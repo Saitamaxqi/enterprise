@@ -364,6 +364,28 @@ class SignTemplate(models.Model):
             'views': [[self.env.ref("sign.sign_request_share_view_form").id, 'form']],
         }
 
+    def get_action_in_progress_requests(self):
+        """ Get the in-progress sign requests related to this template. """
+        sign_request_ids = self.env['sign.request'].search([('state', '=', 'sent'), ('template_id', '=', self.id)]).ids
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('In Progress Requests'),
+            'res_model': 'sign.request',
+            'views': [[False, 'list'], [False, 'form']],
+            'domain': [('id', 'in', sign_request_ids)],
+        }
+
+    def get_action_signed_requests(self):
+        """ Get the signed sign requests related to this template. """
+        sign_request_ids = self.env['sign.request'].search([('state', '=', 'signed'), ('template_id', '=', self.id)]).ids
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Signed Requests'),
+            'res_model': 'sign.request',
+            'views': [[False, 'list'], [False, 'form']],
+            'domain': [('id', 'in', sign_request_ids)],
+        }
+
     def stop_sharing(self):
         self.ensure_one()
         return self.sign_request_ids.filtered(lambda sr: sr.state == 'shared' and sr.create_uid == self.env.user).unlink()

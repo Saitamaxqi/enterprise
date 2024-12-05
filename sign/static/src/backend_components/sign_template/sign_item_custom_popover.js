@@ -2,8 +2,8 @@ import { _t } from "@web/core/l10n/translation";
 import { Record } from "@web/model/record";
 import {
     many2ManyTagsField,
-    Many2ManyTagsField,
 } from "@web/views/fields/many2many_tags/many2many_tags_field";
+import { SelectionItemMany2ManyTagsField } from "@sign/backend_components/selection_item_many2many_tags/selection_item_many2many_tags";
 import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
 import { useService } from "@web/core/utils/hooks";
 import { Component, useState, useExternalListener } from "@odoo/owl";
@@ -37,7 +37,7 @@ export class SignItemCustomPopover extends Component {
     static template = "sign.SignItemCustomPopover";
     static components = {
         Record,
-        Many2ManyTagsField,
+        SelectionItemMany2ManyTagsField,
         Many2OneField,
     };
     static props = {
@@ -60,6 +60,7 @@ export class SignItemCustomPopover extends Component {
         onCopyItem: { type: Function },
         num_options: {type: Number, optional: true},
         radio_set_id: {type: Number, optional: true},
+        selectionTag: { type: Object },
     };
 
     setup() {
@@ -76,6 +77,7 @@ export class SignItemCustomPopover extends Component {
             responsible: this.props.responsible,
             num_options: this.props.num_options,
             radio_set_id: this.props.radio_set_id,
+            isRerenderNeeded: false,
         });
         this.notification = useService("notification");
         this.signItemFieldsGet = getActionActiveFields();
@@ -119,6 +121,7 @@ export class SignItemCustomPopover extends Component {
                     const ids = record.data.option_ids.currentIds;
                     this.state.option_ids = ids;
                     this.props.updateSelectionOptions(ids);
+                    this.state.isRerenderNeeded = !this.state.isRerenderNeeded; // Toggle state to force re-render
                 }
                 if (changes.responsible_id) {
                     const id = changes.responsible_id;
@@ -145,6 +148,9 @@ export class SignItemCustomPopover extends Component {
             ...this.getMany2XProps(record, fieldName),
             domain: [["available", "=", true]],
             noSearchMore: true,
+            updateSelectionOptions: this.props.updateSelectionOptions,
+            state_popover: this.state,
+            selectionTag: this.props.selectionTag,
         };
     }
 

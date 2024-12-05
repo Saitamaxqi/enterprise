@@ -160,7 +160,7 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
         },
         {
             content: "Check option is added",
-            trigger: '.o_popover #o_sign_select_options_input .o_tag_badge_text:contains("option")',
+            trigger: '.o_popover #o_sign_select_options_input .o_sign_list_item_label:contains("option")',
             run: "click",
         },
         {

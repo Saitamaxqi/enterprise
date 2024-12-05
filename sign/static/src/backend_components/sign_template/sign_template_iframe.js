@@ -329,6 +329,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                 signItem.el,
                 SignItemCustomPopover,
                 {
+                    selectionTag: this.props.selectionTag,
                     debug: this.env.debug,
                     responsible: signItem.data.responsible,
                     roles: this.signRolesById,
@@ -442,7 +443,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             return changes;
         }, {});
 
-        if (Object.keys(changes).length) {
+        if (Object.keys(changes).length || signItem.data.type == "selection" && this.props.selectionTag.isSelectionItemRendered) {
             const pageNumber = signItem.data.page;
             const page = this.getPageContainer(pageNumber);
             signItem.el.parentElement.removeChild(signItem.el);
@@ -455,6 +456,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                 data: newData,
                 el: this.renderSignItem(newData, page),
             };
+            this.props.selectionTag.isSelectionItemRendered = false;
             this.refreshSignItems();
             this.currentRole = newData.responsible;
             this.saveChanges();
@@ -673,13 +675,14 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
         const newIds = optionIds.filter((id) => !(id in this.selectionOptionsById));
         const newOptions = await this.orm.searchRead(
             "sign.item.option",
-            [["id", "in", newIds]],
+            [["id", "in", this.props.selectionTag.isSelectionItemEdited ? optionIds : newIds]],
             ["id", "value"],
             { context: user.context }
         );
         for (const option of newOptions) {
             this.selectionOptionsById[option.id] = option;
         }
+        this.props.selectionTag.isSelectionItemEdited = false;
     }
 
     /**

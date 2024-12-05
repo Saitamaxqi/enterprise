@@ -35,17 +35,18 @@
                                 </div>
                             </div>
                         </setting>
-                        <setting help="Allow signatories to provide their identity using itsme® (available in Belgium and the Netherlands)." id="module_sign_itsme">
+                        <setting help="Allow signatories to provide their identity using itsme®" id="module_sign_itsme">
                             <field name="module_sign_itsme"/>
+                            <widget name="documentation_link" path="https://www.itsme-id.com/en-BE/business/coverage" label="Available in supported countries" icon="oi oi-fw o_button_icon oi-arrow-right"/>
                             <widget name="iap_buy_more_credits" service_name="itsme_proxy" hide_service="1"/>
                         </setting>
-                        <setting help="Allow users to define the users or groups which have access to the template." id="manage_template_access">
+                        <setting help="Allow users to define the users or groups which have access to the template" id="manage_template_access">
                             <field name="group_manage_template_access"/>
                         </setting>
-                        <setting id="sms" string="Authenticate by SMS" documentation="/applications/marketing/sms_marketing/pricing/pricing_and_faq.html" help="Deliver one-time codes by SMS to identify signatories when signing a document.">
+                        <setting id="sms" string="Authenticate by SMS" documentation="/applications/marketing/sms_marketing/pricing/pricing_and_faq.html" help="Deliver one-time codes by SMS to identify signatories when signing a document">
                             <widget name="iap_buy_more_credits" service_name="sms" hide_service="1"/>
                         </setting>
-                        <setting id="field_types" string="Field Types" help="Configure the field types that can be used to sign documents (placeholder, auto-completion, ...), as well as the values for selection fields in signable documents.">
+                        <setting id="field_types" string="Field Types" help="Configure the field types that can be used to sign documents (placeholder, auto-completion, ...), as well as the values for selection fields in signable documents">
                             <button name="%(sign.sign_item_type_action)d" icon="oi-arrow-right" type="action" string="Edit field types" class="btn-link"/>
                             <div class="mt8">
                                 <button name="%(sign.sign_item_option_action)d" icon="oi-arrow-right" type="action" string="Edit selection values" class="btn-link"/>

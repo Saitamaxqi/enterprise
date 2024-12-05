@@ -11,20 +11,96 @@
                 <field name="responsible_count"/>
                 <field name="create_uid"/>
                 <field name="is_sharing"/>
+                <field name="create_date"/>
                 <templates>
                     <div t-name="menu">
-                        <a role="menuitem" type="object" name="go_to_custom_template" class="d-none d-md-block dropdown-item" context="{'sign_edit_call': 'sign_template_edit'}">Modify Template</a>
-                        <a role="menuitem" type="object" name="open_requests" class="dropdown-item">Signed Documents</a>
+                        <a role="menuitem" type="object" name="go_to_custom_template" class="d-none d-md-block dropdown-item" context="{'sign_edit_call': 'sign_template_edit'}">Edit</a>
                         <a role="menuitem" type="object" name="stop_sharing" class="dropdown-item" invisible="not is_sharing">Stop Sharing</a>
                         <a role="menuitem" type="action" name="%(sign.action_sign_duplicate_template_with_pdf)d" class="dropdown-item">Use Layout</a>
                         <a role="menuitem" type="object" name="action_archive" class="dropdown-item" t-if="record.active.raw_value">Archive</a>
                         <a role="menuitem" type="object" name="action_unarchive" class="dropdown-item" t-if="!record.active.raw_value">Restore</a>
                         <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
 
+                        <div role="separator" class="dropdown-divider"/>
+                        <div role="separator" class="dropdown-item-text">Color</div>
                         <field name="color" widget="kanban_color_picker"/>
                     </div>
-                    <t t-name="card">
-                        <div class="d-flex lh-1 mb-1">
+                    <t t-name="card" t-att-class="o_sign_kanban_card align-item-center">
+                        <div class="o_sign_kanban_card_ungrouped row mx-0">
+                            <div class="col-lg-4 col-sm-12 py-0 my-2 my-lg-0">
+                                <div class="d-flex flex-row mt-2">
+                                    <t t-if="record.favorited_ids.raw_value.indexOf(context.uid) &lt; 0">
+                                        <a type="object" name="toggle_favorited" aria-label="Not in favorites, set it" title="Not in favorites, add it"
+                                            class="fa fa-lg fa-star-o favorite_sign_button"/>
+                                    </t>
+                                    <t t-else="">
+                                        <a type="object" name="toggle_favorited" aria-label="In favorites, remove it" title="In favorites, remove it"
+                                            class="fa fa-lg fa-star favorite_sign_button_enabled favorite_sign_button"/>
+                                    </t>
+                                    <field name="display_name" class="ms-4 fw-bold text-truncate"/>
+                                </div>
+                                <span class="d-flex align-items-center">
+                                    <field name="user_id" widget="many2one_avatar_user"
+                                        options="{'display_avatar_name': True}"/>
+                                        <span class="mx-1">-</span>
+                                    <em>
+                                        <t t-esc="luxon.DateTime.fromISO(record.create_date.raw_value).toFormat('MMM yyyy')"/>
+                                    </em>
+                                </span>
+                            </div>
+                            <div class="col-lg-2 col-sm-8 d-sm-block col-12 my-3 py-0">
+                                <div class="d-flex flex-column">
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                </div>
+                            </div>
+                            <div t-attf-class="col-lg-1 col-sm-8 col-4 py-0 my-2">
+                                <div class="d-flex flex-column">
+                                    <a type="object" name="get_action_in_progress_requests" class="fw-bold fs-4">
+                                        <field name="in_progress_count"/>
+                                    </a>
+                                    <span class="me-2" title="Number of documents in progress for this template.">
+                                        <span>In Progress</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div t-attf-class="col-lg-1 col-sm-4 col-3 py-0 my-2 me-auto">
+                                <div class="d-flex flex-column">
+                                    <a type="object" name="get_action_signed_requests" class="fw-bold fs-4">
+                                        <field name="signed_count"/>
+                                    </a>
+                                    <span class="me-2" title="Number of documents signed for this template.">
+                                        <span>Signed</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-12 col-12 my-3 py-0 o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left float-end">
+                                    <button
+                                        name="%(sign.action_sign_send_request)d"
+                                        type="action"
+                                        class="btn btn-primary me-1"
+                                        context="{'sign_directly_without_mail': 0, 'show_email': 1}">
+                                        Send
+                                    </button>
+                                    <button
+                                        name="%(sign.action_sign_send_request)d"
+                                        type="action"
+                                        class="btn btn-primary me-1"
+                                        context="{'sign_directly_without_mail': 1}">
+                                        Sign Now
+                                    </button>
+                                    <button
+                                        name="open_shared_sign_request"
+                                        type="object"
+                                        class="btn btn-secondary"
+                                        invisible="not active or responsible_count &gt; 1">
+                                        Share
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- displayed in grouped mode -->
+                        <div class="o_sign_kanban_card_grouped px-1">
                             <t t-if="record.favorited_ids.raw_value.indexOf(context.uid) &lt; 0">
                                 <a type="object" name="toggle_favorited" aria-label="Not in favorites, set it" title="Not in favorites, add it"
                                     class="fa fa-lg fa-star-o favorite_sign_button"/>
@@ -34,35 +110,67 @@
                                     class="fa fa-lg fa-star favorite_sign_button_enabled favorite_sign_button"/>
                             </t>
                             <field name="display_name" class="ms-4 fw-bold fs-5"/>
+                            <span class="d-flex align-items-center">
+                                <field name="user_id" widget="many2one_avatar_user"
+                                    options="{'display_avatar_name': True}"/>
+                                    <span class="mx-1">-</span>
+                                <em>
+                                    <field name="create_date" invisible="1"/>
+                                    <t t-esc="luxon.DateTime.fromISO(record.create_date.raw_value).toFormat('MMM yyyy')"/>
+                                </em>
+                            </span>
+                            <div class="row g-0">
+                                <div class="col-10 p-0 pb-1">
+                                    <div class="row mt-4 ms-2">
+                                        <div class="col-4 p-0">
+                                            <a type="object" name="get_action_in_progress_requests" class="d-flex flex-column align-items-center">
+                                                <span class="fw-bold"><field name="in_progress_count"/></span>
+                                                <span class="text-break text-muted">In Progress</span>
+                                            </a>
+                                        </div>
+                                        <div class="col-4 p-0 border-start">
+                                            <a type="object" name="get_action_signed_requests" class="d-flex flex-column align-items-center">
+                                                <span class="fw-bold"><field name="signed_count"/></span>
+                                                <span class="text-break text-muted">Signed</span>
+                                            </a>
+                                        </div>
+                                        <div class="col-4 p-0 border-start">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <button name="dropdown"
+                                                    class="btn btn-primary btn-sm mt8 dropdown-toggle kanban_ignore_dropdown"
+                                                    type="button"
+                                                    data-bs-toggle="dropdown">
+                                                    Action
+                                                </button>
+                                                <div class="dropdown-menu kanban_ignore_dropdown" role="menu">
+                                                    <button
+                                                        name="%(sign.action_sign_send_request)d"
+                                                        type="action"
+                                                        class="btn btn-primary btn-sm dropdown-item"
+                                                        context="{'sign_directly_without_mail': 0, 'show_email': 1}">
+                                                        Send
+                                                    </button>
+                                                    <button
+                                                        name="%(sign.action_sign_send_request)d"
+                                                        type="action"
+                                                        class="btn btn-primary btn-sm dropdown-item"
+                                                        context="{'sign_directly_without_mail': 1}">
+                                                        Sign Now
+                                                    </button>
+                                                    <button
+                                                        name="open_shared_sign_request"
+                                                        type="object"
+                                                        class="btn btn-secondary btn-sm dropdown-item"
+                                                        invisible="not active or responsible_count &gt; 1">
+                                                        Share
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <field name="create_date" class="fst-italic mb-1" options="{'show_seconds': false}"/>
-                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                        <footer class="pt-1">
-                            <div class="d-flex mobile-xs-hide">
-                                <button name="%(sign.action_sign_send_request)d" type="action" class="btn btn-primary btn-sm mt8 mr8 px-2 py-0" context="{'sign_directly_without_mail': 0, 'show_email': 1}">Send</button>
-                                <button name="%(sign.action_sign_send_request)d" type="action" class="btn btn-primary btn-sm mt8 mr8 px-2 py-0" context="{'sign_directly_without_mail': 1}">Sign Now</button>
-                                <button name="open_shared_sign_request" type="object" class="btn btn-secondary btn-sm mt8 mr8 px-2 py-0" invisible="not active or responsible_count &gt; 1">Share</button>
-                            </div>
-                            <div class="d-flex mobile-xs-show">
-                                <button name="dropdown" class="btn btn-primary mt8 px-2 py-0 dropdown-toggle kanban_ignore_dropdown mr8" type="button" data-bs-toggle="dropdown">Action</button>
-                                <div class="dropdown-menu kanban_ignore_dropdown" role="menu">
-                                    <button name="%(sign.action_sign_send_request)d" type="action" class="btn btn-primary btn-sm dropdown-item" context="{'sign_directly_without_mail': 0, 'show_email': 1}">Send</button>
-                                    <button name="%(sign.action_sign_send_request)d" type="action" class="btn btn-primary btn-sm dropdown-item" context="{'sign_directly_without_mail': 1}">Sign Now</button>
-                                    <button name="open_shared_sign_request" type="object" class="btn btn-secondary btn-sm dropdown-item" invisible="not active or responsible_count &gt; 1">Share</button>
-                                </div>
-                            </div>
-                            <div class="ms-auto mt8 d-flex align-items-center">
-                                <div class="mt-2 mr8" title="Number of documents in progress for this template.">
-                                    <field name="in_progress_count" class="fa fa-hourglass-half"/>
-                                </div>
-                                <div class="mt-2 mr8" title="Number of documents signed for this template.">
-                                    <field name="signed_count" class="fa fa-check"/>
-                                </div>
-                                <div class="align-items-center mr8">
-                                    <field name="user_id" widget="many2one_avatar_user"/>
-                                </div>
-                            </div>
-                        </footer>
                     </t>
                 </templates>
             </kanban>

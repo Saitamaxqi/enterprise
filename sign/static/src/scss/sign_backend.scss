@@ -154,7 +154,22 @@
 .o_sign_template_kanban .o_kanban_renderer {
     --KanbanRecord-width: 360px;
 
+    &.o_kanban_grouped {
+        .o_sign_kanban_card_ungrouped {
+            display:none !important;
+        }
+    }
+    &.o_kanban_ungrouped {
+        .o_sign_kanban_card_grouped {
+            display:none !important;
+        }
+    }
+    .o_sign_kanban_card {
+        min-height: 60px;
+    }
     .o_kanban_record {
+        width: 100%;
+        margin: 0px;
         .o_dropdown_kanban {
             .dropdown-menu {
                 // the content of items in the dropdown menu of sign template is very long

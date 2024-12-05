@@ -344,3 +344,22 @@
         display: none !important;
     }
 }
+
+.o_sign_item_popover_selection{
+    .o_input{
+        border: 1px solid #e7e9ed;
+        border-radius: 0 0.25rem 0.25rem 0;
+        padding-block: 2px;
+        padding-left: 10px;
+        padding-right: 20px !important;
+        width: 100%;
+    }
+    .o_sign_selection{
+        border: 1px solid #e7e9ed;
+        padding-block: 2px;
+        padding-left: 10px;
+    }
+    .o_dropdown_button{
+        margin-right: 8px;
+    }
+}

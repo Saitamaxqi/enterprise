@@ -17,7 +17,7 @@
                     <div t-if="props.type === 'selection'">
                         <label for="o_sign_select_options_input" class="fw-bold">Options</label>
                         <div class="o_field_widget d-block" id="o_sign_select_options_input">
-                            <Many2ManyTagsField t-props="getOptionsProps(record, 'option_ids')"/>
+                            <SelectionItemMany2ManyTagsField t-props="getOptionsProps(record, 'option_ids')"/>
                         </div>
                     </div>
                     <div t-if="props.type === 'radio'" class="mb-2">
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div class="mb-1 d-flex align-items-center justify-content-between">
-                        <button class="btn o_sign_validate_field_button btn-primary" t-on-click="onValidate">Validate</button>
+                        <button class="btn o_sign_validate_field_button btn-primary" t-on-click="onValidate">Save</button>
                         <button class="btn btn-secondary fa fa-trash" t-on-click="props.onDelete"/>
                     </div>
                 </div>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="SelectionItemMany2ManyTagsField">
+    <t t-name="sign.SelectionItemMany2ManyTagsField">
+        <div t-ref="many2ManyTagsField">
+            <ul class="o_sign_item_popover_selection list-unstyled mb-0 mt-1" t-ref="itemsList">
+                <t t-foreach="state.tags" t-as="tag" t-key="tag.id">
+                    <div class="input-group mb-1">
+                        <t t-if="state.editingTag and state.editingTag.id === tag.id">
+                            <input type="text" t-model="state.newText" class="o_sign_selection o_sign_list_item_label flex-grow-1 w-0"/>
+                            <button
+                                type="button"
+                                t-on-click="onSave"
+                                aria-label="Save selection"
+                                data-tooltip="Save selection"
+                                class="btn btn-primary fa fa-check o-web-sign-interactive-list-save-item"/>
+                            <button
+                                type="button"
+                                t-on-click="onUndo"
+                                aria-label="Undo selection"
+                                data-tooltip="Undo selection"
+                                class="btn btn-secondary fa fa-undo o-web-sign-interactive-list-undo-item"/>
+                        </t>
+                        <t t-else="">
+                            <span class="o_sign_selection o_sign_list_item_label flex-grow-1" t-esc="tag.text"/>
+                            <button
+                                type="button"
+                                class="btn btn-secondary fa fa-pencil o-web-sign-interactive-list-edit-item"
+                                aria-label="Edit selection"
+                                data-tooltip="Edit selection"
+                                t-on-click="() => onEditTag(tag)"/>
+                            <button
+                                type="button"
+                                class="btn btn-secondary fa fa-trash-o o-web-sign-interactive-list-remove-item"
+                                aria-label="Remove selection"
+                                data-tooltip="Remove selection"
+                                t-on-click.stop.prevent="(ev) => tag.onDelete and tag.onDelete(ev)"/>
+                        </t>
+                    </div>
+                </t>
+                <div class="input-group mb-1">
+                    <div t-if="showM2OSelectionField" class="o_sign_custom_selection flex-grow-1 d-inline-flex" t-ref="autoComplete">
+                        <Many2XAutocomplete
+                            id="props.id"
+                            placeholder.translate="Enter New Value"
+                            resModel="relation"
+                            autoSelect="true"
+                            fieldString="string"
+                            activeActions="activeActions"
+                            update="update"
+                            quickCreate="activeActions.create ? quickCreate : null"
+                            context="props.context"
+                            getDomain.bind="getDomain"
+                            isToMany="true"
+                            nameCreateField="props.nameCreateField"
+                            noSearchMore="props.noSearchMore"
+                        />
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </t>
+</template>

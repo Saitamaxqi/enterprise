@@ -2,7 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { SignTemplateIframe } from "./sign_template_iframe";
 import { SignTemplateTopBar } from "./sign_template_top_bar";
-import { Component, useRef, useEffect, onWillUnmount } from "@odoo/owl";
+import { Component, useRef, useEffect, onWillUnmount, useState } from "@odoo/owl";
 import { buildPDFViewerURL } from "@sign/components/sign_request/utils";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { hidePDFJSButtons } from "@web/core/utils/pdfjs";
@@ -34,6 +34,10 @@ export class SignTemplateBody extends Component {
         this.dialog = useService("dialog");
         this.PDFIframe = useRef("PDFIframe");
         this.PDFViewerURL = buildPDFViewerURL(this.props.attachmentLocation, this.env.isSmall);
+        this.selectionTag = useState({
+            isSelectionItemEdited: false,
+            isSelectionItemRendered: false,
+        });
         useEffect(
             (el) => {
                 if (el) {
@@ -89,6 +93,7 @@ export class SignTemplateBody extends Component {
                 saveTemplate: () => this.saveTemplate(),
                 getRadioSetInfo: (id) => this.getRadioSetInfo(id),
                 rotatePDF: () => this.rotatePDF(),
+                selectionTag: this.selectionTag,
             }
         );
     }
