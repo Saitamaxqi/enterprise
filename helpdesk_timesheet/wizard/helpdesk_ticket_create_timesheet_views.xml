@@ -13,7 +13,7 @@
                 <footer>
                     <button string="Log Time" type="object" name="action_generate_timesheet" class="btn btn-primary" data-hotkey="q"/>
                     <button string="Resume Timer" special="cancel" data-hotkey="x" type="object" class="btn btn-secondary"/>
-                    <button type="object" name="action_delete_timesheet" class="btn btn-secondary fa fa-trash-o" data-hotkey="w" title="Delete"/>
+                    <button type="object" name="action_delete_timesheet" class="btn btn-secondary py-2 fa fa-trash-o" data-hotkey="w" title="Delete"/>
                 </footer>
             </form>
         </field>
