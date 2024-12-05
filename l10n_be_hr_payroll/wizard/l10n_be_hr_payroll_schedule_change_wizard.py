@@ -55,7 +55,7 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
 
     leave_type_id = fields.Many2one(
         'hr.leave.type', string='Time Off Type', required=True,
-        domain=[('requires_allocation', '=', 'yes')],
+        domain=[('requires_allocation', '=', True)],
         default=lambda self: self.env['hr.leave.type'].search([], limit=1))
     full_time_off_allocation = fields.Float(compute='_compute_full_time_off_allocation', readonly=True)
     time_off_allocation = fields.Float(

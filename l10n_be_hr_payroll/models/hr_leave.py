@@ -53,8 +53,8 @@ class HrLeave(models.Model):
         for leave in (self - l10n_be_leaves):
             leave.l10n_be_sickness_can_relapse = False
 
-    def action_validate(self, check_state=True):
-        res = super().action_validate(check_state=check_state)
+    def _action_validate(self, check_state=True):
+        res = super()._action_validate(check_state=check_state)
         activity_type_id = self.env.ref('mail.mail_activity_data_todo').id
         res_model_id = self.env.ref('hr_holidays.model_hr_leave').id
         for leave in self:

@@ -21,7 +21,7 @@ class TestPeriodDuplicationHolidays(TestPeriodDuplication):
             'request_date_from': dt + relativedelta(weeks=1),
             'request_date_to': dt + relativedelta(weeks=1, days=1),
             'employee_id': self.employee_joseph.id,
-        }).action_validate()
+        }).action_approve()
         copied, _dummy = PlanningSlot.with_context(tz='Europe/Brussels').action_copy_previous_week(
             str(dt + relativedelta(weeks=1)), [
                 ['start_datetime', '<=', dt + relativedelta(weeks=1)],

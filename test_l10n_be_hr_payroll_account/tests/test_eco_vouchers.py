@@ -115,7 +115,7 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
 
         unpaid_time_off_type = self.env['hr.leave.type'].create({
             'name': 'Unpaid',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'leave_validation_type': 'both',
             'request_unit': 'hour',
             'unpaid': True,
@@ -131,7 +131,6 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
             'employee_id': employee.id,
         })
         unpaid_leave_2019.action_approve()
-        unpaid_leave_2019.action_validate()
 
         april_payslip = self.env['hr.payslip'].create({
             'name': 'Payslip Apr 2021',

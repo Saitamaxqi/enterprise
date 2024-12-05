@@ -33,8 +33,8 @@ class TestPayrollCommon(TransactionCase):
 
         cls.holiday_leave_types = cls.env['hr.leave.type'].create([{
             'name': 'Paid Time Off',
-            'requires_allocation': 'yes',
-            'employee_requests': 'no',
+            'requires_allocation': True,
+            'employee_requests': False,
             'allocation_validation_type': 'hr',
             'leave_validation_type': 'both',
             'responsible_ids': [Command.link(cls.env.ref('base.user_admin').id)],

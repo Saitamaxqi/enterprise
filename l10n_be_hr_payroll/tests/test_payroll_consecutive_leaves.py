@@ -32,7 +32,7 @@ class TestConsecutiveLeaves(TestPayrollCommon):
             'request_date_from': date(2023, 1, 4),
             'request_date_to': date(2023, 1, 4),
         })
-        first_leave.action_validate()
+        first_leave.action_approve()
 
         second_leave = self.env['hr.leave'].create({
                 'employee_id': self.employee.id,
@@ -42,7 +42,7 @@ class TestConsecutiveLeaves(TestPayrollCommon):
             })
 
         with self.assertRaises(UserError):
-            second_leave.action_validate()
+            second_leave.action_approve()
 
     def test_no_consecutive_leaves_allowed_directly_after(self):
         """
@@ -54,7 +54,7 @@ class TestConsecutiveLeaves(TestPayrollCommon):
             'request_date_from': date(2023, 1, 4),
             'request_date_to': date(2023, 1, 4),
         })
-        first_leave.action_validate()
+        first_leave.action_approve()
 
         second_leave = self.env['hr.leave'].create({
                 'employee_id': self.employee.id,
@@ -64,7 +64,7 @@ class TestConsecutiveLeaves(TestPayrollCommon):
             })
 
         with self.assertRaises(UserError):
-            second_leave.action_validate()
+            second_leave.action_approve()
 
     def test_no_consecutive_leaves_allowed_allow_with_gap(self):
         """
@@ -76,7 +76,7 @@ class TestConsecutiveLeaves(TestPayrollCommon):
             'request_date_from': date(2023, 1, 4),
             'request_date_to': date(2023, 1, 4),
         })
-        first_leave.action_validate()
+        first_leave.action_approve()
 
         second_leave = self.env['hr.leave'].create({
                 'employee_id': self.employee.id,
@@ -85,7 +85,7 @@ class TestConsecutiveLeaves(TestPayrollCommon):
                 'request_date_to': date(2023, 1, 6),
             })
 
-        second_leave.action_validate()  # no error should be raised
+        second_leave.action_approve()  # no error should be raised
 
     def test_no_consecutive_leaves_allowed_with_weekend(self):
         """
@@ -97,7 +97,7 @@ class TestConsecutiveLeaves(TestPayrollCommon):
                 'request_date_from': date(2023, 1, 6),
                 'request_date_to': date(2023, 1, 6),
             })
-        first_leave.action_validate()
+        first_leave.action_approve()
 
         second_leave = self.env['hr.leave'].create({
                 'employee_id': self.employee.id,
@@ -109,7 +109,7 @@ class TestConsecutiveLeaves(TestPayrollCommon):
         with self.assertRaises(UserError):
             # This leave is considered consecutive to the previous one
             # as there is no working day between the two leaves
-            second_leave.action_validate()
+            second_leave.action_approve()
 
     def test_no_consecutive_leaves_allowed_with_public_holiday(self):
         """
@@ -130,7 +130,7 @@ class TestConsecutiveLeaves(TestPayrollCommon):
             'request_date_from': date(2023, 1, 19),
             'request_date_to': date(2023, 1, 19),
         })
-        first_leave.action_validate()  # no error should be raised
+        first_leave.action_approve()  # no error should be raised
 
         second_leave = self.env['hr.leave'].create({
                 'employee_id': self.employee.id,
@@ -142,4 +142,4 @@ class TestConsecutiveLeaves(TestPayrollCommon):
         with self.assertRaises(UserError):
             # This leave is considered consecutive to the previous one
             # as there is just a public holiday between the two leaves
-            second_leave.action_validate()
+            second_leave.action_approve()

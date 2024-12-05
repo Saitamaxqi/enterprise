@@ -7,21 +7,46 @@
             <field name="model">hr.leave</field>
             <field name="arch" type="xml">
                 <gantt
-                       js_class="hr_holidays_gantt"
-                       kanban_view_id="%(hr_holidays.hr_leave_view_kanban_approve_department)d"
+                       js_class="hr_holidays_gantt_manager"
                        date_start="date_from"
                        date_stop="date_to"
                        string="Days"
                        color="color"
                        default_group_by='employee_id'
-                       decoration-warning="state == 'refuse'"
+                       decoration-danger="state == 'refuse'"
                        decoration-info="state in ['confirm', 'validate1']"
+                       decoration-secondary="state == 'cancel'"
                        precision="{'week': 'day:half', 'month': 'day:half'}"
                        plan="0"
                        total_row="True"
                        display_unavailability="1"
                 >
                     <field name="state" invisible="1"/>
+                    <field name="holiday_status_id" invisible="1"/>
+                    <field name="number_of_days" invisible="1"/>
+                    <field name="manager_id" invisible="1"/>
+                    <field name="can_approve" invisible="1"/>
+                    <field name="can_validate" invisible="1"/>
+                    <field name="can_refuse" invisible="1"/>
+                    <templates>
+                        <div t-name="gantt-popover">
+                        <t t-set="start_date_formatted" t-value="date_from.toLocaleString({ month: 'numeric', day: 'numeric', year: 'numeric' })"/>
+                        <t t-set="stop_date_formatted" t-value="date_to.toLocaleString({ month: 'numeric', day: 'numeric', year: 'numeric' })"/>
+                            <div>
+                                <strong>Name: </strong><t t-out="holiday_status_id[1]"/>
+                            </div>
+                            <div><strong>Start: </strong> <t t-out="start_date_formatted"/></div>
+                            <div><strong>Stop: </strong> <t t-out="stop_date_formatted"/></div>
+                            <footer>
+                                <button name="action_approve" class="btn btn-primary btn-sm" string="Approve" type="object"
+                                    t-if="can_approve"/>
+                                <button name="action_approve" class="btn btn-secondary btn-sm" string="Validate" type="object"
+                                    t-if="can_validate and !can_approve"/>
+                                <button name="action_refuse" class="btn btn-secondary btn-sm" string="Refuse" type="object"
+                                    t-if="can_refuse"/>
+                            </footer>
+                        </div>
+                    </templates>
                 </gantt>
             </field>
         </record>
@@ -31,12 +56,12 @@
             <field name="model">hr.leave.allocation</field>
             <field name="arch" type="xml">
                 <gantt
-                    js_class="hr_gantt"
+                    js_class="hr_holidays_gantt_manager"
                     date_start="date_from"
                     date_stop="date_to"
                     string="Days"
                     default_group_by="employee_id"
-                    decoration-warning="state == 'refuse'"
+                    decoration-danger="state == 'refuse'"
                     decoration-info="state in ['confirm']"
                     plan="0"
                 >
@@ -57,12 +82,13 @@
                     default_range="month"
                     default_group_by="employee_id"
                     decoration-info="state in ['confirm', 'validate1']"
+                    decoration-danger="state == 'refused'"
                     color="employee_id"
                     total_row="True"
                     display_unavailability="True"
                     sample="1">
                     <field name="name"/>
-                    <field name="state"/>
+                    <field name="state" invisible="1"/>
                     <field name="is_manager"/>
                 <templates>
                     <div t-name="gantt-popover">
@@ -72,7 +98,7 @@
                         <footer replace="0">
                             <button name="action_approve" class="btn btn-secondary btn-sm" string="Approve" type="object"
                                 t-if="is_manager and ['confirm', 'refuse'].includes(state)"/>
-                            <button name="action_validate" class="btn btn-secondary btn-sm" string="Validate" type="object"
+                            <button name="action_approve" class="btn btn-secondary btn-sm" string="Validate" type="object"
                                 t-if="is_manager and state == 'validate1'"/>
                             <button name="action_refuse" class="btn btn-secondary btn-sm" string="Refuse" type="object"
                                 t-if="is_manager and state != 'refuse'"/>

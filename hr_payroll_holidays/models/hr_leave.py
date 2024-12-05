@@ -18,7 +18,9 @@ class HrLeave(models.Model):
         ('blocked', 'To defer to next payslip')], string='Payslip State',
         copy=False, default='normal', required=True, tracking=True)
 
-    def action_validate(self, check_state=True):
+    employee_registration_number = fields.Char(related="employee_id.registration_number")
+
+    def _action_validate(self, check_state=True):
         # Get employees payslips
         all_payslips = self.env['hr.payslip'].sudo().search([
             ('employee_id', 'in', self.mapped('employee_id').ids),
@@ -36,10 +38,10 @@ class HrLeave(models.Model):
                 and (payslip.date_from <= leave.date_to.date() \
                 and payslip.date_to >= leave.date_from.date()) for payslip in waiting_payslips):
                 leave.payslip_state = 'blocked'
-        res = super().action_validate(check_state=check_state)
+        res = super()._action_validate(check_state=check_state)
         self.sudo()._recompute_payslips()
         return res
-    
+
     def _get_to_clean_activities(self):
         activities = super()._get_to_clean_activities()
         activities.append('hr_payroll_holidays.mail_activity_data_hr_leave_to_defer')
@@ -50,7 +52,7 @@ class HrLeave(models.Model):
         self.sudo()._recompute_payslips()
         return res
 
-    def _action_user_cancel(self, reason):
+    def _action_user_cancel(self, reason=None):
         res = super()._action_user_cancel(reason)
         self.sudo().payslip_state = 'done'
         self.sudo()._recompute_payslips()

@@ -21,7 +21,7 @@ class TestCommon(TestCommonPlanning):
         # Leave type
         cls.leave_type = cls.env['hr.leave.type'].create({
             'name': 'time off',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'request_unit': 'hour',
         })
 

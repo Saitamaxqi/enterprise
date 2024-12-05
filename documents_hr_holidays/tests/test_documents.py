@@ -17,7 +17,7 @@ class TestCaseDocumentsBridgeHR(TransactionCaseDocumentsHr):
             'user_id': cls.doc_user.id,
             'work_contact_id': cls.doc_user.partner_id.id
         })
-        cls.leave_type = cls.env['hr.leave.type'].create({'name': 'Sick', 'requires_allocation': 'no'})
+        cls.leave_type = cls.env['hr.leave.type'].create({'name': 'Sick', 'requires_allocation': False})
         cls.leave = cls.env['hr.leave'].create({
             'employee_id': cls.employee.id,
             'holiday_status_id': cls.leave_type.id,

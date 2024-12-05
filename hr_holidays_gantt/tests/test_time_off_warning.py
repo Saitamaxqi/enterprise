@@ -13,7 +13,7 @@ class TestHolidaysWarning(TestHrHolidaysCommon):
 
         self.holidays_type_1 = LeaveType.create({
             'name': 'NotLimitedHR',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'leave_validation_type': 'hr',
         })
         time_off_validated_1 = self.env['resource.calendar.leaves'].create({

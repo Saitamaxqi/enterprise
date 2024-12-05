@@ -25,9 +25,6 @@ def format_date(env, date):
 class HrLeave(models.Model):
     _inherit = "hr.leave"
 
-    def action_approve_gantt(self):
-        self.action_approve(check_state=False)
-
     @api.model
     def _get_leave_interval(self, date_from, date_to, employee_ids):
         # Validated hr.leave create a resource.calendar.leaves

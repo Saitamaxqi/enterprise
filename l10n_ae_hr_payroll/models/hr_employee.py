@@ -44,7 +44,7 @@ class HrEmployee(models.Model):
                 join hr_leave_type s ON (s.id=h.holiday_status_id)
             WHERE
                 s.active = true AND h.state='validate' AND
-                s.requires_allocation='yes' AND
+                s.requires_allocation = TRUE AND
                 h.employee_id in %s AND
                 s.l10n_ae_is_annual_leave = TRUE
             GROUP BY h.employee_id""", (tuple(self.ids),))

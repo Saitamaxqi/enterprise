@@ -18,8 +18,8 @@ class TestPayrollRightToLegalLeaves(TestPayrollCommon):
         """
         leave_type_without_notified_officers = self.env['hr.leave.type'].create({
             'name': 'Leave Type Without Notified Officers',
-            'requires_allocation': 'no',
-            'employee_requests': 'yes',
+            'requires_allocation': False,
+            'employee_requests': True,
             'leave_validation_type': 'both',
             'responsible_ids': False,
             'request_unit': 'day'
@@ -32,7 +32,6 @@ class TestPayrollRightToLegalLeaves(TestPayrollCommon):
             'request_date_to': '2024-10-31',
         })
         leave_request.action_approve()
-        leave_request.action_validate()
         activity = self.env['mail.activity'].search([
             ('res_id', '=', leave_request.id),
             ('res_model', '=', 'hr.leave'),

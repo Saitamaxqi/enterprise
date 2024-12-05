@@ -18,7 +18,7 @@ class TestHelpdeskHolidays(HelpdeskCommon, TestHrHolidaysCommon):
         cls.leave_type = cls.env['hr.leave.type'].create({
             'name': 'Legal Leaves',
             'time_type': 'leave',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
         })
 
         cls.user_hruser.group_ids |= cls.env.ref('helpdesk.group_helpdesk_user')

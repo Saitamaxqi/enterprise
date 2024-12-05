@@ -66,5 +66,5 @@ class TestPayrollHolidaysBase(TransactionCase):
             'name': 'Unpaid leave',
             'work_entry_type_id': cls.work_entry_type_unpaid.id,
             'time_type': 'leave',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
         })

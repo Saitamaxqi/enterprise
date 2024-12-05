@@ -514,20 +514,20 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         cls.sick_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Sick Time Off',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_sick_leave').id,
         })
 
         cls.long_term_sick_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Sick Time Off',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_long_sick').id,
         })
 
         cls.paid_time_off_type_2019 = cls.env['hr.leave.type'].create({
             'name': "Paid Time Off 2019",
-            'requires_allocation': 'yes',
-            'employee_requests': 'no',
+            'requires_allocation': True,
+            'employee_requests': False,
             'allocation_validation_type': 'hr',
             'leave_validation_type': 'both',
             'company_id': cls.env.company.id,
@@ -536,8 +536,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         cls.paid_time_off_type_2020 = cls.env['hr.leave.type'].create({
             'name': "Paid Time Off 2020",
-            'requires_allocation': 'yes',
-            'employee_requests': 'no',
+            'requires_allocation': True,
+            'employee_requests': False,
             'allocation_validation_type': 'hr',
             'leave_validation_type': 'both',
             'company_id': cls.env.company.id,
@@ -546,7 +546,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         cls.unpaid_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Unpaid',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'leave_validation_type': 'both',
             'request_unit': 'hour',
             'unpaid': True,
@@ -556,7 +556,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         cls.european_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'European Time Off',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'leave_validation_type': 'both',
             'request_unit': 'half_day',
             'company_id': cls.env.company.id,
@@ -565,7 +565,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         cls.economic_unemployment_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Economic Unemployment',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'leave_validation_type': 'both',
             'request_unit': 'half_day',
             'company_id': cls.env.company.id,
@@ -575,14 +575,14 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         cls.leave_type_small_unemployment = cls.env['hr.leave.type'].create({
             'name': 'Small Unemployment',
             'request_unit': 'hour',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'company_id': cls.env.company.id,
             'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_small_unemployment').id,
         })
 
         cls.extra_legal_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Extra-Legal Time Off',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_extra_legal').id,
         })
 
@@ -676,7 +676,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'employee_id': cls.employee.id,
         })
 
-        (cls.unpaid_leave_2019 + cls.legal_leave_2019 + cls.legal_leave_2020).action_validate()
+        (cls.unpaid_leave_2019 + cls.legal_leave_2019 + cls.legal_leave_2020).action_approve()
 
         cls.contract_2019.generate_work_entries(datetime.date(2019, 1, 1), datetime.date(2019, 12, 31))
         cls.contract_2020.generate_work_entries(datetime.date(2020, 1, 1), datetime.date(2020, 3, 31))
@@ -1928,7 +1928,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         sick_leave_2._compute_date_from_to()
         sick_leave_2 = self.env['hr.leave'].create(sick_leave_2._convert_to_write(sick_leave_2._cache))
 
-        (sick_leave_1 + sick_leave_2).action_validate()
+        (sick_leave_1 + sick_leave_2).action_approve()
 
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
@@ -2053,7 +2053,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         sick_leave_2._compute_date_from_to()
         sick_leave_2 = self.env['hr.leave'].create(sick_leave_2._convert_to_write(sick_leave_2._cache))
 
-        (sick_leave_1 + sick_leave_2).action_validate()
+        (sick_leave_1 + sick_leave_2).action_approve()
 
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
@@ -2156,7 +2156,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
         sick_leave._compute_date_from_to()
         sick_leave = self.env['hr.leave'].create(sick_leave._convert_to_write(sick_leave._cache))
-        sick_leave.action_validate()
+        sick_leave.action_approve()
 
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
@@ -2312,7 +2312,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         sick_leave_2._compute_date_from_to()
         sick_leave_2 = self.env['hr.leave'].create(sick_leave_2._convert_to_write(sick_leave_2._cache))
 
-        (sick_leave_1 + sick_leave_2).action_validate()
+        (sick_leave_1 + sick_leave_2).action_approve()
 
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
@@ -2452,7 +2452,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         sick_leave_2._compute_date_from_to()
         sick_leave_2 = self.env['hr.leave'].create(sick_leave_2._convert_to_write(sick_leave_2._cache))
 
-        (sick_leave_1 + sick_leave_2).action_validate()
+        (sick_leave_1 + sick_leave_2).action_approve()
 
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
@@ -2571,7 +2571,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
         sick_leave._compute_date_from_to()
         sick_leave = self.env['hr.leave'].create(sick_leave._convert_to_write(sick_leave._cache))
-        sick_leave.action_validate()
+        sick_leave.action_approve()
 
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
@@ -3018,7 +3018,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
         sick_time_off._compute_date_from_to()
         sick_time_off = self.env['hr.leave'].create(sick_time_off._convert_to_write(sick_time_off._cache))
-        sick_time_off.action_validate()
+        sick_time_off.action_approve()
 
         self.contract.write({
             'resource_calendar_id': self.resource_calendar_4_5_wednesday_off.id,
@@ -3237,7 +3237,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
         long_term_sick._compute_date_from_to()
         long_term_sick = self.env['hr.leave'].create(long_term_sick._convert_to_write(long_term_sick._cache))
-        long_term_sick.action_validate()
+        long_term_sick.action_approve()
 
         payslip = self._generate_payslip(datetime.date(2020, 3, 1), datetime.date(2020, 3, 31))
 
@@ -4019,7 +4019,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'request_date_to': datetime.date(2020, 5, 4),
             'employee_id': self.employee.id,
         })
-        european_time_off.action_validate()
+        european_time_off.action_approve()
 
         european_payslip = self.env['hr.payslip'].create({
             'name': 'Payslip',
@@ -4070,7 +4070,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'request_date_to': datetime.date(2019, 2, 28),
             'employee_id': self.employee.id,
         })
-        european_time_off.action_validate()
+        european_time_off.action_approve()
 
         european_payslip = self.env['hr.payslip'].create({
             'name': 'Payslip',
@@ -4337,7 +4337,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'request_date_to': datetime.date(2021, 5, 31),
             'employee_id': self.employee.id,
         })
-        economic_unemployment.action_validate()
+        economic_unemployment.action_approve()
 
         self.contract.generate_work_entries(datetime.date(2021, 5, 1), datetime.date(2021, 5, 31))
 
@@ -4425,7 +4425,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'request_date_to': datetime.date(2021, 5, 31),
             'employee_id': self.employee.id,
         })
-        maternity.action_validate()
 
         self.contract.generate_work_entries(datetime.date(2021, 4, 1), datetime.date(2021, 5, 31))
 
@@ -4513,7 +4512,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'request_date_to': '2021-5-31',
             'employee_id': self.employee.id,
         })
-        maternity.action_validate()
 
         self.contract.generate_work_entries(datetime.date(2021, 5, 1), datetime.date(2021, 5, 31))
 
@@ -4567,7 +4565,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'request_date_to': datetime.date(2021, 5, 31),
             'employee_id': self.employee.id,
         })
-        maternity.action_validate()
 
         self.contract.generate_work_entries(datetime.date(2021, 5, 1), datetime.date(2021, 5, 31))
 
@@ -4642,7 +4639,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'request_date_to': datetime.date(2021, 5, 31),
             'employee_id': self.employee.id,
         })
-        maternity.action_validate()
 
         self.contract.generate_work_entries(datetime.date(2021, 5, 1), datetime.date(2021, 5, 31))
 
@@ -5222,7 +5218,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         sick_leave_4._compute_date_from_to()
         sick_leave_4 = self.env['hr.leave'].create(sick_leave_4._convert_to_write(sick_leave_4._cache))
 
-        (sick_leave_1 + sick_leave_2 + sick_leave_3 + sick_leave_4).action_validate()
+        (sick_leave_1 + sick_leave_2 + sick_leave_3 + sick_leave_4).action_approve()
 
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2022, 4, 1), datetime.date(2022, 6, 30))
 
@@ -5422,7 +5418,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
         strike_leave._compute_date_from_to()
         strike_leave = self.env['hr.leave'].create(strike_leave._convert_to_write(strike_leave._cache))
-        strike_leave.action_validate()
+        strike_leave.action_approve()
 
         payslip = self._generate_payslip(datetime.date(2022, 5, 1), datetime.date(2022, 5, 31))
 
@@ -5506,7 +5502,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'request_date_to': '2022-5-12',
             'employee_id': self.employee.id,
         })
-        european_time_off.action_validate()
+        european_time_off.action_approve()
 
         european_payslip = self.env['hr.payslip'].create({
             'name': 'Payslip',
@@ -5937,7 +5933,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         sick_leave_2._compute_date_from_to()
         sick_leave_2 = self.env['hr.leave'].create(sick_leave_2._convert_to_write(sick_leave_2._cache))
 
-        (sick_leave_1 + sick_leave_2).action_validate()
+        (sick_leave_1 + sick_leave_2).action_approve()
 
         self.contract.generate_work_entries(datetime.date(2022, 10, 1), datetime.date(2022, 10, 31))
         payslip = self._generate_payslip(datetime.date(2022, 10, 1), datetime.date(2022, 10, 31))
@@ -6036,7 +6032,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'request_date_from_period': 'am',
             'employee_id': self.employee.id,
         })
-        unpaid_time_off.action_validate()
+        unpaid_time_off.action_approve()
 
         self.env['resource.calendar.leaves'].create({
             'name': "Bank Holiday",
@@ -6104,7 +6100,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'number_of_days': 1,
             'employee_id': self.employee.id,
         }])
-        unpaid_times_off.action_validate()
+        unpaid_times_off.action_approve()
 
         self.env['resource.calendar.leaves'].create([{
             'name': "Bank Holiday Day 1",
@@ -6250,7 +6246,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'number_of_days': 1,
             'employee_id': self.employee.id,
         }])
-        brief_holidays.action_validate()
+        brief_holidays.action_approve()
 
         self.contract.generate_work_entries(datetime.date(2019, 2, 1), datetime.date(2019, 2, 28))
         payslip = self._generate_payslip(datetime.date(2019, 2, 1), datetime.date(2019, 2, 28))
@@ -6344,7 +6340,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
         sick_leave._compute_date_from_to()
         sick_leave = self.env['hr.leave'].create(sick_leave._convert_to_write(sick_leave._cache))
-        sick_leave.action_validate()
+        sick_leave.action_approve()
         self.contract.generate_work_entries(datetime.date(2023, 3, 1), datetime.date(2023, 3, 31))
         payslip = self._generate_payslip(datetime.date(2023, 3, 1), datetime.date(2023, 3, 31))
 
@@ -6509,7 +6505,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
         sick_leave._compute_date_from_to()
         sick_leave = self.env['hr.leave'].create(sick_leave._convert_to_write(sick_leave._cache))
-        sick_leave.action_validate()
+        sick_leave.action_approve()
 
         self.employee.contract_ids.generate_work_entries(datetime.date(2023, 1, 1), datetime.date(2023, 6, 30))
 
@@ -6582,7 +6578,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'number_of_days': 7,
             'employee_id': self.employee.id,
         })
-        extra_legal_time_off.action_validate()
+        extra_legal_time_off.action_approve()
 
         payslip = self._generate_payslip(datetime.date(2023, 8, 1), datetime.date(2023, 8, 31))
 

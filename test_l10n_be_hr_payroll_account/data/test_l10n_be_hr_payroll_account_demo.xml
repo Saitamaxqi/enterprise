@@ -52,7 +52,7 @@
 
     <record id="l10n_be_leave_type_training" model="hr.leave.type">
         <field name="name">Training</field>
-        <field name="requires_allocation">no</field>
+        <field name="requires_allocation">False</field>
         <field name="work_entry_type_id" ref="hr_work_entry.l10n_be_work_entry_type_training"/>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="country_id" ref="base.be"/>
@@ -1814,7 +1814,7 @@
     <!--Leave Type-->
     <record id="holiday_status_phc" model="hr.leave.type">
         <field name="name">Public Holiday Compensation</field>
-        <field name="requires_allocation">no</field>
+        <field name="requires_allocation">False</field>
         <field name="leave_validation_type">both</field>
         <field name="leave_notif_subtype_id" ref="hr_holidays.mt_leave"/>
         <field name="allocation_notif_subtype_id" ref="hr_holidays.mt_leave_allocation"/>
@@ -1825,7 +1825,7 @@
 
     <record id="holiday_status_small_unemployment" model="hr.leave.type">
         <field name="name">Small Unemployment (Brief Holiday)</field>
-        <field name="requires_allocation">no</field>
+        <field name="requires_allocation">False</field>
         <field name="leave_validation_type">both</field>
         <field name="leave_notif_subtype_id" ref="hr_holidays.mt_leave"/>
         <field name="allocation_notif_subtype_id" ref="hr_holidays.mt_leave_allocation"/>
@@ -2082,11 +2082,7 @@
     </record>
 
     <function model="hr.leave" name="action_approve">
-        <value model="hr.leave" eval="obj().search([('state', '=', 'confirm'),('holiday_status_id.company_id', '=', obj().env.ref('base.demo_company_be').id)]).ids"/>
-    </function>
-
-    <function model="hr.leave" name="action_validate">
-        <value model="hr.leave" eval="obj().search([('state', '=', 'validate1'),('holiday_status_id.company_id', '=', obj().env.ref('base.demo_company_be').id)]).ids"/>
+        <value model="hr.leave" eval="obj().search([('state', 'in', ['validate1', 'confirm']),('holiday_status_id.company_id', '=', obj().env.ref('base.demo_company_be').id)]).ids"/>
     </function>
 
     <!-- Data for employee departure -->
@@ -2234,7 +2230,7 @@
 
     <function model="hr.leave.allocation" name="action_approve">
         <value model="hr.leave.allocation" eval="obj().search([
-            ('state', '=', 'confirm'),
+            ('state', 'in', ['confirm', 'validate1']),
             ('id', 'in', [
                 ref('test_l10n_be_hr_payroll_account.hr_holidays_allocation_joseph_noluck_2019'),
                 ref('test_l10n_be_hr_payroll_account.hr_holidays_allocation_joseph_noluck_2020')])
@@ -2276,13 +2272,7 @@
 
     <function model="hr.leave" name="action_approve">
         <value model="hr.leave" eval="obj().search([
-            ('state', '=', 'confirm'),
-            ('employee_id', '=', obj().env.ref('test_l10n_be_hr_payroll_account.hr_employee_joseph_noluck').id)
-        ]).ids"/>
-    </function>
-    <function model="hr.leave" name="action_validate">
-        <value model="hr.leave" eval="obj().search([
-            ('state', '=', 'validate1'),
+            ('state', 'in', ['validate1', 'confirm']),
             ('employee_id', '=', obj().env.ref('test_l10n_be_hr_payroll_account.hr_employee_joseph_noluck').id)
         ]).ids"/>
     </function>

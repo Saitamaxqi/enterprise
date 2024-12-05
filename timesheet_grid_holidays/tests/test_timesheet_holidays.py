@@ -29,7 +29,7 @@ class TestTimesheetGridHolidays(TestCommonTimesheet):
         internal_task_leaves = self.env.company.leave_timesheet_task_id
         hr_leave_type = self.env['hr.leave.type'].create({
             'name': 'Leave Type with timesheet generation',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
         })
         HrLeave = self.env['hr.leave'].with_context(mail_create_nolog=True, mail_notrack=True)
         # employee creates a leave request
@@ -40,7 +40,7 @@ class TestTimesheetGridHolidays(TestCommonTimesheet):
             'request_date_from': '2021-10-05',
             'request_date_to': '2021-10-05',
         })
-        holiday.with_user(SUPERUSER_ID).action_validate()
+        holiday.with_user(SUPERUSER_ID).action_approve()
         result = self.empl_employee.get_timesheet_and_working_hours_for_employees(start_date, end_date)
         self.assertTrue(len(holiday.timesheet_ids) > 0, 'Timesheet entry should be created in Internal project for time off.')
         # working hours for employee after leave creations
@@ -64,7 +64,7 @@ class TestTimesheetGridHolidays(TestCommonTimesheet):
         Requests = self.env['hr.leave'].with_context(mail_create_nolog=True, mail_notrack=True)
         hr_leave_type_with_ts = self.env['hr.leave.type'].create({
             'name': 'Leave Type with timesheet generation',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
         })
         # employee creates a leave request
         holiday = Requests.with_user(self.user_employee).create({
@@ -78,7 +78,7 @@ class TestTimesheetGridHolidays(TestCommonTimesheet):
             'request_unit_hours': True,
         })
         # validate leave request and create timesheet
-        holiday.with_user(SUPERUSER_ID).action_validate()
+        holiday.with_user(SUPERUSER_ID).action_approve()
         self.assertEqual(len(holiday.timesheet_ids), 1)
 
         # create timesheet via grid_update_cell

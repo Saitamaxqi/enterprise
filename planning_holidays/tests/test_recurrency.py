@@ -36,7 +36,7 @@ class TestPlanningLeaves(TestCommon):
             'request_date_from': '2024-3-13',
             'request_date_to': '2024-3-13',
         })  # time off should land on Wednesday
-        leave.action_validate()
+        leave.action_approve()
 
         occuring_slot = self.env['planning.slot'].create({  # this should land on a Monday
             'start_datetime': self.random_monday_date + timedelta(hours=8),

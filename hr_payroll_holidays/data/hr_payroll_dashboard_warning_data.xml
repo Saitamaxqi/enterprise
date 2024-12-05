@@ -40,7 +40,7 @@ if leaves_no_document:
 leaves_no_allocation_ids = []
 employees = self.env['hr.employee'].search([('company_id', 'in', self.env.companies.ids)])
 consumed_leaves = employees._get_consumed_leaves(leave_types=self.env['hr.leave.type'].search([
-    ('requires_allocation', '=', 'yes'),
+    ('requires_allocation', '=', True),
     ('allows_negative', '=', False),
 ]))[1]
 for employee in consumed_leaves:

@@ -31,7 +31,7 @@ class TestPlanningLeaves(TestCommon):
 
         self.assertNotEqual(slot_1.leave_warning, False, "leave is not validated , but warning for requested time off")
 
-        leave.action_validate()
+        leave.action_approve()
 
         self.assertNotEqual(slot_1.leave_warning, False,
                             "employee is on leave, should have a warning")
@@ -49,14 +49,14 @@ class TestPlanningLeaves(TestCommon):
             'employee_id': self.employee_bert.id,
             'request_date_from': '2020-1-6',
             'request_date_to': '2020-1-7',
-        }).action_validate()
+        }).action_approve()
 
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_bert.id,
             'request_date_from': '2020-1-8',
             'request_date_to': '2020-1-10',
-        }).action_validate()
+        }).action_approve()
 
         slot_1 = self.env['planning.slot'].create({
             'resource_id': self.resource_bert.id,
@@ -171,7 +171,7 @@ class TestPlanningLeaves(TestCommon):
         self.assertNotEqual(slot_2.leave_warning, False,
                              "Leave is not validated, but there is a warning for requested time off")
 
-        (leave_1 + leave_2).action_validate()
+        (leave_1 + leave_2).action_approve()
 
         self.assertNotEqual(slot_1.leave_warning, False,
                              "Employee is on leave, there should be a warning")
@@ -197,7 +197,7 @@ class TestPlanningLeaves(TestCommon):
             'employee_id': self.employee_bert.id,
             'request_date_from': '2020-1-9',
             'request_date_to': '2020-1-9',
-        }).action_validate()
+        }).action_approve()
 
         self.env['planning.slot'].sudo().create({
             'resource_id': self.resource_bert.id,
@@ -236,7 +236,7 @@ class TestPlanningLeaves(TestCommon):
             'request_date_from_period': 'am',
             'state': 'confirm',
         })
-        leave_am.sudo().action_validate()
+        leave_am.sudo().action_approve()
 
         start_dt_am = datetime.datetime(2025, 3, 5, 0, 0, 0, tzinfo=utc)
         end_dt_am = datetime.datetime(2025, 3, 5, 12, 0, 0, tzinfo=utc)
@@ -259,7 +259,7 @@ class TestPlanningLeaves(TestCommon):
             'request_date_from_period': 'pm',
             'state': 'confirm',
         })
-        leave_pm.sudo().action_validate()
+        leave_pm.sudo().action_approve()
 
         start_dt_pm = datetime.datetime(2025, 3, 6, 0, 0, 0, tzinfo=utc)
         end_dt_pm = datetime.datetime(2025, 3, 6, 23, 59, 59, 999999, tzinfo=utc)
@@ -295,7 +295,7 @@ class TestPlanningLeaves(TestCommon):
             'employee_id': self.employee_bert.id,
             'request_date_from': '2020-1-6',
             'request_date_to': '2020-1-7',
-        }).action_validate()
+        }).action_approve()
 
         slot_1 = self.env['planning.slot'].create({
             'resource_id': self.resource_bert.id,
@@ -341,8 +341,8 @@ class TestPlanningLeaves(TestCommon):
                 'state': 'confirm',
             },
         ])
-        leave_am.sudo().action_validate()
-        leave_pm.sudo().action_validate()
+        leave_am.sudo().action_approve()
+        leave_pm.sudo().action_approve()
         start_dt = datetime.datetime(2025, 4, 30, 0, 0, 0, tzinfo=utc)
         end_dt = datetime.datetime(2025, 4, 30, 23, 59, 59, 999999, tzinfo=utc)
         intervals = flexible_calendar._leave_intervals_batch(start_dt, end_dt, [self.employee_bert.resource_id])

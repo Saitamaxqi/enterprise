@@ -23,7 +23,7 @@ class TestProjectLeaves(common.TransactionCase):
 
         self.leave_type = self.env['hr.leave.type'].create({
             'name': 'time off',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'request_unit': 'hour',
         })
         self.project = self.env['project.project'].create({
@@ -57,7 +57,7 @@ class TestProjectLeaves(common.TransactionCase):
         self.assertNotEqual(task_1.leave_warning, False,
                             "leave is not validated , but warning for requested time off")
 
-        leave.action_validate()
+        leave.action_approve()
 
         self.assertNotEqual(task_1.leave_warning, False,
                             "employee is on leave, should have a warning")
@@ -73,14 +73,14 @@ class TestProjectLeaves(common.TransactionCase):
             'employee_id': self.employee_hruser.id,
             'request_date_from': '2020-1-6',
             'request_date_to': '2020-1-7',
-        }).action_validate()
+        }).action_approve()
 
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_hruser.id,
             'request_date_from': '2020-1-8',
             'request_date_to': '2020-1-10',
-        }).action_validate()
+        }).action_approve()
 
         task_1 = self.env['project.task'].create({
             'name': "Task 1",
@@ -157,7 +157,7 @@ class TestProjectLeaves(common.TransactionCase):
         self.assertNotEqual(task_2.leave_warning, False,
                             "leave is not validated , but warning for requested time off")
 
-        (leave_1 + leave_2).action_validate()
+        (leave_1 + leave_2).action_approve()
         # there is no direct link with the task, so we invalidate manually
         self.env.invalidate_all()
 
@@ -178,7 +178,7 @@ class TestProjectLeaves(common.TransactionCase):
             'employee_id': self.employee_hruser.id,
             'request_date_from': '2020-1-1',
             'request_date_to': '2020-1-1',
-        }).action_validate()
+        }).action_approve()
 
         with Form(self.env['project.task']) as task_form:
             task_form.name = 'Test Task'
@@ -211,7 +211,7 @@ class TestProjectLeaves(common.TransactionCase):
             'employee_id': self.employee_hruser.id,
             'request_date_from': '2020-1-6',
             'request_date_to': '2020-1-7',
-        }).action_validate()
+        }).action_approve()
 
         task = self.env['project.task'].create({
             'name': "Task",

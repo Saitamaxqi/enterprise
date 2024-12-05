@@ -18,8 +18,8 @@ class TestPayrollRightToLegalLeaves(TestPayrollCommon):
 
         cls.paid_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Paid Time Off',
-            'requires_allocation': 'yes',
-            'employee_requests': 'no',
+            'requires_allocation': True,
+            'employee_requests': False,
             'allocation_validation_type': 'hr',
             'leave_validation_type': 'both',
             'responsible_ids': [Command.link(cls.env.ref('base.user_admin').id)],
@@ -146,7 +146,7 @@ class TestPayrollRightToLegalLeaves(TestPayrollCommon):
             'request_date_from': date(2018, 2, 1),
             'request_date_to': date(2018, 2, 5),
         })
-        leave.action_validate()
+        leave.action_approve()
 
         # Credit time
         wizard = self.env['l10n_be.hr.payroll.schedule.change.wizard'].with_context(allowed_company_ids=self.belgian_company.ids, active_id=employee_test_current_contract.id).new({
@@ -235,7 +235,7 @@ class TestPayrollRightToLegalLeaves(TestPayrollCommon):
             'date_to': date(2018, 2, 3),
             'number_of_days': 1.5
         })
-        leave.action_validate()
+        leave.action_approve()
 
         # Credit time
         wizard = self.env['l10n_be.hr.payroll.schedule.change.wizard'].with_context(allowed_company_ids=self.belgian_company.ids, active_id=employee_test_current_contract.id).new({

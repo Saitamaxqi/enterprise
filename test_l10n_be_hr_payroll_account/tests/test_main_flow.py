@@ -75,15 +75,15 @@ class TestHR(AccountTestInvoicingCommon):
         return user
 
     @classmethod
-    def create_leave_type(cls, user, name='Leave Type', requires_allocation='no', employee_requests='yes', request_unit='day', validation='no_validation', allocation_validation='hr'):
+    def create_leave_type(cls, user, name='Leave Type', requires_allocation=False, employee_requests=True, request_unit='day', validation='no_validation', allocation_validation='hr'):
         leave_type_form = Form(cls.env['hr.leave.type'].with_user(user))
         leave_type_form.name = name
         leave_type_form.requires_allocation = requires_allocation
         # invisible="requires_allocation == 'no'"
-        if requires_allocation == 'yes':
+        if requires_allocation:
             leave_type_form.employee_requests = employee_requests
             # invisible="requires_allocation == 'no' or employee_requests == 'no'"
-            if employee_requests == 'yes':
+            if employee_requests:
                 leave_type_form.allocation_validation_type = allocation_validation
         leave_type_form.leave_validation_type = validation
         leave_type_form.request_unit = request_unit
@@ -143,8 +143,8 @@ class TestHR(AccountTestInvoicingCommon):
         self.leave_type_2 = self.create_leave_type(
             user=self.hr_holidays_manager,
             name='Leave Type (allocation by HR, no validation, half day)',
-            requires_allocation='yes',
-            employee_requests='no',
+            requires_allocation=True,
+            employee_requests=False,
             allocation_validation='hr',
             request_unit='half_day',
             validation='no_validation',
@@ -152,8 +152,8 @@ class TestHR(AccountTestInvoicingCommon):
         self.leave_type_3 = self.create_leave_type(
             user=self.hr_holidays_manager,
             name='Leave Type (allocation request, validation both, hour)',
-            requires_allocation='yes',
-            employee_requests='yes',
+            requires_allocation=True,
+            employee_requests=True,
             request_unit='hour',
             validation='both',
             allocation_validation='hr',
@@ -206,8 +206,8 @@ class TestHR(AccountTestInvoicingCommon):
         leave_form.request_unit_half = True
         leave_form.request_date_from = Date.today() + relativedelta(days=1)
         leave_form.request_date_from_period = 'am'
-        self.assertEqual(leave_form.number_of_days, 0.5, "Onchange should have computed 0.5 days")
-        leave = leave_form.save()
+        leave = leave_form.save()  # need to be saved to have access to record
+        self.assertEqual(leave.number_of_days, 0.5, "Onchange should have computed 0.5 days")
         self.assertEqual(leave.state, 'validate', "Should be automatically validated")
 
         # User request a leave that doesn't require allocation
@@ -235,7 +235,7 @@ class TestHR(AccountTestInvoicingCommon):
         # Holiday manager applies second approval
         # the "hr_holidays_manager" user need this group to access timesheets of other users
         with additional_groups(self.hr_holidays_manager, 'hr_timesheet.group_hr_timesheet_approver'):
-            leave.with_user(self.hr_holidays_manager).action_validate()
+            leave.with_user(self.hr_holidays_manager).action_approve()
 
         self.assertEqual(leave.state, 'validate')
         self.assertEqual(leave.second_approver_id, self.hr_holidays_manager.employee_id)

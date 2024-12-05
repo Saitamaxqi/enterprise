@@ -152,7 +152,7 @@ class TestPayrollCreditTime(TestPayrollCommon):
                 'request_date_from': date(2023, 2, 1),
                 'request_date_to': date(2023, 2, 9),
             })
-            leave.action_validate()
+            leave.action_approve()
             taken_leaves += leave.number_of_days
 
             # Credit time
@@ -178,7 +178,7 @@ class TestPayrollCreditTime(TestPayrollCommon):
                 'request_date_from': date(2023, 7, 1),
                 'request_date_to': date(2023, 7, 11),
             })
-            leave.action_validate()
+            leave.action_approve()
             taken_leaves += leave.number_of_days
 
             # Apply allocation changes directly
@@ -213,4 +213,4 @@ class TestPayrollCreditTime(TestPayrollCommon):
                     'request_date_from': date(2023, 10, 4),
                     'request_date_to': date(2023, 10, 8),
                 })
-                leave.action_validate()
+                leave.action_approve()

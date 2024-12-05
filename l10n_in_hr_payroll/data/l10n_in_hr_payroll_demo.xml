@@ -363,7 +363,7 @@
             <field name="state">confirm</field>
         </record>
 
-        <function model="hr.leave" name="action_validate">
+        <function model="hr.leave" name="action_approve">
             <value model="hr.leave"
                 eval="[
             ref('l10n_in_hr_payroll.l10n_in_vihaan_time_off'),

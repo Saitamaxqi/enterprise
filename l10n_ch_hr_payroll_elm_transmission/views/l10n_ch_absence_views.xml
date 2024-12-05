@@ -6,7 +6,6 @@
         <field name="model">hr.leave</field>
         <field name="arch" type="xml">
             <form string="New Absence" class="o_hr_leave_form">
-            <field name="can_reset" invisible="1"/>
             <field name="can_approve" invisible="1"/>
             <field name="can_cancel" invisible="1"/>
             <field name="has_mandatory_day" invisible="1"/>

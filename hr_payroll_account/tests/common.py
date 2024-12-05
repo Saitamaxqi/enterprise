@@ -139,12 +139,15 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
 
     @classmethod
     def _generate_leave(cls, date_from, date_to, holiday_status_id):
-        return cls.env['hr.leave'].sudo().create({
+        leave = cls.env['hr.leave'].sudo().create({
             'employee_id': cls.employee.id,
             'request_date_from': date_from,
             'request_date_to': date_to,
             'holiday_status_id': holiday_status_id.id,
-        }).action_validate()
+        })
+
+        if holiday_status_id.leave_validation_type != 'no_validation':
+            leave.action_approve()
 
     def _validate_payslip(self, payslip, results, skip_lines=False):
         error = []
