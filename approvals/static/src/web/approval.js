@@ -20,7 +20,7 @@ export class Approval extends Component {
 
     async onClickApprove() {
         await this.env.services.orm.call("approval.approver", "action_approve", [
-            this.props.activity.approval.id,
+            this.props.activity.approver_id.id,
         ]);
         this.props.activity.remove();
         this.props.onChange();
@@ -28,7 +28,7 @@ export class Approval extends Component {
 
     async onClickRefuse() {
         await this.env.services.orm.call("approval.approver", "action_refuse", [
-            this.props.activity.approval.id,
+            this.props.activity.approver_id.id,
         ]);
         this.props.activity.remove();
         this.props.onChange();

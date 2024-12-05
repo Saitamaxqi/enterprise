@@ -1,4 +1,4 @@
-import { Approval } from "@approvals/web/activity/approval";
+import { Approval } from "@approvals/web/approval";
 
 import { ActivityListPopoverItem } from "@mail/core/web/activity_list_popover_item";
 

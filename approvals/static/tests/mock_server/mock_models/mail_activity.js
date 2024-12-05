@@ -9,14 +9,13 @@ export class MailActivity extends mailModels.MailActivity {
             ["res_model", "=", "approval.request"],
         ])) {
             // check on activity type being approval not done here for simplicity
-            const [approver] = this.env["approval.approver"]._filter([
+            const [approver_id] = this.env["approval.approver"]._filter([
                 ["request_id", "=", activity.res_id],
                 ["user_id", "=", activity.user_id],
             ]);
-            if (approver) {
+            if (approver_id) {
                 store.add(this.browse(activity.id), {
-                    approver_id: approver.id,
-                    approver_status: approver.status,
+                    approver_id: { id: approver_id.id, status: approver_id.status },
                 });
             }
         }

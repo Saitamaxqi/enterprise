@@ -66,4 +66,16 @@ export class MailActivity extends mailModels.MailActivity {
             store.add(this.browse(activity.id), activityData);
         }
     }
+
+    /** @param {number[]} ids */
+    _to_store(ids, store) {
+        super._to_store(...arguments);
+        for (const activity of this.browse(ids)) {
+            if (activity.phone) {
+                store.add(this.browse(activity.id), {
+                    phone: activity.phone,
+                });
+            }
+        }
+    }
 }
