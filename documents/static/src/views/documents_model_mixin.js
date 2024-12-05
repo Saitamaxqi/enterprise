@@ -11,6 +11,7 @@ export const DocumentsModelMixin = (component) =>
                 this.originalSelection = params.state?.sharedSelection;
             }
             this.documentService = useService("document.document");
+            this.initialLimit = 40;
         }
 
         exportSelection() {

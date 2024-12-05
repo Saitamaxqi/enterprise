@@ -342,6 +342,16 @@ export class DocumentsControlPanel extends ControlPanel {
     }
 
     get pathBreadcrumbs() {
+        // users come from another app
+        if (this.env.model.config.context.active_model) {
+            return [
+                ...this.env.config.breadcrumbs.slice(0, -1),
+                {
+                    name: this.env.searchModel.getSelectedFolder().display_name,
+                },
+            ];
+        }
+
         return this.env.searchModel.getSelectedFolderAndParents().reverse().map(folder => {
             return {
                 jsId: folder.id,

@@ -59,6 +59,10 @@ export class DocumentsDocument extends models.Model {
     });
     alias_id = fields.Many2one({ relation: "mail.alias" });
     description = fields.Char({ string: "Attachment description" });
+    last_access_date_group = fields.Selection({
+        string: "Last Accessed On",
+        selection: [["0_older", "1_mont", "2_week", "3_day"]],
+    });
 
     get_spreadsheets(domain = [], args) {
         let { offset, limit } = args;

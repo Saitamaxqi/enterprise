@@ -45,6 +45,13 @@ export class DocumentsSearchPanel extends SearchPanel {
               category: "documents.SearchPanel.Category.Small",
               filtersGroup: "documents.SearchPanel.FiltersGroup.Small",
           };
+    static rootIcons = {
+        COMPANY: "fa-building",
+        MY: "fa-hdd-o",
+        RECENT: "fa-clock-o",
+        SHARED: "fa-users",
+        TRASH: "fa-trash",
+    };
     setup() {
         super.setup(...arguments);
         const { uploads } = useService("file_upload");
@@ -62,9 +69,18 @@ export class DocumentsSearchPanel extends SearchPanel {
 
         onWillStart(async () => {
             this.isDocumentManager = await user.hasGroup("documents.group_documents_manager");
-            const selectedFolderId = this.env.searchModel.getSelectedFolderId();
-            if (selectedFolderId) {
-                this._expandFolder({ folderId: selectedFolderId });
+            if (this.env.model.config.context.active_model) {
+                // Ensure folders in search panel are folded when users come from another app
+                const categories = this.env.searchModel.getSections((s) => s.type === "category");
+                for (const category of categories) {
+                    this.state.expanded[category.id] = {};
+                }
+            } else {
+                const selectedFolderId = this.env.searchModel.getSelectedFolderId();
+                if (selectedFolderId) {
+                    this.state.expanded[this.sections[0].id]["COMPANY"] = true;
+                    this._expandFolder({ folderId: selectedFolderId });
+                }
             }
         });
 
@@ -123,7 +139,7 @@ export class DocumentsSearchPanel extends SearchPanel {
                         "documents.document",
                         "action_create_shortcut",
                         [draggingFolderId],
-                        { location_folder_id : parentFolderId === "MY" ? false : parentFolderId },
+                        { location_folder_id: parentFolderId === "MY" ? false : parentFolderId },
                     );
                     return this.env.searchModel._reloadSearchModel(true);
                 } else if (parentFolderId === "COMPANY") {
@@ -150,6 +166,33 @@ export class DocumentsSearchPanel extends SearchPanel {
         return Object.values(this.documentUploads).find(
             (upload) => upload.data.get("folder_id") === folderId
         );
+    }
+
+    //---------------------------------------------------------------------
+    // Selection
+    //---------------------------------------------------------------------
+
+    /**
+     * @param {Object} category
+     * @param {Object} value
+     */
+    async toggleCategory(category, value) {
+        if (category.activeValueId !== value.id) {
+            this.env.searchModel.toggleCategoryValue(category.id, value.id);
+        }
+    }
+
+    /**
+     * @param {*} category
+     * @param {*} value
+     */
+    async toggleFold(category, value) {
+        if (value.childrenIds.length) {
+            const categoryState = this.state.expanded[category.id];
+            categoryState[value.id] = !categoryState[value.id];
+        } else {
+            this.getDropdownState(category.id).close();
+        }
     }
 
     //---------------------------------------------------------------------
@@ -191,12 +234,15 @@ export class DocumentsSearchPanel extends SearchPanel {
     _expandFolder({ folderId }) {
         let needRefresh = false;
         const sectionId = this.sections[0].id;
-        for (const folder of this.env.searchModel.getFolderAndParents(
+        const folders = this.env.searchModel.getFolderAndParents(
             this.env.searchModel.getFolderById(folderId)
-        )) {
-            if (!this.state.expanded[sectionId][folder.id]) {
-                this.state.expanded[sectionId][folder.id] = true;
-                needRefresh = true;
+        );
+        if (folders[0].rootId !== "COMPANY" || this.state.expanded[sectionId]["COMPANY"]) {
+            for (const folder of folders) {
+                if (!this.state.expanded[sectionId][folder.id]) {
+                    this.state.expanded[sectionId][folder.id] = true;
+                    needRefresh = true;
+                }
             }
         }
         if (needRefresh) {

@@ -23,8 +23,15 @@
         }
         li {
             padding-left: var(--treeEntry-padding-h, 1.5rem);
-            &:not(.o_has_treeEntry) .o_toggle_fold {
-                visibility: hidden;
+        }
+    }
+    .o_search_panel_section_header {
+        .o_documents_search_panel_section_header_bg {
+            &:hover {
+                background-color: $list-group-hover-bg;
+            }
+            &.active {
+                background-color: $list-group-active-bg;
             }
         }
     }

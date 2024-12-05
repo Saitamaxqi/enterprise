@@ -2,15 +2,8 @@
 <templates xml:space="preserve">
 
     <t t-name="documents.ControlPanel" t-inherit="web.ControlPanel" t-inherit-mode="primary">
-        <xpath expr="//t[@t-else='']" position="before">
-            <DocumentsBreadcrumbs breadcrumbs="pathBreadcrumbs"
-                t-elif="!this.env.model.config.context.active_model"/>
-        </xpath>
-
-        <xpath expr="//t[@t-set-slot='breadcrumb-additional-actions']" position="replace">
-            <t t-set-slot="breadcrumb-additional-actions">
-                <DocumentsCogMenu/>
-            </t>
+        <xpath expr="//t[@t-else='']/Breadcrumbs" position="replace">
+            <DocumentsBreadcrumbs breadcrumbs="pathBreadcrumbs"/>
         </xpath>
 
         <xpath expr="//div[hasclass('o_control_panel_actions')]" position="inside">

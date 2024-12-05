@@ -4,13 +4,17 @@
         <xpath expr="//section" position="attributes">
             <attribute name="t-att-data-section-id">section.id</attribute>
         </xpath>
-        <xpath expr="//header" position="attributes">
-            <attribute name="t-on-click">() => this.env.searchModel.toggleCategoryValue(1, false)</attribute>
-            <attribute name="class" add="cursor-pointer" separator=" "/>
-        </xpath>
         <xpath expr="//button[@t-on-click='toggleSidebar']" position="replace"/>
-        <xpath expr="//header/b" position="replace">
-            <b>Home</b>
+        <xpath expr="//header" position="replace">
+            <header class="o_search_panel_section_header pt-4 pb-2 ms-1 text-uppercase cursor-pointer"
+                t-if="!this.env.model.config.context.active_model" t-on-click="() => this.env.searchModel.toggleCategoryValue(1, false)">
+                <div t-attf-class="o_documents_search_panel_section_header_bg {{ (state.active[1] === false and !this.env.searchModel.query.length) ? 'active' : ''}}">
+                    <i t-attf-class="fa {{ section.icon }} o_search_panel_section_icon {{ !section.color &amp;&amp; section.type == 'filter' ? 'text-warning' : !section.color ? 'text-primary': '' }} me-2"
+                        t-att-style="section.color and ('color: ' + section.color)"
+                    />
+                    <b class="user-select-none">Home</b>
+                </div>
+            </header>
         </xpath>
     </t>
 
@@ -24,7 +28,7 @@
             <attribute name="class" add="pe-0" separator=" "/>
             <attribute name="t-att-class">{
                     'o_treeEntry' : isChildList,
-                    'o_has_treeEntry': value.childrenIds.length || ["COMPANY", "MY", "RECENT", "SHARED", "TRASH"].includes(valueId),
+                    'o_has_treeEntry': value.childrenIds.length,
                     'o_all_or_trash_category' : !valueId || valueId === 'TRASH'
                 }
             </attribute>
@@ -35,35 +39,36 @@
             <attribute name="t-on-dragover.stop.prevent">(ev) => this.onDragOver(section, value, ev)</attribute>
             <attribute name="t-on-drop.stop.prevent">(ev) => this.onDrop(section, value, ev)</attribute>
         </xpath>
-        <xpath expr="//*[hasclass('o_search_panel_label')]" position="inside">
-            <div class="ms-auto">
-                <i t-if="value.shortcut_document_id" class="o_documents_search_panel_section_edit me-1 fa fa-external-link"
-                        title="This is a shortcut"/>
-                <span t-if="isUploadingInFolder(valueId)" class="fa fa-circle-o-notch fa-spin"/>
+        <xpath expr="//header" position="attributes">
+            <attribute name="t-on-click"/>
+        </xpath>
+        <xpath expr="//*[hasclass('o_search_panel_label')]" position="replace">
+            <div
+                class="o_search_panel_label d-flex align-items-center overflow-hidden w-100 cursor-pointer mb-0"
+                t-att-class="{'o_with_counters': section.enableCounters}"
+                t-att-data-tooltip="value.display_name"
+            >
+                <button
+                    class="o_toggle_fold btn p-0 px-1 flex-shrink-0 text-center"
+                    t-att-class="{'invisible': !value.childrenIds.length}"
+                    t-on-click="() => this.toggleFold(section, value)"
+                >
+                    <i t-attf-class="fa fa-caret-{{ this.state.expanded[section.id][valueId] ? 'down' : 'right' }} {{ typeof valueId === 'number' ? 'mx-1' : 'me-1' }}"/>
+                </button>
+                <div class="w-100 d-flex align-items-baseline" t-on-click="() => this.toggleCategory(section, value)">
+                    <i t-if="typeof valueId !== 'number'" t-attf-class="fa {{ this.constructor.rootIcons[valueId] }} ms-1"/>
+                    <span
+                        class="o_search_panel_label_title text-truncate"
+                        t-att-class="{'fw-bold' : value.bold, 'ps-1': typeof valueId !== number}"
+                        t-out="value.display_name"
+                    />
+                    <div class="ms-auto">
+                        <i t-if="value.shortcut_document_id" class="o_documents_search_panel_section_edit me-1 fa fa-external-link"
+                                title="This is a shortcut"/>
+                        <span t-if="isUploadingInFolder(valueId)" class="fa fa-circle-o-notch fa-spin"/>
+                    </div>
+                </div>
             </div>
-        </xpath>
-        <xpath expr="//button[hasclass('o_toggle_fold')]/i" position="attributes">
-            <attribute name="t-if"></attribute>
-            <attribute name="t-att-class">{
-                    'fa-caret-down' : typeof valueId === "number" ? state.expanded[section.id][valueId] : undefined,
-                    'fa-caret-right': typeof valueId === "number" ? !state.expanded[section.id][valueId] : undefined,
-                    'fa-building': valueId === "COMPANY",
-                    'fa-hdd-o': valueId === "MY",
-                    'fa-clock-o ': valueId === "RECENT",
-                    'fa-users': valueId === "SHARED",
-                    'fa-trash': valueId ===  "TRASH"
-                }
-            </attribute>
-        </xpath>
-        <xpath expr="//span[hasclass('o_search_panel_label_title')]" position="attributes">
-             <attribute name="t-att-class">{
-                     'fw-bold' : value.bold,
-                     'ps-2': typeof valueId !== number ? true : undefined
-                 }
-            </attribute>
-        </xpath>
-        <xpath expr="//button[hasclass('o_toggle_fold')]" position="attributes">
-            <attribute name="class" remove="px-1" separator=" "/>
         </xpath>
     </t>
 
@@ -96,7 +101,7 @@
         </xpath>
     </t>
 
-    <t t-name="documents.SearchPanel.Category.Small" t-inherit="web.SearchPanel.Category" t-inherit-mode="primary">
+    <t t-name="documents.SearchPanel.Category.Small" t-inherit="documents.SearchPanel.Category" t-inherit-mode="primary">
         <xpath expr="//li[hasclass('o_search_panel_category_value')]" position="attributes">
             <attribute name="t-on-touchstart">(ev) => this.onSectionValueTouchStart(ev, section, value.id)</attribute>
             <attribute name="t-on-touchend">(ev) => this.onSectionValueTouchEnd()</attribute>

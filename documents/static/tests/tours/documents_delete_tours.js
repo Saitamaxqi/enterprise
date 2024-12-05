@@ -66,7 +66,7 @@ registry.category("web_tour.tours").add("document_delete_tour", {
         ...restoreDocumentSteps(),
         // 2) Archive a folder (and this its documents) and restore the archived document
         {
-            trigger: '.o_search_panel_field header:contains("Folder1")',
+            trigger: '.o_search_panel_field span:contains("Folder1")',
             content: "Go back to folder",
             run: "click",
         },

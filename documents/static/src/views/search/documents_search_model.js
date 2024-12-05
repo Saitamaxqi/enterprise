@@ -184,6 +184,9 @@ export class DocumentsSearchModel extends SearchModel {
      * @override
      */
     toggleCategoryValue(sectionId, valueId) {
+        if (!valueId) {
+            this.query = [];
+        }
         super.toggleCategoryValue(...arguments);
         browser.localStorage.setItem("searchpanel_documents_document", valueId);
 
@@ -306,6 +309,9 @@ export class DocumentsSearchModel extends SearchModel {
                 { name: "is_folder", asc: true },
                 { name: "last_access_date_group", asc: false },
             ];
+        }
+        if (this.sections.get(1).activeValueId === false) {
+            order.push({ name: "last_access_date_group", asc: false });
         }
         return order;
     }

@@ -14,7 +14,7 @@ registry.category("web_tour.tours").add("test_document_folder_rights_for_multi_c
             content: "Verify that the HOME folder is opened by default",
         },
         {
-            trigger: "span.o_search_panel_label_title:contains('Company')",
+            trigger: 'li[title="Company"] header button',
             run: "click",
         },
         {

@@ -10,14 +10,14 @@ registry.category("web_tour.tours").add("spreadsheet_clone_xlsx", {
             run: "click",
         },
         {
-            trigger: ".o_search_panel_label_title:contains('Company')",
-            content: "Open Company Folder",
-            run: "click",
-        },
-        {
             trigger: '.o_kanban_record:contains("Test folder")',
             content: "Open Test folder workspace",
             run: "dblclick",
+        },
+        {
+            trigger: 'li[title="Company"] header button',
+            content: "Unfold Company folder",
+            run: "click",
         },
         {
             trigger: '.list-group-item.active:contains("Test folder")',
@@ -49,7 +49,7 @@ registry.category("web_tour.tours").add("spreadsheet_clone_xlsx", {
             run: "click",
         },
         {
-            trigger: ".o_kanban_renderer .o_kanban_record:first:has('.o_document_spreadsheet')",
+            trigger: ".o_kanban_renderer .o_kanban_record .o_document_spreadsheet",
             content: "Check a spreadsheet document was created",
         },
         {
