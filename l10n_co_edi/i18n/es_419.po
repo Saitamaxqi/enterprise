@@ -1547,6 +1547,11 @@ msgid "Created on"
 msgstr "Creado"
 
 #. module: l10n_co_edi
+#: model:ir.model.fields.selection,name:l10n_co_edi.selection__account_move__l10n_co_edi_type__91
+msgid "Credit Note"
+msgstr "Nota Crédito Electrónica"
+
+#. module: l10n_co_edi
 #. odoo-python
 #: code:addons/l10n_co_edi/models/account_edi_format.py:0
 msgid ""
@@ -1655,6 +1660,11 @@ msgid "DURANIA"
 msgstr ""
 
 #. module: l10n_co_edi
+#: model:ir.model.fields.selection,name:l10n_co_edi.selection__account_move__l10n_co_edi_type__92
+msgid "Debit Note"
+msgstr "Nota Debito Electrónica"
+
+#. module: l10n_co_edi
 #: model:ir.model.fields,field_description:l10n_co_edi.field_l10n_co_edi_tax_type__description
 msgid "Descripción"
 msgstr ""
@@ -1687,8 +1697,8 @@ msgstr "Nombre Público"
 
 #. module: l10n_co_edi
 #: model:ir.model.fields.selection,name:l10n_co_edi.selection__account_move__l10n_co_edi_type__3
-msgid "Documento electrónico de transmisión – tipo 03"
-msgstr ""
+msgid "Electronic transmission document - type 03"
+msgstr "Documento electrónico de transmisión – tipo 03"
 
 #. module: l10n_co_edi
 #: model:res.city,name:l10n_co_edi.city_co_44
@@ -1979,9 +1989,19 @@ msgid "Electronic invoice submission succeeded. Message from Carvajal:"
 msgstr "Envío de factura electrónica realizado con éxito. Mensaje de Carvajal:"
 
 #. module: l10n_co_edi
+#: model:ir.model.fields.selection,name:l10n_co_edi.selection__account_move__l10n_co_edi_type__4
+msgid "Electronic Sales Invoice - type 04"
+msgstr "Factura electrónica de Venta - tipo 04"
+
+#. module: l10n_co_edi
 #: model:ir.model.fields.selection,name:l10n_co_edi.selection__account_move__l10n_co_edi_operation_type__10
 msgid "Estandar"
 msgstr ""
+
+#. module: l10n_co_edi
+#: model:ir.model.fields.selection,name:l10n_co_edi.selection__account_move__l10n_co_edi_type__96
+msgid "Event (Application Response)"
+msgstr "Evento (respuesta de la aplicación)"
 
 #. module: l10n_co_edi
 #. odoo-python
@@ -2127,13 +2147,13 @@ msgstr ""
 
 #. module: l10n_co_edi
 #: model:ir.model.fields.selection,name:l10n_co_edi.selection__account_move__l10n_co_edi_type__2
-msgid "Factura de exportación"
-msgstr ""
+msgid "Export Invoice"
+msgstr "Factura de exportación"
 
 #. module: l10n_co_edi
 #: model:ir.model.fields.selection,name:l10n_co_edi.selection__account_move__l10n_co_edi_type__1
-msgid "Factura de venta"
-msgstr ""
+msgid "Sales Invoice"
+msgstr "Factura Electrónica de Venta"
 
 #. module: l10n_co_edi
 #: model:ir.model.fields.selection,name:l10n_co_edi.selection__account_move__l10n_co_edi_type__4

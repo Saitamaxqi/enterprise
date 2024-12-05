@@ -66,8 +66,18 @@ msgstr ""
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
+msgid "<strong>Payment Means</strong><br/>"
+msgstr "<strong>Método de Pago</strong><br/>"
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "<strong>Payment Means:</strong><br/>"
 msgstr "<strong>Método de Pago:</strong><br/>"
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
+msgid "<strong>Payment Method</strong><br/>"
+msgstr "<strong>Términos de Pago</strong><br/>"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
