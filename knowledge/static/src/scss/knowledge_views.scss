@@ -120,12 +120,6 @@
             z-index: 0;
         }
 
-        .o_section_header:not(:hover) .o_section_create,
-        .o_section_header:not(:hover) .o_knowledge_join_article_members,
-        .o_article_handle > div:not(:hover) .o_article_create {
-            visibility: hidden;
-        }
-
         .o_section_create:hover, .o_knowledge_join_article_members:hover {
             background-color: rgba($knowledge-bg--active, 0.4);
         }
@@ -446,6 +440,23 @@
             @include o-position-absolute(0, 0, 0, 0);
             background: rgba(0, 0, 0, .3);
             z-index: 2; // should be greater than the action helper z-index
+        }
+    }
+}
+
+@media (hover: none) {
+    .o_knowledge_article_view_form_view {
+        // hide section_create on mobile
+        .o_section_create {
+            display: none;
+        }
+        .o_knowledge_join_article_members {
+            padding-right: 4px !important; // Equivalent to pe-1
+        }
+        .o_toggle_aside {
+            .o_knowledge_edit_cover_buttons {
+                visibility: hidden;
+            }
         }
     }
 }

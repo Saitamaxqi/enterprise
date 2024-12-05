@@ -10,3 +10,6 @@
     --knowledge-properties-bg: #{$o-gray-200};
     --knowledge-properties-btn-bg: #{$o-gray-300};
 }
+.o_knowledge_article_view_form_view img:has(+ .o_form_status_indicator_buttons) {
+    filter: invert(1);
+}
