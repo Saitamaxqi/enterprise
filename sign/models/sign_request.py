@@ -365,7 +365,7 @@ class SignRequest(models.Model):
 
         # cancel request and activities for other unsigned users
         for user in self.request_item_ids.partner_id.user_ids.filtered(lambda u: u.has_group('sign.group_sign_user')):
-            self.activity_unlink(['mail.mail_activity_data_todo'], user_id=user.id)
+            self.activity_unlink(['sign.mail_activity_data_signature_request'], user_id=user.id)
 
         # send emails to signers and cc_partners
         for sign_request_item in self.request_item_ids:
@@ -475,7 +475,7 @@ class SignRequest(models.Model):
 
         # cancel activities for signers
         for user in self.request_item_ids.sudo().partner_id.user_ids.filtered(lambda u: u.has_group('sign.group_sign_user')):
-            self.activity_unlink(['mail.mail_activity_data_todo'], user_id=user.id)
+            self.activity_unlink(['sign.mail_activity_data_signature_request'], user_id=user.id)
 
         self.env['sign.log'].sudo().create([{'sign_request_id': sign_request.id, 'action': 'cancel'} for sign_request in self])
 
@@ -668,6 +668,6 @@ class SignRequest(models.Model):
     def _schedule_activity(self, sign_users):
         for user in sign_users:
             self.with_context(mail_activity_quick_update=True).activity_schedule(
-                'mail.mail_activity_data_todo',
+                'sign.mail_activity_data_signature_request',
                 user_id=user.id
             )

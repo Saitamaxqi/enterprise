@@ -23,11 +23,11 @@ class TestSignRequest(SignRequestCommon, MockEmail):
             self.assertEqual(len(sign_request.sign_log_ids.filtered(lambda log: log.action == 'create')), 1, 'A log with action="create" should be created')
             for sign_request_item in sign_request:
                 self.assertEqual(sign_request_item.state, 'sent', 'The default state for a new created sign request item should be "sent"')
-        self.assertEqual(len(sign_request_no_item.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_1.id)), 1, 'An activity should be scheduled for signers with Sign Access')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_1.id)), 1, 'An activity should be scheduled for signers with Sign Access')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_2.id)), 1, 'An activity should be scheduled for signers with Sign Access')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_5.id)), 0, 'An activity should not be scheduled for signers without Sign Access')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_4.id)), 0, 'An activity should not be scheduled for CC partners')
+        self.assertEqual(len(sign_request_no_item.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_1.id)), 1, 'An activity should be scheduled for signers with Sign Access')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_1.id)), 1, 'An activity should be scheduled for signers with Sign Access')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_2.id)), 1, 'An activity should be scheduled for signers with Sign Access')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_5.id)), 0, 'An activity should not be scheduled for signers without Sign Access')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_4.id)), 0, 'An activity should not be scheduled for CC partners')
 
         SignRequest = self.env['sign.request']
         with self.assertRaises(ValidationError, msg='A sign request with no sign item needs a signer'):
@@ -93,7 +93,7 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertEqual(len(sign_request_no_item.sign_log_ids.filtered(
             lambda log: log.action == 'sign' and log.sign_request_item_id == sign_request_item)),
             1, 'A log with action="sign" should be created')
-        self.assertEqual(len(sign_request_no_item.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_1.id)), 0, 'The activity should be removed after signing')
+        self.assertEqual(len(sign_request_no_item.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_1.id)), 0, 'The activity should be removed after signing')
         with self.assertRaises(UserError, msg='A document cannot be signed twice'):
             sign_request_item.sign(self.signature_fake)
 
@@ -138,9 +138,9 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertEqual(len(sign_request_3_roles.sign_log_ids.filtered(
             lambda log: log.action == 'sign' and log.sign_request_item_id == sign_request_item_customer)),
             1, 'A log with action="sign" should be created')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_1.id)), 0, 'The activity should be removed after signing')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_2.id)), 1, 'The activity should not be removed for unsigned signer')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_3.id)), 1, 'The activity should not be removed for unsigned signer')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_1.id)), 0, 'The activity should be removed after signing')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_2.id)), 1, 'The activity should not be removed for unsigned signer')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_3.id)), 1, 'The activity should not be removed for unsigned signer')
         with self.assertRaises(UserError, msg='A document cannot be signed twice'):
             sign_request_item_customer.sign(self.customer_sign_values)
 
@@ -159,8 +159,8 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertNotEqual(sign_request_item_company.access_token, sign_request_item_company_token, 'The access token should be changed')
         self.assertNotEqual(sign_request_3_roles.access_token, sign_request_3_roles_token, 'The access token should be changed')
         self.assertEqual(len(sign_request_3_roles.sign_log_ids.filtered(lambda log: log.action == 'cancel')), 1, 'A log with action="cancel" should be created')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_2.id)), 0, 'The activity should be removed after cancellation')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_3.id)), 0, 'The activity should be removed after cancellation')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_2.id)), 0, 'The activity should be removed after cancellation')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_3.id)), 0, 'The activity should be removed after cancellation')
 
     def test_sign_request_3_roles_create_sign_refuse_cancel(self):
         # create
@@ -192,8 +192,8 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertEqual(len(sign_request_3_roles.sign_log_ids.filtered(
             lambda log: log.action == 'refuse' and log.sign_request_item_id == sign_request_item_employee)),
             1, 'A log with action="refuse" should be created')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_2.id)), 0, 'The activity should be removed for refused signer')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_3.id)), 0, 'The activity should be removed for remaining signers')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_2.id)), 0, 'The activity should be removed for refused signer')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_3.id)), 0, 'The activity should be removed for remaining signers')
 
         with self.assertRaises(UserError, msg='A canceled sign.request.item cannot be signed'):
             sign_request_item_company.sign(self.company_sign_values)
@@ -236,7 +236,7 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertEqual(len(sign_request.sign_log_ids.filtered(
             lambda log: log.action == 'update_mail' and log.sign_request_item_id == request_item)),
             1, 'A log with action="update_mail" should be created')
-        self.assertEqual(len(sign_request.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_1.id)), 1, 'The number of activities should still be 1')
+        self.assertEqual(len(sign_request.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_1.id)), 1, 'The number of activities should still be 1')
 
         # sign the document
         request_item.sign(self.signature_fake)
@@ -276,8 +276,8 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertEqual(sign_request_item_customer.is_mail_sent, False, 'email should not be sent')
         self.assertEqual(len(sign_request_3_roles.sign_log_ids), logs_num, 'No new log should be created')
         self.assertEqual(sign_request_3_roles.with_context(active_test=False).cc_partner_ids, self.partner_4 + self.partner_1, 'If a signer is reassigned and no longer be a signer, he should be a contact in copy')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_1.id)), 0, 'The activity for the old signer should be removed')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_5.id)), 0, 'No activity should be created for user without permission to access Sign')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_1.id)), 0, 'The activity for the old signer should be removed')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_5.id)), 0, 'No activity should be created for user without permission to access Sign')
 
         # sign
         sign_request_item_customer.sign(self.customer_sign_values)
@@ -294,8 +294,8 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertEqual(sign_request_item_employee.is_mail_sent, False, 'email should not be sent')
         self.assertEqual(len(sign_request_3_roles.sign_log_ids), logs_num, 'No new log should be created')
         self.assertEqual(sign_request_3_roles.with_context(active_test=False).cc_partner_ids, self.partner_4 + self.partner_2, 'If a signer is reassigned and no longer be a signer, he should be a contact in copy')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_2.id)), 0, 'The activity for the old signer should be removed')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_1.id)), 1, 'An activity for the new signer should be created')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_2.id)), 0, 'The activity for the old signer should be removed')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_1.id)), 1, 'An activity for the new signer should be created')
 
         # refuse
         sign_request_item_employee._refuse('bad request')
@@ -328,17 +328,17 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         sign_request_item_customer = role2sign_request_item[self.role_customer]
         sign_request_item_employee = role2sign_request_item[self.role_employee]
         sign_request_item_company = role2sign_request_item[self.role_company]
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_1.id)), 1, 'An activity should be scheduled for the first signer')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_2.id)), 0, 'No activity should be scheduled for the second signer')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_3.id)), 0, 'No activity should be scheduled for the third signer')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_1.id)), 1, 'An activity should be scheduled for the first signer')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_2.id)), 0, 'No activity should be scheduled for the second signer')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_3.id)), 0, 'No activity should be scheduled for the third signer')
         self.assertTrue(sign_request_item_customer.is_mail_sent, 'An email should be sent for the first signer')
         self.assertFalse(sign_request_item_employee.is_mail_sent, 'No email should be sent for the second signer')
         self.assertFalse(sign_request_item_company.is_mail_sent, 'No email should be sent for the third signer')
 
         # sign
         sign_request_item_customer.sign(self.customer_sign_values)
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_2.id)), 1, 'An activity should be scheduled for the second signer')
-        self.assertEqual(len(sign_request_3_roles.activity_search(['mail.mail_activity_data_todo'], user_id=self.user_3.id)), 1, 'An activity should be scheduled for the third signer')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_2.id)), 1, 'An activity should be scheduled for the second signer')
+        self.assertEqual(len(sign_request_3_roles.activity_search(['sign.mail_activity_data_signature_request'], user_id=self.user_3.id)), 1, 'An activity should be scheduled for the third signer')
         self.assertTrue(sign_request_item_employee.is_mail_sent, 'An email should be sent for the second signer')
         self.assertTrue(sign_request_item_company.is_mail_sent, 'An email should be sent for the third signer')
 

@@ -106,7 +106,7 @@ class SignRequestItem(models.Model):
                 if old_sign_user and old_sign_user.has_group('sign.group_sign_user') and \
                         not sign_request.request_item_ids.filtered(
                             lambda sri: sri.partner_id == request_item.partner_id and sri.state == 'sent' and sri not in request_items_reassigned):
-                    sign_request.activity_unlink(['mail.mail_activity_data_todo'], user_id=old_sign_user.id)
+                    sign_request.activity_unlink(['sign.mail_activity_data_signature_request'], user_id=old_sign_user.id)
                 # create logs
                 sign_request.message_post(
                     body=_('The contact of %(role)s has been changed from %(old_partner)s to %(new_partner)s.',
@@ -120,7 +120,7 @@ class SignRequestItem(models.Model):
                 ('all_group_ids', 'in', [self.env.ref('sign.group_sign_user').id])
             ], limit=1)
             if new_sign_user:
-                activity_ids = set(request_items_reassigned.sign_request_id.activity_search(['mail.mail_activity_data_todo'], user_id=new_sign_user.id).mapped('res_id'))
+                activity_ids = set(request_items_reassigned.sign_request_id.activity_search(['sign.mail_activity_data_signature_request'], user_id=new_sign_user.id).mapped('res_id'))
                 request_items_reassigned.sign_request_id.filtered(lambda sr: sr.id not in activity_ids)._schedule_activity(new_sign_user)
 
         res = super().write(vals)
@@ -286,7 +286,7 @@ class SignRequestItem(models.Model):
         if not self.sign_request_id.request_item_ids.filtered(lambda sri: sri.partner_id == self.partner_id and sri.state == 'sent'):
             sign_user = self.partner_id.user_ids[:1]
             if sign_user and sign_user.has_group('sign.group_sign_user'):
-                self.sign_request_id.activity_feedback(['mail.mail_activity_data_todo'], user_id=sign_user.id)
+                self.sign_request_id.activity_feedback(['sign.mail_activity_data_signature_request'], user_id=sign_user.id)
         sign_request = self.sign_request_id
         if all(sri.state == 'completed' for sri in sign_request.request_item_ids):
             sign_request._sign()
