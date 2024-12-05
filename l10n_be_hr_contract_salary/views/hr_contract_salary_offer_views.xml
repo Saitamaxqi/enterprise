@@ -16,7 +16,6 @@
                     <field name="wishlist_car_warning" class="alert text-center alert-warning"
                        role="alert" colspan="2" nolabel="1"
                        invisible="not wishlist_car_warning or not new_car"/>
-                    <field name="show_new_car" invisible="1"/>
                     <field name="car_id" widget="many2one_avatar_user"/>
                     <field name="assigned_car_warning" class="alert alert-warning center"
                         role="alert" colspan="2" nolabel="1"

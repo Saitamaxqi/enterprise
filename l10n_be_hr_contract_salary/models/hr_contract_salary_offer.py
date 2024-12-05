@@ -20,7 +20,6 @@ class HrContractSalaryOffer(models.Model):
         store=True,
         readonly=False,
         help="The employee will be able to choose a new car even if the maximum number of used cars available is reached.")
-    show_new_car = fields.Boolean(tracking=True)
     car_id = fields.Many2one(
         'fleet.vehicle', string='Default Vehicle',
         compute='_compute_car_id',
