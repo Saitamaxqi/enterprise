@@ -177,6 +177,14 @@ msgid "Allowance or Charge reason"
 msgstr ""
 
 #. module: l10n_pe_edi
+#. odoo-python
+#: code:addons/l10n_pe_edi/models/account_move.py:0
+msgid ""
+"An invoice with the same sequence already exists. Please give this invoice a"
+" different sequence."
+msgstr ""
+
+#. module: l10n_pe_edi
 #: model:ir.model.fields.selection,name:l10n_pe_edi.selection__product_template__l10n_pe_withhold_code__013
 msgid "Animales vivos"
 msgstr ""
@@ -216,11 +224,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_pe_edi
-#: model:ir.model,name:l10n_pe_edi.model_ir_attachment
-msgid "Attachment"
-msgstr ""
-
-#. module: l10n_pe_edi
 #: model:ir.model.fields.selection,name:l10n_pe_edi.selection__product_template__l10n_pe_withhold_code__001
 msgid "Azúcar y melaza de caña"
 msgstr ""
@@ -248,12 +251,8 @@ msgid "Bienes gravados con el IGV, o renuncia a la exoneración"
 msgstr ""
 
 #. module: l10n_pe_edi
-#: model:ir.model.fields.selection,name:l10n_pe_edi.selection__account_move_reversal__l10n_pe_edi_refund_reason__08
-msgid "Bonification"
-msgstr ""
-
-#. module: l10n_pe_edi
 #: model:ir.model.fields.selection,name:l10n_pe_edi.selection__account_move__l10n_pe_edi_refund_reason__08
+#: model:ir.model.fields.selection,name:l10n_pe_edi.selection__account_move_reversal__l10n_pe_edi_refund_reason__08
 msgid "Bonus"
 msgstr ""
 
@@ -280,7 +279,6 @@ msgstr ""
 #. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_cancel_reason
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move__l10n_pe_edi_cancel_reason
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_payment__l10n_pe_edi_cancel_reason
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_cancel__l10n_pe_edi_cancel_reason
 msgid "Cancel Reason"
 msgstr ""
@@ -324,11 +322,6 @@ msgid "Caña de azúcar"
 msgstr ""
 
 #. module: l10n_pe_edi
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__content
-msgid "Certificate"
-msgstr ""
-
-#. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company__l10n_pe_edi_certificate_id
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_res_config_settings__l10n_pe_edi_certificate_id
 msgid "Certificate (PE)"
@@ -337,11 +330,6 @@ msgstr ""
 #. module: l10n_pe_edi
 #: model:ir.ui.menu,name:l10n_pe_edi.menu_l10n_pe_edi_certificates
 msgid "Certificates"
-msgstr ""
-
-#. module: l10n_pe_edi
-#: model:ir.actions.act_window,name:l10n_pe_edi.l10n_pe_edi_certificate_action
-msgid "Certificates for EDI invoices on Peru"
 msgstr ""
 
 #. module: l10n_pe_edi
@@ -378,11 +366,6 @@ msgid "Companies"
 msgstr ""
 
 #. module: l10n_pe_edi
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__company_id
-msgid "Company"
-msgstr ""
-
-#. module: l10n_pe_edi
 #: model:ir.model,name:l10n_pe_edi.model_res_config_settings
 msgid "Config Settings"
 msgstr ""
@@ -399,19 +382,12 @@ msgid "Correction by error in the description"
 msgstr ""
 
 #. module: l10n_pe_edi
-#: model_terms:ir.actions.act_window,help:l10n_pe_edi.l10n_pe_edi_certificate_action
-msgid "Create the first certificate"
-msgstr ""
-
-#. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_cancel__create_uid
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_cancel__create_date
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__create_date
 msgid "Created on"
 msgstr ""
 
@@ -419,25 +395,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_refund_reason
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move__l10n_pe_edi_refund_reason
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move_reversal__l10n_pe_edi_refund_reason
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_payment__l10n_pe_edi_refund_reason
 msgid "Credit Reason"
 msgstr ""
 
 #. module: l10n_pe_edi
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__date_end
-msgid "Date End"
-msgstr ""
-
-#. module: l10n_pe_edi
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__date_start
-msgid "Date Start"
+#: model:iap.service,unit_name:l10n_pe_edi.iap_service_l10n_pe_edi
+msgid "Credits"
 msgstr ""
 
 #. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_charge_reason
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_debit_note__l10n_pe_edi_charge_reason
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move__l10n_pe_edi_charge_reason
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_payment__l10n_pe_edi_charge_reason
 msgid "Debit Reason"
 msgstr ""
 
@@ -475,8 +444,22 @@ msgid "Discount per item"
 msgstr ""
 
 #. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_debit_note__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_edi_document__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_edi_format__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_edi_xml_ubl_pe__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_journal__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move_reversal__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_tax__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_tax_group__display_name
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_cancel__display_name
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_product_template__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_uom_uom__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -602,8 +585,22 @@ msgid "IAP"
 msgstr ""
 
 #. module: l10n_pe_edi
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_chart_template__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_debit_note__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_edi_document__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_edi_format__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_edi_xml_ubl_pe__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_journal__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move_line__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move_reversal__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_tax__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_tax_group__id
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_cancel__id
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_product_template__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_company__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_res_config_settings__id
+#: model:ir.model.fields,field_description:l10n_pe_edi.field_uom_uom__id
 msgid "ID"
 msgstr ""
 
@@ -643,14 +640,12 @@ msgstr ""
 #. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_is_required
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move__l10n_pe_edi_is_required
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_payment__l10n_pe_edi_is_required
 msgid "Is the Peruvian EDI needed"
 msgstr ""
 
 #. module: l10n_pe_edi
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_charge_reason
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_move__l10n_pe_edi_charge_reason
-#: model:ir.model.fields,help:l10n_pe_edi.field_account_payment__l10n_pe_edi_charge_reason
 msgid ""
 "It contains all possible values for the charge reason according to Catalog "
 "No. 10"
@@ -660,7 +655,6 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_refund_reason
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_move__l10n_pe_edi_refund_reason
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_move_reversal__l10n_pe_edi_refund_reason
-#: model:ir.model.fields,help:l10n_pe_edi.field_account_payment__l10n_pe_edi_refund_reason
 msgid ""
 "It contains all possible values for the refund reason according to Catalog "
 "No. 09"
@@ -691,19 +685,16 @@ msgstr ""
 #. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_cancel_cdr_number
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move__l10n_pe_edi_cancel_cdr_number
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_payment__l10n_pe_edi_cancel_cdr_number
 msgid "L10N Pe Edi Cancel Cdr Number"
 msgstr ""
 
 #. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_cancel__write_uid
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_cancel__write_date
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -715,14 +706,12 @@ msgstr ""
 #. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_legend_value
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move__l10n_pe_edi_legend_value
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_payment__l10n_pe_edi_legend_value
 msgid "Legend"
 msgstr ""
 
 #. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_legend
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move__l10n_pe_edi_legend
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_payment__l10n_pe_edi_legend
 msgid "Legend Code"
 msgstr ""
 
@@ -814,7 +803,6 @@ msgstr ""
 #. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_operation_type
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_account_move__l10n_pe_edi_operation_type
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_account_payment__l10n_pe_edi_operation_type
 msgid "Operation Type (PE)"
 msgstr ""
 
@@ -828,8 +816,6 @@ msgstr ""
 
 #. module: l10n_pe_edi
 #. odoo-python
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 msgid "Original message:"
 msgstr ""
@@ -881,24 +867,9 @@ msgid "PE UBL 2.1"
 msgstr ""
 
 #. module: l10n_pe_edi
-#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_certificate__content
-msgid "PFX Certificate"
-msgstr ""
-
-#. module: l10n_pe_edi
 #: model:ir.model.fields.selection,name:l10n_pe_edi.selection__account_move__l10n_pe_edi_legend__2009
 msgid ""
 "PRIMERA VENTA DE MERCANCÍA IDENTIFICABLE ENTRE USUARIOS DE LA ZONA COMERCIAL"
-msgstr ""
-
-#. module: l10n_pe_edi
-#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_certificate__password
-msgid "Passphrase for the PFX certificate"
-msgstr ""
-
-#. module: l10n_pe_edi
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__password
-msgid "Password"
 msgstr ""
 
 #. module: l10n_pe_edi
@@ -938,7 +909,6 @@ msgstr ""
 #. module: l10n_pe_edi
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_operation_type
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_move__l10n_pe_edi_operation_type
-#: model:ir.model.fields,help:l10n_pe_edi.field_account_payment__l10n_pe_edi_operation_type
 msgid ""
 "Peru: Defines the operation type, all the options can be used for all the "
 "document types, except '[0113] Internal Sale-NRUS' that is for document type"
@@ -970,7 +940,6 @@ msgstr ""
 #. module: l10n_pe_edi
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_cancel_reason
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_move__l10n_pe_edi_cancel_reason
-#: model:ir.model.fields,help:l10n_pe_edi.field_account_payment__l10n_pe_edi_cancel_reason
 msgid ""
 "Peru: Reason given by the user for cancelling this move, structure of voided"
 " summary: sac:VoidReasonDescription."
@@ -979,14 +948,12 @@ msgstr ""
 #. module: l10n_pe_edi
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_legend
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_move__l10n_pe_edi_legend
-#: model:ir.model.fields,help:l10n_pe_edi.field_account_payment__l10n_pe_edi_legend
 msgid "Peru: Specific operation type code."
 msgstr ""
 
 #. module: l10n_pe_edi
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_legend_value
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_move__l10n_pe_edi_legend_value
-#: model:ir.model.fields,help:l10n_pe_edi.field_account_payment__l10n_pe_edi_legend_value
 msgid "Peru: Specific operation type value."
 msgstr ""
 
@@ -1013,25 +980,19 @@ msgstr ""
 #. module: l10n_pe_edi
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-msgid "Please proceed to buy more credits <a href=\"%s\">here.</a>"
-msgstr ""
-
-#. module: l10n_pe_edi
-#. odoo-python
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 msgid "Please put a cancel reason"
 msgstr ""
 
 #. module: l10n_pe_edi
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-#, python-format
 msgid "Please resequence the invoice to a number not yet sent to SUNAT."
 msgstr ""
 
 #. module: l10n_pe_edi
 #: model:ir.model.fields.selection,name:l10n_pe_edi.selection__product_template__l10n_pe_withhold_code__041
 msgid "Plomo"
+msgstr ""
 
 #. module: l10n_pe_edi
 #: model:ir.model,name:l10n_pe_edi.model_product_template
@@ -1061,7 +1022,6 @@ msgstr ""
 #. module: l10n_pe_edi
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_bank_statement_line__l10n_pe_edi_cancel_cdr_number
 #: model:ir.model.fields,help:l10n_pe_edi.field_account_move__l10n_pe_edi_cancel_cdr_number
-#: model:ir.model.fields,help:l10n_pe_edi.field_account_payment__l10n_pe_edi_cancel_cdr_number
 msgid "Reference from webservice to consult afterwards."
 msgstr ""
 
@@ -1102,7 +1062,6 @@ msgstr ""
 
 #. module: l10n_pe_edi
 #. odoo-python
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 msgid "SOAP status code: "
 msgstr ""
@@ -1155,8 +1114,13 @@ msgid ""
 msgstr ""
 
 #. module: l10n_pe_edi
-#: model:ir.model.fields,field_description:l10n_pe_edi.field_l10n_pe_edi_certificate__serial_number
-msgid "Serial Number"
+#: model:iap.service,description:l10n_pe_edi.iap_service_l10n_pe_edi
+msgid ""
+"Service that allows sending electronic documents to the SUNAT. The credits "
+"acquired through these packages will be consumed in your production database"
+" each time an electronic document is sent. For more details on the credits "
+"consumption, you can consult the section Signature Provider in the Peru "
+"Functional documentation."
 msgstr ""
 
 #. module: l10n_pe_edi
@@ -1172,11 +1136,6 @@ msgstr ""
 #. module: l10n_pe_edi
 #: model:ir.model.fields,field_description:l10n_pe_edi.field_res_config_settings__l10n_pe_edi_provider
 msgid "Signature Provider"
-msgstr ""
-
-#. module: l10n_pe_edi
-#: model:ir.model,name:l10n_pe_edi.model_l10n_pe_edi_certificate
-msgid "Sunat Digital Certificate"
 msgstr ""
 
 #. module: l10n_pe_edi
@@ -1330,23 +1289,6 @@ msgstr ""
 
 #. module: l10n_pe_edi
 #. odoo-python
-#: code:addons/l10n_pe_edi/models/l10n_pe_edi_certificate.py:0
-msgid "The certificate is expired since %s"
-msgstr ""
-
-#. module: l10n_pe_edi
-#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_certificate__date_end
-msgid "The date on which the certificate expires"
-msgstr ""
-
-#. module: l10n_pe_edi
-#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_certificate__date_start
-msgid "The date on which the certificate starts to be valid"
-msgstr ""
-
-#. module: l10n_pe_edi
-#. odoo-python
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 msgid ""
 "The document type of the invoice related is not the same of this document. "
@@ -1417,21 +1359,14 @@ msgid "The password used to login to SUNAT SOL"
 msgstr ""
 
 #. module: l10n_pe_edi
-#: model:ir.model.fields,help:l10n_pe_edi.field_l10n_pe_edi_certificate__serial_number
-msgid "The serial number to add to electronic documents"
-msgstr ""
-
-#. module: l10n_pe_edi
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-#, python-format
 msgid "The tax application is incorrect for free invoice."
 msgstr ""
 
 #. module: l10n_pe_edi
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-#, python-format
 msgid ""
 "The type of identity document used for the client is not valid. Review the "
 "type of document used in the client and change it according to the case of "
@@ -1476,15 +1411,6 @@ msgstr ""
 
 #. module: l10n_pe_edi
 #. odoo-python
-#: code:addons/l10n_pe_edi/models/l10n_pe_edi_certificate.py:0
-msgid ""
-"There has been a problem with the certificate, some usual problems can be:\n"
-"- The password given or the certificate are not valid.\n"
-"- The certificate content is invalid."
-msgstr ""
-
-#. module: l10n_pe_edi
-#. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 msgid ""
 "There was an error in the connection or the response from the OSE server. "
@@ -1501,8 +1427,6 @@ msgstr ""
 
 #. module: l10n_pe_edi
 #. odoo-python
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 msgid "This document number is now registered by SUNAT as invalid."
 msgstr ""
@@ -1623,11 +1547,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_pe_edi
-#: model_terms:ir.ui.view,arch_db:l10n_pe_edi.l10n_pe_edi_certificate_form
-msgid "Validity"
-msgstr ""
-
-#. module: l10n_pe_edi
 #: model:ir.model.fields.selection,name:l10n_pe_edi.selection__account_move__l10n_pe_edi_legend__2005
 msgid "Venta realizada por emisor itinerante"
 msgstr ""
@@ -1635,8 +1554,6 @@ msgstr ""
 #. module: l10n_pe_edi
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-#, python-format
 msgid ""
 "Verify that the taxes are configured correctly: for free invoice, make sure "
 "to include only the taxes applicable to free operations and the free billing"
@@ -1645,10 +1562,6 @@ msgstr ""
 
 #. module: l10n_pe_edi
 #. odoo-python
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 msgid "We got an error response from the OSE. "
 msgstr ""
@@ -1678,18 +1591,6 @@ msgstr ""
 #. module: l10n_pe_edi
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-msgid "XSD validation failed:"
-msgstr ""
-
-#. module: l10n_pe_edi
-#. odoo-python
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-msgid "XSD validation failed: %s"
-msgstr ""
-
-#. module: l10n_pe_edi
-#. odoo-python
-#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 msgid ""
 "You can't have more than one IGV tax per line to generate a legal invoice in"
 " Peru"
@@ -1698,7 +1599,9 @@ msgstr ""
 #. module: l10n_pe_edi
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
-msgid "You have insufficient credits to sign or verify this document!"
+msgid ""
+"You have insufficient credits to sign or verify this "
+"document!{line_break}Please proceed to buy more credits {left}here.{right}"
 msgstr ""
 
 #. module: l10n_pe_edi

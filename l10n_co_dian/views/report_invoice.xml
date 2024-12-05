@@ -4,9 +4,8 @@
         <!-- Custom name -->
         <xpath expr="//t[@t-set='layout_document_title']" position="replace">
             <t t-set="layout_document_title">
-                <span t-if="not proforma"></span>
-                <span t-else="">PROFORMA</span>
                 <span t-field="o.l10n_co_edi_type">Factura de venta</span>
+                <span t-if="proforma">proforma</span>
                 <span t-if="o.name != '/'" t-field="o.name">INV/2023/0001</span>
             </t>
         </xpath>

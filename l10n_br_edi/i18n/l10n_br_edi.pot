@@ -23,35 +23,33 @@ msgid ""
 "    <p style=\"margin: 0px; padding: 0px; font-size: 12px;\">\n"
 "        Dear\n"
 "        <t t-if=\"object.partner_id.parent_id\">\n"
-"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t> (<t t-out=\"object."
-"partner_id.parent_id.name or ''\">Azure Interior</t>),\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t> (<t t-out=\"object.partner_id.parent_id.name or ''\">Azure Interior</t>),\n"
 "        </t>\n"
 "        <t t-else=\"\">\n"
 "            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
 "        </t>\n"
-"        <br><br>\n"
+"        <br/><br/>\n"
 "\n"
 "        We hope you are well. We want to inform you about an update regarding\n"
-"        invoice <span style=\"font-weight:bold;\" t-out=\"object.name or ''\">INV/2021/05/0005</"
-"span>\n"
+"        invoice <span style=\"font-weight:bold;\" t-out=\"object.name or ''\">INV/2021/05/0005</span>\n"
 "        <t t-if=\"object.invoice_origin\">\n"
 "            (with reference: <t t-out=\"object.invoice_origin or ''\">SUB003</t>)\n"
 "        </t>\n"
 "        dated <t t-out=\"format_date(object.invoice_date) or ''\">01/01/2024</t>.\n"
-"        <br><br>\n"
+"        <br/><br/>\n"
 "\n"
 "        This invoice has been\n"
 "        <t t-if=\"ctx.get('wizard_mode') == 'cancel'\">cancelled.</t>\n"
 "        <t t-else=\"\">corrected.</t>\n"
 "        Please review the attached documents for details.\n"
-"        <br><br>\n"
+"        <br/><br/>\n"
 "\n"
 "        Do not hesitate to contact us if you have any questions.\n"
-"        <br><br>\n"
+"        <br/><br/>\n"
 "        Best regards,\n"
-"        <t t-if=\"not is_html_empty(object.user_id.signature)\">\n"
-"            <br><br>\n"
-"            <t t-out=\"object.user_id.signature or ''\">--<br>Mitchell Admin</t>\n"
+"        <t t-if=\"not is_html_empty(object.user_id.signature)\" data-o-mail-quote-container=\"1\">\n"
+"            <br/><br/>\n"
+"            <t t-out=\"object.user_id.signature or ''\" data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/>Mitchell Admin</t>\n"
 "        </t>\n"
 "    </p>\n"
 "</div>\n"
@@ -143,24 +141,24 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_nfse_verification
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_nfse_verification
 msgid ""
-"Brazil: After an NFS-e invoice is issued and confirmed by the municipality, a unique code is "
-"provided for online verification of its authenticity."
+"Brazil: After an NFS-e invoice is issued and confirmed by the municipality, "
+"a unique code is provided for online verification of its authenticity."
 msgstr ""
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_nfse_number
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_nfse_number
 msgid ""
-"Brazil: After an NFS-e invoice is issued and confirmed by the municipality, an NFS-e number is "
-"provided."
+"Brazil: After an NFS-e invoice is issued and confirmed by the municipality, "
+"an NFS-e number is provided."
 msgstr ""
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move_line__l10n_br_cfop
 msgid ""
-"Brazil: CFOP returned from the tax calculation that will be used for submitting your electronic "
-"invoice per line. This is computed based on the Operation Type, product, contact and company "
-"configuration."
+"Brazil: CFOP returned from the tax calculation that will be used for "
+"submitting your electronic invoice per line. This is computed based on the "
+"Operation Type, product, contact and company configuration."
 msgstr ""
 
 #. module: l10n_br_edi
@@ -172,8 +170,8 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_access_key
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_access_key
 msgid ""
-"Brazil: access key associated with the electronic document. Can be used to get invoice "
-"information directly from the government."
+"Brazil: access key associated with the electronic document. Can be used to "
+"get invoice information directly from the government."
 msgstr ""
 
 #. module: l10n_br_edi
@@ -198,25 +196,32 @@ msgstr ""
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_xml_attachment_file
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_xml_attachment_file
-msgid "Brazil: technical field holding the e-invoice XML data for security reasons."
+msgid ""
+"Brazil: technical field holding the e-invoice XML data for security reasons."
 msgstr ""
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_last_correction_number
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_last_correction_number
-msgid "Brazil: technical field that holds the latest correction that happened to this invoice"
+msgid ""
+"Brazil: technical field that holds the latest correction that happened to "
+"this invoice"
 msgstr ""
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_avatax_data
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_avatax_data
-msgid "Brazil: technical field that remembers the last tax summary returned by Avatax."
+msgid ""
+"Brazil: technical field that remembers the last tax summary returned by "
+"Avatax."
 msgstr ""
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_is_needed
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_is_needed
-msgid "Brazil: technical field to determine if this invoice is eligible to be e-invoiced."
+msgid ""
+"Brazil: technical field to determine if this invoice is eligible to be "
+"e-invoiced."
 msgstr ""
 
 #. module: l10n_br_edi
@@ -243,8 +248,7 @@ msgstr ""
 msgid ""
 "Brazilian e-invoicing was enabled but the following invoices cannot be e-invoiced:\n"
 "%s\n"
-"If this is not intended, please check if an Avatax fiscal position is used on those invoices and "
-"if the invoice isn't already e-invoiced."
+"If this is not intended, please check if an Avatax fiscal position is used on those invoices and if the invoice isn't already e-invoiced."
 msgstr ""
 
 #. module: l10n_br_edi
@@ -268,8 +272,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_br_edi/wizard/l10n_br_edi_cancel_range.py:0
 msgid ""
-"Cancelled range %(start_number)s - %(end_number)s for document type %(document_type)s for reason "
-"\"%(reason)s\"."
+"Cancelled range %(start_number)s - %(end_number)s for document type "
+"%(document_type)s for reason \"%(reason)s\"."
 msgstr ""
 
 #. module: l10n_br_edi
@@ -381,7 +385,9 @@ msgstr ""
 #. module: l10n_br_edi
 #. odoo-python
 #: code:addons/l10n_br_edi/wizard/l10n_br_edi_invoice_update.py:0
-msgid "E-invoice cancelled in Odoo, make sure to also cancel it in your city's portal."
+msgid ""
+"E-invoice cancelled in Odoo, make sure to also cancel it in your city's "
+"portal."
 msgstr ""
 
 #. module: l10n_br_edi
@@ -459,8 +465,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_br_edi/models/account_move.py:0
 msgid ""
-"For Brazilian electronic invoicing, contacts must have a complete address, VAT number and "
-"identification type:\n"
+"For Brazilian electronic invoicing, contacts must have a complete address, VAT number and identification type:\n"
 "%s"
 msgstr ""
 
@@ -493,8 +498,14 @@ msgid "Gift certificate"
 msgstr ""
 
 #. module: l10n_br_edi
+#: model:ir.model.fields,field_description:l10n_br_edi.field_account_external_tax_mixin__id
+#: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_br_edi.field_account_move_line__id
+#: model:ir.model.fields,field_description:l10n_br_edi.field_account_move_send__id
 #: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_edi_cancel_range__id
 #: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_edi_invoice_update__id
+#: model:ir.model.fields,field_description:l10n_br_edi.field_payment_method__id
+#: model:ir.model.fields,field_description:l10n_br_edi.field_res_country__id
 msgid "ID"
 msgstr ""
 
@@ -690,7 +701,8 @@ msgstr ""
 
 #. module: l10n_br_edi
 #: model:mail.template,description:l10n_br_edi.mail_template_move_update
-msgid "Sent to customers when a Brazilian e-invoice is corrected or cancelled."
+msgid ""
+"Sent to customers when a Brazilian e-invoice is corrected or cancelled."
 msgstr ""
 
 #. module: l10n_br_edi
@@ -719,12 +731,15 @@ msgstr ""
 #. module: l10n_br_edi
 #. odoo-python
 #: code:addons/l10n_br_edi/models/account_move.py:0
-msgid "Tax has never been calculated on this invoice, please \"Reset to Draft\" and re-post."
+msgid ""
+"Tax has never been calculated on this invoice, please \"Reset to Draft\" and"
+" re-post."
 msgstr ""
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_l10n_br_edi_invoice_update__mode
-msgid "Technical field to determine whether the move is cancelled or corrected."
+msgid ""
+"Technical field to determine whether the move is cancelled or corrected."
 msgstr ""
 
 #. module: l10n_br_edi
@@ -766,9 +781,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_br_edi/models/account_move.py:0
 msgid ""
-"The originating invoice (%(origin_invoice)s) must have an access key before electronically "
-"invoicing %(current_invoice)s. The access key can be set manually or by electronically invoicing "
-"%(origin_invoice)s."
+"The originating invoice (%(origin_invoice)s) must have an access key before "
+"electronically invoicing %(current_invoice)s. The access key can be set "
+"manually or by electronically invoicing %(origin_invoice)s."
 msgstr ""
 
 #. module: l10n_br_edi
@@ -780,19 +795,22 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_br_edi/wizard/l10n_br_edi_invoice_update.py:0
 msgid ""
-"The reason must contain at least 15 characters and cannot exceed a maximum of 255 characters."
+"The reason must contain at least 15 characters and cannot exceed a maximum "
+"of 255 characters."
 msgstr ""
 
 #. module: l10n_br_edi
 #: model:ir.model,name:l10n_br_edi.model_l10n_br_edi_cancel_range
-msgid "This allows a user to inform the government a range of sequence numbers won't be used."
+msgid ""
+"This allows a user to inform the government a range of sequence numbers "
+"won't be used."
 msgstr ""
 
 #. module: l10n_br_edi
 #: model_terms:ir.ui.view,arch_db:l10n_br_edi.l10n_br_edi_invoice_update_form
 msgid ""
-"This invoice will only be cancelled in Odoo. Make sure to cancel it through your city portal as "
-"well."
+"This invoice will only be cancelled in Odoo. Make sure to cancel it through "
+"your city portal as well."
 msgstr ""
 
 #. module: l10n_br_edi
@@ -828,8 +846,8 @@ msgstr ""
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_l10n_br_edi_invoice_update__send_email
 msgid ""
-"When checked an email will be sent informing the customer of the changes and the new EDI "
-"documents."
+"When checked an email will be sent informing the customer of the changes and"
+" the new EDI documents."
 msgstr ""
 
 #. module: l10n_br_edi
@@ -840,5 +858,7 @@ msgstr ""
 
 #. module: l10n_br_edi
 #: model:mail.template,subject:l10n_br_edi.mail_template_move_update
-msgid "{{ object.company_id.name }} Invoice (Ref {{ object.name or 'n/a' }}): Important Update"
+msgid ""
+"{{ object.company_id.name }} Invoice (Ref {{ object.name or 'n/a' }}): "
+"Important Update"
 msgstr ""

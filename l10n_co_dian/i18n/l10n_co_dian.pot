@@ -64,23 +64,103 @@ msgid ""
 msgstr ""
 
 #. module: l10n_co_dian
-#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
-msgid "<strong>Payment Means</strong><br/>"
+#: model:mail.template,body_html:l10n_co_dian.email_template_edi_credit_note
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Dear\n"
+"        <t t-if=\"object.partner_id.parent_id\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t> (<t t-out=\"object.partner_id.parent_id.name or ''\">Azure Interior</t>),\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"        Here is your\n"
+"        <t t-if=\"object.name\">\n"
+"            credit note <span style=\"font-weight:bold;\" t-out=\"object.name or ''\">RINV/2021/05/0001</span>\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            credit note\n"
+"        </t>\n"
+"        <t t-if=\"object.invoice_origin\">\n"
+"            (with reference: <t t-out=\"object.invoice_origin or ''\">SUB003</t>)\n"
+"        </t>\n"
+"        amounting in <span style=\"font-weight:bold;\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 143,750.00</span>\n"
+"        from <t t-out=\"object.company_id.name or ''\">YourCompany</t>.\n"
+"        <br/><br/>\n"
+"        Do not hesitate to contact us if you have any questions.\n"
+"        <t t-if=\"not is_html_empty(object.invoice_user_id.signature)\" data-o-mail-quote-container=\"1\">\n"
+"            <br data-o-mail-quote=\"1\"/><br data-o-mail-quote=\"1\"/>\n"
+"            <t t-out=\"object.invoice_user_id.signature or ''\" data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/>Mitchell Admin</t>\n"
+"        </t>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+
+#. module: l10n_co_dian
+#: model:mail.template,body_html:l10n_co_dian.email_template_edi_invoice
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Dear\n"
+"        <t t-if=\"object.partner_id.parent_id\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t> (<t t-out=\"object.partner_id.parent_id.name or ''\">Azure Interior</t>),\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            <t t-out=\"object.partner_id.name or ''\">Brandon Freeman</t>,\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"        Here is your\n"
+"        <t t-if=\"object.name\">\n"
+"            invoice <span style=\"font-weight:bold;\" t-out=\"object.name or ''\">INV/2021/05/0005</span>\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            invoice\n"
+"        </t>\n"
+"        <t t-if=\"object.invoice_origin\">\n"
+"            (with reference: <t t-out=\"object.invoice_origin or ''\">SUB003</t>)\n"
+"        </t>\n"
+"        amounting in <span style=\"font-weight:bold;\" t-out=\"format_amount(object.amount_total, object.currency_id) or ''\">$ 143,750.00</span>\n"
+"        from <t t-out=\"object.company_id.name or ''\">YourCompany</t>.\n"
+"        <t t-if=\"object.payment_state in ('paid', 'in_payment')\">\n"
+"            This invoice is already paid.\n"
+"        </t>\n"
+"        <t t-else=\"\">\n"
+"            Please remit payment at your earliest convenience.\n"
+"            <t t-if=\"object.payment_reference\">\n"
+"                <br/><br/>\n"
+"                Please use the following communication for your payment: <strong t-out=\"object.payment_reference or ''\">INV/2021/05/0005</strong>\n"
+"                <t t-if=\"object.partner_bank_id\">\n"
+"                    on the account <strong t-out=\"object.partner_bank_id.acc_number\"/>\n"
+"                </t>\n"
+"                .\n"
+"            </t>\n"
+"        </t>\n"
+"        <t t-if=\"hasattr(object, 'timesheet_count') and object.timesheet_count\">\n"
+"            <br/><br/>\n"
+"            PS: you can review your timesheets <a t-att-href=\"'/my/timesheets?search_in=invoice&amp;search=%s' % object.name\">from the portal.</a>\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"        Do not hesitate to contact us if you have any questions.\n"
+"        <t t-if=\"not is_html_empty(object.invoice_user_id.signature)\" data-o-mail-quote-container=\"1\">\n"
+"            <br data-o-mail-quote=\"1\"/><br data-o-mail-quote=\"1\"/>\n"
+"            <t t-out=\"object.invoice_user_id.signature or ''\" data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/>Mitchell Admin</t>\n"
+"        </t>\n"
+"    </p>\n"
+"</div>\n"
+"            "
 msgstr ""
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
-msgid "<strong>Payment Means:</strong><br/>"
+msgid "<strong>Payment Means</strong>"
 msgstr ""
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
-msgid "<strong>Payment Method</strong><br/>"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
-msgid "<strong>Payment Method:</strong><br/>"
+msgid "<strong>Payment Method</strong>"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -130,7 +210,17 @@ msgid "Add your certificates to sign your documents."
 msgstr ""
 
 #. module: l10n_co_dian
-#: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_certificate_view_tree
+#. odoo-python
+#: code:addons/l10n_co_dian/xml_utils.py:0
+msgid "Ambiguous reference URI %(uri)s resolved to %(count)d nodes"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
+msgid "ApplicationResponse"
+msgstr ""
+
+#. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_operation_mode_view_tree
 msgid "Are you sure you want to delete this record?"
 msgstr ""
@@ -143,11 +233,6 @@ msgstr ""
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "Autorretenedor"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__date_start
-msgid "Available date"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -174,7 +259,6 @@ msgstr ""
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_bank_statement_line__l10n_co_edi_cufe_cude_ref
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_move__l10n_co_edi_cufe_cude_ref
-#: model:ir.model.fields,field_description:l10n_co_dian.field_account_payment__l10n_co_edi_cufe_cude_ref
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__identifier
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_account_invoice_filter_inherit_l10n_co_dian
 msgid "CUFE/CUDE/CUDS"
@@ -186,23 +270,8 @@ msgid "Carvajal"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__certificate
+#: model:ir.model,name:l10n_co_dian.model_certificate_certificate
 msgid "Certificate"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__key
-msgid "Certificate Key"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model:ir.model.fields,help:l10n_co_dian.field_l10n_co_dian_certificate__key
-msgid "Certificate Key in PEM format"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model:ir.model.fields,help:l10n_co_dian.field_l10n_co_dian_certificate__certificate
-msgid "Certificate in PEM format"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -242,7 +311,6 @@ msgid "Companies"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__company_id
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_operation_mode__company_id
 msgid "Company"
 msgstr ""
@@ -270,17 +338,20 @@ msgid "Control key acquired in the DIAN portal, used to generate the CUFE"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__create_uid
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__create_uid
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_operation_mode__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__create_date
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__create_date
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_operation_mode__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model:mail.template,name:l10n_co_dian.email_template_edi_credit_note
+msgid "Credit Note (DIAN): Sending"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -294,9 +365,15 @@ msgid "Crédito ACH"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_account_move_send__l10n_co_dian_checkbox_xml
+#. odoo-python
+#: code:addons/l10n_co_dian/models/account_move_send.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_account_move_form_inherit_l10n_co_dian
 msgid "DIAN"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
+msgid "DIAN 2.1"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -317,11 +394,6 @@ msgstr ""
 #. module: l10n_co_dian
 #: model:account.journal,name:l10n_co_dian.debit_note_journal
 msgid "DIAN Debit Notes"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model:ir.model,name:l10n_co_dian.model_l10n_co_dian_certificate
-msgid "DIAN Digital Certificate"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -347,6 +419,12 @@ msgid "DIAN resolution"
 msgstr ""
 
 #. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/account_journal.py:0
+msgid "DIAN returned error %(code)s: \"%(message)s\""
+msgstr ""
+
+#. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_account_invoice_filter_inherit_l10n_co_dian
 msgid "DIAN status"
 msgstr ""
@@ -362,16 +440,28 @@ msgid "Datetime"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_certificate_view_tree
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_operation_mode_view_tree
 msgid "Delete"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__display_name
+#: model:ir.model.fields,field_description:l10n_co_dian.field_account_edi_xml_ubl_dian__display_name
+#: model:ir.model.fields,field_description:l10n_co_dian.field_account_journal__display_name
+#: model:ir.model.fields,field_description:l10n_co_dian.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_co_dian.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:l10n_co_dian.field_account_move_send__display_name
+#: model:ir.model.fields,field_description:l10n_co_dian.field_certificate_certificate__display_name
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__display_name
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_operation_mode__display_name
+#: model:ir.model.fields,field_description:l10n_co_dian.field_mail_template__display_name
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
+msgid "Documentos adjuntos"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -395,8 +485,25 @@ msgid "Electronic Invoicing Provider"
 msgstr ""
 
 #. module: l10n_co_dian
+#: model:ir.model,name:l10n_co_dian.model_mail_template
+msgid "Email Templates"
+msgstr ""
+
+#. module: l10n_co_dian
 #. odoo-python
-#: code:addons/l10n_co_dian/wizard/account_move_send.py:0
+#: code:addons/l10n_co_dian/models/l10n_co_dian_document.py:0
+msgid "Error %(code)s when calling the DIAN server: %(response)s"
+msgstr ""
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/account_move_send.py:0
+msgid "Error(s) when generating the Attached Document:"
+msgstr ""
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/account_move_send.py:0
 msgid "Error(s) when generating the UBL attachment:"
 msgstr ""
 
@@ -410,7 +517,7 @@ msgstr ""
 
 #. module: l10n_co_dian
 #. odoo-python
-#: code:addons/l10n_co_dian/wizard/account_move_send.py:0
+#: code:addons/l10n_co_dian/models/account_move_send.py:0
 msgid "Error(s) when sending the document to the DIAN:"
 msgstr ""
 
@@ -441,13 +548,13 @@ msgid "Every lines should have non zero price units."
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__date_end
-msgid "Expiration date"
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
+msgid "Factura de venta"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
-msgid "Factura de venta"
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_account_move_form_inherit_l10n_co_dian
+msgid "Fetch Attached Document"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -461,9 +568,17 @@ msgid "Get Status"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__id
+#: model:ir.model.fields,field_description:l10n_co_dian.field_account_edi_xml_ubl_dian__id
+#: model:ir.model.fields,field_description:l10n_co_dian.field_account_journal__id
+#: model:ir.model.fields,field_description:l10n_co_dian.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_co_dian.field_account_move_line__id
+#: model:ir.model.fields,field_description:l10n_co_dian.field_account_move_send__id
+#: model:ir.model.fields,field_description:l10n_co_dian.field_certificate_certificate__id
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__id
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_operation_mode__id
+#: model:ir.model.fields,field_description:l10n_co_dian.field_mail_template__id
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_company__id
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__id
 msgid "ID"
 msgstr ""
 
@@ -497,15 +612,8 @@ msgid ""
 msgstr ""
 
 #. module: l10n_co_dian
-#. odoo-python
-#: code:addons/l10n_co_dian/models/l10n_co_dian_certificate.py:0
-msgid "Invalid certificate key:\n"
-msgstr ""
-
-#. module: l10n_co_dian
-#. odoo-python
-#: code:addons/l10n_co_dian/models/l10n_co_dian_certificate.py:0
-msgid "Invalid certificate:\n"
+#: model:mail.template,name:l10n_co_dian.email_template_edi_invoice
+msgid "Invoice (DIAN): Sending"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -537,7 +645,6 @@ msgstr ""
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_bank_statement_line__l10n_co_dian_attachment_id
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_move__l10n_co_dian_attachment_id
-#: model:ir.model.fields,field_description:l10n_co_dian.field_account_payment__l10n_co_dian_attachment_id
 msgid "L10N Co Dian Attachment"
 msgstr ""
 
@@ -554,33 +661,24 @@ msgstr ""
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_bank_statement_line__l10n_co_dian_document_ids
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_move__l10n_co_dian_document_ids
-#: model:ir.model.fields,field_description:l10n_co_dian.field_account_payment__l10n_co_dian_document_ids
 msgid "L10N Co Dian Document"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_account_move_send__l10n_co_dian_enable_xml
-msgid "L10N Co Dian Enable Xml"
 msgstr ""
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_bank_statement_line__l10n_co_dian_identifier_type
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_move__l10n_co_dian_identifier_type
-#: model:ir.model.fields,field_description:l10n_co_dian.field_account_payment__l10n_co_dian_identifier_type
 msgid "L10N Co Dian Identifier Type"
 msgstr ""
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_bank_statement_line__l10n_co_dian_is_enabled
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_move__l10n_co_dian_is_enabled
-#: model:ir.model.fields,field_description:l10n_co_dian.field_account_payment__l10n_co_dian_is_enabled
 msgid "L10N Co Dian Is Enabled"
 msgstr ""
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_bank_statement_line__l10n_co_dian_post_time
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_move__l10n_co_dian_post_time
-#: model:ir.model.fields,field_description:l10n_co_dian.field_account_payment__l10n_co_dian_post_time
 msgid "L10N Co Dian Post Time"
 msgstr ""
 
@@ -593,26 +691,22 @@ msgstr ""
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_bank_statement_line__l10n_co_dian_show_support_doc_button
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_move__l10n_co_dian_show_support_doc_button
-#: model:ir.model.fields,field_description:l10n_co_dian.field_account_payment__l10n_co_dian_show_support_doc_button
 msgid "L10N Co Dian Show Support Doc Button"
 msgstr ""
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_bank_statement_line__l10n_co_dian_state
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_move__l10n_co_dian_state
-#: model:ir.model.fields,field_description:l10n_co_dian.field_account_payment__l10n_co_dian_state
 msgid "L10N Co Dian State"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__write_uid
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__write_uid
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_operation_mode__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__write_date
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__write_date
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_operation_mode__write_date
 msgid "Last Updated on"
@@ -646,14 +740,10 @@ msgstr ""
 
 #. module: l10n_co_dian
 #. odoo-python
-#: code:addons/l10n_co_dian/models/l10n_co_dian_certificate.py:0
-msgid "No certificate found for the current company."
-msgstr ""
-
-#. module: l10n_co_dian
-#. odoo-python
-#: code:addons/l10n_co_dian/models/l10n_co_dian_certificate.py:0
-msgid "No valid certificate found. Check their availability/expiration dates."
+#: code:addons/l10n_co_dian/models/account_journal.py:0
+msgid ""
+"No matching numbering range found for journal with short code '%(actual)s'. "
+"Found '%(expected)s' instead."
 msgstr ""
 
 #. module: l10n_co_dian
@@ -665,11 +755,6 @@ msgstr ""
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_operation_mode_view_form
 msgid "Operation mode"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
-msgid "PROFORMA"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -690,6 +775,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_state__invoice_rejected
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__l10n_co_dian_document__state__invoice_rejected
 msgid "Rejected"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_account_journal_form_inherit_l10n_co_dian
+msgid "Reload DIAN configuration"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -735,13 +825,18 @@ msgid "Sending Failed"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
-msgid "Sequence number from"
+#: model:mail.template,description:l10n_co_dian.email_template_edi_credit_note
+msgid "Sent to customers with the credit note in attachment"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__serial_number
-msgid "Serial number"
+#: model:mail.template,description:l10n_co_dian.email_template_edi_invoice
+msgid "Sent to customers with their invoices in attachment"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
+msgid "Sequence number from"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -849,6 +944,7 @@ msgstr ""
 
 #. module: l10n_co_dian
 #. odoo-python
+#: code:addons/l10n_co_dian/models/account_journal.py:0
 #: code:addons/l10n_co_dian/models/l10n_co_dian_document.py:0
 msgid "The DIAN server did not respond."
 msgstr ""
@@ -881,8 +977,14 @@ msgstr ""
 
 #. module: l10n_co_dian
 #. odoo-python
-#: code:addons/l10n_co_dian/models/l10n_co_dian_certificate.py:0
-msgid "The key and certificate do not match."
+#: code:addons/l10n_co_dian/models/account_journal.py:0
+msgid "The journal values are already up to date."
+msgstr ""
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/account_journal.py:0
+msgid "The journal values were successfully updated."
 msgstr ""
 
 #. module: l10n_co_dian
@@ -937,14 +1039,34 @@ msgid ""
 msgstr ""
 
 #. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
+msgid "UBL 2.1"
+msgstr ""
+
+#. module: l10n_co_dian
 #: model:ir.model,name:l10n_co_dian.model_account_edi_xml_ubl_dian
 msgid "UBL DIAN"
 msgstr ""
 
 #. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/xml_utils.py:0
+msgid "URI %(uri)s not found"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
+msgid "UTF-8"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
+msgid "Unidad Especial Dirección de Impuestos y Aduanas Nacionales"
+msgstr ""
+
+#. module: l10n_co_dian
 #: model:ir.model.fields,help:l10n_co_dian.field_account_bank_statement_line__l10n_co_edi_cufe_cude_ref
 #: model:ir.model.fields,help:l10n_co_dian.field_account_move__l10n_co_edi_cufe_cude_ref
-#: model:ir.model.fields,help:l10n_co_dian.field_account_payment__l10n_co_edi_cufe_cude_ref
 msgid "Unique ID used by the DIAN to identify the invoice."
 msgstr ""
 
@@ -955,8 +1077,11 @@ msgid "Updated the following journal values: %s"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_certificate_view_form
-msgid "Validity"
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_account_journal_form_inherit_l10n_co_dian
+msgid ""
+"Using the company VAT and software code, fetch the resolution number, "
+"resolution                         date, sequence prefix, sequence numbers "
+"and technical control key"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -970,18 +1095,8 @@ msgid "Zip Key"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_certificate_view_form
-msgid "certificate Form"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_certificate_view_tree
-msgid "certificate Tree"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model:ir.actions.act_window,name:l10n_co_dian.l10n_co_dian_certificate_action
-msgid "l10n_co_dian.certificate.action"
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
+msgid "dummy"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -991,5 +1106,24 @@ msgstr ""
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
+msgid "proforma"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
+msgid "text/xml"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "to"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model:mail.template,subject:l10n_co_dian.email_template_edi_credit_note
+#: model:mail.template,subject:l10n_co_dian.email_template_edi_invoice
+msgid ""
+"{{ object.company_id.partner_id._get_vat_without_verification_code() }};{{ "
+"object.company_id.name }};{{ object.name }};{{ object.l10n_co_edi_type }};{{"
+" object.company_id.partner_id.l10n_co_edi_commercial_name }}"
 msgstr ""
