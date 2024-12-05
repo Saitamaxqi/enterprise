@@ -604,7 +604,7 @@ class AccountJournal(models.Model):
                         # Non-structured communication
                         statementLine['communication_struct'] = False
                         statementLine['communication'] = rmspaces(line[62:115])
-                    statementLine['entryDate'] = time.strftime(tools.DEFAULT_SERVER_DATE_FORMAT, time.strptime(rmspaces(line[115:121]), '%d%m%y'))
+                    statementLine['entryDate'] = time.strftime(tools.DEFAULT_SERVER_DATE_FORMAT, time.strptime(rmspaces(line[115:121]), '%d%m%y')) if rmspaces(line[115:121]) != '000000' else statement['date']
                     statementLine['type'] = 'normal'
                     statementLine['globalisation'] = int(line[124])
                     if statementLine['globalisation'] > 0:
@@ -709,7 +709,7 @@ class AccountJournal(models.Model):
                 statement['debit'] = line[41]
                 statement['paperSeqNumber'] = rmspaces(line[1:4])
                 statement['balance_end_real'] = float(rmspaces(line[42:57])) / 1000
-                statement['balance_end_realDate'] = time.strftime(tools.DEFAULT_SERVER_DATE_FORMAT, time.strptime(rmspaces(line[57:63]), '%d%m%y'))
+                statement['balance_end_realDate'] = time.strftime(tools.DEFAULT_SERVER_DATE_FORMAT, time.strptime(rmspaces(line[57:63]), '%d%m%y')) if rmspaces(line[57:63]) != '000000' else statement['date']
                 if statement['debit'] == '1':    # 1=Debit
                     statement['balance_end_real'] = - statement['balance_end_real']
             elif line[0] == '9':
