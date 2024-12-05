@@ -636,7 +636,7 @@ test("A task should always have a title (pill_label='1', scale 'week')", async (
     const pills = queryAll(".o_gantt_pill");
     for (let i = 0; i < pills.length; i++) {
         await contains(pills[i]).click();
-        expect(".o_popover .popover-header").toHaveText(titleMapping[i].name);
+        expect(queryFirst(".o_popover .popover-body span")).toHaveText(titleMapping[i].name);
     }
 });
 
@@ -694,7 +694,7 @@ test("A task should always have a title (pill_label='1', scale 'month')", async 
     const pills = queryAll(".o_gantt_pill");
     for (let i = 0; i < pills.length; i++) {
         await contains(pills[i]).click();
-        expect(".o_popover .popover-header").toHaveText(titleMapping[i].name);
+        expect(queryFirst(".o_popover .popover-body span")).toHaveText(titleMapping[i].name);
     }
 });
 
@@ -752,7 +752,7 @@ test("A task should always have a title (pill_label='1', scale 'year')", async (
     const pills = queryAll(".o_gantt_pill");
     for (let i = 0; i < pills.length; i++) {
         await contains(pills[i]).click();
-        expect(".o_popover .popover-header").toHaveText(titleMapping[i].name);
+        expect(queryFirst(".o_popover .popover-body span")).toHaveText(titleMapping[i].name);
     }
 });
 

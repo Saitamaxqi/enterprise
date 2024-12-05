@@ -7,8 +7,8 @@ patch(TaskGanttRenderer.prototype, {
         super.setup();
         this.timesheetUOMService = useService("timesheet_uom");
     },
-    getPopoverProps(pill) {
-        const props = super.getPopoverProps(...arguments);
+    async getPopoverProps(pill) {
+        const props = await super.getPopoverProps(...arguments);
         const ctx = props.context;
         const { record } = pill;
         const formatter = this.timesheetUOMService.formatter;

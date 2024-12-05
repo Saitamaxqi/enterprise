@@ -145,20 +145,9 @@ export class AppointmentBookingGanttRenderer extends GanttRenderer {
 
     /**
      * @override
-     * Async copy of the overriden method
-     */
-    async onPillClicked(ev, pill) {
-        if (this.popover.isOpen) {
-            return;
-        }
-        const popoverTarget = ev.target.closest(".o_gantt_pill_wrapper");
-        this.popover.open(popoverTarget, await this.getPopoverProps(pill));
-    }
-    /**
-     * @override
      */
     async getPopoverProps(pill) {
-        const popoverProps = super.getPopoverProps(pill);
+        const popoverProps = await super.getPopoverProps(...arguments);
         const { record } = pill;
         const partner_ids = record.partner_ids || [];
         let contact_partner_id = false;

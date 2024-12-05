@@ -1018,3 +1018,87 @@ test("default_range not in scales", async () => {
     const { range } = getGridContent();
     expect(range).toBe("2018");
 });
+
+test("kanban_view_id attribute", async () => {
+    Tasks._views["kanban,42"] = `
+        <kanban>
+            <templates>
+                <t t-name="card">
+                    Allocated Hours: <field name="allocated_hours"/>
+                </t>
+            </templates>
+        </kanban>
+    `;
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" kanban_view_id="42"/>`,
+    });
+    expect(`.o_popover`).toHaveCount(0);
+    await contains(SELECTORS.pill).click();
+    expect(`.o_popover`).toHaveCount(1);
+    expect(`.o_popover .popover-header`).toHaveCount(0);
+    await contains(`.o_popover .popover-footer i.fa.fa-close`).click();
+    expect(`.o_popover`).toHaveCount(0);
+});
+
+test("template in arch get favors vs kanban_view_id attribute", async () => {
+    Tasks._views["kanban,42"] = `
+        <kanban>
+            <templates>
+                <t t-name="card">
+                    Allocated Hours: <field name="allocated_hours"/>
+                </t>
+            </templates>
+        </kanban>
+    `;
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt date_start="start" date_stop="stop" kanban_view_id="42">
+                <templates>
+                    <t t-name="gantt-popover">
+                        <div t-esc="display_name"/>
+                    </t>
+                </templates>
+            </gantt>
+        `,
+    });
+    expect(`.o_popover`).toHaveCount(0);
+    await contains(SELECTORS.pill).click();
+    expect(`.o_popover`).toHaveCount(1);
+    expect(`.o_popover .popover-body .o_kanban_record`).toHaveCount(0);
+    expect(`.o_popover .popover-header`).toHaveText("Task 5");
+    expect(`.o_popover .popover-body div`).toHaveText("Task 5");
+    expect(`.o_popover .popover-footer i.fa.fa-close`).toHaveCount(0);
+    await contains(`.o_popover .popover-header i.fa.fa-close`).click();
+    expect(`.o_popover`).toHaveCount(0);
+});
+
+test("if kanban_view_id attribute is not set, kanban view id is retrieved from config", async () => {
+    Tasks._views.kanban = `
+        <kanban>
+            <templates>
+                <t t-name="card">
+                    Allocated Hours: <field name="allocated_hours"/>
+                </t>
+            </templates>
+        </kanban>
+    `;
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop"/>`,
+        config: {
+            views: [
+                [false, "kanban"],
+                [false, "gantt"],
+            ],
+        },
+    });
+    expect(`.o_popover`).toHaveCount(0);
+    await contains(SELECTORS.pill).click();
+    expect(`.o_popover`).toHaveCount(1);
+    expect(`.o_popover .popover-header`).toHaveCount(0);
+    expect(`.o_popover .popover-body .o_kanban_record`).toHaveText("Allocated Hours:\n0.00");
+    await contains(`.o_popover .popover-footer i.fa.fa-close`).click();
+    expect(`.o_popover`).toHaveCount(0);
+});

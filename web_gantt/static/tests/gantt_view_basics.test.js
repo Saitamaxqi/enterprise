@@ -118,7 +118,7 @@ test("ungrouped gantt rendering", async () => {
         stopDateLocalString,
     ]);
 
-    await contains(`.o_popover .popover-header i.fa.fa-close`).click();
+    await contains(`.o_popover .popover-footer i.fa.fa-close`).click();
     expect(`.o_popover`).toHaveCount(0);
 });
 

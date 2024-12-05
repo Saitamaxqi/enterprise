@@ -37,11 +37,15 @@ export const ganttView = {
                 }
             }
 
+            const kanbanViewId =
+                archInfo.kanbanViewId ?? config.views.find(([_, type]) => type === "kanban")?.[0];
+
             modelParams.metaData = {
                 ...omit(archInfo, "displayMode"),
                 fields,
                 resModel,
                 formViewId,
+                kanbanViewId,
             };
             modelParams.displayParams = {
                 displayMode: archInfo.displayMode,

@@ -1,6 +1,6 @@
 import { expect, test, beforeEach } from "@odoo/hoot";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
-import { click } from "@odoo/hoot-dom";
+import { click, queryFirst } from "@odoo/hoot-dom";
 
 import { onRpc, mountView, mockService } from "@web/../tests/web_test_helpers";
 
@@ -83,7 +83,7 @@ test("test custom action for edit gantt popover button", async () => {
     expect(".o_gantt_pill").toHaveCount(1);
     click(".o_gantt_pill");
     await animationFrame();
-    expect(".o_popover .popover-header").toHaveText("Custom Mobile Button Test");
+    expect(queryFirst(".o_popover .popover-body span")).toHaveText("Custom Mobile Button Test");
     click(".o_popover .popover-footer button", { text: "Edit" });
     await animationFrame();
 

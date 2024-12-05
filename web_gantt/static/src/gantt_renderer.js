@@ -1,5 +1,6 @@
 import {
     Component,
+    markup,
     onWillRender,
     onWillStart,
     onWillUpdateProps,
@@ -7,27 +8,27 @@ import {
     useEffect,
     useExternalListener,
     useRef,
-    markup,
 } from "@odoo/owl";
 import { hasTouch, isMobileOS } from "@web/core/browser/feature_detection";
 import { Domain } from "@web/core/domain";
-import {
-    is24HourFormat,
-    serializeDate,
-    serializeDateTime,
-} from "@web/core/l10n/dates";
+import { is24HourFormat, serializeDate, serializeDateTime } from "@web/core/l10n/dates";
 import { localization } from "@web/core/l10n/localization";
 import { _t } from "@web/core/l10n/translation";
 import { usePopover } from "@web/core/popover/popover_hook";
 import { evaluateBooleanExpr } from "@web/core/py_js/py";
+import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
+import { KeepLast } from "@web/core/utils/concurrency";
 import { useService } from "@web/core/utils/hooks";
 import { omit, pick } from "@web/core/utils/objects";
+import { escape, nbsp } from "@web/core/utils/strings";
 import { debounce, throttleForAnimation } from "@web/core/utils/timing";
 import { url } from "@web/core/utils/urls";
-import { escape } from "@web/core/utils/strings";
+import { parseXML } from "@web/core/utils/xml";
 import { useVirtualGrid } from "@web/core/virtual_grid_hook";
+import { extractFieldsFromArchInfo } from "@web/model/relational_model/utils";
 import { formatFloatTime } from "@web/views/fields/formatters";
+import { KanbanRecord } from "@web/views/kanban/kanban_record";
 import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
 import { GanttConnector } from "./gantt_connector";
 import {
@@ -48,6 +49,8 @@ import { GanttPopover } from "./gantt_popover";
 import { GanttRendererControls } from "./gantt_renderer_controls";
 import { GanttResizeBadge } from "./gantt_resize_badge";
 import { GanttRowProgressBar } from "./gantt_row_progress_bar";
+
+const viewRegistry = registry.category("views");
 
 const { DateTime, Interval } = luxon;
 
@@ -190,6 +193,11 @@ export class GanttRenderer extends Component {
         this.actionService = useService("action");
         this.dialogService = useService("dialog");
         this.notificationService = useService("notification");
+        this.viewService = useService("view");
+
+        this.keepLast = new KeepLast();
+
+        this.defaultkanbanViewParams = null;
 
         this.is24HourFormat = is24HourFormat();
 
@@ -236,7 +244,9 @@ export class GanttRenderer extends Component {
             x: 0,
             y: 0,
         };
-        this.popover = usePopover(this.constructor.components.Popover);
+        this.popover = usePopover(this.constructor.components.Popover, {
+            onClose: () => this.onCloseCurrentPopover?.(),
+        });
 
         this.throttledComputeHoverParams = throttleForAnimation((ev) =>
             this.computeHoverParams(ev)
@@ -1314,12 +1324,14 @@ export class GanttRenderer extends Component {
         const yearlessDateFormat = omit(DateTime.DATE_SHORT, "year");
 
         const daysDelta = Interval.fromDateTimes(
-            startDate.startOf("day"), stopDate.startOf("day")
+            startDate.startOf("day"),
+            stopDate.startOf("day")
         ).toDuration(["day", "hour"]).days;
-        const spanAccrossDays = daysDelta && (daysDelta > 2 || (
-            startDate.endOf("day").diff(startDate, "hours").toObject().hours >= 3 &&
-            stopDate.diff(stopDate.startOf("day"), "hours").toObject().hours >= 3
-        ));
+        const spanAccrossDays =
+            daysDelta &&
+            (daysDelta > 2 ||
+                (startDate.endOf("day").diff(startDate, "hours").toObject().hours >= 3 &&
+                    stopDate.diff(stopDate.startOf("day"), "hours").toObject().hours >= 3));
 
         /** @type {string[]} */
         const labelElements = [];
@@ -1327,9 +1339,11 @@ export class GanttRenderer extends Component {
         // Start & End Dates
         if (scaleId === "year" && !spanAccrossDays) {
             labelElements.push(startDate.toLocaleString(yearlessDateFormat));
-        } else if (scaleId === "year" || (spanAccrossDays && (
-            startDate < this.currentStartDate || this.currentStopDate.endOf("day") < stopDate
-        ))) {
+        } else if (
+            scaleId === "year" ||
+            (spanAccrossDays &&
+                (startDate < this.currentStartDate || this.currentStopDate.endOf("day") < stopDate))
+        ) {
             labelElements.push(startDate.toLocaleString(yearlessDateFormat));
             labelElements.push(stopDate.toLocaleString(yearlessDateFormat));
         }
@@ -1633,29 +1647,92 @@ export class GanttRenderer extends Component {
         };
     }
 
+    async _getKanbanViewParams() {
+        const { dateStartField, dateStopField, kanbanViewId, fields, resModel } =
+            this.model.metaData;
+
+        if (kanbanViewId !== undefined) {
+            const result = await this.viewService.loadViews({
+                resModel,
+                views: [[kanbanViewId, "kanban"]],
+            });
+
+            const arch = result.views.kanban.arch;
+            const archXmlDoc = parseXML(arch.replace(/&amp;nbsp;/g, nbsp));
+            // remove some elements/attributes from archXmlDoc
+            archXmlDoc.removeAttribute("highlight_color");
+            const menu = archXmlDoc.querySelector(
+                `templates [t-name=${KanbanRecord.KANBAN_MENU_ATTRIBUTE}]`
+            );
+            menu?.remove();
+
+            const { relatedModels } = result;
+            const { ArchParser } = viewRegistry.get("kanban");
+            const archInfo = new ArchParser().parse(archXmlDoc, relatedModels, resModel);
+            return {
+                archInfo,
+                ...extractFieldsFromArchInfo(archInfo, fields),
+            };
+        }
+        if (!this.defaultkanbanViewParams) {
+            const arch = `
+                <kanban>
+                    <templates>
+                        <field name="${dateStartField}"/>
+                        <field name="${dateStopField}"/>
+                        <t t-name="${KanbanRecord.KANBAN_CARD_ATTRIBUTE}">
+                            <ul class="p-0 mb-0 list-unstyled">
+                                <li class="pe-2">
+                                    <strong>Name</strong>: <field name="display_name"/>
+                                </li>
+                                <li class="pe-2">
+                                    <strong>Start</strong>: <span t-esc="luxon.DateTime.fromISO(record.${dateStartField}.raw_value).toFormat('f')"/>
+                                </li>
+                                <li class="pe-2">
+                                    <strong>Stop</strong>: <span t-esc="luxon.DateTime.fromISO(record.${dateStopField}.raw_value).toFormat('f')"/>
+                                </li>
+                            </ul>
+                        </t>
+                    </templates>
+                </kanban>
+            `;
+            const archXmlDoc = parseXML(arch.replace(/&amp;nbsp;/g, nbsp));
+
+            const relatedModels = { [resModel]: { fields } };
+            const { ArchParser } = viewRegistry.get("kanban");
+            const archInfo = new ArchParser().parse(archXmlDoc, relatedModels, resModel);
+            this.defaultkanbanViewParams = {
+                archInfo,
+                ...extractFieldsFromArchInfo(archInfo, fields),
+            };
+        }
+        return this.defaultkanbanViewParams;
+    }
+
     /**
      * @param {Pill} pill
      */
-    getPopoverProps(pill) {
+    async getPopoverProps(pill) {
         const { record } = pill;
         const { id: resId, display_name: displayName } = record;
-        const { canEdit, dateStartField, dateStopField, popoverArchParams, resModel } =
-            this.model.metaData;
-        const context = popoverArchParams.bodyTemplate
-            ? { ...record }
-            : /* Default context */ {
-                  name: displayName,
-                  start: record[dateStartField].toFormat("f"),
-                  stop: record[dateStopField].toFormat("f"),
-              };
-
+        const { canEdit, popoverArchParams, resModel } = this.model.metaData;
+        const kanbanViewParams = popoverArchParams.bodyTemplate
+            ? {}
+            : await this._getKanbanViewParams();
         return {
             ...popoverArchParams,
+            kanbanViewParams,
+            KanbanRecord,
             title: displayName,
-            context,
+            context: { ...record },
             resId,
             resModel,
-            reload: () => this.model.fetchData(),
+            reloadOnClose: () => {
+                this.onCloseCurrentPopover = () => {
+                    delete this.onCloseCurrentPopover;
+                    this.model.fetchData();
+                };
+            },
             buttons: [
                 {
                     id: "open_view_edit_dialog",
@@ -2416,12 +2493,13 @@ export class GanttRenderer extends Component {
      * @param {PointerEvent} ev
      * @param {Pill} pill
      */
-    onPillClicked(ev, pill) {
+    async onPillClicked(ev, pill) {
         if (this.popover.isOpen) {
             return;
         }
         const target = ev.target.closest(".o_gantt_pill_wrapper");
-        this.popover.open(target, this.getPopoverProps(pill));
+        const props = await this.keepLast.add(this.getPopoverProps(pill));
+        this.popover.open(target, props);
     }
 
     onPlan(rowId, startCol, stopCol) {

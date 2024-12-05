@@ -186,6 +186,20 @@ export class GanttArchParser {
                                 popoverArchParams.displayGenericButtons = true;
                             }
                         }
+                        let hasRemainingChild = false;
+                        for (const child of popoverArchParams.bodyTemplate.childNodes) {
+                            if (child.nodeType === 8) {
+                                continue;
+                            }
+                            if (child.nodeType === 3 && !child.data.trim()) {
+                                continue;
+                            }
+                            hasRemainingChild = true;
+                            break;
+                        }
+                        if (!hasRemainingChild) {
+                            delete popoverArchParams.bodyTemplate;
+                        }
                     }
                 }
             }
@@ -331,6 +345,7 @@ function getInfoFromRootNode(rootNode) {
         displayTotalRow: exprToBoolean(attrs.total_row),
         displayUnavailability: exprToBoolean(attrs.display_unavailability),
         formViewId: attrs.form_view_id ? parseInt(attrs.form_view_id, 10) : false,
+        kanbanViewId: attrs.kanban_view_id ? evaluateExpr(attrs.kanban_view_id) : null,
         offset: attrs.offset,
         pagerLimit: attrs.groups_limit ? parseInt(attrs.groups_limit, 10) : null,
         pillDecorations,

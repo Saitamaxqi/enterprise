@@ -1,4 +1,5 @@
 import { Component, useRef } from "@odoo/owl";
+import { Record } from "@web/model/record";
 import { ViewButton } from "@web/views/view_button/view_button";
 import { useViewButtons } from "@web/views/view_button/view_button_hook";
 import { useViewCompiler } from "@web/views/view_compiler";
@@ -6,31 +7,33 @@ import { GanttCompiler } from "./gantt_compiler";
 
 export class GanttPopover extends Component {
     static template = "web_gantt.GanttPopover";
-    static components = { ViewButton };
+    static components = { ViewButton, Record };
     static props = [
-        "title",
+        "title?",
         "displayGenericButtons",
         "bodyTemplate?",
         "footerTemplate?",
+        "KanbanRecord?",
+        "kanbanViewParams?",
         "resModel",
         "resId",
         "context",
         "close",
-        "reload",
+        "reloadOnClose",
         "buttons",
     ];
 
     setup() {
         this.rootRef = useRef("root");
 
-        this.templates = { body: "web_gantt.GanttPopover.default" };
+        this.templates = {};
         const toCompile = {};
         const { bodyTemplate, footerTemplate } = this.props;
         if (bodyTemplate) {
             toCompile.body = bodyTemplate;
-            if (footerTemplate) {
-                toCompile.footer = footerTemplate;
-            }
+        }
+        if (footerTemplate) {
+            toCompile.footer = footerTemplate;
         }
         Object.assign(
             this.templates,
@@ -38,11 +41,25 @@ export class GanttPopover extends Component {
         );
 
         useViewButtons(this.rootRef, {
-            reload: async () => {
-                await this.props.reload();
+            reload: () => {
+                this.props.reloadOnClose();
                 this.props.close();
             },
         });
+
+        this.displayPopoverHeader = Boolean(this.templates.body);
+        if (!this.templates.body) {
+            const { kanbanViewParams, resId, resModel } = this.props;
+            const { activeFields, archInfo, fields } = kanbanViewParams;
+            this.recordProps = {
+                resModel,
+                resId,
+                activeFields,
+                fields,
+                onRecordSaved: this.props.reloadOnClose,
+            };
+            this.kanbanRecordProps = { archInfo };
+        }
     }
 
     get renderingContext() {

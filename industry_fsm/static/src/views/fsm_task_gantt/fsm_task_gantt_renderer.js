@@ -11,8 +11,8 @@ export class FsmTaskGanttRenderer extends TaskGanttRenderer {
         return props;
     }
 
-    getPopoverProps(pill) {
-        const props = super.getPopoverProps(pill);
+    async getPopoverProps(pill) {
+        const props = await super.getPopoverProps(...arguments);
         if (this.env.isSmall) {
             props.buttons.find((obj) => obj.id === "open_view_edit_dialog").onClick = () => {
                 const resId = pill.record.id;

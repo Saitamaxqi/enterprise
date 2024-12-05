@@ -2349,7 +2349,7 @@ test("date fields: popover", async () => {
         startDateLocalString,
         stopDateLocalString,
     ]);
-    await contains(".o_popover .popover-header i.fa.fa-close").click();
+    await contains(".o_popover .popover-footer i.fa.fa-close").click();
     expect(".o_popover").toHaveCount(0);
 });
 
@@ -2380,4 +2380,76 @@ test("date fields: dialog", async () => {
     const modal = queryOne(".modal");
     expect(modal.querySelector(".o_field_widget[name=start] input")).toHaveValue("12/20/2018");
     expect(modal.querySelector(".o_field_widget[name=stop] input")).toHaveValue("12/22/2018");
+});
+
+test("gantt popover: on close, reload if record changed", async () => {
+    Tasks._fields.user_ids = fields.Many2many({
+        string: "Assignees",
+        relation: "res.users",
+    });
+    Tasks._records = Tasks._records.slice(0, 1);
+    Tasks._records[0].user_ids = [1];
+    Tasks._views.kanban = `
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <field name="user_ids" widget="many2many_tags_avatar"/>
+                    </t>
+                </templates>
+            </kanban>
+        `;
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" kanban_view_id="42" />`,
+        groupBy: ["user_ids"],
+    });
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    level: 0,
+                    title: "Task 1",
+                },
+            ],
+            title: "User 1",
+        },
+    ]);
+    expect(`.o_popover`).toHaveCount(0);
+    // open gantt popover
+    await contains(SELECTORS.pill).click();
+    expect(`.o_popover`).toHaveCount(1);
+    // open avatar field popover
+    await contains(".popover-body .o_quick_assign", { visible: false }).click();
+    // add User 2 to tags
+    await contains(
+        ".o-overlay-container .o-autocomplete--dropdown-item:contains('User 2')"
+    ).click();
+    // close avatar field popover
+    await press("escape");
+    await animationFrame();
+    // close gantt popover
+    await contains(`.o_popover .popover-footer i.fa.fa-close`).click();
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    level: 0,
+                    title: "Task 1",
+                },
+            ],
+            title: "User 1",
+        },
+        {
+            pills: [
+                {
+                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    level: 0,
+                    title: "Task 1",
+                },
+            ],
+            title: "User 2",
+        },
+    ]);
 });

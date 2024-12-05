@@ -191,8 +191,8 @@ export class TaskGanttRenderer extends GanttRenderer {
         }
     }
 
-    getPopoverProps(pill) {
-        const props = super.getPopoverProps(...arguments);
+    async getPopoverProps(pill) {
+        const props = await super.getPopoverProps(...arguments);
         const { record } = pill;
         if (record.planning_overlap) {
             props.context.planningOverlapHtml = markup(record.planning_overlap);
