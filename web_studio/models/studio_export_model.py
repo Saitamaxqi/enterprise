@@ -71,7 +71,7 @@ PRESET_MODELS_DEFAULTS = [
     ("sale.order.template.line", {}),
     ("knowledge.cover", {"include_attachment": True}),
     ("knowledge.article", {"domain": "[('category', 'in', ['workspace', 'shared'])]"}),
-    ("website", {"is_demo_data": True, "domain": "[]"}),
+    ("website", {"is_demo_data": True}),
     ("website.page", {"is_demo_data": True}),
     ("website.menu", {"is_demo_data": True}),
     ("stock.lot", {"is_demo_data": True}),
