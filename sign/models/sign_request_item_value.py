@@ -1,7 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_compare
 
 
 class SignRequestItemValue(models.Model):
@@ -18,10 +19,21 @@ class SignRequestItemValue(models.Model):
     frame_value = fields.Text()
     frame_has_hash = fields.Boolean()
 
-    def write(self, vals):
-        for request_item in self:
-            if updated_value := vals.get("value"):
-                if request_item.sign_item_id.constant and updated_value != request_item.value:
-                    raise UserError(_("Cannot update the value of a read-only sign item"))
+    @api.model
+    def _is_number(self, value_str):
+        try:
+            float(value_str)
+            is_number = True
+        except ValueError:
+            is_number = False
+        return is_number
 
+    def write(self, vals):
+        for request_item_value in self:
+            if updated_value := vals.get("value"):
+                value_is_updated = request_item_value.sign_item_id.constant and updated_value != request_item_value.value
+                if value_is_updated and self._is_number(updated_value) and self._is_number(request_item_value.value):
+                    value_is_updated = float_compare(float(updated_value), float(request_item_value.value), precision_digits=2)
+                if value_is_updated:
+                    raise UserError(_("Cannot update the value of a read-only sign item"))
         return super().write(vals)

@@ -51,7 +51,6 @@ class SignItem(models.Model):
             if record.constant and record.type_id.item_type in ['signature', 'initial', 'selection', 'checkbox', 'radio']:
                 raise ValidationError(self.env._("Read-only can only be applied to items of the following types: 'Text', 'Name', 'Email', 'Phone', 'Company', 'Multiline', 'Date', 'Strikethrough'"))
 
-
     @api.autovacuum
     def _gc_radio_set_and_options(self):
         # Unlink orphaned radio sets that has no sign items linked to it

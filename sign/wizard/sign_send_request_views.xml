@@ -10,8 +10,15 @@
                 </div>
                 <group>
                     <group>
-                        <field name="template_id" context="{'kanban_view_ref': 'sign.sign_template_view_kanban_mobile'}" invisible="has_default_template" options="{'no_create': True}"/>
-                        <field name="signer_ids" colspan="2" nolabel="1" widget="signer_x2many" invisible="signers_count == 0"></field>
+                        <field name="available_template_ids" invisible="1"/>
+                        <field name="template_id"
+                            context="{'kanban_view_ref': 'sign.sign_template_view_kanban_mobile'}"
+                            invisible="has_default_template"
+                            options="{'no_create': True}"
+                            domain="[('id', 'in', available_template_ids)]"
+                            required="1"
+                        />
+                        <field name="signer_ids" colspan="2" nolabel="1" widget="signer_x2many" invisible="signers_count == 0" force_save="1"/>
                         <div class="d-flex flex-row align-items-center" colspan="2" invisible="signers_count &lt; 2 or context.get('sign_directly_without_mail',False)">
                             <field name="set_sign_order" nolabel="1" widget="boolean_toggle" class="oe_inline" options="{'autosave': false}"/>
                             <label for="set_sign_order" class="fw-bold"/>
@@ -19,6 +26,7 @@
                         <field name="signer_id" string="Contacts" class="w-90" invisible="signers_count != 0 or not template_id" required="signers_count == 0" options="{'no_quick_create': True}" context="{'show_email': True, 'form_view_ref': 'base.view_partner_simple_form'}"/>
                     </group>
                     <group invisible="context.get('sign_directly_without_mail', False)">
+
                         <field name="validity"/>
                         <label for="reminder_enabled" string="Reminders"/>
                         <div class="col">
@@ -34,7 +42,7 @@
                         <div class="o_horizontal_separator mb-2 text-uppercase fw-bolder small" colspan="2">
                             Options
                         </div>
-                        <field name="subject" placeholder="Signature Request"/>
+                        <field name="subject" placeholder="Signature Request" required="1"/>
                         <field name="cc_partner_ids" widget="many2many_tags" string="Contacts in copy" placeholder="Write email or search contact..." context="{'show_email': True}"/>
                         <div invisible="not cc_partner_ids" colspan="2">
                             <field name="message_cc" placeholder="Optional Message..."/>

@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from odoo import Command
 from odoo.tests import tagged
 from odoo.addons.sign.tests.sign_request_common import SignRequestCommon
 
@@ -102,3 +103,52 @@ class TestSignRequest(SignRequestCommon):
         self.assertEqual(default_signer, expense.employee_id.work_contact_id.id,
             "Default signer should be the employee's work contact ID"
         )
+
+    def test_sign_request_auto_value(self):
+        sale_order = self.env['sale.order'].sudo().create({
+            'partner_id': self.env.user.partner_id.id,
+            'order_line': [Command.create({
+                    'product_id': self.product.id,
+                    'price_unit': 500,
+                }),
+            ],
+        })
+        sale_order.action_confirm()
+        type_id = self.env["sign.item.type"].create({
+            'name': 'SO amount',
+            'item_type': 'text',
+            'model_id': self.env['ir.model']._get_id('sale.order'),
+            'auto_field': 'amount_total',
+        })
+        template_constant = self.env['sign.template'].create({
+            'name': 'template_constant',
+        })
+        document_id = self.env['sign.document'].create({
+            'attachment_id': self.attachment.id,
+            'template_id': template_constant.id,
+        })
+        self.env['sign.item'].create([{
+            'type_id': type_id.id,
+            'required': True,
+            'responsible_id': self.env.ref('sign.sign_item_role_customer').id,
+            'page': 1,
+            'posX': 0.273,
+            'posY': 0.158,
+            'document_id': document_id.id,
+            'width': 0.150,
+            'height': 0.015,
+            'constant': True,
+        }])
+        sign_request = self.env['sign.request'].with_context(no_sign_mail=False).create({
+            'template_id': template_constant.id,
+            'reference': "TEST",
+            'reference_doc': f"sale.order,{sale_order.id}",
+            'request_item_ids': [Command.create({
+                'partner_id': self.partner_1.id,
+                'role_id': self.env.ref('sign.sign_item_role_customer').id,
+            })],
+        })
+        item_value = self.env['sign.request.item.value'].search([('sign_request_id', '=', sign_request.id)])
+        fetched_value = sign_request.request_item_ids._get_auto_field_value(type_id)
+        self.assertEqual(sale_order.amount_total, fetched_value)
+        self.assertEqual(str(sale_order.amount_total), item_value.value)

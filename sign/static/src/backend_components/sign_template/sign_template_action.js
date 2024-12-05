@@ -34,7 +34,6 @@ export class SignTemplate extends Component {
         }
         this.actionType = params.sign_edit_call || "";
         this.resModel = params.resModel || "";
-        this.referenceDoc = this.props.action.context.default_reference_doc;
         this.signStatus = useState({
             isTemplateChanged: false,
             // isSignTemplateSaved is used as a flag to know if the template is saved or not.
@@ -285,7 +284,7 @@ export class SignTemplate extends Component {
     async fetchTemplateData() {
         const template = await this.orm.call("sign.template", "read", [
             [this.templateID],
-            ["id", "has_sign_requests", "responsible_count", "display_name", "active"],
+            ["id", "has_sign_requests", "responsible_count", "display_name", "active", "model_name"],
         ]);
 
         if (!template.length) {
@@ -326,7 +325,12 @@ export class SignTemplate extends Component {
     }
 
     async fetchSignItemTypes() {
-        this.signItemTypes = await this.orm.call("sign.item.type", "search_read", [], {
+        let domain = ['|', ['model_name', '=', false], ['model_name', '=', 'res.partner']];
+        const modelName = this.signTemplate.model_name;
+        if (modelName) {
+            domain = ['|', ['model_name', '=', false], ['model_name', 'in', [modelName, 'res.partner']]];
+        }
+        this.signItemTypes = await this.orm.call("sign.item.type", "search_read", [domain], {
             context: user.context,
         });
     }
@@ -418,9 +422,9 @@ export class SignTemplate extends Component {
     }
 
     /**
-     * 
-     * @param {Number} documentId 
-     * @param {Number} direction 
+     *
+     * @param {Number} documentId
+     * @param {Number} direction
      * Moves the document up (direction = -1) or down (direction = 1) in the list of documents,
      * by swapping the sequence numbers of the two documents.
      */

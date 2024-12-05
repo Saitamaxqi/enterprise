@@ -46,6 +46,12 @@ class SignTemplate(models.Model):
     has_sign_requests = fields.Boolean(compute="_compute_has_sign_requests", compute_sudo=True, store=True)
 
     is_sharing = fields.Boolean(compute='_compute_is_sharing', help='Checked if this template has created a shared document for you')
+    # Other model integration
+    model_id = fields.Many2one('ir.model', domain=[
+        ('model', 'not in', ['sign.request', 'sign.template']),
+        ('is_mail_thread', '=', 'True')
+    ])
+    model_name = fields.Char(related='model_id.model', string="Model Name")
 
     @api.model
     def name_search(self, name='', domain=None, operator='ilike', limit=100):
@@ -163,6 +169,7 @@ class SignTemplate(models.Model):
             'name': "Template \"%(name)s\"" % {'name': self.name},
             'type': 'ir.actions.client',
             'tag': 'sign.Template',
+            'context': self.env.context,
             'params': {
                 'id': self.id,
                 'sign_directly_without_mail': sign_directly_without_mail,
@@ -341,7 +348,6 @@ class SignTemplate(models.Model):
             'tag': 'sign.Template',
             'name': template.name,
             'params': {
-                'sign_edit_call': 'sign_send_request',
                 'id': template.id,
                 'sign_directly_without_mail': False
             }
@@ -380,7 +386,7 @@ class SignTemplate(models.Model):
         """ Extract a unique list of role IDs and colors from self.sign_item_ids, adding an index. """
         self.ensure_one()
         roles_info = []
-        for idx, role in enumerate(self.sign_item_ids.responsible_id):
+        for idx, role in enumerate(self.sign_item_ids.responsible_id.sorted()):
             roles_info.append({
                 'id': idx,
                 'roleId': role.id,
@@ -425,3 +431,29 @@ class SignTemplate(models.Model):
             raise UserError(self.env._("PDF File is corrupted. Please try with another file.")) from e
 
         return template_data['id'], template_data['name']
+
+    def open_sign_send_dialog(self):
+        """ Create and open dialog. This is needed to be able to compute the values without onchange and default.
+        """
+        context = dict(self.env.context)
+        template = self and self[:1]
+        default_activity_id = context.get('default_activity_id')
+        is_activity = False
+        if default_activity_id:
+            activity = self.env['mail.activity'].browse(default_activity_id)
+            if activity_template := activity.activity_type_id.default_sign_template_id:
+                if activity_template.has_access('read'):
+                    is_activity = True
+                    template = activity_template
+        context.update({'default_template_id': template and template.id})
+        if template.exists() and not is_activity:
+            # Hide the template_id field
+            context.update({'default_has_default_template': True})
+        if context.get('default_reference_doc'):
+            context.update({'sign_from_record': True})
+        action = self.env['ir.actions.act_window']._for_xml_id('sign.action_sign_send_request')
+        action.update({
+            'context': context,
+            'target': 'new',
+        })
+        return action

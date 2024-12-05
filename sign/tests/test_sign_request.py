@@ -408,11 +408,11 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertEqual(mail.reply_to, responsible_email, 'reply_to is not set as the responsible email')
 
     def test_sign_send_request_without_order(self):
-        wizard = Form(self.env['sign.send.request'].with_context(active_id=self.template_3_roles.id, sign_directly_without_mail=False))
+        wizard = Form(self.env['sign.send.request'].with_context(default_template_id=self.template_3_roles.id, sign_directly_without_mail=False))
         self.assertEqual([record['mail_sent_order'] for record in wizard.signer_ids._records], [1, 1, 1])
 
     def test_sign_send_request_order_with_order(self):
-        wizard = Form(self.env['sign.send.request'].with_context(active_id=self.template_3_roles.id, sign_directly_without_mail=False))
+        wizard = Form(self.env['sign.send.request'].with_context(default_template_id=self.template_3_roles.id, sign_directly_without_mail=False))
         wizard.set_sign_order = True
         self.assertEqual([record['mail_sent_order'] for record in wizard.signer_ids._records], [1, 2, 3])
 
@@ -448,20 +448,23 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         })
 
         # No default template is set for activity type
-        wizard = Form(self.env['sign.send.request'].with_context(default_activity_id=activity.id))
-        self.assertEqual(self.env['sign.template'], wizard.template_id)
+        action = self.env['sign.template'].with_context(default_activity_id=activity.id).open_sign_send_dialog()
+        wizard = self.env['sign.send.request'].with_context(action['context']).new()
+        self.assertFalse(wizard.template_id)
 
         # Default template is set for activity type
         activity_type.write({'default_sign_template_id': self.template_1_role.id})
 
         # Login user is not set as responsible(Template is not accessible)
-        self.env = self.env(user=self.user_1)
-        wizard = Form(self.env['sign.send.request'].with_context(default_activity_id=activity.id))
-        self.assertEqual(self.env['sign.template'], wizard.template_id)
+        env = self.env(user=self.user_1)
+        action = env['sign.template'].with_context(default_activity_id=activity.id).open_sign_send_dialog()
+        wizard = self.env['sign.send.request'].with_context(action['context']).new()
+        self.assertFalse(wizard.template_id)
 
         # Login user is set as responsible(Template is accessible)
         self.template_1_role.write({'user_id': self.user_1.id})
-        wizard = Form(self.env['sign.send.request'].with_context(default_activity_id=activity.id))
+        action = self.env['sign.template'].with_context(default_activity_id=activity.id, arj=True).open_sign_send_dialog()
+        wizard = self.env['sign.send.request'].with_context(action['context']).new()
         self.assertEqual(self.template_1_role, wizard.template_id)
 
     @users('admin')

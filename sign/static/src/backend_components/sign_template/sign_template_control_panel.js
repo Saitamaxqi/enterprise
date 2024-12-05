@@ -27,7 +27,6 @@ export class SignTemplateControlPanel extends Component {
         hasSignersWithoutItems: { type: Boolean },
         documentId: { type: Number },
         onEditTemplate: { type: Function },
-        referenceDoc: { optional: true, type: String },
     };
 
     setup() {
@@ -61,31 +60,35 @@ export class SignTemplateControlPanel extends Component {
 
     async onSendClick() {
         await this.saveBeforeAction();
-        this.action.doAction("sign.action_sign_send_request", {
-            additionalContext: {
-                active_id: this.props.signTemplate.id,
+        return this.action.doActionButton({
+            type: "object",
+            resModel: "sign.template",
+            name:"open_sign_send_dialog",
+            resIds: [this.props.signTemplate.id],
+            context: {
                 sign_directly_without_mail: false,
                 show_email: true,
                 has_signers_without_items: this.props.hasSignersWithoutItems,
-                default_reference_doc: this.props.referenceDoc,
             },
         });
     }
 
     async saveBeforeAction() {
         if (this.props.signStatus.isTemplateChanged) {
-            await this.props.signStatus.save();
+            await Promise.all([await this.props.signStatus.save()]);
         }
     }
 
     async onSignNowClick() {
         await this.saveBeforeAction();
-        this.action.doAction("sign.action_sign_send_request", {
-            additionalContext: {
-                active_id: this.props.signTemplate.id,
+        return this.action.doActionButton({
+            type: "object",
+            resModel: "sign.template",
+            name:"open_sign_send_dialog",
+            resIds: [this.props.signTemplate.id],
+            context: {
                 sign_directly_without_mail: true,
                 has_signers_without_items: this.props.hasSignersWithoutItems,
-                default_reference_doc: this.props.referenceDoc,
             },
         });
     }

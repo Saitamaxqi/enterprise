@@ -346,11 +346,11 @@ class SignRequest(models.Model):
         if not default_action:
             default_action = {}
         # user might not have access to Action Window model
-        action_rec = self.env['ir.actions.act_window'].sudo().search([
+        action_rec_sudo = self.env['ir.actions.act_window'].sudo().sudo().search([
             ('res_model', '=', self.reference_doc._name),
             ('context', 'not ilike', 'active_id')], limit=1)
-        if action_rec:
-            action = action_rec._get_action_dict()
+        if action_rec_sudo:
+            action = action_rec_sudo._get_action_dict()
             action.update({
                 "views": [(False, "form")],
                 "view_mode":  'form',

@@ -2,7 +2,6 @@ import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { registry } from "@web/core/registry";
 import { Component } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
-import { _t } from "@web/core/l10n/translation";
 
 const cogMenuRegistry = registry.category("cogMenu");
 
@@ -30,22 +29,17 @@ export class SignRequestCogMenu extends Component {
         const resId = this.action.currentController.currentState?.resId;
         const referenceDoc = resId && resModel ? `${resModel},${resId}` : false;
         if (referenceDoc) {
-            this.action.doAction(
-                {
-                    name: _t("Signature Request"),
-                    type: "ir.actions.act_window",
-                    view_mode: "form",
-                    views: [[false, "form"]],
-                    target: "new",
-                    res_model: "sign.send.request",
-                },
-                {
-                    additionalContext: {
+            this.action.doActionButton({
+                    type: "object",
+                    resModel: "sign.template",
+                    name:"open_sign_send_dialog",
+                    resIds: [],
+                    context: {
                         sign_directly_without_mail: false,
                         default_reference_doc: referenceDoc,
+                        sign_from_record: true,
                     },
-                }
-            );
+            });
         }
     }
 }

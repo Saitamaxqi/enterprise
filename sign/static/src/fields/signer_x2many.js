@@ -19,6 +19,7 @@ export class SignerX2Many extends X2ManyField {
     get partnerIdFieldInfo() {
         return {
             name: "partner_id",
+            forceSave: true,
             additionalProps: {
                 readonly: false,
                 placeholder: _t("Type a name or email..."),

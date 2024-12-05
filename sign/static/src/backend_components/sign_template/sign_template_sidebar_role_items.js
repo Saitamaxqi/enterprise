@@ -49,6 +49,7 @@ export class SignTemplateSidebarRoleItems extends Component {
             selection: "fa-angle-down",
             strikethrough: "fa-strikethrough",
         };
+        // MASTER: this should be done in batch in SignTemplateSidebar
         this.orm.call("sign.item.role", "read", [this.props.roleId]).then((role) => {
             this.state.roleName = role[0].name;
         });

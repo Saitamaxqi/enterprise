@@ -14,7 +14,7 @@
                 <field name="create_date"/>
                 <templates>
                     <div t-name="menu">
-                        <a role="menuitem" type="object" name="go_to_custom_template" class="d-none d-md-block dropdown-item" context="{'sign_edit_call': 'sign_template_edit'}">Edit</a>
+                        <a role="menuitem" type="object" name="go_to_custom_template" class="d-none d-md-block dropdown-item">Edit</a>
                         <a role="menuitem" type="object" name="stop_sharing" class="dropdown-item" invisible="not is_sharing">Stop Sharing</a>
                         <a role="menuitem" type="object" name="action_duplicate" class="dropdown-item">Duplicate</a>
                         <a role="menuitem" type="object" name="action_archive" class="dropdown-item" t-if="record.active.raw_value">Archive</a>
@@ -80,15 +80,15 @@
                             <div class="col-lg-3 col-sm-12 col-12 my-3 py-0 o_kanban_record_bottom">
                                 <div class="oe_kanban_bottom_left float-lg-end">
                                     <button
-                                        name="%(sign.action_sign_send_request)d"
-                                        type="action"
+                                        name="open_sign_send_dialog"
+                                        type="object"
                                         class="btn btn-primary me-1"
                                         context="{'sign_directly_without_mail': 0, 'show_email': 1}">
                                         Send
                                     </button>
                                     <button
-                                        name="%(sign.action_sign_send_request)d"
-                                        type="action"
+                                        name="open_sign_send_dialog"
+                                        type="object"
                                         class="btn btn-primary me-1"
                                         context="{'sign_directly_without_mail': 1}">
                                         Sign Now
@@ -123,8 +123,8 @@
                 <field name="sign_item_ids" string="Signature fields" optional="hide"/>
                 <field name="active" column_invisible="True"/>
                 <field name="signed_count" string="Signed documents" optional="hide" width="125px"/>
-                <button name="%(sign.action_sign_send_request)d" string="Send" type="action" context="{'sign_directly_without_mail': 0, 'show_email': 1}"/>
-                <button name="%(sign.action_sign_send_request)d" string="Sign Now" type="action" context="{'sign_directly_without_mail': 1}"/>
+                <button name="open_sign_send_dialog" string="Send" type="object" context="{'sign_directly_without_mail': 0, 'show_email': 1}"/>
+                <button name="open_sign_send_dialog" string="Sign Now" type="object" context="{'sign_directly_without_mail': 1}"/>
                 <button name="open_shared_sign_request" string="Share" type="object" invisible="is_sharing or not active or responsible_count &gt; 1"/>
                 <button name="stop_sharing" string="Stop sharing" type="object" invisible="not is_sharing"/>
             </list>
@@ -161,6 +161,7 @@
                             <field name="active" invisible="1"/>
                             <field name="responsible_count" invisible="1"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="Tags"/>
+                            <field name="model_id"/>
                             <field name="redirect_url" widget="url"/>
                             <field name="redirect_url_text"  invisible="not redirect_url" required="bool(redirect_url)"/>
                         </group>
@@ -220,6 +221,9 @@
                 <searchpanel class="searchpanel-xs-hide">
                     <field name="tag_ids" select="multi" icon="fa-tag" enable_counters="1"/>
                 </searchpanel>
+                <group>
+                    <filter string="Model" name="group_by_model" domain="[]" context="{'group_by': 'model_id'}"/>
+                </group>
             </search>
         </field>
     </record>
@@ -260,11 +264,11 @@
                 <field name="type_id"/>
                 <field name="required"/>
                 <field name="responsible_id"/>
-                <field name="page"/>
-                <field name="posX"/>
-                <field name="posY"/>
-                <field name="width"/>
-                <field name="height"/>
+                <field name="page" string="Page"/>
+                <field name="posX" optional="hide"/>
+                <field name="posY" optional="hide"/>
+                <field name="width" optional="hide"/>
+                <field name="height" optional="hide"/>
             </list>
         </field>
     </record>
@@ -423,7 +427,7 @@
     <menuitem id="menu_sign_configuration" sequence="100" name="Configuration" parent="menu_document"/>
     <!-- Menus -->
     <menuitem id="sign.sign_item_settings_menu" name="Settings" parent="sign.menu_sign_configuration" action="sign_settings_action" groups="sign.group_sign_manager"/>
-    <menuitem id="sign.sign_item_type_menu" name="Field Types" parent="sign.menu_sign_configuration" action="sign_item_type_action" groups="base.group_no_one"/>
+    <menuitem id="sign.sign_item_type_menu" name="Field Types" parent="sign.menu_sign_configuration" action="sign_item_type_action"/>
     <menuitem id="sign.sign_template_tag_menu" name="Tags" parent="sign.menu_sign_configuration" action="sign_template_tag_action" groups="sign.group_sign_manager"/>
     <menuitem id="sign_report_green_savings" name="Green Savings" parent="sign_reports" action="sign.sign_report_green_savings_action"/>
     <menuitem id="sign_request_my_documents" name="My Documents" parent="sign_request_menu" action="sign_request_action" sequence="10"/>

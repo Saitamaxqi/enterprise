@@ -16,16 +16,14 @@
                         <i class="fa fa-save fa-fw"/> Save as Template
                     </DropdownItem>
                 </t>
-                <t t-if="env.debug">
-                    <DropdownItem class="'o_menu_item'" onSelected.bind="onTemplatePropertiesClick">
-                        <i class="fa fa-cog fa-fw"/> Configuration
-                    </DropdownItem>
-                </t>
                 <t t-if="props.manageTemplateAccess">
                     <DropdownItem class="'o_menu_item'" onSelected.bind="onAccessRightsClick">
                         <i class="fa fa-group fa-fw"/> Access Rights
                     </DropdownItem>
                 </t>
+                <DropdownItem class="'o_menu_item'" onSelected.bind="onTemplatePropertiesClick">
+                    <i class="fa fa-cog fa-fw"/> Configuration
+                </DropdownItem>
                 <DropdownItem class="'o_menu_item'" onSelected.bind="onPreviewClick">
                     <i class="fa fa-eye fa-fw"/> Preview
                 </DropdownItem>

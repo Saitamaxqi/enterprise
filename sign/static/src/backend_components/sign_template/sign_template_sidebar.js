@@ -74,6 +74,7 @@ export class SignTemplateSidebar extends Component {
     }
 
     getSidebarRoleItemsProps(id) {
+        //  TODO MASTER: we should put the role name here. it would prevent one rpc per role...
         const signer = this.props.signers.find(signer => signer.id === id);
         return {
             id: id,

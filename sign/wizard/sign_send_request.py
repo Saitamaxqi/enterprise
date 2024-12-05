@@ -10,65 +10,6 @@ class SignSendRequest(models.TransientModel):
     _name = 'sign.send.request'
     _description = 'Sign send request'
 
-    @api.model
-    def default_get(self, fields):
-        res = super(SignSendRequest, self).default_get(fields)
-        if res.get('template_id'):
-            template = self.env['sign.template'].browse(res['template_id'])
-            res['has_default_template'] = True
-        elif res.get('activity_id'):
-            activity = self.env['mail.activity'].browse(res['activity_id'])
-            if template := activity.activity_type_id.default_sign_template_id:
-                if not template.has_access('read'):
-                    return res
-                res['template_id'] = template.id
-            else:
-                return res
-        else:
-            return res
-        template._check_send_ready()
-        if 'filename' in fields:
-            res['filename'] = template.display_name
-        if 'subject' in fields:
-            res['subject'] = self.env._("Signature Request - %(file_name)s", file_name=template.name)
-        if 'signers_count' in fields or 'signer_ids' in fields or 'signer_id' in fields:
-            roles = template.sign_item_ids.responsible_id.sorted()
-            if 'signers_count' in fields:
-                res['signers_count'] = len(roles)
-            if self.env.context.get('sign_directly_without_mail'):
-                default_signer = res.get("signer_id") or self.env.user.partner_id.id
-                if not roles and 'signer_id' in fields:
-                    res['signer_id'] = default_signer
-        return res
-
-    @api.model
-    def _default_signer_ids(self):
-        template = self.env['sign.template']
-        if self.env.context.get('active_model') == 'sign.template':
-            template = self.env['sign.template'].browse(self.env.context.get('active_id'))
-        if not template:
-            return []
-        template._check_send_ready()
-        default_signer = self._get_default_signer()
-        roles = template.sign_item_ids.responsible_id.sorted()
-        signer_ids = []
-        user_role_id = self.env['ir.model.data']._xmlid_to_res_id('sign.sign_item_role_user')
-        for default_signing_order, role in enumerate(roles):
-            signer_vals = {
-               'role_id': role.id,
-               'partner_id': False,
-               'mail_sent_order': default_signing_order + 1 if self.set_sign_order else 1,
-            }
-            if len(roles) == 1:
-                # sigle signer always get the current partner default value
-                signer_vals['partner_id'] = default_signer
-            else:
-                if role.id == user_role_id:
-                    signer_vals['partner_id'] = default_signer
-                    break
-            signer_ids.append((0, 0, signer_vals))
-        return signer_ids
-
     def _selection_target_model(self):
         return [(model.model, model.name) for model in self.env['ir.model'].sudo().search(
             [
@@ -80,26 +21,25 @@ class SignSendRequest(models.TransientModel):
     activity_id = fields.Many2one('mail.activity', 'Linked Activity', readonly=True)
     reference_doc = fields.Reference(string="Linked to", selection='_selection_target_model', readonly=True)
     has_default_template = fields.Boolean()
-    template_id = fields.Many2one(
-        'sign.template', required=True, ondelete='cascade',
-        default=lambda self: self.env.context.get('active_id', None),
-    )
-    signer_ids = fields.One2many('sign.send.request.signer', 'sign_send_request_id', string="Signers", default=_default_signer_ids)
+    available_template_ids = fields.Many2many(comodel_name='sign.template', compute='_compute_available_template_ids')
+    template_id = fields.Many2one('sign.template', string="Sign Template", ondelete='cascade')
+
+    signer_ids = fields.One2many('sign.send.request.signer', 'sign_send_request_id', string="Signers", compute='_compute_signer_ids', store=True)
     set_sign_order = fields.Boolean(string="Signing Order",
                                     help="""Specify the order for each signer. The signature request only gets sent to \
                                     the next signers in the sequence when all signers from the previous level have \
                                     signed the document.
                                     """)
     signer_id = fields.Many2one('res.partner', string="Send To")
-    signers_count = fields.Integer()
+    signers_count = fields.Integer(compute='_compute_signers_count')
     cc_partner_ids = fields.Many2many('res.partner', string="Copy to", help="Contacts in copy will be notified by email once the document is either fully signed or refused.")
     is_user_signer = fields.Boolean(compute='_compute_is_user_signer')
 
-    subject = fields.Char(string="Subject", required=True)
+    subject = fields.Char(string="Subject", compute='_compute_subject', store=True)
     message = fields.Html("Message", help="Message to be sent to signers of the specified document")
     message_cc = fields.Html("CC Message", help="Message to be sent to contacts in copy of the signed document")
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
-    filename = fields.Char("Filename", required=False)
+    filename = fields.Char("Filename", compute='_compute_filename', store=True)
 
     validity = fields.Date(string='Valid Until', default=lambda self: fields.Date.today() + relativedelta(months=6), help="Leave empty for requests without expiration.")
     reminder_enabled = fields.Boolean(default=False)
@@ -117,8 +57,7 @@ class SignSendRequest(models.TransientModel):
             self.reminder = 365
 
     def _get_default_signer(self):
-        """
-        Helper method to define default signer (see hr_recruitment_sign/wizard/sign_send_request.py).
+        """Helper method to define default signer (see hr_recruitment_sign/wizard/sign_send_request.py).
         """
         if self.reference_doc or self.env.context.get('default_reference_doc'):
             ref = self.reference_doc
@@ -143,41 +82,67 @@ class SignSendRequest(models.TransientModel):
 
         return self.env.context.get("default_signer_id", self.env.user.partner_id.id)
 
-    @api.onchange('template_id', 'set_sign_order')
-    def _onchange_template_id(self):
-        self.signer_id = False
-        self.filename = self.template_id.display_name
-        self.subject = self.env._("Signature Request - %s", self.template_id.name or '')
-        roles = self.template_id.mapped('sign_item_ids.responsible_id').sorted()
-        if self.signer_ids and len(self.signer_ids) == len(roles):
-            signer_ids = [(0, 0, {
-                'role_id': signer.role_id,
-                'partner_id': signer.partner_id,
-                'mail_sent_order': default_signing_order + 1 if self.set_sign_order else 1
-            }) for default_signing_order, signer in enumerate(self.signer_ids)]
-        else:
-            signer_ids = [(0, 0, {
-                'role_id': role.id,
-                'partner_id': False,
-                'mail_sent_order': default_signing_order + 1 if self.set_sign_order else 1
-            }) for default_signing_order, role in enumerate(roles)]
-        sign_item_role_user = self.env.ref('sign.sign_item_role_user', raise_if_not_found=False)
-        if self.env.context.get('sign_directly_without_mail') or sign_item_role_user:
-            default_signer = self._get_default_signer()
-            if len(roles) == 1 and signer_ids:
-                signer_ids[0][2]['partner_id'] = default_signer
-            elif not roles:
-                self.signer_id = default_signer
-            user_role = sign_item_role_user and sign_item_role_user.id
-            if user_role:
-                for signer_val in signer_ids:
-                    current_role = signer_val[2].get('role_id')
-                    # user_role can't be deleted if already used.
-                    if len(signer_val) == 3 and isinstance(current_role, int) and current_role == user_role:
-                        signer_val[2]['partner_id'] = default_signer
-                        break
-        self.signer_ids = [(5, 0, 0)] + signer_ids
-        self.signers_count = len(roles)
+    @api.depends('template_id', 'set_sign_order', 'template_id.sign_item_ids')
+    def _compute_signer_ids(self):
+        default_signer = self._get_default_signer()
+        for wiz in self:
+            template = wiz.template_id
+            roles = template.sign_item_ids.responsible_id.sorted()
+            signer_ids = []
+            if (self.signer_ids and len(self.signer_ids) == len(roles)):
+                # update when we set the order
+                signer_ids = [(0, 0, {
+                    'role_id': signer.role_id.id,
+                    'partner_id': signer.partner_id.id,
+                    'mail_sent_order': default_signing_order + 1 if wiz.set_sign_order else 1
+                }) for default_signing_order, signer in enumerate(self.signer_ids)]
+            else:
+                for default_signing_order, role in enumerate(roles):
+                    if default_signing_order == 0:
+                        # First signer is always the default signer
+                        partner_id = default_signer
+                    else:
+                        partner_id = False
+                    signer_vals = {
+                        'role_id': role.id,
+                        'partner_id': partner_id,
+                        'mail_sent_order': default_signing_order + 1 if wiz.set_sign_order else 1,
+                    }
+                    signer_ids.append((0, 0, signer_vals))
+            wiz.signer_ids = [(5, 0, 0)] + signer_ids
+
+    @api.depends('signer_ids')
+    def _compute_signers_count(self):
+        for wiz in self:
+            wiz.signers_count = len(wiz.signer_ids)
+
+    @api.depends('template_id', 'reference_doc')
+    def _compute_display_name(self):
+        for wiz in self:
+            display_name = self.env._("Sign Request ")
+            if wiz.reference_doc:
+                display_name = self.env._("Sign Request - %s", wiz.reference_doc.display_name)
+            wiz.display_name = display_name
+
+    @api.depends('template_id', 'reference_doc')
+    def _compute_subject(self):
+        for wiz in self:
+            subject = self.env._("Signature Request")
+            if wiz.reference_doc:
+                subject = self.env._("Signature Request - %s", wiz.reference_doc.display_name or '')
+            elif wiz.template_id:
+                subject = self.env._("Signature Request - %(file_name)s", file_name=wiz.template_id.name)
+            wiz.subject = subject
+
+    @api.depends('template_id', 'reference_doc')
+    def _compute_filename(self):
+        for wiz in self:
+            filename = self.env._("Sign Request")
+            if wiz.reference_doc:
+                filename = self.env._("Sign Request - %s", wiz.reference_doc.display_name)
+            elif wiz.template_id:
+                filename = wiz.template_id.display_name
+            wiz.filename = filename
 
     @api.depends('signer_ids.partner_id', 'signer_id', 'signers_count')
     def _compute_is_user_signer(self):
@@ -187,6 +152,31 @@ class SignSendRequest(models.TransientModel):
             self.is_user_signer = True
         else:
             self.is_user_signer = False
+
+    @api.depends('reference_doc')
+    def _compute_available_template_ids(self):
+        non_specific_templates = self.env['sign.template'].search([('model_id', '=', False)])._filtered_access('read')
+        template_by_model = {}
+        if self.reference_doc:
+            model_names = [ref._name for ref in self.reference_doc if self.reference_doc]
+            # unprivilegied user don't have access to ir.model
+            model_ids = self.env['ir.model'].sudo().search([('model', 'in', model_names)]).ids
+            res = self.env['sign.template']._read_group(
+                [('model_id', 'in', model_ids)],
+                groupby=['model_id'],
+                aggregates=['id:recordset'],
+            )
+            for model, template in res:
+                template_by_model[model.id] = template
+        for wiz in self:
+            all_template_ids = non_specific_templates.ids
+            if wiz.reference_doc:
+                model = self.env['ir.model'].sudo()._get(wiz.reference_doc._name)
+                other_templates = template_by_model.get(model.id, self.env['sign.template'])
+                all_template_ids += other_templates.ids
+            wiz.available_template_ids = [Command.set(all_template_ids)]
+
+    # ==== Business methods ====
 
     def _activity_done(self):
         signatories = self.signer_id.name or self.signer_ids.partner_id.mapped('name')
@@ -223,13 +213,14 @@ class SignSendRequest(models.TransientModel):
             'validity': self.validity,
             'reminder': self.reminder,
             'reminder_enabled': self.reminder_enabled,
-            'reference_doc': reference_doc or self.env.context.get('default_reference_doc'),
+            'reference_doc': reference_doc,
             'certificate_reference': self.certificate_reference,
         })
         sign_request.message_subscribe(partner_ids=cc_partner_ids)
         return sign_request
 
     def send_request(self):
+        self.ensure_one()
         request = self.create_request()
         self._create_request_log_note(request)
         if self.activity_id:
@@ -261,9 +252,11 @@ class SignSendRequest(models.TransientModel):
                 request.message_post(body=body)
 
     def sign_directly(self):
+        self.ensure_one()
         request = self.create_request()
         if self.activity_id:
             self._activity_done()
         if self.env.context.get('sign_all'):
+            # Go back to document if it exists
             return request.go_to_signable_document(request.request_item_ids)
         return request.go_to_signable_document()

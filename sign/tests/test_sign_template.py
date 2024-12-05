@@ -4,8 +4,11 @@ import base64
 
 from odoo.exceptions import ValidationError
 from odoo.tools import file_open
+from odoo.tests import tagged
 from odoo.tests.common import TransactionCase, new_test_user
 
+
+@tagged('post_install', '-at_install')
 class TestSignTemplate(TransactionCase):
     @classmethod
     def setUpClass(cls):
