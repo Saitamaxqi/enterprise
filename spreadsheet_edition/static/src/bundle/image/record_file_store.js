@@ -54,4 +54,9 @@ export class RecordFileStore {
         }
         await this.orm.unlink("ir.attachment", [parseInt(attachmentId)]);
     }
+
+    async getFile(path) {
+        const response = await fetch(path);
+        return await response.blob();
+    }
 }
