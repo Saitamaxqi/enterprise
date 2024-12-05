@@ -41,15 +41,28 @@ export class FormEditorCompiler extends formView.Compiler {
         };
         this.avatars = [];
 
+        const mainSheet = xml.querySelector("sheet:not(field sheet)");
+        const isSheetEmpty = !mainSheet || !mainSheet.firstElementChild;
+
         const compiled = super.compile(key, params);
 
         const sheetBg = compiled.querySelector(".o_form_sheet_bg");
         if (sheetBg) {
-            const studioHook = createElement("StudioHook", {
-                xpath: `"${sheetBg.getAttribute("studioXpath")}"`,
-                position: "'inside'",
-                type: "'insideSheet'",
-            });
+            let studioHook;
+            if (isSheetEmpty) {
+                studioHook = createElement("StudioHook", {
+                    xpath: `"${sheetBg.getAttribute("studioXpath")}"`,
+                    position: "'inside'",
+                    type: "'insideSheet'",
+                });
+            } else {
+                studioHook = createElement("StudioHook", {
+                    xpath: `"${sheetBg.getAttribute("studioXpath")}/*[1]"`,
+                    position: "'before'",
+                    type: "'insideSheet'",
+                });
+            }
+
             sheetBg.querySelector(".o_form_sheet").prepend(studioHook);
         }
 

@@ -2078,3 +2078,32 @@ registry.category("web_tour.tours").add("web_studio_test_use_action_domain", {
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio_test_drag_before_sheet", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_view .o_form_editable",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_new_fields .o_web_studio_field_html",
+            run: "drag_and_drop (.o_web_studio_form_view_editor .o_web_studio_hook:eq(0))",
+        },
+        {
+            trigger: "button.o_web_studio_undo.o_web_studio_active",
+            run() {},
+        },
+        {
+            trigger: ".o_web_studio_leave",
+            run() {},
+        },
+    ],
+});

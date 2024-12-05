@@ -455,8 +455,8 @@ QUnit.module("View Editors", (hooks) => {
 
         const sheetHooksValues = [
             {
-                xpath: "/form[1]/sheet[1]",
-                position: "inside",
+                xpath: "/form[1]/sheet[1]/*[1]",
+                position: "before",
                 type: "insideSheet",
             },
             {
@@ -523,6 +523,30 @@ QUnit.module("View Editors", (hooks) => {
             target.querySelector(".o_web_studio_form_view_editor .o_form_sheet > div:nth-child(5)"),
             "o_web_studio_hook",
             "last div should be a hook"
+        );
+    });
+
+    QUnit.test("correctly display hook in form with empty sheet", async function (assert) {
+        await createViewEditor({
+            serverData,
+            type: "form",
+            resModel: "coucou",
+            arch: `
+                <form>
+                    <field name="name" invisible="1"/>
+                    <sheet/>
+                </form>`,
+        });
+
+        const hooks = target.querySelectorAll(".o_form_sheet > div.o_web_studio_hook");
+        assert.strictEqual(hooks.length, 1);
+        assert.deepEqual(
+            { ...hooks[0].dataset },
+            {
+                xpath: "/form[1]/sheet[1]",
+                position: "inside",
+                type: "insideSheet",
+            }
         );
     });
 

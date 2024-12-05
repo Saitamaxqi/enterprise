@@ -161,7 +161,7 @@ export function xpathToLegacyXpathInfo(xpath) {
     // eg: /form[1]/field[3]
     // RegExp notice: group 1 : form ; group 2: [1], group 3: 1
     const xpathInfo = [];
-    const matches = xpath.matchAll(/\/?(\w+)(\[(\d+)\])?/g);
+    const matches = xpath.matchAll(/\/?(\w+|\*)(\[(\d+)\])?/g);
     for (const m of matches) {
         const info = {
             tag: m[1],
