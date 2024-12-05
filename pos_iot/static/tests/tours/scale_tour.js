@@ -38,6 +38,14 @@ registry.category("web_tour.tours").add("pos_iot_scale_tour", {
             {
                 trigger: ".pos .pos-content",
                 run: function () {
+                    posmodel.hardwareProxy.connectionInfo = {
+                        status: "connected",
+                        drivers: {
+                            scale: {
+                                status: "connected",
+                            },
+                        },
+                    };
                     posmodel.hardwareProxy.deviceControllers.scale = new PosScaleDummy();
                 },
             },
@@ -46,7 +54,7 @@ registry.category("web_tour.tours").add("pos_iot_scale_tour", {
                 run: "click",
             },
             {
-                trigger: '.js-weight:contains("2.35")',
+                trigger: '.gross-weight:contains("2.35")',
                 run: "click",
             },
             {
