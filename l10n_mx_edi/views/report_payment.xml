@@ -22,7 +22,7 @@
         </xpath>
 
         <xpath expr="//table[@name='invoices']" position="before">
-            <t t-if="cfdi and cfdi['cfdi_node']">
+            <t t-if="cfdi and len(cfdi['cfdi_node'])">
                 <t t-set="payment_info" t-value="cfdi.get('payment_info')"/>
                 <table class="table table-sm" t-if="payment_info" name="table_l10n_mx_edi_payment_info">
                     <thead>
