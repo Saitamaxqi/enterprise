@@ -16,7 +16,6 @@ class AccountMove(models.Model):
 
     @api.model
     def l10n_in_get_bill_from_qr_raw(self, qr_raw):
-        bill_action = self.env['ir.actions.act_window']._for_xml_id('account.action_move_in_invoice_type')
         try:
             qr_json = jwt.decode(qr_raw, options={'verify_signature': False})
         except jwt.exceptions.DecodeError:
@@ -27,8 +26,7 @@ class AccountMove(models.Model):
         qr_json_data = json.loads(qr_json.get('data', '{}'))
         is_valid = self._l10n_in_validate_qr_data(qr_json_data)
         if not is_valid:
-            message = _("Scanned QR Code is not appropriate as per E-Invoice QR")
-            return self._l10n_in_get_notification_action({'type': 'danger', 'message': message})
+            return {'warning': _("Scanned QR/IRN is not appropriate as per E-Invoice QR/IRN")}
         default_journal = self.env['account.journal'].search([
             ('type', '=', 'purchase'),
             ('company_id', '=', self.env.company.id)], limit=1)
