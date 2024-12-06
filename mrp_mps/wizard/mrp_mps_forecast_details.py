@@ -37,7 +37,7 @@ class MrpMpsForecastDetails(models.TransientModel):
                'product_qty': mps.manufacture_qty,
                'product_uom': mps.move_ids.product_id.uom_id.name
             }
-            mps.rfq_qty = sum([l.product_uom._compute_quantity(l.product_qty, l.product_id.uom_id) for l in mps.purchase_order_line_ids])
+            mps.rfq_qty = sum(mps.purchase_order_line_ids.mapped('product_uom_qty'))
             mps.rfq_string = "%(record_count)s %(record_name)s (%(product_qty)s %(product_uom)s)" % {
                'record_count': len(mps.purchase_order_line_ids.order_id),
                'record_name': _('Requests for quotation') if len(mps.purchase_order_line_ids.order_id) > 1 else _('Request for quotation'),

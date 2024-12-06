@@ -1295,3 +1295,51 @@ class TestMpsMps(common.TransactionCase):
         self.assertListEqual([f['starting_inventory_qty'] for f in mps_screw['forecast_ids']], [0, 40, 92, 92, 52, 100, 72])
         self.assertListEqual([f['indirect_demand_qty'] for f in mps_screw['forecast_ids']], [40, 28, 0, 40, 32, 28, 0])
         self.assertListEqual([f['replenish_qty'] for f in mps_screw['forecast_ids']], [80, 80, 0, 0, 80, 0, 0])
+
+    def test_actual_replenishment_wizard(self):
+        """ We check that the replenishment popup shows the correct values of
+        what has been order for replenishment:
+         - MO for 1 unit of table
+         - PO for 24 units (2 dozen) of screw
+         - RFQ for 12 units (1 dozen) of screw """
+        partner = self.env['res.partner'].create({'name': 'Bob Palindrome MacScam'})
+        seller = self.env['product.supplierinfo'].create({
+            'partner_id': partner.id,
+            'price': 12.0,
+            'delay': 0
+        })
+        self.screw.seller_ids = [Command.set([seller.id])]
+        self.mps_screw.replenish_trigger = 'manual'
+        self.table.route_ids = [Command.set([self.ref('mrp.route_warehouse0_manufacture')])]
+
+        # Create a MO for 1 table and a PO for 20 screws
+        self.mps_table.set_forecast_qty(0, 1)
+        (self.mps_table | self.mps_screw).action_replenish()
+        # Change the POL qty from 20 screws to 2 dozen screws (4 more than necessary), validate the PO
+        purchase_order_line = self.env['purchase.order.line'].search([('product_id', '=', self.screw.id)])
+        purchase_order_line.write({
+            'product_uom_id': self.env.ref('uom.product_uom_dozen').id,
+            'product_qty': 2,
+        })
+        purchase_order_line.order_id.button_confirm()
+        # Create a new demand for 7 screws, 4 will be taken from the excess of the first PO
+        # Create a second PO for 3 screws
+        self.mps_screw.set_forecast_qty(0, 7)
+        self.mps_screw.action_replenish()
+
+        table_action = self.mps_table.action_open_actual_replenishment_details('Wizard table testing', self.mps_dates_month[0][0], self.mps_dates_month[0][1])
+        table_wizard = Form.from_action(self.env, table_action)
+        self.assertEqual(table_wizard.manufacture_qty, 1)
+        screw_action = self.mps_screw.action_open_actual_replenishment_details('Wizard screw testing', self.mps_dates_month[0][0], self.mps_dates_month[0][1])
+        screw_wizard = Form.from_action(self.env, screw_action)
+        self.assertEqual(screw_wizard.moves_qty, 24)
+        self.assertEqual(screw_wizard.rfq_qty, 3)
+        # Change the POL qty from 3 screws to 1 dozen screws
+        purchase_order_line_2 = self.env['purchase.order.line'].search([('product_id', '=', self.screw.id), ('id', '!=', purchase_order_line.id)])
+        purchase_order_line_2.write({
+            'product_uom_id': self.env.ref('uom.product_uom_dozen').id,
+            'product_qty': 1,
+        })
+        screw_wizard_2 = Form.from_action(self.env, screw_action)
+        self.assertEqual(screw_wizard_2.moves_qty, 24)
+        self.assertEqual(screw_wizard_2.rfq_qty, 12)
