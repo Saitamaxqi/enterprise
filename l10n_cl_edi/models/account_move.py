@@ -195,10 +195,10 @@ services reception has been received as well.
 
     def _compute_l10n_latam_document_type(self):
         """
-        Extension to ensure the document type is computed based on the partner's taxpayer type and allows
+        Extension to ensure the document type for customer invoices is computed based on the partner's taxpayer type and allows
         the SII, the fiscal authority of Chile, to properly validate the record.
         """
-        taxpayer_moves = self.filtered(lambda m: m.partner_id.l10n_cl_sii_taxpayer_type in ['1', '3', '4'])
+        taxpayer_moves = self.filtered(lambda m: m.partner_id.l10n_cl_sii_taxpayer_type in ['1', '3', '4'] and m.move_type == 'out_invoice')
         grouped_doc_types = {doc_type.code: doc_type for doc_type in self.l10n_latam_available_document_type_ids._origin}
         for move in taxpayer_moves:
             taxpayer_type = move.partner_id.l10n_cl_sii_taxpayer_type
