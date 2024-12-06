@@ -212,11 +212,7 @@ patch(TicketScreen.prototype, {
      */
     getDate(order) {
         if (order?.delivery_identifier) {
-            return luxon.DateTime.fromFormat(order.date_order, "yyyy-MM-dd HH:mm:ss", {
-                zone: "utc",
-            })
-                .setZone("local")
-                .toFormat("MM/dd/yyyy HH:mm:ss");
+            return order.date_order.setZone("local").toFormat("MM/dd/yyyy HH:mm:ss");
         }
         return super.getDate(order);
     },

@@ -8,7 +8,7 @@
                 <span>Nº: <t t-out="order.account_move?.l10n_latam_document_number"/></span>
             </div>
             <div t-if="order.company.cl_vat" class="chili-regional-office text-center fw-bolder" t-out="officeSelection"/>
-            <div t-if="order.company.cl_vat" class="text-center fw-bolder pb-2" t-esc="dateOrder" />
+            <div t-if="order.company.cl_vat" class="text-center fw-bolder pb-2" t-esc="order.formatDateOrTime('date_order')" />
             <br/>
         </xpath>
         <xpath expr="//div[hasclass('pos-receipt-contact')]" position="after">
