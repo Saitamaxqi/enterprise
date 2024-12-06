@@ -525,9 +525,7 @@
         "B39": { "content": "=-ODOO.BALANCE(ODOO.ACCOUNT.GROUP($C39),B$30)" },
         "B40": { "content": "=-ODOO.BALANCE(ODOO.ACCOUNT.GROUP($C40),B$30)" },
         "B41": { "content": "=-ODOO.BALANCE(ODOO.ACCOUNT.GROUP($C41),B$30)" },
-        "B42": {
-          "content": "=-ODOO.BALANCE(ODOO.ACCOUNT.GROUP(\"income\"),B$30)"
-        },
+        "B42": { "content": "=-ODOO.BALANCE(ODOO.ACCOUNT.GROUP($C42),B$30)" },
         "B43": { "content": "=-ODOO.BALANCE(ODOO.ACCOUNT.GROUP($C43),B$30)" },
         "B44": { "content": "=ODOO.BALANCE(ODOO.ACCOUNT.GROUP($C44),B$30)" },
         "B45": { "content": "=ODOO.BALANCE(ODOO.ACCOUNT.GROUP($C45),B$30)" },
