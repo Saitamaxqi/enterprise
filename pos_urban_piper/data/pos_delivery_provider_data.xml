@@ -114,4 +114,32 @@
         <field name="image_128" type="base64" file="pos_urban_piper/static/img/Mrsool.png"/>
         <field name="available_country_ids" eval="[Command.set([ref('base.eg'), ref('base.sa')])]"/>
     </record>
+    <record id="pos_delivery_provider_jahez" model="pos.delivery.provider">
+        <field name="name">Jahez</field>
+        <field name="technical_name">jahez</field>
+        <field name="journal_code">JHZ</field>
+        <field name="image_128" type="base64" file="pos_urban_piper/static/img/Jahez.svg"/>
+        <field name="available_country_ids" eval="[Command.set([ref('base.sa'), ref('base.kw'), ref('base.bh')])]"/>
+    </record>
+    <record id="pos_delivery_provider_skipthedishes" model="pos.delivery.provider">
+        <field name="name">SkipTheDishes</field>
+        <field name="technical_name">skipthedishes</field>
+        <field name="journal_code">SKD</field>
+        <field name="image_128" type="base64" file="pos_urban_piper/static/img/SkipTheDishes.svg"/>
+        <field name="available_country_ids" eval="[Command.set([ref('base.ca'), ref('base.us')])]"/>
+    </record>
+    <record id="pos_delivery_provider_rafeeq" model="pos.delivery.provider">
+        <field name="name">Rafeeq</field>
+        <field name="technical_name">rafeeq</field>
+        <field name="journal_code">RFQ</field>
+        <field name="image_128" type="base64" file="pos_urban_piper/static/img/Rafeeq.svg"/>
+        <field name="available_country_ids" eval="[Command.set([ref('base.qa')])]"/>
+    </record>
+    <record id="pos_delivery_provider_ninja" model="pos.delivery.provider">
+        <field name="name">Ninja</field>
+        <field name="technical_name">ninja</field>
+        <field name="journal_code">NJA</field>
+        <field name="image_128" type="base64" file="pos_urban_piper/static/img/Ninja.svg"/>
+        <field name="available_country_ids" eval="[Command.set([ref('base.qa'), ref('base.bh'), ref('base.kw'), ref('base.sa'), ref('base.ae')])]"/>
+    </record>
 </odoo>
