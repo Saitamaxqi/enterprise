@@ -13,8 +13,7 @@ from odoo.tests import users
 from .test_documents_common import TransactionCaseDocuments, GIF, TEXT
 
 DATA = "data:application/zip;base64,R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs="
-file_a = {'name': 'doc.zip', 'data': 'data:application/zip;base64,R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs='}
-file_b = {'name': 'icon.zip', 'data': 'data:application/zip;base64,R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs='}
+file_a = {'name': 'doc.zip', 'datas': 'data:application/zip;base64,R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs='}
 
 
 class TestCaseDocuments(TransactionCaseDocuments):
@@ -35,6 +34,24 @@ class TestCaseDocuments(TransactionCaseDocuments):
             ('partner_id', '=', self.env.user.partner_id.id),
         ])
         self.assertTrue(access)
+
+    def test_documents_action_create_shortcut(self):
+        # Make sure we test copying m2o too
+        self.document_gif.partner_id = self.env.user.partner_id
+        shortcut = self.document_gif.action_create_shortcut()
+        original_file_size = self.document_gif.file_size
+        for field_name in self.env['documents.document']._get_shortcuts_copy_fields():
+            with self.subTest(field_name=field_name):
+                self.assertEqual(shortcut[field_name], self.document_gif[field_name])
+        attachment = self.env['ir.attachment'].create({
+            **file_a,
+            'res_model': 'documents.document',
+            'res_id': 0,
+        })
+        self.document_gif.attachment_id = attachment
+        self.assertNotEqual(self.document_gif.file_size, original_file_size)
+        self.assertEqual(shortcut.file_size, self.document_gif.file_size)
+        self.assertEqual(shortcut.file_extension, self.document_gif.file_extension)
 
     def test_documents_create_from_attachment(self):
         """

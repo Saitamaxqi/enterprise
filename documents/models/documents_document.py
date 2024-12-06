@@ -52,9 +52,9 @@ class DocumentsDocument(models.Model):
     raw = fields.Binary(related='attachment_id.raw', related_sudo=True, readonly=False, prefetch=False)
     file_extension = fields.Char('File Extension', copy=True, store=True, readonly=False,
                                  compute='_compute_file_extension', inverse='_inverse_file_extension')
-    file_size = fields.Integer(related='attachment_id.file_size', store=True)
+    file_size = fields.Integer(compute='_compute_file_size', store=True)
     checksum = fields.Char(related='attachment_id.checksum')
-    mimetype = fields.Char(related='attachment_id.mimetype')
+    mimetype = fields.Char(related='attachment_id.mimetype', inverse='_inverse_mimetype')
     res_model = fields.Char('Resource Model', compute="_compute_res_record", recursive=True,
                             inverse="_inverse_res_model", store=True)
     res_id = fields.Many2oneReference('Resource ID', compute="_compute_res_record", recursive=True,
@@ -214,17 +214,33 @@ class DocumentsDocument(models.Model):
         for record in accessible_records - folders:
             record.display_name = record.name
 
-    @api.depends('name', 'type')
+    @api.depends('name', 'type', 'shortcut_document_id.name')
     def _compute_file_extension(self):
         for record in self:
             if record.type != 'binary':
                 record.file_extension = False
+            elif record.shortcut_document_id.name:
+                file_extension = _sanitize_file_extension(get_extension(record.shortcut_document_id.name.strip()))
+                record.file_extension = file_extension or False
             elif record.name:
                 record.file_extension = _sanitize_file_extension(get_extension(record.name.strip())) or False
 
+    @api.depends('attachment_id', 'shortcut_document_id.attachment_id')
+    def _compute_file_size(self):
+        shortcuts = self.filtered('shortcut_document_id')
+        for document in self - shortcuts:
+            document.file_size = document.attachment_id.file_size
+        for document in shortcuts:
+            document.file_size = document.shortcut_document_id.file_size
+
     def _inverse_file_extension(self):
         for record in self:
-            record.file_extension = _sanitize_file_extension(record.file_extension) if record.file_extension else False
+            file_extension = _sanitize_file_extension(record.file_extension) if record.file_extension else False
+            (record | record.shortcut_ids).file_extension = file_extension
+
+    def _inverse_mimetype(self):
+        for record in self.filtered('shortcut_ids'):
+            record.shortcut_ids.mimetype = record.mimetype
 
     @api.constrains('shortcut_document_id', 'shortcut_ids', 'type', 'folder_id', 'children_ids', 'company_id')
     def _check_shortcut_fields(self):
@@ -678,11 +694,8 @@ class DocumentsDocument(models.Model):
         return self.sudo().create([{
             "folder_id": location.id,
             "shortcut_document_id": document.id,
-            "name": document.name,
-            "type": document.type,
             "access_internal": document.access_internal or 'view',
             "access_via_link": document.access_via_link or 'none',
-            "company_id": document.company_id.id,
             "access_ids": [
                 Command.create({
                     "partner_id": access.partner_id.id,
@@ -690,9 +703,17 @@ class DocumentsDocument(models.Model):
                 })
                 for access in document.access_ids if access.role
             ],
-            "is_multipage": document.is_multipage,
-            "is_access_via_link_hidden": document.is_access_via_link_hidden,
+            **{
+                field_name: (value.id if isinstance((value := document[field_name]), models.Model) else value)
+                for field_name in self._get_shortcuts_copy_fields()
+            }
         } for document in self]).sudo(False)
+
+    @api.model
+    def _get_shortcuts_copy_fields(self):
+        # Note that current simple usage in action_create_shortcut supports scalar and m2o fields.
+        return {'company_id', 'file_size', 'file_extension', 'is_access_via_link_hidden', 'is_multipage', 'mimetype',
+                'name', 'partner_id', 'type'}
 
     def action_update_access_rights(self, access_internal=None, access_via_link=None, is_access_via_link_hidden=None,
                                     partners=None, notify=False, message=""):

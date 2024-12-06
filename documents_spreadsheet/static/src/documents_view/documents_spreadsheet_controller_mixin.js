@@ -36,18 +36,20 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
      * @override
      */
     async _onOpenDocumentsPreview({ mainDocument }) {
-        if (["spreadsheet", "frozen_spreadsheet"].includes(mainDocument.data.handler)) {
+        const mainDocumentOrTarget = mainDocument.shortcutTarget;
+        if (["spreadsheet", "frozen_spreadsheet"].includes(mainDocumentOrTarget.data.handler)) {
             this.action.doAction({
                 type: "ir.actions.client",
                 tag: "action_open_spreadsheet",
                 params: {
-                    spreadsheet_id: mainDocument.resId,
+                    spreadsheet_id: mainDocumentOrTarget.resId,
                 },
             });
         } else if (
-            XLSX_MIME_TYPES.includes(mainDocument.data.mimetype) ||
-            mainDocument.data.mimetype === "text/csv"
+            XLSX_MIME_TYPES.includes(mainDocumentOrTarget.data.mimetype) ||
+            mainDocumentOrTarget.data.mimetype === "text/csv"
         ) {
+            // Keep MainDocument as `active` can be different for shortcut and target.
             if (!mainDocument.data.active) {
                 this.dialogService.add(ConfirmationDialog, {
                     title: _t("Restore file?"),
@@ -69,7 +71,7 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
                     title: fileType + _t(" file preview"),
                     cancel: () => {},
                     cancelLabel: _t("Discard"),
-                    documentId: mainDocument.resId,
+                    documentId: mainDocumentOrTarget.resId,
                     confirmLabel: _t("Open with Odoo Spreadsheet"),
                 });
             }
