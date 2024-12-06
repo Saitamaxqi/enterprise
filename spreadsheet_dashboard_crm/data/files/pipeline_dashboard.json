@@ -122,6 +122,9 @@
         "A56": { "content": "=PIVOT.HEADER(5,\"#country_id\",5)" },
         "A57": { "content": "=PIVOT.HEADER(5,\"#country_id\",6)" },
         "A58": { "content": "=PIVOT.HEADER(5,\"#country_id\",7)" },
+        "A59": { "content": "=PIVOT.HEADER(5,\"#country_id\",8)" },
+        "A60": { "content": "=PIVOT.HEADER(5,\"#country_id\",9)" },
+        "A61": { "content": "=PIVOT.HEADER(5,\"#country_id\",10)" },
         "A63": {
           "content": "[Top Mediums](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"medium_id\",\"!=\",false]],\"context\":{\"group_by\":[\"medium_id\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"medium_id\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})"
         },
@@ -166,6 +169,9 @@
         "B56": { "content": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",5)" },
         "B57": { "content": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",6)" },
         "B58": { "content": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",7)" },
+        "B59": { "content": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",8)" },
+        "B60": { "content": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",9)" },
+        "B61": { "content": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",10)" },
         "B64": { "content": "=_t(\"# Leads\")" },
         "B65": { "content": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",1)" },
         "B66": { "content": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",2)" },
@@ -240,6 +246,15 @@
         },
         "C58": {
           "content": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",7)"
+        },
+        "C59": {
+          "content": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",8)"
+        },
+        "C60": {
+          "content": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",9)"
+        },
+        "C61": {
+          "content": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",10)"
         },
         "C64": { "content": "=_t(\"Revenue\")" },
         "C65": {
