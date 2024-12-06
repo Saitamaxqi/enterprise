@@ -60,7 +60,8 @@
                 "B112:C112",
                 "B113:C113",
                 "B114:C114",
-                "B115:C115"
+                "B115:C115",
+                "B116:C116"
             ],
             "cells": {
                 "A12": { "content": "=_t(\"Purchase Value by creation confirmation date\")" },
@@ -104,6 +105,7 @@
                 "B113": { "content": "=ODOO.LIST(1,7,\"partner_id\")" },
                 "B114": { "content": "=ODOO.LIST(1,8,\"partner_id\")" },
                 "B115": { "content": "=ODOO.LIST(1,9,\"partner_id\")" },
+                "B116": { "content": "=ODOO.LIST(1,10,\"partner_id\")" },
                 "B119": { "content": "=PIVOT.HEADER(12,\"measure\",\"__count\")" },
                 "B120": { "content": "=PIVOT.VALUE(12,\"__count\",\"#product_id\",1)" },
                 "B121": { "content": "=PIVOT.VALUE(12,\"__count\",\"#product_id\",2)" },
@@ -115,7 +117,6 @@
                 "B127": { "content": "=PIVOT.VALUE(12,\"__count\",\"#product_id\",8)" },
                 "B128": { "content": "=PIVOT.VALUE(12,\"__count\",\"#product_id\",9)" },
                 "B129": { "content": "=PIVOT.VALUE(12,\"__count\",\"#product_id\",10)" },
-                "C116": { "content": "=ODOO.LIST(1,10,\"partner_id\")" },
                 "C119": { "content": "=PIVOT.HEADER(12,\"measure\",\"price_total:sum\")" },
                 "C120": { "content": "=PIVOT.VALUE(12,\"price_total:sum\",\"#product_id\",1)" },
                 "C121": { "content": "=PIVOT.VALUE(12,\"price_total:sum\",\"#product_id\",2)" },
