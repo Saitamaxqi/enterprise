@@ -190,10 +190,13 @@ class StockBarcodeController(http.Controller):
                     try:
                         # If barcode is digits only, cut off the padding to keep the original barcode only.
                         barcode = str(int(barcode))
-                        converted_barcodes_domain = expression.OR([
-                            converted_barcodes_domain,
-                            [(barcode_field, 'ilike', barcode)]
-                        ])
+                        if converted_barcodes_domain:
+                            converted_barcodes_domain = expression.OR([
+                                converted_barcodes_domain,
+                                [(barcode_field, 'ilike', barcode)]
+                            ])
+                        else:
+                            converted_barcodes_domain = [(barcode_field, 'ilike', barcode)]
                     except ValueError:
                         unconverted_barcodes.append(barcode)
                         pass  # Barcode isn't digits only.
