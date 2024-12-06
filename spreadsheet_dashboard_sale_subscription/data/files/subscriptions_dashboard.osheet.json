@@ -1581,7 +1581,7 @@
       "name": "Sale Order Log Analysis by Event Date (Year)",
       "sortedColumn": {
         "groupId": [[], []],
-        "measure": "arr_change_normalized",
+        "measure": "mrr_change_normalized",
         "order": "asc"
       },
       "formulaId": "3",
