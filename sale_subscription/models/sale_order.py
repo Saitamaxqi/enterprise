@@ -1248,7 +1248,9 @@ class SaleOrder(models.Model):
         self.ensure_one()
         if not mail_ctx:
             mail_ctx = {}
-        return {**self._context, **mail_ctx, **{'total_amount': self.amount_total,
+        billing_details = self._next_billing_details()
+        return {**self._context, **mail_ctx, **{'next_invoice_amount': billing_details['next_invoice_amount'],
+                                                'total_amount': self.amount_total,
                                                 'currency_name': self.currency_id.name,
                                                 'responsible_email': self.user_id.email,
                                                 'code': self.client_order_ref}}
