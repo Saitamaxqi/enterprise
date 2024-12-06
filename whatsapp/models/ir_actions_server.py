@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 class IrActionsServer(models.Model):
     """ Add WhatsApp option in server actions. """
-    _inherit = ['ir.actions.server']
+    _inherit = 'ir.actions.server'
 
     # force insert before followers option
     state = fields.Selection(selection_add=[

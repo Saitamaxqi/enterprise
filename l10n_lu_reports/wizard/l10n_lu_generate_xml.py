@@ -12,6 +12,7 @@ class L10n_LuGenerateXml(models.TransientModel):
     This wizard is used to generate xml reports for Luxembourg
     according to the xml 2.0 standard.
     """
+    _name = 'l10n_lu.generate.xml'
     _description = 'Generate Xml 2.0'
 
     report_data = fields.Binary('Report file', readonly=True, attachment=False)

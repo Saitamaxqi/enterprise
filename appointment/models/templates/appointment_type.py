@@ -9,7 +9,7 @@ class AppointmentType(models.Model):
     They appear instead of the helper on appointment.type list and kanban views when
     no appointment exists.
     '''
-    _inherit = ['appointment.type']
+    _inherit = 'appointment.type'
 
     @api.model
     def action_setup_appointment_type_template(self, template_key):

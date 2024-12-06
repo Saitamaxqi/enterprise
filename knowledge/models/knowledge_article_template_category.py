@@ -6,6 +6,7 @@ from odoo import fields, models
 
 class KnowledgeArticleTemplateCategory(models.Model):
     """This model represents the categories of the article templates."""
+    _name = 'knowledge.article.template.category'
     _description = "Article Template Category"
     _order = "sequence ASC, id ASC"
 

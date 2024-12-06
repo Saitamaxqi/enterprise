@@ -8,6 +8,7 @@ class AccountAutoReconcileWizard(models.TransientModel):
     """ This wizard is used to automatically reconcile account.move.line.
     It is accessible trough Accounting > Accounting tab > Actions > Auto-reconcile menuitem.
     """
+    _name = 'account.auto.reconcile.wizard'
     _description = 'Account automatic reconciliation wizard'
     _check_company_auto = True
 

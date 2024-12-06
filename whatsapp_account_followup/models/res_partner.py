@@ -2,7 +2,7 @@ from odoo import models
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     def _get_followup_whatsapp_number(self):
         followup_contacts = (self._get_all_followup_contacts() | self).filtered(lambda partner: partner.mobile)

@@ -5,6 +5,7 @@ from odoo import fields, models, _
 
 
 class HrReferralRewardReport(models.Model):
+    _name = 'hr.referral.reward.report'
     _description = "Employee Referral Reward Report"
     _auto = False
     _rec_name = 'reward_id'

@@ -7,6 +7,7 @@ class DocumentsRedirect(models.Model):
     Do *NOT* use that model or inherit from it, it will be removed in the future.
     """
 
+    _name = 'documents.redirect'
     _description = "Document Redirect"
     _log_access = False
 

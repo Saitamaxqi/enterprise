@@ -12,6 +12,7 @@ class L10n_LuGenerateVatIntraReport(models.TransientModel):
     This wizard is used to generate an xml EC Sales report for Luxembourg
     according to the xml 2.0 standard.
     """
+    _name = 'l10n_lu.generate.vat.intra.report'
     _inherit = ['l10n_lu.generate.xml']
     _description = 'Generate Sales Report'
 

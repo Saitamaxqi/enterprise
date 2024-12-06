@@ -2,6 +2,7 @@ from odoo import Command, api, fields, models
 
 
 class HelpdeskTagAssignment(models.Model):
+    _name = 'helpdesk.tag.assignment'
     _description = "Helpdesk Tag Assignment"
 
     team_id = fields.Many2one('helpdesk.team', export_string_translation=False)

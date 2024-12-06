@@ -11,6 +11,7 @@ from ..models.l10n_lu_tax_report_data import (YEARLY_SIMPLIFIED_NEW_TOTALS, YEAR
 
 class L10n_LuGenerateTaxReport(models.TransientModel):
     """This wizard generates an xml tax report for Luxemburg according to the xml 2.0 standard."""
+    _name = 'l10n_lu.generate.tax.report'
     _inherit = ['l10n_lu.generate.xml']
     _description = 'Generate Tax Report'
 

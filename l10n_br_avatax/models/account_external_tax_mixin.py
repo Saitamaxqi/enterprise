@@ -28,7 +28,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
     - partner_shipping_id (res.partner): delivery address, where services are rendered or goods are delivered,
     - partner_id (res.partner): the end customer of the transaction,
     """
-    _inherit = ['account.external.tax.mixin']
+    _inherit = 'account.external.tax.mixin'
 
     l10n_br_is_service_transaction = fields.Boolean(
         "Is Service Transaction",

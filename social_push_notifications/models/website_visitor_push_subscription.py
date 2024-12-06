@@ -14,6 +14,7 @@ class WebsiteVisitorPushSubscription(models.Model):
     (push_subscriptions are 'merged' onto the main visitor, see website.visitor#_merge_visitor for
     more information.) """
 
+    _name = 'website.visitor.push.subscription'
     _description = 'Push Subscription for a Website Visitor'
     _log_access = False
     _rec_name = 'website_visitor_id'

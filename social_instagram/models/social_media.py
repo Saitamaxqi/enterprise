@@ -15,7 +15,7 @@ class SocialMedia(models.Model):
 
     That also means we can only add Instagram accounts through Facebook. """
 
-    _inherit = ['social.media']
+    _inherit = 'social.media'
 
     _INSTAGRAM_ENDPOINT = 'https://graph.facebook.com/'
 

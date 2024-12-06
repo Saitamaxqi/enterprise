@@ -32,6 +32,7 @@ ERROR_MESSAGES = {
 
 class ExtractMixin(models.AbstractModel):
     """ Base model to inherit from to add extract functionality to a model. """
+    _name = 'extract.mixin'
     _inherit = ['mail.thread.main.attachment']
     _description = 'Base class to extract data from documents'
 

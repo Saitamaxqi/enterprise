@@ -6,6 +6,7 @@ class L10n_UsReportHandler(models.AbstractModel):
     '''Check Register is an accounting report usually part of the general ledger, used to record
     financial transactions in cash.
     '''
+    _name = 'l10n_us.report.handler'
     _inherit = ['account.general.ledger.report.handler']
     _description = 'US Report Custom Handler'
 

@@ -9,7 +9,7 @@ from odoo import models
 class SocialStreamPost(models.Model):
     """ Mostly contains methods that return 'mock' data for the comments feature. """
 
-    _inherit = ['social.stream.post']
+    _inherit = 'social.stream.post'
 
     # ========================================================
     # COMMENTS / LIKES

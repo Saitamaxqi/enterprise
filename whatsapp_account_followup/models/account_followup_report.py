@@ -3,7 +3,7 @@ from odoo.exceptions import UserError, ValidationError
 
 
 class AccountFollowupReport(models.AbstractModel):
-    _inherit = ["account.followup.report"]
+    _inherit = "account.followup.report"
 
     @api.model
     def _send_whatsapp(self, partner, whatsapp_composer=None, followup_line=None, **kwargs):

@@ -19,6 +19,7 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
     probable expense in reports (and revert it at the end of the period, to
     recon the real gain/loss.
     """
+    _name = 'account.multicurrency.revaluation.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Multicurrency Revaluation Report Custom Handler'
 

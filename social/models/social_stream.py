@@ -16,6 +16,7 @@ class SocialStream(models.Model):
     They use the social.media third party API to fetch the stream data and create social.stream.posts
     that are displayed on the Feed kanban view. """
 
+    _name = 'social.stream'
     _description = 'Social Stream'
     _order = 'sequence asc, id asc'
 

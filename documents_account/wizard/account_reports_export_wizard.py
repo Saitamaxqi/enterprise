@@ -7,7 +7,7 @@ class Account_ReportsExportWizard(models.TransientModel):
     """ Extends the report export wizard to give it the ability to save the
     attachments it generates as documents, in a folder of the Documents app.
     """
-    _inherit = ['account_reports.export.wizard']
+    _inherit = 'account_reports.export.wizard'
 
     def _get_default_folder(self):
         return (

@@ -24,6 +24,7 @@ class ProductUnspscCode(models.Model):
     """Product and UoM codes defined by UNSPSC
     Used by Mexico, Peru, Colombia and Denmark localizations
     """
+    _name = 'product.unspsc.code'
     _description = "Product and UOM Codes from UNSPSC"
     _rec_names_search = ['name', 'code']
 

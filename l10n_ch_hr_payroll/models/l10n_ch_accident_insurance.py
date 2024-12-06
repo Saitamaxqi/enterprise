@@ -7,6 +7,7 @@ from odoo.exceptions import UserError
 
 class L10nChAccidentInsurance(models.Model):
     # YTI TODO Rename into l10n.ch.laa.insurance
+    _name = 'l10n.ch.accident.insurance'
     _description = 'Swiss: Accident Insurances (AAP/AANP)'
 
     name = fields.Char(required=True)

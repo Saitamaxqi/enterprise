@@ -6,7 +6,7 @@ from odoo import api, models
 
 class CalendarEvent(models.Model):
     """ Model for Calendar Event """
-    _inherit = ['calendar.event']
+    _inherit = 'calendar.event'
 
     @api.model_create_multi
     def create(self, vals_list):

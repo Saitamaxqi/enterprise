@@ -15,6 +15,7 @@ class Account_ReportsExportWizard(models.TransientModel):
     """ Wizard allowing to export an accounting report in several different formats
     at once, saving them as attachments.
     """
+    _name = 'account_reports.export.wizard'
     _description = "Export wizard for accounting's reports"
 
     export_format_ids = fields.Many2many(string="Export to", comodel_name='account_reports.export.wizard.format', relation="dms_acc_rep_export_wizard_format_rel")

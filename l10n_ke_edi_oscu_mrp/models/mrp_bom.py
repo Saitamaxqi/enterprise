@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 
 class MrpBom(models.Model):
     """ Defines bills of material for a product or a product template """
-    _inherit = ['mrp.bom']
+    _inherit = 'mrp.bom'
 
     fiscal_country_codes = fields.Char(compute='_compute_fiscal_country_codes')
     l10n_ke_validation_message = fields.Json(compute='_compute_l10n_ke_validation_message')

@@ -21,6 +21,7 @@ class L10n_AuReportHandler(models.AbstractModel):
     This file was generated using https://softwaredevelopers.ato.gov.au/TPARspecification
     as a reference.
     """
+    _name = 'l10n_au.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Australian Report Custom Handler'
 

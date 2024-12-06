@@ -11,6 +11,7 @@ from odoo.exceptions import UserError
 
 class SocialAccountRevokeYoutube(models.TransientModel):
     """Wizard to revoke a Youtube access token linked to a social account."""
+    _name = 'social.account.revoke.youtube'
     _description = 'Revoke YouTube Account'
 
     _YOUTUBE_REVOKE_URL = 'https://oauth2.googleapis.com/revoke'

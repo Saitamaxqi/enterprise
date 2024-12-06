@@ -17,6 +17,7 @@ class L10n_PlTaxReportHandler(models.AbstractModel):
     the quarter, it includes the list of invoices / vendor bills for the last month and the VAT
     declaration for the entire quarter.
     """
+    _name = 'l10n_pl.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Polish Tax Report Custom Handler'
 

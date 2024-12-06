@@ -10,6 +10,7 @@ class L10n_LuGenerateAccountsReport(models.TransientModel):
     This wizard is used to generate an xml yearly accounts report for Luxembourg
     according to the xml 2.0 standard.
     """
+    _name = 'l10n_lu.generate.accounts.report'
     _inherit = ['l10n_lu.generate.xml']
     _description = 'Generate Accounts Report'
 

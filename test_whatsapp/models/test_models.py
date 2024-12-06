@@ -8,6 +8,7 @@ from odoo.addons.base.models.res_partner import _tz_get
 class WhatsappTestBase(models.Model):
     """ Base test model for whatsapp implementation, with mail thread support
     and number / partner. """
+    _name = 'whatsapp.test.base'
     _description = 'WhatsApp Base Test'
     _inherit = [
         'mail.thread',
@@ -40,6 +41,7 @@ class WhatsappTestBase(models.Model):
 
 class WhatsappTestNothread(models.Model):
     """ Same as base test model but with no way to get a responsible. """
+    _name = 'whatsapp.test.nothread'
     _description = 'WhatsApp NoThread / NoResponsible'
 
     name = fields.Char('Name')
@@ -57,6 +59,7 @@ class WhatsappTestNothread(models.Model):
 class WhatsappTestNothreadNoname(models.Model):
     """ Same as base test model but with no way to get a responsible and that
     does not have a name. """
+    _name = 'whatsapp.test.nothread.noname'
     _description = 'WhatsApp NoThread / NoResponsible /NoName'
     _rec_name = 'customer_id'
 
@@ -73,6 +76,7 @@ class WhatsappTestNothreadNoname(models.Model):
 
 class WhatsappTestResponsible(models.Model):
     """ Same as base test model but with responsible fields """
+    _name = 'whatsapp.test.responsible'
     _description = 'WhatsApp Responsible Test'
     _inherit = [
         'whatsapp.test.base',
@@ -83,6 +87,7 @@ class WhatsappTestResponsible(models.Model):
 
 class WhatsappTestSelection(models.Model):
     """ Selection test model to test Selection fields using chain """
+    _name = 'whatsapp.test.selection'
     _description = 'WhatsApp Selection Test'
 
     selection_field = fields.Selection([
@@ -94,6 +99,7 @@ class WhatsappTestSelection(models.Model):
 
 class WhatsappTestTimezone(models.Model):
     """ Same as base test model but with timezone fields """
+    _name = 'whatsapp.test.timezone'
     _description = 'WhatsApp Timezone Test'
     _inherit = [
         'whatsapp.test.base',

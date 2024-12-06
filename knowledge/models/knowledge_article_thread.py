@@ -17,6 +17,7 @@ class KnowledgeArticleThread(models.Model):
         It is also possible to mark a thread as closed so that it no longer appears inside the editor
         of the article if the conversation does not need to be continued.
     """
+    _name = 'knowledge.article.thread'
     _description = "Article Discussion Thread"
     _inherit = ['mail.thread']
     _mail_post_access = 'read' # if you can read, you can post a message on an article thread

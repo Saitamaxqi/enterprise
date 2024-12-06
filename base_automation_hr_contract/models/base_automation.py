@@ -7,7 +7,7 @@ from odoo.fields import Datetime
 
 class BaseAutomation(models.Model):
     """ Add resource and calendar for time-based conditions """
-    _inherit = ['base.automation']
+    _inherit = 'base.automation'
 
     trg_date_resource_field_id = fields.Many2one('ir.model.fields', string='Use employee work schedule', help='Use the user\'s working schedule.')
 

@@ -24,6 +24,7 @@ class SocialPost(models.Model):
     When posted, it actually creates several instances of social.live.posts (one per social.account)
     that will publish their content through the third party API of the social.account. """
 
+    _name = 'social.post'
     _inherit = ['mail.thread', 'mail.activity.mixin', 'social.post.template', 'utm.source.mixin']
     _description = 'Social Post'
     _order = 'create_date desc'

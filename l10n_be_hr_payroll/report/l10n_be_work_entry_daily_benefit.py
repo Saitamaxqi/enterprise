@@ -12,6 +12,7 @@ class L10n_BeWorkEntryDailyBenefitReport(models.Model):
        * The assumption that a work entry, even minimal (at least 1 hour) is enough to grant the benefit for
          that day.
     """
+    _name = 'l10n_be.work.entry.daily.benefit.report'
     _description = 'Work Entry Related Benefit Report'
     _auto = False
 

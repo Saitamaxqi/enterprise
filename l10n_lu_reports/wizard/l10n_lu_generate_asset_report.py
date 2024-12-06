@@ -9,6 +9,7 @@ class L10n_LuGenerateAssetReport(models.TransientModel):
     This wizard is used to generate xml reports for Luxembourg
     according to the xml 2.0 standard.
     """
+    _name = 'l10n_lu.generate.asset.report'
     _inherit = ['l10n_lu.generate.xml']
     _description = 'Generate XML for Luxembourg'
 

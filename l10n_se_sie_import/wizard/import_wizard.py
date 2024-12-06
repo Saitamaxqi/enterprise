@@ -60,6 +60,7 @@ def _get_partner_data_from_id(partners_map, partner_id):
 class L10n_SeSieImportWizard(models.TransientModel):
     """ SIE import wizard is the main class to import SIE files. """
 
+    _name = 'l10n_se.sie.import.wizard'
     _description = "Accounting SIE import wizard"
 
     attachment_id = fields.Binary(string="SIE File", required=True)

@@ -1351,7 +1351,7 @@ class IrUiView(models.Model):
 
 class ResetViewArchWizard(models.TransientModel):
     """ A wizard to compare and reset views architecture. """
-    _inherit = ["reset.view.arch.wizard"]
+    _inherit = "reset.view.arch.wizard"
 
     @api.model
     def default_get(self, fields):

@@ -22,6 +22,7 @@ class SocialPostTemplate(models.Model):
     It is inherited by `social.post` to extract common fields declaration and post
     management methods.
     """
+    _name = 'social.post.template'
     _description = 'Social Post Template'
     _rec_names_search = ['display_message']
 

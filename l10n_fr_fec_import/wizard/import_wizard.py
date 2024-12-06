@@ -24,6 +24,7 @@ class UnbalancedMovesError(UserError):
 class AccountFecImportWizard(models.TransientModel):
     """ FEC import wizard is the main class to import FEC files.  """
 
+    _name = 'account.fec.import.wizard'
     _description = "Account FEC import wizard"
 
     attachment_name = fields.Char(string="Filename")

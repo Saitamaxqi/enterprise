@@ -8,7 +8,7 @@ class AccountChangeLockDate(models.TransientModel):
     """
     This wizard is used to change the lock date
     """
-    _inherit = ['account.change.lock.date']
+    _inherit = 'account.change.lock.date'
 
     def _create_default_report_external_values(self, lock_date_field):
         """

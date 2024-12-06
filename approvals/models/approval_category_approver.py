@@ -8,6 +8,7 @@ class ApprovalCategoryApprover(models.Model):
     """ Intermediate model between approval.category and res.users
         To know whether an approver for this category is required or not
     """
+    _name = 'approval.category.approver'
     _description = 'Approval Type Approver'
     _rec_name = 'user_id'
     _order = 'sequence'

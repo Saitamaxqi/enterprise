@@ -15,7 +15,8 @@ class DocumentsMixin(models.AbstractModel):
 
     Note: this mixin can be disabled with the context variable "no_document=True".
     """
-    _inherit = ['documents.unlink.mixin']
+    _name = 'documents.mixin'
+    _inherit = 'documents.unlink.mixin'
     _description = "Documents creation mixin"
 
     def _get_document_vals(self, attachment):

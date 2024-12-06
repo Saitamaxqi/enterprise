@@ -2,6 +2,7 @@ from odoo import api, fields, models
 
 
 class Account_FollowupManual_Reminder(models.TransientModel):
+    _name = 'account_followup.manual_reminder'
     _inherit = ['account_followup.manual_reminder', 'whatsapp.composer']
 
     def _raise_no_template_error(self, res_model):
