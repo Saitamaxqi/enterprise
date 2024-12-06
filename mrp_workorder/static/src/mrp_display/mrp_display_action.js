@@ -40,6 +40,7 @@ export class MrpDisplayAction extends Component {
                 "product_description_variants",
                 "priority",
                 "log_note",
+                "picking_type_auto_close",
             ],
             "mrp.workorder": [
                 "id",

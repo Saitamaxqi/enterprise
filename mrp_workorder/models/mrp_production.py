@@ -23,6 +23,8 @@ class MrpProduction(models.Model):
 
     log_note = fields.Text(string="Log note")
 
+    picking_type_auto_close = fields.Boolean(related='picking_type_id.auto_close_production')
+
     def write(self, vals):
         if 'lot_producing_id' in vals:
             self.sudo().workorder_ids.check_ids.filtered(lambda c: c.test_type_id.technical_name == 'register_production').write({'lot_id': vals['lot_producing_id']})

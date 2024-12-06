@@ -20,7 +20,7 @@ cat > barcodesHeaders_TMP_FILE.ps << HEADER
 (PREVIOUS) 79 672 showTitle
 (SKIP) 336 672 showTitle
 (MARK AS DONE) 79 565 showTitle
-(MARK AS DONE AND CLOSE MO) 336 565 showTitle
+(CLOSE PRODUCTION) 336 565 showTitle
 (PASS) 79 456 showTitle
 (FAIL) 336 456 showTitle
 (RECORD PRODUCTION) 79 347 showTitle

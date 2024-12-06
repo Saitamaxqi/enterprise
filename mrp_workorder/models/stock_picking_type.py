@@ -13,6 +13,8 @@ class StockPickingType(models.Model):
         default=False,
     )
 
+    auto_close_production = fields.Boolean(string="Close Manufacturing Order from work orders", help="Allow users to close MO in last work order operation.", default=True)
+
     def action_mrp_overview(self):
         routing_count = self.env['stock.picking.type'].search_count([('code', '=', 'mrp_operation')])
         if routing_count == 1:

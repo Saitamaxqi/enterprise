@@ -52,10 +52,6 @@ export class MrpDisplay extends Component {
             ...this.props.display,
         };
 
-        this.validationStack = {
-            "mrp.production": [],
-            "mrp.workorder": [],
-        };
         this.adminId = false;
         this.barcodeTargetRecordId = false;
         if (
@@ -156,19 +152,6 @@ export class MrpDisplay extends Component {
         });
         onWillDestroy(async () => {
             clearInterval(this.refreshInterval);
-            await this.processValidationStack();
-        });
-    }
-
-    addToValidationStack(record, validationCallback) {
-        const relevantStack = this.validationStack[record.resModel];
-        if (relevantStack.find((rec) => rec.record.resId === record.resId)) {
-            return; // Don't add more than once the same record into the stack.
-        }
-        relevantStack.push({
-            record,
-            isValidated: false,
-            validationCallback,
         });
     }
 
@@ -334,47 +317,6 @@ export class MrpDisplay extends Component {
         return this.model.root.records.find((mo) => mo.resId === record.data.production_id[0]);
     }
 
-    async processValidationStack() {
-        const productionIds = [];
-        const kwargs = {};
-        for (const workorder of this.validationStack["mrp.workorder"]) {
-            await workorder.validationCallback();
-        }
-        for (const production of this.validationStack["mrp.production"]) {
-            if (!production.isValidated) {
-                productionIds.push(production.record.resId);
-                const { data } = production.record;
-                if (data.product_tracking === "serial") {
-                    kwargs.context = kwargs.context || { skip_redirection: true };
-                    if (data.product_qty > 1) {
-                        kwargs.context.skip_backorder = true;
-                        if (!kwargs.context.mo_ids_to_backorder) {
-                            kwargs.context.mo_ids_to_backorder = [];
-                        }
-                        kwargs.context.mo_ids_to_backorder.push(production.resId);
-                    }
-                }
-            }
-        }
-        if (productionIds.length) {
-            const action = await this.orm.call(
-                "mrp.production",
-                "button_mark_done",
-                [productionIds],
-                kwargs
-            );
-            if (action && typeof action === "object") {
-                return this.actionService.doAction(action);
-            }
-            this.validationStack = {
-                "mrp.production": [],
-                "mrp.workorder": [],
-            };
-        }
-        this.env.searchModel.invalidateRecordCache();
-        return { success: true };
-    }
-
     get relevantRecords() {
         const myWorkordersFilter = (wo) =>
             this.adminWorkorderIds.includes(wo.resId) && wo.data.state !== "cancel";
@@ -449,54 +391,30 @@ export class MrpDisplay extends Component {
     }
 
     async selectWorkcenter(workcenterId, filterMO = false) {
-        // Waits all the MO under validation are actually validated before to change the WC.
-        const result = await this.processValidationStack();
         await this.useEmployee.getConnectedEmployees();
-        if (result.success) {
-            if (filterMO) {
-                await this._onProductionBarcodeScanned(filterMO);
-            } else {
-                this.env.searchModel.invalidateRecordCache();
-            }
-            const workcenterIds = this.state.workcenters.map((wc) => wc.id);
-            this.state.activeWorkcenter = Number(workcenterId);
-            this.state.activeResModel = this.state.activeWorkcenter
-                ? "mrp.workorder"
-                : "mrp.production";
-            if (
-                this.state.activeWorkcenter > 0 &&
-                !workcenterIds.includes(this.state.activeWorkcenter)
-            ) {
-                const workcenters = await this.orm.searchRead(
-                    "mrp.workcenter",
-                    [],
-                    ["display_name"]
-                );
-                const workcenterToToggle = [...workcenterIds, this.state.activeWorkcenter].reduce(
-                    (acc, id) => {
-                        const res = workcenters.find((wc) => wc.id === id);
-                        return res ? [...acc, res] : acc;
-                    },
-                    []
-                );
-                await this.toggleWorkcenter(workcenterToToggle);
-            }
-        }
-    }
-
-    async removeFromValidationStack(record, isValidated = true) {
-        const relevantStack = this.validationStack[record.resModel];
-        const foundRecord = relevantStack.find((rec) => rec.record.resId === record.resId);
-        if (isValidated) {
-            foundRecord.isValidated = true;
-            this.env.searchModel.removeRecordFromCache(record.resId);
-            if (relevantStack.every((rec) => rec.isValidated)) {
-                // Empties the validation stack if all under validation MO or WO are validated.
-                this.validationStack[record.resModel] = [];
-            }
+        if (filterMO) {
+            await this._onProductionBarcodeScanned(filterMO);
         } else {
-            const index = relevantStack.indexOf(foundRecord);
-            relevantStack.splice(index, 1);
+            this.env.searchModel.invalidateRecordCache();
+        }
+        const workcenterIds = this.state.workcenters.map((wc) => wc.id);
+        this.state.activeWorkcenter = Number(workcenterId);
+        this.state.activeResModel = this.state.activeWorkcenter
+            ? "mrp.workorder"
+            : "mrp.production";
+        if (
+            this.state.activeWorkcenter > 0 &&
+            !workcenterIds.includes(this.state.activeWorkcenter)
+        ) {
+            const workcenters = await this.orm.searchRead("mrp.workcenter", [], ["display_name"]);
+            const workcenterToToggle = [...workcenterIds, this.state.activeWorkcenter].reduce(
+                (acc, id) => {
+                    const res = workcenters.find((wc) => wc.id === id);
+                    return res ? [...acc, res] : acc;
+                },
+                []
+            );
+            await this.toggleWorkcenter(workcenterToToggle);
         }
     }
 
@@ -555,11 +473,8 @@ export class MrpDisplay extends Component {
     }
 
     async onClickRefresh() {
-        const result = await this.processValidationStack();
-        if (result.success) {
-            this.env.reload();
-            this.env.searchModel.invalidateRecordCache();
-        }
+        this.env.reload();
+        this.env.searchModel.invalidateRecordCache();
     }
 
     login() {

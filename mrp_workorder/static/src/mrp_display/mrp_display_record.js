@@ -30,12 +30,10 @@ export class MrpDisplayRecord extends Component {
         QualityCheck,
     };
     static props = {
-        addToValidationStack: Function,
         groups: Object,
         barcodeTarget: { type: Boolean, optional: true },
         production: { optional: true, type: Object },
         record: Object,
-        removeFromValidationStack: Function,
         isMyWO: { optional: true, type: Boolean },
         selectWorkcenter: { optional: true, type: Function },
         sessionOwner: Object,
@@ -50,7 +48,6 @@ export class MrpDisplayRecord extends Component {
         this.action = useService("action");
         this.state = useState({
             underValidation: false,
-            validated: false,
         });
         this.resModel = this.props.record.resModel;
         this.model = this.props.record.model;
@@ -174,24 +171,11 @@ export class MrpDisplayRecord extends Component {
     get cssClass() {
         const active = this.active ? "o_active" : "";
         const disabled = this.disabled ? "o_disabled" : "";
-        const underValidation =
-            this.state.underValidation && !this.record.is_last_unfinished_wo
-                ? "o_fadeout_animation"
-                : "";
-        const finished = this.state.validated ? "d-none" : "";
-        return `${active} ${disabled} ${underValidation} ${finished}`;
+        return `${active} ${disabled}`;
     }
 
     get displayDoneButton() {
         return this.resModel === "mrp.production" || this._workorderDisplayDoneButton();
-    }
-
-    get displayCloseProductionButton() {
-        return (
-            this.displayDoneButton &&
-            this.state.underValidation &&
-            this.record.is_last_unfinished_wo
-        );
     }
 
     get byProducts() {
@@ -501,7 +485,7 @@ export class MrpDisplayRecord extends Component {
     }
 
     get disabled() {
-        if (this.props.demoRecord) {
+        if (this.props.demoRecord || this.state.underValidation) {
             return true;
         }
         if (
@@ -557,19 +541,11 @@ export class MrpDisplayRecord extends Component {
         });
     }
 
-    async onClickValidateButton() {
-        if (this.state.underValidation) {
-            // Already under validation: cancel the validation process
-            this.props.removeFromValidationStack(this.props.record, false);
-            this.state.underValidation = false;
-        } else {
-            // Start the record's validation process (delayed actual validation).
-            await this.validate();
-        }
-    }
-
     async validate() {
-        const { resModel, resId } = this.props.record;
+        this.state.underValidation = true;
+        let { resModel, resId } = this.props.record;
+        let methodName = "button_mark_done";
+        const kwargs = {};
         if (resModel === "mrp.workorder") {
             if (this.record.state === "ready" && this.record.qty_producing === 0) {
                 this.props.record.update({ qty_producing: this.record.qty_production });
@@ -587,97 +563,68 @@ export class MrpDisplayRecord extends Component {
                 await this.props.record.load();
             }
             await this.props.record.save();
-            const action = await this.model.orm.call(resModel, "pre_record_production", [resId]);
-            if (action && typeof action === "object") {
-                action.context.skip_redirection = true;
-                return this._doAction(action);
+            methodName = "do_finish";
+            kwargs.context = { no_start_next: true, mrp_display: true };
+            if (this.validatingEmployee) {
+                kwargs.context.employee_id = this.validatingEmployee;
             }
         }
-        if (resModel === "mrp.production") {
-            const args = [this.props.production.resId];
-            const params = {};
-            let methodName = "pre_button_mark_done";
-            if (this.trackingMode === "mass_produce") {
+        if (
+            resModel === "mrp.production" ||
+            (this.props.production.data.picking_type_auto_close &&
+                this.record.is_last_unfinished_wo)
+        ) {
+            methodName = "button_mark_done";
+            if (this.trackingMode === "serial") {
+                kwargs.context = { skip_redirection: true };
+                if (this.record.product_qty > 1) {
+                    kwargs.context.skip_backorder = true;
+                    kwargs.context.mo_ids_to_backorder = [resId];
+                }
+            } else if (this.trackingMode === "mass_produce") {
                 methodName = "action_mass_produce";
             }
-            const action = await this.model.orm.call("mrp.production", methodName, args, params);
-            // If there is a wizard while trying to mark as done the production, confirming the
-            // wizard will straight mark the MO as done without the confirmation delay.
+            resModel = "mrp.production";
+            resId = this.props.production.resId;
+        }
+        try {
+            const action = await this.model.orm.call(resModel, methodName, [resId], kwargs);
             if (action && typeof action === "object") {
-                action.context.skip_redirection = true;
+                if (action.context) {
+                    action.context.skip_redirection = true;
+                }
                 return this._doAction(action);
             }
+        } catch (error) {
+            this.state.underValidation = false;
+            throw error;
         }
-        // Makes the validation taking a little amount of time (see o_fadeout_animation CSS class).
-        this.props.addToValidationStack(this.props.record, () => this.realValidation());
-        this.state.underValidation = true;
-    }
-
-    realValidation() {
-        if (this.state.validated) {
-            return;
-        }
-        if (this.resModel === "mrp.production") {
-            return this.productionValidation();
-        } else if (this.resModel === "mrp.workorder") {
-            return this.workorderValidation();
-        }
-    }
-
-    async productionValidation() {
-        const { resId, resModel } = this.props.production;
-        const kwargs = {};
-        if (this.trackingMode === "serial") {
-            kwargs.context = { skip_redirection: true };
-            if (this.record.product_qty > 1) {
-                kwargs.context.skip_backorder = true;
-                kwargs.context.mo_ids_to_backorder = [resId];
-            }
-        }
-        const action = await this.model.orm.call(resModel, "button_mark_done", [resId], kwargs);
-        if (action && typeof action === "object") {
-            if (action.context) {
-                action.context.skip_redirection = true;
-            }
-        } else if (this.props.record.resModel === "mrp.production") {
-            await this.props.removeFromValidationStack(this.props.record);
-            this.state.validated = true;
-        }
-        this.env.reload();
-    }
-
-    async workorderValidation(skipRemoveFromStack = false) {
-        const { resId, resModel } = this.props.record;
-        const context = { no_start_next: true, mrp_display: true };
-        if (this.validatingEmployee) {
-            context.employee_id = this.validatingEmployee;
-        }
-        await this.model.orm.call(resModel, "do_finish", [resId], { context });
-        if (!skipRemoveFromStack) {
-            await this.props.removeFromValidationStack(this.props.record);
-        }
-        if (this.trackingMode === "serial" && this.props.production.data.product_qty > 1) {
-            // To make sure we see any potentially created backorders
-            this.env.reload();
+        if (resModel === "mrp.production") {
+            // Manually remove the parent MO from the model, to avoid a full reload.
+            const productions_root = this.props.production.model.root;
+            productions_root.records.splice(
+                productions_root.records.findIndex((r) => r.resId === this.props.production.resId),
+                1
+            );
+            productions_root.count--;
         } else {
-            this.env.reload(this.props.production);
+            this.env.searchModel.removeRecordFromCache(resId);
+            if (this.quantityProducing < this.quantityToProduce) {
+                // To make sure we see any potentially created backorders
+                await this.env.reload();
+            } else {
+                await this.env.reload(this.props.production);
+            }
+            this.state.underValidation = false;
         }
-        this.state.validated = true;
     }
 
     _doAction(action) {
-        let onClose;
-        if (this.props.production.data.qty_producing < this.props.production.data.product_qty) {
-            // Make sure to reload all records in case of a possible backorder
-            onClose = () => {
+        return this.model.action.doAction(action, {
+            onClose: () => {
                 this.env.reload();
-            };
-        } else {
-            onClose = () => {
-                this.env.reload(this.props.production);
-            };
-        }
-        return this.model.action.doAction(action, { onClose });
+            },
+        });
     }
 
     openFormView() {
@@ -745,61 +692,10 @@ export class MrpDisplayRecord extends Component {
         return hasPDF || hasSlide || hasNote;
     }
 
-    onAnimationEnd(ev) {
-        if (ev.animationName === "fadeout" && this.state.underValidation) {
-            this.realValidation();
-        }
-    }
-
-    async onClickCloseProduction() {
-        /*
-            When using the Close Production button, we fast-forward the delay in validating the WO.
-            To avoid a race condition where the timer validates a WO while we are validating from
-            the Close Production button, we pop the WO of the stack manually before validating.
-         */
-        await this.props.removeFromValidationStack(this.props.record);
-        await this.workorderValidation(true);
-        const params = {};
-        let methodName = "pre_button_mark_done";
-        if (this.trackingMode === "mass_produce") {
-            methodName = "action_mass_produce";
-            params.mark_as_done = true;
-        }
-        const action = await this.model.orm.call(
-            "mrp.production",
-            methodName,
-            [this.props.production.resId],
-            params
-        );
-        // If there is a wizard while trying to mark as done the production, confirming the
-        // wizard will straight mark the MO as done without the confirmation delay.
-        if (action && typeof action === "object") {
-            action.context.skip_redirection = true;
-            return this._doAction(action);
-        }
-        await this.productionValidation();
-        this.env.searchModel.removeRecordFromCache(this.props.record.resId);
-        const productions_root = this.props.record._parentRecord.model.root;
-        // Manually remove the parent MO from the model, to avoid a full reload.
-        productions_root.records.splice(
-            productions_root.records.findIndex((r) => r.resId === this.props.production.resId),
-            1
-        );
-        productions_root.count--;
-    }
-
     async openNextQC() {
         const nextQC = this.lastOpenedQualityCheck
             ? null
             : this.checks.find((qc) => qc.data.quality_state === "none");
         await this.displayInstruction(nextQC);
-    }
-
-    async nextOperation() {
-        await this.realValidation();
-        const nextWorkcenterId = this.props.production.data.workorder_ids.records.find((wo) =>
-            ["pending", "waiting"].includes(wo.data.state)
-        )?.data.workcenter_id[0];
-        nextWorkcenterId && (await this.props.selectWorkcenter(nextWorkcenterId));
     }
 }

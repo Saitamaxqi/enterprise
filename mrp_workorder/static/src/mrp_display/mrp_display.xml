@@ -65,7 +65,6 @@
                 <div class="o_mrp_display_records flex-grow-1 m-2 position-relative">
                     <t t-foreach="relevantRecords" t-as="record" t-key="record.id">
                         <MrpDisplayRecord
-                            addToValidationStack.bind="addToValidationStack"
                             groups="groups"
                             record="record"
                             production="getProduction(record)"
@@ -74,14 +73,12 @@
                             selectWorkcenter.bind="selectWorkcenter"
                             updateEmployees.bind="useEmployee.getConnectedEmployees"
                             sessionOwner="useEmployee.employees.admin"
-                            removeFromValidationStack.bind="removeFromValidationStack"
                             barcodeTarget="barcodeTargetRecord === record.resId"
                             />
                     </t>
                     <t t-if="!relevantRecords.length">
                         <t t-foreach="demoMORecords" t-as="record" t-key="record.id">
                             <MrpDisplayRecord
-                            addToValidationStack.bind="addToValidationStack"
                             groups="groups"
                             record="record"
                             production="getProduction(record)"
@@ -89,7 +86,6 @@
                             selectWorkcenter.bind="selectWorkcenter"
                             updateEmployees.bind="useEmployee.getConnectedEmployees"
                             sessionOwner="useEmployee.employees.admin"
-                            removeFromValidationStack.bind="removeFromValidationStack"
                             demoRecord="true"
                             />
                         </t>

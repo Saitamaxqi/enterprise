@@ -130,8 +130,7 @@ registry.category("web_tour.tours").add("test_shop_floor", {
             run: "click",
         },
         {
-            content: "Navigate to next operation",
-            trigger: "button:contains(Next Operation)",
+            trigger: '.o_control_panel_actions button:contains("Jungle")',
             run: "click",
         },
         {
@@ -187,13 +186,6 @@ registry.category("web_tour.tours").add("test_shop_floor", {
         },
         {
             trigger: "div.o_mrp_display_record .card-header .fa-play",
-        },
-        {
-            trigger: ".card-footer button[barcode_trigger=CLWO]:contains(Mark as Done):enabled",
-            run: "click",
-        },
-        {
-            trigger: ".card-footer button[barcode_trigger=CLWO]:contains(Undo)",
         },
         {
             trigger: ".card-footer button[barcode_trigger=CLMO]",
@@ -450,12 +442,8 @@ registry.category("web_tour.tours").add("test_generate_serials_in_shopfloor", {
         },
         {
             content: "Set production as done",
-            trigger: 'button.btn-primary:contains("Mark as Done")',
-            run: "click",
-        },
-        {
-            content: "Close production",
             trigger: 'button.btn-primary:contains("Close Production")',
+            run: "click",
         },
     ],
 });
@@ -530,11 +518,6 @@ registry.category("web_tour.tours").add("test_change_qty_produced", {
         },
         {
             content: "Mark the WorkOrder as Done",
-            trigger: 'button.btn-primary:contains("Mark as Done")',
-            run: "click",
-        },
-        {
-            content: "Check if the WO was finished",
             trigger: 'button.btn-primary:contains("Close Production")',
             run: "click",
         },

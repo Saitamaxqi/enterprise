@@ -133,6 +133,8 @@ class MrpWorkorder(models.Model):
             action = self.env["ir.actions.actions"]._for_xml_id("mrp.mrp_workorder_todo")
             action['target'] = 'main'
             action['context'] = dict(literal_eval(action['context']), no_breadcrumbs=True)
+        elif self.env.context.get('mrp_display'):
+            return
         else:
             # from workcenter kanban view
             action = self.env["ir.actions.actions"]._for_xml_id("mrp_workorder.mrp_workorder_action_tablet")

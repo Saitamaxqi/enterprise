@@ -12,8 +12,4 @@ patch(MrpDisplayRecord.prototype, {
         }
         return super.validate();
     },
-
-    get displayCloseProductionButton() {
-        return super.displayCloseProductionButton && !this.props.production.data.quality_check_todo;
-    },
 });

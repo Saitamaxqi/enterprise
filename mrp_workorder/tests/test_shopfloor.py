@@ -463,7 +463,6 @@ class TestShopFloor(HttpCase):
         wo = mo.workorder_ids.sorted()[0]
         wo.button_start()
         wo.button_finish()
-
         self.start_tour("/odoo/shop-floor", "test_change_qty_produced", login='admin')
         self.assertEqual(mo.qty_producing, 3)
         for move in mo.move_raw_ids:
@@ -471,5 +470,5 @@ class TestShopFloor(HttpCase):
                 self.assertEqual(move.quantity, 5)
                 self.assertTrue(move.picked)
             if move.product_id.id == comp2.id:
-                self.assertEqual(move.quantity, 6)
+                self.assertEqual(move.quantity, 10)
                 self.assertTrue(move.picked)

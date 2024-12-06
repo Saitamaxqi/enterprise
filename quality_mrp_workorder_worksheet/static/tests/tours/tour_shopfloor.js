@@ -53,17 +53,6 @@ registry.category("web_tour.tours").add("test_worksheet_quality_check", {
         },
         {
             content: "Check that the quality check has been validated",
-            trigger: ".btn:contains('Mark as Done')",
-        },
-        {
-            trigger: ".btn:contains('Mark as Done')",
-            run: "click",
-        },
-        {
-            content: "Check that WO has been marked as done",
-            trigger: ".btn:contains('Close Production')",
-        },
-        {
             trigger: ".btn:contains('Close Production')",
             run: "click",
         },
