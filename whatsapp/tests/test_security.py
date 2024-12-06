@@ -187,9 +187,6 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                     },
                                 },
                             ],
-                            "res.partner": self._filter_partners_fields(
-                                {"id": self.user_admin.partner_id.id, "name": "Mitchell Admin"},
-                            ),
                         },
                     },
                     {
@@ -240,13 +237,13 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                         "write_date": fields.Datetime.to_string(message.write_date),
                                     },
                                 ),
-                                "mail.thread": [
+                                "mail.thread": self._filter_threads_fields(
                                     {
                                         "id": employee_channel.id,
                                         "model": "discuss.channel",
                                         "module_icon": "/mail/static/description/icon.png",
                                     },
-                                ],
+                                ),
                                 "res.partner": self._filter_partners_fields(
                                     {
                                         "id": self.user_admin.partner_id.id,

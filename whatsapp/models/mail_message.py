@@ -28,8 +28,13 @@ class MailMessage(models.Model):
             })
             self._bus_send_reaction_group(reaction_content)
 
-    def _to_store(self, store: Store, **kwargs):
-        super()._to_store(store, **kwargs)
+    def _to_store_defaults(self):
+        return super()._to_store_defaults() + ["whatsappStatus"]
+
+    def _to_store(self, store: Store, fields, **kwargs):
+        super()._to_store(store, [field for field in fields if field != "whatsappStatus"], **kwargs)
+        if "whatsappStatus" not in fields:
+            return
         if whatsapp_mail_messages := self.filtered(lambda m: m.message_type == "whatsapp_message"):
             for whatsapp_message in (
                 self.env["whatsapp.message"]

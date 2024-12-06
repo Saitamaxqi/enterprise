@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
@@ -8,8 +7,13 @@ from odoo.addons.mail.tools.discuss import Store
 class MailActivity(models.Model):
     _inherit = "mail.activity"
 
-    def _to_store(self, store: Store):
-        super()._to_store(store)
+    def _to_store_defaults(self):
+        return super()._to_store_defaults() + ["approver"]
+
+    def _to_store(self, store: Store, fields):
+        super()._to_store(store, [field for field in fields if field != "approver"])
+        if "approver" not in fields:
+            return
         activity_type_approval_id = self.env.ref("approvals.mail_activity_data_approval")
         for activity in self.filtered(
             lambda activity: activity["res_model"] == "approval.request"

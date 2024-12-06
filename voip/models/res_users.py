@@ -1,4 +1,7 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 from odoo import api, models, fields
+from odoo.addons.mail.tools.discuss import Store
 
 
 class ResUsers(models.Model):
@@ -116,7 +119,7 @@ class ResUsers(models.Model):
         last_call = self.env["voip.call"].search(domain, order="id desc", limit=1)
         self.env.user.last_seen_phone_call = last_call.id
 
-    def _init_store_data(self, store):
+    def _init_store_data(self, store: Store):
         super()._init_store_data(store)
         if not self.env.user._is_internal():
             return
@@ -127,7 +130,7 @@ class ResUsers(models.Model):
             "pbxAddress": provider.pbx_ip or "localhost",
             "webSocketUrl": provider.ws_server or "ws://localhost",
         }
-        store.add({"voipConfig": voip_config})
+        store.add_global_values(voipConfig=voip_config)
 
     def _reflect_change_in_res_users_settings(self):
         """

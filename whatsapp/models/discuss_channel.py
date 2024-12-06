@@ -103,9 +103,7 @@ class DiscussChannel(models.Model):
         if self.channel_type == 'whatsapp' and message_type == 'whatsapp_message':
             if new_msg.author_id == self.whatsapp_partner_id:
                 self.last_wa_mail_message_id = new_msg
-                self._bus_send_store(
-                    self, {"whatsapp_channel_valid_until": self.whatsapp_channel_valid_until}
-                )
+                self._bus_send_store(self, "whatsapp_channel_valid_until")
             if not new_msg.wa_message_ids:
                 whatsapp_message = self.env['whatsapp.message'].create({
                     'body': new_msg.body,
@@ -225,7 +223,7 @@ class DiscussChannel(models.Model):
             }])
             message_body = Markup(f'<div class="o_mail_notification">{_("joined the channel")}</div>')
             new_member.channel_id.message_post(body=message_body, message_type="notification", subtype_xmlid="mail.mt_comment")
-            self._bus_send_store(Store(new_member).add(self, {"member_count": self.member_count}))
+            self._bus_send_store(Store(new_member).add(self, "member_count"))
         return Store(self).get_result()
 
     # ------------------------------------------------------------
@@ -243,13 +241,11 @@ class DiscussChannel(models.Model):
             return
         super()._action_unfollow(partner, guest)
 
-    def _to_store(self, store: Store):
-        super()._to_store(store)
-        for channel in self.filtered(lambda channel: channel.channel_type == "whatsapp"):
-            store.add(channel, {
-                "whatsapp_channel_valid_until": channel.whatsapp_channel_valid_until,
-                "whatsapp_partner_id": Store.one(channel.whatsapp_partner_id, only_id=True),
-            })
+    def _to_store_defaults(self):
+        return super()._to_store_defaults() + [
+            "whatsapp_channel_valid_until",
+            Store.One("whatsapp_partner_id", []),
+        ]
 
     def _types_allowing_seen_infos(self):
         return super()._types_allowing_seen_infos() + ["whatsapp"]
