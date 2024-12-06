@@ -504,7 +504,7 @@ class AccountMove(models.Model):
                 'payment_total': abs(line.balance),
             }
             payment_vals.update({
-                'payment_term': max(((line.date_maturity or self.invoice_date) - self.invoice_date).days, 0),
+                'payment_term': max(((line.date_maturity or self.invoice_date) - self.invoice_date).days, 0) if self.invoice_date else 0,
                 'time_unit': "dias",
             })
             payment_data.append(payment_vals)
