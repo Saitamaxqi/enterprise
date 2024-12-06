@@ -257,3 +257,64 @@ class TestAccountReportsModelo(TestAccountReportsCommon):
             ],
             options
         )
+
+    def test_mod349_credit_note(self):
+        """
+            Test the rectification part of modelo 349, if an refund is found without linked invoice
+            it still ends up in the "Rectificaciones" section.
+        """
+        options = self._generate_options(self.report, fields.Date.from_string('2019-04-01'), fields.Date.from_string('2019-04-30'))
+
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_refund',
+            'date': fields.Date.from_string('2019-04-05'),
+            'invoice_date': fields.Date.from_string('2019-04-05'),
+            'partner_id': self.partner_a.id,
+            'l10n_es_reports_mod349_invoice_type': 'E',
+            'line_ids': [
+                Command.create({
+                    'product_id': self.product.id,
+                    'account_id': self.account_income.id,
+                    'quantity': 4,
+                    'price_unit': self.product.lst_price,
+                    'tax_ids': [],
+                }),
+            ]
+        })
+
+        invoice.action_post()
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            [0,                                                                                                                                                     1],
+            [
+                ('Summary',                                                                                                                                ''),
+                ('Total number of intra-community operations',                                                                                              0),
+                ('Total amount of intra-community operations',                                                                                              0),
+                ('Total number of intra-community refund operations',                                                                                       1),
+                ('Amount of intra-community refund operations',                                                                                        400.00),
+                ('Invoices',                                                                                                                               ''),
+                ('E. Intra-community sales',                                                                                                                0),
+                ('A. Intra-community purchases subject to taxes',                                                                                           0),
+                ('T. Sales to other member states exempted of intra-community taxes in case of triangular operations',                                      0),
+                ('S. Intra-community sales of services carried out by the declarant',                                                                       0),
+                ('I. Intra-community purchases of services',                                                                                                0),
+                ('M. Intra-community sales of goods after an importation exempted of taxes',                                                                0),
+                ('H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative',                                  0),
+                ('R. Transfers of goods made under consignment sales contracts.',                                                                           0),
+                ('D. Returns of goods previously sent from the TAI',                                                                                        0),
+                ('C. Replacements of goods',                                                                                                                0),
+                ('Refunds',                                                                                                                                ''),
+                ('E. Intra-community sales refunds',                                                                                                   400.00),
+                ('A. Intra-community purchases subject to taxes',                                                                                           0),
+                ('T. Sales to other member states exempted of intra-community taxes in case of triangular operations',                                      0),
+                ('S. Intra-community sales of services carried out by the declarant',                                                                       0),
+                ('I. Intra-community purchases of services',                                                                                                0),
+                ('M. Intra-community sales of goods after an importation exempted of taxes',                                                                0),
+                ('H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative',                                  0),
+                ('R. Rectifications of transfers of goods made under consignment sale contracts.',                                                          0),
+                ('D. Rectifications of returned goods previously sent from the TAI',                                                                        0),
+                ('C. Rectifications for replacement of goods',                                                                                              0),
+            ],
+            options
+        )
