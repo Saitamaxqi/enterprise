@@ -54,7 +54,7 @@ registry.category("web_tour.tours").add("l10n_mx_edi_pos.tour_invoice_previous_o
             },
             {
                 content: "Pick the first order in the list",
-                trigger: "div.order-row:contains('Paid'):first",
+                trigger: "div .order-row:contains('Paid'):first",
                 run: "click",
             },
             {
@@ -140,7 +140,7 @@ registry
                 },
                 {
                     content: "Pick the first order in the list",
-                    trigger: "div.order-row:contains('Paid'):first",
+                    trigger: "div .order-row:contains('Paid'):first",
                     run: "click",
                 },
                 {

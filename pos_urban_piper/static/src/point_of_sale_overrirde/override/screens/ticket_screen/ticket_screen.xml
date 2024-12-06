@@ -1,43 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
     <t t-name="pos_urban_piper.TicketScreen" t-inherit="point_of_sale.TicketScreen" t-inherit-mode="extension">
-        <xpath expr="//div[hasclass('header-row')]//div[8]" position="after">
-            <div class="col wide p-2" name="Delivery Partner">Delivery Partner</div>
-        </xpath>
-        <xpath expr="//div[hasclass('header-row')]//div[9]" position="after">
-            <div class="col p-2" name="Order Status">Order Status</div>
-        </xpath>
-        <xpath expr="//div[hasclass('header-row')]//div[hasclass('very-narrow')]" position="before">
-            <div class="col very-narrow p-2" name="Order Info"/>
-        </xpath>
-        <xpath expr="//div[hasclass('order-row')]//div[8]" position="after">
-            <div class="col wide p-2">
-                <t t-if="order.delivery_provider_id">
+        <xpath expr="//tr//td[5]" position="after">
+            <td t-if="order.delivery_provider_id" class="align-middle">
                     <t t-set="order_otp" t-value="fetchOrderOtp()"/>
                     <div class="d-flex">
                         <t t-esc="order.delivery_provider_id.name"/>
                         <t t-if="order_otp"> - <t t-esc="order_otp"/></t>
                     </div>
-                </t>
-                <t t-else="">
-                    <t t-esc=""/>
-                </t>
-            </div>
+            </td>
         </xpath>
-        <xpath expr="//div[hasclass('order-row')]//div[9]" position="after">
-            <div class="col p-2">
-                <t t-if="order.delivery_status">
-                    <t t-esc="this.order_status[order.delivery_status]"/>
-                </t>
-                <t t-else="">
-                    <t t-esc=""/>
-                </t>
-            </div>
+        <xpath expr="//tr//td[6]" position="after">
+            <td t-if="order.delivery_status" class="align-middle">
+                <t t-esc="this.order_status[order.delivery_status]"/>
+            </td>
         </xpath>
-        <xpath expr="//div[hasclass('order-row')]//div[hasclass('very-narrow')]" position="before">
-            <div class="col very-narrow info-button p-2 text-center" name="info">
-                <i t-if="order?.delivery_identifier" class="fa fa-info-circle" aria-hidden="true" t-on-click="() => this._onInfoOrder(order)"/>
-            </div>
+        <xpath expr="//tr//td[7]" position="before">
+            <td t-if="order?.delivery_identifier" class="align-middle">
+                <i class="fa fa-info-circle" aria-hidden="true" t-on-click="() => this._onInfoOrder(order)"/>
+            </td>
         </xpath>
         <xpath expr="//div[hasclass('pads')]//div[hasclass('pads')]//BackButton" position="after">
             <t t-set="order" t-value="getSelectedOrder()"/>
@@ -94,7 +75,7 @@
         <xpath expr="//div[hasclass('switchpane')]" position="attributes">
             <attribute name="t-if">!order?.delivery_identifier and ui.isSmall</attribute>
         </xpath>
-        <xpath expr="//div[hasclass('mobileOrderList')]//div[hasclass('justify-content-between')][2]" position="after">
+        <xpath expr="//div[hasclass('mobileOrderList')]//div[hasclass('justify-content-center')][2]" position="after">
             <div t-if="ui.isSmall and order?.delivery_identifier" class="col p-2" t-att-class="{ 'highlight bg-primary text-white': isHighlighted(order) }">
                 <div t-if="!shouldHideDeleteButton(order)" class="col very-narrow bg-info p-2 rounded-2" name="info" t-on-click="() => this._onInfoOrder(order)">
                     <i class="fa fa-info-circle" aria-hidden="true"/> Info
