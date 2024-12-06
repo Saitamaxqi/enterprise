@@ -56,6 +56,7 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
             },
         });
         this.nameService = useService("name");
+        this.modelDisplayName = useService("modelDisplayName");
 
         this.ALLOWED_FIELD_TYPES = ["many2one", "many2many", "one2many"];
     }
@@ -188,10 +189,9 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
         if (!this.relationState.relatedModel.technical) {
             return;
         }
-        const result = await this.orm.call("ir.model", "display_name_for", [
-            [this.relationState.relatedModel.technical],
-        ]);
-        this.relationState.relatedModel.label = result[0] && result[0].display_name;
+        this.relationState.relatedModel.label = await this.modelDisplayName.getModelDisplayName(
+            this.relationState.relatedModel.technical
+        );
         if (!this.genericState.label) {
             this.genericState.label = this.relationState.relatedModel.label;
         }
