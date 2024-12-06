@@ -31,17 +31,17 @@
                     <field name="account_id"/>
                     <field name="company_id"/>
                     <field name="date"/>
-                    <filter string="Budget" name="budget" domain="[('line_type','=','budget')]"/>
-                    <filter string="Achieved" name="achieved" domain="[('line_type','=','achieved')]"/>
+                    <filter string="Budgeted" name="budget" domain="[('line_type','=','budget')]"/>
                     <filter string="Committed" name="committed" domain="[('line_type','=','committed')]"/>
+                    <filter string="Achieved" name="achieved" domain="[('line_type','=','achieved')]"/>
                     <separator/>
-                    <filter string="In a Budget" name="in_a_budget" domain="[('budget_analytic_id', '=', False)]"/>
+                    <filter string="In a Budget" name="in_a_budget" domain="[('budget_analytic_id', '!=', False)]"/>
                     <filter string="Open Budget" name="open_budget" domain="[('budget_analytic_id.state', '=', 'confirmed')]"/>
                     <separator/>
                     <group expand="0" string="Group By">
                         <filter string="Date" name="date" context="{'group_by':'date'}"/>
                         <filter string="Type" name="line_type" context="{'group_by':'line_type'}"/>
-                        <filter string="Budget" name="budget_analytic_id" context="{'group_by':'budget_analytic_id'}"/>
+                        <filter string="Budget" name="group_by_budget_analytic_id" context="{'group_by':'budget_analytic_id'}"/>
                         <separator/>
                         <filter string="Account" name="account_id" context="{'group_by':'account_id'}"/>
                         <separator/>

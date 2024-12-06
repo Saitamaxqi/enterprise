@@ -19,6 +19,16 @@
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
                 </header>
                 <sheet string="Budget">
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button"
+                                name="action_open_budget_report"
+                                type="object"
+                                icon="fa-bar-chart">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Budget Report</span>
+                            </div>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <label for="name"/>
                         <h1>
@@ -56,9 +66,7 @@
                                     <field name="committed_percentage" widget="percentage" optional="hide" column_invisible="parent.budget_type == 'revenue' or parent.state in ('draft','canceled')"/>
                                     <field name="achieved_percentage" widget="percentage" optional="hide" column_invisible="parent.state in ('draft','canceled')"/>
                                     <field name="theoritical_percentage" widget="percentage" optional="hide" column_invisible="parent.state in ('draft','canceled')"/>
-
-                                    <button type="object" name="action_open_budget_entries" string="Details..."
-                                            icon="fa-arrow-circle-o-right" column_invisible="parent.state in ('draft','canceled')"/>
+                                    <button type="object" name="action_open_budget_entries" string="Audit" width="60px" column_invisible="parent.state in ('draft','canceled')"/>
                                     <field name="company_id" column_invisible="1"/>
                                 </list>
                             </field>

@@ -20,6 +20,7 @@ class BudgetReport(models.Model):
     budget = fields.Float('Budget', readonly=True)
     committed = fields.Float('Committed', readonly=True)
     achieved = fields.Float('Achieved', readonly=True)
+    theoretical = fields.Float(readonly=True)
     budget_analytic_id = fields.Many2one('budget.analytic', 'Budget Analytic', readonly=True)
     budget_line_id = fields.Many2one('budget.line', 'Budget Line', readonly=True)
 
@@ -32,6 +33,7 @@ class BudgetReport(models.Model):
                    'budget.analytic' AS res_model,
                    bl.budget_analytic_id AS res_id,
                    bl.date_from AS date,
+                   bl.date_to AS bl_date_to,
                    ba.name AS description,
                    bl.company_id AS company_id,
                    NULL AS user_id,
@@ -39,6 +41,12 @@ class BudgetReport(models.Model):
                    bl.budget_amount AS budget,
                    0 AS committed,
                    0 AS achieved,
+                   CASE WHEN NOW() < bl.date_to AND NOW() > bl.date_from
+                        THEN (((NOW()::DATE - bl.date_from::DATE + 1))/(bl.date_to::DATE - bl.date_from::DATE + 1)::FLOAT)*bl.budget_amount
+                        WHEN NOW() < bl.date_from
+                        THEN 0
+                        ELSE bl.budget_amount
+                   END AS theoretical,
                    %(plan_fields)s
               FROM budget_line bl
               JOIN budget_analytic ba ON ba.id = bl.budget_analytic_id
@@ -55,6 +63,7 @@ class BudgetReport(models.Model):
                    'account.analytic.line' AS res_model,
                    aal.id AS res_id,
                    aal.date AS date,
+                   bl.date_to AS bl_date_to,
                    aal.name AS description,
                    aal.company_id AS company_id,
                    aal.user_id AS user_id,
@@ -62,6 +71,7 @@ class BudgetReport(models.Model):
                    0 AS budget,
                    aal.amount * CASE WHEN ba.budget_type = 'expense' THEN -1 ELSE 1 END AS committed,
                    aal.amount * CASE WHEN ba.budget_type = 'expense' THEN -1 ELSE 1 END AS achieved,
+                   0 AS theoretical,
                    %(analytic_fields)s
               FROM account_analytic_line aal
          LEFT JOIN budget_line bl ON aal.company_id = bl.company_id
@@ -121,6 +131,7 @@ class BudgetReport(models.Model):
                    'purchase.order' AS res_model,
                    po.id AS res_id,
                    po.date_order AS date,
+                   bl.date_to AS bl_date_to,
                    pol.name AS description,
                    pol.company_id AS company_id,
                    po.user_id AS user_id,
@@ -128,6 +139,7 @@ class BudgetReport(models.Model):
                    0 AS budget,
                    (pol.product_qty - COALESCE(qty_invoiced_table.qty_invoiced, 0)) / po.currency_rate * pol.price_unit::FLOAT * (a.rate)::FLOAT AS committed,
                    0 AS achieved,
+                   0 AS theoretical,
                    %(analytic_fields)s
               FROM purchase_order_line pol
          LEFT JOIN (%(qty_invoiced_table)s) qty_invoiced_table ON qty_invoiced_table.pol_id = pol.id
