@@ -604,6 +604,7 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
                 'street': "Test street",
                 'city': "Test City",
                 'zipcode': '12345',
+                'state_id': self.env.ref('base.state_mx_ags').id,
                 'country_id': self.env.ref('base.mx').id,
                 'phone': "123456789",
                 'invoice_l10n_mx_edi_usage': 'D10',

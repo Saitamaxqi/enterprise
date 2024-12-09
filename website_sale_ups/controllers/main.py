@@ -3,7 +3,6 @@
 from odoo import http
 from odoo.http import request
 
-from odoo.addons.portal.controllers import portal
 from odoo.addons.website_sale.controllers import main
 
 
@@ -34,8 +33,3 @@ class WebsiteSale(main.WebsiteSale):
                 'partner_ups_carrier_account': False,
             })
         return request.redirect("/shop/checkout")
-
-class CustomerPortal(portal.CustomerPortal):
-
-    def _get_optional_fields(self):
-        return super()._get_optional_fields() + ['property_ups_carrier_account']

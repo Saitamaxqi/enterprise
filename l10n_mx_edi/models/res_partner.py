@@ -81,6 +81,12 @@ class ResPartner(models.Model):
         # By default, takes the central area timezone
         return timezone('America/Guatemala') # UTC-6
 
+    def _get_frontend_writable_fields(self):
+        frontend_writable_fields = super()._get_frontend_writable_fields()
+        frontend_writable_fields.add('l10n_mx_edi_fiscal_regime')
+
+        return frontend_writable_fields
+
     @api.model
     def get_partner_localisation_fields_required_to_invoice(self, country_id):
         res = super().get_partner_localisation_fields_required_to_invoice(country_id)

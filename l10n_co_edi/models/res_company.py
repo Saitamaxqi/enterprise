@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models, fields
+
+from odoo import fields, models
 
 TEMPLATE_CODE = [
     ('01', 'CGEN03'),
@@ -27,3 +27,6 @@ class ResCompany(models.Model):
 
     def _get_l10n_co_edi_template_code_description(self):
         return dict(TEMPLATE_CODE).get(self.l10n_co_edi_template_code)
+
+    def _is_latam(self):
+        return super()._is_latam() or self.country_code == 'CO'

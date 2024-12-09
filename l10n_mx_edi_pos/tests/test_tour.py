@@ -48,6 +48,7 @@ class TestUi(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
         self.new_partner = self.env['res.partner'].create({
             'name': 'AAA Partner',
             'zip': '12345',
+            'state_id': self.env.ref('base.state_mx_ags').id,
             'country_id': self.env.company.country_id.id,
         })
         self.product1 = self.env['product.product'].create({
@@ -87,7 +88,7 @@ class TestUi(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
             'city': "Test City",
             'zipcode': self.new_partner.zip,
             'country_id': self.new_partner.country_id.id,
-            'state_id': self.new_partner.state_id,
+            'state_id': self.new_partner.state_id.id,
             'phone': "123456789",
             'invoice_l10n_mx_edi_usage': 'D10',
             'partner_l10n_mx_edi_fiscal_regime': '624',

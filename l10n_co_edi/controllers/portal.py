@@ -2,34 +2,10 @@ from odoo import http
 from odoo.http import request
 from odoo.tools import _
 
-from odoo.addons.website_sale.controllers.main import WebsiteSale
+from odoo.addons.l10n_latam_base.controllers.portal import L10nLatamBasePortalAccount
 
 
-class L10nCOWebsiteSale(WebsiteSale):
-
-    def _get_mandatory_billing_address_fields(self, country_sudo):
-        mandatory_fields = super()._get_mandatory_billing_address_fields(country_sudo)
-        company_country = request.website.sudo().company_id.account_fiscal_country_id
-        if country_sudo.code == 'CO' and country_sudo.id == company_country.id:
-            mandatory_fields |= {
-                "vat",
-                "city_id",
-                "state_id",
-                "l10n_latam_identification_type_id",
-            }
-            mandatory_fields.remove("city")
-        return mandatory_fields
-
-    def _get_mandatory_delivery_address_fields(self, country_sudo):
-        mandatory_fields = super()._get_mandatory_delivery_address_fields(country_sudo)
-        company_country = request.website.sudo().company_id.account_fiscal_country_id
-        if country_sudo.code == 'CO' and country_sudo.id == company_country.id:
-            mandatory_fields |= {
-                "city_id",
-                "state_id",
-            }
-            mandatory_fields.remove("city")
-        return mandatory_fields
+class L10nCOPortalAccount(L10nLatamBasePortalAccount):
 
     def _parse_form_data(self, form_data):
         # This is needed so that the field is correctly read as list from the request
@@ -47,23 +23,15 @@ class L10nCOWebsiteSale(WebsiteSale):
             })
         return super()._parse_form_data(form_data)
 
-    def _prepare_address_form_values(self, order_sudo, partner_sudo, address_type, **kwargs):
-        rendering_values = super()._prepare_address_form_values(
-            order_sudo, partner_sudo, address_type=address_type, **kwargs
-        )
+    def _prepare_address_form_values(self, partner_sudo, *args, **kwargs):
+        rendering_values = super()._prepare_address_form_values(partner_sudo, *args, **kwargs)
 
-        if request.website.sudo().company_id.account_fiscal_country_id.code == "CO":
-            LatamIdentificationType = request.env['l10n_latam.identification.type'].sudo()
-            can_edit_vat = rendering_values['can_edit_vat']
+        if request.env.company.account_fiscal_country_id.code == 'CO':
             state = request.env['res.country.state'].browse(rendering_values['state_id'])
             city = partner_sudo.city_id
             ResCity = request.env['res.city'].sudo()
 
             rendering_values.update({
-                'identification_types': LatamIdentificationType.search([
-                    '|', ('country_id', '=', False), ('country_id.code', '=', 'CO')
-                ]) if can_edit_vat else LatamIdentificationType,
-                'vat_label': request.env._('Identification Number'),
                 'obligation_types': request.env['l10n_co_edi.type_code'].sudo().search([]),
                 'selected_obligation_types_ids': request.httprequest.form.getlist('l10n_co_edi_obligation_type_ids', int) or [],
                 'fiscal_regimen_selection': request.env["res.partner"]._fields["l10n_co_edi_fiscal_regimen"].selection,
@@ -73,19 +41,20 @@ class L10nCOWebsiteSale(WebsiteSale):
             })
         return rendering_values
 
-    def _get_vat_validation_fields(self):
-        fnames = super()._get_vat_validation_fields()
-        if request.website.sudo().company_id.account_fiscal_country_id.code == "CO":
-            fnames.add('l10n_latam_identification_type_id')
-            fnames.add('name')
-        return fnames
+    def _get_mandatory_address_fields(self, country_sudo):
+        mandatory_fields = super()._get_mandatory_address_fields(country_sudo)
+        company_country = request.env.company.account_fiscal_country_id
+        if country_sudo.code == 'CO' and country_sudo.id == company_country.id:
+            mandatory_fields.update({'city_id', 'state_id'})
+            mandatory_fields.remove('city')
+        return mandatory_fields
 
     def _validate_address_values(self, address_values, partner_sudo, address_type, *args, **kwargs):
         invalid_fields, missing_fields, error_messages = super()._validate_address_values(
             address_values, partner_sudo, address_type, *args, **kwargs
         )
 
-        if request.website.sudo().company_id.account_fiscal_country_id.code == "CO" and address_type == 'billing':
+        if request.env.company.account_fiscal_country_id.code == "CO" and address_type == 'billing':
             if missing_fields and any(
                 fname in missing_fields
                 for fname in [
@@ -109,7 +78,7 @@ class L10nCOWebsiteSale(WebsiteSale):
         return invalid_fields, missing_fields, error_messages
 
     @http.route(
-        ['/shop/l10n_co_state_infos/<model("res.country.state"):state>'],
+        '/portal/l10n_co_state_infos/<model("res.country.state"):state>',
         type="jsonrpc",
         auth="public",
         methods=["POST"],

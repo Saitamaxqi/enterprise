@@ -30,9 +30,15 @@
         'views/res_config_settings_views.xml',
         'views/electronic_invoice.xml',
         'views/electronic_invoice_vendor_document.xml',
+        'views/portal_address_templates.xml',
         'wizards/account_move_reversal_view.xml',
         'wizards/account_debit_note_view.xml'
     ],
+    'assets': {
+        'web.assets_frontend': [
+            'l10n_co_edi/static/src/js/portal_address.js',
+        ],
+    },
     'installable': True,
     'license': 'OEEL-1',
     'post_init_hook': '_l10n_co_edi_post_init',

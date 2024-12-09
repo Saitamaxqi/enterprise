@@ -30,6 +30,16 @@ class ResPartner(models.Model):
             'l10n_co_edi_commercial_name',
         ]
 
+    def _get_frontend_writable_fields(self):
+        frontend_writable_fields = super()._get_frontend_writable_fields()
+        frontend_writable_fields.update({
+            'city_id',
+            'l10n_co_edi_fiscal_regimen',
+            'l10n_co_edi_obligation_type_ids',
+        })
+
+        return frontend_writable_fields
+
     def _get_vat_without_verification_code(self):
         self.ensure_one()
         # last digit is the verification code, but it could have a - before

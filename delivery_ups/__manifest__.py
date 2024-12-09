@@ -11,6 +11,7 @@
     'data': [
         'data/delivery_ups_data.xml',
         'views/delivery_ups_view.xml',
+        'views/portal_address_templates.xml',
         'views/res_config_settings_views.xml',
         'views/sale_views.xml',
         'views/res_partner_views.xml',

@@ -1,36 +1,10 @@
-import websiteSaleAddress from "@website_sale/js/address";
+import { SelectMenuWrapper } from "@l10n_latam_base/components/select_menu_wrapper/select_menu_wrapper";
+import customerAddress from "@portal/js/address";
 import { rpc } from "@web/core/network/rpc";
-import { Component, useState } from "@odoo/owl";
-import { SelectMenu } from "@web/core/select_menu/select_menu";
 import { attachComponent } from "@web_editor/js/core/owl_utils";
 
-class SelectMenuWrapper extends Component {
-    static template = "l10n_co_edi_website_sale.SelectMenuWrapper";
-    static components = { SelectMenu };
-    static props = {
-        el: { optional: true, type: Object },
-    };
-
-    setup() {
-        this.state = useState({
-            choices: [],
-            value: this.props.el.value,
-        });
-        this.state.choices = [...this.props.el.querySelectorAll("option")].filter((x) => x.value);
-        this.props.el.classList.add("d-none");
-    }
-
-    onSelect(value) {
-        this.state.value = value;
-        this.props.el.value = value;
-        // Manually trigger the change event
-        const event = new Event("change", { bubbles: true });
-        this.props.el.dispatchEvent(event);
-    }
-}
-
-websiteSaleAddress.include({
-    events: Object.assign({}, websiteSaleAddress.prototype.events, {
+customerAddress.include({
+    events: Object.assign({}, customerAddress.prototype.events, {
         "change select[name='l10n_latam_identification_type_id']": "_onChangeIdentificationType",
     }),
     start: function () {
@@ -79,7 +53,7 @@ websiteSaleAddress.include({
             const stateId = this.elementState.value;
             let choices = [];
             if (stateId) {
-                const data = await rpc(`/shop/l10n_co_state_infos/${this.elementState.value}`, {});
+                const data = await rpc(`/portal/l10n_co_state_infos/${this.elementState.value}`, {});
                 choices = data.cities;
             }
             this.elementCities.options.length = 1;
