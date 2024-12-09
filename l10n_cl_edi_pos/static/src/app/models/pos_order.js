@@ -24,7 +24,7 @@ patch(PosOrder.prototype, {
     },
     setToInvoice(to_invoice) {
         if (this.isChileanCompany()) {
-            this.assetEditable();
+            this.assertEditable();
             this.to_invoice = true;
         } else {
             super.setToInvoice(...arguments);
