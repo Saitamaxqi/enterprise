@@ -89,9 +89,10 @@ class ShareRoute(http.Controller):
         if not document_token or document_id < 1:
             return Doc
         document_sudo = Doc.browse(document_id).sudo()
-        if not document_sudo.document_token:  # like exists() but prefetch
-            return Doc
-        if not request.env.user._is_internal() and not document_sudo.active:
+        try:
+            if not document_sudo.document_token: # like exists() but prefetch 
+                return Doc
+        except MissingError:
             return Doc
 
         # Permissions
@@ -100,6 +101,8 @@ class ShareRoute(http.Controller):
             and (document_sudo.user_permission != 'none'
                  or document_sudo.access_via_link != 'none')
         ):
+            return Doc
+        if not request.env.user._is_internal() and not document_sudo.active:
             return Doc
 
         # Document access

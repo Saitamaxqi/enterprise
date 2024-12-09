@@ -1,3 +1,4 @@
+import json
 import zipfile
 from base64 import b64decode, b64encode
 from datetime import timedelta
@@ -888,3 +889,17 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             with self.subTest(document_name=document.name, username=user.name):
                 data = ShareRoute._documents_get_init_data(document.with_user(user), user)
                 self.assertEqual(data['folder_id'], expected_folder_id)
+                
+    def test_from_access_token(self):
+        """Check that _from_access_token doesn't raise on a non-existent record"""
+        url = self.env['documents.document'].create({'name': 'url', 'type': 'url', 'url': 'https://www.odoo.com/'})
+        access_token = url.access_token
+        url.unlink()
+        self.authenticate('admin', 'admin')
+        res = self.url_open(
+            f'/documents/touch/{access_token}', 
+            data=json.dumps({}),
+            headers={"Content-Type": "application/json"}
+        )
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.text, '{"jsonrpc": "2.0", "id": null, "result": {}}')
