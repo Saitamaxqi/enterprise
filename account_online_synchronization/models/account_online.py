@@ -709,7 +709,9 @@ class AccountOnlineLink(models.Model):
             elif matching_account and not matching_account.journal_ids:
                 matching_account.unlink()
         accounts = {}
-        data = {}
+        data = {
+            'currency_code': self.company_id.currency_id.name,
+        }
         swift_code = False
         while True:
             # While this is kind of a bad practice to do, it can happen that provider_data changes between
