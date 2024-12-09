@@ -366,6 +366,7 @@
                 <field name="res_model" column_invisible="1"/>
                 <field name="shortcut_document_id" column_invisible="1"/>
                 <field name="mimetype" column_invisible="1"/>
+                <field name="access_url" column_invisible="1"/>
             </list>
         </field>
     </record>
