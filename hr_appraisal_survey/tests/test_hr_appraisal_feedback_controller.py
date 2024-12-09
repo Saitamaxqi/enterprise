@@ -23,18 +23,31 @@ class TestHrAppraisalFeedbackController(HttpCase):
             groups='base.group_user',
         )
 
+        cls.user_appraisal_officer = mail_new_test_user(
+            cls.env,
+            name='Appraisal Officer',
+            login='AppraisalOfficer',
+            email='appraisal_officer@test.com',
+            groups='hr_appraisal.group_hr_appraisal_user',
+        )
+
         cls.user_manager = mail_new_test_user(
             cls.env,
-            name='Manager Appraisal',
-            login='ManagerAppraisal',
-            email='manager@test.com',
-            groups='hr_appraisal.group_hr_appraisal_manager',
+            name='User Manager',
+            login='UserManager',
+            email='user_manager@test.com',
         )
 
         cls.user_employee = cls.env['hr.employee'].create({
             'name': 'Me Myself and I',
             'user_id': cls.user.id
         })
+
+        cls.appraisal_officer = cls.env['hr.employee'].create({
+            'name': 'Mr. Appraisal Officer',
+            'user_id': cls.user_appraisal_officer.id
+        })
+
         cls.manager = cls.env['hr.employee'].create({
             'name': 'Mr. Manager',
             'user_id': cls.user_manager.id
@@ -83,7 +96,7 @@ class TestHrAppraisalFeedbackController(HttpCase):
                 res = self.url_open(url)
                 self.assertTrue(self.survey_expired_text in str(res.content), "The link should be expired after the deadline")
 
-    def test_appraisal_feedback_link_for_manager(self):
+    def test_appraisal_feedback_link_for_managers(self):
         with freeze_time(datetime.date(2024, 9, 19)):
             feedback = self.env['appraisal.ask.feedback'].create({
                 'appraisal_id': self.appraisal.id,
@@ -104,7 +117,13 @@ class TestHrAppraisalFeedbackController(HttpCase):
             })
             url = answer.get_print_url()
             with freeze_time(datetime.date(2024, 9, 21)):
+                self.authenticate(self.user_appraisal_officer.login, self.user_appraisal_officer.login)
+                res = self.url_open(url)
+                self.assertTrue(self.survey_expired_text not in str(res.content), "A user in Appraisal:Officer group should be able to access the survey answers after the deadline")
+                self.assertTrue(char_answer in str(res.content), "A user in Appraisal:Officer group should be able to see the survey answers")
+
+            with freeze_time(datetime.date(2024, 9, 21)):
                 self.authenticate(self.user_manager.login, self.user_manager.login)
                 res = self.url_open(url)
-                self.assertTrue(self.survey_expired_text not in str(res.content), "The manager should be able to access the survey answers after the deadline")
-                self.assertTrue(char_answer in str(res.content), "The manager should be able to see the survey answers")
+                self.assertTrue(self.survey_expired_text not in str(res.content), "The manager of an appraisal should be able to access the survey answers after the deadline")
+                self.assertTrue(char_answer in str(res.content), "The manager of an appraisal should be able to see the survey answers")

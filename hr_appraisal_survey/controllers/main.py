@@ -25,11 +25,13 @@ class AppraisalSurvey(Survey):
         survey_sudo, answer_sudo = self._fetch_from_access_token(survey_token, answer_token)
         access_data = super()._get_access_data(survey_token, answer_token, ensure_token, check_partner)
 
-        if access_data.get('validity_code', False) == 'answer_deadline' and survey_sudo.survey_type == 'appraisal' \
-            and request.env.user.has_group('hr_appraisal.group_hr_appraisal_user') and answer_sudo:
-            # If the deadline is reached, Hr Manager should be able to consult answers
-            access_data['can_answer'] = False
-            access_data['validity_code'] = True
+        if survey_sudo and answer_sudo and survey_sudo.survey_type == 'appraisal' and access_data.get('validity_code', False) == 'answer_deadline':
+            appraisal = answer_sudo.appraisal_id
+            user = request.env.user
+            if user in appraisal.manager_ids.mapped('user_id') or user.has_group('hr_appraisal.group_hr_appraisal_user'):
+                # If the deadline is reached, Appraisal Manager should be able to consult answers
+                access_data['can_answer'] = False
+                access_data['validity_code'] = True
         return access_data
 
     def _get_results_page_user_input_domain(self, survey, **post):
