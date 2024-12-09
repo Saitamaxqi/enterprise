@@ -23,6 +23,7 @@ class AccountMove(models.Model):
                         so.message_post(body=body)
                 continue
 
+            log_order_ids = []
             for aml in move.invoice_line_ids:
                 if not aml.subscription_id or aml.is_downpayment:
                     continue
@@ -32,6 +33,14 @@ class AccountMove(models.Model):
                 upsell_so = sale_order.filtered(lambda so: so.subscription_state == '7_upsell')
                 subscription = aml.subscription_id - upsell_so.subscription_id
                 all_subscription_ids.add(subscription.id)
+                log_order_ids.append(aml.subscription_id.id)
+            # Update the effective date of logs based on post date.
+            uninvoiced_logs = self.env['sale.order.log'].sudo().search([
+                ('order_id', 'in', log_order_ids),
+                ('effective_date', '=', False)
+            ])
+            uninvoiced_logs.effective_date = move.date
+
         all_subscriptions = self.env['sale.order'].browse(all_subscription_ids)
         for subscription in all_subscriptions:
             # Invoice validation will increment the next invoice date

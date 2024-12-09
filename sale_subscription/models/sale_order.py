@@ -1063,6 +1063,7 @@ class SaleOrder(models.Model):
                 else:
                     close_reason_id = close_reason_unknown_id
             sub.update(dict(**values, close_reason_id=close_reason_id))
+            sub.order_log_ids.sudo().filtered(lambda l: not l.effective_date).effective_date = end_date
         return True
 
     def set_open(self):

@@ -32,6 +32,7 @@ class SaleOrderLogReport(models.Model):
         readonly=True
     )
     event_date = fields.Date(readonly=True)
+    effective_date = fields.Date(readonly=True)
     contract_number = fields.Integer("Active Subscriptions Change", readonly=True)
     pricelist_id = fields.Many2one('product.pricelist', 'Pricelist', readonly=True)
     amount_signed = fields.Monetary("MRR Change", readonly=True, currency_field='log_currency_id')
@@ -83,6 +84,7 @@ class SaleOrderLogReport(models.Model):
             log.order_id AS order_id,
             log.event_type AS event_type,
             log.event_date AS event_date,
+            log.effective_date as effective_date,
             log.currency_id AS currency_id,
             log.user_id AS user_id,
             log.team_id AS team_id,

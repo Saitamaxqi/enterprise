@@ -37,6 +37,7 @@ class SaleOrderLog(models.Model):
         index=True,
     )
     event_date = fields.Date(string='Event Date', required=True, index=True, default=fields.Date.today)
+    effective_date = fields.Date(index=True)
     recurring_monthly = fields.Monetary(string='New MRR', required=True,
                                         help="MRR, after applying the changes of that particular event", readonly=True)
     amount_signed = fields.Monetary(string='MRR change', required=True, readonly=True)

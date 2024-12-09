@@ -133,6 +133,8 @@
                 <separator/>
                 <filter name="filter_end_date" date="end_date"/>
                 <separator/>
+                <filter name="filter_effective_date" string="Invoiced" domain="[('effective_date','!=', False)]"/>
+                <separator/>
                 <group expand="1" string="Group By">
                     <filter string="Event Date" name="group_by_event_date" domain="[]"
                             context="{'group_by': 'event_date'}"/>

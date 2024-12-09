@@ -2078,3 +2078,65 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             self.assertEqual(subscription.order_line.last_invoiced_date, datetime.date(2024, 10, 31), "Last invoiced date is reverted")
             inv = subscription._create_recurring_invoice()
             self.assertEqual(subscription.order_line.last_invoiced_date, datetime.date(2024, 11, 30), "Last invoiced date is updated")
+
+    def test_invoiced_log(self):
+        # make sure that invoiced log are counted but not manual changes
+        context_mail = {'tracking_disable': False}
+        with freeze_time("2025-01-01"):
+            subscription = self.env['sale.order'].with_context(context_mail).create({
+                'name': 'Parent Sub',
+                'is_subscription': True,
+                'note': "original subscription description",
+                'partner_id': self.user_portal.partner_id.id,
+            'pricelist_id': self.company_data['default_pricelist'].id,
+                'sale_order_template_id': self.subscription_tmpl.id,
+            })
+            self.cr.precommit.clear()
+            subscription.write({'order_line': [(0, 0, {
+                'name': 'TestRecurringLine',
+            'product_id': self.product.id,
+                'product_uom_qty': 1,
+            })]})
+            subscription.action_confirm()
+            self.flush_tracking()
+            self.assertFalse(subscription.order_log_ids.filtered(lambda l: l.effective_date))
+            self.env['sale.order']._cron_recurring_create_invoice()
+            self.assertEqual(len(subscription.order_log_ids.filtered(lambda l: l.effective_date)), 1, "one log is counted")
+
+        with freeze_time("2025-01-15"):
+            action = subscription.with_context(tracking_disable=False).prepare_upsell_order()
+            upsell_so = self.env['sale.order'].browse(action['res_id'])
+            upsell_so = upsell_so.with_context(tracking_disable=False)
+            upsell_so.order_line.filtered('product_id').product_uom_qty = 3
+            upsell_so.name = "Upsell"
+            self.flush_tracking()
+            previous_logs = subscription.order_log_ids
+            subscription.order_line.filtered('product_id').product_uom_qty = 3
+            self.flush_tracking()
+            manual_logs = subscription.order_log_ids - previous_logs
+            previous_logs = subscription.order_log_ids
+            upsell_so.action_confirm() # new log should have effective_date only when the upsell is invoiced
+            self.flush_tracking()
+            upsell_logs = subscription.order_log_ids - previous_logs
+            inv = upsell_so._create_invoices()
+            inv._post()
+            self.assertTrue(upsell_logs.effective_date)
+            self.assertTrue(manual_logs.effective_date, "logs that are not yet invoiced are marked as effective if one invoice is posted")
+
+
+        with freeze_time("2025-02-01"):
+            action = subscription.with_context(tracking_disable=False).prepare_renewal_order()
+            renewal_so = self.env['sale.order'].browse(action['res_id'])
+            renewal_so = renewal_so.with_context(tracking_disable=False)
+            renewal_so.order_line.filtered('product_id').product_uom_qty = 10
+            renewal_so.name = "Renewal"
+            self.flush_tracking()
+            previous_logs = (subscription + renewal_so).order_log_ids
+            renewal_so.action_confirm()
+            self.flush_tracking()
+            renew_logs = renewal_so.order_log_ids - previous_logs
+            self.assertFalse(any(renew_logs.mapped('effective_date')))
+            self.env['sale.order']._cron_recurring_create_invoice()
+            self.assertTrue(all(renew_logs.mapped('effective_date')))
+            self.assertTrue(manual_logs.effective_date)
+            self.assertTrue(upsell_logs.effective_date)
