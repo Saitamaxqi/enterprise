@@ -8,7 +8,9 @@
             <xpath expr="//button[@id='validate_button']" position="attributes">
                 <attribute name="invisible">(account_online_linked and batch_type == 'outbound' and payment_method_code == 'sepa_ct') or state != 'draft' or not payment_ids</attribute>
             </xpath>
-            <xpath expr="//button[@id='regenerate_file_button']" position="replace"/>
+            <xpath expr="//button[@id='regenerate_file_button']" position="attributes">
+                <attribute name="invisible" add="payment_online_status != 'uninitiated'" separator=" or "/>
+            </xpath>
             <xpath expr="//button[@id='validate_button']" position="after">
                 <button
                     name="initiate_payment"
