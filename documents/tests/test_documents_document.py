@@ -393,6 +393,12 @@ class TestCaseDocuments(TransactionCaseDocuments):
         self.document_txt.folder_id = self.folder_a
         self.document_txt.with_user(self.internal_user).copy()
 
+        # copy in batch documents of different folder
+        self.assertNotEqual(self.document_txt.folder_id, self.document_gif.folder_id)
+        copied_documents = (self.document_txt | self.document_gif).with_user(self.internal_user).copy()
+        self.assertEqual(copied_documents[0].name, f'{self.document_txt.name} (copy)')
+        self.assertEqual(copied_documents[1].name, f'{self.document_gif.name} (copy)')
+
     def test_document_thumbnail_status(self):
         for mimetype in ['application/pdf', 'application/pdf;base64']:
             with self.subTest(mimetype=mimetype):

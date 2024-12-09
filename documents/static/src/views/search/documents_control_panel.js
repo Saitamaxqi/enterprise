@@ -155,6 +155,27 @@ export class DocumentsControlPanel extends ControlPanel {
         const recordIds = records.map((r) => r.data.id);
         await this.orm.call("documents.document", "copy", [recordIds]);
         await this.notifyChange();
+
+        const copiedInMyDrive = records.filter(
+            (r) =>
+                (r.data.folder_id &&
+                    this.env.searchModel.getFolderById(r.data.folder_id[0]).user_permission !==
+                        "edit") ||
+                (!r.data.folder_id && !this.documentService.userIsDocumentManager)
+        );
+
+        if (this.env.searchModel.getSelectedFolderId() === "MY") {
+            return;
+        }
+
+        if (copiedInMyDrive.length !== 0) {
+            let message = _t("%s has been copied in My Drive.", copiedInMyDrive[0].data.name);
+            if (copiedInMyDrive.length > 1) {
+                const names = copiedInMyDrive.map((r) => r.data.name).join(", ");
+                message = _t("%s have been copied in My Drive.", names);
+            }
+            this.notificationService.add(message, { type: "success" });
+        }
     }
 
     /**

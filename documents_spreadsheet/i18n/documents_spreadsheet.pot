@@ -285,6 +285,13 @@ msgstr ""
 
 #. module: documents_spreadsheet
 #. odoo-javascript
+#: code:addons/documents_spreadsheet/models/documents_document.py:0
+#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
+msgid "New spreadsheet created in My Drive"
+msgstr ""
+
+#. module: documents_spreadsheet
+#. odoo-javascript
 #. odoo-python
 #: code:addons/documents_spreadsheet/models/spreadsheet_template.py:0
 #: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_template/spreadsheet_template_action.js:0

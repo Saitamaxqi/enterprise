@@ -995,8 +995,11 @@ class TestDocumentsAccess(TransactionCaseDocuments):
 
         self.folder_b.access_internal = 'none'
         self.folder_b.action_update_access_rights(partners={self.internal_user.partner_id: ('view', False)})
-        with self.assertRaises(AccessError, msg='No "edit" permission on the parent folder'):
-            documents.with_user(self.internal_user).copy()
+
+        # If we have no access on the root folder, copy in "My Drive"
+        copied_document = documents.with_user(self.internal_user).copy()
+        self.assertFalse(copied_document.folder_id)
+        self.assertEqual(copied_document.owner_id, self.internal_user)
 
         self.folder_b.action_update_access_rights(partners={self.internal_user.partner_id: ('edit', False)})
         self.document_gif.action_update_access_rights(partners={self.internal_user.partner_id: (False, False)})
@@ -1033,7 +1036,45 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             {'name': 'shortcut', 'shortcut_document_id': self.document_gif.id, 'owner_id': self.internal_user.id})
 
         # Copying shortcuts is also supported
-        (url_document_in_my_folder | shortcut).copy()
+        shortcuts = url_document_in_my_folder | shortcut
+        shortcuts.folder_id = self.folder_a
+        copied_shortcuts = shortcuts.copy()
+        self.assertEqual(copied_shortcuts.folder_id, self.folder_a)
+
+        # If we have no access on the root folder, create the shortcuts in "My Drive"
+        self.document_gif.owner_id = self.internal_user
+        copied_shortcuts = shortcuts.with_user(self.internal_user).copy()
+        self.assertFalse(copied_shortcuts.folder_id)
+        self.assertEqual(copied_shortcuts.owner_id, self.internal_user)
+
+        # If we have no access on the root folder, create the folder copy in "My Drive"
+        self.folder_b.folder_id = self.folder_a
+        for access in ('edit', 'view'):
+            self.folder_b.action_update_access_rights(partners={self.internal_user.partner_id: (access, False)})
+            copied_folder = self.folder_b.with_user(self.internal_user).copy()
+            self.assertFalse(copied_folder.folder_id)
+            self.assertEqual(copied_folder.owner_id, self.internal_user)
+            self.assertEqual(len(copied_folder.children_ids), 6)
+            self.assertNotEqual(copied_folder.children_ids, self.folder_b.children_ids)
+
+        # If a manager copies a root folder, do not change the owner
+        self.folder_b.folder_id = False
+        self.assertEqual(self.folder_b.owner_id, self.doc_user)
+        copied_folder = self.folder_b.with_user(self.document_manager).copy()
+        self.assertFalse(copied_folder.folder_id)
+        self.assertEqual(copied_folder.owner_id, self.doc_user)
+
+        # The user has the access on the documents, but he can not create pinned folders
+        # Create the copy in "My Drive"
+        self.folder_b.access_internal = 'edit'
+        copied_folder = self.folder_b.with_user(self.internal_user).copy()
+        self.assertFalse(copied_folder.folder_id)
+        self.assertEqual(copied_folder.owner_id, self.internal_user)
+
+        # Check that portal can not copy in his drive (no drive)
+        self.folder_b.action_update_access_rights(access_via_link = 'edit', partners={self.portal_user.partner_id: ('edit', False)})
+        with self.assertRaises(ValidationError):
+            self.folder_b.with_user(self.portal_user).copy()
 
     def test_updating_owner(self):
         self.assertEqual(self.folder_a_a.owner_id, self.doc_user)

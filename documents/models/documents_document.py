@@ -1388,12 +1388,8 @@ class DocumentsDocument(models.Model):
 
         # As we avoid to propagate the folder permission by setting access_ids to False (see copy_data), user has no
         # right to create the document. So after checking permission, we execute the copy in sudo.
-        self.check_access("create")
+        self.env['documents.document'].check_access('create')
         self.check_access('read')
-        if not self.env.su and self.folder_id and self.folder_id.user_permission != 'edit':
-            # do not check access to allow copying in root company folders
-            raise AccessError(_('You cannot copy in that folder'))
-
         documents_order = {doc.id: idx for idx, doc in enumerate(self)}
         new_documents = [self.browse()] * len(self)
 
@@ -1402,6 +1398,10 @@ class DocumentsDocument(models.Model):
         shortcuts = self.filtered('shortcut_document_id')
         if not skip_documents:
             for destination, targets in shortcuts.grouped('folder_id').items():
+                if not self.env.su and destination and destination.user_permission != 'edit':
+                    # create the shortcut in "My Drive" (owner is set automatically to the current user)
+                    destination = self.browse()
+
                 new_shortcuts = targets.action_create_shortcut(destination.id)
                 for new_shortcut, target in zip(new_shortcuts, targets):
                     new_shortcut.name = _("%s (copy)", target.name)
@@ -1411,11 +1411,19 @@ class DocumentsDocument(models.Model):
         if folders:
             embedded_actions = self._get_folder_embedded_actions(folders.ids)
             new_folders = folders.sudo()._copy_with_access(default=default).sudo(False)
+
+            # move in "My Drive" if needed
+            self.browse([
+                new_folder.id
+                for old_folder, new_folder in zip(folders, new_folders)
+                if old_folder._cannot_create_sibling()
+            ]).sudo().write({'folder_id': False, 'owner_id': self.env.user.id})
+
             for old_folder, new_folder in zip(folders, new_folders):
                 if folder_embedded_actions := embedded_actions.get(old_folder.id):
                     embedded_actions_copies = folder_embedded_actions.copy()
                     embedded_actions_copies.parent_res_id = new_folder.id
-                #  no need to check for permission as user is owner of copies (see copy_data).
+                # no need to check for permission as all the checks have been done
                 old_folder.children_ids.with_context(documents_copy_skip_rename=True).copy({'folder_id': new_folder.id})
                 new_documents[documents_order[old_folder.id]] = new_folder
 
@@ -1423,6 +1431,13 @@ class DocumentsDocument(models.Model):
             new_binaries_sudo = documents_sudo._copy_with_access(default=default)
             for old_document_sudo, new_binary_sudo in zip(documents_sudo, new_binaries_sudo):
                 new_documents[documents_order[old_document_sudo.id]] = new_binary_sudo.sudo(False)
+
+            # move in "My Drive" if needed
+            self.browse([
+                new_binary_sudo.id for new_binary_sudo in new_binaries_sudo
+                if new_binary_sudo.sudo(self.env.su)._cannot_create_sibling()
+            ]).sudo().write({'folder_id': False, 'owner_id': self.env.user.id})
+
             if to_copy_attachment_sudo := documents_sudo._copy_attachment_filter(default):
                 new_attachments_iterator = iter(to_copy_attachment_sudo.attachment_id.with_context(no_document=True).copy())
                 for old_document_sudo, new_binary_sudo in zip(documents_sudo, new_binaries_sudo):
@@ -1436,6 +1451,21 @@ class DocumentsDocument(models.Model):
                         })
 
         return self.browse([new_document.id for new_document in new_documents])
+
+    def _cannot_create_sibling(self):
+        """Return whether the user is not allowed to create in the same folder, used for copy."""
+        self.ensure_one()
+        if self.env.su:
+            return False
+        if self.folder_id:
+            # do not check edit access rule, to allow copying in root company folders
+            return self.folder_id.user_permission != 'edit'
+        return (
+            # allow the manager to copy root folder without moving them to his drive
+            not self.env.user.has_group('documents.group_documents_manager')
+            # anyone can copy in one's drive
+            and self.owner_id != self.env.user
+        )
 
     def _copy_attachment_filter(self, default):
         if default and 'attachment_id' in default:
