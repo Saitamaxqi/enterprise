@@ -282,7 +282,7 @@
             </t>
 
             <t t-set="o_bold" t-value="(' o_fw_bold' if line.get('unfolded') or 'total' in line.get('id') else '')"/>
-            <t t-set="o_overflow" t-value="(' o_overflow_name' if len(line.get('name') or '') > 50 else '')"/>
+            <t t-set="o_overflow" t-value="(' o_overflow_name' if len(line.get('name') or '') > 42 else '')"/>
 
             <tr t-att-class="o_line_level + o_bold + o_overflow" name="pdf_export_main_table_body_lines_tr">
                 <td t-att-colspan="line.get('colspan', '1')" class="o_line_name_level">
