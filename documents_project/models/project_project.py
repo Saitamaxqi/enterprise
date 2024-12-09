@@ -25,6 +25,14 @@ class ProjectProject(models.Model):
         compute='_compute_documents', export_string_translation=False)
     document_ids = fields.One2many('documents.document', compute='_compute_documents', export_string_translation=False)
 
+    @api.ondelete(at_uninstall=False)
+    def _archive_folder_on_projects_unlinked(self):
+        """ Archives the project folder if all its related projects are unlinked. """
+        self.env['documents.document'].sudo().search([
+            ('project_ids', '!=', False),
+            ('project_ids', 'not any', [('id', 'not in', self.ids)]
+        )]).sudo(False)._filtered_access('unlink').action_archive()
+
     @api.constrains('documents_folder_id')
     def _check_company_is_folders_company(self):
         for project in self.filtered('documents_folder_id'):

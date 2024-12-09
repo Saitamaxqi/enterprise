@@ -30,6 +30,49 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
             'groups_id': [(4, cls.env.ref('project.group_project_manager').id)],
         })
 
+    def test_archive_folder_on_projects_unlinked(self):
+        """
+        Projects folders should be archived if every related projects have been unlinked.
+        """
+        folder_1, folder_2, folder_3, folder_4 = self.env['documents.document'].create(
+            [{'name': f'F{i}', 'type': 'folder'} for i in range(4)]
+        )
+
+        (
+            project_0, project_1, project_2, project_3,
+            project_4, project_5, project_6, _,
+        ) = self.env['project.project'].create([
+            {'name': f'p{i}', 'documents_folder_id': folder.id}
+            for i, folder in enumerate([folder_1] * 4 + [folder_2] * 3 + [folder_3])
+        ])
+
+        cases = [
+            (
+                project_1 | project_4,
+                folder_1 | folder_2 | folder_3 | folder_4,
+                self.env['documents.document']
+            ), (
+                project_2,
+                folder_1 | folder_2 | folder_3 | folder_4,
+                self.env['documents.document']
+            ), (
+                project_0 | project_3 | project_5 | project_6,
+                folder_3 | folder_4,
+                folder_1 | folder_2
+            ),
+        ]
+
+        count_start = self.env['documents.document'].search_count([('active', '=', True)])
+
+        for projects_to_unlink, active_folders, inactive_folders in cases:
+            with self.subTest(projects_to_unlink=projects_to_unlink, active_folders=active_folders, inactive_folders=inactive_folders):
+                projects_to_unlink.unlink()
+                self.assertTrue(all(active_folders.mapped('active')))
+                self.assertFalse(any(inactive_folders.mapped('active')))
+
+        count_end = self.env['documents.document'].search_count([('active', '=', True)])
+        self.assertEqual(count_end, count_start - 2)
+
     def test_bridge_folder_workflow(self):
         """
         tests the create new business model (project).
