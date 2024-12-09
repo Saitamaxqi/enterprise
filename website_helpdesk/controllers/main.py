@@ -133,6 +133,7 @@ class WebsiteHelpdesk(http.Controller):
     def _format_search_results(self, search_type, records, options):
         return []
 
+
 class WebsiteForm(form.WebsiteForm):
 
     def _handle_website_form(self, model_name, **kwargs):
@@ -154,27 +155,31 @@ class WebsiteForm(form.WebsiteForm):
 
         return super()._handle_website_form(model_name, **kwargs)
 
-    def insert_attachment(self, model, id_record, files):
-        super().insert_attachment(model, id_record, files)
+    def insert_attachment(self, model_sudo, id_record, files):
+        super().insert_attachment(model_sudo, id_record, files)
         # If the helpdesk ticket form is submit with attachments,
         # Give access token to these attachments and make the message
         # accessible to the portal user
         # (which will be able to view and download its own documents).
-        model_name = model.model
+        model_name = model_sudo.model
         if model_name == "helpdesk.ticket":
-            ticket = model.env[model_name].browse(id_record)
-            attachments = request.env['ir.attachment'].sudo().search([('res_model', '=', model_name), ('res_id', '=', ticket.id), ('access_token', '=', False)])
+            ticket = model_sudo.env[model_name].browse(id_record)
+            attachments = request.env['ir.attachment'].sudo().search([
+                ('res_model', '=', model_name),
+                ('res_id', '=', ticket.id),
+                ('access_token', '=', False),
+            ])
             attachments.generate_access_token()
             message = ticket.message_ids.filtered(lambda m: m.attachment_ids == attachments)
             message.is_internal = False
             message.subtype_id = request.env.ref('mail.mt_comment')
 
-    def insert_record(self, request, model, values, custom, meta=None):
-        res = super().insert_record(request, model, values, custom, meta=meta)
-        if model.model != 'helpdesk.ticket':
+    def insert_record(self, request, model_sudo, values, custom, meta=None):
+        res = super().insert_record(request, model_sudo, values, custom, meta=meta)
+        if model_sudo.model != 'helpdesk.ticket':
             return res
         ticket = request.env['helpdesk.ticket'].sudo().browse(res)
-        default_field = model.website_form_default_field_id
+        default_field = model_sudo.website_form_default_field_id
         if default_field.name and ticket[default_field.name]:
             ticket._message_log(
                 body=nl2br_enclose(ticket[default_field.name], 'p'),
