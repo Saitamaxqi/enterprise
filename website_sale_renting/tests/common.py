@@ -27,6 +27,7 @@ class TestWebsiteSaleRentingCommon(SaleRentingCommon):
             'name': 'Computer',
             'list_price': 2000,
             'rent_ok': True,
+            'is_published': True,
         })
         recurrence_5_hour = cls.env['sale.temporal.recurrence'].sudo().create({'duration': 5, 'unit': 'hour'})
         cls.env['product.pricing'].create([

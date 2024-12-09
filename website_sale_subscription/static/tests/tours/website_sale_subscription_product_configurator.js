@@ -20,11 +20,11 @@ registry
             },
             {
                 content: "Verify the subscription price in the cart",
-                trigger: 'div[name="website_sale_cart_line_price"]:contains(5.00)',
+                trigger: 'h6[name="website_sale_cart_line_price"]:contains(5.00)',
             },
             {
                 content: "Verify the subscription plan in the cart",
-                trigger: 'div[name="website_sale_cart_line_price"]:contains(per week)',
+                trigger: 'h6[name="website_sale_cart_line_price"]:contains(per week)',
             },
         ],
    });

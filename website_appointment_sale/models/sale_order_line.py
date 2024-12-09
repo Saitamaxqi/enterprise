@@ -16,8 +16,13 @@ class SaleOrderLine(models.Model):
         booking_so_lines.product_uom_readonly = True
         super(SaleOrderLine, self - booking_so_lines)._compute_product_uom_readonly()
 
-    def _is_not_sellable_line(self):
-        return super()._is_not_sellable_line() or self.calendar_booking_ids
+    def _is_sellable(self):
+        """ Override of `sale` to flag appointment lines as not sellable.
+
+        :return: Whether the line is sellable or not.
+        :rtype: bool
+        """
+        return super()._is_sellable() and not self.calendar_booking_ids
 
     def unlink(self):
         """ Manually unlink in order to unlink answer inputs linked to calendar bookings. """

@@ -44,7 +44,7 @@ registry.category("web_tour.tours").add("shop_buy_rental_product_comparison", {
         tourUtils.goToCart({ quantity: 1 }),
         {
             content: "Verify there is a Computer",
-            trigger: '#cart_products div a h6:contains("Computer")',
+            trigger: '#cart_products div h6:contains("Computer")',
         },
         {
             content: "Verify there are 1 quantity of Computers",

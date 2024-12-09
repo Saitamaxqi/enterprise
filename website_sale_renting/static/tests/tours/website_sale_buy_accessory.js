@@ -12,7 +12,7 @@ registry.category("web_tour.tours").add('shop_buy_accessory_rental_product', {
         },
         {
             content: "Add Accessory product to cart via the quick add button",
-            trigger: 'a:contains("Add to cart")',
+            trigger: 'button:contains("Add to cart")',
             run: "click",
         },
         {
