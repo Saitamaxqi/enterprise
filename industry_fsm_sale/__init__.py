@@ -17,10 +17,5 @@ def post_init(env):
 
 
 def uninstall_hook(env):
-    """ When sale_timesheet is uninstalled, the product 'sale_timesheet.time_product' is deleted.
-        Yet, this module adds a constraint on project that checks
-        that the timesheet_product_id is not null if allow_billable.
-        This method unsets allow_billable on projects with this product to allow its deletion. """
-    env['project.project'].with_context(active_test=False).search(
-        [('allow_billable', '=', True), ('timesheet_product_id', '=', env.ref('sale_timesheet.time_product').id)]
-    ).allow_billable = False
+    """ TODO: remove me in master """
+    pass
