@@ -122,10 +122,6 @@ class AccountChangeLockDate(models.TransientModel):
         readonly=True,
     )
 
-    exception_needed = fields.Boolean(  # TODO: remove in master (18.1)
-        string='Exception needed',
-        compute='_compute_exception_needed',
-    )
     exception_needed_fields = fields.Char(
         # String of comma separated values of the field(s) the exception applies to
         compute='_compute_exception_needed_fields',
@@ -212,12 +208,6 @@ class AccountChangeLockDate(models.TransientModel):
             for field in SOFT_LOCK_DATE_FIELDS
             if self.env.company[field] and (not self[field] or self[field] < self.env.company[field])
         }
-
-    @api.depends(*SOFT_LOCK_DATE_FIELDS)
-    def _compute_exception_needed(self):
-        # TODO: remove in master (18.1)
-        for wizard in self:
-            wizard.exception_needed = bool(wizard._get_changes_needing_exception())
 
     @api.depends(*SOFT_LOCK_DATE_FIELDS)
     def _compute_exception_needed_fields(self):
