@@ -38,7 +38,8 @@ class UrbanPiperClient:
             'Authorization': f'apikey {user_name}:{api_key}',
             'Content-Type': 'application/json'
         }
-        access_url = 'https://pos-int.urbanpiper.com/' + endpoint
+        urbanpiper_url = 'https://pos-int.urbanpiper.com/' if self.config.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.is_production_mode') == 'False' else 'https://api.urbanpiper.com/'
+        access_url = urbanpiper_url + endpoint
         try:
             # Make the API request
             response = self.session.request(method, access_url, json=data, headers=headers, timeout=timeout)
