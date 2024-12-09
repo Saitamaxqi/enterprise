@@ -5,7 +5,7 @@
             <t t-foreach="barButtons" t-as="barButton" t-key="barButton_index">
                 <button
                     t-att-class="'btn text-nowrap' + (barButton.disabled ? ' disabled' : '') + (barButton_first ? ' btn-primary' : ' btn-secondary')"
-                    t-on-click="(ev) => controller.reportAction(ev, barButton.error_action || barButton.action, barButton.action_param, true)"
+                    t-on-click="(ev) => controller.buttonAction(ev, barButton)"
                 >
                     <t t-out="barButton.name"/>
                 </button>

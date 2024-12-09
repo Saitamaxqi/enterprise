@@ -750,7 +750,13 @@ export class AccountReportController {
     //------------------------------------------------------------------------------------------------------------------
     // Server calls
     //------------------------------------------------------------------------------------------------------------------
-    async reportAction(ev, action, actionParam = null, callOnSectionsSource = false) {
+    buttonAction(ev, button) {
+        // Might be overidden to add specific functionality to button
+        // For instance adding context to a call ...
+        this.reportAction(ev, button.error_action || button.action, button.action_param, true);
+    }
+
+    async reportAction(ev, action, actionParam = null, callOnSectionsSource = false, actionContext=null) {
         // 'ev' might be 'undefined' if event is not triggered from a button/anchor
         ev?.preventDefault();
         ev?.stopPropagation();
@@ -780,6 +786,9 @@ export class AccountReportController {
                 actionParam,
                 callOnSectionsSource,
             ],
+            {
+                context: Object.assign({}, this.context, actionContext)
+            }
         );
         if (dispatchReportAction?.help) {
             dispatchReportAction.help = owl.markup(dispatchReportAction.help)

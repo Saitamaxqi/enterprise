@@ -109,19 +109,20 @@ class TestAllReportsGeneration(AccountTestInvoicingCommon):
                         continue
                     with self.subTest(button=option_button['name']):
                         with patch.object(type(self.env['ir.actions.report']), '_run_wkhtmltopdf', lambda *args, **kwargs: b"This is a pdf"):
-                            action_dict = report.dispatch_report_action(
-                                options,
-                                option_button['action'],
-                                action_param=option_button.get('action_param'),
-                                on_sections_source=True,
-                            )
-
-                            if action_dict['type'] == 'ir_actions_account_report_download':
-                                file_gen_res = report.dispatch_report_action(options, action_dict['data']['file_generator'], on_sections_source=True)
-                                self.assertEqual(
-                                    set(file_gen_res.keys()), {'file_name', 'file_content', 'file_type'},
-                                    "File generator's result should always contain the same 3 keys."
+                            if not option_button.get('client_tag'):
+                                action_dict = report.dispatch_report_action(
+                                    options,
+                                    option_button['action'],
+                                    action_param=option_button.get('action_param'),
+                                    on_sections_source=True,
                                 )
+
+                                if action_dict['type'] == 'ir_actions_account_report_download':
+                                    file_gen_res = report.dispatch_report_action(options, action_dict['data']['file_generator'], on_sections_source=True)
+                                    self.assertEqual(
+                                        set(file_gen_res.keys()), {'file_name', 'file_content', 'file_type'},
+                                        "File generator's result should always contain the same 3 keys."
+                                    )
 
             # Unset the test values, in case they are used in conditions to define custom behaviors
             self.env.company.write({

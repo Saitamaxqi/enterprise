@@ -8,11 +8,13 @@ import json
 import requests
 import socket
 import hmac
+import uuid
 from hashlib import sha256
 from werkzeug import urls
 
 from odoo import api, models, _
 from odoo.http import request
+from odoo.release import version
 import logging
 from odoo.exceptions import UserError
 
@@ -102,10 +104,21 @@ class HmrcService(models.AbstractModel):
             environ = request.httprequest.environ
             headers = request.httprequest.headers
             remote_address = request.httprequest.remote_addr
-            remote_needed = not ipaddress.ip_address(remote_address).is_private
-            hostname = request.httprequest.host.split(":")[0]
-            server_public_ip = socket.gethostbyname(hostname)
-            public_ip_needed = not ipaddress.ip_address(server_public_ip).is_private
+            is_private_network = ipaddress.ip_address(remote_address).is_private
+            # If it is a private network both server and client are in the same network
+            if is_private_network:
+                try:
+                    response = requests.get('https://ipinfo.io/ip', timeout=TIMEOUT)
+                    response.raise_for_status()
+                except requests.exceptions.RequestException as e:
+                    raise UserError(_("Sorry, something went wrong: %s", e))
+                ip = response.content.decode('utf8')
+                remote_address = ip
+                server_ip = ip
+            else:
+                hostname = request.httprequest.host.split(":")[0]
+                server_ip = socket.gethostbyname(hostname)
+
             tz = self.env.context.get('tz')
             if tz:
                 tz_hour = datetime.now(pytz.timezone(tz)).strftime('%z')
@@ -125,9 +138,9 @@ class HmrcService(models.AbstractModel):
             gov_vendor_version = self.sudo().env.ref('base.module_base').latest_version
 
             gov_dict['Gov-Client-Connection-Method'] = 'WEB_APP_VIA_SERVER'
-            if remote_needed: #no need when on a private network
-                gov_dict['Gov-Client-Public-IP'] = urls.url_quote(remote_address)
-                gov_dict['Gov-Client-Public-Port'] = urls.url_quote(str(environ.get('REMOTE_PORT')))
+            
+            gov_dict['Gov-Client-Public-IP'] = urls.url_quote(remote_address)
+            gov_dict['Gov-Client-Public-Port'] = urls.url_quote(str(environ.get('REMOTE_PORT')))
             if 'totp_enabled' in self.env.user._fields and self.env.user.totp_enabled:
                 # We can not percent encode the separator, so we have to split the string as such to percent encode each key and value
                 gov_dict['Gov-Client-Multi-Factor'] = "{}={type}&{}={time}&{}={unique}".format(
@@ -145,16 +158,29 @@ class HmrcService(models.AbstractModel):
             gov_dict['Gov-Client-Screens'] = f"width={client_data['screen_width']}&height={client_data['screen_height']}&scaling-factor={client_data['screen_scaling_factor']}&colour-depth={client_data['screen_color_depth']}" if client_data else ''
             gov_dict['Gov-Client-Window-Size'] = f"width={client_data['window_width']}&height={client_data['window_height']}" if client_data else ''
             gov_dict['Gov-Client-Public-Ip-Timestamp'] = datetime.utcnow().isoformat(timespec='milliseconds')+'Z'
-            gov_dict['Gov-Vendor-Product-Name'] = urls.url_quote("Odoo")
-            gov_dict['Gov-Client-Device-Id'] = client_data['hmrc_gov_client_device_id'] if client_data else ''
-            gov_dict['Gov-Vendor-Forwarded'] = f"by={server_public_ip}&for={remote_address}"
-            if public_ip_needed: # No need when on a private network
-                gov_dict['Gov-Vendor-Public-IP'] = server_public_ip
+            gov_dict['Gov-Vendor-Product-Name'] = urls.url_quote(f"Odoo {version}")
+            gov_dict['Gov-Client-Device-Id'] = (client_data or {}).get('hmrc_gov_client_device_id') or str(uuid.uuid4()) 
+            gov_dict['Gov-Vendor-Forwarded'] = f"by={server_ip}&for={remote_address}"
+            gov_dict['Gov-Vendor-Public-IP'] = server_ip
             if hashed_license:
                 gov_dict['Gov-Vendor-License-IDs'] = urls.url_quote("Odoo") + "=" + urls.url_quote(hashed_license)
         except Exception:
             _logger.warning("Could not construct fraud prevention headers", exc_info=True)
         return gov_dict
+
+    def _validate_fraud_prevention_headers(self, headers):
+        """
+        Test the fraud prevention headers during requests. Only valid in test mode, does nothing when in production.
+        """
+        if self.env['ir.config_parameter'].sudo().get_param("l10n_uk_reports.hmrc_mode", 'production') == 'production':
+            return
+        
+        url = self._get_endpoint_url('/test/fraud-prevention-headers/validate')
+        response = requests.request('GET', url, headers=headers, timeout=TIMEOUT)
+        response.raise_for_status()
+        response_dict = response.json()
+        if response_dict.get('errors'):
+            raise UserError(_("Invalid HMRC fraud prevention headers"))
 
     @api.model
     def _write_tokens(self, user, tokens):

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import uuid
+
 from odoo import models, _
 
 
@@ -16,7 +18,7 @@ class L10n_UkTaxReportHandler(models.AbstractModel):
         if self.env.user.l10n_uk_user_token and not self.env.user.l10n_uk_hmrc_vat_token:
             self.env['hmrc.service']._login()
         button_name = _('Send to HMRC') if self.env.user.l10n_uk_hmrc_vat_token else _('Connect to HMRC')
-        options['buttons'].append({'name': button_name, 'action': 'send_hmrc', 'sequence': 50})
+        options['buttons'].append({'name': button_name, 'action': 'send_hmrc', 'sequence': 50, 'client_tag': 'send_hmrc_button_report', 'always_show': False})
 
     def send_hmrc(self, options):
         if not options.get('_running_export_test'):
@@ -25,7 +27,7 @@ class L10n_UkTaxReportHandler(models.AbstractModel):
                 return self.env['hmrc.service']._login()
 
             # Check obligations: should be logged in by now
-            self.env['l10n_uk.vat.obligation'].import_vat_obligations()
+            self.env['l10n_uk.vat.obligation'].import_vat_obligations(self.env.context['client_data'])
 
             # import_vat_obligations() removes the token if the user is not authorised when importing the obligations.
             # This can happen if the user switched companies then tried to send the report. Before the user had to
@@ -36,7 +38,13 @@ class L10n_UkTaxReportHandler(models.AbstractModel):
 
         # Show wizard when sending to HMRC
         context = self.env.context.copy()
-        context.update({'options': options})
+        context.update({
+            'options': options,
+            'client_data': {
+                **context.get('client_data', {}),
+                'hmrc_gov_client_device_id': uuid.uuid4()
+            }
+        })
         view_id = self.env.ref('l10n_uk_reports.hmrc_send_wizard_form').id
         return {'type': 'ir.actions.act_window',
                 'name': _('Send to HMRC'),

@@ -49,7 +49,7 @@ class L10n_UkVatObligation(models.Model):
         return headers
 
     @api.model
-    def retrieve_vat_obligations(self, vat, from_date, to_date, status=''):
+    def retrieve_vat_obligations(self, vat, from_date, to_date, client_data=None, status=''):
         """ Retrieve vat obligations
 
         The User should be logged in before doing this
@@ -64,7 +64,8 @@ class L10n_UkVatObligation(models.Model):
 
         user = self.env.user
         bearer = user.l10n_uk_hmrc_vat_token
-        headers = self._get_auth_headers(bearer)
+        headers = self._get_auth_headers(bearer, client_data)
+        self.env['hmrc.service']._validate_fraud_prevention_headers(headers)
 
         url = self.env['hmrc.service']._get_endpoint_url('/organisations/vat/%s/obligations' % vat)
         params = {
@@ -112,7 +113,7 @@ class L10n_UkVatObligation(models.Model):
 
         return vat
 
-    def import_vat_obligations(self):
+    def import_vat_obligations(self, client_data=None):
         today = datetime.date.today()
         res = self.env['hmrc.service']._login()
         if res: # If you can not login, return url for re-login
@@ -122,8 +123,9 @@ class L10n_UkVatObligation(models.Model):
         obligations = self.retrieve_vat_obligations(
             self._get_vat(),
             (today + relativedelta(months=-6)).strftime('%Y-%m-%d'),
-            (today + relativedelta(months=6,leapdays=-1)).strftime('%Y-%m-%d'))
-
+            (today + relativedelta(months=6,leapdays=-1)).strftime('%Y-%m-%d'),
+            client_data
+        )
         for new_obligation in obligations:
             obligation = self.env['l10n_uk.vat.obligation'].search([('period_key', '=', new_obligation.get('periodKey')),
                                                                  ('company_id', '=', self.env.company.id)])
@@ -187,6 +189,7 @@ class L10n_UkVatObligation(models.Model):
         if res: # If you can not login, return url for re-login
             return res
         headers = self._get_auth_headers(self.env.user.l10n_uk_hmrc_vat_token, data)
+        self.env['hmrc.service']._validate_fraud_prevention_headers(headers)
 
         url = self.env['hmrc.service']._get_endpoint_url('/organisations/vat/%s/returns' % vat)
         data = values.copy()

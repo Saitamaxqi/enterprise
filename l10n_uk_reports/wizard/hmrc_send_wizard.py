@@ -15,6 +15,9 @@ class L10n_UkHmrcSendWizard(models.TransientModel):
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
 
+        # Check obligations: should be logged in by now
+        self.env['l10n_uk.vat.obligation'].import_vat_obligations(self.env.context['client_data'])
+
         if 'obligation_id' in fields_list:
             obligations = self.env['l10n_uk.vat.obligation'].search([('status', '=', 'open')])
             if not obligations:
@@ -26,6 +29,10 @@ class L10n_UkHmrcSendWizard(models.TransientModel):
                 if obl.date_start == date_from and obl.date_end == date_to:
                     res['obligation_id'] = obl.id
                     break
+        
+        if 'hmrc_gov_client_device_id' in fields_list:
+            res['hmrc_gov_client_device_id'] = self.env.context['client_data']['hmrc_gov_client_device_id']
+        
         if 'message' in fields_list:
             res['message'] = not res.get('obligation_id')
         return res
