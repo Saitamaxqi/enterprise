@@ -42,6 +42,40 @@ class TestAccountAvalaraStock(TestAccountAvataxCommon):
 
         return res
 
+    def test_line_level_address_sale_order_warehouse(self):
+        with self._capture_request(return_value={'lines': [], 'summary': []}) as capture:
+            sale_order = self.env['sale.order'].create({
+                'partner_id': self.partner.id,
+                'partner_shipping_id': self.shipping_partner.id,
+                'fiscal_position_id': self.fp_avatax.id,
+                'date_order': '2021-01-01',
+                'warehouse_id': self.warehouse_with_different_address.id,
+                'order_line': [
+                    (0, 0, {
+                        'product_id': self.product.id,
+                        'tax_ids': None,
+                        'price_unit': self.product.list_price,
+                    }),
+                ]
+            })
+            sale_order.button_external_tax_calculation()
+            line_addresses = capture.val['json']['createTransactionModel']['lines'][0].get('addresses', False)
+            self.assertEqual(line_addresses['shipFrom']['region'], 'WA', 'should ship from the sales order warehouse')
+            self.assertEqual(line_addresses['shipTo']['region'], 'OH', 'should ship to the delivery address')
+            capture.val = None
+
+            sale_order.action_confirm()
+            line_addresses = capture.val['json']['createTransactionModel']['lines'][0].get('addresses', False)
+            self.assertEqual(line_addresses['shipFrom']['region'], 'WA', 'should ship from the sales order warehouse')
+            self.assertEqual(line_addresses['shipTo']['region'], 'OH', 'should ship to the delivery address')
+            capture.val = None
+
+            invoice = sale_order._create_invoices()
+            invoice.button_external_tax_calculation()
+            line_addresses = capture.val['json']['createTransactionModel']['lines'][0].get('addresses', False)
+            self.assertEqual(line_addresses['shipFrom']['region'], 'WA', 'should ship from the sales order warehouse')
+            self.assertEqual(line_addresses['shipTo']['region'], 'OH', 'should ship to the delivery address')
+
     def test_line_level_address_with_different_warehouse_address(self):
         """Ensure that invoices created from a sale order with items shipped from a different address than the
            company's have the correct line level addresses and items shipped from the same address as the
