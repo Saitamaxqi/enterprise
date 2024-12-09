@@ -19,16 +19,29 @@ class AccountTaxReportHandler(models.AbstractModel):
     # With this, custom tax reports don't need to inherit from the generic tax report
 
     def _custom_options_initializer(self, report, options, previous_options):
+        optional_periods = {
+            'monthly': 'month',
+            'trimester': 'quarter',
+            'year': 'year',
+        }
+
         options['buttons'].append({'name': _('Closing Entry'), 'action': 'action_periodic_vat_entries', 'sequence': 110, 'always_show': True})
         self._enable_export_buttons_for_common_vat_groups_in_branches(options)
 
         day, month = self.env.company._get_tax_closing_start_date_attributes(report)
+        periodicity = self.env.company._get_tax_periodicity(report)
         options['tax_periodicity'] = {
-            'periodicity': self.env.company._get_tax_periodicity(report),
+            'periodicity': periodicity,
             'months_per_period': self.env.company._get_tax_periodicity_months_delay(report),
             'start_day': day,
             'start_month': month,
         }
+
+        options['show_tax_period_filter'] = periodicity not in optional_periods or day != 1 or month != 1
+        if not options['show_tax_period_filter']:
+            period_type = optional_periods[periodicity]
+            options['date']['filter'] = options['date']['filter'].replace('tax_period', period_type)
+            options['date']['period_type'] = options['date']['period_type'].replace('tax_period', period_type)
 
     def _get_custom_display_config(self):
         display_config = defaultdict(dict)

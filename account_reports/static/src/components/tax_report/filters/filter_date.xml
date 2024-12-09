@@ -3,7 +3,7 @@
     <t t-name="account_reports.TaxReportFilterDate" t-inherit="account_reports.AccountReportFilterDate">
         <xpath expr="//t[last()]/t[@t-call='account_reports.AccountReportFilterDateSelection']" position="before">
             <DropdownItem
-            t-if="!this.hideTaxPeriodFilter()"
+            t-if="this.controller.options.show_tax_period_filter"
             class="{ 'd-flex justify-content-between date_filter': true, 'selected': (this.isPeriodSelected('tax_period')) }"
             onSelected="() => this.selectDateFilter('tax_period', controller.options.date.period_type != 'tax_period')"
             closingMode="'none'"
