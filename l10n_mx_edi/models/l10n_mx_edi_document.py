@@ -1038,6 +1038,28 @@ class L10n_Mx_EdiDocument(models.Model):
                 cfdi_values['subtotal'] += values['base_amount_currency']
                 cfdi_values['total'] += values['base_amount_currency']
 
+        # Post-fix discount.
+        # We have to deal with a special case: 100.05 with 50% of discount. In that case,
+        # The gross price subtotal is 100.05 and the discount/base are 50.025.
+        # However:
+        # - the subtotal of the document has to be the round of the sum of base amounts.
+        # - the discount has to be the round of the sum of discount for each line.
+        # - the total has to be the sum of the gross price subtotal.
+        # The problem in this case, without doing anything, we end with:
+        # total = 50.03
+        # discount = 50.03
+        # subtotal = 50.03 + 50.03 = 100.06 != 100.05.
+        # We can't change the discount (total + for the line) to 50.02 because the round globally will be broken with more complex
+        # cases. If we have a total discount of 50.02 and a discount for the line of 50.025, it's rejected because the SAT checks
+        # the amounts HALF-UP.
+        delta_discount = currency.round(sum(x['importe'] for x in line_values_list)) - cfdi_values['subtotal']
+        if currency.round(delta_discount):
+            biggest_line = max([x for x in line_values_list if x['descuento']], key=lambda x: -x['importe'])
+            if biggest_line:
+                biggest_line['descuento'] = currency.round(biggest_line['descuento']) + delta_discount
+                cfdi_values['descuento'] += delta_discount
+                cfdi_values['subtotal'] += delta_discount
+
         if currency.is_zero(cfdi_values['descuento']):
             cfdi_values['descuento'] = None
 
