@@ -91,4 +91,22 @@
             </p>
         </field>
     </record>
+
+    <record id="appointment_resource_action_stat" model="ir.actions.act_window">
+        <field name="name">Resources</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">appointment.resource</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('appointment_type_ids', 'in', active_ids)]</field>
+        <field name="context">{'default_appointment_type_ids': active_ids}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create an Appointment Resource
+            </p>
+            <p>
+                Appointment Resources are the places or equipment people can book
+                (e.g. Tables, Tennis Courts, Meeting Rooms, ...)
+            </p>
+        </field>
+    </record>
 </odoo>

@@ -135,4 +135,19 @@
             </p>
         </field>
     </record>
+
+    <record id="appointment_invite_action_stat" model="ir.actions.act_window">
+        <field name="name">Share Links</field>
+        <field name="res_model">appointment.invite</field>
+        <field name="view_mode">list</field>
+        <field name="domain">[('appointment_type_ids', 'in', active_ids)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Shared Links yet!
+            </p><p>
+                Configure links that allow booking appointments with custom settings<br/>
+                (e.g. a specific user only, a list of appointment types, ...)
+            </p>
+        </field>
+    </record>
 </odoo>

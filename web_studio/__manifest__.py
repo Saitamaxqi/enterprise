@@ -37,6 +37,7 @@ Note: Only the admin user is allowed to make those customizations.
         'views/actions.xml',
         'views/ir_actions_report_xml.xml',
         'views/ir_model_data.xml',
+        'views/base_automation_views.xml',
         'views/studio_approval_views.xml',
         'views/reset_view_arch_wizard.xml',
         'views/studio_export_wizard_views.xml',

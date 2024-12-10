@@ -373,38 +373,12 @@ class AppointmentType(models.Model):
             category=appointment_type.category,
         ) for appointment_type, vals in zip(self, vals_list)]
 
-    def action_appointment_resources(self):
-        self.ensure_one()
-        action = self.env["ir.actions.act_window"]._for_xml_id("appointment.appointment_resource_action")
-        action["domain"] = [('appointment_type_ids', 'in', self.ids)]
-        action["context"] = {
-            'default_appointment_type_ids': self.ids,
-        }
-        return action
-
-    def action_appointment_shared_links(self):
-        action = self.env["ir.actions.act_window"]._for_xml_id("appointment.appointment_invite_action")
-        action["domain"] = [('appointment_type_ids', 'in', self.ids)]
-        if len(self) == 1:
-            action["context"] = {'schedule_based_on': self.schedule_based_on}
-        return action
-
     def action_calendar_event_view_request(self):
         action = self.action_calendar_meetings(calendar_event_domain=[('appointment_status', '=', 'request')])
         action['context'].update({
             'search_default_filter_appointment_status_request': True,
             'default_start_date': action['context']['initial_date'],
         })
-        return action
-
-    def action_calendar_events_reporting(self):
-        self.ensure_one()
-        action = self.env["ir.actions.act_window"]._for_xml_id("appointment.calendar_event_action_appointment_reporting")
-        action["domain"] = [('appointment_type_id', '!=', False)]
-        action["context"] = {
-            'search_default_appointment_type_id': self.id,
-            'default_appointment_type_id': self.id,
-        }
         return action
 
     def action_calendar_meetings(self, calendar_event_domain=False):
