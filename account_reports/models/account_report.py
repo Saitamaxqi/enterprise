@@ -723,7 +723,7 @@ class AccountReport(models.Model):
         :param options:             The current report options to build.
         :param previous_options:    The previous options coming from another report.
         """
-        if not self.filter_period_comparison or (previous_options or {}).get('export_mode') == 'file':
+        if not self.filter_period_comparison:
             return
 
         previous_comparison = previous_options.get('comparison', {})
