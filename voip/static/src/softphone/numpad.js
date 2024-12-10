@@ -41,7 +41,7 @@ export class Numpad extends Component {
     }
 
     /** @param {MouseEvent} ev */
-    onClickKeypad(ev) {
+    onClickKey(ev) {
         const key = ev.target.textContent;
         this.userAgentService.session?.sipSession?.sessionDescriptionHandler.sendDtmf(key);
         const { value } = this.softphone.numpad;

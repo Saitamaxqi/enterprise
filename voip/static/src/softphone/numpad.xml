@@ -7,8 +7,8 @@
                 <button class="btn fa fa-long-arrow-left shadow-none" title="Backspace" t-on-click="onClickBackspace"/>
             </div>
             <div class="container justify-content-center">
-                <div class="row row-cols-3" t-on-click="onClickKeypad">
-                    <button t-foreach="'123456789*0#'" t-as="key" t-key="key" t-esc="key" class="btn btn-light py-3 fw-normal fs-2"/>
+                <div class="row row-cols-3">
+                    <button t-foreach="'123456789*0#'" t-as="key" t-key="key" t-esc="key" t-on-click="onClickKey" class="btn btn-light py-3 fw-normal fs-2"/>
                 </div>
             </div>
         </div>
