@@ -18,7 +18,8 @@ class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
     def write(self, vals):
-        if 'account_id' not in vals:
+        if not self.env.user.has_group('account.group_account_user') \
+           or 'account_id' not in vals:
             return super().write(vals)
         for line in self.filtered(lambda l: l.company_id.account_fiscal_country_id.code == 'BE'):
             suspense_account = line.company_id.account_journal_suspense_account_id
