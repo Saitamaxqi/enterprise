@@ -27,7 +27,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         xml_doc = self.journal_id.sudo().with_context(
             sepa_payroll_sala=True,
             l10n_be_hr_payroll_sepa_salary_payment=self.journal_id.company_id.account_fiscal_country_id.code == "BE"
-        ).create_iso20022_credit_transfer(payments=payments_data, payment_method_code='iso20022', batch_booking=True)
+        ).create_iso20022_credit_transfer(payments=payments_data, payment_method_code='sepa_ct', batch_booking=True)
         return base64.encodebytes(xml_doc)
 
     def _perform_checks(self):
