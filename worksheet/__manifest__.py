@@ -23,8 +23,8 @@ Create customizable worksheet
         'web_studio.studio_assets_minimal': [
             'worksheet/static/src/client_action/navbar/navbar.js'
         ],
-        'web.qunit_suite_tests': [
-            'worksheet/static/tests/*.js',
+        'web.assets_unit_tests': [
+            'worksheet/static/tests/*',
         ],
     },
     'license': 'OEEL-1',
