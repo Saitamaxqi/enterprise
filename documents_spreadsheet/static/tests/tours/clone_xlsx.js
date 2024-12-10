@@ -10,6 +10,11 @@ registry.category("web_tour.tours").add("spreadsheet_clone_xlsx", {
             run: "click",
         },
         {
+            trigger: '.o_search_panel_label_title:contains("Company)',
+            content: "Select parent folder",
+            run: "click",
+        },
+        {
             trigger: '.o_kanban_record:contains("Test folder")',
             content: "Open Test folder workspace",
             run: "dblclick",

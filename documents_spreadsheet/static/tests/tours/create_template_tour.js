@@ -10,6 +10,11 @@ registry.category("web_tour.tours").add("documents_spreadsheet_create_template_t
     steps: () => [
         ...stepUtils.goToAppSteps("documents.menu_root", "Open Document app"),
         {
+            trigger: '.o_search_panel_label_title:contains("Company)',
+            content: "Select parent folder",
+            run: "click",
+        },
+        {
             trigger: '.o_kanban_record:contains("Test folder")',
             content: "Open the test folder",
             run: "dblclick",

@@ -10,6 +10,11 @@ registry.category("web_tour.tours").add("spreadsheet_save_multipage", {
             run: "click",
         },
         {
+            trigger: '.o_search_panel_label_title:contains("Company)',
+            content: "Select parent folder",
+            run: "click",
+        },
+        {
             trigger: '.o_kanban_record:contains("Test folder")',
             content: "Open the test folder",
             run: "dblclick",
