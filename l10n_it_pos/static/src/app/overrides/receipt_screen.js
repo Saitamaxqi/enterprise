@@ -20,7 +20,7 @@ patch(ReceiptScreen.prototype, {
             return super.printReceipt(...arguments);
         }
 
-        const order = this.pos.get_order();
+        const order = this.pos.getOrder();
 
         const result = order.to_invoice
             ? await this.pos.fiscalPrinter.printFiscalInvoice()

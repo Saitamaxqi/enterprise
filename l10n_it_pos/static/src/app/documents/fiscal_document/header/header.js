@@ -14,13 +14,13 @@ export class Header extends Component {
 
     setup() {
         this.pos = usePos();
-        this.order = this.pos.get_order();
+        this.order = this.pos.getOrder();
     }
 
     get headers() {
         Heading.resetIndex();
         const company = this.pos.company;
-        const cashier = this.pos.get_cashier();
+        const cashier = this.pos.getCashier();
 
         const headings = [
             new Heading(company.partner_id.name, Font.DOUBLE_HEIGHT),

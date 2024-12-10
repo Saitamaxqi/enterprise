@@ -23,7 +23,7 @@ export class Body extends Component {
 
     setup() {
         this.pos = usePos();
-        this.order = this.pos.get_order();
+        this.order = this.pos.getOrder();
     }
 
     _itFormatCurrency(amount) {
@@ -47,12 +47,12 @@ export class Body extends Component {
     get lines() {
         const calculateDiscountAmount = (line) => {
             const { priceWithTaxBeforeDiscount, priceWithTax: priceWithTaxAfterDiscount } =
-                line.get_all_prices();
+                line.getAllPrices();
             return priceWithTaxBeforeDiscount - priceWithTaxAfterDiscount;
         };
 
         return this.order.lines.map((line, index) => {
-            const productName = line.get_full_product_name();
+            const productName = line.getFullProductName();
             const department = line.tax_ids.map((tax) => tax.tax_group_id.pos_receipt_label)[0];
             const isRefund = line.qty < 0;
             const isReward = line.is_reward_line;
@@ -60,14 +60,14 @@ export class Body extends Component {
                 isRefund,
                 isReward,
                 description: isRefund ? _t("%s (refund)", productName) : productName,
-                customer_note: line.get_customer_note(),
+                customer_note: line.getCustomerNote(),
                 quantity: this._itFormatQty(Math.abs(line.qty)),
                 // DISCOUNT: Use price before discount because the discounted amount is specified in the printRecItemAdjustment.
                 // REFUND: Use the price with tax because there is no adjustment for printRecRefund.
                 unitPrice: this._itFormatCurrency(
                     isRefund
-                        ? line.get_all_prices(1).priceWithTax
-                        : line.get_all_prices(1).priceWithTaxBeforeDiscount
+                        ? line.getAllPrices(1).priceWithTax
+                        : line.getAllPrices(1).priceWithTaxBeforeDiscount
                 ),
                 department,
                 index,

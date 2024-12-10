@@ -15,7 +15,7 @@ export class Footer extends Component {
 
     async setup() {
         this.pos = usePos();
-        this.order = this.pos.get_order();
+        this.order = this.pos.getOrder();
     }
 
     get footers() {

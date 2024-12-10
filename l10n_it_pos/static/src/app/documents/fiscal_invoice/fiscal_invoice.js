@@ -15,10 +15,10 @@ export class FiscalInvoice extends Component {
 
     setup() {
         this.pos = usePos();
-        this.order = this.pos.get_order();
+        this.order = this.pos.getOrder();
     }
 
     get client() {
-        return this.order.get_partner_name();
+        return this.order.getPartnerName();
     }
 }
