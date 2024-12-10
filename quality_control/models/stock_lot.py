@@ -3,6 +3,7 @@
 
 from odoo import fields, models
 from odoo.osv import expression
+import ast
 
 
 class StockLot(models.Model):
@@ -18,6 +19,13 @@ class StockLot(models.Model):
 
     def _get_quality_check_domain(self, prod_lot):
         return [('lot_id', '=', prod_lot.id)]
+
+    def action_open_quality_checks(self):
+        self.ensure_one()
+        action_values = self.env['ir.actions.act_window']._for_xml_id('quality_control.quality_check_action_production_lot')
+        domain = ast.literal_eval(action_values.get('domain')) if action_values.get('domain') else []
+        action_values["domain"] = expression.AND([domain, self._get_quality_check_domain(self)])
+        return action_values
 
     def _compute_quality_alert_qty(self):
         for prod_lot in self:

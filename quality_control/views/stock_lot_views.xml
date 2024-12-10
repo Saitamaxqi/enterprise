@@ -27,7 +27,7 @@
         <field name="inherit_id" ref="stock.view_production_lot_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
-                <button name="%(quality_check_action_production_lot)d" type="action"
+                <button name="action_open_quality_checks" type="object"
                     invisible="quality_check_qty == 0"
                     icon="fa-check" class="oe_stat_button" groups="quality.group_quality_user">
                     <field string="Quality Checks" name="quality_check_qty" widget="statinfo"/>
