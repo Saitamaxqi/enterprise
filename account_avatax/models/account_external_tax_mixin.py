@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
+from collections import defaultdict
 from pprint import pformat
 
 from odoo import models, api, fields, _
@@ -110,12 +111,12 @@ class AccountExternalTaxMixin(models.AbstractModel):
                     details[record].setdefault('tax_ids', self.env['account.tax'])
                     details[record]['tax_ids'] += tax
 
-            summary[document] = {}
+            summary[document] = defaultdict(float)
             for summary_line in query_result['summary']:
                 tax = find_or_create_tax(document, summary_line)
 
                 # Tax avatax returns is opposite from aml balance (avatax is positive on invoice, negative on refund)
-                summary[document][tax] = -summary_line['tax']
+                summary[document][tax] += -summary_line['tax']
 
         return details, summary
 

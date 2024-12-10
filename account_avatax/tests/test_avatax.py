@@ -78,6 +78,20 @@ class TestAccountAvalaraInternal(TestAccountAvalaraInternalCommon):
             invoice.button_draft()
             mocked_uncommit.assert_called()
 
+    def test_03_odoo_invoice(self):
+        """Tax calculation with two SC SPECIAL 1% taxes on the same line."""
+        invoice, response = self._create_invoice_03_and_expected_response()
+        self.assertRecordValues(invoice, [{
+            'amount_total': 30.0,
+            'amount_untaxed': 30.0,
+            'amount_tax': 0.0,
+        }])
+
+        with self._capture_request(return_value=response):
+            invoice.action_post()
+
+        self.assertEqual(invoice.amount_total, 32.7, "Wrong total amount, it should be $30.00 + $2.70 of taxes.")
+
     def test_01_odoo_refund(self):
         invoice, response = self._create_invoice_01_and_expected_response()
 
