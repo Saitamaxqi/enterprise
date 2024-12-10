@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import hashlib
 import io
 import itertools
 import json
@@ -10,7 +11,7 @@ import textwrap
 import zipfile
 
 from odoo import http
-from odoo.http import request, Response
+from odoo.http import request, Response, Stream
 from odoo.modules import get_module_path
 from odoo.tools.misc import str2bool
 
@@ -25,12 +26,20 @@ class IoTController(http.Controller):
         return request.env['iot.box'].sudo().search([('identifier', '=', mac_address)], limit=1)
 
     @http.route('/iot/get_handlers', type='http', auth='public', csrf=False)
-    def download_iot_handlers(self, mac, auto):
+    def get_handlers(self, mac, auto):
+        """Return a zip file containing all the IoT handlers for the given IoT Box.
+
+        :param mac: The mac address of the IoT Box.
+        :param auto: If True, the IoT Box will automatically update its handlers.
+        :return: A zip file containing all the IoT handlers.
+        """
         # Check mac is of one of the IoT Boxes
         box = self._search_box(mac)
         if not box or (auto == 'True' and not box.drivers_auto_update):
             return ''
 
+
+        allowed_filename = f"_{box.version[0]}.py" # '_L.py' files for Linux and '_W.py' for Windows
         module_ids = request.env['ir.module.module'].sudo().search([('state', '=', 'installed')])
         fobj = io.BytesIO()
         with zipfile.ZipFile(fobj, 'w', zipfile.ZIP_DEFLATED) as zf:
@@ -39,11 +48,25 @@ class IoTController(http.Controller):
                 if module_path:
                     iot_handlers = pathlib.Path(module_path) / 'iot_handlers'
                     for handler in iot_handlers.glob('*/*'):
-                        if handler.is_file() and not handler.name.startswith(('.', '_')):
+                        if not handler.is_file() or handler.name.startswith(('.', '_')):
+                            continue
+                        if handler.name.endswith(allowed_filename):
                             # In order to remove the absolute path
                             zf.write(handler, handler.relative_to(iot_handlers))
 
-        return fobj.getvalue()
+        etag = hashlib.sha256(fobj.getvalue()).hexdigest()
+        # If the file has not been modified since the last request, return a 304 (Not Modified)
+        if etag == request.httprequest.headers.get('If-None-Match'):
+            return request.make_response('', headers=[('ETag', etag)], status=304)
+
+        return Stream(
+            type='data',
+            data=fobj.getvalue(),
+            download_name='iot_handlers.zip',
+            etag=etag,
+            size=fobj.tell(),
+            public=True,
+        ).get_response()
 
     @http.route('/iot/keyboard_layouts', type='http', auth='public', csrf=False)
     def load_keyboard_layouts(self, available_layouts):
