@@ -100,6 +100,7 @@
             <field name="name">Standard 24 hours/week</field>
             <field name="company_id" ref="base.demo_company_in"/>
             <field name="hours_per_day">8</field>
+            <field name="tz">Asia/Kolkata</field>
             <field name="attendance_ids"
                 eval="[(5, 0, 0),
                 (0, 0, {'name': 'Monday Morning', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
@@ -224,6 +225,7 @@
             <field name="l10n_in_uan">398175628304</field>
             <field name="l10n_in_esic_number">4658302649025064783</field>
             <field name="l10n_in_pan">GUNI5723P</field>
+            <field name="create_date" eval="(DateTime.today() + relativedelta(months=-6))"/>
         </record>
 
          <!-- Running  Contract-->
@@ -237,7 +239,7 @@
             <field name="company_id" ref="base.demo_company_in"/>
             <field name="hr_responsible_id" ref="base.user_demo"/>
             <field name="l10n_in_esic_amount">1200</field>
-            <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
+            <field name="date_start" eval="(DateTime.today() + relativedelta(months=-6))"/>
         </record>
         <record id="l10n_in_hr_contract_shaurya" model="hr.contract">
             <field name="name">Shaurya Contract</field>
