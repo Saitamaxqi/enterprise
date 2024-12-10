@@ -3,7 +3,7 @@
 
     <t t-name="approvals.Approval">
         <div t-if="props.activity.approval.status === 'pending'">
-            <t t-if="props.activity.user_id[0] === store.self.userId">
+            <t t-if="props.activity.persona.eq(store.self)">
                 <button class="btn btn-success btn-link ps-0 pt-0" t-on-click="onClickApprove">
                     <i class="fa fa-check"/> Approve
                 </button>
