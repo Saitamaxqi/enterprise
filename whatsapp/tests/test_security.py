@@ -114,6 +114,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
     @users('admin')
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_member_creation(self):
+        self.maxDiff = None
         channel_channel, channel_wa = self.env['discuss.channel'].create([
             {
                 'channel_type': 'channel',
@@ -239,6 +240,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                 ),
                                 "mail.thread": self._filter_threads_fields(
                                     {
+                                        "display_name": "employee channel",
                                         "id": employee_channel.id,
                                         "model": "discuss.channel",
                                         "module_icon": "/mail/static/description/icon.png",
