@@ -76,6 +76,9 @@ class TestRentalPlanning(TestSalePlanning):
         self.assertEqual(slot.start_datetime, datetime(2023, 9, 25, 8, 0), 'Slot start datetime should be same as on SO')
         self.assertEqual(slot.end_datetime, datetime(2023, 9, 28, 8, 0), 'Slot end datetime should be same as on SO')
 
+        self.assertEqual(basic_so.planning_hours_planned, 24.0, 'Planned hours should be set when the shift is already scheduled.')
+        self.assertEqual(basic_so.planning_hours_to_plan, 0.0, 'To Plan hours should be zero when the shift is already scheduled.')
+
         resource_time_off_so.action_confirm()
         slot_2 = resource_time_off_so.order_line.planning_slot_ids
 
@@ -86,3 +89,45 @@ class TestRentalPlanning(TestSalePlanning):
         slot_3 = public_holiday_so.order_line.planning_slot_ids
 
         self.assertEqual(slot_3.resource_id, plannable_employee1.resource_id, 'First resource should be assign on public holiday as first resource is working flexible hours')
+
+    def test_planning_rental_for_material_resource(self):
+        """
+        Steps:
+            1) Create a rental product with the `Plan Service` enabled and the resource type set to 'Material'.
+            2) Create a SO for the newly created product and confirm it.
+            3) Observe the state button the shift is already planned but it incorrectly displays 'To Plan'.
+        """
+
+        projector = self.env['resource.resource'].create({
+            'name': 'Projector',
+            'resource_type': 'material',
+        })
+
+        planning_role_projector = self.env['planning.role'].create({
+            'name': 'Projector',
+            'resource_ids': [(4, projector.id)],
+        })
+
+        product_projector = self.env['product.product'].create({
+            'name': 'Projector Service',
+            'type': 'service',
+            'planning_enabled': True,
+            'planning_role_id': planning_role_projector.id,
+            'rent_ok': True,
+        })
+
+        so_rental = self.env['sale.order'].with_context(in_rental_app=True).create([{
+            'partner_id': self.planning_partner.id,
+            'rental_start_date': datetime(2024, 12, 18, 0, 0),
+            'rental_return_date': datetime(2024, 12, 19, 0, 0),
+            'order_line': [
+                Command.create({
+                    'product_id': product_projector.id,
+                    'product_uom_qty': 10,
+                }),
+            ],
+        }])
+
+        so_rental.action_confirm()
+        self.assertEqual(so_rental.planning_hours_planned, 8.0, 'Planned hours should be set when the shift is already scheduled.')
+        self.assertEqual(so_rental.planning_hours_to_plan, 0.0, 'To Plan hours should be zero when the shift is already scheduled.')
