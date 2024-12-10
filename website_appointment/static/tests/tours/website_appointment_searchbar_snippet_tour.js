@@ -22,7 +22,7 @@ registerWebsitePreviewTour("test_searchbar_within_appointments", {
     {
         content: "Enter search term",
         trigger: ":iframe .o_searchbar_form input",
-        run: "edit tennis court",
+        run: "edit yoga session",
     },
     {
         content: "Check that the number of results found is correct.",
