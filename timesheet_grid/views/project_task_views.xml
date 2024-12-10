@@ -19,6 +19,7 @@
                     <field name="timer_start"
                            class="align-self-center me-auto ms-2 h2"
                            widget="timer_start_field"
+                           options="{'unit_amount_field': 'timesheet_unit_amount'}"
                            groups="hr_timesheet.group_hr_timesheet_user"
                     />
                 </xpath>

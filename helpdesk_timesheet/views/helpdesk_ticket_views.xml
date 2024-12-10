@@ -22,6 +22,7 @@
                         groups="hr_timesheet.group_hr_timesheet_user"
                     />
                     <field name="timer_start" widget="timer_start_field" class="d-flex align-self-center me-auto ms-2 h2"
+                        options="{'unit_amount_field': 'timesheet_unit_amount'}"
                         groups="hr_timesheet.group_hr_timesheet_user"
                     />
                 </field>
