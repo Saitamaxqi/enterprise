@@ -178,28 +178,33 @@
                                     </a>
                                 </span>
                             </div>
-                            <label for="hard_lock_date"/>
-                            <div class="d-flex">
-                                <field name="hard_lock_date" placeholder="Not locked"
-                                       class="oe_inline"
-                                       decoration-info="exception_needed_fields and 'hard_lock_date' in exception_needed_fields"
-                                       options="{'warn_future': true}"/>
-                                <span class="text-muted" invisible="hard_lock_date != current_hard_lock_date">
-                                    <i>to ensure inalterability</i>
-                                </span>
-                                <span class="text-danger o_form_label" invisible="hard_lock_date == current_hard_lock_date">
-                                    <i>This change is irreversible</i>
-                                </span>
-                            </div>
-                            <div class="alert alert-info ps-3 mb-3 d-flex" role="alert"
+                            <div class="alert alert-info ps-3 mt-2 mb-0 d-flex flex-wrap" role="alert"
                                  colspan="2"
                                  style="white-space: pre;"
                                  invisible="not exception_needed_fields">
                                 <span>Exception</span>
                                 <field name="exception_applies_to" class="oe_inline mx-3"/>
                                 <field name="exception_duration" class="oe_inline"/>
-                                <div invisible="exception_applies_to == 'everyone' and exception_duration == 'forever'">
-                                    <field name="exception_reason" placeholder="Reason..." class="oe_inline mx-3"/>
+                                <field name="exception_reason"
+                                       placeholder="Reason..."
+                                       class="oe_inline mx-3 flex-grow-1"
+                                       widget="text"
+                                       options="{'line_breaks': False}"
+                                       invisible="exception_applies_to == 'everyone' and exception_duration == 'forever'"/>
+                            </div>
+                            <div class="d-flex justify-content-start">
+                                <div class="alert alert-danger ps-3 mb-3" role="alert">
+                                    <div>Need an irreversible lock to ensure inalterability, for all users?</div>
+                                    <div class="d-flex">
+                                        <label for="hard_lock_date"/>
+                                        <field name="hard_lock_date" placeholder="Not locked"
+                                               class="oe_inline mx-3"
+                                               decoration-info="exception_needed_fields and 'hard_lock_date' in exception_needed_fields"
+                                               options="{'warn_future': true}"/>
+                                        <span class="text-danger o_form_label" invisible="hard_lock_date == current_hard_lock_date">
+                                            <i>This change is irreversible</i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </group>
