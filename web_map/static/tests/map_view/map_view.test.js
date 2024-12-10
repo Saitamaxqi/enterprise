@@ -2286,6 +2286,18 @@ describe("map_view_desktop", () => {
         });
         expect(".o-map-renderer--pin-list-group-header").toHaveCount(1, { message: "ABC" });
     });
+
+    test("display '0' for empty int field values in grouped map view", async () => {
+        await mountView({
+            type: "map",
+            resModel: "project.task",
+            arch: `<map res_partner="partner_id" routing="1" />`,
+            searchViewId: false,
+            groupBy: ["sequence"],
+        });
+
+        expect(".o-map-renderer--pin-list-group-header").toHaveText("0");
+    });
 });
 
 describe.tags("mobile");
