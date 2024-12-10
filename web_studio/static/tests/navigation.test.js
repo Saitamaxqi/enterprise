@@ -128,6 +128,7 @@ test("navigation in Studio with act_window", async () => {
         "/web/action/load",
         "get_views",
         "web_search_read",
+        "has_group"
     ]);
 
     await contains(".o_web_studio_navbar_item button").click();
@@ -154,7 +155,6 @@ test("navigation in Studio with act_window", async () => {
         "get_views",
         "/web_studio/get_studio_view_arch",
         "web_search_read",
-        "has_group",
     ]);
 
     await click(".o_web_studio_leave");

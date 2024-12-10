@@ -77,7 +77,13 @@
         </xpath>
     </t>
 
-    <t t-name="documents.SearchPanel.Small" t-inherit="web.SearchPanel.Small" t-inherit-mode="primary"/>
+    <t t-name="documents.SearchPanel.Small" t-inherit="web.SearchPanel.Small" t-inherit-mode="primary">
+        <xpath expr="//div[hasclass('o_search_panel')]" position="attributes">
+            <attribute name="t-if">
+                !this.root.selection.length
+            </attribute>
+        </xpath>
+    </t>
 
     <t t-name="documents.SearchPanel" t-inherit="web.SearchPanel" t-inherit-mode="primary">
         <xpath expr="//t[@t-call='web.SearchPanel.Regular']" position="attributes">

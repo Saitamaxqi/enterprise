@@ -1,6 +1,6 @@
 import { preSuperSetup, useDocumentView } from "@documents/views/hooks";
 import { DocumentsControllerMixin } from "@documents/views/documents_controller_mixin";
-import { onMounted, useRef, useState } from "@odoo/owl";
+import { onMounted, useEffect, useRef, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { KanbanController } from "@web/views/kanban/kanban_controller";
 
@@ -17,6 +17,16 @@ export class DocumentsKanbanController extends DocumentsControllerMixin(KanbanCo
         this.documentStates = useState({
             previewStore: {},
         });
+
+        useEffect(() => {
+            this.documentService.getSelectionActions = () => {
+                return {
+                    getTopbarActions: () => this.getTopBarActionMenuItems(),
+                    getMenuProps: () => this.actionMenuProps
+                };
+            }
+            return () => this.documentService.getSelectionActions = null;
+        }, () => []);
 
         /**
          * Open document preview when the page is accessed from an activity link
@@ -37,6 +47,14 @@ export class DocumentsKanbanController extends DocumentsControllerMixin(KanbanCo
                 }
             }
         });
+    }
+
+    get hasSelectedRecords() {
+        return this.targetRecords.length;
+    }
+
+    get targetRecords() {
+        return this.model.targetRecords;
     }
 
     /**

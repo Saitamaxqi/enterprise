@@ -197,17 +197,15 @@ beforeEach(() => {
 // Those tests rely on hidden view to be in CSS: display: none
 describe("basic flow with home menu", () => {
     stepAllNetworkCalls();
-    onRpc("/web/dataset/call_kw/partner/get_formview_action", () => {
-        return {
-            type: "ir.actions.act_window",
-            res_model: "partner",
-            view_type: "form",
-            view_mode: "form",
-            views: [[false, "form"]],
-            target: "current",
-            res_id: 2,
-        };
-    });
+    onRpc("/web/dataset/call_kw/partner/get_formview_action", () => ({
+        type: "ir.actions.act_window",
+        res_model: "partner",
+        view_type: "form",
+        view_mode: "form",
+        views: [[false, "form"]],
+        target: "current",
+        res_id: 2,
+    }));
     defineMenus([
         {
             id: "root",
@@ -232,7 +230,7 @@ describe("basic flow with home menu", () => {
         expect.verifySteps(["/web/webclient/translations", "/web/webclient/load_menus"]);
         await contains(".o_app.o_menuitem").click();
         await animationFrame();
-        expect.verifySteps(["/web/action/load", "get_views", "web_search_read"]);
+        expect.verifySteps(["/web/action/load", "get_views", "web_search_read", "has_group"]);
         expect(document.body).not.toHaveClass("o_home_menu_background");
         expect(".o_home_menu").toHaveCount(0);
         expect(".o_kanban_view").toHaveCount(1);
@@ -245,7 +243,7 @@ describe("basic flow with home menu", () => {
         expect.verifySteps(["/web/webclient/translations", "/web/webclient/load_menus"]);
         await contains(".o_app.o_menuitem").click();
         await animationFrame();
-        expect.verifySteps(["/web/action/load", "get_views", "web_search_read"]);
+        expect.verifySteps(["/web/action/load", "get_views", "web_search_read", "has_group"]);
         expect(".o_kanban_view").toHaveCount(1);
         await contains(".o_kanban_record").click();
         await animationFrame(); // there is another tick to update navbar and destroy HomeMenu
@@ -267,7 +265,7 @@ describe("basic flow with home menu", () => {
         expect.verifySteps(["/web/webclient/translations", "/web/webclient/load_menus"]);
         await contains(".o_app.o_menuitem").click();
         await animationFrame();
-        expect.verifySteps(["/web/action/load", "get_views", "web_search_read"]);
+        expect.verifySteps(["/web/action/load", "get_views", "web_search_read", "has_group"]);
         expect(".o_kanban_view").toHaveCount(1);
         await contains(".o_kanban_record").click();
         expect.verifySteps(["web_read"]);
@@ -292,7 +290,7 @@ describe("basic flow with home menu", () => {
         expect.verifySteps(["/web/webclient/translations", "/web/webclient/load_menus"]);
         await contains(".o_app.o_menuitem").click();
         await animationFrame();
-        expect.verifySteps(["/web/action/load", "get_views", "web_search_read"]);
+        expect.verifySteps(["/web/action/load", "get_views", "web_search_read", "has_group"]);
         expect(".o_kanban_view").toHaveCount(1);
         await contains(".o_kanban_record").click();
         expect.verifySteps(["web_read"]);
@@ -319,7 +317,7 @@ describe("basic flow with home menu", () => {
         expect.verifySteps(["/web/webclient/translations", "/web/webclient/load_menus"]);
         await contains(".o_app.o_menuitem").click();
         await animationFrame();
-        expect.verifySteps(["/web/action/load", "get_views", "web_search_read"]);
+        expect.verifySteps(["/web/action/load", "get_views", "web_search_read", "has_group"]);
         expect(".o_kanban_view").toHaveCount(1);
         await contains(".o_kanban_record").click();
         expect.verifySteps(["web_read"]);
@@ -487,17 +485,13 @@ test("supports attachments of apps deleted", async () => {
 test.tags("desktop");
 test("debug manager resets to global items when home menu is displayed", async () => {
     const debugRegistry = registry.category("debug");
-    debugRegistry.category("default").add("item_1", () => {
-        return {
-            type: "item",
-            description: "globalItem",
-            callback: () => {},
-            sequence: 10,
-        };
-    });
-    onRpc("has_access", () => {
-        return true;
-    });
+    debugRegistry.category("default").add("item_1", () => ({
+        type: "item",
+        description: "globalItem",
+        callback: () => {},
+        sequence: 10,
+    }));
+    onRpc("has_access", () => true);
     serverState.debug = true;
     await mountWebClientEnterprise();
     await contains(".o_debug_manager .dropdown-toggle").click();

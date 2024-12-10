@@ -537,7 +537,7 @@ test("Selected all records from current page are inserted correctly", async func
     const target = getFixture();
     await contains(target.querySelectorAll("td.o_list_record_selector input")[1]).click();
     await contains(target.querySelectorAll("td.o_list_record_selector input")[0]).click();
-    await contains(".o_list_select_domain").click();
+    await contains(".o_select_domain").click();
     await toggleActionMenu();
     const insertMenuItem = [...target.querySelectorAll(".o-dropdown--menu .o_menu_item")].filter(
         (el) => el.innerText === "Insert in spreadsheet"

@@ -67,6 +67,7 @@ export class DocumentsSearchPanel extends SearchPanel {
             popoverClass: "o_search_panel_item_settings_popover",
         });
         this.dialog = useService("dialog");
+        this.root = useState(this.env.model.root);
 
         onWillStart(async () => {
             this.isDocumentManager = await user.hasGroup("documents.group_documents_manager");

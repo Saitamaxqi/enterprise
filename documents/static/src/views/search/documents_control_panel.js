@@ -2,7 +2,7 @@ import { DocumentsAction } from "@documents/views/action/documents_action";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import { DocumentsBreadcrumbs } from "@documents/components/documents_breadcrumbs";
 import { DocumentsCogMenu } from "../cog_menu/documents_cog_menu";
-import { onPatched, onWillPatch, useState } from "@odoo/owl";
+import { useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 
 export class DocumentsControlPanel extends ControlPanel {
@@ -19,19 +19,8 @@ export class DocumentsControlPanel extends ControlPanel {
         this.documentService = useService("document.document");
 
         this.chatterState = useState(this.documentService.chatterState);
-
-        onPatched(() => {
-            const searchPanelContainer = document.querySelector('.o_search_panel');
-            if (searchPanelContainer) {
-                searchPanelContainer.classList.toggle('d-none', this.env.isSmall && this.env.model.root.selection.length);
-            }
-        });
-
-        this.firstLoad = true;
-        onWillPatch(() => {
-            this.firstLoad = false;
-        });
     }
+
     /**
      * Return the current folder ID.
      */

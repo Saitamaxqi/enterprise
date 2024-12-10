@@ -17,11 +17,11 @@ function restoreDocumentSteps() {
             run: "click",
         },
         {
-            trigger: ".o_control_panel_actions button:contains('Action')",
+            trigger: ".o_control_panel_actions button:contains('Actions')",
             run: "click",
         },
         {
-            trigger: "button:contains('Restore')",
+            trigger: ".o_menu_item:contains('Restore')",
             run: "click",
         },
         {
@@ -47,11 +47,11 @@ registry.category("web_tour.tours").add("document_delete_tour", {
             trigger: '.o_record_selected:contains("Chouchou")',
         },
         {
-            trigger: ".o_control_panel_actions button:contains('Action')",
+            trigger: ".o_control_panel_actions button:contains('Actions')",
             run: "click",
         },
         {
-            trigger: "button:contains('Move to Trash')",
+            trigger: ".o_menu_item:contains('Move to Trash')",
             run: "click",
         },
         {
@@ -76,11 +76,11 @@ registry.category("web_tour.tours").add("document_delete_tour", {
             run: "click",
         },
         {
-            trigger: ".o_control_panel_actions button:contains('Action')",
+            trigger: ".o_control_panel_actions button:contains('Actions')",
             run: "click",
         },
         {
-            trigger: "button:contains('Move to Trash')",
+            trigger: ".o_menu_item:contains('Move to Trash')",
             run: "click",
         },
         {
@@ -107,11 +107,11 @@ registry.category("web_tour.tours").add("document_delete_tour", {
             run: "click",
         },
         {
-            trigger: ".o_control_panel_actions button:contains('Action')",
+            trigger: ".o_control_panel_actions button:contains('Actions')",
             run: "click",
         },
         {
-            trigger: "button:contains('Delete')",
+            trigger: ".o_menu_item:contains('Delete')",
             run: "click",
         },
         {

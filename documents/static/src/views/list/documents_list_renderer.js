@@ -7,8 +7,8 @@ import { FileUploadProgressDataRow } from "@web/core/file_upload/file_upload_pro
 import { DocumentsDropZone } from "../helper/documents_drop_zone";
 import { DocumentsActionHelper } from "../helper/documents_action_helper";
 import { DocumentsFileViewer } from "../helper/documents_file_viewer";
-import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
 import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
+import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
 import { useCommand } from "@web/core/commands/command_hook";
 import { useRef } from "@odoo/owl";
 import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
@@ -82,13 +82,13 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
      */
     onCellClicked(record, column, ev) {
         ev.stopPropagation();
-        const isSelectionKeyPressed = ev.ctrlKey || ev.metaKey || ev.shiftKey;
+        const isSelectionKeyPressed = ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey;
         if (isSelectionKeyPressed) {
-            this.toggleRecordSelection(record);
+            this.toggleRecordSelection(record, ev);
         } else if (record.selected && this.editableColumns.includes(column.name)) {
-            return super.onCellClicked(...arguments);
+            super.onCellClicked(...arguments);
         } else if (record.data.type !== "folder") {
-            return record.onClickPreview(ev);
+            record.onClickPreview(ev);
         } else {
             record.openFolder();
         }

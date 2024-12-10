@@ -2,25 +2,12 @@
 <templates xml:space="preserve">
 
     <t t-name="documents.ControlPanel" t-inherit="web.ControlPanel" t-inherit-mode="primary">
-        <xpath expr="//t[@t-elif='env.isSmall']/section[hasclass('o_control_panel_breadcrumbs_actions')]" position="replace">
-             <t t-set="_embeddedActions" t-value="embeddedActions"/>
-            <div t-if="this.env.model.root.selection.length" class="dropdown">
-                <button class="d-print-none btn btn-secondary" data-bs-toggle="dropdown" data-hotkey="u" data-tooltip="Actions">
-                    <i class="fa fa-fw fa-cog"/>
-                </button>
-                <DocumentsAction folderId="currentFolderId" targetRecords="this.env.model.root.selection"/>
-            </div>
-        </xpath>
-
         <xpath expr="//t[@t-else='']/Breadcrumbs" position="replace">
             <DocumentsBreadcrumbs breadcrumbs="pathBreadcrumbs"/>
         </xpath>
 
         <xpath expr="//div[hasclass('o_control_panel_actions')]" position="inside">
-            <t t-if="!this.documentService.previewedDocument">
-                <SearchBar t-if="!this.env.model.root.selection.length" toggler="env.searchBarToggler" autofocus="firstLoad"/>
-                <DocumentsAction folderId="currentFolderId" targetRecords="this.env.model.root.selection"/>
-            </t>
+            <DocumentsAction t-if="!documentService.previewedDocument" folderId="currentFolderId" targetRecords="this.env.model.root.selection"/>
         </xpath>
 
         <xpath expr="//*[hasclass('o_cp_switch_buttons')]" position="before">

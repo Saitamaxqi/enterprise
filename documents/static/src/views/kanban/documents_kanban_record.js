@@ -1,6 +1,7 @@
 import { _t } from "@web/core/l10n/translation";
 import { user } from "@web/core/user";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
+import { browser } from "@web/core/browser/browser";
 import { FileUploadProgressBar } from "@web/core/file_upload/file_upload_progress_bar";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { useState, xml } from "@odoo/owl";
@@ -15,7 +16,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
     static defaultProps = {
         ...KanbanRecord.defaultProps,
     };
-    static props = [...KanbanRecord.props, "selection?"];
+    static props = [...KanbanRecord.props];
     static template = xml`
         <div
             role="article"
@@ -27,8 +28,12 @@ export class DocumentsKanbanRecord extends KanbanRecord {
             t-on-dragover.stop.prevent="onDragOver"
             t-on-dragleave.stop.prevent="onDragLeave"
             t-on-drop.stop.prevent="onDrop"
-            t-on-keydown.synthetic="onKeydown"
+            t-on-touchstart="onTouchStart"
+            t-on-touchmove="onTouchMoveOrCancel"
+            t-on-touchcancel="onTouchMoveOrCancel"
+            t-on-touchend="onTouchEnd"
             t-ref="root">
+            <span t-if="props.selectionAvailable" class="o_record_selection_tooltip d-none position-absolute p-2 rounded-3 start-50 top-50">Click to select</span>
             <t t-call="{{ templates[this.constructor.KANBAN_CARD_ATTRIBUTE] }}" t-call-context="this.renderingContext"/>
         </div>`;
     setup() {
@@ -100,37 +105,34 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         if (ev.target.closest(CANCEL_GLOBAL_CLICK)) {
             return;
         }
-        // Preview is clicked
-        if (ev.target.closest("div[name='document_preview']")) {
+        const selectionLength = this.props.getSelection().length;
+        // We can enable selection mode when only one item is selected if a key is pressed,
+        // or if we have more than one item selected
+        const isSelectionModeActive = selectionLength === 1 ? ev.shiftKey : selectionLength > 1;
+        if (ev.altKey || ev.ctrlKey || isSelectionModeActive) {
+            this.rootRef.el.focus();
+            this.props.toggleSelection(this.props.record, ev.shiftKey);
+        } else if (ev.target.closest("div[name='document_preview']")) {
             this.props.record.onClickPreview(ev);
             if (ev.cancelBubble) {
                 return;
             }
+        } else if (this.env.searchModel.getSelectedFolderId() === "TRASH" || this.props.record.data.type !== "folder") {
+            // Select only one document record
+            this.props.getSelection().forEach(r => r.toggleSelection(false));
+            this.props.record.toggleSelection(true);
+        } else {
+            this.props.record.openFolder();
         }
-        this.props.record.onRecordClick(ev);
-    }
-
-    onKeydown(ev) {
-        if (ev.key !== "Enter" && ev.key !== " ") {
-            return;
-        }
-        ev.preventDefault();
-        const options = {};
-        if (ev.key === "Enter" && this.props.record.data.type !== "folder") {
-            this.props.record.onClickPreview(ev);
-        } else if (ev.key === " ") {
-            options.isKeepSelection = true;
-        }
-        return this.props.record.onRecordClick(ev, options);
     }
 
     onDragEnter(ev) {
         if (this.props.record.data.type !== "folder") {
             return;
         }
-        const isInvalidFolder = this.props.selection
-            ?.map((r) => r.data.id)
-            ?.includes(this.props.record.data.id);
+        const isInvalidFolder = this.props.getSelection()
+            .map((r) => r.data.id)
+            .includes(this.props.record.data.id);
         this.drag.state = isInvalidFolder ? "invalid" : "hover";
         const icon = this.rootRef.el.querySelector(".fa-folder-o");
         icon?.classList.remove("fa-folder-o");
@@ -140,7 +142,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
     onDragOver(ev) {
         const isInvalidTarget =
             this.props.record.data.type !== "folder" ||
-            this.props.selection?.map((r) => r.data.id)?.includes(this.props.record.data.id);
+            this.props.getSelection().map((r) => r.data.id).includes(this.props.record.data.id);
         const dropEffect = isInvalidTarget ? "none" : ev.ctrlKey ? "link" : "move";
         ev.dataTransfer.dropEffect = dropEffect;
     }
@@ -170,5 +172,17 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         const icon = this.rootRef.el.querySelector(".fa-folder-open-o");
         icon?.classList.remove("fa-folder-open-o");
         icon?.classList.add("fa-folder-o");
+    }
+
+    onTouchStart() {
+        // We handle touch multi-selection for Documents with a long
+        // press as well, as a simple touch already selects one record
+        this.touchStartMs = Date.now();
+        if (this.longTouchTimer === null) {
+            this.longTouchTimer = browser.setTimeout(() => {
+                this.props.record.toggleSelection(true);
+                this.resetLongTouchTimer();
+            }, this.LONG_TOUCH_THRESHOLD);
+        }
     }
 }

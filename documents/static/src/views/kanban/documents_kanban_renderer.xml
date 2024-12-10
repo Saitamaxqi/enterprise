@@ -46,7 +46,10 @@
                         <KanbanRecord
                             Compiler="props.Compiler"
                             archInfo="props.archInfo"
-                            selection="props.list.selection"
+                            groupByField="props.list.groupByField"
+                            getSelection.bind="getSelection"
+                            toggleSelection.bind="toggleSelection"
+                            selectionAvailable="state.selectionAvailable"
                             record="record"
                         />
                     </div>
@@ -56,7 +59,10 @@
                         <KanbanRecord
                             Compiler="props.Compiler"
                             archInfo="props.archInfo"
-                            selection="props.list.selection"
+                            groupByField="props.list.groupByField"
+                            getSelection.bind="getSelection"
+                            toggleSelection.bind="toggleSelection"
+                            selectionAvailable="state.selectionAvailable"
                             record="record"
                         />
                     </div>
@@ -68,7 +74,10 @@
                     <KanbanRecord
                         Compiler="props.Compiler"
                         archInfo="props.archInfo"
-                        selection="props.list.selection"
+                        groupByField="props.list.groupByField"
+                        getSelection.bind="getSelection"
+                        toggleSelection.bind="toggleSelection"
+                            selectionAvailable="state.selectionAvailable"
                         record="folderRecord.record"
                     />
                 </t>
