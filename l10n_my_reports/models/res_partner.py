@@ -1,17 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models, fields
+from odoo import models, fields
 from odoo.osv import expression
 
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
-
-    active_company_country_code = fields.Char(compute='_compute_active_company_country_code')
-
-    @api.depends_context('company')
-    def _compute_active_company_country_code(self):
-        self.active_company_country_code = self.env.company.country_code
 
     def action_print_report_statement_account(self, options=None):
         domain = []
