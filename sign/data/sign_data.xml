@@ -9,6 +9,7 @@
     <record id="template_sign_tour" model="sign.template">
         <field name="attachment_id" ref="attachment_sign_tour"/>
         <field name="active" eval="False"/>
+        <field name="group_ids" eval="[Command.link(ref('sign.group_sign_user'))]"/>
     </record>
 
     <!-- Reminder CRON -->
