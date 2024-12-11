@@ -14,13 +14,6 @@
         sequence="41"/>
 
     <menuitem
-        id="menu_l10n_ke_hr_payroll_nhif_report_wizard"
-        name="NHIF Report"
-        action="l10n_ke_hr_payroll_nhif_report_wizard_action"
-        parent="l10n_ke_hr_payroll.menu_reporting_l10n_ke"
-        sequence="42"/>
-
-    <menuitem
         id="menu_l10n_ke_hr_payroll_shif_report_wizard"
         name="SHIF (NHIF) Report"
         action="l10n_ke_hr_payroll_shif_report_wizard_action"

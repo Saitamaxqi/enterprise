@@ -108,6 +108,7 @@
         <field name="l10n_ke_kra_pin">4321</field>
         <field name="l10n_ke_nssf_number">160465</field>
         <field name="l10n_ke_nhif_number">871542</field>
+        <field name="l10n_ke_shif_number">245178</field>
     </record>
 
     <record id="hr_contract_cdi_barack_previous" model="hr.contract">

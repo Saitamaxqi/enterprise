@@ -110,6 +110,11 @@ msgstr ""
 
 #. module: l10n_ke_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.report_payslip_ken
+msgid "<strong>SHIF Number</strong>"
+msgstr ""
+
+#. module: l10n_ke_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.report_payslip_ken
 msgid "<strong>NSSF Number</strong>"
 msgstr ""
 
@@ -331,8 +336,8 @@ msgstr ""
 
 #. module: l10n_ke_hr_payroll
 #. odoo-python
-#: code:addons/l10n_ke_hr_payroll/wizards/l10n_ke_hr_payroll_nhif_report_wizard.py:0
-msgid "Export NHIF Report into XLSX"
+#: code:addons/l10n_ke_hr_payroll/wizards/l10n_ke_hr_payroll_shif_report_wizard.py:0
+msgid "Export SHIF (NHIF) Report into XLSX"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -455,7 +460,7 @@ msgstr ""
 #: code:addons/l10n_ke_hr_payroll/controllers/main.py:0
 #: code:addons/l10n_ke_hr_payroll/controllers/main.py:0
 msgid ""
-"It seems that you either not have the rights to access the nhif reports or "
+"It seems that you either not have the rights to access the shif reports or "
 "that you try to access it outside normal circumstances. If you think there "
 "is a problem, please contact an administrator."
 msgstr ""
@@ -614,6 +619,12 @@ msgid "NHIF Amount"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
+#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_shif_amount
+#: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_l10n_ke_hr_payroll_shif_report_line_wizard__shif_amount
+msgid "SHIF Amount"
+msgstr ""
+
+#. module: l10n_ke_hr_payroll
 #: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_nhif_amount_hidden
 msgid "NHIF Amount (Hidden)"
 msgstr ""
@@ -625,25 +636,31 @@ msgid "NHIF Number"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_hr_employee__l10n_ke_shif_number
+#: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_l10n_ke_hr_payroll_shif_report_line_wizard__shif_number
+msgid "SHIF Number"
+msgstr ""
+
+#. module: l10n_ke_hr_payroll
 #: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_nhif_relief
 msgid "NHIF Relief"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:ir.actions.act_window,name:l10n_ke_hr_payroll.l10n_ke_hr_payroll_nhif_report_wizard_action
-#: model:ir.ui.menu,name:l10n_ke_hr_payroll.menu_l10n_ke_hr_payroll_nhif_report_wizard
-#: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.l10n_ke_hr_payroll_nhif_report_wizard_view_form
-msgid "NHIF Report"
+#: model:ir.actions.act_window,name:l10n_ke_hr_payroll.l10n_ke_hr_payroll_shif_report_wizard_action
+#: model:ir.ui.menu,name:l10n_ke_hr_payroll.menu_l10n_ke_hr_payroll_shif_report_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.l10n_ke_hr_payroll_shif_report_wizard_view_form
+msgid "SHIF (NHIF) Report"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:ir.model,name:l10n_ke_hr_payroll.model_l10n_ke_hr_payroll_nhif_report_wizard
-msgid "NHIF Report Wizard"
+#: model:ir.model,name:l10n_ke_hr_payroll.model_l10n_ke_hr_payroll_shif_report_wizard
+msgid "SHIF Report Wizard"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:ir.model,name:l10n_ke_hr_payroll.model_l10n_ke_hr_payroll_nhif_report_line_wizard
-msgid "NHIF Report Wizard Line"
+#: model:ir.model,name:l10n_ke_hr_payroll.model_l10n_ke_hr_payroll_shif_report_line_wizard
+msgid "SHIF Report Wizard Line"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll

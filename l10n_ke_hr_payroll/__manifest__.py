@@ -26,7 +26,6 @@ Kenyan Payroll Rules.
         'data/hr_salary_rule_category_data.xml',
         'data/hr_payroll_structure_type_data.xml',
         'wizards/l10n_ke_hr_payroll_nssf_report_wizard_views.xml',
-        'wizards/l10n_ke_hr_payroll_nhif_report_wizard_views.xml',
         'wizards/l10n_ke_hr_payroll_shif_report_wizard_views.xml',
         'views/hr_payroll_report.xml',
         'data/hr_payroll_structure_data.xml',
