@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 {
     'name': 'Sweden Registered Cash Register',
     'countries': ['se'],
@@ -19,7 +19,7 @@
     ],
     'assets': {
         'point_of_sale._assets_pos': [
-            'pos_l10n_se/static/src/**/*',
+            'l10n_se_pos/static/src/**/*',
         ],
     },
     'installable': True,

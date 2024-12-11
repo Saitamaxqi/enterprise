@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields
@@ -15,7 +14,7 @@ class PosConfig(models.Model):
     )
 
     def _compute_iot_device_ids(self):
-        super(PosConfig, self)._compute_iot_device_ids()
+        super()._compute_iot_device_ids()
         for config in self:
             if config.is_posbox:
                 config.iot_device_ids += config.iface_sweden_fiscal_data_module
