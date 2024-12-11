@@ -6,10 +6,5 @@
             <!-- Otherwise, the line might be deleted while the payment is in progress -->
             <attribute name="t-if" value="line.payment_method_id.use_payment_terminal !== 'worldline' or ['retry', 'pending', 'waiting', 'force_done'].includes(line.payment_status)" />
         </xpath>
-        <xpath expr="//div[hasclass('payment-infos')]" position="inside">
-            <t t-if="line.transaction_id and line.payment_method_id.use_payment_terminal === 'worldline'">
-                - <t t-esc="line.transaction_id"/>
-            </t>
-        </xpath>
     </t>
 </templates>

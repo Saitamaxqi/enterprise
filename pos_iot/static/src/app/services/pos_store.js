@@ -1,11 +1,10 @@
 import { patch } from "@web/core/utils/patch";
-import { PosStore, register_payment_method } from "@point_of_sale/app/services/pos_store";
+import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
 import { DeviceController } from "@iot/device_controller";
 import { IoTPrinter } from "@pos_iot/app/utils/printer/iot_printer";
-import { PaymentIngenico, PaymentWorldline } from "@pos_iot/app/utils/payment/payment";
 
 patch(PosStore.prototype, {
     async processServerData(loadedData) {
@@ -90,6 +89,3 @@ patch(PosStore.prototype, {
         }
     },
 });
-
-register_payment_method("ingenico", PaymentIngenico);
-register_payment_method("worldline", PaymentWorldline);

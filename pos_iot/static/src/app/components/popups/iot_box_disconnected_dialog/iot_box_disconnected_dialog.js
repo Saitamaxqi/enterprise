@@ -5,6 +5,7 @@ export class iotBoxDisconnectedDialog extends Component {
     static components = { Dialog };
     static props = {
         url: String,
+        close: Function,
     };
     static template = "pos_iot.IotBoxDisconnectedDialog";
 }

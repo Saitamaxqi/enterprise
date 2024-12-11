@@ -818,7 +818,7 @@ class IngenicoDriver(Driver):
         """
         try:
             self.data = {'value': '', 'Stage': False, 'Response': False, 'Ticket': False, 'Error': False}
-            while not self._stopped.isSet():
+            while not self._stopped.is_set():
                 sleep(1)
                 _logger.debug("Waiting for incoming message")
                 msg = IncomingIngenicoMessage(self)

@@ -3,17 +3,17 @@ import { register_payment_method } from "@point_of_sale/app/services/pos_store";
 import { PaymentInterfaceIot } from "@pos_iot/app/utils/payment/payment_interface_iot";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 
-export class PaymentSix extends PaymentInterfaceIot {
+export class PaymentWorldline extends PaymentInterfaceIot {
     getPaymentData(uuid) {
         const paymentLine = this.pos.getOrder().getPaymentlineByUuid(uuid);
+        paymentLine.transaction_id = Math.floor(Math.random() * Math.pow(2, 32)); // 4 random bytes
         return {
             messageType: "Transaction",
-            transactionType: "Payment",
-            amount: Math.round(paymentLine.amount * 100),
-            currency: this.pos.currency.name,
+            // The last 13 characters of the uuid is a 52-bit integer, fits in the Number data type.
+            TransactionID: parseInt(uuid.replace(/-/g, "").slice(19, 32), 16),
             cid: uuid,
-            posId: this.pos.session.name,
-            userId: this.pos.session.user_id.id,
+            amount: Math.round(paymentLine.amount * 100),
+            actionIdentifier: paymentLine.transaction_id,
         };
     }
 
@@ -84,4 +84,4 @@ export class PaymentSix extends PaymentInterfaceIot {
     }
 }
 
-register_payment_method("six_iot", PaymentSix);
+register_payment_method("worldline", PaymentWorldline);

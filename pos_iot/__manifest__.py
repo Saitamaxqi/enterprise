@@ -13,7 +13,6 @@ Supported devices include payment terminals, receipt printers, scales and custom
     'data': [
         'views/pos_config_views.xml',
         'views/res_config_setting_views.xml',
-        'views/pos_payment_method_views.xml',
         'views/pos_printer_views.xml',
     ],
     'depends': ['point_of_sale', 'iot'],
