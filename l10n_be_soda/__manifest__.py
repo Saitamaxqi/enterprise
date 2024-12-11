@@ -8,7 +8,7 @@
 Module to import SODA files.
 ======================================
 ''',
-    'depends': ['account_accountant', 'l10n_be'],
+    'depends': ['accountant', 'l10n_be'],
     'data': [
         'security/ir.model.access.csv',
         'views/account_journal_dashboard_view.xml',
