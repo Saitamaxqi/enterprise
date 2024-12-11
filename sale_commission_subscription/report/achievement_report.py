@@ -18,6 +18,31 @@ class SaleCommissionAchievementReport(models.Model):
             rules.mrr_rate * log.amount_signed
         """
 
+    @api.model
+    def _select_rules(self):
+        res = super()._select_rules()
+        res += """
+        ,scpa.recurring_plan_id
+        """
+        return res
+
+    @api.model
+    def _join_invoices(self):
+        res = super()._join_invoices()
+        res += """
+          LEFT JOIN sale_order sub ON sub.id=aml.subscription_id
+        """
+        return res
+
+    @api.model
+    def _where_invoices(self):
+        res = super()._where_invoices()
+        # When the rules has no recurring plan, all invoices match, otherwise only the plan of the subscription
+        res += """
+          AND ((rules.recurring_plan_id IS NULL) OR (rules.recurring_plan_id=sub.plan_id))
+        """
+        return res
+
     def _subscription_lines(self, users=None, teams=None):
         return f"""
 subscription_rules AS (

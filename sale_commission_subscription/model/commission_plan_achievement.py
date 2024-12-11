@@ -15,5 +15,5 @@ class SaleCommissionPlanAchievement(models.Model):
         for pa in self:
             if pa.type == 'mrr' and (pa.product_id or pa.product_categ_id):
                 raise UserError(_("You cannot have Product or Category constraints on MRR achievements."))
-            elif pa.type != 'mrr' and pa.recurring_plan_id:
-                raise UserError(_("You cannot have Recurring Plan constraint on non MRR achievements."))
+            elif pa.type in ['amount_sold', 'qty_sold'] and pa.recurring_plan_id:
+                raise UserError(_("You cannot have Recurring Plan constraint on SO achievements."))
