@@ -74,9 +74,9 @@ class AccountBatchPayment(models.Model):
 
         error_msgs = []
         if not bank_account.l10n_jp_zengin_client_code:
-            error_msgs.append(_("Please set a client code on the %(account)s bank account for %(partner)s."), account=bank_account.display_name, partner=bank_account.partner_id.display_name)
+            error_msgs.append(_("Please set a client code on the %(account)s bank account for %(partner)s.", account=bank_account.display_name, partner=bank_account.partner_id.display_name))
         if bank_account.l10n_jp_zengin_account_type == 'savings':
-            error_msgs.append(_("Savings account type is not supported for Zengin on %(account)s bank account for %(partner)s."), account=bank_account.display_name, partner=bank_account.partner_id.display_name)
+            error_msgs.append(_("Savings account type is not supported for Zengin on %(account)s bank account for %(partner)s.", account=bank_account.display_name, partner=bank_account.partner_id.display_name))
 
         if error_msgs:
             action_error = {
