@@ -1,17 +1,15 @@
-import publicWidget from '@web/legacy/js/public/public_widget';
-import DynamicSnippet from '@website/snippets/s_dynamic_snippet/000';
+import { registry } from "@web/core/registry";
+import { DynamicSnippet } from "@website/snippets/s_dynamic_snippet/dynamic_snippet";
 import { Domain } from "@web/core/domain";
 
 
-const AppointmentsListSnippet = DynamicSnippet.extend({
-    selector: '.s_appointments',
-    disabledInEditableMode: false,
+export class AppointmentsListSnippet extends DynamicSnippet {
+    static selector = ".s_appointments";
     /**
      * @override
-     * @private
      */
-    _getSearchDomain: function () {
-        let searchDomain = new Domain(this._super(...arguments));
+    getSearchDomain() {
+        let searchDomain = new Domain(super.getSearchDomain(...arguments));
         const snippetDataset = this.el.dataset;
         const filterType = snippetDataset.filterType;
         const appointmentNames = (snippetDataset.appointmentNames || '')
@@ -41,9 +39,13 @@ const AppointmentsListSnippet = DynamicSnippet.extend({
             searchDomain = Domain.and([searchDomain, Domain.or(nameDomains)]);
         }
         return searchDomain.toList();
-    },
-});
+    }
+}
 
-publicWidget.registry.s_appointments = AppointmentsListSnippet;
+registry.category("public.interactions").add("website_appointment.appointments", AppointmentsListSnippet);
 
-export default AppointmentsListSnippet;
+registry
+    .category("public.interactions.edit")
+    .add("website_appointment.appointments", {
+        Interaction: AppointmentsListSnippet,
+    });
