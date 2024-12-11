@@ -186,6 +186,10 @@ export default class BarcodeModel extends EventBus {
         return this.displaySourceLocation;
     }
 
+    displayLineQtyDemand(line) {
+        return this.getQtyDemand(line);
+    }
+
     groupKey(line) {
         return `${line.product_id.id}_${line.location_id.id}`;
     }

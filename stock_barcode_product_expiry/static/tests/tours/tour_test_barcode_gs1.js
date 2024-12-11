@@ -55,7 +55,7 @@ registry.category("web_tour.tours").add("test_gs1_receipt_expiration_date", {
                 const parentLine = helper.getLine({ barcode: "76543210" });
                 const [line1, line2] = helper.getSublines();
                 helper.assertLineQty(parentLine, "12/20");
-                helper.assertLineQty(line1, "8/20");
+                helper.assertLineQty(line1, "8");
                 helper.assertLineQty(line2, "4");
                 helper.assertLineIsHighlighted(line1, false);
                 helper.assertLineIsHighlighted(line2, true);
@@ -85,7 +85,7 @@ registry.category("web_tour.tours").add("test_gs1_receipt_expiration_date", {
                 const parentLine = helper.getLine({ barcode: "76543210" });
                 const [line1, line2, line3] = helper.getSublines();
                 helper.assertLineQty(parentLine, "20/20");
-                helper.assertLineQty(line1, "8/20");
+                helper.assertLineQty(line1, "8");
                 helper.assertLineQty(line2, "4");
                 helper.assertLineQty(line3, "8");
                 helper.assertLineIsHighlighted(line1, false);

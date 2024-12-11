@@ -501,6 +501,13 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
         this.trigger("update");
     }
 
+    displayLineQtyDemand(line) {
+        if (!this.pageLines.includes(line)) {
+            return true;
+        }
+        return super.displayLineQtyDemand(line);
+    }
+
     /** Save commands */
 
     _getPrintOptions() {

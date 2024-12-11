@@ -49,7 +49,7 @@
                             {{qtyDemand &amp;&amp; qtyDone == 0 ? env.model.zeroQtyClass(line) : ''}}
                             {{qtyDemand &amp;&amp; qtyDone &amp;&amp; qtyDone == qtyDemand ? 'text-success' : ''}}"
                         t-out="env.model.IsNotSet(line) ? '?' : qtyDone"/>
-                    <span t-if="qtyDemand" t-out="'/' + qtyDemand"/>
+                    <span t-if="env.model.displayLineQtyDemand(line)" t-out="'/' + qtyDemand"/>
                 </span>
                 <small t-if="props.displayUOM" class="o_line_uom text-muted ms-1"
                     t-out="props.line.product_uom_id.name"/>

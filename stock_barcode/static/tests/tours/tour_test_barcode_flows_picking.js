@@ -1274,6 +1274,20 @@ registry.category("web_tour.tours").add("test_delivery_reserved_5_dont_show_rese
                 helper.assertLineQty(0, "2/4");
             },
         },
+
+        // "There should be no faulty line if show reserved sn/lot is disabled"
+        { trigger: '.o_line_button.o_toggle_sublines', run: 'click' },
+        {
+            trigger: '.o_sublines',
+            run: function() {
+                helper.assertLineQty(0, "2/4");
+                const unreservedLine = document.querySelector('.o_faulty');
+                helper.assert(
+                    Boolean(unreservedLine), false, "There should be no faulty line if show reserved sn/lot is disabled"
+                );
+            }
+        },
+
         // Scans 2 more SN to complete the delivery and validates it.
         { trigger: ".o_barcode_client_action", run: "scan sn2" },
         { trigger: ".o_barcode_client_action", run: "scan sn3" },
@@ -1343,8 +1357,8 @@ registry.category("web_tour.tours").add("test_delivery_reserved_6_dont_show_rese
                 const sublines = helper.getSublines();
                 helper.assertLinesCount(1);
                 helper.assertSublinesCount(2);
-                helper.assertLineQty(sublines[0], "1/4");
-                helper.assertLineQty(sublines[1], "1/4");
+                helper.assertLineQty(sublines[0], "1");
+                helper.assertLineQty(sublines[1], "1");
                 helper.assertLinesTrackingNumbers(sublines, ["lot-001", "lot-002"]);
             },
         },
@@ -1356,8 +1370,8 @@ registry.category("web_tour.tours").add("test_delivery_reserved_6_dont_show_rese
                 const sublines = helper.getSublines();
                 helper.assertLinesCount(1);
                 helper.assertSublinesCount(3);
-                helper.assertLineQty(sublines[0], "1/4");
-                helper.assertLineQty(sublines[1], "1/4");
+                helper.assertLineQty(sublines[0], "1");
+                helper.assertLineQty(sublines[1], "1");
                 helper.assertLineQty(sublines[2], "1");
                 helper.assertLinesTrackingNumbers(sublines, ["lot-001", "lot-002", "lot-005"]);
             },
@@ -5698,10 +5712,10 @@ registry.category("web_tour.tours").add("test_serial_product_packaging", {
                 helper.assertSublinesCount(4);
                 const sublines = helper.getSublines();
                 helper.assertLinesTrackingNumbers(sublines, ["sn4", "sn3", "sn2", "sn1"]);
-                helper.assertLineQty(sublines[0], "1/1 Units");
-                helper.assertLineQty(sublines[1], "1/1 Units");
-                helper.assertLineQty(sublines[2], "1/1 Units");
-                helper.assertLineQty(sublines[3], "1/1 Units");
+                helper.assertLineQty(sublines[0], "1 Units");
+                helper.assertLineQty(sublines[1], "1 Units");
+                helper.assertLineQty(sublines[2], "1 Units");
+                helper.assertLineQty(sublines[3], "1 Units");
             },
         },
     ],

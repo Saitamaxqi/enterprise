@@ -186,8 +186,8 @@ registry.category("web_tour.tours").add("test_barcode_batch_receipt_1", {
                 checkState(currentViewState);
                 const sublines = helper.getSublines({ barcode: "productserial1" });
                 helper.assert(sublines.length, 2, "Expect 2 lines for productserial1");
-                helper.assertLineQty(sublines[0], "1/1");
-                helper.assertLineQty(sublines[1], "1/1");
+                helper.assertLineQty(sublines[0], "1");
+                helper.assertLineQty(sublines[1], "1");
             },
         },
 
@@ -307,7 +307,7 @@ registry.category("web_tour.tours").add("test_barcode_batch_receipt_1", {
                 helper.assert(groupLines.length, 2, "Expect 2 lines for productlot1");
                 const sublines = helper.getSublines({ barcode: "productlot1" });
                 helper.assert(sublines.length, 2, "Expect 2 sublines for productlot1");
-                helper.assertLineQty(sublines[0], "4/8"); // Previous line (4/8).
+                helper.assertLineQty(sublines[0], "4"); // Previous line (4/8).
                 helper.assertLineIsHighlighted(sublines[0], false);
                 helper.assertLineQty(sublines[1], "0"); // New created line.
                 helper.assertLineIsHighlighted(sublines[1]);
@@ -325,7 +325,7 @@ registry.category("web_tour.tours").add("test_barcode_batch_receipt_1", {
             run: function () {
                 const sublines = helper.getSublines({ barcode: "productlot1" });
                 helper.assert(sublines.length, 2, "Expect 2 lines for productlot1");
-                helper.assertLineQty(sublines[0], "4/8");
+                helper.assertLineQty(sublines[0], "4");
                 helper.assertLineIsHighlighted(sublines[0], false);
                 helper.assertLineQty(sublines[1], "4");
                 helper.assertLineIsHighlighted(sublines[1]);
@@ -370,7 +370,7 @@ registry.category("web_tour.tours").add("test_barcode_batch_receipt_1", {
             run: function () {
                 const sublines = helper.getSublines({ barcode: "productlot1" });
                 helper.assert(sublines.length, 2, "Expect 2 sublines for productlot1");
-                helper.assertLineQty(sublines[0], "4/8");
+                helper.assertLineQty(sublines[0], "4");
                 helper.assertLineIsHighlighted(sublines[0], false);
                 helper.assertLineQty(sublines[1], "5");
                 helper.assertLineIsHighlighted(sublines[1]);
@@ -751,7 +751,7 @@ registry.category("web_tour.tours").add("test_barcode_batch_scan_lots", {
                 helper.assertLineBelongTo(1, "receipt_2");
                 helper.assertLineQty(0, "4/4");
                 helper.assertLineQty(1, "4/4");
-                helper.assertLineQty(sublines[0], "2/4");
+                helper.assertLineQty(sublines[0], "2");
                 helper.assertLineQty(sublines[1], "2");
                 helper.assertLinesTrackingNumbers(sublines, ["lot2", "lot3"]);
             },
@@ -799,7 +799,7 @@ registry.category("web_tour.tours").add("test_barcode_batch_scan_lots", {
                 helper.assertLineBelongTo(3, "delivery_2");
                 helper.assertLineQty(0, "3/3");
                 helper.assertLineQty(3, "0/3");
-                helper.assertLineQty(sublines[0], "2/3");
+                helper.assertLineQty(sublines[0], "2");
                 helper.assertLineQty(sublines[1], "1");
                 helper.assertLinesTrackingNumbers(sublines, ["lot2", "lot3"]);
             },
@@ -820,7 +820,7 @@ registry.category("web_tour.tours").add("test_barcode_batch_scan_lots", {
                 helper.assertLineBelongTo(1, "delivery_2");
                 helper.assertLineQty(0, "3/3");
                 helper.assertLineQty(1, "3/3");
-                helper.assertLineQty(sublines[0], "1/3");
+                helper.assertLineQty(sublines[0], "1");
                 helper.assertLineQty(sublines[1], "1");
                 helper.assertLineQty(sublines[2], "1");
                 helper.assertLinesTrackingNumbers(sublines, ["lot2", "lot1", "lot3"]);
@@ -1337,10 +1337,10 @@ registry.category("web_tour.tours").add("test_setting_group_lines_by_product", {
                 helper.assertSublinesCount(3);
                 const sublines = document.querySelectorAll(".o_sublines .o_barcode_line");
                 // lot1 receipt1
-                helper.assertLineQty(sublines[0], "2/4");
+                helper.assertLineQty(sublines[0], "2");
                 helper.assertLineBelongTo(sublines[0], "receipt1");
                 // lot2 receipt2
-                helper.assertLineQty(sublines[1], "2/2");
+                helper.assertLineQty(sublines[1], "2");
                 helper.assertLineBelongTo(sublines[1], "receipt2");
                 // lot3 receipt2
                 helper.assertLineQty(sublines[2], "2");
