@@ -65,8 +65,10 @@
                 </group>
 
                 <footer>
-                    <button string="Sign Now" name="sign_directly" type="object" class="btn-primary" invisible="context.get('sign_directly_without_mail',False) and not is_user_signer" data-hotkey="q"/>
+                    <!-- Opens signing process for current user and emails all signers. -->
+                    <button string="Sign Now" name="sign_directly" type="object" class="btn-primary" invisible="context.get('sign_directly_without_mail',False) or not is_user_signer" data-hotkey="q"/>
                     <button string="Send" name="send_request" type="object" class="btn-primary" invisible="context.get('sign_directly_without_mail',False)" data-hotkey="w"/>
+                    <!-- Starts signing for current user, then opens sign requests for other roles without emailing signers. -->
                     <button string="Sign Now" name="sign_directly" context="{'no_sign_mail': True, 'sign_all': True}" type="object" class="btn-primary" invisible="not context.get('sign_directly_without_mail',False)" data-hotkey="q"/>
                     <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
                 </footer>
