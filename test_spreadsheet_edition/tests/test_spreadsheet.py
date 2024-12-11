@@ -271,6 +271,27 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         self.assertFalse(rev1.active)
         self.assertFalse((snapshot_rev | rev3).exists())
 
+    def test_restore_version_as_base_user(self):
+        user = new_test_user(self.env, login="test", groups="base.group_user")
+        spreadsheet = self.env["spreadsheet.test"].with_user(user).create({})
+        spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
+        spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
+        revisions = spreadsheet.spreadsheet_revision_ids
+        rev1 = revisions[0]
+        rev2 = revisions[1]
+
+        spreadsheet.restore_spreadsheet_version(
+            rev1.id,
+            {"test": "snapshot", "revisionId": rev1.revision_uuid}
+        )
+        self.assertFalse(rev1.active)
+        self.assertFalse(rev2.exists())
+
+        self.assertEqual(
+            json.loads(spreadsheet._get_spreadsheet_serialized_snapshot()),
+            {"test": "snapshot", "revisionId": spreadsheet.current_revision_uuid}
+        )
+
     def test_rename_revision(self):
         spreadsheet = self.env["spreadsheet.test"].create({})
         spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
