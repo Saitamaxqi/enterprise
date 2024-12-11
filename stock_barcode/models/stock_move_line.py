@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+import re
 
 from odoo import api, fields, models, _
 from odoo.tools import frozendict
+from odoo.addons.stock_barcode.models.epc_encoder import EpcScheme
 
 
 class StockMoveLine(models.Model):
@@ -21,6 +23,7 @@ class StockMoveLine(models.Model):
     image_1920 = fields.Image(related="product_id.image_1920")
     product_reference_code = fields.Char(related="product_id.code", string="Product Reference Code")
     qty_done = fields.Float(compute='_compute_qty_done', inverse='_inverse_qty_done', digits='Product Unit of Measure')  # Dummy field
+    electronic_product_code = fields.Char(compute='_compute_electronic_product_code')
 
     @api.depends('tracking', 'picking_type_use_existing_lots', 'picking_type_use_create_lots', 'lot_name')
     def _compute_hide_lot_name(self):
@@ -104,3 +107,39 @@ class StockMoveLine(models.Model):
             'product_packaging_uom_qty',
             'move_id',
         ]
+
+    def _compute_electronic_product_code(self):
+        movelines_per_product = self.grouped('product_id')
+        epc_sequence = self.env['ir.sequence'].search([('code', '=', 'stock_barcode.epc.serial')], limit=1)
+        for product_id, move_line_ids in movelines_per_product.items():
+            if not product_id.barcode:
+                move_line_ids.electronic_product_code = self.env._("Error: We can't generate an Electronic Product Code for a product without a barcode.")
+                continue
+            if not re.match(r"^\d+$", product_id.barcode):  # length and check digit do not matter
+                move_line_ids.electronic_product_code = self.env._("Error: The product barcode is not a valid Global Trade Item Number, we can't generate an Electronic Product Code for it.")
+                continue
+            if product_id.tracking == 'none':
+                alphanumeric_tracking = False
+                start_number = int(epc_sequence.next_by_id())
+                tracking_number_list = [i for i in range(start_number, start_number + len(move_line_ids), 1)]
+                epc_sequence.write({'number_next_actual': start_number + len(move_line_ids)})
+            else:
+                tracking_number_list = move_line_ids.lot_id.mapped('name')
+                alphanumeric_tracking = any(re.search(r'[^\d]', tracking_number) for tracking_number in tracking_number_list)
+            # NOTE: In the future, obtain the filter & company prefix length rather than providing them explicitly
+            gtin = product_id.barcode
+            filter_value = 1 # POS Item
+            company_prefix_length = 7
+            scheme_name, field_name = ('sgtin-198', 'serial_string') if alphanumeric_tracking else ('sgtin-96', 'serial_integer')
+            scheme = EpcScheme(scheme_name)
+            element_string = f"(01) {gtin} (21) {tracking_number_list[0]}"
+            try:
+                move_line_ids[0].electronic_product_code = scheme.encode(element_string, filter_value, company_prefix_length)
+            except Exception as e:
+                # When an error is explicitely returned as an exception, we can't generate an EPC for the whole product, so we skip other tracking numbers
+                move_line_ids.electronic_product_code = str(e)
+                continue
+            # Since we operate on a single product, we can reuse the base encoding for all the tracking numbers to fasten the process
+            for i in range(1, len(move_line_ids)):
+                tracking_number = tracking_number_list[i]
+                move_line_ids[i].electronic_product_code = scheme.encode_partial(field_name, tracking_number)
