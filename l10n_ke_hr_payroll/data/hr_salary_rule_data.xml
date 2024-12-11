@@ -207,21 +207,6 @@ result = employee.l10n_ke_mortgage
         <field name="appears_on_payroll_report" eval="False"/>
     </record>
 
-    <record id="l10n_ke_employees_salary_gross_taxable" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.GROSS"/>
-        <field name="name">Gross Taxable</field>
-        <field name="code">GROSS_TAXABLE</field>
-        <field name="sequence">39</field>
-        <field name="condition_select">none</field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-taxable_pension = min(contract.l10n_ke_pension_contribution, payslip._rule_parameter('l10n_ke_max_pension_contribution')) - max(0, contract.l10n_ke_pension_allowance - payslip._rule_parameter('l10n_ke_pension_alw_max'))
-result = result_rules['GROSS']['total'] - categories['KE_UT_ALW'] - categories['RELIEF'] - employee.l10n_ke_mortgage - taxable_pension - result_rules['NSSF_EMPLOYEE_TIER_1']['total'] - result_rules['NSSF_EMPLOYEE_TIER_2']['total']
-        </field>
-        <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
-    </record>
-
     <!-- INCOME TAX -->
 
     <record id="l10n_ke_employees_salary_nssf_tier_1_hidden" model="hr.salary.rule">
@@ -265,6 +250,21 @@ result_rate = 6
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
+    </record>
+
+    <record id="l10n_ke_employees_salary_gross_taxable" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.GROSS"/>
+        <field name="name">Gross Taxable</field>
+        <field name="code">GROSS_TAXABLE</field>
+        <field name="sequence">39</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+taxable_pension = min(contract.l10n_ke_pension_contribution, payslip._rule_parameter('l10n_ke_max_pension_contribution')) - max(0, contract.l10n_ke_pension_allowance - payslip._rule_parameter('l10n_ke_pension_alw_max'))
+result = result_rules['GROSS']['total'] - categories['KE_UT_ALW'] - employee.l10n_ke_mortgage - taxable_pension - result_rules['NSSF_EMPLOYEE_TIER_1']['total'] - result_rules['NSSF_EMPLOYEE_TIER_2']['total']
+        </field>
+        <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
+        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_salary_income_tax" model="hr.salary.rule">
@@ -474,7 +474,7 @@ result = - payslip._rule_parameter('l10n_ke_personal_relief')
         <field name="condition_python">result = result_rules['GROSS_TAXABLE']['total'] &gt;= 24000</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = result_rules['INCOME_TAX']['total'] + categories['RELIEF']
+result = max(result_rules['INCOME_TAX']['total'] + categories['RELIEF'], 0)
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payroll_report" eval="True"/>
