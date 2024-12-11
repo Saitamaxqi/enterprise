@@ -188,26 +188,23 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
             extract_response=self.validate_success_response(),
             assert_params=expected_validation_params,
         ):
-            self.expense.action_submit_expenses()
+            self.expense.action_submit()
 
         self.assertEqual(self.expense.extract_state, 'done')
 
     def test_no_digitisation_for_posted_entries(self):
         # Tests that if a move is created from an expense, it is not digitised again.
         self.env.company.expense_extract_show_ocr_option_selection = 'auto_send'
-
         self.expense.message_post(attachment_ids=[self.attachment.id])
 
-        expense_sheet = self.env['hr.expense.sheet'].create({
-            'name': self.expense.name,
-            'employee_id': self.expense.employee_id.id,
-            'expense_line_ids': self.expense.ids,
-        })
-        expense_sheet.action_submit_sheet()
-        expense_sheet.action_approve_expense_sheets()
-        expense_sheet.action_sheet_move_post()
+        # We need to set a value, because if it is zero it would trigger non-zero constraints
+        self.expense.total_amount_currency = 1
 
-        move = expense_sheet.account_move_ids
+        self.expense.action_submit()
+        self.expense.action_approve()
+        self.post_expenses_with_wizard(self.expense)
+
+        move = self.expense.account_move_id
         self.assertFalse(move._needs_auto_extract())
 
     def test_no_change_in_price_unit_with_expense_no_extract(self):

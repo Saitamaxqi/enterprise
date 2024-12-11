@@ -10,7 +10,6 @@
     'data': [
         'security/ir.model.access.csv',
         'wizard/expense_sample_receipt_views.xml',
-        'wizard/expense_sample_register_views.xml',
         'views/hr_expense_views.xml',
         'views/res_config_settings_views.xml',
         'data/crons.xml',

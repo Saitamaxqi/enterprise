@@ -14,4 +14,4 @@ class AccountPaymentRegister(models.TransientModel):
         already set to be paid through a payslip
         """
         for wizard in self:
-            wizard.is_already_paid_through_a_payslip = bool(wizard.line_ids.move_id.expense_sheet_id.payslip_id)
+            wizard.is_already_paid_through_a_payslip = bool(wizard.line_ids.move_id.expense_ids.payslip_id)

@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, _
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, UserError
 
 
 class AccountMove(models.Model):
@@ -14,7 +14,7 @@ class AccountMove(models.Model):
         # and only one payment shall be made, the payslip one. If the moves have been altered, the automatic reconciliation may not be done,
         # it will be done manually by an accountant. We will keep the temporary matching data to simplify that case.
         lines_to_reconcile = self.env['account.move.line']
-        if not self.env.context.get('skip_reconcile_expense_with_payslip'):
+        if not self.env.context.get('skip_reconcile_expense_with_payslip') and self.sudo().payslip_ids.expense_ids:
             self = self.with_context(skip_reconcile_expense_with_payslip=True)  # noqa: PLW0642 Avoid entering here recursively
             lines_to_reconcile = self._hr_payroll_expense_prepare_move_lines_to_reconcile()
 
@@ -33,9 +33,9 @@ class AccountMove(models.Model):
 
     def unlink(self):
         # EXTENDS account
-        moves_to_unlink = self.sudo().payslip_ids.expense_sheet_ids.account_move_ids.ids
-        if moves_to_unlink:
-            self.browse(moves_to_unlink)._unlink_or_reverse()
+        moves_to_unlink_ids = self.sudo().payslip_ids.expense_ids.account_move_id.ids
+        if moves_to_unlink_ids:
+            self.browse(moves_to_unlink_ids)._unlink_or_reverse()
         return super().unlink()
 
     def _hr_payroll_expense_prepare_move_lines_to_reconcile(self):
@@ -48,25 +48,23 @@ class AccountMove(models.Model):
             raise AccessError(_("You don't have the access rights to post an invoice."))
 
         payslips_sudo = self.sudo().payslip_ids
-        if not payslips_sudo.expense_sheet_ids:
+        all_payslip_expenses_sudo = payslips_sudo.expense_ids
+        if not all_payslip_expenses_sudo:
             return self.env['account.move.line']  # No payslip or expenses, no reason to continue
 
-        # Create missing expense sheets moves (if any)
-        sheets_without_moves = payslips_sudo.expense_sheet_ids.filtered(lambda sheet: not sheet.account_move_ids)
-        if sheets_without_moves:
-            sheets_without_moves._do_create_moves()
+        expenses_without_moves = all_payslip_expenses_sudo.filtered(lambda expense: not expense.account_move_id)
+        if expenses_without_moves:
+            expenses_without_moves._post_without_wizard()  # Only valid case to bypass the wizard
 
-        # Prepare the reconciliation by grouping expense sheet moves per payslip move
+        # Prepare the reconciliation by grouping expense moves per payslip move
         payslip_move_to_expense_move_map = {}
 
         # Handles the case where an account move linked to an expense is already paid, ignoring the fact that it was flagged to be paid here
         # (They will get paid twice, but it's the user's responsibility)
-        valid_expense_sheets_sudo = payslips_sudo.expense_sheet_ids.filtered(
-            lambda sheet: sheet.payment_state == 'not_paid' and sheet.account_move_ids
-        )
-        for payslip_sudo, expense_sheets_sudo in valid_expense_sheets_sudo.grouped('payslip_id').items():
+        valid_expenses_sudo = all_payslip_expenses_sudo.filtered(lambda expense: expense.state == 'posted')
+        for payslip_sudo, expenses_sudo in valid_expenses_sudo.grouped('payslip_id').items():
             payslip_move_to_expense_move_map.setdefault(payslip_sudo.move_id, self.env['account.move'].sudo())
-            payslip_move_to_expense_move_map[payslip_sudo.move_id] |= expense_sheets_sudo.sorted().account_move_ids
+            payslip_move_to_expense_move_map[payslip_sudo.move_id] |= expenses_sudo.sorted().account_move_id
 
         # Prepare and collect the reconciliation lines
         lines_to_reconcile_sudo = self.env['account.move.line']
@@ -85,8 +83,8 @@ class AccountMove(models.Model):
             lines_to_match_sudo.matching_number = f'{idx:0>10}-{payslip_move_sudo.id}-{min(expense_moves_sudo.ids)}'
             lines_to_reconcile_sudo |= lines_to_match_sudo
 
-        # Post all expense sheet moves that aren't posted already
-        expense_moves_to_post_sudo = payslips_sudo.expense_sheet_ids.account_move_ids.filtered(lambda move: move.state == 'draft')
+        # Post all expense moves that aren't posted already
+        expense_moves_to_post_sudo = all_payslip_expenses_sudo.account_move_id.filtered(lambda move: move.state == 'draft')
         if expense_moves_to_post_sudo:
             expense_moves_to_post_sudo._post(soft=False)
 

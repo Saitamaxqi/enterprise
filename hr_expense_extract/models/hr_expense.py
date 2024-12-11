@@ -4,7 +4,6 @@ from markupsafe import Markup
 
 from odoo.addons.iap.tools import iap_tools
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
 from odoo.tools import is_html_empty
 from odoo.tools.misc import DEFAULT_SERVER_DATE_FORMAT
 
@@ -23,15 +22,15 @@ class HrExpense(models.Model):
     sample = fields.Boolean(help='Expenses created from sample receipt')
 
     def _needs_product_price_computation(self):
-        # OVERRIDES 'hr_expense'
+        # EXTENDS 'hr_expense'
         self.ensure_one()
         is_extracted = self.extract_state in {'waiting_validation', 'to_validate', 'done'} and self.is_editable
-        return self.product_has_cost and not is_extracted
+        return super()._needs_product_price_computation() and not is_extracted
 
     @api.depends('state')
     def _compute_is_in_extractable_state(self):
         for expense in self:
-            expense.is_in_extractable_state = expense.state == 'draft' and not expense.sheet_id
+            expense.is_in_extractable_state = expense.state == 'draft'
 
     @api.depends('extract_state', 'state')
     def _compute_extract_state_processed(self):
@@ -67,8 +66,8 @@ class HrExpense(models.Model):
             text_to_send["content"] = self.currency_id.name
         return text_to_send
 
-    def action_submit_expenses(self, **kwargs):
-        res = super().action_submit_expenses(**kwargs)
+    def action_submit(self, **kwargs):
+        res = super().action_submit(**kwargs)
         self._validate_ocr()
         return res
 
@@ -81,7 +80,8 @@ class HrExpense(models.Model):
             date_ocr = self._get_ocr_selected_value(ocr_results, 'date', fields.Date.context_today(self).strftime(DEFAULT_SERVER_DATE_FORMAT))
             currency_ocr = self._get_ocr_selected_value(ocr_results, 'currency', self.env.company.currency_id.name)
 
-            if description_ocr and not self.name or self.name == '.'.join(self.message_main_attachment_id.name.split('.')[:-1]):
+            receipt_name = (self.message_main_attachment_id.name or '').split('.')[0]
+            if (description_ocr and not self.name) or (receipt_name and self.name == receipt_name):
                 predicted_product_id = self._predict_product(description_ocr, category=True)
                 if predicted_product_id:
                     vals['product_id'] = predicted_product_id or self.product_id
@@ -123,10 +123,7 @@ class HrExpense(models.Model):
     @api.model
     def get_empty_list_help(self, help_message):
         if self.env.user.has_group('base.group_user'):
-            expenses = self.search_count([
-                ('employee_id', 'in', self.env.user.employee_ids.ids),
-                ('state', 'in', ['draft', 'reported', 'approved', 'done', 'refused'])
-            ])
+            has_expenses = bool(self.search_count([('employee_id', 'in', self.env.user.employee_ids.ids)]))
             if is_html_empty(help_message):
                 help_message = Markup("""
                     <p class="o_view_nocontent_expense_receipt">
@@ -139,7 +136,7 @@ class HrExpense(models.Model):
                     </p>""").format(title=_("Upload or drop an expense receipt"))
             # add hint for extract if not already present and user might now have already used it
             extract_txt = _("try a sample receipt")
-            if not expenses and extract_txt not in help_message:
+            if not has_expenses and extract_txt not in help_message:
                 action_id = self.env.ref('hr_expense_extract.action_expense_sample_receipt').id
                 help_message += Markup(
                     "<p class='text-muted mt-4'>Or <a type='action' name='%(action_id)s' class='o_select_sample'>%(extract_txt)s</a></p>"
@@ -173,51 +170,31 @@ class HrExpense(models.Model):
                     time.sleep(1)
                     record._check_ocr_status()
 
-
-class HrExpenseSheet(models.Model):
-    _inherit = 'hr.expense.sheet'
-
-    def _is_expense_sample(self):
-        samples = set(self.mapped('expense_line_ids.sample'))
-        if len(samples) > 1:
-            raise UserError(_("You can't mix sample expenses and regular ones"))
-        return samples and samples.pop() # True / False
-
     @api.ondelete(at_uninstall=False)
-    def _unlink_except_posted_or_paid(self):
-        super(HrExpenseSheet, self.filtered(lambda exp: not exp._is_expense_sample()))._unlink_except_posted_or_paid()
+    def _unlink_except_approved(self):
+        super(HrExpense, self - self.filtered('sample'))._unlink_except_approved()
 
-    def action_register_payment(self):
-        if self._is_expense_sample():
-            # using the real wizard is not possible as it check
-            # lots of stuffs on the account.move.line
-            action = self.env['ir.actions.actions']._for_xml_id('hr_expense_extract.action_expense_sample_register')
-            action['context'] = {'active_id': self.id}
-            return action
-
-        return super().action_register_payment()
-
-    def _do_approve(self):
+    def _do_approve(self, check=True):
         # If we're dealing with sample expenses (demo data) then we should NEVER create any account.move
-        if self._is_expense_sample():
-            sheets_to_approve = self.filtered(lambda s: s.state in {'submit', 'draft'})
-            for sheet in sheets_to_approve:
-                sheet.write(
-                    {
-                        'approval_state': 'approve',
-                        'user_id': sheet.user_id.id or self.env.user.id,
-                        'approval_date': fields.Date.context_today(sheet),
-                    }
-                )
-            self.activity_update()
-            return
-        return super()._do_approve()
+        # EXTENDS account
+        today = fields.Date.context_today(self)
+        samples = self.filtered('sample')
+        for expense in samples.filtered(lambda s: s.state in {'submitted', 'draft'}):
+            expense.write(
+                {
+                    'approval_state': 'approved',
+                    'manager_id': (expense.manager_id or self.env.user).id,
+                    'approval_date': today,
+                }
+            )
+            expense.update_activities_and_mails()
+        return super(HrExpense, self - samples)._do_approve(check)
 
-    def action_sheet_move_post(self):
-        if self._is_expense_sample():
-            self.set_to_posted()
-            if self.payment_mode == 'company_account':
-                self.set_to_paid()
-            return
+    def action_post(self):
+        # Add an override for sample expenses
+        # EXTENDS account
+        samples = self.filtered('sample')
+        for expense in samples:
+            expense.state = 'paid'
 
-        return super().action_sheet_move_post()
+        return super(HrExpense, self - samples).action_post()

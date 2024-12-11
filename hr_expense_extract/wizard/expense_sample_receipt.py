@@ -11,25 +11,30 @@ class ExpenseSampleReceipt(models.Model):
     _name = 'expense.sample.receipt'
     _description = 'Try Sample Receipts'
 
-    def _action_create_expense(self, values, sample_number):
+    def _action_create_expense(self, values):
         fallback_employee = self.env['hr.employee'].search([], limit=1) or self.env['hr.employee'].create({
             'name': _('Sample Employee'),
             'company_id': self.env.company.id,
         })
 
         expense_categ = self.env.ref('product.product_category_expenses', raise_if_not_found=False)
-        product = self.env.ref('hr_expense.product_product_no_cost', raise_if_not_found=False) or \
-                  self.env['product.product']._load_records([
-                      dict(xml_id='hr_expense.product_product_no_cost',
-                           values={
-                                'name': 'Expenses',
-                                'list_price': 0.0,
-                                'standard_price': 1.0,
-                                'type': 'service',
-                                'categ_id': expense_categ.id if expense_categ else False,
-                                'can_be_expensed': True
-                           }, noupdate=True)
-                  ])
+        product = (
+            self.env.ref('hr_expense.product_product_no_cost', raise_if_not_found=False)
+            or self.env['product.product']._load_records([
+                {
+                    'xml_id':'hr_expense.product_product_no_cost',
+                    'values': {
+                        'name': _("Expenses"),
+                        'list_price': 1.0,
+                        'standard_price': 0.0,
+                        'type': 'service',
+                        'categ_id': expense_categ.id if expense_categ else False,
+                        'can_be_expensed': True,
+                    },
+                    'noupdate': True,
+                }
+            ])
+        )
 
         # 3/ Compute the line values
         expense_line_values = {
@@ -43,7 +48,7 @@ class ExpenseSampleReceipt(models.Model):
         }
 
         # 4/ Ensure we have a journal
-        if not self.env['hr.expense.sheet']._default_journal_id():
+        if not self.env['hr.expense']._default_journal_id():
             self.env['account.journal'].create({
                 'type': 'purchase',
                 'company_id': self.env.company.id,
@@ -79,4 +84,4 @@ class ExpenseSampleReceipt(models.Model):
             'name': 'External training',
             'amount': 1995.6,
             'date': datetime.date(2024, 5, 24)  # Same date used in the receipt animation
-        }, 1)
+        })
