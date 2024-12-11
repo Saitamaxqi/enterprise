@@ -63,6 +63,9 @@ class SaleCommissionReport(models.Model):
 
     @property
     def _table_query(self):
+        return self._query()
+
+    def _query(self):
         users = self.env.context.get('commission_user_ids', [])
         if users:
             users = self.env['res.users'].browse(users).exists()
