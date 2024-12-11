@@ -1,8 +1,9 @@
 import json
 from contextlib import contextmanager
-from unittest.mock import patch
+from unittest.mock import patch, DEFAULT
 import requests
 
+from odoo.exceptions import UserError
 from odoo.tests import TransactionCase, tagged
 from odoo import Command
 
@@ -484,3 +485,65 @@ class TestDeliverySendCloud(TransactionCase):
         ]
         for address in addresses:
             self.assertEqual(api._get_house_number(address[0]), address[1])
+
+    def test_sendcloud_picking_batch_validation(self):
+        """
+        Create 2 delivery orders with sendcloud carrier. Make them respectively
+        valid and invalid on the carrier side. Validate the pickings in batch
+        Since the pickings are processed unbatched on the carrier side the
+        "UserError" of the invalid picking can not be raised and should be
+        replaced by a warning activity.
+        """
+        alien = self.env['res.users'].create({
+            'login': 'Mars Man',
+            'name': 'Spleton',
+            'email': 'alien@mars.com',
+        })
+        sale_orders = self.env['sale.order'].create([
+            {
+                'partner_id': self.eu_partner.id,
+                'order_line': [
+                    Command.create({
+                        'product_id': self.product_to_ship1.id
+                    }),
+                ]
+            },
+            {
+                'partner_id': self.eu_partner.id,
+                'order_line': [
+                    Command.create({
+                        'product_id': self.product_to_ship2.id
+                    }),
+                ]
+            },
+        ])
+        choose_delivery_carriers = [self.env[wiz_action['res_model']].with_context(wiz_action['context']).create({
+            'carrier_id': self.sendcloud.id,
+            'order_id': sale_orders[index].id
+        }) for index, wiz_action in enumerate(sale_orders.mapped(lambda so: so.action_open_delivery_wizard()))]
+
+        def fail_send_shipment(pick):
+            # side effect to throw an error for a given picking but resolve the normal call for the other
+            def _throw_error_on_chosen_picking(*args, **kwargs):
+                if args and args[0] == pick:
+                    raise UserError("Something went wrong, parcel not returned from Sendcloud: {'weight': ['The weight must be less than 10.001 kg']}")
+                else:
+                    return DEFAULT
+            return _throw_error_on_chosen_picking
+
+        with _mock_sendcloud_call(self.warehouse_id):
+            for i in range(0, len(sale_orders)):
+                choose_delivery_carriers[i].update_price()
+                choose_delivery_carriers[i].button_confirm()
+                sale_orders[i].action_confirm()
+                # check that a delivery was created for the associated carrier
+                self.assertEqual(sale_orders[i].picking_ids.carrier_id.id, sale_orders[i].carrier_id.id)
+            pickings = sale_orders.picking_ids
+            pickings.action_assign()
+            pickings.action_set_quantities_to_reservation()
+            sendcloud_class = 'odoo.addons.delivery_sendcloud.models.sendcloud_service.SendCloud'
+            with patch(sendcloud_class + '.send_shipment', side_effect=fail_send_shipment(pickings[1])):
+                pickings.with_user(alien).button_validate()
+        # both pickings should be validated but and activity should have been created for the invalid picking
+        self.assertEqual(pickings.mapped('state'), ['done', 'done'])
+        self.assertTrue(self.env['mail.activity'].search([('res_model', '=', 'stock.picking'), ('res_id', '=', pickings[1].id), ('user_id', '=', alien.id)], limit=1))
