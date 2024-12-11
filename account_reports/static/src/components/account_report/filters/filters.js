@@ -37,8 +37,7 @@ export class AccountReportFilters extends Component {
         this.timeout = null;
     }
 
-    focusInnerInput(index, items) {
-        const selectedItem = items[index];
+    focusInnerInput(selectedItem) {
         selectedItem.el.querySelector(":scope input")?.focus();
     }
 
@@ -185,7 +184,7 @@ export class AccountReportFilters extends Component {
         return {
             shouldFocusChildInput: false,
             hotkeys: {
-                arrowright: (index, items) => this.focusInnerInput(index, items),
+                arrowright: (navigator) => this.focusInnerInput(navigator.activeItem),
             },
         };
     }
