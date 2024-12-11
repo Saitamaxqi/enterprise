@@ -723,7 +723,7 @@ class AccountMove(models.Model):
         if partner.country_id.code not in ['AR', False]:
             vat_country = partner.country_id.l10n_ar_legal_entity_vat if partner.is_company \
                 else partner.country_id.l10n_ar_natural_vat
-        return vat_country
+        return vat_country or 0
 
     def wsfex_get_cae_request(self, last_id, client):
         if not self.commercial_partner_id.country_id:
