@@ -1227,15 +1227,21 @@ test("Create a new relative date filter with a negative offset should save the a
 
     await selectFieldMatching("date", pivotFieldMatching);
     await contains(pivotFieldMatching.querySelector("select")).select("-1");
-    await contains(pivotFieldMatching.querySelector("input.o_filter_offset_input")).edit("-7");
+    await contains(pivotFieldMatching.querySelector("input.o_filter_offset_input")).edit("-7", {
+        instantly: true,
+    });
 
     await selectFieldMatching("date", listFieldMatching);
     await contains(listFieldMatching.querySelector("select")).select("1");
-    await contains(listFieldMatching.querySelector("input.o_filter_offset_input")).edit("-2");
+    await contains(listFieldMatching.querySelector("input.o_filter_offset_input")).edit("-2", {
+        instantly: true,
+    });
 
     await selectFieldMatching("date", graphFieldMatching);
     await contains(graphFieldMatching.querySelector("select")).select("-1");
-    await contains(graphFieldMatching.querySelector("input.o_filter_offset_input")).edit("-2");
+    await contains(graphFieldMatching.querySelector("input.o_filter_offset_input")).edit("-2", {
+        instantly: true,
+    });
 
     await saveGlobalFilter();
 
