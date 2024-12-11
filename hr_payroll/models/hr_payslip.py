@@ -908,7 +908,6 @@ class HrPayslip(models.Model):
             if localdict is None:
                 localdict = payslip._get_localdict()
 
-            rules_dict = localdict['rules']
             result_rules_dict = localdict['result_rules']
 
             blacklisted_rule_ids = self.env.context.get('prevent_payslip_computation_line_ids', [])
@@ -937,7 +936,6 @@ class HrPayslip(models.Model):
                             result_rules_dict[rule.code]['amount'] += tot_rule
                             result_rules_dict[rule.code]['quantity'] = 1
                             result_rules_dict[rule.code]['rate'] = 100
-                            rules_dict[rule.code] = rule
 
                             localdict = rule.category_id._sum_salary_rule_category(localdict,
                                                                                    tot_rule)
@@ -965,7 +963,6 @@ class HrPayslip(models.Model):
                         tot_rule = payslip._get_payslip_line_total(amount, qty, rate, rule)
                         localdict[rule.code] = tot_rule
                         result_rules_dict[rule.code] = {'total': tot_rule, 'amount': amount, 'quantity': qty, 'rate': rate}
-                        rules_dict[rule.code] = rule
                         # sum the amount for its salary category
                         localdict = rule.category_id._sum_salary_rule_category(localdict, tot_rule - previous_amount)
                         rule_name = payslip._get_rule_name(localdict, rule, employee_lang)

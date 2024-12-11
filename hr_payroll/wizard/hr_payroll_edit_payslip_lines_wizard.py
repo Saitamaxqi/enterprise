@@ -29,7 +29,6 @@ class HrPayrollEditPayslipLinesWizard(models.TransientModel):
         if not wizard_line.salary_rule_id:
             return reload_wizard
         localdict = self.payslip_id._get_localdict()
-        rules_dict = localdict['rules']
         result_rules_dict = localdict['result_rules']
         remove_lines = False
         lines_to_remove = []
@@ -38,7 +37,6 @@ class HrPayrollEditPayslipLinesWizard(models.TransientModel):
             if remove_lines and line.code in self.payslip_id.line_ids.mapped('code'):
                 lines_to_remove.append((2, line.id, 0))
             else:
-                rules_dict[line.code] = line.salary_rule_id
                 if line == wizard_line:
                     line._compute_total()
                     remove_lines = True
