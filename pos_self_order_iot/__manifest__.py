@@ -9,7 +9,9 @@
     'auto_install': True,
     "data": [
         "views/iot_views.xml",
-        "data/iot_demo.xml",
+    ],
+    "demo": [
+        "demo/iot_demo.xml",
     ],
     'assets': {
         'pos_self_order.assets': [

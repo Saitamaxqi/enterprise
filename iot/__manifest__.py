@@ -19,7 +19,7 @@ This module provides management of your IoT Boxes inside Odoo.
         'views/iot_views.xml',
     ],
     'demo': [
-        'data/iot_demo.xml'
+        'demo/iot_demo.xml'
     ],
     'installable': True,
     'application': True,
