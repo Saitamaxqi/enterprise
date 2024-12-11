@@ -173,7 +173,7 @@ export class KnowledgeArticleFormController extends FormController {
     }
 
     getHtmlTitle() {
-        const titleEl = this.root.el.querySelector('#body_0 h1');
+        const titleEl = this.root.el.querySelector(".note-editable.odoo-editor-editable h1");
         if (titleEl) {
             const title = titleEl.textContent.trim();
             if (title) {
@@ -247,13 +247,11 @@ export class KnowledgeArticleFormController extends FormController {
      */
     renameArticle(name) {
         if (!name) {
-            const title = this.root.el.querySelector(".note-editable.odoo-editor-editable h1");
-            if (title) {
-                name = title.textContent.trim();
-                if (!name) {
-                    return;
-                }
+            const title = this.getHtmlTitle();
+            if (!title) {
+                return;
             }
+            name = title;
         }
         return this.model.root.update({ name });
     }
