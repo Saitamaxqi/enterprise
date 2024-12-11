@@ -50,7 +50,7 @@ class HrSalaryRule(models.Model):
 # payslip: hr.payslip object
 # employee: hr.employee object
 # contract: hr.contract object
-# rules: dict containing the rules code (previously computed)
+# result_rules: dict containing the rules amounts, quantities, rates and totals (previously computed)
 # categories: dict containing the computed salary rule categories (sum of amount of all rules belonging to that category).
 # worked_days: dict containing the computed worked days
 # inputs: dict containing the computed inputs.
@@ -59,7 +59,7 @@ class HrSalaryRule(models.Model):
 #----------------------
 # result: boolean True if the rule should be calculated, False otherwise
 
-result = rules['NET']['total'] > categories['NET'] * 0.10''',
+result = result_rules['NET']['total'] > categories['NET'] * 0.10''',
         help='Applied this rule for calculation if condition is true. You can specify condition like basic > 1000.')
     condition_range_min = fields.Float(string='Minimum Range', help="The minimum amount, applied for this rule.")
     condition_range_max = fields.Float(string='Maximum Range', help="The maximum amount, applied for this rule.")
@@ -80,7 +80,7 @@ result = rules['NET']['total'] > categories['NET'] * 0.10''',
 # payslip: hr.payslip object
 # employee: hr.employee object
 # contract: hr.contract object
-# rules: dict containing the rules code (previously computed)
+# result_rules: dict containing the rules amounts, quantities, rates and totals (previously computed)
 # categories: dict containing the computed salary rule categories (sum of amount of all rules belonging to that category).
 # worked_days: dict containing the computed worked days
 # inputs: dict containing the computed inputs.
@@ -93,9 +93,10 @@ result = rules['NET']['total'] > categories['NET'] * 0.10''',
 # result_name: string, name of the line, which defaults to the name field of the salary rule.
 #              This is useful if the name depends should depend on something computed in the rule.
 # The total returned by the salary rule is calculated as:
-# total = result * result_rate * result_qty
+# total = result * result_rate / 100 * result_qty
 
-result = contract.wage * 0.10''')
+result = contract.wage
+result_rate = 10''')
     amount_percentage_base = fields.Char(string='Percentage based on', help='result will be affected to a variable')
     partner_id = fields.Many2one('res.partner', string='Partner',
         help="Eventual third party involved in the salary payment of the employees.")
