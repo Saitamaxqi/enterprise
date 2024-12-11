@@ -21,8 +21,6 @@ class L10nKeHrPayrollShifReportWizard(models.TransientModel):
         current_year = datetime.now().year
         return [(str(i), i) for i in range(1990, current_year + 1)]
 
-    reference_start_date = fields.Char(
-        compute='_compute_reference_start_date')
     reference_month = fields.Selection(
         [
             ('1', 'January'),
@@ -40,12 +38,14 @@ class L10nKeHrPayrollShifReportWizard(models.TransientModel):
         ],
         string='Month',
         required=True,
-        default=str(date.today().month))
+        default=lambda self: str((date.today()).month))
+    reference_start_date = fields.Char(
+        compute='_compute_reference_start_date')
     reference_year = fields.Selection(
         selection='_get_year_selection',
         string='Year',
         required=True,
-        default=str(date.today().year))
+        default=lambda self: str(date.today().year))
     name = fields.Char(
         compute='_compute_name',
         readonly=False,
@@ -62,9 +62,7 @@ class L10nKeHrPayrollShifReportWizard(models.TransientModel):
     @api.depends('reference_month', 'reference_year')
     def _compute_reference_start_date(self):
         for wizard in self:
-            wizard.reference_start_date = (
-                        date(int(self.reference_year), int(self.reference_month), 10) - relativedelta(
-                    months=1)).strftime("%d %B %Y").title()
+            wizard.reference_start_date = (date(int(self.reference_year), int(self.reference_month), 10) - relativedelta(months=1)).strftime("%d %B %Y").title()
 
     @api.depends('reference_month', 'reference_year')
     def _compute_is_nhif(self):

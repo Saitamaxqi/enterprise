@@ -12,6 +12,7 @@
                 <field name="l10n_ke_nssf_number" invisible="company_country_code != 'KE'"/>
                 <field name="l10n_ke_kra_pin" invisible="company_country_code != 'KE'"/>
                 <field name="l10n_ke_nhif_number" invisible="company_country_code != 'KE'"/>
+                <field name="l10n_ke_shif_number" invisible="company_country_code != 'KE'"/>
             </xpath>
         </field>
     </record>

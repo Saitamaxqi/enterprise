@@ -13,7 +13,7 @@ from odoo.tools.misc import xlsxwriter
 LINE_CODES = [
     'BASIC', 'BONUS', 'COMMISSION', 'LEAVE120',
     'TAXED_AIRTIME_ALLOWANCE', 'TAXED_FOOD_ALLOWANCE',
-    'GROSS', 'NHIF_AMOUNT', 'NSSF_AMOUNT', 'PAYE', 'HELB',
+    'GROSS', 'NHIF_AMOUNT', 'SHIF_AMOUNT', 'NSSF_AMOUNT', 'PAYE', 'HELB',
     'STATUTORY_DED', 'ADVANCE', 'LOAN', 'OTHER_DED',
     'NET', 'NITA', 'NSSF_EMP',
 ]
@@ -121,7 +121,7 @@ class L10n_KeMasterReport(models.Model):
         headers = [
             _('Basic Salary'), _('Bonus'), _('Commission'),
             _('Holiday Pay'), _('Airtime Allowance'),
-            _('Meal Allowance'), _('Gross Salary'), _('NHIF'),
+            _('Meal Allowance'), _('Gross Salary'), _('NHIF'), _('SHIF'),
             _('NSSF'), _('PAYE'), _('HELB'), _('Total Statutory Deductions'),
             _('Salary Advance'), _('Loan'), _('Total Other Deductions'),
             _('Net Pay'), _('NITA'), _('NSSF - Employer Contribution'),

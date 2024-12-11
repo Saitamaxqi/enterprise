@@ -34,13 +34,13 @@
                             </list>
                         </field>
                         <field name="line_ids" invisible="not is_nhif">
-                                <list editable="bottom">
-                                    <field name="payslip_number"/>
-                                    <field name="employee_id" widget="many2one_avatar_user"/>
-                                    <field name="employee_identification_id"/>
-                                    <field name="shif_or_nhif_number" string="NHIF Number"/>
-                                    <field name="shif_or_nhif_amount" string="NHIF Amount"/>
-                                </list>
+                            <list editable="bottom">
+                                <field name="payslip_number"/>
+                                <field name="employee_id" widget="many2one_avatar_user"/>
+                                <field name="employee_identification_id"/>
+                                <field name="shif_or_nhif_number" string="NHIF Number"/>
+                                <field name="shif_or_nhif_amount" string="NHIF Amount"/>
+                            </list>
                         </field>
                     </group>
                 </sheet>
