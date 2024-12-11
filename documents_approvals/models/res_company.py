@@ -9,7 +9,7 @@ class ResCompany(models.Model):
     documents_approvals_settings = fields.Boolean(default=False)
     approvals_folder_id = fields.Many2one(
         'documents.document',
-        string="Approvals Workspace",
+        string="Approvals Folder",
         default=lambda self: self.env.ref('documents_approvals.document_approvals_folder', raise_if_not_found=False),
         check_company=True,
         domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)],

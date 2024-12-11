@@ -45,7 +45,7 @@ class DocumentsDocument(models.Model):
         # custom folders assigned to company.documents_project_folder_id are protected by _unlink_except_company_folders
         project_folder = self.env.ref('documents_project.document_project_folder')
         if self._project_folder_or_ancestor_in_self(project_folder):
-            raise UserError(_('The "%s" workspace is required by the Project application and cannot be deleted.', project_folder.name))
+            raise UserError(_('The "%s" folder is required by the Project application and cannot be deleted.', project_folder.name))
 
     @api.constrains('active')
     def _archive_except_project_folder(self):
@@ -82,10 +82,10 @@ class DocumentsDocument(models.Model):
                     continue
                 if len(different_company_projects) == 1:
                     project = different_company_projects[0]
-                    message = _('This folder should remain in the same company as the "%(project)s" project to which it is linked. Please update the company of the "%(project)s" project, or leave the company of this workspace empty.', project=project.name)
+                    message = _('This folder should remain in the same company as the "%(project)s" project to which it is linked. Please update the company of the "%(project)s" project, or leave the company of this folder empty.', project=project.name)
                 else:
                     lines = [f"- {project.name}" for project in different_company_projects]
-                    message = _('This folder should remain in the same company as the following projects to which it is linked:\n%s\n\nPlease update the company of those projects, or leave the company of this workspace empty.', '\n'.join(lines))
+                    message = _('This folder should remain in the same company as the following projects to which it is linked:\n%s\n\nPlease update the company of those projects, or leave the company of this folder empty.', '\n'.join(lines))
                 raise ValidationError(message)  # noqa: E8507
 
     def write(self, vals):
@@ -100,7 +100,7 @@ class DocumentsDocument(models.Model):
             documents_without_partner.partner_id = partner
         project_folder = self.env.ref('documents_project.document_project_folder')
         if not vals.get('active', True) and self._project_folder_or_ancestor_in_self(project_folder):
-            raise UserError(_('The "%s" workspace is required by the Project application and cannot be archived.', project_folder.name))
+            raise UserError(_('The "%s" folder is required by the Project application and cannot be archived.', project_folder.name))
         return write_result
 
     def _get_link_to_project_values(self):
