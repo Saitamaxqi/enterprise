@@ -46,11 +46,11 @@
                         <button t-if="props.openPreviousCheck" t-on-click="back"
                                 class="btn btn-secondary me-2"
                                 t-att-disabled="state.disabled"
-                                barcode_trigger="prev">&lt; Back</button>
+                                barcode_trigger="PREV">&lt; Back</button>
                         <button t-if="props.openNextCheck" t-on-click="skip"
                                 class="btn btn-secondary"
                                 t-att-disabled="state.disabled"
-                                barcode_trigger="skip">Skip &gt;</button>
+                                barcode_trigger="SKIP">Skip &gt;</button>
                     </div>
                 </div>
 

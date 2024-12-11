@@ -7,10 +7,10 @@
             </button>
         </div>
         <div class="o_form_buttons_view justify-content-end">
-            <button t-if="props.openPreviousCheck" type="button" class="btn btn-secondary" barcode_trigger="prev" t-on-click.stop="backPressed">
+            <button t-if="props.openPreviousCheck" type="button" class="btn btn-secondary" barcode_trigger="PREV" t-on-click.stop="backPressed">
                 &lt; Back
             </button>
-            <button t-if="props.openNextCheck" type="button" class="btn btn-secondary" barcode_trigger="skip" t-on-click.stop="skipPressed">
+            <button t-if="props.openNextCheck" type="button" class="btn btn-secondary" barcode_trigger="SKIP" t-on-click.stop="skipPressed">
                 Skip &gt;
             </button>
         </div>
