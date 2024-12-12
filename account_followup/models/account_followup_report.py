@@ -59,7 +59,7 @@ class AccountFollowupReport(models.AbstractModel):
         today = fields.Date.today()
         line_num = 0
         for l in partner.unreconciled_aml_ids.sorted().filtered(lambda aml: not aml.currency_id.is_zero(aml.amount_residual_currency)):
-            if l.company_id in self.env.company._accessible_branches():
+            if l.company_id in self.env.company.search([('id', 'child_of', self.env.context.get('allowed_company_ids', self.env.company.id))]):
                 currency = l.currency_id or l.company_id.currency_id
                 if currency not in res:
                     res[currency] = []

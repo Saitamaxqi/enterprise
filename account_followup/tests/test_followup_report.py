@@ -5,11 +5,12 @@ from unittest.mock import patch
 
 from odoo.tests import Form, tagged
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
+from odoo.addons.account_followup.tests.common import TestAccountFollowupCommon
 from odoo import Command
 
 
 @tagged('post_install', '-at_install')
-class TestAccountFollowupReports(TestAccountReportsCommon):
+class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCommon):
 
     @classmethod
     def setUpClass(cls):
@@ -296,7 +297,7 @@ class TestAccountFollowupReports(TestAccountReportsCommon):
     def test_negative_followup_report(self):
         ''' Test negative or null followup reports: if a contact has an overdue invoice but has a negative of null total due, no action is needed.
         '''
-        self.env['account_followup.followup.line'].create({
+        followup_line = self.env['account_followup.followup.line'].create({
             'company_id': self.env.company.id,
             'name': 'First Reminder',
             'delay': 15,
@@ -324,14 +325,14 @@ class TestAccountFollowupReports(TestAccountReportsCommon):
             })]
         }).action_post()
         self.assertEqual(self.partner_a.total_due, 200)
-        self.assertEqual(self.partner_a.followup_status, 'in_need_of_action')
+        self.assertPartnerFollowup(self.partner_a, 'in_need_of_action', followup_line)
 
         self.env['account.payment'].create({
             'partner_id': self.partner_a.id,
             'amount': 400,
         }).action_post()
         self.assertEqual(self.partner_a.total_due, -200)
-        self.assertEqual(self.partner_a.followup_status, 'no_action_needed')
+        self.assertPartnerFollowup(self.partner_a, 'no_action_needed', followup_line)
 
     def test_followup_report_style(self):
         """
@@ -517,3 +518,227 @@ class TestAccountFollowupReports(TestAccountReportsCommon):
             active_ids=self.partner_a.ids,
         )) as wizard:
             self.assertEqual(wizard.render_model, "res.partner")
+
+    def test_followup_report_with_levels_on_main_company(self):
+        cron = self.env.ref('account_followup.ir_cron_follow_up')
+
+        self.env['account_followup.followup.line'].create([{
+            'company_id': self.company_data['company'].id,
+            'name': 'First Reminder',
+            'delay': 15,
+            'send_email': True,
+            'auto_execute': True,
+        }, {
+            'company_id': self.company_data['company'].id,
+            'name': 'Second Reminder',
+            'delay': 30,
+            'send_email': True,
+            'auto_execute': True,
+        }])
+
+        self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2016-01-01',
+            'invoice_date_due': '2016-01-01',
+            'date': '2016-01-01',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 500,
+            })]
+        }).action_post()
+
+        with (
+            freeze_time('2022-01-10'),
+            patch.object(self.env.registry['res.partner'], '_send_followup') as patched,
+            self.enter_registry_test_mode(),
+        ):
+            cron.method_direct_trigger()
+            # For the same reason we clear the cache in assertPartnerFollowup, to avoid this test change the state of the cache,
+            # which could break other tests.
+            self.env.cr.cache.pop('res_partner_all_followup', None)
+            self.assertEqual(patched.call_count, 1)
+
+        count_mail = self.env['mail.message'].search_count([('record_company_id', '=', self.company_data['company'].id)])
+        # We should have 1 email :
+        # 1 for the main company
+        self.assertEqual(count_mail, 1)
+
+    def test_followup_report_with_levels_on_one_branch(self):
+        cron = self.env.ref('account_followup.ir_cron_follow_up')
+
+        branch_a, branch_b = self.env['res.company'].create([{
+            'name': 'Branch number 1',
+            'parent_id': self.company_data['company'].id,
+        }, {
+            'name': 'Branch number 2',
+            'parent_id': self.company_data['company'].id,
+        }])
+
+        self.cr.precommit.run()  # load the COA
+
+        self.env['account_followup.followup.line'].create([{
+            'company_id': branch_a.id,
+            'name': 'First Reminder (A)',
+            'delay': 15,
+            'send_email': True,
+            'auto_execute': True,
+        }, {
+            'company_id': branch_a.id,
+            'name': 'Second Reminder (A)',
+            'delay': 30,
+            'send_email': True,
+            'auto_execute': True,
+        }])
+
+        self.env['account.move'].create([{
+            'move_type': 'out_invoice',
+            'invoice_date': '2016-01-01',
+            'invoice_date_due': '2016-01-01',
+            'date': '2016-01-01',
+            'partner_id': self.partner_a.id,
+            'company_id': branch_a.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 400,
+            })]
+        }, {
+            'move_type': 'out_invoice',
+            'invoice_date': '2016-01-01',
+            'invoice_date_due': '2016-01-01',
+            'date': '2016-01-01',
+            'partner_id': self.partner_a.id,
+            'company_id': branch_b.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 800,
+            })]
+        }]).action_post()
+
+        with (
+            freeze_time('2022-01-10'),
+            patch.object(self.env.registry['res.partner'], '_send_followup') as patched,
+            self.enter_registry_test_mode(),
+        ):
+            cron.method_direct_trigger()
+            # For the same reason we clear the cache in assertPartnerFollowup, to avoid this test change the state of the cache,
+            # which could break other tests.
+            self.env.cr.cache.pop('res_partner_all_followup', None)
+            self.assertEqual(patched.call_count, 1)
+
+        count_mail = self.env['mail.message'].search_count([('record_company_id', '=', branch_a.id)])
+        # We should have 1 email :
+        # 1 for the Branch number 1
+        self.assertEqual(count_mail, 1)
+
+    def test_followup_report_with_levels_on_branches_and_main_company(self):
+        cron = self.env.ref('account_followup.ir_cron_follow_up')
+
+        branch_a, branch_b = self.env['res.company'].create([{
+            'name': 'Branch number 1',
+            'parent_id': self.company_data['company'].id,
+        }, {
+            'name': 'Branch number 2',
+            'parent_id': self.company_data['company'].id,
+        }])
+
+        self.cr.precommit.run()  # load the COA
+
+        self.env['account_followup.followup.line'].create([{
+            'company_id': branch_a.id,
+            'name': 'First Reminder (A)',
+            'delay': 15,
+            'send_email': True,
+            'auto_execute': True,
+        }, {
+            'company_id': branch_a.id,
+            'name': 'Second Reminder (A)',
+            'delay': 30,
+            'send_email': True,
+            'auto_execute': True,
+        }, {
+            'company_id': branch_b.id,
+            'name': 'First Reminder (B)',
+            'delay': 10,
+            'send_email': True,
+            'auto_execute': True,
+        }, {
+            'company_id': branch_b.id,
+            'name': 'Second Reminder (B)',
+            'delay': 20,
+            'send_email': True,
+            'auto_execute': True,
+        }, {
+            'company_id': self.company_data['company'].id,
+            'name': 'First Reminder',
+            'delay': 20,
+            'send_email': True,
+            'auto_execute': True,
+        }, {
+            'company_id': self.company_data['company'].id,
+            'name': 'Second Reminder',
+            'delay': 40,
+            'send_email': True,
+            'auto_execute': True,
+        }])
+
+        self.env['account.move'].create([{
+            'move_type': 'out_invoice',
+            'invoice_date': '2016-01-01',
+            'invoice_date_due': '2016-01-01',
+            'date': '2016-01-01',
+            'partner_id': self.partner_a.id,
+            'company_id': branch_a.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 400,
+            })]
+        }, {
+            'move_type': 'out_invoice',
+            'invoice_date': '2016-01-01',
+            'invoice_date_due': '2016-01-01',
+            'date': '2016-01-01',
+            'partner_id': self.partner_a.id,
+            'company_id': branch_b.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 800,
+            })]
+        }, {
+            'move_type': 'out_invoice',
+            'invoice_date': '2016-01-01',
+            'invoice_date_due': '2016-01-01',
+            'date': '2016-01-01',
+            'partner_id': self.partner_a.id,
+            'company_id': self.company_data['company'].id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 200,
+            })]
+        }]).action_post()
+
+        with (
+            freeze_time('2022-01-10'),
+            patch.object(self.env.registry['res.partner'], '_send_followup') as patched,
+            self.enter_registry_test_mode(),
+        ):
+            cron.method_direct_trigger()
+            # For the same reason we clear the cache in assertPartnerFollowup, to avoid this test change the state of the cache,
+            # which could break other tests.
+            self.env.cr.cache.pop('res_partner_all_followup', None)
+            self.assertEqual(patched.call_count, 3)
+
+        count_mail = self.env['mail.message'].search_count([('record_company_id', 'in', [self.company_data['company'].id, branch_a.id, branch_b.id])])
+        # We should have 3 emails :
+        # 1 for the main company
+        # 1 for the Branch number 1
+        # 1 for the Branch number 2
+        self.assertEqual(count_mail, 3)
+
+        # Now we check the amounts overdue
+        # Expected : 200 (main_company) + 400 (branch_a) + 800 (branch_b)
+        self.assertEqual(self.partner_a.total_overdue, 1400)
+        # Expected : 400
+        self.assertEqual(self.partner_a.with_company(branch_a).total_overdue, 400)
+        # Expected : 800
+        self.assertEqual(self.partner_a.with_company(branch_b).total_overdue, 800)

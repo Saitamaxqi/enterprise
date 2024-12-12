@@ -5,12 +5,12 @@ from freezegun import freeze_time
 
 from odoo import Command, fields
 from odoo.tests import tagged
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.addons.account_followup.tests.common import TestAccountFollowupCommon
 from dateutil.relativedelta import relativedelta
 
 
 @tagged('post_install', '-at_install')
-class TestAccountFollowupReports(AccountTestInvoicingCommon):
+class TestAccountFollowupReports(TestAccountFollowupCommon):
 
     @classmethod
     def setUpClass(cls):
@@ -38,17 +38,6 @@ class TestAccountFollowupReports(AccountTestInvoicingCommon):
         })
         invoice.action_post()
         return invoice
-
-    def assertPartnerFollowup(self, partner, status, line):
-        partner.invalidate_recordset(['followup_status', 'followup_line_id'])
-        # Since we are querying multiple times with data changes in the same transaction (for the purpose of tests),
-        # we need to invalidated the cache in database
-        self.env.cr.cache.pop('res_partner_all_followup', None)
-        res = partner._query_followup_data()
-        self.assertEqual(res.get(partner.id, {}).get('followup_status'), status)
-        self.assertEqual(res.get(partner.id, {}).get('followup_line_id'), line.id if line else None)
-        self.assertEqual(partner.followup_status, status or 'no_action_needed')
-        self.assertEqual(partner.followup_line_id.id if partner.followup_line_id else None, line.id if line else None)
 
     def test_followup_responsible(self):
         """

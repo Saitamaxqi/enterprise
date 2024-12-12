@@ -373,7 +373,7 @@ class ResPartner(models.Model):
                     SELECT next_ful.id
                       FROM account_followup_followup_line next_ful
                      WHERE next_ful.delay > COALESCE(ful.delay, %(min_delay)s - 1)
-                       AND next_ful.company_id = %(root_company_id)s
+                       AND next_ful.company_id = %(company_id)s
                   ORDER BY next_ful.delay ASC
                      LIMIT 1
                  )
@@ -385,7 +385,7 @@ class ResPartner(models.Model):
              {"" if partner_ids is None else "AND aml.partner_id IN %(partner_ids)s"}
         GROUP BY partner.id
             ) partner
-            LEFT JOIN account_followup_followup_line ful ON ful.delay = partner.followup_delay AND ful.company_id = %(root_company_id)s
+            LEFT JOIN account_followup_followup_line ful ON ful.delay = partner.followup_delay AND ful.company_id = %(company_id)s
             -- Get the followup status data
             LEFT OUTER JOIN LATERAL (
                 SELECT line.id
@@ -419,7 +419,7 @@ class ResPartner(models.Model):
             ) exceeded_unreconciled_aml ON true
         """, {
             'company_ids': self.env.company.search([('id', 'child_of', self.env.company.id)]).ids,
-            'root_company_id': self.env.company.root_id.id,
+            'company_id': self.env.company.id,
             'partner_ids': tuple(partner_ids or []),
             'current_date': fields.Date.context_today(self),  # Allow mocking the current day for testing purpose.
             'min_delay': self._get_first_followup_level().delay or 0,
