@@ -31,7 +31,7 @@ class SaleCommissionPlan(models.Model):
     user_type = fields.Selection([('person', "Salesperson"), ('team', "Sales Team")], required=True, default='person', tracking=True)
     team_id = fields.Many2one('crm.team', 'Sale team')
 
-    achievement_ids = fields.One2many('sale.commission.plan.achievement', 'plan_id', default=[Command.create({'type': 'amount_invoiced'})])
+    achievement_ids = fields.One2many('sale.commission.plan.achievement', 'plan_id', default=[Command.create({'type': 'amount_invoiced'})], copy=True)
     target_ids = fields.One2many('sale.commission.plan.target', 'plan_id', compute='_compute_targets',
                                  store=True, readonly=False)
     target_commission_ids = fields.One2many('sale.commission.plan.target.commission', 'plan_id',
