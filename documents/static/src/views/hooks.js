@@ -1,4 +1,5 @@
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { PromoteStudioAutomationDialog } from "@web_enterprise/webclient/promote_studio_dialog/promote_studio_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";
@@ -124,6 +125,50 @@ export function useDocumentView(helpers) {
         });
     };
 
+    // Open Automation rules
+    const _openAutomations = async ({ folderId, folderDisplayName }) => {
+        const checkBaseAutomation = await orm.searchCount("ir.module.module", [
+            ["name", "=", "base_automation"],
+            ["state", "=", "installed"],
+        ]);
+        if (!checkBaseAutomation > 0) {
+            return dialogService.add(PromoteStudioAutomationDialog, {
+                title: _t("Odoo Studio - Customize workflows in minutes"),
+            });
+        }
+        const userHasAccessRight = await user.checkAccessRight("base.automation", "create");
+        if (!userHasAccessRight) {
+            return notification.add(_t("Contact your Administrator to get access if needed."), {
+                title: _t("Access to Automations"),
+                type: "info",
+            });
+        }
+        const documentsModelId = await orm.search(
+            "ir.model",
+            [["model", "=", "documents.document"]],
+            { limit: 1 }
+        );
+        const defaultTriggerFieldIds = await orm.search(
+            "ir.model.fields",
+            [
+                ["model", "=", "documents.document"],
+                ["name", "=", "folder_id"],
+            ],
+            { limit: 1 }
+        );
+        return await action.doAction("base_automation.base_automation_act", {
+            additionalContext: {
+                active_test: false,
+                default_model_id: documentsModelId[0],
+                search_default_model_id: documentsModelId[0],
+                default_name: _t("Put in %s", folderDisplayName),
+                default_filter_domain: [["folder_id", "in", [folderId]]],
+                default_trigger: "on_create_or_write",
+                default_trigger_field_ids: defaultTriggerFieldIds,
+            },
+        });
+    };
+
     // Keep selection between views
     useSetupAction({
         rootRef: root,
@@ -134,6 +179,10 @@ export function useDocumentView(helpers) {
 
     useBus(bus, "documents-open-share", (ev) => {
         _openShareDialog(ev.detail);
+    });
+
+    useBus(bus, "documents-open-automations", (ev) => {
+        _openAutomations(ev.detail);
     });
 
     let maxUploadSize;
