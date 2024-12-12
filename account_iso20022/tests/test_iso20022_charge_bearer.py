@@ -35,6 +35,9 @@ class TestISO20022ChargeBearer(TestISO20022CommonCreditTransfer):
             'bank_id': cls.bank_ing.id,
             'currency_id': cls.env.ref('base.USD').id,
         })
+        # A country is required for sepa transfer
+        cls.partner_a.country_id = cls.env.ref('base.us')
+        cls.partner_b.country_id = cls.env.ref('base.us')
 
     def test_default_charge_bearer(self):
         """

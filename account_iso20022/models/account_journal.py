@@ -435,7 +435,8 @@ class AccountJournal(models.Model):
         if not pstl_addr_list:
             if partner_id.is_company:
                 raise ValidationError(_('Partner %s has no country code defined.', partner_id.name))
-            return None
+            else:
+                raise ValidationError(_('Employee %s has no country in their address.', partner_id.name))
         pstl_addr_list = [addr for addr in pstl_addr_list if addr['city']]
         if not pstl_addr_list:
             return None
