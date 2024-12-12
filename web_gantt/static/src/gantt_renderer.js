@@ -2153,8 +2153,24 @@ export class GanttRenderer extends Component {
 
         if (direction === "start") {
             params.start = dateAddFixedOffset(record[dateStartField], { [time]: cellTime * diff });
+            if (params.start > record[dateStopField]) {
+                return this.notificationService.add(
+                    _t("Starting date cannot be after the ending date"),
+                    {
+                        type: "warning",
+                    }
+                );
+            }
         } else {
             params.stop = dateAddFixedOffset(record[dateStopField], { [time]: cellTime * diff });
+            if (params.stop < record[dateStartField]) {
+                return this.notificationService.add(
+                    _t("Ending date cannot be before the starting date"),
+                    {
+                        type: "warning",
+                    }
+                );
+            }
         }
         const schedule = this.model.getSchedule(params);
 

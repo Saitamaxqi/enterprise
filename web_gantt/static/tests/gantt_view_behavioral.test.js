@@ -937,6 +937,61 @@ test("resize a pill (2)", async () => {
     expect.verifySteps([[[2], { stop: "2018-12-23 06:29:59" }]]);
 });
 
+test("resize a pill: invalid result", async () => {
+    Tasks._records[1].start = "2018-12-17 10:30:00";
+    Tasks._records[1].stop = "2018-12-17 15:30:00";
+    onRpc("write", () => {
+        throw new Error("Pill should not be resized");
+    });
+
+    await mountGanttView({
+        resModel: "tasks",
+        arch: '<gantt date_start="start" date_stop="stop" />',
+        domain: [["id", "=", 2]],
+    });
+
+    expect(SELECTORS.pill).toHaveCount(1);
+
+    await contains(getPillWrapper("Task 2")).hover();
+
+    expect(getPillWrapper("Task 2")).toHaveClass(CLASSES.resizable);
+    expect(SELECTORS.resizeHandle).toHaveCount(2);
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [{ title: "Task 2", level: 0, colSpan: "17 December 2018 -> 17 December 2018" }],
+        },
+    ]);
+
+    // shift end date towards start date
+    await resizePill(getPillWrapper("Task 2"), "end", -1);
+
+    expect(".modal").toHaveCount(0);
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [{ title: "Task 2", level: 0, colSpan: "17 December 2018 -> 17 December 2018" }],
+        },
+    ]);
+    expect(".o_notification").toHaveCount(1);
+    expect(".o_notification .o_notification_body").toHaveText(
+        "Ending date cannot be before the starting date"
+    );
+    await contains(".o_notification_close").click();
+
+    // shift start date towards end date
+    await resizePill(getPillWrapper("Task 2"), "start", +1);
+
+    expect(".modal").toHaveCount(0);
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [{ title: "Task 2", level: 0, colSpan: "17 December 2018 -> 17 December 2018" }],
+        },
+    ]);
+    expect(".o_notification").toHaveCount(1);
+    expect(".o_notification .o_notification_body").toHaveText(
+        "Starting date cannot be after the ending date"
+    );
+});
+
 test.tags("desktop");
 test("resize a pill: quickly enter the neighbour pill when resize start", async () => {
     await mountGanttView({
