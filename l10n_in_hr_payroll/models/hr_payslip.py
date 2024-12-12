@@ -26,8 +26,7 @@ class HrPayslip(models.Model):
             lang = slip.employee_id.lang or self.env.user.lang
             payslip_name = slip.struct_id.payslip_name or _('Salary Slip')
             date = format_date(self.env, slip.date_from, date_format="MMMM y", lang_code=lang)
-            slip.name = '%(payslip_name)s - %(slip_ref)s - %(dates)s' % {
-                'slip_ref': slip.id,
+            slip.name = '%(payslip_name)s - %(dates)s' % {
                 'payslip_name': payslip_name,
                 'dates': date
             }
