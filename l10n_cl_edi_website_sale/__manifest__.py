@@ -10,6 +10,7 @@
         'l10n_cl_edi'
     ],
     'data': [
+        'data/data.xml',
         'views/templates.xml',
     ],
     'assets': {
@@ -18,4 +19,5 @@
         ]
     },
     'license': 'OEEL-1',
+    'post_init_hook': '_post_init_hook',
 }

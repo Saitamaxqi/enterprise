@@ -13,7 +13,7 @@ registry.category("web_tour.tours").add("test_validate_additional_fields", {
         },
         {
             content: "Confirm Address",
-            trigger: "a:contains('Confirm')",
+            trigger: "a:contains('Continue checkout')",
             run: "click",
         },
         {
@@ -27,7 +27,7 @@ registry.category("web_tour.tours").add("test_validate_additional_fields", {
         },
         {
             content: "Click Next",
-            trigger: "a.a-submit:contains('Continue checkout')",
+            trigger: "a.a-submit:contains('Confirm')",
             run: "click",
         },
         {

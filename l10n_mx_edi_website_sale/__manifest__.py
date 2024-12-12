@@ -22,6 +22,7 @@ The extra tab only appears if:
         'l10n_mx_edi_sale',
     ],
     'data': [
+        'data/data.xml',
         'views/templates.xml',
     ],
     'assets': {
@@ -36,4 +37,5 @@ The extra tab only appears if:
     'auto_install': True,
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
+    'post_init_hook': '_post_init_hook',
 }

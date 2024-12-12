@@ -13,10 +13,14 @@ class L10nCLWebsiteSale(WebsiteSale):
 
     def _l10n_cl_is_extra_info_needed(self):
         IrConfigParameter = request.env['ir.config_parameter'].sudo()
-        return (
+        invoicing_step = request.website._get_checkout_step(
+            '/shop/l10n_cl_invoicing_info'
+        )
+        invoicing_info_needed = invoicing_step.sudo().is_published = (
             request.website.company_id.country_code == 'CL'
             and str2bool(IrConfigParameter.get_param('sale.automatic_invoice'))
         )
+        return invoicing_info_needed
 
     @route()
     def shop_checkout(self, try_skip_step=False, **query_params):
@@ -75,6 +79,7 @@ class L10nCLWebsiteSale(WebsiteSale):
             return request.redirect("/shop/confirm_order")
         if 'l10n_cl_type_document' not in values['default_value']:
             values['default_value'].update(l10n_cl_type_document='ticket')
+        values.update(request.website._get_checkout_step_values(request.httprequest.path))
         return request.render('l10n_cl_edi_website_sale.l10n_cl_edi_invoicing_info', values)
 
     def _check_billing_address(self, partner_sudo):

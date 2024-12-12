@@ -9,7 +9,13 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale
 class WebsiteSaleL10nMX(WebsiteSale):
 
     def _l10n_mx_edi_is_extra_info_needed(self):
-        return request.website.company_id.country_code == 'MX'
+        invoicing_step = request.website._get_checkout_step(
+            '/shop/l10n_mx_invoicing_info'
+        )
+        invoicing_info_needed = invoicing_step.sudo().is_published = (
+            request.website.company_id.country_code == 'MX'
+        )
+        return invoicing_info_needed
 
     @route()
     def shop_checkout(self, try_skip_step=False, **query_params):
@@ -99,4 +105,6 @@ class WebsiteSaleL10nMX(WebsiteSale):
             'l10n_mx_show_extra_info': True,
             'can_edit_vat': can_edit_vat,
         }
+        values.update(request.website._get_checkout_step_values(request.httprequest.path))
+
         return request.render("l10n_mx_edi_website_sale.l10n_mx_edi_invoicing_info", values)
