@@ -18,9 +18,11 @@ class AccountPayment(models.Model):
             if pay.currency_id:
                 # Start by getting the integer amount
                 check_amount = pay.currency_id.amount_to_text(int(pay.amount)).removesuffix(' Peso')
+                if self.env.lang.startswith('en'):
+                    check_amount = check_amount.replace('And ', '').replace(',', '')
                 if pay.amount % 1 > 0:
                     # If there are decimals, we write them as x/100
-                    check_amount += f' And {str(pay.amount).split(".")[1]}/100'
+                    check_amount += f' And {str(pay.amount).split(".")[1].ljust(2, "0")}/100'
                 pay.check_amount_in_words = check_amount + ' ONLY'
             else:
                 pay.check_amount_in_words = False
@@ -48,3 +50,8 @@ class AccountPayment(models.Model):
             'amount_no_currency': formatLang(self.env, self.amount) if i == 0 else 'VOID',
         })
         return info
+
+    def _check_fill_line(self, amount_str):
+        if self.company_id.account_check_printing_layout == 'l10n_ph_check_printing.action_print_check':
+            return amount_str or ''
+        return super()._check_fill_line(amount_str)

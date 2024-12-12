@@ -9,13 +9,13 @@
                         <div class="ph_check_date ph_check_date_day" t-esc="page['day']"/>
                         <div class="ph_check_date ph_check_date_year" t-esc="page['year']"/>
                         <div class="ph_check_partner_name">
-                            **<t t-esc="page['partner_name']"/>**
+                            <t t-esc="page['partner_name']"/>
                         </div>
                         <div class="ph_check_amount">
-                            **<t t-esc="page['amount_no_currency']"/>**
+                            <t t-esc="page['amount_no_currency']"/>
                         </div>
                         <div class="ph_check_amount_words">
-                            **<t t-esc="page['amount_in_word']"/>**
+                            <t t-esc="page['amount_in_word']"/>
                         </div>
                     </div>
                 </div>
