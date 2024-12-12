@@ -9,6 +9,9 @@
         <xpath expr="//input" position="before">
             <span t-if="props.hasForcedNegativeValue and currency and currency.position === 'before'">-</span>
         </xpath>
+        <xpath expr="//span[hasclass('o_monetary_ghost_value')]" position="before">
+            <span class="opacity-0 mx-1" t-if="props.hasForcedNegativeValue">-</span>
+        </xpath>
     </t>
 
 </templates>
