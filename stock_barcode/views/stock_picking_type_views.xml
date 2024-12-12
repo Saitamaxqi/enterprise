@@ -91,6 +91,9 @@
                     </group>
                 </page>
             </xpath>
+            <xpath expr="//group[@name='first']/group[last()]" position="inside">
+                <field name="color" widget="color_picker" string="Card Color" help="Add colors to operation cards to help users differentiate them."/>
+            </xpath>
         </field>
     </record>
 </odoo>

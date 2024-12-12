@@ -146,18 +146,14 @@
             $-color-contrast: color-contrast($-color);
 
             background-color: $-color;
+            .o_kanban_record_title {
+                color: $-color-contrast;
+            }
 
             .badge {
                 background: $-color-contrast;
                 color: color-contrast($-color-contrast);
             }
-        }
-    }
-
-    .o_barcode_picking_type {
-        &:after {
-            // Hide the left colored bar.
-            border-color: transparent !important;
         }
     }
 }
