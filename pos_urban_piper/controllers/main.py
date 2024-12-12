@@ -8,7 +8,7 @@ from odoo.http import request
 from odoo.tools import consteq
 from odoo.tools.json import scriptsafe as json
 from odoo.addons.pos_urban_piper import const
-from .data_validator import object_of, list_of
+from ...pos_enterprise.models.data_validator import object_of, list_of
 
 from werkzeug import exceptions
 
