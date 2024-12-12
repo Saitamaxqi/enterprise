@@ -153,6 +153,7 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
                     currency=foreign_currency.display_name if res['foreign_currency_id'] else None,
                     amount=-res['amount_residual'] * rate if res['amount_residual'] else None,
                     amount_currency_id=journal_currency.id,
+                    has_sublines=True,
                 )
             else:
                 amount = 0

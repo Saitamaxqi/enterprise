@@ -140,7 +140,7 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
                 'vat_number': vat_number,
                 'turnover': 0,
                 'vat_amount': 0,
-                'has_sublines': False,
+                'has_sublines': True,
             }
 
             for line in query_res_lines:

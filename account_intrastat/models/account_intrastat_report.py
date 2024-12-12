@@ -162,6 +162,7 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                     'weight': res['weight'] or None,
                     'supplementary_units': supplementary_units,
                     'value': res['value'] or None if current_groupby == 'intrastat_grouping' else sum(line['value'] for line in query_res_lines if not line['missing_product']),
+                    'has_sublines': True,
                 }
                 if options.get('export_mode') == 'file':
                     return self._get_exporting_dict_data(result_dict, res)

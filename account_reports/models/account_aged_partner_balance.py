@@ -124,7 +124,7 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
                     'currency': currency.display_name if currency else None,
                     'account_name': query_res['account_name'][0] if len(query_res['account_name']) == 1 else None,
                     'total': None,
-                    'has_sublines': query_res['aml_count'] > 0,
+                    'has_sublines': True,
 
                     # Needed by the custom_unfold_all_batch_data_generator, to speed-up unfold_all
                     'partner_id': query_res['partner_id'][0] if query_res['partner_id'] else None,
@@ -138,7 +138,7 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
                     'currency': None,
                     'account_name': None,
                     'total': sum(rslt[f'period{i}'] for i in range(len(periods))),
-                    'has_sublines': False,
+                    'has_sublines': True,
                 })
 
             return rslt
@@ -322,7 +322,7 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
 
                         # Iterate on results by partner to generate the content of the column group
                         partner_expression_totals = rslt.setdefault(f"[{report_line_id}]=>partner_id", {})\
-                                                        .setdefault(column_group_key, {expression: {'value': []} for expression in expressions_to_evaluate})
+                                                        .setdefault(column_group_key, {expression: {'value': [], 'sublines_info': set()} for expression in expressions_to_evaluate})
                         for partner_id, aml_data_list in aml_data_by_partner.items():
                             partner_values = self._prepare_partner_values()
                             for i in range(report_periods):
@@ -330,7 +330,7 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
 
                             # Build expression totals under the right key
                             partner_aml_expression_totals = rslt.setdefault(f"[{report_line_id}]partner_id:{partner_id}=>id", {})\
-                                                                .setdefault(column_group_key, {expression: {'value': []} for expression in expressions_to_evaluate})
+                                                                .setdefault(column_group_key, {expression: {'value': [], 'sublines_info': set()} for expression in expressions_to_evaluate})
                             for aml_data in aml_data_list:
                                 for i in range(report_periods):
                                     period_value = aml_data[f'period{i}']
@@ -346,6 +346,7 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
                                 partner_expression_totals[expression]['value'].append(
                                     (partner_id, partner_values[expression.subformula])
                                 )
+                                partner_expression_totals[expression]['sublines_info'].add(partner_id)
 
         return rslt
 

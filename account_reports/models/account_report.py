@@ -2783,7 +2783,7 @@ class AccountReport(models.Model):
             column_expr_label = column_data['expression_label']
             column_res_dict = target_line_res_dict.get(column_expr_label, {})
             column_value = column_res_dict.get('value')
-            column_has_sublines = column_res_dict.get('has_sublines', False)
+            column_has_sublines = column_res_dict.get('sublines_info', False)
             column_expression = line_expressions_map.get(column_expr_label, self.env['account.report.expression'])
             figure_type = column_expression.figure_type or column_data['figure_type']
 
@@ -3144,20 +3144,21 @@ class AccountReport(models.Model):
                         # Happens when expanding a groupby line, to compute its children.
                         # We then want to keep a list(grouping key, total) as the final result of each total
                         expression_value = []
-                        expression_has_sublines = False
+                        sublines_info = set()
                         for key, result_dict in result:
+                            if result_dict.get('has_sublines'):
+                                sublines_info.add(key)
                             try:
                                 expression_value.append((key, safe_eval(result_value_key, result_dict)))
                             except (ValueError, SyntaxError):
                                 raise UserError(subformula_error_format)
-                            expression_has_sublines = expression_has_sublines or result_dict.get('has_sublines')
                     else:
                         # For non-groupby lines, we directly set the total value for the line.
                         try:
                             expression_value = safe_eval(result_value_key, result)
+                            sublines_info = result.get('has_sublines', False)
                         except (ValueError, SyntaxError):
                             raise UserError(subformula_error_format)
-                        expression_has_sublines = result.get('has_sublines')
 
                     if column_group_options.get('integer_rounding_enabled'):
                         in_monetary_column = any(
@@ -3171,7 +3172,7 @@ class AccountReport(models.Model):
 
                     expression_result = {
                         'value': expression_value,
-                        'has_sublines': expression_has_sublines,
+                        'sublines_info': sublines_info,
                     }
 
                     if expression.report_line_id.report_id == self:
@@ -6831,7 +6832,7 @@ class AccountReportLine(models.Model):
 
         cached_result = (unfold_all_batch_data or {}).get(full_sub_groupby_key)
 
-        if cached_result is not None:
+        if cached_result is not None or options.get('test_unfold_all'):
             all_column_groups_expression_totals = cached_result
         else:
             all_column_groups_expression_totals = self.report_id._compute_expression_totals_for_each_column_group(
@@ -6866,8 +6867,12 @@ class AccountReportLine(models.Model):
         aggregated_group_totals = defaultdict(lambda: defaultdict(default_value_per_expression.copy))
         for column_group_key, expression_totals in all_column_groups_expression_totals.items():
             for expression in self.expression_ids:
+                sublines_info = expression_totals[expression]['sublines_info']
                 for grouping_key, result in expression_totals[expression]['value']:
-                    aggregated_group_totals[grouping_key][column_group_key][expression] = {'value': result}
+                    aggregated_group_totals[grouping_key][column_group_key][expression] = {
+                        'value': result,
+                        'sublines_info': grouping_key in sublines_info,
+                    }
 
         # Generate groupby lines
         group_lines_by_keys = {}
@@ -6883,11 +6888,14 @@ class AccountReportLine(models.Model):
                 else:
                     caret_option = groupby_model
 
+            columns = self.report_id._build_static_line_columns(self, options, group_totals, groupby_model=groupby_model)
+            has_children = bool(next_groupby) and any(col['has_sublines'] for col in columns)
+
             group_line_dict = {
                 # 'name' key will be set later, so that we can browse all the records of this expansion at once (in case we're dealing with records)
                 'id': line_id,
-                'unfoldable': bool(next_groupby),
-                'unfolded': (next_groupby and options['unfold_all']) or line_id in options['unfolded_lines'],
+                'unfoldable': has_children,
+                'unfolded': (has_children and next_groupby and options['unfold_all']) or line_id in options['unfolded_lines'],
                 'groupby': next_groupby,
                 'columns': self.report_id._build_static_line_columns(self, options, group_totals, groupby_model=groupby_model),
                 'level': self.hierarchy_level + 2 * (prefix_groups_count + len(sub_groupby_domain) + 1) + (group_indent - 1),

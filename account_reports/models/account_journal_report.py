@@ -62,7 +62,8 @@ class AccountJournalReportHandler(models.AbstractModel):
                 'code': code,
                 'credit': query_line['credit'],
                 'debit': query_line['debit'],
-                'balance': query_line['balance'] if current_groupby == 'account_id' else None
+                'balance': query_line['balance'] if current_groupby == 'account_id' else None,
+                'has_sublines': True,
             }
             return query_line['grouping_key'], result_line_dict
 

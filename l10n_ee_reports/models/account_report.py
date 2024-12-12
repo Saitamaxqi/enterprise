@@ -276,6 +276,7 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
                 'tax_rate': res['tax_rate'],
                 'sum_for_rate_in_period': res['sum_rate_period'],
                 'comments': res['comments'],
+                'has_sublines': True,
             }
         return {
             'buyer_reg_code': None,
@@ -286,6 +287,7 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
             'tax_rate': 0,
             'sum_for_rate_in_period': 0,
             'comments': None,
+            'has_sublines': True,
         }
 
     def build_result_dict_kmd_inf_b(self, query_res_lines, current_groupby):
@@ -299,6 +301,7 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
                 'invoice_sum_vat': res['invoice_sum_vat'],
                 'vat_in_period': res['vat_in_period'],
                 'comments': res['comments'],
+                'has_sublines': True,
             }
         return {
             'seller_reg_code': None,
@@ -308,6 +311,7 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
             'invoice_sum_vat': 0,
             'vat_in_period': 0,
             'comments': None,
+            'has_sublines': True,
         }
 
     ####################################################

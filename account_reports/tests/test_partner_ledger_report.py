@@ -123,6 +123,47 @@ class TestPartnerLedgerReport(TestAccountReportsCommon):
             options,
         )
 
+    def test_partner_ledger_batch_data_generator(self):
+        """ Test the custom_unfold_all_batch_data_generator """
+        options = self._generate_options(
+            self.report,
+            fields.Date.from_string('2017-01-01'),
+            fields.Date.from_string('2017-12-31'),
+            default_options={'unfold_all': True}
+        )
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #   Name                                      Debit           Credit          Balance
+            [   0,                                          6,              7,              9],
+            [
+                ('partner_a',                           20133.33,          0.0,         20133.33),
+                ('Initial Balance',                       133.33,          0.0,           133.33),
+                ('MISC/2017/01/0001 - 2017_1_2',         2000.0,           0.0,          2133.33),
+                ('MISC/2017/01/0001 - 2017_1_3',         3000.0,           0.0,          5133.33),
+                ('MISC/2017/01/0001 - 2017_1_4',         4000.0,           0.0,          9133.33),
+                ('MISC/2017/01/0001 - 2017_1_5',         5000.0,           0.0,         14133.33),
+                ('MISC/2017/01/0001 - 2017_1_6',         6000.0,           0.0,         20133.33),
+                ('Total partner_a',                     20133.33,          0.0,         20133.33),
+                ('partner_b',                            1200.0,           0.0,          1200.0),
+                ('Initial Balance',                       200.0,           0.0,           200.0),
+                ('MISC/2017/01/0001 - 2017_1_1',         1000.0,           0.0,          1200.0),
+                ('Total partner_b',                      1200.0,           0.0,          1200.0),
+                ('partner_c',                               0.0,       21333.33,       -21333.33),
+                ('Initial Balance',                         0.0,         333.33,         -333.33),
+                ('MISC/2017/01/0001 - 2017_1_7',            0.0,        6000.0,         -6333.33),
+                ('MISC/2017/01/0001 - 2017_1_8',            0.0,        7000.0,        -13333.33),
+                ('MISC/2017/01/0001 - 2017_1_9',            0.0,        8000.0,        -21333.33),
+                ('Total partner_c',                         0.0,       21333.33,       -21333.33),
+                ('Unknown Partner',                       200.0,         200.0,             0.0),
+                ('MISC/2017/06/0001 - 2017_2_1',          200.0,           0.0,           200.0),
+                ('MISC/2017/06/0001 - 2017_2_2',            0.0,         200.0,             0.0),
+                ('Total Unknown Partner',                 200.0,         200.0,             0.0),
+                ('Total',                               21533.33,      21533.33,            0.0),
+            ],
+            options,
+        )
+
     def test_partner_ledger_load_more(self):
         ''' Test unfolding a line to use the load more. '''
         self.report.load_more_limit = 2

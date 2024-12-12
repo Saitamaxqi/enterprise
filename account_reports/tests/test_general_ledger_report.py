@@ -215,7 +215,9 @@ class TestGeneralLedgerReport(TestAccountReportsCommon, odoo.tests.HttpCase):
             options,
         )
 
-        options['unfold_all'] = True
+        options.update({
+            'unfold_all': True,
+        })
 
         self.assertLinesValues(
             self.report._get_lines(options),
