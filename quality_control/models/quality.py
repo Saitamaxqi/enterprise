@@ -231,7 +231,13 @@ class QualityCheck(models.Model):
         help="""Operation = One quality check is requested at the operation level.
                   Product = A quality check is requested per product.
                  Quantity = A quality check is requested for each new product quantity registered, with partial quantity checks also possible.""")
-    move_line_id = fields.Many2one('stock.move.line', 'Stock Move Line', check_company=True, help="In case of Quality Check by Quantity, Move Line on which the Quality Check applies")
+    move_line_id = fields.Many2one(
+        "stock.move.line",
+        "Stock Move Line",
+        check_company=True,
+        help="In case of Quality Check by Quantity, Move Line on which the Quality Check applies",
+        index="btree_not_null",
+    )
     failure_location_id = fields.Many2one('stock.location', string="Failure Location")
     lot_name = fields.Char('Lot/Serial Number Name', related='move_line_id.lot_name')
     lot_line_id = fields.Many2one('stock.lot', store=True, compute='_compute_lot_line_id')
