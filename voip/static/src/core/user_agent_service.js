@@ -50,6 +50,7 @@ export class UserAgent {
     constructor(env, services) {
         this.env = env;
         this.callService = services["voip.call"];
+        this.multiTabService = services.multi_tab;
         this.notificationService = services.notification;
         this.ringtoneService = services["voip.ringtone"];
         this.voip = services.voip;
@@ -468,7 +469,9 @@ export class UserAgent {
             sipSession: inviteSession,
         };
         this.softphone.show();
-        this.ringtoneService.incoming.play();
+        if (this.multiTabService.isOnMainTab()) {
+            this.ringtoneService.incoming.play();
+        }
         // TODO send notification
     }
 
@@ -656,7 +659,7 @@ export class UserAgent {
 }
 
 export const userAgentService = {
-    dependencies: ["notification", "voip", "voip.call", "voip.ringtone"],
+    dependencies: ["multi_tab", "notification", "voip", "voip.call", "voip.ringtone"],
     start(env, services) {
         return new UserAgent(env, services);
     },
