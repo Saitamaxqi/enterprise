@@ -12,26 +12,26 @@
                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
             </t>
         </xpath>
-        <xpath expr="//h3[hasclass('css_editable_mode_hidden')]/del" position="after">
+        <del name="product_price_strikethrough" position="after">
             <t t-if="combination_info.get('is_rental')">
                 <span>per</span>
                 <span itemprop="rental_duration" t-if="combination_info['rental_duration'] > 1"
                       t-esc="combination_info['rental_duration']"/>
                 <span itemprop="rental_unit" t-esc="combination_info['rental_unit']"/>
             </t>
-        </xpath>
+        </del>
         <xpath expr="//span[hasclass('oe_price')]" position="attributes">
             <attribute name="t-if">not combination_info.get('is_rental')</attribute>
         </xpath>
         <xpath expr="//span[@itemprop='listPrice']" position="attributes">
             <attribute name="t-if">not combination_info.get('is_rental')</attribute>
         </xpath>
-        <xpath expr="//h3[hasclass('css_non_editable_mode_hidden')]" position="attributes">
+        <div name="product_list_price_container" position="attributes">
             <attribute name="t-if">not combination_info.get('is_rental')</attribute>
-        </xpath>
+        </div>
         <xpath expr="//div[@itemprop='offers']" position="after">
             <div t-if="combination_info.get('is_rental')" class="d-inline-block mt-2 mb-3">
-                <h3>
+                <div class="h3">
                     <span
                         class="oe_price o_renting_total_price text-nowrap"
                         t-out="combination_info['current_rental_price']"
@@ -48,7 +48,7 @@
                             t-out="combination_info['current_rental_unit']"
                         />
                     </span>
-                </h3>
+                </div>
             </div>
             </xpath>
     </template>

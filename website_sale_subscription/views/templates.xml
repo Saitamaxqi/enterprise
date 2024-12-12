@@ -23,10 +23,10 @@
     </template>
 
     <template id="subscription_product_price" inherit_id="website_sale.product_price" name="Subscription Product Price">
-        <xpath expr="//h3[hasclass('css_editable_mode_hidden')]" position="attributes">
+        <div name="product_price_container" position="attributes">
             <attribute name="t-att-hidden">combination_info.get('is_subscription', False)</attribute>
-        </xpath>
-        <xpath expr="//h3[hasclass('css_editable_mode_hidden')]" position="after">
+        </div>
+        <div name="product_price_container" position="after">
             <t t-if="combination_info.get('is_subscription') and combination_info['pricings']">
                 <select t-if="combination_info['subscription_pricing_select']" name="plan_id" class="form-select plan_select fs-5" required="1" t-nocache="1">
                     <t t-foreach="combination_info['pricings']" t-as="pricing">
@@ -45,7 +45,7 @@
                     </del>
                 </h5>
             </t>
-        </xpath>
+        </div>
     </template>
 
     <template id="cart_summary_inherit_website_sale_subscription" inherit_id="website_sale.checkout_layout">
