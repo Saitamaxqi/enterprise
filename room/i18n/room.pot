@@ -98,7 +98,13 @@ msgstr ""
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__description
+#: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "Amenities"
+msgstr ""
+
+#. module: room
+#: model_terms:ir.ui.view,arch_db:room.room_room_view_form
+msgid "Appearance"
 msgstr ""
 
 #. module: room
