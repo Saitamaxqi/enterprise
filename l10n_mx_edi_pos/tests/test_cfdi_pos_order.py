@@ -1,6 +1,6 @@
 from .common import TestMxEdiPosCommon
 
-from odoo import http
+from odoo import Command, http
 from odoo.addons.l10n_mx_edi.tests.common import EXTERNAL_MODE
 from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
 from odoo.exceptions import UserError
@@ -290,6 +290,38 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
                 )
             sent_doc_values['sat_state'] = 'valid'
             self.assertRecordValues(orders.l10n_mx_edi_document_ids, [sent_doc_values])
+
+    def test_global_invoice_from_order_foreign_currency(self):
+        usd = self.env.ref('base.USD')
+        usd.rate_ids = [Command.create({
+            'rate': 1 / 17.0398,
+            'name': self.frozen_today,
+        })]
+        usd_journal = self.env['account.journal'].create({
+            'name': 'Test POS Journal',
+            'type': 'sale',
+            'code': 'TPOS',
+            'currency_id': usd.id
+        })
+        usd_pricelist = self.env['product.pricelist'].create({
+            'name': 'POS Pricelist',
+            'currency_id': usd.id
+        })
+        self.config.journal_id = usd_journal.id
+        self.config.write({
+            'use_pricelist': True,
+            'pricelist_id': usd_pricelist.id,
+            'available_pricelist_ids': usd_pricelist.ids,
+        })
+        with self.mx_external_setup(self.frozen_today), self.with_pos_session() as _session:
+            order = self._create_order({
+                'pos_order_lines_ui_args': [(self.product, 1)],
+                'payments': [(self.bank_pm1, 68.08)],
+            })
+
+            with self.with_mocked_pac_sign_success():
+                order._l10n_mx_edi_cfdi_global_invoice_try_send()
+            self._assert_global_invoice_cfdi_from_orders(order, "test_global_invoice_from_order_foreign_currency")
 
     def test_invoiced_order_then_refund(self):
         with self.mx_external_setup(self.frozen_today):
