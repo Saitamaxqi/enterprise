@@ -36,6 +36,7 @@ Features:
         'views/sale_order_template.xml',
         'views/product_template_views.xml',
         'views/product_pricelist_views.xml',
+        'views/product_views.xml',
         'views/sale_subscription_views.xml',
         'views/sale_order_line_view.xml',
         'views/res_partner_views.xml',
@@ -61,6 +62,7 @@ Features:
     'assets': {
         'web.assets_backend': [
             'sale_subscription/static/src/js/components/**/*',
+            'sale_subscription/static/src/js/product_catalog/**/*',
             'sale_subscription/static/src/js/combo_configurator_dialog/*',
             'sale_subscription/static/src/js/product_configurator_dialog/*',
             'sale_subscription/static/src/js/sale_product_field.js',

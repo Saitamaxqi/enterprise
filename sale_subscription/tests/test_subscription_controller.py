@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
+import json
 from datetime import date
 from freezegun import freeze_time
 from unittest.mock import patch
@@ -707,3 +708,66 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
                 "Subscription state should be '6_churn' after closing."
             )
             self.assertTrue(self.subscription.close_reason_id, "Close reason should be set after closing.")
+
+    def test_check_product_catalog_data(self):
+        """
+        Test that creating a sale order with both subscription and normal products
+        reflects the correct pricing in the catalog and sale order lines.
+        """
+        sub_product = self.env['product.product'].create({
+            'name': 'Subscription Product',
+            'type': 'service',
+            'recurring_invoice': True,
+            'invoice_policy': 'order',
+            'list_price': 100.0,
+        })
+        non_sub_product = self.env['product.product'].create({
+            'name': 'Non-Subscription Product',
+            'type': 'service',
+            'invoice_policy': 'order',
+            'list_price': 50.0,
+        })
+        sale_order = self.env['sale.order'].create({
+            'name': 'Test Sale Order',
+            'partner_id': self.partner.id,
+            'plan_id': self.plan_month.id,
+        })
+        data = {
+            "id": 0,
+            "jsonrpc": "2.0",
+            "method": "call",
+            "params": {
+                'res_model': 'sale.order',
+                'order_id': sale_order.id,
+                'product_ids': [sub_product.id, non_sub_product.id],
+            }
+        }
+        headers = {
+            "Content-Type": "application/json",
+        }
+        self.authenticate(self.env.user.login, self.env.user.login)
+
+        # Make the request
+        response = self.url_open(
+            '/product/catalog/order_lines_info',
+            data=json.dumps(data).encode(),
+            headers=headers
+        )
+
+        # Check the response
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.content)
+        response_prices = {
+            int(product_id): product_data['price']
+            for product_id, product_data in response_data['result'].items()
+        }
+        expected_prices = {
+            sub_product.id: sub_product.list_price,
+            non_sub_product.id: non_sub_product.list_price,
+        }
+        # Ensure both are sorted before comparison
+        self.assertEqual(
+            sorted(response_prices.items()),
+            sorted(expected_prices.items()),
+            "Prices in the response should match the expected list prices."
+        )
