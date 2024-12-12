@@ -56,8 +56,8 @@ class L10nRoTrialBalance5ColumnReportHandler(models.AbstractModel):
         return {
             'date': {
                 **general_ledger_initial_balance_options['date'],
-                'date_from': initial_date['date_from'],
-                'date_to': initial_date['date_to'],
+                'date_from': initial_date['date_from'] if isinstance(initial_date['date_from'], str) else fields.Date.to_string(initial_date['date_from']),
+                'date_to': initial_date['date_to'] if isinstance(initial_date['date_to'], str) else fields.Date.to_string(initial_date['date_to']),
             },
             'include_current_year_in_unaff_earnings': general_ledger_initial_balance_options['include_current_year_in_unaff_earnings'],
         }
