@@ -95,6 +95,13 @@ export class GanttRendererControls extends Component {
         }
     }
 
+    get formattedDateRange() {
+        return _t("From: %(from_date)s to: %(to_date)s", {
+            from_date: formatDate(this.state.startDate),
+            to_date: formatDate(this.state.stopDate),
+        });
+    }
+
     getFormattedDate(date) {
         return formatDate(date);
     }

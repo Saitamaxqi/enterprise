@@ -110,7 +110,7 @@
             <div class="btn btn-secondary">
                 <i class="fa fa-calendar me-1"/>
                 <t t-if="state.rangeId === 'custom'">
-                    <t t-esc="`From: ${getFormattedDate(state.startDate)} to: ${getFormattedDate(state.stopDate)}`"/>
+                    <t t-esc="formattedDateRange"/>
                 </t>
                 <t t-else="">
                     <t t-esc="dateDescription"/>
