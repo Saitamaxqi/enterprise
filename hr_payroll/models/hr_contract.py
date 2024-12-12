@@ -88,7 +88,14 @@ class HrContract(models.Model):
 
     def copy_data(self, default=None):
         vals_list = super().copy_data(default=default)
-        return [dict(vals, name=self.env._("%s (copy)", contract.name)) for contract, vals in zip(self, vals_list)]
+        new_list = []
+        for contract, vals in zip(self, vals_list):
+            if contract.name == vals.get('name'):
+                new_list.append(dict(vals, name=self.env._("%s (copy)", contract.name)))
+            else:
+                new_list.append(vals)
+
+        return new_list
 
     def _get_salary_costs_factor(self):
         self.ensure_one()
