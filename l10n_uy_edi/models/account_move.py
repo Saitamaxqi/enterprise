@@ -140,7 +140,7 @@ class AccountMove(models.Model):
                 not x.l10n_uy_edi_document_id or
                 x.l10n_uy_edi_document_id.state not in ["received", "accepted", "rejected"]
             )
-        ).name = "/"
+        ).name = False
 
     def _is_manual_document_number(self):
         # EXTEND l10n_latam_invoice_document

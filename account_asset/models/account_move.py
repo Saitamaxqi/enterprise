@@ -306,7 +306,6 @@ class AccountMove(models.Model):
             'ref': name,
             'asset_depreciation_beginning_date': vals['depreciation_beginning_date'],
             'asset_number_days': vals['asset_number_days'],
-            'name': '/',
             'asset_value_change': vals.get('asset_value_change', False),
             'move_type': 'entry',
             'currency_id': current_currency.id,

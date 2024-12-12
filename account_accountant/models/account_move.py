@@ -306,7 +306,7 @@ class AccountMove(models.Model):
                 'partner_id': line.partner_id.id,
                 'auto_post': 'at_date',
                 'ref': ref,
-                'name': '/',
+                'name': False,
             }
 
             # Defer the current invoice
