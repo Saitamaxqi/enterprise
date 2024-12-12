@@ -30,7 +30,6 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
         })
         cls.payroll_folder.action_update_access_rights(partners={cls.payroll_manager.partner_id: ('edit', False)})
         cls.env.user.company_id.documents_payroll_folder_id = cls.payroll_folder.id
-        cls.richard_emp.work_contact_id = cls.doc_user.partner_id
         cls.richard_emp.user_id = cls.doc_user
         cls.contract = cls.richard_emp.contract_ids[0]
         cls.contract.state = 'open'
@@ -41,6 +40,9 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
         })
 
     def test_payslip_document_creation(self):
+        # Set a different partner for the work_contact_id to verify that the partner of the employee user is used
+        self.richard_emp.work_contact_id = self.doc_user.partner_id.copy()
+
         self.payslip.compute_sheet()
         self.payslip.with_context(payslip_generate_pdf=True, payslip_generate_pdf_direct=True).action_payslip_done()
 
@@ -50,11 +52,18 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
         document = self.env['documents.document'].search([('attachment_id', '=', attachment.id)])
         self.assertTrue(document, "There should be a new document created from the attachment")
         self.assertFalse(document.owner_id)
-        self.assertEqual(document.partner_id, self.richard_emp.work_contact_id, "The partner_id should be the employee's address")
+        self.assertEqual(document.partner_id, self.richard_emp.user_id.partner_id, "The document contact must be the user partner of the employee")
         self.assertEqual(document.folder_id, self.payroll_folder, "The document should have been created in the configured folder")
         self.assertEqual(document.access_via_link, "none")
         self.assertEqual(document.access_internal, "none")
         self.assertTrue(document.is_access_via_link_hidden)
+        self.assertEqual(
+            {a.partner_id: a.role for a in document.access_ids},
+            {self.payroll_manager.partner_id: 'edit', self.richard_emp.user_id.partner_id: 'view'},
+            "The payroll manager must have edit right on the payslip and the employee view right"
+        )
+        self.assertEqual(document.with_user(self.richard_emp.user_id).user_permission, 'view')
+        self.assertEqual(document.with_user(self.payroll_manager.user_id).user_permission, 'edit')
         self.check_document_no_access(document, self.doc_user_2)
         self.check_document_no_access(document, self.document_manager)
 

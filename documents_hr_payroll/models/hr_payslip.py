@@ -9,13 +9,13 @@ class HrPayslip(models.Model):
     _inherit = ['hr.payslip', 'documents.mixin']
 
     def _get_document_access_ids(self):
-        return [(self.employee_id.work_contact_id, ('view', False))]
+        return [(self._get_document_partner(), ('view', False))]
 
     def _get_document_tags(self):
         return self.company_id.documents_hr_payslips_tags
 
     def _get_document_partner(self):
-        return self.employee_id.work_contact_id
+        return self.employee_id.user_id.partner_id or self.employee_id.work_contact_id
 
     def _get_document_folder(self):
         return self.company_id.documents_payroll_folder_id
