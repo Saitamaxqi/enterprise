@@ -152,9 +152,14 @@ registry.category("web_tour.tours").add("test_shop_floor", {
             trigger: ".modal:not(.o_inactive_modal) .o_product_kanban_catalog_view",
         },
         {
-            content: "Add Color",
+            content: "search Color",
             trigger: ".modal-body .o_searchview_input",
-            run: "edit color && press Enter",
+            run: "edit color",
+        },
+        {
+            content: "Add Color",
+            trigger: ".o_searchview_autocomplete .o-dropdown-item.focus",
+            run: "press Enter",
         },
         {
             content: "Ensure the search is done",

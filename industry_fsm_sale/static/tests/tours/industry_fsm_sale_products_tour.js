@@ -13,7 +13,7 @@ registry.category("web_tour.tours").add('industry_fsm_sale_products_tour', {
     content: 'Search Field Service task',
     run: `fill Fsm task`,
 }, {
-    trigger: '.o_searchview_autocomplete .o_menu_item:contains("Fsm task")',
+    trigger: '.o_searchview_autocomplete .o-dropdown-item:contains("Fsm task")',
     content: 'Validate search',
     run: "click",
 }, {

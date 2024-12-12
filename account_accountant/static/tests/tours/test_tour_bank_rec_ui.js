@@ -101,7 +101,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
         },
         {
             content: "Select the Journal Entry search option from the dropdown",
-            trigger: ".o_searchview_autocomplete li:contains(Journal Entry)",
+            trigger: ".o_searchview_autocomplete .o-dropdown-item:contains(Journal Entry)",
             run: "click",
         },
         {
@@ -189,7 +189,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
         },
         {
             content: "Select the Transaction search option from the dropdown",
-            trigger: ".o_searchview_autocomplete li:contains(Transaction)",
+            trigger: ".o_searchview_autocomplete .o-dropdown-item:contains(Transaction)",
             run: "click",
         },
         {

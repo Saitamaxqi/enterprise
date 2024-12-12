@@ -139,7 +139,11 @@ registry.category("web_tour.tours").add("website_studio_website_form", {
         },
         {
             trigger: ".modal .o_searchview_input",
-            run: "edit x_test_model && press Enter"
+            run: "edit x_test_model"
+        },
+        {
+            trigger: ".o_searchview_autocomplete .o-dropdown-item.focus",
+            run: "press Enter"
         },
         {
             trigger: ".modal .o_data_row:contains(x_test_model) .o_data_cell",

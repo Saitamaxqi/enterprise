@@ -1277,7 +1277,7 @@ registry.category("web_tour.tours").add("web_studio.test_record_model_differs_fr
             },
             {
                 trigger:
-                    ".o_studio_report_kanban_view .o_searchview .o_menu_item:contains(Report):contains(dummy test)",
+                    ".o_searchview_autocomplete .o-dropdown-item:contains(Report):contains(dummy test)",
                 run: "click",
             },
             {

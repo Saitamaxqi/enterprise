@@ -43,7 +43,7 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     content: "Search planning shifts assigned to Aramis",
     run: "fill Aramis",
 }, {
-    trigger: ".o_menu_item.dropdown-item > a:not(.o_expand)",
+    trigger: ".o_searchview_autocomplete .o-dropdown-item > a:not(.o_expand)",
     content: "Select filter resource = Aramis",
     run: 'click',
 }, {
@@ -51,7 +51,7 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     content: "Search planning shifts assigned to Athos",
     run: "fill Athos",
 }, {
-    trigger: ".o_menu_item.dropdown-item > a:not(.o_expand)",
+    trigger: ".o_searchview_autocomplete .o-dropdown-item > a:not(.o_expand)",
     content: "Select filter resource = Athos",
     run: 'click',
 }, {
@@ -59,7 +59,7 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     content: "Search planning shifts assigned to Porthos",
     run: "fill Porthos",
 }, {
-    trigger: ".o_menu_item.dropdown-item > a:not(.o_expand)",
+    trigger: ".o_searchview_autocomplete .o-dropdown-item > a:not(.o_expand)",
     content: "Select filter resource = Porthos",
     run: 'click',
 }, {
@@ -67,7 +67,7 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     content: "Search planning shifts assigned to Rochefort",
     run: "fill Rochefort",
 }, {
-    trigger: ".o_menu_item.dropdown-item > a:not(.o_expand)",
+    trigger: ".o-dropdown-item > a:not(.o_expand)",
     content: "Select filter resource = Rochefort",
     run: 'click',
 }, {

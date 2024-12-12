@@ -29,7 +29,7 @@ registry.category("web_tour.tours").add("shared_sign_request_tour", {
         },
         {
             content: "Search Document Name",
-            trigger: ".o_searchview_autocomplete .o_menu_item:first",
+            trigger: ".o_searchview_autocomplete .o-dropdown-item:first",
             run: "click",
         },
         {

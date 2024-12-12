@@ -43,7 +43,7 @@ registry.category("web_tour.tours").add('planning_avatar_card_non_hr_user', {
     content: "Search planning shifts assigned to 3D Printer Room",
     run: "edit 3D Printer Room",
 }, {
-    trigger: ".o_menu_item.dropdown-item > a:not(.o_expand)",
+    trigger: ".o_searchview_autocomplete .o-dropdown-item > a:not(.o_expand)",
     content: "Select filter resource = 3D Printer Room",
     run: 'click',
 }, {

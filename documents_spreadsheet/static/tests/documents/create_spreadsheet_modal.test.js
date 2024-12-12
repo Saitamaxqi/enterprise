@@ -2,7 +2,7 @@ import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests
 import { getEnrichedSearchArch } from "@documents_spreadsheet/../tests/helpers/document_helpers";
 import { mockActionService } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { describe, expect, test } from "@odoo/hoot";
-import { click, dblclick, queryFirst, select } from "@odoo/hoot-dom";
+import { click, dblclick, queryFirst, select, press } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { contains, mountView } from "@web/../tests/web_test_helpers";
@@ -169,6 +169,8 @@ test("Can search template in modal with searchbar", async function () {
     expect(`${dialogSelector} .o-spreadsheet-grid:first`).toHaveText("Blank spreadsheet");
 
     await contains(`${dialogSelector} .o_searchview_input`).edit("Template 1");
+    await press("Enter");
+    await animationFrame();
     expect(`${dialogSelector} .o-spreadsheet-grid:not(.o-spreadsheet-grid-ghost-item)`).toHaveCount(
         2
     );
@@ -375,6 +377,7 @@ test("Offset reset to zero after searching for template in template dialog", asy
     ]);
 
     await contains(`${dialogSelector} .o_searchview_input`).edit("Template 1");
+    await press("Enter");
     await animationFrame();
     await animationFrame();
 

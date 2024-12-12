@@ -100,7 +100,7 @@ registry.category("web_tour.tours").add("documents_spreadsheet_create_template_t
             run: `edit ${TEMPLATE_NAME}`,
         },
         {
-            trigger: ".o_menu_item.focus",
+            trigger: ".o_searchview_autocomplete .o-dropdown-item.focus",
             content: "Validate search",
             run: "click",
         },

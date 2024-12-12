@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { click, edit, press, queryAll } from "@odoo/hoot-dom";
+import { animationFrame } from "@odoo/hoot-mock";
 
 import { contains, mailModels } from "@mail/../tests/mail_test_helpers";
 import { ProjectProject, defineProjectModels } from "@project/../tests/project_models";
@@ -121,6 +122,7 @@ test("Unassigned tasks will show when search for assignee", async () => {
     ]);
     await click(".o_searchview_input");
     await edit("User1");
+    await animationFrame();
     await press("Enter");
     await contains(".o_gantt_row_title", { count: 2 });
     expect(getGridContent().rows).toEqual([
