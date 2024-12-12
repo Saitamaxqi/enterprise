@@ -100,7 +100,7 @@ patch(StreamPostKanbanRecord.prototype, {
             tweet_id: this.record.twitter_tweet_id.raw_value,
             like: !userLikes
         });
-        const promises = this.props.list.groups.map((group) =>
+        const promises = this.props.group.model.root.groups.map((group) =>
             group.list.records
                 .filter(
                     (record) =>
