@@ -1281,3 +1281,24 @@ registry.category("web_tour.tours").add("test_barcode_mo_creation_in_scan_mo2", 
         { trigger: ".o_notification_bar.bg-success" },
     ],
 });
+
+registry.category("web_tour.tours").add("test_setting_barcode_mrp_allow_extra_product", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_line",
+            run: function () {
+                helper.assertLinesCount(2);
+            },
+        },
+        // Scans product2; It shouldn't be added as the allow_extra_product config is disabled.
+        { trigger: ".o_barcode_client_action", run: "scan product2" },
+        {
+            trigger: ".o_notification_bar.bg-danger",
+            run: () => {
+                helper.assertErrorMessage(
+                    "The product product2 should not be picked in this operation."
+                );
+            },
+        },
+    ],
+});

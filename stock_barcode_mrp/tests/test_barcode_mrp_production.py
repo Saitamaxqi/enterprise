@@ -750,3 +750,31 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         mo = self.env['mrp.production'].search([('product_id', '=', product_to_manufacture.id)], limit=1)
         self.assertTrue(mo, "The Manufacturing Order was not created.")
         self.assertEqual(mo.picking_type_id, mo2_operation_type, "The MO was not created with the correct operation type (MO2).")
+
+    def test_setting_barcode_mrp_allow_extra_product(self):
+        """ This test ensures that non-reserved products cannot be added when the
+            "allow extra product" option is disabled for the manufacturing operation type
+        """
+        self.clean_access_rights()
+        picking_type_manufacturing = self.env.ref('stock.warehouse0').manu_type_id
+        picking_type_manufacturing.barcode_allow_extra_product = False
+
+        # Create a manufacturing order in the backend and process it in the barcode app.
+        self.env['stock.quant'].create({
+            'quantity': 4,
+            'product_id': self.component01.id,
+            'location_id': self.stock_location.id,
+        })
+
+        mo = self.env['mrp.production'].create({
+            'product_id': self.final_product.id,
+            'product_qty': 1,
+            'move_raw_ids': [Command.create({
+                'product_id': self.component01.id,
+                'product_uom_qty': 2
+            })]
+        })
+        mo.action_confirm()
+
+        url = f'/odoo/{mo.id}/action-stock_barcode_mrp.stock_barcode_mo_client_action'
+        self.start_tour(url, 'test_setting_barcode_mrp_allow_extra_product', login='admin')
