@@ -39,7 +39,6 @@ class TestFsmStockUI(HttpCase):
                 'invoice_policy': 'delivery',
                 'list_price': 885.0,
                 'is_storable': True,
-                'is_favorite': True,
             }, {
                 'name': 'Product B',
                 'list_price': 2950.0,
@@ -47,9 +46,9 @@ class TestFsmStockUI(HttpCase):
                 'invoice_policy': 'delivery',
                 'taxes_id': False,
                 'tracking': 'lot',
-                'is_favorite': True,
             },
         ])
+        (cls.product_not_lot + cls.product_lot).product_tmpl_id.is_favorite = True
         cls.lot_id1 = cls.env['stock.lot'].create({
             'product_id': cls.product_lot.id,
             'name': 'Lot_1',

@@ -47,7 +47,7 @@
         <field name="name">product.list.barcodes</field>
         <field name="model">product.product</field>
         <field name="arch" type="xml">
-            <list string="Product Barcodes" editable="top" create="false" delete="false">
+            <list string="Product Barcodes" editable="top" create="false" delete="false" default_order="is_favorite desc, default_code, name, id">
                 <field name="name" readonly="1"/>
                 <field name="code" readonly="1"/>
                 <field name="barcode"/>

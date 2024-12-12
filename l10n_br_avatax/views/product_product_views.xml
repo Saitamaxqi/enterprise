@@ -5,7 +5,7 @@
             <field name="name">product.product.view.list</field>
             <field name="model">product.product</field>
             <field name="arch" type="xml">
-                <list editable="top" multi_edit="1">
+                <list editable="top" multi_edit="1" default_order="is_favorite desc, default_code, name, id">
                     <field name="default_code"/>
                     <field name="name"/>
                     <field name="l10n_br_source_origin"/>
@@ -22,7 +22,7 @@
             <field name="name">product.product.view.list</field>
             <field name="model">product.product</field>
             <field name="arch" type="xml">
-                <list editable="top" multi_edit="1">
+                <list editable="top" multi_edit="1" default_order="is_favorite desc, default_code, name, id">
                     <field name="default_code"/>
                     <field name="name"/>
                     <field name="l10n_br_source_origin"/>

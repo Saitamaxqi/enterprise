@@ -72,7 +72,7 @@
             <field name="mode">primary</field>
             <field eval="7" name="priority"/>
             <field name="arch" type="xml">
-                <list string="Product" multi_edit="1" duplicate="false" editable="bottom" expand="context.get('expand', False)">
+                <list string="Product" multi_edit="1" duplicate="false" editable="bottom" expand="context.get('expand', False)" default_order="is_favorite desc, default_code, name, id">
                     <field name="default_code" readonly="1"/>
                     <field name="name" readonly="1"/>
                     <field name="intrastat_code_id"/>
@@ -86,7 +86,7 @@
             <field name="mode">primary</field>
             <field eval="7" name="priority"/>
             <field name="arch" type="xml">
-                <list string="product" multi_edit="1" duplicate="false" editable="bottom" expand="context.get('expand', false)">
+                <list string="product" multi_edit="1" duplicate="false" editable="bottom" expand="context.get('expand', false)" default_order="is_favorite desc, default_code, name, id">
                     <field name="default_code" readonly="1"/>
                     <field name="name" readonly="1"/>
                     <field name="intrastat_code_id" string="Commodity Code" readonly="1"/>
@@ -102,7 +102,7 @@
             <field name="mode">primary</field>
             <field eval="7" name="priority"/>
             <field name="arch" type="xml">
-                <list string="Product" multi_edit="1" duplicate="false" editable="bottom" expand="context.get('expand', False)">
+                <list string="Product" multi_edit="1" duplicate="false" editable="bottom" expand="context.get('expand', False)" default_order="is_favorite desc, default_code, name, id">
                     <field name="default_code" readonly="1"/>
                     <field name="name" readonly="1"/>
                     <field name="intrastat_code_id" string="Commodity Code" readonly="1"/>

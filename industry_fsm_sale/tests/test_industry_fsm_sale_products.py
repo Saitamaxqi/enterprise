@@ -82,8 +82,8 @@ class TestFsmSaleProducts(HttpCase, TestFsmFlowCommon):
                 'name': 'Super Product',
                 'invoice_policy': 'delivery',
                 'list_price': 100.0,
-                'is_favorite': '1',
         })
+        super_product.product_tmpl_id.is_favorite = True
         self.start_tour("/odoo", 'industry_fsm_sale_products_compute_catalog_tour', login="admin")
         self.assertTrue(main_so.order_line.filtered(lambda sol: 'task 1' in sol.task_id.name and sol.product_id == super_product))
         self.assertTrue(main_so.order_line.filtered(lambda sol: 'task 2' in sol.task_id.name and sol.product_id == super_product))
