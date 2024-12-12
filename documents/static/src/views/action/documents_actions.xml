@@ -77,7 +77,7 @@
                         </button>
                         <button class="dropdown-item w-100"
                             t-on-click="() => this.onDelete()"
-                            t-if="someArchived">
+                            t-if="areTargetRecordsDeletable">
                             <i class="fa fa-fw fa-trash me-1"/>
                             <span class="d-inline-block">Delete</span>
                         </button>

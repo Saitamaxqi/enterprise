@@ -3,6 +3,7 @@ import { browser } from "@web/core/browser/browser";
 import { serializeDate } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
 import { download } from "@web/core/network/download";
+import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { openDeleteConfirmationDialog, toggleArchive } from "../hooks";
 
@@ -105,10 +106,13 @@ export class DocumentsAction extends Component {
     }
 
     /**
-     * Unlink the selected documents if they are archived.
+     * For internal user, unlink the selected documents if they are archived.
+     * And for non-internal user, unlink the selected documents as they don't have access to the trash.
      */
     async onDelete() {
-        const records = this.props.targetRecords.filter((r) => !r.data.active);
+        const records = !this.documentService.userIsInternal
+            ? this.props.targetRecords
+            : this.props.targetRecords.filter((r) => !r.data.active);
         if (!(await openDeleteConfirmationDialog(this.env.model, true))) {
             return;
         }
@@ -269,6 +273,21 @@ export class DocumentsAction extends Component {
         const actionsListIds = actionsList.map((actions) => actions.map((a) => a.id));
         return actionsList[0].filter((action) =>
             actionsListIds.every((a) => a.includes(action.id))
+        );
+    }
+
+    get areTargetRecordsDeletable() {
+        // Portal user can delete their own documents while internal user can only delete document in the Trash.
+        const documents = this.props.targetRecords.map((r) => r.data);
+        if (this.userIsInternal) {
+            return documents.some((d) => !d.active);
+        }
+        return documents.every(
+            (r) =>
+                r.owner_id?.[0] === user.userId &&
+                ["binary", "url"].includes(r.type) &&
+                typeof r.folder_id?.[0] === "number" &&
+                this.env.searchModel.getFolderById(r.folder_id[0]).user_permission === "edit"
         );
     }
 
