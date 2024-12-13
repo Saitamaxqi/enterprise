@@ -9,39 +9,63 @@ registry.category("web_tour.tours").add("test_checkout_id_nit", {
         {
             content: "Go to checkout",
             trigger: "a[name='website_sale_main_button']",
-            run: 'click',
+            run: "click",
         },
         {
-            content: "Fill Billing Form",
-            trigger: 'form.checkout_autoformat',
-            run: function() {
-                $('select[name="country_id"]').val($('#o_country_id option[code="CO"]').val()).change();
-                $('input[name="name"]').val('abc');
-                $('input[name="phone"]').val('99999999');
-                $('input[name="email"]').val('abc@odoo.com');
-                $('input[name="street"]').val('SO1 Billing Street, 33');
-                $('input[name="zip"]').val('10000');
-                $('input[name="company_name"]').val('Test Name');
-                const nit_id = $('select[name="l10n_latam_identification_type_id"] option').filter(() => $(this).text().trim() === 'NIT');
-                $('select[name="l10n_latam_identification_type_id"]').val(nit_id.val()).change();
-                $('input[name="vat"]').val('213123432-1');
-                // When ID is NIT, fill out the Obligation Types field
-                const obligation_id = $("select[name='l10n_co_edi_obligation_type_ids'] option").filter(() => $(this).text().trim() === 'R-99-PN');
-                $("select[name='l10n_co_edi_obligation_type_ids']").val(obligation_id.val());
-            },
+            trigger: "select[name=country_id]",
+            run: "selectByLabel Colombia",
         },
         {
-            content: "Fill State and City",
-            trigger: "select[name='city_id']",
-            run: function() {
-                $('select[name="state_id"]').val($('select[name="state_id"] option:eq(1)').val());
-                $('select[name="city_id"]').val($('select[name="city_id"] option:eq(1)').val());
-            },
+            trigger: "input[name=name]",
+            run: "edit abc",
+        },
+        {
+            trigger: "input[name=phone]",
+            run: "edit 99999999",
+        },
+        {
+            trigger: "input[name=email]",
+            run: "edit abc@odoo.com",
+        },
+        {
+            trigger: "input[name=street]",
+            run: "edit SO1 Billing Street, 33",
+        },
+        {
+            trigger: "input[name=zip]",
+            run: "edit 10000",
+        },
+        {
+            trigger: "input[name=company_name]",
+            run: "edit Test Name",
+        },
+        {
+            trigger: "input[name=vat]",
+            run: "edit 213123432-1",
+        },
+        {
+            trigger: "select[name=state_id]",
+            run: "selectByIndex 1",
+        },
+        {
+            trigger: "select[name=city_id]",
+            run: "selectByIndex 1",
+        },
+        {
+            trigger: "select[name=l10n_latam_identification_type_id]",
+            run: "selectByIndex 1",
+        },
+        {
+            trigger: "select[name=l10n_co_edi_obligation_type_ids]:not(:visible)",
+            run: "selectByLabel R-99-PN",
         },
         {
             content: "Continue Checkout",
             trigger: '.btn-primary:contains("Continue checkout")',
-            run: 'click',
+            run: "click",
+        },
+        {
+            trigger: "h4:contains(delivery address)",
         },
     ],
 });
@@ -54,35 +78,59 @@ registry.category("web_tour.tours").add("test_checkout_other_id", {
         {
             content: "Go to checkout",
             trigger: "a[name='website_sale_main_button']",
-            run: 'click',
+            run: "click",
         },
         {
-            content: "Fill Billing Form",
-            trigger: 'form.checkout_autoformat',
-            run: function() {
-                $('select[name="country_id"]').val($('#o_country_id option[code="CO"]').val()).change();
-                $('input[name="name"]').val('abc');
-                $('input[name="phone"]').val('99999999');
-                $('input[name="email"]').val('abc@odoo.com');
-                $('input[name="street"]').val('SO1 Billing Street, 33');
-                $('input[name="zip"]').val('10000');
-                const civil_id = $('select[name="l10n_latam_identification_type_id"] option').filter(() =>  $(this).text().trim() === 'Registro Civil');
-                $('select[name="l10n_latam_identification_type_id"]').val(civil_id.val()).change();
-                $('input[name="vat"]').val('213123432-1');
-            },
+            trigger: "select[name=country_id]",
+            run: "selectByLabel Colombia",
         },
         {
-            content: "Fill the city and state",
-            trigger: "select[name='city_id']",
-            run: function() {
-                $('select[name="state_id"]').val($('select[name="state_id"] option:eq(1)').val());
-                $('select[name="city_id"]').val($('select[name="city_id"] option:eq(1)').val());
-            },
+            trigger: "input[name=name]",
+            run: "edit abc",
+        },
+        {
+            trigger: "input[name=phone]",
+            run: "edit 99999999",
+        },
+        {
+            trigger: "input[name=email]",
+            run: "edit abc@odoo.com",
+        },
+        {
+            trigger: "input[name=street]",
+            run: "edit SO1 Billing Street, 33",
+        },
+        {
+            trigger: "input[name=zip]",
+            run: "edit 10000",
+        },
+        {
+            trigger: "input[name=company_name]",
+            run: "edit Test Name",
+        },
+        {
+            trigger: "input[name=vat]",
+            run: "edit 213123432-1",
+        },
+        {
+            trigger: "select[name=state_id]",
+            run: "selectByIndex 1",
+        },
+        {
+            trigger: "select[name=city_id]",
+            run: "selectByIndex 1",
+        },
+        {
+            trigger: "select[name=l10n_latam_identification_type_id]",
+            run: "selectByLabel Registro Civil",
         },
         {
             content: "Validate address",
             trigger: '.btn-primary:contains("Continue checkout")',
-            run: 'click',
+            run: "click",
+        },
+        {
+            trigger: "h4:contains(delivery address)",
         },
     ],
 });
