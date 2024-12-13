@@ -20,7 +20,7 @@ patch(Activity.prototype, {
                 return;
             }
         }
-        const documentReference = res_model && res_id ? `${res_model},${res_id}` : false;
+        const documentReference = (res_model && res_model != 'sign.request') && res_id ? `${res_model},${res_id}` : false;
         await this.props.activity.requestSignature(this.props.reloadParentView, documentReference);
     },
 });
