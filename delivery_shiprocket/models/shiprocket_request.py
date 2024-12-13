@@ -317,6 +317,8 @@ class ShipRocket:
         net_weight_in_kg = self.carrier._shiprocket_convert_weight(package.weight)
         line_vals = self._get_shipping_lines(package, picking).values()
         payment_method = "Prepaid" if self.carrier.shiprocket_payment_method == "prepaid" else "COD"
+        discount_order_lines = picking.sale_id.order_line.filtered(lambda ol: ol.product_id == ol.company_id.sale_discount_product_id)
+        total_discount = abs(sum(discount_order_lines.mapped('price_unit')))
         return {
             "request_pickup": self.carrier.shiprocket_pickup_request,
             "print_label": True,
@@ -353,6 +355,7 @@ class ShipRocket:
             "shipping_email": partner.email,
             "shipping_phone": self._get_phone(partner),
             "order_items": list(line_vals),
+            "total_discount": total_discount,
             "sub_total": self._get_subtotal(line_vals),
             "payment_method": payment_method,
             "shipping_charges": ship_charges,
@@ -389,7 +392,9 @@ class ShipRocket:
             # need courier code, as the rate request and forward shipment APIs must have to use the same courier code.
             courier_code = rate_response.get('courier_code')
             # ship_charges is mandatory as forward shipment API will not return it in response, used in subtotal.
-            ship_charges = rate_response.get('price')
+            carrier_product_id = self.carrier.product_id
+            carrier_order_lines = picking.sale_id.order_line.filtered(lambda ol: ol.product_id == carrier_product_id)
+            ship_charges = sum(carrier_order_lines.mapped('price_unit'))
             parcel = self._prepare_parcel(picking, package, courier_code, ship_charges, index=index)
             parcel_dict[package] = parcel
         return parcel_dict

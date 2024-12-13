@@ -157,6 +157,7 @@ class TestDeliveryShiprocket(TransactionCase):
                 'height': dimensions.get('height'),
                 'weight': net_weight_in_kg,
                 'order_items': list(line_vals),
+                'total_discount': 0,
                 'sub_total': sr._get_subtotal(line_vals),
                 'pickup_location': warehouse_partner_name,
                 'vendor_details': {
@@ -227,6 +228,7 @@ class TestDeliveryShiprocket(TransactionCase):
                 'height': dimensions.get('height'),
                 'weight': net_weight_in_kg,
                 'order_items': list(line_vals),
+                'total_discount': 0,
                 'sub_total': sr._get_subtotal(line_vals),
                 'pickup_location': warehouse_partner_name,
                 'vendor_details': {
