@@ -128,7 +128,7 @@ class TestL10nBREDI(TestL10nBREDICommon):
 
     def test_l10n_br_edi_generate_and_send_single_wizard(self):
         single_wizard = self.env['account.move.send.wizard'].create({'move_id': self.invoice.id})
-        self.assertTrue('manual' in single_wizard.sending_methods)
+        self.assertFalse(single_wizard.sending_methods)
         self.assertEqual(single_wizard.invoice_edi_format, False)
         self.assertTrue('br_edi' in single_wizard.extra_edis)
         with self.with_patched_account_move("_l10n_br_iap_request", invoice_1_submit_success_response):
