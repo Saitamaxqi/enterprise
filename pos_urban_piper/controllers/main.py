@@ -97,9 +97,6 @@ class PosUrbanPiperController(http.Controller):
             pos_config.log_xml("Payload - %s. Error - %s" % (data, error), 'urbanpiper_webhook_%s' % (event_type))
             _logger.warning("UrbanPiper: %r", error)
 
-    def _tax_amount_to_remove(self, lines, pos_config_sudo):
-        return 0
-
     def _create_order(self, data):
         order = data['order']
         customer = data['customer']
@@ -186,7 +183,6 @@ class PosUrbanPiperController(http.Controller):
                 'uuid': str(uuid.uuid4())
             }))
         pos_reference, order_sequence_number, tracking_number = pos_config_sudo.current_session_id.get_next_order_refs(ref_prefix=pos_delivery_provider.name)
-        tax_amt_to_remove = self._tax_amount_to_remove(order['items'], pos_config_sudo)
         discounts = details.get('ext_platforms', [{}])[0].get('discounts', [])
         discount_amt = sum(discount['value'] for discount in discounts if discount['is_merchant_discount'])
         general_note = "\n".join([
@@ -214,8 +210,6 @@ class PosUrbanPiperController(http.Controller):
                     'note': '\n'.join([discount.get('code', ''), discount.get('title', '')]),
                     'uuid': str(uuid.uuid4()),
                 }))
-        amount_tax = float(details['total_taxes']) - float(tax_amt_to_remove)
-        amount_total = float(details['order_subtotal']) + float(details.get('order_level_total_charges')) - discount_amt + amount_tax
         delivery_order = request.env["pos.order"].sudo().create({
             'partner_id': customer_sudo.id,
             'pos_reference': pos_reference,
@@ -226,9 +220,9 @@ class PosUrbanPiperController(http.Controller):
             'company_id': pos_config_sudo.company_id.id,
             'fiscal_position_id': pos_config_sudo.urbanpiper_fiscal_position_id.id,
             'lines': lines,
-            'amount_paid': amount_total,
-            'amount_total': amount_total,
-            'amount_tax': amount_tax,
+            'amount_paid': 0.0, #calculation is done below
+            'amount_total': 0.0,
+            'amount_tax': 0.0,
             'amount_return': 0.0,
             'delivery_identifier': details['id'],
             'delivery_status': details['order_state'].lower(),
@@ -241,6 +235,7 @@ class PosUrbanPiperController(http.Controller):
             'user_id':  pos_config_sudo.current_session_id.user_id.id,
             'uuid': str(uuid.uuid4()),
         })
+        delivery_order._compute_prices()
         pos_config_sudo._send_delivery_order_count(delivery_order.id)
 
     def _get_tax_value(self, taxes_data, pos_config):
