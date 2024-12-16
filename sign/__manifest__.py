@@ -159,6 +159,7 @@ Let your customers follow the signature process easily.
             'sign/static/src/dialogs/**/*',
             'sign/static/src/services/**/*',
 
+            'sign/static/tests/tours/**/*', 
             'web_tour/static/src/tour_pointer/**/*',
             'web_tour/static/src/tour_service/**/*',
             'web/static/lib/hoot-dom/**/*',
