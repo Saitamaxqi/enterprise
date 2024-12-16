@@ -17,5 +17,6 @@
 
     .o_gantt_renderer {
         --Gantt__DayOff-background-color: #{$o-gray-300};
+        --Gantt__DayOffToday-background-color: #{$gantt-highlight-today-bg};
     }
 }
