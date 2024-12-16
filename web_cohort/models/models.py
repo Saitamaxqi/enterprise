@@ -8,7 +8,7 @@ from dateutil.relativedelta import relativedelta
 import babel.dates
 
 from odoo import api, fields, models
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, date_utils
 from odoo.osv import expression
 from odoo.tools.misc import get_lang
 
@@ -31,7 +31,7 @@ class Base(models.AbstractModel):
             :param date_start: the starting date to use in the group_by clause
             :param date_stop: the date field which mark the change of state
             :param measure: the field to aggregate
-            :param interval: the interval of time between two cells ('day', 'week', 'month', 'year')
+            :param interval: the interval of time between two cells ('day', 'week', 'month', 'quarter', 'year')
             :param domain: a domain to limit the read_group
             :param mode: the mode of aggregation ('retention', 'churn') [default='retention']
             :param timeline: the direction to display data ('forward', 'backward') [default='forward']
@@ -101,6 +101,9 @@ class Base(models.AbstractModel):
                 elif interval == 'month':
                     col_start_date += relativedelta(months=col)
                     col_end_date = col_start_date + relativedelta(months=1)
+                elif interval == 'quarter':
+                    col_start_date += relativedelta(months=3 * col)
+                    col_end_date = col_start_date + relativedelta(months=3)
                 else:
                     col_start_date += relativedelta(years=col)
                     col_end_date = col_start_date + relativedelta(years=1)
@@ -148,6 +151,8 @@ class Base(models.AbstractModel):
                 # For 'week' interval, we display a better tooltip (range like : '02 Jul - 08 Jul')
                 if interval == 'week':
                     period = "%s - %s" % (col_start_date.strftime('%d %b'), (col_end_date - relativedelta(days=1)).strftime('%d %b'))
+                elif interval == 'quarter':
+                    period = f"Q{date_utils.get_quarter_number(col_start_date)} {col_start_date.strftime('%Y')}"
                 else:
                     period = col_start_date.strftime(DISPLAY_FORMATS[interval])
 

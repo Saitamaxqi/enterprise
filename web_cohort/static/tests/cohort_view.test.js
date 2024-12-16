@@ -125,7 +125,43 @@ test("simple cohort rendering", async () => {
     });
 
     await contains(".o_view_scale_selector .scale_button_selection").click();
-    expect(".o-dropdown--menu span").toHaveCount(4, {
+    expect(".o-dropdown--menu span").toHaveCount(5, {
+        message: "should have buttons of intervals",
+    });
+});
+
+test("quarter cohort rendering", async () => {
+    await mountView({
+        type: "cohort",
+        resModel: "subscription",
+        arch: '<cohort string="Subscription" date_start="start" date_stop="stop" />',
+    });
+    await changeScale("quarter");
+    expect(".o_cohort_view").toHaveClass("o_view_controller");
+    expect(".table").toHaveCount(1, { message: "should have a table" });
+    expect(".table thead tr:first th:first:contains(Start)").toHaveCount(1, {
+        message: 'should contain "Start" in header of first column',
+    });
+    expect(".table thead tr:first th:nth-child(3):contains(Stop - By Quarter)").toHaveCount(1, {
+        message: 'should contain "Stop - By Quarter" in title',
+    });
+    expect(".table tbody tr td:first:contains(Q3 2017)").toHaveCount(1, {
+        message: 'should contain "Q3 2017" as start',
+    });
+    expect(".table thead tr:nth-child(2) th:first:contains(+0)").toHaveCount(1, {
+        message: "interval should start with 0",
+    });
+    expect(".table thead tr:nth-child(2) th:nth-child(7):contains(+6)").toHaveCount(1, {
+        message: "interval should end with 6",
+    });
+
+    await toggleMenu("Measures");
+    expect(".dropdown-menu:not(.d-none)").toHaveCount(1, {
+        message: "should have list of measures",
+    });
+
+    await contains(".o_view_scale_selector .scale_button_selection").click();
+    expect(".o-dropdown--menu span").toHaveCount(5, {
         message: "should have buttons of intervals",
     });
 });

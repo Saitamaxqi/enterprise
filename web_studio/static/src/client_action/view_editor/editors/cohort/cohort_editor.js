@@ -56,6 +56,7 @@ export class CohortEditorSidebar extends Component {
             { label: _t("Day"), value: "day" },
             { label: _t("Week"), value: "week" },
             { label: _t("Month"), value: "month" },
+            { label: _t("Quarter"), value: "quarter" },
             { label: _t("Year"), value: "year" },
         ];
     }

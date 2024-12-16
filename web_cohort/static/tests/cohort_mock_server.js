@@ -14,6 +14,7 @@ function _mockGetCohortData({ args, kwargs, model }) {
         day: "dd MM yyyy",
         week: "WW kkkk",
         month: "MMMM yyyy",
+        quarter: "Qq yyyy",
         year: "y",
     };
     const rows = [];
@@ -38,6 +39,9 @@ function _mockGetCohortData({ args, kwargs, model }) {
                 break;
             case "month":
                 format = "MMMM yyyy";
+                break;
+            case "quarter":
+                format = "Qq yyyy";
                 break;
             case "year":
                 format = "y";
