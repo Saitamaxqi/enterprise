@@ -67,7 +67,8 @@ class AppraisalAskFeedback(models.TransientModel):
     def _compute_deadline(self):
         date_in_month = fields.Date.today() + relativedelta(months=1)
         for wizard in self:
-            wizard.deadline = min(date_in_month, wizard.appraisal_id.date_close + relativedelta(days=-1))
+            # allow "last day" feedback fill by adding 1 day
+            wizard.deadline = min(date_in_month, wizard.appraisal_id.date_close + relativedelta(days=1))
 
     @api.onchange('employee_ids')
     def _onchange_employee_ids(self):
