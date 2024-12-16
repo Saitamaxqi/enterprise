@@ -402,7 +402,6 @@ class ProjectTask(models.Model):
                 'default_res_ids': self.ids,
                 'default_template_id': template_id,
                 'fsm_mark_as_sent': True,
-                'mailing_document_based': True,
             },
         }
 

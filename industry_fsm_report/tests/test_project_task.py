@@ -35,7 +35,6 @@ class TestProjectTask(TestIndustryFsmCommon):
             'default_res_ids': self.task.ids,
             'default_template_id': self.env.ref('industry_fsm.mail_template_data_task_report').id,
             'fsm_mark_as_sent': True,
-            'mailing_document_based': True,
         })
 
         self.env.company.external_report_layout_id = False  # make sure no layout exists
