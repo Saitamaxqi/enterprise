@@ -65,7 +65,7 @@
                                 help="E-invoice fetching is in progress.">
                             <div class="o_stat_info">
                                 <span class="o_stat_text">
-                                    <i class="fa fa-spinner fa-spin p-1"/>
+                                    <i class="fa fa-circle-o-notch fa-spin p-1"/>
                                     Fetching
                                 </span>
                             </div>

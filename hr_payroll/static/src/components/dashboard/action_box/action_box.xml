@@ -9,7 +9,7 @@
             </div>
             <t t-if="this.state.loading">
                 <div class="position-absolute top-0 bottom-0 start-0 end-0 d-flex align-items-center justify-content-center">
-                    <i class="fa fa-3x fa-spin fa-spinner mx-auto text-o-color-2"/>
+                    <i class="fa fa-3x fa-circle-o-notch fa-spin mx-auto text-o-color-2"/>
                 </div>
             </t>
             <t t-else="">

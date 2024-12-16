@@ -5,7 +5,7 @@
             <span class="w-25" t-esc="state.status"/>
             <t t-if="state.isFetching">
                 <div>
-                    <i class="fa fa-refresh fa-spin"/>
+                    <i class="fa fa-circle-o-notch fa-spin"/>
                 </div>
             </t>
             <t t-else="">

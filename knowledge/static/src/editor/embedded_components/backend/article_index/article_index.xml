@@ -15,7 +15,7 @@
                     />
                     <EmbeddedComponentToolbarButton
                         hidden="props.readonly"
-                        icon="['fa-refresh', state.loading ? 'fa-spin' : ''].join(' ')"
+                        icon="['fa-circle-o-notch', state.loading ? 'fa-spin' : ''].join(' ')"
                         label.translate="Refresh"
                         onClick.bind="onRefreshBtnClick"
                         title.translate="Update"

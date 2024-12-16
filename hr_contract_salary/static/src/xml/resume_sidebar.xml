@@ -14,7 +14,7 @@
                                 <t t-if="!hide_details">
                                     <a role="button" data-bs-toggle="modal" data-bs-target="#hr_cs_modal" name="details" data-bs-backdrop="false" data-bs-dismiss="modal">Details</a>
                                 </t>
-                                <a role="button" name="recompute" title="Recompute" aria-label="Recompute" class="d-none"><i class="fa fa-refresh fa-spin"/></a>
+                                <a role="button" name="recompute" title="Recompute" aria-label="Recompute" class="d-none"><i class="fa fa-circle-o-notch fa-spin"/></a>
                             </div>
                         </t>
                         <t t-if="!is_net">

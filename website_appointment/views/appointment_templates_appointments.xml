@@ -226,7 +226,7 @@
                 <p class="m-0">Use the top button '<b>+ New</b>' to create an appointment type.</p>
             </div>
             <div class="o_appointment_svg mx-auto text-center py-3 w-75">
-                <i class="mx-auto h3 fa fa-spinner fa-spin"/>
+                <i class="mx-auto h3 fa fa-circle-o-notch fa-spin"/>
             </div>
             <div class="mt-4 text-center d-none">
                 <t t-if="current_search">

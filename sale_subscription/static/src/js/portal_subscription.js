@@ -70,7 +70,7 @@
          */
         _onClick: function () {
             this.$el.attr('disabled', true);
-            this.$el.prepend('<i class="fa fa-refresh fa-spin"></i> ');
+            this.$el.prepend('<i class="fa fa-circle-o-notch fa-spin"></i> ');
             $('#wc-modal-close-init form').submit();
         },
     });

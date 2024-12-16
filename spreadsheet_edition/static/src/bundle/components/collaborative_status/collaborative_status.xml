@@ -7,7 +7,7 @@
                 <i class="fa fa-check"/> Saved
             </t>
             <t t-else="">
-                <i class="fa fa-spin fa-spinner"/> Saving
+                <i class="fa fa-circle-o-notch fa-spin"/> Saving
             </t>
         </div>
         <div t-if="connectedUsers.length > 0"
