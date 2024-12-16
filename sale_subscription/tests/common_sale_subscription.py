@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
 
@@ -26,14 +26,14 @@ class TestSubscriptionCommon(TestSaleCommon):
         cls.env.ref('base.main_company').currency_id = cls.env.ref('base.USD')
 
         # disable most emails for speed
-        context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True}
-        AnalyticPlan = cls.env['account.analytic.plan'].with_context(context_no_mail)
-        Analytic = cls.env['account.analytic.account'].with_context(context_no_mail)
-        SaleOrder = cls.env['sale.order'].with_context(context_no_mail)
-        SubPlan = cls.env['sale.subscription.plan'].with_context(context_no_mail)
-        SubPricing = cls.env['sale.subscription.pricing'].with_context(context_no_mail)
-        Tax = cls.env['account.tax'].with_context(context_no_mail)
-        ProductTmpl = cls.env['product.template'].with_context(context_no_mail)
+        cls.context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True}
+        AnalyticPlan = cls.env['account.analytic.plan'].with_context(cls.context_no_mail)
+        Analytic = cls.env['account.analytic.account'].with_context(cls.context_no_mail)
+        cls.SaleOrder = cls.env['sale.order'].with_context(cls.context_no_mail)
+        cls.SubPlan = cls.env['sale.subscription.plan'].with_context(cls.context_no_mail)
+        SubPricing = cls.env['sale.subscription.pricing'].with_context(cls.context_no_mail)
+        Tax = cls.env['account.tax'].with_context(cls.context_no_mail)
+        cls.ProductTmpl = cls.env['product.template'].with_context(cls.context_no_mail)
         cls.country_belgium = cls.env.ref('base.be')
 
         # Minimal CoA & taxes setup
@@ -58,16 +58,16 @@ class TestSubscriptionCommon(TestSaleCommon):
         cls.journal = cls.company_data['default_journal_sale']
 
         # Test products
-        cls.plan_week = SubPlan.create({'name': 'Weekly', 'billing_period_value': 1, 'billing_period_unit': 'week'})
-        cls.plan_month = SubPlan.create({'name': 'Monthly', 'billing_period_value': 1, 'billing_period_unit': 'month'})
-        cls.plan_year = SubPlan.create({'name': 'Yearly', 'billing_period_value': 1, 'billing_period_unit': 'year'})
-        cls.plan_2_month = SubPlan.create({'name': '2 Months', 'billing_period_value': 2, 'billing_period_unit': 'month'})
+        cls.plan_week = cls.SubPlan.create({'name': 'Weekly', 'billing_period_value': 1, 'billing_period_unit': 'week'})
+        cls.plan_month = cls.SubPlan.create({'name': 'Monthly', 'billing_period_value': 1, 'billing_period_unit': 'month'})
+        cls.plan_year = cls.SubPlan.create({'name': 'Yearly', 'billing_period_value': 1, 'billing_period_unit': 'year'})
+        cls.plan_2_month = cls.SubPlan.create({'name': '2 Months', 'billing_period_value': 2, 'billing_period_unit': 'month'})
 
         cls.pricing_month = SubPricing.create({'plan_id': cls.plan_month.id, 'price': 1})
         cls.pricing_year = SubPricing.create({'plan_id': cls.plan_year.id, 'price': 100})
         cls.pricing_year_2 = SubPricing.create({'plan_id': cls.plan_year.id, 'price': 200})
         cls.pricing_year_3 = SubPricing.create({'plan_id': cls.plan_year.id, 'price': 300})
-        cls.sub_product_tmpl = ProductTmpl.create({
+        cls.sub_product_tmpl = cls.ProductTmpl.create({
             'name': 'BaseTestProduct',
             'type': 'service',
             'recurring_invoice': True,
@@ -81,7 +81,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'property_account_income_id': cls.account_income.id,
         })
 
-        cls.product_tmpl_2 = ProductTmpl.create({
+        cls.product_tmpl_2 = cls.ProductTmpl.create({
             'name': 'TestProduct2',
             'type': 'service',
             'recurring_invoice': True,
@@ -94,7 +94,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'property_account_income_id': cls.account_income.id,
         })
 
-        cls.product_tmpl_3 = ProductTmpl.create({
+        cls.product_tmpl_3 = cls.ProductTmpl.create({
             'name': 'TestProduct3',
             'type': 'service',
             'recurring_invoice': True,
@@ -107,7 +107,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'property_account_income_id': cls.account_income.id,
         })
 
-        cls.product_tmpl_4 = ProductTmpl.create({
+        cls.product_tmpl_4 = cls.ProductTmpl.create({
             'name': 'TestProduct4',
             'type': 'service',
             'recurring_invoice': True,
@@ -119,7 +119,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'taxes_id': [(6, 0, [cls.tax_20.id])],
             'property_account_income_id': cls.account_income.id,
         })
-        cls.product_tmpl_5 = ProductTmpl.create({
+        cls.product_tmpl_5 = cls.ProductTmpl.create({
             'name': 'One shot product',
             'type': 'service',
             'recurring_invoice': False,
@@ -228,7 +228,7 @@ class TestSubscriptionCommon(TestSaleCommon):
         })
 
         # Test Subscription
-        cls.subscription = SaleOrder.create({
+        cls.subscription = cls.SaleOrder.create({
             'name': 'TestSubscription',
             'is_subscription': True,
             'plan_id': cls.plan_month.id,
@@ -339,6 +339,7 @@ class TestSubscriptionCommon(TestSaleCommon):
         return invoice
 
     def flush_tracking(self):
+        """ Force the creation of tracking values. """
         self.env.flush_all()
         self.cr.flush()
 
