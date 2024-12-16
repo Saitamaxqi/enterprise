@@ -55,15 +55,15 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_kanban_view"/>
         <field name="arch" type="xml">
-                <xpath expr="//field[@name='list_price']" position="replace">
+            <xpath expr="//field[@name='list_price']" position="replace">
+                <group groups="sales_team.group_sale_salesman">
                     <field name="product_subscription_pricing_ids" invisible="1"/>
-                    <t t-if="record.product_subscription_pricing_ids.raw_value.length">
-                        <field name="display_subscription_pricing" />
-                    </t>
-                    <t t-else="">
-                        <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"></field>
-                    </t>
-                </xpath>
+                    <field name="display_subscription_pricing" invisible="not product_subscription_pricing_ids"/>
+                </group>
+                <group>
+                    <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                </group>
+            </xpath>
         </field>
     </record>
 
