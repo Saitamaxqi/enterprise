@@ -11,8 +11,7 @@ from odoo.tools import float_repr, float_round
 
 import odoo.addons.account.tools.structured_reference as sr
 from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_communication
-from odoo.addons.account_iso20022.models.account_payment import ISO20022_CHARGE_BEARER_SELECTION
-
+from odoo.addons.account_iso20022.models.account_payment import ISO20022_CHARGE_BEARER_SELECTION, ISO20022_PRIORITY_SELECTION, ISO20022_PRIORITY_HELP
 
 class AccountJournal(models.Model):
     _inherit = "account.journal"
@@ -31,7 +30,14 @@ class AccountJournal(models.Model):
         help="SEPA version to use to generate Credit Transfer XML files from this journal",
     )
     has_sepa_ct_payment_method = fields.Boolean(compute='_compute_has_sepa_ct_payment_method')
-
+    has_iso20022_payment_method = fields.Boolean(compute='_compute_has_iso20022_payment_method')
+    iso20022_default_priority = fields.Selection(
+        selection=ISO20022_PRIORITY_SELECTION,
+        string='Default Priority',
+        default='NORM',
+        help=ISO20022_PRIORITY_HELP,
+        required=True,
+    )
     iso20022_charge_bearer = fields.Selection(
         string="ISO 20022 Charge Bearer",
         selection=ISO20022_CHARGE_BEARER_SELECTION,
@@ -74,8 +80,7 @@ class AccountJournal(models.Model):
     def _compute_has_iso20022_payment_method(self):
         for journal in self:
             journal.has_iso20022_payment_method = any(
-                code.startswith('iso20022')
-                for code in journal.mapped('outbound_payment_method_line_ids.payment_method_id.code')
+                journal.mapped('outbound_payment_method_line_ids.payment_method_id.is_iso20022')
             )
 
     # -------------------------------------------------------------------------
@@ -135,8 +140,9 @@ class AccountJournal(models.Model):
         for payment in payments:
             required_payment_date = max(payment['payment_date'], today)
             currency = payment['currency_id'] or self.company_id.currency_id.id
-            payments_date_instr_wise[(required_payment_date, currency)].append(payment)
-        for count, ((payment_date, _currency), payments_list) in enumerate(payments_date_instr_wise.items()):
+            priority = payment['iso20022_priority']
+            payments_date_instr_wise[(required_payment_date, currency, priority)].append(payment)
+        for count, ((payment_date, _currency, priority), payments_list) in enumerate(payments_date_instr_wise.items()):
             PmtInf = etree.SubElement(CstmrCdtTrfInitn, "PmtInf")
             PmtInfId = etree.SubElement(PmtInf, "PmtInfId")
             PmtInfId.text = (val_MsgId + str(self.id) + str(count))[-30:]
@@ -149,7 +155,7 @@ class AccountJournal(models.Model):
             CtrlSum = etree.SubElement(PmtInf, "CtrlSum")
             CtrlSum.text = self._get_CtrlSum(payments_list)
 
-            PmtTpInf = self._get_PmtTpInf(payment_method_code)
+            PmtTpInf = self._get_PmtTpInf(payment_method_code, priority)
             if len(PmtTpInf) != 0:  # Boolean conversion from etree element triggers a deprecation warning ; this is the proper way
                 PmtInf.append(PmtTpInf)
 
@@ -194,23 +200,18 @@ class AccountJournal(models.Model):
         InitgPty.extend(self._get_company_PartyIdentification32(postal_address=False, issr=True, payment_method_code=payment_method_code))
         return InitgPty
 
-    def _get_PmtTpInf(self, payment_method_code):
+    def _get_PmtTpInf(self, payment_method_code, priority):
         PmtTpInf = etree.Element("PmtTpInf")
-        is_salary = self.env.context.get('sepa_payroll_sala')
-        if is_salary:
-            # The "High" priority level is also an attribute of the payment
-            # that we should specify as well for salary payments
-            # See https://www.febelfin.be/sites/default/files/2019-04/standard-credit_transfer-xml-v32-en_0.pdf section 2.6
+        if priority:
             InstrPrty = etree.SubElement(PmtTpInf, "InstrPrty")
-            InstrPrty.text = 'HIGH'
-
+            InstrPrty.text = priority
         SvcLvlTxt = self._get_SvcLvlText(payment_method_code)
         if SvcLvlTxt:
             SvcLvl = etree.SubElement(PmtTpInf, "SvcLvl")
             Cd = etree.SubElement(SvcLvl, "Cd")
             Cd.text = SvcLvlTxt
 
-        if is_salary:
+        if self.env.context.get('sepa_payroll_sala'):
             # The SALA purpose code is standard for all SEPA, and guarantees a series
             # of things in instant payment: https://www.sepaforcorporates.com/sepa-payments/sala-sepa-salary-payments.
             CtgyPurp = etree.SubElement(PmtTpInf, "CtgyPurp")

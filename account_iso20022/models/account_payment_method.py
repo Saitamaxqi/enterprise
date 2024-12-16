@@ -1,10 +1,17 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models, osv
+from odoo import api, fields, models, osv
 
 
 class AccountPaymentMethod(models.Model):
     _inherit = 'account.payment.method'
+
+    is_iso20022 = fields.Boolean(compute='_compute_is_iso20022')
+
+    @api.depends('code')
+    def _compute_is_iso20022(self):
+        for method in self:
+            method.is_iso20022 = method.code and method.code.startswith('iso20022')
 
     @api.model
     def _get_payment_method_information(self):

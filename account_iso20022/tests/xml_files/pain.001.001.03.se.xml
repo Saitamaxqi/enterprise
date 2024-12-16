@@ -26,6 +26,7 @@
       <NbOfTxs>2</NbOfTxs>
       <CtrlSum>1100.00</CtrlSum>
       <PmtTpInf>
+        <InstrPrty>NORM</InstrPrty>
         <SvcLvl>
           <Cd>NURG</Cd>
         </SvcLvl>

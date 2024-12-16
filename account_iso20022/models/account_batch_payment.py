@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields, _
+from odoo import api, fields, models, _
 from odoo.exceptions import RedirectWarning, UserError
 
 import base64
@@ -14,6 +14,8 @@ class AccountBatchPayment(models.Model):
         string="SCT Batch Booking",
         default=True,
         help="Request batch booking from the bank for the related bank statements.")
+
+    payment_method_is_iso20022 = fields.Boolean(related='payment_method_id.is_iso20022')
 
     def _get_methods_generating_files(self):
         rslt = super()._get_methods_generating_files()
@@ -130,6 +132,7 @@ class AccountBatchPayment(models.Model):
             'partner_country_code': payment.partner_id.country_id.code,
             'iso20022_uetr': payment.iso20022_uetr,
             'iso20022_charge_bearer': payment.iso20022_charge_bearer,
+            'iso20022_priority': payment.iso20022_priority,
         }
 
     def _generate_payment_template(self, payments):

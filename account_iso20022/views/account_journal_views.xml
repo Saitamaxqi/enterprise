@@ -10,6 +10,7 @@
                     <group string="Credit Transfer" invisible="not (has_sepa_ct_payment_method or has_iso20022_payment_method)">
                         <field name="sepa_pain_version" required="1" invisible="not has_sepa_ct_payment_method"/>
                         <field name="iso20022_charge_bearer" invisible="not has_iso20022_payment_method"/>
+                        <field name="iso20022_default_priority" invisible="not has_iso20022_payment_method"/>
                     </group>
                 </xpath>
             </field>

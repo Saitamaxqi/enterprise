@@ -1,4 +1,5 @@
 
+from textwrap import dedent
 from uuid import uuid4
 
 from odoo import models, fields, api, _
@@ -10,6 +11,18 @@ ISO20022_CHARGE_BEARER_SELECTION = [
     ('SHAR', "Shared"),
     ('SLEV', "Service Level"),
 ]
+ISO20022_PRIORITY_SELECTION = [
+    ('NORM', 'NORM - Normal'),
+    ('HIGH', 'HIGH - High priority'),
+    ('URGP', 'URGP - Critical urgency'),
+    ('SVDA', 'SVDA - Same value date'),
+]
+ISO20022_PRIORITY_HELP = dedent('''\
+    • NORM: Standard processing time.
+    • HIGH: High priority payment.
+    • URGP: Critical, requires immediate processing.
+    • SVDA: Payments must settle on same day as submission.'''
+)
 
 
 class AccountPayment(models.Model):
@@ -22,7 +35,14 @@ class AccountPayment(models.Model):
         store=True,
         help='Unique end-to-end transaction reference',
     )
-
+    iso20022_priority = fields.Selection(
+        string='Priority',
+        selection=ISO20022_PRIORITY_SELECTION,
+        compute='_compute_payment_method_priority',
+        store=True, readonly=False,
+        help=ISO20022_PRIORITY_HELP,
+    )
+    payment_method_is_iso20022 = fields.Boolean(related='payment_method_line_id.payment_method_id.is_iso20022')
     iso20022_charge_bearer = fields.Selection(
         string="Charge Bearer",
         selection=ISO20022_CHARGE_BEARER_SELECTION,
@@ -83,3 +103,11 @@ class AccountPayment(models.Model):
         )
         for payment in payments:
             payment.iso20022_uetr = uuid4()
+
+    @api.depends('journal_id', 'payment_method_is_iso20022')
+    def _compute_payment_method_priority(self):
+        for payment in self:
+            payment.iso20022_priority = (
+                payment.payment_method_is_iso20022
+                and payment.journal_id.iso20022_default_priority
+            )
