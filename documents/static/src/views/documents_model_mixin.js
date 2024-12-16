@@ -1,4 +1,3 @@
-import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { user } from '@web/core/user';
 import { useService } from "@web/core/utils/hooks";
@@ -224,14 +223,6 @@ export const DocumentsRecordMixin = (component) => class extends component {
             options.isRangeSelection
         ) {
             this.selectRecord(ev, options);
-        } else if (this.model.root.selection.length > 0) {
-            this.model.dialog.add(ConfirmationDialog, {
-                title: _t("Open folder"),
-                body: _t("Entering this folder will deselect all items. Do you want to proceed?"),
-                confirmLabel: _t("Enter folder"),
-                confirm: () => this.openFolder(),
-                cancel: () => {},
-            });
         } else {
             this.openFolder();
         }
