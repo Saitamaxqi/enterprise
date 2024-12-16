@@ -30,6 +30,7 @@ class HrEmployeeBase(models.AbstractModel):
         employee_appraisals = self.with_context(active_test=False).appraisal_ids
         opened_appraisals = employee_appraisals.filtered(lambda a: a.state in ['new', 'pending'])
         done_appraisals = employee_appraisals.filtered(lambda a: a.state == 'done')
+        relevant_appraisals = employee_appraisals
         if opened_appraisals:
             relevant_appraisals = opened_appraisals
         elif done_appraisals:
