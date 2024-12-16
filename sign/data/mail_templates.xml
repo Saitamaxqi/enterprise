@@ -156,7 +156,7 @@
     </template>
 
     <template id="message_signature_link">
-        <p>A document has been signed and a copy attached to <t t-esc="request.reference_doc.name"/>:
+        <p>A document has been signed and a copy attached to <t t-esc="request.reference_doc.display_name"/>:
             <a href="#" t-att-data-oe-model="request._name" t-att-data-oe-id="request.id"> <t t-esc="request.reference"/></a>
         </p>
     </template>
