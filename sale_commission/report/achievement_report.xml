@@ -5,14 +5,14 @@
         <field name="model">sale.commission.achievement.report</field>
         <field name="arch" type="xml">
             <list create="0" delete="0" action="open_related" type="object">
-                <field name="plan_id" optional="hide"/>
                 <field name="user_id"/>
                 <field name="team_id" optional="hide"/>
-                <field name="achieved"/>
+                <field name="plan_id" optional="visible"/>
                 <field name="date" optional="hide"/>
-                <field name="related_res_id" string="Source"/>
                 <field name="target_id"/>
+                <field name="related_res_id" string="Source"/>
                 <field name="currency_id" optional="hide"/>
+                <field name="achieved"/>
             </list>
         </field>
     </record>

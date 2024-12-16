@@ -7,8 +7,9 @@
             <list create="0" delete="0" editable="top">
                 <field name="user_id"/>
                 <field name="team_id" optional="hide"/>
-                <field name="plan_id" optional="hide"/>
-                <field name="payment_date"/>
+                <field name="plan_id" optional="visible"/>
+                <field name="date_to" string="Period" options="{'format': '%b %Y'}"/>
+                <field name="payment_date" optional="hide"/>
                 <field name="forecast" readonly="0" optional="hide"/>
                 <field name="target_amount" invisible="target_amount == 0"/>
                 <field name="achieved"/>

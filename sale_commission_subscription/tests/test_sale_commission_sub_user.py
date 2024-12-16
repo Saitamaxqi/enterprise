@@ -137,3 +137,41 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
         self.assertEqual(sum(achievements.mapped('achieved')), 110, 'Subscription invoice provide 100 and non recurring one provives 10')
         self.assertEqual(sorted(achievements.mapped('related_res_id')), sorted([inv2.id, inv_sub.id]))
         self.assertEqual(sum(commissions.mapped('commission')), 110, "One user has achieved and not the other one")
+
+
+    @freeze_time('2024-02-02')
+    def test_multiple_achievements(self):
+        # this test makes sure all achievements are summed
+        sub = self.subscription.copy()
+        sub.user_id = self.commission_user_1.id
+        sub.order_line.price_unit = 500
+        sub.start_date = False
+        sub.next_invoice_date = False
+        sub.action_confirm()
+        sub.order_line[1].unlink()
+        sub.order_line.price_unit = 500
+        self.commission_plan_sub.achievement_ids = self.env['sale.commission.plan.achievement'].create([
+            {
+                'type': 'amount_invoiced',
+                'rate': 0.1,
+                'plan_id': self.commission_plan_sub.id,
+                'recurring_plan_id': sub.plan_id.id,
+            }, {
+                'type': 'amount_invoiced',
+                'rate': 0.15,
+                'plan_id': self.commission_plan_sub.id,
+                'product_id': caca.id,
+            }
+        ])
+        self.commission_plan_user.achievement_ids = self.env['sale.commission.plan.achievement'].create([
+            {
+                'type': 'amount_invoiced',
+                'rate': 0.1,
+            }, {
+                'type': 'amount_invoiced',
+                'rate': 0.15,
+                'product_id': caca.id,
+                'product_category_id': cat.id
+            }
+        ])
+        tood: vérifier que ça somme tout dans les deux cas:
