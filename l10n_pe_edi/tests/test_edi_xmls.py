@@ -244,7 +244,7 @@ class TestEdiXmls(TestPeEdiCommon):
                                 </Country>
                             </RegistrationAddress>
                             <TaxScheme>
-                                <ID>VAT</ID>
+                                <ID>NOT_EU_VAT</ID>
                             </TaxScheme>
                         </PartyTaxScheme>
                         <PartyLegalEntity>
@@ -289,7 +289,7 @@ class TestEdiXmls(TestPeEdiCommon):
                                 </Country>
                             </RegistrationAddress>
                             <TaxScheme>
-                                <ID>VAT</ID>
+                                <ID>NOT_EU_VAT</ID>
                             </TaxScheme>
                         </PartyTaxScheme>
                         <PartyLegalEntity>
@@ -504,7 +504,7 @@ class TestEdiXmls(TestPeEdiCommon):
                                 </Country>
                             </RegistrationAddress>
                             <TaxScheme>
-                                <ID>VAT</ID>
+                                <ID>NOT_EU_VAT</ID>
                             </TaxScheme>
                         </PartyTaxScheme>
                         <PartyLegalEntity>
@@ -549,7 +549,7 @@ class TestEdiXmls(TestPeEdiCommon):
                                 </Country>
                             </RegistrationAddress>
                             <TaxScheme>
-                                <ID>VAT</ID>
+                                <ID>NOT_EU_VAT</ID>
                             </TaxScheme>
                         </PartyTaxScheme>
                         <PartyLegalEntity>
