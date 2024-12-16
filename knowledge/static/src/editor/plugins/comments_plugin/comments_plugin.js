@@ -370,7 +370,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
     }
 
     onWindowClick(ev) {
-        const selector = ".oe-local-overlay, .o_knowledge_comment_box, .o-overlay-container";
+        const selector = `.oe-local-overlay, .o_knowledge_comment_box, .o-we-toolbar, .o-overlay-container`;
         const closestElement = ev.target.closest(selector);
         if (!closestElement && !this.editable.contains(ev.target)) {
             this.commentsState.activeThreadId = undefined;
