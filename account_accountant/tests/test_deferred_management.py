@@ -4,8 +4,9 @@ import datetime
 
 from odoo import Command, fields
 from odoo.tests import tagged
-
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+
+from freezegun import freeze_time
 
 
 @tagged('post_install', '-at_install')
@@ -482,6 +483,38 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
             {'date': fields.Date.to_date('2023-01-31')},
             {'date': fields.Date.to_date('2023-02-28')},
         ])
+
+    def test_deferred_entries_not_created_on_future_invoice(self):
+        """Test that we don't create deferred entries on a future posted invoice"""
+        tomorrow = fields.Date.to_date(fields.Date.today()) + datetime.timedelta(days=1)
+        move = self.create_invoice(
+            'out_invoice',
+            [(self.expense_accounts[0], 1680, tomorrow, tomorrow + datetime.timedelta(days=100))],
+            date=tomorrow,
+            post=False
+        )
+        move.auto_post = "at_date"
+        move._post()
+        self.assertFalse(move.deferred_move_ids)
+
+        with freeze_time(tomorrow):
+            self.env.ref('account.ir_cron_auto_post_draft_entry').method_direct_trigger()
+            self.assertEqual(move.state, 'posted')
+            self.assertTrue(move.deferred_move_ids)
+
+    def test_deferred_entries_created_on_auto_post_invoice(self):
+        """Test that deferred entries are created on an invoice with auto_post set to 'at_date'"""
+        yesterday = fields.Date.to_date(fields.Date.today()) - datetime.timedelta(days=1)
+        move = self.create_invoice(
+            'out_invoice',
+            [(self.expense_accounts[0], 1680, yesterday, yesterday + datetime.timedelta(days=45))],
+            date=yesterday,
+            post=False
+        )
+        move.auto_post = "at_date"
+        move._post()
+        self.assertEqual(move.state, 'posted')
+        self.assertTrue(move.deferred_move_ids)
 
     def test_deferred_compute_method_full_months(self):
         """

@@ -281,6 +281,8 @@ class AccountMove(models.Model):
         Generates the deferred entries for the invoice.
         """
         self.ensure_one()
+        if self.state != 'posted':
+            return
         if self.is_entry():
             raise UserError(_("You cannot generate deferred entries for a miscellaneous journal entry."))
         deferred_type = "expense" if self.is_purchase_document() else "revenue"
