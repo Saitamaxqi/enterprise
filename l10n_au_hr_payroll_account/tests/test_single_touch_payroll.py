@@ -1,9 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from datetime import date
+from psycopg2.errors import UniqueViolation
 
-from odoo import fields, Command
+from odoo import fields, Command, tools
 from odoo.tests import tagged
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from .common import L10nPayrollAccountCommon
 from odoo.addons.l10n_au_hr_payroll.tests.test_unused_leaves import TestPayrollUnusedLeaves
 
@@ -206,3 +207,47 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         )
         self.assertEqual(rendering_data[1][0]["EmploymentEndD"], fields.Date.from_string("2024-05-31"))
         self._submit_stp(stp)
+
+    def test_transfer_opening_balances_wizard(self):
+        ytd_wizard = self.env["l10n_au.previous.payroll.transfer"].create(
+            {
+                "previous_bms_id": "12321321",
+                "l10n_au_previous_payroll_transfer_employee_ids": [
+                    (0, 0, {
+                        "employee_id": self.employee_1.id,
+                        "previous_payroll_id": "123",
+                        "l10n_au_income_stream_type": "SAW",
+                        "import_ytd": True
+                    }),
+                ]
+            })
+        # Create a second transfer for the same employee and income stream type
+        # on the same wizard
+        with tools.mute_logger('odoo.sql_db'), self.assertRaises(UniqueViolation):
+            self.env["l10n_au.previous.payroll.transfer.employee"].create({
+                "employee_id": self.employee_1.id,
+                "previous_payroll_id": "123",
+                "l10n_au_income_stream_type": "SAW",
+                "import_ytd": True,
+                "l10n_au_previous_payroll_transfer_id": ytd_wizard.id
+            })
+
+        with self.assertRaises(UserError):
+            payslip = self.env["hr.payslip"].create({
+                "name": "payslip",
+                "employee_id": self.employee_1.id,
+                "contract_id": self.contract_1.id,
+                "date_from": "2024-05-01",
+                "date_to": "2024-05-31",
+            })
+            payslip.compute_sheet()
+            payslip.action_payslip_done()
+            ytd_wizard.action_transfer()
+
+        ytd_wizard.action_transfer()
+
+        # Check creating a second transfer for the same employee after
+        # first as been created
+        self.company.l10n_au_previous_bms_id = False
+        with tools.mute_logger('odoo.sql_db'), self.assertRaises(UniqueViolation):
+            ytd_wizard.action_transfer()

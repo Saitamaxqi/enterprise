@@ -22,16 +22,22 @@ class ResCompany(models.Model):
             if company.l10n_au_stp_responsible_id and not company.l10n_au_stp_responsible_id.user_id.exists():
                 raise ValidationError(_("The STP Responsible must be linked to a user."))
 
-    def _create_ytd_values(self, employees, start_date):
+    def _create_ytd_values(self, prev_pay_transfer_employees, start_date):
         values = []
-        default_struct_id = self.env.ref("l10n_au_hr_payroll.hr_payroll_structure_au_regular").id
-        for employee in employees:
-            if not employee.structure_type_id.default_struct_id:
+        for employee_transfer in prev_pay_transfer_employees:
+            if not employee_transfer.employee_id.contract_ids:
+                raise UserError(_("The contract for employee %(employee)s might be archived or deleted. "
+                    "Please unarchive it first to proceed.", employee=employee_transfer.employee_id.name))
+
+            default_struct_id = employee_transfer.employee_id.structure_type_id.default_struct_id.id
+            if not default_struct_id:
                 raise UserError(_("Unable to generate YTD Opening balance for %s. "
-                    "Please set the correct salary structure or unset the Import YTD field.", (employee.name)))
+                    "Please set the correct salary structure or unset the Import YTD field.", (employee_transfer.employee_id.name)))
+
             values += [
                 {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "requires_inputs": True,
                     "rule_id": self.env["hr.salary.rule"].search(
@@ -75,7 +81,8 @@ class ResCompany(models.Model):
                     ]
 
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "requires_inputs": True,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_extra_pay_structure_1").id,
@@ -87,7 +94,8 @@ class ResCompany(models.Model):
                         }) for input_type in self.env["hr.payslip.input.type"].search([("code", "=", "EXTRA")])
                     ],
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "requires_inputs": True,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_salary_sacrifice_other_structure_1").id,
@@ -101,12 +109,14 @@ class ResCompany(models.Model):
                         })
                     ],
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_workplace_giving_structure_1").id,
                     "start_date": start_date,
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "requires_inputs": True,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_allowance_structure_1").id,
@@ -124,12 +134,14 @@ class ResCompany(models.Model):
                         )
                     ],
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_return_to_work_structure_1").id,
                     "start_date": start_date,
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "requires_inputs": True,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_non_tax_allowance_structure_1").id,
@@ -147,7 +159,8 @@ class ResCompany(models.Model):
                         )
                     ],
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "requires_inputs": True,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_back_payments_structure_1").id,
@@ -160,12 +173,14 @@ class ResCompany(models.Model):
                         for input_type in self.env["hr.payslip.input.type"].search([("code", "=", "BBC")])
                     ],
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_withholding_net_structure_1").id,
                     "start_date": start_date,
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "requires_inputs": True,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_child_support_structure_1").id,
@@ -182,12 +197,14 @@ class ResCompany(models.Model):
                         for input_type in self.env["hr.payslip.input.type"].search([("code", "=", "CHILD_SUPPORT_GARNISHEE")])
                     ],
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_super_contribution_structure_1").id,
                     "start_date": start_date,
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "requires_inputs": True,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_salary_sacrifice_structure_1").id,
@@ -201,7 +218,8 @@ class ResCompany(models.Model):
                         }),
                     ],
                 }, {
-                    "employee_id": employee.id,
+                    "employee_id": employee_transfer.employee_id.id,
+                    "l10n_au_income_stream_type": employee_transfer.l10n_au_income_stream_type,
                     "struct_id": default_struct_id,
                     "requires_inputs": True,
                     "rule_id": self.env.ref("l10n_au_hr_payroll.l10n_au_reportable_fringe_benefits_structure_1").id,

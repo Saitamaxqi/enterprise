@@ -4,6 +4,18 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare
 
+INCOME_STREAM_TYPES = [
+    ("SAW", "Salary and wages"),
+    ("CHP", "Closely held payees"),
+    ("IAA", "Inbound assignees to Australia"),
+    ("WHM", "Working holiday makers"),
+    ("SWP", "Seasonal worker programme"),
+    ("FEI", "Foreign employment income"),
+    ("JPD", "Joint petroleum development area"),
+    ("VOL", "Voluntary agreement"),
+    ("LAB", "Labour hire"),
+    ("OSP", "Other specified payments")]
+
 
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
@@ -142,17 +154,7 @@ class HrEmployee(models.Model):
         string="Tax Treatment Category",
         groups="hr.group_hr_user")
     l10n_au_income_stream_type = fields.Selection(
-        selection=[
-            ("SAW", "Salary and wages"),
-            ("CHP", "Closely held payees"),
-            ("IAA", "Inbound assignees to Australia"),
-            ("WHM", "Working holiday makers"),
-            ("SWP", "Seasonal worker programme"),
-            ("FEI", "Foreign employment income"),
-            ("JPD", "Joint petroleum development area"),
-            ("VOL", "Voluntary agreement"),
-            ("LAB", "Labour hire"),
-            ("OSP", "Other specified payments")],
+        selection=INCOME_STREAM_TYPES,
         string="Income Stream Type", default="SAW",
         compute="_compute_l10n_au_income_stream_type",
         precompute=True,

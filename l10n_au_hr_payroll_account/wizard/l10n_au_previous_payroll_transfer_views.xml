@@ -6,6 +6,11 @@
         <field name="model">l10n_au.previous.payroll.transfer</field>
         <field name="arch" type="xml">
             <form string="Set YTD Initial Balances">
+                <div class="alert alert-warning mb-0" role="alert">
+                    In case an employee switched income stream type during this financial year
+                    (e.g. "working holiday maker" to "salary &amp; wages"), make sure to create
+                    an extra line for that employee with the additional income stream type.
+                </div>
                 <sheet>
                     <div class="oe_title">
                         <h1>
@@ -24,6 +29,7 @@
                                 <field name="company_id" column_invisible="1"/>
                                 <field name="employee_id" domain="[('company_id', '=', company_id)]" options="{'no_create': True}"/>
                                 <field name="previous_payroll_id" readonly="0" />
+                                <field name="l10n_au_income_stream_type" />
                                 <field name="import_ytd" />
                             </list>
                         </field>

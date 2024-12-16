@@ -1,5 +1,6 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from odoo.addons.l10n_au_hr_payroll.models.hr_employee import INCOME_STREAM_TYPES
 
 
 class L10n_AuPayslipYtd(models.Model):
@@ -9,6 +10,9 @@ class L10n_AuPayslipYtd(models.Model):
     name = fields.Char(string="Description", compute="_compute_name", required=True)
     start_date = fields.Date(string="Fiscal Start Date", inverse="_fiscal_start_date", required=True, help="The date should be the start of the fiscal year.")
     employee_id = fields.Many2one("hr.employee", string="Employee", required=True)
+    l10n_au_income_stream_type = fields.Selection(
+        selection=INCOME_STREAM_TYPES,
+        string="Income Stream Type", readonly=True, required=True)
     company_id = fields.Many2one(related="employee_id.company_id", required=True)
     currency_id = fields.Many2one(related="company_id.currency_id")
     struct_id = fields.Many2one(
@@ -25,6 +29,9 @@ class L10n_AuPayslipYtd(models.Model):
     start_value = fields.Monetary(string="Start Value")
     ytd_amount = fields.Float(string="YTD Amount", compute="_compute_total_ytd")
     finalised = fields.Boolean(string="Finalised")
+
+    _unique_employee = models.Constraint("unique(employee_id, rule_id, l10n_au_income_stream_type)",
+        "Opening balances for an employee with the same income stream type can only be imported once.")
 
     @api.depends("l10n_au_payslip_ytd_input_ids", "l10n_au_payslip_ytd_input_ids.ytd_amount", "start_value")
     def _compute_total_ytd(self):
@@ -56,20 +63,14 @@ class L10n_AuPayslipYtd(models.Model):
         for rec in self:
             rec.struct_id = rec.employee_id.contract_id.structure_type_id.default_struct_id
 
-    @api.constrains("employee_id", "rule_id", "start_value")
-    def _check_unique_rule(self):
-        for rec in self:
-            if not rec.finalised:
-                if self.search_count([
-                    ("employee_id", "=", rec.employee_id.id),
-                    ("rule_id", "=", rec.rule_id.id),
-                    ("id", "!=", rec.id),
-                ]):
-                    raise UserError(_("A record for %(rule)s rule for %(employee)s already exists. "
-                        "Please update that before creating new one.", rule=rec.rule_id.name, employee=rec.employee_id.name))
-            if self.env["hr.payslip"].search_count([("employee_id", "=", rec.employee_id.id), ("state", "in", ("done", "paid"))]):
-                raise UserError(_("You can't create or update YTD opening balances for %s, because there are "
-                    "validated payslips for this employee.", (rec.employee_id.name)))
+    @api.model_create_multi
+    def create(self, vals):
+        records = super().create(vals)
+        employees = self.env["hr.payslip"].search([("employee_id", "=", records.employee_id.ids), ("state", "in", ("done", "paid"))]).mapped("employee_id.name")
+        if employees:
+            raise UserError(_("You can't create or update YTD opening balances for %(employees)s, because there are "
+                "validated payslips for these employee(s).", employees=", ".join(employees)))
+        return records
 
     def write(self, vals):
         if any(finalised for finalised in self.mapped("finalised")):

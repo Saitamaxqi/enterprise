@@ -2,6 +2,7 @@
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from odoo.addons.l10n_au_hr_payroll.models.hr_employee import INCOME_STREAM_TYPES
 
 
 class L10n_AuPreviousPayrollTransfer(models.TransientModel):
@@ -30,10 +31,10 @@ class L10n_AuPreviousPayrollTransfer(models.TransientModel):
         self.company_id.write({"l10n_au_previous_bms_id": self.previous_bms_id})
         for rec in self.l10n_au_previous_payroll_transfer_employee_ids:
             rec.employee_id.l10n_au_previous_payroll_id = rec.previous_payroll_id
-        employees = self.l10n_au_previous_payroll_transfer_employee_ids.filtered(lambda x: x.import_ytd).employee_id
+        prev_pay_transfer_employees = self.l10n_au_previous_payroll_transfer_employee_ids.filtered(lambda x: x.import_ytd)
 
-        return self.company_id._create_ytd_values(employees, self.fiscal_year_start_date)\
-            .with_context(search_default_filter_group_employee_id=1)\
+        return self.company_id._create_ytd_values(prev_pay_transfer_employees, self.fiscal_year_start_date)\
+            .with_context(search_default_filter_group_employee_id=1, search_default_filter_group_income_stream= 1)\
             ._get_records_action(name=_("Opening Balances"))
 
 
@@ -49,14 +50,25 @@ class L10n_AuPreviousPayrollTransferEmployee(models.TransientModel):
         compute="_compute_payroll_id", size=20,
         required=True, store=True, readonly=False,
     )
+    l10n_au_income_stream_type = fields.Selection(
+        selection=INCOME_STREAM_TYPES,
+        string="Income Stream Type",
+        compute="_compute_income_stream_type",
+        required=True, store=True, readonly=False
+    )
     import_ytd = fields.Boolean("Import YTD Balances", default=True)
 
     _unique_employee_transfer = models.Constraint(
-        'unique(employee_id, l10n_au_previous_payroll_transfer_id)',
-        "An employee can only be transferred once.",
+        'unique(employee_id, l10n_au_previous_payroll_transfer_id, l10n_au_income_stream_type)',
+        "An employee can only be transferred once per Income Stream Type.",
     )
 
     @api.depends("employee_id")
     def _compute_payroll_id(self):
         for rec in self:
             rec.previous_payroll_id = rec.employee_id.l10n_au_previous_payroll_id
+
+    @api.depends("employee_id")
+    def _compute_income_stream_type(self):
+        for rec in self:
+            rec.l10n_au_income_stream_type = rec.employee_id.l10n_au_income_stream_type
