@@ -112,3 +112,9 @@ class testAttachmentAccess(TransactionCase):
         with self.assertRaises(AccessError):
             document.write({'attachment_id': attachment_forbidden.id})
             document.datas
+
+    def test_create_shortcut(self):
+        doc = self.env['documents.document'].create({'name': 'secret', 'access_internal': 'none'})
+
+        with self.assertRaises(AccessError):
+            self.env['documents.document'].with_user(self.user).create({'shortcut_document_id': doc.id})

@@ -1640,6 +1640,9 @@ class DocumentsDocument(models.Model):
                 'owner_id': owner.id,
                 'access_ids': [Command.create(owner_values)] if owner else []
             }
+            if vals.get('shortcut_document_id'):
+                self.browse(vals.get('shortcut_document_id')).check_access('read')
+
             if vals.get('folder_id'):
                 folder = self.env['documents.document'].browse(vals['folder_id'])
                 if not folder.active:
