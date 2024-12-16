@@ -44,7 +44,7 @@ export class BankRecRecord extends Record {
             data[fieldName] = parseServerValue(this.fields[fieldName], otherChanges[fieldName]);
         }
         const applyChanges = () => {
-            Object.assign(changes, this._parseServerValues(otherChanges, this.data));
+            Object.assign(changes, this._parseServerValues(otherChanges, { currentValues: this.data }));
             if (Object.keys(changes).length > 0) {
                 this._applyChanges(changes);
             }
