@@ -19,6 +19,10 @@ export class MrpMenuDialog extends Component {
     };
     static template = "mrp_workorder.MrpDisplayMenuDialog";
     static components = { Dialog };
+    static NOTIFICATION_MESSAGE = {
+        button_scrap: "The scrap order has been successfully registered.",
+        button_quality_alert: "The quality alert has been successfully created.",
+    };
 
     setup() {
         this.orm = useService("orm");
@@ -37,6 +41,14 @@ export class MrpMenuDialog extends Component {
                 context: { from_shop_floor: true },
             }
         );
+
+        const message = MrpMenuDialog.NOTIFICATION_MESSAGE[method];
+        if (message) {
+            props.onSave = async () => {
+                this.notification.add(_t(message), { type: "success" });
+            };
+        }
+
         await this.action.doAction(action, {
             onClose: async () => {
                 await this.props.reload(this.props.record);
@@ -67,7 +79,14 @@ export class MrpMenuDialog extends Component {
         function _moveToWorkcenter(workcenters) {
             const workcenter = workcenters[0];
             this.props.record.update({ workcenter_id: [workcenter.id, workcenter.display_name] });
-            this.props.record.save();
+            this.props.record.save().then((succeeded) => {
+                if (succeeded) {
+                    this.notification.add(
+                        _t("The operation has been successfully moved."),
+                        { type: "success" }
+                    );
+                }
+            });
             this.props.removeFromCache(this.props.record.resId);
             this.props.close();
         }
