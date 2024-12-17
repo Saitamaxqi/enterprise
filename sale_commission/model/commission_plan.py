@@ -35,7 +35,7 @@ class SaleCommissionPlan(models.Model):
     target_ids = fields.One2many('sale.commission.plan.target', 'plan_id', compute='_compute_targets',
                                  store=True, readonly=False)
     target_commission_ids = fields.One2many('sale.commission.plan.target.commission', 'plan_id',
-                                            compute='_compute_target_commission_ids', store=True, readonly=False)
+                                            compute='_compute_target_commission_ids', store=True, readonly=False, copy=True)
     target_commission_graph = fields.Text(compute="_compute_target_commission_graph")
     user_ids = fields.One2many('sale.commission.plan.user', 'plan_id', copy=True)
 
