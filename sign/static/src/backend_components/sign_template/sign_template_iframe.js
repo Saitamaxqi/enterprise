@@ -270,12 +270,13 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
     renderLine(data){
         const canvas = this.getCanvas();
         const ctx = canvas.getContext('2d');
-        ctx.lineWidth = 3;
-        ctx.setLineDash([15, 7]);
+        const scale = this.getCanvasScale();
+        ctx.lineWidth = 3 / scale;
+        ctx.setLineDash([15 / scale, 7 / scale]);
         ctx.strokeStyle = "orange";
         ctx.beginPath();
-        ctx.moveTo(data.start.x, data.start.y);
-        ctx.lineTo(data.end.x, data.end.y);
+        ctx.moveTo(data.start.x / scale, data.start.y / scale);
+        ctx.lineTo(data.end.x / scale, data.end.y / scale);
         ctx.stroke();
     }
 

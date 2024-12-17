@@ -90,6 +90,7 @@ export class PDFIframe {
     addCanvasLayer() {
         const viewer = this.root.querySelector("#viewer");
         const layer = document.createElement("canvas");
+        const scale = this.getCanvasScale();
         layer.id = "canvas_layer_0";
         layer.style.position = "absolute";
         layer.style.top = "0";
@@ -97,8 +98,8 @@ export class PDFIframe {
         layer.style.zIndex = 1;
         layer.style.width = viewer.offsetWidth + "px";
         layer.style.height = viewer.offsetHeight + "px";
-        layer.width = viewer.offsetWidth;
-        layer.height = viewer.offsetHeight;
+        layer.width = viewer.offsetWidth / scale;
+        layer.height = viewer.offsetHeight / scale;
         viewer.appendChild(layer);
     }
 
@@ -353,5 +354,16 @@ export class PDFIframe {
      */
     getCanvas() {
         return this.root.querySelector("#canvas_layer_0");
+    }
+
+    /**
+     *
+     * @returns scale of the canvas if its height exceeds the maximum size, else 1.
+     */
+    getCanvasScale() {
+        //@see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas#maximum_canvas_size
+        const MAX_CANVAS_HEIGHT = 16384;
+        const viewer_height = this.root.querySelector("#viewer").offsetHeight;
+        return Math.ceil(viewer_height / MAX_CANVAS_HEIGHT);
     }
 }
