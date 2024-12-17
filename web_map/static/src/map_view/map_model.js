@@ -403,7 +403,7 @@ export class MapModel extends Model {
             } else {
                 if (["date", "datetime"].includes(fieldType) && value) {
                     const date = fieldType === "date" ? parseDate(value) : parseDateTime(value);
-                    id = name = date.toFormat(DATE_GROUP_FORMATS[subGroup]);
+                    id = name = date.toFormat(DATE_GROUP_FORMATS[subGroup || "month"]);
                 } else if (fieldType === "boolean") {
                     id = name = value ? _t("Yes") : _t("No");
                 } else if (fieldType === "integer") {

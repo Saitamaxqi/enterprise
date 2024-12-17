@@ -1696,12 +1696,17 @@ describe("map_view_desktop", () => {
     test("Pager", async () => {
         patchWithCleanup(session, { map_box_token: MAP_BOX_TOKEN });
 
-        Task._records = Array.from({ length: 101 }, (_, index) => {
-            return { id: index + 1, name: "project", partner_id: index + 1 };
-        });
-        Partner._records = Array.from({ length: 101 }, (_, index) => {
-            return { id: index + 1, name: "Foo", partner_latitude: 10.0, partner_longitude: 10.5 };
-        });
+        Task._records = Array.from({ length: 101 }, (_, index) => ({
+            id: index + 1,
+            name: "project",
+            partner_id: index + 1,
+        }));
+        Partner._records = Array.from({ length: 101 }, (_, index) => ({
+            id: index + 1,
+            name: "Foo",
+            partner_latitude: 10.0,
+            partner_longitude: 10.5,
+        }));
 
         await mountView({
             type: "map",
@@ -2274,9 +2279,11 @@ describe("map_view_desktop", () => {
         Task._records = [
             { id: 1, name: "Project", sequence: 1, partner_id: 1, task_status: "abc" },
         ];
-        onRpc("res.partner", "search_read", () => {
-            return TEST_RECORDS.partner.twoRecordsAddressCoordinates;
-        });
+        onRpc(
+            "res.partner",
+            "search_read",
+            () => TEST_RECORDS.partner.twoRecordsAddressCoordinates
+        );
 
         await mountView({
             type: "map",
@@ -2317,6 +2324,23 @@ describe("map_view_desktop", () => {
             "FooProject\nFooBarProject",
             "BarProject",
         ]);
+    });
+
+    test("GroupBy on datetime field with no subgroup specified", async () => {
+        patchWithCleanup(session, { map_box_token: MAP_BOX_TOKEN });
+        Task._records = TEST_RECORDS.task.twoRecordsFieldDateTime;
+        Partner._records = TEST_RECORDS.partner.twoRecordsAddressCoordinates;
+
+        await mountView({
+            type: "map",
+            resModel: "project.task",
+            arch: `<map default_group_by="scheduled_date" res_partner="partner_id" />`,
+        });
+
+        expect(".o-map-renderer--pin-list-group-header").toHaveCount(2);
+        expect(".o-map-renderer--pin-list-group-header:eq(1)").toHaveText("February 2022", {
+            message: "Should default to month scale when not specified",
+        });
     });
 });
 
