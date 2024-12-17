@@ -76,7 +76,7 @@ class AccountBatchPayment(models.Model):
                     'bank_account': payment.partner_bank_id,
                     'account_holder': payment.partner_id,
                     'transaction_code': '50',
-                    'reference': payment.ref,
+                    'reference': payment.memo,
                 } for payment in self.payment_ids]
             }
 
