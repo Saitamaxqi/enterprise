@@ -170,6 +170,7 @@ export const DocumentsControllerMixin = (component) =>
                     isAvailable: () =>
                         userIsInternal &&
                         selectionCount &&
+                        editMode &&
                         this.targetRecords.every(
                             (record) => record.isPdf() && !record.data.lock_uid
                         ) &&

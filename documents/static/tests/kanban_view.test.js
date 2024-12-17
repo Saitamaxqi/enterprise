@@ -506,3 +506,53 @@ test("document selector: include archived checkbox should not be shown", async (
 
     expect(".form-switch label:contains(Include archived)").not.toHaveCount();
 });
+
+test("Split PDF button availability", async function () {
+    const serverData = getDocumentsTestServerModelsData([
+        {
+            attachment_id: 1,
+            id: 2,
+            name: "text_file.txt",
+            user_permission: "edit",
+            mimetype: "image/webp",
+        },
+        {
+            attachment_id: 2,
+            id: 3,
+            name: "pdf1.pdf",
+            user_permission: "view",
+            mimetype: "application/pdf",
+        },
+        {
+            attachment_id: 3,
+            id: 4,
+            name: "pdf2.pdf",
+            user_permission: "edit",
+            mimetype: "application/pdf",
+        },
+    ]);
+
+    serverData["ir.attachment"] = [
+            { id: 1, name: "text_file.txt", mimetype: "image/webp"},
+            { id: 2, name: "pdf1.pdf", mimetype: "application/pdf"},
+            { id: 3, name: "pdf2.pdf", mimetype: "application/pdf"},
+        ]
+
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView();
+
+    // Non-PDF with edit permission
+    await contains(".o_kanban_record:contains('text_file.txt') [name='document_preview']").click();
+    await contains('.o-FileViewer .o_cp_action_menus .o-dropdown').click()
+    await waitForNone(".o-dropdown-item:contains('Split PDF')")
+
+    // PDF with view permission
+    await contains(".o_kanban_record:contains('pdf1.pdf') [name='document_preview']").click();
+    await contains('.o-FileViewer .o_cp_action_menus .o-dropdown').click()
+    await waitForNone(".o-dropdown-item:contains('Split PDF')")
+
+    // PDF with edit permission
+    await contains(".o_kanban_record:contains('pdf2.pdf') [name='document_preview']").click();
+    await contains('.o-FileViewer .o_cp_action_menus .o-dropdown').click()
+    await waitFor(".o-dropdown-item:contains('Split PDF')")
+});
