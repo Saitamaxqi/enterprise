@@ -3,10 +3,10 @@
 
     <template id="report_saleorder_pro_forma" inherit_id="sale.report_saleorder_pro_forma">
         <xpath expr='//t[@t-call="sale.report_saleorder_document"]' position="attributes">
-            <attribute name="t-if" add="doc.company_id.country_code != 'MX'" separator=" and "/>
+            <attribute name="t-if" add="doc.country_code != 'MX'" separator=" and "/>
         </xpath>
         <xpath expr='//t[@t-call="sale.report_saleorder_document"]' position="after">
-            <t t-elif="doc.company_id.country_code == 'MX'"
+            <t t-elif="doc.country_code == 'MX'"
                t-call="l10n_mx_edi_sale.report_saleorder_document_proforma" t-lang="doc.partner_id.lang"/>
         </xpath>
     </template>
@@ -19,11 +19,15 @@
         </t>
 
         <div id='informations' position="inside">
-            <div t-if="doc.l10n_mx_edi_payment_method_id and doc.company_id.country_code == 'MX'" class="col-auto col-3 mw-100 mb-2">
+            <div t-if="doc.l10n_mx_edi_payment_method_id and doc.country_code == 'MX'" class="col-auto col-3 mw-100 mb-2">
                 <span class="fw-bold">Payment Way:</span><br/>
                 <span class="m-0" t-field="doc.l10n_mx_edi_payment_method_id">To be defined</span>
             </div>
-            <div t-if="doc.l10n_mx_edi_usage and doc.company_id.country_code == 'MX'" class="col-auto col-3 mw-100 mb-2">
+            <div t-if="doc.l10n_mx_edi_payment_policy and doc.country_code == 'MX'" class="col-auto mw-100 mb-2">
+                <span class="fw-bold">Payment Method:</span><br/>
+                <span class="m-0" t-field="doc.l10n_mx_edi_payment_policy">PUE</span>
+            </div>
+            <div t-if="doc.l10n_mx_edi_usage and doc.country_code == 'MX'" class="col-auto mw-100 mb-2">
                 <span class="fw-bold">Usage:</span><br/>
                 <span class="m-0" t-field="doc.l10n_mx_edi_usage">General expenses</span>
             </div>

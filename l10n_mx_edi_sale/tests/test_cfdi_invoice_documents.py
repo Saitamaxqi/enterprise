@@ -12,6 +12,22 @@ class TestCFDIInvoiceDocuments(TestMxEdiCommon):
         super().setUpClass()
         cls.env['product.pricelist'].search([]).unlink()
 
+    def test_payment_policy_preserved_from_sale_order_to_invoice(self):
+        sale_order = self.env['sale.order'].create({
+            'partner_id': self.partner_mx.id,
+            'l10n_mx_edi_payment_method_id': self.env.ref('l10n_mx_edi.payment_method_efectivo').id,
+            'order_line': [Command.create({
+                'product_id': self.product.id,
+                'product_uom_qty': 3,
+            })],
+            'l10n_mx_edi_payment_policy': 'PPD',
+        })
+        sale_order.action_confirm()
+
+        invoice = sale_order._create_invoices()
+        invoice.action_post()
+        self.assertRecordValues(invoice, [{'l10n_mx_edi_payment_policy': 'PPD'}])
+
     @freeze_time('2017-02-01')
     def test_invoice_cancellation_01_from_sale_orders(self):
         """ Test the cancellation with reason '01' for an invoice linked to a sale orders.

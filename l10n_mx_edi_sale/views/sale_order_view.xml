@@ -9,6 +9,7 @@
                 <xpath expr="//field[@name='validity_date']" position="after">
                     <field name="l10n_mx_edi_cfdi_to_public" invisible="country_code != 'MX'"/>
                     <field name="l10n_mx_edi_payment_method_id" invisible="country_code != 'MX'"/>
+                    <field name="l10n_mx_edi_payment_policy" invisible="country_code != 'MX'"/>
                     <field name="l10n_mx_edi_usage" invisible="country_code != 'MX'"/>
                 </xpath>
             </field>

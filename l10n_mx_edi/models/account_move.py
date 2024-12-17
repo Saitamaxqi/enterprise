@@ -203,6 +203,8 @@ class AccountMove(models.Model):
         string="Payment Policy",
         selection=[('PPD', 'PPD'), ('PUE', 'PUE')],
         compute='_compute_l10n_mx_edi_payment_policy',
+        store=True,
+        readonly=False,
     )
     # Indicate if you send the invoice to the SAT using 'Publico En General' meaning
     # the customer is unknown by the SAT. This is mainly used when the customer doesn't have
@@ -607,32 +609,41 @@ class AccountMove(models.Model):
             move.l10n_mx_edi_cfdi_customer_rfc = cfdi_infos.get('customer_rfc')
             move.l10n_mx_edi_cfdi_amount = cfdi_infos.get('amount_total')
 
-    @api.depends('move_type', 'invoice_date_due', 'invoice_date', 'invoice_payment_term_id')
+    @api.depends('partner_id', 'move_type', 'invoice_date_due', 'invoice_date', 'invoice_payment_term_id')
     def _compute_l10n_mx_edi_payment_policy(self):
         for move in self:
-            move.l10n_mx_edi_payment_policy = False
-
-            if move.is_invoice(include_receipts=True) \
-                and move.l10n_mx_edi_is_cfdi_needed \
-                and move.invoice_date_due \
-                and move.invoice_date:
-
-                # By default PUE means immediate payment and then, no need to send the payments to
-                # the SAT except if you explicitely send them.
-                move.l10n_mx_edi_payment_policy = 'PUE'
-
-                # In CFDI 3.3 - rule 2.7.1.43 which establish that
-                # invoice payment term should be PPD as soon as the due date
-                # is after the last day of  the month (the month of the invoice date).
+            if move.is_invoice(include_receipts=True) and move.l10n_mx_edi_is_cfdi_needed:
+                move.l10n_mx_edi_payment_policy = (
+                    move.partner_id.l10n_mx_edi_payment_policy
+                    or move.move_type == 'out_refund' and 'PUE'
+                    or move.l10n_mx_edi_payment_policy
+                )
                 if (
-                    move.move_type == 'out_invoice'
-                    and (
-                        move.invoice_date_due.month > move.invoice_date.month
-                        or move.invoice_date_due.year > move.invoice_date.year
-                        or len(move.invoice_payment_term_id.line_ids) > 1
-                    )
+                    not move.l10n_mx_edi_payment_policy
+                    and move.invoice_date_due
+                    and move.invoice_date
                 ):
-                    move.l10n_mx_edi_payment_policy = 'PPD'
+                    # In CFDI 3.3 - rule 2.7.1.43 which establish that
+                    # invoice payment term should be PPD as soon as the due date
+                    # is after the last day of  the month (the month of the invoice date).
+                    if (
+                        move.move_type == 'out_invoice'
+                        and (
+                            move.invoice_date_due > move.invoice_date
+                            and (
+                                move.invoice_date_due.month > move.invoice_date.month
+                                or move.invoice_date_due.year > move.invoice_date.year
+                                or len(move.invoice_payment_term_id.line_ids) > 1
+                            )
+                        )
+                    ):
+                        move.l10n_mx_edi_payment_policy = 'PPD'
+                    else:
+                        # By default, PUE means immediate payment and then, no need to send the payments to
+                        # the SAT except if you explicitly send them.
+                        move.l10n_mx_edi_payment_policy = 'PUE'
+            else:
+                move.l10n_mx_edi_payment_policy = False
 
     @api.depends('l10n_mx_edi_is_cfdi_needed', 'l10n_mx_edi_cfdi_origin', 'partner_id', 'company_id')
     def _compute_l10n_mx_edi_cfdi_to_public(self):

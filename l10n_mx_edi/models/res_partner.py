@@ -37,6 +37,13 @@ class ResPartner(models.Model):
         help="Indicates the way the invoice was/will be paid, where the options could be: "
              "Cash, Nominal Check, Credit Card, etc. Leave empty if unkown and the XML will show 'Unidentified'.",
     )
+    l10n_mx_edi_payment_policy = fields.Selection(
+        string="Payment Policy",
+        selection=[
+            ('PPD', 'PPD'),
+            ('PUE', 'PUE'),
+        ],
+    )
 
     @api.depends('country_code')
     def _compute_l10n_mx_edi_fiscal_regime(self):

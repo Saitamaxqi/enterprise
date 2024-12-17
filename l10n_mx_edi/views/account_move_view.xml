@@ -45,7 +45,7 @@
                            readonly="state != 'draft'"
                            options="{'no_open': True}"/>
                     <field name="l10n_mx_edi_payment_policy"
-                           invisible="not l10n_mx_edi_payment_policy"/>
+                           readonly="l10n_mx_edi_cfdi_state == 'sent'"/>
                     <field name="l10n_mx_edi_usage"
                            invisible="not l10n_mx_edi_is_cfdi_needed"
                            readonly="state != 'draft'"/>
@@ -127,6 +127,19 @@
                     <field name="l10n_mx_edi_cfdi_state" optional="hide"/>
                     <field name="l10n_mx_edi_cfdi_sat_state" optional="hide"/>
                 </field>
+            </field>
+        </record>
+
+        <record id="view_account_invoice_filter_inherit_l10n_mx_edi" model="ir.ui.view">
+            <field name="name">view.account.invoice.filter.inherit.l10n_mx_edi</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='due_date']" position="after">
+                    <separator/>
+                    <filter name="l10n_mx_edi_payment_policy" string="PUE" domain="[('l10n_mx_edi_payment_policy', '=', 'PUE')]"/>
+                    <filter name="l10n_mx_edi_payment_policy" string="PPD" domain="[('l10n_mx_edi_payment_policy', '=', 'PPD')]"/>
+                </xpath>
             </field>
         </record>
     </data>

@@ -34,6 +34,16 @@ class SaleOrder(models.Model):
         tracking=True,
         help="The code that corresponds to the use that will be made of the receipt by the recipient.",
     )
+    l10n_mx_edi_payment_policy = fields.Selection(
+        string="Payment Policy",
+        selection=[
+            ('PPD', 'PPD'),
+            ('PUE', 'PUE'),
+        ],
+        compute="_compute_l10n_mx_edi_payment_policy",
+        store=True,
+        readonly=False,
+    )
 
     @api.depends('partner_id')
     def _compute_l10n_mx_edi_payment_method_id(self):
@@ -65,12 +75,22 @@ class SaleOrder(models.Model):
         for order in self:
             order.l10n_mx_edi_cfdi_to_public = False
 
+    @api.depends('partner_id')
+    def _compute_l10n_mx_edi_payment_policy(self):
+        for order in self:
+            if order.country_code == 'MX':
+                order.l10n_mx_edi_payment_policy = order.partner_id.l10n_mx_edi_payment_policy or order.l10n_mx_edi_payment_policy
+            else:
+                order.l10n_mx_edi_payment_policy = False
+
     def _prepare_invoice(self):
         # OVERRIDE
         vals = super()._prepare_invoice()
         vals['l10n_mx_edi_cfdi_to_public'] = self.l10n_mx_edi_cfdi_to_public
         vals['l10n_mx_edi_usage'] = self.l10n_mx_edi_usage
         vals['l10n_mx_edi_payment_method_id'] = self.l10n_mx_edi_payment_method_id.id
+        if self.l10n_mx_edi_payment_policy:
+            vals['l10n_mx_edi_payment_policy'] = self.l10n_mx_edi_payment_policy
         return vals
 
     def _get_name_proforma_report(self):
