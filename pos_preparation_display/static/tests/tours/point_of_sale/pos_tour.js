@@ -14,11 +14,11 @@ registry.category("web_tour.tours").add("PreparationDisplayTour", {
             Dialog.confirm("Open Register"),
 
             ProductScreen.addOrderline("Letter Tray", "10"),
-            ProductScreen.selectedOrderlineHas("Letter Tray", "10.0"),
+            ProductScreen.selectedOrderlineHas("Letter Tray", "10"),
             ProductScreen.addOrderline("Magnetic Board", "5"),
-            ProductScreen.selectedOrderlineHas("Magnetic Board", "5.0"),
+            ProductScreen.selectedOrderlineHas("Magnetic Board", "5"),
             ProductScreen.addOrderline("Monitor Stand", "1"),
-            ProductScreen.selectedOrderlineHas("Monitor Stand", "1.0"),
+            ProductScreen.selectedOrderlineHas("Monitor Stand", "1"),
             ProductScreen.clickPayButton(),
 
             PaymentScreen.clickPaymentMethod("Bank"),
@@ -30,9 +30,9 @@ registry.category("web_tour.tours").add("PreparationDisplayTour", {
 
             // Should not send anything to preparation
             ProductScreen.addOrderline("Magnetic Board", "5"),
-            ProductScreen.selectedOrderlineHas("Magnetic Board", "5.0"),
+            ProductScreen.selectedOrderlineHas("Magnetic Board", "5"),
             ProductScreen.addOrderline("Monitor Stand", "1"),
-            ProductScreen.selectedOrderlineHas("Monitor Stand", "1.0"),
+            ProductScreen.selectedOrderlineHas("Monitor Stand", "1"),
             ProductScreen.clickPayButton(),
 
             PaymentScreen.clickPaymentMethod("Bank"),
