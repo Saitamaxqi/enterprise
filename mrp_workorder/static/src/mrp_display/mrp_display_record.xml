@@ -56,7 +56,7 @@
                     <StockMove t-props="subRecordProps(move)"/>
                 </t>
                 <div class="accordion" t-if="checks.length > 0">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center border-bottom">
                         <button class="btn btn-default" t-on-click="openNextQC">
                             Instructions (<t t-esc="checks.filter(c => c.data.quality_state !== 'none').length"/>/<t t-esc="checks.length"/>)
                         </button>
