@@ -155,6 +155,9 @@ $o-web-studio-sidebar-margin: $grid-gutter-width * 0.5;
 
                 button {
                     background-color: $o-web-studio-bg-dark !important;
+                    .text-muted {
+                        color: lighten($o-web-studio-text-dark, 50%) !important;
+                    }
                 }
             }
 

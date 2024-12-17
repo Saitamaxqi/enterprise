@@ -11,6 +11,7 @@
             <SelectMenu t-if="choices"
                 t-props="props.childProps"
                 value="props.value"
+                placeholder="props.inputAttributes?.placeholder"
                 onSelect="(value) => this.props.onChange(value, this.props.name)"
                 class="'border-0'"
                 togglerClass="'p-2'"

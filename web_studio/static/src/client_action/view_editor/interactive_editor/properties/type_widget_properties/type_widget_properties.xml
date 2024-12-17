@@ -66,6 +66,7 @@
 <t t-name="web_studio.property.selection">
     <t t-if="attribute and !attribute.isInvisible">
         <Property
+            inputAttributes="{placeholder: attribute?.placeholder}"
             name="attribute.name"
             type="'selection'"
             value="getSelectValue(attribute.value)"
