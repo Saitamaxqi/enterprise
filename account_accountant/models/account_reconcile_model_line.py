@@ -93,18 +93,9 @@ class AccountReconcileModelLine(models.Model):
                 aml_values['amount_currency'] = currency.round(-journal_amount * self.amount / 100.0)
                 aml_values['currency_id'] = journal_currency.id
         elif self.amount_type == 'regex':
-            match = re.search(self.amount_string, st_line.payment_ref)
-            if match:
-                sign = 1 if residual_amount_currency > 0.0 else -1
-                decimal_separator = self.model_id.decimal_separator
-                try:
-                    extracted_match_group = re.sub(r'[^\d' + decimal_separator + ']', '', match.group(1))
-                    extracted_balance = float(extracted_match_group.replace(decimal_separator, '.'))
-                    aml_values['amount_currency'] = copysign(extracted_balance * sign, residual_amount_currency)
-                except ValueError:
-                    aml_values['amount_currency'] = 0.0
-            else:
-                aml_values['amount_currency'] = 0.0
+            aml_values['amount_currency'] = self._get_amount_currency_by_regex(residual_amount_currency, self.amount_string, st_line.payment_ref)
+        elif self.amount_type == 'from_transaction_details':
+            aml_values['amount_currency'] = self._get_amount_currency_by_regex(residual_amount_currency, self.amount_string, st_line.transaction_details)
 
         if 'amount_currency' not in aml_values:
             aml_values.update(self._apply_in_manual_widget(residual_amount_currency, partner, currency))
@@ -115,3 +106,20 @@ class AccountReconcileModelLine(models.Model):
             aml_values['name'] = st_line.payment_ref
 
         return aml_values
+
+    def _get_amount_currency_by_regex(self, residual_amount_currency, amount_string, target_field):
+        if not target_field:
+            return 0.0
+
+        match = re.search(amount_string, target_field)
+        if match:
+            sign = 1 if residual_amount_currency > 0.0 else -1
+            decimal_separator = self.model_id.decimal_separator
+            try:
+                extracted_match_group = re.sub(r'[^\d' + decimal_separator + ']', '', match.group(1))
+                extracted_balance = float(extracted_match_group.replace(decimal_separator, '.'))
+                return copysign(extracted_balance * sign, residual_amount_currency)
+            except ValueError:
+                return 0.0
+        else:
+            return 0.0

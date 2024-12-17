@@ -1,3 +1,4 @@
+import json
 from odoo import fields, models, Command, tools
 from odoo.tools import SQL
 
@@ -111,10 +112,13 @@ class AccountReconcileModel(models.Model):
         ):
             return False
 
-        # Filter on label, note
-        for record, rule_field, record_field in [(st_line, 'label', 'payment_ref'), (st_line.move_id, 'note', 'narration')]:
+        # Filter on label, note and transaction details
+        for record, rule_field, record_field in [(st_line, 'label', 'payment_ref'), (st_line.move_id, 'note', 'narration'), (st_line, 'transaction_details', 'transaction_details')]:
             rule_term = (self['match_' + rule_field + '_param'] or '').lower()
-            record_term = (record[record_field] or '').lower()
+            if isinstance(record[record_field], dict):
+                record_term = json.dumps(record[record_field])
+            else:
+                record_term = (record[record_field] or '').lower()
 
             # This defines non-match conditions
             if ((self['match_' + rule_field] == 'contains' and rule_term not in record_term)
