@@ -5924,18 +5924,18 @@ class AccountReport(models.Model):
         date_default_style = workbook.add_format({'font_name': 'Lato', 'align': 'left', 'font_size': 12, 'font_color': '#666666', 'num_format': 'yyyy-mm-dd'})
         default_col1_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'indent': 2})
         default_col2_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666'})
-        default_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666'})
+        default_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'num_format': '#,##0.00'})
         annotation_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'text_wrap': True})
         title_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'bold': True, 'bottom': 2})
-        level_0_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 6, 'font_color': '#666666'})
+        level_0_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 6, 'font_color': '#666666', 'num_format': '#,##0.00'})
         level_1_col1_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666', 'indent': 1})
-        level_1_col1_total_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666'})
+        level_1_col1_total_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666', 'num_format': '#,##0.00'})
         level_1_col2_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666'})
-        level_1_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666'})
+        level_1_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666', 'num_format': '#,##0.00'})
         level_2_col1_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'indent': 2})
-        level_2_col1_total_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'indent': 1})
+        level_2_col1_total_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'indent': 1, 'num_format': '#,##0.00'})
         level_2_col2_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'indent': 1})
-        level_2_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666'})
+        level_2_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'num_format': '#,##0.00'})
         col1_styles = {}
 
         print_mode_self = self.with_context(no_format=True)
@@ -5950,6 +5950,14 @@ class AccountReport(models.Model):
             if line_model == 'account.account':
                 # Reuse the _split_code_name to split the name and code in two values.
                 account_lines_split_names[line['id']] = self.env['account.account']._split_code_name(line['name'])
+
+        # Set the (Account) Name column width to 50.
+        # If we have account lines and split the name and code in two columns, we will also set the code column.
+        if len(account_lines_split_names) > 0:
+            sheet.set_column(0, 0, 13)
+            sheet.set_column(1, 1, 50)
+        else:
+            sheet.set_column(0, 0, 50)
 
         original_x_offset = 1 if len(account_lines_split_names) > 0 else 0
 
@@ -5989,7 +5997,9 @@ class AccountReport(models.Model):
 
         if account_lines_split_names:
             # If we have a separate account code column, add a title for it
-            write_cell(sheet, x_offset - 1, y_offset, _("Account Code"), title_style)
+            write_cell(sheet, x_offset - 2, y_offset, _("Code"), title_style)
+            write_cell(sheet, x_offset - 1, y_offset, _("Account Name"), title_style)
+        sheet.set_column(x_offset, x_offset + len(options['columns']), 10)
 
         for column in options['columns']:
             colspan = column.get('colspan', 1)
@@ -6030,19 +6040,10 @@ class AccountReport(models.Model):
                 col2_style = style
                 level_col1_styles = col1_styles.get(level)
                 if not level_col1_styles:
+                    level_col1_base_format = {'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'num_format': '#,##0.00'}
                     level_col1_styles = col1_styles[level] = {
-                        'default': workbook.add_format(
-                            {'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'indent': level}
-                        ),
-                        'total': workbook.add_format(
-                            {
-                                'font_name': 'Lato',
-                                'bold': True,
-                                'font_size': 12,
-                                'font_color': '#666666',
-                                'indent': level - 1,
-                            }
-                        ),
+                        'default': workbook.add_format({**level_col1_base_format, 'indent': level}),
+                        'total': workbook.add_format({**level_col1_base_format, 'bold': True, 'indent': level - 1}),
                     }
                 col1_style = level_col1_styles['total'] if is_total_line else level_col1_styles['default']
             else:
@@ -6050,23 +6051,23 @@ class AccountReport(models.Model):
                 col1_style = default_col1_style
                 col2_style = default_col2_style
 
-            # write the first column, with a specific style to manage the indentation
+            # write the (Account) Name column, with a specific style to manage the indentation
             x_offset = original_x_offset + 1
             if lines[y]['id'] in account_lines_split_names:
                 code, name = account_lines_split_names[lines[y]['id']]
-                write_cell(sheet, 0, y + y_offset, name, col1_style)
-                write_cell(sheet, 1, y + y_offset, code, col2_style)
+                write_cell(sheet, 0, y + y_offset, code, col2_style)
+                write_cell(sheet, 1, y + y_offset, name, col1_style)
             else:
                 cell_type, cell_value = self._get_cell_type_value(lines[y])
                 if cell_type == 'date':
-                    write_cell(sheet, 0, y + y_offset, cell_value, date_default_col1_style, datetime=True)
+                    write_cell(sheet, original_x_offset, y + y_offset, cell_value, date_default_col1_style, datetime=True)
                 else:
-                    write_cell(sheet, 0, y + y_offset, cell_value, col1_style)
+                    write_cell(sheet, original_x_offset, y + y_offset, cell_value, col1_style)
 
                 if lines[y].get('parent_id') and lines[y]['parent_id'] in account_lines_split_names:
-                    write_cell(sheet, 1, y + y_offset, account_lines_split_names[lines[y]['parent_id']][0], col2_style)
+                    write_cell(sheet, 1 + original_x_offset, y + y_offset, account_lines_split_names[lines[y]['parent_id']][0], col2_style)
                 elif account_lines_split_names:
-                    write_cell(sheet, 1, y + y_offset, "", col2_style)
+                    write_cell(sheet, 1 + original_x_offset, y + y_offset, "", col2_style)
 
             #write all the remaining cells
             columns = lines[y]['columns']
