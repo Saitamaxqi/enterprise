@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
 from unittest.mock import patch
-
 from freezegun import freeze_time
 
 from odoo import fields, Command
@@ -226,6 +225,18 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
             {'flag': 'aml',       'account_id': self.account_revenue1.id,                  'amount_currency': -1000.0, 'currency_id': self.company_data['currency'].id,    'balance': -1000.0},
         ])
 
+    def test_draft_break_recon(self):
+        st_line = self._create_st_line(100)
+        inv_line = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 100.0}])
+        inv_line.move_id.button_draft()
+        invoice = inv_line.move_id
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+        wizard._action_add_new_amls(inv_line)
+        wizard._action_validate()
+        self.assertRecordValues(invoice, [{'payment_state': 'paid', 'has_reconciled_entries': True, 'amount_residual': 0.0}])
+        invoice.partner_id = self.partner_b
+        self.assertRecordValues(invoice, [{'payment_state': 'not_paid', 'has_reconciled_entries': False, 'amount_residual': 100.0}])
+
     def test_validation_exchange_difference(self):
         # 240.0 curr2 == 120.0 comp_curr
         st_line = self._create_st_line(
@@ -245,18 +256,15 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
         wizard._action_add_new_amls(inv_line)
         self.assertRecordValues(wizard.line_ids, [
-            # pylint: disable=C0326
             {'flag': 'liquidity',       'amount_currency': 120.0,       'currency_id': self.company_data['currency'].id,    'balance': 120.0},
             {'flag': 'new_aml',         'amount_currency': -240.0,      'currency_id': self.other_currency.id,              'balance': -80.0},
             {'flag': 'exchange_diff',   'amount_currency': 0.0,         'currency_id': self.other_currency.id,              'balance': -40.0},
         ])
         self.assertRecordValues(wizard, [{'state': 'valid'}])
-
         wizard._action_validate()
 
         # Check the statement line.
         self.assertRecordValues(st_line.line_ids.sorted(), [
-            # pylint: disable=C0326
             {'account_id': st_line.journal_id.default_account_id.id,    'amount_currency': 120.0,   'currency_id': self.company_data['currency'].id,    'balance': 120.0,  'reconciled': False},
             {'account_id': inv_line.account_id.id,                      'amount_currency': -240.0,  'currency_id': self.other_currency.id,              'balance': -120.0, 'reconciled': True},
         ])
@@ -266,7 +274,6 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         exchange_move = partials.exchange_move_id
         _liquidity_line, _suspense_line, other_line = st_line._seek_for_lines()
         self.assertRecordValues(partials.sorted(), [
-            # pylint: disable=C0326
             {
                 'amount': 40.0,
                 'debit_amount_currency': 0.0,
@@ -287,10 +294,245 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
 
         # Check the exchange diff journal entry.
         self.assertRecordValues(exchange_move.line_ids.sorted(), [
-            # pylint: disable=C0326
             {'account_id': inv_line.account_id.id,                                  'amount_currency': 0.0,     'currency_id': self.other_currency.id,  'balance': 40.0,  'reconciled': True},
             {'account_id': self.env.company.income_currency_exchange_account_id.id, 'amount_currency': 0.0,     'currency_id': self.other_currency.id,  'balance': -40.0, 'reconciled': False},
         ])
+
+    def test_validation_exchange_difference_draft_invoice_allowed(self):
+        ''' It's allowed to modify the exchange diff line from the bank reconciliation widget if the counterpart is still draft'''
+        # 240.0 curr2 == 80.0 comp_curr
+        inv_line = self._create_invoice_line(
+            'out_invoice',
+            currency_id=self.other_currency.id,
+            invoice_date='2016-01-01',
+            invoice_line_ids=[{'price_unit': 240.0}],
+        )
+        inv_line.move_id.button_draft()
+        self.assertEqual(inv_line.move_id.state, 'draft')
+        self.assertAlmostEqual(inv_line.amount_residual, 80.0)
+
+        # 240.0 curr2 == 120.0 comp_curr
+        st_line = self._create_st_line(
+            120.0,
+            date='2017-01-01',
+            foreign_currency_id=self.other_currency.id,
+            amount_currency=240.0,
+        )
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+        wizard._action_add_new_amls(inv_line)
+        self.assertRecordValues(wizard.line_ids, [
+            {'flag': 'liquidity',       'amount_currency': 120.0,       'currency_id': self.company_data['currency'].id,    'balance': 120.0},
+            {'flag': 'new_aml',         'amount_currency': -240.0,      'currency_id': self.other_currency.id,              'balance': -80.0},
+            {'flag': 'exchange_diff',   'amount_currency': 0.0,         'currency_id': self.other_currency.id,              'balance': -40.0},
+        ])
+        self.assertRecordValues(wizard, [{'state': 'valid'}])
+
+        # modify the exchange entry proposed and set a custom exchange diff amount/account
+        line = wizard.line_ids.filtered(lambda x: x.flag == 'exchange_diff')
+        line.balance = -15.0
+        wizard._line_value_changed_balance(line)
+
+        line = wizard.line_ids.filtered(lambda x: x.flag == 'auto_balance')
+        account = self.env['account.account'].create({
+            'name': "test_validation_using_custom_account",
+            'code': "424242",
+            'account_type': "asset_current",
+        })
+        line.account_id = account
+        wizard._line_value_changed_account_id(line)
+        self.assertRecordValues(wizard.line_ids, [
+            {'flag': 'liquidity',       'amount_currency': 120.0,       'currency_id': self.company_data['currency'].id,    'balance': 120.0},
+            {'flag': 'new_aml',         'amount_currency': -240.0,      'currency_id': self.other_currency.id,              'balance': -80.0},
+            {'flag': 'exchange_diff',   'amount_currency': 0.0,         'currency_id': self.other_currency.id,              'balance': -15.0},
+            {'flag': 'manual',          'amount_currency': 0.0,         'currency_id': self.other_currency.id,              'balance': -25.0},
+        ])
+
+        # validate and check
+        wizard._action_validate()
+
+        # Check the statement line.
+        self.assertRecordValues(st_line.line_ids.sorted(), [
+            {'account_id': st_line.journal_id.default_account_id.id,    'amount_currency': 120.0,   'currency_id': self.company_data['currency'].id,    'balance': 120.0, 'reconciled': False},
+            {'account_id': inv_line.account_id.id,                      'amount_currency': -240.0,  'currency_id': self.other_currency.id,              'balance': -95.0, 'reconciled': True},
+            {'account_id': account.id,                                  'amount_currency': 0.0,     'currency_id': self.other_currency.id,              'balance': -25.0, 'reconciled': False},
+        ])
+
+        # Check the partials.
+        partials = st_line.line_ids.matched_debit_ids
+        exchange_move = partials.exchange_move_id
+        _liquidity_line, _suspense_line, other_lines = st_line._seek_for_lines()
+        receivable_line_id = other_lines.filtered(lambda x: x.account_id == inv_line.account_id).id
+        self.assertRecordValues(partials.sorted(), [
+            {
+                'amount': 15.0,
+                'debit_amount_currency': 0.0,
+                'credit_amount_currency': 0.0,
+                'debit_move_id': exchange_move.line_ids.sorted()[0].id,
+                'credit_move_id': receivable_line_id,
+                'exchange_move_id': False,
+            },
+            {
+                'amount': 80.0,
+                'debit_amount_currency': 240.0,
+                'credit_amount_currency': 240.0,
+                'debit_move_id': inv_line.id,
+                'credit_move_id': receivable_line_id,
+                'exchange_move_id': exchange_move.id,
+            },
+        ])
+
+        # Check the exchange diff journal entry.
+        self.assertRecordValues(exchange_move.line_ids.sorted(), [
+            {'account_id': inv_line.account_id.id,                                  'amount_currency': 0.0,     'currency_id': self.other_currency.id,  'balance': 15.0,  'reconciled': True},
+            {'account_id': self.env.company.income_currency_exchange_account_id.id, 'amount_currency': 0.0,     'currency_id': self.other_currency.id,  'balance': -15.0, 'reconciled': False},
+        ])
+
+        # Post the invoice and check nothing changed
+        inv_line.move_id.action_post()
+        self.assertRecordValues(st_line.line_ids.sorted(), [
+            {'account_id': st_line.journal_id.default_account_id.id,    'amount_currency': 120.0,   'currency_id': self.company_data['currency'].id,    'balance': 120.0, 'reconciled': False},
+            {'account_id': inv_line.account_id.id,                      'amount_currency': -240.0,  'currency_id': self.other_currency.id,              'balance': -95.0, 'reconciled': True},
+            {'account_id': account.id,                                  'amount_currency': 0.0,     'currency_id': self.other_currency.id,              'balance': -25.0, 'reconciled': False},
+        ])
+        partials = st_line.line_ids.matched_debit_ids
+        exchange_move = partials.exchange_move_id
+        _liquidity_line, _suspense_line, other_lines = st_line._seek_for_lines()
+        receivable_line_id = other_lines.filtered(lambda x: x.account_id == inv_line.account_id).id
+        self.assertRecordValues(partials.sorted(), [
+            {
+                'amount': 15.0,
+                'debit_amount_currency': 0.0,
+                'credit_amount_currency': 0.0,
+                'debit_move_id': exchange_move.line_ids.sorted()[0].id,
+                'credit_move_id': receivable_line_id,
+                'exchange_move_id': False,
+            },
+            {
+                'amount': 80.0,
+                'debit_amount_currency': 240.0,
+                'credit_amount_currency': 240.0,
+                'debit_move_id': inv_line.id,
+                'credit_move_id': receivable_line_id,
+                'exchange_move_id': exchange_move.id,
+            },
+        ])
+        self.assertRecordValues(exchange_move.line_ids.sorted(), [
+            {'account_id': inv_line.account_id.id,                                  'amount_currency': 0.0,     'currency_id': self.other_currency.id,  'balance': 15.0,  'reconciled': True},
+            {'account_id': self.env.company.income_currency_exchange_account_id.id, 'amount_currency': 0.0,     'currency_id': self.other_currency.id,  'balance': -15.0, 'reconciled': False},
+        ])
+
+    def test_validation_exchange_difference_draft_invoice(self):
+        # 240.0 curr2 == 80.0 comp_curr
+        inv_line = self._create_invoice_line(
+            'out_invoice',
+            currency_id=self.other_currency.id,
+            invoice_date='2016-01-01',
+            invoice_line_ids=[{'price_unit': 240.0}],
+        )
+        inv_line.move_id.button_draft()
+        self.assertEqual(inv_line.move_id.state, 'draft')
+        self.assertAlmostEqual(inv_line.amount_residual, 80.0)
+
+        # 1st statement line
+        # 120.0 curr2 == 60.0 comp_curr
+        st_line_1 = self._create_st_line(
+            60.0,
+            date='2017-01-01',
+            foreign_currency_id=self.other_currency.id,
+            amount_currency=120.0,
+        )
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line_1.id).new({})
+        wizard._action_add_new_amls(inv_line)
+        self.assertRecordValues(wizard.line_ids, [
+            {'flag': 'liquidity',       'amount_currency': 60.0,        'currency_id': self.company_data['currency'].id,    'balance': 60.0},
+            {'flag': 'new_aml',         'amount_currency': -120.0,      'currency_id': self.other_currency.id,              'balance': -40.0},
+            {'flag': 'exchange_diff',   'amount_currency': 0.0,         'currency_id': self.other_currency.id,              'balance': -20.0},
+        ])
+        self.assertRecordValues(wizard, [{'state': 'valid'}])
+
+        # inv_line has never been posted
+        wizard._action_validate()
+
+        # Check the statement line.
+        self.assertRecordValues(st_line_1.line_ids.sorted(), [
+            {'account_id': st_line_1.journal_id.default_account_id.id,  'amount_currency': 60.0,    'currency_id': self.company_data['currency'].id,    'balance': 60.0,   'reconciled': False},
+            {'account_id': inv_line.account_id.id,                      'amount_currency': -120.0,  'currency_id': self.other_currency.id,              'balance': -60.0,  'reconciled': True},
+        ])
+
+        # Check the partials.
+        partials = st_line_1.line_ids.matched_debit_ids
+        exchange_move = partials.exchange_move_id
+        _liquidity_line, _suspense_line, other_line = st_line_1._seek_for_lines()
+        self.assertRecordValues(partials.sorted(), [
+            {
+                'amount': 20.0,
+                'debit_amount_currency': 0.0,
+                'credit_amount_currency': 0.0,
+                'debit_move_id': exchange_move.line_ids.sorted()[0].id,
+                'credit_move_id': other_line.id,
+                'exchange_move_id': False,
+            },
+            {
+                'amount': 40.0,
+                'debit_amount_currency': 120.0,
+                'credit_amount_currency': 120.0,
+                'debit_move_id': inv_line.id,
+                'credit_move_id': other_line.id,
+                'exchange_move_id': exchange_move.id,
+            },
+        ])
+
+        # Check the exchange diff journal entry.
+        self.assertEqual(exchange_move.state, 'draft')
+        self.assertRecordValues(exchange_move.line_ids.sorted(), [
+            {'account_id': inv_line.account_id.id,                                  'amount_currency': 0.0,     'currency_id': self.other_currency.id,  'balance': 20.0,  'reconciled': True},
+            {'account_id': self.env.company.income_currency_exchange_account_id.id, 'amount_currency': 0.0,     'currency_id': self.other_currency.id,  'balance': -20.0, 'reconciled': False},
+        ])
+        self.assertEqual(inv_line.move_id.payment_state, 'partial')
+        self.assertAlmostEqual(inv_line.amount_residual, 40.0)
+
+        # modifying something critical before posting the invoice should remove entirely the draft exchange entry and reconciliation made
+        inv_line.move_id.line_ids.filtered(lambda x: x.display_type == 'product').price_unit = 290
+        inv_line.move_id.action_post()
+        self.assertEqual(inv_line.move_id.payment_state, 'not_paid')
+        partials = st_line_1.line_ids.matched_debit_ids
+        exchange_move = partials.exchange_move_id
+        self.assertEqual(exchange_move, self.env['account.move'])
+
+        # reset the invoice in draft and to previous values for the next test
+        inv_line.move_id.button_draft()
+        inv_line.move_id.line_ids.filtered(lambda x: x.display_type == 'product').price_unit = 240
+        self.assertAlmostEqual(inv_line.amount_residual, 80.0)
+
+        # 2nd statement line
+        st_line_2 = self._create_st_line(
+            60.0,
+            date='2017-01-01',
+            foreign_currency_id=self.other_currency.id,
+            amount_currency=120.0,
+        )
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line_2.id).new({})
+        wizard._action_add_new_amls(inv_line)
+        self.assertRecordValues(wizard.line_ids, [
+            {'flag': 'liquidity',       'amount_currency': 60.0,        'currency_id': self.company_data['currency'].id,    'balance': 60.0},
+            {'flag': 'new_aml',         'amount_currency': -120.0,      'currency_id': self.other_currency.id,              'balance': -40.0},
+            {'flag': 'exchange_diff',   'amount_currency': 0.0,         'currency_id': self.other_currency.id,              'balance': -20.0},
+        ])
+        self.assertRecordValues(wizard, [{'state': 'valid'}])
+        wizard._action_validate()
+        partials = st_line_2.line_ids.matched_debit_ids
+        exchange_move = partials.exchange_move_id
+        self.assertEqual(exchange_move.state, 'draft')
+        self.assertEqual(inv_line.move_id.payment_state, 'partial')
+        self.assertAlmostEqual(inv_line.amount_residual, 40.0)
+
+        # 2nd statement creates exactly the same as 1st, so there's no need to assert those values/entries
+        # modifying something uncritical before posting the invoice shouldn't remove the draft exchange entry and reconciliation made
+        inv_line.ref = 'new reference'
+        inv_line.move_id.action_post()
+        self.assertEqual(inv_line.move_id.payment_state, 'partial')
+        self.assertAlmostEqual(inv_line.amount_residual, 40.0)
+        self.assertEqual(exchange_move.state, 'posted')
 
     def test_validation_new_aml_same_foreign_currency(self):
         income_exchange_account = self.env.company.income_currency_exchange_account_id

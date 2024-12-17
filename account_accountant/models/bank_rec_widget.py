@@ -319,6 +319,7 @@ class BankRecWidget(models.Model):
         self._ensure_loaded_lines()
 
         method_name = todo_command['method_name']
+
         getattr(self, f'_js_action_{method_name}')(*todo_command.get('args', []), **todo_command.get('kwargs', {}))
 
     # -------------------------------------------------------------------------
@@ -1422,11 +1423,13 @@ class BankRecWidget(models.Model):
                 exchange_analytic_distribution = exchange_diff_amounts.pop('analytic_distribution', False)
                 if exchange_diff_amounts:
                     related_exchange_diff_amls = line if exchange_diff_amounts['amount_residual'] * line.amount_residual > 0 else counterpart
-                    exchange_diff_vals_list.append(related_exchange_diff_amls._prepare_exchange_difference_move_vals(
+                    exchange_diff_values = related_exchange_diff_amls._prepare_exchange_difference_move_vals(
                         [exchange_diff_amounts],
                         exchange_date=max(line.date, counterpart.date),
                         exchange_analytic_distribution=exchange_analytic_distribution,
-                    ))
+                    )
+                    exchange_diff_values['to_post'] = line.parent_state == 'posted' and counterpart.parent_state == 'posted'
+                    exchange_diff_vals_list.append(exchange_diff_values)
                     lines_with_exch_diff += line
             exchange_diff_moves = AccountMoveLine._create_exchange_difference_moves(exchange_diff_vals_list)
 
