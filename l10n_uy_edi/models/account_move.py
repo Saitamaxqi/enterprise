@@ -412,9 +412,6 @@ class AccountMove(models.Model):
                 errors.append(_("To validate a DN/CN the original document should be informed"))
             if not int(related_doc.l10n_latam_document_type_id.code):
                 errors.append(_("To validate a DN/CN the original document should be informed and it should be electronic"))
-            # CFE v.24: related CFE needs to be accepted by DGI
-            if related_doc.l10n_uy_edi_cfe_state != "accepted":
-                errors.append(_("To validate a DN/CN the related CFE (original document) needs to be Accepted by DGI"))
 
         # For e-Ticket and related DN/CN max lines <= 700
         lines = self.invoice_line_ids.filtered(lambda x: x.display_type not in ("line_section", "line_note"))
