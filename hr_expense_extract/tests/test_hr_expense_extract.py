@@ -3,7 +3,7 @@ from freezegun import freeze_time
 from odoo import fields
 from odoo.addons.hr_expense.tests.common import TestExpenseCommon
 from odoo.addons.iap_extract.tests.test_extract_mixin import TestExtractMixin
-from odoo.tests import tagged, Form
+from odoo.tests import users, tagged, Form
 from odoo.tools import float_compare
 
 from ..models.hr_expense import OCR_VERSION
@@ -27,6 +27,11 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
             'name': "product_c.jpg",
             'raw': b'My expense',
         })
+
+    @classmethod
+    def default_env_context(cls):
+        # OVERRIDE to reactivate the tracking
+        return {}
 
     def get_result_success_response(self):
         return {
@@ -319,3 +324,26 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         self.assertAlmostEqual(self.expense.total_amount, 33.33, 2)
         self.assertEqual(self.expense.currency_id.name, 'EUR')
         self.assertEqual(self.expense.date, fields.Date.to_date('2024-01-01'))
+
+    @users('admin')
+    def test_expense_ocr_note_author(self):
+        attachment = self.env['ir.attachment'].create({
+            'name': 'test_attachment.png',
+            'res_model': 'hr.expense',
+            'raw': b'My expense',
+        })
+        with self._mock_iap_extract(extract_response=self.parse_success_response()):
+            self.env['hr.expense'].create_expense_from_attachments(attachment.ids)
+
+        expense = self.env['hr.expense'].search([('attachment_ids', '=', attachment.id)]).ensure_one()
+        with self._mock_iap_extract(extract_response=self.get_result_success_response()):
+            expense.check_all_status()
+
+        self.env.cr.flush()
+        message = self.env['mail.message'].search([
+            ('model', '=', 'hr.expense'),
+            ('res_id', '=', expense.id),
+            ('tracking_value_ids', '!=', False),
+        ]).ensure_one()
+        author_name = message.author_id.complete_name
+        self.assertEqual(author_name, 'OdooBot')

@@ -35,6 +35,11 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCommo
             limit=1,
         )
 
+    @classmethod
+    def default_env_context(cls):
+        # OVERRIDE to reactivate the tracking
+        return {}
+
     def get_result_success_response(self):
         return {
             'results': [{
@@ -1004,3 +1009,25 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCommo
         # Now, next time the OCR is finished, we should autopost the bill
         bill = create_bill_with_ocr()
         self.assertEqual(bill.state, "posted")
+
+    def test_invoice_ocr_note_author(self):
+        invoice = self.env['account.move'].create({'move_type': 'in_invoice', 'extract_state': 'waiting_extraction'})
+        attachment = self.env['ir.attachment'].create({
+            'name': 'test_attachment.png',
+            'res_model': 'account.move',
+            'raw': b'My invoice',
+        })
+        with self._mock_iap_extract(extract_response=self.parse_success_response()):
+            invoice.message_post(attachment_ids=[attachment.id])
+
+        with self._mock_iap_extract(extract_response=self.get_result_success_response()):
+            invoice.check_all_status()
+
+        self.env.cr.flush()
+        message = self.env['mail.message'].search([
+            ('model', '=', 'account.move'),
+            ('res_id', '=', invoice.id),
+            ('tracking_value_ids', '!=', False),
+        ]).ensure_one()
+        author_name = message.author_id.complete_name
+        self.assertEqual(author_name, 'OdooBot')

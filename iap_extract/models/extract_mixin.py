@@ -331,10 +331,10 @@ class ExtractMixin(models.AbstractModel):
         self.extract_status = result['status']
         if result['status'] == 'success':
             self.extract_state = 'waiting_validation'
-            # Set OdooBot as the author of the tracking message
-            self._track_set_author(self.env.ref('base.partner_root'))
             ocr_results = result['results'][0]
             self.with_company(self.company_id)._fill_document_with_results(ocr_results)
+            # Set OdooBot as the author of the tracking message
+            self._track_set_author(self.env.ref('base.partner_root'))
             if 'full_text_annotation' in ocr_results:
                 self.message_main_attachment_id.index_content = ocr_results['full_text_annotation']
 

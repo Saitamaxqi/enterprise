@@ -75,7 +75,7 @@ class HrExpense(models.Model):
             date_ocr = self._get_ocr_selected_value(ocr_results, 'date', fields.Date.context_today(self).strftime(DEFAULT_SERVER_DATE_FORMAT))
             currency_ocr = self._get_ocr_selected_value(ocr_results, 'currency', self.env.company.currency_id.name)
 
-            if description_ocr and not self.name or self.name == self.message_main_attachment_id.name.split('.')[0]:
+            if description_ocr and not self.name or self.name == '.'.join(self.message_main_attachment_id.name.split('.')[:-1]):
                 predicted_product_id = self._predict_product(description_ocr, category=True)
                 if predicted_product_id:
                     vals['product_id'] = predicted_product_id or self.product_id
