@@ -52,7 +52,7 @@ class HrContract(models.Model):
     @api.depends('wage_with_holidays')
     def _compute_double_holiday_wage(self):
         for contract in self:
-            contract.double_holiday_wage = contract.wage_with_holidays * 0.92
+            contract.double_holiday_wage = contract._get_wage_to_apply() * 0.92
 
     @api.model
     def _benefit_white_list(self):

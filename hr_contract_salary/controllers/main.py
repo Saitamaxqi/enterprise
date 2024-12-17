@@ -43,6 +43,7 @@ class SignContract(Sign):
         return result
 
     def _update_contract_on_signature(self, request_item, contract, offer):
+        wage_to_apply = contract._get_wage_to_apply()
         # Only the applicant/employee has signed
         if request_item.sign_request_id.nb_closed == 1:
             contract.active = True
@@ -50,7 +51,7 @@ class SignContract(Sign):
             if contract.applicant_id:
                 contract.applicant_id.employee_id = contract.employee_id
             self._create_activity_benefit(contract, 'running')
-            contract.wage_on_signature = contract.wage_with_holidays
+            contract.wage_on_signature = wage_to_apply
             offer.state = "half_signed"
 
         # Both applicant/employee and HR responsible have signed
@@ -691,10 +692,11 @@ class HrContractSalary(http.Controller):
         return result
 
     def _get_compute_results(self, new_contract):
-        new_contract.wage_on_signature = new_contract.wage_with_holidays
+        wage_to_apply = new_contract._get_wage_to_apply()
+        new_contract.wage_on_signature = wage_to_apply
 
         result = {}
-        result['wage_with_holidays'] = round(new_contract.wage_with_holidays, 2)
+        result['wage_with_holidays'] = round(wage_to_apply, 2)
         # Allowed company ids might not be filled or request.env.user.company_ids might be wrong
         # since we are in route context, force the company to make sure we load everything
         resume_lines = request.env['hr.contract.salary.resume'].sudo().with_company(new_contract.company_id).search([
@@ -769,6 +771,8 @@ class HrContractSalary(http.Controller):
         return {'hide_children': not bool(value), 'field': field}
 
     def _get_email_info(self, contract, **kw):
+        wage_to_apply = contract._get_wage_to_apply()
+
         field_names = {
             model: {
                 field.name: field.field_description for field in request.env['ir.model.fields'].sudo().search([('model', '=', model)])
@@ -802,7 +806,7 @@ class HrContractSalary(http.Controller):
             contract_info[benefit.benefit_type_id.name].append((field_names['hr.contract'][field_name], field_value))
         # Add wage information
         contract_info[_('Wage')] = [
-            (_('Monthly Gross Salary'), contract.wage_with_holidays),
+            (_('Monthly Gross Salary'), wage_to_apply),
             (_('Annual Employer Cost'), contract.final_yearly_costs),
         ]
         result[_('Contract Information:')] = contract_info

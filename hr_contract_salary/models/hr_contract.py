@@ -377,6 +377,11 @@ class HrContract(models.Model):
             'department_id': self.department_id.id,
         }
 
+    def _get_wage_to_apply(self):
+        # To be overriden in localizations if a new wage applies depending on selected benefits
+        self.ensure_one()
+        return self.wage_with_holidays
+
     def action_show_offers(self):
         self.ensure_one()
         action = self.env['ir.actions.act_window']._for_xml_id('hr_contract_salary.hr_contract_salary_offer_action')

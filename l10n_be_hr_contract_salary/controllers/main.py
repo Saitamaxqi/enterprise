@@ -401,19 +401,23 @@ class HrContractSalary(main.HrContractSalary):
             })
         return new_contract, contract_diff
 
+    def _get_wage_to_apply(self):
+        return "wage_with_holidays"
+
     def _get_compute_results(self, new_contract):
         result = super()._get_compute_results(new_contract)
         result['double_holiday_wage'] = round(new_contract.double_holiday_wage, 2)
+        wage_to_apply = self._get_wage_to_apply()
         # Horrible hack: Add a sequence / display condition fields on salary resume model in master
         resume = result['resume_lines_mapped']['Monthly Salary']
-        if 'SALARY' in resume and resume.get('wage_with_holidays') and resume['wage_with_holidays'][1] != resume['SALARY'][1]:
-            ordered_fields = ['wage_with_holidays', 'SALARY', 'NET']
+        if 'SALARY' in resume and resume.get(wage_to_apply) and resume[wage_to_apply][1] != resume['SALARY'][1]:
+            ordered_fields = [wage_to_apply, 'SALARY', 'NET']
             if new_contract.env.context.get('simulation_working_schedule', '100') != '100':
                 salary_tuple = result['resume_lines_mapped']['Monthly Salary']['SALARY']
                 salary_tuple = (_('Gross (Part Time)'), salary_tuple[1], salary_tuple[2])
                 result['resume_lines_mapped']['Monthly Salary']['SALARY'] = salary_tuple
         else:
-            ordered_fields = ['wage_with_holidays', 'NET']
+            ordered_fields = [wage_to_apply, 'NET']
         result['resume_lines_mapped']['Monthly Salary'] = {field: resume.get(field, 0) for field in ordered_fields}
         return result
 
