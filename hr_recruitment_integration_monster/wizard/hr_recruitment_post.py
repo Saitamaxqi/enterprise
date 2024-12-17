@@ -11,7 +11,7 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
 
     def _prepare_monster_data(self):
         def convert_hours_to_monster_id():
-            if self.job_id.schedule_id.is_flexible_hours:
+            if self.job_id.schedule_id.flexible_hours:
                 return 6
             hours = self.job_id.schedule_id.hours_per_week
             if hours < 10:
