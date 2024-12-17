@@ -8,7 +8,10 @@ patch(PosStore.prototype, {
      */
     async setup() {
         await super.setup(...arguments);
-        this.delivery_order_count = {};
+        this.delivery_order_count = { urbanpiper: {} };
+        this.delivery_providers = [];
+        this.total_new_order = 0;
+        this.delivery_providers_active = false;
         this.onNotified("DELIVERY_ORDER_COUNT", async (order_id) => {
             await this._fetchUrbanpiperOrderCount(order_id);
         });
@@ -52,16 +55,6 @@ patch(PosStore.prototype, {
                 sticky: false,
             });
         }
-        const response = await this.data.call(
-            "pos.config",
-            "get_delivery_data",
-            [this.config.id],
-            {}
-        );
-        this.delivery_order_count = response.delivery_order_count;
-        this.delivery_providers = response.delivery_providers;
-        this.total_new_order = response.total_new_order || 0;
-        this.delivery_providers_active = response.delivery_providers_active;
         const deliveryOrder = order_id ? this.models["pos.order"].get(order_id) : false;
         if (!deliveryOrder) {
             return;
