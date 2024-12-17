@@ -366,51 +366,52 @@ class TestCashFlowReport(TestAccountReportsCommon):
         ], options)
 
     def test_cash_flow_multi_company_multi_currency_unfolding(self):
+        company_data_3 = self.setup_other_company(name="Company 3")
         options = self._generate_options(self.report, fields.Date.from_string('2016-01-01'), fields.Date.from_string('2017-01-01'))
         options['unfold_all'] = True
         self.company_data_2['default_journal_bank'].default_account_id.code = '101411'
 
-        account_operating_2 = self.env['account.account'].with_company(self.company_data_2['company']).create({
-            'account_type': 'asset_current',
-            'name': 'Account Operating',
-            'code': '121160',
-            'reconcile': True,
-            'tag_ids': self.env.ref('account.account_tag_operating'),
-        })
-        account_operating_2.with_company(self.env.company).code = '121160'
+        for company_data in (self.company_data, self.company_data_2, company_data_3):
+            account_operating = self.env['account.account'].with_company(company_data['company']).create({
+                'account_type': 'asset_current',
+                'name': 'Account Operating',
+                'code': '121160',
+                'reconcile': True,
+                'tag_ids': self.env.ref('account.account_tag_operating'),
+            })
+            invoice = self.env['account.move'].with_company(company_data['company']).create({
+                'move_type': 'entry',
+                'date': '2016-01-01',
+                'journal_id': company_data['default_journal_bank'].id,
+                'line_ids': [
+                    (0, 0, {'debit': 1150.0, 'credit': 0.0,    'account_id': company_data['default_account_receivable'].id}),
+                    (0, 0, {'debit': 0.0,    'credit': 1150.0, 'account_id': account_operating.id}),
+                ],
+            })
+            invoice.action_post()
+            payment = self.env['account.move'].with_company(company_data['company']).create({
+                'move_type': 'entry',
+                'date': '2017-01-01',
+                'journal_id': company_data['default_journal_bank'].id,
+                'line_ids': [
+                    (0, 0, {'debit': 0.0,   'credit': 230.0, 'account_id': company_data['default_account_receivable'].id}),
+                    (0, 0, {'debit': 230.0, 'credit': 0.0,   'account_id': company_data['default_journal_bank'].default_account_id.id}),
+                ],
+            })
+            payment.action_post()
+            self._reconcile_on((invoice + payment).line_ids, company_data['default_account_receivable'])
 
-        invoice_with_company_2 = self.env['account.move'].with_company(self.company_data_2['company']).create({
-            'move_type': 'entry',
-            'date': '2016-01-01',
-            'journal_id': self.company_data_2['default_journal_bank'].id,
-            'line_ids': [
-                (0, 0, {'debit': 1150.0, 'credit': 0.0,    'account_id': self.company_data_2['default_account_receivable'].id}),
-                (0, 0, {'debit': 0.0,    'credit': 1150.0, 'account_id': account_operating_2.id}),
-            ],
-        })
-        invoice_with_company_2.action_post()
-
-        payment_with_company_2 = self.env['account.move'].with_company(self.company_data_2['company']).create({
-            'move_type': 'entry',
-            'date': '2017-01-01',
-            'journal_id': self.company_data_2['default_journal_bank'].id,
-            'line_ids': [
-                (0, 0, {'debit': 0.0,   'credit': 230.0, 'account_id': self.company_data_2['default_account_receivable'].id}),
-                (0, 0, {'debit': 230.0, 'credit': 0.0,   'account_id': self.company_data_2['default_journal_bank'].default_account_id.id}),
-            ],
-        })
-        payment_with_company_2.action_post()
-
-        self._reconcile_on((invoice_with_company_2 + payment_with_company_2).line_ids, self.company_data_2['default_account_receivable'])
-
-        self.assertLinesValues(self.report._get_lines(options), [0, 1], [
+        lines = self.report._get_lines(options)
+        self.assertLinesValues(lines, [0, 1], [
             ['Cash and cash equivalents, beginning of period',                        0.0],
-            ['Net increase in cash and cash equivalents',                           115.0],
-            ['Cash flows from operating activities',                                115.0],
+            ['Net increase in cash and cash equivalents',                           575.0],
+            ['Cash flows from operating activities',                                575.0],
             ['Advance Payments received from customers',                              0.0],
-            ['Cash received from operating activities',                             115.0],
-            ['121160 Account Operating',                                            115.0],
-            ['Total Cash received from operating activities',                       115.0],
+            ['Cash received from operating activities',                             575.0],
+            ['121160 Account Operating',                                            230.0],  # Company 1
+            ['Account Operating',                                                   115.0],  # Company 2 (rate 2.0)
+            ['Account Operating',                                                   230.0],  # Company 3
+            ['Total Cash received from operating activities',                       575.0],
             ['Advance payments made to suppliers',                                    0.0],
             ['Cash paid for operating activities',                                    0.0],
             ['Cash flows from investing & extraordinary activities',                  0.0],
@@ -422,9 +423,11 @@ class TestCashFlowReport(TestAccountReportsCommon):
             ['Cash flows from unclassified activities',                               0.0],
             ['Cash in',                                                               0.0],
             ['Cash out',                                                              0.0],
-            ['Cash and cash equivalents, closing balance',                          115.0],
-            ['101411 Bank',                                                         115.0],
-            ['Total Cash and cash equivalents, closing balance',                    115.0],
+            ['Cash and cash equivalents, closing balance',                          575.0],
+            ['101401 Bank',                                                         230.0],  # Company 1
+            ['101411 Bank',                                                         115.0],  # Company 2 (rate 2.0)
+            ['Bank',                                                                230.0],  # Company 3
+            ['Total Cash and cash equivalents, closing balance',                    575.0],
         ], options)
 
     def test_cash_flow_tricky_case_1(self):
