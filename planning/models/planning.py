@@ -583,7 +583,7 @@ class PlanningSlot(models.Model):
         if not template_id:
             # Transform the current column's start/end_datetime to the user's timezone from UTC
             # Look at the work intervals to examine whether the current start/end_datetimes are inside working hours
-            calendar_id = resource.calendar_id if resource else company.resource_calendar_id
+            calendar_id = resource.calendar_id or company.resource_calendar_id
             work_interval = calendar_id._work_intervals_batch(start, end)[False]
             intervals = [(date_start, date_stop) for date_start, date_stop, attendance in work_interval]
             if not intervals:
