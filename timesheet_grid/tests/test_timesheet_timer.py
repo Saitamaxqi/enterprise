@@ -139,11 +139,16 @@ class TestTimesheetTimer(TestCommonTimesheet):
         self.assertEqual(timer.parent_res_model, 'project.task')
         self.assertEqual(timer.parent_res_id, self.task1.id)
 
-        timesheet_project = self.env['project.project'].create({
-            'name': 'Timesheet Project',
-            'allow_timesheets': True,
-        })
+        timesheet_project, non_timesheetable_project = self.env['project.project'].create([
+            {'name': 'Timesheet Project', 'allow_timesheets': True},
+            {'name': 'Non Timesheet Project', 'allow_timesheets': False},
+        ])
         self.task1.write({'project_id': timesheet_project.id})
         self.assertTrue(self.task1.with_user(self.user_employee).is_timer_running)
         self.assertEqual(timer.parent_res_model, 'project.task')
         self.assertEqual(timer.parent_res_id, self.task1.id)
+
+        self.task1.write({'project_id': non_timesheetable_project.id})
+        self.task1.invalidate_recordset()
+        self.assertFalse(self.task1.with_user(self.user_employee).is_timer_running)
+        self.assertFalse(timesheet.exists(), 'The timesheet should be removed since the timesheet has unit amount equals to 0.')

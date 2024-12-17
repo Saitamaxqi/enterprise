@@ -20,6 +20,7 @@
                            class="align-self-center me-auto ms-2 h2"
                            widget="timer_start_field"
                            options="{'unit_amount_field': 'timesheet_unit_amount'}"
+                           invisible="not display_timesheet_timer"
                            groups="hr_timesheet.group_hr_timesheet_user"
                     />
                 </xpath>

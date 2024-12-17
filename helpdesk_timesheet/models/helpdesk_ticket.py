@@ -97,6 +97,21 @@ class HelpdeskTicket(models.Model):
         else:
             super()._compute_display_extra_info()
 
+    def write(self, vals):
+        res = super().write(vals)
+        if vals.get('team_id') and not self.team_id.use_helpdesk_timesheet:
+            timers = self.env['timer.timer'].search([
+                ('parent_res_model', '=', 'helpdesk.ticket'),
+                ('parent_res_id', 'in', self.ids),
+                ('res_model', '=', 'account.analytic.line'),
+            ])
+            if timers:
+                timesheets = self.env['account.analytic.line'].browse(timers.mapped('res_id')).sudo()
+                timers.unlink()
+                if timesheets_to_remove := timesheets.filtered(lambda t: t.unit_amount == 0):
+                    timesheets_to_remove.unlink()
+        return res
+
     def action_timer_start(self):
         if self.display_timesheet_timer:
             super().action_timer_start()

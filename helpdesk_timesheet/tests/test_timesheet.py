@@ -366,15 +366,22 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
 
         timesheet.action_timer_start()
 
-        self.helpdesk_ticket.team_id = self.env['helpdesk.team'].create({
-            'name': 'New Team',
+        helpdesk_team_with_timesheet, helpdesk_team_without_timesheet = self.env['helpdesk.team'].create([{
+            'name': 'Helpdesk with timesheet',
             'use_helpdesk_timesheet': True,
             'project_id': self.project.id,
-        })
-
+        }, {
+            'name': 'Helpdesk without timesheet',
+            'use_helpdesk_timesheet': False,
+        }])
+        self.helpdesk_ticket.team_id = helpdesk_team_with_timesheet
         self.assertTrue(timesheet.is_timer_running, 'The timer should still be running after changing the helpdesk team')
         self.assertEqual(timesheet.user_timer_id.parent_res_model, 'helpdesk.ticket', 'The timer should still be linked to the ticket')
         self.assertEqual(timesheet.user_timer_id.parent_res_id, self.helpdesk_ticket.id, 'The timer should still be linked to the ticket')
 
         ticket = self.helpdesk_ticket.with_user(self.user_employee)
         self.assertTrue(ticket.is_timer_running)
+
+        ticket.team_id = helpdesk_team_without_timesheet
+        self.assertFalse(ticket.is_timer_running, 'The timer should have been stopped after changing the helpdesk team since the timesheet feature is disabled on that team')
+        self.assertFalse(timesheet.exists(), 'The timesheet should have been deleted after the timer was stopped since the unit_amount is 0')

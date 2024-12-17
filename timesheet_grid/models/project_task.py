@@ -62,6 +62,21 @@ class ProjectTask(models.Model):
                 },
             }
 
+    def write(self, vals):
+        res = super().write(vals)
+        if vals.get('project_id') and not self.project_id.sudo().allow_timesheets:
+            timers = self.env['timer.timer'].sudo().search([
+                ('parent_res_model', '=', 'project.task'),
+                ('parent_res_id', 'in', self.ids),
+                ('res_model', '=', 'account.analytic.line'),
+            ])
+            if timers:
+                timesheets = self.env['account.analytic.line'].browse(timers.mapped('res_id')).sudo()
+                timers.unlink()
+                if timesheets_to_remove := timesheets.filtered(lambda t: t.unit_amount == 0):
+                    timesheets_to_remove.unlink()
+        return res
+
     def _set_allocated_hours_for_tasks(self):
         super(ProjectTask, self.filtered(lambda task: not task.allow_timesheets))._set_allocated_hours_for_tasks()
 
