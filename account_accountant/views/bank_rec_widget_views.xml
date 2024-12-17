@@ -77,7 +77,7 @@
                     <separator/>
                     <filter name="no_statement" string="No statement" domain="[('statement_id', '=', False)]"/>
                     <filter name="invalid_statement" string="Invalid statements"
-                            domain="[('statement_complete', '=', False)]"/>
+                            domain="['|',('statement_complete', '=', False), ('statement_valid', '=', False)]"/>
                     <separator/>
                     <filter name="matched" string="Matched" domain="[('is_reconciled', '=', True)]"/>
                     <filter name="not_matched" string="Not Matched"
