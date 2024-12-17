@@ -116,7 +116,9 @@ class SaleOrderLine(models.Model):
         """Check subscription moves in/out during invoice period."""
         base_filter = super()._get_incoming_outgoing_moves_filter()
         if self.recurring_invoice:
-            start, end = self.order_id.last_invoice_date, self.order_id.next_invoice_date
+            so = self.order_id
+            start = so.last_invoice_date or so.start_date
+            end = so.next_invoice_date
 
             def date_filter(m):
                 return m.date_deadline and start and end and start <= m.date_deadline.date() < end
