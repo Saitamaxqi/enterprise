@@ -29,7 +29,6 @@ class TestSaleValidatedTimesheet(TestCommonSaleTimesheet):
             'partner_id': cls.partner_a.id,
             'partner_invoice_id': cls.partner_a.id,
             'partner_shipping_id': cls.partner_a.id,
-            'pricelist_id': cls.company_data['default_pricelist'].id,
         })
         cls.ordered_so_line = cls.env['sale.order.line'].with_context(tracking_disable=True).create({
             'product_id': cls.product_order_timesheet3.id,
@@ -288,7 +287,6 @@ class TestSaleValidatedTimesheet(TestCommonSaleTimesheet):
             'partner_id': self.partner_a.id,
             'partner_invoice_id': self.partner_a.id,
             'partner_shipping_id': self.partner_a.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
         })
 
         delivered_so_line = self.env['sale.order.line'].with_context(tracking_disable=True).create({

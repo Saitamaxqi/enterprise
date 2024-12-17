@@ -46,7 +46,6 @@ class TestSaleSubscriptionProjectProfitability(TestProjectProfitabilityCommon, T
             'plan_id': cls.plan_month.id,
             'note': "original subscription description",
             'partner_id': cls.user_portal.partner_id.id,
-            'pricelist_id': cls.company_data_2['default_pricelist'].id,
             'company_id': cls.company_data_2['company'].id,
             'sale_order_template_id': cls.subscription_tmpl_foreign_company.id,
         }, {
@@ -55,7 +54,6 @@ class TestSaleSubscriptionProjectProfitability(TestProjectProfitabilityCommon, T
             'plan_id': cls.plan_month.id,
             'note': "original subscription description",
             'partner_id': cls.user_portal.partner_id.id,
-            'pricelist_id': cls.company_data['default_pricelist'].id,
             'company_id': cls.company_data['company'].id,
             'sale_order_template_id': cls.subscription_tmpl_foreign_company.id,
         }])

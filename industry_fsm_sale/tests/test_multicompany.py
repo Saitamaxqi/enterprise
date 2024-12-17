@@ -1,15 +1,17 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import Command
-from odoo.addons.sale.tests.common import TestSaleCommonBase
-from odoo.addons.mail.tests.common import mail_new_test_user
 from datetime import datetime
+
+from odoo.fields import Command
+
+from odoo.addons.mail.tests.common import mail_new_test_user
+from odoo.addons.sale.tests.common import TestSaleCommon
 
 
 # This test class has to be tested at install since the flow is modified in industry_fsm_stock
 # where the SO gets confirmed as soon as a product is added in an FSM task which causes the
 # tests of this class to fail
-class TestMultiCompany(TestSaleCommonBase):
+class TestMultiCompany(TestSaleCommon):
 
     @classmethod
     def setUpClass(cls):

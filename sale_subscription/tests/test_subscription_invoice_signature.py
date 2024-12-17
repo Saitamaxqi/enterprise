@@ -71,7 +71,6 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
                 'product_variant_ids': [Command.link(variant.id)],
                 'plan_id': self.plan_week.id,
                 'price': 10.0 * i,
-                'pricelist_id': self.company_data['default_pricelist'].id,
             }, {
                 'product_template_id': product.id,
                 'product_variant_ids': [Command.link(variant.id)],
@@ -103,7 +102,6 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
                 'plan_id': self.plan_month.id,
                 'note': "original subscription description",
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'sale_order_template_id': self.subscription_tmpl.id,
             })
             subscription._onchange_sale_order_template_id()
@@ -169,7 +167,6 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
             'is_subscription': True,
             'plan_id': self.plan_month.id,
             'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'order_line': [(0, 0, {'product_id': product.id})],
         })
         sub.action_confirm()

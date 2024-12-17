@@ -243,7 +243,6 @@ class TestSubscriptionCommon(TestSaleCommon):
             'plan_id': cls.plan_month.id,
             'note': "original subscription description",
             'partner_id': cls.user_portal.partner_id.id,
-            'pricelist_id': cls.company_data['default_pricelist'].id,
             'sale_order_template_id': cls.subscription_tmpl.id,
         })
         cls.subscription._onchange_sale_order_template_id()

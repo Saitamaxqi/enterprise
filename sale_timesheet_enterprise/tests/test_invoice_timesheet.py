@@ -20,7 +20,6 @@ class TestInvoiceTimesheet(TestCommonSaleTimesheet):
             'partner_id': self.partner_a.id,
             'partner_invoice_id': self.partner_a.id,
             'partner_shipping_id': self.partner_a.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
         })
         so_line_product_1 = self.env['sale.order.line'].create({
             'product_id': self.product_delivery_timesheet3.id,

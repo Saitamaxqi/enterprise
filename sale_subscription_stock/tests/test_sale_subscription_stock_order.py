@@ -379,7 +379,6 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             'is_subscription': True,
             'partner_id': self.user_portal.partner_id.id,
             'plan_id': self.plan_month.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'order_line': [
                 Command.create(
                     {'product_id': self.sub_product_order.id, 'product_uom_qty': 1, 'tax_ids': [Command.clear()]}

@@ -108,7 +108,6 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
             'is_subscription': True,
             'partner_id': cls.user_portal.partner_id.id,
             'plan_id': cls.plan_month.id,
-            'pricelist_id': cls.company_data['default_pricelist'].id,
             'order_line': [Command.create({
                 'product_id': cls.sub_product_order.id,
                 'product_uom_qty': 1,
@@ -121,7 +120,6 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
             'is_subscription': True,
             'partner_id': cls.user_portal.partner_id.id,
             'plan_id': cls.plan_month.id,
-            'pricelist_id': cls.company_data['default_pricelist'].id,
             'order_line': [Command.create({
                 'product_id': cls.sub_product_delivery.id,
                 'product_uom_qty': 1,

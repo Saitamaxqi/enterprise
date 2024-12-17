@@ -344,7 +344,6 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
                 'is_subscription': True,
                 'plan_id': self.plan_year.id,
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'order_line': [
                     (0, 0, {
                         'name': self.product.name,

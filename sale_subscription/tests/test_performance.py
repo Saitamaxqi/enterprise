@@ -21,7 +21,6 @@ class TestSubscriptionPerformance(TestSubscriptionCommon):
                 'name': "SO %s" % idx,
                 'partner_id': partners[idx].id,
                 'plan_id': self.plan_month.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'order_line': [
                     (0, 0, {
                         'name': self.company_data['product_order_cost'].name,
@@ -63,7 +62,6 @@ class TestSubscriptionPerformance(TestSubscriptionCommon):
         non_recuring_sale_orders = self.env['sale.order'].create([{
             'name': "SO %s" % idx,
             'partner_id': partners[idx].id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'order_line': [
                 (0, 0, {
                     'name': self.company_data['product_order_cost'].name,

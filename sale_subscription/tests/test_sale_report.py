@@ -35,7 +35,6 @@ class TestSaleReport(TestSubscriptionCommon):
                 'is_subscription': True,
                 'note': "Subscription description",
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'plan_id': self.plan_month.id,
                 'order_line': [Command.create({
                     'name': self.recurring_product.name,

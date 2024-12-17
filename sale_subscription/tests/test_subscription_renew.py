@@ -117,7 +117,6 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
                 'is_subscription': True,
                 'note': "original subscription description",
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'sale_order_template_id': self.subscription_tmpl.id,
             })
             free_sub = self.env['sale.order'].with_context(context_mail).create({
@@ -125,7 +124,6 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
                 'is_subscription': True,
                 'note': "original subscription description",
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'plan_id': self.plan_month.id,
                 'client_order_ref': 'free',
                 'order_line': [
@@ -142,7 +140,6 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
                 'is_subscription': True,
                 'note': "original subscription description",
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'plan_id': self.plan_month.id,
                 'start_date': '2021-06-01',
                 'order_line': [
@@ -329,9 +326,8 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
     def test_renew_different_currency(self):
         with freeze_time("2023-03-28"):
             self.product.product_subscription_pricing_ids.unlink()
-            default_pricelist = self.company_data['default_pricelist']
-            other_currency = self.env.ref('base.EUR')
-            other_currency.action_unarchive()
+            default_pricelist = self.pricelist
+            other_currency = self._enable_currency('EUR')
             other_pricelist = self.env['product.pricelist'].create({
                 'name': 'Test Pricelist (EUR)',
                 'currency_id': other_currency.id,
@@ -478,7 +474,6 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
                 'is_subscription': True,
                 'note': "original subscription description",
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'sale_order_template_id': self.subscription_tmpl.id,
             })
             sub._onchange_sale_order_template_id()
@@ -578,9 +573,8 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
         to another one will recompute the order lines pricings.
         """
         with freeze_time("2023-04-04"):
-            default_pricelist = self.company_data['default_pricelist']
-            other_currency = self.env.ref('base.EUR')
-            other_currency.action_unarchive()
+            default_pricelist = self.pricelist
+            other_currency = self._enable_currency('EUR')
             other_pricelist = self.env['product.pricelist'].create({
                 'name': 'Test Pricelist (EUR)',
                 'currency_id': other_currency.id,

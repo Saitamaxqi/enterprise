@@ -34,8 +34,7 @@ class TestSubscriptionTask(TestSubscriptionCommon, TestCommonSaleTimesheet):
             'plan_id': self.plan_month.id,
             'note': "original subscription description",
             'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
-             'order_line': [
+            'order_line': [
                     Command.create({
                         'product_id': self.product_deliver_timesheet.id,
                         'product_uom_qty': 1

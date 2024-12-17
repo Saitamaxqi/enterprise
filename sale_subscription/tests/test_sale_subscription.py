@@ -343,7 +343,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'name': 'TestSubscription',
             'fiscal_position_id': fp.id,
             'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'order_line': [Command.create({
                 'product_id': product_tmpl.product_variant_id.id,
                 'product_uom_qty': 1
@@ -453,7 +452,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.env['sale.subscription.pricing'].create({
             'price': 10,
             'plan_id': self.plan_year.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'product_template_id': self.product.product_tmpl_id.id
         })
         other_pricelist = self.env['product.pricelist'].create({
@@ -488,7 +486,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'name': 'TestSubscription',
             'is_subscription': True,
             'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'sale_order_template_id': template.id,
         })
         subscription._onchange_sale_order_template_id()
@@ -759,7 +756,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'name': 'TestSubscription',
             'is_subscription': True,
             'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'plan_id': self.plan_week.id,
             'order_line': [
                 Command.create({
@@ -860,7 +856,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         # Simulate the order without recurrence but linked to a subscription
         order = self.env['sale.order'].create({
             'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'subscription_id': sub.id,
             'order_line': [Command.create({
                 'name': "recurring line",
@@ -1336,7 +1331,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertEqual(sub.close_reason_id.id, self.env.ref('sale_subscription.close_reason_auto_close_limit_reached').id)
 
     def test_subscription_pricelist_discount(self):
-        pricelist = self.company_data['default_pricelist']
+        pricelist = self.pricelist
         pricelist.item_ids.create({
             'pricelist_id': pricelist.id,
             'compute_price': 'percentage',
@@ -1348,7 +1343,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'plan_id': self.plan_month.id,
             'note': "original subscription description",
             'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'sale_order_template_id': self.subscription_tmpl.id,
         })
         sub._onchange_sale_order_template_id()
@@ -1365,12 +1359,13 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
              "Discounts should not be reset on confirmation.")
 
     def test_non_subscription_pricelist_discount(self):
-        pricelist = self.company_data['default_pricelist']
-        pricelist.item_ids.create({
-            'pricelist_id': pricelist.id,
-            'compute_price': 'percentage',
-            'percent_price': 50,
-        })
+        pricelist = self.pricelist
+        pricelist.item_ids = [
+            Command.create({
+                'compute_price': 'percentage',
+                'percent_price': 50,
+            })
+        ]
         so = self.env["sale.order"].with_context(**self.context_no_mail).create({
             'name': 'TestNonSubscription',
             'is_subscription': False,
@@ -1394,7 +1389,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'is_subscription': True,
             'note': "original subscription description",
             'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'sale_order_template_id': self.subscription_tmpl.id,
         })
         sub._onchange_sale_order_template_id()
@@ -1428,18 +1422,14 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         Assert that after changing the 'Recurrence' field of a subscription,
         prices will recompute automatically ONLY for subscription products.
         """
-        default_pricelist = self.company_data['default_pricelist']
-        other_currency = self.env.ref('base.EUR')
-        other_currency.action_unarchive()
+        self._enable_currency('EUR')
         pricing_month_1_eur = self.env['sale.subscription.pricing'].create({
             'plan_id': self.plan_month.id,
             'price': 100,
-            'pricelist_id': default_pricelist.id,
         })
         pricing_year_1_eur = self.env['sale.subscription.pricing'].create({
             'plan_id': self.plan_year.id,
             'price': 1000,
-            'pricelist_id': default_pricelist.id,
         })
         simple_product = self.product.copy({'recurring_invoice': False})
         simple_product_order_line = {
@@ -1464,7 +1454,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'partner_id': self.user_portal.partner_id.id,
             'currency_id': self.company.currency_id.id,
             'plan_id': self.plan_month.id,
-            'pricelist_id': default_pricelist.id,
             'order_line': [
                 Command.create(sub_product_order_line),
                 Command.create(simple_product_order_line)
@@ -1536,7 +1525,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'name': 'TestSubscription',
             'is_subscription': True,
             'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'plan_id': self.plan_month.id,
             'sale_order_template_id': template.id,
         })
@@ -1878,7 +1866,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'name': 'with token and online payment true',
                 'is_subscription': True,
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'plan_id': self.plan_month.id,
                 'order_line': [
                     Command.create({
@@ -1895,7 +1882,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'name': 'without token and online payment true',
                 'is_subscription': True,
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'plan_id': self.plan_month.id,
                 'order_line': [
                     Command.create({
@@ -1911,7 +1897,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'name': 'with token and online payment false',
                 'is_subscription': True,
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'plan_id': self.plan_month.id,
                 'order_line': [
                     Command.create({
@@ -1927,7 +1912,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'name': 'without token and online payment false',
                 'is_subscription': True,
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'plan_id': self.plan_month.id,
                 'order_line': [
                     Command.create({
@@ -1942,7 +1926,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'name': 'without token online payment true and prepayment percent < 100',
                 'is_subscription': True,
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'plan_id': self.plan_month.id,
                 'order_line': [
                     Command.create({
@@ -1959,7 +1942,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'name': 'with token online payment true and prepayment percent < 100',
                 'is_subscription': True,
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'plan_id': self.plan_month.id,
                 'order_line': [
                     Command.create({
@@ -2093,7 +2075,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'is_subscription': True,
                 'note': "original subscription description",
                 'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
                 'sale_order_template_id': self.subscription_tmpl.id,
             })
             self.cr.precommit.clear()

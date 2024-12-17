@@ -232,7 +232,7 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
                 'is_subscription': True,
                 'note': "original subscription description",
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
+
                 'plan_id': self.plan_year.id,
                 'order_line': [
                     (0, 0, {

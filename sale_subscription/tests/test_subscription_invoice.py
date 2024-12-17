@@ -122,7 +122,6 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
                 'plan_id': self.plan_month.id,
                 'note': "original subscription description",
                 'partner_id': self.user_portal.partner_id.id,
-                'pricelist_id': self.company_data['default_pricelist'].id,
                 'sale_order_template_id': self.subscription_tmpl.id,
             })
             sub._onchange_sale_order_template_id()
@@ -236,7 +235,6 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
             'is_subscription': True,
             'plan_id': self.plan_month.id,
             'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'order_line': [(0, 0, {'product_id': sub_product1.id})],
         })
 
@@ -813,7 +811,6 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
             'is_subscription': True,
             'plan_id': self.plan_month.id,
             'partner_id': self.user_portal.partner_id.id,
-            'pricelist_id': self.company_data['default_pricelist'].id,
             'order_line': [(0, 0, {'product_id': self.product.id})],
         })
         sub.action_confirm()

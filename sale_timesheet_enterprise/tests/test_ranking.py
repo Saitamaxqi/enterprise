@@ -20,7 +20,6 @@ class TestSaleTimesheetEnterpriseRanking(TestCommonSaleTimesheet):
             'partner_id': cls.partner_a.id,
             'partner_invoice_id': cls.partner_a.id,
             'partner_shipping_id': cls.partner_a.id,
-            'pricelist_id': cls.company_data['default_pricelist'].id,
         })
         cls.sol = cls.env['sale.order.line'].create({
             'product_id': cls.product_order_timesheet3.id,
