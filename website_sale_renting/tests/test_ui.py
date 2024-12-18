@@ -61,3 +61,7 @@ class TestUi(HttpCase, TestWebsiteSaleRentingCommon):
     def test_website_sale_update_rental_duration(self):
         self.computer.website_published = True
         self.start_tour('/shop', 'rental_cart_update_duration')
+
+    def test_website_sale_renting_select_wrong_period(self):
+        self.computer.website_published = True
+        self.start_tour('/shop', 'website_sale_renting_select_wrong_period')

@@ -206,11 +206,10 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
         if (message) {
             this.el.parentElement.querySelector('span[name=renting_warning_message]').innerText = message;
             this.el.parentElement.querySelector('.o_renting_warning').classList.add('d-block');
-            // only disable when there is a message. Hence, it doesn't override other disabling.
-            $('.oe_website_sale').trigger('toggle_disable', [this._getParentElement(), !message]);
         } else {
             this.el.parentElement.querySelector('.o_renting_warning').classList.remove('d-block');
         }
+        $('.oe_website_sale').trigger('toggle_disable', [this._getParentElement(), !message]);
         this.el.dispatchEvent(new CustomEvent('toggle_search_btn', { bubbles: true, detail: message }));
         return !message;
     },

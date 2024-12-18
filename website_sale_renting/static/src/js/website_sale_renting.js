@@ -123,11 +123,10 @@ WebsiteSale.include({
         if (message) {
             this.el.querySelector('span[name=renting_warning_message]').innerText = message;
             this.el.querySelector('.o_renting_warning').classList.add('d-block');
-            // only disable when there is a message. Hence, it doesn't override other disabling.
-            this._toggleDisable($parent.closest('form'), !message);
         } else {
             this.el.querySelector('.o_renting_warning').classList.remove('d-block');
         }
+        this._toggleDisable($parent.closest('form'), !message);
         return !message;
     },
 
