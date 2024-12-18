@@ -20,5 +20,5 @@ class PosSelfOrderPreparationDisplayController(PosSelfOrderController):
         pos_config, _ = self._verify_authorization(access_token, table_identifier, order)
         order_id = pos_config.env['pos.order'].browse(order_id)
 
-        if pos_config.self_ordering_pay_after == 'each' and order_id.state == 'paid':
+        if pos_config.self_ordering_pay_after == 'each' and order_id.state == 'paid' or pos_config.self_ordering_mode == 'kiosk':
             pos_config.env['pos_preparation_display.order'].process_order(order_id.id)
