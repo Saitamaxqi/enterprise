@@ -399,6 +399,23 @@ class TestCaseDocuments(TransactionCaseDocuments):
         self.assertEqual(copied_documents[0].name, f'{self.document_txt.name} (copy)')
         self.assertEqual(copied_documents[1].name, f'{self.document_gif.name} (copy)')
 
+        # Check that copied documents res_model and res_id are pointing to themselves
+        document_txt_copy = self.document_txt.with_user(self.internal_user).copy()
+        copied_documents = (self.document_txt | document_txt_copy).with_user(self.internal_user).copy()
+        self.document_txt.unlink()
+        for copied_document in copied_documents:
+            self.assertEqual(copied_document.res_id, copied_document.id)
+            self.assertEqual(copied_document.res_model, "documents.document")
+            self.assertTrue(copied_document.exists())
+
+        self.document_gif.write({
+            "res_model": "res.partner",
+            "res_id": self.env.user.partner_id.id,
+        })
+        copied_document = self.document_gif.copy()
+        self.assertEqual(copied_document.res_id, copied_document.id)
+        self.assertEqual(copied_document.res_model, "documents.document")
+
     def test_document_thumbnail_status(self):
         for mimetype in ['application/pdf', 'application/pdf;base64']:
             with self.subTest(mimetype=mimetype):

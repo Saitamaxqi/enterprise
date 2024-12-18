@@ -1448,6 +1448,8 @@ class DocumentsDocument(models.Model):
                             # Avoid recompute based on attachment_id
                             'name': new_binary_sudo.name,
                             'url_preview_image': False,
+                            'res_id': new_binary_sudo.id,
+                            'res_model': 'documents.document',
                         })
 
         return self.browse([new_document.id for new_document in new_documents])
