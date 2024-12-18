@@ -214,7 +214,7 @@ test("Update the chart domain from the side panel", async function () {
     await dsHelpers.addNewRule();
     await contains(".modal-footer .btn-primary").click();
     expect(model.getters.getChartDefinition(chartId).searchParams.domain).toEqual([["id", "=", 1]]);
-    expect(dsHelpers.getConditionText(fixture)).toBe("Id = 1");
+    expect(dsHelpers.getConditionText(fixture)).toBe("Id is equal 1");
 });
 
 test("Cumulative line chart", async () => {
@@ -409,9 +409,9 @@ describe("trend line", () => {
     });
 
     test("Can change polynomial degree", async function () {
-        onRpc("web_read_group", () => {
+        onRpc("web_read_group", () =>
             // return at least 3 groups to have a valid trend line
-            return {
+            ({
                 groups: [
                     {
                         bar: true,
@@ -430,8 +430,8 @@ describe("trend line", () => {
                     },
                 ],
                 length: 3,
-            };
-        });
+            })
+        );
         const { model, env } = await createSpreadsheetFromGraphView();
         const sheetId = model.getters.getActiveSheetId();
         const chartId = model.getters.getChartIds(sheetId)[0];

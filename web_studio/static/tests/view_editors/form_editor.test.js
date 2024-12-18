@@ -212,9 +212,7 @@ test("optional field not in form editor", async () => {
 });
 
 test("many2one field edition", async () => {
-    onRpc("/web_studio/get_studio_view_arch", () => {
-        return { studio_view_arch: "" };
-    });
+    onRpc("/web_studio/get_studio_view_arch", () => ({ studio_view_arch: "" }));
     onRpc("get_formview_action", () => {
         throw new Error("The many2one form view should not be opened");
     });
@@ -721,12 +719,10 @@ test("edit options and attributes on a widget node", async () => {
     }
     registry.category("view_widgets").add("test_widget", {
         component: MyTestWidget,
-        extractProps: ({ attrs, options }) => {
-            return {
-                width: attrs.width,
-                color: options.color,
-            };
-        },
+        extractProps: ({ attrs, options }) => ({
+            width: attrs.width,
+            color: options.color,
+        }),
         supportedAttributes: [
             {
                 label: "Width",
@@ -1099,7 +1095,7 @@ test("edit one2many list view that uses parent key [REQUIRE FOCUS]", async () =>
 
     await contains(".o_web_studio_sidebar input#domain").click();
     expect(".modal .modal-body").toHaveText(
-        "Match\nall\nof the following rules:\nDisplay name\n=\n!=\ncontains\ndoes not contain\nis in\nis not in\nis set\nis not set\nstarts with\nends with\nparent.display_name\nNew Rule"
+        "Match\nall\nof the following rules:\nDisplay name\nis equal\nis not equal\ncontains\ndoes not contain\nis in\nis not in\nis set\nis not set\nstarts with\nends with\nparent.display_name\nNew Rule"
     );
 
     // Close the modal and remove the domain on invisible attr
