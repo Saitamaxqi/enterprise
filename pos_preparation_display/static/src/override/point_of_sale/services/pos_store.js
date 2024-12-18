@@ -9,30 +9,6 @@ patch(PosStore.prototype, {
         this["pos_preparation_display.display"] = [];
     },
 
-    // @override - add preparation display categories to global order preparation categories
-    get orderPreparationCategories() {
-        let categoryIds = super.orderPreparationCategories;
-        if (this.preparationDisplayCategoryIds.size > 0) {
-            categoryIds = new Set([...categoryIds, ...this.preparationDisplayCategoryIds]);
-        } else if (this.data.models["pos_preparation_display.display"].length > 0) {
-            categoryIds = new Set([
-                ...categoryIds,
-                ...this.data.models["pos.category"].map((cat) => cat.id),
-            ]);
-        }
-        return categoryIds;
-    },
-
-    get preparationDisplayCategoryIds() {
-        return new Set(
-            this.models["pos_preparation_display.display"].flatMap((preparationDisplay) =>
-                preparationDisplay.category_ids.length > 0
-                    ? preparationDisplay.category_ids.flatMap((cat) => cat.id)
-                    : this.models["pos.category"].flatMap((cat) => cat.id)
-            )
-        );
-    },
-
     async sendOrderInPreparation(o, cancelled = false) {
         if (this.models["pos_preparation_display.display"].length > 0) {
             for (const note of Object.values(o.uiState.noteHistory)) {

@@ -68,12 +68,6 @@ patch(PosStore.prototype, {
             return super.showScreen(...arguments);
         }
     },
-    useProxy() {
-        return (
-            super.useProxy() ||
-            (this.config.iot_device_ids && this.config.iot_device_ids.length > 0)
-        );
-    },
     connectToProxy() {
         this.hardwareProxy.pingBoxes();
         if (this.config.iface_scan_via_proxy) {
