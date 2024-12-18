@@ -52,6 +52,9 @@
             <t t-set="snippet_selector" t-value="'.s_appointments'"/>
         </t>
     </xpath>
+    <xpath expr="//div[@data-js='ScrollButton']" position="attributes">
+        <attribute name="data-exclude" add=".s_appointments .s_dynamic_snippet_content" separator=","/>
+    </xpath>
 </template>
 
 <template id="s_dynamic_snippet_options_template" inherit_id="website.s_dynamic_snippet_options_template">
