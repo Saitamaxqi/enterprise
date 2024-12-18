@@ -32,10 +32,11 @@ class TestShopFloor(HttpCase):
 
     def test_shop_floor(self):
         # Creates somme employees for test purpose.
-        self.env['hr.employee'].create([{
+        employees = self.env['hr.employee'].create([{
             'name': name,
             'company_id': self.env.company.id,
         } for name in ['Abbie Seedy', 'Billy Demo', 'Cory Corrinson']])
+        employees[0].barcode = "659898105101"
 
         giraffe = self.env['product.product'].create({
             'name': 'Giraffe',

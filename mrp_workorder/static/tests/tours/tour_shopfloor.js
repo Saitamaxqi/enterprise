@@ -29,8 +29,21 @@ registry.category("web_tour.tours").add("test_shop_floor", {
             run: "click",
         },
         {
-            content: "Select the Marc Demo employee",
-            trigger: '.modal-body .o_mrp_employee_tree_view .o_data_row td:contains("Billy Demo")',
+            content: "Scan Abbie Seedy's badge",
+            trigger: ".modal-body .o_mrp_employee_tree_view",
+            run: "scan 659898105101",
+        },
+        {
+            trigger: ".o_mrp_employees_panel li.o_admin_user:contains(Abbie Seedy)",
+        },
+        {
+            content: "Add operator button",
+            trigger: "button:contains('Operator')",
+            run: "click",
+        },
+        {
+            content: "Select the Billy Demo employee",
+            trigger: ".modal-body .o_mrp_employee_tree_view .o_data_row td:contains('Billy Demo')",
             run: "click",
         },
         {

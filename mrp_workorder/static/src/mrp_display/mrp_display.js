@@ -192,9 +192,6 @@ export class MrpDisplay extends Component {
         }
         const employee = await this.orm.call("mrp.workcenter", "get_employee_barcode", [barcode]);
         if (employee) {
-            if (this.useEmployee.popup.SelectionPopup.isShown) {
-                this.useEmployee.popup.SelectionPopup.close();
-            }
             return this.useEmployee.setSessionOwner(employee, undefined);
         }
         if (

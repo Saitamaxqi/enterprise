@@ -133,6 +133,7 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
     };
 
     const setSessionOwner = async (employee_id, pin) => {
+        dialogService.closeAll();
         if (employees.admin.id === employee_id && employee_id === employees.connected[0].id) {
             return;
         }
@@ -162,9 +163,8 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
         });
     };
 
-    const pinValidation = async (employeeId, pin) => {
-        return await orm.call("hr.employee", "pin_validation", [employeeId, pin]);
-    };
+    const pinValidation = async (employeeId, pin) =>
+        await orm.call("hr.employee", "pin_validation", [employeeId, pin]);
 
     const checkPin = async (employeeId, pin) => {
         if (
