@@ -35,7 +35,9 @@ class SaleCommissionPlan(models.Model):
     target_ids = fields.One2many('sale.commission.plan.target', 'plan_id', compute='_compute_targets',
                                  store=True, readonly=False)
     target_commission_ids = fields.One2many('sale.commission.plan.target.commission', 'plan_id',
-                                            compute='_compute_target_commission_ids', store=True, readonly=False, copy=True)
+                                            compute='_compute_target_commission_ids',
+                                            inverse='_inverse_target_commission_ids',
+                                            store=True, readonly=False, copy=True)
     target_commission_graph = fields.Text(compute="_compute_target_commission_graph")
     user_ids = fields.One2many('sale.commission.plan.user', 'plan_id', copy=True)
 
@@ -136,6 +138,24 @@ CREATE INDEX IF NOT EXISTS account_move_invoice_user_id_date_idx ON account_move
                 for target in plan.target_commission_ids:
                     target.amount = target.amount_rate * plan.commission_amount
 
+    def _inverse_target_commission_ids(self):
+        for plan in self:
+            sorted_amounts = {}
+            sorted_rates = []
+            exact_value = False
+            for target in plan.target_commission_ids.sorted('target_rate'):
+                sorted_amounts[target.target_rate] = target.amount
+                sorted_rates.append(target.target_rate)
+                if target.target_rate == 1 and target.amount:
+                    plan.commission_amount = target.amount
+                    exact_value = True
+                    break
+            if not exact_value:
+                # Try to interpolate/extrapolate values at 100
+                amount = self._get_completion_value(sorted_amounts, sorted_rates)
+                if amount:
+                    plan.commission_amount = amount
+
     @api.depends('target_commission_ids')
     def _compute_target_commission_graph(self):
         for plan in self:
@@ -184,3 +204,22 @@ CREATE INDEX IF NOT EXISTS account_move_invoice_user_id_date_idx ON account_move
 
     def action_cancel(self):
         self.state = 'cancel'
+
+    @api.model
+    def _get_completion_value(self, sorted_amounts, sorted_rates):
+        """ Interpolate/extrapolate the amount at 100% target completion.
+        return: amount at 100% target completion
+        """
+        lowest_vals = [v for v in sorted_rates if v < 1]
+        higher_vals = [v for v in sorted_rates if v > 1]
+        # The plan has always a value at 0% completion
+        if lowest_vals and higher_vals:
+            low = lowest_vals[-1]
+            high = higher_vals[0]
+        elif not higher_vals and len(lowest_vals) > 1:
+            low = lowest_vals[-2]
+            high = lowest_vals[-1]
+        else:
+            return
+        # y = ax + b
+        return sorted_amounts[low] + (sorted_amounts[high] - sorted_amounts[low])/(high-low) * (1-low)
