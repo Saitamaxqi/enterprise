@@ -19,11 +19,6 @@ registry.category("web_tour.tours").add('applicant_sign_request_tour', {
             run: 'click',
         },
         {
-            content: "Open group",
-            trigger: 'tr.o_group_has_content:contains("None")',
-            run: 'click',
-        },
-        {
             content: "Open Saitama's application",
             trigger: '.o_data_cell[data-tooltip="Saitama"]',
             run: 'click',
