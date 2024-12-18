@@ -17,6 +17,9 @@ export class Many2One extends Component {
         if (this.lastProm) {
             this.lastProm.abort(false);
         }
+        if (!request) {
+            return []; // Do not fetch data if input is empty
+        }
         this.lastProm = this.search(request);
         const records = await this.lastProm;
         if (!records.length) {

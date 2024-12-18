@@ -38,6 +38,11 @@ registry.category("web_tour.tours").add("required_fields_tour", {
             run: "click",
         },
         {
+            content: "Filling the details",
+            trigger: 'input[type="text"]',
+            run: "edit Mitchell",
+        },
+        {
             content: "Select the host from the dropdown",
             trigger: '.ui-autocomplete.dropdown-menu a:contains("Mitchell Admin")',
             run: "click",

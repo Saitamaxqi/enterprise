@@ -6,7 +6,7 @@
             <AutoComplete
                 value="props.value || ''"
                 id="props.id"
-                placeholder="props.placeholder || 'Choose a Host'"
+                placeholder="props.placeholder || 'Write the name of the person you\'re visiting....'"
                 sources="sources"
                 onSelect.bind="onSelect"
                 dropdown="true"
