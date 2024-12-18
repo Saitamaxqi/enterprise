@@ -3,6 +3,7 @@
 import logging
 
 from odoo import _, api, fields, models
+from odoo.tools.float_utils import json_float_round
 from odoo.exceptions import UserError
 from odoo.addons.l10n_ke_edi_oscu.models.account_move import format_etims_datetime
 from odoo.tools import SQL
@@ -314,7 +315,7 @@ class ProductProduct(models.Model):
             'qtyUnitCd':   self.uom_id.l10n_ke_quantity_unit_id.code,             # Quantity unit code
             'taxTyCd':     self._l10n_ke_get_tax_type().code,                     # Tax type code
             'bcd':         self.barcode or None,                                  # Self barcode
-            'dftPrc':      self.standard_price,                                   # Standard price
+            'dftPrc':      json_float_round(self.standard_price, 2),              # Standard price
             'isrcAplcbYn': 'Y' if self.l10n_ke_is_insurance_applicable else 'N',  # Is insurance applicable
             'useYn': 'Y',
             **self.env.company._l10n_ke_get_user_dict(self.create_uid, self.write_uid),
