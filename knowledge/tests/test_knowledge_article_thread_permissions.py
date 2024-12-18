@@ -120,3 +120,13 @@ class TestKnowledgeArticleThreadPermissions(KnowledgeArticlePermissionsCase):
         self.assertEqual(len(base_thread.message_ids), 1)
         base_thread.message_post(body="Hello Friend")
         self.assertEqual(len(base_thread.message_ids), 2, "A message should have been posted")
+
+        # Access token is generated for the attachment when a user posts a message
+        base_thread = self.workspace_thread.with_env(self.env)
+        attachment = self.env['ir.attachment'].create({
+            'name': 'Test attachment',
+            'raw': b'Attachment',
+            'res_model': 'mail.compose.message',
+        })
+        message = base_thread.message_post(body="Hello Dear!", attachment_ids=attachment.ids)
+        self.assertTrue(message.attachment_ids[0].access_token)

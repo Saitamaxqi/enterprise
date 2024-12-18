@@ -10,3 +10,4 @@ from . import knowledge_article_stage
 from . import knowledge_cover
 from . import res_partner
 from . import res_users
+from . import ir_attachment

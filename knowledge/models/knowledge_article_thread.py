@@ -134,3 +134,7 @@ class KnowledgeArticleThread(models.Model):
         )]
 
         return new_groups + groups
+
+    def _process_attachments_for_post(self, attachments, attachment_ids, message_values):
+        self.env['ir.attachment'].browse(attachment_ids).generate_access_token()
+        return super()._process_attachments_for_post(attachments, attachment_ids, message_values)
