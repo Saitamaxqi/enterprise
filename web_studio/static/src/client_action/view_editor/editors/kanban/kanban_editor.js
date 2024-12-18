@@ -37,12 +37,14 @@ class OneRecordModel extends kanbanView.Model {
                     activeFields: list.config.activeFields,
                     groupByFieldName: list.groupByField.name,
                     context: list.context,
+                    companies: list.config.companies,
                     list: {
                         resModel: list.config.resModel,
                         fields: list.config.fields,
                         activeFields: list.config.activeFields,
                         groupBy: [],
                         context: list.context,
+                        companies: list.config.companies,
                     },
                 };
 
@@ -132,7 +134,9 @@ async function addKanbanViewStructure(structure) {
             return { type: "kanban_menu" };
         }
         case "ribbon": {
-            const cardTemplate = this.viewEditorModel.xmlDoc.querySelector(`[t-name="${KANBAN_CARD_ATTRIBUTE}"]`);
+            const cardTemplate = this.viewEditorModel.xmlDoc.querySelector(
+                `[t-name="${KANBAN_CARD_ATTRIBUTE}"]`
+            );
             let ribbonTarget;
             if (cardTemplate.children.length) {
                 ribbonTarget = [`//kanban//t[@t-name="${KANBAN_CARD_ATTRIBUTE}"]/*[1]`, "before"];
@@ -148,10 +152,9 @@ async function addKanbanViewStructure(structure) {
                     },
                 },
 
-                target: this.env.viewEditorModel.getFullTarget(
-                    ribbonTarget[0],
-                    { isXpathFullAbsolute: false }
-                ),
+                target: this.env.viewEditorModel.getFullTarget(ribbonTarget[0], {
+                    isXpathFullAbsolute: false,
+                }),
                 position: ribbonTarget[1],
             };
         }
