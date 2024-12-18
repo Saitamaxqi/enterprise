@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
-
 {
     'name': 'IoT for PoS',
     'version': '1.0',
@@ -30,6 +28,7 @@ Supported devices include payment terminals, receipt printers, scales and custom
             'iot/static/src/iot_report_action.js',
             'iot/static/src/dialogs/iot_connection_error_dialog.js',
             'iot/static/src/iot_websocket_service.js',
+            'iot/static/src/select_printer_wizard.js',
             'iot/static/src/client_action/delete_local_storage.js',
             'pos_iot/static/src/**/*',
         ],
