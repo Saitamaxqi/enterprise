@@ -273,8 +273,8 @@ export const DocumentsRecordMixin = (component) => class extends component {
         this.toggleSelection();
     }
 
-    async toggleSelection() {
-        await super.toggleSelection();
+    async toggleSelection(selected) {
+        await super.toggleSelection(selected);
 
         if (this.selected) {
             this.model.documentService.logAccess(this.data.access_token);

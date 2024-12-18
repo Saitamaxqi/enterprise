@@ -1,7 +1,7 @@
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import { DocumentsBreadcrumbs } from "@documents/components/documents_breadcrumbs";
 import { DocumentsCogMenu } from "../cog_menu/documents_cog_menu";
-import { useState } from "@odoo/owl";
+import { onWillPatch, useState } from "@odoo/owl";
 import { useService, useBus } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
 import { download } from "@web/core/network/download";
@@ -29,6 +29,11 @@ export class DocumentsControlPanel extends ControlPanel {
         this.documentsState = useState({
             isChatterVisible: this.documentService.isChatterVisible(),
             previewedDocument: null,
+        });
+
+        this.firstLoad = true;
+        onWillPatch(() => {
+            this.firstLoad = false;
         });
 
         // Document service functions
