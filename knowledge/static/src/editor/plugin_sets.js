@@ -7,6 +7,7 @@ import { EmbeddedClipboardPlugin } from "@knowledge/editor/embedded_components/p
 import { EmbeddedViewPlugin } from "@knowledge/editor/embedded_components/plugins/embedded_view_plugin/embedded_view_plugin";
 import { InsertPendingElementPlugin } from "@knowledge/editor/plugins/insert_pending_element_plugin/insert_pending_element_plugin";
 import { VersionPlugin } from "@knowledge/editor/plugins/version_plugin/version_plugin";
+import { EmbeddedFilePlugin } from "@html_editor/others/embedded_components/plugins/embedded_file_plugin/embedded_file_plugin";
 
 MAIN_PLUGINS.push(VersionPlugin, KnowledgeArticlePlugin);
 
@@ -20,4 +21,5 @@ export const KNOWLEDGE_EMBEDDED_COMPONENT_PLUGINS = [
     ArticleIndexPlugin,
     EmbeddedClipboardPlugin,
     EmbeddedViewPlugin,
+    EmbeddedFilePlugin,
 ];
