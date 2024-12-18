@@ -39,7 +39,7 @@
         <field name="inherit_id" ref="hr_appraisal.view_hr_appraisal_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='date_close']" position="after">
-                <field name="employee_feedback_ids" string="Asked Feedback" widget="many2many_avatar_user" optional="hide"/>
+                <field name="employee_feedback_ids" string="Asked Feedback" widget="many2many_avatar_employee" optional="hide"/>
             </xpath>
         </field>
     </record>

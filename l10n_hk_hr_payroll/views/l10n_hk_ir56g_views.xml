@@ -40,7 +40,7 @@
             <form string="IR56G Line">
                 <sheet>
                     <h3 class="mb-3">
-                        <field name="employee_id" widget="many2one_avatar_user" readonly="1"/>
+                        <field name="employee_id" widget="many2one_avatar_employee" readonly="1"/>
                     </h3>
                     <div class="d-flex">
                         <label class="mr16" for="leave_hk_date"/>

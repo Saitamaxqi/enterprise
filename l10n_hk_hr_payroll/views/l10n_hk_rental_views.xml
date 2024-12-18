@@ -25,7 +25,7 @@
                         <group name="top_info_left">
                             <field name="active" invisible="1"/>
                             <field name="company_id" invisible="1"/>
-                            <field name="employee_id" widget="many2one_avatar_user"/>
+                            <field name="employee_id" widget="many2one_avatar_employee"/>
                             <field name="date_start" string="Rental Start Date"/>
                             <field name="date_end" string="Rental End Date"/>
                         </group>

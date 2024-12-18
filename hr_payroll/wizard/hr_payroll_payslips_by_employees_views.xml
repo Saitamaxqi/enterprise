@@ -11,7 +11,7 @@
                     <div class="o_row ms-2">
                         <group>
                             <field name="selection_mode"/>
-                            <field name="select_employee_ids" string="Employees" invisible="selection_mode != 'employee'" widget="many2many_avatar_user" placeholder="All Employees"/>
+                            <field name="select_employee_ids" string="Employees" invisible="selection_mode != 'employee'" widget="many2many_avatar_employee" placeholder="All Employees"/>
                             <field name="department_ids" invisible="selection_mode != 'department'" widget="many2many_tags" placeholder="All Departments"/>
                             <field name="job_ids" invisible="selection_mode != 'job'" widget="many2many_tags" placeholder="All Job Positions"/>
                             <field name="structure_type_ids" invisible="selection_mode != 'structure'" widget="many2many_tags" placeholder="All Salary Structure Types"/>

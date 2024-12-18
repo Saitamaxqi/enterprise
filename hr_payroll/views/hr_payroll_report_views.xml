@@ -35,7 +35,7 @@
             <field name="model">hr.payroll.report</field>
             <field name="arch" type="xml">
                 <list string="Payroll Analysis" create="0">
-                    <field name="employee_id" widget="many2one_avatar_user"/>
+                    <field name="employee_id" widget="many2one_avatar_employee"/>
                     <field name="department_id" optional="show"/>
                     <field name="job_id" optional="hide"/>
                     <field name="type" optional="show"/>

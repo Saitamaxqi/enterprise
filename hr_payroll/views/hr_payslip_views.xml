@@ -11,7 +11,7 @@
                 </header>
                 <field name="company_id" column_invisible="True"/>
                 <field name="currency_id" column_invisible="True"/>
-                <field name="employee_id" widget="many2one_avatar_user" readonly="state not in ['draft', 'verify']"/>
+                <field name="employee_id" widget="many2one_avatar_employee" readonly="state not in ['draft', 'verify']"/>
                 <field name="payslip_run_id" readonly="state not in ['draft', 'verify']"/>
                 <field name="struct_id" optional="hide" readonly="state in ['cancel', 'done', 'paid']"/>
                 <field name="date_from" optional="hide" readonly="state in ['cancel', 'done', 'paid']"/>
@@ -33,7 +33,7 @@
                 <field name="currency_id"/>
                 <templates>
                     <t t-name="card" class="row g-0">
-                        <field name="employee_id" widget="many2one_avatar_user" options="{'display_avatar_name': True}" readonly="state not in ['draft', 'verify']" class="col-6 fw-bold mb-1"/>
+                        <field name="employee_id" widget="many2one_avatar_employee" options="{'display_avatar_name': True}" readonly="state not in ['draft', 'verify']" class="col-6 fw-bold mb-1"/>
                         <div class="col-6">
                             <field name="state" class="float-end" widget="badge"
                                 decoration-info="state == 'draft'"

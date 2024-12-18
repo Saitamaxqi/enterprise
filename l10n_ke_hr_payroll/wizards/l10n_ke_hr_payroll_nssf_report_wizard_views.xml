@@ -15,7 +15,7 @@
                         <field name="line_ids">
                             <list editable="bottom">
                                 <field name="payslip_number"/>
-                                <field name="employee_id" widget="many2one_avatar_user"/>
+                                <field name="employee_id" widget="many2one_avatar_employee"/>
                                 <field name="employee_nssf_number"/>
                                 <field name="employee_kra_pin"/>
                                 <field name="employee_identification_id" column_invisible="True"/>

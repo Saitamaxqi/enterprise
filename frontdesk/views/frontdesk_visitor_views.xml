@@ -24,7 +24,7 @@
                 <field name="company" optional="show"/>
                 <field name="phone" optional="show"/>
                 <field name="drink_ids" optional="hide" widget='many2many_tags'/>
-                <field name="host_ids" string="Host" optional="show" widget="many2many_avatar_user"/>
+                <field name="host_ids" string="Host" optional="show" widget="many2many_avatar_employee"/>
                 <field name="check_in" string="CheckIn"/>
                 <field name="check_out" string="Checkout" optional="hide"/>
                 <field name="visitor_properties" string="Properties" optional="hide"/>
@@ -78,7 +78,7 @@
                         </group>
                         <group>
                             <field name="station_id"/>
-                            <field name="host_ids" widget="many2many_avatar_user"/>
+                            <field name="host_ids" widget="many2many_avatar_employee"/>
                             <field name="check_in"/>
                             <field name="duration" widget="float_time"/>
                             <field name="company_id" groups="base.group_multi_company"/>
@@ -114,7 +114,7 @@
                         <field name="station_id"/>
                         <footer>
                             <field name="check_in"/>
-                            <field name="host_ids" widget="many2many_avatar_user" class="ms-auto"/>
+                            <field name="host_ids" widget="many2many_avatar_employee" class="ms-auto"/>
                         </footer>
                     </t>
                 </templates>

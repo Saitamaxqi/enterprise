@@ -7,7 +7,7 @@
             <form string="Employee Departure - Holiday Attests">
                 <group class="o_label_nowrap">
                     <group>
-                        <field name="employee_id" widget="many2one_avatar_user"/>
+                        <field name="employee_id" widget="many2one_avatar_employee"/>
                     </group>
                 </group>
                 <div class="o_horizontal_separator mb-3 text-uppercase fw-bolder small">Payslip</div>

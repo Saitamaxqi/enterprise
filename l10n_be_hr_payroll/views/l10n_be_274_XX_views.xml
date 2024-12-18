@@ -55,7 +55,7 @@
                         </group>
                         <field name="line_ids" readonly="1">
                             <list>
-                                <field name="employee_id" widget="many2one_avatar_user"/>
+                                <field name="employee_id" widget="many2one_avatar_employee"/>
                                 <field name="certificate"/>
                                 <field name="taxable_amount"/>
                                 <field name="amount" options="{'currency_field': 'currency_id'}"/>
@@ -70,7 +70,7 @@
                             </p>
                             <p invisible="not xml_file" class="oe_inline">
                                 Download the XML Export file: <field name="xml_file" readonly="1" filename="xml_filename"/>
-                                Payment Structured Communication: <field name="payment_reference" readonly="1" invisible="not payment_reference"/> 
+                                Payment Structured Communication: <field name="payment_reference" readonly="1" invisible="not payment_reference"/>
                                 <field name="xml_validation_state" widget="state_selection" nolabel="1"/>
                                 <field name="error_message" invisible="xml_validation_state != 'invalid'" nolabel="1"/>
                             </p>

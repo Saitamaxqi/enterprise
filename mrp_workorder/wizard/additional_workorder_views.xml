@@ -13,7 +13,7 @@
                         <field name="workcenter_id"/>
                         <field name="duration_expected" widget="mrp_timer"/>
                         <field name="date_start"/>
-                        <field name="employee_assigned_ids" widget="many2many_avatar_user"/>
+                        <field name="employee_assigned_ids" widget="many2many_avatar_employee"/>
                     </group>
                 </group>
                 <footer>

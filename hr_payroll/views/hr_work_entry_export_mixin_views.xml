@@ -73,7 +73,7 @@
         <field name="arch" type="xml">
             <list string="Eligible Employees" type="object" action="action_open_work_entries" editable="top">
                 <field name="export_id" column_invisible="1"/>
-                <field name="employee_id" widget="many2one_avatar_user"/>
+                <field name="employee_id" widget="many2one_avatar_employee"/>
                 <field name="contract_ids" string="contracts" widget="many2many_tags"/>
             </list>
         </field>

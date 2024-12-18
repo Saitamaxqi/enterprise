@@ -32,7 +32,7 @@
                     </div>
                     <field name="line_ids">
                         <list no_open="1" editable="bottom">
-                            <field name="employee_id" widget="many2one_avatar_user"/>
+                            <field name="employee_id" widget="many2one_avatar_employee"/>
                             <field name="surcharge_percentage" widget="percentage" />
                             <field name="amount_surcharge" />
                         </list>
