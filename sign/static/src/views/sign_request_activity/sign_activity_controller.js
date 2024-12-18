@@ -6,7 +6,10 @@ export class SignActivityController extends ActivityController {
         dialogProps = {
             ...dialogProps,
             noCreate: true,
-            show_upload_button: this.props.context.show_upload_button,
+            context: {
+                ...dialogProps.context,
+                show_upload_button: false,
+            },
         };
         return dialogProps
     }
