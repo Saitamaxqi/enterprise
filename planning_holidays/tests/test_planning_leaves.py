@@ -4,10 +4,12 @@ import datetime
 from odoo.tests import freeze_time
 from .test_common import TestCommon
 
+from odoo import Command
 
 @freeze_time('2020-01-01')
 class TestPlanningLeaves(TestCommon):
     def test_simple_employee_leave(self):
+        self.leave_type.responsible_ids = [Command.link(self.env.ref('base.user_admin').id)]
         leave = self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_bert.id,
@@ -174,9 +176,9 @@ class TestPlanningLeaves(TestCommon):
         self.assertNotEqual(slot_2.leave_warning, False,
                              "Employee is on leave, there should be a warning")
         self.assertEqual(slot_1.leave_warning,
-                         "bert is on time off on 01/01/2020 from 9:00 AM to 1:00 PM. \n")
+                         "bert requested time off on 01/01/2020 from 9:00 AM to 1:00 PM. \n")
         self.assertEqual(slot_2.leave_warning,
-                         "bert is on time off on 01/02/2020 from 2:00 PM to 6:00 PM. \n")
+                         "bert requested time off on 01/02/2020 from 2:00 PM to 6:00 PM. \n")
         self.assertEqual(slot_3.leave_warning, False,
                          "Employee is not on leave, there should be no warning")
 
