@@ -245,7 +245,13 @@ export class GanttRenderer extends Component {
             y: 0,
         };
         this.popover = usePopover(this.constructor.components.Popover, {
-            onClose: () => this.onCloseCurrentPopover?.(),
+            onClose: () => {
+                if (!this.preventClick) {
+                    this.preventClick = true;
+                    setTimeout(() => (this.preventClick = false), 250);
+                }
+                this.onCloseCurrentPopover?.();
+            },
         });
 
         this.throttledComputeHoverParams = throttleForAnimation((ev) =>
