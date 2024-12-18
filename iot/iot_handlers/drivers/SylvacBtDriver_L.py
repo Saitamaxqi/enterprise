@@ -6,7 +6,6 @@ import logging
 
 from odoo.addons.hw_drivers.driver import Driver
 from odoo.addons.hw_drivers.event_manager import event_manager
-from odoo.addons.hw_drivers.main import iot_devices
 from odoo.addons.hw_drivers.iot_handlers.interfaces.BTInterface_L import bt_devices
 
 _logger = logging.getLogger(__name__)
@@ -23,6 +22,11 @@ class SylvacBtDriver(Driver):
         self.device_type = 'device'
         self.device_connection = 'bluetooth'
         self.device_name = device.alias()
+        self._actions['read_once'] = self._action_read_once
+
+    def _action_read_once(self, _data):
+        """Make value available to the longpolling event route"""""
+        event_manager.device_changed(self)
 
     @classmethod
     def supported(cls, device):

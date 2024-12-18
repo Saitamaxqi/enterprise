@@ -38,6 +38,11 @@ class SylvacSCalProDriver(SerialDriver):
     def __init__(self, identifier, device):
         super(SylvacSCalProDriver, self).__init__(identifier, device)
         self.device_type = 'device'
+        self._actions['read_once'] = self._action_read_once
+
+    def _action_read_once(self, _data):
+        """Make value available to the longpolling event route"""""
+        event_manager.device_changed(self)
 
     def _take_measure(self):
         """Asks the device for a new value, and pushes that value to the frontend."""
