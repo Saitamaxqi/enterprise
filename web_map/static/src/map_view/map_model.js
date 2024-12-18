@@ -367,10 +367,6 @@ export class MapModel extends Model {
         return ERROR_MESSAGES[message];
     }
 
-    _getEmptyGroupLabel(fieldName) {
-        return _t("None");
-    }
-
     /**
      * @protected
      * @returns {Object} the fetched records grouped by the groupBy field.
@@ -378,6 +374,7 @@ export class MapModel extends Model {
     async _getRecordGroups(metaData, data) {
         const [fieldName, subGroup] = data.groupByKey.split(":");
         const fieldType = metaData.fields[fieldName].type;
+        const unsetName = metaData.fields[fieldName].falsy_value_label || _t("None");
         const groups = {};
         function addToGroup(id, name, record) {
             if (!groups[id]) {
@@ -397,7 +394,7 @@ export class MapModel extends Model {
                         addToGroup(r.id, r.display_name, record);
                     }
                 } else {
-                    id = name = this._getEmptyGroupLabel(fieldName);
+                    id = name = unsetName;
                     addToGroup(id, name, record);
                 }
             } else {
@@ -421,7 +418,7 @@ export class MapModel extends Model {
                     name = value;
                 }
                 if (!id && !name) {
-                    id = name = this._getEmptyGroupLabel(fieldName);
+                    id = name = unsetName;
                 }
                 addToGroup(id, name, record);
             }

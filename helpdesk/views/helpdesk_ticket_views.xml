@@ -34,7 +34,7 @@
         <field name="name">helpdesk.ticket.graph</field>
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
-            <graph string="Helpdesk Tickets" type="bar" sample="1" js_class="helpdesk_ticket_graph">
+            <graph string="Helpdesk Tickets" type="bar" sample="1">
                 <field name="stage_id"/>
                 <field name="rating_last_value" string="Rating (1-5)"/>
                 <field name="user_id" string="Assigned"/>
@@ -54,7 +54,7 @@
         <field name="name">helpdesk.ticket.pivot</field>
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
-            <pivot string="Helpdesk Tickets" sample="1" js_class="helpdesk_ticket_pivot">
+            <pivot string="Helpdesk Tickets" sample="1">
                 <field name="stage_id" type="col"/>
                 <field name="rating_last_value" string="Rating (1-5)"/>
                 <field name="close_hours" string="Working Hours to Close" widget="float_time"/>
@@ -201,7 +201,7 @@
         <field name="name">helpdesk.ticket.list</field>
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
-            <list string="Tickets" multi_edit="1" sample="1" default_order="priority desc, sla_deadline, id" js_class="helpdesk_ticket_list">
+            <list string="Tickets" multi_edit="1" sample="1" default_order="priority desc, sla_deadline, id">
                 <field name="company_id" column_invisible="True"/>
                 <field name="use_sla" column_invisible="True"/>
                 <field name="fold" column_invisible="True"/>

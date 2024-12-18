@@ -22,9 +22,7 @@ import {
 
 describe.current.tags("desktop");
 
-onRpc("get_all_deadlines", () => {
-    return { milestone_id: [], project_id: [] };
-});
+onRpc("get_all_deadlines", () => ({ milestone_id: [], project_id: [] }));
 
 const ganttViewParams = {
     arch: '<gantt js_class="task_gantt" date_start="start" date_stop="stop"/>',
@@ -44,6 +42,7 @@ class Task extends models.Model {
     user_ids = fields.Many2one({
         string: "Assigned to",
         relation: "res.users",
+        falsy_value_label: "👤 Unassigned",
     });
     stuff_id = fields.Many2one({
         string: "Stuff",
@@ -53,6 +52,7 @@ class Task extends models.Model {
     project_id = fields.Many2one({
         string: "Project",
         relation: "project",
+        falsy_value_label: "🔒 Private",
     });
     milestone_id = fields.Many2one({
         string: "Milestone",
@@ -234,9 +234,7 @@ test('Empty groupby "Assigned To" and "Project" can be rendered', async function
 });
 
 test("progress bar has the correct unit", async () => {
-    onRpc("get_all_deadlines", () => {
-        return { milestone_id: [], project_id: [] };
-    });
+    onRpc("get_all_deadlines", () => ({ milestone_id: [], project_id: [] }));
     onRpc("get_gantt_data", async ({ kwargs, parent }) => {
         const result = await parent();
         expect(kwargs.progress_bar_fields).toEqual(["user_ids"]);
@@ -270,9 +268,7 @@ test("open a dialog to schedule task", async () => {
         project_id: 1,
         user_ids: 100,
     });
-    onRpc("get_all_deadlines", () => {
-        return { milestone_id: [], project_id: [] };
-    });
+    onRpc("get_all_deadlines", () => ({ milestone_id: [], project_id: [] }));
     onRpc("schedule_tasks", () => {
         expect.step("schedule_tasks");
         return {};

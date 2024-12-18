@@ -2294,7 +2294,7 @@ describe("map_view_desktop", () => {
         expect(".o-map-renderer--pin-list-group-header").toHaveCount(1, { message: "ABC" });
     });
 
-    test("display '0' for empty int field values in grouped map view", async () => {
+    test("display '0' for false group, when grouped by int field", async () => {
         await mountView({
             type: "map",
             resModel: "project.task",
@@ -2341,6 +2341,21 @@ describe("map_view_desktop", () => {
         expect(".o-map-renderer--pin-list-group-header:eq(1)").toHaveText("February 2022", {
             message: "Should default to month scale when not specified",
         });
+    });
+
+    test("display the field's falsy_value_label for false group, if defined", async () => {
+        Task._fields.partner_id.falsy_value_label = "I'm the false group";
+        Task._records[0].partner_id = false;
+
+        await mountView({
+            type: "map",
+            resModel: "project.task",
+            arch: `<map res_partner="partner_id" routing="1" />`,
+            searchViewId: false,
+            groupBy: ["partner_id"],
+        });
+
+        expect(".o-map-renderer--pin-list-group-header").toHaveText("I'm the false group");
     });
 });
 

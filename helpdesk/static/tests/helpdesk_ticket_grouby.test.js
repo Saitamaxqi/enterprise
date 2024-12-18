@@ -6,7 +6,6 @@ import {
     mountView,
     onRpc,
 } from "@web/../tests/web_test_helpers";
-import { checkLabels, checkLegend, selectMode } from "@web/../tests/views/graph/graph_test_helpers";
 
 import { defineHelpdeskModels } from "@helpdesk/../tests/helpdesk_test_helpers";
 import { HelpdeskTeam } from "@helpdesk/../tests/mock_server/mock_models/helpdesk_team";
@@ -24,21 +23,6 @@ const kanbanViewArch = `
         </templates>
     </kanban>
 `;
-
-test("Test group label for empty SLA Deadline in tree", async () => {
-    await mountView({
-        resModel: "helpdesk.ticket",
-        type: "list",
-        groupBy: ["sla_deadline"],
-        arch: `
-            <list js_class="helpdesk_ticket_list">
-                <field name="sla_deadline" widget="remaining_days"/>
-                <field name="name"/>
-            </list>
-        `,
-    });
-    expect(".o_group_name").toHaveText("Deadline reached (3)");
-});
 
 test("Test group label for empty SLA Deadline in kanban", async () => {
     await mountView({
@@ -100,44 +84,6 @@ test("Delete a column in grouped on m2o", async (assert) => {
     expect.verifySteps(["action_unlink_wizard"]);
 });
 
-test("Test group label for empty SLA Deadline in pivot", async () => {
-    await mountView({
-        resModel: "helpdesk.ticket",
-        type: "pivot",
-        arch: `
-            <pivot js_class="helpdesk_ticket_pivot">
-                <field name="sla_deadline" type="row"/>
-            </pivot>
-        `,
-    });
-    expect("tr:nth-of-type(2) .o_pivot_header_cell_closed").toHaveText("Deadline reached");
-});
-
-test("Test group label for empty SLA Deadline in graph", async () => {
-    const graph = await mountView({
-        resModel: "helpdesk.ticket",
-        type: "graph",
-        arch: `
-            <graph js_class="helpdesk_ticket_graph">
-                <field name="sla_deadline"/>
-            </graph>
-        `,
-        searchViewArch: `
-            <search>
-                <filter name="group_by_sla_deadline" string="SLA Deadline" context="{ 'group_by': 'sla_deadline:day' }"/>
-            </search>
-        `,
-        groupBy: ["sla_deadline"],
-    });
-
-    expect(".o_helpdesk_ticket_graph_view").toHaveCount(1);
-    checkLabels(graph, ["Deadline reached"]);
-    checkLegend(graph, ["Count"]);
-    await selectMode("pie");
-    checkLabels(graph, ["Deadline reached"]);
-    checkLegend(graph, ["Deadline reached"]);
-});
-
 test("Prevent helpdesk users from reordering ticket stages", async () => {
     onRpc("has_group", (group) => group === "helpdesk.group_helpdesk_user");
     await mountView({
@@ -157,43 +103,6 @@ test("Access for helpdesk manager to reordering ticket stages", async () => {
         arch: kanbanViewArch,
     });
     expect(".o_group_draggable").toHaveCount(2);
-});
-
-test("Test group label of unassigned tickets in kanban view", async () => {
-    await mountView({
-        resModel: "helpdesk.ticket",
-        type: "kanban",
-        groupBy: ["user_id"],
-        arch: kanbanViewArch,
-    });
-    expect(".o_column_title").toHaveText("👤 Unassigned\n(3)");
-});
-
-test("Test group label of unassigned tickets in list view", async () => {
-    await mountView({
-        resModel: "helpdesk.ticket",
-        type: "list",
-        groupBy: ["user_id"],
-        arch: `
-            <list js_class="helpdesk_ticket_list">
-                <field name="user_id"/>
-            </list>
-        `,
-    });
-    expect(".o_group_name").toHaveText("👤 Unassigned (3)");
-});
-
-test("Test group label of unassigned tickets in pivot view", async () => {
-    await mountView({
-        resModel: "helpdesk.ticket",
-        type: "pivot",
-        arch: `
-            <pivot js_class="helpdesk_ticket_pivot">
-                <field name="user_id" type="row"/>
-            </pivot>
-        `,
-    });
-    expect("tr:nth-of-type(2) .o_pivot_header_cell_closed").toHaveText("Unassigned");
 });
 
 test("Verify ghost column is visible when all task stages are deleted in Task Kanban view", async () => {

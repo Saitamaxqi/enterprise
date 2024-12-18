@@ -7,10 +7,12 @@ import { MapRenderer } from "./map_renderer";
 
 export const mapView = {
     type: "map",
+
     Controller: MapController,
     Renderer: MapRenderer,
     Model: MapModel,
     ArchParser: MapArchParser,
+
     buttonTemplate: "web_map.MapView.Buttons",
 
     props: (genericProps, view, config) => {
@@ -22,11 +24,11 @@ export const mapView = {
             const views = config.views || [];
             modelParams = {
                 allowResequence: archInfo.allowResequence || false,
-                context: context,
+                context,
                 defaultOrder: archInfo.defaultOrder,
                 fieldNames: archInfo.fieldNames,
                 fieldNamesMarkerPopup: archInfo.fieldNamesMarkerPopup,
-                fields: fields,
+                fields,
                 hasFormView: views.some((view) => view[1] === "form"),
                 hideAddress: archInfo.hideAddress || false,
                 hideName: archInfo.hideName || false,
@@ -35,7 +37,7 @@ export const mapView = {
                 numbering: archInfo.routing || false,
                 offset: 0,
                 panelTitle: archInfo.panelTitle || config.getDisplayName() || _t("Items"),
-                resModel: resModel,
+                resModel,
                 resPartnerField: archInfo.resPartnerField,
                 routing: archInfo.routing || false,
             };

@@ -1,4 +1,3 @@
-import { _t } from "@web/core/l10n/translation";
 import { deserializeDate, deserializeDateTime, serializeDateTime } from "@web/core/l10n/dates";
 import { GanttModel } from "@web_gantt/gantt_model";
 import { sortBy } from "@web/core/utils/arrays";
@@ -183,20 +182,6 @@ export class TaskGanttModel extends GanttModel {
             });
         }
         return rows;
-    }
-
-    /**
-     * @override
-     */
-    _getRowName(_, groupedByField, value) {
-        if (!value) {
-            if (groupedByField === "user_ids") {
-                return _t("👤 Unassigned");
-            } else if (groupedByField === "project_id") {
-                return _t("🔒 Private");
-            }
-        }
-        return super._getRowName(...arguments);
     }
 
     /**

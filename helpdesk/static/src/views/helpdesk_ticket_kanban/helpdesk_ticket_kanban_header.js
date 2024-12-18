@@ -1,4 +1,3 @@
-import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { KanbanHeader } from "@web/views/kanban/kanban_header";
 
@@ -6,19 +5,6 @@ export class HelpdeskTicketKanbanHeader extends KanbanHeader {
     setup() {
         super.setup();
         this.action = useService("action");
-    }
-
-    /**
-     * @override
-     */
-    _getEmptyGroupLabel(fieldName) {
-        if (fieldName === "sla_deadline") {
-            return _t("Deadline reached");
-        } else if (fieldName === "user_id") {
-            return _t("👤 Unassigned");
-        } else {
-            return super._getEmptyGroupLabel(fieldName);
-        }
     }
 
     async deleteGroup() {

@@ -239,6 +239,23 @@ test("single-level grouped gantt rendering", async () => {
     ]);
 });
 
+test("display the field's falsy_value_label for false group, if defined", async () => {
+    Tasks._fields.project_id.falsy_value_label = "I'm the false group";
+    Tasks._records[0].project_id = false;
+
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt string="Tasks" date_start="start" date_stop="stop"/>`,
+        groupBy: ["project_id"],
+    });
+
+    expect(queryAllTexts(".o_gantt_row_header")).toEqual([
+        "I'm the false group",
+        "Project 1",
+        "Project 2",
+    ]);
+});
+
 test("single-level grouped gantt rendering with group_expand", async () => {
     const groups = [
         { project_id: [20, "Unused Project 1"], __record_ids: [] },

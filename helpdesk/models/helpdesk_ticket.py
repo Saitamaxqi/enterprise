@@ -8,7 +8,10 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, Command, fields, models, tools, _
 from odoo.exceptions import AccessError
 from odoo.osv import expression
+from odoo.tools import LazyTranslate
 from odoo.addons.web.controllers.utils import clean_action
+
+_lt = LazyTranslate(__name__)
 
 TICKET_PRIORITY = [
     ('0', 'Low priority'),
@@ -83,7 +86,8 @@ class HelpdeskTicket(models.Model):
     user_id = fields.Many2one(
         'res.users', string='Assigned to', compute='_compute_user_and_stage_ids', store=True,
         readonly=False, tracking=True,
-        domain=lambda self: [('groups_id', 'in', self.env.ref('helpdesk.group_helpdesk_user').id)])
+        domain=lambda self: [('groups_id', 'in', self.env.ref('helpdesk.group_helpdesk_user').id)],
+        falsy_value_label=_lt("👤 Unassigned"))
     properties = fields.Properties(
         'Properties', definition='team_id.ticket_properties',
         copy=True)
@@ -116,7 +120,7 @@ class HelpdeskTicket(models.Model):
     sla_status_ids = fields.One2many('helpdesk.sla.status', 'ticket_id', string="SLA Status")
     sla_reached_late = fields.Boolean("Has SLA reached late", compute='_compute_sla_reached_late', compute_sudo=True, store=True)
     sla_reached = fields.Boolean("Has SLA reached", compute='_compute_sla_reached', compute_sudo=True, store=True)
-    sla_deadline = fields.Datetime("SLA Deadline", compute='_compute_sla_deadline', compute_sudo=True, store=True)
+    sla_deadline = fields.Datetime("SLA Deadline", compute='_compute_sla_deadline', compute_sudo=True, store=True, falsy_value_label=_lt("Deadline reached"))
     sla_deadline_hours = fields.Float("Working Hours until SLA Deadline", compute='_compute_sla_deadline', compute_sudo=True, store=True, aggregator="avg")
     sla_fail = fields.Boolean("Failed SLA Policy", compute='_compute_sla_fail', search='_search_sla_fail')
     sla_success = fields.Boolean("Success SLA Policy", compute='_compute_sla_success', search='_search_sla_success')
