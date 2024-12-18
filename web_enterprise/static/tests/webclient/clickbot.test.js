@@ -59,7 +59,6 @@ beforeEach(() => {
             id: 1001,
             name: "App1",
             res_model: "foo",
-            type: "ir.actions.act_window",
             views: [
                 [false, "list"],
                 [false, "kanban"],
@@ -70,7 +69,6 @@ beforeEach(() => {
             id: 1002,
             name: "App2 Menu 1",
             res_model: "foo",
-            type: "ir.actions.act_window",
             views: [[false, "kanban"]],
             xml_id: "app2_menu1",
         },
@@ -78,7 +76,6 @@ beforeEach(() => {
             id: 1022,
             name: "App2 Menu 2",
             res_model: "foo",
-            type: "ir.actions.act_window",
             views: [[false, "list"]],
             xml_id: "app2_menu2",
         },

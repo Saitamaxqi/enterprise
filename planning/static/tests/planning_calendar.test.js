@@ -49,7 +49,6 @@ defineActions([
         id: 1,
         name: "planning action",
         res_model: "planning.slot",
-        type: "ir.actions.act_window",
         views: [
             [false, "calendar"],
             [false, "list"],

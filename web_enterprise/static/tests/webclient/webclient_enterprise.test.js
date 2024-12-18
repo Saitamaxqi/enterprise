@@ -58,7 +58,6 @@ defineActions([
         xml_id: "action_1",
         name: "Partners Action 1",
         res_model: "partner",
-        type: "ir.actions.act_window",
         views: [[1, "kanban"]],
     },
     {
@@ -71,8 +70,6 @@ defineActions([
         xml_id: "action_3",
         name: "Partners",
         res_model: "partner",
-        mobile_view_mode: "kanban",
-        type: "ir.actions.act_window",
         views: [
             [false, "list"],
             [1, "kanban"],
@@ -84,7 +81,6 @@ defineActions([
         xml_id: "action_4",
         name: "Partners Action 4",
         res_model: "partner",
-        type: "ir.actions.act_window",
         views: [
             [1, "kanban"],
             [2, "list"],
@@ -97,7 +93,6 @@ defineActions([
         name: "Create a Partner",
         res_model: "partner",
         target: "new",
-        type: "ir.actions.act_window",
         views: [[false, "form"]],
     },
     {
@@ -106,7 +101,6 @@ defineActions([
         name: "Partner",
         res_id: 2,
         res_model: "partner",
-        type: "ir.actions.act_window",
         views: [[false, "form"]],
     },
     {
@@ -352,17 +346,18 @@ describe("basic flow with home menu", () => {
 });
 
 test("restore the newly created record in form view", async () => {
-    defineActions([
-        {
-            id: 6,
-            xml_id: "action_6",
-            name: "Partner",
-            res_model: "partner",
-            target: "current",
-            type: "ir.actions.act_window",
-            views: [[false, "form"]],
-        },
-    ]);
+    defineActions(
+        [
+            {
+                id: 6,
+                xml_id: "action_6",
+                name: "Partner",
+                res_model: "partner",
+                views: [[false, "form"]],
+            },
+        ],
+        { mode: "replace" }
+    );
     await mountWebClientEnterprise();
 
     await getService("action").doAction(6);

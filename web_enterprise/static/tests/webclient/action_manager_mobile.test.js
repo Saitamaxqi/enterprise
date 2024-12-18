@@ -51,8 +51,6 @@ defineActions([
         id: 1,
         name: "Partners Action 1",
         res_model: "partner",
-        type: "ir.actions.act_window",
-        mobile_view_mode: "kanban",
         views: [
             [false, "list"],
             [false, "kanban"],
@@ -63,7 +61,6 @@ defineActions([
         id: 2,
         name: "Partners Action 2",
         res_model: "partner",
-        type: "ir.actions.act_window",
         views: [
             [false, "list"],
             [false, "form"],

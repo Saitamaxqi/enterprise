@@ -149,7 +149,6 @@ defineActions([
         id: 1,
         name: "Resource Task",
         res_model: "resource.task",
-        type: "ir.actions.act_window",
         res_id: 1,
         views: [[false, "form"]],
     },

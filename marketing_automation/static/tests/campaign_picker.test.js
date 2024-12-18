@@ -152,7 +152,6 @@ defineActions([
         xml_id: "marketing_campaign_action_view",
         name: "Campaign View",
         res_model: "marketing.campaign",
-        type: "ir.actions.act_window",
         views: [
             [false, "kanban"],
             [false, "list"],
