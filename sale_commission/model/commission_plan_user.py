@@ -2,7 +2,7 @@
 
 from collections import defaultdict
 
-from odoo import models, fields, exceptions, _, api
+from odoo import Command, models, fields, exceptions, _, api
 
 
 class SaleCommissionPlanUser(models.Model):
@@ -26,22 +26,29 @@ class SaleCommissionPlanUser(models.Model):
     @api.constrains('date_from', 'date_to')
     def _date_constraint(self):
         for user in self:
-            if user.date_to and user.date_to < user.date_from:
+            if user.date_to and user.date_from and user.date_to < user.date_from:
                 raise exceptions.UserError(_("From must be before To"))
-            if user.date_from < user.plan_id.date_from:
+            if user.date_from and user.plan_id.date_from and user.date_from < user.plan_id.date_from:
                 raise exceptions.UserError(_("User period cannot start before the plan."))
-            if user.date_to and user.date_to > user.plan_id.date_to:
+            if user.date_to and user.plan_id.date_to and user.date_to > user.plan_id.date_to:
                 raise exceptions.UserError(_("User period cannot end after the plan."))
 
-    @api.depends('user_id')
+    @api.depends('user_id', 'plan_id.date_from', 'plan_id.date_to', 'date_from', 'date_to')
     def _compute_other_plans(self):
-        grouped_users = defaultdict(lambda: self.env['sale.commission.plan.user'])
-        for user in self | self.search([('user_id', 'in', self.user_id.ids), ('plan_id.state', 'in', ['draft', 'approved'])]):
-            grouped_users[user.user_id] += user
-
-        for plan_users in grouped_users.values():
-            for plan_user in plan_users:
-                plan_user.other_plans = plan_users.plan_id - plan_user.plan_id
+        plan_ids = self.search([
+            ('user_id', 'in', self.user_id.ids),
+            ('plan_id.state', 'in', ['draft', 'approved']),
+        ]).plan_id
+        for pu in self:
+            pu_date_from = pu.date_from or pu.plan_id.date_from
+            pu_date_to = pu.date_to or pu.plan_id.date_to
+            other_plans_ids = []
+            for plan in (plan_ids - pu.plan_id._origin -pu.plan_id):
+                if plan.date_to < pu_date_from or plan.date_from > pu_date_to:
+                    # no overlap
+                    continue
+                other_plans_ids.append(plan.id)
+            pu.other_plans = [Command.clear()] if not other_plans_ids else [Command.set(other_plans_ids)]
 
     @api.depends('plan_id')
     def _compute_date_from(self):

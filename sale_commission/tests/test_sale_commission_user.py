@@ -1,3 +1,6 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
+import datetime
 from freezegun import freeze_time
 
 from odoo.fields import Command
@@ -324,3 +327,64 @@ class TestSaleCommissionUser(TestSaleCommissionCommon):
         self.env.invalidate_all()
         commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_user.id)])
         self.assertEqual(sum(commissions.mapped('forecast')), 4800)
+
+
+    @freeze_time('2024-02-02')
+    def test_plan_other(self):
+        self.env['sale.commission.plan'].search([]).unlink()
+        commission_full_year = self.env['sale.commission.plan'].create({
+            'name': "Full year",
+            'company_id': self.env.company.id,
+            'date_from': datetime.date(year=2024, month=1, day=1),
+            'date_to': datetime.date(year=2024, month=12, day=31),
+            'periodicity': 'month',
+            'type': 'target',
+            'user_type': 'person',
+            'commission_amount': 2500,
+            'user_ids': [Command.create({
+                'user_id': self.commission_user_1.id,
+            })],
+        })
+        commission_full_year.action_approve()
+        commission_six_month = self.env['sale.commission.plan'].create({
+            'name': "Six month",
+            'company_id': self.env.company.id,
+            'date_from': datetime.date(year=2024, month=3, day=1),
+            'date_to': datetime.date(year=2024, month=9, day=30),
+            'periodicity': 'month',
+            'type': 'target',
+            'user_type': 'person',
+            'commission_amount': 2500,
+            'user_ids': [Command.create({
+                'user_id': self.commission_user_1.id,
+            })],
+        })
+        self.assertEqual(commission_six_month.user_ids.other_plans, commission_full_year)
+        commission_2023_overflow = self.env['sale.commission.plan'].create({
+            'name': "2023 overflow in 2024",
+            'company_id': self.env.company.id,
+            'date_from': datetime.date(year=2023, month=1, day=1),
+            'date_to': datetime.date(year=2024, month=1, day=1),
+            'periodicity': 'month',
+            'type': 'target',
+            'user_type': 'person',
+            'commission_amount': 2500,
+            'user_ids': [Command.create({
+                'user_id': self.commission_user_1.id,
+            })],
+        })
+        self.assertEqual(commission_2023_overflow.user_ids.other_plans, commission_full_year)
+        commission_2023_normal = self.env['sale.commission.plan'].create({
+            'name': "2023 normal",
+            'company_id': self.env.company.id,
+            'date_from': datetime.date(year=2023, month=1, day=1),
+            'date_to': datetime.date(year=2023, month=12, day=31),
+            'periodicity': 'month',
+            'type': 'target',
+            'user_type': 'person',
+            'commission_amount': 2500,
+            'user_ids': [Command.create({
+                'user_id': self.commission_user_1.id,
+            })],
+        })
+        self.assertEqual(commission_2023_normal.user_ids.other_plans, commission_2023_overflow)

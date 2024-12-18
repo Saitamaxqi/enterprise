@@ -141,15 +141,19 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
 
     @freeze_time('2024-02-02')
     def test_multiple_achievements(self):
-        # this test makes sure all achievements are summed
+        # this test makes sure all achievements are summed even if one product is in several achievements for example
+        category = self.env['product.category'].create({
+            'name': 'Test Category',
+        })
+        self.commission_plan_sub.search([]).action_draft()
         sub = self.subscription.copy()
         sub.user_id = self.commission_user_1.id
+        sub.order_line[1].unlink()
+        product = sub.order_line.product_id
+        product.categ_id = category.id
         sub.order_line.price_unit = 500
         sub.start_date = False
         sub.next_invoice_date = False
-        sub.action_confirm()
-        sub.order_line[1].unlink()
-        sub.order_line.price_unit = 500
         self.commission_plan_sub.achievement_ids = self.env['sale.commission.plan.achievement'].create([
             {
                 'type': 'amount_invoiced',
@@ -158,20 +162,48 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
                 'recurring_plan_id': sub.plan_id.id,
             }, {
                 'type': 'amount_invoiced',
-                'rate': 0.15,
+                'rate': 0.2,
                 'plan_id': self.commission_plan_sub.id,
-                'product_id': caca.id,
+                'product_id': product.id,
+            }, {
+                'type': 'amount_invoiced',
+                'rate': 0.3,
+                'plan_id': self.commission_plan_sub.id,
+                'product_categ_id': category.id,
             }
+
         ])
         self.commission_plan_user.achievement_ids = self.env['sale.commission.plan.achievement'].create([
             {
                 'type': 'amount_invoiced',
                 'rate': 0.1,
+                'plan_id': self.commission_plan_user.id,
+                'product_id': product.id,
             }, {
                 'type': 'amount_invoiced',
-                'rate': 0.15,
-                'product_id': caca.id,
-                'product_category_id': cat.id
+                'rate': 0.2,
+                'plan_id': self.commission_plan_user.id,
+                'product_categ_id': category.id,
             }
         ])
-        tood: vérifier que ça somme tout dans les deux cas:
+        self.commission_plan_user.action_approve()
+        self.commission_plan_sub.action_approve()
+        sub.action_confirm()
+        inv = sub._create_recurring_invoice()
+        achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
+        commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
+        self.assertAlmostEqual(inv.amount_untaxed, 500, 2, msg="The invoice amount should be equal to 500")
+        # this plan will take both invoices: subscription and the other one because no recurring plan is defined
+        self.assertEqual(len(commissions), 24, "24 commissions for two users")
+        self.assertEqual(sum(achievements.mapped('achieved')), 300, 'Subscription invoice provide 300: 500*0.1 + 500*0.2+500*0.3')
+        self.assertEqual(achievements.related_res_id, inv.id)
+        self.assertEqual(sum(commissions.mapped('commission')), 300, "One user has achieved and not the other one")
+
+        achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_user.id)])
+        commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_user.id)])
+        self.assertAlmostEqual(inv.amount_untaxed, 500, 2, msg="The invoice amount should be equal to 500")
+        # this plan will take both invoices: subscription and the other one because no recurring plan is defined
+        self.assertEqual(len(commissions), 24, "24 commissions for two users")
+        self.assertEqual(sum(achievements.mapped('achieved')), 150, 'invoice provide 150: 500*0.1 + 500*0.2')
+        self.assertEqual(achievements.related_res_id, inv.id)
+        self.assertEqual(sum(commissions.mapped('commission')), 150, "One user has achieved and not the other one")
