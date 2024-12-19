@@ -77,39 +77,24 @@ class Command extends String {
 const EpsonFiscalPrinterCommandService = {
     dependencies: ["renderer"],
     start(env, { renderer }) {
-        const TAGS = tags.reduce((acc, tag) => ({ ...acc, [tag.toLowerCase()]: tag }), {});
-        const ATTRIBUTES = attributes.reduce(
-            (acc, attribute) => ({ ...acc, [attribute.toLowerCase()]: attribute }),
-            {}
-        );
-
         async function create(template, props = {}) {
-            let command = await renderer.toHtml(template, props);
-            command = command.outerHTML
-                .replace(/<(\w+)([^>]*)>([\s\S]*?)<\/\1>/g, (_, tagName, attributes, content) => {
-                    const pascalCaseTag = TAGS[tagName];
-                    return `<${pascalCaseTag}${_processAttributes(
-                        attributes
-                    )}>${content}</${pascalCaseTag}>`;
-                })
-                .replace(/<(\w+)([^>]*)>\s*<\/\1>/g, (_, tagName, attributes) => {
-                    const pascalCaseTag = TAGS[tagName];
-                    return `<${pascalCaseTag}${_processAttributes(attributes)} />`;
-                });
+            const commandRaw = await renderer.toHtml(template, props);
 
-            command =
+            // replace all tags and attributes
+            let htmlString = commandRaw.outerHTML;
+            for (const tag of [...tags, ...attributes]) {
+                htmlString = htmlString.replaceAll(tag.toLowerCase(), tag);
+            }
+
+            // make self-closing tags
+            const xmlString = htmlString.replaceAll(/<(\w+)([^>]*)>\s*<\/\1>/g, "<$1$2 />");
+
+            const command =
                 '<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>' +
-                command +
+                xmlString +
                 "</s:Body></s:Envelope>";
 
             return new Command(command);
-        }
-
-        function _processAttributes(attributes) {
-            return attributes.replace(/(\w[\w-]*)="([^"]*)"/g, (_, attrName, value) => {
-                const newAttrName = ATTRIBUTES[attrName] || attrName;
-                return `${newAttrName}="${value}"`;
-            });
         }
 
         return { create };
