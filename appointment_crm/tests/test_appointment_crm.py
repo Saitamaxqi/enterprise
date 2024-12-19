@@ -69,7 +69,7 @@ class AppointmentCRMTest(TestCrmCommon):
             "Event should be linked with the model crm.lead")
         self.assertTrue(event.res_id)
         self.assertTrue(event.opportunity_id)
-        lead = event.opportunity_id
+        lead = event.opportunity_id.sudo()
         self.assertEqual(lead.user_id, event.user_id)
         self.assertEqual(lead.name, event.name)
         self.assertTrue(lead.description)
@@ -108,7 +108,7 @@ class AppointmentCRMTest(TestCrmCommon):
                 start=datetime.now() + timedelta(hours=1),
                 start_date=datetime.now() + timedelta(hours=1),
                 stop=datetime.now() + timedelta(hours=2),
-        )])
+        )]).sudo()
         self.assertTrue(events[0].opportunity_id)
         self.assertFalse(events[1].opportunity_id)
         self.assertTrue(events[2].opportunity_id)
