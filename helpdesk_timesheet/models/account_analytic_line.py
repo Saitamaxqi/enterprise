@@ -54,7 +54,10 @@ class AccountAnalyticLine(models.Model):
     @api.depends('task_id')
     def _compute_helpdesk_ticket_id(self):
         # set helpdesk_ticket_id to false when a task_id has been assigned
-        self.filtered(lambda line: line.task_id and line.helpdesk_ticket_id).helpdesk_ticket_id = False
+        timesheet_to_update = self.filtered(lambda line: line.task_id and line.helpdesk_ticket_id)
+        # no need to recompute the project_id if nothing changes.
+        self.env.remove_to_compute(self._fields['project_id'], self - timesheet_to_update)
+        timesheet_to_update.helpdesk_ticket_id = False
 
     @api.constrains('task_id', 'helpdesk_ticket_id')
     def _check_no_link_task_and_ticket(self):
@@ -68,6 +71,12 @@ class AccountAnalyticLine(models.Model):
         for line in self:
             if line.helpdesk_ticket_id:
                 line.partner_id = line.helpdesk_ticket_id.partner_id or line.partner_id
+
+    @api.onchange('project_id')
+    def _onchange_project_id(self):
+        super()._onchange_project_id()
+        if not self.project_id or self.helpdesk_ticket_id.project_id != self.project_id:
+            self.helpdesk_ticket_id = False
 
     def write(self, values):
         if values.get("helpdesk_ticket_id"):
