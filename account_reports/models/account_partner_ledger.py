@@ -21,7 +21,6 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 'AccountReportLineCell': 'account_reports.PartnerLedgerLineCell',
             },
             'templates': {
-                'AccountReportFilters': 'account_reports.PartnerLedgerFilters',
                 'AccountReportLineName': 'account_reports.PartnerLedgerLineName',
             },
         }

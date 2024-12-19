@@ -44,6 +44,46 @@ export class AccountReportFilters extends Component {
     //------------------------------------------------------------------------------------------------------------------
     // Getters
     //------------------------------------------------------------------------------------------------------------------
+    get filterExtraOptionsData() {
+        return {
+            'all_entries': {
+                'name': _t("Draft Entries"),
+                'group': 'account_readonly',
+                'show': this.controller.filters.show_draft,
+            },
+            'include_analytic_without_aml': {
+                'name': _t("Analytic Simulations"),
+                'group': 'account_readonly',
+            },
+            'hierarchy': {
+                'name': _t("Hierarchy and Subtotals"),
+                'show': this.controller.options.display_hierarchy_filter,
+            },
+            'unreconciled': {
+                'name': _t("Unreconciled Entries"),
+                'show': this.controller.filters.show_unreconciled,
+            },
+            'unfold_all': {
+                'name': _t("Unfold All"),
+                'show': this.controller.filters.show_all,
+            },
+            'integer_rounding_enabled': {
+                'name': _t("Integer Rounding"),
+            },
+            'hide_0_lines': {
+                'name': _t("Hide lines at 0"),
+                'ui_filter': true,
+                'onSelect': () => this.toggleHideZeroLines(),
+                'show': this.controller.filters.show_hide_0_lines !== "never",
+            },
+            'horizontal_split': {
+                'name': _t("Split Horizontally"),
+                'ui_filter': true,
+                'onSelect': () => this.toggleHorizontalSplit(),
+            },
+        }
+    }
+
     get selectedFiscalPositionName() {
         switch (this.controller.options.fiscal_position) {
             case "domestic":
@@ -203,21 +243,24 @@ export class AccountReportFilters extends Component {
         return Boolean(this.controller.options.sales_report_taxes?.operation_category?.goods);
     }
 
-    get hasExtraOptionsFilter() {
+    isExtraOptionFilterShown(option) {
+        let data = this.filterExtraOptionsData[option];
         return (
-            "report_cash_basis" in this.controller.options ||
-            this.controller.filters.show_draft ||
-            this.controller.filters.show_all ||
-            this.controller.filters.show_unreconciled ||
-            this.hasUIFilter
+            option in this.controller.options &&
+            option in this.filterExtraOptionsData &&
+            data.show !== false &&
+            (data.group === undefined || this.controller.groups[data.group])
         );
     }
 
+    get hasExtraOptionsFilter() {
+        return Object.keys(this.filterExtraOptionsData)
+                     .some(option => this.isExtraOptionFilterShown(option));
+    }
+
     get hasUIFilter() {
-        return (
-            this.controller.filters.show_hide_0_lines !== "never" ||
-            "horizontal_split" in this.controller.options
-        );
+        return Object.entries(this.filterExtraOptionsData)
+                     .some(([option, data]) => data.ui_filter && this.isExtraOptionFilterShown(option));
     }
 
     get hasFiscalPositionFilter() {

@@ -36,7 +36,6 @@ class AccountJournalReportHandler(models.AbstractModel):
                 'AccountReportLine': 'account_reports.JournalReportLine',
             },
             'templates': {
-                'AccountReportFilters': 'account_reports.JournalReportFilters',
                 'AccountReportLineName': 'account_reports.JournalReportLineName',
             }
         }

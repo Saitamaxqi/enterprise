@@ -18,13 +18,6 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
     _inherit = ['l10n_ph.generic.report.handler']
     _description = 'Summary Lists of Sales and Purchases Custom Handler'
 
-    def _get_custom_display_config(self):
-        return {
-            'templates': {
-                'AccountReportFilters': 'l10n_ph_reports.SlspReportFilters',
-            },
-        }
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
         options.setdefault('buttons', []).append(

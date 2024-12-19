@@ -3,6 +3,18 @@ import { patch } from "@web/core/utils/patch";
 import { AccountReportFilters } from "@account_reports/components/account_report/filters/filters";
 
 patch(AccountReportFilters.prototype, {
+    get filterExtraOptionsData() {
+        return {
+            ...super.filterExtraOptionsData,
+            'include_no_tin': {
+                'name': _t("Including Partners Without TIN"),
+            },
+            'include_imports': {
+                'name': _t("Including Importations"),
+            },
+        };
+    },
+
     get selectedExtraOptions() {
         let selectedExtraOptionsName = super.selectedExtraOptions;
 
@@ -24,11 +36,4 @@ patch(AccountReportFilters.prototype, {
         return selectedExtraOptionsName;
     },
 
-    get hasExtraOptionsFilter() {
-        return (
-            super.hasExtraOptionsFilter ||
-            "include_no_tin" in this.controller.options ||
-            "include_imports" in this.controller.options
-        );
-    },
 });

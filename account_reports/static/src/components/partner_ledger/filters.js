@@ -6,8 +6,11 @@ patch(AccountReportFilters.prototype, {
     get filterExtraOptionsData() {
         return {
             ...super.filterExtraOptionsData,
-            'show_payment_lines': {
-                'name': _t("Include Payments"),
+            'hide_account': {
+                'name': _t("Hide Account"),
+            },
+            'hide_debit_credit': {
+                'name': _t("Hide Debit/Credit"),
             },
         };
     },
