@@ -8,8 +8,11 @@
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='medium_id']" position="after">
-                <field name="ref_user_id" domain="[('share', '=', False), ('company_id', 'in', allowed_company_ids)]" widget="many2one_avatar"/>
+            <xpath expr="//field[@name='source_id']" position="before">
+                <field name="ref_user_id"
+                       domain="[('share', '=', False), ('company_id', 'in', allowed_company_ids)]"
+                       widget="many2one_avatar"
+                       placeholder="Select the user that send us the applicant"/>
                 <field name="is_accessible_to_current_user" invisible="1"/>
             </xpath>
         </field>

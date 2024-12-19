@@ -1,4 +1,3 @@
-# # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import json
 
@@ -69,10 +68,8 @@ class TestHrReferral(TestHrReferralBase):
             'company_id': self.company_1.id,
             'job_id': self.job_dev.id,
             'source_id': self.richard_user.utm_source_id.id,
+            'ref_user_id': self.richard_user.id,
         })
-
-        self.assertEqual(job_applicant.ref_user_id, self.richard_user, "Referral is created with the right user")
-        # self.assertEqual(job_applicant_2.ref_user_id, self.richard_user, "Referral is created with the right user")
         points_richard_c1 = self.env['hr.referral.points'].search([('ref_user_id', '=', self.richard_user.id), ('company_id', '=', self.company_1.id)])
         points_richard_c2 = self.env['hr.referral.points'].search([('ref_user_id', '=', self.richard_user.id), ('company_id', '=', self.company_2.id)])
         # All points are created for employee of company 1 as it's a job offer from company 1. No point in company 2.

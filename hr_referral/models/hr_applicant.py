@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import json
@@ -18,7 +17,8 @@ class HrApplicant(models.Model):
     _inherit = "hr.applicant"
 
     ref_user_id = fields.Many2one('res.users', string='Referred By User', tracking=True,
-        compute='_compute_ref_user_id', inverse='_inverse_ref_user_id', store=True, copy=False)
+        compute='_compute_ref_user_id', readonly=False, store=True, copy=False)
+    source_id = fields.Many2one(compute="_compute_source_id", store=True, readonly=False)
     referral_points_ids = fields.One2many('hr.referral.points', 'applicant_id', copy=False)
     earned_points = fields.Integer(compute='_compute_earned_points')
     referral_state = fields.Selection([
@@ -59,15 +59,17 @@ class HrApplicant(models.Model):
 
     @api.depends('source_id')
     def _compute_ref_user_id(self):
+        utm_source_referral = self.env.ref('utm.utm_source_referral', raise_if_not_found=False)
         for applicant in self:
-            if applicant.source_id:
-                applicant.ref_user_id = self.env['res.users'].search([('utm_source_id', '=', applicant.source_id.id)], limit=1)
-            else:
+            if applicant.source_id != utm_source_referral:
                 applicant.ref_user_id = False
 
-    def _inverse_ref_user_id(self):
+    @api.depends('ref_user_id')
+    def _compute_source_id(self):
+        utm_source_referral = self.env.ref('utm.utm_source_referral', raise_if_not_found=False)
         for applicant in self:
-            applicant.source_id = applicant.ref_user_id.utm_source_id
+            if applicant.ref_user_id and utm_source_referral:
+                applicant.source_id = utm_source_referral.id
 
     @api.model
     def check_field_access_rights(self, operation, field_names):
@@ -371,6 +373,20 @@ class HrApplicant(models.Model):
         ], order='points asc', limit=1)
         if next_referral_level:
             user_id.write({'hr_referral_level_id': next_referral_level.id})
+
+    @api.model
+    def default_get(self, fields):
+        # To set the source_id as "Referral" instead of utm_source that was generated for every individual referrer
+        values = super().default_get(fields)
+        utm_source_referral = self.env.ref('utm.utm_source_referral', raise_if_not_found=False)
+        if (
+            'ref_user_id' in fields
+            and (utm_source := values.get('source_id'))
+            and (user := self.env['res.users'].search([('utm_source_id', '=', utm_source)], limit=1))
+        ):
+            values['ref_user_id'] = user.id
+            values['source_id'] = utm_source_referral.id if utm_source_referral else False
+        return values
 
 
 class HrRecruitmentStage(models.Model):
