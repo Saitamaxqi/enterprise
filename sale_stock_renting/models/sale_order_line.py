@@ -449,7 +449,7 @@ class SaleOrderLine(models.Model):
         self.product_id.ensure_one()
         rented_quantities = defaultdict(float)
         now = fields.Datetime.now()
-        for so_line in self:
+        for so_line in self.filtered('is_rental'):
             rented_quantities[so_line.reservation_begin] += so_line.product_uom_qty
             rented_quantities[so_line.return_date] -= so_line.product_uom_qty
             # Adjust the rented quantities for early pickups.
