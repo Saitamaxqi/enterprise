@@ -11,10 +11,10 @@
                 <field name="date_to" string="Period"/>
                 <field name="payment_date" optional="hide"/>
                 <field name="forecast" readonly="0" optional="hide"/>
-                <field name="target_amount" invisible="target_amount == 0"/>
-                <field name="achieved"/>
+                <field name="target_amount" invisible="target_amount == 0" sum="Total Target"/>
+                <field name="achieved" sum="Total achieved"/>
                 <field name="achieved_rate" widget="percentage" optional="hide" invisible="target_amount == 0"/>
-                <field name="commission"/>
+                <field name="commission" sum="Total commission"/>
                 <field name="currency_id" column_invisible="True"/>  <!-- Monetary field -->
                 <button name="action_achievement_detail" title="Achievements" type="object" string="Details" help="See associated achievements"/>
             </list>
@@ -61,6 +61,7 @@
                 <field name="company_id"/>
                 <filter string="My Commissions" name="my"
                             domain="[('user_id', '=', uid)]"/>
+                <filter string="My Team" name="filter_my_team" domain="[('team_id.user_id', '=', uid)]"/>
                 <filter string="Active Plans" name="active_plans"
                         domain="[('plan_id.date_from', '&lt;', context_today().strftime('%Y-%m-%d')), ('plan_id.date_to', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
                 <separator/>
