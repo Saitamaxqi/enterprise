@@ -132,3 +132,22 @@ class TestUi(test_frontend.TestFrontendCommon):
 
         # Should receive 2 notifications, 1 placing the order, 1 cancelling it
         self.assertEqual(notifications.count(pdis.id), 2)
+
+    def test_payment_does_not_cancel_display_orders(self):
+        self.env['pos_preparation_display.display'].create({
+            'name': 'Preparation Display (Food only)',
+            'pos_config_ids': [(4, self.pos_config.id)],
+        })
+        self.pos_config.printer_ids.unlink()
+        self.pos_config.with_user(self.pos_user).open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'PreparationDisplayPaymentNotCancelDisplayTour', login="pos_user")
+        pos_order = self.env['pos.order'].search([], limit=1)
+        pdis_order = self.env['pos_preparation_display.order'].search(
+            [('pos_order_id', '=', pos_order.id)]
+        )
+        pdis_lines = pdis_order.preparation_display_order_line_ids
+        self.assertEqual(len(pdis_lines), 2)
+        self.assertEqual(pdis_lines[0].product_quantity, 2.0)
+        self.assertEqual(pdis_lines[0].product_cancelled, 1.0)
+        self.assertEqual(pdis_lines[1].product_quantity, 2.0)
+        self.assertEqual(pdis_lines[1].product_cancelled, 0.0)

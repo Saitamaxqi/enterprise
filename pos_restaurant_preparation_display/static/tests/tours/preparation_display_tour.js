@@ -155,3 +155,32 @@ registry.category("web_tour.tours").add("PreparationDisplayTourSkipChange", {
             ProductScreen.orderlinesHaveNoChange(),
         ].flat(),
 });
+
+registry.category("web_tour.tours").add("PreparationDisplayPaymentNotCancelDisplayTour", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+            FloorScreen.clickTable("5"),
+            ProductScreen.addOrderline("Coca-Cola", "2"),
+            ProductScreen.addInternalNote("To Serve"),
+            ProductScreen.clickOrderButton(),
+            ProductScreen.orderlinesHaveNoChange(),
+            FloorScreen.clickTable("5"),
+            ProductScreen.addOrderline("Coca-Cola", "2"),
+            ProductScreen.addInternalNote("To Serve"),
+            ProductScreen.clickOrderButton(),
+            ProductScreen.orderlinesHaveNoChange(),
+            FloorScreen.clickTable("5"),
+            ProductScreen.clickOrderline("Coca-Cola", "2"),
+            ProductScreen.clickNumpad("⌫"),
+            ProductScreen.clickNumpad("1"),
+            ProductScreen.clickOrderButton(),
+            ProductScreen.orderlinesHaveNoChange(),
+            FloorScreen.clickTable("5"),
+            ProductScreen.clickPayButton(),
+            PaymentScreen.clickPaymentMethod("Bank"),
+            PaymentScreen.clickValidate(),
+            Chrome.endTour(),
+        ].flat(),
+});
