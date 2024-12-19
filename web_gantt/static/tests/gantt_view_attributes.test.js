@@ -742,18 +742,6 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
     ]);
 });
 
-test("offset attribute", async () => {
-    await mountGanttView({
-        resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" offset="-4" default_scale="day"/>`,
-    });
-
-    const { range } = getGridContent();
-    expect(range).toBe("From: 12/16/2018 to: 12/18/2018", {
-        message: "gantt view should be set to 4 days before initial date",
-    });
-});
-
 test("default_group_by attribute", async () => {
     await mountGanttView({
         resModel: "tasks",

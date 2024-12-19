@@ -882,16 +882,11 @@ export class GanttModel extends Model {
         return this._filterDateIngroupedBy(metaData, groupedBy);
     }
 
-    _getDefaultFocusDate(metaData, searchParams, scaleId) {
+    _getDefaultFocusDate(searchParams) {
         const { context } = searchParams;
-        let focusDate =
+        const focusDate =
             "initialDate" in context ? deserializeDateTime(context.initialDate) : DateTime.local();
-        focusDate = focusDate.startOf("day");
-        if (metaData.offset) {
-            const { unit } = metaData.scales[scaleId];
-            focusDate = focusDate.plus({ [unit]: metaData.offset });
-        }
-        return focusDate;
+        return focusDate.startOf("day");
     }
 
     /**
@@ -913,14 +908,14 @@ export class GanttModel extends Model {
                 : metaData.defaultRange || "custom";
         let focusDate;
         if (rangeId in metaData.ranges) {
-            focusDate = this._getDefaultFocusDate(metaData, searchParams, scaleId);
+            focusDate = this._getDefaultFocusDate(searchParams);
             return { scaleId, ...getRangeFromDate(rangeId, focusDate) };
         }
         let startDate = context.default_start_date && deserializeDate(context.default_start_date);
         let stopDate = context.default_stop_date && deserializeDate(context.default_stop_date);
         if (!startDate && !stopDate) {
             /** @type {DateTime} */
-            focusDate = this._getDefaultFocusDate(metaData, searchParams, scaleId);
+            focusDate = this._getDefaultFocusDate(searchParams);
             startDate = firstColumnBefore(focusDate, defaultRange.unit);
             stopDate = startDate
                 .plus({ [defaultRange.unit]: defaultRange.count })
