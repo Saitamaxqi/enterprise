@@ -373,13 +373,8 @@ def _get_and_write_studio_view(view, values=None, should_create=True, view_key_t
         vals = {"active": True, **values}
         studio_view.write(vals)
     elif should_create:
-        all_inheritance = view._get_inheriting_views()
         vals = {"name": key, "key": key, "inherit_id": view.id, "mode": "extension", "priority": 9999999, **values}
         studio_view = view.create(vals)
-        all_inheritance = all_inheritance.with_prefetch((all_inheritance + studio_view).ids)
-        studio_view = studio_view.with_prefetch(all_inheritance._prefetch_ids)
-        view._copy_field_terms_translations(all_inheritance, "arch_db", studio_view, "arch_db")
-
     return studio_view
 
 

@@ -1488,3 +1488,49 @@ registry.category("web_tour.tours").add("web_studio.test_reports_view_concurrenc
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio.test_dont_translate_on_save", {
+    steps: () => [
+        {
+            trigger: "body :iframe .odoo-editor-editable#wrapwrap p.test-origin",
+            async run() {
+                const doc = this.anchor.ownerDocument;
+                const el = doc.createElement("span");
+                el.textContent = "new content";
+                this.anchor.insertAdjacentElement("beforebegin", el);
+                const editor = editorsWeakMap.get(doc);
+                editor.shared.history.addStep();
+                await nextTick();
+            },
+        },
+        {
+            trigger: ".o-web-studio-save-report.btn-primary",
+            run: "click",
+        },
+        {
+            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+        },
+        {
+            trigger: "body :iframe .odoo-editor-editable#wrapwrap span",
+            run() {
+                const doc = this.anchor.ownerDocument;
+                const selection = doc.getSelection();
+                selection.removeAllRanges();
+                const range = doc.createRange();
+                range.selectNode(this.anchor);
+                selection.addRange(range);
+            },
+        },
+        {
+            trigger: ".o-we-toolbar button[name='bold']",
+            run: "click",
+        },
+        {
+            trigger: ".o-web-studio-save-report.btn-primary",
+            run: "click",
+        },
+        {
+            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+        },
+    ],
+});

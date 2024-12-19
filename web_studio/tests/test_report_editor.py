@@ -1349,6 +1349,36 @@ class TestReportEditorUIUnit(HttpCase):
         </main>
         """)
 
+    def test_dont_translate_on_save(self):
+        self.main_view_document.arch = """
+            <t t-name="web_studio.test_report_document">
+                <div><p class="test-origin">content</p></div>
+                <p><br/></p>
+            </t>"""
+
+        self.env["res.lang"]._activate_lang("fr_FR")
+        self.start_tour(self.tour_url, "web_studio.test_dont_translate_on_save", login="admin")
+        html, _ = self.report.with_context(lang="fr_FR")._render_qweb_html(self.report.id, [1])
+        main = etree.fromstring(html).find(".//main")
+        self.assertXMLEqual(etree.tostring(main), """
+        <main>
+           <div>
+            <p>
+               <br/>
+             </p>
+           </div>
+           <div>
+             <span>
+               <strong>new content</strong>
+             </span>
+             <p class="test-origin">content</p>
+           </div>
+           <p>
+             <br/>
+           </p>
+         </main>
+        """)
+
     def test_evaluate_bad_queries(self):
         self.main_view_document.arch = """
         <t t-name="web_studio.test_report_document">
