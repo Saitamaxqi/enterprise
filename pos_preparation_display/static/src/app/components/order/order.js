@@ -3,6 +3,8 @@ import { usePreparationDisplay } from "@pos_preparation_display/app/services/pre
 import { Orderline } from "@pos_preparation_display/app/components/orderline/orderline";
 import { computeFontColor } from "@pos_preparation_display/app/utils/utils";
 
+const { DateTime } = luxon;
+
 export class Order extends Component {
     static components = { Orderline };
     static template = "pos_preparation_display.Order";
@@ -28,6 +30,11 @@ export class Order extends Component {
             clearInterval(this.interval);
         });
     }
+
+    get presetTime() {
+        return DateTime.fromSQL(this.props.order.preset_time).toFormat("HH:mm");
+    }
+
     get stage() {
         const order = this.props.order;
         return this.preparationDisplay.stages.get(order.stageId);

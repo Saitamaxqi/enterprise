@@ -128,6 +128,9 @@ class Pos_Preparation_DisplayOrder(models.Model):
 
         return preparation_display_orders
 
+    def _get_order_name(self):
+        return self.pos_order_id.floating_order_name
+
     def _export_for_ui(self, preparation_display):
         preparation_display_orderlines = []
 
@@ -160,6 +163,9 @@ class Pos_Preparation_DisplayOrder(models.Model):
                 'pos_order_id': self.pos_order_id.id,
                 'create_date': self.create_date,
                 'responsible': self.create_uid.display_name,
+                'preset_name': self.pos_order_id.preset_id.name,
+                'preset_time': self.pos_order_id.preset_time,
+                'pos_reference': self._get_order_name(),
                 'stage_id': current_order_stage.stage_id.id if current_order_stage else None,
                 'last_stage_change': current_order_stage.write_date if current_order_stage else self.create_date,
                 'displayed': self.displayed,

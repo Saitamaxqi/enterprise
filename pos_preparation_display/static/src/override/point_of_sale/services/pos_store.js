@@ -9,7 +9,7 @@ patch(PosStore.prototype, {
         this["pos_preparation_display.display"] = [];
     },
 
-    async sendOrderInPreparation(o, cancelled = false) {
+    async sendOrderInPreparation(o, cancelled = false, orderDone = false) {
         if (this.models["pos_preparation_display.display"].length > 0) {
             for (const note of Object.values(o.uiState.noteHistory)) {
                 for (const n of note) {
@@ -40,6 +40,6 @@ patch(PosStore.prototype, {
             o.uiState.noteHistory = {};
         }
 
-        return super.sendOrderInPreparation(o, cancelled);
+        return super.sendOrderInPreparation(o, cancelled, orderDone);
     },
 });

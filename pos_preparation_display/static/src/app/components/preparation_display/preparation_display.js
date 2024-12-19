@@ -3,7 +3,7 @@ import { Stages } from "@pos_preparation_display/app/components/stages/stages";
 import { Order } from "@pos_preparation_display/app/components/order/order";
 import { MainComponentsContainer } from "@web/core/main_components_container";
 import { usePreparationDisplay } from "@pos_preparation_display/app/services/preparation_display_service";
-import { Component, onPatched, useState, whenReady } from "@odoo/owl";
+import { Component, onMounted, onPatched, useState, whenReady } from "@odoo/owl";
 import { mountComponent } from "@web/env";
 
 export class PreparationDisplay extends Component {
@@ -18,12 +18,18 @@ export class PreparationDisplay extends Component {
         this.onNextPatch = new Set();
         this.state = useState({
             isMenuOpened: false,
+            zoom: 1,
         });
 
         onPatched(() => {
             for (const cb of this.onNextPatch) {
                 cb();
             }
+            localStorage.setItem("pdis-zoom", this.state.zoom);
+        });
+
+        onMounted(() => {
+            this.state.zoom = parseFloat(localStorage.getItem("pdis-zoom")) || 1;
         });
     }
     get filterSelected() {
@@ -31,6 +37,13 @@ export class PreparationDisplay extends Component {
             this.preparationDisplay.selectedCategories.size +
             this.preparationDisplay.selectedProducts.size
         );
+    }
+    changeZoom(value) {
+        const currentZoom = parseFloat(this.state.zoom);
+        let val = currentZoom + parseFloat(value);
+        val = val > 2 ? 2 : val;
+        val = val < 0.5 ? 0.5 : val;
+        this.state.zoom = val;
     }
     archiveAllVisibleOrders() {
         const lastStageVisibleOrderIds = this.preparationDisplay.filteredOrders.filter(

@@ -26,6 +26,20 @@
                     </button>
                 </div>
                 <Stages stages="this.preparationDisplay.stages" />
+                <div class="d-flex d-inline-block m-auto w-25 align-items-center gap-2 o_pdis_zoom me-1">
+                    <button class="btn btn-secondary rounded" t-on-click="() => this.changeZoom(-0.25)">
+                        <i class="fa fa-search-minus" aria-hidden="true" />
+                    </button>
+                    <input
+                        type="range"
+                        class="form-range flex-grow-1 w-0"
+                        t-att-min="0.5" t-att-max="2" step="0.01"
+                        t-model="state.zoom"
+                    />
+                    <button class="btn btn-secondary rounded" t-on-click="() => this.changeZoom(0.25)">
+                        <i class="fa fa-search-plus" aria-hidden="true" />
+                    </button>
+                </div>
                 <div class="d-inline-block d-sm-inline-block d-xs-inline-block d-md-inline-block d-lg-none">
                     <button t-if="isBurgerMenuClosed()" class="btn position-relative h-100 px-4 rounded-0 border-start shadow-none burger-menu" t-on-click="openMenu">
                         <div class="d-flex px-1">
@@ -118,9 +132,11 @@
                         </div>
                     </div>
 
-                    <div t-if="preparationDisplay.posHasProducts" class="o_pdis_orders position-relative d-grid flex-grow-1 h-100 gap-3 text-reset p-3 overflow-auto">
+                    <div t-if="preparationDisplay.posHasProducts"
+                        class="o_pdis_orders position-relative d-grid flex-grow-1 h-100 gap-3 text-reset p-3 overflow-auto"
+                        t-attf-style="zoom:{{ state.zoom }}">
                         <t t-foreach="this.preparationDisplay.filteredOrders" t-as="order" t-key="order.id">
-                        <Order order="order" />
+                            <Order order="order" />
                         </t>
                     </div>
                 </div>

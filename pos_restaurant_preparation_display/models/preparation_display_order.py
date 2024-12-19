@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 
 
 class Pos_Preparation_DisplayOrder(models.Model):
@@ -40,3 +40,22 @@ class Pos_Preparation_DisplayOrder(models.Model):
                 o.pos_table_id = order.table_id
 
         return res
+
+    def _get_order_name(self):
+        order = self.pos_order_id
+        if order.session_id.config_id.module_pos_restaurant:
+            if not order.table_id and not order.floating_order_name:
+                return _("Direct Sale")
+
+            if order.table_id:
+                table = order.table_id
+                parents = table.get_all_parents()
+                name = ""
+                for parent in parents:
+                    if not name:
+                        name = f"T{parent.table_number}"
+                    else:
+                        name += f" & {parent.table_number}"
+                return name
+
+        return super()._get_order_name()

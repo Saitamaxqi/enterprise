@@ -36,6 +36,9 @@ export class Order extends Reactive {
         this.customer_count = order.customer_count;
         this.changeStageTimeout = null;
         this.tracking_number = order.tracking_number;
+        this.pos_reference = order.pos_reference;
+        this.preset_name = order.preset_name;
+        this.preset_time = order.preset_time;
         this.blinkingNote = blinkingNote || false;
 
         if (this.blinkingNote) {

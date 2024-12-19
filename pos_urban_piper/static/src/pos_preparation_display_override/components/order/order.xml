@@ -6,7 +6,7 @@
                 class="o_pdis_order_card_header_top_delivery d-flex flex-nowrap align-items-center justify-content-between px-2 pb-1 fw-bold"
                 t-att-class="this.cardColor"
                 t-if="this.props.order.delivery_identifier">
-                <div class="o_pdis_staff w-100 text-truncate flex-shrink-1">
+                <div class="w-100 text-truncate flex-shrink-1">
                     <img class="me-1" t-att-src="'/web/image?model=pos.delivery.provider&amp;field=image_128&amp;id=' + this.props.order.delivery_provider_id" style="height: 28px"/>
                     <span class="me-1" t-esc="this.props.order.delivery_provider_name"/>
                     <t t-if="this.props.order.order_otp">
