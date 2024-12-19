@@ -111,8 +111,10 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                     zf.writestr('EXTF_vendor_accounts.csv', self._l10n_de_datev_get_partner_list(options, set_move_line_ids, customer=False))
             buf.seek(0)
             content = buf.read()
+
+        filename, extension = report.get_default_report_filename(options, 'ZIP').split('.')
         return {
-            'file_name': report.get_default_report_filename(options, 'ZIP'),
+            'file_name': f'{filename}_atch.{extension}' if options.get('add_attachments') else f'{filename}_data.{extension}',
             'file_content': content,
             'file_type': 'zip'
         }
