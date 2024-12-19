@@ -98,7 +98,7 @@ def _recompose_arch_with_t_call_parts(main_tree, origin_call_groups, changed_cal
                 nodes_to_append.extend(origin[group_key]["nodes"])
 
         if nodes_to_append:
-            target = main_tree.xpath(f"//t[@t-call and @ws-call-key='{call_key}']")[0]
+            target = main_tree.xpath(f"//*[@t-call and @ws-call-key='{call_key}']")[0]
             for n in nodes_to_append:
                 target.append(etree.fromstring(etree.tostring(n)))
 
