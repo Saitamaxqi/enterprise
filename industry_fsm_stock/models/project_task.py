@@ -138,6 +138,7 @@ class ProjectTask(models.Model):
             'type': 'ir.actions.act_window',
             'name': _('Pick Up Material'),
             'view_mode': 'list,kanban',
+            'mobile_view_mode': 'kanban',
             'domain': [('id', 'in', stock_move_ids.ids)],
             'res_model': 'stock.move',
             'views': [
