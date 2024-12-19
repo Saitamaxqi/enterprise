@@ -259,6 +259,93 @@ class TestBankRecWidgetWithoutEntry(CommonAccountingInstalled, TestBankRecWidget
         views_data = wizard._prepare_embedded_views_data()
         self.assertFalse(views_data.get('batch_payments'))
 
+    def test_invoice_partial_batch_payment(self):
+        invoice = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[1000.0], post=True)
+        payment = self.env['account.payment.register'].create({
+            'payment_date': '2019-01-01',
+            'payment_method_line_id': self.payment_method_line.id,
+            'line_ids': [Command.set(invoice.line_ids.filtered(lambda l: l.display_type == 'payment_term').ids)],
+            'amount': 500.0,
+        })._create_payments()
+        batch = self.env['account.batch.payment'].create({
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_ids': [Command.set(payment.ids)],
+            'payment_method_id': self.payment_method_line.payment_method_id.id,
+        })
+        batch.validate_batch()
+
+        st_line = self._create_st_line(500.0, payment_ref=batch.name, partner_id=self.partner_a.id)
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+        wizard._action_add_new_batch_payments(batch)
+        self.assertRecordValues(wizard.line_ids, [
+            # pylint: disable=C0326
+            {'flag': 'liquidity', 'balance':  500.0},
+            {'flag': 'new_batch', 'balance': -500.0},
+        ])
+        wizard._action_validate()
+
+        if self.module == 'accounting':
+            counterpart_account = self.partner_a.property_account_receivable_id
+        else:
+            counterpart_account = self.env['account.payment']._get_outstanding_account('inbound')
+
+        self.assertRecordValues(st_line.move_id.line_ids.sorted('balance'), [
+            {'account_id': counterpart_account.id,                   'balance': -500.0, 'reconciled': True},
+            {'account_id': st_line.journal_id.default_account_id.id, 'balance':  500.0, 'reconciled': False},
+        ])
+        self.assertEqual(invoice.amount_residual, 500.0)
+        self.assertEqual(batch.amount_residual, 0.0)
+
+    def test_batch_with_cancelled_or_rejected_payments(self):
+        payment_1 = self.env['account.payment'].create({
+            'date': '2015-01-01',
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': self.partner_a.id,
+            'payment_method_line_id': self.payment_method_line.id,
+            'amount': 100.0,
+        })
+        payment_2 = self.env['account.payment'].create({
+            'date': '2015-01-01',
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': self.partner_a.id,
+            'payment_method_line_id': self.payment_method_line.id,
+            'amount': 200.0,
+        })
+        payment_3 = self.env['account.payment'].create({
+            'date': '2015-01-01',
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': self.partner_a.id,
+            'payment_method_line_id': self.payment_method_line.id,
+            'amount': 300.0,
+        })
+        payments = payment_1 + payment_2 + payment_3
+        payments.action_post()
+        batch = self.env['account.batch.payment'].create({
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_ids': [Command.set(payments.ids)],
+            'payment_method_id': self.payment_method_line.payment_method_id.id,
+        })
+        batch.validate_batch()
+        self.assertEqual(batch.amount_residual, 600.0)
+        # cancel first payment
+        payment_1.action_cancel()
+        # reject second payment
+        payment_2.action_reject()
+        self.assertEqual(batch.amount_residual, 300.0)
+
+        st_line = self._create_st_line(300.0, payment_ref=batch.name, partner_id=self.partner_a.id)
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+        wizard._action_add_new_batch_payments(batch)
+        wizard._action_validate()
+        self.assertEqual(batch.amount_residual, 0.0)
+        self.assertEqual(batch.state, 'reconciled')
+        self.assertEqual(payment_1.state, 'canceled')
+        self.assertEqual(payment_2.state, 'rejected')
+        self.assertEqual(payment_3.state, 'paid')
+
 
 @tagged('post_install', '-at_install')
 class TestBankRecWidgetWithoutEntryInvoicingOnly(CommonInvoicingOnly, TestBankRecWidgetWithoutEntry):

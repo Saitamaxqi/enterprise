@@ -107,9 +107,9 @@ class AccountBatchPayment(models.Model):
     @api.depends('payment_ids.is_sent', 'payment_ids.is_matched')
     def _compute_state(self):
         for batch in self:
-            if batch.payment_ids and all(pay.is_matched and pay.is_sent for pay in batch.payment_ids):
+            if batch.payment_ids and all(pay.is_matched and pay.is_sent for pay in batch.payment_ids.filtered(lambda p: p.state not in ('canceled', 'rejected'))):
                 batch.state = 'reconciled'
-            elif batch.payment_ids and all(pay.is_sent for pay in batch.payment_ids):
+            elif batch.payment_ids and all(pay.is_sent for pay in batch.payment_ids.filtered(lambda p: p.state not in ('canceled', 'rejected'))):
                 batch.state = 'sent'
             else:
                 batch.state = 'draft'
