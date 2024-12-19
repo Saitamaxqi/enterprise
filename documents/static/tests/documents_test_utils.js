@@ -8,8 +8,6 @@ import { multiTabService } from "@bus/multi_tab_service";
 import { busService } from "@bus/services/bus_service";
 import { presenceService } from "@bus/services/presence_service";
 import { documentService } from "@documents/core/document_service";
-import { storeService } from "@mail/core/common/store_service";
-import { voiceMessageService } from "@mail/discuss/voice_message/common/voice_message_service";
 import { fileUploadService } from "@web/core/file_upload/file_upload_service";
 
 export function getEnrichedSearchArch(searchArch='<search></search>') {
@@ -44,6 +42,12 @@ export async function createDocumentsViewWithMessaging(params) {
     return createDocumentsView(params);
 }
 
+function makeFakeMailStoreService() {
+    return {
+        start: (env) => ({}),
+    };
+}
+
 /**
  * Load the services needed to test the documents views.
  */
@@ -58,8 +62,8 @@ export function loadServices(extraServices = {}) {
         },
         "bus.parameters": busParametersService,
         "document.document": documentService,
-        "discuss.voice_message": voiceMessageService,
-        "mail.store": storeService,
+        // Should be replaced with original mail.store service in hoot
+        "mail.store": makeFakeMailStoreService(),
         bus_service: busService,
         im_status: imStatusService,
         file_upload: fileUploadService,
