@@ -175,8 +175,6 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         # Check the invoice status
         self.assertEqual(move.l10n_cl_dte_acceptation_status, 'received')
 
-    # Patch out the VAT check since the VAT number from the sender is invalid
-    @patch('odoo.addons.base_vat.models.res_partner.ResPartner.check_vat', MagicMock())
     def test_create_invoice_33_from_attachment_with_sending_partner_defined_on_other_company(self):
         """DTE with unknown partner for the receiving company, but known partner for
         another company. Make sure we don't match with a partner the company associated
@@ -211,8 +209,6 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         self.assertNotEqual(move.partner_id, other_company_partner)
         self.assertEqual(move.company_id, self.company_data['company'])
 
-    # Patch out the VAT check since the VAT number from the sender is invalid
-    @patch('odoo.addons.base_vat.models.res_partner.ResPartner.check_vat', MagicMock())
     def test_create_invoice_33_from_attachment_with_sending_partner_defined_on_two_companies(self):
         """DTE with known partner for the receiving company and another company.
         Make sure the one from the receiving company gets picked, because otherwise
@@ -226,7 +222,7 @@ class TestFetchmailServer(TestL10nClEdiCommon):
             # Different company from the receiver on the XML (which is self.company_data['company'])
             'company_id': self.company_data_2['company'].id,
             # Same VAT as in the invoice XML
-            'vat': '76086428-1',
+            'vat': '76086428-1',  # Invalid VAT works as there is no country_id
         })
 
         partner_sii_same_company = self.env['res.partner'].create({
@@ -235,7 +231,7 @@ class TestFetchmailServer(TestL10nClEdiCommon):
             # Same company as the receiver on the XML
             'company_id': self.company_data['company'].id,
             # Same VAT as in the invoice XML
-            'vat': '76086428-1',
+            'vat': '76086428-1',  # Invalid VAT works as there is no country_id
         })
 
         att_name = 'incoming_invoice_33.xml'

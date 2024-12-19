@@ -55,13 +55,12 @@ class ResCompany(models.Model):
         if not self.vat:
             errors.append(_("Set your company RUT"))
         else:
-            # Validate if the VAT is a valid RUT:  we use _run_vat_test() instead of check_vat() because we do not want
-            # raise a ValidationError, also we are sure that the company identification type is RUT
+            # Validate if the VAT is a valid RUT:  we use _check_vat_number to avoid ValidationError
             partner = self.partner_id
             if (
                 partner.vat
                 and partner.l10n_latam_identification_type_id.l10n_uy_dgi_code == "2"
-                and partner._run_vat_test(partner.vat, partner.country_id, partner.is_company) != "uy"
+                and not partner._check_vat_number('UY', partner.vat)
             ):
                 errors.append(_("Set a valid RUT in your company"))
         if not self.l10n_uy_edi_branch_code:

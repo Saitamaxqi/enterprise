@@ -357,7 +357,6 @@ class CzechVATControlReportCustomHandler(models.AbstractModel):
         eu_country_codes = cz_utils.get_eu_country_codes(self.env, options)
         if vat_number[0].isalpha():  # else, use passed country_code and vat_number
             country_code, vat_number = self.env['res.partner']._split_vat(vat_number)
-            country_code = country_code.upper()
         if country_code in eu_country_codes:
             return vat_number, country_code
         return '', ''

@@ -10,8 +10,8 @@ class AccountTaxUnit(models.Model):
     _description = "Tax Unit"
 
     name = fields.Char(string="Name", required=True)
-    country_id = fields.Many2one(string="Country", comodel_name='res.country', required=True, help="The country in which this tax unit is used to group your companies' tax reports declaration.")
-    vat = fields.Char(string="Tax ID", required=True, help="The identifier to be used when submitting a report for this unit.")
+    country_id = fields.Many2one(string="Country", comodel_name='res.country', required=True, inverse="_inverse_vat", help="The country in which this tax unit is used to group your companies' tax reports declaration.")
+    vat = fields.Char(string="Tax ID", required=True, inverse="_inverse_vat", help="The identifier to be used when submitting a report for this unit.")
     company_ids = fields.Many2many(string="Companies", comodel_name='res.company', required=True, help="Members of this unit")
     main_company_id = fields.Many2one(string="Main Company", comodel_name='res.company', required=True, help="Main company of this unit; the one actually reporting and paying the taxes.")
     fpos_synced = fields.Boolean(string="Fiscal Positions Synchronised", compute='_compute_fiscal_position_completion', help="Technical field indicating whether Fiscal Positions exist for all companies in the unit")
@@ -140,21 +140,19 @@ class AccountTaxUnit(models.Model):
             if len(record.company_ids) < 2:
                 raise ValidationError(_("A tax unit must contain a minimum of two companies. You might want to delete the unit."))
 
-    @api.constrains('country_id', 'vat')
-    def _validate_vat(self):
+    @api.onchange('vat', 'country_id')
+    def _onchange_vat(self):
+        self.vat, _country_code = self.env['res.partner']._run_vat_checks(self.country_id, self.vat, validation=False)
+
+    def _inverse_vat(self):
         for record in self:
             if not record.vat:
                 continue
 
-            checked_country_code = self.env['res.partner']._run_vat_test(record.vat, record.country_id)
-
-            if checked_country_code and checked_country_code != record.country_id.code.lower():
+            _vat, checked_country_code = self.env['res.partner']._run_vat_checks(record.country_id, record.vat,
+                                                                                partner_name=_("tax unit [%s]", record.name))
+            if checked_country_code and checked_country_code != record.country_id.code:
                 raise ValidationError(_("The country detected for this VAT number does not match the one set on this Tax Unit."))
-
-            if not checked_country_code:
-                tu_label = _("tax unit [%s]", record.name)
-                error_message = self.env['res.partner']._build_vat_error_message(record.country_id.code.lower(), record.vat, tu_label)
-                raise ValidationError(error_message)
 
     @api.onchange('company_ids')
     def _onchange_company_ids(self):

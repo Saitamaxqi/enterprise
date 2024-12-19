@@ -38,9 +38,11 @@ class TestL10nClEdiCommon(AccountEdiTestCommon):
             'extract_in_invoice_digitalization_mode': 'no_send',
             'tax_calculation_rounding_method': 'round_globally',
         })
+        cl_country = cls.env.ref('base.cl').id
         cls.company_data['company'].partner_id.write({
             'l10n_cl_sii_taxpayer_type': '1',
-            'vat': 'CL762012243',
+            'vat': '76201224-3',
+            'country_id': cl_country,
             'l10n_cl_activity_description': 'activity_test',
         })
         content = misc.file_open('certificate/tests/data/cert.pfx', mode="rb").read()
@@ -60,7 +62,7 @@ class TestL10nClEdiCommon(AccountEdiTestCommon):
             'name': 'Partner SII',
             'is_company': 1,
             'city': 'Pudahuel',
-            'country_id': cls.env.ref('base.cl').id,
+            'country_id': cl_country,
             'street': 'Puerto Test 102',
             'phone': '+562 0000 0000',
             'website': 'http://www.partner_sii.cl',
@@ -77,7 +79,7 @@ class TestL10nClEdiCommon(AccountEdiTestCommon):
             'l10n_cl_sii_taxpayer_type': '3',
             'street': '',
             'street2': '',
-            'country_id': cls.env.ref('base.cl').id,
+            'country_id': cl_country,
             'vat': '66666666-6',
         })
         cls.sale_journal = cls.env['account.journal'].create({

@@ -289,15 +289,17 @@ class L10n_ClEdiUtil(models.AbstractModel):
 
     def _l10n_cl_format_vat(self, value, with_zero=False):
         if not value or value in ['', 0]:
-            value = 'CL666666666'
-        if 'CL' in value:
-            # argument is vat
-            rut = value[:10] + '-' + value[10:]
-            if not with_zero:
-                rut = rut.replace('CL0', '')
-            return rut.replace('CL', '')
+            value = '666666666'
+        # argument is vat
+        if '-' not in value:
+            rut = value[:8] + '-' + value[8:]
+        else:
+            rut = value
+        if not with_zero:
+            if rut[0] == '0':
+                rut = rut[1:]
         #  Argument is other
-        return value.replace('.', '')
+        return rut.replace('.', '')
 
     def _get_sha1_digest(self, data):
         return hashlib.new('sha1', data).digest()

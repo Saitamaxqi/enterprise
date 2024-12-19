@@ -48,7 +48,7 @@ class L10n_IeTaxReportHandler(models.AbstractModel):
 
         # Check company PPSN
         vat_country, vat_number = self.env['res.partner']._split_vat(self.env.company.vat)
-        ppsn = self.env.company.company_registry or (vat_number if vat_country == 'ie' else self.env.company.vat)
+        ppsn = self.env.company.company_registry or (vat_number if vat_country == 'IE' else self.env.company.vat)
         if not stdnum.ie.pps.is_valid(ppsn):
             raise UserError(_('You must set a valid PPSN number in the `Company Registry` field of your Company configuration.'))
         values['ppsn'] = ppsn

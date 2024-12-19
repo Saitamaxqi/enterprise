@@ -4,7 +4,7 @@
             <ENC>
                 <ENC_1>NC</ENC_1>
                 <ENC_2>213123432</ENC_2>
-                <ENC_3>213.123.432</ENC_3>
+                <ENC_3>213123432</ENC_3>
                 <ENC_4>UBL 2.1</ENC_4>
                 <ENC_5>DIAN 2.1: Nota Crédito de Factura Electrónica de Venta</ENC_5>
                 <ENC_6>RINV/2020/00001</ENC_6>
@@ -74,7 +74,7 @@
             </EMI>
             <ADQ>
                 <ADQ_1>1</ADQ_1>
-                <ADQ_2>213.123.432</ADQ_2>
+                <ADQ_2>213123432</ADQ_2>
                 <ADQ_3>31</ADQ_3>
                 <ADQ_4>No Aplica</ADQ_4>
 
@@ -94,7 +94,7 @@
                     <ADQ_22>1</ADQ_22>
                     <ADQ_23>00000</ADQ_23>
 
-                <ADQ_24>213.123.432</ADQ_24>
+                <ADQ_24>213123432</ADQ_24>
                 <ADQ_25>31</ADQ_25>
                 <ADQ_26>1</ADQ_26>
 
@@ -104,7 +104,7 @@
 
                 <ILA>
                    <ILA_1>company_2_data</ILA_1>
-                   <ILA_2>213.123.432</ILA_2>
+                   <ILA_2>213123432</ILA_2>
                    <ILA_3>31</ILA_3>
                    <ILA_4>1</ILA_4>
                 </ILA>
@@ -212,7 +212,7 @@
             </NOT><NOT>
                 <NOT_1>7.- http://www.example.com</NOT_1>
             </NOT><NOT>
-                <NOT_1>8.-213.123.432|(870)-931-0505|</NOT_1>
+                <NOT_1>8.-213123432|(870)-931-0505|</NOT_1>
             </NOT><NOT>
                 <NOT_1>10.- | | | |N/A</NOT_1>
             </NOT><NOT>

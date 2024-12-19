@@ -444,7 +444,7 @@ class AccountMove(models.Model):
 
         # Check receiver has a valid identification number
         try:
-            self.partner_id.check_vat()
+            self.partner_id._check_vat()
         except ValidationError as exp:
             errors.append(_("Problem with Receiver identification number: %(exp_msg)s", exp_msg=str(exp)))
 

@@ -235,7 +235,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                 partner_type in ('supplier', 'customer')
                 and partner.vat
                 and partner.vat[:2].isalpha()
-                and partner.country_code.lower() != partner._split_vat(partner.vat)[0]
+                and partner.country_code != partner._split_vat(partner.vat)[0]
             ):
                 faulty_partners['partner_vat_doesnt_match_country'] |= partner
             # Romanian company partners should have their VAT number or CUI number set in the Tax ID or company_registry field.
@@ -251,7 +251,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                     cui = partner.company_registry or vat_number
                     if not stdnum.ro.cui.is_valid(cui):
                         faulty_partners['partner_registry_incorrect'] |= partner
-                elif not partner.vat or not partner.simple_vat_check(vat_country, vat_number):
+                elif not partner.vat or not partner._check_vat_number(vat_country, vat_number):
                     faulty_partners['partner_vat_invalid'] |= partner
                 elif partner.perform_vies_validation and not partner.vies_valid:
                     faulty_partners['partner_vies_failed'] |= partner
@@ -309,9 +309,9 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                     cui = partner.company_registry or vat_number
                     return '00' + stdnum.ro.cui.compact(cui)
                 elif partner.country_id and 'EU' in partner.country_id.country_group_codes:
-                    return '01' + vat_country.upper() + vat_number
+                    return '01' + vat_country + vat_number
                 else:
-                    return '02' + vat_country.upper() + vat_number
+                    return '02' + vat_country + vat_number
             else:
                 if partner.company_registry and stdnum.ro.cnp.is_valid(partner.company_registry):
                     # For individuals having a valid CNP or NIF, that should be used

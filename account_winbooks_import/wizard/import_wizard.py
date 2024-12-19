@@ -75,7 +75,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
                 partner_data[rec.get('NUMBER')] = partner.id
             if not partner:
                 vatcode = rec.get('VATNUMBER') and rec.get('COUNTRY') and (rec.get('COUNTRY') + rec.get('VATNUMBER').replace('.', ''))
-                if not rec.get('VATNUMBER') or not rec.get('COUNTRY') or not ResPartner.simple_vat_check(rec.get('COUNTRY').lower(), vatcode):
+                if not rec.get('VATNUMBER') or not rec.get('COUNTRY') or not ResPartner._check_vat_number(rec.get('COUNTRY').upper(), vatcode):
                     vatcode = ''
                 data = {
                     'ref': rec.get('NUMBER'),
