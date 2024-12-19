@@ -320,7 +320,13 @@ class HrContractSalary(http.Controller):
                 else:
                     content = False
                 initial_values[personal_info.field] = content
-                initial_values[personal_info.field + '_filename'] = contract[personal_info.field + '_filename'] or personal_info.field
+                filename_field = personal_info.field + '_filename'
+                if filename_field in contract._fields:
+                    initial_values[personal_info.field + '_filename'] = contract[filename_field]
+                elif filename_field in target:
+                    initial_values[personal_info.field + '_filename'] = target[filename_field]
+                else:
+                    initial_values[personal_info.field + '_filename'] = personal_info.field
             else:
                 initial_values[personal_info.field] = target[personal_info.field] if personal_info.field in target else ''
 
