@@ -213,13 +213,15 @@ CREATE INDEX IF NOT EXISTS account_move_invoice_user_id_date_idx ON account_move
         lowest_vals = [v for v in sorted_rates if v < 1]
         higher_vals = [v for v in sorted_rates if v > 1]
         # The plan has always a value at 0% completion
+        low, high = None, None
         if lowest_vals and higher_vals:
             low = lowest_vals[-1]
             high = higher_vals[0]
         elif not higher_vals and len(lowest_vals) > 1:
             low = lowest_vals[-2]
             high = lowest_vals[-1]
-        else:
+        if not (low and high) or low == high:
+            # No values or division by zero
             return
         # y = ax + b
         return sorted_amounts[low] + (sorted_amounts[high] - sorted_amounts[low])/(high-low) * (1-low)
