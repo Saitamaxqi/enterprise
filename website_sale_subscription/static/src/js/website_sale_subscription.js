@@ -11,7 +11,7 @@ WebsiteSale.include({
     _updateRootProduct($form, productId, productTemplateId) {
         this._super(...arguments);
         const selected_plan = $form.find('.product_price .plan_select').val()
-            ?? $form.find('#add_to_cart').data('subscription-plan-id');
+            ?? $form.find('#add_to_cart').attr('data-subscription-plan-id');
         if (selected_plan) {
             Object.assign(this.rootProduct, {
                 plan_id: parseInt(selected_plan),
