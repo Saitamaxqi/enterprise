@@ -580,6 +580,15 @@ msgid "The xml file generated contains an invalid character: '%s'"
 msgstr "Le fichier xml généré contient un caractère invalide: '%s'"
 
 #. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid ""
+"There is no amount in your Tax report, Odoo will send an empty declaration "
+"(check box \"declaration of nil\" checked)"
+msgstr ""
+"Il n'y a pas de montant dans votre rapport fiscal, Odoo enverra une déclaration vide "
+"(case à cocher \"déclaration néant\" vérifié)"
+
+#. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid "This declaration is unknown from Odoo."

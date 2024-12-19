@@ -25,7 +25,6 @@ in the "Statement Reports" section).
         'data/account_report_ec_sales_list_report.xml',
         'security/ir.model.access.csv',
         'views/res_config_settings_views.xml',
-        'views/account_journal_dashboard_view.xml',
         'views/account_report_async_export_view.xml',
         'wizard/l10n_fr_send_vat_report_wizard.xml',
     ],

@@ -30,5 +30,13 @@
             <field name="res_model">account.move</field>
             <field name="chaining_type">suggest</field>
         </record>
+
+        <record id="mail_activity_type_tax_report_error" model="mail.activity.type">
+            <field name="name">Tax Report - Error</field>
+            <field name="summary">Error sending Tax Report</field>
+            <field name="category">tax_report</field>
+            <field name="res_model">account.move</field>
+            <field name="decoration_type">warning</field>
+        </record>
     </data>
 </odoo>

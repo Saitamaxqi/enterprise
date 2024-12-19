@@ -102,6 +102,10 @@ class AccountMove(models.Model):
         # hook for l10n tax payment wizard
         return self.action_open_tax_report()
 
+    def _action_tax_report_error(self):
+        # hook for l10n tax report errors
+        return self.action_open_tax_report()
+
     def action_open_tax_report(self):
         action = self.env["ir.actions.actions"]._for_xml_id("account_reports.action_account_report_gt")
         if not self.tax_closing_report_id:
@@ -182,6 +186,11 @@ class AccountMove(models.Model):
 
         self._close_tax_period_create_activities()
 
+    def _get_tax_period_description(self):
+        self.ensure_one()
+        period_start, period_end = self.company_id._get_tax_closing_period_boundaries(self.date, self.tax_closing_report_id)
+        return self.company_id._get_tax_closing_move_description(self.company_id._get_tax_periodicity(self.tax_closing_report_id), period_start, period_end, self.fiscal_position_id, self.tax_closing_report_id)
+
     def _close_tax_period_create_activities(self):
         mat_to_send_xml_id = 'account_reports.mail_activity_type_tax_report_to_be_sent'
         mat_to_send = self.env.ref(mat_to_send_xml_id)
@@ -200,8 +209,7 @@ class AccountMove(models.Model):
         ])
 
         for move in moves_without_send_activity:
-            period_start, period_end = move.company_id._get_tax_closing_period_boundaries(move.date, move.tax_closing_report_id)
-            period_desc = move.company_id._get_tax_closing_move_description(move.company_id._get_tax_periodicity(move.tax_closing_report_id), period_start, period_end, move.fiscal_position_id, move.tax_closing_report_id)
+            period_desc = move._get_tax_period_description()
             move.with_context(mail_activity_quick_update=True).activity_schedule(
                 act_type_xmlid=mat_to_send_xml_id,
                 summary=_("Send tax report: %s", period_desc),

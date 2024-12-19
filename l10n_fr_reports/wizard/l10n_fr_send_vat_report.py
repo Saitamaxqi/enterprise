@@ -266,6 +266,12 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
                     'value': float_repr(self.currency_id.round(column_value), self.currency_id.decimal_places).replace('.', ','),
                 })
 
+        if self.currency_id.is_zero(self.vat_amount):
+            edi_values.append({
+                'id': "KF",
+                'value': "X",
+            })
+
         return edi_values
 
     def _get_formatted_payment_values(self):

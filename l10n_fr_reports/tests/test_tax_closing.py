@@ -3,6 +3,7 @@ from unittest.mock import patch
 from odoo import Command
 from odoo.tests import tagged
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
+from odoo.addons.iap.tools import iap_tools
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -400,3 +401,104 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             },
             edi_vals['declarations'][0]['identif']['zones'],
         )
+
+    def test_fr_send_empty_declaration_to_administration(self):
+        """ The aim of this test is to verify edi VAT values
+            when VAT is empty VS when not empty.
+        """
+        def get_edi_vals(start_date, end_date):
+            send_vat_wizard = self.env['l10n_fr_reports.send.vat.report'].create({
+                'date_from': start_date,
+                'date_to': end_date,
+                'report_id': self.report.id,
+                'test_interchange': True,
+            })
+            options = self._generate_options(
+                self.report,
+                date_from=start_date,
+                date_to=end_date,
+                default_options={
+                    'no_format': True,
+                    'unfold_all': True,
+                }
+            )
+            lines = self.report._get_lines(options)
+            return send_vat_wizard._prepare_edi_vals(options, lines)
+
+        self.init_invoice('out_invoice', invoice_date='2024-05-08', amounts=[100], taxes=self.tax_20_g_sale, post=True)
+        edi_vals_5 = get_edi_vals('2024-05-01', '2024-05-31')
+        self.assertNotIn(
+            {
+                'id': 'KF',
+                'value': 'X',
+            },
+            edi_vals_5['declarations'][0]['form']['zones'],
+        )
+
+        edi_vals_6 = get_edi_vals('2024-06-01', '2024-06-30')
+        self.assertIn(
+            {
+                'id': 'KF',
+                'value': 'X',
+            },
+            edi_vals_6['declarations'][0]['form']['zones'],
+        )
+
+    def test_activity_created_on_tax_report_error(self):
+        """ The aim of this test is to verify that
+        an activity is created when VAT edi is in error state.
+        """
+        options = self._generate_options(
+            self.report,
+            date_from='2024-05-01',
+            date_to='2024-05-31',
+        )
+        with patch.object(self.env.registry['account.move'], '_get_vat_report_attachments', return_value=[]):
+            may_closing_entry = self.report_handler._get_periodic_vat_entries(options)
+            may_closing_entry._post()
+        send_vat_wizard = self.env['l10n_fr_reports.send.vat.report'].create({
+            'date_from': '2024-05-01',
+            'date_to': '2024-05-31',
+            'report_id': self.report.id,
+            'test_interchange': True,
+        })
+
+        def mock_success_iap_jsonrpc(*args, **kwargs):
+            return {
+                'responseType': 'SUCCESS',
+                'response': {
+                    'errorResponse': False,
+                    'successfullResponse': {
+                        'depositId': 123,
+                    },
+                },
+                'xml_content': '',
+            }
+        with patch.object(iap_tools, 'iap_jsonrpc', side_effect=mock_success_iap_jsonrpc):
+            send_vat_wizard.send_vat_return()
+
+        def mock_failure_iap_jsonrpc(*args, **kwargs):
+            return {
+                'responseType': 'SUCCESS',
+                'response': {
+                    'errorResponse': False,
+                    'successfullResponse': {
+                        'interchanges': {'interchange': [{
+                            'declarationIds': {'declarationId': [1]},
+                            'statesHistory': {'stateHistory': [{
+                                'name': 'history',
+                                'label': 'history',
+                                'isError': True,
+                                'isFinal': True,
+                                'stateDetailsHistory': False,
+                            }]},
+                        }]},
+                    },
+                },
+            }
+        with patch.object(iap_tools, 'iap_jsonrpc', side_effect=mock_failure_iap_jsonrpc), self.enter_registry_test_mode():
+            self.env['account.report.async.export'].button_process_report()
+        self.env['mail.activity'].search([
+            ('res_id', '=', may_closing_entry.id),
+            ('activity_type_id', '=', self.env.ref('account_reports.mail_activity_type_tax_report_error').id),
+        ]).ensure_one()

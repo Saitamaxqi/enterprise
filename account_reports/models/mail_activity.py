@@ -15,6 +15,10 @@ class MailActivity(models.Model):
             move = self.env['account.move'].browse(self.res_id)
             return move._action_tax_to_pay_wizard()
 
+        if self.activity_type_id == self.env.ref('account_reports.mail_activity_type_tax_report_error'):
+            move = self.env['account.move'].browse(self.res_id)
+            return move._action_tax_report_error()
+
         journal = self.env['account.journal'].browse(self.res_id)
         options = {}
         if self.account_tax_closing_params:
