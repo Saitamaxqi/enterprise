@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
@@ -8,7 +8,10 @@ export class VoipSystrayItem extends Component {
     static template = "voip.SystrayItem";
 
     setup() {
-        this.voip = useService("voip");
+        this.voip = useState(useService("voip"));
+        this.ringtoneService = useService("voip.ringtone");
+        this.userAgent = useState(useService("voip.user_agent"));
+        this.multiTabService = useService("multi_tab");
         this.softphone = this.voip.softphone;
     }
 
@@ -19,6 +22,15 @@ export class VoipSystrayItem extends Component {
      */
     get missedCallCount() {
         return this.voip.missedCalls;
+    }
+
+    /** @returns {boolean} */
+    get shouldDisplayInCallIndicator() {
+        const call = this.softphone.selectedCorrespondence?.call;
+        if (!call) {
+            return false;
+        }
+        return call.isInProgress && call.state === "ongoing";
     }
 
     /**
@@ -44,10 +56,16 @@ export class VoipSystrayItem extends Component {
                 this.voip.resetMissedCalls();
             } else {
                 this.softphone.hide();
+                if (this.userAgent.hasCallInvitation) {
+                    this.ringtoneService.stopPlaying();
+                }
             }
         } else {
             this.softphone.show();
             this.voip.resetMissedCalls();
+            if (this.userAgent.hasCallInvitation && this.multiTabService.isOnMainTab()) {
+                this.ringtoneService.incoming.play();
+            }
         }
     }
 }

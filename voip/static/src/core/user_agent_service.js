@@ -59,6 +59,15 @@ export class UserAgent {
         return reactive(this);
     }
 
+    /** @returns {boolean} */
+    get hasCallInvitation() {
+        const call = this.softphone.selectedCorrespondence?.call;
+        if (!call) {
+            return false;
+        }
+        return call.state === "calling" && call.direction === "incoming" && Boolean(this.session);
+    }
+
     /** @returns {Object} */
     get mediaConstraints() {
         const constraints = { audio: true, video: false };

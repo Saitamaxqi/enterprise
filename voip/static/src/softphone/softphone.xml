@@ -10,7 +10,7 @@
                 <button class="oi oi-large oi-close btn h-100 opacity-50 opacity-100-hover text-reset" title="Close" t-on-click="onClickClose"/>
             </div>
             <div t-if="!isFolded" class="o-voip-Softphone-content position-relative d-flex flex-column flex-grow-1 bg-view" t-att-class="{ 'h-100': isOnSmallDevice }">
-                <CallInvitation t-if="shouldDisplayCallInvitation" correspondence="softphone.selectedCorrespondence" extraClass="'flex-grow-1'"/>
+                <CallInvitation t-if="userAgent.hasCallInvitation" correspondence="softphone.selectedCorrespondence" extraClass="'flex-grow-1'"/>
                 <t t-else="">
                     <div t-if="voip.error" class="o-voip-Softphone-error position-absolute w-100 h-100 overflow-auto d-flex px-2" t-on-click="onClickError">
                         <div class="m-auto text-center" t-out="voip.error.text"/>

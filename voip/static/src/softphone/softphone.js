@@ -28,7 +28,8 @@ export class Softphone extends Component {
         this.store = useService("mail.store");
         this.voip = useService("voip");
         this.callService = useService("voip.call");
-        this.userAgent = useService("voip.user_agent");
+        this.userAgent = useState(useService("voip.user_agent"));
+        this.ringtoneService = useService("voip.ringtone");
         this.searchBar = useRef("search");
         this.softphone = useState(this.voip.softphone);
         useEffect(
@@ -101,19 +102,6 @@ export class Softphone extends Component {
     }
 
     /** @returns {boolean} */
-    get shouldDisplayCallInvitation() {
-        const call = this.softphone.selectedCorrespondence?.call;
-        if (!call) {
-            return false;
-        }
-        return (
-            call.state === "calling" &&
-            call.direction === "incoming" &&
-            Boolean(this.userAgent.session)
-        );
-    }
-
-    /** @returns {boolean} */
     get shouldDisplayCorrespondenceDetails() {
         return Boolean(this.softphone.selectedCorrespondence);
     }
@@ -130,6 +118,9 @@ export class Softphone extends Component {
     onClickClose(ev) {
         markEventHandled(ev, "Softphone.close");
         this.softphone.hide();
+        if (this.userAgent.hasCallInvitation) {
+            this.ringtoneService.stopPlaying();
+        }
     }
 
     /** @param {MouseEvent} ev */
