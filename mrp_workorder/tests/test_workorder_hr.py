@@ -103,3 +103,14 @@ class TestWorkorderDurationHr(common.TransactionCase):
         self.env.user.employee_id = self.employee_1
         self.mo.workorder_ids.button_start()
         self.assertEqual(self.mo.workorder_ids.state, 'progress')
+
+    def test_assigned_employee_workorder_productivity(self):
+        """Ensure that the employee assigned to the work order is the one
+        linked to productivity when validating the MO.
+        """
+        self.env.user.employee_ids = [Command.link(self.employee_2.id)]
+        self.mo.workorder_ids.employee_assigned_ids = self.employee_1
+        self.mo.button_mark_done()
+        self.assertTrue(self.mo.workorder_ids)
+        self.assertEqual(self.mo.state, 'done')
+        self.assertEqual(self.mo.workorder_ids.time_ids.employee_id, self.employee_1)

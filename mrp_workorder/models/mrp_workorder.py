@@ -884,3 +884,9 @@ class MrpWorkorder(models.Model):
         if self.env.user.has_group('mrp.group_mrp_workorder_dependencies'):
             action['views'] = [(self.env.ref(ref).id, 'gantt')] + [(id, kind) for id, kind in action['views'] if kind != 'gantt']
         return action
+
+    def _prepare_timeline_vals(self, duration, date_start, date_end=False):
+        time_data = super()._prepare_timeline_vals(duration=duration, date_start=date_start, date_end=date_end)
+        if self.employee_assigned_ids:
+            time_data['employee_id'] = self.employee_assigned_ids[0].id
+        return time_data
