@@ -4,7 +4,6 @@
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 import logging
-from unittest.mock import patch
 
 from odoo import api, fields, models
 
@@ -32,23 +31,27 @@ class SaleOrder(models.Model):
         data = [{"xml_id":f"test_sale_subscription.test_subscription_def_invoice_{inv.id}", "record": inv} for inv in self.invoice_ids.deferred_move_ids]
         self.env["ir.model.data"]._update_xmlids(data)
 
+    def _process_invoices_to_send(self, account_moves):
+        if self.env.context.get("mock_no_commit", False):
+            # Mocking for '_process_invoices_to_send'
+            # Otherwise the whole sending mail process will be triggered and we don't want it in the post_init hook
+            account_moves.is_move_sent = True
+            return
+        return super()._process_invoices_to_send(account_moves)
+
+    def _subscription_commit_cursor(self, auto_commit):
+        if self.env.context.get("mock_no_commit", False):
+            return
+        return super()._subscription_commit_cursor(auto_commit)
+
+    def _subscription_rollback_cursor(self, auto_commit):
+        if self.env.context.get("mock_no_commit", False):
+            return
+        return super()._subscription_rollback_cursor(auto_commit)
+
     @api.model
     def _test_demo_generate_subscriptions(self):
-        # Mocking for '_process_invoices_to_send'
-        # Otherwise the whole sending mail process will be triggered and we don't want it in the post_init hook
-        def _mock_process_invoices_to_send(account_moves):
-            account_moves.is_move_sent = True
-
-        def _do_nothing(self, auto_commit=False):
-            pass
-
-        with patch('odoo.addons.sale_subscription.models.sale_order.SaleOrder._process_invoices_to_send',
-                  wraps=_mock_process_invoices_to_send),\
-             patch('odoo.addons.sale_subscription.models.sale_order.SaleOrder._subscription_commit_cursor',
-                  wraps=_do_nothing),\
-             patch('odoo.addons.sale_subscription.models.sale_order.SaleOrder._subscription_rollback_cursor',
-                  wraps=_do_nothing):
-            self._test_demo_generate_subscriptions_unpatched()
+        self.with_context(mock_no_commit=True)._test_demo_generate_subscriptions_unpatched()
 
     def _test_demo_generate_subscriptions_unpatched(self):
         self._test_demo_flush_tracking()
