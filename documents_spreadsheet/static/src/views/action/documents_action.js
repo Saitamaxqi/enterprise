@@ -1,11 +1,11 @@
+import { DocumentsAction } from "@documents/views/action/documents_action";
+import { loadBundle } from "@web/core/assets";
 import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
-import { DocumentsControlPanel } from "@documents/views/search/documents_control_panel";
-import { loadBundle } from "@web/core/assets";
 
-patch(DocumentsControlPanel.prototype, {
+patch(DocumentsAction.prototype, {
     async onClickFreezeAndShareSpreadsheet() {
-        const selection = this.env.model.root.selection;
+        const selection = this.props.targetRecords;
         if (
             selection.length !== 1 ||
             !["spreadsheet", "frozen_spreadsheet"].includes(selection[0].data.handler)
