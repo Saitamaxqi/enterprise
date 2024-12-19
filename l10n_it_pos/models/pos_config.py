@@ -23,9 +23,3 @@ class PosConfig(models.Model):
                 elif pm.type == 'pay_later':
                     pm.it_payment_code = '5'
         return journal, pm_ids
-
-    def open_ui(self):
-        if self.company_id.country_id.code == 'IT':
-            if not self.it_fiscal_printer_ip:
-                raise UserError(_("Missing Italian Fiscal Printer IP address. Please configure it in the settings."))
-        return super().open_ui()
