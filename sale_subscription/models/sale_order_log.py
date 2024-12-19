@@ -180,7 +180,7 @@ class SaleOrderLog(models.Model):
     def _create_currency_transfer_log(self, order, initial_values):
         new_mrr = max(order.recurring_monthly, 0)
         old_mrr = max(initial_values.get('recurring_monthly', new_mrr), 0)
-        old_mrr_new_currency = initial_values['currency_id'].currency_id._convert(old_mrr,
+        old_mrr_new_currency = initial_values['currency_id']._convert(old_mrr,
                                                           to_currency=order.currency_id,
                                                           company=order.company_id, round=False)
         result = self.create([{
