@@ -2,6 +2,7 @@ import { Component, xml } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 
 import { actionService } from "@web/webclient/actions/action_service";
+import { companyService } from "@web/webclient/company_service";
 import { menuService } from "@web/webclient/menus/menu_service";
 import { viewService } from "@web/views/view_service";
 import { MainComponentsContainer } from "@web/core/main_components_container";
@@ -41,6 +42,7 @@ QUnit.module("Studio Navbar > New Model", (hooks) => {
         serviceRegistry.add("dialog", dialogService);
         serviceRegistry.add("menu", menuService);
         serviceRegistry.add("hotkey", hotkeyService);
+        serviceRegistry.add("company", companyService);
         const menus = {
             root: { id: "root", children: [1], name: "root", appID: "root" },
             1: { id: 1, children: [], name: "App0", appID: 1 },

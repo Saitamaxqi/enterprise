@@ -1,13 +1,13 @@
 import { Dialog } from "@web/core/dialog/dialog";
 import { Component, useState } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
-import { session } from "@web/session";
 
 /** You might wonder why I defined all these strings here and not in the template.
  * The reason is that I wanted clear templates that use a single element to render an option,
  * meaning that the label and helper text had to be defined here in the code.
  */
-function getModelOptions() {
+function getModelOptions(isMultiCompany) {
     const modelOptions = {
         use_partner: {
             label: _t("Contact details"),
@@ -80,7 +80,7 @@ function getModelOptions() {
             value: true,
         },
     };
-    if (!session.display_switch_company_menu) {
+    if (isMultiCompany) {
         delete modelOptions.use_company;
     }
     return modelOptions;
@@ -98,7 +98,8 @@ export class ModelConfigurator extends Component {
 
     setup() {
         this.state = useState({ saving: false });
-        this.options = useState(getModelOptions());
+        const company = useService("company");
+        this.options = useState(getModelOptions(company.isMultiCompany));
     }
 
     /**
