@@ -52,6 +52,9 @@ export class TimerReactive extends Reactive {
         this.resetTimer();
         this.addFloatTime(timeElapsed);
         this.timeElapsed = this.toSeconds;
+        if (!serverTime && this.serverOffset !== null) {
+            serverTime = timerStart.plus({ seconds: this.serverOffset });
+        }
         if (timerStart && serverTime) {
             const dateStart = timerStart;
             const { hours, minutes, seconds } = this.getInterval(dateStart, serverTime)
@@ -117,6 +120,5 @@ export class TimerReactive extends Reactive {
 
     clearTimer() {
         this.resetTimer();
-        delete this.serverOffset;
     }
 }

@@ -8,7 +8,6 @@ import { getPropertyFieldInfo } from "@web/views/fields/field";
 import { TimesheetTimerHeader } from "../timesheet_timer_header/timesheet_timer_header";
 
 import { Component, onWillStart } from "@odoo/owl";
-import { TimerReactive } from "@timer/models/timer_reactive";
 
 export class GridTimesheetTimerHeader extends Component {
     static components = {
@@ -32,7 +31,8 @@ export class GridTimesheetTimerHeader extends Component {
     setup() {
         this.notificationService = useService("notification");
         this.timesheetUOMService = useService("timesheet_uom");
-        this.timerReactive = new TimerReactive(this.env);
+        this.timerService = useService("timer");
+        this.timerReactive = this.timerService.createTimer();
         onWillStart(this.onWillStart);
     }
 
