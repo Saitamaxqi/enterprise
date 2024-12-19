@@ -97,7 +97,7 @@
                                                     <record id="account_financial_report_line_02_1_0_1_fr_bilan_actif_column2" model="account.report.expression">
                                                         <field name="label">amort</field>
                                                         <field name="engine">account_codes</field>
-                                                        <field name="formula">-2801</field>
+                                                        <field name="formula">-2801 - 2901</field>
                                                     </record>
                                                     <record id="account_financial_report_line_02_1_0_1_fr_bilan_actif_column3" model="account.report.expression">
                                                         <field name="label">net</field>
@@ -120,7 +120,7 @@
                                                     <record id="account_financial_report_line_02_1_0_2_fr_bilan_actif_column2" model="account.report.expression">
                                                         <field name="label">amort</field>
                                                         <field name="engine">account_codes</field>
-                                                        <field name="formula">-2803</field>
+                                                        <field name="formula">-2803 - 2903</field>
                                                     </record>
                                                     <record id="account_financial_report_line_02_1_0_2_fr_bilan_actif_column3" model="account.report.expression">
                                                         <field name="label">net</field>
@@ -419,17 +419,17 @@
                                                     <record id="account_financial_report_line_02_3_0_1_fr_bilan_actif_column1" model="account.report.expression">
                                                         <field name="label">brut</field>
                                                         <field name="engine">account_codes</field>
-                                                        <field name="formula">25 + 266 + 261 + 262</field>
+                                                        <field name="formula">266 + 261 + 262</field>
                                                     </record>
                                                     <record id="account_financial_report_line_02_3_0_1_fr_bilan_actif_column2" model="account.report.expression">
                                                         <field name="label">amort</field>
                                                         <field name="engine">account_codes</field>
-                                                        <field name="formula">-2961 - 2966</field>
+                                                        <field name="formula">-2961 - 2962 - 2966</field>
                                                     </record>
                                                     <record id="account_financial_report_line_02_3_0_1_fr_bilan_actif_column3" model="account.report.expression">
                                                         <field name="label">net</field>
                                                         <field name="engine">account_codes</field>
-                                                        <field name="formula">25 + 266 + 261 + 262 + 2961 + 2966</field>
+                                                        <field name="formula">266 + 261 + 262 + 2961 + 2962 + 2966</field>
                                                     </record>
                                                 </field>
                                             </record>
@@ -753,7 +753,7 @@
                                                     <record id="account_financial_report_line_03_01_2_2_fr_bilan_actif_column1" model="account.report.expression">
                                                         <field name="label">brut</field>
                                                         <field name="engine">account_codes</field>
-                                                        <field name="formula">471 + 425 + 472 + 474 + 441 + 4098 + 475 + 473 + 465 + 4287 + 4456 + 4097 + 462 + 4096 + 456\(4562)D + 443D + 451D + 445\(4452,4455,4456,44584,44587)D + 449D + 428\(4287)D + 458D + 470D + 448D + 444D + 455D + 478D + 467D + 438D + 468\(4686)D</field>
+                                                        <field name="formula">471 + 425 + 472 + 474 + 441 + 4098 + 475 + 473 + 465 + 4456 + 4097 + 462 + 4096 + 456\(4562)D + 451D + 445\(4452,4455,4456,44584,44587)D + 449D + 428D + 458D + 470D + 448D + 444D + 455D + 478D + 467D + 438D + 468D</field>
                                                     </record>
                                                     <record id="account_financial_report_line_03_01_2_2_fr_bilan_actif_column2" model="account.report.expression">
                                                         <field name="label">amort</field>
@@ -763,7 +763,7 @@
                                                     <record id="account_financial_report_line_03_01_2_2_fr_bilan_actif_column3" model="account.report.expression">
                                                         <field name="label">net</field>
                                                         <field name="engine">account_codes</field>
-                                                        <field name="formula">471 + 425 + 472 + 474 + 441 + 4098 + 475 + 473 + 465 + 4287 + 4456 + 4097 + 462 + 4096 + 456\(4562)D + 443D + 451D + 445\(4452,4455,4456,44584,44587)D + 449D + 428\(4287)D + 458D + 470D + 448D + 444D + 455D + 478D + 467D + 438D + 468\(4686)D + 496 + 495</field>
+                                                        <field name="formula">471 + 425 + 472 + 474 + 441 + 4098 + 475 + 473 + 465 + 4456 + 4097 + 462 + 4096 + 456\(4562)D + 451D + 445\(4452,4455,4456,44584,44587)D + 449D + 428D + 458D + 470D + 448D + 444D + 455D + 478D + 467D + 438D + 468D + 496 + 495</field>
                                                     </record>
                                                 </field>
                                             </record>
@@ -875,7 +875,7 @@
                                                     <record id="account_financial_report_line_03_01_3_2_fr_bilan_actif_column3" model="account.report.expression">
                                                         <field name="label">net</field>
                                                         <field name="engine">account_codes</field>
-                                                        <field name="formula">53 + 54 + 58 + 511 + 515 + 516 + 514D + 518D + 512D + 513D + 517D</field>
+                                                        <field name="formula">53 + 58 + 511 + 518D + 512D + 517D</field>
                                                     </record>
                                                 </field>
                                             </record>
@@ -1297,7 +1297,7 @@
                                             <record id="account_financial_report_line_05_0_1_fr_bilan_passif_column3" model="account.report.expression">
                                                 <field name="label">net</field>
                                                 <field name="engine">account_codes</field>
-                                                <field name="formula">-16881 - 161</field>
+                                                <field name="formula">-1618 - 161</field>
                                             </record>
                                         </field>
                                     </record>
@@ -1310,7 +1310,7 @@
                                             <record id="account_financial_report_line_05_0_2_fr_bilan_passif_column3" model="account.report.expression">
                                                 <field name="label">net</field>
                                                 <field name="engine">account_codes</field>
-                                                <field name="formula">-162 - 16883 - 163</field>
+                                                <field name="formula">-162 - 1638 - 163</field>
                                             </record>
                                         </field>
                                     </record>
@@ -1323,7 +1323,7 @@
                                             <record id="account_financial_report_line_05_0_3_fr_bilan_passif_column3" model="account.report.expression">
                                                 <field name="label">net</field>
                                                 <field name="engine">account_codes</field>
-                                                <field name="formula">-16884 - 164 - 519 - 514C - 518C - 512C - 513C - 517C</field>
+                                                <field name="formula">-1648 - 164 - 519 - 518C - 512C - 517C</field>
                                             </record>
                                         </field>
                                     </record>
@@ -1336,7 +1336,7 @@
                                             <record id="account_financial_report_line_05_0_4_fr_bilan_passif_column3" model="account.report.expression">
                                                 <field name="label">net</field>
                                                 <field name="engine">account_codes</field>
-                                                <field name="formula">-166 - 165 - 168\(16881,16883,16884) - 17 - 426 - 45\(457,4562)C</field>
+                                                <field name="formula">-166 - 165 - 168 - 17 - 426 - 45\(457,4562)C</field>
                                             </record>
                                         </field>
                                     </record>
@@ -1375,7 +1375,7 @@
                                             <record id="account_financial_report_line_05_0_7_fr_bilan_passif_column3" model="account.report.expression">
                                                 <field name="label">net</field>
                                                 <field name="engine">account_codes</field>
-                                                <field name="formula">-4455 - 44587 - 421 - 457 - 442 - 424 - 43\(438) - 422 - 427 - 447 - 446 - 4452 - 44584 - 443C - 4453C - 4457C - 449C - 428\(4287)C - 448C - 444C - 4458\(44584,44587)C - 438C</field>
+                                                <field name="formula">-4455 - 44587 - 421 - 457 - 442 - 424 - 43\(438) - 422 - 427 - 447 - 446 - 4452 - 44584 - 4453C - 4457C - 449C - 428 - 448C - 444C - 4458\(44584,44587)C - 438C</field>
                                             </record>
                                         </field>
                                     </record>
@@ -1401,7 +1401,7 @@
                                             <record id="account_financial_report_line_05_0_9_fr_bilan_passif_column3" model="account.report.expression">
                                                 <field name="label">net</field>
                                                 <field name="engine">account_codes</field>
-                                                <field name="formula">-4198 - 509 - 4196 - 4197 - 4686 - 464 - 468\(4686)C - 470C - 478C - 467C</field>
+                                                <field name="formula">-4198 - 509 - 4196 - 4197 - 464 - 468C - 470C - 478C - 467C</field>
                                             </record>
                                         </field>
                                     </record>

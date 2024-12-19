@@ -29,6 +29,11 @@ msgid "%(field)s is required on %(model)s"
 msgstr "%(field)s est requis sur %(model)s"
 
 #. module: l10n_fr_reports
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_de_stocked_production
+msgid "(De)Stocked production"
+msgstr "Production (dé)stockée"
+
+#. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.p_n_l_1_resultat_exploitation
 msgid "1-Operating result (I-II)"
 msgstr "1-Résultat d'exploitation (I-II)"
@@ -181,8 +186,9 @@ msgstr "Amort. & Prov"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_g
-msgid "Amortization, depreciation and operating provisions (g)"
-msgstr "Dotations aux amort., dépréciations et provisions d'exploitation (g)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_amortization_depreciation_and_operating_provisions
+msgid "Amortization, depreciation and operating provisions (h)"
+msgstr "Dotations aux amort., dépréciations et provisions d'exploitation (h)"
 
 #. module: l10n_fr_reports
 #: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
@@ -293,6 +299,13 @@ msgid "Bank Partner"
 msgstr "Banque partenaire"
 
 #. module: l10n_fr_reports
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_book_value_intangible_assets_property_plant_equipment_sold
+msgid ""
+"Book value of intangible assets and property, plant and equipment sold (j)"
+msgstr ""
+"Valeur comptable des immobilisations incorporelles et corporelles vendues (j)"
+
+#. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_05_0_3_fr_bilan_passif
 msgid "Borrowings and debts with credit institutions"
 msgstr "Emprunts et dettes auprès des établissements de crédit"
@@ -315,6 +328,7 @@ msgstr "Annuler"
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrp4
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_5
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_capitalized_production
 msgid "Capitalized production"
 msgstr "Production immobilisée"
 
@@ -376,6 +390,7 @@ msgstr "Paramètres de configuration"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_III
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_consumption_during_the_year_from_third_parties
 msgid "Consumption during the year from third parties (III)"
 msgstr "Consommations de l'exercice en provenance de tiers (III)"
 
@@ -411,8 +426,9 @@ msgstr "Actif circulant"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_VII
-msgid "Current result before tax VII (VI+i+j-k-l)"
-msgstr "Résultat courant avant impôt VII (VI+i+j-k-l)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_current_result_before_tax
+msgid "Current result before tax VII (VI+k+l-m-n)"
+msgstr "Résultat courant avant impôt VII (VI+k+l-m-n)"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields.selection,name:l10n_fr_reports.selection__account_report_async_export__recipient__dgi_edi_tva
@@ -521,8 +537,9 @@ msgstr "Exports EDI"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_o
-msgid "Employee participation (o)"
-msgstr "Participation des salariés (o)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_employee_participation
+msgid "Employee participation (q)"
+msgstr "Participation des salariés (q)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_01_fr_cdr24
@@ -560,8 +577,9 @@ msgstr "Charges exceptionnels (VIII)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_n
-msgid "Exceptional expenses (n)"
-msgstr "Charges exceptionnelles (n)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_exceptional_expenses
+msgid "Exceptional expenses (p)"
+msgstr "Charges exceptionnelles (p)"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields.selection,name:l10n_fr_reports.selection__account_report_async_export__recipient__cec_edi_tva
@@ -581,13 +599,15 @@ msgstr "Produits exceptionnels (VII)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_m
-msgid "Extraordinary income (m)"
-msgstr "Produits exceptionnels (m)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_extraordinary_income
+msgid "Extraordinary income (o)"
+msgstr "Produits exceptionnels (o)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_VIII
-msgid "Extraordinary result VIII (m-n)"
-msgstr "Résultat exceptionnel VIII (m-n)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_extraordinary_result
+msgid "Extraordinary result VIII (o-p)"
+msgstr "Résultat exceptionnel VIII (o-p)"
 
 #. module: l10n_fr_reports
 #. odoo-python
@@ -619,8 +639,9 @@ msgstr "Charges financières (VI)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_l
-msgid "Financial charges (l)"
-msgstr "Charges financières (l)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_financial_charges
+msgid "Financial charges (n)"
+msgstr "Charges financières (n)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_01_fr_cdr_prod_fin
@@ -629,8 +650,9 @@ msgstr "Produits financiers (V)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_j
-msgid "Financial income (j)"
-msgstr "Produits financiers (j)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_financial_income
+msgid "Financial income (l)"
+msgstr "Produits financiers (l)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_02_0_fr_bilan_actif
@@ -659,6 +681,7 @@ msgstr "Brut"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_V
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_gross_operation_surplus
 msgid "Gross operating surplus V (IV+a-b-c)"
 msgstr "Excédent Brut d'Exploitation V (IV+a-b-c)"
 
@@ -697,8 +720,9 @@ msgstr "Impôts sur les bénéfices (X)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_p
-msgid "Income tax (p)"
-msgstr "Impôt sur les bénéfices (p)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_income_tax
+msgid "Income tax (r)"
+msgstr "Impôt sur les bénéfices (r)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_02_1_0_fr_bilan_actif
@@ -820,6 +844,11 @@ msgid "Net"
 msgstr "Net"
 
 #. module: l10n_fr_reports
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_net_sales
+msgid "Net Sales"
+msgstr "Montant net du chiffre d'affaires"
+
+#. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrc20
 msgid "Net expenses on disposals of investment property"
 msgstr "Charges nettes sur cessions de valeurs immobilières de placement"
@@ -892,8 +921,9 @@ msgstr "Produits d'exploitation (I)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_VI
-msgid "Operating result VI (V+d+e+f-g-h)"
-msgstr "Résultat d'Exploitation VI (V+d+e+f-g-h)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_operating_result
+msgid "Operating result VI (V+d+e+f+g-h-i-j)"
+msgstr "Résultat d'Exploitation VI (V+d+e+f+g-h-i-j)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrp5
@@ -902,6 +932,7 @@ msgstr "Subventions d'exploitation"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_a
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_operation_subsidies
 msgid "Operating subsidies (a)"
 msgstr "Subventions d'exploitation (a)"
 
@@ -927,8 +958,9 @@ msgstr "Autres dettes"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_h
-msgid "Other expenses (h)"
-msgstr "Autres charges (h)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_other_expenses
+msgid "Other expenses (i)"
+msgstr "Autres charges (i)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_02_3_0_4_fr_bilan_actif
@@ -942,6 +974,7 @@ msgstr "Autres intérêts et produits assimilés"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_d
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_other_operating_income
 msgid "Other operating income (d)"
 msgstr "Autre produits d'exploitation (d)"
 
@@ -993,6 +1026,7 @@ msgstr "Actions propres"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_c
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_personnel_costs
 msgid "Personnel costs (c)"
 msgstr "Charges de personnel (c)"
 
@@ -1007,6 +1041,15 @@ msgid "Prepaid expenses"
 msgstr "Charges constatés d'avance"
 
 #. module: l10n_fr_reports
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_proceeds_disposals_property_plant_equipment_intangible_assets
+msgid ""
+"Proceeds from disposals of property, plant and equipment and intangible "
+"assets (g)"
+msgstr ""
+"Produits des cessions d’immobilisations incorporelles et corporelles"
+" (g)"
+
+#. module: l10n_fr_reports
 #: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_account_report_async_export_form
 msgid "Process now"
 msgstr "Traiter maintenant"
@@ -1018,11 +1061,13 @@ msgstr "Traiter les exports asynchrones en attente"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_II
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_production_for_the_year
 msgid "Production for the year (II)"
 msgstr "Production de l'exercice (II)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_3
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_production_sold
 msgid "Production sold"
 msgstr "Production vendue"
 
@@ -1074,6 +1119,7 @@ msgstr "Provisions pour risques"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_2
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_purchase_cost_of_goods_sold
 msgid "Purchase cost of goods sold"
 msgstr "Cout d'achat des marchandises vendues"
 
@@ -1160,8 +1206,9 @@ msgstr "Résultat de l'exercice"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_IX
-msgid "Result for the year IX (VII+VIII-o-p)"
-msgstr "Résultat de l'exercice IX (VII+VIII-o-p)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_result_for_the_year
+msgid "Result for the year IX (VII+VIII-q-r)"
+msgstr "Résultat de l'exercice IX (VII+VIII-q-r)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_02_0_6_fr_bilan_passif
@@ -1175,6 +1222,7 @@ msgstr "Écarts de réévaluation"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_e
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_reversals_of_depreciations_and_operation_provisions
 msgid "Reversals of depreciations and operating provisions (e)"
 msgstr "Reprises sur dépreciations et provisions d'exploitations (e)"
 
@@ -1191,6 +1239,7 @@ msgstr "Reprises sur provisions et transferts de charges"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_1
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_sale_of_goods
 msgid "Sale of goods"
 msgstr "Ventes de marchandises"
 
@@ -1216,9 +1265,17 @@ msgid "Sent"
 msgstr "Envoyé"
 
 #. module: l10n_fr_reports
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_share_of_investment_grants
+msgid ""
+"Share of investment grants transferred to profit or loss for the year (f)"
+msgstr ""
+"Quote-part des subventions d'investissement transférée au résultat de l'exercice (f)"
+
+#. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_k
-msgid "Share of profit from joint operations (k)"
-msgstr "Quote-part de résultat sur opérations faites en commun (k)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_share_of_profit_from_joint_operations
+msgid "Share of profit from joint operations (m)"
+msgstr "Quote-part de résultat sur opérations faites en commun (m)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_01_fr_cdr16
@@ -1227,8 +1284,9 @@ msgstr "Quotes-part de résultat sur opérations faites en commun"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_i
-msgid "Share of profit on joint operations (i)"
-msgstr "Quote-part de résultat sur opérations faites en commun (i)"
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_share_of_profit_on_joint_operations
+msgid "Share of profit on joint operations (k)"
+msgstr "Quote-part de résultat sur opérations faites en commun (k)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_01_0_1_fr_bilan_passif
@@ -1353,6 +1411,7 @@ msgstr "Impôts et taxes"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_b
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_taxes_and_similar_payments
 msgid "Taxes and similar payments (b)"
 msgstr "Impots, taxes et versements assimilés (b)"
 
@@ -1437,6 +1496,7 @@ msgstr "Total des produits (I+III+V+VII)"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_I
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_trade_margin
 msgid "Trade margin (I)"
 msgstr "Marge commerciale (I)"
 
@@ -1524,6 +1584,7 @@ msgstr "TVA à recevoir"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_IV
+#: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_value_added
 msgid "Value Added IV (I+II-III)"
 msgstr "Valeur Ajoutée IV (I+II-III)"
 
