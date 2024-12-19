@@ -69,8 +69,5 @@
             "timesheet_grid/static/tests/**/*.test.js",
             "timesheet_grid/static/tests/hr_timesheet_models.js",
         ],
-        'web.qunit_suite_tests': [
-            "timesheet_grid/static/tests/legacy/**/*.js",
-        ]
     }
 }
