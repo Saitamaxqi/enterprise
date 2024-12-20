@@ -33,6 +33,7 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
 
         options['multi_currency'] = report.env.user.has_group('base.group_multi_currency')
         options['show_currency'] = options['multi_currency'] and (previous_options or {}).get('show_currency', False)
+        options['no_xlsx_currency_code_columns'] = True
         if not options['show_currency']:
             hidden_columns.update(['amount_currency', 'currency'])
 

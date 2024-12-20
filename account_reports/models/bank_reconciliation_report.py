@@ -20,6 +20,7 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
 
         # Options is needed otherwise some elements added in the post processor go on the total line
         options['ignore_totals_below_sections'] = True
+        options['no_xlsx_currency_code_columns'] = True
         if 'active_id' in self._context and self._context.get('active_model') == 'account.journal':
             options['bank_reconciliation_report_journal_id'] = self._context['active_id']
         elif 'bank_reconciliation_report_journal_id' in previous_options:

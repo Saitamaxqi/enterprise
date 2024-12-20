@@ -6076,6 +6076,9 @@ class AccountReport(models.Model):
         else:
             sheet.set_column(0, 0, 50)
 
+        if not options.get('no_xlsx_currency_code_columns'):
+            self._add_xlsx_currency_codes_columns(options, lines)
+
         # keep tracks of cells merged vertically
         merged_rowspan_cells = set()
 
@@ -6223,6 +6226,46 @@ class AccountReport(models.Model):
                     line_annotation_text.append(f"{counter} - {line_annotation['text']}")
                     counter += 1
                 write_cell(sheet, annotations_x_offset, y + y_offset, "\n".join(line_annotation_text), annotation_format)
+
+    def _add_xlsx_currency_codes_columns(self, options, lines):
+        """ Adds a 'Currency Code' column for each column displaying amounts in foreign currencies. This is done because
+        the raw number is displayed on the xlsx file, making it impossible to know the currency used.
+        To have it displayed, the line must have an expression label starting with '_currency_' """
+        required_currency_code_columns = {
+            label.removeprefix('_currency_')
+            for label in self.line_ids.expression_ids.mapped('label')
+            if label.startswith('_currency_')
+        }
+
+        new_columns = []
+        for col in options['columns']:
+            new_columns.append(col)
+
+            if col['expression_label'] in required_currency_code_columns:
+                new_columns.append({
+                    **col,
+                    'name': _("Currency Code"),
+                    'figure_type': 'string',
+                    'expression_label': f"_xlsx_currency_code_{col['expression_label']}"
+                })
+
+        options['columns'] = new_columns
+
+        # Add 'Currency Code' values to each line
+        for line in lines:
+            new_column_values = []
+
+            for index, col_data in enumerate(line['columns']):
+                new_column_values.append(col_data)
+
+                if col_data.get('expression_label') in required_currency_code_columns:
+                    currency = col_data.get('currency')
+                    currency_code = currency.name if currency else ''
+                    new_column = self._build_column_dict(currency_code, options['columns'][index+1], options)
+                    new_column['name'] = new_column['no_format']
+                    new_column_values.append(new_column)
+
+            line['columns'] = new_column_values
 
     def _add_options_xlsx_sheet(self, workbook, options_list):
         """Adds a new sheet for xlsx report exports with a summary of all filters and options activated at the moment of the export."""
