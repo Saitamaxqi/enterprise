@@ -10,7 +10,7 @@
                 <page string="Rental prices" name="pricing" invisible="not rent_ok">
                     <group>
                         <group name="pricing" string="Pricing">
-                            <field name="product_pricing_ids" nolabel="1">
+                            <field name="product_pricing_ids" nolabel="1" colspan="2">
                                 <list editable="bottom">
                                     <control>
                                         <create name="add_product_pricing" string="Add a price"/>
