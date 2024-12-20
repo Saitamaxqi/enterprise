@@ -1261,7 +1261,7 @@ class BankRecWidget(models.Model):
 
         return {
             'amls': {
-                'domain': st_line._get_default_amls_matching_domain(),
+                'domain': st_line._get_default_amls_matching_domain(allow_draft=True),
                 'dynamic_filters': dynamic_filters,
                 'context': context,
             },

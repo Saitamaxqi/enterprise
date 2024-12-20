@@ -6,9 +6,9 @@ from odoo.osv import expression
 class AccountBankStatementLine(models.Model):
     _inherit = "account.bank.statement.line"
 
-    def _get_default_amls_matching_domain(self):
+    def _get_default_amls_matching_domain(self, allow_draft=False):
         # EXTENDS account
-        domain = super()._get_default_amls_matching_domain()
+        domain = super()._get_default_amls_matching_domain(allow_draft=allow_draft)
 
         categories = self.env['product.category'].search([
             '|',

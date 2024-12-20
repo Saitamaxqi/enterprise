@@ -399,6 +399,7 @@
                       edit="false"
                       limit="40"
                       count_limit="40"
+                      decoration-info="parent_state == 'draft'"
                       js_class="bank_rec_amls_list_view">
                     <!-- Invisible fields -->
                     <field name="company_id" column_invisible="True"/>

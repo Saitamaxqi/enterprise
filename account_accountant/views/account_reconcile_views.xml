@@ -35,6 +35,9 @@
                 <filter string="Payable" domain="[('account_id.account_type', '=', 'liability_payable'), ('account_id.non_trade', '=', False)]" help="From Trade Payable accounts" name="trade_payable"/>
                 <filter string="Receivable" domain="[('account_id.account_type', '=', 'asset_receivable'), ('account_id.non_trade', '=', False)]" help="From Trade Receivable accounts" name="trade_receivable"/>
                 <separator/>
+                <filter string="Posted" domain="[('parent_state', '=', 'posted')]" name="posted_lines"/>
+                <filter string="Unposted" domain="[('parent_state', '=', 'draft')]" name="unposted_lines"/>
+                <separator/>
                 <filter string="Date" name="date" date="date"/>
                 <filter string="Invoice Date" name="invoice_date" date="invoice_date"/>
                 <separator/>
@@ -116,7 +119,7 @@
         <field name="view_mode">list</field>
         <field name="search_view_id" ref="view_account_move_line_reconcile_search"/>
         <field name="view_id" ref="view_move_line_reconcile_tree"/>
-        <field name="domain">[('display_type', 'not in', ('line_section', 'line_note')), ('account_id.reconcile', '=', True), ('parent_state', '=', 'posted'), ('full_reconcile_id', '=', False)]</field>
-        <field name="context">{'journal_type': 'general', 'search_default_unreconciled': True, 'search_default_group_by_account': True, 'search_default_group_by_partner': True}</field>
+        <field name="domain">[('display_type', 'not in', ('line_section', 'line_note')), ('account_id.reconcile', '=', True), ('full_reconcile_id', '=', False)]</field>
+        <field name="context">{'journal_type': 'general', 'search_default_posted_lines': True, 'search_default_unreconciled': True, 'search_default_group_by_account': True, 'search_default_group_by_partner': True}</field>
     </record>
 </odoo>
