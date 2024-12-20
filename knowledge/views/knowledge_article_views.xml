@@ -27,7 +27,6 @@
                 <field name="to_delete" invisible="1"/>
                 <field name="cover_image_id" invisible="1"/>
                 <field name="has_article_children" invisible="1"/>
-                <field name="has_item_parent" invisible="1"/>
                 <field name="full_width" invisible="1"/>
                 <field name="last_edition_uid" invisible="1"/>
                 <field name="last_edition_date" invisible="1"/>

@@ -379,11 +379,11 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 },
 // Add a random icon
 {
-    trigger: '#dropdown_tools_panel',
+    trigger: '.o_knowledge_header .dropdown-toggle',
     run: "click",
 }, {
     // Click on the "add Icon" button
-    trigger: '.o_knowledge_add_icon',
+    trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Add Icon")',
     run: "click",
 }, {
     // Check that the icon has been updated in the sidenar
@@ -443,10 +443,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
         },
         {
     // Lock the article
-    trigger: '#dropdown_tools_panel',
+    trigger: '.o_knowledge_header .dropdown-toggle',
     run: "click",
 }, {
-    trigger: '.o_knowledge_more_options_panel .btn-lock',
+    trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Lock")',
     run: "click",
         },
         {
@@ -463,10 +463,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Update icon of unlocked article
 {
     // Unlock the article
-    trigger: '#dropdown_tools_panel',
+    trigger: '.o_knowledge_header .dropdown-toggle',
     run: "click",
 }, {
-    trigger: '.o_knowledge_more_options_panel .btn-lock .fa-unlock',
+    trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Unlock")',
     run: "click",
         },
         {
@@ -486,12 +486,12 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 },
 // Convert article into item
 {
-    // Open the kebab menu
-    trigger: '#dropdown_tools_panel',
+    // Open the options dropdown
+    trigger: '.o_knowledge_header .dropdown-toggle',
     run: "click",
 }, {
     // Click on convert button
-    trigger: '.dropdown-item .fa-tasks',
+    trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Convert")',
     run: "click",
         },
         {
@@ -512,12 +512,12 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 },
 // Convert item into article
 {
-    // Open the kebab menu
-    trigger: '#dropdown_tools_panel',
+    // Open the options dropdown
+    trigger: '.o_knowledge_header .dropdown-toggle',
     run: "click",
 }, {
     // Click on convert button
-    trigger: '.dropdown-item .fa-sitemap',
+    trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Convert")',
     run: "click",
 }, {
     // Check that article has been readded in the main tree
@@ -525,12 +525,12 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 },
 // Convert a favorite article to an item
 {
-    // Open the kebab menu
-    trigger: '#dropdown_tools_panel',
+    // Open the options dropdown
+    trigger: '.o_knowledge_header .dropdown-toggle',
     run: "click",
 }, {
     // Click on the convert button
-    trigger: '.dropdown-item .fa-tasks',
+    trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Convert")',
     run: "click",
         },
         {
@@ -724,11 +724,11 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
             trigger: '.o_article_active:contains("Private Child 2")',
         },
         {
-    // Check that article shows "Add Properties" button
-    trigger: '#dropdown_tools_panel',
+    // Check that article shows "Add Properties" button in the options dropdown
+    trigger: '.o_knowledge_header .dropdown-toggle',
     run: "click",
 }, {
-    trigger: '.o_knowledge_add_properties',
+    trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Add Properties")',
 }, {
     trigger: 'section[data-section="private"] .o_article:first:contains("Private Article")',
     run: () => {
@@ -748,8 +748,11 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     // Check that article was removed from children in favorites
     trigger: '.o_section[data-section="favorites"]:not(:has(.o_article:contains("Private Child 2")))',
 }, {
-    // Check that article does not show "Add Properties" button anymore
-    trigger: '.o_knowledge_more_options_panel:not(:has(button.o_knowledge_add_properties))',
+    // Check that the "Add Properties" button is disabled
+    trigger: '.o_knowledge_header .dropdown-toggle',
+    run: 'click',
+}, {
+    trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Add Properties").o_disabled_option',
 },
 // Drag and drop root above root
 {

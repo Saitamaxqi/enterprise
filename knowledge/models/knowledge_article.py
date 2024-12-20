@@ -1275,11 +1275,8 @@ class KnowledgeArticle(models.Model):
             if self.parent_id and self.parent_id.user_has_access \
                 else self.env['knowledge.article'].action_home_page()
 
-    def action_set_lock(self):
-        self.is_locked = True
-
-    def action_set_unlock(self):
-        self.is_locked = False
+    def action_set_lock(self, lock):
+        self.is_locked = lock
 
     def action_toggle_favorite(self):
         """ Read access is sufficient for toggling its own favorite status. """

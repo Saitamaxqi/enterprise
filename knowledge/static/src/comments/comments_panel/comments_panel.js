@@ -3,7 +3,7 @@ import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { KnowledgeCommentsThread } from "../comment/comment";
-import { Component, onWillDestroy, onWillStart, useEffect, useRef, useState } from "@odoo/owl";
+import { Component, onWillDestroy, onWillStart, useEffect, useState } from "@odoo/owl";
 import { batched, debounce } from "@web/core/utils/timing";
 import { effect } from "@web/core/utils/reactive";
 import { LOAD_THREADS_LIMIT } from "../../comments/comments_service";
@@ -14,17 +14,13 @@ export class KnowledgeCommentsPanel extends Component {
     static props = { ...standardWidgetProps };
 
     setup() {
-        this.rootRef = useRef("root");
         this.commentsService = useService("knowledge.comments");
         this.commentsState = useState(this.commentsService.getCommentsState());
         let threadRecordsKeys;
         this.alive = true;
         effect(
             batched((state) => {
-                if (!this.alive) {
-                    return;
-                }
-                if (state.displayMode !== "panel") {
+                if (!this.alive || state.displayMode !== "panel") {
                     return;
                 }
                 const threadRecords = state.threadRecords;
@@ -73,17 +69,6 @@ export class KnowledgeCommentsPanel extends Component {
                     });
             },
             () => [this.state.mode, this.commentsState.articleId, this.commentsState.displayMode]
-        );
-        // TODO ABD: refactor form view style to not have to do this
-        useEffect(
-            () => {
-                if (this.commentsState.displayMode === "panel") {
-                    this.rootRef.el?.parentElement.classList.remove("d-none");
-                } else {
-                    this.rootRef.el?.parentElement.classList.add("d-none");
-                }
-            },
-            () => [this.commentsState.displayMode]
         );
         onWillStart(async () => {
             // TODO ABD: test this use case
@@ -189,14 +174,7 @@ export class KnowledgeCommentsPanel extends Component {
 
 export const knowledgeCommentsPanel = {
     component: KnowledgeCommentsPanel,
-    additionalClasses: [
-        "d-none",
-        "col-12",
-        "col-lg-4",
-        "border-start",
-        "border-top",
-        "d-print-none",
-    ],
+    additionalClasses: ["col-12", "col-lg-4", "border-start", "border-top", "d-print-none"],
 };
 
 registry.category("view_widgets").add("knowledge_comments_panel", knowledgeCommentsPanel);

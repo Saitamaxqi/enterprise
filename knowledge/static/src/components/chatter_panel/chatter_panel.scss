@@ -1,0 +1,12 @@
+.o_widget_knowledge_chatter_panel {
+    &:empty {
+        display: none,
+    }
+    li.nav-item {
+        display: none;
+    }
+    @include media-breakpoint-up(lg) {
+        border-left: 1px solid $border-color;
+        min-width: 400px;
+    }
+}

@@ -62,7 +62,7 @@ registry.category("web_tour.tours").add('knowledge_history_tour', {
         ...changeArticleContentAndSave('Modified Title 03'),
     {
         // Open dropdown 'More actions'
-        trigger: '#dropdown_tools_panel',
+        trigger: '.o_knowledge_header .dropdown-toggle',
         run: "click",
     },
     {

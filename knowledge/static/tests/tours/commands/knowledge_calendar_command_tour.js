@@ -107,7 +107,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
 },
 {
     // Check we created an item with the right datetime used as property
-    trigger: '.o_knowledge_properties_field .o_property_field:contains("Start Date")',
+    trigger: '.o_widget_knowledge_properties_panel .o_property_field:contains("Start Date")',
     run: function () {
         const input = this.anchor.querySelector("input");
         if (!input.value.includes("08:00")) {
@@ -206,7 +206,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
 },
 {
     // Check we created an item with the right datetime used as property
-    trigger: '.o_knowledge_properties_field .o_property_field:contains("Start Property")',
+    trigger: '.o_widget_knowledge_properties_panel .o_property_field:contains("Start Property")',
     run: function () {
         const input = this.anchor.querySelector("input");
         if (!input.value.includes("08:00")) {
@@ -220,7 +220,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     //-----------------------------------------------------------------------
 
     // Create a new date property
-    trigger: '.o_knowledge_properties_field .o_field_property_add button',
+    trigger: '.o_widget_knowledge_properties_panel .o_field_property_add button',
     run: 'click',
 }, {
     trigger: '.o_field_property_definition_header',
@@ -235,7 +235,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: '.o_knowledge_editor .odoo-editor-editable',
     run: 'click',
 }, { // Create a new checkbox property
-    trigger: '.o_knowledge_properties_field .o_field_property_add button',
+    trigger: '.o_widget_knowledge_properties_panel .o_field_property_add button',
     run: 'click',
 }, {
     trigger: '.o_field_property_definition_header',
@@ -250,7 +250,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: '.o_knowledge_editor .odoo-editor-editable',
     run: 'click',
 }, { // Create a text property
-    trigger: '.o_knowledge_properties_field .o_field_property_add button',
+    trigger: '.o_widget_knowledge_properties_panel .o_field_property_add button',
     run: 'click',
 }, {
     trigger: '.o_field_property_definition_header',
@@ -265,7 +265,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: '.o_knowledge_editor .odoo-editor-editable',
     run: 'click',
 }, { // Set the text property
-    trigger: '.o_knowledge_properties_field .o_property_field:contains("Text Property") input',
+    trigger: '.o_widget_knowledge_properties_panel .o_property_field:contains("Text Property") input',
     run: 'edit Custom text && click body',
 }, { // Set the name of the item
     trigger: '.o_knowledge_editor .odoo-editor-editable h1',
@@ -420,7 +420,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
 },
 {
     // Check that the properties have been updated
-    trigger: '.o_knowledge_properties_field .o_property_field:contains("Start Property")',
+    trigger: '.o_widget_knowledge_properties_panel .o_property_field:contains("Start Property")',
     run: function () {
         const input = this.anchor.querySelector("input");
         if (!input.value.includes("09:00")) {
@@ -428,7 +428,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
         }
     },
 }, {
-    trigger: '.o_knowledge_properties_field .o_property_field:contains("Stop Property")',
+    trigger: '.o_widget_knowledge_properties_panel .o_property_field:contains("Stop Property")',
     run: function () {
         const input = this.anchor.querySelector("input");
         // When resizing an event, the event spans the hovered row, so we need to add 15 minutes
@@ -437,7 +437,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
         }
     },
 }, { // Check text property did not change
-    trigger: '.o_knowledge_properties_field .o_property_field:contains("Text Property")',
+    trigger: '.o_widget_knowledge_properties_panel .o_property_field:contains("Text Property")',
     run: function () {
         const input = this.anchor.querySelector("input");
         if (!input.value.includes("Custom text")) {
@@ -451,8 +451,8 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     //---------------------------------------------------------------------
 
     // Click on edit property button
-    trigger: ".o_knowledge_properties_field .o_property_field:contains(Start Property)",
-    run: "hover && click .o_knowledge_properties_field .o_property_field:contains(Start Property) .o_field_property_open_popover",
+    trigger: ".o_widget_knowledge_properties_panel .o_property_field:contains(Start Property)",
+    run: "hover && click .o_widget_knowledge_properties_panel .o_property_field:contains(Start Property) .o_field_property_open_popover",
 }, { // Delete start date property
     trigger: '.o_field_property_definition .o_field_property_definition_delete',
     run: 'click',

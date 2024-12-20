@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <div t-name="knowledge.KnowledgeArticleChatter" t-ref="root">
-        <chatter t-if="this.state.displayChatter" class="o_FormRenderer_chatterContainer o_scroll_view_lg">
+    <t t-name="knowledge.KnowledgeArticleChatter">
+        <chatter t-if="this.state.isDisplayed" class="o_FormRenderer_chatterContainer o_scroll_view_lg p-0">
             <Chatter
                 threadModel="'knowledge.article'"
                 threadId="this.props.record.resId"
@@ -13,5 +13,5 @@
                 saveRecord="props.record.save.bind(props.record, { reload: false })"
             />
         </chatter>
-    </div>
+    </t>
 </templates>

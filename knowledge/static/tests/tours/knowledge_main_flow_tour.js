@@ -255,10 +255,10 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     trigger: '.o_hierarchy_article_name > input',
     run: "edit Article to be moved && click body",  // modify the article name
 }, {// move article
-    trigger: 'a#dropdown_tools_panel',
+    trigger: '.o_knowledge_header .dropdown-toggle',
     run: 'click'
 }, {
-    trigger: '.btn-move',
+    trigger: '.dropdown-item:contains("Move To")',
     run: "click",
 }, {
     trigger: '.o_select_menu_item:contains("Article 3")',
