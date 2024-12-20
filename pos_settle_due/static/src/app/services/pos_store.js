@@ -42,7 +42,7 @@ patch(PosStore.prototype, {
             partner.id,
             this.config.currency_id.id,
         ]);
-        partner.total_due = total_due;
+        partner.total_due = parseFloat(total_due) || 0;
         return [partner];
     },
     async settleCustomerDue(partner) {
