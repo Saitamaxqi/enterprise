@@ -9,7 +9,7 @@
                 <field name="pos_module_pos_restaurant_appointment" invisible="True" />
                 <div class="mt16" invisible="not pos_module_pos_restaurant_appointment">
                     <label string="Appointment type" for="pos_appointment_type_id" class="o_light_label me-2"/>
-                    <field name="pos_appointment_type_id" readonly="pos_has_active_session" />
+                    <field name="pos_appointment_type_id"/>
                 </div>
             </div>
         </field>
