@@ -22,7 +22,7 @@
                         <td class="align-middle"><span t-out="slot._format_datetime_to_user_tz(slot.start_datetime, env, slot.resource_id.tz)">01/01/2023 9:00 AM</span></td>
                         <td class="align-middle"><span t-out="slot._format_datetime_to_user_tz(slot.end_datetime, env, slot.resource_id.tz)">01/01/2023 5:00 PM</span></td>
                         <td t-if="show_time" class="align-middle">
-                            <span t-if="slot.allocated_hours" t-out="ceil(slot.allocated_hours)" t-options="{'widget': 'float_time'}">8 hours</span>
+                            <span t-if="slot.allocated_hours" t-out="slot.allocated_hours" t-options="{'widget': 'float_time'}">8 hours</span>
                             <span t-if="slot.allocated_percentage and show_percentage">
                                 (<span t-out="ceil(slot.allocated_percentage)" t-options="{'widget': 'float', 'precision': 0}">100</span>%)
                             </span>
