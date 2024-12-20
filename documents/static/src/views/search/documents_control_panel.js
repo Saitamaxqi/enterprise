@@ -124,23 +124,6 @@ export class DocumentsControlPanel extends ControlPanel {
     }
 
     /**
-     * Open the detail form view on the selected document
-     * (if only one record is selected).
-     */
-    async onDetail() {
-        if (this.targetRecords.length !== 1) {
-            return;
-        }
-        const doc = this.targetRecords[0];
-        const isEditable = this.documentService.isEditable(doc.data);
-        await this.documentService.openDialogDetails(doc.data.id, isEditable);
-        if (isEditable) {
-            await this.env.model.load();
-            this.env.model.notify();
-        }
-    }
-
-    /**
      * Unlink the selected documents if they are archived.
      */
     async onDelete() {

@@ -1,4 +1,3 @@
-import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { user } from '@web/core/user';
 import { useService } from "@web/core/utils/hooks";
@@ -224,14 +223,6 @@ export const DocumentsRecordMixin = (component) => class extends component {
             options.isRangeSelection
         ) {
             this.selectRecord(ev, options);
-        } else if (this.model.root.selection.length > 0) {
-            this.model.dialog.add(ConfirmationDialog, {
-                title: _t("Open folder"),
-                body: _t("Entering this folder will deselect all items. Do you want to proceed?"),
-                confirmLabel: _t("Enter folder"),
-                confirm: () => this.openFolder(),
-                cancel: () => {},
-            });
         } else {
             this.openFolder();
         }
@@ -296,11 +287,13 @@ export const DocumentsRecordMixin = (component) => class extends component {
      * Upon double-clicking on a document shortcut,
      * selects targeted file / opens targeted folder.
      */
-    onRecordDoubleClick() {
+    jumpToTarget() {
         const section = this.model.env.searchModel.getSections()[0];
-        const folderId = this.data.type === "folder"
-            ? this.shortcutTarget.data.id
-            : this.shortcutTarget.data.folder_id[0];
+        const folderId = this.shortcutTarget.data.active
+            ? this.shortcutTarget.data.type === "folder"
+                ? this.shortcutTarget.data.id
+                : this.shortcutTarget.data.folder_id[0]
+            : "TRASH";
         this.model.env.searchModel.toggleCategoryValue(section.id, folderId);
         this.model.originalSelection = [this.shortcutTarget.resId];
         this.model.env.documentsView.bus.trigger("documents-expand-folder", { folderId: folderId });

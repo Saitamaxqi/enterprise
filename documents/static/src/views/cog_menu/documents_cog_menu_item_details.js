@@ -1,22 +1,16 @@
 import { STATIC_COG_GROUP_ACTION_ADVANCED } from "./documents_cog_menu_group";
 import { DocumentsCogMenuItem } from "./documents_cog_menu_item";
 import { _t } from "@web/core/l10n/translation";
-import { useService } from "@web/core/utils/hooks";
 
 export class DocumentsCogMenuItemDetails extends DocumentsCogMenuItem {
     setup() {
         this.icon = "fa-info-circle";
-        this.label = _t("Details");
+        this.label = _t("Info & Tags");
         super.setup();
-        this.documentService = useService("document.document");
     }
 
     async doActionOnFolder(folder) {
-        await this.documentService.openDialogDetails(
-            folder.id,
-            this.documentService.isEditable(folder)
-        );
-        await this.reload();
+        await this.env.documentsView.bus.trigger("documents-toggle-chatter");
     }
 }
 

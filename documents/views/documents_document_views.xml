@@ -71,6 +71,10 @@
                 <field name="is_access_via_link_hidden"/>
                 <field name="available_embedded_actions_ids" groups="base.group_user"/>
                 <field name="partner_id"/>
+                <field name="file_size"/>
+                <field name="alias_name"/>
+                <field name="alias_domain_id"/>
+                <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/> <!-- fetch `color` too -->
                 <templates>
                     <t t-name="card">
                         <div draggable="true" class="d-flex flex-column o_kanban_attachment o_documents_attachment h-100 pb-2"
@@ -368,9 +372,13 @@
                 <field name="folder_id" column_invisible="1"/>
                 <field name="res_id" column_invisible="1"/>
                 <field name="res_model" column_invisible="1"/>
+                <field name="res_name" column_invisible="1"/>
                 <field name="shortcut_document_id" column_invisible="1"/>
                 <field name="mimetype" column_invisible="1"/>
                 <field name="access_url" column_invisible="1"/>
+                <field name="alias_name" optional="hide"/>
+                <field name="alias_domain_id" optional="hide"/>
+                <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" column_invisible="1"/> <!-- fetch `color` too -->
             </list>
         </field>
     </record>

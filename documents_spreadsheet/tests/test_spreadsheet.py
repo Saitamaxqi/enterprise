@@ -120,6 +120,12 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         self.assertEqual(frozen_spreadsheet.access_internal, 'view')
         self.assertEqual(frozen_spreadsheet.access_ids.role, 'view')
 
+    def test_action_create_shortcut(self):
+        self.archive_existing_spreadsheet()
+        document = self.create_spreadsheet()
+        shortcut = document.action_create_shortcut()
+        self.assertEqual(shortcut.handler, "spreadsheet")
+
     def archive_existing_spreadsheet(self):
         """Existing spreadsheet in the database can influence some test results"""
         self.env["documents.document"].search([("handler", "=", "spreadsheet")]).active = False

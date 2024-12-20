@@ -71,10 +71,11 @@
                                 <span class="d-inline-block">Duplicate</span>
                             </button>
                             <button class="dropdown-item w-100"
-                                t-on-click="() => this.onDetail()"
-                                t-if="singleSelection">
+                                t-on-click="() => this.onToggleChatter()"
+                                t-if="singleSelection"
+                            >
                                 <i class="fa fa-fw fa-info-circle me-1"/>
-                                <span class="d-inline-block">Details</span>
+                                <span class="d-inline-block">Info &amp; tags </span>
                             </button>
                             <button class="dropdown-item w-100"
                                 t-on-click="() => this.onArchive()"
@@ -140,8 +141,10 @@
         <xpath expr="//*[hasclass('o_cp_switch_buttons')]" position="before">
             <button t-if="documentService.userIsInternal"
                 t-on-click="() => this.onToggleChatter()"
-                class="btn btn-secondary o_switch_view o_kanban fa fa-comments"
-                t-att-class="{'active': this.documentsState.isChatterVisible}"/>
+                class="btn btn-secondary o_switch_view o_kanban"
+                t-att-class="{'active': this.documentsState.isChatterVisible}">
+                <i class="fa fa-fw fa-info-circle mt-1"/>
+            </button>
         </xpath>
     </t>
 

@@ -23,7 +23,6 @@ export class DocumentsKanbanRecord extends KanbanRecord {
             t-att-data-id="props.canResequence and props.record.id"
             t-att-tabindex="props.record.model.useSampleModel ? -1 : 0"
             t-on-click.synthetic="onGlobalClick"
-            t-on-dblclick="onDoubleClick"
             t-on-dragenter.stop.prevent="onDragEnter"
             t-on-dragover.stop.prevent="onDragOver"
             t-on-dragleave.stop.prevent="onDragLeave"
@@ -99,17 +98,6 @@ export class DocumentsKanbanRecord extends KanbanRecord {
             options.isKeepSelection = true;
         }
         this.props.record.onRecordClick(ev, options);
-    }
-
-    /**
-     * Upon double-clicking on a document shortcut,
-     * selects targeted file / opens targeted folder.
-     */
-    onDoubleClick() {
-        if (!this.props.record.data.shortcut_document_id) {
-            return;
-        }
-        this.props.record.onRecordDoubleClick();
     }
 
     onKeydown(ev) {

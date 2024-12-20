@@ -1,9 +1,10 @@
 import { preSuperSetup, useDocumentView } from "@documents/views/hooks";
+import { DocumentsControllerMixin } from "@documents/views/documents_controller_mixin";
 import { onMounted, useRef, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { KanbanController } from "@web/views/kanban/kanban_controller";
 
-export class DocumentsKanbanController extends KanbanController {
+export class DocumentsKanbanController extends DocumentsControllerMixin(KanbanController) {
     static template = "documents.DocumentsKanbanView";
     setup() {
         preSuperSetup();
@@ -36,12 +37,6 @@ export class DocumentsKanbanController extends KanbanController {
                 }
             }
         });
-    }
-
-    get modelParams() {
-        const modelParams = super.modelParams;
-        modelParams.multiEdit = true;
-        return modelParams;
     }
 
     /**

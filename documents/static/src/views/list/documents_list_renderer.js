@@ -7,13 +7,15 @@ import { FileUploadProgressDataRow } from "@web/core/file_upload/file_upload_pro
 import { DocumentsDropZone } from "../helper/documents_drop_zone";
 import { DocumentsActionHelper } from "../helper/documents_action_helper";
 import { DocumentsFileViewer } from "../helper/documents_file_viewer";
+import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
 import { DocumentsListRendererCheckBox } from "./documents_list_renderer_checkbox";
+import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
 import { useCommand } from "@web/core/commands/command_hook";
 import { useRef, useState } from "@odoo/owl";
 import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
 import { Chatter } from "@mail/chatter/web_portal/chatter";
 
-export class DocumentsListRenderer extends ListRenderer {
+export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) {
     static props = [...ListRenderer.props, "previewStore"];
     static template = "documents.DocumentsListRenderer";
     static recordRowTemplate = "documents.DocumentsListRenderer.RecordRow";
@@ -24,6 +26,7 @@ export class DocumentsListRenderer extends ListRenderer {
         DocumentsDropZone,
         DocumentsActionHelper,
         DocumentsFileViewer,
+        DocumentsDetailsPanel,
         Chatter,
     });
 
@@ -108,20 +111,6 @@ export class DocumentsListRenderer extends ListRenderer {
     }
 
     /**
-     * Upon double-clicking on a document shortcut,
-     * selects targeted file / opens targeted folder.
-     */
-    onCellDoubleClick(ev) {
-        ev.stopPropagation();
-        const row = ev.target.closest(".o_data_row");
-        const record = row && this.props.list.records.find((rec) => rec.id === row.dataset.id);
-        if (!record?.data.shortcut_document_id) {
-            return;
-        }
-        record.onRecordDoubleClick();
-    }
-
-    /**
      * Called when a click event is triggered.
      */
     onGlobalClick(ev) {
@@ -134,6 +123,13 @@ export class DocumentsListRenderer extends ListRenderer {
             return; // We then have to check that we are not clicking on the header
         }
         this.props.list.selection.forEach((el) => el.toggleSelection(false));
+    }
+
+    getFolderInfo() {
+        return {
+            count: this.props.list.model.useSampleModel ? 0 : this.props.list.count,
+            fileSize: this.props.list.model.fileSize,
+        };
     }
 
     onCellKeydown(ev, group = null, record = null) {
@@ -150,15 +146,6 @@ export class DocumentsListRenderer extends ListRenderer {
 
     get isMobile() {
         return this.env.isSmall;
-    }
-
-    /**
-     * Records on which we will execute the actions / see the chatter.
-     */
-    get targetRecords() {
-        return this.chatterState.previewedDocument
-            ? [this.chatterState.previewedDocument.record]
-            : this.props.list.selection;
     }
 
     onDragEnter(ev) {
