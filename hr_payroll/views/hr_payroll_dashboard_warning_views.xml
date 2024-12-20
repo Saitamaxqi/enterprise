@@ -33,7 +33,7 @@
             <list string="Payroll Dashboard Warning">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
-                <field name="country_id"/>
+                <field name="country_id" optional="hide"/>
                 <field name="color" widget="color_picker"/>
             </list>
         </field>

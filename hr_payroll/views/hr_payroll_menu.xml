@@ -195,7 +195,7 @@
         id="menu_hr_payroll_dashboard_warning"
         action="action_hr_payroll_dashboard_warning"
         parent="menu_hr_payroll_dashboard_configuration"
-        name="Warnings"
+        name="Warning Type"
         sequence="10"/>
 
 </odoo>

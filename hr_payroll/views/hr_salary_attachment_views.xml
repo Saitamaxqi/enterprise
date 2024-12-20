@@ -128,10 +128,26 @@
         </field>
     </record>
 
+    <record id="action_hr_salary_attachment_new" model="ir.actions.act_window">
+        <field name="name">Salary Attachment</field>
+        <field name="res_model">hr.salary.attachment</field>
+        <field name="view_mode">form</field>
+    </record>
+
     <record id="hr_salary_attachment_action" model="ir.actions.act_window">
         <field name="name">Salary Attachment</field>
         <field name="res_model">hr.salary.attachment</field>
         <field name="view_mode">list,form,pivot</field>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Salary Attachment ?
+              </p><p>
+                A Salary Attachment is a recurring amount of money defined on the
+                employee and used in every payslip on an amount of time.<br/>
+                Ex. Money recovery, Child support, Assessment of salary, ...<br/><br/>
+                <a name="hr_payroll.action_hr_salary_attachment_new" type="action" class="btn btn-secondary">Create a Salary Attachment</a>
+              </p>
+        </field>
     </record>
 
     <record id="hr_salary_attachment_action_view_employee" model="ir.actions.act_window">

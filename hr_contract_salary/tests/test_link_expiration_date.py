@@ -60,6 +60,7 @@ class TestLinkExpirationDate(HttpCase):
         with freeze_time(self.offer_date):
             applicant.action_generate_offer()
             offer = applicant.salary_offer_ids
+            offer.offer_end_date = self.offer_date + relativedelta(days=30)
             url = f'/salary_package/simulation/offer/{offer.id}?token={offer.access_token}'
             res = self.url_open(url)
         self.assertTrue(self.fail_text not in str(res.content),
@@ -82,6 +83,7 @@ class TestLinkExpirationDate(HttpCase):
         with freeze_time(self.offer_date):
             employee_contract.action_generate_offer()
             offer = employee_contract.salary_offer_ids
+            offer.offer_end_date = self.offer_date + relativedelta(days=30)
             url = f'/salary_package/simulation/offer/{offer.id}'
             self.authenticate(self.simple_user.login, self.simple_user.login)
             res = self.url_open(url)

@@ -178,7 +178,7 @@ class HrContractSalary(http.Controller):
                 if not kw.get('token') or \
                         not offer.access_token or \
                         not consteq(offer.access_token, kw.get('token')) or \
-                        offer.offer_end_date < fields.Date.today():
+                        offer.offer_end_date and offer.offer_end_date < fields.Date.today():
                     return request.render('http_routing.http_error', {
                         'status_code': _('Oops'),
                         'status_message': _('This link is invalid. Please contact the HR Responsible to get a new one...')})
@@ -188,7 +188,7 @@ class HrContractSalary(http.Controller):
                     'status_message': _('The employee is not linked to an existing user, please contact the administrator..')})
             if contract.employee_id and contract.employee_id.user_id != request.env.user:
                 raise NotFound()
-            if contract.employee_id and offer.offer_end_date < fields.Date.today():
+            if offer.offer_end_date and contract.employee_id and offer.offer_end_date < fields.Date.today():
                 return request.render('http_routing.http_error', {
                     'status_code': _('Oops'),
                     'status_message': _('This link is invalid. Please contact the HR Responsible to get a new one...')})

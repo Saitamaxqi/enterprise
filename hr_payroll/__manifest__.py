@@ -4,7 +4,7 @@
     'name': 'Payroll',
     'category': 'Human Resources/Payroll',
     'sequence': 290,
-    'summary': 'Manage your employee payroll records',
+    'summary': 'Manage your employee payroll',
     'installable': True,
     'application': True,
     'depends': [

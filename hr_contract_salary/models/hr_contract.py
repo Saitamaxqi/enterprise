@@ -46,7 +46,7 @@ class HrContract(models.Model):
         help="Number of days of paid leaves the employee gets per year.")
     wage_with_holidays = fields.Monetary(compute='_compute_wage_with_holidays', inverse='_inverse_wage_with_holidays',
         tracking=True, string="Wage with Holidays")
-    wage_on_signature = fields.Monetary(string="Wage on Payroll", help="Wage on contract signature", tracking=True, aggregator="avg")
+    wage_on_signature = fields.Monetary(string="Wage on Signed Contract", help="Wage on contract signature", tracking=True, aggregator="avg")
     salary_offer_ids = fields.One2many('hr.contract.salary.offer', 'employee_contract_id')
     originated_offer_id = fields.Many2one('hr.contract.salary.offer', help="The original offer")
     salary_offers_count = fields.Integer(compute='_compute_salary_offers_count', compute_sudo=True)
@@ -55,13 +55,11 @@ class HrContract(models.Model):
     final_yearly_costs = fields.Monetary(
         compute='_compute_final_yearly_costs',
         readonly=False, store=True,
-        string="Yearly Cost (Real)",
+        string="Yearly Cost",
         tracking=True,
-        help="Total real yearly cost of the employee for the employer.",
         aggregator="avg")
     monthly_yearly_costs = fields.Monetary(
-        compute='_compute_monthly_yearly_costs', string='Monthly Cost (Real)', readonly=True,
-        help="Total real monthly cost of the employee for the employer.")
+        compute='_compute_monthly_yearly_costs', string='Monthly Cost', readonly=True)
 
     @api.constrains('sign_template_signatories_ids')
     def _check_signatories_unicity(self):
@@ -324,10 +322,8 @@ class HrContract(models.Model):
 
         offer_validity_period = int(self.env['ir.config_parameter'].sudo().get_param(
             'hr_contract_salary.employee_salary_simulator_link_validity', default=30))
-        validity_end = (fields.Date.context_today(self) + relativedelta(days=offer_validity_period))
         offer_values = self._get_offer_values()
         offer_values['validity_days_count'] = offer_validity_period
-        offer_values['offer_end_date'] = validity_end
         offer = self.env['hr.contract.salary.offer'].with_context(
             default_contract_template_id=self.id).create(offer_values)
 

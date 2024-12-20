@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <record id="action_hr_offer_new" model="ir.actions.act_window">
+        <field name="name">Offer</field>
+        <field name="res_model">hr.contract.salary.offer</field>
+        <field name="context">{'is_hr_payroll': True}</field>
+        <field name="view_mode">form</field>
+    </record>
     <record id="hr_contract_salary_offer_action" model="ir.actions.act_window">
         <field name="name">Offers</field>
         <field name="res_model">hr.contract.salary.offer</field>
         <field name="view_mode">list,form</field>
         <field name="context">{
             'search_default_group_by_state': True,
-            'search_default_employees': True
+            'search_default_employees': True,
+            'is_hr_payroll': True
         }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Manage your Offers
+            </p><p>
+                Offers are sent to employee with a predefined selection of data.
+                It allows to reflect on the propositon and discuss it.<br/><br/>
+                <a name="hr_contract_salary.action_hr_offer_new" type="action" class="btn btn-secondary">Create a Offer</a>
+            </p>
+        </field>
     </record>
 
     <record id="hr_contract_salary_offer_view_tree" model="ir.ui.view">
         <field name="name">hr.contract.salary.offer.view.list</field>
         <field name="model">hr.contract.salary.offer</field>
         <field name="arch" type="xml">
-            <list string="Salary Package Offers" create="0" default_order="id desc">
+            <list string="Salary Package Offers" default_order="id desc">
                 <field name="display_name" optional="show"/>
                 <field name="employee_id" invisible="not employee_contract_id" optional="show"/>
                 <field name="applicant_id" invisible="not applicant_id" optional="show" context="{'show_partner_name': True}"/>
@@ -43,7 +60,7 @@
         <field name="name">hr.contract.salary.offer.view.form</field>
         <field name="model">hr.contract.salary.offer</field>
         <field name="arch" type="xml">
-            <form string="Salary Package Offer" create="0">
+            <form string="Salary Package Offer">
                 <header>
                     <button
                         name="action_send_by_email"
@@ -105,18 +122,17 @@
                             <field name="department_id" readonly="state == 'cancelled'"/>
                             <field name="contract_start_date" readonly="state == 'cancelled'"/>
                             <field name="offer_create_date" readonly="1"/>
-                            <field name="offer_end_date" readonly="state == 'cancelled'"/>
+                            <field name="offer_end_date" readonly="state == 'cancelled'" placeholder="Always valid"/>
                             <field name="url" widget="HrContractSalaryCopyClipboardURL" invisible="not id"/>
-                            <label for="validity_days_count" readonly="state == 'cancelled'"/>
-                            <div class="o_row">
-                                <field name="validity_days_count" class="o_hr_narrow_field" nolabel="1" readonly="state == 'cancelled'"/>
-                                <span> days</span>
-                            </div>
                         </group>
                         <group name="group_offer_to">
-                            <field name="employee_id" invisible="applicant_id"/>
-                            <field name="employee_contract_id" invisible="applicant_id" readonly="1"/>
-                            <field name="applicant_id" invisible="employee_contract_id" readonly="1" context="{'show_partner_name': True}"/>
+                            <field name="employee_id" invisible="applicant_id or not context.get('is_hr_payroll', True)"
+                                readonly="not context.get('is_hr_payroll', False)" placeholder="Select an employee..."/>
+                            <field name="employee_contract_id" invisible="applicant_id or not context.get('is_hr_payroll', True)"
+                                readonly="not context.get('is_hr_payroll', False)"/>
+                            <field name="applicant_id" invisible="employee_contract_id or context.get('is_hr_payroll', False)"
+                                readonly="context.get('is_hr_payroll', True)"
+                                context="{'show_partner_name': True}" placeholder="Select an applicant..."/>
                             <field name="company_id" groups="base.group_multi_company" readonly="state == 'cancelled'"/>
                             <field name="company_id" invisible="1" groups="!base.group_multi_company"/>
                             <field name="refusal_reason" readonly="1" invisible="not refusal_reason"/>
@@ -176,7 +192,7 @@
         <field name="res_model">hr.contract.salary.offer</field>
         <field name="view_mode">list,form</field>
         <field name="domain">[('employee_id', '=', False)]</field>
-        <field name="context">{'search_default_group_by_state': True}</field>
+        <field name="context">{'search_default_group_by_state': True, 'is_hr_payroll': False}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create new offer

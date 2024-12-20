@@ -233,7 +233,7 @@ class HrContract(models.Model):
         else:
             self.new_bike_model_id = False
 
-    @api.onchange('transport_mode_bike', 'transport_mode_train', 'transport_mode_public')
+    @api.onchange('transport_mode_bike', 'transport_mode_train', 'transport_mode_public', 'transport_mode_car')
     def _onchange_transport_mode(self):
         super(HrContract, self)._onchange_transport_mode()
         if self.transport_mode_bike:

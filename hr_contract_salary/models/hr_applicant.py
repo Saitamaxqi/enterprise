@@ -94,14 +94,12 @@ class HrApplicant(models.Model):
 
         offer_validity_period = int(self.env['ir.config_parameter'].sudo().get_param(
             'hr_contract_salary.access_token_validity', default=30))
-        validity_end = (fields.Date.context_today(self) + relativedelta(days=offer_validity_period))
         offer_values = self._get_offer_values()
 
         if not offer_values['contract_template_id']:
             raise UserError(_('You have to define contract templates to be used for offers. Go to Configuration / Contract Templates to define a contract template'))
 
         offer_values['validity_days_count'] = offer_validity_period
-        offer_values['offer_end_date'] = validity_end
         offer = self.env['hr.contract.salary.offer'].with_context(
             default_contract_template_id=self._get_contract_template().id).create(offer_values)
 

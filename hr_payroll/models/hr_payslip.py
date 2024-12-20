@@ -95,7 +95,7 @@ class HrPayslip(models.Model):
         readonly=False)
     paid = fields.Boolean(
         string='Made Payment Order? ', copy=False)
-    paid_date = fields.Date(string="Close Date", help="The date on which the payment is made to the employee.")
+    paid_date = fields.Date(string="Payment Date")
     note = fields.Text(string='Internal Note')
     contract_domain_ids = fields.Many2many('hr.contract', compute='_compute_contract_domain_ids')
     contract_id = fields.Many2one(
@@ -1669,7 +1669,7 @@ class HrPayslip(models.Model):
         today = fields.Date.context_today(self)
         employees_trends = {
             'type': 'bar',
-            'title': _('Employee Trends'),
+            'title': _('Employee Count'),
             'label': _('Employee Count'),
             'id': 'employees',
             'is_sample': False,

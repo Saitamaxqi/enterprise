@@ -48,12 +48,14 @@
             <header position="inside">
                 <button name="action_generate_offer" type="object" string="Generate Offer" invisible="not employee_id" groups="hr_contract.group_hr_contract_manager" class="btn-secondary"/>
             </header>
-            <field name="hr_responsible_id" position="after">
+            <field name="job_id" position="before">
                 <label for="wage_on_signature"/>
                 <div class="o_row" name="wage">
                     <field class="o_hr_narrow_field" name="wage_on_signature" nolabel="1"/>
                     <span>/ month</span>
                 </div>
+            </field>
+            <field name="hr_responsible_id" position="after">
                 <field name="hr_responsible_id" widget="many2one_avatar_user" required="1"/>
             </field>
             <group name="contract_details_0" position="inside">

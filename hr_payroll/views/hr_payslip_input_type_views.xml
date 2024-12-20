@@ -5,6 +5,8 @@
         <field name="model">hr.payslip.input.type</field>
         <field name="arch" type="xml">
             <search string="Payslip Input Type">
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]" string="Description"/>
+                <field name="struct_ids" string="Structure"/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
                 <filter string="Available in attachments" name="available_in_attachments" domain="[('available_in_attachments', '=', True)]"/>
             </search>

@@ -59,9 +59,7 @@ class HrContractSalaryOffer(models.Model):
     validity_days_count = fields.Integer("Validity Days Count",
                               compute="_compute_validity_days_count",
                               store=True, readonly=False)
-    offer_end_date = fields.Date('Offer Validity Date',
-                                 compute="_compute_offer_end_date",
-                                 store=True, readonly=False,
+    offer_end_date = fields.Date('Offer Expiration', readonly=False,
                                  copy=False, tracking=True)
     url = fields.Char('Link', compute='_compute_url')
 
@@ -74,7 +72,7 @@ class HrContractSalaryOffer(models.Model):
                       + f"?final_yearly_costs={round(offer.final_yearly_costs, 2)}" \
                       + (f"&token={offer.access_token}" if offer.applicant_id else "")
 
-    @api.depends('applicant_id', 'employee_contract_id')
+    @api.depends('applicant_id', 'employee_contract_id', 'employee_id')
     def _compute_display_name(self):
         for offer in self:
             if offer.applicant_id:
@@ -82,8 +80,9 @@ class HrContractSalaryOffer(models.Model):
                     offer.applicant_id.partner_id.name or \
                     offer.applicant_id.partner_name
             else:
-                name = offer.employee_contract_id.employee_id.name
-            offer.display_name = _("Offer for %(recipient)s", recipient=name)
+                name = offer.employee_contract_id.employee_id.name or \
+                    offer.employee_id.name
+            offer.display_name = _("Offer for %(recipient)s", recipient=name) if name else ""
 
     def _search_display_name(self, operator, value):
         if neg := (operator in expression.NEGATIVE_TERM_OPERATORS):
@@ -106,12 +105,7 @@ class HrContractSalaryOffer(models.Model):
     @api.depends('create_date')
     def _compute_offer_create_date(self):
         for offer in self:
-            offer.offer_create_date = offer.create_date.date()
-
-    @api.depends('offer_create_date', 'validity_days_count')
-    def _compute_offer_end_date(self):
-        for offer in self:
-            offer.offer_end_date = offer.offer_create_date + relativedelta(days=offer.validity_days_count)
+            offer.offer_create_date = offer.create_date and offer.create_date.date() or fields.Date.today()
 
     @api.depends('offer_create_date', 'offer_end_date')
     def _compute_validity_days_count(self):

@@ -48,6 +48,7 @@ class TestStudent(AccountTestInvoicingCommon):
             'resource_calendar_id': cls.new_calendar.id,
             'structure_type_id': cls.env.ref('l10n_be_hr_payroll.structure_type_student').id,
             'wage': 0,
+            'wage_type': 'hourly',
             'hourly_wage': 10.87,
             'fuel_card': 0,
             'meal_voucher_amount': 7.45,

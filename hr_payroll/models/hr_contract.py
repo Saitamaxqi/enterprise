@@ -24,7 +24,7 @@ class HrContract(models.Model):
         ('bi-weekly', 'Bi-weekly'),
         ('weekly', 'Weekly'),
         ('daily', 'Daily')],
-        compute='_compute_schedule_pay', store=True, readonly=False)
+        compute='_compute_schedule_pay', store=True, readonly=False, required=True, default="monthly")
     resource_calendar_id = fields.Many2one(default=lambda self: self.env.company.resource_calendar_id,
         help='''Employee's working schedule.
         When left empty, the employee is considered to have a fully flexible schedule, allowing them to work without any time limit, anytime of the week.
@@ -36,7 +36,7 @@ class HrContract(models.Model):
     wage_type = fields.Selection([
         ('monthly', 'Fixed Wage'),
         ('hourly', 'Hourly Wage')
-    ], compute='_compute_wage_type', store=True, readonly=False)
+    ], compute='_compute_wage_type', store=True, readonly=False, required=True, default="monthly")
     hourly_wage = fields.Monetary('Hourly Wage', tracking=True, help="Employee's hourly gross wage.")
     payslips_count = fields.Integer("# Payslips", compute='_compute_payslips_count', groups="hr_payroll.group_hr_payroll_user")
     calendar_changed = fields.Boolean(help="Whether the previous or next contract has a different schedule or not")

@@ -8,7 +8,9 @@
             <search string="Search Payslip Batches">
                 <field name="name" string="Payslip Batch"/>
                 <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]" help="Draft Payslip Batches"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'verify')]" help="Confirmed Payslip Batches"/>
                 <filter string="Done" name="done_filter" domain="[('state', '=', 'close')]" help="Done Payslip Batches"/>
+                <filter string="Paid" name="paid" domain="[('state', '=', 'paid')]" help="Paid Payslip Batches"/>
                 <group expand="0" string="Group By">
                     <filter string="Status" name="state" context="{'group_by': 'state'}"/>
                 </group>
@@ -30,8 +32,8 @@
                     decoration-success="state == 'close'"
                     decoration-primary="state == 'paid'"
                 />
-                <field name="payslip_count" string="Payslips Count"/>
-                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="payslip_count" string="# Payslips"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
             </list>
         </field>
     </record>
@@ -52,7 +54,16 @@
                                 decoration-primary="state == 'paid'"/>
                         </div>
                         <div class="mt-auto">
-                            <field name="date_start" readonly="state != 'draft'"/> - <field name="date_end" readonly="state != 'draft'"/>
+                            <div class="row">
+                                <div class="col-8">
+                                    <field name="date_start" readonly="state != 'draft'"/> - <field name="date_end" readonly="state != 'draft'"/>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <a name="action_open_payslips" type="object" help="Generated Payslips" invisible="payslip_count == 0">
+                                        <field name="payslip_count"/> Payslips
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </t>
                 </templates>

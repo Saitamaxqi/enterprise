@@ -136,8 +136,8 @@
                             <list string="Worked Days" editable="bottom" create="0" delete="0">
                                 <field name="work_entry_type_id" readonly="1" force_save="1"/>
                                 <field name="name"/>
-                                <field name="number_of_days" sum="Total Working Days" readonly="1" force_save="1"/>
-                                <field name="number_of_hours"  widget="float_time" sum="Total Working Hours" readonly="1" force_save="1"/>
+                                <field name="number_of_days" sum="Total Working Days" readonly="1" force_save="1" string="Days"/>
+                                <field name="number_of_hours"  widget="float_time" sum="Total Working Hours" readonly="1" force_save="1" string="Hours"/>
                                 <field name="amount" readonly="1" sum="Total Amount" force_save="1"/>
                                 <field name="ytd" readonly="1" force_save="1"
                                     column_invisible="not parent.ytd_computation"
@@ -151,8 +151,8 @@
                                     <field name="work_entry_type_id"/>
                                     <field name="name"/>
                                     <field name="sequence"/>
-                                    <field name="number_of_days"/>
-                                    <field name="number_of_hours" widget="float_time"/>
+                                    <field name="number_of_days" string="Days"/>
+                                    <field name="number_of_hours" widget="float_time" string="Hours"/>
                                     <field name="amount"/>
                                     <field name="ytd" readonly="1" invisible="not parent.ytd_computation"/>
                                     <field name="is_paid"/>
@@ -199,12 +199,12 @@
                             <list string="Salary Structure" editable="bottom" decoration-info="total == 0" create="0" delete="0">
                                 <field name="name"/>
                                 <field name="code" readonly="1" force_save="1" optional="hide"/>
-                                <field name="category_id" readonly="1" force_save="1"/>
+                                <field name="category_id" readonly="1" force_save="1" optional="hide"/>
                                 <field name="sequence" readonly="1" column_invisible="True" force_save="1"/>
-                                <field name="quantity" readonly="1" force_save="1"/>
-                                <field name="rate" readonly="1" force_save="1"/>
-                                <field name="salary_rule_id" groups="base.group_no_one" readonly="1" force_save="1"/>
-                                <field name="amount" readonly="1" force_save="1"/>
+                                <field name="quantity" readonly="1" force_save="1" optional="show"/>
+                                <field name="rate" readonly="1" force_save="1" optional="show"/>
+                                <field name="salary_rule_id" groups="base.group_no_one" readonly="1" force_save="1" optional="hide"/>
+                                <field name="amount" readonly="1" force_save="1" optional="show"/>
                                 <field name="total" readonly="1" force_save="1"/>
                                 <field name="ytd" readonly="1" force_save="1"
                                     column_invisible="not parent.ytd_computation"
@@ -299,6 +299,11 @@
             </search>
         </field>
     </record>
+    <record id="action_hr_payslip_new" model="ir.actions.act_window">
+        <field name="name">Employee Payslips</field>
+        <field name="res_model">hr.payslip</field>
+        <field name="view_mode">form</field>
+    </record>
     <record id="hr_payslip_action_view_to_pay" model="ir.actions.act_window">
         <field name="name">Payslips To Pay</field>
         <field name="res_model">hr.payslip</field>
@@ -306,6 +311,15 @@
         <field name="view_mode">list,kanban,form,pivot,activity</field>
         <field name="search_view_id" ref="view_hr_payslip_filter"/>
         <field name="domain">[('state', '=', 'done')]</field>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Payslips.
+              </p><p>
+                The Payslip is the computation of the pay based on a period of time for an employee.
+                It computes the Net salary according to the Salary Rules you've defined in the configuration.<br/><br/>
+                <a name="hr_payroll.action_hr_payslip_new" type="action" class="btn btn-secondary">Create a Payslip</a>
+              </p>
+        </field>
     </record>
     <record id="action_view_hr_payslip_form" model="ir.actions.act_window">
         <field name="name">Employee Payslips</field>
@@ -321,6 +335,15 @@
         <field name="view_mode">list,kanban,form,activity</field>
         <field name="search_view_id" ref="view_hr_payslip_filter"/>
         <field name="context">{"search_default_group_by_batch":1}</field>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Payslips.
+              </p><p>
+                The Payslip is the computation of the pay based on a period of time for an employee.
+                It computes the Net salary according to the Salary Rules you've defined in the configuration.<br/><br/>
+                <a name="hr_payroll.action_hr_payslip_new" type="action" class="btn btn-secondary">Create a Payslip</a>
+              </p>
+        </field>
     </record>
 
     <record id="act_hr_employee_payslip_list" model="ir.actions.act_window">

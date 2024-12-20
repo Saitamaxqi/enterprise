@@ -411,6 +411,13 @@ class HrContractSalary(main.HrContractSalary):
         result['double_holiday_wage'] = round(new_contract.double_holiday_wage, 2)
         wage_to_apply = self._get_wage_to_apply()
         # Horrible hack: Add a sequence / display condition fields on salary resume model in master
+        yearly_benefits = result['resume_lines_mapped']['Yearly Benefits']
+        if yearly_benefits:
+            annual_time_off = yearly_benefits['annual_time_off']
+            annual_time_off_list = list(annual_time_off)
+            annual_time_off_list[3] = _('20 days are the maximum amount an employee could get if she/he worked on a full working rate during the previous year in Belgium')
+            result['resume_lines_mapped']['Yearly Benefits']['annual_time_off'] = tuple(annual_time_off_list)
+
         resume = result['resume_lines_mapped']['Monthly Salary']
         if 'SALARY' in resume and resume.get(wage_to_apply) and resume[wage_to_apply][1] != resume['SALARY'][1]:
             ordered_fields = [wage_to_apply, 'SALARY', 'NET']

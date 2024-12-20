@@ -173,8 +173,11 @@
             (0, 0, {'view_mode': 'list', 'sequence': 2, 'view_id': ref('hr_payroll.hr_contract_view_tree')})]"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-            Create a new contract
-            </p>
+            No contracts ?
+            </p><p>
+                Contracts are the link between an employee and his company. <br></br>
+                It contains all the information about his salary package.
+              </p>
         </field>
     </record>
 

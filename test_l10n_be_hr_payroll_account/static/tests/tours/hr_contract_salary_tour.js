@@ -1081,17 +1081,17 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         {
             content: "Contract Information",
             trigger: "div[name='fuel_card'] input",
-            run: "edit 250 && click h2:contains(Monthly)",
+            run: "edit 250 && click div:contains(Monthly)",
         },
         {
             content: "Contract Information",
             trigger: "div[name='commission_on_target'] input",
-            run: "edit 1000 && click h2:contains(Monthly)",
+            run: "edit 1000 && click div:contains(Monthly)",
         },
         {
             content: "Contract Information",
             trigger: "[name='ip_wage_rate'] input",
-            run: "edit 25 && click h2:contains(Monthly)",
+            run: "edit 25 && click div:contains(Monthly)",
         },
         {
             content: "Contract Information",

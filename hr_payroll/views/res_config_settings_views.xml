@@ -20,31 +20,18 @@
                         <field name="module_l10n_fr_hr_payroll" invisible="1"/>
                         <field name="module_l10n_be_hr_payroll" invisible="1"/>
                         <field name="module_l10n_in_hr_payroll" invisible="1"/>
-                        <block title="Accounting" id="hr_payroll_accountant">
-                            <setting name="module_hr_payroll_account" string="Payroll Entries" help="Post payroll slips in accounting">
-                                <field name="module_hr_payroll_account"/>
-                            </setting>
-                            <setting name="module_hr_payroll_account_iso20022" invisible="not module_hr_payroll_account" string="Payroll SEPA" help="Create SEPA payment">
-                                <field name="module_hr_payroll_account_iso20022"/>
-                            </setting>
-                        </block>
                         <block title="Payroll" id="hr_payroll_settings">
                             <setting string="Payroll Rules" help="Payroll rules that apply to your country"
                                 invisible="module_l10n_fr_hr_payroll or module_l10n_be_hr_payroll or module_l10n_in_hr_payroll">
                                 <div class="mt8" id="localization_text">
-                                    <button name="%(open_payroll_modules)d" icon="oi-arrow-right" type="action" string="Choose a Payroll Localization" class="btn-link"/>
+                                    <button name="%(open_payroll_modules)d" icon="oi-arrow-right" type="action" string="Choose a Payroll Localization Package" class="btn-link"/>
                                 </div>
                             </setting>
-                            <setting string="Contract Expiration Notice Period" id="contract_notice_period"
-                                title="Number of days prior to the contract end date that a contract expiration warning is triggered.">
-                                <field name="contract_expiration_notice_period" class="w-25"/><span>Days</span>
+                            <setting string="Contract Expiration Notice Period" id="contract_notice_period">
+                                <span>Warn me </span><field name="contract_expiration_notice_period" class="w-25"/><span>days before end of contract.</span>
                             </setting>
-                            <setting string="Payslip PDF Display" help="Display Payslip PDF File on a payslip form" id="display_payslip">
-                                <field name="group_payslip_display"/>
-                            </setting>
-                            <setting string="Work Permit Expiration Notice Period" id="work_permit_notice_period"
-                                title="Number of days prior to the work permit expiration date that a warning is triggered.">
-                                <field name="work_permit_expiration_notice_period" class="w-25"/><span>Days</span>
+                            <setting string="Work Permit Expiration Notice Period" id="work_permit_notice_period">
+                                 <span>Warn me </span><field name="work_permit_expiration_notice_period" class="w-25"/><span>days before expiration of the Work Permit.</span>
                             </setting>
                             <setting string="YTD Reset Date" id="ytd_reset_date"
                                 title="Day where the 'Year To Date' will be reset every year.">
@@ -52,6 +39,14 @@
                                     <field name="ytd_reset_day" class="o_light_label" style="width: 3ch;"/>
                                     <field name="ytd_reset_month" class="o_light_label"/>
                                 </div>
+                            </setting>
+                        </block>
+                        <block title="Accounting" id="hr_payroll_accountant">
+                            <setting name="module_hr_payroll_account" string="Payroll Entries" help="Post payroll slips in accounting">
+                                <field name="module_hr_payroll_account"/>
+                            </setting>
+                            <setting name="module_hr_payroll_account_iso20022" invisible="not module_hr_payroll_account" string="Payroll SEPA" help="Create SEPA payment">
+                                <field name="module_hr_payroll_account_iso20022"/>
                             </setting>
                         </block>
                     </app>
