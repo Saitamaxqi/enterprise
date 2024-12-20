@@ -17,7 +17,12 @@ class HrSalaryRuleCategory(models.Model):
         domain="['|', ('country_id', '=', False), ('country_id', '=', country_id)]")
     children_ids = fields.One2many('hr.salary.rule.category', 'parent_id', string='Children')
     note = fields.Html(string='Description')
-    country_id = fields.Many2one('res.country', string="Country", default=lambda self: self.env.company.country_id)
+    country_id = fields.Many2one(
+        'res.country',
+        string="Country",
+        default=lambda self: self.env.company.country_id,
+        domain=lambda self: [('id', 'in', self.env.companies.country_id.ids)]
+    )
 
     @api.constrains('parent_id')
     def _check_parent_id(self):
