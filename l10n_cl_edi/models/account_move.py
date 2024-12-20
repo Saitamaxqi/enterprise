@@ -203,11 +203,17 @@ services reception has been received as well.
         for move in taxpayer_moves:
             taxpayer_type = move.partner_id.l10n_cl_sii_taxpayer_type
             if taxpayer_type == '1':
-                move.l10n_latam_document_type_id = grouped_doc_types.get('33', False)
+                if move.debit_origin_id:
+                    move.l10n_latam_document_type_id = grouped_doc_types.get('56', False)
+                else:
+                    move.l10n_latam_document_type_id = grouped_doc_types.get('33', False)
             elif taxpayer_type == '3':
                 move.l10n_latam_document_type_id = grouped_doc_types.get('39', False)
             else:
-                move.l10n_latam_document_type_id = grouped_doc_types.get('110', False)
+                if move.debit_origin_id:
+                    move.l10n_latam_document_type_id = grouped_doc_types.get('111', False)
+                else:
+                    move.l10n_latam_document_type_id = grouped_doc_types.get('110', False)
         super(AccountMove, self - taxpayer_moves)._compute_l10n_latam_document_type()
 
     # SII Customer Invoice Buttons
