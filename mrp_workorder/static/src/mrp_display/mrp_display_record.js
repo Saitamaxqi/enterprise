@@ -512,13 +512,8 @@ export class MrpDisplayRecord extends Component {
     }
 
     async onClickHeader() {
-        const { resModel, resId } = this.props.record;
-        if (resModel === "mrp.workorder") {
-            await this.startWorking(true);
-        }
-        if (resModel === "mrp.production") {
-            await this.model.orm.call(resModel, "action_start", [resId]);
-            await this.env.reload();
+        if (this.props.record.resModel === "mrp.workorder") {
+            this.startWorking(true);
         }
     }
 
