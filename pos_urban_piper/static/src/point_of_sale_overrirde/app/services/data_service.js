@@ -7,6 +7,10 @@ patch(PosData.prototype, {
      */
     async preLoadData(data) {
         const loadData = await super.preLoadData(data);
+        const config = this.models["pos.config"].getFirst();
+        if (!config.module_pos_urban_piper || !config.urbanpiper_store_identifier) {
+            return loadData;
+        }
         if (loadData["pos.order"]) {
             loadData["pos.order"] = loadData["pos.order"].filter((o) => !o.delivery_identifier);
         }
