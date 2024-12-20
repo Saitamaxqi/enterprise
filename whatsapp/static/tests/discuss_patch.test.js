@@ -60,7 +60,6 @@ test("Shows whatsapp user in member list", async () => {
     });
     await start();
     await openDiscuss(channelId);
-    await click(".o-mail-Discuss-header button[name='member-list']");
     await contains(".o-discuss-ChannelMember.cursor-pointer", { text: "Mitchell Admin" });
     await contains(".o-discuss-ChannelMemberList h6", { text: "WhatsApp User" });
     await contains(".o-discuss-ChannelMember:not(.cursor-pointer)", {
