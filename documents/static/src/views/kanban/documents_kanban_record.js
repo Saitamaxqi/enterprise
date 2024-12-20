@@ -1,5 +1,4 @@
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
-import { DocumentsKanbanCompiler } from "./documents_kanban_compiler";
 import { FileUploadProgressBar } from "@web/core/file_upload/file_upload_progress_bar";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { useState, xml } from "@odoo/owl";
@@ -13,7 +12,6 @@ export class DocumentsKanbanRecord extends KanbanRecord {
     };
     static defaultProps = {
         ...KanbanRecord.defaultProps,
-        Compiler: DocumentsKanbanCompiler,
     };
     static props = [...KanbanRecord.props, "selection?"];
     static template = xml`

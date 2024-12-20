@@ -44,6 +44,7 @@
                     <div t-foreach="folders" t-as="record" t-key="record.id">
                         <t t-set="group" t-as="group.group"/>
                         <KanbanRecord
+                            Compiler="props.Compiler"
                             archInfo="props.archInfo"
                             selection="props.list.selection"
                             record="record"
@@ -53,6 +54,7 @@
                     <div t-foreach="files" t-as="record" t-key="record.id">
                         <t t-set="group" t-as="group.group"/>
                         <KanbanRecord
+                            Compiler="props.Compiler"
                             archInfo="props.archInfo"
                             selection="props.list.selection"
                             record="record"
@@ -64,6 +66,7 @@
                 <h3 class="o_documents_title m-2 border-bottom w-100">Folders</h3>
                 <t t-foreach="getFolderRecords()" t-as="folderRecord" t-key="folderRecord.key">
                     <KanbanRecord
+                        Compiler="props.Compiler"
                         archInfo="props.archInfo"
                         selection="props.list.selection"
                         record="folderRecord.record"

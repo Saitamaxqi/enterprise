@@ -8,6 +8,7 @@ import { DocumentsKanbanRenderer } from "./documents_kanban_renderer";
 import { DocumentsSearchModel } from "../search/documents_search_model";
 import { DocumentsSearchPanel } from "../search/documents_search_panel";
 import { DocumentsKanbanArchParser } from "./documents_kanban_arch_parser";
+import { DocumentsKanbanCompiler } from "./documents_kanban_compiler";
 
 
 export const DocumentsKanbanView = Object.assign({}, kanbanView, {
@@ -16,6 +17,7 @@ export const DocumentsKanbanView = Object.assign({}, kanbanView, {
     SearchPanel: DocumentsSearchPanel,
     ControlPanel: DocumentsControlPanel,
     Controller: DocumentsKanbanController,
+    Compiler: DocumentsKanbanCompiler,
     Model: DocumentsKanbanModel,
     Renderer: DocumentsKanbanRenderer,
     searchMenuTypes: ["filter", "groupBy", "favorite"],
