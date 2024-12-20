@@ -50,8 +50,6 @@ class DeliveryCarrier(models.Model):
     ups_bill_my_account = fields.Boolean(string='Bill My Account',
                                          help="If checked, ecommerce users will be prompted their UPS account number\n"
                                               "and delivery fees will be charged on it.")
-    ups_cod = fields.Boolean(string='Collect on Delivery',
-        help='This value added service enables UPS to collect the payment of the shipment from your customer.')
     ups_saturday_delivery = fields.Boolean(string='UPS Saturday Delivery',
         help='This value added service will allow you to ship the package on saturday also.')
     ups_cod_funds_code = fields.Selection(selection=[
@@ -73,7 +71,7 @@ class DeliveryCarrier(models.Model):
 
     @api.onchange('ups_default_service_type')
     def on_change_service_type(self):
-        self.ups_cod = False
+        self.allow_cash_on_delivery = False
         self.ups_saturday_delivery = False
 
     def ups_rate_shipment(self, order):
@@ -87,7 +85,7 @@ class DeliveryCarrier(models.Model):
             'total_qty': sum(line.product_uom_qty for line in order.order_line.filtered(lambda line: not line.is_delivery and not line.display_type))  # required when service type = 'UPS Worldwide Express Freight'
         }
 
-        if self.ups_cod:
+        if self.allow_cash_on_delivery:
             cod_info = {
                 'currency': order.partner_id.country_id.currency_id.name,
                 'monetary_value': order.amount_total,
@@ -163,7 +161,7 @@ class DeliveryCarrier(models.Model):
             if self.ups_bill_my_account:
                 ups_carrier_account = picking.partner_id.with_company(picking.company_id).property_ups_carrier_account
 
-            if picking.carrier_id.ups_cod:
+            if picking.carrier_id.allow_cash_on_delivery:
                 cod_info = {
                     'currency': picking.partner_id.country_id.currency_id.name,
                     'monetary_value': picking.sale_id.amount_total,
@@ -255,7 +253,7 @@ class DeliveryCarrier(models.Model):
         if self.ups_bill_my_account:
             ups_carrier_account = picking.partner_id.with_company(picking.company_id).property_ups_carrier_account
 
-        if picking.carrier_id.ups_cod:
+        if picking.carrier_id.allow_cash_on_delivery:
             cod_info = {
                 'currency': picking.partner_id.country_id.currency_id.name,
                 'monetary_value': picking.sale_id.amount_total,

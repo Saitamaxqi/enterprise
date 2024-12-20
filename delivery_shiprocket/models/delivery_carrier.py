@@ -53,12 +53,6 @@ class DeliveryCarrier(models.Model):
         help="Shiprocket requires package dimensions for getting accurate rate, "
              "you can define these in a package type that you set as default"
     )
-    shiprocket_payment_method = fields.Selection(
-        [('prepaid', 'Prepaid'), ('cod', 'COD')],
-        default="prepaid",
-        string="Payment Method",
-        help="The method of payment. Can be either COD (Cash on delivery) Or Prepaid while creating Shiprocket order."
-    )
     shiprocket_manifests_generate = fields.Boolean(
         string="Generate Manifest",
         help="A manifest is a document that is required by some carriers to streamline the pickup process."

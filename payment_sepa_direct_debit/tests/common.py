@@ -25,7 +25,7 @@ class SepaDirectDebitCommon(AccountPaymentCommon, PaymentCustomCommon):
 
         assert cls.sepa_bank_account.acc_type == 'iban'
 
-        cls.sepa = cls._prepare_provider('sepa_direct_debit')
+        cls.sepa = cls._prepare_provider(code='custom', custom_mode='sepa_direct_debit')
         cls.sepa_journal = cls.sepa.journal_id
         cls.sepa_journal.bank_account_id = cls.sepa_bank_account
 

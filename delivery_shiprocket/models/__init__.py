@@ -2,6 +2,7 @@
 
 from . import res_config_settings
 from . import delivery_carrier
+from . import payment_provider
 from . import shiprocket_request
 from . import stock_picking
 from . import shiprocket_courier

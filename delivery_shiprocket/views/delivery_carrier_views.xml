@@ -24,7 +24,6 @@
                             <field name="shiprocket_manifests_generate"/>
                         </group>
                         <group>
-                            <field name="shiprocket_payment_method" required="delivery_type == 'shiprocket'"/>
                             <field name="shiprocket_default_package_type_id" context="{'default_package_carrier_type': 'shiprocket'}" domain="[('package_carrier_type', '=', 'shiprocket')]" required="delivery_type == 'shiprocket'"/>
                             <label for="shiprocket_courier_ids" />
                             <div>

@@ -146,7 +146,7 @@ class ShipRocket:
             'height': dimensions.get('height')
         }
         if is_india:
-            data['cod'] = self.carrier.shiprocket_payment_method == 'cod' and '1' or '0'
+            data['cod'] = self.carrier.allow_cash_on_delivery and '1' or '0'
             rate_json = self._make_api_request('external/courier/serviceability/', data=data, token=self._get_token())
         else:
             data['cod'] = 0
@@ -316,7 +316,7 @@ class ShipRocket:
         dimensions = package.dimension
         net_weight_in_kg = self.carrier._shiprocket_convert_weight(package.weight)
         line_vals = self._get_shipping_lines(package, picking).values()
-        payment_method = "Prepaid" if self.carrier.shiprocket_payment_method == "prepaid" else "COD"
+        payment_method = "COD" if self.carrier.allow_cash_on_delivery else "Prepaid"
         discount_order_lines = picking.sale_id.order_line.filtered(lambda ol: ol.product_id == ol.company_id.sale_discount_product_id)
         total_discount = abs(sum(discount_order_lines.mapped('price_unit')))
         return {

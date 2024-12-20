@@ -6,6 +6,9 @@
         <field name="model">delivery.carrier</field>
         <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
         <field name="arch" type="xml">
+            <field name="allow_cash_on_delivery" position='attributes'>
+                <attribute name="invisible" add="delivery_type=='ups'" separator=" or "/>
+            </field>
             <xpath expr="//page[@name='destination']" position='before'>
                 <page string="UPS Configuration" name="ups_configuration"
                     invisible="delivery_type != 'ups'">
@@ -26,8 +29,13 @@
                         <group string="Options" name="ups_vas">
                             <field name="ups_bill_my_account" invisible="delivery_type != 'ups'"/>
                             <field name="ups_saturday_delivery" string="Saturday Delivery" invisible="ups_default_service_type in ['03', '11', '13', '59', '12', '65', '08']" required="delivery_type == 'ups'"/>
-                            <field name="ups_cod" invisible="ups_default_service_type == '96'" required="delivery_type == 'ups'"/>
-                            <field name="ups_cod_funds_code" invisible="not ups_cod" required="delivery_type == 'ups'" widget="radio"/>
+                            <field
+                                name="allow_cash_on_delivery"
+                                required="delivery_type == 'ups'"
+                                invisible="ups_default_service_type == '96'"
+                                help="This value added service enables UPS to collect the payment of the shipment from your customer."
+                            />
+                            <field name="ups_cod_funds_code" invisible="not allow_cash_on_delivery" required="delivery_type == 'ups'" widget="radio"/>
                             <field name="can_generate_return" invisible="1"/>
                             <field name="return_label_on_delivery" invisible="not can_generate_return"/>
                             <field name="get_return_label_from_portal" invisible="not return_label_on_delivery"/>
@@ -45,7 +53,7 @@
         <field name="inherit_id" ref="stock_delivery.view_picking_withcarrier_out_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='carrier_id']" position="attributes">
-                <attribute name="domain">[('ups_cod', '=', False)]</attribute>
+                <attribute name="domain">[('allow_cash_on_delivery', '=', False)]</attribute>
             </xpath>
         </field>
     </record>

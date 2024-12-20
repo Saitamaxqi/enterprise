@@ -2,7 +2,10 @@ import json
 from contextlib import contextmanager
 from unittest.mock import patch
 import requests
-from odoo.tests.common import TransactionCase, tagged
+
+from odoo.tests.common import tagged
+
+from odoo.addons.delivery_ups_rest.tests.common import DeliveryUPSCommon
 
 
 @contextmanager
@@ -40,7 +43,7 @@ def _mock_request_call():
 
 
 @tagged('post_install', '-at_install')
-class TestDeliveryUPS(TransactionCase):
+class TestDeliveryUPS(DeliveryUPSCommon):
 
     def setUp(self):
         super().setUp()
@@ -52,23 +55,6 @@ class TestDeliveryUPS(TransactionCase):
             'street': 'My street',
             'phone': '1234567890',
             'zip': '1234',
-        })
-
-        shipping_product = self.env['product.product'].create({
-            'name': 'UPS Delivery',
-            'type': 'service',
-        })
-
-        self.ups_delivery = self.env['delivery.carrier'].create({
-            'name': 'ups',
-            'delivery_type': 'ups_rest',
-            'ups_shipper_number': 'mock',
-            'ups_client_id': 'mock',
-            'ups_client_secret': 'mock',
-            'ups_default_service_type': '11',
-            'product_id': shipping_product.id,
-            'ups_label_file_type': 'ZPL',
-            'ups_default_packaging_id': self.env.ref('delivery_ups_rest.ups_packaging_25').id,  # 10 kg box
         })
 
         self.product = self.env['product.product'].create({
