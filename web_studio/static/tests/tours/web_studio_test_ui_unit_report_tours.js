@@ -1534,3 +1534,21 @@ registry.category("web_tour.tours").add("web_studio.test_dont_translate_on_save"
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio.test_do_not_delete_unspecial_spans", {
+    steps: () => [
+        {
+            trigger: "body :iframe .odoo-editor-editable#wrapwrap span",
+            run() {
+                insertText(this.anchor, "added");
+            },
+        },
+        {
+            trigger: ".o-web-studio-save-report.btn-primary",
+            run: "click",
+        },
+        {
+            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+        },
+    ],
+});

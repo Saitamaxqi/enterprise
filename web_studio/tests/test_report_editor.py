@@ -1425,3 +1425,20 @@ class TestReportEditorUIUnit(HttpCase):
             <div t-attf-class="res_partner_{{ bool(docs.search([('create_date', '!=', False)], limit=1)) }}" oe-origin-class="" class="res_partner_True">term3</div>
         </div>
         """)
+
+    def test_do_not_delete_unspecial_spans(self):
+        self.main_view_document.arch = """
+            <t t-name="web_studio.test_report_document">
+                <span>some text</span>
+            </t>"""
+        self.start_tour(self.tour_url, "web_studio.test_do_not_delete_unspecial_spans", login="admin")
+        _, studio_view_arch = get_combined_and_studio_arch(self.main_view_document)
+        self.assertXMLEqual(studio_view_arch, """
+         <data>
+           <data>
+           <xpath position="replace" expr="/t[@t-name='web_studio.test_report_document']/span">
+             <span>some textadded</span>
+           </xpath>
+           </data>
+         </data>
+        """)
