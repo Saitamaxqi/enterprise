@@ -28,7 +28,8 @@
             <attribute name="class" add="o_bank_rec_kanban_div" separator=" "/>
         </xpath>
         <xpath expr="//t[@t-as='groupOrRecord']" position="before">
-            <t t-set="statementGroups" t-value="groups()"/>
+            <!-- Needed because we will modify in place the statement groups -->
+            <t t-set="statementGroups" t-value="getStatementGroups"/>
             <BankRecGlobalInfo t-if="globalState.bankRecStLineId and globalState.journalId"
                                 journalId="globalState.journalId"
                                 journalBalanceAmount="globalState.journalBalanceAmount"/>
@@ -47,7 +48,7 @@
                 <!-- remove the first statement from the list of statements -->
                 <t t-set="stGroup" t-value="statementGroups.shift()"/>
                 <t t-set="stClass" t-value="!(recData.statement_complete and recData.statement_valid) and 'text-danger' or ''"/>
-                <span t-if="stGroup" class="kanban-statement d-flex text-truncate align-self-center fw-bold w-100">
+                <span t-if="stGroup" class="kanban-statement d-flex fw-bold w-100">
                     <span t-attf-class="{{stClass}} kanban-statement-subline text-truncate flex-fill text-start"
                           t-att-title="stGroup.name"
                           t-out="stGroup.name"
@@ -58,6 +59,13 @@
                           t-esc="stGroup.balance"/>
                 </span>
             </t>
+            <span t-if="!recData.statement_id and typeof statementGroups[0]?.id === 'string'"
+                  class="kanban-statement d-flex fw-bold w-100">
+                <t t-set="stGroup" t-value="statementGroups.shift()"/>
+                <span t-if="stGroup" class="kanban-statement-subline flex-fill">
+                    No Bank Statement
+                </span>
+            </span>
         </xpath>
         <t t-call="web.ActionHelper" position="replace">
             <div t-if="props.noContentHelp" class="o_view_nocontent">

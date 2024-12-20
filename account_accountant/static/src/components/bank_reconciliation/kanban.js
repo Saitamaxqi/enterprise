@@ -1181,18 +1181,25 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
     Prepares a list of statements based on the statement_id of the bank statement line records.
     Statements are only displayed above the first line of the statement (all lines might not be visible in the kanban)
     **/
-    groups() {
+    get getStatementGroups() {
         const { list } = this.props;
-        let statementGroups = [];
+        const statementGroups = [];
         for (const record of list.records) {
-            let lastItem = statementGroups.slice(-1);
-            let statementId = record.data.statement_id && record.data.statement_id[0];
-            if (statementId && (!lastItem.length || lastItem[0].id != statementId)) {
+            const lastItem = statementGroups.at(-1);
+            const statementId = record.data.statement_id?.[0];
+            if (statementId && lastItem?.id !== statementId) {
                 statementGroups.push({
                     id: statementId,
                     name: record.data.statement_name,
-                    balance: formatMonetary(record.data.statement_balance_end_real, {currencyId: record.data.currency_id[0]}),
+                    balance: formatMonetary(record.data.statement_balance_end_real, {
+                        currencyId: record.data.currency_id[0],
+                    }),
                 });
+            } else {
+                // lastItem.id can either be undefined, an integer or a string with 'no_bank_statement_after_'.
+                if (!statementId && typeof lastItem?.id !== "string") {
+                    statementGroups.push({ id: `no_bank_statement_after_${lastItem?.id}` });
+                }
             }
         }
         return statementGroups;

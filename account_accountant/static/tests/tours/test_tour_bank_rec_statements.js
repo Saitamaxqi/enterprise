@@ -76,7 +76,8 @@ registry.category("web_tour.tours").add('account_accountant_bank_rec_widget_stat
             run: "click",
         },
         {
-            trigger: ".o_kanban_renderer:not(:has(.kanban-statement))",
+            content: "No Bank Statement",
+            trigger: ".kanban-statement-subline:contains('No Bank Statement')",
         },
         {
             content: "balance displays $3000.00 and no statement",
