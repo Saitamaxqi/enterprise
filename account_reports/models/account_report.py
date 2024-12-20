@@ -21,6 +21,7 @@ from PIL import ImageFont
 from odoo import models, fields, api, _, osv
 from odoo.addons.web.controllers.utils import clean_action
 from odoo.exceptions import RedirectWarning, UserError, ValidationError
+from odoo.fields import Domain
 from odoo.service.model import get_public_method
 from odoo.tools import date_utils, get_lang, float_is_zero, float_repr, SQL, parse_version, Query
 from odoo.tools.float_utils import float_round, float_compare
@@ -2116,6 +2117,13 @@ class AccountReport(models.Model):
         domain = self._get_options_domain(options, date_scope) + (domain or [])
 
         self.env['account.move.line'].check_access('read')
+
+        if options.get('compute_budget'):
+            # remove required columns that are not filled from the domain
+            # these qre not in the budget table
+            aml_required_columns = {'move_id', 'currency_id', 'journal_id', 'display_type'}
+            domain = Domain(domain)
+            domain = domain.map_conditions(lambda condition: Domain.TRUE if condition.field_expr in aml_required_columns else condition)
 
         query = self.env['account.move.line']._where_calc(domain)
 
