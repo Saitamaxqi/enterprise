@@ -687,3 +687,59 @@ class TestTrialBalanceReport(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_trial_balance_groupby_partner(self):
+        """ Make sure the trial balance still works properly when the first groupby isn't by account_id (but by partner_id for example). """
+        move_with_partner = self.env['account.move'].create([{
+            'move_type': 'entry',
+            'date': fields.Date.from_string('2017-01-31'),
+            'journal_id': self.company_data['default_journal_misc'].id,
+            'line_ids': [
+                Command.create(
+                    {'debit': 100.0, 'credit': 0.0, 'name': 'aml_partner', 'partner_id': self.partner_a.id, 'account_id': self.company_data['default_account_revenue'].id}
+                ),
+                Command.create(
+                    {'debit': 0.0, 'credit': 100.0, 'name': 'aml_partner_2', 'partner_id': self.partner_a.id, 'account_id': self.company_data['default_account_expense'].id}
+                ),
+            ],
+        }])
+        move_with_partner.action_post()
+
+        # Select only one company to reduce the number of lines
+        self.env.user.write({
+            'company_ids': [Command.set((self.company_data['company']).ids)],
+            'company_id': self.company_data['company'].id,
+        })
+        self.report.line_ids[0].user_groupby = 'partner_id, account_or_unaff_id, id'
+
+        options = self._generate_options(self.report, '2017-01-01', '2017-01-31', default_options={'unfold_all': True, 'test_unfold_all': True})
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #    Name                                  Initial Balance       Debit          Credit      End Balance
+            [0,                                                1,               2,             3,             4],
+            [
+                ('partner_a',                                 0.0,            100.0,         100.0,        0.0),
+                ('400000 Product Sales',                      0.0,            100.0,           0.0,      100.0),
+                ('MISC/2017/01/0001 aml_partner',             0.0,            100.0,           0.0,      100.0),
+                ('600000 Expenses',                           0.0,              0.0,         100.0,     -100.0),
+                ('MISC/2017/01/0001 aml_partner_2',           0.0,              0.0,         100.0,     -100.0),
+                ('Unknown',                                 100.0,          21000.0,       21000.0,      100.0),
+                ('121000 Account Receivable',                 0.0,           1000.0,           0.0,     1000.0),
+                ('INV/2017/00001 2017_1_1',                   0.0,           1000.0,           0.0,     1000.0),
+                ('211000 Account Payable',                  100.0,              0.0,           0.0,      100.0),
+                ('400000 Product Sales',                      0.0,          20000.0,           0.0,    20000.0),
+                ('INV/2017/00001 2017_1_2',                   0.0,           2000.0,           0.0,     2000.0),
+                ('INV/2017/00001 2017_1_3',                   0.0,           3000.0,           0.0,     3000.0),
+                ('INV/2017/00001 2017_1_4',                   0.0,           4000.0,           0.0,     4000.0),
+                ('INV/2017/00001 2017_1_5',                   0.0,           5000.0,           0.0,     5000.0),
+                ('INV/2017/00001 2017_1_6',                   0.0,           6000.0,           0.0,     6000.0),
+                ('600000 Expenses',                           0.0,              0.0,       21000.0,   -21000.0),
+                ('INV/2017/00001 2017_1_7',                   0.0,              0.0,        6000.0,    -6000.0),
+                ('INV/2017/00001 2017_1_8',                   0.0,              0.0,        7000.0,    -7000.0),
+                ('INV/2017/00001 2017_1_9',                   0.0,              0.0,        8000.0,    -8000.0),
+                ('999999 Undistributed Profits/Losses',    -100.0,              0.0,           0.0,     -100.0),
+                ('Total',                                     0.0,          21100.0,       21100.0,        0.0),
+            ],
+            options,
+        )
