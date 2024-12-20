@@ -223,7 +223,6 @@ class HrContractSalaryOffer(models.Model):
             'partner_to': partner_to and partner_to.id or False,
             'validity_end': self.offer_end_date,
             'email_to': email_to or False,
-            'mail_post_autofollow': False,
         }
         return {
             'type': 'ir.actions.act_window',
