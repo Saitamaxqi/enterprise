@@ -12,6 +12,9 @@
             <!-- Remove the search bar and let the control panel handle it -->
             <t t-set-slot="layout-actions"/>
         </xpath>
+        <xpath expr="//t[@t-component='searchBarToggler.component']" position="attributes">
+            <attribute name="t-if">!model.root.selection.length</attribute>
+        </xpath>
         <xpath expr="//Layout/t[@t-component='props.Renderer']" position="attributes">
             <attribute name="previewStore">documentStates.previewStore</attribute>
         </xpath>

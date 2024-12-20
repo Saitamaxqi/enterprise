@@ -17,7 +17,7 @@
                 <t t-call="documents.PartnerAccess.info">
                     <t t-set="partner" t-value="accessPartner"/>
                 </t>
-                <div class="col-sm-5 pe-0">
+                <div class="col-5 col-sm-5 pe-0">
                     <div class="input-group">
                        <DocumentsAccessExpirationDateBtn
                             accessPartner="accessPartner"
@@ -32,6 +32,7 @@
                             removeAccess.bind="props.removeDocumentAccess"/>
                         <DocumentsPermissionSelect
                             ariaLabel.translate="User Access Role"
+                            selectClass="'mt-2'"
                             disabled="props.disabled"
                             onChange.bind="(e) => props.onChangePartnerRole(e, accessPartner)"
                             options="props.selections"
@@ -45,11 +46,11 @@
     </t>
 
     <t t-name="documents.PartnerAccess.info">
-        <div class="col-sm-1 p-0">
+        <div class="col-2 col-sm-1">
             <img class="o_documents_permission_panel_avatar o_avatar rounded" t-if="partner.partner_id.id"
                 t-attf-src="/web/image?model=res.partner&amp;field=avatar_128&amp;id={{ partner.partner_id.id }}"/>
         </div>
-        <div class="col-sm-6 px-1">
+        <div class="col-5 col-sm-6 pe-1">
             <div t-attf-class="text-truncate {{ props.isCurrentUser(partner) ? 'd-sm-flex align-items-sm-center fw-bold text-primary' : '' }}">
                 <t t-out="partner.partner_id.name"/>
                 <span t-if="props.isCurrentUser(partner)" class="badge d-none d-sm-block ms-1 rounded-pill text-bg-primary">You</span>

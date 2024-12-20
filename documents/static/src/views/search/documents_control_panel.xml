@@ -15,7 +15,7 @@
             <t t-set="userIsInternal" t-value="documentService.userIsInternal"/>
             <t t-set="editMode" t-value="targetRecords.every((r) => r.data.user_permission === 'edit')"/>
 
-            <SearchBar t-if="!selectionCount" autofocus="firstLoad"/>
+            <SearchBar t-if="!selectionCount" toggler="env.searchBarToggler" autofocus="firstLoad"/>
 
             <t t-call="web.ListView.Selection" t-if="this.env.model.root.selection.length">
                 <t t-set="isDomainSelected" t-value="false"/>

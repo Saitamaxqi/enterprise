@@ -68,7 +68,7 @@
     </t>
 
     <t t-name="documents.MemberInviteShareBtn">
-        <button type="button" class="btn btn-primary" t-on-click="onShare" t-att-disabled="state.sharing">
+        <button type="button" class="btn btn-primary w-100" t-on-click="onShare" t-att-disabled="state.sharing">
             <span t-if="state.sharing">Sharing...</span>
             <span t-elif="state.notify">Send</span>
             <span t-else="">Share</span>
@@ -76,7 +76,7 @@
     </t>
 
     <t t-name="documents.MemberInviteDiscardBtn">
-        <button type="button" class="btn btn-secondary" t-on-click="onDiscard">
+        <button type="button" class="btn btn-secondary w-100" t-on-click="onDiscard">
             <span>Discard</span>
         </button>
     </t>

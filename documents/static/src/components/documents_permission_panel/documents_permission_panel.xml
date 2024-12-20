@@ -12,7 +12,7 @@
                 </button>
                 <div t-if="!state.mainPage" id="o_document_member_invite_share_btn"/>
                 <CopyButton
-                    className="'btn-secondary'"
+                    className="'btn-secondary text-truncate'"
                     copyText="copyText"
                     content="state.access.access_url"
                     disabled="pendingSave || !state.access.active"
