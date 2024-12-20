@@ -92,9 +92,7 @@ export function handleDefaultStudioRoutes() {
     onRpc("/web_studio/chatter_allowed", () => false);
     onRpc("/web_studio/edit_view", () => {});
     onRpc("/web_studio/edit_view_arch", () => {});
-    onRpc("/web_studio/get_default_value", () => {
-        return { default_value: undefined };
-    });
+    onRpc("/web_studio/get_default_value", () => ({ default_value: undefined }));
     onRpc("/web_studio/get_studio_view_arch", () => ({ studio_view_arch: "" }));
     onRpc("get_approval_spec", ({ args }) => {
         const result = { all_rules: {} };
@@ -138,6 +136,7 @@ export async function mountViewEditor(params) {
 function prepareRegistry(filterRegistry) {
     registry.category("main_components").remove("mail.ChatHub");
     registry.category("main_components").remove("discuss.CallInvitations");
+    registry.category("main_components").remove("bus.connection_alert");
     serviceRegistry.add("messaging", makeFakeMessagingService());
     if (!filterRegistry) {
         return;

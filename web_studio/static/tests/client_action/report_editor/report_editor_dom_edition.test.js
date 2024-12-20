@@ -9,14 +9,18 @@ import { registry } from "@web/core/registry";
 before(() => {
     const services = registry.category("services");
     for (const [name] of services.getEntries()) {
-        if (name.startsWith("mail.") || name.startsWith("discuss.")) {
+        if (
+            name.startsWith("mail.") ||
+            name.startsWith("discuss.") ||
+            name === "bus.monitoring_service"
+        ) {
             services.remove(name);
         }
     }
 
     const main_components = registry.category("main_components");
     for (const [name] of main_components.getEntries()) {
-        if (name.startsWith("mail.") || name.startsWith("discuss.")) {
+        if (name.startsWith("mail.") || name.startsWith("discuss.") || name.startsWith("bus.")) {
             main_components.remove(name);
         }
     }
