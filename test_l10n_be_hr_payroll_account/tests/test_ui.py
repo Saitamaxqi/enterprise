@@ -4,12 +4,14 @@
 from freezegun import freeze_time
 
 import odoo.tests
+from odoo.addons.mail.tests.common import MockEmail
 from . import common
 
 
 @odoo.tests.tagged('-at_install', 'post_install', 'salary')
-class Testl10nBeHrPayrollAccountUi(common.TestPayrollAccountCommon):
+class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
     def test_ui(self):
+        self._init_mail_gateway()
         with freeze_time("2022-01-01 10:00:00"):
             self.start_tour("/", 'hr_contract_salary_tour', login='admin', timeout=350)
 
