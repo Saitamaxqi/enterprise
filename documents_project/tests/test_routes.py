@@ -72,3 +72,22 @@ class TestDocumentsProjectRoutes(HttpCase, TestProjectCommon):
             document.request_activity_id,
             "Document should not be linked to the activity anymore",
         )
+
+    def test_upload_document_propagates_values(self):
+        """Check that relevant project-defined values are passed on documents uploaded inside the project folder."""
+        self.project_pigs.partner_id = self.partner_1
+        self.project_pigs.documents_tag_ids = self.env['documents.tag'].create({'name': 'Test Project Tag'})
+
+        self.project_pigs.documents_folder_id.access_via_link = 'edit'
+        self.authenticate(None, None)
+
+        with RecordCapturer(self.env['documents.document'], []) as capture:
+            res = self.url_open(f'/documents/upload/{self.project_pigs.documents_folder_id.access_token}',
+                                data={'csrf_token': http.Request.csrf_token(self)},
+                                files={'ufile': ('hello.txt', b"Hello", 'text/plain')},
+                                allow_redirects=False,
+                                )
+            res.raise_for_status()
+        document = capture.records.ensure_one()
+        self.assertEqual(document.partner_id, self.partner_1)
+        self.assertEqual(document.tag_ids, self.project_pigs.documents_tag_ids)

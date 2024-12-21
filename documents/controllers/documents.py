@@ -564,14 +564,14 @@ class ShareRoute(http.Controller):
         if is_internal_user:
             with replace_exceptions(ValueError, by=BadRequest):
                 owner_id = int(owner_id) if owner_id else request.env.user.id
-                partner_id = int(partner_id) if partner_id else False
+                partner_id = int(partner_id) if partner_id else None
                 res_model = res_model or 'documents.document'
                 res_id = int(res_id) if res_id else False
         elif owner_id or partner_id or res_id or res_model:
             raise Forbidden("only internal users can provide field values")
         else:
             owner_id = document_sudo.owner_id.id if request.env.user.is_public else request.env.user.id
-            partner_id = False
+            partner_id = None
             res_model = 'documents.document'
             res_id = False  # replaced by the document's id
 
@@ -616,10 +616,11 @@ class ShareRoute(http.Controller):
                     'access_via_link': 'none' if folder_sudo.access_via_link in (False, 'none') else 'view',
                     'folder_id': folder_sudo.id,
                     'owner_id': owner_id,
-                    'partner_id': partner_id,
                     'res_model': res_model,
                     'res_id': res_id,
-                })
+                } | (
+                    {'partner_id': partner_id} if partner_id is not None else {}
+                ))
                 document_ids.append(document_sudo.id)
             if folder_sudo.create_activity_option:
                 folder_sudo.browse(document_ids).documents_set_activity(
