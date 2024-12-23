@@ -206,6 +206,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
 
     def test_matching_fields(self):
         # Check without restriction.
+        self.rule_1.match_text_location_label = False
         self._check_statement_matching(self.rule_1, {
             self.bank_line_1: {'amls': self.invoice_line_1, 'model': self.rule_1},
             self.bank_line_2: {'amls': self.invoice_line_1 + self.invoice_line_2 + self.invoice_line_3, 'model': self.rule_1},
@@ -216,7 +217,9 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
     def test_matching_fields_match_text_location(self):
         st_line = self._create_st_line(payment_ref="1111", ref="2222 3333", narration="4444 5555 6666")
 
-        inv = self._create_invoice_line(1000, self.partner_a, 'out_invoice')
+        inv1 = self._create_invoice_line(1000, self.partner_a, 'out_invoice', ref="bernard 1111 gagnant")
+        inv2 = self._create_invoice_line(1000, self.partner_a, 'out_invoice', ref="2222 turlututu 3333")
+        inv3 = self._create_invoice_line(1000, self.partner_a, 'out_invoice', ref="4444 tsoin 5555 tsoin 6666")
 
         rule = self._create_reconcile_model(
             allow_payment_tolerance=False,
@@ -226,19 +229,19 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         )
         self.assertDictEqual(
             rule._apply_rules(st_line, st_line._retrieve_partner()),
-            {'amls': inv, 'model': rule},
+            {'amls': inv1, 'model': rule},
         )
 
         rule.match_text_location_reference = True
         self.assertDictEqual(
             rule._apply_rules(st_line, st_line._retrieve_partner()),
-            {'amls': inv, 'model': rule},
+            {'amls': inv2, 'model': rule},
         )
 
         rule.match_text_location_note = True
         self.assertDictEqual(
             rule._apply_rules(st_line, st_line._retrieve_partner()),
-            {'amls': inv, 'model': rule},
+            {'amls': inv3, 'model': rule},
         )
 
     def test_matching_fields_match_text_location_no_partner(self):
@@ -275,6 +278,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             })
 
     def test_matching_fields_match_journal_ids(self):
+        self.rule_1.match_text_location_label = False
         self.rule_1.match_journal_ids |= self.cash_line_1.journal_id
         self._check_statement_matching(self.rule_1, {
             self.bank_line_1: {},
@@ -283,6 +287,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         })
 
     def test_matching_fields_match_nature(self):
+        self.rule_1.match_text_location_label = False
         self.rule_1.match_nature = 'amount_received'
         self._check_statement_matching(self.rule_1, {
             self.bank_line_1: {'amls': self.invoice_line_1, 'model': self.rule_1},
@@ -300,6 +305,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         })
 
     def test_matching_fields_match_amount(self):
+        self.rule_1.match_text_location_label = False
         self.rule_1.match_amount = 'lower'
         self.rule_1.match_amount_max = 150
         self._check_statement_matching(self.rule_1, {
@@ -324,6 +330,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         })
 
     def test_matching_fields_match_label(self):
+        self.rule_1.match_text_location_label = False
         self.rule_1.match_label = 'contains'
         self.rule_1.match_label_param = 'yyyyy'
         self._check_statement_matching(self.rule_1, {
@@ -355,21 +362,21 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             invl = self._create_invoice_line(1000.0, self.partner_a, inv_type, inv_date='2019-01-01')
 
             # Exact matching.
-            st_line = self._create_st_line(amount=bsl_sign * 1000.0)
+            st_line = self._create_st_line(amount=bsl_sign * 1000.0, payment_ref=invl.name)
             self._check_statement_matching(
                 rule,
                 {st_line: {'amls': invl, 'model': rule}},
             )
 
             # No matching because there is no tolerance.
-            st_line = self._create_st_line(amount=bsl_sign * 990.0)
+            st_line = self._create_st_line(amount=bsl_sign * 990.0, payment_ref=invl.name)
             self._check_statement_matching(
                 rule,
                 {st_line: {}},
             )
 
             # The payment amount is higher than the invoice one.
-            st_line = self._create_st_line(amount=bsl_sign * 1010.0)
+            st_line = self._create_st_line(amount=bsl_sign * 1010.0, payment_ref=invl.name)
             self._check_statement_matching(
                 rule,
                 {st_line: {'amls': invl, 'model': rule}},
@@ -379,6 +386,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
     def test_zero_payment_tolerance_auto_reconcile(self):
         rule = self._create_reconcile_model(
             auto_reconcile=True,
+            match_text_location_label = False,
             line_ids=[{}],
         )
 
@@ -387,7 +395,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             invl = self._create_invoice_line(1000.0, self.partner_a, inv_type, inv_date='2019-01-01')
 
             # No matching because there is no tolerance.
-            st_line = self._create_st_line(amount=bsl_sign * 990.0)
+            st_line = self._create_st_line(amount=bsl_sign * 990.0, payment_ref='123456')
             self._check_statement_matching(
                 rule,
                 {st_line: {}},
@@ -413,7 +421,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 invl = self._create_invoice_line(1000.0, self.partner_a, inv_type, inv_date='2019-01-01')
 
                 # No matching because there is no enough tolerance.
-                st_line = self._create_st_line(amount=bsl_sign * 990.0)
+                st_line = self._create_st_line(amount=bsl_sign * 990.0, payment_ref=invl.name)
                 self._check_statement_matching(
                     rule,
                     {st_line: {}},
@@ -422,7 +430,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 # The payment amount is higher than the invoice one.
                 # However, since the invoice amount is lower than the payment amount,
                 # the tolerance is not checked and the invoice line is matched.
-                st_line = self._create_st_line(amount=bsl_sign * 1010.0)
+                st_line = self._create_st_line(amount=bsl_sign * 1010.0, payment_ref=invl.name)
                 self._check_statement_matching(
                     rule,
                     {st_line: {'amls': invl, 'model': rule}},
@@ -440,7 +448,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             invl = self._create_invoice_line(1210.0, self.partner_a, inv_type, inv_date='2019-01-01')
 
             # Enough tolerance to match the invoice line.
-            st_line = self._create_st_line(amount=bsl_sign * 1185.80)
+            st_line = self._create_st_line(amount=bsl_sign * 1185.80, payment_ref=invl.name)
             self._check_statement_matching(
                 rule,
                 {st_line: {'amls': invl, 'model': rule, 'status': 'write_off'}},
@@ -449,7 +457,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             # The payment amount is higher than the invoice one.
             # However, since the invoice amount is lower than the payment amount,
             # the tolerance is not checked and the invoice line is matched.
-            st_line = self._create_st_line(amount=bsl_sign * 1234.20)
+            st_line = self._create_st_line(amount=bsl_sign * 1234.20, payment_ref=invl.name)
             self._check_statement_matching(
                 rule,
                 {st_line: {'amls': invl, 'model': rule}},
@@ -460,6 +468,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         rule = self._create_reconcile_model(
             payment_tolerance_param=1.0,
             auto_reconcile=True,
+            match_text_location_label = False,
             line_ids=[{'amount_type': 'percentage_st_line', 'amount_string': '200.0'}],
         )
 
@@ -481,7 +490,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         for inv_type, bsl_sign in (('out_invoice', 1), ('in_invoice', -1)):
 
             invl = self._create_invoice_line(990.0, self.partner_a, inv_type, inv_date='2019-01-01')
-            st_line = self._create_st_line(amount=bsl_sign * 1000)
+            st_line = self._create_st_line(amount=bsl_sign * 1000, payment_ref=invl.name)
 
             # Partial reconciliation.
             self._check_statement_matching(
@@ -494,6 +503,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         rule = self._create_reconcile_model(
             payment_tolerance_param=1.0,
             auto_reconcile=True,
+            match_text_location_label = False,
             line_ids=[{}],
         )
 
@@ -537,6 +547,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             )
 
     def test_matching_fields_match_partner_category_ids(self):
+        self.rule_1.match_text_location_label = False
         test_category = self.env['res.partner.category'].create({'name': 'Consulting Services'})
         test_category2 = self.env['res.partner.category'].create({'name': 'Consulting Services2'})
 
@@ -551,6 +562,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
 
     def test_mixin_rules(self):
         ''' Test usage of rules together.'''
+        self.rule_1.match_text_location_label = False
         # rule_1 is used before rule_2.
         self.rule_1.sequence = 1
         self.rule_2.sequence = 2
@@ -593,6 +605,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.rule_1.sequence = 2
         self.rule_1.auto_reconcile = True
         self.rule_1.payment_tolerance_param = 10.0
+        self.rule_1.match_text_location_label = False
         self.rule_2.sequence = 1
         self.rule_2.match_partner_ids |= self.partner_2
         self.rule_2.auto_reconcile = True
@@ -642,6 +655,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.rule_1.allow_payment_tolerance = False
         self.rule_1.auto_reconcile = True
         self.rule_1.line_ids = [(5, 0, 0)]
+        self.rule_1.match_text_location_label = False
 
         self._check_statement_matching(self.rule_1, {
             self.bank_line_1: {
@@ -745,6 +759,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         move_reversed = move._reverse_moves()
         self.assertTrue(move_reversed.exists())
 
+        self.rule_1.match_text_location_label = False
         self.bank_line_1.write({
             'payment_ref': '8',
             'partner_id': partner.id,
@@ -770,7 +785,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
 
         invoice_line = self._create_invoice_line(100, partner, 'out_invoice', currency=currency_inv)
 
-        self.bank_line_1.write({'partner_id': partner.id, 'foreign_currency_id': currency_statement.id, 'amount_currency': 100, 'payment_ref': 'test'})
+        self.bank_line_1.write({'partner_id': partner.id, 'foreign_currency_id': currency_statement.id, 'amount_currency': 100, 'payment_ref': invoice_line.name})
         self._check_statement_matching(self.rule_1, {
             self.bank_line_1: {'amls': invoice_line, 'model': self.rule_1},
             self.bank_line_2: {},
@@ -902,6 +917,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             'match_same_currency': False,
             'company_id': self.company_data['company'].id,
             'past_months_limit': False,
+            'match_text_location_label': False,
         })
 
         statement_line = self.env['account.bank.statement.line'].create({
@@ -1022,6 +1038,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         of 100, 200 and 300 (retrieved in this order), only 100 and 200 should be proposed.
         """
         self.rule_1.allow_payment_tolerance = False
+        self.rule_1.match_text_location_label = False
         self.bank_line_2.amount = 250
         self.bank_line_1.partner_id = None
 
@@ -1041,6 +1058,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         other ones are disregarded.
         """
         self.rule_1.allow_payment_tolerance = False
+        self.rule_1.match_text_location_label = False
         self.bank_line_2.amount = 300
         self.bank_line_1.partner_id = None
 

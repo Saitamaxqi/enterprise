@@ -2691,12 +2691,12 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
 
     @freeze_time('2019-01-01')
     def test_button_apply_reco_model(self):
-        st_line = self._create_st_line(-1000.0, partner_id=self.partner_a.id)
         inv_line = self._create_invoice_line(
             'in_invoice',
-            invoice_date=st_line.date,
+            invoice_date='2019-01-01',
             invoice_line_ids=[{'price_unit': 980.0}],
         )
+        st_line = self._create_st_line(-1000.0, partner_id=self.partner_a.id, date=inv_line.date, payment_ref=inv_line.move_name)
 
         reco_model = self.env['account.reconcile.model'].create({
             'name': "test_apply_taxes_with_reco_model",

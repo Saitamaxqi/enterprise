@@ -77,6 +77,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon, HttpCase):
             invoice_date='2019-01-01',
             invoice_line_ids=[{'price_unit': 2000.0}],
         )
+        self.st_line2.payment_ref = self.st_line2.payment_ref + ' - ' + 'INV/2019/00001'
         self.start_tour('/odoo?debug=assets', 'account_accountant_bank_rec_widget_ui', timeout=120, login=self.env.user.login)
 
     def test_tour_bank_rec_widget_rainbowman_reset(self):
