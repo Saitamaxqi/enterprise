@@ -155,6 +155,7 @@
     <record model="ir.actions.act_window" id="act_budget_analytic_view">
         <field name="name">Budgets</field>
         <field name="res_model">budget.analytic</field>
+        <field name="path">analytic-budgets</field>
         <field name="view_mode">list,kanban,form,activity</field>
         <field name="view_id" ref="view_budget_analytic_tree"/>
         <field name="search_view_id" ref="view_budget_analytic_search"/>

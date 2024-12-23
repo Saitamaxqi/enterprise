@@ -116,6 +116,7 @@ if records:
         <record id="action_batch_payment_in" model="ir.actions.act_window">
             <field name="name">Customer Batch Payments</field>
             <field name="res_model">account.batch.payment</field>
+            <field name="path">customer-batch-payments</field>
             <field name="view_mode">list,form,kanban,activity</field>
             <field name="view_id" ref="view_batch_payment_tree"/>
             <field name="search_view_id" ref="view_batch_payment_search"/>
@@ -135,6 +136,7 @@ if records:
         <record id="action_batch_payment_out" model="ir.actions.act_window">
             <field name="name">Vendor Batch Payments</field>
             <field name="res_model">account.batch.payment</field>
+            <field name="path">vendor-batch-payments</field>
             <field name="view_mode">list,form,kanban,activity</field>
             <field name="view_id" ref="view_batch_payment_tree"/>
             <field name="search_view_id" ref="view_batch_payment_search"/>

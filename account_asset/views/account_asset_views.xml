@@ -434,6 +434,7 @@
     <record model="ir.actions.act_window" id="action_account_asset_form">
         <field name="name">Assets</field>
         <field name="res_model">account.asset</field>
+        <field name="path">assets</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'list', 'view_id': ref('view_account_asset_tree')}),
             (0, 0, {'view_mode': 'kanban'}),
@@ -450,6 +451,7 @@
     <record model="ir.actions.act_window" id="action_account_asset_model_form">
         <field name="name">Asset Models</field>
         <field name="res_model">account.asset</field>
+        <field name="path">asset-models</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'list', 'view_id': ref('view_account_asset_model_tree')}),

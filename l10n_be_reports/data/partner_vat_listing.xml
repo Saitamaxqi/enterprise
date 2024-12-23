@@ -54,6 +54,7 @@
 
     <record id="action_account_report_l10n_be_partner_vat_listing" model="ir.actions.client">
         <field name="name">Partner VAT Listing</field>
+        <field name="path">partner-vat-listing</field>
         <field name="tag">account_report</field>
         <field name="context" eval="{'report_id': ref('l10n_be_reports.l10n_be_partner_vat_listing')}"/>
     </record>

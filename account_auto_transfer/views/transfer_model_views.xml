@@ -17,6 +17,7 @@
     <record model="ir.actions.act_window" id="transfer_model_action">
         <field name="name">Automatic Transfers</field>
         <field name="res_model">account.transfer.model</field>
+            <field name="path">transfers</field>
         <field name="view_mode">list,form</field>
     </record>
 

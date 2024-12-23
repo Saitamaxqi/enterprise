@@ -2,6 +2,7 @@
     <!-- Intrastat Report -->
     <record id="action_account_report_intrastat" model="ir.actions.client">
         <field name="name">Intrastat Report</field>
+        <field name="path">intrastat</field>
         <field name="tag">account_report</field>
         <field name="context" eval="{'report_id': ref('account_intrastat.intrastat_report')}"/>
     </record>

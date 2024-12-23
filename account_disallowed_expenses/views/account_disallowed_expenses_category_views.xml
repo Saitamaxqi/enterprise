@@ -89,6 +89,7 @@
     <record id="action_account_disallowed_expenses_category_list" model="ir.actions.act_window">
         <field name="name">Disallowed Expenses Categories</field>
         <field name="res_model">account.disallowed.expenses.category</field>
+        <field name="path">disallowed-expenses-categories</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Add a Disallowed Expenses Category

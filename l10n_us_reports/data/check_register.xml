@@ -47,6 +47,7 @@
 
         <record id="check_register_action" model="ir.actions.client">
             <field name="name">Check Register</field>
+            <field name="path">check-register</field>
             <field name="tag">account_report</field>
             <field name="context" eval="{'report_id': ref('l10n_us_reports.check_register_report')}"/>
         </record>
