@@ -192,6 +192,12 @@ msgid "Certificate"
 msgstr "Certificado"
 
 #. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/xml_utils.py:0
+msgid "Certificate is not available"
+msgstr "Certificado no está disponible"
+
+#. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_certificate__key
 msgid "Certificate Key"
 msgstr "Llave del Certificado"

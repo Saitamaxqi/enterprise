@@ -8,7 +8,7 @@ import hashlib
 import logging
 import uuid
 
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo import fields, _
 
 _logger = logging.getLogger(__name__)
@@ -122,7 +122,9 @@ def _uuid1():
 
 
 def _build_and_send_request(self, payload, service, company):
-    cert_sudo = company.sudo().l10n_co_dian_certificate_ids[-1]
+    cert_sudo = company.sudo().l10n_co_dian_certificate_ids[-1:]
+    if not cert_sudo:
+        raise ValidationError(_('Certificate is not available'))
     dt_now = fields.Datetime.now()
     vals = {
         'creation_time': dt_now.isoformat(timespec='milliseconds') + "Z",
