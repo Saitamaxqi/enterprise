@@ -38,6 +38,10 @@
                             <field name="firebase_project_id" class="w-100" placeholder='e.g. "my-project-id"'/>
                         </div>
                         <div class="mt16">
+                            <label for="firebase_web_app_id" string="App ID" class="o_form_label"/>
+                            <field name="firebase_web_app_id" class="w-100" placeholder='e.g. "1:280765099157:web:7c7b7d7b7d7b7d7b7d7b7d"'/>
+                        </div>
+                        <div class="mt16">
                             <label for="firebase_web_api_key" string="Web API Key" class="o_form_label"/>
                             <field name="firebase_web_api_key" class="w-100" placeholder='e.g. "BIzbSyXhhsFHEgphW55CSg5cV7h7c_S-AuTMKc9"'/>
                         </div>

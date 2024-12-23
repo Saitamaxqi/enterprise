@@ -1,5 +1,3 @@
-/* global firebase */
-
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { browser } from "@web/core/browser/browser";
 import { rpc } from "@web/core/network/rpc";
@@ -12,6 +10,36 @@ publicWidget.registry.NotificationWidget =  publicWidget.Widget.extend({
     init() {
         this._super(...arguments);
         this.notification = this.bindService("notification");
+    },
+
+    /** @override
+     * Firebase dependencies are now provided as standard JavaScript modules.
+     * To ensure the browser recognizes and executes these scripts correctly,
+     * they must be loaded using a `<script>` tag with `type="module"`.
+     * Unfortunately, these dependencies cannot be included in the common
+     * Odoo JS bundle because the bundle is loaded with a `<script>` tag
+     * having `type="text/javascript"`. This difference prevents the browser
+     * from recognizing modern JavaScript module-specific syntax that are
+     * used in the Firebase dependencies (see: `import` and `export`).
+     * To load the dependencies, we have to manually inject in the DOM a
+     * script tag with the "module" type. */
+    willStart: async function () {
+        await this._super(...arguments);
+        const loadFirebaseAssets = () => {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement("script");
+                script.addEventListener("load", () => {
+                    resolve(globalThis.firebase);
+                });
+                script.addEventListener("error", error => {
+                    reject(error);
+                });
+                script.type = "module";
+                script.src = "/social_push_notifications/static/lib/firebase.js";
+                document.head.appendChild(script);
+            });
+        };
+        this.firebase = await loadFirebaseAssets();
     },
 
     /**
@@ -65,26 +93,24 @@ publicWidget.registry.NotificationWidget =  publicWidget.Widget.extend({
     _setForegroundNotificationHandler: function (config, messaging) {
         const onMessage = (payload) => {
             if (window.Notification && Notification.permission === "granted") {
-                const notificationData = payload.data;
                 const options = {
-                    title: notificationData.title,
+                    title: payload.notification.title,
                     type: 'success',
                 };
-                const targetUrl = notificationData.target_url;
-                if (targetUrl) {
+                if (payload.data && payload.data.target_url) {
                     options.buttons = [{
                         name: 'Open',
-                        onClick: () => window.open(targetUrl, '_blank'),
+                        onClick: () => window.open(payload.data.target_url, '_blank'),
                     }];
                 }
-                this.notification.add(notificationData.body, options);
+                this.notification.add(payload.notification.body, options);
             }
         };
         messaging = messaging || this._initializeFirebaseApp(config);
         if (!messaging) {
             return;
         }
-        messaging.onMessage(onMessage);
+        this.firebase.onMessage(messaging, onMessage);
     },
 
     /**
@@ -126,18 +152,20 @@ publicWidget.registry.NotificationWidget =  publicWidget.Widget.extend({
     _initializeFirebaseApp: function (config) {
         if (!config.firebase_push_certificate_key
             || !config.firebase_project_id
-            || !config.firebase_web_api_key) {
+            || !config.firebase_web_api_key
+            || !config.firebase_web_app_id) {
             // missing configuration
             return null;
         }
 
-        firebase.initializeApp({
+        const app = this.firebase.initializeApp({
+            appId: config.firebase_web_app_id,
             apiKey: config.firebase_web_api_key,
             projectId: config.firebase_project_id,
             messagingSenderId: config.firebase_sender_id
         });
 
-        var messaging = firebase.messaging();
+        const messaging = this.firebase.getMessaging(app);
         return messaging;
     },
 
@@ -160,12 +188,18 @@ publicWidget.registry.NotificationWidget =  publicWidget.Widget.extend({
             return;
         }
 
-        var baseWorkerUrl = '/social_push_notifications/static/src/js/push_service_worker.js';
-        navigator.serviceWorker.register(baseWorkerUrl + '?senderId=' + encodeURIComponent(config.firebase_sender_id))
+        const url = new URL(window.location.origin + "/social_push_notifications/static/src/js/push_service_worker.js");
+        url.searchParams.append("appId", config.firebase_web_app_id);
+        url.searchParams.append("apiKey", config.firebase_web_api_key);
+        url.searchParams.append("projectId", config.firebase_project_id);
+        url.searchParams.append("messagingSenderId", config.firebase_sender_id);
+
+        navigator.serviceWorker.register(url, { type: "module" })
             .then(function (registration) {
-                messaging.useServiceWorker(registration);
-                messaging.usePublicVapidKey(config.firebase_push_certificate_key);
-                messaging.getToken().then(function (token) {
+                self.firebase.getToken(messaging, {
+                    vapidKey: config.firebase_push_certificate_key,
+                    serviceWorkerRegistration: registration
+                }).then(function (token) {
                     self._registerToken(token);
                 });
         });

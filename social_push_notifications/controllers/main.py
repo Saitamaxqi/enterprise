@@ -28,6 +28,7 @@ class SocialPushNotificationsController(http.Controller):
         if not current_website.firebase_use_own_account \
            and (not current_website.firebase_project_id or
            not current_website.firebase_web_api_key or
+           not current_website.firebase_web_app_id or
            not current_website.firebase_push_certificate_key or
            not current_website.firebase_sender_id):
             self._register_iap_firebase_info(current_website)
@@ -39,6 +40,7 @@ class SocialPushNotificationsController(http.Controller):
             'notification_request_icon': icon,
             'firebase_project_id': current_website.firebase_project_id,
             'firebase_web_api_key': current_website.firebase_web_api_key,
+            'firebase_web_app_id': current_website.firebase_web_app_id,
             'firebase_push_certificate_key': current_website.firebase_push_certificate_key,
             'firebase_sender_id': current_website.firebase_sender_id
         }
@@ -60,6 +62,7 @@ class SocialPushNotificationsController(http.Controller):
             current_website.sudo().write({
                 'firebase_project_id': result_json['firebase_project_id'],
                 'firebase_web_api_key': result_json['firebase_web_api_key'],
+                'firebase_web_app_id': result_json['firebase_web_app_id'],
                 'firebase_push_certificate_key': result_json['firebase_push_certificate_key'],
                 'firebase_sender_id': result_json['firebase_sender_id'],
             })

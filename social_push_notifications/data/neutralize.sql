@@ -4,5 +4,6 @@ UPDATE website
        firebase_use_own_account = false,
        firebase_project_id = NULL,
        firebase_web_api_key = NULL,
+       firebase_web_app_id = NULL,
        firebase_push_certificate_key = NULL,
        firebase_sender_id = NULL;

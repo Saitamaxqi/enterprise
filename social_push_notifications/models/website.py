@@ -11,6 +11,7 @@ class Website(models.Model):
     firebase_use_own_account = fields.Boolean('Use your own Firebase account')
     firebase_project_id = fields.Char('Firebase Project ID')
     firebase_web_api_key = fields.Char('Firebase Web API Key')
+    firebase_web_app_id = fields.Char('Firebase Web App ID')
     firebase_push_certificate_key = fields.Char('Firebase Push Certificate Key')
     firebase_sender_id = fields.Char('Firebase Sender ID')
     firebase_admin_key_file = fields.Binary('Firebase Admin Key File', groups="social.group_social_manager")

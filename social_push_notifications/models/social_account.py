@@ -28,6 +28,7 @@ class SocialAccount(models.Model):
     firebase_use_own_account = fields.Boolean('Use your own Firebase account', related='website_id.firebase_use_own_account')
     firebase_project_id = fields.Char('Firebase Project ID', related='website_id.firebase_project_id')
     firebase_web_api_key = fields.Char('Firebase Web API Key', related='website_id.firebase_web_api_key')
+    firebase_web_app_id = fields.Char('Firebase Web App ID', related='website_id.firebase_web_app_id')
     firebase_push_certificate_key = fields.Char('Firebase Push Certificate Key', related='website_id.firebase_push_certificate_key')
     firebase_sender_id = fields.Char('Firebase Sender ID', related='website_id.firebase_sender_id')
     firebase_admin_key_file = fields.Binary('Firebase Admin Key File', related='website_id.firebase_admin_key_file')
@@ -81,8 +82,15 @@ class SocialAccount(models.Model):
                     f'https://fcm.googleapis.com/v1/projects/{firebase_data["project_id"]}/messages:send',
                     json={
                         'message': {
-                            'data': data,
-                            'token': token
+                            'token': token,
+                            'notification': {
+                                'title': data['title'],
+                                'body': data['body'],
+                                'image': data['icon']
+                            },
+                            'data': {
+                                'target_url': data['target_url']
+                            }
                         }
                     },
                     headers={'authorization': f'Bearer {auth_token}'},

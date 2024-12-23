@@ -1,18 +1,22 @@
-/* global firebase */
 /* eslint-env serviceworker */
-// Give the service worker access to Firebase Messaging.
-importScripts('https://www.gstatic.com/firebasejs/6.3.4/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/6.3.4/firebase-messaging.js');
+/* eslint-disable no-restricted-globals */
 
-// firebase code expects a 'self' variable to be defined
-// didn't find any explanation for this on the web, everyone seems cool with it
-var self = this;
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+import { getMessaging, onBackgroundMessage } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-sw.js";
 
-var senderId = this.location.search.replace('?senderId=', '');
-// Initialize the Firebase app in the service worker by passing in the messagingSenderId
-firebase.initializeApp({
-    'messagingSenderId': senderId
-});
+const getFirebaseConfig = () => {
+    const params = new URLSearchParams(self.location.search);
+    return {
+        appId: params.get("appId"),
+        apiKey: params.get("apiKey"),
+        projectId: params.get("projectId"),
+        messagingSenderId: params.get("messagingSenderId"),
+    };
+};
+
+// Initialize the Firebase app in the service worker by passing the config in the URL.
+const app = initializeApp(getFirebaseConfig());
+const messaging = getMessaging(app);
 
 // Add an event listener to handle notification clicks
 self.addEventListener('notificationclick', function (event) {
@@ -30,16 +34,16 @@ self.addEventListener('notificationclick', function (event) {
 // Retrieve an instance of Firebase Messaging so that it can handle background messages
 // This line HAS to stay after the event listener or it will break it
 // https://stackoverflow.com/questions/50869015/firefox-not-opening-window-in-service-worker-for-push-message
-const messaging = firebase.messaging();
 
-messaging.setBackgroundMessageHandler(function (payload) {
-    var notificationData = payload.data;
-
-    return self.registration.showNotification(notificationData.title, {
-        body: notificationData.body,
-        icon: notificationData.icon,
-        data: {
-            target_url: notificationData.target_url,
-        }
-    });
+onBackgroundMessage(messaging, function (payload) {
+    const options = {
+        body: payload.notification.body,
+        icon: payload.notification.image
+    };
+    if (payload.data && payload.data.target_url) {
+        options.data = {
+            target_url: payload.data.target_url
+        };
+    }
+    return self.registration.showNotification(payload.notification.title, options);
 });

@@ -25,8 +25,6 @@
     'post_init_hook': '_create_social_accounts',
     'assets': {
         'web.assets_frontend': [
-            'social_push_notifications/static/lib/firebase-app-6.3.4.js',
-            'social_push_notifications/static/lib/firebase-messaging-6.3.4.js',
             'social_push_notifications/static/src/js/push_notification_request_popup.js',
             'social_push_notifications/static/src/js/push_notification_widget.js',
             'social_push_notifications/static/src/scss/social_push_notifications_frontend.scss',
