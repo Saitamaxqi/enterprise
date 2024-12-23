@@ -51,7 +51,7 @@ class MailThread(models.AbstractModel):
         if not icp_sudo.get_param('odoo_ocn.project_id') or not icp_sudo.get_param('mail_mobile.enable_ocn'):
             return
 
-        pids = self._extract_partner_ids_for_notifications(message, recipients_data, msg_vals=msg_vals)
+        pids = self._notify_get_recipients_for_extra_notifications(message, recipients_data, msg_vals=msg_vals)
         if not pids:
             return
 
