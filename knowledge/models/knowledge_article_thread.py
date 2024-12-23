@@ -96,28 +96,24 @@ class KnowledgeArticleThread(models.Model):
             return action
         return super()._get_access_action(access_uid=access_uid, force_website=force_website)
 
-    def _notify_thread_by_email(self, message, recipients_data, **kwargs):
-        """We need to override this method to set our own mail template to be sent to users that
-        have been tagged inside a comment. We are using the template 'knowledge.knowledge_mail_notification_layout'
-        which is a simple template comprised of the comment sent and the person that tagged the notified user.
-        """
-        if not kwargs.get('msg_vals', {}).get('partner_ids', []):
-            return
-        kwargs['msg_vals'] = {**kwargs.get('msg_vals', {}), 'email_layout_xmlid': 'knowledge.knowledge_mail_notification_layout'}
-
-        return super()._notify_thread_by_email(message, recipients_data, **kwargs)
+    def _notify_thread_by_email(self, message, recipients_data, msg_vals=False, **kwargs):
+        # Use knowledge specific template which is a simple template comprised of the
+        # # comment sent and the person that tagged the notified user.
+        msg_vals = msg_vals or {}
+        msg_vals['email_layout_xmlid'] = 'knowledge.knowledge_mail_notification_layout'
+        return super()._notify_thread_by_email(message, recipients_data, msg_vals=msg_vals, **kwargs)
 
     def _message_compute_subject(self):
         self.ensure_one()
         return _('New Mention in %s') % self.display_name
 
-    def _notify_get_recipients(self, message, msg_vals, **kwargs):
-        recipients_data = super()._notify_get_recipients(message, msg_vals, **kwargs)
+    def _notify_get_recipients(self, message, msg_vals=False, **kwargs):
+        recipients_data = super()._notify_get_recipients(message, msg_vals=msg_vals, **kwargs)
         recipients_data = [data for data in recipients_data if data['id'] in msg_vals.get('partner_ids', [])]
 
         return recipients_data
 
-    def _notify_get_recipients_groups(self, message, model_description, msg_vals=None):
+    def _notify_get_recipients_groups(self, message, model_description, msg_vals=False):
         groups = super()._notify_get_recipients_groups(
             message, model_description, msg_vals=msg_vals
         )

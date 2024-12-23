@@ -2580,13 +2580,15 @@ class KnowledgeArticle(models.Model):
                 subtitles=[self.display_name, _('Your Access: %s', permission_label)],
             )
 
-    def _notify_get_recipients_groups(self, message, model_description, msg_vals=None):
+    def _notify_get_recipients_groups(self, message, model_description, msg_vals=False):
         groups = super()._notify_get_recipients_groups(message, model_description, msg_vals=msg_vals)
-        if not self or not msg_vals.get('partner_ids'):
+        msg_vals = msg_vals or {}
+        partner_ids = msg_vals['partner_ids'] if 'partner_ids' in msg_vals else message.partner_ids.ids
+        if not self or not partner_ids:
             return groups
         new_group = []
         for member in self.article_member_ids.filtered(
-            lambda member: member.partner_id.id in msg_vals['partner_ids'] and member.partner_id.partner_share
+            lambda member: member.partner_id.id in partner_ids and member.partner_id.partner_share
         ):
             url = url_join(
                 self.get_base_url(),
