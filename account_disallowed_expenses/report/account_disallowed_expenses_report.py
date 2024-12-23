@@ -15,7 +15,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         lines = []
 
         totals = {
-            column_group_key: {key: 0.0 for key in ['total_amount', 'disallowed_amount']}
+            column_group_key: {key: 0.0 for key in ['total_amount', 'disallowed_amount', 'deductible_amount']}
             for column_group_key in options['column_groups']
         }
 
@@ -128,7 +128,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
                 ARRAY_AGG(aml.company_id) company_id,
                 ARRAY_AGG(aml.account_id) account_id,
                 ARRAY_AGG(rate.rate) account_rate,
-                SUM(aml.balance * rate.rate) / 100 AS account_disallowed_amount
+                SUM(aml.balance * (100.0 - rate.rate)) / 100 AS account_disallowed_amount
             """,
             account_name=self.env['account.account']._field_to_sql('account', 'name'),
             account_code=account_code,
@@ -279,7 +279,8 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
             vals = values.get(column['column_group_key'], {})
             if vals and not is_total_line:
                 vals['rate'] = self._get_current_rate(vals)
-                vals['disallowed_amount'] = self._get_current_disallowed_amount(vals)
+                vals['disallowed_amount'] = max(0, self._get_current_disallowed_amount(vals) or 0)
+                vals['deductible_amount'] = vals['total_amount'] - (self._get_current_disallowed_amount(vals) or 0)
             col_val = vals.get(column['expression_label'])
 
             column_values.append(report._build_column_dict(

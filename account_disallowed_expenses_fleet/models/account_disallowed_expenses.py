@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class AccountDisallowedExpensesCategory(models.Model):
     _inherit = 'account.disallowed.expenses.category'
 
-    car_category = fields.Boolean('Make Vehicle Required', help='The vehicle becomes mandatory while booking any account move.')
+    car_category = fields.Boolean('Requires a Vehicle', help='The vehicle becomes mandatory while booking any account move.')
 
     @api.depends('car_category')
     def _compute_display_name(self):
