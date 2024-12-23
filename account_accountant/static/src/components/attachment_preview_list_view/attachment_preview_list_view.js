@@ -18,7 +18,7 @@ export class AttachmentPreviewListController extends ListController {
         super.setup();
         /** @type {import("@mail/core/common/store_service").Store} */
         this.store = useService("mail.store");
-        this.ui = useState(useService("ui"));
+        this.ui = useService("ui");
         this.mailPopoutService = useService("mail.popout");
         this.attachmentPreviewState = useState({
             displayAttachment: localStorage.getItem(this.previewerStorageKey) !== "false",

@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component } from "@odoo/owl";
 
 import { useService } from "@web/core/utils/hooks";
 
@@ -15,7 +15,7 @@ export class Approval extends Component {
     };
 
     setup() {
-        this.store = useState(useService("mail.store"));
+        this.store = useService("mail.store");
     }
 
     async onClickApprove() {

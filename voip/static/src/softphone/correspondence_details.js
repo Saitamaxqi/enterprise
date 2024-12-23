@@ -1,4 +1,4 @@
-import { Component, useEffect, useRef, useState } from "@odoo/owl";
+import { Component, useEffect, useRef } from "@odoo/owl";
 
 import { DeviceSelectionDialog } from "@voip/mobile/device_selection_dialog";
 import { TransferPopover } from "@voip/softphone/transfer_popover";
@@ -19,7 +19,7 @@ export class CorrespondenceDetails extends Component {
         this.callService = useService("voip.call");
         this.dialog = useService("dialog");
         this.orm = this.env.services.orm;
-        this.userAgent = useState(useService("voip.user_agent"));
+        this.userAgent = useService("voip.user_agent");
         this.voip = useService("voip");
         this.softphone = this.voip.softphone;
         this.transferButtonRef = useRef("transferButton");

@@ -25,8 +25,8 @@ export class Softphone extends Component {
     static template = "voip.Softphone";
 
     setup() {
-        this.store = useState(useService("mail.store"));
-        this.voip = useState(useService("voip"));
+        this.store = useService("mail.store");
+        this.voip = useService("voip");
         this.callService = useService("voip.call");
         this.userAgent = useService("voip.user_agent");
         this.searchBar = useRef("search");

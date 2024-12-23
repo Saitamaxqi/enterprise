@@ -91,7 +91,7 @@ export class HomeMenu extends Component {
         this.command = useService("command");
         this.menus = useService("menu");
         this.homeMenuService = useService("home_menu");
-        this.subscription = useState(useService("enterprise_subscription"));
+        this.subscription = useService("enterprise_subscription");
         this.ui = useService("ui");
         this.state = useState({
             focusedIndex: null,

@@ -22,7 +22,7 @@ export class InvoiceExtractFormRenderer extends AccountMoveFormRenderer {
         super.setup();
 
         /** @type {import("@mail/core/common/store_service").Store} */
-        this.store = useState(useService("mail.store"));
+        this.store = useService("mail.store");
         this.dialog = useService("dialog");
         this.orm = useService("orm");
         this.mailPopoutService = useService("mail.popout");

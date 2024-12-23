@@ -1,5 +1,5 @@
 import { useVisible } from "@mail/utils/common/hooks";
-import { Component, onMounted, useState } from "@odoo/owl";
+import { Component, onMounted } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 
 export class RecentTab extends Component {
@@ -8,7 +8,7 @@ export class RecentTab extends Component {
     static template = "voip.RecentTab";
 
     setup() {
-        this.voip = useState(useService("voip"));
+        this.voip = useService("voip");
         this.orm = useService("orm");
         this.callService = useService("voip.call");
         onMounted(() => this.voip.fetchRecentCalls());

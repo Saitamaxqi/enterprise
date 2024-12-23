@@ -1,4 +1,4 @@
-import { Component, useState, xml } from "@odoo/owl";
+import { Component, xml } from "@odoo/owl";
 
 import { Softphone } from "@voip/softphone/softphone";
 import { useService } from "@web/core/utils/hooks";
@@ -13,6 +13,6 @@ export class SoftphoneContainer extends Component {
     `;
 
     setup() {
-        this.voip = useState(useService("voip"));
+        this.voip = useService("voip");
     }
 }

@@ -1,4 +1,4 @@
-import { Component, useRef, useState } from "@odoo/owl";
+import { Component, useRef } from "@odoo/owl";
 
 import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from "@web/core/utils/hooks";
@@ -12,7 +12,7 @@ export class CallMethodSelectionDialog extends Component {
     setup() {
         this.fieldsetRef = useRef("fieldset");
         this.rememberCheckboxRef = useRef("rememberCheckbox");
-        this.store = useState(useService("mail.store"));
+        this.store = useService("mail.store");
         this.orm = useService("orm");
     }
 

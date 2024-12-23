@@ -12,7 +12,7 @@ export class TransferPopover extends Component {
         this.inputRef = useRef("input");
         this.userAgent = useService("voip.user_agent");
         this.voip = useService("voip");
-        this.store = useState(useService("mail.store"));
+        this.store = useService("mail.store");
         this.state = useState({ inputValue: this.props.defaultInputValue });
         this.onInputDebounced = useDebounced(
             () => this.voip.fetchContacts(this.state.inputValue),

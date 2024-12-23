@@ -1,4 +1,4 @@
-import { reactive, useState } from "@odoo/owl";
+import { reactive } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { session } from "@web/session";
 import { useService } from "@web/core/utils/hooks";
@@ -18,5 +18,5 @@ const orderTrackingDisplayService = {
 
 registry.category("services").add("order_tracking_display", orderTrackingDisplayService);
 export function useOrderStatusDisplay() {
-    return useState(useService("order_tracking_display"));
+    return useService("order_tracking_display");
 }

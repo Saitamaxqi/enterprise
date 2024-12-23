@@ -17,7 +17,7 @@ export class ExpirationPanel extends Component {
     static components = { Transition };
 
     setup() {
-        this.subscription = useState(useService("enterprise_subscription"));
+        this.subscription = useService("enterprise_subscription");
 
         this.state = useState({
             displayRegisterForm: false,

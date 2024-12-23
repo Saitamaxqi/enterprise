@@ -1,6 +1,6 @@
 import { useVisible } from "@mail/utils/common/hooks";
 
-import { Component, onMounted, useState } from "@odoo/owl";
+import { Component, onMounted } from "@odoo/owl";
 
 import { url } from "@web/core/utils/urls";
 import { useService } from "@web/core/utils/hooks";
@@ -11,8 +11,8 @@ export class ContactsTab extends Component {
     static template = "voip.ContactsTab";
 
     setup() {
-        this.store = useState(useService("mail.store"));
-        this.voip = useState(useService("voip"));
+        this.store = useService("mail.store");
+        this.voip = useService("voip");
         this.orm = useService("orm");
         onMounted(() => this.voip.fetchContacts());
         useVisible("last-shown-contact", (isVisible) => {

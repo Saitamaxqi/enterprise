@@ -1,12 +1,10 @@
-import { useState } from "@odoo/owl";
-
 import { ListController } from "@web/views/list/list_controller";
 import { useService } from "@web/core/utils/hooks";
 
 export class WhatsappChannelListController extends ListController {
     setup() {
         super.setup(...arguments);
-        this.store = useState(useService("mail.store"));
+        this.store = useService("mail.store");
     }
 
     async openRecord(record) {

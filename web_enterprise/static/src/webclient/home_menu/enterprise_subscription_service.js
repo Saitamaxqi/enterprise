@@ -9,7 +9,7 @@ import { cookie } from "@web/core/browser/cookie";
 import { rpc } from "@web/core/network/rpc";
 
 const { DateTime } = luxon;
-import { Component, xml, useState } from "@odoo/owl";
+import { Component, reactive, xml } from "@odoo/owl";
 
 function daysUntil(datetime) {
     const duration = datetime.diff(DateTime.utc(), "days");
@@ -72,12 +72,12 @@ export class SubscriptionManager {
      * Save the registration code then triggers a ping to submit it.
      */
     async submitCode(enterpriseCode) {
-        const [oldDate, ] = await Promise.all([
+        const [oldDate] = await Promise.all([
             this.orm.call("ir.config_parameter", "get_param", ["database.expiration_date"]),
             this.orm.call("ir.config_parameter", "set_param", [
                 "database.enterprise_code",
                 enterpriseCode,
-            ])
+            ]),
         ]);
 
         await this.orm.call("publisher_warranty.contract", "update_notification", [[]]);
@@ -87,9 +87,7 @@ export class SubscriptionManager {
                 "database.already_linked_subscription_url",
             ]),
             this.orm.call("ir.config_parameter", "get_param", ["database.already_linked_email"]),
-            this.orm.call("ir.config_parameter", "get_param", [
-                "database.expiration_date",
-            ])
+            this.orm.call("ir.config_parameter", "get_param", ["database.expiration_date"]),
         ]);
 
         if (linkedSubscriptionUrl) {
@@ -177,7 +175,7 @@ class ExpiredSubscriptionBlockUI extends Component {
         </t>`;
     static components = { ExpirationPanel };
     setup() {
-        this.subscription = useState(useService("enterprise_subscription"));
+        this.subscription = useService("enterprise_subscription");
     }
 }
 
@@ -188,7 +186,7 @@ export const enterpriseSubscriptionService = {
         registry
             .category("main_components")
             .add("expired_subscription_block_ui", { Component: ExpiredSubscriptionBlockUI });
-        return new SubscriptionManager(env, { orm, notification });
+        return reactive(new SubscriptionManager(env, { orm, notification }));
     },
 };
 

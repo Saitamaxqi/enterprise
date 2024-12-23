@@ -1,4 +1,3 @@
-import { useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { PreparationDisplay } from "@pos_preparation_display/app/models/preparation_display";
 import { getOnNotified } from "@point_of_sale/utils";
@@ -64,5 +63,5 @@ registry.category("services").add("preparation_display", preparationDisplayServi
  * @returns {ReturnType<typeof preparationDisplay.start>}
  */
 export function usePreparationDisplay() {
-    return useState(useService("preparation_display"));
+    return useService("preparation_display");
 }

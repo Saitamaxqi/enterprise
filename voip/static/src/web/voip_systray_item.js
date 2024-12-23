@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component } from "@odoo/owl";
 
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
@@ -8,7 +8,7 @@ export class VoipSystrayItem extends Component {
     static template = "voip.SystrayItem";
 
     setup() {
-        this.voip = useState(useService("voip"));
+        this.voip = useService("voip");
         this.softphone = this.voip.softphone;
     }
 

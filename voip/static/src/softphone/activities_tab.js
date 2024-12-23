@@ -13,7 +13,7 @@ export class ActivitiesTab extends Component {
     setup() {
         this.dialog = useService("dialog");
         this.orm = useService("orm");
-        this.voip = useState(useService("voip"));
+        this.voip = useService("voip");
         onMounted(() => this.voip.fetchTodayCallActivities());
         this.state = useState({ hoveredActivity: null });
     }

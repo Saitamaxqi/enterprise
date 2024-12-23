@@ -1,5 +1,5 @@
 import { useSelection } from "@mail/utils/common/hooks";
-import { Component, useEffect, useRef, useState } from "@odoo/owl";
+import { Component, useEffect, useRef } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 
 export class Numpad extends Component {
@@ -8,7 +8,7 @@ export class Numpad extends Component {
     static template = "voip.Numpad";
 
     setup() {
-        this.softphone = useState(useService("voip").softphone);
+        this.softphone = useService("voip").softphone;
         this.callService = useService("voip.call");
         this.userAgentService = useService("voip.user_agent");
         this.input = useRef("input");
