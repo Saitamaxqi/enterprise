@@ -130,9 +130,6 @@ class MailThread(models.AbstractModel):
             "subject": record_name or subject
         }
 
-        if not payload['model'] and body:
-            payload['model'], payload['res_id'] = self._extract_model_and_id(body)
-
         # Check payload limit of 4000 bytes (4kb) and if remain space add the body
         payload_length = len(str(payload).encode('utf-8'))
         # FIXME: when msg_type is 'user_notification', the type value of msg_vals.get('body') is bytes
