@@ -123,19 +123,19 @@
         <field name="date_from" eval="datetime(2024, 10, 10).date()"/>
     </record>
 
-    <record id="rule_parameter_shif_min_basic" model="hr.rule.parameter">
-        <field name="name">Kenya: SHIF Minimum Basic Amount</field>
-        <field name="code">l10n_ke_shif_min_basic</field>
+    <record id="rule_parameter_shif_min_gross" model="hr.rule.parameter">
+        <field name="name">Kenya: SHIF Minimum Gross Amount</field>
+        <field name="code">l10n_ke_shif_min_gross</field>
         <field name="country_id" ref="base.ke"/>
     </record>
-    <record id="rule_parameter_shif_min_basic_amount_2021" model="hr.rule.parameter.value">
+    <record id="rule_parameter_shif_min_gross_amount_2021" model="hr.rule.parameter.value">
         <field name="parameter_value">0</field>
-        <field name="rule_parameter_id" ref="rule_parameter_shif_min_basic"/>
+        <field name="rule_parameter_id" ref="rule_parameter_shif_min_gross"/>
         <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_shif_min_basic_amount_2024" model="hr.rule.parameter.value">
+    <record id="rule_parameter_shif_min_gross_amount_2024" model="hr.rule.parameter.value">
         <field name="parameter_value">10909</field>
-        <field name="rule_parameter_id" ref="rule_parameter_shif_min_basic"/>
+        <field name="rule_parameter_id" ref="rule_parameter_shif_min_gross"/>
         <field name="date_from" eval="datetime(2024, 10, 10).date()"/>
     </record>
 
