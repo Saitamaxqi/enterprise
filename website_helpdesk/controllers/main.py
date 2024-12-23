@@ -172,6 +172,8 @@ class WebsiteForm(form.WebsiteForm):
                 ('res_id', '=', ticket.id),
                 ('access_token', '=', False),
             ])
+            if not attachments:
+                return
             attachments.generate_access_token()
             message = ticket.message_ids.filtered(lambda m: m.attachment_ids == attachments)
             message.is_internal = False

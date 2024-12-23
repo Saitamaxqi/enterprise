@@ -83,3 +83,17 @@ class HelpDeskPortal(HttpCase):
             'use_website_helpdesk_form': True
         })
         self.assertTrue(self.team_with_sla)
+
+    def test_portal_ticket_submission_without_attachment(self):
+        """test for checking creation msg when there is no attachment while creating helpdesk ticket """
+        ticket_data = {
+            'name': "Broken product",
+            'partner_name': 'Jean Michel',
+            'partner_email': 'jean@michel.com',
+            'team_id': self.team_with_sla.id,
+            'description': 'Your product is broken',
+        }
+        response = self.url_open('/website/form/helpdesk.ticket', data=ticket_data)
+        ticket = self.env['helpdesk.ticket'].browse(response.json().get('id'))
+        self.assertTrue(ticket.exists())
+        self.assertEqual(ticket.message_ids[2].subtype_id.name, 'Ticket Created')
