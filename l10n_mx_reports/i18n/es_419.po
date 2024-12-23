@@ -111,12 +111,6 @@ msgid "Invalid SAT code: %s"
 msgstr ""
 
 #. module: l10n_mx_reports
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner__l10n_mx_nationality
-#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_users__l10n_mx_nationality
-msgid "L10N Mx Nationality"
-msgstr "Nacionalidad"
-
-#. module: l10n_mx_reports
 #: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner__l10n_mx_type_of_third
 #: model:ir.model.fields,field_description:l10n_mx_reports.field_res_users__l10n_mx_type_of_third
 msgid "L10N Mx Type Of Third"
@@ -160,6 +154,8 @@ msgstr ""
 
 #. module: l10n_mx_reports
 #: model:account.report.column,name:l10n_mx_reports.diot_report_partner_nationality
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner__l10n_mx_nationality
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_users__l10n_mx_nationality
 msgid "Nationality"
 msgstr "Nacionalidad"
 

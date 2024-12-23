@@ -25,6 +25,7 @@ class ResPartner(models.Model):
         string='Type of Operation',
     )
     l10n_mx_nationality = fields.Char(
+        string='Nationality',
         help='Mexico: Nationality based in the supplier country. Is the seventh column in DIOT report.',
         compute='_compute_nationality', readonly=True)
 
