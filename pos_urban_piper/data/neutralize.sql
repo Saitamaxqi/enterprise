@@ -1,4 +1,4 @@
-UPDATE ir_config_parameter
-   SET value = 'dummy'
- WHERE key in ('pos_urban_piper.urbanpiper_username', 'pos_urban_piper.urbanpiper_apikey');
-
+-- disable urbanpiper
+UPDATE res_company
+SET pos_urbanpiper_username = 'demo',
+    pos_urbanpiper_apikey = 'demo';

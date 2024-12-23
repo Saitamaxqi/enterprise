@@ -366,11 +366,9 @@ class PosConfig(models.Model):
 
     def _check_required_request_params(self, store_required=True):
         msg = ''
-        user_name = self.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.urbanpiper_username', False)
-        api_key = self.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.urbanpiper_apikey', False)
-        if not user_name:
+        if not self.env.company.pos_urbanpiper_username:
             msg += _('UrbanPiper Username is required.\n')
-        if not api_key:
+        if not self.env.company.pos_urbanpiper_apikey:
             msg += _('UrbanPiper API Key is required.\n')
         if not self.urbanpiper_store_identifier and store_required:
             msg += _('UrbanPiper Store ID is required.\n')

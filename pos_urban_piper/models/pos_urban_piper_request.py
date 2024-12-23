@@ -32,10 +32,9 @@ class UrbanPiperClient:
         """
         Make an api call, return response for multiple api requests of urban piper.
         """
-        user_name = self.config.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.urbanpiper_username')
-        api_key = self.config.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.urbanpiper_apikey')
         headers = {
-            'Authorization': f'apikey {user_name}:{api_key}',
+            'Authorization': f'apikey {self.config.env.company.pos_urbanpiper_username}:'
+                             f'{self.config.env.company.pos_urbanpiper_apikey}',
             'Content-Type': 'application/json'
         }
         urbanpiper_url = 'https://pos-int.urbanpiper.com/' if self.config.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.is_production_mode') == 'False' else 'https://api.urbanpiper.com/'

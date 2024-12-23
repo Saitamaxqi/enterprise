@@ -1,6 +1,7 @@
 from . import pos_delivery_provider
 from . import ir_config_parameter
 from . import pos_config
+from . import res_company
 from . import res_config_settings
 from . import pos_urban_piper_request
 from . import pos_order

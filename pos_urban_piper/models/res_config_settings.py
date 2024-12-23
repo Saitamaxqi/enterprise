@@ -8,14 +8,12 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     urbanpiper_username = fields.Char(
-        string='UrbanPiper Username',
-        config_parameter='pos_urban_piper.urbanpiper_username',
-        help='The username for the UrbanPiper account.'
+        related="company_id.pos_urbanpiper_username",
+        readonly=False
     )
     urbanpiper_apikey = fields.Char(
-        string='UrbanPiper API Key',
-        config_parameter='pos_urban_piper.urbanpiper_apikey',
-        help='The API key for accessing the UrbanPiper services.'
+        related="company_id.pos_urbanpiper_apikey",
+        readonly=False
     )
     pos_urbanpiper_store_identifier = fields.Char(
         string='UrbanPiper Store Identifier',
