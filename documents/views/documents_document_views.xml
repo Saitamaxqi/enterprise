@@ -304,7 +304,7 @@
             <form>
                 <sheet>
                     <div class="oe_title">
-                        <h1><field name="name" placeholder="e.g. Finance" options="{'line_breaks': False}" widget="text" readonly="False"/></h1>
+                        <h1><field name="name" placeholder="e.g. Finance" options="{'line_breaks': False}" widget="text" readonly="False" required="True"/></h1>
                     </div>
                 </sheet>
                 <footer>
