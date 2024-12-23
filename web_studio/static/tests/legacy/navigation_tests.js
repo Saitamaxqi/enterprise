@@ -851,18 +851,18 @@ QUnit.module("Studio", (hooks) => {
         await nextTick();
         assert.containsOnce(target, ".o_kanban_view");
         assert.verifySteps([
-            `web_search_read: {"specification":{"display_name":{}},"offset":0,"order":"","limit":40,"context":{"lang":"en","tz":"taht","allowed_company_ids":[1],"uid":7,"bin_size":true,"current_company_id":1},"count_limit":10001,"domain":[]}`,
+            `web_search_read: {"specification":{"display_name":{}},"offset":0,"order":"","limit":40,"context":{"lang":"en","tz":"taht","allowed_company_ids":[1],"uid":7,"bin_size":true},"count_limit":10001,"domain":[]}`,
         ]);
         await toggleSearchBarMenu(target);
         await toggleMenuItem(target, "Apple");
         assert.verifySteps([
-            `web_search_read: {"specification":{"display_name":{}},"offset":0,"order":"","limit":40,"context":{"lang":"en","tz":"taht","allowed_company_ids":[1],"uid":7,"bin_size":true,"current_company_id":1},"count_limit":10001,"domain":[["name","ilike","Apple"]]}`,
+            `web_search_read: {"specification":{"display_name":{}},"offset":0,"order":"","limit":40,"context":{"lang":"en","tz":"taht","allowed_company_ids":[1],"uid":7,"bin_size":true},"count_limit":10001,"domain":[["name","ilike","Apple"]]}`,
         ]);
 
         await openStudio(target);
         assert.containsOnce(target, ".o_web_studio_kanban_view_editor");
         assert.verifySteps([
-            `web_search_read: {"specification":{"display_name":{}},"offset":0,"order":"","limit":1,"context":{"lang":"en","tz":"taht","allowed_company_ids":[1],"uid":7,"bin_size":true,"studio":1,"current_company_id":1},"count_limit":10001,"domain":[["name","ilike","Apple"]]}`,
+            `web_search_read: {"specification":{"display_name":{}},"offset":0,"order":"","limit":1,"context":{"lang":"en","tz":"taht","allowed_company_ids":[1],"uid":7,"bin_size":true,"studio":1},"count_limit":10001,"domain":[["name","ilike","Apple"]]}`,
         ]);
         assert.strictEqual(target.querySelector(".o_kanban_record").textContent, "Applejack");
     });
