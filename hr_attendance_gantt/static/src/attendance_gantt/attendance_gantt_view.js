@@ -25,8 +25,8 @@ export class HrAttendanceGanttController extends GanttController {
     }
 
     get showNoContentHelp() {
-        // Rows's length need to be lower than 4 to avoid nocontent overlapping
-        return !this.model.hasData() && this.model.data.rows.length < 4;
+        // Show if first row is empty (means no records)
+        return this.model.data.rows.length < 2 && this.model.data.rows[0].name === "";
     }
 }
 const viewRegistry = registry.category("views");

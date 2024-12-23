@@ -181,6 +181,11 @@ class HrAttendance(models.Model):
                 employee_unavailable_full_interval |= interval & calendar_unavailable_interval_list
             unavailable_intervals_by_employees[employee.id] = employee_unavailable_full_interval
 
+        flexible_employees = self.env['hr.employee']
+        for calendar, employees in employees_by_calendar.items():
+            if calendar.flexible_hours:
+                flexible_employees |= employees
+
         result = {}
         for employee_id in res_ids:
             # When an employee doesn't have any calendar,
@@ -191,6 +196,13 @@ class HrAttendance(models.Model):
                     'stop': stop.astimezone(UTC),
                 }]
                 continue
+
+            # When an employee has a flexible calendar,
+            # he is considered available for the entire interval
+            if employee_id in flexible_employees.ids:
+                result[employee_id] = []
+                continue
+
             # When an employee doesn't have a calendar for a part of the entire interval,
             # he will be unavailable for this part
             if employee_id in periods_without_calendar_by_employee:
