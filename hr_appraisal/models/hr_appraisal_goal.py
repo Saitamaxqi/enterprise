@@ -59,7 +59,7 @@ class HrAppraisalGoal(models.Model):
     def _notify_by_email_prepare_rendering_context(self, message, msg_vals=False, model_description=False,
                                                    force_email_company=False, force_email_lang=False):
         render_context = super()._notify_by_email_prepare_rendering_context(
-            message, msg_vals, model_description=model_description,
+            message, msg_vals=msg_vals, model_description=model_description,
             force_email_company=force_email_company, force_email_lang=force_email_lang
         )
         if self.deadline:

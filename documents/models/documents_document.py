@@ -1144,7 +1144,7 @@ class DocumentsDocument(models.Model):
                 subtitles=[self.display_name, _('Your Role: %s', roles_info[role, partner.lang]['role_label'])],
             )
 
-    def _notify_get_recipients_groups(self, message, model_description, msg_vals=None):
+    def _notify_get_recipients_groups(self, message, model_description, msg_vals=False):
         groups = super()._notify_get_recipients_groups(
             message, model_description, msg_vals=msg_vals
         )
@@ -1254,8 +1254,8 @@ class DocumentsDocument(models.Model):
 
     @api.model
     def message_new(self, msg_dict, custom_values=None):
-        """When an email comes, create a document with the default values,
-        then let `_message_post_after_hook` create one document per attachment."""
+        # When an email comes, create a document with the default values,
+        # then let `_message_post_after_hook` create one document per attachment.
         custom_values = custom_values or {}
 
         folder = self.env['documents.document'].browse(custom_values.get('folder_id'))
@@ -1289,9 +1289,8 @@ class DocumentsDocument(models.Model):
         return values
 
     def _message_post_after_hook(self, message, msg_vals):
-        """ If the res model was an attachment and a mail, adds all the custom values of the linked
-        document settings to the attachments of the mail.
-        """
+        # If the res model was an attachment and a mail, adds all the custom values of the linked
+        # document settings to the attachments of the mail.
         m2m_commands = msg_vals['attachment_ids']
         attachments = self.env['ir.attachment'].browse([x[1] for x in m2m_commands])
         if (not self.env.context.get("no_document") or message.message_type == 'email') and attachments:

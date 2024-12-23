@@ -515,9 +515,6 @@ class QualityAlert(models.Model):
 
     @api.model
     def message_new(self, msg_dict, custom_values=None):
-        """ Override, used with creation by email alias. The purpose of the override is
-        to use the subject for title and body for description instead of the name.
-        """
         # We need to add the name in custom_values or it will use the subject.
         custom_values['name'] = self.env['ir.sequence'].next_by_code('quality.alert') or _('New')
         if msg_dict.get('subject'):

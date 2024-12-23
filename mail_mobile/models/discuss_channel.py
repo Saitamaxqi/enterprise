@@ -8,7 +8,7 @@ class DiscussChannel(models.Model):
     _inherit = 'discuss.channel'
 
     def _notify_thread_by_ocn(self, message, recipients_data, msg_vals=False, **kwargs):
-        """ Specifically handle channel members. """
+        # Specifically handle channel members
         icp_sudo = self.env['ir.config_parameter'].sudo()
         # Avoid to send notification if this feature is disabled or if no user use the mobile app.
         if not icp_sudo.get_param('odoo_ocn.project_id') or not icp_sudo.get_param('mail_mobile.enable_ocn'):
@@ -35,9 +35,10 @@ class DiscussChannel(models.Model):
         return super()._notify_thread_by_ocn(message, channel_rdata, msg_vals=msg_vals, **kwargs)
 
     def _notify_by_ocn_prepare_payload(self, message, receiver_ids, msg_vals=False):
+        msg_vals = msg_vals or {}
         payload = super()._notify_by_ocn_prepare_payload(message, receiver_ids, msg_vals=msg_vals)
         payload['action'] = 'mail.action_discuss'
-        record_name = msg_vals.get('record_name') if msg_vals and 'record_name' in msg_vals else message.record_name
+        record_name = msg_vals['record_name'] if 'record_name' in msg_vals else message.record_name
         if self.channel_type == 'chat':
             payload['subject'] = payload['author_name']
             payload['type'] = 'chat'

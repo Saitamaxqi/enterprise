@@ -51,17 +51,15 @@ class MailThread(models.AbstractModel):
         if not icp_sudo.get_param('odoo_ocn.project_id') or not icp_sudo.get_param('mail_mobile.enable_ocn'):
             return
 
-        msg_vals = dict(msg_vals or {})
-        pids = self._extract_partner_ids_for_notifications(message, msg_vals, recipients_data)
-
+        pids = self._notify_get_recipients_for_extra_notifications(message, recipients_data, msg_vals=msg_vals)
         if not pids:
             return
 
         self._notify_by_ocn_send(message, pids, msg_vals=msg_vals)
 
     def _notify_by_ocn_send(self, message, partner_ids, msg_vals=False):
-        """
-        Send the notification to a list of partners
+        """ Send the notification to a list of partners
+
         :param message: current mail.message record
         :param partner_ids: list of partner IDs
         :param msg_vals: see ``_notify_thread_by_ocn()``;
@@ -80,7 +78,7 @@ class MailThread(models.AbstractModel):
             chunks = []
             at_mention_ocn_token_list = []
             identities_ocn_token_list = []
-            at_mention_analyser_id_list = self._at_mention_analyser(msg_vals.get('body') if msg_vals else message.body)
+            at_mention_analyser_id_list = self._at_mention_analyser(msg_vals['body'] if msg_vals and 'body' in msg_vals else message.body)
             for receiver_id in receiver_ids:
                 if receiver_id.id in at_mention_analyser_id_list:
                     at_mention_ocn_token_list.append(receiver_id.ocn_token)
@@ -114,29 +112,26 @@ class MailThread(models.AbstractModel):
         This info will be delivered to mobile device via Google Firebase Cloud
         Messaging (FCM). And it is having limit of 4000 bytes (4kb)
         """
-        author_id = [msg_vals.get('author_id')] if 'author_id' in msg_vals else message.author_id.ids
+        msg_vals = msg_vals or {}
+        author_id = msg_vals['author_id'] if 'author_id' in msg_vals else message.author_id.ids
         author_name = self.env['res.partner'].browse(author_id).name
-        model = msg_vals.get('model') if msg_vals else message.model
-        res_id = msg_vals.get('res_id') if msg_vals else message.res_id
-        record_name = msg_vals.get('record_name') if msg_vals else message.record_name
-        subject = msg_vals.get('subject') if msg_vals else message.subject
+        body = msg_vals['body'] if 'body' in msg_vals else message.body
+        model = msg_vals['model'] if 'model' in msg_vals else message.model
+        res_id = msg_vals['res_id'] if 'res_id' in msg_vals else message.res_id
+        record_name = msg_vals['record_name'] if 'record_name' in msg_vals else message.record_name
+        subject = msg_vals['subject'] if 'subject' in msg_vals else message.subject
 
         payload = {
+            "android_channel_id": "Following",
             "author_name": author_name,
             "model": model,
             "res_id": res_id,
-            "db_id": self.env['res.config.settings']._get_ocn_uuid()
+            "db_id": self.env['res.config.settings']._get_ocn_uuid(),
+            "subject": record_name or subject
         }
-
-        if not payload['model'] and msg_vals and msg_vals.get('body'):
-            payload['model'], payload['res_id'] = self._extract_model_and_id(msg_vals)
-
-        payload['subject'] = record_name or subject
-        payload['android_channel_id'] = 'Following'
 
         # Check payload limit of 4000 bytes (4kb) and if remain space add the body
         payload_length = len(str(payload).encode('utf-8'))
-        body = msg_vals.get('body') if msg_vals else message.body
         # FIXME: when msg_type is 'user_notification', the type value of msg_vals.get('body') is bytes
         if isinstance(body, bytes):
             body = body.decode("utf-8")
