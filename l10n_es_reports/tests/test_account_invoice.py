@@ -150,3 +150,33 @@ class TestAccountInvoice(TestAccountReportsCommon):
             2: (2019, '4T', 'A', '01', '0000', 'F2', 'I01', 3000, '12/31/2019', '', '', 'INV/2019/00002', '', '', '', '', False, '01', 'S1', '', 3630, 3000, 21, 630, 0, 0, '', '', '', '', 0, 0, '', '', '', ''),
             3: (2019, '4T', 'A', '01', '0000', 'F1', 'I01', 5000, '12/31/2019', '', '', 'INV/2019/00001', '', '', '', '', 'España', '01', 'S1', '', 6050, 5000, 21, 1050, 0, 0, '', '', '', '', 0, 0, '', '', '', ''),
         })
+
+    def test_exclude_349_from_internal_customer_invoice(self):
+        """
+        Test that when creating an invoice for a spanish customer, l10n_es_reports_mod349_invoice_type is set to False
+        also test that when creating an invoice for a european partner l10n_es_reports_mod349_invoice_type is set
+        to its default value
+        """
+        invoice_es = self.init_invoice(
+            'out_invoice',
+            partner=self.partner_es,
+            amounts=[10],
+            post=True,
+        )
+
+        self.assertEqual(invoice_es.l10n_es_reports_mod347_invoice_type, 'regular')
+        self.assertFalse(invoice_es.l10n_es_reports_mod349_invoice_type)
+
+        partner_fr = self.env['res.partner'].create({
+            'name': 'France',
+            'country_id': self.env.ref('base.fr').id,
+            'is_company': True,
+        })
+        invoice_eu = self.init_invoice(
+            'out_invoice',
+            partner=partner_fr,
+            amounts=[10],
+            post=True,
+        )
+
+        self.assertEqual(invoice_eu.l10n_es_reports_mod349_invoice_type, 'E')
