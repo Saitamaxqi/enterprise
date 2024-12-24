@@ -414,7 +414,8 @@ class CalendarEvent(models.Model):
                 **vals,
                 'auto_delete_keep_log': False,
                 'subtype_id': self.env['ir.model.data']._xmlid_to_res_id('appointment.mt_calendar_event_canceled'),
-                'email_layout_xmlid': 'mail.mail_notification_light'
+                'email_layout_xmlid': 'mail.mail_notification_light',
+                'notify_author': True,
             })
         return res
 

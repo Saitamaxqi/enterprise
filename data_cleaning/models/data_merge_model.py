@@ -165,7 +165,6 @@ class Data_MergeModel(models.Model):
                     )
                 ),
                 model=self._name,
-                notify_author=True,
                 partner_ids=partner_ids,
                 res_id=self.id,
                 subject=self.env._('Duplicates to Merge'),

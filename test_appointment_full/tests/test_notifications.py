@@ -8,6 +8,7 @@ from odoo.addons.google_calendar.tests.test_sync_common import TestSyncGoogle
 from odoo.addons.microsoft_calendar.models.res_users import ResUsers as MsftUser
 from odoo.addons.microsoft_calendar.tests.common import TestCommon as MsftTestCommon
 from odoo.addons.microsoft_calendar.utils.microsoft_calendar import MicrosoftCalendarService
+from odoo.tests import tagged
 
 
 class TestAppointmentNotificationCommon(AppointmentCommon):
@@ -28,6 +29,7 @@ class TestAppointmentNotificationCommon(AppointmentCommon):
         })
 
 
+@tagged('post_install', '-at_install', 'mail_flow')
 class TestAppointmentNotificationsMail(TestAppointmentNotificationCommon):
     @freeze_time('2020-02-01 09:00:00')
     def test_appointment_cancel_notification_mail(self):
@@ -35,13 +37,14 @@ class TestAppointmentNotificationsMail(TestAppointmentNotificationCommon):
         self.env.flush_all()
         self.cr.precommit.run()
         with self.mock_mail_gateway():
-            appointment.with_context(mail_notify_author=True).action_archive()
+            appointment.action_archive()
             self.env.flush_all()
             self.cr.precommit.run()
         self.assertMailMail(appointment.partner_id, 'sent', author=appointment.partner_id)
         self.assertMailMail(appointment.partner_ids - appointment.partner_id, 'sent', author=appointment.partner_id)
 
 
+@tagged('post_install', '-at_install', 'mail_flow')
 class TestSyncOdoo2GoogleMail(TestSyncGoogle, TestAppointmentNotificationCommon):
     @freeze_time('2020-02-01 09:00:00')
     @patch.object(GoogleUser, '_get_google_calendar_token', lambda user: 'some-token')
@@ -60,6 +63,7 @@ class TestSyncOdoo2GoogleMail(TestSyncGoogle, TestAppointmentNotificationCommon)
         self.assertNotSentEmail()
 
 
+@tagged('post_install', '-at_install', 'mail_flow')
 class TestAppointmentNotificationsMicrosoftCalendar(MsftTestCommon, TestAppointmentNotificationCommon):
     @freeze_time('2020-02-01 09:00:00')
     @patch.object(MsftUser, '_get_microsoft_calendar_token', lambda user: 'some-token')

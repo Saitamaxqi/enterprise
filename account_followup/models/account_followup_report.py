@@ -388,7 +388,7 @@ Best Regards,
                 # Otherwise, if the follow-up is automatic, the author_id will be the followup responsible or OdooBot.
                 author_id = options.get('author_id', partner._get_followup_responsible().partner_id.id)
 
-                partner.with_context(mail_post_autofollow=True, mail_notify_author=True, lang=partner.lang or self.env.user.lang).message_post(
+                partner.with_context(mail_post_autofollow=True, lang=partner.lang or self.env.user.lang).message_post(
                     partner_ids=[to_send_partner.id],
                     author_id=author_id,
                     email_from=self._get_email_from(options),
@@ -396,6 +396,7 @@ Best Regards,
                     subject=self._get_email_subject(options),
                     reply_to=self._get_email_reply_to(options),
                     model_description=_('payment reminder'),
+                    notify_author=True,
                     email_layout_xmlid='mail.mail_notification_light',
                     attachment_ids=attachment_ids,
                     subtype_id=self.env['ir.model.data']._xmlid_to_res_id('mail.mt_note'),
