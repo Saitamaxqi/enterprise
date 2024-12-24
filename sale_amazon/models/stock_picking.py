@@ -215,6 +215,9 @@ class StockPicking(models.Model):
                     fulfillment_data_, 'CarrierName'
                 ).text = picking_._get_formatted_carrier_name()
                 ElementTree.SubElement(
+                    fulfillment_data_, 'ShippingMethod'
+                ).text = picking_.carrier_id.name
+                ElementTree.SubElement(
                     fulfillment_data_, 'ShipperTrackingNumber'
                 ).text = picking_.carrier_tracking_ref
 
