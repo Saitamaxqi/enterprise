@@ -1,5 +1,6 @@
 import { patch } from "@web/core/utils/patch";
 import { PosStore, posService } from "@point_of_sale/app/services/pos_store";
+import { isFiscalPrinterActive } from "./helpers/utils";
 
 patch(posService, {
     dependencies: [...posService.dependencies, "epson_fiscal_printer"],
@@ -8,7 +9,7 @@ patch(posService, {
 patch(PosStore.prototype, {
     async setup(env, { epson_fiscal_printer }) {
         await super.setup(...arguments);
-        if (this.config.company_id.country_id.code === "IT") {
+        if (isFiscalPrinterActive(this.config)) {
             const { it_fiscal_printer_https, it_fiscal_printer_ip } = this.config;
             this.fiscalPrinter = epson_fiscal_printer(
                 it_fiscal_printer_https,
@@ -21,7 +22,7 @@ patch(PosStore.prototype, {
     },
     getSyncAllOrdersContext(orders) {
         const context = super.getSyncAllOrdersContext(orders);
-        if (this.config.company_id.country_id.code === "IT") {
+        if (isFiscalPrinterActive(this.config)) {
             // No need to slow down the order syncing by generating the PDF in the server.
             // The invoice will be printed by the fiscal printer.
             context["generate_pdf"] = false;
@@ -30,7 +31,7 @@ patch(PosStore.prototype, {
     },
     // override
     async printReceipt() {
-        if (this.config.company_id.country_id.code !== "IT") {
+        if (!isFiscalPrinterActive(this.config)) {
             return super.printReceipt(...arguments);
         }
 

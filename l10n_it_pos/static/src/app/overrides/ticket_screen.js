@@ -2,11 +2,12 @@
 
 import { patch } from "@web/core/utils/patch";
 import { TicketScreen } from "@point_of_sale/app/screens/ticket_screen/ticket_screen";
+import { isFiscalPrinterActive } from "./helpers/utils";
 
 patch(TicketScreen.prototype, {
     //@override
     async addAdditionalRefundInfo(order, destinationOrder) {
-        if (this.pos.config.company_id.country_id.code !== "IT") {
+        if (!isFiscalPrinterActive(this.pos.config)) {
             super.addAdditionalRefundInfo(...arguments);
         }
         destinationOrder.update({
@@ -19,7 +20,7 @@ patch(TicketScreen.prototype, {
     //@override
     async onDoRefund() {
         await super.onDoRefund(...arguments);
-        if (this.pos.config.company_id.country_id.code === "IT") {
+        if (isFiscalPrinterActive(this.pos.config)) {
             this.pos.showScreen("PaymentScreen", { orderUuid: this.pos.selectedOrderUuid });
         }
     },

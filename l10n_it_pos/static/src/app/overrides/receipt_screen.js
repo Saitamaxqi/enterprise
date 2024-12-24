@@ -1,13 +1,14 @@
 import { patch } from "@web/core/utils/patch";
 import { ReceiptScreen } from "@point_of_sale/app/screens/receipt_screen/receipt_screen";
 import { onMounted } from "@odoo/owl";
+import { isFiscalPrinterActive } from "./helpers/utils";
 
 patch(ReceiptScreen.prototype, {
     setup() {
         super.setup(...arguments);
         onMounted(async () => {
             const order = this.pos.getOrder();
-            if (this.pos.config.company_id.country_id.code === "IT" && !order.nb_print) {
+            if (isFiscalPrinterActive(this.pos.config) && !order.nb_print) {
                 //make sure we only print the first time around
                 await this.printReceipt();
                 if (this.pos.config.it_fiscal_cash_drawer) {

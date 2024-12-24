@@ -2,17 +2,18 @@
 
 import { ClosePosPopup } from "@point_of_sale/app/components/popups/closing_popup/closing_popup";
 import { patch } from "@web/core/utils/patch";
+import { isFiscalPrinterActive } from "./helpers/utils";
 
 patch(ClosePosPopup.prototype, {
     downloadSalesReport() {
-        if (this.pos.config.company_id.country_id.code !== "IT") {
+        if (!isFiscalPrinterActive(this.pos.config)) {
             return super.downloadSalesReport();
         } else {
             return this.pos.fiscalPrinter.printXReport();
         }
     },
     async closeSession() {
-        if (this.pos.config.company_id.country_id.code === "IT") {
+        if (isFiscalPrinterActive(this.pos.config)) {
             const zResult = await this.pos.fiscalPrinter.printZReport();
             if (!zResult.success) {
                 // print XZ report if the Z report failed because of status 17.
