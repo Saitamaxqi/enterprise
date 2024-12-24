@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-25 09:12+0000\n"
-"PO-Revision-Date: 2024-10-25 09:12+0000\n"
+"POT-Creation-Date: 2024-12-24 15:20+0000\n"
+"PO-Revision-Date: 2024-12-24 15:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2013,6 +2013,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:knowledge.knowledge_article_action_form
 #: model:ir.actions.act_window,name:knowledge.knowledge_article_action_form_show_resolved
 #: model:ir.actions.server,name:knowledge.ir_actions_server_knowledge_home_page
+#: model:ir.ui.menu,name:knowledge.knowledge_menu_article
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Articles"
 msgstr ""
@@ -2389,6 +2390,18 @@ msgstr ""
 #: code:addons/knowledge/static/src/js/knowledge_controller.js:0
 #: code:addons/knowledge/static/src/macros/abstract_macro.js:0
 msgid "Close"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/topbar/topbar.js:0
+msgid "Close chatter panel"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/topbar/topbar.js:0
+msgid "Close comments panel"
 msgstr ""
 
 #. module: knowledge
@@ -2771,6 +2784,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__display_name
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__display_name
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__display_name
+#: model:ir.model.fields,field_description:knowledge.field_res_partner__display_name
+#: model:ir.model.fields,field_description:knowledge.field_res_users__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -3247,6 +3262,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__id
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__id
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__id
+#: model:ir.model.fields,field_description:knowledge.field_res_partner__id
+#: model:ir.model.fields,field_description:knowledge.field_res_users__id
 msgid "ID"
 msgstr ""
 
@@ -3335,6 +3352,7 @@ msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/core/article_index/readonly_article_index.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/article_index_plugin/article_index_plugin.js:0
 msgid "Index"
 msgstr ""
@@ -3652,6 +3670,12 @@ msgid "Keep track of your company to-dos and share them with your colleagues."
 msgstr ""
 
 #. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/wysiwyg_article_helper/wysiwyg_article_helper.xml:0
+msgid "Keep writing, or choose an option below to jump right in!"
+msgstr ""
+
+#. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_company_newsletter
 msgid ""
 "Keep your colleagues informed about the company's latest developments and "
@@ -3857,12 +3881,6 @@ msgstr ""
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_sprint_calendar
 msgid "Manage your team schedule for the upcoming sprint."
-msgstr ""
-
-#. module: knowledge
-#. odoo-python
-#: code:addons/knowledge/models/knowledge_article_thread.py:0
-msgid "Mark Comment as Closed"
 msgstr ""
 
 #. module: knowledge
@@ -4090,11 +4108,16 @@ msgstr ""
 #. odoo-javascript
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
-#: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
 #: code:addons/knowledge/static/src/js/knowledge_controller.js:0
 #: code:addons/knowledge/static/src/views/item_calendar/item_calendar_views.xml:0
 #: model:knowledge.article.stage,name:knowledge.knowledge_article_template_stage_new
 msgid "New"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/sidebar/sidebar.xml:0
+msgid "New Article"
 msgstr ""
 
 #. module: knowledge
@@ -4160,6 +4183,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "No Article in Trash"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/sidebar/sidebar_row.xml:0
+msgid "No Articles here"
 msgstr ""
 
 #. module: knowledge
@@ -4327,13 +4356,19 @@ msgstr ""
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
-msgid "Open comments panel"
+msgid "Open Version History"
 msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
-msgid "Open history"
+#: code:addons/knowledge/static/src/components/topbar/topbar.js:0
+msgid "Open chatter panel"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/topbar/topbar.js:0
+msgid "Open comments panel"
 msgstr ""
 
 #. module: knowledge
@@ -4850,11 +4885,6 @@ msgid "Save position"
 msgstr ""
 
 #. module: knowledge
-#: model:ir.ui.menu,name:knowledge.knowledge_menu_article
-msgid "Search"
-msgstr ""
-
-#. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_search
 msgid "Search Favorites"
 msgstr ""
@@ -4879,12 +4909,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.js:0
 msgid "Search an Article..."
-msgstr ""
-
-#. module: knowledge
-#. odoo-javascript
-#: code:addons/knowledge/static/src/components/sidebar/sidebar.xml:0
-msgid "Search an article..."
 msgstr ""
 
 #. module: knowledge
@@ -5177,10 +5201,8 @@ msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/wysiwyg_article_helper/wysiwyg_article_helper.xml:0
-msgid ""
-"Start typing to continue with an empty page or pick an option below to get "
-"started."
+#: code:addons/knowledge/static/src/components/knowledge_html_field/knowledge_html_field.js:0
+msgid "Start with a title..."
 msgstr ""
 
 #. module: knowledge
@@ -5404,6 +5426,14 @@ msgid ""
 msgstr ""
 
 #. module: knowledge
+#. odoo-python
+#: code:addons/knowledge/__init__.py:0
+msgid ""
+"The version of the lxml package used is not supported. Consider reinstalling"
+" lxml package using 'pip install --nobinary :all: lxml'"
+msgstr ""
+
+#. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/view/embedded_view.xml:0
 msgid "The view does not exist or you are not allowed to access to it."
@@ -5506,12 +5536,6 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.xml:0
 #: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
 msgid "Toggle aside menu"
-msgstr ""
-
-#. module: knowledge
-#. odoo-javascript
-#: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
-msgid "Toggle chatter"
 msgstr ""
 
 #. module: knowledge
@@ -6093,7 +6117,7 @@ msgstr ""
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_trash_notification
-msgid "been sent to Trash.<br/><br/>"
+msgid "been sent to Trash.<br/>"
 msgstr ""
 
 #. module: knowledge
@@ -6189,12 +6213,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/comments/comments_panel/comments_panel.xml:0
 msgid "resolved"
-msgstr ""
-
-#. module: knowledge
-#. odoo-javascript
-#: code:addons/knowledge/static/src/components/sidebar/sidebar.xml:0
-msgid "search"
 msgstr ""
 
 #. module: knowledge

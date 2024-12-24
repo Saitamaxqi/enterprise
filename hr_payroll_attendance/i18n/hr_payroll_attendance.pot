@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:25+0000\n"
-"PO-Revision-Date: 2024-09-25 09:25+0000\n"
+"POT-Creation-Date: 2024-12-24 15:21+0000\n"
+"PO-Revision-Date: 2024-12-24 15:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,6 +28,13 @@ msgid "Attendances"
 msgstr ""
 
 #. module: hr_payroll_attendance
+#: model:ir.model.fields,field_description:hr_payroll_attendance.field_hr_contract__display_name
+#: model:ir.model.fields,field_description:hr_payroll_attendance.field_hr_payslip__display_name
+#: model:ir.model.fields,field_description:hr_payroll_attendance.field_hr_payslip_worked_days__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: hr_payroll_attendance
 #: model_terms:ir.ui.view,arch_db:hr_payroll_attendance.hr_attendance_view_inherit_filter
 msgid "Employee Code"
 msgstr ""
@@ -35,6 +42,13 @@ msgstr ""
 #. module: hr_payroll_attendance
 #: model:ir.model,name:hr_payroll_attendance.model_hr_contract
 msgid "Employee Contract"
+msgstr ""
+
+#. module: hr_payroll_attendance
+#: model:ir.model.fields,field_description:hr_payroll_attendance.field_hr_contract__id
+#: model:ir.model.fields,field_description:hr_payroll_attendance.field_hr_payslip__id
+#: model:ir.model.fields,field_description:hr_payroll_attendance.field_hr_payslip_worked_days__id
+msgid "ID"
 msgstr ""
 
 #. module: hr_payroll_attendance

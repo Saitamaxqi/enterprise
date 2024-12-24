@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-25 09:14+0000\n"
-"PO-Revision-Date: 2024-10-25 09:14+0000\n"
+"POT-Creation-Date: 2024-12-24 15:22+0000\n"
+"PO-Revision-Date: 2024-12-24 15:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -25,15 +25,15 @@ msgstr ""
 msgid ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; margin:0px auto;\"><tbody>\n"
 "        <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
-"            Dear <t t-esc=\"object.name\"></t>, your personal documents access link is available for you.<br><br>\n"
-"            You'll find all your personal HR documents in this folder.<br><br>\n"
-"            Please keep this link secure.<br><br>\n"
+"            Dear <t t-esc=\"object.name\"/>, your personal documents access link is available for you.<br/><br/>\n"
+"            You'll find all your personal HR documents in this folder.<br/><br/>\n"
+"            Please keep this link secure.<br/><br/>\n"
 "            <div style=\"text-align: center; padding: 16px 0px 16px 0px; font-size: 14px;\">\n"
 "                <a t-attf-href=\"{{ object._get_documents_link_url() }}\" target=\"_blank\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
 "                    Your Documents\n"
 "                </a>\n"
 "            </div>\n"
-"            Have a nice day,<br>\n"
+"            Have a nice day,<br/>\n"
 "            The HR Team\n"
 "        </td></tr>\n"
 "    </tbody></table>\n"
@@ -68,6 +68,16 @@ msgstr ""
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_hr_departure_wizard
 msgid "Departure Wizard"
+msgstr ""
+
+#. module: documents_hr
+#: model:ir.model.fields,field_description:documents_hr.field_documents_redirect__display_name
+#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__display_name
+#: model:ir.model.fields,field_description:documents_hr.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:documents_hr.field_res_company__display_name
+#: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:documents_hr.field_res_users__display_name
+msgid "Display Name"
 msgstr ""
 
 #. module: documents_hr
@@ -134,18 +144,28 @@ msgid "Human Resources"
 msgstr ""
 
 #. module: documents_hr
+#: model:ir.model.fields,field_description:documents_hr.field_documents_redirect__id
+#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__id
+#: model:ir.model.fields,field_description:documents_hr.field_hr_employee__id
+#: model:ir.model.fields,field_description:documents_hr.field_res_company__id
+#: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__id
+#: model:ir.model.fields,field_description:documents_hr.field_res_users__id
+msgid "ID"
+msgstr ""
+
+#. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
 msgid "My documents"
 msgstr ""
 
 #. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__private_email
-msgid "Private Email"
+#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__send_hr_documents_access_link
+msgid "Send Access Link"
 msgstr ""
 
 #. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__send_hr_documents_access_link
-msgid "Send Access Link"
+#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__send_documents_enabled
+msgid "Send Docs"
 msgstr ""
 
 #. module: documents_hr
@@ -177,8 +197,21 @@ msgid "The access link has been sent to the employee."
 msgstr ""
 
 #. module: documents_hr
+#. odoo-python
+#: code:addons/documents_hr/wizard/hr_departure_wizard.py:0
+msgid ""
+"The following employees have no private email or user on record and will not be sent a link to their documents:\n"
+" %s"
+msgstr ""
+
+#. module: documents_hr
 #: model:ir.model,name:documents_hr.model_res_users
 msgid "User"
+msgstr ""
+
+#. module: documents_hr
+#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__warning_message
+msgid "Warning Message"
 msgstr ""
 
 #. module: documents_hr

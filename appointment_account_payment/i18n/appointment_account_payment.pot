@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:26+0000\n"
-"PO-Revision-Date: 2024-09-25 09:26+0000\n"
+"POT-Creation-Date: 2024-12-24 15:21+0000\n"
+"PO-Revision-Date: 2024-12-24 15:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -229,6 +229,9 @@ msgid ""
 msgstr ""
 
 #. module: appointment_account_payment
+#: model:ir.model.fields,field_description:appointment_account_payment.field_account_move__display_name
+#: model:ir.model.fields,field_description:appointment_account_payment.field_appointment_answer_input__display_name
+#: model:ir.model.fields,field_description:appointment_account_payment.field_appointment_type__display_name
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__display_name
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking_line__display_name
 msgid "Display Name"
@@ -251,6 +254,9 @@ msgid "Guests"
 msgstr ""
 
 #. module: appointment_account_payment
+#: model:ir.model.fields,field_description:appointment_account_payment.field_account_move__id
+#: model:ir.model.fields,field_description:appointment_account_payment.field_appointment_answer_input__id
+#: model:ir.model.fields,field_description:appointment_account_payment.field_appointment_type__id
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__id
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking_line__id
 msgid "ID"

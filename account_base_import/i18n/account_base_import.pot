@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:26+0000\n"
-"PO-Revision-Date: 2024-09-25 09:26+0000\n"
+"POT-Creation-Date: 2024-12-24 15:21+0000\n"
+"PO-Revision-Date: 2024-12-24 15:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,10 @@ msgid "Customers"
 msgstr ""
 
 #. module: account_base_import
+#: model:ir.model.fields,field_description:account_base_import.field_account_account__display_name
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__display_name
+#: model:ir.model.fields,field_description:account_base_import.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:account_base_import.field_base_import_import__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -122,7 +125,10 @@ msgid "FEC Import module"
 msgstr ""
 
 #. module: account_base_import
+#: model:ir.model.fields,field_description:account_base_import.field_account_account__id
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__id
+#: model:ir.model.fields,field_description:account_base_import.field_account_move_line__id
+#: model:ir.model.fields,field_description:account_base_import.field_base_import_import__id
 msgid "ID"
 msgstr ""
 
@@ -374,7 +380,8 @@ msgstr ""
 #. module: account_base_import
 #. odoo-python
 #: code:addons/account_base_import/models/account_account.py:0
-msgid "You must provide both the `code_mapping_ids/company_id` and the "
+msgid ""
+"You must provide both the `code_mapping_ids/company_id` and the "
 "`code_mapping_ids/code` columns."
 msgstr ""
 

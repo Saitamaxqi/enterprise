@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:27+0000\n"
-"PO-Revision-Date: 2024-09-25 09:27+0000\n"
+"POT-Creation-Date: 2024-12-24 15:22+0000\n"
+"PO-Revision-Date: 2024-12-24 15:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,10 +19,10 @@ msgstr ""
 #: model:mail.template,body_html:iap_extract.iap_extract_no_credit
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
-"    <p>Dear,<br></p>\n"
-"    <p>There are no more credits on your IAP OCR account.<br>\n"
+"    <p>Dear,<br/></p>\n"
+"    <p>There are no more credits on your IAP OCR account.<br/>\n"
 "    You can charge your IAP OCR account in the settings page.</p>\n"
-"    <p>Best regards,<br></p>\n"
+"    <p>Best regards,<br/></p>\n"
 "    <p>Odoo S.A.</p>\n"
 "</div>"
 msgstr ""
@@ -95,6 +95,11 @@ msgid ""
 msgstr ""
 
 #. module: iap_extract
+#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
 msgid "Document is being digitized"
@@ -162,6 +167,11 @@ msgstr ""
 #: model:mail.template,name:iap_extract.iap_extract_no_credit
 #: model:mail.template,subject:iap_extract.iap_extract_no_credit
 msgid "IAP Extract Notification"
+msgstr ""
+
+#. module: iap_extract
+#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__id
+msgid "ID"
 msgstr ""
 
 #. module: iap_extract

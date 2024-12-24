@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:27+0000\n"
-"PO-Revision-Date: 2024-09-25 09:27+0000\n"
+"POT-Creation-Date: 2024-12-24 15:22+0000\n"
+"PO-Revision-Date: 2024-12-24 15:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -67,6 +67,11 @@ msgid "Attachment"
 msgstr ""
 
 #. module: hr_contract_sign
+#: model:sign.template,redirect_url_text:hr_contract_sign.template_sign_termination
+msgid "Close"
+msgstr ""
+
+#. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__contract_id
 msgid "Contract"
 msgstr ""
@@ -97,7 +102,13 @@ msgid "Discard"
 msgstr ""
 
 #. module: hr_contract_sign
+#: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract__display_name
+#: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_history__display_name
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__display_name
+#: model:ir.model.fields,field_description:hr_contract_sign.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:hr_contract_sign.field_mail_activity_plan_template__display_name
+#: model:ir.model.fields,field_description:hr_contract_sign.field_mail_activity_schedule__display_name
+#: model:ir.model.fields,field_description:hr_contract_sign.field_res_users__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -178,7 +189,13 @@ msgid "Has Both Template"
 msgstr ""
 
 #. module: hr_contract_sign
+#: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract__id
+#: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_history__id
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__id
+#: model:ir.model.fields,field_description:hr_contract_sign.field_hr_employee__id
+#: model:ir.model.fields,field_description:hr_contract_sign.field_mail_activity_plan_template__id
+#: model:ir.model.fields,field_description:hr_contract_sign.field_mail_activity_schedule__id
+#: model:ir.model.fields,field_description:hr_contract_sign.field_res_users__id
 msgid "ID"
 msgstr ""
 
@@ -229,11 +246,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_contract_sign/wizard/hr_contract_sign_document_wizard.py:0
 msgid "Only %s has to sign."
-msgstr ""
-
-#. module: hr_contract_sign
-#: model:sign.template,redirect_url_text:hr_contract_sign.template_sign_termination
-msgid "Open Link"
 msgstr ""
 
 #. module: hr_contract_sign

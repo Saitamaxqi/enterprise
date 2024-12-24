@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:26+0000\n"
-"PO-Revision-Date: 2024-09-25 09:26+0000\n"
+"POT-Creation-Date: 2024-12-24 15:21+0000\n"
+"PO-Revision-Date: 2024-12-24 15:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,24 +18,20 @@ msgstr ""
 #. module: appointment_hr_recruitment
 #: model:mail.template,body_html:appointment_hr_recruitment.email_template_data_applicant_schedule_interview
 msgid ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"    <tr>\n"
-"        <td valign=\"top\">\n"
-"            <h2>Hello,</h2>\n"
-"            <div style=\"font-size: 13px;\">\n"
-"                Thanks for your application and interest in <t t-out=\"object.company_id.name or ''\">YourCompany</t>.<br>\n"
-"                <br>\n"
-"                I would like to organize a phone interview with you, it should last about 30 min.\n"
-"                We'll go through your resume and motivations to join the <t t-out=\"object.company_id.name or ''\">YourCompany</t> team.\n"
-"                You can book a slot in our agenda by cliking on the button below.<br>\n"
-"            </div>\n"
-"            <br>\n"
-"            <a t-att-href=\"env['ir.config_parameter'].sudo().get_param('web.base.url') + '/book/interview'\" style=\"background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;\">Schedule my interview</a><br>\n"
-"            <br>\n"
-"            Best regards,\n"
-"        </td>\n"
-"    </tr>\n"
-"</table>\n"
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <h2>Hello,</h2>\n"
+"    <div style=\"font-size: 13px;\">\n"
+"        Thanks for your application and interest in <t t-out=\"object.company_id.name or ''\">YourCompany</t>.<br/>\n"
+"        <br/>\n"
+"        I would like to organize a phone interview with you, it should last about 30 min.\n"
+"        We'll go through your resume and motivations to join the <t t-out=\"object.company_id.name or ''\">YourCompany</t> team.\n"
+"        You can book a slot in our agenda by cliking on the button below.<br/>\n"
+"    </div>\n"
+"    <br/>\n"
+"    <a t-att-href=\"env['ir.config_parameter'].sudo().get_param('web.base.url') + '/book/interview'\" style=\"background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;\">Schedule my interview</a><br/>\n"
+"    <br/>\n"
+"    Best regards,\n"
+"</div>\n"
 "        "
 msgstr ""
 
@@ -65,6 +61,20 @@ msgstr ""
 msgid ""
 "Can we plan an interview together for your {{ (object.job_id.name + ' ') if "
 "object.job_id else '' }}application?"
+msgstr ""
+
+#. module: appointment_hr_recruitment
+#: model:ir.model.fields,field_description:appointment_hr_recruitment.field_appointment_invite__display_name
+#: model:ir.model.fields,field_description:appointment_hr_recruitment.field_appointment_type__display_name
+#: model:ir.model.fields,field_description:appointment_hr_recruitment.field_calendar_event__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: appointment_hr_recruitment
+#: model:ir.model.fields,field_description:appointment_hr_recruitment.field_appointment_invite__id
+#: model:ir.model.fields,field_description:appointment_hr_recruitment.field_appointment_type__id
+#: model:ir.model.fields,field_description:appointment_hr_recruitment.field_calendar_event__id
+msgid "ID"
 msgstr ""
 
 #. module: appointment_hr_recruitment

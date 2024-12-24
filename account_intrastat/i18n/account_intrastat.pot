@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:26+0000\n"
-"PO-Revision-Date: 2024-09-25 09:26+0000\n"
+"POT-Creation-Date: 2024-12-24 15:21+0000\n"
+"PO-Revision-Date: 2024-12-24 15:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -69,10 +69,8 @@ msgid "All partners"
 msgstr ""
 
 #. module: account_intrastat
-#. odoo-javascript
 #. odoo-python
 #: code:addons/account_intrastat/models/account_intrastat_report.py:0
-#: code:addons/account_intrastat/static/src/components/intrastat_report/filters/filters.js:0
 msgid "Arrival"
 msgstr ""
 
@@ -114,12 +112,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_intrastat.field_product_template__intrastat_code_id
 #: model_terms:ir.ui.view,arch_db:account_intrastat.product_product_tree_view_account_intrastat_supplementary_unit
 #: model_terms:ir.ui.view,arch_db:account_intrastat.product_product_tree_view_account_intrastat_weight
+#: model_terms:ir.ui.view,arch_db:account_intrastat.product_template_form_view_inherit_account_intrastat
 msgid "Commodity Code"
-msgstr ""
-
-#. module: account_intrastat
-#: model:ir.model.fields,field_description:account_intrastat.field_product_product__intrastat_code_id
-msgid "Commodity code"
 msgstr ""
 
 #. module: account_intrastat
@@ -139,6 +133,7 @@ msgstr ""
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_country_code
+#: model:account.report.column,name:account_intrastat.intrastat_report_column_services_country_code
 #: model:ir.model,name:account_intrastat.model_res_country
 msgid "Country"
 msgstr ""
@@ -167,11 +162,23 @@ msgid "Default transport mode"
 msgstr ""
 
 #. module: account_intrastat
-#. odoo-javascript
 #. odoo-python
 #: code:addons/account_intrastat/models/account_intrastat_report.py:0
-#: code:addons/account_intrastat/static/src/components/intrastat_report/filters/filters.js:0
 msgid "Dispatch"
+msgstr ""
+
+#. module: account_intrastat
+#: model:ir.model.fields,field_description:account_intrastat.field_account_intrastat_goods_report_handler__display_name
+#: model:ir.model.fields,field_description:account_intrastat.field_account_intrastat_report_handler__display_name
+#: model:ir.model.fields,field_description:account_intrastat.field_account_intrastat_services_report_handler__display_name
+#: model:ir.model.fields,field_description:account_intrastat.field_account_move__display_name
+#: model:ir.model.fields,field_description:account_intrastat.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:account_intrastat.field_product_product__display_name
+#: model:ir.model.fields,field_description:account_intrastat.field_product_template__display_name
+#: model:ir.model.fields,field_description:account_intrastat.field_res_company__display_name
+#: model:ir.model.fields,field_description:account_intrastat.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:account_intrastat.field_res_country__display_name
+msgid "Display Name"
 msgstr ""
 
 #. module: account_intrastat
@@ -192,12 +199,32 @@ msgid "Has Country Regions"
 msgstr ""
 
 #. module: account_intrastat
+#: model:ir.model.fields,field_description:account_intrastat.field_account_intrastat_goods_report_handler__id
+#: model:ir.model.fields,field_description:account_intrastat.field_account_intrastat_report_handler__id
+#: model:ir.model.fields,field_description:account_intrastat.field_account_intrastat_services_report_handler__id
+#: model:ir.model.fields,field_description:account_intrastat.field_account_move__id
+#: model:ir.model.fields,field_description:account_intrastat.field_account_move_line__id
+#: model:ir.model.fields,field_description:account_intrastat.field_product_product__id
+#: model:ir.model.fields,field_description:account_intrastat.field_product_template__id
+#: model:ir.model.fields,field_description:account_intrastat.field_res_company__id
+#: model:ir.model.fields,field_description:account_intrastat.field_res_config_settings__id
+#: model:ir.model.fields,field_description:account_intrastat.field_res_country__id
+msgid "ID"
+msgstr ""
+
+#. module: account_intrastat
+#: model:account.report.column,name:account_intrastat.intrastat_report_column_services_value_currency
+msgid "In Currency"
+msgstr ""
+
+#. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_incoterm_code
 msgid "Incoterm"
 msgstr ""
 
 #. module: account_intrastat
 #: model:account.report.line,name:account_intrastat.intrastat_line
+#: model:account.report.line,name:account_intrastat.intrastat_line_services
 #: model:ir.model.fields,field_description:account_intrastat.field_account_move_line__intrastat_transaction_id
 #: model_terms:ir.ui.view,arch_db:account_intrastat.invoice_form_inherit_account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.product_product_form_view_inherit_account_intrastat
@@ -206,11 +233,28 @@ msgid "Intrastat"
 msgstr ""
 
 #. module: account_intrastat
+#: model:account.report,name:account_intrastat.intrastat_report
+msgid "Intrastat (Goods)"
+msgstr ""
+
+#. module: account_intrastat
+#: model:account.report,name:account_intrastat.intrastat_report_services
+msgid "Intrastat (Services)"
+msgstr ""
+
+#. module: account_intrastat
 #: model:ir.actions.act_window,name:account_intrastat.action_report_intrastat_code_tree
 #: model:ir.model,name:account_intrastat.model_account_intrastat_code
+#: model:ir.model.fields,field_description:account_intrastat.field_product_product__intrastat_code_id
 #: model:ir.ui.menu,name:account_intrastat.menu_report_intrastat_code
 #: model_terms:ir.ui.view,arch_db:account_intrastat.view_report_intrastat_code_form
 msgid "Intrastat Code"
+msgstr ""
+
+#. module: account_intrastat
+#: model:ir.model.fields,field_description:account_intrastat.field_product_product__valid_intrastat_code_ids
+#: model:ir.model.fields,field_description:account_intrastat.field_product_template__valid_intrastat_code_ids
+msgid "Intrastat Code IDs"
 msgstr ""
 
 #. module: account_intrastat
@@ -220,7 +264,11 @@ msgid "Intrastat Country"
 msgstr ""
 
 #. module: account_intrastat
-#: model:account.report,name:account_intrastat.intrastat_report
+#: model:ir.model,name:account_intrastat.model_account_intrastat_goods_report_handler
+msgid "Intrastat Goods Report Custom Handler"
+msgstr ""
+
+#. module: account_intrastat
 #: model:ir.actions.client,name:account_intrastat.action_account_report_intrastat
 #: model:ir.ui.menu,name:account_intrastat.menu_action_account_report_intrastat
 msgid "Intrastat Report"
@@ -229,6 +277,11 @@ msgstr ""
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_account_intrastat_report_handler
 msgid "Intrastat Report Custom Handler"
+msgstr ""
+
+#. module: account_intrastat
+#: model:ir.model,name:account_intrastat.model_account_intrastat_services_report_handler
+msgid "Intrastat Services Report Custom Handler"
 msgstr ""
 
 #. module: account_intrastat
@@ -342,11 +395,13 @@ msgstr ""
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_product_origin_country
+#: model:account.report.column,name:account_intrastat.intrastat_report_column_services_product_origin_country
 msgid "Origin Country"
 msgstr ""
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_partner_vat
+#: model:account.report.column,name:account_intrastat.intrastat_report_column_services_partner_vat
 msgid "Partner VAT"
 msgstr ""
 
@@ -375,9 +430,22 @@ msgstr ""
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_region_code
+#: model:account.report.column,name:account_intrastat.intrastat_report_column_services_region_code
 #: model:ir.model.fields.selection,name:account_intrastat.selection__account_intrastat_code__type__region
 #: model_terms:ir.ui.view,arch_db:account_intrastat.view_intrastat_code_search
 msgid "Region"
+msgstr ""
+
+#. module: account_intrastat
+#: model:account.report.column,name:account_intrastat.intrastat_report_column_services_commodity_code
+#: model:ir.model.fields.selection,name:account_intrastat.selection__account_intrastat_code__type__service
+#: model_terms:ir.ui.view,arch_db:account_intrastat.view_intrastat_code_search
+msgid "Service"
+msgstr ""
+
+#. module: account_intrastat
+#: model_terms:ir.ui.view,arch_db:account_intrastat.product_template_form_view_inherit_account_intrastat
+msgid "Service Code"
 msgstr ""
 
 #. module: account_intrastat
@@ -428,6 +496,7 @@ msgid "Supplementary Units per Product"
 msgstr ""
 
 #. module: account_intrastat
+#: model:account.report.column,name:account_intrastat.intrastat_report_column_services_system
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_system
 msgid "System"
 msgstr ""
@@ -440,6 +509,18 @@ msgstr ""
 #. module: account_intrastat
 #: model:ir.model.fields,help:account_intrastat.field_res_config_settings__company_country_id
 msgid "The country to use the tax reports from for this company"
+msgstr ""
+
+#. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_intrastat_report.py:0
+msgid "The date range must be a full month"
+msgstr ""
+
+#. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_intrastat_report.py:0
+msgid "The date range must be a full month or a full quarter."
 msgstr ""
 
 #. module: account_intrastat
@@ -485,8 +566,14 @@ msgid "Undefined weight products."
 msgstr ""
 
 #. module: account_intrastat
+#: model:account.report.column,name:account_intrastat.intrastat_report_column_services_value
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_value
 msgid "Value"
+msgstr ""
+
+#. module: account_intrastat
+#: model:account.report.column,name:account_intrastat.intrastat_report_column_value_currency
+msgid "Value Currency"
 msgstr ""
 
 #. module: account_intrastat
@@ -634,7 +721,25 @@ msgstr ""
 #. module: account_intrastat
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
+msgid "product service codes"
+msgstr ""
+
+#. module: account_intrastat
+#. odoo-javascript
+#: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid "product's commodity codes"
+msgstr ""
+
+#. module: account_intrastat
+#. odoo-javascript
+#: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
+msgid "product's service codes"
+msgstr ""
+
+#. module: account_intrastat
+#. odoo-javascript
+#: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
+msgid "service codes"
 msgstr ""
 
 #. module: account_intrastat

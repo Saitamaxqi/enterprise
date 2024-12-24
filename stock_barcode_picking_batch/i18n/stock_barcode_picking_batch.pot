@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:28+0000\n"
-"PO-Revision-Date: 2024-09-25 09:28+0000\n"
+"POT-Creation-Date: 2024-12-24 15:23+0000\n"
+"PO-Revision-Date: 2024-12-24 15:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -95,8 +95,26 @@ msgid "Display Batch Button"
 msgstr ""
 
 #. module: stock_barcode_picking_batch
+#: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_barcode_cancel_operation__display_name
+#: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking_batch__display_name
+#: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_barcode_picking_batch
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking_type__group_lines_by_product
 msgid "Group batch lines"
+msgstr ""
+
+#. module: stock_barcode_picking_batch
+#: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_barcode_cancel_operation__id
+#: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_move_line__id
+#: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking_batch__id
+#: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking_type__id
+msgid "ID"
 msgstr ""
 
 #. module: stock_barcode_picking_batch

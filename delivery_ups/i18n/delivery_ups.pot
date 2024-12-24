@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:29+0000\n"
-"PO-Revision-Date: 2024-09-25 09:29+0000\n"
+"POT-Creation-Date: 2024-12-24 15:24+0000\n"
+"PO-Revision-Date: 2024-12-24 15:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -105,6 +105,14 @@ msgid "Contact"
 msgstr ""
 
 #. module: delivery_ups
+#: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_ups.field_res_partner__display_name
+#: model:ir.model.fields,field_description:delivery_ups.field_sale_order__display_name
+#: model:ir.model.fields,field_description:delivery_ups.field_stock_package_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: delivery_ups
 #: model_terms:ir.ui.view,arch_db:delivery_ups.view_delivery_carrier_form_with_provider_ups
 msgid "Duties paid by"
 msgstr ""
@@ -127,6 +135,14 @@ msgstr ""
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid ""
 "Exceeds Total Number of allowed pieces per World Wide Express Shipment."
+msgstr ""
+
+#. module: delivery_ups
+#: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_ups.field_res_partner__id
+#: model:ir.model.fields,field_description:delivery_ups.field_sale_order__id
+#: model:ir.model.fields,field_description:delivery_ups.field_stock_package_type__id
+msgid "ID"
 msgstr ""
 
 #. module: delivery_ups

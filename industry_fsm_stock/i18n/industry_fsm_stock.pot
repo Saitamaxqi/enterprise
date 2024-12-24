@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:27+0000\n"
-"PO-Revision-Date: 2024-09-25 09:27+0000\n"
+"POT-Creation-Date: 2024-12-24 15:22+0000\n"
+"PO-Revision-Date: 2024-12-24 15:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -62,6 +62,11 @@ msgstr ""
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__display_name
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking_line__display_name
+#: model:ir.model.fields,field_description:industry_fsm_stock.field_product_product__display_name
+#: model:ir.model.fields,field_description:industry_fsm_stock.field_project_task__display_name
+#: model:ir.model.fields,field_description:industry_fsm_stock.field_sale_order__display_name
+#: model:ir.model.fields,field_description:industry_fsm_stock.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:industry_fsm_stock.field_stock_move__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -84,6 +89,11 @@ msgstr ""
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__id
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking_line__id
+#: model:ir.model.fields,field_description:industry_fsm_stock.field_product_product__id
+#: model:ir.model.fields,field_description:industry_fsm_stock.field_project_task__id
+#: model:ir.model.fields,field_description:industry_fsm_stock.field_sale_order__id
+#: model:ir.model.fields,field_description:industry_fsm_stock.field_sale_order_line__id
+#: model:ir.model.fields,field_description:industry_fsm_stock.field_stock_move__id
 msgid "ID"
 msgstr ""
 
@@ -142,6 +152,11 @@ msgid "Quantity"
 msgstr ""
 
 #. module: industry_fsm_stock
+#: model_terms:ir.ui.view,arch_db:industry_fsm_stock.view_move_kanban_picking_redirect
+msgid "Quantity:"
+msgstr ""
+
+#. module: industry_fsm_stock
 #: model:ir.model,name:industry_fsm_stock.model_sale_order
 msgid "Sales Order"
 msgstr ""
@@ -149,6 +164,11 @@ msgstr ""
 #. module: industry_fsm_stock
 #: model:ir.model,name:industry_fsm_stock.model_sale_order_line
 msgid "Sales Order Line"
+msgstr ""
+
+#. module: industry_fsm_stock
+#: model_terms:ir.ui.view,arch_db:industry_fsm_stock.view_move_kanban_picking_redirect
+msgid "Source Location:"
 msgstr ""
 
 #. module: industry_fsm_stock
@@ -185,6 +205,19 @@ msgstr ""
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__tracking
 msgid "Tracking"
+msgstr ""
+
+#. module: industry_fsm_stock
+#: model:ir.model.fields,help:industry_fsm_stock.field_project_task__display_name
+msgid ""
+"Use these keywords in the title to set new tasks:\n"
+"\n"
+"        30h Allocate 30 hours to the task\n"
+"        #tags Set tags on the task\n"
+"        @user Assign the task to a user\n"
+"        ! Set the task a high priority\n"
+"\n"
+"        Make sure to use the right format and order e.g. Improve the configuration screen 5h #feature #v16 @Mitchell !"
 msgstr ""
 
 #. module: industry_fsm_stock

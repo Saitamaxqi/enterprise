@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:25+0000\n"
-"PO-Revision-Date: 2024-09-25 09:25+0000\n"
+"POT-Creation-Date: 2024-12-24 15:21+0000\n"
+"PO-Revision-Date: 2024-12-24 15:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #. module: pos_settle_due
 #. odoo-javascript
-#: code:addons/pos_settle_due/static/src/overrides/components/partner_list/partner_line/partner_line.xml:0
+#: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "(with cart:"
 msgstr ""
 
@@ -33,62 +33,74 @@ msgstr ""
 
 #. module: pos_settle_due
 #. odoo-javascript
-#: code:addons/pos_settle_due/static/src/overrides/components/partner_list/partner_list.xml:0
+#: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_list.xml:0
 msgid "Credit limit reached!"
 msgstr ""
 
 #. module: pos_settle_due
 #. odoo-javascript
-#: code:addons/pos_settle_due/static/src/overrides/components/partner_list/partner_line/partner_line.xml:0
+#: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "Credit limit:"
 msgstr ""
 
 #. module: pos_settle_due
 #. odoo-javascript
-#: code:addons/pos_settle_due/static/src/overrides/components/partner_list/partner_line/partner_line.xml:0
+#: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "Deposit money"
 msgstr ""
 
 #. module: pos_settle_due
+#: model:ir.model.fields,field_description:pos_settle_due.field_res_company__display_name
+#: model:ir.model.fields,field_description:pos_settle_due.field_res_partner__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: pos_settle_due
 #. odoo-javascript
-#: code:addons/pos_settle_due/static/src/overrides/components/payment_screen/payment_screen.js:0
+#: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "Do you want to deposit %s to %s?"
 msgstr ""
 
 #. module: pos_settle_due
 #. odoo-javascript
-#: code:addons/pos_settle_due/static/src/overrides/components/payment_screen/payment_screen.js:0
+#: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid ""
 "Do you want to deposit %s to a specific customer? If so, first select "
 "him/her."
 msgstr ""
 
 #. module: pos_settle_due
+#: model:ir.model.fields,field_description:pos_settle_due.field_res_company__id
+#: model:ir.model.fields,field_description:pos_settle_due.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: pos_settle_due
 #. odoo-javascript
-#: code:addons/pos_settle_due/static/src/overrides/models/pos_store.js:0
+#: code:addons/pos_settle_due/static/src/app/services/pos_store.js:0
 msgid "Select the payment method to settle the due"
 msgstr ""
 
 #. module: pos_settle_due
 #. odoo-javascript
-#: code:addons/pos_settle_due/static/src/overrides/components/partner_list/partner_line/partner_line.xml:0
+#: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "Settle due accounts"
 msgstr ""
 
 #. module: pos_settle_due
 #. odoo-javascript
-#: code:addons/pos_settle_due/static/src/overrides/components/payment_screen/payment_screen.js:0
+#: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "The order is empty"
 msgstr ""
 
 #. module: pos_settle_due
 #. odoo-javascript
-#: code:addons/pos_settle_due/static/src/overrides/components/partner_list/partner_line/partner_line.xml:0
+#: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "Total due:"
 msgstr ""
 
 #. module: pos_settle_due
 #. odoo-javascript
-#: code:addons/pos_settle_due/static/src/overrides/components/payment_screen/payment_screen.js:0
+#: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "Yes"
 msgstr ""

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:25+0000\n"
-"PO-Revision-Date: 2024-09-25 09:25+0000\n"
+"POT-Creation-Date: 2024-12-24 15:21+0000\n"
+"PO-Revision-Date: 2024-12-24 15:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -63,8 +63,12 @@ msgid "Date and time of the last synchronization with Pricer"
 msgstr ""
 
 #. module: pos_pricer
+#: model:ir.model.fields,field_description:pos_pricer.field_pos_config__display_name
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__display_name
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_tag__display_name
+#: model:ir.model.fields,field_description:pos_pricer.field_product_product__display_name
+#: model:ir.model.fields,field_description:pos_pricer.field_product_template__display_name
+#: model:ir.model.fields,field_description:pos_pricer.field_stock_move__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -87,8 +91,12 @@ msgid "Failed to unlink Pricer tag %(pricer_tag)s at API url %(api_url)s"
 msgstr ""
 
 #. module: pos_pricer
+#: model:ir.model.fields,field_description:pos_pricer.field_pos_config__id
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__id
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_tag__id
+#: model:ir.model.fields,field_description:pos_pricer.field_product_product__id
+#: model:ir.model.fields,field_description:pos_pricer.field_product_template__id
+#: model:ir.model.fields,field_description:pos_pricer.field_stock_move__id
 msgid "ID"
 msgstr ""
 

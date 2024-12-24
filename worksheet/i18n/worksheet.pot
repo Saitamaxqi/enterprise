@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:29+0000\n"
-"PO-Revision-Date: 2024-09-25 09:29+0000\n"
+"POT-Creation-Date: 2024-12-24 15:24+0000\n"
+"PO-Revision-Date: 2024-12-24 15:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -73,6 +73,7 @@ msgid "Design Template"
 msgstr ""
 
 #. module: worksheet
+#: model:ir.model.fields,field_description:worksheet.field_ir_model__display_name
 #: model:ir.model.fields,field_description:worksheet.field_worksheet_template__display_name
 msgid "Display Name"
 msgstr ""
@@ -88,6 +89,7 @@ msgid "Host Model"
 msgstr ""
 
 #. module: worksheet
+#: model:ir.model.fields,field_description:worksheet.field_ir_model__id
 #: model:ir.model.fields,field_description:worksheet.field_worksheet_template__id
 msgid "ID"
 msgstr ""

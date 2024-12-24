@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:28+0000\n"
-"PO-Revision-Date: 2024-09-25 09:28+0000\n"
+"POT-Creation-Date: 2024-12-24 15:22+0000\n"
+"PO-Revision-Date: 2024-12-24 15:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -117,6 +117,12 @@ msgid "Check it out <i class=\"oi oi-chevron-right ms-2\"/>"
 msgstr ""
 
 #. module: project_enterprise
+#. odoo-javascript
+#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer_controls.xml:0
+msgid "Critical Path"
+msgstr ""
+
+#. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__partner_id
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view_no_title
@@ -131,6 +137,30 @@ msgstr ""
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form_in_gantt
 msgid "Discard"
+msgstr ""
+
+#. module: project_enterprise
+#: model:ir.model.fields,field_description:project_enterprise.field_project_project__display_name
+#: model:ir.model.fields,field_description:project_enterprise.field_project_task__display_name
+#: model:ir.model.fields,field_description:project_enterprise.field_project_task_recurrence__display_name
+#: model:ir.model.fields,field_description:project_enterprise.field_report_project_task_user__display_name
+#: model:ir.model.fields,field_description:project_enterprise.field_res_users__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: project_enterprise
+#: model:ir.model.fields,field_description:project_enterprise.field_project_project__id
+#: model:ir.model.fields,field_description:project_enterprise.field_project_task__id
+#: model:ir.model.fields,field_description:project_enterprise.field_project_task_recurrence__id
+#: model:ir.model.fields,field_description:project_enterprise.field_report_project_task_user__id
+#: model:ir.model.fields,field_description:project_enterprise.field_res_users__id
+msgid "ID"
+msgstr ""
+
+#. module: project_enterprise
+#. odoo-javascript
+#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer_controls.xml:0
+msgid "Longest path between tasks matching the current filter"
 msgstr ""
 
 #. module: project_enterprise
@@ -180,12 +210,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
 msgid "Planning"
-msgstr ""
-
-#. module: project_enterprise
-#. odoo-javascript
-#: code:addons/project_enterprise/static/src/views/project_task_map/project_task_map_model.js:0
-msgid "Private"
 msgstr ""
 
 #. module: project_enterprise
@@ -315,15 +339,22 @@ msgid "Timesheets"
 msgstr ""
 
 #. module: project_enterprise
-#. odoo-javascript
-#: code:addons/project_enterprise/static/src/views/project_task_map/project_task_map_model.js:0
-msgid "Unassigned"
-msgstr ""
-
-#. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form_in_gantt
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
 msgid "Unschedule"
+msgstr ""
+
+#. module: project_enterprise
+#: model:ir.model.fields,help:project_enterprise.field_project_task__display_name
+msgid ""
+"Use these keywords in the title to set new tasks:\n"
+"\n"
+"        30h Allocate 30 hours to the task\n"
+"        #tags Set tags on the task\n"
+"        @user Assign the task to a user\n"
+"        ! Set the task a high priority\n"
+"\n"
+"        Make sure to use the right format and order e.g. Improve the configuration screen 5h #feature #v16 @Mitchell !"
 msgstr ""
 
 #. module: project_enterprise
@@ -341,16 +372,4 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Warning"
-msgstr ""
-
-#. module: project_enterprise
-#. odoo-javascript
-#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_model.js:0
-msgid "👤 Unassigned"
-msgstr ""
-
-#. module: project_enterprise
-#. odoo-javascript
-#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_model.js:0
-msgid "🔒 Private"
 msgstr ""

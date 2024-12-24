@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:25+0000\n"
-"PO-Revision-Date: 2024-09-25 09:25+0000\n"
+"POT-Creation-Date: 2024-12-24 15:20+0000\n"
+"PO-Revision-Date: 2024-12-24 15:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -176,8 +176,11 @@ msgid ""
 msgstr ""
 
 #. module: delivery_sendcloud
+#: model:ir.model.fields,field_description:delivery_sendcloud.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_sendcloud.field_sendcloud_shipping_product__display_name
 #: model:ir.model.fields,field_description:delivery_sendcloud.field_sendcloud_shipping_wizard__display_name
+#: model:ir.model.fields,field_description:delivery_sendcloud.field_stock_package_type__display_name
+#: model:ir.model.fields,field_description:delivery_sendcloud.field_stock_picking__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -232,8 +235,11 @@ msgid "Has Multicollo"
 msgstr ""
 
 #. module: delivery_sendcloud
+#: model:ir.model.fields,field_description:delivery_sendcloud.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_sendcloud.field_sendcloud_shipping_product__id
 #: model:ir.model.fields,field_description:delivery_sendcloud.field_sendcloud_shipping_wizard__id
+#: model:ir.model.fields,field_description:delivery_sendcloud.field_stock_package_type__id
+#: model:ir.model.fields,field_description:delivery_sendcloud.field_stock_picking__id
 msgid "ID"
 msgstr ""
 
@@ -516,6 +522,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_sendcloud/models/sendcloud_service.py:0
 msgid "The %s address needs to have the street, city, zip, and country"
+msgstr ""
+
+#. module: delivery_sendcloud
+#. odoo-python
+#: code:addons/delivery_sendcloud/models/delivery_carrier.py:0
+msgid ""
+"The cancellation was rejected for the parcel(s) with the following id:\n"
+"%(details)s\n"
+"Either:\n"
+"\t - The parcel is already cancelled\n"
+"\t - The parcel has been announced more than 42 days ago\n"
+"\t - The parcel has already been delivered"
 msgstr ""
 
 #. module: delivery_sendcloud

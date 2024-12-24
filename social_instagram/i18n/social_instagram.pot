@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:28+0000\n"
-"PO-Revision-Date: 2024-09-25 09:28+0000\n"
+"POT-Creation-Date: 2024-12-24 15:23+0000\n"
+"PO-Revision-Date: 2024-12-24 15:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -120,6 +120,18 @@ msgid "Display Instagram Preview"
 msgstr ""
 
 #. module: social_instagram
+#: model:ir.model.fields,field_description:social_instagram.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:social_instagram.field_social_account__display_name
+#: model:ir.model.fields,field_description:social_instagram.field_social_live_post__display_name
+#: model:ir.model.fields,field_description:social_instagram.field_social_media__display_name
+#: model:ir.model.fields,field_description:social_instagram.field_social_post__display_name
+#: model:ir.model.fields,field_description:social_instagram.field_social_post_template__display_name
+#: model:ir.model.fields,field_description:social_instagram.field_social_stream__display_name
+#: model:ir.model.fields,field_description:social_instagram.field_social_stream_post__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: social_instagram
 #: model:ir.model.fields,help:social_instagram.field_social_account__instagram_facebook_account_id
 msgid ""
 "Facebook Account ID provided by the Facebook API, this should never be set manually.\n"
@@ -130,6 +142,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_instagram.field_social_post__has_instagram_account
 #: model:ir.model.fields,field_description:social_instagram.field_social_post_template__has_instagram_account
 msgid "Has Instagram Account"
+msgstr ""
+
+#. module: social_instagram
+#: model:ir.model.fields,field_description:social_instagram.field_res_config_settings__id
+#: model:ir.model.fields,field_description:social_instagram.field_social_account__id
+#: model:ir.model.fields,field_description:social_instagram.field_social_live_post__id
+#: model:ir.model.fields,field_description:social_instagram.field_social_media__id
+#: model:ir.model.fields,field_description:social_instagram.field_social_post__id
+#: model:ir.model.fields,field_description:social_instagram.field_social_post_template__id
+#: model:ir.model.fields,field_description:social_instagram.field_social_stream__id
+#: model:ir.model.fields,field_description:social_instagram.field_social_stream_post__id
+msgid "ID"
 msgstr ""
 
 #. module: social_instagram

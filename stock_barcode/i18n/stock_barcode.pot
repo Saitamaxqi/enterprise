@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-25 09:12+0000\n"
-"PO-Revision-Date: 2024-10-25 09:12+0000\n"
+"POT-Creation-Date: 2024-12-24 15:20+0000\n"
+"PO-Revision-Date: 2024-12-24 15:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -80,6 +80,17 @@ msgid "<span>Replenish Quantities</span>"
 msgstr ""
 
 #. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/controllers/stock_barcode.py:0
+msgid "A GTIN can only contains digits"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_scan_product
+msgid "A line's product must be scanned before the line can be edited"
+msgstr ""
+
+#. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_model.js:0
 msgid ""
@@ -108,7 +119,7 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.model.fields.selection,name:stock_barcode.selection__stock_picking_type__restrict_put_in_pack__optional
 #: model:ir.model.fields.selection,name:stock_barcode.selection__stock_picking_type__restrict_scan_dest_location__optional
-msgid "After group of Products"
+msgid "After group of products"
 msgstr ""
 
 #. module: stock_barcode
@@ -133,23 +144,60 @@ msgid "Allow full picking validation"
 msgstr ""
 
 #. module: stock_barcode
-#: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__barcode_validation_full
-msgid ""
-"Allow to validate a picking even if nothing was scanned yet (and so, do an "
-"immediate transfert)"
-msgstr ""
-
-#. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid ""
 "Allow users to see the expected quantity of a product to count in a location"
 msgstr ""
 
 #. module: stock_barcode
-#: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__show_reserved_sns
+#: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__barcode_validation_full
 msgid ""
-"Allows to display reserved lots/serial numbers. When non active, it is clear"
-" for the picker that they can pick the lots/serials they want."
+"Allow validating a picking even if nothing has been scanned yet, i.e. do an "
+"immediate transfer"
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid ""
+"An error occured during parsing of element_string: AI code %(ai_code)s is "
+"missing for scheme %(scheme_name)s"
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid ""
+"An error occured with field '%(field_name)s': the corresponding AI "
+"'%(ai_code)s' was not found in the element_string"
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid ""
+"An error occured: value of company_prefix_length (%(company_prefix_length)s)"
+" must be between 6 and 12 inclusive."
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "An error occurred with field '%(field_name)s': %(error_message)s"
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid ""
+"An error occurred with field 'partition': no partition value can be found "
+"for the given company_prefix_length"
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "An error occurred with method '%(method_name)s': %(error_message)s"
 msgstr ""
 
 #. module: stock_barcode
@@ -163,7 +211,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/main.xml:0
-#: code:addons/stock_barcode/static/src/components/manual_barcode.xml:0
 msgid "Apply"
 msgstr ""
 
@@ -234,6 +281,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_barcode/controllers/stock_barcode.py:0
 msgid "Barcodes are not available."
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid ""
+"Binary value %(word)s cannot be represented with %(word_size_write)s bits"
 msgstr ""
 
 #. module: stock_barcode
@@ -383,8 +437,33 @@ msgid "Discard"
 msgstr ""
 
 #. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_product_packaging__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_product_product__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_res_partner__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_backorder_confirmation__display_name
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_cancel_operation__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_location__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_lot__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_package_type__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_quant__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_quant_package__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_request_count__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_scrap__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_warehouse__display_name
+#: model:ir.model.fields,field_description:stock_barcode.field_uom_uom__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: stock_barcode
+#: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__show_reserved_sns
+msgid ""
+"Display reserved lots/serial numbers. When not active, the picker can pick "
+"lots/serials as they want."
 msgstr ""
 
 #. module: stock_barcode
@@ -398,13 +477,12 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_put_in_pack
 msgid ""
-"Does the picker have to put in a package the scanned products? If yes, at "
-"which rate?"
+"Does the picker have to put the scanned products in a package? If yes, when?"
 msgstr ""
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_scan_dest_location
-msgid "Does the picker have to scan the destination? If yes, at which rate?"
+msgid "Does the picker have to scan the destination? If yes, when?"
 msgstr ""
 
 #. module: stock_barcode
@@ -443,14 +521,43 @@ msgid "Dummy"
 msgstr ""
 
 #. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__electronic_product_code
+msgid "Electronic Product Code"
+msgstr ""
+
+#. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_backorder_confirmation__empty_move_count
 msgid "Empty Move Count"
 msgstr ""
 
 #. module: stock_barcode
-#. odoo-javascript
-#: code:addons/stock_barcode/static/src/components/manual_barcode.xml:0
-msgid "Enter a barcode..."
+#. odoo-python
+#: code:addons/stock_barcode/models/stock_move_line.py:0
+msgid ""
+"Error: The product barcode is not a valid Global Trade Item Number, we can't"
+" generate an Electronic Product Code for it."
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/stock_move_line.py:0
+msgid ""
+"Error: We can't generate an Electronic Product Code for a product without a "
+"barcode."
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid ""
+"Field '%(field_name)s' is a reserved field, you can't manually update its "
+"value with this method"
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "Field '%(field_name)s' not found"
 msgstr ""
 
 #. module: stock_barcode
@@ -472,7 +579,7 @@ msgstr ""
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__barcode_allow_extra_product
-msgid "For planned transfers, allow to add non-reserved products"
+msgid "For planned transfers, allow adding non-reserved products"
 msgstr ""
 
 #. module: stock_barcode
@@ -497,7 +604,7 @@ msgstr ""
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__barcode_validation_after_dest_location
-msgid "Force a destination on all products"
+msgid "Force a destination for all products"
 msgstr ""
 
 #. module: stock_barcode
@@ -531,7 +638,25 @@ msgid "Hide Lot Name"
 msgstr ""
 
 #. module: stock_barcode
+#: model:ir.model.fields,field_description:stock_barcode.field_product_packaging__id
+#: model:ir.model.fields,field_description:stock_barcode.field_product_product__id
+#: model:ir.model.fields,field_description:stock_barcode.field_res_config_settings__id
+#: model:ir.model.fields,field_description:stock_barcode.field_res_partner__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_backorder_confirmation__id
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_cancel_operation__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_location__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_lot__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_package_type__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_quant__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_quant_package__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_request_count__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_scrap__id
+#: model:ir.model.fields,field_description:stock_barcode.field_stock_warehouse__id
+#: model:ir.model.fields,field_description:stock_barcode.field_uom_uom__id
 msgid "ID"
 msgstr ""
 
@@ -575,6 +700,30 @@ msgid "International Article Number used for product identification."
 msgstr ""
 
 #. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "Invalid pad_char '%(pad_char)s'. Use '0' or '1'."
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "Invalid pad_side '%(pad_side)s'. Use 'left' or 'right'."
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "Invalid word_pad_char '%(word_pad_char)s'. Use '0' or '1'."
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "Invalid word_pad_side '%(word_pad_side)s'. Use 'left' or 'right'."
+msgstr ""
+
+#. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_quant_model.js:0
 msgid "Inventory Adjustment"
@@ -613,8 +762,9 @@ msgid "Leave it"
 msgstr ""
 
 #. module: stock_barcode
-#: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_scan_product
-msgid "Line's product must be scanned before the line can be edited"
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "Length must be a positive integer"
 msgstr ""
 
 #. module: stock_barcode
@@ -815,6 +965,14 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_backorder_confirmation__partial_move_count
 msgid "Partial Move Count"
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid ""
+"Partition table %(table_name)s not found, available tables are : "
+"%(table_list)s)"
 msgstr ""
 
 #. module: stock_barcode
@@ -1371,15 +1529,21 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__is_barcode_picking_type
 msgid ""
-"Technical field indicating if should be used in barcode app and used to "
-"control visibility in the related UI."
+"Technical field indicating if type should be used in barcode app and used to"
+" control visibility in the related UI."
 msgstr ""
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__show_barcode_validation
 msgid ""
 "Technical field used to compute whether the \"Final Validation\" group "
-"should be displayed, solving combined groups/invisible complexity."
+"should be displayed, to support combined groups/invisible complexity."
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "The encoding '%(encoding_name)s' is not supported."
 msgstr ""
 
 #. module: stock_barcode
@@ -1542,8 +1706,26 @@ msgid "Validate"
 msgstr ""
 
 #. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "Value %(value)s cannot be represented with %(length)s bits"
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "Value '%(value)s' must be an integer"
+msgstr ""
+
+#. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_scrap___barcode_scanned
 msgid "Value of the last barcode scanned."
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "Value to encode contains invalid character(s): %(invalid_chars)s"
 msgstr ""
 
 #. module: stock_barcode
@@ -1562,6 +1744,12 @@ msgstr ""
 msgid ""
 "When scanning a location in inventory adjustments, you will be assigned to "
 "count all products from this location"
+msgstr ""
+
+#. module: stock_barcode
+#. odoo-python
+#: code:addons/stock_barcode/models/epc_encoder.py:0
+msgid "Word size must be a positive integer"
 msgstr ""
 
 #. module: stock_barcode

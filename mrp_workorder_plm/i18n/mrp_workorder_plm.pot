@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:27+0000\n"
-"PO-Revision-Date: 2024-09-25 09:27+0000\n"
+"POT-Creation-Date: 2024-12-24 15:22+0000\n"
+"PO-Revision-Date: 2024-12-24 15:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,6 +28,16 @@ msgid "Defines the type of the quality control point."
 msgstr ""
 
 #. module: mrp_workorder_plm
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_mrp_eco__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_mrp_eco_routing_change__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_propose_change__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_quality_check__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_quality_point__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: mrp_workorder_plm
 #: model:ir.model.fields,field_description:mrp_workorder_plm.field_mrp_eco__routing_change_ids_on_operation
 msgid "ECO Routing Changes - Operation"
 msgstr ""
@@ -45,6 +55,16 @@ msgstr ""
 #. module: mrp_workorder_plm
 #: model:ir.model,name:mrp_workorder_plm.model_mrp_eco
 msgid "Engineering Change Order (ECO)"
+msgstr ""
+
+#. module: mrp_workorder_plm
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_mrp_eco__id
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_mrp_eco_routing_change__id
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_mrp_production__id
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_propose_change__id
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_quality_check__id
+#: model:ir.model.fields,field_description:mrp_workorder_plm.field_quality_point__id
+msgid "ID"
 msgstr ""
 
 #. module: mrp_workorder_plm

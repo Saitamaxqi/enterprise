@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:25+0000\n"
-"PO-Revision-Date: 2024-09-25 09:25+0000\n"
+"POT-Creation-Date: 2024-12-24 15:21+0000\n"
+"PO-Revision-Date: 2024-12-24 15:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+#: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid "Access your"
 msgstr ""
 
@@ -49,13 +49,13 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+#: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid "Click on Advanced/Show Details/Details/More information"
 msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+#: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid ""
 "Click on Proceed to .../Add Exception/Visit this website/Go on to the "
 "webpage"
@@ -63,7 +63,7 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+#: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid "Close this window and try again"
 msgstr ""
 
@@ -74,25 +74,25 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/payment.js:0
+#: code:addons/pos_iot/static/src/app/utils/payment/payment.js:0
 msgid "Configuration of payment terminal failed"
 msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/payment.js:0
+#: code:addons/pos_iot/static/src/app/utils/payment/payment.js:0
 msgid "Connection to IoT Box failed"
 msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/payment.js:0
+#: code:addons/pos_iot/static/src/app/utils/payment/payment.js:0
 msgid "Connection to terminal failed"
 msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/overrides/components/scale_screen/scale_screen.js:0
+#: code:addons/pos_iot/static/src/app/screens/scale_screen/scale_screen.js:0
 msgid "Could not connect to IoT scale"
 msgstr ""
 
@@ -100,6 +100,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Customer Display"
+msgstr ""
+
+#. module: pos_iot
+#: model:ir.model.fields,field_description:pos_iot.field_iot_box__display_name
+#: model:ir.model.fields,field_description:pos_iot.field_iot_device__display_name
+#: model:ir.model.fields,field_description:pos_iot.field_pos_config__display_name
+#: model:ir.model.fields,field_description:pos_iot.field_pos_payment_method__display_name
+#: model:ir.model.fields,field_description:pos_iot.field_pos_printer__display_name
+#: model:ir.model.fields,field_description:pos_iot.field_pos_session__display_name
+#: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__display_name
+msgid "Display Name"
 msgstr ""
 
 #. module: pos_iot
@@ -125,14 +136,25 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+#: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid "Firefox only: Click on Confirm Security Exception"
 msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/overrides/components/scale_screen/scale_screen.xml:0
+#: code:addons/pos_iot/static/src/app/screens/scale_screen/scale_screen.xml:0
 msgid "Get Weight"
+msgstr ""
+
+#. module: pos_iot
+#: model:ir.model.fields,field_description:pos_iot.field_iot_box__id
+#: model:ir.model.fields,field_description:pos_iot.field_iot_device__id
+#: model:ir.model.fields,field_description:pos_iot.field_pos_config__id
+#: model:ir.model.fields,field_description:pos_iot.field_pos_payment_method__id
+#: model:ir.model.fields,field_description:pos_iot.field_pos_printer__id
+#: model:ir.model.fields,field_description:pos_iot.field_pos_session__id
+#: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__id
+msgid "ID"
 msgstr ""
 
 #. module: pos_iot
@@ -147,7 +169,7 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+#: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid ""
 "If you are on a secure server (HTTPS) check if you accepted the certificate:"
 msgstr ""
@@ -193,7 +215,7 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+#: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid "IoT Box Homepage"
 msgstr ""
 
@@ -215,7 +237,7 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+#: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid "Network Error"
 msgstr ""
 
@@ -232,26 +254,26 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/payment.js:0
+#: code:addons/pos_iot/static/src/app/utils/payment/payment.js:0
 msgid "Payment terminal error"
 msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
-#: code:addons/pos_iot/static/src/app/payment.js:0
+#: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
+#: code:addons/pos_iot/static/src/app/utils/payment/payment.js:0
 msgid "Please check if the IoT Box is still connected."
 msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/payment.js:0
+#: code:addons/pos_iot/static/src/app/utils/payment/payment.js:0
 msgid "Please check if the terminal is still connected."
 msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/payment.js:0
+#: code:addons/pos_iot/static/src/app/utils/payment/payment.js:0
 msgid ""
 "Please check the network connection and then check the status of the last "
 "transaction manually."
@@ -259,7 +281,7 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/overrides/models/pos_store.js:0
+#: code:addons/pos_iot/static/src/app/services/pos_store.js:0
 msgid "Please process or cancel the current transaction."
 msgstr ""
 
@@ -317,7 +339,7 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/payment.js:0
+#: code:addons/pos_iot/static/src/app/utils/payment/payment.js:0
 msgid "Terminal Disconnected"
 msgstr ""
 
@@ -328,7 +350,7 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/overrides/components/scale_screen/scale_screen.js:0
+#: code:addons/pos_iot/static/src/app/screens/scale_screen/scale_screen.js:0
 msgid "The IoT scale is not responding. You should check your connection."
 msgstr ""
 
@@ -349,13 +371,13 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/payment.js:0
+#: code:addons/pos_iot/static/src/app/utils/payment/payment.js:0
 msgid "Transaction could not be cancelled"
 msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/overrides/models/pos_store.js:0
+#: code:addons/pos_iot/static/src/app/services/pos_store.js:0
 msgid "Transaction in progress"
 msgstr ""
 
@@ -371,7 +393,7 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
-#: code:addons/pos_iot/static/src/app/payment.js:0
+#: code:addons/pos_iot/static/src/app/utils/payment/payment.js:0
 msgid "You must select a payment terminal in your POS config."
 msgstr ""
 

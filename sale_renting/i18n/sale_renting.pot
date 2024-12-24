@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-25 09:12+0000\n"
-"PO-Revision-Date: 2024-10-25 09:12+0000\n"
+"POT-Creation-Date: 2024-12-24 15:20+0000\n"
+"PO-Revision-Date: 2024-12-24 15:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -457,9 +457,16 @@ msgid "Digital Documents"
 msgstr ""
 
 #. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricelist__display_name
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_product_product__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_product_template__display_name
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__display_name
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_res_company__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__display_name
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__display_name
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__display_name
@@ -580,9 +587,16 @@ msgid "Hours"
 msgstr ""
 
 #. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricelist__id
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__id
+#: model:ir.model.fields,field_description:sale_renting.field_product_product__id
+#: model:ir.model.fields,field_description:sale_renting.field_product_template__id
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__id
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__id
+#: model:ir.model.fields,field_description:sale_renting.field_res_company__id
+#: model:ir.model.fields,field_description:sale_renting.field_res_config_settings__id
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__id
@@ -1444,8 +1458,8 @@ msgid "Unit"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_uom
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__product_uom
+#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_uom_id
+#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__product_uom_id
 msgid "Unit of Measure"
 msgstr ""
 

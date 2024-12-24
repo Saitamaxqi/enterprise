@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:25+0000\n"
-"PO-Revision-Date: 2024-09-25 09:25+0000\n"
+"POT-Creation-Date: 2024-12-24 15:20+0000\n"
+"PO-Revision-Date: 2024-12-24 15:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -63,12 +63,6 @@ msgstr ""
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Are you sure you want to reboot the IoT box?"
-msgstr ""
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Are you sure you want to restart Odoo on the IoT box?"
 msgstr ""
 
@@ -111,19 +105,19 @@ msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
+#: code:addons/iot/static/src/dialogs/iot_connection_error_dialog.xml:0
 msgid "Click here to open your IoT Homepage"
 msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
+#: code:addons/iot/static/src/dialogs/iot_connection_error_dialog.xml:0
 msgid "Click on Advanced/Show Details/Details/More information"
 msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
+#: code:addons/iot/static/src/dialogs/iot_connection_error_dialog.xml:0
 msgid ""
 "Click on Proceed to .../Add Exception/Visit this website/Go on to the "
 "webpage"
@@ -136,14 +130,14 @@ msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
+#: code:addons/iot/static/src/dialogs/iot_connection_error_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
 msgid "Close"
 msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
+#: code:addons/iot/static/src/dialogs/iot_connection_error_dialog.xml:0
 msgid "Close this window and try again"
 msgstr ""
 
@@ -178,7 +172,7 @@ msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_connection_error_dialog.js:0
+#: code:addons/iot/static/src/dialogs/iot_connection_error_dialog.js:0
 msgid "Connection to IoT Box failed"
 msgstr ""
 
@@ -256,8 +250,12 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__display_name
 #: model:ir.model.fields,field_description:iot.field_iot_box__display_name
+#: model:ir.model.fields,field_description:iot.field_iot_channel__display_name
 #: model:ir.model.fields,field_description:iot.field_iot_device__display_name
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__display_name
+#: model:ir.model.fields,field_description:iot.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:iot.field_ir_websocket__display_name
+#: model:ir.model.fields,field_description:iot.field_publisher_warranty_contract__display_name
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__display_name
 msgid "Display Name"
 msgstr ""
@@ -265,6 +263,11 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__display_url
 msgid "Display URL"
+msgstr ""
+
+#. module: iot
+#: model:ir.model.fields,field_description:iot.field_select_printers_wizard__do_not_ask_again
+msgid "Do not ask me again"
 msgstr ""
 
 #. module: iot
@@ -293,7 +296,7 @@ msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
+#: code:addons/iot/static/src/dialogs/iot_connection_error_dialog.xml:0
 msgid "Firefox only: Click on Confirm Security Exception"
 msgstr ""
 
@@ -315,8 +318,12 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__id
 #: model:ir.model.fields,field_description:iot.field_iot_box__id
+#: model:ir.model.fields,field_description:iot.field_iot_channel__id
 #: model:ir.model.fields,field_description:iot.field_iot_device__id
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__id
+#: model:ir.model.fields,field_description:iot.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:iot.field_ir_websocket__id
+#: model:ir.model.fields,field_description:iot.field_publisher_warranty_contract__id
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__id
 msgid "ID"
 msgstr ""
@@ -337,13 +344,20 @@ msgid "Identifier (Mac Address)"
 msgstr ""
 
 #. module: iot
+#: model:ir.model.fields,help:iot.field_select_printers_wizard__do_not_ask_again
+msgid ""
+"If checked, this dialog won't appear the next time you print and the "
+"selected printers will be used automatically."
+msgstr ""
+
+#. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__connected
 msgid "If device is connected to the IoT Box"
 msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
+#: code:addons/iot/static/src/dialogs/iot_connection_error_dialog.xml:0
 msgid ""
 "If you are on a secure server (HTTPS) check if you accepted the certificate:"
 msgstr ""
@@ -509,7 +523,7 @@ msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
+#: code:addons/iot/static/src/dialogs/iot_connection_error_dialog.xml:0
 msgid "Odoo cannot reach the IoT Box."
 msgstr ""
 
@@ -548,7 +562,7 @@ msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
+#: code:addons/iot/static/src/dialogs/iot_connection_error_dialog.xml:0
 msgid ""
 "Please accept the certificate of your IoT Box (procedure depends on your "
 "browser):"
@@ -556,7 +570,7 @@ msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
+#: code:addons/iot/static/src/dialogs/iot_connection_error_dialog.xml:0
 msgid "Please check if the IoT Box is still connected."
 msgstr ""
 

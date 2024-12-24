@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:26+0000\n"
-"PO-Revision-Date: 2024-09-25 09:26+0000\n"
+"POT-Creation-Date: 2024-12-24 15:21+0000\n"
+"PO-Revision-Date: 2024-12-24 15:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,12 +19,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_iso20022/models/account_batch_payment.py:0
 msgid "A bank account is not defined."
-msgstr ""
-
-#. module: account_iso20022
-#. odoo-python
-#: code:addons/account_iso20022/models/account_payment_register.py:0
-msgid "A bank account must be set on the following documents: %s(doc_name)"
 msgstr ""
 
 #. module: account_iso20022
@@ -43,7 +37,7 @@ msgid "Batch Payment"
 msgstr ""
 
 #. module: account_iso20022
-#: model:ir.model.fields,field_description:account_iso20022.field_account_batch_payment__iso20022_charge_bearer
+#: model:ir.model.fields,field_description:account_iso20022.field_account_payment__iso20022_charge_bearer
 msgid "Charge Bearer"
 msgstr ""
 
@@ -69,13 +63,31 @@ msgid "Contact"
 msgstr ""
 
 #. module: account_iso20022
-#: model:ir.model.fields.selection,name:account_iso20022.selection__account_batch_payment__iso20022_charge_bearer__cred
+#: model_terms:ir.ui.view,arch_db:account_iso20022.view_account_journal_form
+msgid "Credit Transfer"
+msgstr ""
+
+#. module: account_iso20022
+#: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_charge_bearer__cred
+#: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_charge_bearer__cred
 msgid "Creditor"
 msgstr ""
 
 #. module: account_iso20022
-#: model:ir.model.fields.selection,name:account_iso20022.selection__account_batch_payment__iso20022_charge_bearer__debt
+#: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_charge_bearer__debt
+#: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_charge_bearer__debt
 msgid "Debtor"
+msgstr ""
+
+#. module: account_iso20022
+#: model:ir.model.fields,field_description:account_iso20022.field_account_batch_payment__display_name
+#: model:ir.model.fields,field_description:account_iso20022.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_iso20022.field_account_payment__display_name
+#: model:ir.model.fields,field_description:account_iso20022.field_account_payment_method__display_name
+#: model:ir.model.fields,field_description:account_iso20022.field_res_company__display_name
+#: model:ir.model.fields,field_description:account_iso20022.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:account_iso20022.field_res_partner__display_name
+msgid "Display Name"
 msgstr ""
 
 #. module: account_iso20022
@@ -97,8 +109,29 @@ msgid "Go to settings"
 msgstr ""
 
 #. module: account_iso20022
+#: model:ir.model.fields,field_description:account_iso20022.field_account_journal__has_iso20022_payment_method
+msgid "Has Iso20022 Payment Method"
+msgstr ""
+
+#. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_journal__has_sepa_ct_payment_method
 msgid "Has Sepa Ct Payment Method"
+msgstr ""
+
+#. module: account_iso20022
+#: model:ir.model.fields,field_description:account_iso20022.field_account_batch_payment__id
+#: model:ir.model.fields,field_description:account_iso20022.field_account_journal__id
+#: model:ir.model.fields,field_description:account_iso20022.field_account_payment__id
+#: model:ir.model.fields,field_description:account_iso20022.field_account_payment_method__id
+#: model:ir.model.fields,field_description:account_iso20022.field_res_company__id
+#: model:ir.model.fields,field_description:account_iso20022.field_res_config_settings__id
+#: model:ir.model.fields,field_description:account_iso20022.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: account_iso20022
+#: model:ir.model.fields,field_description:account_iso20022.field_account_journal__iso20022_charge_bearer
+msgid "ISO 20022 Charge Bearer"
 msgstr ""
 
 #. module: account_iso20022
@@ -144,19 +177,6 @@ msgid "Legal Entity Identifier"
 msgstr ""
 
 #. module: account_iso20022
-#. odoo-python
-#: code:addons/account_iso20022/models/account_batch_payment.py:0
-msgid ""
-"Maximum amount is %(maximum_euro)s for payments in Euros, %(maximum_other)s "
-"for other currencies."
-msgstr ""
-
-#. module: account_iso20022
-#: model_terms:ir.ui.view,arch_db:account_iso20022.res_partner_sepa_inherit_form
-msgid "Miscellaneous"
-msgstr ""
-
-#. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_res_config_settings__iso20022_initiating_party_name
 msgid ""
 "Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters "
@@ -179,11 +199,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_iso20022/models/account_journal.py:0
 msgid "Partner %s has not bank account defined."
-msgstr ""
-
-#. module: account_iso20022
-#: model:ir.model,name:account_iso20022.model_account_payment_register
-msgid "Pay"
 msgstr ""
 
 #. module: account_iso20022
@@ -224,7 +239,6 @@ msgstr ""
 
 #. module: account_iso20022
 #: model:account.payment.method,name:account_iso20022.account_payment_method_sepa_ct
-#: model_terms:ir.ui.view,arch_db:account_iso20022.view_account_journal_form
 msgid "SEPA Credit Transfer"
 msgstr ""
 
@@ -232,6 +246,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_iso20022/models/account_journal_dashboard.py:0
 msgid "SEPA Credit Transfers to Send"
+msgstr ""
+
+#. module: account_iso20022
+#: model:ir.model.fields,field_description:account_iso20022.field_account_journal__sepa_pain_version
+#: model:ir.model.fields,field_description:account_iso20022.field_account_payment__sepa_pain_version
+msgid "SEPA XML Format"
 msgstr ""
 
 #. module: account_iso20022
@@ -255,12 +275,14 @@ msgid ""
 msgstr ""
 
 #. module: account_iso20022
-#: model:ir.model.fields.selection,name:account_iso20022.selection__account_batch_payment__iso20022_charge_bearer__slev
+#: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_charge_bearer__slev
+#: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_charge_bearer__slev
 msgid "Service Level"
 msgstr ""
 
 #. module: account_iso20022
-#: model:ir.model.fields.selection,name:account_iso20022.selection__account_batch_payment__iso20022_charge_bearer__shar
+#: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_charge_bearer__shar
+#: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_charge_bearer__shar
 msgid "Shared"
 msgstr ""
 
@@ -285,7 +307,14 @@ msgid "Some payments have no recipient bank account set."
 msgstr ""
 
 #. module: account_iso20022
-#: model:ir.model.fields,help:account_iso20022.field_account_batch_payment__iso20022_charge_bearer
+#: model:ir.model.fields,help:account_iso20022.field_account_journal__iso20022_charge_bearer
+msgid ""
+"Specifies which party/parties will bear the charges associated with the "
+"processing of ISO 20022 payment transactions from this journal."
+msgstr ""
+
+#. module: account_iso20022
+#: model:ir.model.fields,help:account_iso20022.field_account_payment__iso20022_charge_bearer
 msgid ""
 "Specifies which party/parties will bear the charges associated with the "
 "processing of the payment transaction."
@@ -394,12 +423,6 @@ msgstr ""
 msgid ""
 "Will appear in SEPA payments as the name of the party initiating the "
 "payment. Limited to 70 characters."
-msgstr ""
-
-#. module: account_iso20022
-#: model:ir.model.fields,field_description:account_iso20022.field_account_journal__sepa_pain_version
-#: model:ir.model.fields,field_description:account_iso20022.field_account_payment__sepa_pain_version
-msgid "XML Format"
 msgstr ""
 
 #. module: account_iso20022

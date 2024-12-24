@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-25 09:13+0000\n"
-"PO-Revision-Date: 2024-10-25 09:13+0000\n"
+"POT-Creation-Date: 2024-12-24 15:21+0000\n"
+"PO-Revision-Date: 2024-12-24 15:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,9 @@ msgstr ""
 
 #. module: mrp_workorder
 #. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/buttons.xml:0
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_quality_check_confirmation_dialog.xml:0
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_register_production_dialog.xml:0
 msgid "< Back"
 msgstr ""
 
@@ -199,6 +201,12 @@ msgid "Back"
 msgstr ""
 
 #. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_barcode
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__product_barcode
+msgid "Barcode"
+msgstr ""
+
+#. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder___barcode_scanned
 msgid "Barcode Scanned"
 msgstr ""
@@ -256,7 +264,7 @@ msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__check_ids
-#: model:ir.model.fields,field_description:mrp_workorder.field_stock_move_line__quality_check_ids
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__check_id
 msgid "Check"
 msgstr ""
 
@@ -304,11 +312,6 @@ msgid "Component"
 msgstr ""
 
 #. module: mrp_workorder
-#: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_qty_to_do
-msgid "Component Qty To Do"
-msgstr ""
-
-#. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_res_config_settings
 msgid "Config Settings"
 msgstr ""
@@ -339,17 +342,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/components/working_employee_popup.xml:0
 msgid "Continue"
-msgstr ""
-
-#. module: mrp_workorder
-#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
-msgid "Continue Consumption"
-msgstr ""
-
-#. module: mrp_workorder
-#. odoo-javascript
-#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_quality_check_confirmation_dialog.xml:0
-msgid "Continue consumption"
 msgstr ""
 
 #. module: mrp_workorder
@@ -433,6 +425,12 @@ msgid "Deleted in production"
 msgstr ""
 
 #. module: mrp_workorder
+#. odoo-python
+#: code:addons/mrp_workorder/models/stock_move.py:0
+msgid "Detailed Operations"
+msgstr ""
+
+#. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_record_line/mrp_workorder.js:0
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.add_quality_check_from_tablet
@@ -448,20 +446,31 @@ msgid "Display Log Note"
 msgstr ""
 
 #. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_change_production_qty__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production__display_name
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production_additional_workorder__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workcenter__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workcenter_productivity__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__display_name
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_alert__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_point_test_type__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_report_mrp_report_bom_structure__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_report_mrp_report_mo_overview__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_picking_type__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.add_quality_check_from_tablet
 msgid "Document"
-msgstr ""
-
-#. module: mrp_workorder
-#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__qty_done
-#: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__qty_done
-msgid "Done"
 msgstr ""
 
 #. module: mrp_workorder
@@ -584,8 +593,25 @@ msgid "Has Description"
 msgstr ""
 
 #. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_change_production_qty__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_hr_employee__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production__id
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production_additional_workorder__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workcenter__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workcenter_productivity__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__id
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_alert__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_point_test_type__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_report_mrp_report_bom_structure__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_report_mrp_report_mo_overview__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_res_config_settings__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_picking_type__id
 msgid "ID"
 msgstr ""
 
@@ -615,14 +641,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/search_model.js:0
 msgid "In Progress"
-msgstr ""
-
-#. module: mrp_workorder
-#: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder__move_line_id
-#: model:ir.model.fields,help:mrp_workorder.field_quality_check__move_line_id
-msgid ""
-"In case of Quality Check by Quantity, Move Line on which the Quality Check "
-"applies"
 msgstr ""
 
 #. module: mrp_workorder
@@ -664,6 +682,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display_record.xml:0
 msgid "Instructions ("
+msgstr ""
+
+#. module: mrp_workorder
+#: model:ir.model.fields,help:mrp_workorder.field_quality_check__component_barcode
+#: model:ir.model.fields,help:mrp_workorder.field_stock_move__product_barcode
+msgid "International Article Number used for product identification."
 msgstr ""
 
 #. module: mrp_workorder
@@ -747,7 +771,6 @@ msgstr ""
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
-#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
 msgid "Lot"
 msgstr ""
 
@@ -818,6 +841,11 @@ msgid "Menu"
 msgstr ""
 
 #. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__move_line_ids_picked
+msgid "Move Line Ids Picked"
+msgstr ""
+
+#. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.xml:0
 msgid "Move to work center"
@@ -885,8 +913,8 @@ msgstr ""
 
 #. module: mrp_workorder
 #. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/buttons.xml:0
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_quality_check_confirmation_dialog.js:0
-#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
 msgid "Next"
 msgstr ""
 
@@ -937,6 +965,16 @@ msgstr ""
 msgid ""
 "No workcenters are available, please create one first to add it to the shop "
 "floor view"
+msgstr ""
+
+#. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__note
+msgid "Note"
+msgstr ""
+
+#. module: mrp_workorder
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.view_stock_move_operations_quality_check
+msgid "Note Text"
 msgstr ""
 
 #. module: mrp_workorder
@@ -1051,18 +1089,6 @@ msgstr ""
 
 #. module: mrp_workorder
 #. odoo-python
-#: code:addons/mrp_workorder/models/quality.py:0
-msgid "Please enter a Lot/SN."
-msgstr ""
-
-#. module: mrp_workorder
-#. odoo-python
-#: code:addons/mrp_workorder/models/quality.py:0
-msgid "Please enter a positive quantity."
-msgstr ""
-
-#. module: mrp_workorder
-#. odoo-python
 #: code:addons/mrp_workorder/models/mrp_workorder.py:0
 msgid ""
 "Please set the quantity you are currently producing. It should be different "
@@ -1082,6 +1108,12 @@ msgid "Please upload a picture."
 msgstr ""
 
 #. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__picking_type_prefill_shop_floor_lots
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_picking_type__prefill_shop_floor_lots
+msgid "Pre fill lot/serial numbers in shop floor moves "
+msgstr ""
+
+#. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__previous_check_id
 msgid "Previous Check"
 msgstr ""
@@ -1089,18 +1121,12 @@ msgstr ""
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_quality_check_confirmation_dialog.js:0
-#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
 msgid "Print Labels"
 msgstr ""
 
 #. module: mrp_workorder
 #: model:quality.point.test_type,name:mrp_workorder.test_type_print_label
 msgid "Print label"
-msgstr ""
-
-#. module: mrp_workorder
-#: model:ir.model,name:mrp_workorder.model_stock_move_line
-msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: mrp_workorder
@@ -1198,10 +1224,7 @@ msgid "Quality State"
 msgstr ""
 
 #. module: mrp_workorder
-#. odoo-javascript
-#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_quality_check_confirmation_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_production_tree_view_planning
-#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
 msgid "Quantity"
 msgstr ""
 
@@ -1258,19 +1281,8 @@ msgid "Register Production: %s"
 msgstr ""
 
 #. module: mrp_workorder
-#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__additional
-#: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__additional
-msgid "Register additional product"
-msgstr ""
-
-#. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__bom_active
 msgid "Related Bill of Material Active"
-msgstr ""
-
-#. module: mrp_workorder
-#: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_remaining_qty
-msgid "Remaining Quantity for Component"
 msgstr ""
 
 #. module: mrp_workorder
@@ -1296,6 +1308,12 @@ msgstr ""
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__result
 msgid "Result"
+msgstr ""
+
+#. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/buttons.xml:0
+msgid "Save"
 msgstr ""
 
 #. module: mrp_workorder
@@ -1329,7 +1347,6 @@ msgstr ""
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
-#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
 msgid "Serial"
 msgstr ""
 
@@ -1371,7 +1388,9 @@ msgstr ""
 
 #. module: mrp_workorder
 #. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/buttons.xml:0
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_quality_check_confirmation_dialog.xml:0
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_register_production_dialog.xml:0
 msgid "Skip >"
 msgstr ""
 
@@ -1427,12 +1446,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__move_id
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__move_id
 msgid "Stock Move"
-msgstr ""
-
-#. module: mrp_workorder
-#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__move_line_id
-#: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__move_line_id
-msgid "Stock Move Line"
 msgstr ""
 
 #. module: mrp_workorder
@@ -1644,7 +1657,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_quality_check_confirmation_dialog.js:0
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_record_line/mrp_workorder.js:0
-#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
 msgid "Validate"
 msgstr ""
 
@@ -1669,6 +1681,21 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/search_model.js:0
 msgid "Waiting"
+msgstr ""
+
+#. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/mrp_display_record.js:0
+msgid "What do you want to do?"
+msgstr ""
+
+#. module: mrp_workorder
+#: model:ir.model.fields,help:mrp_workorder.field_stock_move__picking_type_prefill_shop_floor_lots
+#: model:ir.model.fields,help:mrp_workorder.field_stock_picking_type__prefill_shop_floor_lots
+msgid ""
+"When enabled, reserved lots for component moves will be displayed in the "
+"shop floor. When disabled, lots will always need to be selected manually "
+"when processing components in the shop floor."
 msgstr ""
 
 #. module: mrp_workorder
@@ -1758,9 +1785,19 @@ msgid "Worksheet"
 msgstr ""
 
 #. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__worksheet_document
+msgid "Worksheet Image/PDF"
+msgstr ""
+
+#. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__worksheet_page
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__worksheet_page
 msgid "Worksheet Page"
+msgstr ""
+
+#. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__worksheet_note
+msgid "Worksheet description"
 msgstr ""
 
 #. module: mrp_workorder
@@ -1846,7 +1883,7 @@ msgstr ""
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.js:0
-msgid "Your suggestion to delete the %s step was succesfully created."
+msgid "Your suggestion to delete the %s step was successfully created."
 msgstr ""
 
 #. module: mrp_workorder

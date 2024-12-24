@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:27+0000\n"
-"PO-Revision-Date: 2024-09-25 09:27+0000\n"
+"POT-Creation-Date: 2024-12-24 15:22+0000\n"
+"PO-Revision-Date: 2024-12-24 15:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -148,8 +148,20 @@ msgid "Default Commission Plan"
 msgstr ""
 
 #. module: partner_commission
+#: model:ir.model.fields,field_description:partner_commission.field_account_move__display_name
+#: model:ir.model.fields,field_description:partner_commission.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:partner_commission.field_commission_plan__display_name
 #: model:ir.model.fields,field_description:partner_commission.field_commission_rule__display_name
+#: model:ir.model.fields,field_description:partner_commission.field_crm_lead__display_name
+#: model:ir.model.fields,field_description:partner_commission.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:partner_commission.field_res_company__display_name
+#: model:ir.model.fields,field_description:partner_commission.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:partner_commission.field_res_partner__display_name
+#: model:ir.model.fields,field_description:partner_commission.field_res_partner_grade__display_name
+#: model:ir.model.fields,field_description:partner_commission.field_sale_order__display_name
+#: model:ir.model.fields,field_description:partner_commission.field_sale_order_log_report__display_name
+#: model:ir.model.fields,field_description:partner_commission.field_sale_report__display_name
+#: model:ir.model.fields,field_description:partner_commission.field_sale_subscription_report__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -164,8 +176,20 @@ msgid "Frequency at which purchase orders will be automatically confirmed"
 msgstr ""
 
 #. module: partner_commission
+#: model:ir.model.fields,field_description:partner_commission.field_account_move__id
+#: model:ir.model.fields,field_description:partner_commission.field_account_move_line__id
 #: model:ir.model.fields,field_description:partner_commission.field_commission_plan__id
 #: model:ir.model.fields,field_description:partner_commission.field_commission_rule__id
+#: model:ir.model.fields,field_description:partner_commission.field_crm_lead__id
+#: model:ir.model.fields,field_description:partner_commission.field_purchase_order__id
+#: model:ir.model.fields,field_description:partner_commission.field_res_company__id
+#: model:ir.model.fields,field_description:partner_commission.field_res_config_settings__id
+#: model:ir.model.fields,field_description:partner_commission.field_res_partner__id
+#: model:ir.model.fields,field_description:partner_commission.field_res_partner_grade__id
+#: model:ir.model.fields,field_description:partner_commission.field_sale_order__id
+#: model:ir.model.fields,field_description:partner_commission.field_sale_order_log_report__id
+#: model:ir.model.fields,field_description:partner_commission.field_sale_report__id
+#: model:ir.model.fields,field_description:partner_commission.field_sale_subscription_report__id
 msgid "ID"
 msgstr ""
 
@@ -206,7 +230,7 @@ msgstr ""
 
 #. module: partner_commission
 #: model:ir.model,name:partner_commission.model_crm_lead
-msgid "Lead/Opportunity"
+msgid "Lead"
 msgstr ""
 
 #. module: partner_commission
