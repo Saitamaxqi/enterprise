@@ -224,37 +224,32 @@ class BankRecWidget(models.Model):
         batch_lines = self.line_ids.filtered(lambda x: x.flag == 'new_batch')
         valid_payment_states = batch_lines.source_batch_payment_id._valid_payment_states()
         for line in batch_lines:
-            for (currency, partner), payments in line.source_batch_payment_id.payment_ids.grouped(lambda p: (p.currency_id, p.partner_id)).items():
+            for payment in line.source_batch_payment_id.payment_ids.filtered(lambda p: p.state in valid_payment_states):
                 account2amount = defaultdict(float)
-                aml_residual = defaultdict(float)
-                term_lines = payments.invoice_ids.line_ids.filtered(lambda l: l.display_type == 'payment_term')
-                # keep track of the residual amount of each account move line to prevent
-                # 2 separate payments to cover the same amount
-                for term_line in term_lines:
-                    aml_residual[term_line] = term_line.amount_residual_currency
-                for payment in payments.filtered(lambda p: p.state in valid_payment_states):
-                    if not payment.invoice_ids:
-                        account2amount[partner.property_account_receivable_id] -= payment.amount
-                        continue
-                    amount_left_to_reconcile = payment.amount
-                    pterm_lines = iter(payment.invoice_ids.line_ids.filtered(lambda l: l.display_type == 'payment_term'))
-                    pterm_line = next(pterm_lines, False)
-                    while amount_left_to_reconcile and pterm_line:
-                        amount_to_reconcile = min(amount_left_to_reconcile, aml_residual[pterm_line])
-                        amount_left_to_reconcile -= amount_to_reconcile
-                        aml_residual[pterm_line] -= amount_to_reconcile
-                        account2amount[pterm_line.account_id] -= amount_to_reconcile
-                        to_reconcile.append((len(line_ids_create_command_list) + 1, pterm_line))
-                        pterm_line = next(pterm_lines, False)
+                account2lines = defaultdict(list)
+                term_lines = iter(payment.invoice_ids.line_ids.filtered(lambda l: l.display_type == 'payment_term').sorted('date'))
+                remaining = payment.amount_signed
+                while remaining and (term_line := next(term_lines, None)):
+                    current = min(remaining, term_line.currency_id._convert(
+                        from_amount=term_line.amount_currency,
+                        to_currency=payment.currency_id,
+                    ))
+                    remaining -= current
+                    account2amount[term_line.account_id] -= current
+                    account2lines[term_line.account_id].append(term_line.id)
+                if remaining:
+                    account2amount[payment.partner_id.property_account_receivable_id] -= remaining
                 for account, amount in account2amount.items():
                     line_ids_create_command_list.append(Command.create(line._get_aml_values(
                         sequence=len(line_ids_create_command_list) + 1,
-                        partner_id=partner.id,
+                        partner_id=payment.partner_id.id,
                         account_id=account.id,
-                        currency_id=currency.id,
+                        currency_id=payment.currency_id.id,
                         amount_currency=amount,
-                        balance=currency._convert(from_amount=amount, to_currency=self.env.company.currency_id),
+                        balance=payment.currency_id._convert(from_amount=amount, to_currency=self.env.company.currency_id),
                     )))
+                    if lines := self.env['account.move.line'].browse(account2lines[account]):
+                        to_reconcile.append((len(line_ids_create_command_list), lines))
         batch_lines.source_batch_payment_id.payment_ids.filtered(lambda p: not p.move_id and p.state in valid_payment_states).action_validate()
         self.line_ids -= batch_lines
         super()._validation_lines_vals(line_ids_create_command_list, aml_to_exchange_diff_vals, to_reconcile)

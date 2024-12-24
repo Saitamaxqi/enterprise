@@ -12,6 +12,14 @@ class CommonAccountingInstalled(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.classPatch(cls.env.registry['account.move'], '_get_invoice_in_payment_state', lambda self: 'in_payment')
+        cls.payment_method_line = cls.company_data['default_journal_bank'].inbound_payment_method_line_ids\
+            .filtered(lambda l: l.code == 'batch_payment')
+
+    def _register_payment(self, invoice, **kwargs):
+        return self.env['account.payment.register'].with_context(active_model='account.move', active_ids=invoice.ids).create({
+            'payment_method_line_id': self.payment_method_line.id,
+            **kwargs,
+        })._create_payments()
 
 
 class CommonInvoicingOnly(TransactionCase):
@@ -40,12 +48,6 @@ class CommonInvoicingOnly(TransactionCase):
 
 @tagged('post_install', '-at_install')
 class TestBankRecWidgetWithoutEntry(CommonAccountingInstalled, TestBankRecWidgetCommon):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.payment_method_line = cls.company_data['default_journal_bank'].inbound_payment_method_line_ids\
-            .filtered(lambda l: l.code == 'batch_payment')
-
     def test_state_changes(self):
         invoice = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[1000.0], post=True)
         invoice_payment = self.env['account.payment.register'].create({
@@ -226,7 +228,9 @@ class TestBankRecWidgetWithoutEntry(CommonAccountingInstalled, TestBankRecWidget
 
         wizard._js_action_validate()
         self.assertRecordValues(st_line.move_id.line_ids, [
-            {'balance':   -270.0, 'amount_currency':   -540.0, 'amount_residual':   -270.0},
+            {'balance':    -50.0, 'amount_currency':   -100.0, 'amount_residual':    -50.0},
+            {'balance':   -100.0, 'amount_currency':   -200.0, 'amount_residual':   -100.0},
+            {'balance':   -120.0, 'amount_currency':   -240.0, 'amount_residual':   -120.0},
             {'balance':    -75.0, 'amount_currency':   -300.0, 'amount_residual':    -75.0},
             {'balance':   1000.0, 'amount_currency':   1000.0, 'amount_residual':   1000.0},
             {'balance':   -655.0, 'amount_currency':   -655.0, 'amount_residual':      0.0},
@@ -346,6 +350,67 @@ class TestBankRecWidgetWithoutEntry(CommonAccountingInstalled, TestBankRecWidget
         self.assertEqual(payment_2.state, 'rejected')
         self.assertEqual(payment_3.state, 'paid')
 
+    def test_match_batch_partial_payments(self):
+        """ Test reconcile a batch of partial payments with the corresponding statement """
+        payments = self.env['account.payment']
+        invoice1 = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[10.0], post=True)
+        payments |= self._register_payment(invoice1, amount=2.0)
+        payments |= self._register_payment(invoice1, amount=2.0)
+        invoice2 = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[100.0], post=True)
+        payments |= self._register_payment(invoice2, amount=20.0)
+        invoice3 = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[1000.0], post=True)
+        other_account = self.partner_a.property_account_receivable_id.copy()
+        invoice3.line_ids.filtered(lambda l: l.display_type == 'payment_term').account_id = other_account
+        payments |= self._register_payment(invoice3, amount=200.0)
+        invoice4 = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[10000.0], post=True)
+        payments |= self._register_payment(invoice4, amount=20000.0)
+
+        batch = self.env['account.batch.payment'].create({
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_ids': [Command.set(payments.ids)],
+            'payment_method_id': self.payment_method_line.payment_method_id.id,
+        })
+        batch.validate_batch()
+
+        st_line = self._create_st_line(20224.0, payment_ref=batch.name, partner_id=self.partner_a.id)
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+        wizard._action_add_new_batch_payments(batch)
+        self.assertRecordValues(wizard.line_ids, [
+            # pylint: disable=C0326
+            {'flag': 'liquidity',       'balance':   20224.0},
+            {'flag': 'new_batch',       'balance':  -20224.0},
+        ])
+        wizard._action_validate()
+        self.assertRecordValues(payments, [{'state': 'paid'}] * 5)
+        self.assertRecordValues(invoice1 + invoice2 + invoice3 + invoice4, [
+            {'amount_residual':   6.0},
+            {'amount_residual':  80.0},
+            {'amount_residual': 800.0},
+            {'amount_residual':   0.0},
+        ])
+
+        bank_account = st_line.journal_id.default_account_id
+        if self.module == 'accounting':
+            receivable = self.partner_a.property_account_receivable_id
+            self.assertRecordValues(st_line.move_id.line_ids.sorted('balance'), [
+                {'account_id': receivable.id,    'balance': -20000.0, 'amount_residual': -10000.0},
+                {'account_id': other_account.id, 'balance':   -200.0, 'amount_residual':      0.0},
+                {'account_id': receivable.id,    'balance':    -20.0, 'amount_residual':      0.0},
+                {'account_id': receivable.id,    'balance':     -2.0, 'amount_residual':      0.0},
+                {'account_id': receivable.id,    'balance':     -2.0, 'amount_residual':      0.0},
+                {'account_id': bank_account.id,  'balance':  20224.0, 'amount_residual':  20224.0},
+            ])
+        else:
+            outstanding = self.env['account.payment']._get_outstanding_account('inbound')
+            self.assertRecordValues(st_line.move_id.line_ids.sorted('balance'), [
+                {'account_id': outstanding.id,   'balance': -20000.0, 'amount_residual':      0.0},
+                {'account_id': outstanding.id,   'balance':   -200.0, 'amount_residual':      0.0},
+                {'account_id': outstanding.id,   'balance':    -20.0, 'amount_residual':      0.0},
+                {'account_id': outstanding.id,   'balance':     -2.0, 'amount_residual':      0.0},
+                {'account_id': outstanding.id,   'balance':     -2.0, 'amount_residual':      0.0},
+                {'account_id': bank_account.id,  'balance':  20224.0, 'amount_residual':  20224.0},
+            ])
+
 
 @tagged('post_install', '-at_install')
 class TestBankRecWidgetWithoutEntryInvoicingOnly(CommonInvoicingOnly, TestBankRecWidgetWithoutEntry):
@@ -357,8 +422,6 @@ class TestBankRecWidgetWithEntry(CommonAccountingInstalled, TestBankRecWidgetCom
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.payment_method_line = cls.company_data['default_journal_bank'].inbound_payment_method_line_ids\
-            .filtered(lambda l: l.code == 'batch_payment')
         cls.payment_method_line.payment_account_id = cls.inbound_payment_method_line.payment_account_id
 
     def test_matching_batch_payment(self):
