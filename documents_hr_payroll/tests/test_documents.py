@@ -49,7 +49,7 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
 
         document = self.env['documents.document'].search([('attachment_id', '=', attachment.id)])
         self.assertTrue(document, "There should be a new document created from the attachment")
-        self.assertEqual(document.owner_id, self.env.ref('base.user_root'), "The owner_id should be odooBot")
+        self.assertFalse(document.owner_id)
         self.assertEqual(document.partner_id, self.richard_emp.work_contact_id, "The partner_id should be the employee's address")
         self.assertEqual(document.folder_id, self.payroll_folder, "The document should have been created in the configured folder")
         self.assertEqual(document.access_via_link, "none")

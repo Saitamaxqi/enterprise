@@ -13,7 +13,7 @@ class TestDocumentDeletion(HttpCase):
         folder = self.env['documents.document'].create({
             "type": "folder",
             "name": "Folder1",
-            "owner_id": self.env.ref('base.user_root').id,
+            "owner_id": False,
             "access_internal": "edit",
         })
         document = self.env['documents.document'].create({
@@ -21,7 +21,7 @@ class TestDocumentDeletion(HttpCase):
             'name': "Chouchou",
             'folder_id': folder.id,
             'mimetype': 'image/gif',
-            'owner_id': self.env.user.id,
+            'owner_id': False,
         })
         folder_copy = folder
         document_copy = document

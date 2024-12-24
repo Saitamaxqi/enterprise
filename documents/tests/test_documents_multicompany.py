@@ -28,7 +28,7 @@ class TestDocumentsMulticompany(TransactionCaseDocuments):
     def _make_test_documents(self, company_id, user):
         technical_root = self.env['documents.document'].sudo().create({
             'name': 'tech root', 'type': 'folder', 'access_internal': 'none', 'access_via_link': 'none',
-            'company_id': self.company_other.id, 'owner_id': self.env.ref('base.user_root').id,
+            'company_id': self.company_other.id, 'owner_id': False,
         })
         common = {
             'type': 'folder',

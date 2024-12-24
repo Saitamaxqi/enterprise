@@ -53,7 +53,6 @@ class DocumentsRequest_Wizard(models.TransientModel):
             'name': self.name,
             'folder_id': self.folder_id.id,
             'tag_ids': [(6, 0, self.tag_ids.ids if self.tag_ids else [])],
-            'owner_id': self.env.user.id,
             'partner_id': self.partner_id.id if self.partner_id else False,
             'requestee_partner_id': self.requestee_id.id,
             'res_model': self.res_model,

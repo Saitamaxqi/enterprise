@@ -67,7 +67,7 @@ class MailActivity(models.Model):
         doc_vals = [{
             'res_model': activity.res_model,
             'res_id': activity.res_id,
-            'owner_id': activity.activity_type_id.default_user_id.id or self.env.user.id,
+            'owner_id': activity.activity_type_id.default_user_id.id or (self.env.user.id if self.env.user.active else False),
             'folder_id': activity.activity_type_id.folder_id.id,
             'tag_ids': [(6, 0, activity.activity_type_id.tag_ids.ids)],
             'name': activity.summary or activity.res_name or 'upload file request',

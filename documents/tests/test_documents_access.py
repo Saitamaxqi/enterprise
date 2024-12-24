@@ -498,7 +498,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             self.env['documents.document'].with_user(self.portal_user).create({
                 'name': 'document',
                 'folder_id': False,
-                'owner_id': self.env.ref('base.user_root').id,
+                'owner_id': self.internal_user.id,
                 'type': 'binary',
             })
 
@@ -506,7 +506,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.env['documents.document'].with_user(self.portal_user).sudo().create({
             'name': 'document',
             'folder_id': False,
-            'owner_id': self.env.ref('base.user_root').id,
+            'owner_id': self.internal_user.id,
             'type': 'binary',
         })
 
@@ -525,9 +525,8 @@ class TestDocumentsAccess(TransactionCaseDocuments):
 
         Creating inside depends on regular access rights
         """
-        odoobot = self.env.ref('base.user_root')
         self.assertFalse(self.folder_a.folder_id)
-        self.folder_a.owner_id = odoobot
+        self.folder_a.owner_id = False
         self.folder_a.action_update_access_rights(partners={self.internal_user.partner_id.id: ('edit', False)})
         access = self.env['documents.access'].search([
             ('document_id', '=', self.folder_a.id),
@@ -549,10 +548,10 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             location_folder_id=self.folder_a.id
         )
         self.assertEqual(shortcut.folder_id, self.folder_a)
-        # Managers can unpin by moving to another odoobot folder
-        self.folder_b.owner_id = odoobot
+        # Managers can unpin by moving to another root folder
+        self.folder_b.owner_id = False
         self.folder_a.with_user(self.document_manager).folder_id = self.folder_b
-        self.assertFalse(self.folder_a.is_pinned_folder)
+        self.assertFalse(self.folder_a.is_company_root_folder)
         # Or moving to their own drive
         self.folder_a.with_user(self.document_manager).folder_id = False
         self.folder_a.with_user(self.document_manager).owner_id = self.document_manager
@@ -560,27 +559,25 @@ class TestDocumentsAccess(TransactionCaseDocuments):
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_pin_folder_create(self):
         """Check that a normal user can not create a pinned folder."""
-        odoobot = self.env.ref('base.user_root')
         folder = self.env['documents.document'].create({
             'folder_id': False,
             'name': 'folder',
-            'owner_id': odoobot.id,
+            'owner_id': False,
             'type': 'folder',
         })
-        self.assertTrue(folder.is_pinned_folder)
+        self.assertTrue(folder.is_company_root_folder)
 
         with self.assertRaises(AccessError):
             self.env['documents.document'].with_user(self.internal_user).create({
                 'folder_id': False,
                 'name': 'folder',
-                'owner_id': odoobot.id,
+                'owner_id': False,
                 'type': 'folder',
             })
 
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_pin_folder_folder_id(self):
         """Check that non-admins cannot (un-)pin company root folders."""
-        odoobot = self.env.ref('base.user_root')
         self.assertFalse(self.folder_a.folder_id)
 
         self.folder_a.owner_id = self.document_manager
@@ -632,10 +629,11 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             children_access_before)
 
         # set_as_company_root changed owner_id
-        self.assertEqual((self.folder_a | self.folder_b).owner_id, odoobot)
+        self.assertFalse((self.folder_a | self.folder_b).owner_id)
 
         # Normal user cannot pin
         self.folder_a.with_user(self.document_manager).owner_id = self.internal_user
+
         self.folder_a.with_user(self.internal_user).check_access('write')
         with self.assertRaises(AccessError):
             self.folder_a.with_user(self.internal_user).action_set_as_company_root()
@@ -754,7 +752,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         """
         self._assert_no_members(self.folder_b)
         self.folder_b.action_move_documents(self.folder_a.id)
-        self.folder_a.owner_id = self.env.ref('base.user_root')
+        self.folder_a.owner_id = False
 
         self.assertEqual(self.folder_a.access_internal, 'view')
         self.assertEqual(self.document_txt.folder_id, self.folder_b)
@@ -908,7 +906,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
                     'shortcut_document_id': target.id,
                 })],
             })],
-            'owner_id': self.document_manager.id  # not odoobot
+            'owner_id': self.document_manager.id  # not False
         })
 
         file_1 = self.env['documents.document'].search([('id', 'child_of', root.id), ('name', '=', 'File 1')])

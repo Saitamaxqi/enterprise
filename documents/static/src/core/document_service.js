@@ -116,7 +116,7 @@ export class DocumentService {
             document &&
             typeof document.id === "number" &&
             document.user_permission === "edit" &&
-            (!document.is_pinned_folder || this.userIsDocumentManager)
+            (!document.is_company_root_folder || this.userIsDocumentManager)
         );
     }
 

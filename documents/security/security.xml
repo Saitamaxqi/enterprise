@@ -71,7 +71,7 @@
                 (4, ref('base.group_portal')),
                 (4, ref('base.group_user')),
             ]"/>
-            <field name="domain_force">[('user_permission', '=', 'edit'), ('is_pinned_folder', '=', False)]</field>
+            <field name="domain_force">[('user_permission', '=', 'edit'), ('is_company_root_folder', '=', False)]</field>
             <field name="perm_read" eval="False"/>
             <field name="perm_create" eval="False"/>
         </record>

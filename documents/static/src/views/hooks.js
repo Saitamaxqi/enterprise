@@ -204,7 +204,7 @@ export function useDocumentView(helpers) {
                     default_res_id: props.context.default_res_id || false,
                     default_res_model: props.context.default_res_model || false,
                     ...(folderId === "COMPANY"
-                        ? { default_owner_id: documentService.store.odoobot.userId }
+                        ? { default_owner_id: false }
                         : {}),
                 },
                 fullscreen: env.isSmall,
@@ -224,7 +224,7 @@ export function useDocumentView(helpers) {
                     ...(currentFolder === "COMPANY"
                         ? {
                               default_access_internal: "edit",
-                              default_owner_id: documentService.store.odoobot.userId,
+                              default_owner_id: false,
                           }
                         : {}),
                 },
@@ -499,7 +499,8 @@ function useDocumentsViewFileUpload() {
     const uploadFiles = async ({ files, accessToken, context }) => {
         if (env.searchModel.getSelectedFolderId() === "COMPANY") {
             // to upload in the COMPANY folder, we need to set Odoobot as owner
-            context.default_owner_id = documentService.store.odoobot.userId;
+            // (value will be passed as string, so we need to use 0 instead of false)
+            context.default_owner_id = "0";
         }
 
         const validFiles = [...files].filter((file) => file.size <= component.maxUploadSize);
