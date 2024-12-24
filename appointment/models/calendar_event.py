@@ -424,8 +424,8 @@ class CalendarEvent(models.Model):
         if not self.appointment_type_id:
             return super()._get_customer_description()
 
-        confirmation_html = html_sanitize(self.appointment_type_id.message_confirmation or '')
-        base_url = self.appointment_type_id.get_base_url()
+        confirmation_html = html_sanitize(self.appointment_type_id.sudo().message_confirmation or '')
+        base_url = self.appointment_type_id.sudo().get_base_url()
         url = f"{base_url}/calendar/view/{self.access_token}"
         link_html = Markup("<span>%s <a href=%s>%s</a></span>") % (_("Need to reschedule?"), url, _("Click here"))
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import base64
+from datetime import datetime, timedelta
 
 from odoo.addons.appointment.tests.common import AppointmentSecurityCommon
 from odoo.exceptions import AccessError
@@ -129,6 +130,28 @@ class TestAppointmentTypeSecurity(AppointmentSecurityCommon):
             self.env['appointment.type'].create({
                 'name': 'Test Create'
             })
+
+    @users('staff_user_aust')
+    def test_appointment_type_customer_description_access(self):
+        """
+        Ensure a user who is only an attendee (i.e., not in staff_user_ids)
+        does NOT receive an AccessError when calling _get_customer_description.
+        """
+        appointment_type = self.apt_type_bxls_2days
+        appointment_type.sudo().staff_user_ids = [self.apt_manager.id]  # ensure staff is set
+        appointment_type.sudo().message_confirmation = 'Test confirmation message'
+
+        test_event = self.env['calendar.event'].create({
+            'name': 'Test Event for Non-staff Attendee',
+            'start': datetime.now(),
+            'stop': datetime.now() + timedelta(hours=1),
+            'appointment_type_id': appointment_type.id,
+            'user_id': self.apt_manager.id,  # The staff/host user
+            'partner_ids': [(6, 0, [self.env.user.partner_id.id, self.apt_manager.partner_id.id])],
+        })
+
+        test_event.appointment_type_id.invalidate_recordset(['message_confirmation'])
+        self.assertIn("Test confirmation message", test_event._get_customer_description())
 
     @users('public_user')
     @mute_logger('odoo.addons.base.models.ir_model', 'odoo.addons.base.models.ir_rule')
