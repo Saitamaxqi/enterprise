@@ -20,6 +20,7 @@
             <t t-call="web.ListView.Selection" t-if="this.env.model.root.selection.length">
                 <t t-set="isDomainSelected" t-value="false"/>
                 <t t-set="isPageSelected" t-value="false"/>
+                <t t-set="model" t-value="this.env.model"/>
                 <t t-set="nbSelected" t-value="this.env.model.root.selection.length"/>
             </t>
             <div class="btn-group">
