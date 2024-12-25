@@ -693,6 +693,12 @@ msgid ""
 msgstr ""
 
 #. module: account_budget
+#. odoo-python
+#: code:addons/account_budget/models/budget_line.py:0
+msgid "The 'End Date' must be greater than or equal to 'Start Date'."
+msgstr ""
+
+#. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__theoritical_amount
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__theoretical
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form

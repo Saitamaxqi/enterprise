@@ -2,7 +2,8 @@
 
 from datetime import timedelta
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class BudgetLine(models.Model):
@@ -45,6 +46,12 @@ class BudgetLine(models.Model):
     is_above_budget = fields.Boolean(compute='_compute_above_budget')
     budget_analytic_state = fields.Selection(related='budget_analytic_id.state', string='Budget State', store=True, readonly=True)
 
+    @api.constrains('date_from', 'date_to')
+    def _check_date_range(self):
+        for line in self:
+            if line.date_from and line.date_to and line.date_to < line.date_from:
+                raise ValidationError(_("The 'End Date' must be greater than or equal to 'Start Date'."))
+
     @api.depends('achieved_amount', 'budget_amount')
     def _compute_above_budget(self):
         for line in self:
@@ -78,7 +85,7 @@ class BudgetLine(models.Model):
             # For example, between April 1st and April 30th, the timedelta must be 30 days.
             line_timedelta = line.date_to - line.date_from + timedelta(days=1)
             elapsed_timedelta = min(max(today, line.date_from), line.date_to) - line.date_from + timedelta(days=1)
-            line.theoritical_amount = (elapsed_timedelta.total_seconds() / line_timedelta.total_seconds()) * line.budget_amount
+            line.theoritical_amount = line_timedelta and (elapsed_timedelta.total_seconds() / line_timedelta.total_seconds()) * line.budget_amount
             line.theoritical_percentage = line.budget_amount and (line.theoritical_amount / line.budget_amount)
 
     def _read_group_select(self, aggregate_spec, query):
