@@ -19,6 +19,7 @@
         </field>
         <xpath expr="//list">
             <field name="is_seo_optimized"/>
+            <field name="website_id" optional="show"/>
             <field name="is_published"/>
         </xpath>
     </field>
