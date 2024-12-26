@@ -10,4 +10,5 @@ class ResCompany(models.Model):
     @api.model
     def fec_import_action(self):
         """ This action is triggered when the Configuration > FEC Import menu button is pressed."""
-        return self.env['ir.actions.act_window']._for_xml_id("l10n_fr_fec_import.import_action")
+        wizard = self.env['account.fec.import.wizard'].create({})
+        return wizard._get_records_action(name=self.env._("FEC Import"), target='new')

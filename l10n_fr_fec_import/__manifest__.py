@@ -38,7 +38,17 @@ https://github.com/DGFiP/Test-Compta-Demat
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [
+            'l10n_fr_fec_import/static/src/components/**/*',
+            'l10n_fr_fec_import/static/src/hooks/**/*',
+            'l10n_fr_fec_import/static/src/views/**/*',
             'l10n_fr_fec_import/static/src/xml/**/*',
+        ],
+        'web.assets_tests': [
+            'l10n_fr_fec_import/static/tests/tours/**/*',
+        ],
+        'web.assets_unit_tests': [
+            'l10n_fr_fec_import/static/tests/**/*',
+            ('remove', 'l10n_fr_fec_import/static/tests/tours/**/*'),
         ],
     },
 }

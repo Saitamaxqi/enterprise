@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import base64
-import codecs
 from collections import defaultdict
-import csv
 import datetime
-import io
 import logging
 import copy
 
 from odoo import _, fields, models, Command
 from odoo.exceptions import UserError, RedirectWarning
 from odoo.tools import float_repr, float_is_zero, SQL
+from odoo.addons.web.controllers.utils import clean_action
 
 _logger = logging.getLogger(__name__)
 
@@ -27,8 +24,6 @@ class AccountFecImportWizard(models.TransientModel):
     _name = 'account.fec.import.wizard'
     _description = "Account FEC import wizard"
 
-    attachment_name = fields.Char(string="Filename")
-    attachment_id = fields.Binary(string="File", required=True, help="Accounting FEC data file to be imported")
     company_id = fields.Many2one(comodel_name="res.company", string="Company", help="Company used for the import", default=lambda self: self.env.company, required=True, readonly=True)
     document_prefix = fields.Char(string="Document prefix")
     duplicate_documents_handling = fields.Selection(
@@ -40,76 +35,7 @@ class AccountFecImportWizard(models.TransientModel):
         default='update',
     )
 
-    # ------------------------------------
-    # Reading
-    # ------------------------------------
-
-    def _get_rows(self, attachment, attachment_name):
-        """ Returns the rows that are stored inside the CSV FEC attachment.
-
-            If the file starts with a BOM_UTF8, it's considered utf-8 w/BOM.
-            'utf-8' and 'iso8859_15' are the only other allowed encodings.
-            Allowed delimiters are ';|,\t', as in the official FEC testing tooling.
-
-            Record fields are stripped of spaces after being read from the file.
-        """
-
-        # Determine the encoding
-        bytes_data = base64.b64decode(attachment)
-        if bytes_data.startswith(codecs.BOM_UTF8):
-            string_data = bytes_data.decode('utf-8-sig')
-        else:
-            for encoding in ['utf-8', 'iso8859_15']:
-                try:
-                    string_data = bytes_data.decode(encoding)
-                    if string_data:
-                        break
-                except ValueError:
-                    pass
-            if not string_data:
-                raise UserError(_("Cannot determine the encoding for the attached file."))
-
-        # Find the CSV dialect
-        try:
-            dialect = csv.Sniffer().sniff(string_data, delimiters=";|,\t")
-        except csv.Error:
-            raise UserError(_("Cannot determine the file format for the attached file."))
-
-        # Return the spaces-stripped rows
-        rows = []
-        try:
-            incomplete_lines = []
-            reader = csv.reader(io.StringIO(string_data), dialect=dialect)
-
-            for line_no, record in enumerate(reader, 1):
-                # Deal with the header
-                if line_no == 1:
-                    header = [x.strip() for x in record]
-                    while header and not header[-1]:
-                        header.pop()
-                else:
-                    # Read the rows, skipping the empty ones
-                    # Then put it in the rows basket, or flag it if it's incomplete
-                    row = [x.strip() if isinstance(x, str) else x for x in record]
-                    if row:
-                        if len(row) >= len(header):
-                            rows.append(dict(zip(header, row)))
-                        else:
-                            incomplete_lines.append(line_no)
-
-        # Print a friendly message to the user
-        except csv.Error as e:
-            _logger.warning("csv.Error: %s", e)
-            raise UserError(_("This file could not be recognised.\n"
-                              "Please check that it is encoded in utf-8 or iso8859_15"))
-
-        # Block the processing if there are incomplete lines
-        if incomplete_lines:
-            raise UserError(_("Some lines do not have the same number of fields as the header.\n"
-                              "Please check the following line numbers:\n"
-                              "%s", incomplete_lines))
-
-        return rows
+    import_summary_id = fields.Many2one(comodel_name="account.import.summary", default=lambda self: self.env['account.import.summary'].create({}))
 
     # ------------------------------------
     # Generators
@@ -160,7 +86,6 @@ class AccountFecImportWizard(models.TransientModel):
                 cache['account.account'][account_code_stripped] = data
                 yield account_xml_id, data
         self.env['ir.model.data']._update_xmlids(new_ids.values())
-
 
     def _shorten_code(self, value, max_len, cache, reserved_digits=2):
         """ In case that given value is too long, this function shortens it like this:
@@ -441,8 +366,6 @@ class AccountFecImportWizard(models.TransientModel):
             piece_ref = record.get("PieceRef", "")
             ecriture_num = record.get("EcritureNum", "")
             move_name = ecriture_num or piece_ref
-            if not move_name:
-                raise UserError(_("Line %s has an invalid move name", idx))
 
             if self.document_prefix:
                 move_name = self.document_prefix.strip() + ' ' + move_name
@@ -701,21 +624,16 @@ class AccountFecImportWizard(models.TransientModel):
     # Main methods
     # -----------------------------------
 
-    def action_import(self):
-        """ Action called by the Import button """
-        return self._import_files()
-
-    def _import_files(self, models=None):
+    def process_chunk(self, header=[], rows=[]):
         """ Start the import by gathering generators and templates and applying them to attached files. """
-
+        rows = [dict(zip(header, row)) for row in rows]
         # Basic checks to start
         if not self.company_id.account_fiscal_country_id or not self.company_id.chart_template:
             action = self.env.ref('account.action_account_config')
             raise RedirectWarning(_('You should install a Fiscal Localization first.'), action.id, _('Accounting Settings'))
 
-        # Models list can be injected for testing purposes
-        if not models:
-            models = ["account.account", "account.journal", "res.partner", "account.move"]
+        # Models list
+        models = ["account.account", "account.journal", "res.partner", "account.move"]
 
         # In Odoo, move names follow sequences based on the year, so the checks complain
         # if the year present in the move's name doesn't match with the move's date.
@@ -733,7 +651,6 @@ class AccountFecImportWizard(models.TransientModel):
 
         data = defaultdict(dict)
         all_templates = self._gather_templates()
-        rows = self._get_rows(self.attachment_id, self.attachment_name)
 
         # For each file provided, cycle over each model
         for model in models:
@@ -773,11 +690,11 @@ class AccountFecImportWizard(models.TransientModel):
                     self._setup_bank_journal(journal)
                 journal.type = journal_type
 
-        import_summary = self.env['account.import.summary'].create({
-            'import_summary_account_ids': created_vals.get("account.account"),
-            'import_summary_journal_ids': created_vals.get("account.journal"),
-            'import_summary_move_ids': created_vals.get("account.move"),
-            'import_summary_partner_ids': created_vals.get("res.partner"),
-            'import_summary_tax_ids': created_vals.get("account.tax"),
-        })
-        return import_summary.action_open_summary_view()
+        self.import_summary_id.import_summary_account_ids |= created_vals.get("account.account", self.env['account.account'])
+        self.import_summary_id.import_summary_journal_ids |= created_vals.get("account.journal", self.env['account.journal'])
+        self.import_summary_id.import_summary_move_ids |= created_vals.get("account.move", self.env['account.move'])
+        self.import_summary_id.import_summary_partner_ids |= created_vals.get("res.partner", self.env['res.partner'])
+        self.import_summary_id.import_summary_tax_ids |= created_vals.get("account.tax", self.env['account.tax'])
+
+    def import_summary_action(self):
+        return clean_action(self.import_summary_id.action_open_summary_view(), self.env)
