@@ -249,6 +249,9 @@ export class ButtonBox extends components.ButtonBox {
     }
 
     isSlotVisible(slot) {
+        if (this.viewEditorModel.isEditingSubview) {
+            return false;
+        }
         return this.viewEditorModel.showInvisible || super.isSlotVisible(slot);
     }
 }

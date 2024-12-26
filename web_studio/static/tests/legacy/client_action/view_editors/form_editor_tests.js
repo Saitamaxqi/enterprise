@@ -2922,7 +2922,8 @@ QUnit.module("View Editors", (hooks) => {
         await click(target, ".o_web_studio_editX2Many[data-type='form']");
         await nextTick();
         assert.containsOnce(target, ".o-form-buttonbox");
-        assert.containsOnce(target, ".o-form-buttonbox button[name='some_action']");
+        assert.containsNone(target, ".o-form-buttonbox .o_web_studio_button_hook");
+        assert.containsNone(target, ".o-form-buttonbox button[name='some_action']");
     });
 
     QUnit.test("cannot add a related properties field", async (assert) => {

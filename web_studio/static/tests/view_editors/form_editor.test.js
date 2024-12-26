@@ -1028,16 +1028,6 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
     disableHookAnimation();
     await contains(".o_web_studio_field_char").dragAndDrop(".o_inner_group .o_web_studio_hook");
     expect.verifySteps(["/web_studio/edit_view"]);
-
-    // add a new button
-    await contains(".o_web_studio_button_hook").click();
-    expect.verifySteps([]);
-
-    await contains(".o_input_dropdown input").click();
-    expect.verifySteps(["name_search"]);
-
-    await contains(".o_web_studio_new_button_dialog li a").click();
-    expect(".o_web_studio_new_button_dialog .o-autocomplete--input").toHaveValue("Partner");
 });
 
 test("edit one2many list view that uses parent key [REQUIRE FOCUS]", async () => {
