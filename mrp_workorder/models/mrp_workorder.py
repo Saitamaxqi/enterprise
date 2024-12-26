@@ -61,7 +61,7 @@ class MrpWorkorder(models.Model):
     employee_ids = fields.Many2many('hr.employee', string='Working employees', copy=False)
     # employees assigned to the wo
     employee_assigned_ids = fields.Many2many('hr.employee', 'mrp_workorder_employee_assigned',
-                                             'workorder_id', 'employee_id', string='Assigned', copy=False)
+                                             'workorder_id', 'employee_id', string='Assigned')
     # employees connected
     connected_employee_ids = fields.Many2many('hr.employee', search='search_is_assigned_to_connected', store=False)
 
