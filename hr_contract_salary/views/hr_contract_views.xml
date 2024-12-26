@@ -165,11 +165,29 @@
         <field name="mode">primary</field>
         <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
         <field name="arch" type="xml">
+            <field name="date_start" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </field>
+            <field name="date_end" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </field>
+            <field name="state" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </field>
+            <field name="kanban_state" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </field>
             <field name="employee_id" position="attributes">
                 <attribute name="column_invisible">1</attribute>
             </field>
             <field name="wage_on_signature" position="attributes">
                 <attribute name="column_invisible">1</attribute>
+            </field>
+            <field name="wage" position="attributes">
+                <attribute name="optional">show</attribute>
+            </field>
+            <field name="structure_type_id" position="attributes">
+                <attribute name="optional">show</attribute>
             </field>
         </field>
     </record>
