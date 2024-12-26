@@ -260,7 +260,11 @@ class PosUrbanPiperController(http.Controller):
         value_ids_lst = []
         note = ''
         if line_data.get('options_to_add'):
-            note = '\n'.join([f"{option.get('title')} X {option.get('quantity')}" for option in line_data['options_to_add']])
+            note = '\n'.join([
+                f"{option.get('title')} X {option.get('quantity')}"
+                for option in line_data['options_to_add']
+                if int(option.get('quantity', 0)) > 1
+            ])
             merchant_value_lst = [option.get('merchant_id') for option in line_data['options_to_add']]
             value_ids_lst = [int(vid.split('-')[1]) for vid in merchant_value_lst]
         price_extra = sum(option.get('total_price', 0) for option in line_data.get('options_to_add', []))

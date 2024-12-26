@@ -119,12 +119,12 @@ patch(PosStore.prototype, {
     },
 
     async goToBack() {
-        this.addPendingOrder([this.selectedOrder.id]);
+        this.addPendingOrder([this.getOrder().id]);
         await this.syncAllOrders();
         this.showScreen("TicketScreen");
-        if (this.selectedOrder.delivery_status !== "placed") {
+        if (this.getOrder().delivery_status !== "placed") {
             try {
-                await this.sendOrderInPreparation(this.selectedOrder);
+                await this.sendOrderInPreparation(this.getOrder());
             } catch {
                 this.notification.add(_t("Error to send in preparation display."), {
                     type: "warning",
