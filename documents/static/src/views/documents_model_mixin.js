@@ -284,16 +284,26 @@ export const DocumentsRecordMixin = (component) => class extends component {
     }
 
     /**
-     * Upon double-clicking on a document shortcut,
-     * selects targeted file / opens targeted folder.
+     * Jump to shortcut targeted file / open targeted folder.
      */
     jumpToTarget() {
         const section = this.model.env.searchModel.getSections()[0];
-        const folderId = this.shortcutTarget.data.active
-            ? this.shortcutTarget.data.type === "folder"
-                ? this.shortcutTarget.data.id
-                : this.shortcutTarget.data.folder_id[0]
-            : "TRASH";
+        let folderId;
+        if (!this.shortcutTarget.data.active) {
+            folderId = "TRASH";
+        } else if (this.shortcutTarget.data.type === "folder") {
+            // Using doc data shortcut_document_id because isContainer record does not (need to) load shortcutTarget.
+            folderId = this.data.shortcut_document_id?.[0] || this.shortcutTarget.data.id;
+        } else if (this.shortcutTarget.data.folder_id) {
+            folderId = this.shortcutTarget.data.folder_id[0];
+        } else if (!this.shortcutTarget.data.owner_id[0]) {
+            folderId = "COMPANY";
+        } else if (this.shortcutTarget.data.owner_id[0] === user.userId) {
+            folderId = "MY";
+        }
+        if (!folderId || !this.model.env.searchModel.getFolderById(folderId)) {
+            folderId = "SHARED"; // Inaccessible folder
+        }
         this.model.env.searchModel.toggleCategoryValue(section.id, folderId);
         this.model.originalSelection = [this.shortcutTarget.resId];
         this.model.env.documentsView.bus.trigger("documents-expand-folder", { folderId: folderId });

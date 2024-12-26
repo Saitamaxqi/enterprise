@@ -1868,7 +1868,7 @@ class DocumentsDocument(models.Model):
             enable_counters = kwargs.get('enable_counters', False)
             search_panel_fields = ['access_token', 'company_id', 'description', 'display_name', 'folder_id',
                                    'is_favorited', 'is_company_root_folder', 'owner_id', 'shortcut_document_id',
-                                   'user_permission']
+                                   'user_permission', 'active']
             if not self.env.user.share:
                 search_panel_fields += ['alias_name', 'alias_domain_id', 'alias_tag_ids']
             domain = [('type', '=', 'folder')]
