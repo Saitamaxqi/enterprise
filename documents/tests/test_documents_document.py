@@ -39,6 +39,7 @@ class TestCaseDocuments(TransactionCaseDocuments):
         # Make sure we test copying m2o too
         self.document_gif.partner_id = self.env.user.partner_id
         shortcut = self.document_gif.action_create_shortcut()
+        self.assertFalse(shortcut.attachment_id)
         original_file_size = self.document_gif.file_size
         for field_name in self.env['documents.document']._get_shortcuts_copy_fields():
             with self.subTest(field_name=field_name):
@@ -113,30 +114,6 @@ class TestCaseDocuments(TransactionCaseDocuments):
                 'folder_id': folder.id,
                 'type': 'binary',
             } for folder in folders])
-
-    def test_documents_share_links(self):
-        """
-        Tests document share links
-        """
-        # todo: transform into testing sharing a shortcut document with expiration
-        # by Folder
-        pass
-
-    def test_documents_share_popup(self):
-        shared_folder = self.env['documents.document'].create({
-            'type': 'folder',
-            'name': 'share folder',
-            'children_ids': [
-                Command.create({'type': 'binary', 'datas': GIF, 'name': 'file.gif', 'mimetype': 'image/gif'}),
-                Command.create({'type': 'url', 'url': 'https://odoo.com'}),
-            ],
-        })
-        share_tag = self.env['documents.tag'].create({
-            'name': "share category > share tag",
-        })
-        shared_folder.children_ids[0].tag_ids = [Command.set(share_tag.ids)]
-        # todo
-        # self.assertEqual(shared_folder.links_count, 0, "There should be no links counted in this share")
 
     def test_default_res_id_model(self):
         """
@@ -319,7 +296,7 @@ class TestCaseDocuments(TransactionCaseDocuments):
         """
         Tests a documents.document unlink method.
         Attachments should be deleted when related documents are deleted,
-        for which res_model is not 'documents.document'.
+        for which res_model is not 'documents.document' or `False`.
 
         Test case description:
             Case 1:
@@ -331,21 +308,23 @@ class TestCaseDocuments(TransactionCaseDocuments):
             Case 2:
             - ensure the existing flow for res_model 'documents.document'
               does not break.
-        """
-        document = self.env['documents.document'].create({
-            'datas': GIF,
-            'folder_id': self.folder_b.id,
-            'res_model': 'res.partner',
-        })
-        self.assertTrue(document.attachment_id.exists(), 'the attachment should exist')
-        attachment = document.attachment_id
-        document.unlink()
-        self.assertFalse(attachment.exists(), 'the attachment should not exist')
 
-        self.assertTrue(self.document_txt.attachment_id.exists(), 'the attachment should exist')
-        attachment_a = self.document_txt.attachment_id
-        self.document_txt.unlink()
-        self.assertFalse(attachment_a.exists(), 'the attachment should not exist')
+            Case 3:
+            - ensure the existing flow for res_model `False` does not break.
+        """
+        documents = self.env['documents.document'].create([{
+                'datas': GIF,
+                'folder_id': self.folder_b.id,
+                'res_model': res_model,
+            } for res_model in ('res.partner', 'documents.document', False)
+        ])
+        documents[2].res_model = False
+        for document in documents:
+            with self.subTest(res_model=document.res_model):
+                self.assertTrue(document.attachment_id.exists())
+                attachment = document.attachment_id
+                document.unlink()
+                self.assertFalse(attachment.exists())
 
     def test_archive_and_unarchive_document(self):
         self.document_txt.action_archive()

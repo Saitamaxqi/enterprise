@@ -54,7 +54,7 @@ class DocumentsDocument(models.Model):
                                  compute='_compute_file_extension', inverse='_inverse_file_extension')
     file_size = fields.Integer(compute='_compute_file_size', store=True)
     checksum = fields.Char(related='attachment_id.checksum')
-    mimetype = fields.Char(related='attachment_id.mimetype', inverse='_inverse_mimetype')
+    mimetype = fields.Char(related='attachment_id.mimetype')
     res_model = fields.Char('Resource Model', compute="_compute_res_record", recursive=True,
                             inverse="_inverse_res_model", store=True)
     res_id = fields.Many2oneReference('Resource ID', compute="_compute_res_record", recursive=True,
@@ -239,10 +239,6 @@ class DocumentsDocument(models.Model):
         for record in self:
             file_extension = _sanitize_file_extension(record.file_extension) if record.file_extension else False
             (record | record.shortcut_ids).file_extension = file_extension
-
-    def _inverse_mimetype(self):
-        for record in self.filtered('shortcut_ids'):
-            record.shortcut_ids.mimetype = record.mimetype
 
     @api.constrains('shortcut_document_id', 'shortcut_ids', 'type', 'folder_id', 'children_ids', 'company_id')
     def _check_shortcut_fields(self):
@@ -730,7 +726,7 @@ class DocumentsDocument(models.Model):
     @api.model
     def _get_shortcuts_copy_fields(self):
         # Note that current simple usage in action_create_shortcut supports scalar and m2o fields.
-        return {'company_id', 'file_size', 'file_extension', 'is_access_via_link_hidden', 'is_multipage', 'mimetype',
+        return {'company_id', 'file_size', 'file_extension', 'is_access_via_link_hidden', 'is_multipage',
                 'name', 'partner_id', 'type'}
 
     def action_update_access_rights(self, access_internal=None, access_via_link=None, is_access_via_link_hidden=None,
