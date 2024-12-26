@@ -11,7 +11,7 @@ from odoo import api, fields, models
 from odoo.fields import Domain
 from odoo.osv import expression
 from odoo.exceptions import UserError
-from odoo.tools import _, format_list, topological_sort
+from odoo.tools import _, format_list, topological_sort, Query
 from odoo.tools.sql import SQL
 from odoo.addons.resource.models.utils import filter_domain_leaf
 
@@ -114,27 +114,23 @@ class ProjectTask(models.Model):
         self.allocated_hours = round(work_duration, 2)
 
     def _fetch_planning_overlap(self, additional_domain=None):
-        domain = [
+        domain = Domain([
             ('active', '=', True),
             ('is_closed', '=', False),
             ('planned_date_begin', '!=', False),
             ('date_deadline', '!=', False),
             ('date_deadline', '>', fields.Datetime.now()),
             ('project_id', '!=', False),
-        ]
+        ])
         if additional_domain:
-            domain = expression.AND([domain, additional_domain])
+            domain &= Domain(additional_domain)
         ProjectTask = self.env['project.task']
-        planning_overlap_query = ProjectTask._where_calc(
-            expression.AND([
-                domain,
-                [('id', 'in', self.ids)]
-            ])
-        )
+        domain = domain._optimize(ProjectTask)
+        planning_overlap_query = ProjectTask._where_calc(domain & Domain('id', 'in', self.ids))
         tu1_alias = planning_overlap_query.join(ProjectTask._table, 'id', 'project_task_user_rel', 'task_id', 'TU1')
         task2_alias = planning_overlap_query.make_alias(ProjectTask._table, 'T2')
-        task2_expression = expression.expression(domain, ProjectTask, task2_alias)
-        task2_query = task2_expression.query
+        task2_query = Query(ProjectTask.env, task2_alias, ProjectTask._table_sql)
+        task2_query.add_where(domain._to_sql(ProjectTask, task2_alias, task2_query))
 
         # add additional condition to join with the main query
         task2_query.add_where(

@@ -12,8 +12,8 @@ import psycopg2.errors
 
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError, UserError
+from odoo.fields import Domain
 from odoo.models import MAGIC_COLUMNS
-from odoo.osv.expression import FALSE_DOMAIN, OR, expression
 from odoo.tools import _, get_lang, SQL
 from odoo.tools.misc import format_datetime, format_date, partition as tools_partition, unique
 
@@ -98,7 +98,7 @@ class Data_MergeRecord(models.Model):
             # Initial select id query to apply ir.rules and build Query object.
             query = self.env['data_merge.record'].with_context(active_test=False)._search([])
             # no models => return all records
-            return [('id', 'in', query)]
+            return Domain('id', 'in', query)
 
         models_with_company, models_no_company = tools_partition(
             lambda r: self.env[r[0]]._fields.get('company_id'),
@@ -130,9 +130,8 @@ class Data_MergeRecord(models.Model):
         for model_name, model_id in models_with_company:
             Model = self.env[model_name]
             # Adapt operator and value for direct SQL query
-            exp = expression([('company_id', operator, value)], Model)
-            self._apply_ir_rules(exp.query)
-            from_clause, where_clause = exp.query.from_clause, exp.query.where_clause
+            query = Model.with_context(active_test=False)._search([('company_id', operator, value)])
+            from_clause, where_clause = query.from_clause, query.where_clause
             model_table = Model._table
             from_sql_code = from_clause.code
             assert from_sql_code.startswith(f'"{model_table}"') and not from_clause.params
@@ -155,7 +154,7 @@ class Data_MergeRecord(models.Model):
         if not where_queries:
             # there was a nonempty models_info but no subqueries
             # it means that nothing satisfies the domain
-            return FALSE_DOMAIN
+            return Domain.FALSE
         sql = SQL(
             """(
             SELECT data_merge_record.id
@@ -166,7 +165,7 @@ class Data_MergeRecord(models.Model):
             SQL(" ").join(join_queries),
             SQL(" OR ").join(where_queries),
         )
-        return [('id', 'in', sql)]
+        return Domain('id', 'in', sql)
 
 
     #############
@@ -267,12 +266,10 @@ class Data_MergeRecord(models.Model):
             for field in reference_fields:
                 group_model_fields[field.model].append(field.name)
 
-
-            for model in group_model_fields:
-                ref_fields = group_model_fields[model]  # fields for the model
-                domain = OR([[(f, 'in', records.mapped('res_id'))] for f in ref_fields])
+            for model, ref_fields in group_model_fields.items():
+                domain = Domain.OR([[(f, 'in', records.mapped('res_id'))] for f in ref_fields])
                 groupby_field = ref_fields[0]
-                count_grouped = self.env[model]._read_group([(groupby_field, '!=', False)] + domain, [groupby_field], ['__count'])
+                count_grouped = self.env[model]._read_group(domain & Domain(groupby_field, '!=', False), [groupby_field], ['__count'])
                 for group_value, count in count_grouped:
                     record_id = records_mapped.get(group_value.id)
                     if not record_id:
