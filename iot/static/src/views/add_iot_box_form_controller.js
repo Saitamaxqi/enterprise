@@ -38,10 +38,13 @@ export class AddIoTBoxFormController extends FormController {
     async initializeIoTConnection() {
         this.iotBoxesBeforeConnection = await this.orm.call("iot.box", "search_read", [[], ["identifier"]]);
 
-        this.closeConnectingNotification = this.notification.add(_t("Waiting for a new IoT Box..."), {
-            type: "info",
-            sticky: true,
-        });
+        this.closeConnectingNotification = this.notification.add(
+            _t("We're looking for your IoT Box"),
+            {
+                type: "info",
+                sticky: true,
+            }
+        );
 
         // Set a timer to check for new IoT Boxes every 10 seconds
         this.iotCheckTimer = setInterval(async () => {

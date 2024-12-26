@@ -4,7 +4,7 @@
         <field name="name">Add IoT box</field>
         <field name="model">add.iot.box</field>
         <field name="arch" type="xml">
-            <form string="Connect an IoT Box" js_class="add_iot_box_wizard">
+            <form string="Connect my IoT Box" js_class="add_iot_box_wizard">
                 <div>
                     0. Power on the IoT Box and connect it to the internet through ethernet
                     <a href="//www.odoo.com/documentation/master/applications/general/iot/config/connect.html#ethernet-connection" target="_blank" class="fa fa-question-circle"/>
@@ -43,7 +43,7 @@
         </field>
     </record>
     <record id="action_add_iot_box" model="ir.actions.act_window">
-        <field name="name">Connect an IoT Box</field>
+        <field name="name">Connect my IoT Box</field>
         <field name="res_model">add.iot.box</field>
         <field name="view_mode">form</field>
         <field name="view_id" ref="view_add_iot_box"/>
