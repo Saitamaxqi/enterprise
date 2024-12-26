@@ -1352,13 +1352,13 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         deferral = self.generate_deferral_entries(options)[0]
         self.assert_invoice_lines(deferral, expected_values)
 
-    def test_deferred_expense_manual_generation_deprecated_account(self):
-        """Test that deferred on deprecated accounts are still visible in the report, but cannot be generated."""
+    def test_deferred_expense_manual_generation_inactive_account(self):
+        """Test that deferred on inactive accounts are still visible in the report, but cannot be generated."""
         self.company.generate_deferred_expense_entries_method = 'manual'
         self.company.deferred_expense_amount_computation_method = 'month'
 
         self.create_invoice([self.expense_lines[0]])
-        self.expense_accounts[0].deprecated = True
+        self.expense_accounts[0].active = False
 
         options = self.get_options('2023-03-01', '2023-03-31')
         lines = self.get_lines(options)
@@ -1374,8 +1374,8 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         )
 
         # Shouldn't raise
-        #    'The account ... is deprecated.'
-        # or 'A line of this move is using a deprecated account, you cannot post it.'
+        #    'The account ... is archived.'
+        # or 'A line of this move is using an archived account, you cannot post it.'
         entries = self.generate_deferral_entries(options)
         expected_values = [
             # Account                      Debit     Credit

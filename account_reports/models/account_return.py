@@ -946,14 +946,14 @@ class AccountReturn(models.Model):
         if not move_vals_lines:
             rep_ln_in = self.env['account.tax.repartition.line'].search([
                 *self.env['account.tax.repartition.line']._check_company_domain(company),
-                ('account_id.deprecated', '=', False),
+                ('account_id.active', '=', True),
                 ('repartition_type', '=', 'tax'),
                 ('document_type', '=', 'invoice'),
                 ('tax_id.type_tax_use', '=', 'purchase'),
             ], limit=1)
             rep_ln_out = self.env['account.tax.repartition.line'].search([
                 *self.env['account.tax.repartition.line']._check_company_domain(company),
-                ('account_id.deprecated', '=', False),
+                ('account_id.active', '=', True),
                 ('repartition_type', '=', 'tax'),
                 ('document_type', '=', 'invoice'),
                 ('tax_id.type_tax_use', '=', 'sale'),

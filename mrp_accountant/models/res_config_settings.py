@@ -10,7 +10,6 @@ class ResConfigSettings(models.TransientModel):
     property_stock_account_production_cost_id = fields.Many2one(
         'account.account', "Production Account",
         check_company=True,
-        domain="[('deprecated', '=', False)]",
         compute='_compute_property_stock_account',
         inverse='_set_property_stock_account_production_cost_id')
 

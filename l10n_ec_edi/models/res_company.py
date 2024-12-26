@@ -66,13 +66,11 @@ class ResCompany(models.Model):
 
     l10n_ec_tax_base_sale_account_id = fields.Many2one(
         comodel_name='account.account',
-        domain=[('deprecated', '=', False)],
         string="Sales Tax Base Account",
         help="Account that will be set on lines created to represent the tax base amounts for sale withhold documents.",
     )
     l10n_ec_tax_base_purchase_account_id = fields.Many2one(
         comodel_name='account.account',
-        domain=[('deprecated', '=', False)],
         string="Purchase Tax Base Account",
         help="Account that will be set on lines created to represent the tax base amounts for purchase withhold documents.",
     )

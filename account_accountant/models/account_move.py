@@ -768,7 +768,6 @@ class AccountMoveLine(models.Model):
             excluded_group = 'expense'
         account_query = self.env['account.account']._where_calc([
             *self.env['account.account']._check_company_domain(self.move_id.company_id or self.env.company),
-            ('deprecated', '=', False),
             ('internal_group', 'not in', (excluded_group, 'off')),
             ('account_type', 'not in', ('liability_payable', 'asset_receivable')),
         ])

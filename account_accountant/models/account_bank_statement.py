@@ -222,7 +222,7 @@ class AccountBankStatementLine(models.Model):
             st_line.partner_id = mapped_partner_id
 
         # global flushing of tables that should not be updated between the different SQL queries
-        self.env['account.account'].flush_model(['account_type', 'deprecated'])
+        self.env['account.account'].flush_model(['account_type', 'active'])
         self.env['account.move'].flush_model(['date', 'amount_total'])
 
         # First try to match invoices and payments where we can't be wrong:
@@ -248,7 +248,7 @@ class AccountBankStatementLine(models.Model):
                AND aml.company_id = st_line.company_id
                AND aml.reconciled = false
                AND acc.account_type IN ('asset_receivable', 'liability_payable')
-               AND NOT acc.deprecated
+               AND acc.active
                AND st_line.id IN %s
           GROUP BY st_line.id
         """, tuple(self.ids)))
@@ -297,7 +297,7 @@ class AccountBankStatementLine(models.Model):
                 AND aml.company_id = st_line.company_id
                 AND aml.reconciled = false
                 AND acc.account_type IN ('asset_receivable', 'liability_payable')
-                AND NOT acc.deprecated
+                AND acc.active
                 AND st_line.id IN %s
                 -- we have only one invoice matching the exact amount, even if the payment reference doesn't match
                 -- or the invoice discount amount is the same as the statement line amount and paid in the allowed time limit
@@ -347,7 +347,7 @@ class AccountBankStatementLine(models.Model):
                 AND aml.company_id = st_line.company_id
                 AND aml.reconciled = false
                 AND acc.account_type IN ('asset_receivable', 'liability_payable')
-                AND NOT acc.deprecated
+                AND acc.active
                 AND st_line.id IN %s
                 AND st_line.currency_id = aml.currency_id
                 AND (st_line.payment_ref = aml.move_name OR st_line.payment_ref = aml.ref OR st_line.payment_ref = move.payment_reference)

@@ -187,7 +187,6 @@ class ResPartner(models.Model):
     def _get_unreconciled_aml_domain(self):
         return [
             ('reconciled', '=', False),
-            ('account_id.deprecated', '=', False),
             ('account_id.account_type', '=', 'asset_receivable'),
             ('parent_state', '=', 'posted'),
             ('partner_id', 'in', self.ids),
@@ -363,7 +362,7 @@ class ResPartner(models.Model):
                   ORDER BY next_ful.delay ASC
                      LIMIT 1
                  )
-           WHERE account.deprecated IS NOT TRUE
+           WHERE account.active
              AND account.account_type = 'asset_receivable'
              AND aml.parent_state = 'posted'
              AND aml.reconciled IS NOT TRUE
@@ -380,7 +379,7 @@ class ResPartner(models.Model):
              LEFT JOIN account_followup_followup_line ful ON ful.id = line.followup_line_id
                  WHERE line.partner_id = partner.id
                    AND account.account_type = 'asset_receivable'
-                   AND account.deprecated IS NOT TRUE
+                   AND account.active
                    AND line.parent_state = 'posted'
                    AND line.reconciled IS NOT TRUE
                    AND line.balance > 0
@@ -395,7 +394,7 @@ class ResPartner(models.Model):
                   JOIN account_account account ON line.account_id = account.id
                  WHERE line.partner_id = partner.id
                    AND account.account_type = 'asset_receivable'
-                   AND account.deprecated IS NOT TRUE
+                   AND account.active
                    AND line.parent_state = 'posted'
                    AND line.reconciled IS NOT TRUE
                    AND line.balance > 0

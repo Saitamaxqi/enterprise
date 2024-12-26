@@ -2,7 +2,7 @@
 
 from odoo import api, fields, models
 
-ACCOUNT_DOMAIN = [('deprecated', '=', False), ('account_type', 'not in', ('asset_receivable', 'liability_payable', 'asset_cash', 'liability_credit_card', 'off_balance'))]
+ACCOUNT_DOMAIN = [('account_type', 'not in', ('asset_receivable', 'liability_payable', 'asset_cash', 'liability_credit_card', 'off_balance'))]
 
 
 class ResConfigSettings(models.TransientModel):
@@ -26,19 +26,16 @@ class ResConfigSettings(models.TransientModel):
     property_stock_valuation_account_id = fields.Many2one(
         'account.account', "Stock Valuation Account",
         check_company=True,
-        domain="[('deprecated', '=', False)]",
         compute='_compute_property_stock_account',
         inverse='_set_property_stock_valuation_account_id')
     property_stock_account_input_categ_id = fields.Many2one(
         'account.account', "Stock Input Account",
         check_company=True,
-        domain="[('deprecated', '=', False)]",
         compute='_compute_property_stock_account',
         inverse='_set_property_stock_account_input_categ_id')
     property_stock_account_output_categ_id = fields.Many2one(
         'account.account', "Stock Output Account",
         check_company=True,
-        domain="[('deprecated', '=', False)]",
         compute='_compute_property_stock_account',
         inverse='_set_property_stock_account_output_categ_id')
 

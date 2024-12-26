@@ -730,7 +730,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
         return param_data
 
     def _post_import(self, account_deprecated_ids):
-        account_deprecated_ids.write({'deprecated': True})  # We can't set it before because of a constraint in aml's create
+        account_deprecated_ids.write({'active': False})  # We can't set it before because of a constraint in aml's create
 
     def import_winbooks_file(self):
         """Import all the data from a Winbooks database dump. The imported

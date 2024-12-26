@@ -59,7 +59,7 @@
                         </div>
                         <div class="row mt8">
                             <label for="deferred_expense_account_id" class="col-lg-5 o_light_label" string="Deferred expense"/>
-                            <field name="deferred_expense_account_id" domain="[('account_type', '=', 'asset_current'), ('deprecated', '=', False)]"/>
+                            <field name="deferred_expense_account_id" domain="[('account_type', '=', 'asset_current')]"/>
                         </div>
                         <div class="row mt8">
                             <label for="generate_deferred_expense_entries_method" class="col-lg-5 o_light_label" string="Generate Entries"/>
@@ -79,7 +79,7 @@
                         </div>
                         <div class="row mt8">
                             <label for="deferred_revenue_account_id" class="col-lg-5 o_light_label" string="Deferred revenue"/>
-                            <field name="deferred_revenue_account_id" domain="[('account_type', '=', 'liability_current'), ('deprecated', '=', False)]"/>
+                            <field name="deferred_revenue_account_id" domain="[('account_type', '=', 'liability_current')]"/>
                         </div>
                         <div class="row mt8">
                             <label for="generate_deferred_revenue_entries_method" class="col-lg-5 o_light_label" string="Generate Entries"/>

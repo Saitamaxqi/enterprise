@@ -96,7 +96,7 @@ class AccountReconcileWizard(models.TransientModel):
         comodel_name='account.account',
         string='Account',
         check_company=True,
-        domain="[('deprecated', '=', False), ('account_type', '!=', 'off_balance')]")
+        domain="[('account_type', '!=', 'off_balance')]")
     is_rec_pay_account = fields.Boolean(compute='_compute_is_rec_pay_account')
     to_partner_id = fields.Many2one(
         comodel_name='res.partner',

@@ -29,24 +29,20 @@ class AssetModify(models.TransientModel):
         'account.account',
         string="Gross Increase Account",
         check_company=True,
-        domain="[('deprecated', '=', False)]",
     )
     account_asset_counterpart_id = fields.Many2one(
         'account.account',
         check_company=True,
-        domain="[('deprecated', '=', False)]",
         string="Asset Counterpart Account",
     )
     account_depreciation_id = fields.Many2one(
         'account.account',
         check_company=True,
-        domain="[('deprecated', '=', False)]",
         string="Depreciation Account",
     )
     account_depreciation_expense_id = fields.Many2one(
         'account.account',
         check_company=True,
-        domain="[('deprecated', '=', False)]",
         string="Expense Account",
     )
     modify_action = fields.Selection(selection="_get_selection_modify_options", string="Action")
@@ -68,14 +64,12 @@ class AssetModify(models.TransientModel):
     gain_account_id = fields.Many2one(
         comodel_name='account.account',
         check_company=True,
-        domain="[('deprecated', '=', False)]",
         compute="_compute_accounts", inverse="_inverse_gain_account", readonly=False, compute_sudo=True,
         help="Account used to write the journal item in case of gain",
     )
     loss_account_id = fields.Many2one(
         comodel_name='account.account',
         check_company=True,
-        domain="[('deprecated', '=', False)]",
         compute="_compute_accounts", inverse="_inverse_loss_account", readonly=False, compute_sudo=True,
         help="Account used to write the journal item in case of loss",
     )
