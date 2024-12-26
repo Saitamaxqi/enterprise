@@ -110,7 +110,7 @@ class AccountMove(models.Model):
                 'price_unit': line.price_unit,
                 'invoice_lines': line.ids,
                 'date_planned': fields.Date.context_today(self),
-                'taxes_id': line.tax_ids.ids,
+                'tax_ids': line.tax_ids.ids,
                 'display_type': line.display_type if line.display_type in ['line_section', 'line_note'] else False,
             }))
 
