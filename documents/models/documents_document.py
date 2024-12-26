@@ -1329,6 +1329,7 @@ class DocumentsDocument(models.Model):
                             '(possibly known) issue within PyPDF2.', self.name, exc_info=True)
             return False
 
+    # todo: unused, remove in master
     def _get_models(self, domain):
         """
         Return the names of the models to which the attachments are attached.

@@ -2,6 +2,8 @@ import { SpreadsheetModels, defineSpreadsheetModels } from "@spreadsheet/../test
 import { defineActions, fields, models, onRpc, serverState } from "@web/../tests/web_test_helpers";
 import { Domain } from "@web/core/domain";
 
+const ACCESS_TOKEN_MY_SPREADSHEET = "accessTokenMyspreadsheet";
+
 export class DocumentsDocument extends models.Model {
     _name = "documents.document";
 
@@ -165,7 +167,7 @@ export class DocumentsDocument extends models.Model {
             folder_id: 1,
             handler: "spreadsheet",
             active: true,
-            access_token: "accessTokenMyspreadsheet",
+            access_token: ACCESS_TOKEN_MY_SPREADSHEET,
         },
         {
             id: 3,
@@ -182,26 +184,6 @@ export class DocumentsDocument extends models.Model {
 
 export class DocumentsTag extends models.Model {
     _name = "documents.tag";
-
-    facet_id = fields.Many2one({ relation: "documents.facet" });
-    get_tags() {
-        return [];
-    }
-}
-
-export class TagsCategories extends models.Model {
-    _name = "documents.facet";
-}
-
-export class DocumentsWorkflowRule extends models.Model {
-    _name = "documents.workflow.rule";
-
-    note = fields.Char({ string: "Tooltip" });
-    limited_to_single_record = fields.Boolean({ string: "Limited to single record" });
-    create_model = fields.Selection({
-        selection: [["link.to.record", "Link to record"]],
-        string: "Create",
-    });
 }
 
 export class SpreadsheetTemplate extends models.Model {
@@ -313,9 +295,7 @@ export function defineDocumentSpreadsheetModels() {
         MailAlias,
         MailAliasDomain,
         DocumentsDocument,
-        TagsCategories,
         DocumentsTag,
-        DocumentsWorkflowRule,
         SpreadsheetTemplate,
         IrUIMenu,
         ResCountries,
@@ -347,7 +327,6 @@ export function getBasicPermissionPanelData(recordExtra) {
     const record = {
         access_internal: "view",
         access_via_link: "view",
-        access_url: "http://localhost:8069/share/url/132465",
         access_ids: [],
         active: true,
         owner_id: {
@@ -383,4 +362,12 @@ export function getBasicPermissionPanelData(recordExtra) {
         ],
     };
     return { record, selections };
+}
+
+export function getMySpreadsheetPermissionPanelData() {
+    return getBasicPermissionPanelData({
+        access_url: `https://localhost:8069/odoo/documents/${ACCESS_TOKEN_MY_SPREADSHEET}`,
+        display_name: "My Spreadsheet",
+        handler: "spreadsheet",
+    });
 }
