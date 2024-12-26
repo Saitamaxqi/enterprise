@@ -29,7 +29,7 @@
                         <field name="code" readonly="1" force_save="1" optional="hide"/>
                         <field name="category_id" readonly="1" column_invisible="True" force_save="1"/>
                         <field name="quantity"/>
-                        <field name="rate" readonly="1" force_save="1"/>
+                        <field name="rate"/>
                         <field name="salary_rule_id" options="{'no_create_edit': True}" required="1"/>
                         <field name="amount"/>
                         <field name="total" readonly="1" force_save="1"/>
