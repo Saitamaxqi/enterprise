@@ -1858,6 +1858,40 @@ class TestCFDIInvoice(TestMxEdiCommon):
             self._assert_invoice_payment_cfdi(payment4.move_id, 'test_partial_payment_3_pay4')
             self.assertRecordValues(invoice, [{'amount_residual': 464.0}])
 
+    def test_full_payment_rate(self):
+        date1 = fields.Date.today() - relativedelta(days=1)
+        date2 = fields.Date.today()
+        usd = self.setup_other_currency('USD', rates=[(date1, 0.049905678268), (date2, 0.049073733284)])
+
+        with self.mx_external_setup(date1):
+            invoice = self._create_invoice(
+                date=date1,
+                currency_id=usd.id,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 5490.00,
+                        'quantity': 1,
+                        'discount': 0.0,
+                        'tax_ids': [Command.set(self.tax_16.ids)],
+                    })],
+                )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self.assertEqual(invoice.l10n_mx_edi_cfdi_state, 'sent', f'Error: {invoice.l10n_mx_edi_document_ids.message}')
+
+        with self.mx_external_setup(date2):
+            payment = self._create_payment(
+                invoice,
+                amount=129772.07,
+                payment_date=date2,
+                currency_id=self.env.ref('base.MXN').id,
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice.l10n_mx_edi_cfdi_invoice_try_update_payments()
+            self.assertEqual(payment.move_id.l10n_mx_edi_cfdi_state, 'sent', f'Error: {payment.move_id.l10n_mx_edi_document_ids.message}')
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_full_payment_rate')
+
     def test_foreign_curr_statement_and_invoice_modify_exchange_move(self):
         """ Test a bank reconciliation multi currency reconcliation with remaining amount in company currency """
         date1 = self.frozen_today - relativedelta(days=1)

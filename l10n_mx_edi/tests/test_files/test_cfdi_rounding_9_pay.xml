@@ -7,7 +7,7 @@
 	</cfdi:Conceptos>
 	<cfdi:Complemento>
 		<pago20:Pagos Version="2.0">
-			<pago20:Totales TotalTrasladosBaseIVA16="238174.10" TotalTrasladosImpuestoIVA16="38107.86" MontoTotalPagos="276281.95"/>
+			<pago20:Totales TotalTrasladosBaseIVA16="238174.09" TotalTrasladosImpuestoIVA16="38107.86" MontoTotalPagos="276281.95"/>
 			<pago20:Pago FechaPago="___ignore___" FormaDePagoP="01" MonedaP="MXN" TipoCambioP="1" Monto="276281.95" NumOperacion="___ignore___">
 				<pago20:DoctoRelacionado IdDocumento="___ignore___" Folio="___ignore___" Serie="___ignore___" MonedaDR="USD" EquivalenciaDR="0.0597168228" NumParcialidad="1" ImpSaldoAnt="3340.80" ImpPagado="3340.80" ObjetoImpDR="02" ImpSaldoInsoluto="0.00">
 					<pago20:ImpuestosDR>
@@ -53,7 +53,7 @@
 				</pago20:DoctoRelacionado>
 				<pago20:ImpuestosP>
 					<pago20:TrasladosP>
-						<pago20:TrasladoP BaseP="238174.10" ImporteP="38107.86" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.160000"/>
+						<pago20:TrasladoP BaseP="238174.09" ImporteP="38107.86" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.160000"/>
 					</pago20:TrasladosP>
 				</pago20:ImpuestosP>
 			</pago20:Pago>
