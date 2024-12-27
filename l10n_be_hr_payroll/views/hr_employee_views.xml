@@ -58,7 +58,7 @@
         <field name="priority">30</field>
         <field name="arch" type="xml">
             <group name="payroll_group" position="after">
-                <group name="l10n_be_payroll_group" string="Belgian Payroll">
+                <group name="l10n_be_payroll_group" string="Belgian Payroll" invisible="company_country_code != 'BE'">
                     <field name="fiscal_voluntarism"/>
                 </group>
             </group>
