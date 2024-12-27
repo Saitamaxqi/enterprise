@@ -1094,3 +1094,28 @@ test("List cells are highlighted when hovering the list menu item", async functi
     await leave("div[data-name='item_list_1']");
     expect(getHighlightsFromStore(env)).toEqual([]);
 });
+
+test("Inserting a grouped list ignore groups", async function () {
+    const serverData = getBasicServerData();
+    Partner._fields.foo.sortable = true;
+    onRpc("partner", "web_read_group", async ({ kwargs, parent }) => {
+        if (kwargs.groupby) {
+            // The mock server cannot handle orderby count
+            kwargs.orderby = "";
+        }
+        return parent();
+    });
+    const { model } = await createSpreadsheetFromListView({
+        actions: async (fixture) => {
+            // display the property which is an optional column
+            await contains(".o_searchview_dropdown_toggler").click();
+            await contains(".o_add_custom_group_menu").select("bar");
+            await contains(".o_searchview_facet_label").click();
+        },
+        serverData,
+        linesNumber: 4,
+    });
+    expect(getEvaluatedCell(model, "A2").value <= getEvaluatedCell(model, "A3").value).not.toBe(
+        undefined
+    );
+});

@@ -26,11 +26,12 @@ patch(ListRenderer.prototype, {
         const selection = await model.getResIds(true);
         const threshold = selection.length > 0 ? selection.length : Math.min(count, model.limit);
         let name = this.env.config.getDisplayName();
-        const sortBy = model.orderBy[0];
-        if (sortBy && model.fields[sortBy.name]) {
+        const sortBy = model.orderBy[0]?.name;
+        const groupBy = model.groupBy[0];
+        if (sortBy || groupBy) {
             name = _t("%(field name)s by %(order)s", {
                 "field name": name,
-                order: model.fields[sortBy.name].string,
+                order: model.fields[sortBy]?.string ?? groupBy,
             });
         }
         const { list, fields } = await this.getListForSpreadsheet(name);
@@ -70,13 +71,14 @@ patch(ListRenderer.prototype, {
         const model = this.env.model.root;
         const { actionId } = this.env.config;
         const { xml_id } = actionId ? await this.actionService.loadAction(actionId, this.props.list.context) : {};
-        const fields = this.env.model.root.fields;
-
+        // Remove the `group_by` instructions
+        const fieldNames = model.fieldNames;
+        const filteredOrderBy = (model.orderBy).filter(order => fieldNames.includes(order.name));
         return {
             list: {
                 model: model.resModel,
                 domain: this.env.searchModel.domainString,
-                orderBy: model.orderBy.filter((field) => fields[field.name]),
+                orderBy: filteredOrderBy,
                 context: omit(model.context, ...Object.keys(user.context)),
                 columns: this.getColumnsForSpreadsheet(),
                 name,
