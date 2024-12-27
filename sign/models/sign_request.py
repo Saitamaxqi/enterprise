@@ -301,6 +301,7 @@ class SignRequest(models.Model):
                 "views": [(False, "form")],
                 "view_mode":  'form',
                 "res_id": self.reference_doc.id,
+                "target": 'current',
             })
         else:
             action = default_action
