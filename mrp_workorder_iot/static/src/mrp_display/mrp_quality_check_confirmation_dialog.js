@@ -52,7 +52,7 @@ patch(MrpQualityCheckConfirmationDialog.prototype, {
                   identifier: deviceIdentifier,
                   iot_ip: iot_box_ip,
                });
-               controller.addListener(this.createOnValueChangeHandler(device2key2action[deviceIdentifier]));
+               controller.addListener(this.createOnValueChangeHandler.bind(this, device2key2action[deviceIdentifier]));
                this.deviceControllers[`${iot_box_ip}/${deviceIdentifier}`] = controller;
             }
          }
@@ -65,20 +65,16 @@ patch(MrpQualityCheckConfirmationDialog.prototype, {
          }
       });
    },
-   createOnValueChangeHandler(key2action) {
-      return (data) => {
-         console.log("onValueChangeHandler", data.owner, data.session_id, data.value, data, key2action);
-         if (data.owner && data.owner !== data.session_id) {
-            this.state.pedalConnected = false;
-         } else {
-            for (const key in key2action) {
-               if (data.value === key) {
-                  console.log("onValueChangeHandler triggering barcode_scanned", `O-BTN.${key2action[key]}`);
-                  this.barcode.bus.trigger('barcode_scanned', { barcode: `O-BTN.${key2action[key]}` });
-               }
+   createOnValueChangeHandler(key2action, data) {
+      if (data.owner && data.owner !== data.session_id) {
+         this.state.pedalConnected = false;
+      } else {
+         for (const key in key2action) {
+            if (data.value === key) {
+               this.barcode.bus.trigger('barcode_scanned', { barcode: `O-BTN.${key2action[key]}` });
             }
          }
-      };
+      }
    },
    async takeOwnership() {
       this.state.pedalConnected = true;

@@ -3,8 +3,6 @@ import { registry } from '@web/core/registry';
 import { TabletImageField, tabletImageField } from "@quality/tablet_image_field/tablet_image_field";
 import { useIotDevice } from '@iot/iot_device_hook';
 import { useService } from '@web/core/utils/hooks';
-import { WarningDialog } from '@web/core/errors/error_dialogs';
-import { IoTConnectionErrorDialog } from '@iot/dialogs/iot_connection_error_dialog';
 
 export class TabletImageIoTField extends TabletImageField {
     static template = "quality_iot.TabletImageIoTField";
@@ -18,46 +16,55 @@ export class TabletImageIoTField extends TabletImageField {
         super.setup();
         this.dialog = useService('dialog');
         this.notification = useService('notification');
+        const iotIp = this.props.record.data[this.props.ip_field];
+        const identifier = this.props.record.data[this.props.identifier_field];
+        if (!iotIp || !identifier) {
+            this.notification.add(
+                _t('Please link the corresponding Quality Control Point to the camera.'), {
+                title: _t('Camera configuration error'),
+                type: 'warning',
+            });
+            return;
+        }
+        if (this.props.record.data.test_type !== 'picture') return;
         this.getIotDevice = useIotDevice({
-            getIotIp: () => {
-                if (this.props.record.data.test_type === 'picture') {
-                    return this.props.record.data[this.props.ip_field];
-                }
-            },
-            getIdentifier: () => {
-                if (this.props.record.data.test_type === 'picture') {
-                    return this.props.record.data[this.props.identifier_field];
-                }
-            },
+            getIotIp: () => iotIp,
+            getIdentifier: () => identifier,
             onValueChange: (data) => {
                 if (data.owner && data.owner === data.session_id) {
-                    this.notification.add(data.message);
-                    if (data.image) {
+                    if (data.image && data.message) {
+                        this.notification.add(_t(data.message), { type: 'success' });
                         this.props.record.update({ [this.props.name]: data.image });
+                    } else {
+                        this.notifyFailure();
                     }
                 }
             },
         });
     }
     async onTakePicture(ev) {
-        if (this.getIotDevice()) {
-            // Stop propagating so that the FileUploader component won't open the file dialog.
-            ev.stopImmediatePropagation();
-            ev.preventDefault();
-            this.notification.add(_t('Capture image...'));
-            try {
-                const data = await this.getIotDevice().action({});
-                if (data.result !== true) {
-                    this.dialog.add(WarningDialog, {
-                        title: _t('Connection to device failed'),
-                        message: _t('Please check if the device is still connected.'),
-                    });
-                }
-                return data;
-            } catch {
-                this.dialog.add(IoTConnectionErrorDialog, { href: this.props.record.data[this.props.ip_field] });
+        if (!this.getIotDevice) return;
+
+        // Stop propagating so that the FileUploader component won't open the file dialog.
+        ev.stopImmediatePropagation();
+        ev.preventDefault();
+        this.notification.add(_t('Capturing image...'), { type: 'info' });
+        try {
+            const data = await this.getIotDevice().action({});
+            if (data.result !== true) {
+                this.notifyFailure();
             }
+            return data;
+        } catch {
+            this.notifyFailure();
         }
+    }
+
+    notifyFailure() {
+        this.notification.add(_t('Please check if the device is still connected.'), {
+            type: 'danger',
+            title: _t('Connection to device failed'),
+        });
     }
 }
 
