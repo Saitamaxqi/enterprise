@@ -38,10 +38,10 @@
         <field name="model">helpdesk.sla.report.analysis</field>
         <field name="arch" type="xml">
             <graph string="SLA Status Analysis" disable_linking="1" sample="1">
-                 <field name="ticket_assignation_hours" widget="float_time"/>
-                 <field name="ticket_close_hours" widget="float_time"/>
+                 <field name="ticket_assignation_hours" widget="float_time" invisible="1"/>
+                 <field name="ticket_close_hours" widget="float_time" invisible="1"/>
                  <field name="sla_id"/>
-                 <field name="sla_exceeded_hours" widget="float_time"/>
+                 <field name="sla_exceeded_hours" widget="float_time" invisible="1"/>
                  <field name="sla_status"/>
              </graph>
          </field>
