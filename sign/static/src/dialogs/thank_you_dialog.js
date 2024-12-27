@@ -44,7 +44,7 @@ export class ThankYouDialog extends Component {
         });
         this.redirectURL = this.processURL(this.props.redirectURL);
         this.message =
-            this.props.message || _t("You will receive the final signed document by email.");
+            this.props.message || _t("You will get the signed document by email.");
         onWillStart(this.willStart);
         this.isMobileOS = isMobileOS();
     }
@@ -120,23 +120,15 @@ export class ThankYouDialog extends Component {
 
         this.state.buttons.push({
             name: this.closeLabel,
-            click: () => this.onClickClose(),
+            click: () => {
+                if (this.suggestSignUp) {
+                    window.open(`https://odoo.com/app/sign`);
+                } else {
+                    this.onClickClose();
+                }
+            },
             classes: 'btn btn-secondary o_sign_thankyou_close_button',
         });
-
-        if (this.suggestSignUp) {
-            this.state.buttons.push({
-                name: _t("Sign Up for free"),
-                classes: "btn btn-link ms-auto",
-                ignored: true,
-                click: () => {
-                    window.open(
-                        "https://www.odoo.com/trial?selected_app=sign&utm_source=db&utm_medium=sign",
-                        "_blank"
-                    );
-                },
-            });
-        }
     }
 
     onClickClose() {

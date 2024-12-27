@@ -80,7 +80,7 @@ QUnit.module("thank you dialog", (hooks) => {
 
         await mountThankYouDialog(await createEnv(mockRPC));
 
-        assert.strictEqual(target.querySelector(".modal-title").textContent.trim(), "All done!");
+        assert.strictEqual(target.querySelector(".modal-title").textContent.trim(), "It's signed!");
         assert.strictEqual(
             target.querySelector("#thank-you-message").textContent,
             "bla",
@@ -131,8 +131,8 @@ QUnit.module("thank you dialog", (hooks) => {
         );
         assert.containsOnce(
             target,
-            "button:contains('Sign Up for free')",
-            "Should render sign up button"
+            "a:contains('Odoo Sign')",
+            "Should render sign up link"
         );
     });
 
@@ -160,7 +160,7 @@ QUnit.module("thank you dialog", (hooks) => {
 
         assert.containsOnce(
             target,
-            "button:contains('Download it')",
+            "button:contains('Download')",
             "Should render download document button"
         );
     });
@@ -197,7 +197,7 @@ QUnit.module("thank you dialog", (hooks) => {
         );
         assert.containsOnce(
             target,
-            "button:contains('Download it')",
+            "button:contains('Download')",
             "Should render download document button"
         );
     });
