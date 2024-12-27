@@ -13,6 +13,7 @@ Contains the enterprise views for Stock management
     'data': [
         'security/ir.model.access.csv',
         'security/stock_enterprise_security.xml',
+        'views/res_config_settings_views.xml',
         'views/stock_move_views.xml',
         'views/stock_picking_map_views.xml',
         'report/stock_report_views.xml',
