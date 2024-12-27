@@ -74,7 +74,8 @@ class L10nInSalaryRegisterController(http.Controller):
         ]
 
         # HORIZONTAL DATA
-        domain = [('employee_id', 'in', employee_ids.ids), ('date_from', '>=', date_from), ('date_to', '<=', date_to), ('state', '=', 'paid')]
+        domain = wizard._get_payslip_domain()
+        domain.append(('employee_id', 'in', employee_ids.ids))
         if struct_id:
             domain.append(('struct_id', '=', struct_id.id))
         payslips_per_employee = dict(request.env['hr.payslip']._read_group(

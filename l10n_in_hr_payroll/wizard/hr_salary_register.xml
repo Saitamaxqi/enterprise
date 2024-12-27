@@ -5,7 +5,7 @@
             <field name="model">salary.register.wizard</field>
             <field name="arch" type="xml">
                 <form string="Salary Register">
-                    <span class="o_form_label text-muted">Generate an Excel report based on Paid payslips for the selected period of time.</span>
+                    <span class="o_form_label text-muted">Generate an Excel report based on payslips for the selected period of time.</span>
                     <footer>
                         <button name="action_export_xlsx" string="Export XLSX" type="object" class="btn-primary disabled" data-hotkey="q" invisible="employee_ids"/>
                         <button name="action_export_xlsx" string="Export XLSX" type="object" class="btn-primary" data-hotkey="q" invisible="not employee_ids"/>
@@ -15,6 +15,13 @@
                         <field name="date_from"/>
                         <field name="date_to"/>
                         <field name="struct_id" string="Salary Structure"/>
+                        <label class="o_form_label" for="include_paid" string="Payslip Status"/>
+                        <div class="o_row" string="Payslip Status">
+                            <label for="include_paid" string="Paid"/>
+                            <field name="include_paid"/>
+                            <label class="mx-0" for="include_done" string="Done"/>
+                            <field name="include_done"/>
+                        </div>
                         <separator string="Employees" />
                         <field name="employee_ids" nolabel="1" colspan="2" context="{'list_view_ref' : 'l10n_in_hr_payroll.hr_employee_tree_inherit'}">
                             <list no_open="True" create="False">
