@@ -47,15 +47,18 @@ class FetchmailServer(models.Model):
             if record.l10n_cl_is_dte and record.server_type not in ('imap', 'outlook', 'gmail'):
                 raise ValidationError(_('The server must be of type IMAP.'))
 
-    def fetch_mail(self, raise_exception=True):
-        for server in self.filtered(lambda s: s.l10n_cl_is_dte):
+    def _fetch_mail(self, **kw):
+        # TODO This reimplements the logic from the mail module to connect to a
+        # server, we should instead handle the message in `mail.thread.message_process`.
+        # The logic seems to have drifted away, even before refactoring to use `commit_progress`.
+        for server in self.filtered(lambda s: s.l10n_cl_is_dte).try_lock_for_update():
             _logger.info('Start checking for new emails on %s IMAP server %s', server.server_type, server.name)
 
             # prevents the process from timing out when connecting for the first time
             # to an edi email server with too many new emails to process
             # e.g over 5k emails. We will only fetch the next 50 "new" emails
             # based on their IMAP uid
-            default_batch_size = 50
+            default_batch_size = kw.get('batch_limit') or 50
 
             count, failed = 0, 0
             imap_server = None
@@ -89,27 +92,23 @@ class FetchmailServer(models.Model):
                         message = message.encode('utf-8')
                     msg_txt = email.message_from_bytes(message, policy=email.policy.SMTP)
                     try:
-                        server._process_incoming_email(msg_txt)
-                        new_max_uid = max(new_max_uid, int(uid))
-                        server.write({'l10n_cl_last_uid': new_max_uid})
-                        self._cr.commit()
-                    except Exception as e:
-                        if raise_exception:
-                            raise ValidationError(_(
-                                "Couldn't get your emails. Check out the error message below for more info:\n%s", e
-                            )) from e
+                        with self.env.cr.savepoint():
+                            # using a savepoint instead of a new transaction to
+                            # avoid impacting this process while rolling back
+                            # properly on failures
+                            server._process_incoming_email(msg_txt)
+                            new_max_uid = max(new_max_uid, int(uid))
+                            server.write({'l10n_cl_last_uid': new_max_uid})
+                    except Exception:  # noqa: BLE001
                         _logger.info('Failed to process mail from %s server %s.', server.server_type, server.name,
                                      exc_info=True)
                         failed += 1
                     count += 1
+                    self.env.cr.commit()
                 server.write({'l10n_cl_last_uid': new_max_uid})
                 _logger.info('Fetched %d email(s) on %s server %s; %d succeeded, %d failed.', count, server.server_type,
                              server.name, (count - failed), failed)
-            except Exception as e:
-                if raise_exception:
-                    raise ValidationError(_(
-                        "Couldn't get your emails. Check out the error message below for more info:\n%s", e
-                    )) from e
+            except Exception:  # noqa: BLE001
                 _logger.info('General failure when trying to fetch mail from %s server %s.', server.server_type,
                              server.name, exc_info=True)
             finally:
@@ -119,8 +118,9 @@ class FetchmailServer(models.Model):
                         imap_server.logout()
                     except Exception:  # pylint: disable=broad-except
                         _logger.warning('Failed to properly finish connection: %s.', server.name, exc_info=True)
-                server.write({'date': fields.Datetime.now()})
-        return super(FetchmailServer, self.filtered(lambda s: not s.l10n_cl_is_dte)).fetch_mail(raise_exception)
+            server.write({'date': fields.Datetime.now()})
+            self.env.cr.commit()
+        return super(FetchmailServer, self.filtered(lambda s: not s.l10n_cl_is_dte))._fetch_mail(**kw)
 
     def _process_incoming_email(self, msg_txt):
         parsed_values = self.env['mail.thread']._message_parse_extract_payload(msg_txt, {})
