@@ -32,6 +32,7 @@ Accounting Reports
         'views/account_report_view.xml',
         'data/account_report_actions.xml',
         'data/report_send_cron.xml',
+        'data/annual_statements.xml',
         'data/menuitems.xml',
         'data/mail_templates.xml',
         'data/ir_cron.xml',

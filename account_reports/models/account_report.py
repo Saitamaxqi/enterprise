@@ -22,7 +22,7 @@ try:
 except ImportError:
     xlsxwriter = None
 
-from odoo import models, fields, api, _, osv
+from odoo import Command, models, fields, api, _, osv
 from odoo.addons.web.controllers.utils import clean_action
 from odoo.exceptions import RedirectWarning, UserError, ValidationError
 from odoo.fields import Domain
@@ -127,6 +127,46 @@ class AccountReport(models.Model):
                 dummy, menuitem = report._get_existing_menuitem()
                 menuitem.active = vals['active']
         return super().write(vals)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        reports = super().create(vals_list)
+        if root_annual_statements := self.env.ref('account_reports.annual_statements', raise_if_not_found=False):
+            asr_section_reports = reports.filtered_domain(self._asr_sections_domain(root_annual_statements))
+            asr_section_reports._link_annual_statements(root_annual_statements)
+        return reports
+
+    def _asr_sections_domain(self, root_annual_statements):
+        """
+        The domain returned by this function is used to filter which reports
+        should be a section of an annual statements report
+        """
+        return [
+            ('root_report_id', 'in', root_annual_statements.section_report_ids.ids),
+            ('availability_condition', '!=', 'always'),  # the report has to be localized
+        ]
+
+    def _link_annual_statements(self, root_annual_statements):
+        for asr_section_report in self:
+            annual_statements = self.env['account.report'].search([
+                ('root_report_id', '=', root_annual_statements.id),
+                ('country_id', '=', asr_section_report.country_id.id),
+                ('chart_template', '=', asr_section_report.chart_template),
+            ])
+            if not annual_statements:
+                annual_statements = self.env['account.report'].create({
+                    'name': _("Annual Statements"),
+                    'root_report_id': root_annual_statements.id,
+                    'country_id': asr_section_report.country_id.id,
+                    'use_sections': True,
+                    'chart_template': asr_section_report.chart_template,
+                    'availability_condition': asr_section_report.availability_condition,
+                    'section_report_ids': [Command.set(root_annual_statements.section_report_ids.ids)],
+                })
+
+            annual_statements.section_report_ids -= asr_section_report.root_report_id
+            annual_statements.section_report_ids += asr_section_report
+            asr_section_report.sequence = asr_section_report.root_report_id.sequence
 
     ####################################################
     # CRON

@@ -2,6 +2,7 @@
 <odoo auto_sequence="1">
     <record id="trial_balance_report" model="account.report">
         <field name="name">Trial Balance</field>
+        <field name="sequence">30</field> <!-- Ensures the correct order in the composite Annual Statements report -->
         <field name="filter_journals" eval="True"/>
         <field name="filter_analytic" eval="True"/>
         <field name="filter_growth_comparison" eval="False"/>
