@@ -50,8 +50,7 @@ test("Allow only single attachment in every message", async () => {
     await click(".o-mail-Composer button[title='More Actions']"); // close
     await inputFiles(".o-mail-Composer .o_input_file", [file1]);
     await contains(".o-mail-AttachmentCard", { text: "text.txt", contains: [".fa-check"] });
-    await click(".o-mail-Composer button[title='More Actions']");
-    await contains(".dropdown-item:contains('Attach Files')", { count: 0 });
+    await contains(".o-mail-Composer button[title='More Actions']", { count: 0 });
     await pasteFiles(".o-mail-Composer-input", [file2]);
     await contains(".o-mail-AttachmentCard", { text: "text.txt", contains: [".fa-check"] });
     await dragenterFiles(".o-mail-Composer-input", [file2]);
