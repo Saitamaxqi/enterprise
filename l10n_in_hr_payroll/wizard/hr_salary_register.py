@@ -19,7 +19,7 @@ class SalaryRegisterWizard(models.TransientModel):
         return fields.Date.today() + relativedelta(day=1, month=1)
 
     def _get_default_date_to(self):
-        return fields.Date.today()
+        return fields.Date.today() + relativedelta(day=31)
 
     def _get_employee_ids_domain(self):
         employees = self.env['hr.payslip'].search([('state', '=', 'paid')]).employee_id.filtered(lambda e: e.company_id.country_id.code == "IN").ids
