@@ -70,7 +70,7 @@ class StockMoveLine(models.Model):
         pass
 
     def _inverse_qty_done(self):
-        for line in self:
+        for line in self.with_context({'preserve_state': True}):
             line.quantity = line.qty_done
             line.picked = line.quantity > 0
 
