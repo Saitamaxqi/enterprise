@@ -726,6 +726,10 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         report = self.env['account.report'].browse(options['report_id'])
         for column in options['columns']:
             col_expr_label = column['expression_label']
+
+            if col_expr_label not in aml_query_result:
+                raise UserError(_("The column '%s' is not available for this report.", col_expr_label))
+
             col_value = aml_query_result[col_expr_label] if column['column_group_key'] == aml_query_result['column_group_key'] else None
 
             if col_value is None:
