@@ -29,6 +29,19 @@ class AccountBankStatement(models.Model):
             extra_domain=[('statement_id', '=', self.id)]
         )
 
+    def action_open_journal_invalid_statements(self):
+        self.ensure_one()
+        return {
+            'name': _('Invalid Bank Statements'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.bank.statement',
+            'view_mode': 'list',
+            'context': {
+                'search_default_journal_id': self.journal_id.id,
+                'search_default_invalid': True,
+            },
+        }
+
     def action_generate_attachment(self):
         ir_actions_report_sudo = self.env['ir.actions.report'].sudo()
         statement_report_action = self.env.ref('account.action_report_account_statement')
