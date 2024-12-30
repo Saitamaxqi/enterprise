@@ -1,17 +1,14 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import contextlib
 import json
 import jwt
 import re
-
-from datetime import date, datetime
+from datetime import datetime, date
 from markupsafe import Markup
 
-from odoo import _, api, Command, fields, models, modules
+from odoo import  Command, _, api, fields, models, modules
 from odoo.tools import split_every
-
 from .irn_exception import IrnException
 
 UOM_REF_MAP = {
@@ -68,7 +65,10 @@ class AccountMove(models.Model):
         readonly=True,
         default="pending"
     )
-    l10n_in_reversed_entry_warning = fields.Boolean('Display reversed entry warning', compute="_compute_l10n_in_reversed_entry_warning")
+    l10n_in_reversed_entry_warning = fields.Boolean(
+        string="Display reversed entry warning",
+        compute="_compute_l10n_in_reversed_entry_warning"
+    )
     l10n_in_irn_number = fields.Char('IRN Number', readonly=True)
     l10n_in_gstr_activate_einvoice_fetch = fields.Selection(related="company_id.l10n_in_gstr_activate_einvoice_fetch")
     l10n_in_gst_efiling_feature_enabled = fields.Boolean(related="company_id.l10n_in_gst_efiling_feature")
@@ -88,8 +88,17 @@ class AccountMove(models.Model):
     @api.depends('move_type', 'reversed_entry_id', 'state', 'invoice_date', 'invoice_line_ids.tax_ids')
     def _compute_l10n_in_reversed_entry_warning(self):
         for move in self:
-            if move.country_code == 'IN' and move.company_id.l10n_in_gst_efiling_feature and move.move_type == 'out_refund' and move.state == 'draft' and move.invoice_date and move.reversed_entry_id and move.invoice_line_ids.tax_ids:
-                move.l10n_in_reversed_entry_warning = move.reversed_entry_id.invoice_date < move._l10n_in_get_fiscal_year_start_date(move.company_id, move.invoice_date)
+            if (
+                move.country_code == 'IN'
+                and move.l10n_in_gst_efiling_feature_enabled
+                and move.move_type == 'out_refund'
+                and move.state == 'draft'
+                and move.invoice_date
+                and move.reversed_entry_id
+                and move.invoice_line_ids.tax_ids
+            ):
+                move.l10n_in_reversed_entry_warning = move.reversed_entry_id.invoice_date < move._l10n_in_get_fiscal_year_start_date(
+                    move.company_id, move.invoice_date)
             else:
                 move.l10n_in_reversed_entry_warning = False
 
@@ -115,7 +124,10 @@ class AccountMove(models.Model):
         :returns: action to refresh the form view.
         """
         context = {'active_id': self.ids, 'active_model': 'account.move'}
-        self.env['l10n_in.gst.return.period'].with_context(context)._check_config(next_gst_action='fetch_irn_from_account_move', company=self.env.company)
+        self.env['l10n_in.gst.return.period'].with_context(context)._check_config(
+            next_gst_action='fetch_irn_from_account_move',
+            company=self.env.company
+        )
 
         JSON_MIMETYPE = 'application/json'
         STATUS_CANCELLED = 'CNL'
@@ -131,7 +143,13 @@ class AccountMove(models.Model):
                 # Retrieve IRN details if no valid attachment is found
                 gov_json_data = self._l10n_in_retrieve_details_from_irn(move.l10n_in_irn_number, move.company_id)
             except IrnException as e:
-                move.message_post(body=Markup("Fetching IRN details failed with error(s):<br/> %s") % str(e))
+                if str(e) == 'no-credit':
+                    message = self._l10n_in_edi_get_iap_buy_credits_message()
+                else:
+                    message = str(e)
+                move.message_post(
+                    body=Markup("%s <br/> %s") % (_("Fetching IRN details failed with error(s):", message))
+                )
                 continue
             attachment = self.env['ir.attachment'].create({
                 'name': f'{move.l10n_in_irn_number}.json',
@@ -155,26 +173,22 @@ class AccountMove(models.Model):
 
         :param job_count: the number of moves to process in each batch.
         """
-        indian_companies = self.env['res.company'].search([
-            ('account_fiscal_country_id.code', '=', 'IN'),
-            ('l10n_in_fetch_vendor_edi_feature', '=', True),
-        ])
-        for indian_company in indian_companies:
-            if indian_company._is_l10n_in_gstr_token_valid():
-                domain = [
-                    ('company_id', '=', indian_company.id),
-                    ('state', '=', 'draft'),
-                    ('company_id.l10n_in_gstr_activate_einvoice_fetch', '=', 'automatic'),
-                    ('l10n_in_irn_number', '!=', False),
-                    ('posted_before', '=', False),
-                    ('line_ids', 'not any', [(1, '=', 1)]),
-                ]
-                moves = self.env['account.move'].search(domain)
-                for move_batch in split_every(job_count, moves):
-                    for move in move_batch:
-                        move.l10n_in_update_move_using_irn()
-                    if not modules.module.current_test:
-                        self._cr.commit()
+        domain = [
+            ('company_id.account_fiscal_country_id.code', '=', 'IN'),
+            ('company_id.l10n_in_fetch_vendor_edi_feature', '=', True),
+            ('company_id.l10n_in_gstr_activate_einvoice_fetch', '=', 'automatic'),
+            ('company_id.l10n_in_gstr_gst_token_validity', '>', fields.Datetime.now()),
+            ('state', '=', 'draft'),
+            ('l10n_in_irn_number', '!=', False),
+            ('posted_before', '=', False),
+            ('line_ids', 'not any', [(1, '=', 1)]),
+        ]
+        moves = self.search(domain)
+        for move_batch in split_every(job_count, moves):
+            for move in move_batch:
+                move.l10n_in_update_move_using_irn()
+            if not modules.module.current_test:
+                self._cr.commit()
 
     # ========================================
     # Import Vendor Bills and Credit Notes
@@ -218,7 +232,7 @@ class AccountMove(models.Model):
             decoded_invoice_data = json.loads(decoded_data.get('data', '{}'))
         except (json.JSONDecodeError, jwt.exceptions.DecodeError):
             # Post a message on the invoice regarding the failure
-            invoice.message_post(body="Failed to decode signed invoice.")
+            invoice.message_post(body=_("Failed to decode signed invoice."))
             return False
         # Update the invoice with decoded data
         with self._get_edi_creation() as self:
@@ -232,12 +246,12 @@ class AccountMove(models.Model):
         :returns: True if the update was successful
 
         """
-        def _get_tax(rate, tag):
+        def _get_tax(rate, tag_ids):
             tax = self.env['account.tax'].search([
                 ('type_tax_use', '=', 'purchase'),
                 ('amount', '=', rate),
-                '|', ('repartition_line_ids.tag_ids', 'in', tag),
-                     ('children_tax_ids.repartition_line_ids.tag_ids', 'in', tag)
+                '|', ('repartition_line_ids.tag_ids', 'in', tag_ids),
+                     ('children_tax_ids.repartition_line_ids.tag_ids', 'in', tag_ids)
             ], limit=1)
             return tax
 
@@ -245,92 +259,88 @@ class AccountMove(models.Model):
         seller_details = content['SellerDtls']
         item_list = content['ItemList']
         value_details = content['ValDtls']
-
-        self.l10n_in_irn_number = content.get('Irn', False)
-        self.move_type = {
-            'INV': 'in_invoice',
-            'CRN': 'in_refund',
-            'DBN': 'in_invoice'
-        }.get(bill_details.get('Typ'), 'in_invoice')
-
+        move_vals = {
+            'l10n_in_irn_number': content.get('Irn'),
+            'move_type': MOVE_TYPE_MAPPING.get(bill_details.get('Typ'), 'in_invoice'),
+            'invoice_line_ids': [Command.clear(),],
+        }
         # Find a partner if one exists, else create one
         if seller_details.get('Gstin'):
-            seller_partner = self.env['res.partner'].search([
+            ResPartner = self.env['res.partner']
+            seller_partner = ResPartner.search([
                 ('vat', '=', seller_details['Gstin']),
             ], limit=1)
             if not seller_partner:
-                partner_vals = self.env['res.partner']._l10n_in_get_partner_vals_by_vat(seller_details['Gstin'])
+                partner_vals = ResPartner._l10n_in_get_partner_vals_by_vat(seller_details['Gstin'])
                 if partner_vals:
-                    seller_partner = self.env['res.partner'].create(partner_vals)
-            self.partner_id = seller_partner
+                    seller_partner = ResPartner.create(partner_vals)
+            move_vals['partner_id'] = seller_partner.id
 
         if (bill_date := bill_details.get('Dt')):
-            self.invoice_date = datetime.strptime(bill_date, '%d/%m/%Y').strftime('%Y-%m-%d')
+            move_vals['invoice_date'] = datetime.strptime(bill_date, '%d/%m/%Y').strftime('%Y-%m-%d')
 
-        self.ref = bill_details.get('No')
-        igst_tag_id = self.env.ref('l10n_in.tax_tag_igst')
-        cgst_tag_id = self.env.ref('l10n_in.tax_tag_cgst')
-        sgst_tag_id = self.env.ref('l10n_in.tax_tag_sgst')
-        gst_tag_ids = cgst_tag_id + sgst_tag_id
-
+        move_vals['ref'] = bill_details.get('No')
+        igst_tag_ids = self.env.ref('l10n_in.tax_tag_igst').ids
+        gst_tag_ids = (self.env.ref('l10n_in.tax_tag_cgst') + self.env.ref('l10n_in.tax_tag_sgst')).ids
         uom_map = {
             irn_uom: self.env['ir.model.data']._xmlid_to_res_id(xmlid)
             for irn_uom, xmlid in UOM_REF_MAP.items()
         }
 
-        invoice_lines = []
         other_charges = value_details.get('OthChrg', 0)
         cess_charges = 0
         for item in item_list:
             line_dict = {}
             if 'GstRt' in item:
-                tag_id = igst_tag_id.ids if item.get('IgstAmt') else gst_tag_ids.ids
-                taxes = _get_tax(item['GstRt'], tag_id)
+                tag_ids = igst_tag_ids if item.get('IgstAmt') else gst_tag_ids
+                taxes = _get_tax(item['GstRt'], tag_ids)
                 if taxes:
                     line_dict['tax_ids'] = [Command.link(taxes.id)]
 
             line_dict['discount'] = (item.get('Discount', 0.0) / item.get('TotAmt', 1.0)) * 100.0 if item.get('TotAmt') else 0.0
             line_dict['product_uom_id'] = uom_map.get(item.get('Unit'))
-            invoice_lines.append(
+            move_vals['invoice_line_ids'].append(
                 Command.create({
                     **line_dict,
                     'name': item.get('PrdDesc'),
                     'l10n_in_hsn_code': item.get('HsnCd'),
-                    # For service-type products where the quantity might be 0, therefore, replace 0 with 1 to ensure proper handling.
+                    # For service-type products where the quantity might be 0, therefore,
+                    # replace 0 with 1 to ensure proper handling.
                     'quantity': item.get('Qty') or 1,
                     'price_unit': item.get('UnitPrice'),
                 })
             )
             other_charges += item.get('OthChrg', 0)
-            cess_charges += sum(item.get(key, 0) for key in ['CesAmt', 'CesNonAdvlAmt', 'StateCesAmt', 'StateCesNonAdvlAmt'])
+            cess_charges += sum(
+                item.get(key, 0)
+                for key in ('CesAmt', 'CesNonAdvlAmt', 'StateCesAmt', 'StateCesNonAdvlAmt')
+            )
 
         # Create other charges line
         if other_charges:
-            invoice_lines.append(Command.create({
-                'name': "Other Charges",
+            move_vals['invoice_line_ids'].append(Command.create({
+                'name': _("Other Charges"),
                 'price_unit': other_charges,
             }))
         # Create cess charges line
         if cess_charges:
-            invoice_lines.append(Command.create({
-                'name': "CESS Charges",
+            move_vals['invoice_line_ids'].append(Command.create({
+                'name': _("CESS Charges"),
                 'price_unit': cess_charges,
             }))
         # Create rounding value line
         if (rounding_amount := value_details.get('RndOffAmt')):
-            invoice_lines.append(Command.create({
-                'name': "Rounding Value",
+            move_vals['invoice_line_ids'].append(Command.create({
+                'name': _("Rounding Value"),
                 'price_unit': rounding_amount,
             }))
         # Create discount value line
         if (discount_amount := value_details.get('Discount')):
-            invoice_lines.append(Command.create({
-                'name': "Discount Value",
+            move_vals['invoice_line_ids'].append(Command.create({
+                'name': _("Discount Value"),
                 'price_unit': discount_amount * -1,
             }))
-        if self.invoice_line_ids:
-            self.invoice_line_ids.unlink()
-        self.invoice_line_ids = invoice_lines
+        self.write(move_vals)
         return True
 
     def _l10n_in_retrieve_details_from_irn(self, irn_number, company_id):
@@ -360,10 +370,13 @@ class AccountMove(models.Model):
         irn_lower = irn and irn.lower() or irn
         if not re.match(IRN_PATTERN, irn_lower):
             return super()._l10n_in_get_bill_from_irn(irn)
-        if self.env.company.l10n_in_fetch_vendor_edi_feature and self.env.company.l10n_in_gstr_activate_einvoice_fetch in ('manual', 'automatic'):
-            match_bill = self.env['account.move'].search([('l10n_in_irn_number', '=', irn_lower)], limit=1)
+        if (
+            self.env.company.l10n_in_fetch_vendor_edi_feature
+            and self.env.company.l10n_in_gstr_activate_einvoice_fetch in ('manual', 'automatic')
+        ):
+            match_bill = self.search([('l10n_in_irn_number', '=', irn_lower)], limit=1)
             if not match_bill:
-                match_bill = self.env['account.move'].create({
+                match_bill = self.create({
                     'l10n_in_irn_number': irn_lower,
                     'move_type': 'in_invoice',
                 })
@@ -448,12 +461,13 @@ class AccountMove(models.Model):
         return move_line_vals
 
     def _l10n_in_get_partner_from_gstin(self, gstin):
-        partner = self.env['res.partner']._retrieve_partner(vat=gstin)
+        ResPartner = self.env['res.partner']
+        partner = ResPartner._retrieve_partner(vat=gstin)
         if partner:
             return partner.id
-        partner_vals = self.env['res.partner']._l10n_in_get_partner_vals_by_vat(gstin)
+        partner_vals = ResPartner._l10n_in_get_partner_vals_by_vat(gstin)
         if partner_vals:
-            partner = self.env['res.partner'].create(partner_vals)
+            partner = ResPartner.create(partner_vals)
             #read_by_vat method is not providing the state/country code
             #by using the following methods the state and country will set from the partner vat
             partner.onchange_vat()

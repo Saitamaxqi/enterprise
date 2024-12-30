@@ -10,7 +10,8 @@ from datetime import date, datetime, timedelta
 from dateutil import relativedelta
 from markupsafe import Markup
 
-from odoo import _, api, Command, fields, models, modules, SUPERUSER_ID
+from odoo import Command, SUPERUSER_ID, _, api, fields, models, modules, tools
+
 from odoo.exceptions import UserError, AccessError, ValidationError, RedirectWarning
 from odoo.tools import date_utils, get_lang, html_escape, SQL
 from odoo.tools.misc import format_date
@@ -621,13 +622,10 @@ class L10n_InGstReturnPeriod(models.Model):
                         lines_json[tax_rate]['samt'] += line_tax_details['sgst'] * -1
                         lines_json[tax_rate]['csamt'] += line_tax_details['cess'] * -1
                     if lines_json:
-                        invoice_type = 'R'
-                        if move_id.l10n_in_gst_treatment == 'deemed_export':
-                            invoice_type = 'DE'
-                        elif move_id.l10n_in_gst_treatment == "special_economic_zone" and is_igst_amount:
-                            invoice_type = 'SEWP'
-                        elif move_id.l10n_in_gst_treatment == "special_economic_zone":
-                            invoice_type = 'SEWOP'
+                        invoice_type = {
+                            'deemed_export': 'DE',
+                            'special_economic_zone': 'SEWP' if is_igst_amount else 'SEWOP',
+                        }.get(move_id.l10n_in_gst_treatment, 'R')
                         inv_json = {
                             "inum": move_id.name,
                             "idt": move_id.invoice_date.strftime("%d-%m-%Y"),
@@ -808,13 +806,10 @@ class L10n_InGstReturnPeriod(models.Model):
                         lines_json[tax_rate]['camt'] += line_tax_details['sgst']
                         lines_json[tax_rate]['csamt'] += line_tax_details['cess']
                     if lines_json:
-                        invoice_type = 'R'
-                        if move_id.l10n_in_gst_treatment == 'deemed_export':
-                            invoice_type = 'DE'
-                        elif move_id.l10n_in_gst_treatment == "special_economic_zone" and is_igst_amount:
-                            invoice_type = 'SEWP'
-                        elif move_id.l10n_in_gst_treatment == "special_economic_zone":
-                            invoice_type = 'SEWOP'
+                        invoice_type = {
+                            'deemed_export': 'DE',
+                            'special_economic_zone': 'SEWP' if is_igst_amount else 'SEWOP',
+                        }.get(move_id.l10n_in_gst_treatment, 'R')
                         is_out_refund = move_id.move_type == "out_refund"
                         sign = is_out_refund and 1 or -1
                         inv_json = {
@@ -1675,13 +1670,14 @@ class L10n_InGstReturnPeriod(models.Model):
             except ValueError:
                 tolerance_amount = 0.009
             for gstr2b_bill in gstr2b_streamline_bills:
-                amount = gstr2b_bill.get('bill_total')
-                if gstr2b_bill.get('bill_taxable_value'):
-                    amount = gstr2b_bill.get('bill_taxable_value')
-                sanitized_ref = _remove_special_characters(gstr2b_bill.get('bill_number'))
+                bill_type = gstr2b_bill.get('bill_type')
+                bill_date = gstr2b_bill.get('bill_date')
+                bill_number = gstr2b_bill.get('bill_number')
+                bill_vat = gstr2b_bill.get('vat')
+                sanitized_ref = _remove_special_characters(bill_number)
                 matching_keys = _get_matching_keys(
-                    sanitized_ref, gstr2b_bill.get('vat'), gstr2b_bill.get('bill_date'),
-                    gstr2b_bill.get('bill_type'), amount)
+                    sanitized_ref, bill_vat, bill_date,
+                    bill_type, gstr2b_bill.get('bill_total') or gstr2b_bill.get('bill_taxable_value'))
                 matched_bills = False
                 for matching_key in matching_keys:
                     if not matched_bills and matching_dict.get(matching_key):
@@ -1691,14 +1687,10 @@ class L10n_InGstReturnPeriod(models.Model):
                         b.l10n_in_gstr2b_reconciliation_status == 'gstr2_bills_not_in_odoo' and b.state == 'draft')
                     checked_bills += created_from_reconciliation
                     matched_bills = matched_bills - created_from_reconciliation
-                    if gstr2b_bill['bill_type'] == 'credit_note':
-                        invoice_type = 'Credit Note'
-                    else:
-                        invoice_type = 'Bill'
                     if len(matched_bills) == 1:
                         remove_matched_bill_value(matching_dict, matching_keys, matched_bills)
                         exception = []
-                        if matched_bills.ref == gstr2b_bill.get('bill_number'):
+                        if matched_bills.ref == bill_number:
                             if 'bill_taxable_value' in gstr2b_bill and gstr2b_bill['bill_taxable_value'] != matched_bills.amount_untaxed:
                                 exception.append(_("Total Taxable amount as per GSTR-2B is %s", gstr2b_bill['bill_taxable_value']))
                             amount_total = matched_bills.amount_total
@@ -1706,25 +1698,33 @@ class L10n_InGstReturnPeriod(models.Model):
                             for line in matched_bills.line_ids:
                                 if line.tax_line_id.amount < 0:
                                     amount_total += line.balance * sign
-                            if 'bill_pos' in gstr2b_bill and gstr2b_bill['bill_pos'] != matched_bills.l10n_in_state_id.l10n_in_tin:
-                                place_of_supply = self.env['res.country.state'].search([('l10n_in_tin', '=', gstr2b_bill['bill_pos'])], limit=1)
+                            if (bill_pos := gstr2b_bill.get('bill_pos')) and bill_pos != matched_bills.l10n_in_state_id.l10n_in_tin:
+                                place_of_supply = self.env['res.country.state'].search([('l10n_in_tin', '=', bill_pos)], limit=1)
                                 exception.append(_("The place of supply as GSTR-2B is %s", place_of_supply.name))
-                            if 'bill_total' in gstr2b_bill and not (amount_total - tolerance_amount <= gstr2b_bill['bill_total'] <= amount_total + tolerance_amount):
+                            if (
+                                'bill_total' in gstr2b_bill
+                                and not (amount_total - tolerance_amount <= gstr2b_bill['bill_total'] <= amount_total + tolerance_amount)
+                            ):
                                 exception.append(_("The total amount as per GSTR-2B is %s", gstr2b_bill['bill_total']))
-                            if 'vat' in gstr2b_bill and gstr2b_bill['vat'] != matched_bills.partner_id.vat:
-                                exception.append(_("The GSTIN as per GSTR-2B is %s", gstr2b_bill['vat']))
-                            if 'bill_date' in gstr2b_bill and gstr2b_bill['bill_date'] != matched_bills.invoice_date:
-                                exception.append(_("The bill date as per GSTR-2B is %s", gstr2b_bill['bill_date']))
-                            if 'bill_type' in gstr2b_bill and (matched_bills.move_type == 'in_refund' and gstr2b_bill['bill_type'] == 'bill') or \
-                                (matched_bills.move_type != 'in_refund' and gstr2b_bill['bill_type'] == 'credit_note'):
+                            if bill_vat and bill_vat != matched_bills.partner_id.vat:
+                                exception.append(_("The GSTIN as per GSTR-2B is %s", bill_vat))
+                            if bill_date and bill_date != matched_bills.invoice_date:
+                                exception.append(_("The bill date as per GSTR-2B is %s", bill_date))
+                            if (
+                                matched_bills.move_type == 'in_refund' and bill_type == 'bill'
+                                or matched_bills.move_type != 'in_refund' and bill_type == 'credit_note'
+                            ):
+                                invoice_type = 'Credit Note' if bill_type == 'credit_note' else 'Bill'
                                 exception.append(_("The bill type as per GSTR-2B is %s", invoice_type))
-                        elif (gstr2b_bill.get('bill_total') == matched_bills.amount_total or \
-                            gstr2b_bill.get('bill_taxable_value') == matched_bills.amount_untaxed) and \
-                            gstr2b_bill.get('vat') == matched_bills.partner_id.vat and \
-                            gstr2b_bill.get('bill_date') == matched_bills.invoice_date and \
-                            (matched_bills.move_type == 'in_refund' and gstr2b_bill.get('bill_type') == 'credit_note') or \
-                            (matched_bills.move_type != 'in_refund' and gstr2b_bill.get('bill_type') == 'bill'):
-                            exception.append(_("The reference number as per GSTR-2B is %s", gstr2b_bill['bill_number']))
+                        elif (
+                            (gstr2b_bill.get('bill_total') == matched_bills.amount_total
+                                or gstr2b_bill.get('bill_taxable_value') == matched_bills.amount_untaxed)
+                            and bill_vat == matched_bills.partner_id.vat
+                            and bill_date == matched_bills.invoice_date
+                            and (matched_bills.move_type == 'in_refund' and bill_type == 'credit_note'
+                                or matched_bills.move_type != 'in_refund' and bill_type == 'bill')
+                        ):
+                            exception.append(_("The reference number as per GSTR-2B is %s", bill_number))
                         matched_bills.write({
                             "l10n_in_exception": '<br/>'.join(exception),
                             "l10n_in_gstr2b_reconciliation_status": exception and "partially_matched" or "matched",
@@ -1751,21 +1751,27 @@ class L10n_InGstReturnPeriod(models.Model):
                         })
                         checked_bills += matched_bills
                 else:
-                    partner = 'vat' in gstr2b_bill and self.env['res.partner'].search([
+                    partner = bill_vat and self.env['res.partner'].search([
                         *self.env['res.partner']._check_company_domain(self.company_id),
-                        ('vat', '=', gstr2b_bill['vat']),
+                        ('vat', '=', bill_vat),
                     ], limit=1)
                     journal = self.env['account.journal'].search([
                         *self.env['account.journal']._check_company_domain(self.company_id),
                         ('type', '=', 'purchase')
                     ], limit=1)
-                    default_l10n_in_gst_treatment = (gstr2b_bill.get('section_code') == 'impg' and 'overseas') or (gstr2b_bill.get('section_code') == 'impgsez' and 'special_economic_zone') or 'regular'
+                    if partner.l10n_in_gst_treatment not in ('deemed_export', 'uin_holders'):
+                        l10n_in_gst_treatment = {
+                            'impg': 'overseas',
+                            'impgsez': 'special_economic_zone',
+                        }.get(gstr2b_bill.get('section_code'), 'regular')
+                    else:
+                        l10n_in_gst_treatment = partner.l10n_in_gst_treatment
                     create_vals.append({
-                        "move_type": gstr2b_bill.get('bill_type') == 'credit_note' and "in_refund" or "in_invoice",
-                        "ref": gstr2b_bill.get('bill_number'),
-                        "invoice_date": gstr2b_bill.get('bill_date'),
+                        "move_type": bill_type == 'credit_note' and "in_refund" or "in_invoice",
+                        "ref": bill_number,
+                        "invoice_date": bill_date,
                         "partner_id": partner.id,
-                        "l10n_in_gst_treatment": partner and partner.l10n_in_gst_treatment in ('deemed_export', 'uin_holders') and partner.l10n_in_gst_treatment or default_l10n_in_gst_treatment,
+                        "l10n_in_gst_treatment": l10n_in_gst_treatment,
                         "journal_id": journal.id,
                         "l10n_in_gstr2b_reconciliation_status": "gstr2_bills_not_in_odoo",
                         "checked": False,
@@ -1779,7 +1785,7 @@ class L10n_InGstReturnPeriod(models.Model):
                             'attachment_ids': _create_attachment(
                                 self.env['account.move'],
                                 gstr2b_bill.get('bill_value_json'),
-                                ref=gstr2b_bill.get('bill_number')
+                                ref=bill_number
                             ).ids
                         })]
                     })
@@ -1974,15 +1980,10 @@ class L10n_InGstReturnPeriod(models.Model):
         if self.company_id.sudo().l10n_in_edi_production_env:
             edi_credits = self.env["iap.account"].get_credits(service_name="l10n_in_edi")
             if edi_credits < 3:
-                url = self.env["iap.account"].get_credits_url(service_name="l10n_in_edi")
                 self.irn_status = 'process_with_error'
-                self.message_post(body=markupsafe.Markup("""
-                    <p><b>%s</b></p><p>%s <a href="%s">%s</a></p>""") % (
-                    _("You have insufficient credits to retrieve this document!"),
-                    _("Please buy more credits and retry: "),
-                    url,
-                    _("Buy Credits")
-                ))
+                self.message_post(
+                    body=self.env['account.move']._l10n_in_edi_get_iap_buy_credits_message()
+                )
                 return True
         self._check_config(next_gst_action='fetch_irn')
         self.irn_status = 'to_download'
@@ -2126,8 +2127,9 @@ class L10n_InGstReturnPeriod(models.Model):
 
         # Perform bulk search for bills with matching IRN numbers
         existing_bills = AccountMove.search([
+            ("move_type", "in", AccountMove.get_purchase_types()),
             ("l10n_in_irn_number", "in", list(irn_numbers)),
-            ("company_id", "in", self.company_ids.ids or self.company_id.ids)
+            ("company_id", "child_of", self.company_ids.ids or self.company_id.ids),
         ])
         # Create a mapping of existing bills by IRN number
         existing_bills_dict = {bill.l10n_in_irn_number: bill for bill in existing_bills}
@@ -2142,7 +2144,7 @@ class L10n_InGstReturnPeriod(models.Model):
                     ("move_type", "in", AccountMove.get_purchase_types()),
                     ("ref", "=", bill.get('bill_number')),
                     ("invoice_date", "=", bill.get('bill_date')),
-                    ("company_id", "in", self.company_ids.ids or self.company_id.ids),
+                    ("company_id", "child_of", self.company_ids.ids or self.company_id.ids),
                 ]
                 if bill.get('vat'):
                     domain.append(("partner_id.vat", "=", bill.get('vat')))
@@ -2171,7 +2173,11 @@ class L10n_InGstReturnPeriod(models.Model):
                     try:
                         gov_json_data = created_move._l10n_in_retrieve_details_from_irn(irn_number, self.company_id)
                     except IrnException as e:
-                        created_move.message_post(body=Markup("%s<br/> %s") % (_("Fetching IRN details failed with error(s):"), str(e)))
+                        if str(e) == 'no-credit':
+                            message = self.env['account.move']._l10n_in_edi_get_iap_buy_credits_message()
+                        else:
+                            message = str(e)
+                        created_move.message_post(body=Markup("%s<br/> %s") % (_("Fetching IRN details failed with error(s):"), message))
                         checked_moves |= created_move
                         continue
                     if gov_json_data:
@@ -2197,7 +2203,9 @@ class L10n_InGstReturnPeriod(models.Model):
             else:
                 # Cancel the existing bill if the IRN status indicates cancellation
                 if bill.get('irn_status') == 'CNL' and bill_already_exists.state != 'cancel':
-                    bill_already_exists.message_post(body=_("This bill has been marked as canceled based on the e-invoice status."))
+                    bill_already_exists.message_post(
+                        body=_("This bill has been marked as canceled based on the e-invoice status.")
+                    )
                     bill_already_exists.button_cancel()
 
             checked_moves |= bill_already_exists or created_move
@@ -2223,7 +2231,11 @@ class L10n_InGstReturnPeriod(models.Model):
                 return_period._get_irn_data()
             except IrnException as e:
                 return_period.irn_status = 'process_with_error'
-                return_period.message_post(body=Markup("%s<br/> %s") % (_("Fetching List of e-invoice..."), str(e)))
+                if str(e) == 'no-credit':
+                    message = self.env['account.move']._l10n_in_edi_get_iap_buy_credits_message()
+                else:
+                    message = str(e)
+                return_period.message_post(body=Markup("%s<br/> %s") % (_("Fetching List of e-invoice..."), message))
 
     def _cron_irn_match_data(self):
         """

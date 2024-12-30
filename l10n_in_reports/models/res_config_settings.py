@@ -17,5 +17,11 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.l10n_in_gstr_activate_einvoice_fetch",
         readonly=False)
     l10n_in_gst_efiling_feature = fields.Boolean(related='company_id.l10n_in_gst_efiling_feature', readonly=False)
-    l10n_in_fetch_vendor_edi_feature = fields.Boolean(related='company_id.l10n_in_fetch_vendor_edi_feature', readonly=False)
-    l10n_in_enet_vendor_batch_payment_feature = fields.Boolean(related='company_id.l10n_in_enet_vendor_batch_payment_feature', readonly=False)
+    l10n_in_fetch_vendor_edi_feature = fields.Boolean(
+        related='company_id.l10n_in_fetch_vendor_edi_feature',
+        readonly=False
+    )
+    l10n_in_enet_vendor_batch_payment_feature = fields.Boolean(
+        related='company_id.l10n_in_enet_vendor_batch_payment_feature',
+        readonly=False
+    )
