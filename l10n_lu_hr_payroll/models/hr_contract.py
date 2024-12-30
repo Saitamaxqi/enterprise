@@ -46,7 +46,11 @@ class HrContract(models.Model):
 
     @api.depends('l10n_lu_meal_voucher_amount')
     def _compute_l10n_lu_meal_voucher_employer_cost(self):
-        meal_voucher_max_value = self.env['hr.rule.parameter']._get_parameter_from_code('l10n_lu_meal_voucher_max_value')
+        meal_voucher_max_value = self.env['hr.rule.parameter']._get_parameter_from_code('l10n_lu_meal_voucher_max_value', raise_if_not_found=False)
+        if not meal_voucher_max_value:
+            self.l10n_lu_meal_voucher_employer_cost = 0
+            self.l10n_lu_bik_meal_voucher_exceeding_amount = 0
+            return
         # The employee always pays 2.8€ per meal voucher.
         # The employer contributes for the rest up to a maximum amount.
         for contract in self:
