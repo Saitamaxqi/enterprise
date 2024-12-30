@@ -4,12 +4,21 @@
             background: rgba($knowledge-bg--active, 0.2);
             &:hover {
                 background: rgba($knowledge-bg--active, 0.3);
+                .o_article_template_delete:hover {
+                    background-color: rgba($knowledge-bg--active, 0.4);
+                }
             }
         }
         li:not(.active) {
             &:hover {
                 background: rgba($knowledge-bg--hover, 0.2);
+                .o_article_template_delete:hover {
+                    background-color: rgba($knowledge-bg--hover, 0.4);
+                }
             }
+        }
+        li:not(:hover) .o_article_template_delete {
+            display: none;
         }
     }
     .o_knowledge_template_preview {
@@ -29,6 +38,14 @@
         }
         .o_content {
             overflow: auto;
+        }
+    }
+    .o_article_template_container {
+        --editor-gutter-size: #{map-get($spacers, 4)};
+        padding: var(--editor-gutter-size);
+
+        [data-embedded="view"] {
+            margin: 0 calc(-1 * var(--editor-gutter-size));
         }
     }
 }

@@ -331,15 +331,35 @@ export class KnowledgeSidebar extends Component {
     /**
      * Open the templates dialog
      */
-    browseTemplates() {
+    async browseTemplates() {
+        if (await this.props.record.isDirty()) {
+            await this.props.record.save();
+        }
         this.dialog.add(ArticleTemplatePickerDialog, {
-            onLoadTemplate: async articleTemplateId => {
+            record: this.props.record,
+            /** @param {integer} articleId */
+            onLoadArticle: async articleId => {
+                const newArticleIds = await this.orm.call(
+                    "knowledge.article",
+                    "action_make_private_copy", [articleId], { preserve_name: true }
+                );
                 await this.actionService.doAction("knowledge.ir_actions_server_knowledge_home_page", {
                     stackPosition: "replaceCurrentAction",
                     additionalContext: {
-                        res_id: await this.orm.call("knowledge.article", "create_article_from_template", [
-                            articleTemplateId
-                        ])
+                        res_id: newArticleIds[0],
+                    }
+                });
+            },
+            /** @param {integer} templateId */
+            onLoadTemplate: async templateId => {
+                const newArticleId = await this.orm.call(
+                    "knowledge.article",
+                    "create_article_from_template", [templateId]
+                );
+                await this.actionService.doAction("knowledge.ir_actions_server_knowledge_home_page", {
+                    stackPosition: "replaceCurrentAction",
+                    additionalContext: {
+                        res_id: newArticleId,
                     }
                 });
             }

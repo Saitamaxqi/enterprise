@@ -7,6 +7,7 @@ import { PromptEmbeddedViewNameDialog } from "@knowledge/components/prompt_embed
 import { _t } from "@web/core/l10n/translation";
 import { renderToFragment } from "@web/core/utils/render";
 import { useService } from "@web/core/utils/hooks";
+import { HtmlUpgradeManager } from "@knowledge/editor/html_migrations/html_upgrade_manager";
 
 export class WysiwygArticleHelper extends Component {
     static template = "knowledge.WysiwygArticleHelper";
@@ -23,22 +24,50 @@ export class WysiwygArticleHelper extends Component {
     }
 
     onLoadTemplateBtnClick() {
+        /** @param {string} body */
+        const replaceCurrentArticleBodyWith = (body) => {
+            let newBody = new HtmlUpgradeManager().processForUpgrade(body);
+            newBody = parseHTML(this.props.editor.document, body);
+            newBody = this.props.editor.shared.sanitize.sanitize(newBody);
+            this.props.editor.editable.replaceChildren(newBody);
+            this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
+            this.props.editor.shared.history.addStep();
+        };
         this.dialogService.add(ArticleTemplatePickerDialog, {
-            onLoadTemplate: async (articleTemplateId) => {
+            record: this.props.record,
+            /** @param {integer} articleId */
+            onLoadArticle: async (articleId) => {
+                const body = await this.orm.call(
+                    "knowledge.article",
+                    "apply_article_as_template",
+                    [this.props.record.resId],
+                    {
+                        article_id: articleId
+                    }
+                );
+                replaceCurrentArticleBodyWith(body);
+                await this.actionService.doAction(
+                    "knowledge.ir_actions_server_knowledge_home_page",
+                    {
+                        stackPosition: "replaceCurrentAction",
+                        additionalContext: {
+                            res_id: this.props.record.resId,
+                        },
+                    }
+                );
+            },
+            /** @param {integer} templateId */
+            onLoadTemplate: async (templateId) => {
                 const body = await this.orm.call(
                     "knowledge.article",
                     "apply_template",
                     [this.props.record.resId],
                     {
-                        template_id: articleTemplateId,
+                        template_id: templateId,
                         skip_body_update: true,
                     }
                 );
-                this.props.editor.editable.replaceChildren(
-                    parseHTML(this.props.editor.document, body)
-                );
-                this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
-                this.props.editor.shared.history.addStep();
+                replaceCurrentArticleBodyWith(body);
                 // TODO: apply_template could return all modified values on the current
                 // article and record.update would reload related components
                 await this.actionService.doAction(

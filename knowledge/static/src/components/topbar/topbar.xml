@@ -130,6 +130,14 @@
                             <button class="dropdown-item" t-on-click="this.exportToPdf">
                                 <i class="me-2 fa fa-fw fa-lg fa-download"/> Export
                             </button>
+                            <t t-if="isInternalUser">
+                                <button t-if="props.record.data.is_listed_in_templates_gallery" class="dropdown-item" t-on-click="unlistArticleFromTemplateGallery">
+                                    <i class="me-2 fa fa-fw fa-lg fa-paint-brush"/> Remove from Templates
+                                </button>
+                                <button t-else="" class="dropdown-item" t-on-click="listArticleInTemplateGallery">
+                                    <i class="me-2 fa fa-fw fa-lg fa-paint-brush"/> Add to Templates
+                                </button>
+                            </t>
                             <button class="dropdown-item" t-on-click="sendToTrash"
                                 t-if="props.record.data.user_can_write and props.record.data.active
                                       and (isInternalUser or props.record.data.category == 'private')">

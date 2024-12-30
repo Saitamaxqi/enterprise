@@ -34,6 +34,7 @@ class KnowledgeTopbar extends Component {
         super.setup();
         this.actionService = useService('action');
         this.dialog = useService('dialog');
+        this.notification = useService('notification');
         this.orm = useService('orm');
         this.uiService = useService('ui');
 
@@ -200,7 +201,7 @@ class KnowledgeTopbar extends Component {
         await this.env._saveIfDirty();
         const articleIds = await this.orm.call(
             'knowledge.article',
-            'action_clone',
+            'action_make_copy',
             [this.props.record.resId]
         );
         this.env.openArticle(articleIds[0], true);
@@ -305,6 +306,28 @@ class KnowledgeTopbar extends Component {
         );
     }
 
+    async listArticleInTemplateGallery() {
+        await this.env._saveIfDirty();
+        await this.orm.write("knowledge.article", [this.props.record.resId], {
+            is_listed_in_templates_gallery: true,
+        });
+        await this.props.record.load();
+        this.notification.add(_t("Article added to the list of Templates"), {
+            type: "success",
+        });
+    }
+
+    async unlistArticleFromTemplateGallery() {
+        await this.env._saveIfDirty();
+        await this.orm.write("knowledge.article", [this.props.record.resId], {
+            is_listed_in_templates_gallery: false,
+        });
+        await this.props.record.load();
+        this.notification.add(_t("Article removed from the list of Templates"), {
+            type: "success",
+        });
+    }
+
     /**
      * @param {Event} event
      * @param {Proxy} member
@@ -326,6 +349,7 @@ export const knowledgeTopbar = {
         { name: "last_edition_uid", type: "many2one", relation: "res.users" },
         { name: "parent_path", type: "char" },
         { name: "root_article_id", type: "many2one", relation: "knowledge.article" },
+        { name: "is_listed_in_templates_gallery", type: "boolean" },
     ],
 };
 

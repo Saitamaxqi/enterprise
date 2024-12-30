@@ -160,6 +160,8 @@ class KnowledgeArticle(models.Model):
     article_properties = fields.Properties('Properties', definition="parent_id.article_properties_definition", copy=True)
 
     # Templates
+    is_listed_in_templates_gallery = fields.Boolean(string="Is listed in Templates Gallery?",
+        help="If checked, the article will appear in the templates gallery under the 'Shared Templates' section")
     is_template = fields.Boolean(string="Is Template")
     template_body = fields.Text(string="Template Body", translate=html_translate)
     template_category_id = fields.Many2one("knowledge.article.template.category", string="Template Category",
@@ -1169,99 +1171,100 @@ class KnowledgeArticle(models.Model):
 
         return domain
 
-    def _get_common_copied_data(self):
-        return {
-            "article_properties_definition": self.article_properties_definition,
-            "body": self.body,
-            "cover_image_id": self.cover_image_id.id,
-            "cover_image_position": self.cover_image_position,
-            "full_width": self.full_width,
-            "icon": self.icon,
-            "is_desynchronized": False,
-            "is_locked": False,
-            "name": _("%(article_name)s (copy)", article_name=self.name) if self.name else False,
-        }
-
-    def _update_article_references(self, original_article):
+    def _get_transformed_body_from(self, source_article):
+        """ Returns the body of the source article with the following transformations:
+        - Updates the embedded views so that the views listing the article items
+        of the source article now lists the article items of the current article.
+        - Removes the history steps from the document.
+        :param <knowledge.article> source_article: Source article
         """
-        Updates the IDs stored in the body of the current articles.
-        After calling that method, the embedded views listing the article items
-        of the original article will now list the article items of the current record.
-        :param <knowledge.article> original_article: original article
-        """
-        for article in self:
-            if is_html_empty(article.body):
-                continue
-            needs_embed_view_update = False
-            fragment = html.fragment_fromstring(article.body, create_parent=True)
-            for element in fragment.findall(".//*[@data-embedded='view']"):
-                embedded_props = json.loads(element.get("data-embedded-props"))
-                view_props = embedded_props.get("viewProps", {})
-                context = view_props.get("context", {})
-                if context.get("default_is_article_item") and context.get("active_id") == original_article.id:
-                    context.update({
-                        "active_id": article.id,
-                        "default_parent_id": article.id
-                    })
-                    element.set("data-embedded-props", json.dumps(embedded_props))
-                    needs_embed_view_update = True
+        fragment = html.fragment_fromstring(source_article.body, create_parent=True)
 
-            if needs_embed_view_update:
-                article.write({
-                    "body": html.tostring(fragment, encoding="unicode")
-                })
+        # Remove history steps to prevent divergence errors:
+        for element in fragment.findall('.//*[@data-last-history-steps]'):
+            del element.attrib["data-last-history-steps"]
+
+        # Update the embedded views:
+        for element in fragment.findall(".//*[@data-embedded='view']"):
+            embedded_props = json.loads(element.get("data-embedded-props"))
+            view_props = embedded_props.get("viewProps", {})
+            context = view_props.get("context", {})
+            if context.get("default_is_article_item") and context.get("active_id") == source_article.id:
+                context.update({"active_id": self.id, "default_parent_id": self.id})
+                element.set("data-embedded-props", json.dumps(embedded_props))
+
+        return html.tostring(fragment, encoding="unicode")
 
     # ------------------------------------------------------------
     # ACTIONS
     # ------------------------------------------------------------
 
-    def action_make_private_copy(self):
-        """ Creates a copy of an article. != duplicate article (see `copy`).
-        Creates a new private article with the same body, icon and cover,
-        but drops other fields such as members, children, permissions etc.
-        Note: KnowledgeArticle references will be update, see `_update_article_references`
-        """
+    def action_make_private_copy(self, preserve_name=False):
+        """ Creates a duplicate of the current article and saves it in the user's
+        private section. This method replicates the article items and Kanban stages.
+        Additionally, it updates the embedded views to ensure they reference the
+        new article's items instead of those from the original article.
+        :param preserve_name: if False, append the name with (copy) """
         self.ensure_one()
-        article_vals = self._get_common_copied_data()
-        article_vals.update({
-            "article_member_ids": [(0, 0, {
-                "partner_id": self.env.user.partner_id.id,
-                "permission": 'write'
+        name = _('%(article_name)s (copy)', article_name=self.name) \
+            if not preserve_name and self.name else self.name
+
+        # Copy the article and make it private:
+        article = self.create({
+            'article_member_ids': [(0, 0, {
+                'partner_id': self.env.user.partner_id.id,
+                'permission': 'write'
             })],
-            "internal_permission": "none",
-            "parent_id": False,
+            'article_properties_definition': self.article_properties_definition,
+            'cover_image_id': self.cover_image_id.id,
+            'cover_image_position': self.cover_image_position,
+            'full_width': self.full_width,
+            'icon': self.icon,
+            'internal_permission': 'none',
+            'name': name,
         })
-        article = self.create(article_vals)
-        article._update_article_references(self)
+
+        # Remove the history steps and transform the embedded views:
+        article.write({
+            'body': article._get_transformed_body_from(self)
+        })
+
         # Copy the related stages for the /kanban command:
-        for stage in self.env["knowledge.article.stage"].search([("parent_id", "=", self.id)]):
-            stage.copy({
-                "parent_id": article.id
-            })
+        stages_mapping = {}
+        for stage in self.env['knowledge.article.stage'].search([('parent_id', '=', self.id)]):
+            new_stage = stage.copy({'parent_id': article.id})
+            stages_mapping[stage.id] = new_stage.id
+
+        # Copy the related article items and link them to their corresponding stage:
+        article_items = self.child_ids.filtered(lambda article: article.is_article_item)
+        self.create([{
+            'article_properties': article_item.article_properties,
+            'body': article_item.body,
+            'cover_image_id': article_item.cover_image_id.id,
+            'cover_image_position': article_item.cover_image_position,
+            'full_width': article_item.full_width,
+            'icon': article_item.icon,
+            'is_article_item': True,
+            'name': article_item.name,
+            'parent_id': article.id,
+            'stage_id': stages_mapping.get(article_item.stage_id.id, False),
+        } for article_item in article_items.sorted(lambda child: child.sequence)])
+
         return article
 
-    def action_clone(self):
-        """Creates a duplicate of an article in the same context as the original.
-        This means that this methods create a copy with the same parent,
-        permission and properties as the original
-        Note: KnowledgeArticle references will be update, see `_update_article_references`
+    def action_make_copy(self, preserve_name=False):
+        """ Create a copy of the current article and attempt to attach it to the
+        parent of the original. If the new parent article is not editable by the
+        user, the copied article will be placed in the user's private section,
+        ensuring the user retains access.
+        :param preserve_name: if False, append the name with (copy)
         """
         self.ensure_one()
-        if not self.user_can_write or not (self.parent_id and self.parent_id.user_can_write):
-            return self.action_make_private_copy()
-        article_vals = self._get_common_copied_data()
-        article_vals.update({
-            "internal_permission": self.internal_permission,
-            "parent_id": self.parent_id.id,
-            "article_properties": self.article_properties,
-            "is_article_item": self.is_article_item,
-        })
-        article = self.create(article_vals)
-        article._update_article_references(self)
-        # Copy the related stages for the /kanban command:
-        for stage in self.env["knowledge.article.stage"].search([("parent_id", "=", self.id)]):
-            stage.copy({
-                "parent_id": article.id
+        article = self.action_make_private_copy(preserve_name)
+        # Attach the new copy to the parent of the original article:
+        if self.parent_id and self.parent_id.user_can_write:
+            article.write({
+                'parent_id': self.parent_id.id,
             })
         return article
 
@@ -2843,6 +2846,64 @@ class KnowledgeArticle(models.Model):
 
         return ''.join(html.tostring(child, encoding='unicode', method='html') \
             for child in fragment.getchildren()) # unwrap the elements from the parent node
+
+    def apply_article_as_template(self, article_id):
+        """Substitute the current article fields for the given article and return
+        the body so that it can be applied in the editor. This function is meant
+        to be called while in edition, so that the body update is shared in
+        collaboration with other users.
+        :param int article_id: Article id to copy"""
+        self.ensure_one()
+        article = self.env['knowledge.article'].browse(article_id)
+        article.ensure_one()
+
+        self.write({
+            'article_properties_definition': article.article_properties_definition,
+            'cover_image_id': article.cover_image_id.id,
+            'cover_image_position': article.cover_image_position,
+            'full_width': article.full_width,
+            'icon': article.icon,
+            'name': article.name,
+        })
+
+        body = self._get_transformed_body_from(article)
+
+        # Copy the article stages:
+        stages_mapping = {}
+        for stage in self.env['knowledge.article.stage'].search([('parent_id', '=', article.id)]):
+            new_stage = stage.copy({'parent_id': self.id})
+            stages_mapping[stage.id] = new_stage.id
+
+        # Copy the related article items and link them to their corresponding stage:
+        article_items = article.child_ids.filtered(lambda article: article.is_article_item).sorted(lambda child: child.sequence)
+        new_article_items = self.create([{
+            'article_properties': article_item.article_properties,
+            'cover_image_id': article_item.cover_image_id.id,
+            'cover_image_position': article_item.cover_image_position,
+            'full_width': article_item.full_width,
+            'icon': article_item.icon,
+            'is_article_item': True,
+            'name': article_item.name,
+            'parent_id': self.id,
+            'stage_id': stages_mapping.get(article_item.stage_id.id, False),
+        } for article_item in article_items])
+
+        stages_by_parent_id = self.env['knowledge.article.stage'].search([
+            ('parent_id', 'in', article_items.mapped('id'))
+        ]).grouped('parent_id')
+
+        for article_item, new_article_item in zip(article_items, new_article_items):
+            # Create the stages for the article items:
+            stages = stages_by_parent_id.get(article_item)
+            if stages:
+                stages.copy({
+                    'parent_id': new_article_item.id
+                })
+            new_article_item.write({
+                'body': new_article_item._get_transformed_body_from(article_item),
+            })
+
+        return body
 
     def create_default_item_stages(self):
         """ Need to create stages if this article has no stage yet. """

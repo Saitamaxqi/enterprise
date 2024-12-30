@@ -411,6 +411,8 @@
                 <filter name="filter_own_privates" string="Private"
                     domain="[('category', '=', 'private'), ('user_has_write_access', '=', True)]"/>
                 <separator/>
+                <filter name="filter_templates" string="Templates"
+                    domain="[('is_listed_in_templates_gallery', '=', True)]"/>
                 <filter name="filter_is_archived" string="Archived"
                     domain="[('active', '=', False)]"/>
                 <filter name="filter_trashed" string="Trashed"

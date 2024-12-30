@@ -950,7 +950,7 @@ class TestKnowledgeArticleCopy(KnowledgeCommonBusinessCase):
                                msg="ACLs: copy should not allow to access hidden articles"):
             _new_article = article_hidden.action_make_private_copy()
 
-        # Copying an article should create a private article without parent nor children
+        # Copying an article should create a private article without parent
         article_readonly = self.article_shared.with_env(self.env)
         new_article = article_readonly.action_make_private_copy()
         self.assertEqual(new_article.name, f'{article_readonly.name} (copy)')
