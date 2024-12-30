@@ -2232,7 +2232,7 @@ class AccountReport(models.Model):
             # When there is a model, value is an id, so we cast it to and int. Else, we keep the original value (for groupby lines on
             # non-relational fields, for example).
             (self._parse_markup(markup) if not markup_as_string else markup, model or None, int(value) if model and value else (value or None))
-            for markup, model, value in (key.split('~') for key in line_id.split(LINE_ID_HIERARCHY_DELIMITER))
+            for markup, model, value in (key.rsplit('~', 2) for key in line_id.split(LINE_ID_HIERARCHY_DELIMITER))
         ] or []
 
     @api.model
