@@ -12,7 +12,6 @@
     """,
     'depends': ['pos_restaurant', 'pos_iot', 'l10n_se'],
     'data': [
-        'views/pos_daily_reports.xml',
         'views/pos_config.xml',
         'views/res_config_settings_views.xml',
         'views/pos_order.xml',
