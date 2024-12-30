@@ -31,9 +31,9 @@ class CustomerPortal(portal.CustomerPortal):
         return values
 
     def _prepare_my_tickets_values(self, page=1, date_begin=None, date_end=None, sortby=None, filterby='all', search=None, groupby='none', search_in='name'):
-        if (search_in == 'sale_order' or groupby == 'sale_order_id') and not request.env['helpdesk.team']._check_sale_timesheet_feature_enabled():
+        if (search_in == 'sale_order' or groupby == 'sale_line_id') and not request.env['helpdesk.team']._check_sale_timesheet_feature_enabled():
             search_in = 'name' if search_in == 'sale_order' else search_in
-            groupby = 'none' if groupby == 'sale_order_id' else groupby
+            groupby = 'none' if groupby == 'sale_line_id' else groupby
         values = super()._prepare_my_tickets_values(page, date_begin, date_end, sortby, filterby, search, groupby, search_in)
         Timesheet = request.env['account.analytic.line']
         is_encode_uom_day = Timesheet._is_timesheet_encode_uom_day()
@@ -46,7 +46,7 @@ class CustomerPortal(portal.CustomerPortal):
         searchbar_inputs = super()._ticket_get_searchbar_inputs()
         if request.env['helpdesk.team']._check_sale_timesheet_feature_enabled():
             searchbar_inputs |= {
-                'sale_order': {'input': 'sale_order', 'label': _('Search in Sales Order'), 'sequence': 60}
+                'sale_order': {'input': 'sale_order', 'label': _('Search in Sales Order Item'), 'sequence': 60}
             }
         return searchbar_inputs
 
@@ -54,7 +54,7 @@ class CustomerPortal(portal.CustomerPortal):
         searchbar_groupby = super()._ticket_get_searchbar_groupby()
         if request.env['helpdesk.team']._check_sale_timesheet_feature_enabled():
             searchbar_groupby |= {
-                'sale_order_id': {'label': _('Sales Order Item'), 'sequence': 70},
+                'sale_line_id': {'label': _('Sales Order Item'), 'sequence': 70},
             }
         return searchbar_groupby
 
