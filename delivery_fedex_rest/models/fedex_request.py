@@ -183,8 +183,10 @@ class FedexRequest:
         if company_partner:
             # Always put the name of the company, if the partner is a WH
             res['companyName'] = partner.name
+            res['personName'] = partner.name
         elif partner.is_company:
             res['companyName'] = partner.name
+            res['personName'] = partner.name
         else:
             res['personName'] = partner.name
             if partner.parent_id:
