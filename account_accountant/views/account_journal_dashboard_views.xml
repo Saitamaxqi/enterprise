@@ -4,6 +4,10 @@
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
         <field name="arch" type="xml">
+            <kanban position="attributes">
+                <attribute name="on_create">account_accountant.action_journal_create_wizard</attribute>
+            </kanban>
+
             <xpath expr="//div[@id='sale_purchase_refund']" position="after">
                 <div>
                     <a type="object" name="action_open_reconcile" groups="account.group_account_user">Payments Matching</a>
@@ -41,5 +45,12 @@
                 </div>
             </xpath>
         </field>
+    </record>
+
+    <record id="action_journal_create_wizard" model="ir.actions.client">
+        <field name="name">What type of journal do you want to add?</field>
+        <field name="tag">journal_create_wizard</field>
+        <field name="target">new</field>
+        <field name="context">{'footer': false}</field>
     </record>
 </odoo>

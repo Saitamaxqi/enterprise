@@ -102,8 +102,6 @@ class AccountReconcileModel(models.Model):
         # Filter on journals, amount nature, amount and partners
         # All the conditions defined in this block are non-match conditions.
         if ((self.match_journal_ids and st_line.move_id.journal_id not in self.match_journal_ids)
-            or (self.match_nature == 'amount_received' and st_line.amount < 0)
-            or (self.match_nature == 'amount_paid' and st_line.amount > 0)
             or (self.match_amount == 'lower' and abs(st_line.amount) >= self.match_amount_max)
             or (self.match_amount == 'greater' and abs(st_line.amount) <= self.match_amount_min)
             or (self.match_amount == 'between' and (abs(st_line.amount) > self.match_amount_max or abs(st_line.amount) < self.match_amount_min))
@@ -113,8 +111,8 @@ class AccountReconcileModel(models.Model):
         ):
             return False
 
-        # Filter on label, note and transaction_type
-        for record, rule_field, record_field in [(st_line, 'label', 'payment_ref'), (st_line.move_id, 'note', 'narration'), (st_line, 'transaction_type', 'transaction_type')]:
+        # Filter on label, note
+        for record, rule_field, record_field in [(st_line, 'label', 'payment_ref'), (st_line.move_id, 'note', 'narration')]:
             rule_term = (self['match_' + rule_field + '_param'] or '').lower()
             record_term = (record[record_field] or '').lower()
 

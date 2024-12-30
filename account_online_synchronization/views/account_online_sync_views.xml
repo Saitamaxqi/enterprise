@@ -117,10 +117,10 @@
 
         <menuitem
             name="Online Synchronization"
-            parent="account.account_banks_menu"
+            parent="account.account_account_menu"
             action="action_account_online_link_form"
             id="menu_action_online_link_account"
             groups="base.group_no_one"
-            sequence="4"/>
+            sequence="20"/>
     </data>
 </odoo>

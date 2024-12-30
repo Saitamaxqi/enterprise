@@ -26,7 +26,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             ('company_ids', '=', cls.company.id)], limit=1)
 
         cls.bank_journal = cls.env['account.journal'].search([('type', '=', 'bank'), ('company_id', '=', cls.company.id)], limit=1)
-        cls.cash_journal = cls.env['account.journal'].search([('type', '=', 'cash'), ('company_id', '=', cls.company.id)], limit=1)
+        cls.cash_journal = cls.env['account.journal'].create({'type': 'cash', 'name': 'Cash'})
 
         cls.tax21 = cls.env['account.tax'].create({
             'name': '21%',
@@ -52,7 +52,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             'sequence': '1',
             'rule_type': 'invoice_matching',
             'auto_reconcile': False,
-            'match_nature': 'both',
             'match_same_currency': True,
             'allow_payment_tolerance': True,
             'payment_tolerance_type': 'percentage',
@@ -280,24 +279,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
     def test_matching_fields_match_journal_ids(self):
         self.rule_1.match_text_location_label = False
         self.rule_1.match_journal_ids |= self.cash_line_1.journal_id
-        self._check_statement_matching(self.rule_1, {
-            self.bank_line_1: {},
-            self.bank_line_2: {},
-            self.cash_line_1: {'amls': self.invoice_line_4, 'model': self.rule_1},
-        })
-
-    def test_matching_fields_match_nature(self):
-        self.rule_1.match_text_location_label = False
-        self.rule_1.match_nature = 'amount_received'
-        self._check_statement_matching(self.rule_1, {
-            self.bank_line_1: {'amls': self.invoice_line_1, 'model': self.rule_1},
-            self.bank_line_2: {
-                'amls': self.invoice_line_2 + self.invoice_line_3 + self.invoice_line_1,
-                'model': self.rule_1,
-            },
-            self.cash_line_1: {},
-        })
-        self.rule_1.match_nature = 'amount_paid'
         self._check_statement_matching(self.rule_1, {
             self.bank_line_1: {},
             self.bank_line_2: {},
@@ -667,69 +648,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 'amls': self.invoice_line_1 + self.invoice_line_2 + self.invoice_line_3,
                 'model': self.rule_1,
             },
-        })
-
-    def test_auto_reconcile_with_tax(self):
-        ''' Test auto reconciliation with a tax amount included in the bank statement line'''
-        self.rule_1.write({
-            'auto_reconcile': True,
-            'rule_type': 'writeoff_suggestion',
-            'line_ids': [(1, self.rule_1.line_ids.id, {
-                'amount': 50,
-                'force_tax_included': True,
-                'tax_ids': [(6, 0, self.tax21.ids)],
-            }), (0, 0, {
-                'amount': 100,
-                'force_tax_included': False,
-                'tax_ids': [(6, 0, self.tax12.ids)],
-                'account_id': self.current_assets_account.id,
-            })]
-        })
-
-        self.bank_line_1.amount = -121
-
-        self._check_statement_matching(self.rule_1, {
-            self.bank_line_1: {'model': self.rule_1, 'status': 'write_off', 'auto_reconcile': True},
-            self.bank_line_2: {'model': self.rule_1, 'status': 'write_off', 'auto_reconcile': True},
-        })
-
-    def test_auto_reconcile_with_tax_fpos(self):
-        """ Test the fiscal positions are applied by reconcile models when using taxes.
-        """
-        self.rule_1.write({
-            'auto_reconcile': True,
-            'rule_type': 'writeoff_suggestion',
-            'line_ids': [(1, self.rule_1.line_ids.id, {
-                'amount': 100,
-                'force_tax_included': True,
-                'tax_ids': [(6, 0, self.tax21.ids)],
-            })]
-        })
-
-        self.partner_1.country_id = self.env.ref('base.lu')
-        belgium = self.env.ref('base.be')
-        self.partner_2.country_id = belgium
-
-        self.bank_line_2.partner_id = self.partner_2
-
-        self.bank_line_1.amount = -121
-        self.bank_line_2.amount = -112
-
-        self.env['account.fiscal.position'].create({
-            'name': "Test",
-            'country_id': belgium.id,
-            'auto_apply': True,
-            'tax_ids': [
-                Command.create({
-                    'tax_src_id': self.tax21.id,
-                    'tax_dest_id': self.tax12.id,
-                }),
-            ]
-        })
-
-        self._check_statement_matching(self.rule_1, {
-            self.bank_line_1: {'model': self.rule_1, 'status': 'write_off', 'auto_reconcile': True},
-            self.bank_line_2: {'model': self.rule_1, 'status': 'write_off', 'auto_reconcile': True},
         })
 
     def test_reverted_move_matching(self):

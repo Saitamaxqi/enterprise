@@ -40,7 +40,6 @@ It gives the Administrator user access to important invoicing features such as b
         'wizard/account_change_lock_date.xml',
         'wizard/account_auto_reconcile_wizard.xml',
         'wizard/account_reconcile_wizard.xml',
-        'wizard/reconcile_model_wizard.xml',
     ],
     'installable': True,
     'auto_install': True,

@@ -27,9 +27,8 @@ class TestBalanceSheetReport(TestAccountReportsCommon):
             'code_prefix_end': '1015010',
         }])
 
-        cid = self.env.company.id
-        account_bank = self.env.ref(f"account.{cid}_bank").default_account_id
-        account_cash = self.env.ref(f"account.{cid}_cash").default_account_id
+        account_bank = self.company_data['default_journal_bank'].default_account_id
+        account_cash = self.company_data['default_journal_cash'].default_account_id
         account_a = self.env['account.account'].create([{'code': '1014010', 'name': 'A', 'account_type': 'asset_cash'}])
         account_c = self.env['account.account'].create([{'code': '101600', 'name': 'C', 'account_type': 'asset_cash'}])
 

@@ -100,6 +100,6 @@
       </field>
     </record>
 
-    <menuitem action="action_account_followup_line_definition_form" id="account_followup_menu" parent="account.account_invoicing_menu" name="Follow-up Levels" groups="account.group_account_manager" sequence="2"/>
+    <menuitem action="action_account_followup_line_definition_form" id="account_followup_menu" parent="account.account_invoicing_menu" name="Follow-up Levels" groups="account.group_account_manager" sequence="11"/>
 
 </odoo>

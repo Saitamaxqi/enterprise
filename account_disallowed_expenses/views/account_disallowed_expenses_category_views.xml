@@ -87,7 +87,7 @@
     </record>
 
     <record id="action_account_disallowed_expenses_category_list" model="ir.actions.act_window">
-        <field name="name">Disallowed Expenses Categories</field>
+        <field name="name">Fiscal Categories</field>
         <field name="res_model">account.disallowed.expenses.category</field>
         <field name="path">disallowed-expenses-categories</field>
         <field name="help" type="html">
@@ -99,6 +99,6 @@
 
     <menuitem action="action_account_disallowed_expenses_category_list"
               id="menu_action_account_disallowed_expenses_category_list"
-              parent="account.account_management_menu"
+              parent="account.account_account_menu"
               groups="account.group_account_readonly"/>
 </odoo>

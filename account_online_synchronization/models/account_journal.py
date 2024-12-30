@@ -79,10 +79,10 @@ class AccountJournal(models.Model):
                 self.env.cr.rollback()
 
     def fetch_online_sync_favorite_institutions(self):
-        self.ensure_one()
+        company = self.company_id if len(self) == 1 else self.env.company
         timeout = int(self.env['ir.config_parameter'].sudo().get_param('account_online_synchronization.request_timeout')) or 60
         endpoint_url = self.env['account.online.link']._get_odoofin_url('/proxy/v1/get_dashboard_institutions')
-        params = {'country': self.company_id.account_fiscal_country_id.code, 'limit': 28}
+        params = {'country': company.account_fiscal_country_id.code, 'limit': 28}
         try:
             resp = requests.post(endpoint_url, json=params, timeout=timeout)
             resp_dict = resp.json()['result']

@@ -21,15 +21,8 @@
                 </div>
             </xpath>
 
-            <xpath expr="//div[@id='bank_and_cash_container']" position="inside">
-                <div class="col-4 o_kanban_card_manage_section o_kanban_manage_reconciliation">
-                    <h5 id="card_action_view_menus" class="o_kanban_card_manage_title">
-                        <span role="separator">Reconciliation</span>
-                    </h5>
-                    <div>
-                        <a type="action" name="%(action_account_report_bank_reconciliation)d">Reconciliation Report</a>
-                    </div>
-                </div>
+            <xpath expr="//div[@id='bank_and_cash_container']//div[@name='action_card_reconciliation']" position="inside">
+                <a type="action" name="%(action_account_report_bank_reconciliation)d">Report</a>
             </xpath>
 
             <!-- Add subtitle & onboarding to account_tax_periodicity_journals -->

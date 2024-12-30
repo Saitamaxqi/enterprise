@@ -144,7 +144,7 @@ class AccountOnlineAccount(models.Model):
         elif existing_journal:
             journal = existing_journal
         else:
-            new_journal_code = self.env['account.journal'].get_next_bank_cash_default_code(journal_type, self.env.company)
+            new_journal_code = self.env['account.journal']._get_next_journal_default_code(journal_type, self.env.company)
             journal = self.env['account.journal'].create({
                 'name': self.account_number or self.display_name,
                 'code': new_journal_code,
