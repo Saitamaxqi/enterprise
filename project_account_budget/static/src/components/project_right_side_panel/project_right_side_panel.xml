@@ -27,9 +27,9 @@
                     <thead class="bg-100 align-middle">
                         <tr>
                             <th>Budget</th>
-                            <th class="text-end">Allocated</th>
-                            <th class="text-end">Spent</th>
-                            <th class="text-end">Remaining</th>
+                            <th class="text-end">Forecast</th>
+                            <th class="text-end">Actual</th>
+                            <th class="text-end">Difference</th>
                         </tr>
                     </thead>
                     <tbody>
