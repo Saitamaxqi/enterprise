@@ -440,6 +440,12 @@ class AccountMove(models.Model):
 
         return super()._post(soft)
 
+    def _get_fields_to_detach(self):
+        # EXTENDS account
+        fields_list = super()._get_fields_to_detach()
+        fields_list.append('l10n_ke_oscu_attachment_file')
+        return fields_list
+
     def _l10n_ke_oscu_send_customer_invoice(self):
         company = self.company_id
 

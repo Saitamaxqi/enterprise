@@ -129,6 +129,12 @@ class L10n_Uy_EdiDocument(models.Model):
         self.attachment_id.unlink()
         return super().unlink()
 
+    def _get_fields_to_detach(self):
+        # EXTENDS account
+        fields_list = super()._get_fields_to_detach()
+        fields_list.append('attachment_file')
+        return fields_list
+
     # Helpers
 
     def _can_edit(self):

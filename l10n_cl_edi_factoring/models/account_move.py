@@ -53,6 +53,12 @@ class AccountMove(models.Model):
         res = super()._post(soft=soft)
         return res
 
+    def _get_fields_to_detach(self):
+        # EXTENDS account
+        fields_list = super()._get_fields_to_detach()
+        fields_list.append('l10n_cl_aec_attachment_file')
+        return fields_list
+
     def _l10n_cl_is_aec_move(self):
         return self.move_type == 'entry' and self.l10n_cl_aec_attachment_id
 
