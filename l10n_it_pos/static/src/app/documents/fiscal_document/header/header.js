@@ -28,8 +28,8 @@ export class Header extends Component {
             company.vat && new Heading(`${company.country_id?.vat_label || "IVA"}: ${company.vat}`),
             company.email && new Heading(company.email),
             company.website && new Heading(company.website),
-            company.partner_id.contact_address &&
-                new Heading(company.partner_id.contact_address.replace(/\n/g, " ")),
+            company.partner_id.pos_contact_address &&
+                new Heading(company.partner_id.pos_contact_address.replace(/\n/g, " ")),
             this.pos.config.header && new Heading(this.pos.config.header),
             cashier?.name && new Heading(_t("Served by %s", cashier.name), Font.BOLD),
         ];
