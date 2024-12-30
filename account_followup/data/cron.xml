@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="ir_cron_auto_post_draft_entry" model="ir.cron">
+    <record id="ir_cron_follow_up" model="ir.cron">
         <field name="name">Account Report Followup; Execute followup</field>
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>

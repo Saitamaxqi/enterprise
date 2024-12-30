@@ -28,7 +28,7 @@ class TestWhatsAppFollowup(WhatsAppCommon, TestAccountFollowupReports):
         return followup
 
     def test_whatsapp_followup_cron(self):
-        cron = self.env.ref('account_followup.ir_cron_auto_post_draft_entry')
+        cron = self.env.ref('account_followup.ir_cron_follow_up')
         followup_10 = self.create_followup(delay=10)
         followup_10.auto_execute = True
 
