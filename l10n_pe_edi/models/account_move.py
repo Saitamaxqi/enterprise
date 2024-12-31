@@ -218,7 +218,7 @@ class AccountMove(models.Model):
 
         return {
             'id': 'Detraccion',
-            'currency': self.currency_id,
+            'currency': self.company_id.currency_id,
             'payment_means_id': line.product_id.l10n_pe_withhold_code,
             'payee_financial_account': national_bank_account_number,
             'payment_means_code': '999',
