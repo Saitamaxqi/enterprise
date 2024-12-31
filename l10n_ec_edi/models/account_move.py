@@ -758,7 +758,7 @@ class AccountMove(models.Model):
             return False  # widget gives errors if no tax groups
 
         wth_subtotals = {
-            'formatted_amount_total': formatLang(self.env, vat_amount + pro_amount, currency_obj=currency_id),
+            'total_amount_currency': vat_amount + pro_amount,
             'allow_tax_edition': False,
             'groups_by_subtotal': {},
             'subtotals_order': [],
@@ -766,21 +766,25 @@ class AccountMove(models.Model):
             'display_tax_base': False,
         }
 
-        def add_subtotal(amount, base, currency, key):
+        def add_subtotal(amount, base, currency, key, tax_group):
             # Add a subtotal to the widget
             # We need to add a group_by_subtotal, subtotals and subtotals_order otherwise the widget will crash
-            formatted_base = formatLang(self.env, base, currency_obj=currency)
             wth_subtotals['groups_by_subtotal'][key] = []
             wth_subtotals['subtotals_order'].append(key)
             wth_subtotals['subtotals'].append({
                 'name': key,
-                'formatted_amount': _('(base: %(base)s) %(amount)s', base=formatted_base, amount=formatLang(self.env, amount, currency_obj=currency))
+                'base_amount_currency': amount,
+                'tax_groups': [{
+                    'display_base_amount_currency': True,
+                    'group_name': tax_group.name,
+                    'tax_amount_currency': amount,
+                }],
             })
 
         if vat_tax_group:
-            add_subtotal(vat_amount, vat_base, currency_id, _("VAT Withhold"))
+            add_subtotal(vat_amount, vat_base, currency_id, _("VAT Withhold"), vat_tax_group)
         if pro_tax_group:
-            add_subtotal(pro_amount, pro_base, currency_id, _("Profit Withhold"))
+            add_subtotal(pro_amount, pro_base, currency_id, _("Profit Withhold"), pro_tax_group)
 
         return wth_subtotals
 
