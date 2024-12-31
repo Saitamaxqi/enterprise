@@ -13,7 +13,6 @@ export class QualityCheck extends MrpWorkorder {
     setup() {
         super.setup();
         this.fieldState = "quality_state";
-        this.isLongPressable = false;
         this.name = this.props.record.data.title || this.props.record.data.name;
         this.note = this.props.record.data.note;
         this.action = useService("action");

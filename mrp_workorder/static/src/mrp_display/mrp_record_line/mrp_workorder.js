@@ -19,7 +19,6 @@ export class MrpWorkorder extends StockMove {
 
     setup() {
         super.setup();
-        this.isLongPressable = true;
         this.dialogService = useService("dialog");
         this.name = this.props.record.data.name;
         this.note = false;
@@ -80,12 +79,6 @@ export class MrpWorkorder extends StockMove {
             params.cancelLabel = _t("Discard");
         }
         this.dialogService.add(ConfirmationDialog, params);
-    }
-
-    async longPress() {
-        const { record } = this.props;
-        await record.model.orm.call(record.resModel, "button_finish", [record.resId]);
-        await this.env.reload(this.props.record);
     }
 
     async clicked() {

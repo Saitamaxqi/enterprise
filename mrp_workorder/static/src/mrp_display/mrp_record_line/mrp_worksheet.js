@@ -13,7 +13,6 @@ export class MrpWorksheet extends QualityCheck {
 
     setup() {
         super.setup();
-        this.isLongPressable = false;
         this.dialog = useService("dialog");
     }
 

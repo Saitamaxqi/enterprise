@@ -3,8 +3,7 @@
     <t t-name="mrp_workorder.QualityCheck">
         <li class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center"
             t-att-class="cssClass"
-            t-on-click="onClick"
-            t-on-animationend="onAnimationEnd">
+            t-on-click="onClick">
             <span class="text-truncate" t-att-class="isComplete ? 'text-decoration-line-through opacity-25' : ''" t-esc="name"/>
             <span t-if="props.record.data.duration" t-att-class="active ? '' : 'text-muted'">
                 <MrpTimer value="props.record.data.duration" ongoing="active"/>

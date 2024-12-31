@@ -16,18 +16,12 @@ export class StockMove extends Component {
 
     setup() {
         this.fieldState = "state";
-        this.isLongPressable = false;
-        this.longPressed = false;
         this.resModel = this.props.record.resModel;
         this.resId = this.props.record.resId;
     }
 
     get cssClass() {
-        let cssClass = this.isLongPressable ? "o_longpressable" : "";
-        if (this.isComplete) {
-            cssClass += " text-muted";
-        }
-        return cssClass;
+        return this.isComplete ? "text-muted" : "";
     }
 
     get isComplete() {
@@ -55,22 +49,9 @@ export class StockMove extends Component {
         return this.toConsumeQuantity === 1 ? _t("Unit") : _t("Units");
     }
 
-    longPress() {}
-
-    onAnimationEnd(ev) {
-        if (ev.animationName === "longpress") {
-            this.longPressed = true;
-            this.longPress();
-        }
-    }
-
     async onClick() {
         if (!this.props.clickable) {
             return;
-        }
-        if (this.longPressed) {
-            this.longPressed = false;
-            return; // Do nothing since the longpress event was already called.
         }
         await this.clicked();
     }
