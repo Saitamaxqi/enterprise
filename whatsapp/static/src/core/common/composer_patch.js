@@ -62,12 +62,6 @@ patch(Composer.prototype, {
             }
         }
     },
-    get hasSendButtonNonEditing() {
-        if (this.thread?.channel_type === "whatsapp" && !this.state.active) {
-            return false;
-        }
-        return super.hasSendButtonNonEditing;
-    },
 
     /** @override */
     get isSendButtonDisabled() {
