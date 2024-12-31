@@ -483,7 +483,7 @@ class L10n_LuStoredIntraReport(models.Model):
     _description = "Wrapper for an attachment, adds the financial report data"
     _rec_name = "display_name"
 
-    attachment_id = fields.Many2one(comodel_name='ir.attachment')
+    attachment_bin = fields.Binary()
     year = fields.Char(required=True)
     period = fields.Char(required=True)
     codes = fields.Selection([
@@ -492,8 +492,17 @@ class L10n_LuStoredIntraReport(models.Model):
         ('LTS', 'Supply of goods (normal/in the context of triangular operations) and supply of services')
     ])
     company_id = fields.Many2one(comodel_name='res.company', default=lambda self: self.env.company.id)
+    name = fields.Char(required=True)
 
-    @api.depends('year', 'period', 'codes', 'attachment_id')
+    @api.depends('year', 'period', 'codes', 'name')
     def _compute_display_name(self):
         for r in self:
-            r.display_name = f"{r.year}/{r.period}/{r.codes} : {r.attachment_id.name}"
+            r.display_name = f"{r.year}/{r.period}/{r.codes} : {r.name}"
+
+    def action_download_stored_report(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"/web/content/l10n_lu.stored.intra.report/{self.id}/attachment_bin?download=true",
+            "target": "download",
+        }

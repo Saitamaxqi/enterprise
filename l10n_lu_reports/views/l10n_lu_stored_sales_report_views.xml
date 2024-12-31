@@ -5,10 +5,11 @@
         <field name="model">l10n_lu.stored.intra.report</field>
         <field name="arch" type="xml">
             <list string="Reports" create="false">
-                <field name="attachment_id" string="Attachment" widget="many2one"/>
+                <field name="display_name" string="Attachment"/>
                 <field name="year"/>
                 <field name="period"/>
                 <field name="codes"/>
+                <button type="object" name="action_download_stored_report" string="Download"/>
             </list>
         </field>
     </record>

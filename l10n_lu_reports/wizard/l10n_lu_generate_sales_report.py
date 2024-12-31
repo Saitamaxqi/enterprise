@@ -31,7 +31,12 @@ class L10n_LuGenerateVatIntraReport(models.TransientModel):
         if ('L' in selected) != ('T' in selected) and self.save_report:
             raise UserError(_("The report can't be saved, because it isn't a valid eCDF declaration. "
                               "Either both 'L' and 'T' codes should be selected, or none of them"))
-        comparison_files = [(d.attachment_id.name, base64.b64decode(d.attachment_id.datas)) for d in self.l10n_lu_stored_report_ids]
+        stored_attachments = self.env['ir.attachment'].sudo().search([
+            ('res_model', '=', 'l10n_lu.stored.intra.report'),
+            ('res_field', '=', 'attachment_bin'),
+            ('res_id', 'in', self.l10n_lu_stored_report_ids.ids),
+        ])
+        comparison_files = [(attachment.name, base64.b64decode(attachment.datas)) for attachment in stored_attachments]
         ec_sales_report = self.env.ref('l10n_lu_reports.lux_ec_sales_report')
         forms, year, period, codes = self.env[ec_sales_report.custom_handler_model_name].get_xml_2_0_report_values(report_generation_options, comparison_files)
         declarations = {'declaration_singles': {'forms': forms}, 'declaration_groups': []}
@@ -39,22 +44,17 @@ class L10n_LuGenerateVatIntraReport(models.TransientModel):
         return {'declarations': [declarations], 'year': year, 'period': period, 'codes': codes}
 
     def _save_xml_report(self, declarations_data, lu_template_values, filename):
+        self.ensure_one()
         # Overridden to allow saving the report as a 'l10n_lu.stored.intra.report' (for future comparisons)
         super()._save_xml_report(declarations_data, lu_template_values, filename)
-
         if not self.save_report:
             return
-        attachment = self.env['ir.attachment'].create({
-            'name': self.filename,
-            'company_id': self.env.company.id,
-            'mimetype': 'application/xml',
-            'datas': self.report_data,
-            'description': "Report filename: " + self.filename,
-        })
+
         self.env['l10n_lu.stored.intra.report'].create({
-            'attachment_id': attachment.id,
+            'attachment_bin': self.report_data,
             'year': declarations_data['year'],
             'period': declarations_data['period'],
             'codes': declarations_data['codes'],
             'company_id': self.env.company.id,
+            'name': self.filename,
         })

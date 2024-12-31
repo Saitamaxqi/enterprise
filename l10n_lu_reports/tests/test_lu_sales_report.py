@@ -192,8 +192,13 @@ class LuxembourgSalesReportTest(AccountSalesReportCommon):
         report, options = self._get_report_and_options(report, '2020-05-01', '2020-05-31')
         wizard2 = self.env['l10n_lu.generate.vat.intra.report'].create({})
         wizard2.save_report = False
-        attachment = self.env['ir.attachment'].create({'datas': wizard.report_data, 'name': 'discard'})
-        stored_report = self.env['l10n_lu.stored.intra.report'].create({'attachment_id': attachment.id, 'year': '2020', 'period': '5', 'codes': 'LTS'})
+        stored_report = self.env['l10n_lu.stored.intra.report'].create({
+            'attachment_bin': wizard.report_data,
+            'year': '2020',
+            'period': '5',
+            'codes': 'LTS',
+            'name': 'discard',
+        })
         wizard2.l10n_lu_stored_report_ids = stored_report
         wizard2.with_context(self.env[report.custom_handler_model_name].open_report_export_wizard(options)['context'], skip_xsd=True).get_xml()
         declaration_to_compare_2 = base64.b64decode(wizard2.report_data.decode("utf-8"))
