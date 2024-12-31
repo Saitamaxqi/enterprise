@@ -843,7 +843,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
                 'is_subscription': True,
                 'partner_id': self.user_portal.partner_id.id,
                 'plan_id': self.plan_month.id,
-                'start_date': fields.Date.today(),
+                'start_date': "2024-10-01",
                 'next_invoice_date': False,
                 'order_line': [Command.create({'product_id': self.storable_product.id, 'product_uom_qty': 1})]
             })
@@ -853,7 +853,9 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         subscription_order_1 = create_subscription("Order 1")
         subscription_order_2 = create_subscription("Order 2")
 
-        self.env["sale.order"]._create_recurring_invoice()
+        # Use freeze_time to not rely in "today's" date.
+        with freeze_time("2024-11-15"):
+            self.env["sale.order"]._create_recurring_invoice()
 
         move_1 = subscription_order_1.order_line.move_ids
         move_2 = subscription_order_2.order_line.move_ids
