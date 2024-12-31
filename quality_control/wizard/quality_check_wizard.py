@@ -4,6 +4,7 @@ import ast
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from odoo.tools.misc import clean_context
 
 
 class QualityCheckWizard(models.TransientModel):
@@ -104,7 +105,7 @@ class QualityCheckWizard(models.TransientModel):
                 default_qty_tested=check_id.qty_to_test,
             )
         if self._context.get('button_validate_picking_ids', False):
-            self.check_ids.picking_id.button_validate()
+            self.with_context(clean_context(self.env.context)).check_ids.picking_id.button_validate()
         return action
 
     def action_generate_previous_window(self):

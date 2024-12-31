@@ -1011,3 +1011,45 @@ class TestQualityCheck(TestQualityCommon):
         scrap.do_scrap()
         self.assertEqual(len(picking_in.move_ids), 2)
         self.assertEqual(len(picking_in.check_ids), 1)
+
+    def test_qc_by_product_with_partial_reception(self):
+        """
+        Test that a new quality check is created for the backorder.
+        """
+        self.env['quality.point'].create({
+            'picking_type_ids': [self.picking_type_id],
+            'test_type_id': self.env.ref('quality_control.test_type_measure').id,
+            'measure_on': 'product',
+        })
+        picking_in = self.env['stock.picking'].create({
+            'picking_type_id': self.picking_type_id,
+            'partner_id': self.partner_id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id,
+        })
+        move = self.env['stock.move'].create({
+            'name': self.product_2.name,
+            'product_id': self.product_2.id,
+            'product_uom_qty': 10,
+            'product_uom': self.product_2.uom_id.id,
+            'picking_id': picking_in.id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id})
+        picking_in.action_confirm()
+        self.assertEqual(len(picking_in.check_ids), 1)
+        self.assertTrue(picking_in.quality_check_todo)
+        move.quantity = 5
+        move.picked = True
+        # validate the incoming picking and create a backorder
+        action_quality_check = Form.from_action(self.env, picking_in.button_validate()).save().process()
+        # Confirm the quality check wizard
+        Form.from_action(self.env, action_quality_check).save().do_pass()
+        # Check that the first quality check is still linked to the first picking
+        self.assertEqual(len(picking_in.check_ids), 1)
+        self.assertEqual(picking_in.check_ids.quality_state, 'pass')
+        # Make sure that the backorder is correctly created
+        backorder = picking_in.backorder_ids
+        # Verify that a new quality check is created and linked to the backorder
+        self.assertEqual(len(backorder.check_ids), 1)
+        backorder.check_ids.do_pass()
+        self.assertEqual(backorder.check_ids.quality_state, 'pass')
