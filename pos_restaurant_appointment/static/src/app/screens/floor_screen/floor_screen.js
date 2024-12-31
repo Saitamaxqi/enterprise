@@ -92,8 +92,8 @@ patch(FloorScreen.prototype, {
             criterion: (a) => deserializeDateTime(a.start).ts,
         });
     },
-    getFormatedDate(date) {
-        return deserializeDateTime(date).toFormat("HH:mm");
+    getFormattedDate(date) {
+        return date.toFormat("HH:mm");
     },
     isCustomerLate(table) {
         const dateNow = DateTime.now();

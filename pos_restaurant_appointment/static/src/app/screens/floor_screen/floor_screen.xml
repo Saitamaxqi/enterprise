@@ -13,7 +13,7 @@
                 t-attf-class="{{ this.isCustomerLate(table) ? 'text-danger' : 'text-white' }}"
                 >
                 <div class="text-center small p-0 text-truncate" t-esc="firstAppointment.name" />
-                <div class="text-center small p-0 text-truncate" t-esc="getFormatedDate(firstAppointment.start)" />
+                <div class="text-center small p-0 text-truncate" t-esc="getFormattedDate(firstAppointment.start)" />
             </div>
         </xpath>
         <xpath expr="//div[hasclass('label')]" position="attributes">
