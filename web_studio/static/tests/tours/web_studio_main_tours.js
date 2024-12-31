@@ -1002,7 +1002,7 @@ registry.category("web_tour.tours").add("web_studio_new_report_tour", {
                 this.anchor.ownerDocument.getSelection().setPosition(this.anchor);
                 assertEqual(
                     this.anchor.outerHTML,
-                    `<div class="oe_structure" o-diff-key="3"></div>`
+                    `<div class="oe_structure o-paragraph" o-diff-key="3"><br></div>`
                 );
             },
         },

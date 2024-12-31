@@ -29,10 +29,10 @@ export class EmbeddedViewLinkPlugin extends Plugin {
     replaceElementWith(target, element) {
         const [anchorNode, anchorOffset, focusNode, focusOffset] = boundariesOut(target);
         this.dependencies.selection.setSelection({
-          anchorNode,
-          anchorOffset,
-          focusNode,
-          focusOffset,
+            anchorNode,
+            anchorOffset,
+            focusNode,
+            focusOffset,
         });
         this.dependencies.dom.insert(element);
     }
