@@ -33,7 +33,7 @@ export class DocumentsSearchPanelItemSettingsPopover extends Component {
 
 export class DocumentsSearchPanel extends SearchPanel {
     static modelExtension = "DocumentsSearchPanel";
-    static template = !uiUtils.isSmall() ? "documents.SearchPanel" : "web.SearchPanel";
+    static template = !uiUtils.isSmall() ? "documents.SearchPanel" : "documents.SearchPanel.Small";
     static subTemplates = !uiUtils.isSmall()
         ? {
               section: "web.SearchPanel.Section",
