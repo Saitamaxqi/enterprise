@@ -5,7 +5,10 @@ import { CopyClipboardCharField } from "@web/views/fields/copy_clipboard/copy_cl
 
 const PermissionPanelWebsiteKnowledgePatch = {
     toggleWebsitePublished() {
-        if (this.props.record.data.user_can_write) {
+        if (
+            (this.props.record.data.user_can_write && this.isInternalUser) ||
+            this.state.user_is_admin
+        ) {
             this.props.record.update(
                 { website_published: !this.props.record.data.website_published },
                 { save: true }
