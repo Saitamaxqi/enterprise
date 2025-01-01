@@ -18,12 +18,13 @@ class HrPayslipWorkedDays(models.Model):
             if not worked_days.version_id or worked_days.code == 'OUT' or not worked_days.is_paid or worked_days.is_credit_time:
                 worked_days.amount = 0
                 continue
+            amount_rate = worked_days.work_entry_type_id.amount_rate
             if worked_days.payslip_id.wage_type == "hourly":
                 hourly_wage = worked_days.payslip_id.version_id.hourly_wage
                 if worked_days.work_entry_type_id.l10n_hk_use_713:
                     hourly_wage = max(hourly_wage, worked_days.payslip_id._get_moving_daily_wage() / worked_days.version_id.resource_calendar_id.hours_per_day)
                 rate = 0.8 if worked_days.work_entry_type_id.l10n_hk_non_full_pay else 1
-                worked_days.amount = hourly_wage * worked_days.number_of_hours * rate
+                worked_days.amount = hourly_wage * worked_days.number_of_hours * amount_rate * rate
             else:
                 payslip = worked_days.payslip_id
                 if worked_days.l10n_hk_leave_id:
@@ -33,12 +34,16 @@ class HrPayslipWorkedDays(models.Model):
                         ('date_to', '>=', worked_days.l10n_hk_leave_id.date_from),
                         ('state', 'in', ['done', 'paid']),
                     ], limit=1) or worked_days.payslip_id
-                sum_worked_days = worked_days.payslip_id.sum_worked_hours / worked_days.version_id.resource_calendar_id.hours_per_day
+                attendance_hours = sum(
+                    wd.number_of_hours for wd in payslip.worked_days_line_ids
+                    if not wd.work_entry_type_id.is_extra_hours
+                )
+                sum_worked_days = attendance_hours / worked_days.version_id.resource_calendar_id.hours_per_day
                 daily_wage = worked_days.version_id.contract_wage / (sum_worked_days or 1)
                 if worked_days.work_entry_type_id.l10n_hk_use_713:
                     daily_wage = max(daily_wage, payslip._get_moving_daily_wage())
                 rate = 0.8 if worked_days.work_entry_type_id.l10n_hk_non_full_pay else 1
                 number_of_days = worked_days.number_of_hours / worked_days.version_id.resource_calendar_id.hours_per_day
-                worked_days.amount = daily_wage * number_of_days * rate
+                worked_days.amount = daily_wage * number_of_days * amount_rate * rate
 
         super(HrPayslipWorkedDays, self - hk_worked_days)._compute_amount()

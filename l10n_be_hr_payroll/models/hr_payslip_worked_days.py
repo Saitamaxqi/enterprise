@@ -148,9 +148,10 @@ class HrPayslipWorkedDays(models.Model):
             ####################################################################################
             paid_worked_days = worked_day._l10n_be_get_paid_work_days()
             main_worked_day = paid_worked_days[0].code if paid_worked_days else False
+            amount_rate = worked_day.work_entry_type_id.amount_rate
 
             if worked_day.code != main_worked_day:
-                worked_day.amount = min(wage, worked_day._l10n_be_get_workday_amount(wage))
+                worked_day.amount = min(wage, worked_day._l10n_be_get_workday_amount(wage)) * amount_rate
                 continue
 
             # If out of contract, we use the hourly formula to deduct the real wage
@@ -162,13 +163,15 @@ class HrPayslipWorkedDays(models.Model):
             number_of_other_hours = sum(
                 wd.number_of_hours
                 for wd in worked_days_line_ids
-                if wd.code not in [main_worked_day, 'OUT', 'OVERTIME'] and not wd.is_credit_time
+                if wd.code not in [main_worked_day, 'OUT']
+                and not wd.is_credit_time
+                and not wd.work_entry_type_id.is_extra_hours
             )
 
             if len(work100_wds) == 1:
                 worked_day.amount = max(
                     0, worked_day._l10n_be_get_workday_amount(wage, number_of_other_hours, out_ratio)
-                )
+                ) * amount_rate
                 continue
 
             # Case with half days mixed with full days
@@ -177,20 +180,20 @@ class HrPayslipWorkedDays(models.Model):
                 wage = worked_day._l10n_be_get_workday_amount(wage, number_of_other_hours, out_ratio)
                 if float_compare(worked_day.number_of_hours, max(work100_wds.mapped('number_of_hours')), 2): # lowest lines
                     number_of_hours = (work100_wds - worked_day).number_of_hours
-                    worked_day.amount = worked_day._l10n_be_get_workday_amount(wage, number_of_hours, inverse=True)
+                    worked_day.amount = worked_day._l10n_be_get_workday_amount(wage, number_of_hours, inverse=True) * amount_rate
                     continue
                 else:  # biggest line
-                    worked_day.amount = worked_day._l10n_be_get_workday_amount(wage)
+                    worked_day.amount = worked_day._l10n_be_get_workday_amount(wage) * amount_rate
                     continue
             # Mix of presence/absences - Compute the half days from the hourly formula
             else:
                 if float_compare(worked_day.number_of_hours, max(work100_wds.mapped('number_of_hours')), 2): # lowest lines
-                    worked_day.amount = worked_day._l10n_be_get_workday_amount(wage)
+                    worked_day.amount = worked_day._l10n_be_get_workday_amount(wage) * amount_rate
                     continue
                 else:  # biggest line
                     total_wage = worked_day._l10n_be_get_workday_amount(wage, number_of_other_hours, out_ratio)
                     number_of_hours = (work100_wds - worked_day).number_of_hours
-                    worked_day.amount = total_wage - worked_day._l10n_be_get_workday_amount(wage, number_of_hours)
+                    worked_day.amount = (total_wage - worked_day._l10n_be_get_workday_amount(wage, number_of_hours)) * amount_rate
                     continue
 
         super(HrPayslipWorkedDays, computed_by_super)._compute_amount()

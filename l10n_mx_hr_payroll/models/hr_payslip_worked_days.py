@@ -25,16 +25,19 @@ class HrPayslipWorkedDays(models.Model):
             salary_factor = in_contract_days / actual_period_days
 
             period_wage = worked_days._get_period_wage()
-            worked_days.amount = period_wage * salary_factor
+            amount_rate = worked_days.work_entry_type_id.amount_rate
+            worked_days.amount = period_wage * salary_factor * amount_rate
         return super(HrPayslipWorkedDays, self - mx_worked_days)._compute_amount()
 
     def _get_period_wage(self):
         self.ensure_one()
-        sum_worked_hours = sum(line.number_of_hours for line in
-    self.payslip_id.worked_days_line_ids if not line.is_credit_time and line.code != 'OUT')
         if not self.is_paid:
             return 0
         if self.version_id.wage_type == 'hourly':
             return self.version_id.hourly_wage * self.number_of_hours
         else:
-            return self.version_id.wage * self.number_of_hours / (sum_worked_hours or 1)
+            attendance_hours = sum(
+                line.number_of_hours for line in self.payslip_id.worked_days_line_ids
+                if not line.is_credit_time and line.code != 'OUT' and not line.work_entry_type_id.is_extra_hours
+            ) or 1
+            return self.version_id.wage * self.number_of_hours / attendance_hours

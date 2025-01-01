@@ -93,10 +93,10 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         # Benefits: Healthcare contributions, no pre-tax retirement
 
         self.env['hr.work.entry'].create([{
-            'name': 'Overtime',
+            'name': 'Overtime Hours (Paid at 150%)',
             'employee_id': self.employee.id,
             'version_id': self.contract.id,
-            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_overtime').id,
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_us_work_entry_type_overtime').id,
             'date_start': datetime.datetime(2023, 1, 1, 9),
             'date_stop': datetime.datetime(2023, 1, 1, 9) + relativedelta(hours=10, minutes=43, seconds=48),
             'company_id': self.env.company.id,
@@ -166,7 +166,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'USDOUBLE': (0.15, 1.17, 58.5),
             'USRETROOVERTIME': (0.37, 2.99, 112.13),
             'LEAVE100': (1.0, 8.0, 200.0),
-            'OVERTIME': (1.34, 10.73, 402.38),
+            'USOVERTIME150': (1.34, 10.73, 402.38),
             'USRETROREGULAR': (4.0, 32.0, 800.0),
             'WORK100': (9.0, 72.0, 1800.0),
         })

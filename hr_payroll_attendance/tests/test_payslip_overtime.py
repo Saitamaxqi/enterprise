@@ -1,4 +1,3 @@
-#-*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.addons.hr_work_entry_attendance.tests.common import HrWorkEntryAttendanceCommon
@@ -85,31 +84,6 @@ class TestPayslipOvertime(HrWorkEntryAttendanceCommon):
         })
         self.payslip._compute_worked_days_line_ids()
         self.assertEqual(self.payslip.worked_days_line_ids.filtered(lambda w: w.code == 'OVERTIME').number_of_hours, 11)
-
-    def test_overtime_parameter_percent(self):
-        self.env['hr.attendance'].create({
-            'employee_id': self.employee.id,
-            'check_in': datetime(2022, 1, 3, 0, 0, 0),
-            'check_out': datetime(2022, 1, 3, 20, 0, 0),
-        })
-        rule_value = self.env.ref('hr_payroll_attendance.rule_parameter_overtime_pay_value')
-
-        rule_value.parameter_value = '50'
-        self.payslip._compute_worked_days_line_ids()
-        overtime_worked_days = self.payslip.worked_days_line_ids.filtered(lambda w: w.code == 'OVERTIME')
-        self.assertEqual(overtime_worked_days.number_of_hours * self.contract.hourly_wage * 0.5, overtime_worked_days.amount)
-
-        rule_value.parameter_value = '100'
-        self.env.registry.clear_cache()
-        self.payslip._compute_worked_days_line_ids()
-        overtime_worked_days = self.payslip.worked_days_line_ids.filtered(lambda w: w.code == 'OVERTIME')
-        self.assertEqual(overtime_worked_days.number_of_hours * self.contract.hourly_wage * 1, overtime_worked_days.amount)
-
-        rule_value.parameter_value = '15'
-        self.env.registry.clear_cache()
-        self.payslip._compute_worked_days_line_ids()
-        overtime_worked_days = self.payslip.worked_days_line_ids.filtered(lambda w: w.code == 'OVERTIME')
-        self.assertEqual(overtime_worked_days.number_of_hours * self.contract.hourly_wage * .15, overtime_worked_days.amount)
 
     def test_overtime_with_approval(self):
         """Test that the overtime is taken into account only when it's approved."""

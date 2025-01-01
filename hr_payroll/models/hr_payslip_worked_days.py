@@ -34,7 +34,9 @@ class HrPayslipWorkedDays(models.Model):
         for worked_days in self:
             worked_days.is_paid = (worked_days.work_entry_type_id.id not in unpaid[worked_days.payslip_id.struct_id.id]) if worked_days.payslip_id.struct_id.id in unpaid else False
 
-    @api.depends('is_paid', 'is_credit_time', 'number_of_hours', 'payslip_id', 'version_id.wage', 'payslip_id.sum_worked_hours')
+    @api.depends(
+        'is_paid', 'is_credit_time', 'number_of_hours', 'payslip_id', 'version_id.wage', 'version_id.hourly_wage', 'payslip_id.sum_worked_hours',
+        'work_entry_type_id.amount_rate', 'work_entry_type_id.is_extra_hours')
     def _compute_amount(self):
         for worked_days in self:
             if worked_days.payslip_id.edited or worked_days.payslip_id.state not in ['draft', 'verify']:
@@ -42,10 +44,17 @@ class HrPayslipWorkedDays(models.Model):
             if not worked_days.version_id or worked_days.code == 'OUT' or worked_days.is_credit_time:
                 worked_days.amount = 0
                 continue
+            version = worked_days.payslip_id.version_id
+            amount_rate = worked_days.work_entry_type_id.amount_rate
             if worked_days.payslip_id.wage_type == "hourly":
-                worked_days.amount = worked_days.payslip_id.version_id.hourly_wage * worked_days.number_of_hours if worked_days.is_paid else 0
+                hourly_rate = version.hourly_wage
             else:
-                worked_days.amount = worked_days.payslip_id.version_id.contract_wage * worked_days.number_of_hours / (worked_days.payslip_id._get_regular_worked_hours() or 1) if worked_days.is_paid else 0
+                attendance_hours = sum(
+                    wd.number_of_hours for wd in worked_days.payslip_id.worked_days_line_ids
+                    if not wd.work_entry_type_id.is_extra_hours
+                ) or 1
+                hourly_rate = version.contract_wage / attendance_hours
+            worked_days.amount = hourly_rate * worked_days.number_of_hours * amount_rate if worked_days.is_paid else 0
 
     def _is_half_day(self):
         self.ensure_one()

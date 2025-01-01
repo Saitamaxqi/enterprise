@@ -250,6 +250,31 @@ class TestPayslipComputation(TestPayslipContractBase):
         self.assertEqual(work_line.number_of_hours, 8.0, "It should have 8 hours of work")  # Monday
         self.assertEqual(extra_work_line.number_of_hours, 7.0, "It should have 7 hours of extra work")  # Sunday
 
+    def test_payslip_generation_with_overtime_work_rate(self):
+        """ Test the computation of overtime amount in the payslip as per rate. """
+        work_entry = self.env['hr.work.entry'].create({
+            'name': 'Overtime Work',
+            'employee_id': self.richard_emp.id,
+            'version_id': self.contract_cdi.id,
+            'work_entry_type_id': self.work_entry_type_overtime_duty.id,
+            'date_start': datetime(2024, 12, 16, 18, 0, 0),
+            'date_stop': datetime(2024, 12, 16, 22, 0, 0),
+        })
+        work_entry.action_validate()
+        payslip = self.env['hr.payslip'].create({
+            'name': 'Payslip of Richard',
+            'employee_id': self.richard_emp.id,
+            'version_id': self.contract_cdi.id,
+            'date_from': date(2024, 12, 1),
+            'date_to': date(2024, 12, 31),
+        })
+        payslip.compute_sheet()
+        overtime_line = payslip.worked_days_line_ids.filtered(lambda l: l.work_entry_type_id == self.work_entry_type_overtime_duty)
+        expected_hours = 4.0
+        expected_amount = 64.93
+        self.assertEqual(overtime_line.number_of_hours, expected_hours, "Overtime hours mismatch")
+        self.assertAlmostEqual(overtime_line.amount, expected_amount, delta=0.01, msg="Overtime amount calculation mismatch")
+
     def test_work_data_with_exceeding_interval(self):
         # The start and stop dates for these entries are stored in UTC.
         # Note that the contract for these entries is for a Europe/Brussels

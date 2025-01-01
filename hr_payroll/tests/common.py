@@ -73,6 +73,15 @@ class TestPayslipBase(TransactionCase):
             'code': 'LEAVETEST100'
         })
 
+        # I create a work entry type with work rate
+        cls.work_entry_type_overtime_duty = cls.env['hr.work.entry.type'].create({
+            'name': 'Overtime Duty',
+            'is_leave': False,
+            'code': 'WORKRATETEST400',
+            'amount_rate': 0.5,
+            'is_extra_hours': True
+        })
+
         # I create a salary structure for "Software Developer"
         cls.developer_pay_structure = cls.env['hr.payroll.structure'].create({
             'name': 'Salary Structure for Software Developer',

@@ -509,6 +509,10 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             }])
             work_entry.action_validate()
 
+        self.env.ref("hr_work_entry.work_entry_type_overtime").write({
+            "is_extra_hours": True,
+        })
+
         # Work Entries, For simplicty, Leaves handled as work entries
         create_work_entry("hr_work_entry.work_entry_type_overtime", datetime(2024, 10, 1, 9), 3)
         create_work_entry("hr_work_entry.l10n_au_work_entry_type_other", datetime(2024, 10, 3, 9), 4, "validated")
