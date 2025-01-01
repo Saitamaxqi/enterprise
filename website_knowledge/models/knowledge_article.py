@@ -78,7 +78,7 @@ class KnowledgeArticle(models.Model):
     def _prepare_article_create_values(self, title=False, parent_id=False, is_private=False, is_article_item=False, article_properties=False):
         values = super()._prepare_article_create_values(title, parent_id, is_private, is_article_item, article_properties)
 
-        if parent_id:
+        if parent_id and (self.env.user._is_internal() or self.env.su):
             parent_article = self.env['knowledge.article'].browse(parent_id)
             if parent_article.website_published:
                 values['website_published'] = True
