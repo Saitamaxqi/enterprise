@@ -278,6 +278,8 @@
                 <filter string="To Compute" name="draft" domain="[('state', '=', 'draft')]" help="Draft Slip"/>
                 <filter string="To Confirm" name="draft" domain="[('state', '=', 'verify')]" help="Slips to Confirm"/>
                 <filter string="Done" name="done" domain="[('state', '=', 'done')]" help="Done Slip"/>
+                <filter string="Paid" name="paid" domain="[('state', '=', 'paid')]" help="Paid Slip"/>
+                <filter string="Cancelled" name="cancel" domain="[('state', '=', 'cancel')]" help="Canceled Slip"/>
                 <separator/>
                 <filter string="Date" name="date_filter" date="date_to" default_period="month-1"/>
                 <separator/>
