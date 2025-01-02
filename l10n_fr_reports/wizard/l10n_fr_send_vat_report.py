@@ -244,8 +244,24 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
 
     def _check_vat_to_pay(self):
         self.ensure_one()
-        if any(float_compare(line.vat_amount, 0, precision_digits=line.currency_id.decimal_places) <= 0 for line in self.bank_account_line_ids):
+        if any(float_compare(line.vat_amount, 0, precision_digits=line.currency_id.decimal_places) <= 0 for line in
+               self.bank_account_line_ids):
             raise UserError(_("You can't set an amount with a negative value or a value set to 0."))
+
+    def _check_values_export(self, options):
+        # Check constraints
+        sender_company = self.report_id._get_sender_company_for_export(options)
+        # Assume Emitor = Writer -> omit the emitor
+        writer = sender_company.account_representative_id or sender_company
+        self._check_constraints(writer, ['company_registry', 'street', 'zip', 'city', 'country_id'])
+        self._check_siret(writer)
+        # Debtor
+        debtor = sender_company
+        self._check_constraints(debtor, ['company_registry', 'street', 'zip', 'city', 'country_id'])
+        self._check_siret(debtor)
+
+        self._check_bank_accounts()
+        self._check_vat_to_pay()
 
     def _get_formatted_edi_values(self, lines):
         edi_values = []
@@ -298,25 +314,11 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             ])
         return formatted_payment_values
 
-    def _prepare_edi_vals(self, options, lines):
-        # Check constraints
+    def _get_common_edi_vals(self, options):
         sender_company = self.report_id._get_sender_company_for_export(options)
         # Assume Emitor = Writer -> omit the emitor
         writer = sender_company.account_representative_id or sender_company
-        self._check_constraints(writer, ['company_registry', 'street', 'zip', 'city', 'country_id'])
-        self._check_siret(writer)
-        # Debtor
         debtor = sender_company
-        self._check_constraints(debtor, ['company_registry', 'street', 'zip', 'city', 'country_id'])
-        self._check_siret(debtor)
-
-        self._check_bank_accounts()
-        self._check_vat_to_pay()
-
-        edi_values = self._get_formatted_edi_values(lines)
-        if not edi_values:
-            raise UserError(_("The tax report is empty."))
-
         writer_vals = {
             'siret': writer.company_registry,
             'designation': "CEC_EDI_TVA",
@@ -348,15 +350,24 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             {'id': 'KD', 'value': 'TVA1'},  # ROF
             {'id': 'CA', 'value': self.date_from.strftime("%Y%m%d")},  # declaration period: yyyymmdd
             {'id': 'CB', 'value': self.date_to.strftime("%Y%m%d")},
-            *self._get_formatted_payment_values(),
         ]
+        return writer_vals, debtor_vals, aspone_vals, identif_vals
+
+    def _prepare_edi_vals(self, options, lines):
+        edi_values = self._get_formatted_edi_values(lines)
+        if not edi_values:
+            raise UserError(_("The tax report is empty."))
+
+        writer_vals, debtor_vals, aspone_vals, identif_vals = self._get_common_edi_vals(options)
+
+        identif_vals.extend(self._get_formatted_payment_values())
         is_neutralized = self.env['ir.config_parameter'].sudo().get_param('database.is_neutralized')
 
         return {
             'date_from': self.date_from.strftime("%Y%m%d"),
             'date_to': self.date_to.strftime("%Y%m%d"),
             'is_test': '1' if self.test_interchange or is_neutralized else '0',
-            'type': "INFENT",  # constant
+            'type': "INFENT",
             'declarations': [{
                 'type': "IDT",  # depends on the procedure
                 'reference': "INFENT000042",  # internal reference to the emitor
@@ -366,12 +377,12 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
                 'recipients': [{'designation': self.recipient}],
                 # T-IDENTIF form
                 'identif': {
-                    'millesime': "23",
+                    'millesime': "24",
                     'zones': identif_vals,
                 },
                 # 3310CA3
                 'form': {
-                    'millesime': "23",
+                    'millesime': "24",
                     'name': "3310CA3",
                     'zones': edi_values,
                 }
@@ -432,7 +443,10 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
     def send_vat_return(self):
         self.ensure_one()
 
-        options = self.report_id.get_options({'no_format': True, 'date': {'date_from': self.date_from, 'date_to': self.date_to}, 'unfold_all': True})
+        options = self.report_id.get_options(
+            {'no_format': True, 'date': {'date_from': self.date_from, 'date_to': self.date_to}, 'unfold_all': True})
+        self._check_values_export(options)
+
         lines = self.report_id._get_lines(options)
 
         # Generate xml
@@ -447,6 +461,20 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         xml_content = etree.tostring(cleanup_xml_node(xml_content), encoding='ISO-8859-15', standalone='yes')
 
         if not self.is_vat_due and self.computed_vat_amount:
+            if external_value_26 := self.env.ref('l10n_fr_account.tax_report_26_external_tag',
+                                                 raise_if_not_found=False):
+                # xml_id in module l10n_fr_account may not be updated yet
+                self.env['account.report.external.value'].create({
+                    'name': _(
+                        "Carryover reimbursement from %(date_from)s to %(date_to)s",
+                        date_from=format_date(self.env, self.date_from),
+                        date_to=format_date(self.env, self.date_to)
+                    ),
+                    'value': self.computed_vat_amount,
+                    'date': self.date_to,
+                    'target_report_expression_id': external_value_26.id,
+                    'company_id': self.env.company.id,
+                })
             origin_expression = self.env.ref('l10n_fr_account.tax_report_27_carryover')
             self.env['account.report.external.value'].create({
                 'name': _(
@@ -466,7 +494,85 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             if not self.test_interchange:
                 carryover_reimbursment_move._post()
 
+            self._send_reimbursement_xml_to_aspone(options)
+
         # Send xml to ASPOne
+        vat_report_name = self._get_vat_report_name(self.date_from, self.date_to)
+        self._send_xml_to_aspone(xml_content, vat_report_name)
+
+    def _send_reimbursement_xml_to_aspone(self, options):
+        """ Create declaration 3519 for each reimbursement asked for a bank account and send it to AspOne"""
+        writer_vals, debtor_vals, aspone_vals, identif_vals = self._get_common_edi_vals(options)
+        sender_company = self.report_id._get_sender_company_for_export(options)
+
+        is_neutralized = self.env['ir.config_parameter'].sudo().get_param('database.is_neutralized')
+
+        if sender_company.country_code == 'FR':
+            company_location_code = 'DD'
+        elif sender_company.country_id in self.env.ref('base.europe').country_ids:
+            company_location_code = 'DE'
+        else:
+            company_location_code = 'DF',
+
+        for index, bank_account_line in enumerate(self.bank_account_line_ids):
+            declarations = {
+                'type': 'RBT',
+                'reference': "INFENT000042",  # internal reference to the emitor
+                'writer': writer_vals,
+                'debtor': debtor_vals,
+                'edi_partner': aspone_vals,
+                'recipients': [{'designation': self.recipient}],
+                # T-IDENTIF form
+                'identif': {
+                    'millesime': "24",
+                    'zones': identif_vals,
+                },
+                # 3519
+                'form': {
+                    'millesime': "24",
+                    'name': "3519",
+                    'zones': [{
+                        'id': 'AA',
+                        'iban': bank_account_line.account_number.replace(' ', ''),
+                        'bic': bank_account_line.bank_bic.replace(' ', ''),
+                    }, {
+                        'id': 'FK',
+                        'value': 'X'
+                    }, {
+                        'id': 'DN',
+                        'value': float_repr(
+                            bank_account_line.currency_id.round(bank_account_line.vat_amount),
+                            bank_account_line.currency_id.decimal_places,
+                        ).replace('.', ',')
+                    }, {
+                        'id': company_location_code,
+                        'value': 'X',
+                    }],
+                }
+            }
+
+            vals = {
+                'date_from': self.date_from.strftime("%Y%m%d"),
+                'date_to': self.date_to.strftime("%Y%m%d"),
+                'is_test': '1' if self.test_interchange or is_neutralized else '0',
+                'type': "INFENT",
+                'declarations': [declarations],
+            }
+
+            xml_content = self.env['ir.qweb']._render('l10n_fr_reports.aspone_xml_edi', vals)
+            try:
+                xml_content.encode('ISO-8859-15')
+            except UnicodeEncodeError as e:
+                raise ValidationError(
+                    _("The xml file generated contains an invalid character: '%s'", xml_content[e.start:e.end]))
+
+            xml_content = etree.tostring(cleanup_xml_node(xml_content), encoding='ISO-8859-15', standalone='yes')
+            report_common_name = self._get_vat_report_name(self.date_from, self.date_to)
+            reimbursement_name = _('%(report_common_name)s_reimbursement_%(index)s',
+                                   report_common_name=report_common_name, index=index)
+            self._send_xml_to_aspone(xml_content, reimbursement_name)
+
+    def _send_xml_to_aspone(self, xml_content, export_name):
         db_uuid = self.env['ir.config_parameter'].sudo().get_param('database.uuid')
         response = self.env['account.report.async.export']._get_fr_webservice_answer(
             url=f"{ENDPOINT}/api/l10n_fr_aspone/1/add_document",
@@ -480,10 +586,9 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         if not deposit_uid:
             raise ValidationError(_("Error occured while sending the report to the government : '%(response)s'", response=str(response)))
 
-        vat_report_name = self._get_vat_report_name(self.date_from, self.date_to)
 
         attachment = self.env['ir.attachment'].create({
-            'name': f'{vat_report_name}.xml',
+            'name': f'{export_name}.xml',
             'res_model': 'l10n_fr_reports.report',
             'type': 'binary',
             # IAP might force the "Test" flag to 1 if the config parameter 'l10n_fr_aspone_proxy.test_env' is True
@@ -493,7 +598,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
 
         # Create the vat return
         self.env['account.report.async.export'].create({
-            'name': vat_report_name,
+            'name': export_name,
             'attachment_ids': attachment.ids,
             'deposit_uid': deposit_uid,
             'date_from': self.date_from,

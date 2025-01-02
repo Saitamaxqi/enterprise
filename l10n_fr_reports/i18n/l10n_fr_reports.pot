@@ -29,6 +29,12 @@ msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "%(report_common_name)s_reimbursement_%(index)s"
+msgstr ""
+
+#. module: l10n_fr_reports
+#. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid ""
 "<b> Warning, the report has not been fully processed by the recipient yet "
