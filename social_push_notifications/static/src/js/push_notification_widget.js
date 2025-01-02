@@ -39,7 +39,9 @@ publicWidget.registry.NotificationWidget =  publicWidget.Widget.extend({
                 document.head.appendChild(script);
             });
         };
-        this.firebase = await loadFirebaseAssets();
+        try {
+            this.firebase = await loadFirebaseAssets();
+        } catch {};
     },
 
     /**
@@ -52,7 +54,7 @@ publicWidget.registry.NotificationWidget =  publicWidget.Widget.extend({
         var self = this;
         var superPromise = this._super.apply(this, arguments);
 
-        if (!this._isBrowserCompatible()) {
+        if (!this._isBrowserCompatible() || !this.firebase) {
             return superPromise;
         }
 
