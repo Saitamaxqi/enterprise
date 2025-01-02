@@ -6965,6 +6965,7 @@ class AccountReportLine(models.Model):
 
             group_lines_by_keys[grouping_key] = group_line_dict
 
+        draft_entries = {}  # move state used order to color the line if it's draft
         # Sort grouping keys in the right order and generate line names
         keys_and_names_in_sequence = {}  # Order of this dict will matter
 
@@ -6980,6 +6981,12 @@ class AccountReportLine(models.Model):
 
             for record in records_to_sort.with_context(active_test=False).sorted():
                 keys_and_names_in_sequence[record.id] = record.display_name
+
+                if groupby_model == 'account.move.line':
+                    draft_entries[record.id] = record.parent_state
+
+                if groupby_model == 'account.move':
+                    draft_entries[record.id] = record.state
 
             if None in group_lines_by_keys:
                 keys_and_names_in_sequence[None] = _("Unknown")
@@ -6999,6 +7006,8 @@ class AccountReportLine(models.Model):
         for grouping_key, line_name in keys_and_names_in_sequence.items():
             group_line_dict = group_lines_by_keys[grouping_key]
             group_line_dict['name'] = line_name
+            if draft_entries.get(grouping_key) == 'draft':
+                group_line_dict['is_draft'] = True
             group_lines.append(group_line_dict)
 
         if options.get('hierarchy'):

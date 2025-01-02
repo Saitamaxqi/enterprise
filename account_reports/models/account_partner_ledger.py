@@ -486,6 +486,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                     account_move_line.date_maturity,
                     account_move_line.name,
                     account_move_line.ref,
+                    account_move_line.parent_state,
                     account_move_line.company_id,
                     account_move_line.account_id,
                     account_move_line.payment_id,
@@ -539,6 +540,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                     account_move_line.date_maturity,
                     account_move_line.name,
                     account_move_line.ref,
+                    account_move_line.parent_state,
                     account_move_line.company_id,
                     account_move_line.account_id,
                     account_move_line.payment_id,
@@ -710,6 +712,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             'columns': columns,
             'caret_options': caret_type,
             'level': 3 + level_shift,
+            'is_draft': aml_query_result['parent_state'] == 'draft',
         }
 
     def _get_report_line_total(self, options, totals_by_column_group):

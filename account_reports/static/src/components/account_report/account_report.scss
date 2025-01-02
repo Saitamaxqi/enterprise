@@ -147,6 +147,7 @@
         }
 
         .name { white-space: nowrap }
+        &.draft { color: $o-info; }
         &.unfoldable:hover { cursor: pointer }
     }
 

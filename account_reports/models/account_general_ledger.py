@@ -433,6 +433,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                     account_move_line.date_maturity,
                     account_move_line.name,
                     account_move_line.ref,
+                    account_move_line.parent_state,
                     account_move_line.company_id,
                     account_move_line.account_id,
                     account_move_line.payment_id,
@@ -665,9 +666,10 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             'id': report._get_generic_line_id('account.move.line', aml_id, parent_line_id=parent_line_id, markup=date),
             'caret_options': caret_type,
             'parent_id': parent_line_id,
-            'name': move_name,
+            'name': move_name or _('Draft Entry'),
             'columns': line_columns,
             'level': 3,
+            'is_draft': column_group_dict.get('parent_state') == 'draft',
         }
 
     @api.model

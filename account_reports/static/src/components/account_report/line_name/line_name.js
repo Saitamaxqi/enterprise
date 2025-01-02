@@ -72,6 +72,9 @@ export class AccountReportLineName extends Component {
         if (this.props.line.unfoldable)
             classes += " unfoldable";
 
+        if (this.props.line.is_draft)
+            classes += " draft";
+
         if (this.props.line.class)
             classes += ` ${ this.props.line.class }`;
 
