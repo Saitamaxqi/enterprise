@@ -72,19 +72,22 @@ class L10n_Nl_ReportsEcSalesReportHandler(models.AbstractModel):
 
         goods_tag = self.env.ref('l10n_nl.tax_report_rub_3bg_tag', raise_if_not_found=False)
         services_tag = self.env.ref('l10n_nl.tax_report_rub_3bs_tag', raise_if_not_found=False)
-        if goods_tag and services_tag:
+        triangular_tag = self.env.ref('l10n_nl.tax_report_rub_3bt_tag', raise_if_not_found=False)
+        if goods_tag and services_tag and triangular_tag:
             options.get('sales_report_taxes', {}).update({
                 'goods': goods_tag._get_matching_tags().ids,
                 'services': services_tag._get_matching_tags().ids,
-                'triangular': self.env.ref('l10n_nl.tax_report_rub_3bt_tag')._get_matching_tags().ids,
+                'triangular': triangular_tag._get_matching_tags().ids,
                 'use_taxes_instead_of_tags': False,
             })
         else:
-            company_id = self.env.company.id
+            goods_tax = self.env['account.chart.template'].ref('btw_X0_producten', raise_if_not_found=False)
+            services_tax = self.env['account.chart.template'].ref('btw_X0_diensten', raise_if_not_found=False)
+            triangular_tax = self.env['account.chart.template'].ref('btw_X0_ABC_levering', raise_if_not_found=False)
             options.get('sales_report_taxes', {}).update({
-                'goods': (self.env.ref(f'l10n_nl.{company_id}_btw_X0_producten').id,),
-                'services': (self.env.ref(f'l10n_nl.{company_id}_btw_X0_diensten').id,),
-                'triangular': (self.env.ref(f'l10n_nl.{company_id}_btw_X0_ABC_levering').id,),
+                'goods': [goods_tax.id] if goods_tax else [],
+                'services': [services_tax.id] if services_tax else [],
+                'triangular': [triangular_tax.id] if triangular_tax else [],
                 'use_taxes_instead_of_tags': True,
             })
 
