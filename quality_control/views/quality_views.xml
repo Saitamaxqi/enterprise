@@ -417,8 +417,6 @@
         <field name="res_model">quality.check</field>
         <field name="view_mode">list,form</field>
         <field name="context">{
-            'search_default_lot_id': [active_id],
-            'default_lot_id': active_id,
             'create': 0}
         </field>
     </record>
