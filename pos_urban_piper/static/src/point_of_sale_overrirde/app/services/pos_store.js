@@ -46,6 +46,38 @@ patch(PosStore.prototype, {
         }
     },
 
+    get notificationOptions() {
+        return {
+            type: "success",
+            sticky: false,
+            buttons: [
+                {
+                    name: _t("Review Orders"),
+                    onClick: () => {
+                        const stateOverride = {
+                            search: {
+                                fieldName: "DELIVERYPROVIDER",
+                                searchTerm:
+                                    this.deliveryOrderNotification?.delivery_provider_id.name,
+                            },
+                            filter: "ACTIVE_ORDERS",
+                        };
+                        this.setOrder(this.deliveryOrderNotification);
+                        if (this.mainScreen.component?.name == "TicketScreen") {
+                            this.closeScreen();
+                            setTimeout(() => {
+                                this.showScreen("TicketScreen", { stateOverride });
+                                this.env.services.ui.unblock();
+                            }, 300);
+                            return;
+                        }
+                        return this.showScreen("TicketScreen", { stateOverride });
+                    },
+                },
+            ],
+        };
+    },
+
     async _fetchUrbanpiperOrderCount(order_id) {
         try {
             await this.getServerOrders();
@@ -63,39 +95,8 @@ patch(PosStore.prototype, {
             this.sendOrderInPreparationUpdateLastChange(deliveryOrder);
         } else if (deliveryOrder.delivery_status === "placed") {
             this.sound.play("notification");
-            this.notification.add(_t("New online order received."), {
-                type: "success",
-                sticky: false,
-                buttons: [
-                    {
-                        name: _t("Review Orders"),
-                        onClick: () => {
-                            const stateOverride = {
-                                search: {
-                                    fieldName: "DELIVERYPROVIDER",
-                                    searchTerm: deliveryOrder?.delivery_provider_id.name,
-                                },
-                                filter: "ACTIVE_ORDERS",
-                            };
-                            this.setOrder(deliveryOrder);
-                            if (this.mainScreen.component?.name == "TicketScreen") {
-                                this.env.services.ui.block();
-                                if (this.config.module_pos_restaurant) {
-                                    this.showScreen("FloorScreen");
-                                } else {
-                                    this.showScreen("ProductScreen");
-                                }
-                                setTimeout(() => {
-                                    this.showScreen("TicketScreen", { stateOverride });
-                                    this.env.services.ui.unblock();
-                                }, 300);
-                                return;
-                            }
-                            return this.showScreen("TicketScreen", { stateOverride });
-                        },
-                    },
-                ],
-            });
+            this.deliveryOrderNotification = deliveryOrder;
+            this.notification.add(_t("New online order received."), this.notificationOptions);
         } else if (deliveryOrder.delivery_status === "food_ready") {
             deliveryOrder.uiState.locked = true;
         }

@@ -14,4 +14,8 @@ patch(PosOrder.prototype, {
     getOrderStatus() {
         return this.delivery_status ? this.delivery_status : "";
     },
+
+    get isDirectSale() {
+        return Boolean(super.isDirectSale && !this.delivery_identifier);
+    },
 });
