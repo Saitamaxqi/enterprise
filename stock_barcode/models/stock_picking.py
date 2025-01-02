@@ -186,6 +186,7 @@ class StockPicking(models.Model):
             'picking_type_code',
             'picking_type_entire_packs',
             'picking_type_id',
+            'picking_warning_text',
             'return_id',
             'signature',
             'state',

@@ -60,6 +60,10 @@
                         <span class="o_scan_message" t-attf-class="o_{{info.class}}" t-out="info.message"/>
                     </div>
                 </div>
+                <div t-if="env.model.resModel == 'stock.picking' &amp;&amp; env.model.record.picking_warning_text"
+                     class="alert text-bg-900 text-center fw-bold" role="alert" style="white-space: pre-wrap;">
+                    <t t-esc="env.model.record.picking_warning_text"/>
+                </div>
             </t>
         </header>
         <div t-if="state.view === 'barcodeLines' &amp;&amp; env.model.canBeProcessed"
