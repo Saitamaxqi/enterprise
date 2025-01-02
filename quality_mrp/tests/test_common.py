@@ -39,13 +39,11 @@ class TestQualityMrpCommon(TestQualityCommon):
                     'product_qty': 1,
                     'product_uom_id': cls.product_uom_id,
                     'sequence': 1,
-                    'manual_consumption': True,
                 }), (0, 0, {
                     'product_id': product_product_drawer_case.id,
                     'product_qty': 1,
                     'product_uom_id': cls.product_uom_id,
                     'sequence': 1,
-                    'manual_consumption': True,
                 })
             ]
         })

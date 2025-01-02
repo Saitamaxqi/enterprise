@@ -261,7 +261,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         })
 
         untracked_product_bom_line = self.bom_lot.bom_line_ids.filtered(lambda l: l.product_id == self.component01)
-        untracked_product_bom_line.manual_consumption = True
 
         mo_form = Form(self.env['mrp.production'])
         mo_form.product_id = self.final_product_lot

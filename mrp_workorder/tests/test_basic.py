@@ -457,7 +457,6 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         product_screw = self.product_screw
         mrp_bom_desk = self.mrp_bom_desk
         mrp_bom_desk.bom_line_ids.operation_id = False
-        mrp_bom_desk.bom_line_ids.manual_consumption = False
 
         self.env['stock.move'].search([('product_id', 'in', [product_bolt.id, product_screw.id])])._do_unreserve()
 

@@ -106,7 +106,7 @@ class TestShopFloor(HttpCase):
             })],
             'bom_line_ids': [
                 (0, 0, {'product_id': leg.id, 'product_qty': 4}),
-                (0, 0, {'product_id': neck.id, 'product_qty': 1, 'manual_consumption': True})
+                (0, 0, {'product_id': neck.id, 'product_qty': 1})
             ]
         })
         steps_common_values = {
@@ -220,8 +220,8 @@ class TestShopFloor(HttpCase):
                 'workcenter_id': wc3.id,
             })],
             'bom_line_ids': [
-                Command.create({'product_id': product_comp1.id, 'product_qty': 1, 'manual_consumption': True}),
-                Command.create({'product_id': product_comp2.id, 'product_qty': 1, 'manual_consumption': True})
+                Command.create({'product_id': product_comp1.id, 'product_qty': 1}),
+                Command.create({'product_id': product_comp2.id, 'product_qty': 1})
             ]
         })
         # Create two Manufacturing Orders.
@@ -264,7 +264,7 @@ class TestShopFloor(HttpCase):
             'product_qty': 1.0,
             'consumption': 'flexible',
             'bom_line_ids': [
-                Command.create({'product_id': product_comp1.id, 'product_qty': 1, 'manual_consumption': True}),
+                Command.create({'product_id': product_comp1.id, 'product_qty': 1}),
             ]
         })
         # Adds some quantity in stock.
