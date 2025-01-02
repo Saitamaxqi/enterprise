@@ -118,56 +118,56 @@ test("basic", async () => {
     // Focus the field
     await focus(".o_field_widget[name=partner_id] input");
     // Check boxes presence for supplier & VAT number
-    await contains(".o_invoice_extract_box", { count: 6 });
-    await contains(".o_invoice_extract_box[data-field-name=supplier]", { count: 3 });
-    await contains(".o_invoice_extract_box[data-field-name=VAT_Number]", { count: 3 });
+    await contains(".o_extract_mixin_box", { count: 6 });
+    await contains(".o_extract_mixin_box[data-field-name=supplier]", { count: 3 });
+    await contains(".o_extract_mixin_box[data-field-name=VAT_Number]", { count: 3 });
     // Check selection of VAT number boxes
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="1"]')).not.toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="1"]')).not.toHaveClass(
         "ocr_chosen"
     );
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="1"]')).not.toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="1"]')).not.toHaveClass(
         "selected"
     );
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="2"]')).toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="2"]')).toHaveClass(
         "ocr_chosen"
     );
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="2"]')).not.toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="2"]')).not.toHaveClass(
         "selected"
     );
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="3"]')).not.toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="3"]')).not.toHaveClass(
         "ocr_chosen"
     );
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="3"]')).toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="3"]')).toHaveClass(
         "selected"
     );
     // Check selection of supplier boxes
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="6"]')).not.toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="6"]')).not.toHaveClass(
         "ocr_chosen"
     );
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="6"]')).toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="6"]')).toHaveClass(
         "selected"
     );
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="7"]')).toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="7"]')).toHaveClass(
         "ocr_chosen"
     );
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="7"]')).not.toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="7"]')).not.toHaveClass(
         "selected"
     );
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="8"]')).not.toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="8"]')).not.toHaveClass(
         "ocr_chosen"
     );
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="8"]')).not.toHaveClass(
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="8"]')).not.toHaveClass(
         "selected"
     );
     // Click on the VAT number box with ID 1
-    await click('.o_invoice_extract_box[data-id="1"]');
+    await click('.o_extract_mixin_box[data-id="1"]');
     await contains(".o_field_widget[name=partner_id] input", { value: "Odoo" });
-    await contains('.selected.o_invoice_extract_box[data-id="1"]');
-    expect(attachmentPreview.querySelector('.o_invoice_extract_box[data-id="2"]')).not.toHaveClass(
+    await contains('.selected.o_extract_mixin_box[data-id="1"]');
+    expect(attachmentPreview.querySelector('.o_extract_mixin_box[data-id="2"]')).not.toHaveClass(
         "selected"
     );
     // Click on the VAT number box with ID 2
-    await click('.o_invoice_extract_box[data-id="2"]');
+    await click('.o_extract_mixin_box[data-id="2"]');
     // Check that a modal opened to create a res.partner with the VAT number pre-filled
     await contains(".o_dialog input#vat_0", { value: "BE0477472701" });
     await click(".o_dialog .o_form_button_cancel");
@@ -175,59 +175,59 @@ test("basic", async () => {
     // Re-focus the field
     await focus(".o_field_widget[name=partner_id] input");
     // Click on the supplier box with ID 7
-    await click('.o_invoice_extract_box[data-id="7"]');
+    await click('.o_extract_mixin_box[data-id="7"]');
     // Check that a modal opened to create a res.partner with the name pre-filled
     await contains(".o_dialog input#name_0", { value: "Some partner" });
     await click(".o_dialog .o_form_button_cancel");
     // Re-focus the field
     await focus(".o_field_widget[name=partner_id] input");
     // Click on the VAT number box with ID 8
-    await click('.o_invoice_extract_box[data-id="8"]');
+    await click('.o_extract_mixin_box[data-id="8"]');
     await contains(".o_field_widget[name=partner_id] input", { value: "Odoo" });
     // ---------- Invoice ID ----------
     // Focus the field
     await focus(".o_field_widget[name=ref] input");
     // Check boxes presence for invoice ID
-    await contains(".o_invoice_extract_box", { count: 2 });
-    await contains(".o_invoice_extract_box[data-field-name=invoice_id]", { count: 2 });
+    await contains(".o_extract_mixin_box", { count: 2 });
+    await contains(".o_extract_mixin_box[data-field-name=invoice_id]", { count: 2 });
     // Click on the invoice ID box with ID 4
-    await click('.o_invoice_extract_box[data-id="4"]');
+    await click('.o_extract_mixin_box[data-id="4"]');
     await animationFrame(); // so that input value is changed (prevent relying on contains timeout)
     await contains(".o_field_widget[name=ref] input", { value: "some invoice_id" });
     // ---------- Total ----------
     // Focus the field
     await focus(".o_field_widget[name=quick_edit_total_amount] input");
     // Check boxes presence for total
-    await contains(".o_invoice_extract_box", { count: 2 });
-    await contains(".o_invoice_extract_box[data-field-name=total]", { count: 2 });
+    await contains(".o_extract_mixin_box", { count: 2 });
+    await contains(".o_extract_mixin_box[data-field-name=total]", { count: 2 });
     // Click on the total box with ID 10
-    await click('.o_invoice_extract_box[data-id="10"]');
+    await click('.o_extract_mixin_box[data-id="10"]');
     await contains(".o_field_widget[name=quick_edit_total_amount] input", { value: "123.00" });
     // ---------- Date ----------
     // Focus the field
     await focus(".o_field_widget[name=invoice_date] input");
     // Check boxes presence for date
-    await contains(".o_invoice_extract_box", { count: 3 });
-    await contains(".o_invoice_extract_box[data-field-name=date]", { count: 3 });
+    await contains(".o_extract_mixin_box", { count: 3 });
+    await contains(".o_extract_mixin_box[data-field-name=date]", { count: 3 });
     // Click on the date box with ID 12
-    await click('.o_invoice_extract_box[data-id="12"]');
+    await click('.o_extract_mixin_box[data-id="12"]');
     await contains(".o_field_widget[name=invoice_date] input", { value: "01/01/2022" });
     // ---------- Due date ----------
     // Focus the field
     await focus(".o_field_widget[name=invoice_date_due] input");
     // Check boxes presence for due date
-    await contains(".o_invoice_extract_box", { count: 2 });
-    await contains(".o_invoice_extract_box[data-field-name=due_date]", { count: 2 });
+    await contains(".o_extract_mixin_box", { count: 2 });
+    await contains(".o_extract_mixin_box[data-field-name=due_date]", { count: 2 });
     // Click on the due date box with ID 14
-    await click('.o_invoice_extract_box[data-id="14"]');
+    await click('.o_extract_mixin_box[data-id="14"]');
     await contains(".o_field_widget[name=invoice_date_due] input", { value: "01/15/2022" });
     // ---------- Currency ----------
     // Focus the field
     await focus(".o_field_widget[name=currency_id] input");
     // Check boxes presence for currency
-    await contains(".o_invoice_extract_box", { count: 2 });
-    await contains(".o_invoice_extract_box[data-field-name=currency]", { count: 2 });
+    await contains(".o_extract_mixin_box", { count: 2 });
+    await contains(".o_extract_mixin_box[data-field-name=currency]", { count: 2 });
     // Click on the currency box with ID 16
-    await click('.o_invoice_extract_box[data-id="16"]');
+    await click('.o_extract_mixin_box[data-id="16"]');
     await contains(".o_field_widget[name=currency_id] input", { value: "EUR" });
 });

@@ -1,7 +1,7 @@
 import { Component } from "@odoo/owl";
 
 export class Box extends Component {
-    static template = "account_invoice_extract.Box";
+    static template = "iap_extract.Box";
     static props = {
         box: Object,
         pageWidth: String,

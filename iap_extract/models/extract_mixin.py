@@ -333,6 +333,7 @@ class ExtractMixin(models.AbstractModel):
         if result['status'] == 'success':
             self.extract_state = 'waiting_validation'
             ocr_results = result['results'][0]
+            self._on_ocr_results(ocr_results)
             self.with_company(self.company_id)._fill_document_with_results(ocr_results)
             # Set OdooBot as the author of the tracking message
             self._track_set_author(self.env.ref('base.partner_root'))
@@ -351,6 +352,10 @@ class ExtractMixin(models.AbstractModel):
     def _fill_document_with_results(self, ocr_results):
         """ Fill the document with the results of the OCR. This method is meant to be overridden """
         raise NotImplementedError()
+
+    def _on_ocr_results(self, ocr_results):
+        """ Function called when the OCR results are received. This method is meant to be extended """
+        return None
 
     def _get_cron_ocr(self, ocr_action):
         """ Return the cron used to validate the documents, based on the module name.

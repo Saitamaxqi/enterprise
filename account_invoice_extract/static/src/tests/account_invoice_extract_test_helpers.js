@@ -37,7 +37,7 @@ function createBoxData(params) {
 
 /**
  * Important: the field name of boxes should be compatible.
- * @see account_invoice_extract.Fields:init
+ * @see iap_extract.Fields:init
  *
  * @returns {Object[]}
  */
