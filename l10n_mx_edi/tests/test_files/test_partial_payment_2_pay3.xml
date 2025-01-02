@@ -8,8 +8,8 @@
 	<cfdi:Complemento>
 		<pago20:Pagos Version="2.0">
 			<pago20:Totales TotalTrasladosBaseIVA16="100.00" TotalTrasladosImpuestoIVA16="16.00" MontoTotalPagos="116.00"/>
-			<pago20:Pago FechaPago="___ignore___" FormaDePagoP="01" MonedaP="MXN" TipoCambioP="1" Monto="116.00" NumOperacion="INV/2024/00001">
-				<pago20:DoctoRelacionado IdDocumento="___ignore___" Folio="1" Serie="INV/2024/" MonedaDR="CHF" EquivalenciaDR="18.0000000000" NumParcialidad="3" ImpSaldoAnt="14732.00" ImpPagado="2088.00" ObjetoImpDR="02" ImpSaldoInsoluto="12644.00">
+			<pago20:Pago FechaPago="___ignore___" FormaDePagoP="01" MonedaP="MXN" TipoCambioP="1" Monto="116.00" NumOperacion="___ignore___">
+				<pago20:DoctoRelacionado IdDocumento="___ignore___" Folio="___ignore___" Serie="___ignore___" MonedaDR="CHF" EquivalenciaDR="18.0000000000" NumParcialidad="3" ImpSaldoAnt="14732.00" ImpPagado="2088.00" ObjetoImpDR="02" ImpSaldoInsoluto="12644.00">
 					<pago20:ImpuestosDR>
 						<pago20:TrasladosDR>
 							<pago20:TrasladoDR BaseDR="1800.00" ImporteDR="288.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.160000"/>
