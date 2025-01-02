@@ -103,3 +103,32 @@ class TestPlanningTimesheet(TestCommonForecast):
             'date': date(2024, 1, 15),
         })
         self.assertEqual(slot.effective_hours, 2)
+
+    def test_planning_analysis_report_fields(self):
+        ''' This test ensure that the fields of the planning analysis report are correctly computed'''
+        slot = self.env["planning.slot"].create({
+            'resource_id': self.employee_bert.resource_id.id,
+            'project_id': self.project_opera.id,
+            'start_datetime': datetime(2025, 1, 22, 0, 0, 0),
+            'end_datetime': datetime(2025, 1, 23, 0, 0, 0),
+            'state': 'published',
+            'allow_timesheets': True,
+        })
+        self.env['account.analytic.line'].create({
+            'name': 'Test Timesheet',
+            'unit_amount': 2,
+            'project_id': self.project_opera.id,
+            'task_id': self.task_opera_place_new_chairs.id,
+            'employee_id': self.employee_bert.id,
+            'date': date(2025, 1, 22),
+        })
+        slot.invalidate_recordset()
+
+        effective_hours, remaining_hours, percentage_hours = self.env['planning.analysis.report']._read_group(
+            [('slot_id', '=', slot.id)],
+            aggregates=['effective_hours:sum', 'remaining_hours:sum', 'percentage_hours:avg'],
+        )[0]
+
+        self.assertEqual(effective_hours, 2.0, "Effective hours should match the timesheet entry")
+        self.assertEqual(remaining_hours, 6.0, "Remaining hours should be Allocated Hours - Effective hours")
+        self.assertEqual(percentage_hours, 25.0, "Percentage hours should be calculated properly")

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import json
 from datetime import datetime
 from freezegun import freeze_time
 
@@ -86,3 +87,24 @@ class TestControllersRoute(HttpCase, TestCommonPlanning):
         self.assertEqual(req.status_code, 200, "Response should = OK")
         decoded_content = req.content.decode('utf-8')
         self.assertEqual(decoded_content.count('BEGIN:VEVENT'), 3, "There should be 3 Calendar events present in the ics file")
+
+    def test_planning_fields_import_compatible_export(self):
+        self.authenticate('admin', 'admin')
+        response = self.url_open(
+            "/web/export/get_fields",
+            data=json.dumps({"params": {"model": 'planning.slot.template',
+                                        "import_compat": True,
+                                        "domain": []}}),
+            headers={"Content-Type": "application/json"},
+        )
+
+        response_data = json.loads(response.content)['result']
+        actual_exported_fields = {field['value'] for field in response_data if field['default_export']}
+
+        expected_exported_fields = {'duration_days', 'start_time', 'end_time'}
+
+        self.assertEqual(
+            actual_exported_fields,
+            expected_exported_fields,
+            "The default exported fields should be matched"
+        )

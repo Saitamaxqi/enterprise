@@ -96,3 +96,32 @@ class TestPlanningForm(TestCommonPlanning):
         start, end = datetime(2020, 1, 1, 23, 0, 0), datetime(2020, 1, 2, 22, 59, 59)
         self.planning_form('Asia/Kolkata', start, end, 8, 16.6)
         self.planning_form('America/Montreal', start, end, 8, 16.6)
+
+    def test_create_material_resource_and_assign_role(self):
+        """
+        Verify that material resources are created and assigned roles correctly.
+
+        Steps:
+            - Create a planning role
+            - Assign Officer: Manage all employees to the planning manager
+            - Create a material-type resource
+            - Confirm no roles are initially assigned
+            - Assign a role to the resource
+            - Check the assigned planning role and default role
+        """
+        toolkit_role = self.env['planning.role'].create({'name': 'Toolkit'})
+
+        self.test_user.group_ids += self.env.ref('hr.group_hr_user')
+
+        with Form(self.env['resource.resource'].with_user(self.test_user)) as resource_form:
+            resource_form.name = "Material Resource"
+            resource_form.resource_type = 'material'
+        material_resource = resource_form.save()
+
+        self.assertFalse(material_resource.role_ids, "Initially, no role should be assigned to the resource.")
+        self.assertFalse(material_resource.default_role_id, "Initially, no default role should be assigned.")
+
+        material_resource.role_ids = toolkit_role
+        self.assertEqual(material_resource.resource_type, 'material', "The resource type should be 'material'.")
+        self.assertEqual(material_resource.role_ids, toolkit_role, "The assigned planning role should match the expected role.")
+        self.assertEqual(material_resource.default_role_id, toolkit_role, "The default role should match the assigned planning role.")
