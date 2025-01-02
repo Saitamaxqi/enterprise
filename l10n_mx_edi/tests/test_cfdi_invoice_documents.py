@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from .common import TestMxEdiCommon
 from odoo import Command, fields
+from odoo.addons.mail.tools.discuss import Store
 from odoo.exceptions import UserError
 from odoo.tests import tagged
 
@@ -1936,3 +1937,40 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
             payment1_doc_values,
             sent_doc_values,
         ])
+
+    def test_access_invoice_form_with_second_user(self):
+        def create_invoice(**kwargs):
+            return self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                    })
+                ],
+                **kwargs
+            )
+
+        with self.mx_external_setup(self.frozen_today):
+            second_partner = self.env['res.partner'].create({
+                'name': 'second user',
+            })
+            second_user = self.env['res.users'].create({
+                'login': 'seconduser',
+                'partner_id': second_partner.id,
+                'groups_id': [self.env.ref('account.group_account_manager').id]
+            })
+
+            invoice = create_invoice()
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            invoice_for_global = create_invoice(l10n_mx_edi_cfdi_to_public=True)
+            with self.with_mocked_pac_sign_success():
+                invoice_for_global._l10n_mx_edi_cfdi_global_invoice_try_send()
+
+            self.env.invalidate_all()  # remove values from cache to check access rights
+            request_list = ['activities', 'attachments', 'followers', 'scheduledMessages', 'suggestedRecipients']
+            store = Store()
+            invoice.with_user(second_user)._thread_to_store(store, [], request_list=request_list)
+            invoice_for_global.with_user(second_user)._thread_to_store(store, [], request_list=request_list)
+            checksums = [attachment_data['checksum'] for attachment_data in store.data['ir.attachment'].values()]
+            self.assertTrue(invoice.l10n_mx_edi_cfdi_attachment_id.checksum in checksums)
+            self.assertTrue(invoice_for_global.l10n_mx_edi_cfdi_attachment_id.checksum in checksums)
