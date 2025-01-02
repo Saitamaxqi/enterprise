@@ -131,11 +131,12 @@ class AccountMoveLine(models.Model):
             })
 
         company_b = self.env['res.company']._find_company_from_partner(self.move_id.partner_id.id)
+        company_a_partner = self.company_id.partner_id
         company_b_default_distribution = self.env['account.analytic.distribution.model']._get_distribution({
             "product_id": self.product_id.id,
             "product_categ_id": self.product_id.categ_id.id,
-            "partner_id": self.partner_id.id,
-            "partner_category_id": self.partner_id.category_id.ids,
+            "partner_id": company_a_partner.id,
+            "partner_category_id": company_a_partner.category_id.ids,
             "account_prefix": self.account_id.code,
             "company_id": company_b.id,
         })

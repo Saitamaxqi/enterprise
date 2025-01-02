@@ -20,7 +20,7 @@ class TestInterCompanyInvoice(TestInterCompanyRulesCommon):
         cls.env.user.company_id = cls.company_a
         cls.env['account.chart.template'].try_loading('generic_coa', cls.company_a, install_demo=False)
 
-    def _configure_analytic(self, product, company=None):
+    def _configure_analytic(self, product=None, company=None, partner=None):
         """
         Configure Analytic Distribution Model for company_a based on Product A
         return: analytic account
@@ -37,8 +37,9 @@ class TestInterCompanyInvoice(TestInterCompanyRulesCommon):
         })
         self.env['account.analytic.distribution.model'].create({
             'analytic_distribution': {analytic_account.id: 100},
-            'product_id': product.id,
+            'product_id': product and product.id,
             'company_id': company and company.id,
+            'partner_id': partner and partner.id,
         })
         return analytic_account
 
@@ -221,3 +222,19 @@ class TestInterCompanyInvoice(TestInterCompanyRulesCommon):
         supplier_invoice = self.env['account.move'].with_user(self.res_users_company_b).search([('move_type', '=', 'in_invoice')], limit=1)
         self.assertFalse(supplier_invoice.invoice_line_ids.product_id, "No product should be set")
         self.assertEqual(supplier_invoice.invoice_line_ids.name, self.product_a.name)
+
+    def test_analytic_distribution_model_partner(self):
+        """
+        If company B defines Company A as a partner in its distribution model, the distribution should be retrieved
+        """
+        inter_company_analytic_account = self._configure_analytic(product=self.product_b)
+        analytic_account_company_b = self._configure_analytic(company=self.company_b, partner=self.company_a.partner_id)
+        self._create_post_invoice(product_id=self.product_a.id, analytic_distribution={inter_company_analytic_account.id: 100})
+
+        supplier_invoice = self.env['account.move'].with_user(self.res_users_company_b).search([('move_type', '=', 'in_invoice')], limit=1)
+
+        expected_distribution = {
+            str(inter_company_analytic_account.id): 100,
+            str(analytic_account_company_b.id): 100
+        }
+        self.assertEqual(supplier_invoice.invoice_line_ids.analytic_distribution, expected_distribution)
