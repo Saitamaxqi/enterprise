@@ -68,16 +68,14 @@ class TestRoSaftReportAssets(TestRoSaftReport):
         cls.truck_to_dispose = copy_and_validate_asset(cls.truck, 'Truck to dispose')
 
         # Positive revaluation
-        # Force the original move of the positive revaluation to have its date in 2023
-        with freeze_time('2023-12-31'):
-            cls.env['asset.modify'].create({
-                'name': 'New beautiful sticker :D',
-                'asset_id': cls.truck_to_increase.id,
-                'value_residual': cls.truck_to_increase._get_residual_value_at_date(fields.Date.to_date('2023-06-30')) + 80,
-                'salvage_value': 0,
-                'date': '2023-06-30',
-                "account_asset_counterpart_id": counterpart_account_id,
-            }).modify()
+        cls.env['asset.modify'].create({
+            'name': 'New beautiful sticker :D',
+            'asset_id': cls.truck_to_increase.id,
+            'value_residual': cls.truck_to_increase._get_residual_value_at_date(fields.Date.to_date('2023-06-30')) + 80,
+            'salvage_value': 0,
+            'date': '2023-06-30',
+            "account_asset_counterpart_id": counterpart_account_id,
+        }).modify()
 
         # Negative revaluation
         cls.env['asset.modify'].create({
@@ -102,7 +100,7 @@ class TestRoSaftReportAssets(TestRoSaftReport):
         # Sell
         closing_invoice = cls.env['account.move'].create({
             'move_type': 'out_invoice',
-            'invoice_line_ids': [Command.create({'price_unit': cls.truck.book_value + 100})]
+            'invoice_line_ids': [Command.create({'price_unit': 900})]  # amount at 2023-06-30 - perfect sale
         })
         cls.env['asset.modify'].create({
             'asset_id': cls.truck_to_sell.id,
