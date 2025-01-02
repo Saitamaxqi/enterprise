@@ -56,10 +56,6 @@ Schedule your teams and employees with shift.
         ],
         'web.assets_unit_tests': [
             'planning/static/tests/**/*',
-            ('remove', 'planning/static/tests/legacy/**/*'),  # to remove when all legacy tests are ported
-        ],
-        'web.qunit_suite_tests': [
-            'planning/static/tests/legacy/**/*',
         ],
         'web.assets_tests': [
             'planning/static/tests/tours/*',

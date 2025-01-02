@@ -23,12 +23,8 @@ slots planification and allocated hours.
         'web.assets_backend_lazy': [
             'planning_contract/static/src/**',
         ],
-        'web.qunit_suite_tests': [
-            'planning_contract/static/tests/*',
-        ],
         'web.assets_unit_tests': [
             'planning_contract/static/tests/**/*',
-            ("remove", 'planning_contract/static/tests/mock_server.js'),
         ],
     }
 }
