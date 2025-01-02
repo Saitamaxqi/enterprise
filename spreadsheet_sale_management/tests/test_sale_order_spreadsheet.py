@@ -33,9 +33,9 @@ class SaleOrderSpreadsheet(TransactionCase):
             "sale_order_template_id": quotation_template.id
         })
         sale_order.action_open_sale_order_spreadsheet()
-        spreadsheet = sale_order.spreadsheet_ids
+        spreadsheets = sale_order.spreadsheet_ids
         sale_order.action_open_sale_order_spreadsheet()
-        self.assertEqual(sale_order.spreadsheet_ids, spreadsheet, "it should be the same spreadsheet")
+        self.assertEqual(sale_order.spreadsheet_ids, spreadsheets, "it should be the same spreadsheet")
 
     def test_get_selector_spreadsheet_models(self):
         user = new_test_user(self.env, login="Raoul")
@@ -45,3 +45,19 @@ class SaleOrderSpreadsheet(TransactionCase):
         user.groups_id |= self.env.ref("sales_team.group_sale_salesman")
         result = self.env["spreadsheet.mixin"].with_user(user).get_selector_spreadsheet_models()
         self.assertTrue(any(r["model"] == "sale.order.spreadsheet" for r in result))
+
+    def test_sale_order_spreadsheet_deleted_with_related_order(self):
+        spreadsheet = self.env["sale.order.spreadsheet"].create({"name": "spreadsheet"})
+        quotation_template = self.env["sale.order.template"].create({
+            "name": "Test template",
+            "spreadsheet_template_id": spreadsheet.id
+        })
+        sale_order = self.env["sale.order"].create({
+            "partner_id": self.env.user.partner_id.id,
+            "sale_order_template_id": quotation_template.id
+        })
+        sale_order.action_open_sale_order_spreadsheet()
+        so_spreadsheet = sale_order.spreadsheet_ids
+        sale_order.unlink()
+        self.assertFalse(so_spreadsheet.exists(), "spreadsheet should be deleted with the related order")
+        self.assertTrue(spreadsheet.exists(), "Original spreadsheet should be unaltered")
