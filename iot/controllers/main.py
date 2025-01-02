@@ -38,8 +38,8 @@ class IoTController(http.Controller):
         if not box or (auto == 'True' and not box.drivers_auto_update):
             return ''
 
-
-        allowed_filename = f"_{box.version[0]}.py" # '_L.py' files for Linux and '_W.py' for Windows
+        # '_L.py' files for Linux and '_W.py' for Windows
+        incompatible_filename = "_L.py" if box.version[0] == 'W' else "_W.py"
         module_ids = request.env['ir.module.module'].sudo().search([('state', '=', 'installed')])
         fobj = io.BytesIO()
         with zipfile.ZipFile(fobj, 'w', zipfile.ZIP_DEFLATED) as zf:
@@ -48,11 +48,9 @@ class IoTController(http.Controller):
                 if module_path:
                     iot_handlers = pathlib.Path(module_path) / 'iot_handlers'
                     for handler in iot_handlers.glob('*/*'):
-                        if not handler.is_file() or handler.name.startswith(('.', '_')):
+                        if handler.name.startswith(('.', '_')) or handler.name.endswith(incompatible_filename):
                             continue
-                        if handler.name.endswith(allowed_filename):
-                            # In order to remove the absolute path
-                            zf.write(handler, handler.relative_to(iot_handlers))
+                        zf.write(handler, handler.relative_to(iot_handlers)) # In order to remove the absolute path
 
         etag = hashlib.sha256(fobj.getvalue()).hexdigest()
         # If the file has not been modified since the last request, return a 304 (Not Modified)
