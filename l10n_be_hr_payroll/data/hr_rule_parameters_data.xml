@@ -1717,6 +1717,18 @@
             <field name="rule_parameter_id" ref="rule_parameter_cp200_seizable_amount_percentages"/>
             <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
         </record>
+        <record id="rule_parameter_cp200_seizable_amount_percentages_2024" model="hr.rule.parameter.value">
+            <field name="parameter_value">
+[
+    (   0.00,      1341.00,   0.00),
+    (1341.01,      1440.00,   0.20),
+    (1440.01,      1589.00,   0.30),
+    (1589.01,      1738.00,   0.40),
+    (1738.01, 999999999.00,   1.00),
+]</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_seizable_amount_percentages"/>
+            <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
+        </record>
 
         <record id="rule_parameter_cp200_seizable_amount_child" model="hr.rule.parameter">
             <field name="name">CP200: Seizable Amount Child</field>
@@ -1727,6 +1739,11 @@
             <field name="parameter_value">71.00</field>
             <field name="rule_parameter_id" ref="rule_parameter_cp200_seizable_amount_child"/>
             <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_cp200_seizable_amount_child_2024" model="hr.rule.parameter.value">
+            <field name="parameter_value">83.00</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_seizable_amount_child"/>
+            <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
         </record>
 
         <record id="rule_parameter_cp200_special_social_cotisation_isolated" model="hr.rule.parameter">
