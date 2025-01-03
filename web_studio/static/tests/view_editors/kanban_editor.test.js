@@ -1,4 +1,4 @@
-import { expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame, Deferred } from "@odoo/hoot-mock";
 import { onMounted } from "@odoo/owl";
 import {
@@ -11,6 +11,8 @@ import {
     serverState,
 } from "@web/../tests/web_test_helpers";
 import { CodeEditor } from "@web/core/code_editor/code_editor";
+
+describe.current.tags("desktop");
 
 import {
     createMockViewResult,

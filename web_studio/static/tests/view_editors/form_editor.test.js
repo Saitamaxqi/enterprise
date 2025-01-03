@@ -1,4 +1,4 @@
-import { expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { queryAll, queryAllTexts, waitFor, waitForNone } from "@odoo/hoot-dom";
 import { Component, onMounted, xml } from "@odoo/owl";
@@ -31,6 +31,8 @@ import {
     handleDefaultStudioRoutes,
 } from "@web_studio/../tests/view_editor_tests_utils";
 import { formEditor } from "@web_studio/client_action/view_editor/editors/form/form_editor";
+
+describe.current.tags("desktop");
 
 const R_DATASET_ROUTE = /\/web\/dataset\/call_(button|kw)\/[\w.-]+\/(?<step>\w+)/;
 const R_WEBCLIENT_ROUTE = /(?<step>\/web\/webclient\/\w+)/;
@@ -103,7 +105,6 @@ test("empty form editor", async () => {
     expect(".o_web_studio_form_view_editor .o_web_studio_hook").toHaveCount(0);
 });
 
-test.tags("desktop");
 test("Form editor view buttons can be set to invisible", async () => {
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
@@ -144,7 +145,6 @@ test("Form editor view buttons can be set to invisible", async () => {
     expect.verifySteps(["edit_view"]);
 });
 
-test.tags("desktop");
 test("Form editor view buttons label and class are editable from the sidebar", async () => {
     let count = 0;
 
@@ -634,7 +634,6 @@ test("field selection when editing a suboption", async () => {
     expect(".o_web_studio_property_suboption .o_select_menu").toHaveCount(1);
 });
 
-test.tags("desktop");
 test("'class' attribute is editable in the sidebar with a tooltip", async () => {
     const arch = `<form>
         <header>
@@ -674,7 +673,6 @@ test("'class' attribute is editable in the sidebar with a tooltip", async () => 
     );
 });
 
-test.tags("desktop");
 test("the name of the selected element is displayed in the sidebar", async () => {
     await mountViewEditor({
         type: "form",
@@ -910,7 +908,6 @@ test("disable creation(no_create options) in many2many_avatar_user and many2many
     expect.verifySteps(["edit_view"]);
 });
 
-test.tags("desktop");
 test("edit one2many form view (2 level) and check chatter allowed", async () => {
     Product._views = { "list,2": /*xml*/ `<list><field name='display_name'/></list>` };
     Partner._views = { "list,false": /*xml*/ `<list><field name='display_name'/></list>` };
@@ -1026,7 +1023,6 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
     expect(".o_web_studio_new_button_dialog .o-autocomplete--input").toHaveValue("Partner");
 });
 
-test.tags("desktop");
 test("edit one2many list view that uses parent key [REQUIRE FOCUS]", async () => {
     Product._views = { "list,2": /*xml*/ `<list><field name='display_name'/></list>` };
     Coucou._views = {
@@ -1104,7 +1100,6 @@ test("edit one2many list view that uses parent key [REQUIRE FOCUS]", async () =>
     expect.verifySteps(["edit_view"]);
 });
 
-test.tags("desktop");
 test("move a field in one2many list", async () => {
     Coucou._views = {
         "form,1": /*xml*/ `
@@ -1196,7 +1191,6 @@ test("move a field in one2many list", async () => {
     expect.verifySteps(["edit_view"]);
 });
 
-test.tags("desktop");
 test("One2Many list editor column_invisible in attrs ", async () => {
     Coucou._views = {
         "form,1": /*xml*/ `
@@ -1247,7 +1241,6 @@ test("One2Many list editor column_invisible in attrs ", async () => {
     expect.verifySteps(["edit_view"]);
 });
 
-test.tags("desktop");
 test("One2Many form datapoint doesn't contain the parent datapoint", async () => {
     /*
      * OPW-2125214

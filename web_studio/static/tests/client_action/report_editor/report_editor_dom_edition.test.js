@@ -1,10 +1,12 @@
 import { setupEditor } from "@html_editor/../tests/_helpers/editor";
 import { getContent } from "@html_editor/../tests/_helpers/selection";
-import { before, expect, test } from "@odoo/hoot";
+import { before, describe, expect, test } from "@odoo/hoot";
 import { hover, queryAll, queryFirst } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { contains } from "@web/../tests/web_test_helpers";
 import { registry } from "@web/core/registry";
+
+describe.current.tags("desktop");
 
 before(() => {
     const services = registry.category("services");
