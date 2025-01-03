@@ -1368,6 +1368,24 @@
             <field name="rule_parameter_id" ref="rule_parameter_holiday_pay_exoneration"/>
             <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
         </record>
+        <record id="rule_parameter_holiday_pay_exoneration_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">{
+    1: 18400.00,
+    2: 21930.00,
+    3: 28270.00,
+    4: 35330.00,
+    5: 42390.00,
+    6: 49450.00,
+    7: 56510.00,
+    8: 63570.00,
+    9: 70630.00,
+    10: 77690.00,
+    11: 84750.00,
+    12: 91810.00,
+}</field>
+            <field name="rule_parameter_id" ref="rule_parameter_holiday_pay_exoneration"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
 
         <!-- Holiday Pay - PP rate reduction -->
         <record id="rule_parameter_holiday_pay_rate_reduction" model="hr.rule.parameter">
@@ -1407,6 +1425,17 @@
 }</field>
             <field name="rule_parameter_id" ref="rule_parameter_holiday_pay_rate_reduction"/>
             <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_holiday_pay_rate_reduction_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">{
+    1: (7.5, 28245.00),
+    2: (20.0, 28245.00),
+    3: (35.0, 31070.00),
+    4: (55.0, 36720.00),
+    5: (75.0, 39550.00),
+}</field>
+            <field name="rule_parameter_id" ref="rule_parameter_holiday_pay_rate_reduction"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
         </record>
 
         <!-- ONSS Restructuring -->
