@@ -14,5 +14,6 @@ class AccountFiscalPosition(models.Model):
     def _create_draft_closing_move_for_foreign_vat(self):
         self.ensure_one()
         existing_draft_closings = self.env['account.move'].search([('tax_closing_report_id', '!=', False), ('state', '=', 'draft')])
-        for closing_date in set(existing_draft_closings.mapped('date')):
-            self.company_id._get_and_update_tax_closing_moves(closing_date, self)
+        for closing_date, entries in existing_draft_closings.grouped('date').items():
+            for entry in entries:
+                self.company_id._get_and_update_tax_closing_moves(closing_date, entry.tax_closing_report_id, fiscal_positions=self)
