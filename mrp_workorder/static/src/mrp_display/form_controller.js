@@ -40,8 +40,8 @@ export class ShopFloorFormController extends FormController {
 
     async nextPressed() {
         await this.saveButtonClicked({ closable: false });
+        await this.orm.call("stock.move", "action_pass", [this.props.resId]);
         if (this.props.qualityCheckDone) {
-            await this.orm.call("stock.move", "action_pass", [this.props.resId]);
             await this.props.qualityCheckDone();
         }
         await this.actionService.doAction({ type: "ir.actions.act_window_close" });
