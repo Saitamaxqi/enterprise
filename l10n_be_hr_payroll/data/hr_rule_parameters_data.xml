@@ -1459,6 +1459,11 @@
             <field name="rule_parameter_id" ref="rule_parameter_onss_restructuring_before_30"/>
             <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
         </record>
+        <record id="rule_parameter_onss_restructuring_before_30_2024" model="hr.rule.parameter.value">
+            <field name="parameter_value">3671.21</field>
+            <field name="rule_parameter_id" ref="rule_parameter_onss_restructuring_before_30"/>
+            <field name="date_from" eval="datetime(2024, 7, 1).date()"/>
+        </record>
 
         <record id="rule_parameter_onss_restructuring_after_30" model="hr.rule.parameter">
             <field name="name">ONSS Reduction for Restructuring - after 30 years old</field>
@@ -1469,6 +1474,11 @@
             <field name="parameter_value">4504.93</field>
             <field name="rule_parameter_id" ref="rule_parameter_onss_restructuring_after_30"/>
             <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_onss_restructuring_after_30_2024" model="hr.rule.parameter.value">
+            <field name="parameter_value">5383.82</field>
+            <field name="rule_parameter_id" ref="rule_parameter_onss_restructuring_after_30"/>
+            <field name="date_from" eval="datetime(2024, 7, 1).date()"/>
         </record>
 
         <record id="rule_parameter_onss_restructuring_amount" model="hr.rule.parameter">
