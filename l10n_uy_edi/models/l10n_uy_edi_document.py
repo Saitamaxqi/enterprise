@@ -234,7 +234,7 @@ class L10n_Uy_EdiDocument(models.Model):
         response = result.get("response")
 
         if response is not None:
-            res.update({"file_content": response.findtext(".//{*}ObtenerPdfResult").encode()})
+            res.update({"file_content": response.findtext(".//{*}" + report_params + "Result").encode()})
 
         if result.get("errors"):
             res.update({"errors": result.get("errors")})
