@@ -43,12 +43,17 @@ class UrbanPiperClient:
         try:
             # Make the API request
             response = self.session.request(method, access_url, json=data, headers=headers, timeout=timeout)
+            # raise an error if the response is not successful
+            response.raise_for_status()
             # Parse the response as JSON
             response_json = response.json()
             return response_json
         except requests.exceptions.ConnectionError as error:
             _logger.warning('Connection Error: %r with the given URL %r', error, access_url)
             return {'errors': {'timeout': 'Cannot reach the server. Please try again later.'}}
+        except requests.exceptions.HTTPError as error:
+            _logger.warning('HTTPError: %r', error)
+            return {'errors': {'HTTPError': str(error)}}
         except json.decoder.JSONDecodeError as error:
             _logger.warning('JSONDecodeError: %r', error)
             return {'errors': {'JSONDecodeError': str(error)}}

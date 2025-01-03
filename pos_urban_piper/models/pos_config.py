@@ -162,7 +162,7 @@ class PosConfig(models.Model):
         """
         self.ensure_one()
         fiscal_position = self.urbanpiper_fiscal_position_id or self.env.ref('pos_urban_piper.pos_account_fiscal_position_urbanpiper', False)
-        if fiscal_position.sudo().company_id.id != self.company_id.id:
+        if fiscal_position and fiscal_position.sudo().company_id.id != self.company_id.id:
             fiscal_position = self.env['account.fiscal.position'].create({
                 'name': 'UrbanPiper'
             })
@@ -333,23 +333,24 @@ class PosConfig(models.Model):
         """
         Handle response from urban piper
         """
-        if response_json.get('message'):
-            msg_type = ''
+        title, msg_type, message = _('Urban Piper'), 'danger', ''
+        if response_json.get('errors'):
+            title = list(response_json.get('errors').keys())[0]
+            message = list(response_json.get('errors').values())[0]
+        elif response_json.get('message'):
+            message = response_json.get('message')
             if response_json.get('status') == 'success':
                 msg_type = 'success'
+                message = message.split('.')[0]
             elif response_json.get('status') == 'error':
                 if raise_exception:
                     raise ValidationError(response_json['message'])
-                else:
-                    msg_type = 'danger'
-            message = response_json['message']
-            if msg_type == 'success':
-                message = message.split('.')[0]
+        if message:
             return {
                 'type': 'ir.actions.client',
                 'tag': 'display_notification',
                 'params': {
-                    'title': _('Urban Piper'),
+                    'title': title,
                     'message': message,
                     'type': msg_type,
                     'sticky': False,
