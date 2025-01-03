@@ -222,7 +222,7 @@ export class MrpDisplay extends Component {
                     }
                 }
             }
-            // 2. Check if there is a manual consumption move with this product (WO/MO)
+            // 2. Check if there is a move with this product (WO/MO)
             for (const move of record.data.move_raw_ids.records) {
                 if (
                     move.data.product_barcode === barcode &&
@@ -233,19 +233,7 @@ export class MrpDisplay extends Component {
                 }
             }
             if (this.state.activeResModel === "mrp.workorder") {
-                // 3. Check if there is a manual consumption move on the MO but not on the WO with this product
-                for (const move of record._parentRecord.data.move_raw_ids.records) {
-                    if (
-                        move.data.product_barcode === barcode &&
-                        move.data.manual_consumption &&
-                        !move.data.scrapped &&
-                        !move.data.operation_id &&
-                        move.data.workorder_id[0] !== record.data.id
-                    ) {
-                        return move.component.onClick();
-                    }
-                }
-                // 4. Check if there is a byproduct move on this WO or on the MO but not any WO with this product
+                // 3. Check if there is a byproduct move on this WO or on the MO but not any WO with this product
                 for (const move of record._parentRecord.data.move_byproduct_ids.records) {
                     if (
                         move.data.product_barcode === barcode &&
@@ -256,7 +244,7 @@ export class MrpDisplay extends Component {
                     }
                 }
             } else {
-                // 5. Check if there is a byproduct move with this product (MO only)
+                // 4. Check if there is a byproduct move with this product (MO only)
                 for (const move of record.data.move_byproduct_ids.records) {
                     if (move.data.product_barcode === barcode) {
                         return move.component.onClick();
@@ -561,7 +549,6 @@ export class MrpDisplay extends Component {
                                 product_id: [0, "[FURN_7023] Wood Panel"],
                                 product_uom_qty: 8,
                                 product_uom: [1, "Units"],
-                                manual_consumption: true,
                                 move_line_ids: {
                                     records: [],
                                 },

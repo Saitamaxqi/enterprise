@@ -24,7 +24,6 @@ export class MrpDisplayAction extends Component {
                 "company_id",
                 "employee_ids",
                 "lot_producing_id",
-                "manual_consumption",
                 "move_byproduct_ids",
                 "move_raw_ids",
                 "move_finished_ids",
@@ -73,7 +72,6 @@ export class MrpDisplayAction extends Component {
             ],
             "stock.move": [
                 "id",
-                "manual_consumption",
                 "operation_id",
                 "product_id",
                 "product_uom",
