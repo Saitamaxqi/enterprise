@@ -230,6 +230,10 @@ REPORT_CONFIG = {
         'asset_line_ref': 'l10n_mn_reports.report_line_balanceta',
         'liability_line_ref': 'l10n_mn_reports.report_line_balancele',
     },
+    'l10n_mr_reports.l10n_mr_balance_sheet': {
+        'asset_line_ref': 'l10n_mr_reports.account_financial_report_mr_active_title',
+        'liability_line_ref': 'l10n_mr_reports.account_financial_report_mr_passive_title',
+    },
     'l10n_mt_reports.l10n_mt_balance_sheet': {
         'asset_line_ref': 'l10n_mt_reports.account_financial_report_mt_active_title',
         'liability_line_ref': 'l10n_mt_reports.account_financial_report_mt_passif_title',

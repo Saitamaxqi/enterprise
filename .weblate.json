@@ -3029,6 +3029,12 @@
                 "language_regex": "^(mn)$"
             },
             {
+                "name": "l10n_mr_reports",
+                "filemask": "l10n_mr_reports/i18n/*.po",
+                "new_base": "l10n_mr_reports/i18n/l10n_mr_reports.pot",
+                "language_regex": "^(fr)$"
+            },
+            {
                 "name": "l10n_mu_reports",
                 "filemask": "l10n_mu_reports/i18n/*.po",
                 "new_base": "l10n_mu_reports/i18n/l10n_mu_reports.pot",
