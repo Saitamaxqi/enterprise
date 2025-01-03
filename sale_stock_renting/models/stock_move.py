@@ -25,6 +25,12 @@ class StockMove(models.Model):
             domain.insert(index_to_insert, '|')
         return domain
 
+    def _prepare_procurement_values(self):
+        res = super()._prepare_procurement_values()
+        if self.sale_line_id._are_rental_pickings_enabled() and self.sale_line_id.is_rental and self.sale_line_id.is_mto:
+            res['route_ids'] = self.rule_id.route_id
+        return res
+
     @api.model
     def _prepare_merge_moves_distinct_fields(self):
         distinct_fields = super()._prepare_merge_moves_distinct_fields()

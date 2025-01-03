@@ -361,16 +361,13 @@ class TestRentalWizard(TestRentalCommon):
         )
 
     def test_lot_accuracy_in_schedule(self):
-        """ Schedule should only display lots that are associated with
-        rental order lines
-        """
+        """ Schedule should only display lots that are associated with rental order lines """
+        self.env.user.groups_id = [Command.link(self.env.ref('sale_stock_renting.group_rental_stock_picking').id)]
         self.env['res.company'].create_missing_rental_location()
         if self.env['ir.module.module'].search([('name', '=', 'purchase_stock'), ('state', '=', 'installed')], limit=1):
             self.env.user._get_default_warehouse_id().buy_to_resupply = False
 
         rental_schedule = self.env['sale.rental.schedule']
-        rental_transfers_group = self.env.ref('sale_stock_renting.group_rental_stock_picking')
-        self.env.user.groups_id = [(4, rental_transfers_group.id)]
         so = self.lots_rental_order
         self.order_line_id2.product_uom_qty = 1.0
         so.order_line = [(6, 0, self.order_line_id2.id)]
@@ -425,6 +422,25 @@ class TestRentalPicking(TestRentalCommon):
         super().setUpClass()
 
         cls.env['res.config.settings'].create({'group_rental_stock_picking': True}).execute()
+
+    def test_disable_reenable(self):
+        """ When disabling rental picking then re-enabling it, make sure that
+        the route AND the rule(s) are unarchived. """
+        warehouse_rental_route = self.env.ref('sale_stock_renting.route_rental')
+        self.assertTrue(warehouse_rental_route.active)
+        self.assertTrue(warehouse_rental_route.rule_ids)
+        # disable setting
+        self.env.user.groups_id -= self.env.ref('sale_stock_renting.group_rental_stock_picking')
+        settings = self.env['res.config.settings'].with_user(self.env.user).create({})
+        settings.group_rental_stock_picking = False
+        settings.set_values()
+        self.assertFalse(warehouse_rental_route.active)
+        self.assertFalse(warehouse_rental_route.rule_ids)
+        # re-enable setting
+        settings.group_rental_stock_picking = True
+        settings.with_context(active_test=False).set_values()
+        self.assertTrue(warehouse_rental_route.active)
+        self.assertTrue(warehouse_rental_route.rule_ids)
 
     def test_flow_1(self):
         rental_order_1 = self.sale_order_id.copy()
@@ -946,3 +962,66 @@ class TestRentalPicking(TestRentalCommon):
             and the second line contains a rental product.
         """
         self._test_rental_order_with_mixed_lines(rental_first=False)
+
+    def test_rental_purchase_mto(self):
+        """ Test that renting an MTO product without stock correctly creates
+        a PO and that the delivery picking effectively depends on it. """
+        if 'purchase.order' not in self.env:
+            self.skipTest('`purchase` is not installed')
+        mto_route = self.env.ref('stock.route_warehouse0_mto')
+        mto_route.active = True
+        incoming_route = self.env.ref('purchase_stock.route_warehouse0_buy')
+        seller = self.env['res.partner'].create({'name': 'Marty McScam'})
+        mto_product = self.env['product.product'].create({
+            'name': 'MTO Product',
+            'type': 'consu',
+            'is_storable': True,
+            'rent_ok': True,
+            'route_ids': [Command.set([mto_route.id, incoming_route.id])],
+            'seller_ids': [Command.create({'partner_id': seller.id})]
+        })
+
+        rental_order = self.sale_order_id.copy()
+        rental_order.order_line.write({'product_id': mto_product.id,'product_uom_qty': 3, 'is_rental': True, 'is_mto': True})
+        rental_order.rental_start_date = self.rental_start_date
+        rental_order.rental_return_date = self.rental_return_date
+        rental_order.action_confirm()
+        self.assertEqual(len(rental_order.picking_ids), 2)
+        purchase = rental_order._get_purchase_orders()
+        self.assertRecordValues(purchase, [{'state': 'draft', 'partner_id': seller.id}])
+        self.assertRecordValues(purchase.order_line, [{
+            'product_id': mto_product.id,
+            'move_dest_ids': rental_order.picking_ids.move_ids[0].ids
+        }])
+
+    def test_rental_manufacture_mto(self):
+        """ Test that renting an MTO product without stock correctly creates
+        a MO and that the delivery picking effectively depends on it. """
+        if 'mrp.production' not in self.env:
+            self.skipTest('`mrp´ is not installed')
+        mto_route = self.env.ref('stock.route_warehouse0_mto')
+        mto_route.active = True
+        incoming_route = self.env.ref('mrp.route_warehouse0_manufacture')
+        mto_product = self.env['product.product'].create({
+            'name': 'MTO Product',
+            'type': 'consu',
+            'is_storable': True,
+            'rent_ok': True,
+            'route_ids': [Command.set([mto_route.id, incoming_route.id])],
+        })
+        bom = self.env['mrp.bom'].create({'product_tmpl_id': mto_product.product_tmpl_id.id, 'product_id': mto_product.id})
+
+        rental_order = self.sale_order_id.copy()
+        rental_order.order_line.write({'product_id': mto_product.id,'product_uom_qty': 3, 'is_rental': True, 'is_mto': True})
+        rental_order.rental_start_date = self.rental_start_date
+        rental_order.rental_return_date = self.rental_return_date
+        rental_order.action_confirm()
+        self.assertEqual(len(rental_order.picking_ids), 2)
+        production = rental_order.mrp_production_ids
+        self.assertRecordValues(production, [{
+            'state': 'draft',
+            'bom_id': bom.id,
+            'product_id': mto_product.id,
+            'product_uom_qty': rental_order.order_line.product_uom_qty,
+            'move_dest_ids': rental_order.picking_ids.move_ids[0].ids
+        }])

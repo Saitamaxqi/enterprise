@@ -14,13 +14,13 @@ class StockWarehouse(models.Model):
 
     def _create_or_update_route(self):
         warehouse_rental_route = self.env.ref('sale_stock_renting.route_rental')
-        if warehouse_rental_route.active and not self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'):
-            warehouse_rental_route.rule_ids.active = False
-            warehouse_rental_route.active = False
+        if not self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'):
+            if warehouse_rental_route.active:
+                warehouse_rental_route.rule_ids.active = False
+                warehouse_rental_route.active = False
             return super()._create_or_update_route()
-
         warehouse_rental_route.active = True
-        rental_rules = self.env['stock.rule'].search([
+        rental_rules = self.env['stock.rule'].with_context(active_test=False).search([
             ('route_id', '=', warehouse_rental_route.id),
             ('warehouse_id', 'in', self.ids)
         ])
@@ -30,6 +30,7 @@ class StockWarehouse(models.Model):
             source_location = warehouse.company_id.rental_loc_id
             destination_location = warehouse.lot_stock_id
             if rule:
+                rule.active = True
                 continue
             self.env['stock.rule'].create({
                 'name': warehouse._format_rulename(source_location, destination_location, f'rental-{warehouse.code}-'),
