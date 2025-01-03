@@ -1,13 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import base64
-from datetime import datetime
 
-from freezegun import freeze_time
-
-from odoo import Command
+from odoo import Command, fields
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 from odoo.tests import tagged
+from odoo.tools import format_date
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -134,9 +132,6 @@ class TestNZEFT(AccountTestInvoicingCommon):
             'date': '2024-05-25',
         })
 
-        cls.fakenow = datetime(2024, 5, 23)
-        cls.startClassPatcher(freeze_time(cls.fakenow))
-
     def test_export_anz(self):
         """ Test exporting the file for ANZ """
         # 1 - Inbound batch
@@ -144,8 +139,10 @@ class TestNZEFT(AccountTestInvoicingCommon):
             'l10n_nz_file_format': 'anz',
             'l10n_nz_dishonour_account_id': self.company_data['company'].partner_id.bank_ids[0],  # here because only ANZ requires that.
         })
+        # To be exact it's the date at which the file is generated, so today.
+        batch_creation_date = format_date(self.env, fields.Date.context_today(self.inbound_batch), date_format='YYYYMMdd')
         self._test_file('inbound', [
-            '1,D,20240525,,20240523,02134691345768042,9965423,S,011236544532687012,BATCH/IN/202,111/222,,Payments,,,',
+            f'1,D,20240525,,{batch_creation_date},02134691345768042,9965423,S,011236544532687012,BATCH/IN/202,111/222,,Payments,,,',
             '2,01126451349786054,00,25000,partner_a,#123#,#234#,for noodles,#345#,#456#,for noodles,,,',
             '2,01126451349786054,00,15000,partner_a,#123#,#234#,ent for boat,#345#,#456#,ent for boat,,,',
             '3,40000,,2,25282699572,,,',
@@ -157,7 +154,7 @@ class TestNZEFT(AccountTestInvoicingCommon):
             'l10n_nz_dishonour_account_id': self.company_data['company'].partner_id.bank_ids[0],  # here because only ANZ requires that.
         })
         self._test_file('outbound', [
-            '1,C,20240525,,20240523,02134691345768042,,S,011236544532687012,BATCH/OUT/20,333/666,,Purchases,,,',
+            f'1,C,20240525,,{batch_creation_date},02134691345768042,,S,011236544532687012,BATCH/OUT/20,333/666,,Purchases,,,',
             '2,01126451349786054,50,25000,partner_a,#345#,#456#,hase of cups,#123#,#234#,hase of cups,,,',
             '2,05987566794815038,50,15000,partner_b,#345#,#456#,ater bottles,#123#,#234#,ater bottles,,,',
             '3,,40000,2,11398144601,,,',
@@ -167,8 +164,9 @@ class TestNZEFT(AccountTestInvoicingCommon):
         """ Test exporting the file for BNZ """
         # 1 - Inbound batch
         self.inbound_batch.l10n_nz_file_format = 'bnz'
+        batch_creation_date = format_date(self.env, fields.Date.context_today(self.inbound_batch), date_format='YYMMdd')
         self._test_file('inbound', [
-            '1,9965423,,,02134691345768042,6,240525,240523,',
+            f'1,9965423,,,02134691345768042,6,240525,{batch_creation_date},',
             '2,01126451349786054,00,25000,partner_a,for noodles,#234#,,#123#,company_1_data,#456#,for noodles,#345#',
             '2,01126451349786054,00,15000,partner_a,ent for boat,#234#,,#123#,company_1_data,#456#,ent for boat,#345#',
             '3,40000,2,25282699572',
@@ -176,7 +174,7 @@ class TestNZEFT(AccountTestInvoicingCommon):
         # 2 - Outbound batch
         self.outbound_batch.l10n_nz_file_format = 'bnz'
         self._test_file('outbound', [
-            '1,,,,02134691345768042,7,240525,240523,',
+            f'1,,,,02134691345768042,7,240525,{batch_creation_date},',
             '2,01126451349786054,50,25000,partner_a,hase of cups,#456#,,#345#,company_1_data,#234#,hase of cups,#123#',
             '2,05987566794815038,50,15000,partner_b,ater bottles,#456#,,#345#,company_1_data,#234#,ater bottles,#123#',
             '3,40000,2,11398144601',
@@ -194,8 +192,8 @@ class TestNZEFT(AccountTestInvoicingCommon):
         # 2 - Outbound batch
         self.outbound_batch.l10n_nz_file_format = 'asb'
         self._test_file('outbound', [
-            'BATCH/OUT/2024/0001,2024/05/25,02134691345768042,250.00,#345#,#456#,hase of cups,01126451349786054,#123#,#234#,hase of cups,partner_a',
-            'BATCH/OUT/2024/0001,2024/05/25,02134691345768042,150.00,#345#,#456#,ater bottles,05987566794815038,#123#,#234#,ater bottles,partner_b',
+            f'{self.outbound_batch.name},2024/05/25,02134691345768042,250.00,#345#,#456#,hase of cups,01126451349786054,#123#,#234#,hase of cups,partner_a',
+            f'{self.outbound_batch.name},2024/05/25,02134691345768042,150.00,#345#,#456#,ater bottles,05987566794815038,#123#,#234#,ater bottles,partner_b',
         ])
 
     def test_export_westpac(self):
