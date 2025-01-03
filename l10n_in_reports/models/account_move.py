@@ -19,6 +19,7 @@ class AccountMove(models.Model):
 
     @api.depends("country_code", "l10n_in_state_id", "company_id")
     def _compute_l10n_in_transaction_type(self):
+        self.fetch(['country_code', 'l10n_in_state_id',"company_id"])
         for move in self:
             if move.country_code == "IN":
                 if move.l10n_in_state_id and move.l10n_in_state_id == move.company_id.state_id:
