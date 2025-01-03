@@ -76,3 +76,21 @@ msgstr ""
 #: code:addons/website_sale_subscription/models/sale_order.py:0
 msgid "You cannot mix different subscription plans in the same order."
 msgstr ""
+
+#. module: website_sale_subscription
+#. odoo-python
+#: code:addons/website_sale_subscription/models/product_template.py:0
+msgid "month"
+msgstr ""
+
+#. module: website_sale_subscription
+#. odoo-python
+#: code:addons/website_sale_subscription/models/product_template.py:0
+msgid "week"
+msgstr ""
+
+#. module: website_sale_subscription
+#. odoo-python
+#: code:addons/website_sale_subscription/models/product_template.py:0
+msgid "year"
+msgstr ""

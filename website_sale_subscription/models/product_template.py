@@ -100,12 +100,16 @@ class ProductTemplate(models.Model):
         if pricings:
             plan_ids = self.env['sale.subscription.plan'].browse(pricing['plan_id'] for pricing in pricings)
             to_year = {'year': 1, 'month': 12, 'week': 52}
+            translation_mapping = {'year': _('year'),
+                                   'month': _('month'),
+                                   'week': _('week'),
+            }
             minimum_period = min(plan_ids.mapped('billing_period_unit'), key=lambda x: 1/to_year[x])
             for pricing in pricings:
                 plan_id = plan_ids.browse(pricing['plan_id'])
                 price = pricing['price_value'] / plan_id.billing_period_value * to_year[plan_id.billing_period_unit] \
                         / to_year[minimum_period]
-                pricing['to_minimum_billing_period'] = f'{format_amount(self.env, amount=price, currency=currency)} / {minimum_period}'
+                pricing['to_minimum_billing_period'] = f'{format_amount(self.env, amount=price, currency=currency)} / {translation_mapping.get(minimum_period, minimum_period)}'
 
         if not pricings:
             res.update({
