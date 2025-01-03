@@ -782,3 +782,25 @@ Content-Transfer-Encoding: quoted-printable
         self.assertEqual(ticket_copy.first_response_hours, 0.0)
         self.assertEqual(ticket_copy.avg_response_hours, 0.0)
         self.assertEqual(ticket_copy.total_response_hours, 0.0)
+
+    def test_copy_ticket_without_archive_user(self):
+        tickets = self.env['helpdesk.ticket'].create([
+            {
+                'name': "Ticket A",
+                'team_id': self.test_team.id,
+                'user_id': self.helpdesk_user.id,
+            }, {
+                'name': "Ticket B",
+                'team_id': self.test_team.id,
+                'user_id': self.helpdesk_manager.id,
+            },
+        ])
+        self.helpdesk_user.action_archive()
+        ticket_a, ticket_b = tickets.copy()
+        self.assertFalse(ticket_a.user_id, "Archived user should not be assigned to the new ticket.")
+        self.assertEqual(ticket_b.user_id, self.helpdesk_manager)
+
+        # exception if the user gives the archived user in the default parameter
+        ticket2_a, ticket2_b = tickets.copy({'user_id': self.helpdesk_user.id})
+        self.assertEqual(ticket2_a.user_id, self.helpdesk_user)
+        self.assertEqual(ticket2_b.user_id, self.helpdesk_user)
