@@ -4,6 +4,6 @@ import { patch } from "@web/core/utils/patch";
 patch(PosOrder.prototype, {
     setup() {
         super.setup(...arguments);
-        this.uiState.noteHistory = {};
+        this.uiState.noteHistory = this.uiState?.noteHistory || {};
     },
 });

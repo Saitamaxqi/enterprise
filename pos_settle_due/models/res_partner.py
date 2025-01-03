@@ -6,7 +6,8 @@ from odoo import fields, models, api
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    def get_total_due(self, pos_currency):
+    def get_total_due(self, config_id):
+        config = self.env['pos.config'].browse(config_id)
         pos_payments = self.env['pos.order'].search([
             ('partner_id', '=', self.id), ('state', '=', 'paid'),
             ('session_id.state', '!=', 'closed')]).mapped('payment_ids')
@@ -15,10 +16,14 @@ class ResPartner(models.Model):
 
         total_due = self.parent_id.total_due if self.parent_id else self.total_due
         total_due += total_settled
-        if self.env.company.currency_id.id != pos_currency:
-            pos_currency = self.env['res.currency'].browse(pos_currency)
-            return self.env.company.currency_id._convert(total_due, pos_currency, self.env.company, fields.Date.today())
-        return total_due
+        if self.env.company.currency_id.id != config.currency_id.id:
+            pos_currency = config.currency_id
+            total_due = self.env.company.currency_id._convert(total_due, pos_currency, self.env.company, fields.Date.today())
+        partner = self.read(self._load_pos_data_fields(config_id), load=False)[0]
+        partner['total_due'] = total_due
+        return {
+            'res.partner': [partner],
+        }
 
     @api.model
     def _load_pos_data_fields(self, config_id):

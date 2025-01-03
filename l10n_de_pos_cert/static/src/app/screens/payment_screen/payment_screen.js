@@ -71,6 +71,9 @@ patch(PaymentScreen.prototype, {
                     }
                 }
             }
+            if (this.currentOrder.isTransactionFinished()) {
+                await super._finalizeValidation(...arguments);
+            }
         } else {
             await super._finalizeValidation(...arguments);
         }
