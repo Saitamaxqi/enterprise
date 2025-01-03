@@ -37,17 +37,14 @@ class HrPayslip(models.Model):
     def _action_create_account_move(self):
         precision = self.env['decimal.precision'].precision_get('Payroll')
 
-        # Add payslip without run
-        payslips_to_post = self.filtered(lambda slip: not slip.payslip_run_id)
-
-        # Adding pay slips from a batch and deleting pay slips with a batch that is not ready for validation.
-        payslip_runs = (self - payslips_to_post).payslip_run_id
-        for run in payslip_runs:
+        all_payslips = self
+        # Adding pay slips from a batch.
+        for run in self.payslip_run_id:
             if run._are_payslips_ready():
-                payslips_to_post |= run.slip_ids
+                all_payslips |= run.slip_ids
 
         # A payslip need to have a done state and not an accounting move.
-        payslips_to_post = payslips_to_post.filtered(lambda slip: slip.state == 'done' and not slip.move_id)
+        payslips_to_post = all_payslips.filtered(lambda slip: slip.state == 'done' and not slip.move_id)
 
         # Check that a journal exists on all the structures
         if any(not payslip.struct_id for payslip in payslips_to_post):
