@@ -32,7 +32,7 @@ class SpreadsheetShareRoute(ShareRoute):
                 "session_info": request.env["ir.http"].session_info(),
                 "props": {
                     "dataUrl": f"/documents/spreadsheet/{document.access_token}",
-                    "downloadExcelUrl": f"/documents/content/{document.access_token}",
+                    "downloadExcelUrl": document.excel_export and f"/documents/content/{document.access_token}",
                 },
             },
         )
