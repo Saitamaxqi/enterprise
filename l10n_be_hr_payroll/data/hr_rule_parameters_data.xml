@@ -1972,6 +1972,11 @@
             <field name="rule_parameter_id" ref="rule_parameter_cp200_cycle_reimbursement_per_km"/>
             <field name="date_from" eval="datetime(2022, 7, 1).date()"/>
         </record>
+        <record id="rule_parameter_cp200_cycle_reimbursement_per_km_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">0.36</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_cycle_reimbursement_per_km"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
 
         <record id="rule_parameter_cp200_cycle_reimbursement_max" model="hr.rule.parameter">
             <field name="name">CP200: Cycle Reimbursement Max</field>
