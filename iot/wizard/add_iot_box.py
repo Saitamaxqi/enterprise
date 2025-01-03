@@ -34,6 +34,7 @@ class AddIotBox(models.TransientModel):
 
     token = fields.Char(string='Token', default=_default_token, store=False)
     pairing_code = fields.Char(string='Pairing Code')
+    use_token = fields.Boolean(string='Use other method', default=False)
 
     def box_pairing(self):
         if not self.pairing_code:
@@ -76,6 +77,21 @@ class AddIotBox(models.TransientModel):
                     }
                 },
             }
+
+    def toggle_connection_method(self):
+        """Toggle the connection method between token and pairing code
+
+        :return: reloads the modal with the new connection method
+        """
+        self.use_token = not self.use_token
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': self._name,
+            'name': _('Connect my IoT Box'),
+            'view_mode': 'form',
+            'res_id': self.id,
+            'target': 'new',
+        }
 
     # TODO: Dead code to remove
     # Since https://github.com/odoo/enterprise/pull/68394 we don't need to reload the page anymore
