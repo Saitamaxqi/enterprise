@@ -20,13 +20,8 @@ class ResPartner(models.Model):
         string='Next reminder',
         copy=False,
         company_dependent=True,
-        help="""The date before which no follow-up action should be taken.
-                You can set it manually if desired but it is automatically set when follow-ups are processed.
-                The date is computed according to the following rules (depending on the follow-up levels):
-                - default -> next date set in {next level delay - current level delay} days
-                - if no next level -> next date set in {current level delay - previous level delay} days
-                - if no next level AND no previous level -> next date set in {current level delay} days
-                - if no level defined at all -> next date never automatically set""",
+        help='''No follow-up action will be taken before this date.
+                Sending a reminder will set this date depending on the levels configuration, and you can change it manually.''',
     )
 
     # readonly=False in order to be able to edit it directly in the view form, without having to click on 'Edit'
