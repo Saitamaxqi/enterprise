@@ -55,7 +55,14 @@ class StockPicking(models.Model):
                 picking.show_validate = False
 
     def check_quality(self):
-        checkable_products = self.mapped('move_line_ids').mapped('product_id')
+        if all(not move.picked for move in self.move_ids):
+            checkable_lines = self.move_line_ids
+        else:
+            checkable_lines = self.move_line_ids.filtered(
+            lambda ml: (
+                not float_is_zero(ml.quantity, precision_rounding=ml.product_uom_id.rounding)
+            ))
+        checkable_products = checkable_lines.product_id
         checks = self.check_ids.filtered(lambda check: check.quality_state == 'none' and (check.product_id in checkable_products or check.measure_on == 'operation'))
         if checks:
             return checks.action_open_quality_check_wizard()

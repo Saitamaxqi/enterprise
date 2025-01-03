@@ -1016,11 +1016,9 @@ class TestQualityCheck(TestQualityCommon):
         untracked_check_ids = picking_in.check_ids.filtered(lambda qc: qc.product_id == self.product_3)
         untracked_check_ids.do_pass()
         self.assertEqual(untracked_check_ids.quality_state, 'pass')
-        # Update the move line of the tracked product to 0 and
-        # ensure that its quality check is not as todo
-        move_tracked_product.move_line_ids.quantity = 0
         self.env.invalidate_all()
-        self.assertFalse(picking_in.quality_check_todo)
+        self.assertEqual(move_tracked_product.quantity, 1)
+        self.assertFalse(move_tracked_product.picked)
         # Validate incoming shipment.
         res_dict = picking_in.button_validate()
         wizard = Form(self.env[res_dict['res_model']].with_context(res_dict['context'])).save()
