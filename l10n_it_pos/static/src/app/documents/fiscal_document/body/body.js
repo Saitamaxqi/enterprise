@@ -93,11 +93,13 @@ export class Body extends Component {
     }
 
     get payments() {
-        return this.order.payment_ids.map((payment) => ({
-            description: _t("Payment in %s", payment.payment_method_id.name),
-            payment: this._itFormatCurrency(payment.amount),
-            paymentType: payment.payment_method_id.it_payment_code,
-            index: payment.payment_method_id.it_payment_index,
-        }));
+        return this.order.payment_ids
+            .filter((payment) => !payment.is_change)
+            .map((payment) => ({
+                description: _t("Payment in %s", payment.payment_method_id.name),
+                payment: this._itFormatCurrency(payment.amount),
+                paymentType: payment.payment_method_id.it_payment_code,
+                index: payment.payment_method_id.it_payment_index,
+            }));
     }
 }
