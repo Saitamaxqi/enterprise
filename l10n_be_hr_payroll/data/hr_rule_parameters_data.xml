@@ -1039,6 +1039,16 @@
             <field name="rule_parameter_id" ref="rule_parameter_private_car_taxable_threshold"/>
             <field name="date_from" eval="datetime(2023, 1, 1).date()"/>
         </record>
+        <record id="rule_parameter_private_car_taxable_threshold_2024" model="hr.rule.parameter.value">
+            <field name="parameter_value">490</field>
+            <field name="rule_parameter_id" ref="rule_parameter_private_car_taxable_threshold"/>
+            <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_private_car_taxable_threshold_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">500</field>
+            <field name="rule_parameter_id" ref="rule_parameter_private_car_taxable_threshold"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
 
         <record id="rule_parameter_private_car_reimbursement_scale" model="hr.rule.parameter">
             <field name="name">Reimbursement Scale</field>
