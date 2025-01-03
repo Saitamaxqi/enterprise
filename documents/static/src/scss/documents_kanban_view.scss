@@ -159,7 +159,7 @@
             @include media-breakpoint-up(lg) {
                 &:not(:hover) {
                     .fa-eye-slash,.fa-star-o,.o_field_kanban_activity:has(.fa-clock-o) {
-                        display: none;
+                        visibility: hidden;
                     }
                 }
             }
