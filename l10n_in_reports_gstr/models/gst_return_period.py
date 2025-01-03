@@ -1815,7 +1815,7 @@ class L10n_InGstReturnPeriod(models.Model):
                                 'bill_date': bill_date,
                                 'bill_total': doc_data.get('val'),
                                 'bill_value_json': doc_data,
-                                'bill_type': section_code == 'cdnr' and 'credit_note' or 'bill',
+                                'bill_type': section_code == 'cdnr' and doc_data.get('typ') == 'C' and 'credit_note' or 'bill',
                                 'section_code': section_code,
                                 "bill_pos": doc_data.get('pos'),
                             }
