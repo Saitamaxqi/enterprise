@@ -1154,6 +1154,24 @@
             <field name="rule_parameter_id" ref="rule_parameter_holiday_pay_rates"/>
             <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
         </record>
+        <record id="rule_parameter_holiday_pay_rates_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">
+[
+    (    0.00,      10415.00,  0.00),
+    (10415.01,      13330.00, 19.17),
+    (13330.01,      16960.00, 21.20),
+    (16960.01,      20340.00, 26.25),
+    (20340.01,      23020.00, 31.30),
+    (23020.01,      25710.00, 34.33),
+    (25710.01,      31070.00, 36.34),
+    (31070.01,      33810.00, 39.37),
+    (33810.01,      44770.00, 42.39),
+    (44770.01,      58460.00, 47.44),
+    (58460.00,  999999999.00, 53.50)
+]</field>
+            <field name="rule_parameter_id" ref="rule_parameter_holiday_pay_rates"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
 
         <record id="rule_parameter_exceptional_allowances_rates" model="hr.rule.parameter">
             <field name="name">Exceptional Allowances: Withholding Taxes Rates</field>
@@ -1214,6 +1232,24 @@
             <field name="rule_parameter_id" ref="rule_parameter_exceptional_allowances_rates"/>
             <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
         </record>
+        <record id="rule_parameter_exceptional_allowances_rates_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">
+[
+    (    0.00,      10415.00,  0.00),
+    (10415.01,      13330.00, 23.22),
+    (13330.01,      16960.00, 25.23),
+    (16960.01,      20340.00, 30.28),
+    (20340.01,      23020.00, 35.33),
+    (23020.01,      25710.00, 38.36),
+    (25710.01,      31070.00, 40.38),
+    (31070.01,      33810.00, 43.41),
+    (33810.01,      44770.00, 46.44),
+    (44770.01,      58460.00, 51.48),
+    (58460.00,  999999999.00, 53.50)
+]</field>
+            <field name="rule_parameter_id" ref="rule_parameter_exceptional_allowances_rates"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
 
         <!-- Termination Fees - Rates-->
         <record id="rule_parameter_termination_fees_rates" model="hr.rule.parameter">
@@ -1245,6 +1281,31 @@
 ]</field>
             <field name="rule_parameter_id" ref="rule_parameter_termination_fees_rates"/>
             <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_termination_fees_rates_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">
+[
+    (    0.00,      11575.00,  0.00),
+    (11575.01,      13895.00,  2.68),
+    (13895.01,      15430.00,  6.57),
+    (15430.01,      18525.00, 10.77),
+    (18525.01,      20070.00, 13.55),
+    (20070.01,      22385.00, 16.55),
+    (22385.01,      26240.00, 19.17),
+    (26240.01,      33955.00, 24.92),
+    (33955.01,      41670.00, 29.93),
+    (41670.01,      54025.00, 31.30),
+    (54025.01,      60965.00, 36.90),
+    (60965.01,      69455.00, 38.96),
+    (69455.01,      81025.00, 40.93),
+    (81025.01,      97240.00, 42.92),
+    (97240.01,     121930.00, 44.99),
+    (121930.01,    140450.00, 46.47),
+    (140450.01,    165140.00, 47.48),
+    (165140.01,  999999999.00,48.00)
+]</field>
+            <field name="rule_parameter_id" ref="rule_parameter_termination_fees_rates"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
         </record>
 
         <!-- Holiday Pay - PP Exoneration -->
