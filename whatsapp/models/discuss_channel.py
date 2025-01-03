@@ -240,8 +240,8 @@ class DiscussChannel(models.Model):
             return
         super()._action_unfollow(partner, guest)
 
-    def _to_store_defaults(self):
-        return super()._to_store_defaults() + [
+    def _to_store_defaults(self, for_current_user=True):
+        return super()._to_store_defaults(for_current_user=for_current_user) + [
             "whatsapp_channel_valid_until",
             Store.One("whatsapp_partner_id", []),
         ]

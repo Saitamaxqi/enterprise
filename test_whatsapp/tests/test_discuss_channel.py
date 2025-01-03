@@ -166,38 +166,49 @@ class DiscussChannel(WhatsAppFullCase, MockIncomingWhatsApp):
                 (self.cr.dbname, "discuss.channel", discuss_channel.id),
                 (self.cr.dbname, "discuss.channel", discuss_channel.id),
             ],
-            [{
-                "type": "mail.record/insert",
-                "payload": {
-                    "mail.message": [{
-                        "id": message.id,
-                        "reactions": [["DELETE", {"message": message.id, "content": "😊"}]],
-                    }],
-                },
-            }, {
-                "type": "mail.record/insert",
-                "payload": {
-                    "MessageReactions": [{
-                        "content": "👍",
-                        "count": 1,
-                        "message": message.id,
-                        "personas": [{"id": message.author_id.id, "type": "partner"}],
-                        # new reaction, and there is no way that we can get the id of the reaction, so that the sequence is directly +1
-                        "sequence": message.reaction_ids.ids[0] + 1,
-                    }],
-                    "mail.message": [{
-                        "id": message.id,
-                        "reactions": [["ADD", [{"message": message.id, "content": "👍"}]]],
-                    }],
-                    "res.partner": [{
-                        "id": message.author_id.id,
-                        "name": "+32499123456",
-                        "write_date": fields.Datetime.to_string(
-                            message.author_id.write_date
+            [
+                {
+                    "type": "mail.record/insert",
+                    "payload": {
+                        "mail.message": self._filter_messages_fields(
+                            {
+                                "id": message.id,
+                                "reactions": [["DELETE", {"message": message.id, "content": "😊"}]],
+                            }
                         ),
-                    }],
+                    },
                 },
-            }],
+                {
+                    "type": "mail.record/insert",
+                    "payload": {
+                        "MessageReactions": [
+                            {
+                                "content": "👍",
+                                "count": 1,
+                                "message": message.id,
+                                "personas": [{"id": message.author_id.id, "type": "partner"}],
+                                # new reaction, and there is no way that we can get the id of the reaction, so that the sequence is directly +1
+                                "sequence": message.reaction_ids.ids[0] + 1,
+                            }
+                        ],
+                        "mail.message": self._filter_messages_fields(
+                            {
+                                "id": message.id,
+                                "reactions": [["ADD", [{"message": message.id, "content": "👍"}]]],
+                            },
+                        ),
+                        "res.partner": self._filter_partners_fields(
+                            {
+                                "id": message.author_id.id,
+                                "name": "+32499123456",
+                                "write_date": fields.Datetime.to_string(
+                                    message.author_id.write_date
+                                ),
+                            }
+                        ),
+                    },
+                },
+            ],
         ):
             with self.mockWhatsappGateway():
                 self._receive_whatsapp_message(
