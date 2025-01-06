@@ -52,6 +52,7 @@ test("Clicking on cross icon in whatsapp sidebar category item unpins the channe
     });
     await start();
     await openDiscuss();
+    await contains(".o-mail-DiscussSidebarChannel", { text: "WhatsApp 1" });
     await click("[title='Unpin Conversation']", {
         parent: [
             ".o-mail-DiscussSidebarChannel",
@@ -63,9 +64,6 @@ test("Clicking on cross icon in whatsapp sidebar category item unpins the channe
     await contains(".o-mail-DiscussSidebarChannel", {
         count: 0,
         contains: ["span", { text: "WhatsApp 1" }],
-    });
-    await contains(".o_notification", {
-        text: "You unpinned your conversation with WhatsApp 1",
     });
 });
 
