@@ -554,6 +554,9 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
         # EXTENDS account.edi.xml.ubl_21
         vals = super()._export_invoice_vals(invoice)
 
+        if 'buyer_reference' in vals['vals']:
+            vals['vals'].pop('buyer_reference')
+
         vals['vals']['accounting_supplier_party_vals']['party_vals']['industry_classification_code'] = \
             invoice.company_id.l10n_co_edi_header_actividad_economica
         if invoice.l10n_co_dian_identifier_type == 'cude':
