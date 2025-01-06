@@ -23,7 +23,18 @@ class AppraisalAskFeedback(models.TransientModel):
             result['survey_template_id'] = appraisal.department_id.appraisal_survey_template_id.id or appraisal.company_id.appraisal_survey_template_id.id
         return result
 
-    appraisal_id = fields.Many2one('hr.appraisal', default=lambda self: self.env.context.get('active_id', None))
+    def _default_appraisal_id(self):
+        active_id = self.env.context.get('active_id', None)
+        if active_id:
+            return active_id
+
+        active_domain = self.env.context.get('active_domain', [])
+        for d in active_domain:
+            if isinstance(d, (list, tuple)) and len(d) == 3 and d[0] == 'appraisal_id':
+                return d[2]
+        return None
+
+    appraisal_id = fields.Many2one('hr.appraisal', default=_default_appraisal_id)
     employee_id = fields.Many2one(related='appraisal_id.employee_id', string='Appraisal Employee')
     template_id = fields.Many2one(default=lambda self: self.env.ref('hr_appraisal_survey.mail_template_appraisal_ask_feedback', raise_if_not_found=False),
                                   domain=lambda self: [('model_id', '=', self.env['ir.model']._get('hr.appraisal').id)])

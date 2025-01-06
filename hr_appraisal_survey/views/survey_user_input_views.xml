@@ -8,6 +8,7 @@
                 <header>
                     <button string="All answers" name="action_open_all_survey_inputs" icon="fa-external-link" type="object"/>
                     <button string="Resend all" name="action_ask_feedback" icon="fa-repeat" type="object"/>
+                    <button string="Ask Feedback" name="%(hr_appraisal_survey.appraisal_ask_feedback_action)d" type="action" display="always"/>
                 </header>
                 <field name="partner_id" string="Employee"/>
                 <field name="state" widget="badge"

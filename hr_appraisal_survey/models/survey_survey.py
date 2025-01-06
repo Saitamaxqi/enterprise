@@ -103,7 +103,7 @@ class SurveyUser_Input(models.Model):
         if len(self.survey_id) > 1:
             raise ValidationError(self.env._("You can't selected multiple feedback template."))
         appraisal_id = self.appraisal_id
-        set_emails = set(self.mapped('email'))
+        set_emails = set(self.partner_id.mapped('email'))
         if appraisal_id.employee_feedback_ids:
             employee_ids = appraisal_id.employee_feedback_ids.filtered(
                 lambda e: e.work_email in set_emails or\

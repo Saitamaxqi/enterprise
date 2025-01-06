@@ -50,5 +50,14 @@
                 </form>
             </field>
         </record>
+
+        <record id="appraisal_ask_feedback_action" model="ir.actions.act_window" >
+            <field name="name">Ask Feedback</field>
+            <field name="res_model">appraisal.ask.feedback</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="appraisal_ask_feedback_view_form"/>
+            <field name="target">new</field>
+            
+        </record>
     </data>
 </odoo>
