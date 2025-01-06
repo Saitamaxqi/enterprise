@@ -85,6 +85,14 @@ JOIN sale_commission_plan_target era
             rules.amount_invoiced_rate * aml.price_subtotal / am.invoice_currency_rate +
             rules.qty_invoiced_rate * aml.quantity
         """
+    @api.model
+    def _get_company_condition(self, company_table):
+        assert(company_table in ['so', 'am', 'scp'])
+        company_count = len(self.env.companies.ids)
+        if company_count == 1:
+            return f"AND \"{company_table}\".company_id = {self.env.companies.id}"
+        else:
+            return f"AND \"{company_table}\".company_id IN {tuple(self.env.companies.ids)}"
 
     @api.model
     def _select_invoices(self):
@@ -118,6 +126,7 @@ JOIN sale_commission_plan_target era
           aml.display_type = 'product'
           AND am.move_type in ('out_invoice', 'out_refund')
           AND am.state != 'cancel'
+          {self._get_company_condition('am')}
         """
 
     @api.model
@@ -141,7 +150,7 @@ JOIN sale_commission_plan_target era
 
     @api.model
     def _where_sales(self):
-        return """
+        return f"""
           AND sol.display_type IS NULL
           AND (so.date_order BETWEEN rules.date_from AND rules.date_to)
           AND so.state = 'sale'
@@ -149,6 +158,7 @@ JOIN sale_commission_plan_target era
           AND (rules.product_categ_id IS NULL OR rules.product_categ_id = pt.categ_id)
           AND COALESCE(is_expense, false) = false
           AND COALESCE(is_downpayment, false) = false
+          {self._get_company_condition('so')}
         """
 
     def _achievement_lines(self, users=None, teams=None):
@@ -259,6 +269,7 @@ sale_rules AS (
     JOIN sale_commission_plan_user scpu ON scpa.plan_id = scpu.plan_id
     WHERE scp.active
       AND scp.state = 'approved'
+      {self._get_company_condition('scp')}
       AND scpa.type IN ({','.join("'%s'" % r for r in self._get_sale_rates())})
     {'AND scpu.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
 ), sale_commission_lines_team AS (
