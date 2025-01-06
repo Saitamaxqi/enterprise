@@ -375,7 +375,7 @@ class AccountAssetReportHandler(models.AbstractModel):
         if analytic_account_ids:
             query.add_where(SQL('%s && %s', analytic_account_ids, self.env['account.asset']._query_analytic_accounts('asset')))
 
-        selected_journals = tuple(journal['id'] for journal in options.get('journals') if journal['model'] == 'account.journal' and journal['selected'])
+        selected_journals = tuple(journal['id'] for journal in options.get('journals', []) if journal['model'] == 'account.journal' and journal['selected'])
         if selected_journals:
             query.add_where(SQL("asset.journal_id in %s", selected_journals))
 
