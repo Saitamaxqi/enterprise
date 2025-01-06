@@ -304,6 +304,10 @@ class DocumentsDocument(models.Model):
     def _update_spreadsheet_contributors(self):
         """Add the current user to the spreadsheet contributors.
         """
+        can_write = self.env['spreadsheet.contributor'].has_access('write')
+        can_create = self.env['spreadsheet.contributor'].has_access('create')
+        if not can_write or not can_create:
+            return
         for document in self:
             if document.handler == 'spreadsheet':
                 self.env['spreadsheet.contributor']._update(self.env.user, document)

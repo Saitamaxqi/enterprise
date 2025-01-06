@@ -194,6 +194,18 @@ class TestSpreadsheetDocumentController(SpreadsheetTestCommon, HttpCase):
         response = self.url_open('/spreadsheet/data/documents.document/%s' % document_1.id)
         self.assertEqual(response.status_code, 200)
 
+    def test_read_portal_user_with_doc_access(self):
+        document = self.create_spreadsheet()
+        portal_user = new_test_user(self.env, login="Raoul", groups="base.group_portal")
+        self.authenticate(portal_user.login, portal_user.password)
+        self.env['documents.access'].create({
+            'document_id': document.id,
+            'partner_id': portal_user.partner_id.id,
+            'role': 'view',
+        })
+        response = self.url_open('/spreadsheet/data/documents.document/%s' % document.id)
+        self.assertEqual(response.status_code, 200)
+
     def test_join_snapshot_request(self):
         raoul = new_test_user(self.env, login='raoul')
         self.authenticate(raoul.login, raoul.password)
