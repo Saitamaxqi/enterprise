@@ -21,14 +21,22 @@ class ResCompany(models.Model):
             if record:
                 stage_ids.append(record.id)
         team_name = _('Customer Care')
+        to_create_or_existing_aliases = {r['alias_name'] for r in self.env['helpdesk.team'].search_read(fields=['alias_name'])}
+
         for company in self:
+            alias_name = f"{team_name}-{company.name}"
+            sanitized_alias_name = self.env['mail.alias']._sanitize_alias_name(alias_name)
+
+            if sanitized_alias_name in to_create_or_existing_aliases:
+                alias_name = f"{sanitized_alias_name}-{company.id}"
+            to_create_or_existing_aliases.add(sanitized_alias_name)
             company = company.with_company(company)
             results += [{
                 'name': team_name,
                 'company_id': company.id,
                 'use_sla': False,
                 'stage_ids': [Command.set(stage_ids)],
-                'alias_name': "%s-%s" % (team_name, company.name),
+                'alias_name': alias_name,
             }]
         # use sudo as the user could have the right to create a company
         # but not to create a team for other company.

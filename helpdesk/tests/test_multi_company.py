@@ -19,6 +19,22 @@ class TestHelpdeskMultyCompany(HelpdeskCommon):
         self.assertEqual(len(helpdek_teams), len(companies), "The team should be created for each company.")
         self.assertEqual(helpdek_teams.company_id, companies, "Each helpdesk team should be set to a company.")
 
+    def test_create_utf8_companies(self):
+        """ At the moment of creating this test, mail.alias was restricted to ascii characters.
+        Creating new company with helpdesk installed attempts to create a mail.alias with the company name.
+        Doing it once will convert all non ASCII characters to question marks. (Ex. "好色" -> "??")
+        However, doing it again for a company name with same number of characters will violate the unique constraint.
+
+        This test checks that we have a fallback for this behavior.
+        """
+        companies = self.env['res.company'].with_context(tracking_disable=True).create([
+            {'name': '好色'},
+            {'name': '色好'},
+        ])
+        helpdek_teams = self.env['helpdesk.team'].search([('company_id', 'in', companies.ids)])
+        self.assertEqual(len(helpdek_teams), len(companies), "The team should be created for each company.")
+        self.assertEqual(helpdek_teams.company_id, companies, "Each helpdesk team should be set to a company.")
+
     def test_multi_company(self):
         Team = self.env['helpdesk.team'].with_context(tracking_disable=True)
         Ticket = self.env['helpdesk.ticket'].with_context(tracking_disable=True)
