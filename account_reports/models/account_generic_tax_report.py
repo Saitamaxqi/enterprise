@@ -914,7 +914,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
                 SELECT
                     %(select_clause)s,
                     trl.document_type = 'refund' AS is_refund,
-                    SUM(tdr.base_amount) AS base_amount,
+                    SUM(CASE WHEN tdr.display_type = 'rounding' THEN 0 ELSE tdr.base_amount END) AS base_amount,
                     SUM(tdr.tax_amount) AS tax_amount
                 FROM (%(tax_details_query)s) AS tdr
                 JOIN account_tax_repartition_line trl ON trl.id = tdr.tax_repartition_line_id
@@ -924,7 +924,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
                     AND src_tax.type_tax_use IN ('sale', 'purchase')
                 JOIN account_account account ON account.id = tdr.base_account_id
                 WHERE tdr.tax_exigible
-                GROUP BY tdr.tax_repartition_line_id, trl.document_type, tdr.display_type, %(groupby_query)s
+                GROUP BY tdr.tax_repartition_line_id, trl.document_type, %(groupby_query)s
                 ORDER BY src_tax.sequence, src_tax.id, tax.sequence, tax.id
                 ''',
                 select_clause=SQL(',').join(select_clause_list),
