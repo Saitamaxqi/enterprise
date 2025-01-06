@@ -14,10 +14,10 @@
                                         </h2>
                                         <p> From Date
                                             <u>
-                                                <span t-out="date_from"/>
+                                                <span t-out="date_from.strftime('%d/%m/%Y')"/>
                                             </u> To Date
                                             <u>
-                                                <span t-out="date_to"/>
+                                                <span t-out="date_to.strftime('%d/%m/%Y')"/>
                                             </u>
                                         </p>
                                     </td>
@@ -31,8 +31,8 @@
                                     </td>
                                     <td><strong>Employee Code</strong></td>
                                     <td>
-                                        <t t-if="employee.identification_id">
-                                            <span t-field="employee.identification_id"/>
+                                        <t t-if="employee.registration_number">
+                                            <span t-field="employee.registration_number"/>
                                         </t>
                                     </td>
                                     <td><strong>Designation</strong></td>
@@ -48,55 +48,57 @@
                                         </t>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="8" class="p-0">
+                                        <t t-foreach="get_employee_detail_new(employee.id).items()" t-as="structure">
+                                            <table class="table table-sm full-width-table m-0" style="font-size: 11px">
+                                                <thead>
+                                                    <tr t-foreach="get_periods(data['form'])" t-as="months">
+                                                        <th><strong><t t-esc="structure[0]"/></strong></th>
+                                                        <t t-foreach="months" t-as="month">
+                                                            <th class="text-end">
+                                                                <strong><span t-out="month"/></strong>
+                                                            </th>
+                                                        </t>
+                                                        <th class="text-end"><strong>Total</strong></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <td><strong> Allowances with Basic:</strong></td>
+                                                    <tr t-foreach="structure[1]['allow_list']" t-as="allowance">
+                                                        <t t-if="allowance[0] in {'BASIC','GROSS'}">
+                                                            <td><strong><span t-out="allowance[1][0]"/></strong></td>
+                                                            <t t-foreach="allowance[1][1:-1]" t-as="allow">
+                                                                <td class="text-end"><span t-out="allow" t-options="{'widget': 'monetary', 'display_currency': employee.company_id.currency_id}"/></td>
+                                                            </t>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td><span t-out="allowance[1][0]" class="text-end"/></td>
+                                                            <t t-foreach="allowance[1][1:-1]" t-as="allow">
+                                                                <td class="text-end"><span t-out="allow" t-options="{'widget': 'monetary', 'display_currency': employee.company_id.currency_id}"/></td>
+                                                            </t>
+                                                        </t>
+                                                        <td t-out="allowance[1][-1:][0]" class="text-end" t-options="{'widget': 'monetary', 'display_currency': employee.company_id.currency_id}"/>
+                                                    </tr>
+                                                    <td><strong> Deductions:</strong></td>
+                                                    <tr t-foreach="structure[1]['deduct_list']" t-as="deduction">
+                                                        <t t-if="deduction[0] == 'NET'">
+                                                            <td><strong><span t-out="deduction[1][0]"/></strong></td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td><span t-out="deduction[1][0]"/></td>
+                                                        </t>
+                                                        <t t-foreach="deduction[1][1:-1]" t-as="deduct">
+                                                            <td class="text-end"><span t-out="deduct" t-options="{'widget': 'monetary', 'display_currency': employee.company_id.currency_id}"/></td>
+                                                        </t>
+                                                        <td t-out="deduction[1][-1:][0]" class="text-end" t-options="{'widget': 'monetary', 'display_currency': employee.company_id.currency_id}"/>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </t>
+                                    </td>
+                                </tr>
                             </table>
-                            <t t-foreach="get_employee_detail_new(employee.id).items()" t-as="structure">
-                                <div class="page" style="page-break-after: always">
-                                    <table class="table table-sm full-width-table" style="font-size: 11px">
-                                        <thead>
-                                            <tr t-foreach="get_periods(data['form'])" t-as="months">
-                                                <th><strong><t t-esc="structure[0]"/></strong></th>
-                                                <t t-foreach="months" t-as="month_sal">
-                                                    <th class="text-end">
-                                                        <span t-out="month_sal"/>
-                                                    </th>
-                                                </t>
-                                                <th class="text-end">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <td><strong> Allowances with Basic:</strong></td>
-                                            <tr t-foreach="structure[1]['allow_list']" t-as="allowance">
-                                                <t t-if="allowance[0] in ['BASIC','GROSS']">
-                                                    <td><strong><span t-out="allowance[1][0]"/></strong></td>
-                                                    <t t-foreach="allowance[1][1:-1]" t-as="allow">
-                                                        <td class="text-end"><span t-out="allow" t-options="{'widget': 'monetary', 'display_currency': employee.company_id.currency_id}"/></td>
-                                                    </t>
-                                                </t>
-                                                <t t-if="allowance[0] not in ['BASIC','GROSS']">
-                                                    <td><span t-out="allowance[1][0]" class="text-end"/></td>
-                                                    <t t-foreach="allowance[1][1:-1]" t-as="allow">
-                                                        <td class="text-end"><span t-out="allow" t-options="{'widget': 'monetary', 'display_currency': employee.company_id.currency_id}"/></td>
-                                                    </t>
-                                                </t>
-                                                <td t-out="allowance[1][-1:][0]" class="text-end" t-options="{'widget': 'monetary', 'display_currency': employee.company_id.currency_id}"/>
-                                            </tr>
-                                            <td><strong> Deductions:</strong></td>
-                                            <tr t-foreach="structure[1]['deduct_list']" t-as="deduct">
-                                                <t t-if="deduct[0] in ['NET']">
-                                                    <td><strong><span t-out="deduct[1][0]"/></strong></td>
-                                                </t>
-                                                <t t-if="deduct[0] not in ['NET']">
-                                                    <td><span t-out="deduct[1][0]"/></td>
-                                                </t>
-                                                <t t-foreach="deduct[1][1:-1]" t-as="d">
-                                                    <td class="text-end"><span t-out="d" t-options="{'widget': 'monetary', 'display_currency': employee.company_id.currency_id}"/></td>
-                                                </t>
-                                                <td t-out="deduct[1][-1:][0]" class="text-end" t-options="{'widget': 'monetary', 'display_currency': employee.company_id.currency_id}"/>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </t>
                         </div>
                     </t>
                 </t>
