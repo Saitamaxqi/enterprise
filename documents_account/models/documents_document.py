@@ -96,6 +96,8 @@ class DocumentsDocument(models.Model):
             else:
                 move = self.env['account.move'].new({'move_type': move_type})
                 journal_id = move.suitable_journal_ids[:1]._origin
+        elif isinstance(journal_id, int):
+            journal_id = self.env['account.journal'].browse(journal_id)
 
         move = None
         invoices = self.env['account.move']
