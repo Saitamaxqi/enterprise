@@ -42,9 +42,9 @@ class SaleCommissionReport(models.Model):
             amount = values['forecast']
             for line in self:
                 if line.forecast_id:
-                    line.forecast_id.amount = amount
+                    line.sudo().forecast_id.amount = amount
                 else:
-                    line.forecast_id = self.env['sale.commission.plan.target.forecast'].create({
+                    line.forecast_id = self.env['sale.commission.plan.target.forecast'].sudo().create({
                         'target_id': line.target_id.id,
                         'amount': amount,
                         'plan_id': line.plan_id.id,
