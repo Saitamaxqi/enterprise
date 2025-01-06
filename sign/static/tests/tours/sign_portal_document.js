@@ -30,7 +30,7 @@ registry.category("web_tour.tours").add('portal_sign_document', {
         },
         {
             content: "Close the dialog.",
-            trigger: "button:contains('close')",
+            trigger: "h4:contains('It\'s Signed!') + button.btn-close",
             run: "click",
         },
     ]

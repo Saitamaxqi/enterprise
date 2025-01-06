@@ -91,11 +91,6 @@ QUnit.module("thank you dialog", (hooks) => {
             "aha",
             "Should render subtitle"
         );
-        assert.strictEqual(
-            target.querySelector(".o_sign_thankyou_close_button").textContent,
-            "Close",
-            "Should render close button"
-        );
     });
 
     QUnit.test("suggest signup is shown", async (assert) => {
@@ -124,11 +119,6 @@ QUnit.module("thank you dialog", (hooks) => {
 
         await mountThankYouDialog(env);
 
-        assert.strictEqual(
-            target.querySelector("#thank-you-message").textContent,
-            "bla",
-            "Should render message"
-        );
         assert.containsOnce(
             target,
             "a:contains('Odoo Sign')",

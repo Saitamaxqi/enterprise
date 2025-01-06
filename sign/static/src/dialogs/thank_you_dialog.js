@@ -32,6 +32,10 @@ export class ThankYouDialog extends Component {
             optional: true,
         },
         close: Function,
+        reference: {
+            type: String,
+            optional: true
+        }
     };
 
     setup() {
@@ -41,6 +45,7 @@ export class ThankYouDialog extends Component {
         this.state = useState({
             nextDocuments: [],
             buttons: [],
+            signUpButton: null
         });
         this.redirectURL = this.processURL(this.props.redirectURL);
         this.message =
@@ -118,20 +123,26 @@ export class ThankYouDialog extends Component {
             });
         }
 
-        this.state.buttons.push({
-            name: this.closeLabel,
-            click: () => {
-                if (this.suggestSignUp) {
-                    window.open(`https://odoo.com/app/sign`);
-                } else {
-                    this.onClickClose();
-                }
-            },
-            classes: 'btn btn-secondary o_sign_thankyou_close_button',
-        });
+        if (this.suggestSignUp) {
+            this.state.signUpButton = {
+                name: _t("Sign Up for free"),
+                classes: "btn btn-primary",
+                ignored: true,
+                click: () => {
+                    window.open(
+                        "https://www.odoo.com/trial?selected_app=sign&utm_source=db&utm_medium=sign",
+                        "_blank"
+                    ); 
+                },
+            };
+        }
     }
 
     onClickClose() {
+        if (this.suggestSignUp) {
+            window.open(`https://odoo.com/app/sign`, "_self");
+            return;
+        } 
         if (session.is_frontend) {
             const signatureRequestId = this.signInfo.get("documentId");
             window.location.assign(`/my/signature/${signatureRequestId}`);
@@ -187,13 +198,13 @@ export class ThankYouDialog extends Component {
 
     async downloadDocument() {
         // Simply triggers a download of the document which the user just signed.
-        window.location.assign(
+        window.open(
             this.makeURI(
                 "/sign/download",
                 this.signInfo.get("documentId"),
                 this.signInfo.get("signRequestToken"),
                 "/completed"
-            )
+            ), "_blank"
         );
     }
 

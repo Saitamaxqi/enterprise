@@ -14,6 +14,7 @@
                 <div id="thank-you-message" class="o_thankyou_message">
                     <t t-esc="message"/>
                 </div>
+                <button class="btn btn-link" t-if="signRequestState === 'signed'" t-on-click="() => this.downloadDocument()">Download signed document</button>
             </div>
             <t t-if="state.nextDocuments.filter((doc) => !doc.canceled).length > 0">
                 <hr/>
@@ -52,7 +53,9 @@
                 </div>
             </div>
             <t t-set-slot="footer">
-                <button class="btn btn-primary" t-if="signRequestState === 'signed'" t-on-click="() => this.downloadDocument()">Download</button>
+                <t t-if="suggestSignUp">
+                    <button t-att-class="state.signUpButton.classes" t-on-click="state.signUpButton.click"><t t-out="state.signUpButton.name"/></button>
+                </t>
                 <t t-foreach="state.buttons" t-as="button" t-key="button.name">
                     <button t-att-class="button.classes" t-on-click="button.click" t-att-disabled="button.disabled"><t t-out="button.name"/></button>
                 </t>

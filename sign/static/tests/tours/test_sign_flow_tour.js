@@ -108,7 +108,7 @@ registry.category("web_tour.tours").add("test_sign_flow_tour", {
         },
         {
             content: "view",
-            trigger: ".modal-footer button.btn-primary, .modal-footer button.btn-secondary",
+            trigger: "h4:contains('It\'s signed') + button:btn-close",
             run: "click",
         },
     ],
