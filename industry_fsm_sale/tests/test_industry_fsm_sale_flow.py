@@ -306,3 +306,53 @@ class TestFsmFlowSale(TestFsmFlowSaleCommon):
         self.assertEqual(so.invoice_status, 'invoiced')
         sol.price_unit = 0
         self.assertEqual(so.invoice_status, 'invoiced')
+
+    def test_copy_task_sale_fields(self):
+        normal_project = self.env['project.project'].create({
+            'name': 'Normal Project',
+            'allow_billable': True,
+            'allow_timesheets': True,
+            'company_id': self.env.company.id,
+        })
+        normal_task = self.env['project.task'].create({
+            'name': 'Original Task for Copy Test',
+            'project_id': normal_project.id,
+            'partner_id': self.partner_1.id,
+        })
+        
+        fsm_product = self.env['product.product'].create({
+            'name': 'Fsm Product',
+            'list_price': 100,
+        })
+        fsm_task = self.env['project.task'].create({
+            'name': 'Original Task for Copy Test',
+            'project_id': self.fsm_project.id,
+            'partner_id': self.partner_1.id,
+        })
+        
+        fsm_product.with_context({'fsm_task_id': fsm_task.id}).set_fsm_quantity(10.0)
+        fsm_product.with_context({'fsm_task_id': normal_task.id}).set_fsm_quantity(10.0)
+        
+        self.assertTrue(fsm_task.sale_order_id)
+        self.assertEqual(len(fsm_task.sale_order_id.order_line), 1)
+    
+        self.assertTrue(normal_task.sale_order_id)
+        self.assertEqual(len(normal_task.sale_order_id.order_line), 1)
+        
+        fsm_task.action_fsm_validate()
+        fsm_task.sale_order_id._create_invoices()
+        
+        normal_task.action_fsm_validate()
+        normal_task.sale_order_id._create_invoices()
+        
+        self.assertTrue(fsm_task.sale_order_id.invoice_ids)
+        self.assertTrue(normal_task.sale_order_id.invoice_ids)
+        
+        fsm_task.update(fsm_task.copy_data()[0])
+        normal_task.update(normal_task.copy_data()[0])
+
+        self.assertFalse(fsm_task.sale_order_id)
+        self.assertFalse(fsm_task.sale_order_id.invoice_ids)
+        
+        self.assertTrue(normal_task.sale_order_id)
+        self.assertTrue(normal_task.sale_order_id.invoice_ids)

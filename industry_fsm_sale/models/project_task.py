@@ -647,6 +647,16 @@ class ProjectTask(models.Model):
                 'timesheet_ids': [fields.Command.update(timesheet.id, {'so_line': sale_order_line.id}) for timesheet in not_billed_timesheets if not timesheet.is_so_line_edited]
             })
 
+    def copy_data(self, default=None):
+        vals_list = super().copy_data(default)
+        for task, vals in zip(self, vals_list):
+            if task.is_fsm:
+                vals.update({
+                    'sale_order_id': False,
+                    'sale_line_id': False,
+                })
+        return vals_list
+
     def _prepare_materials_delivery(self):
         # While industry_fsm_stock is not installed then we automatically deliver materials
         read_group_timesheets = self.env['account.analytic.line'].sudo().search_read([('task_id', 'in', self.ids), ('project_id', '!=', False), ('so_line', '!=', False)], ['so_line'])
