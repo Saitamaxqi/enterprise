@@ -23,6 +23,12 @@ export class BankRecListUploadRenderer extends BankRecListRenderer {
         super.setup();
         this.dropzoneState = useState({ visible: false });
     }
+
+    onDragStart(ev) {
+        if (ev.dataTransfer.types.includes("Files")) {
+            this.dropzoneState.visible = true
+        }
+    }
 }
 
 export const bankRecListUploadView = {

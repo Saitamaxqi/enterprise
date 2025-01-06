@@ -15,6 +15,12 @@ patch(BankRecKanbanRenderer.prototype, {
             visible: false,
         });
     },
+
+    onDragStart(ev) {
+        if (ev.dataTransfer.types.includes("Files")) {
+            this.dropzoneState.visible = true
+        }
+    },
 });
 
 patch(BankRecKanbanRenderer, {
