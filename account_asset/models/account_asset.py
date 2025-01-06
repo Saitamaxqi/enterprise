@@ -579,12 +579,13 @@ class AccountAsset(models.Model):
             degressive_amount = residual_amount - degressive_total_value
             return self._degressive_linear_amount(residual_amount, degressive_amount, linear_amount)
 
+        if float_is_zero(self.asset_lifetime_days, 2) or float_is_zero(residual_amount, 2):
+            return 0, 0
+
         days_until_period_end = self._get_delta_days(self.paused_prorata_date, period_end_date)
         days_before_period = self._get_delta_days(self.paused_prorata_date, period_start_date + relativedelta(days=-1))
         days_before_period = max(days_before_period, 0)  # if disposed before the beginning of the asset for example
         number_days = days_until_period_end - days_before_period
-        if float_is_zero(self.asset_lifetime_days, 2):
-            return 0, 0
 
         # The amount to depreciate are computed by computing how much the asset should be depreciated at the end of the
         # period minus how much difference it is actually depreciated. It is done that way to avoid having the last move to take

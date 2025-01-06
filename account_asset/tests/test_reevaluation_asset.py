@@ -1630,3 +1630,14 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
             self._get_depreciation_move_values(date='2022-06-30', depreciation_value=1000, remaining_value=0, depreciated_value=3000, state='cancel'),
             self._get_depreciation_move_values(date='2022-07-31', depreciation_value=1000, remaining_value=0, depreciated_value=3000, state='cancel'),
         ])
+
+    def test_disposal_of_fully_depreciated_asset(self):
+        asset = self.create_asset(value=10000, periodicity="yearly", periods=2, method="degressive", acquisition_date="2020-01-01", prorata_computation_type="constant_periods")
+        asset.validate()
+
+        self.env['asset.modify'].create({
+            'asset_id': asset.id,
+            'date':  fields.Date.to_date("2022-01-01"),
+            'modify_action': 'dispose',
+            'loss_account_id': self.company_data['default_account_expense'].copy().id,
+        }).sell_dispose()
