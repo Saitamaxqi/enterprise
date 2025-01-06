@@ -395,10 +395,6 @@
     </template>
 
     <template id="website_sale_renting.products" name="Datepicker" inherit_id="website_sale.products">
-        <!-- Allow rental datepicker by itself in left side bar-->
-        <xpath expr="//t[@t-set='hasLeftColumn']" position="after">
-            <t t-set="hasLeftColumn" t-value="hasLeftColumn or is_view_active('website_sale_renting.shop_rental_datepicker_opt')"/>
-        </xpath>
         <!-- Add rental datepicker to left bar -->
         <xpath expr="//aside[@id='products_grid_before']//div//div[1]" position="before">
             <t t-if="is_view_active('website_sale_renting.shop_rental_datepicker_opt')">
@@ -441,10 +437,6 @@
                     </div>
                 </div>
             </t>
-        </xpath>
-        <!-- Allow rental datepicker by itself in offcanvas -->
-        <xpath expr="//button[@data-bs-target='#o_wsale_offcanvas']" position="attributes">
-            <attribute name="t-if" add="is_view_active('website_sale_renting.shop_rental_datepicker_opt')" separator=" or "/>
         </xpath>
     </template>
 
