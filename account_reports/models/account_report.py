@@ -1577,20 +1577,35 @@ class AccountReport(models.Model):
                 column_headers.append(header_level)
         else:
             # Insert budget column headers if needed
-            new_column_headers = []
-            for column_header in column_headers[0]:
-                new_column_headers.append(column_header)
-                for budget_option in options.get('budgets', []):
-                    if not budget_option['selected']:
-                        continue
-                    new_column_headers.append({
-                        'name': f"{budget_option['name']} {column_header['name']}",
+            selected_budgets = [budget for budget in options.get('budgets', []) if budget['selected']]
+            if selected_budgets:
+                budget_headers = [{
+                    'name': '',
+                    'forced_options': {
+                        'budget_base': True,
+                    }
+                }]
+
+                for budget in selected_budgets:
+                    # Add budget amount column
+                    budget_headers.append({
+                        'name': budget['name'],
                         'forced_options': {
-                            'compute_budget': budget_option['id'],
-                            'date': column_header['forced_options']['date'],
+                            'compute_budget': budget['id'],
                         },
+                        'colspan': 1,
                     })
-            column_headers = [new_column_headers]
+                    if len(self.column_ids.filtered(lambda column: column.figure_type == 'monetary')) == 1:
+                        # Add budget percentage column (only if one column in the report)
+                        budget_headers.append({
+                            'name': "%",
+                            'forced_options': {
+                                'budget_percentage': budget['id'],
+                            },
+                            'colspan': 1,
+                        })
+
+                column_headers.append(budget_headers)
 
         options['column_headers'] = column_headers
 
@@ -1651,16 +1666,29 @@ class AccountReport(models.Model):
             if horizontal_group_key_tuple:
                 column_groups[column_group_key]['horizontal_groupby_element'] = horizontal_group_key_tuple
 
-            for report_column in self.column_ids:
+            # for budget, only one column in needed, regardless of the number of columns in the report
+            if any(budget_key in column_group_val['forced_options'] for budget_key in ('compute_budget', 'budget_percentage')):
                 columns.append({
-                    'name': report_column.name,
+                    'name': "",
                     'column_group_key': column_group_key,
-                    'expression_label': report_column.expression_label,
-                    'sortable': report_column.sortable,
-                    'figure_type': report_column.figure_type,
-                    'blank_if_zero': report_column.blank_if_zero,
+                    'expression_label': 'balance',
+                    'sortable': False,
+                    'figure_type': 'monetary',
+                    'blank_if_zero': False,
                     'style': "text-align: center; white-space: nowrap;",
                 })
+
+            else:
+                for report_column in self.column_ids:
+                    columns.append({
+                        'name': report_column.name,
+                        'column_group_key': column_group_key,
+                        'expression_label': report_column.expression_label,
+                        'sortable': report_column.sortable,
+                        'figure_type': report_column.figure_type,
+                        'blank_if_zero': report_column.blank_if_zero,
+                        'style': "text-align: center; white-space: nowrap;",
+                    })
 
         return columns, column_groups
 
@@ -2536,7 +2564,7 @@ class AccountReport(models.Model):
         # Manage budget comparison
         elif options.get('column_percent_comparison') == 'budget':
             for line in lines:
-                line['columns'] = self._get_budget_column_comparisons(options, line)
+                self._set_budget_column_comparisons(options, line)
 
         # Manage hide_if_zero lines:
         # - If they have column values: hide them if all those values are 0 (or empty)
@@ -5204,7 +5232,18 @@ class AccountReport(models.Model):
         for i in range(len(options['column_headers'])):
             colspan = max(len(columns), 1)
             for column_header in options['column_headers'][i + 1:]:
-                colspan *= len(column_header)
+                # Separate non-budget and budget headers
+                budget_count = sum(
+                    any(key in header.get('forced_options', {}) for key in ('compute_budget', 'budget_percentage'))
+                    for header in column_header
+                )
+                non_budget_count = len(column_header) - budget_count
+
+                # budget headers (amount and percentage) can only contain a single column each, regardless of the amount of columns in the report.
+                # This implies that we first need to multiply for the 'regular' columns and then add the budget columns.
+                colspan *= non_budget_count
+                colspan += budget_count
+
             level_colspan_list.append(colspan)
 
         # Compute the number of times each header level will have to be repeated, and its colspan to properly handle horizontal groups/comparisons
@@ -5926,9 +5965,6 @@ class AccountReport(models.Model):
                 colspan = header_to_render.get('colspan', column_headers_render_data['level_colspan'][header_level_index])
                 write_cell(sheet, x_offset, y_offset, header_to_render.get('name', ''), title_style, colspan + (1 if options['show_horizontal_group_total'] and header_level_index == 0 else 0))
                 x_offset += colspan
-                if header_to_render.get('forced_options', {}).get('compute_budget'):
-                    write_cell(sheet, x_offset, y_offset, '%', title_style)
-                    x_offset += colspan + (1 if options['show_horizontal_group_total'] and header_level_index == 0 else 0)
             if options.get('column_percent_comparison') == 'growth':
                 write_cell(sheet, x_offset, y_offset, '%', title_style)
                 x_offset += 1
@@ -5959,9 +5995,6 @@ class AccountReport(models.Model):
             colspan = column.get('colspan', 1)
             write_cell(sheet, x_offset, y_offset, column.get('name', ''), title_style, colspan)
             x_offset += colspan
-            if column.get('column_group_key') and 'compute_budget' in column['column_group_key']:
-                write_cell(sheet, x_offset, y_offset, '', title_style, colspan)
-                x_offset += colspan
 
         if options['show_horizontal_group_total']:
             write_cell(sheet, x_offset, y_offset, options['columns'][0].get('name', ''), title_style, colspan)
@@ -6297,32 +6330,44 @@ class AccountReport(models.Model):
                 'mode': 'green' if (comparison_value >= 0 and green_on_positive) or (comparison_value == -1 and not green_on_positive) else 'red',
             }
 
-    def _get_budget_column_comparisons(self, options, line):
-        nb_selected_budgets = len([budget for budget in options['budgets'] if budget['selected']])
-        new_columns = []
+    def _set_budget_column_comparisons(self, options, line):
+        """
+            Set the percentage values in the budget columns
+        """
+        for col_index, col in enumerate(line['columns']):
+            col_group_data = options['column_groups'][col['column_group_key']]
+            if 'budget_percentage' in col_group_data.get('forced_options'):
+                budget_id = col_group_data['forced_options']['budget_percentage']
+                date_key = col_group_data.get('forced_options', {}).get('date')
+                if not date_key:
+                    continue
 
-        for columns in split_every(nb_selected_budgets + 1, line['columns']):
-            main_column = columns[0]
-            new_columns.append(main_column)
+                budget_base_col = None
+                budget_amount_col = None
+                for line_col in line['columns']:
+                    other_col_group_key = line_col['column_group_key']
+                    other_col_options = options['column_groups'][other_col_group_key]
+                    if other_col_options.get('forced_options', {}).get('date') == date_key:
+                        if other_col_options.get('forced_options', {}).get('budget_base') and line_col['figure_type'] == 'monetary':
+                            budget_base_col = line_col
+                        elif other_col_options.get('forced_options', {}).get('compute_budget') == budget_id:
+                            budget_amount_col = line_col
 
-            for budget_column in columns[1:]:
                 value = self._compute_column_percent_comparison_data(
                     options,
-                    main_column['no_format'],
-                    budget_column['no_format'],
-                    green_on_positive=main_column['green_on_positive'],
+                    budget_base_col['no_format'],
+                    budget_amount_col['no_format'],
+                    green_on_positive=budget_base_col['green_on_positive'],
                 )
                 comparison_column = self._build_column_dict(
                     value['name'],
                     {
-                        **budget_column,
-                        'column_group_key': None,
+                        **budget_amount_col,
                         'figure_type': 'string',
                         'comparison_mode': value['mode'],
                     }
                 )
-                new_columns.extend([budget_column, comparison_column])
-        return new_columns
+                line['columns'][col_index] = comparison_column
 
     def _check_groupby_fields(self, groupby_fields_name: list[str] | str):
         """ Checks that each string in the groupby_fields_name list is a valid groupby value for an accounting report (so: it must be a field from
@@ -6915,7 +6960,7 @@ class AccountReportLine(models.Model):
                     options, group_line_dict['columns'][0]['no_format'], group_line_dict['columns'][1]['no_format'], green_on_positive=compared_expression.green_on_positive)
             # Manage budget comparison
             elif options.get('column_percent_comparison') == 'budget':
-                group_line_dict['columns'] = self.report_id._get_budget_column_comparisons(options, group_line_dict)
+                self.report_id._set_budget_column_comparisons(options, group_line_dict)
 
             group_lines_by_keys[grouping_key] = group_line_dict
 

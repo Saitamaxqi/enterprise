@@ -24,12 +24,6 @@
                         >
                             <t t-out="header.name"/>
                         </th>
-                        <!-- Budget comparison column -->
-                        <t t-if="header.forced_options?.compute_budget">
-                            <th class="column_percent_comparison_header">
-                                <i class="fa fa-percent"/>
-                            </th>
-                        </t>
                     </t>
 
                     <t t-if="controller.options.show_horizontal_group_total">

@@ -83,12 +83,18 @@ class AccountReport(models.AbstractModel):
                 }
             })
         if analytic_headers:
-            analytic_headers.append({'name': ''})
-            # We add the analytic layer to the column_headers before creating the columns
-            options['column_headers'] = [
-                *options['column_headers'],
-                analytic_headers,
-            ]
+            has_selected_budgets = any([budget for budget in options.get('budgets', []) if budget['selected']])
+            if has_selected_budgets:
+                # if budget is selected, then analytic headers are placed on the same header level
+                options['column_headers'][-1] = analytic_headers + options['column_headers'][-1]
+            else:
+                # We add the analytic layer to the column_headers before creating the columns
+                analytic_headers.append({'name': ''})
+
+                options['column_headers'] = [
+                    *options['column_headers'],
+                    analytic_headers,
+                ]
 
     @api.model
     def _prepare_lines_for_analytic_groupby(self):

@@ -491,3 +491,136 @@ class TestBudgetReport(TestAccountReportsCommon):
             expected_lines,
             options,
         )
+
+    def test_financial_budget_with_analytic_groupby(self):
+        """ Ensure that when budgets and analytics groupby filters are both active, then their headers are
+        displayed on the same level, and values in the report are properly computed"""
+
+        budget_a = self.env['account.report.budget'].create([{'name': "Budget A"}])
+        budget_b = self.env['account.report.budget'].create([{'name': "Budget B"}])
+
+        budget_a._create_or_update_budget_items(
+            value_to_set=2400,  # 100 each month
+            account_id=self.account_1.id,
+            rounding=self.env.company.currency_id.decimal_places,
+            date_from='2024-01-01',
+            date_to='2025-12-31',
+        )
+        budget_b._create_or_update_budget_items(
+            value_to_set=3000,  # 125 each month
+            account_id=self.account_1.id,
+            rounding=self.env.company.currency_id.decimal_places,
+            date_from='2024-01-01',
+            date_to='2025-12-31',
+        )
+
+        self.env.user.groups_id += self.env.ref('analytic.group_analytic_accounting')
+        self.report.write({'filter_analytic_groupby': True})
+
+        analytic_plan_a = self.env['account.analytic.plan'].create([{
+            'name': 'Plan A',
+        }])
+        analytic_account_1 = self.env['account.analytic.account'].create([{
+            'name': 'Account A1',
+            'plan_id': analytic_plan_a.id
+        }])
+        analytic_account_2 = self.env['account.analytic.account'].create([{
+            'name': 'Account A2',
+            'plan_id': analytic_plan_a.id
+        }])
+
+        moves_2024 = self._create_moves({self.account_1.id: 100}, '2024-01-01', '2024-12-31', to_post=False)
+        moves_2025 = self._create_moves({self.account_1.id: 150}, '2025-01-01', '2025-12-31', to_post=False)
+
+        for move_line in (moves_2024 + moves_2025).line_ids:
+            move_line.analytic_distribution = {str(analytic_account_1.id): 75.0, str(analytic_account_2.id): 25.0}
+
+        (moves_2024 + moves_2025).action_post()
+
+        options = self._generate_options(
+            self.report,
+            '2025-01-01',
+            '2025-12-31',
+            default_options={
+                'comparison': {'filter': 'previous_period', 'number_period': 1},
+                'analytic_accounts_groupby': [analytic_account_1.id, analytic_account_2.id],
+                'budgets': [{'id': budget_a.id, 'selected': True}, {'id': budget_b.id, 'selected': True}],
+            }
+        )
+
+        self.assertEqual(
+            [header['name'] for header in options['column_headers'][1]],
+            ['Account A1', 'Account A2', '', 'Budget A', '%', 'Budget B', '%']
+        )
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #                                   [                             2025                          ]    [                          2024                             ]
+            #                                   [ A1 ] [ A2 ] [ Total ] [ Budget A ] [ % ] [ Budget B ] [ % ]    [ A1 ] [ A2 ] [ Total ] [ Budget A ] [ % ] [ Budget B ] [ % ]
+            [0,                                   1,     2,      3,          4,        5,        6,       7,       8,     9,      10,         11,      12,      13,        14],
+            [
+                ('line_domain',                 1350,   450,    1800,      1200,  '150.0%',  1500,   '120.0%',   900,   300,     1200,      1200,  '100.0%',   1500,   '80.0%'),
+                (self.account_1.display_name,   1350,   450,    1800,      1200,  '150.0%',  1500,   '120.0%',   900,   300,     1200,      1200,  '100.0%',   1500,   '80.0%'),
+                ('line_account_codes',          1350,   450,    1800,      1200,  '150.0%',  1500,   '120.0%',   900,   300,     1200,      1200,  '100.0%',   1500,   '80.0%'),
+                (self.account_1.display_name,   1350,   450,    1800,      1200,  '150.0%',  1500,   '120.0%',   900,   300,     1200,      1200,  '100.0%',   1500,   '80.0%'),
+            ],
+            options,
+        )
+
+    def test_financial_budget_with_several_columns(self):
+        """ Ensure that financial budget feature works properly on reports with several columns,
+        and that percentage column of budget is hidden is the case where multiple monetary columns exist """
+        self.report.write({
+            'column_ids': [
+                Command.create({
+                    'name': "Column test",
+                    'expression_label': 'column_test',
+                }),
+            ],
+        })
+
+        self._create_moves(
+            {
+                self.account_1.id: 100,
+                self.account_2.id: 200,
+                self.account_3.id: 300,
+            },
+            '2020-01-01',
+            '2020-01-01',
+        )
+
+        options = self._generate_options(
+            self.report,
+            '2020-01-01',
+            '2020-12-31',
+            default_options={
+                'comparison': {'filter': 'previous_period', 'number_period': 1},
+                'budgets': [{'id': self.budget_1.id, 'selected': True}],
+            }
+        )
+
+        # Ensure level header colspan is 3 for top header, 2 for the columns + 1 selected budget
+        self.assertEqual(
+            self.report._get_column_headers_render_data(options),
+            {'level_colspan': [3, 2], 'level_repetitions': [1, 2], 'custom_subheaders': []}
+        )
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #                                   [          2020                ]  [            2019              ]
+            #                                   [ col 1 ] [ col 2 ] [ budget 1 ]  [ col 1 ] [ col 2 ] [ budget 1 ]
+            [0,                                     1,        2,         3,          4,        5,         6],
+            [
+                ('line_domain',                   600,        '',      1110,          0,       '',         0),
+                (self.account_1.display_name,     100,        '',      1000,          0,       '',         0),
+                (self.account_2.display_name,     200,        '',         0,          0,       '',         0),
+                (self.account_3.display_name,     300,        '',       100,          0,       '',         0),
+                (self.account_4.display_name,       0,        '',        10,          0,       '',         0),
+                ('line_account_codes',            600,        '',      1110,          0,       '',         0),
+                (self.account_1.display_name,     100,        '',      1000,          0,       '',         0),
+                (self.account_2.display_name,     200,        '',         0,          0,       '',         0),
+                (self.account_3.display_name,     300,        '',       100,          0,       '',         0),
+                (self.account_4.display_name,       0,        '',        10,          0,       '',         0),
+            ],
+            options,
+        )

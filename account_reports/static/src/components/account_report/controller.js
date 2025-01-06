@@ -314,14 +314,6 @@ export class AccountReportController {
         return Boolean(this.visibleAnnotations.length);
     }
 
-    get hasBudgetColumn() {
-        return this.options.column_headers.some((columns) => {
-            return columns.some((column) => {
-                return Boolean(column.forced_options?.compute_budget);
-            });
-        });
-    }
-
     //------------------------------------------------------------------------------------------------------------------
     // Options
     //------------------------------------------------------------------------------------------------------------------

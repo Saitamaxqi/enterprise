@@ -205,7 +205,6 @@
                         <th t-att-colspan="header.get('colspan', column_headers_render_data['level_colspan'][column_header_index]) + (1 if options.get('show_horizontal_group_total') and column_header_first else 0)" class="o_overflow_name">
                             <t t-out="header.get('name')"/>
                         </th>
-                        <th t-if="header.get('forced_options', {}).get('compute_budget')">%</th>
                     </t>
 
                     <th t-if="options.get('show_horizontal_group_total') and not column_header_first">
@@ -237,7 +236,6 @@
                     <th>
                         <t t-out="subheader.get('name')"/>
                     </th>
-                    <th t-if="subheader.get('column_group_key') and 'compute_budget' in subheader['column_group_key']"/>
                 </t>
                 <th t-if="options.get('show_horizontal_group_total')">
                     <t t-out="options['columns'][0].get('name')"/>
