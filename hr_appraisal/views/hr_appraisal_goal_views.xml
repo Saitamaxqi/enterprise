@@ -93,7 +93,7 @@
     </record>
 
     <record id="hr_appraisal_goal_view_graph" model="ir.ui.view">
-        <field name="name">hr.appraisal.goal.view.kanban</field>
+        <field name="name">hr.appraisal.goal.view.graph</field>
         <field name="model">hr.appraisal.goal</field>
         <field name="arch" type="xml">
             <graph string="Goals" type="bar" stacked="0" order="asc" sample="1">
