@@ -1330,7 +1330,7 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
 
                         if move_type == 'invoice' and options['date']['date_from'] <= matching_move.invoice_date.strftime('%Y-%m-%d') <= options['date']['date_to']:
                             # If the linked move invoice date is in the same period as the report, we just need to subtract the refund value
-                            result_dict['value'] -= res_line['amount_total']
+                            result_dict['value'] -= res_line['amount_untaxed']
 
                         elif move_type == 'refund' and matching_move.invoice_date.strftime('%Y-%m-%d') < options['date']['date_from']:
                             # If the linked move is in a previous period, we need to add the amount_residual of the linked move to the result
@@ -1343,7 +1343,7 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
                     elif ((res_line['move_type'] in ('in_invoice', 'out_invoice') and move_type == 'invoice') or
                             (res_line['move_type'] in ('in_refund', 'out_refund') and move_type == 'refund')):
                         # In case the move is matching the section type we always add the value to the result
-                        result_dict['value'] += res_line['amount_total']
+                        result_dict['value'] += res_line['amount_untaxed']
 
             elif current_groupby == 'partner_id':
                 # Compute the sublines for the firsts line (1 & 3)
@@ -1384,7 +1384,7 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
                 account_move.reversed_entry_id AS reversed_entry_id,
                 account_move.partner_id AS partner_id,
                 account_move.id AS move_id,
-                SUM(account_move.amount_total) AS amount_total
+                SUM(account_move.amount_untaxed) AS amount_untaxed
             FROM %(tables)s
             JOIN account_move on account_move.id = account_move_line.move_id
             WHERE %(where_clause)s
