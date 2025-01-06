@@ -117,7 +117,7 @@
                                                     <a class="link"
                                                         t-on-click="(ev) => controller.reportAction(ev,
                                                             'journal_report_tax_tag_template_open_aml', {
-                                                                tag_id: taxGrids[country][grid]['tag_ids'],
+                                                                tag_ids: taxGrids[country][grid]['tag_ids'],
                                                                 date_form: props.line.date_from,
                                                                 date_to: props.line.date_to,
                                                         })"

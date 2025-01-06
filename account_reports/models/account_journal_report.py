@@ -1207,7 +1207,7 @@ class AccountJournalReportHandler(models.AbstractModel):
         tag_ids = params.get('tag_ids')
         domain = (
             self.env['account.report'].browse(options['report_id'])._get_options_domain(options, 'strict_range')
-            + [('tax_tag_ids', 'in', [tag_ids])]
+            + [('tax_tag_ids', 'in', tag_ids)]
             + self.env['account.move.line']._get_tax_exigible_domain()
         )
 
