@@ -347,7 +347,7 @@ class AccountMove(models.Model):
         """
         failed_invoices = self.filtered(lambda x: x.state != 'posted')
         if failed_invoices:
-            invoices_str = ", ".join(failed_invoices.mapped('name'))
+            invoices_str = ", ".join(invoice.name or '/' for invoice in failed_invoices)
             raise UserError(_("Invoices %s are not posted.", invoices_str))
         if len(self.company_id) != 1 or len(self.journal_id) != 1:
             raise UserError(_("You can only process invoices sharing the same company and journal."))
