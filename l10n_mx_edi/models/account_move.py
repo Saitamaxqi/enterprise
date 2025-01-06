@@ -862,11 +862,8 @@ class AccountMove(models.Model):
                 x.attachment_uuid == self.l10n_mx_edi_cfdi_uuid
                 and x.state in ('invoice_sent', 'payment_sent')
             ))[0]
-            if doc.state == 'invoice_sent':
-                return doc.action_request_cancel()
-            else:
-                return doc.action_request_cancel_payment()
-
+            return doc.action_cancel()
+        
         return super().button_request_cancel()
 
     def _reverse_moves(self, default_values_list=None, cancel=False):
