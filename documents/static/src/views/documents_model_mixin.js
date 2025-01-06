@@ -231,7 +231,7 @@ export const DocumentsRecordMixin = (component) => class extends component {
     openFolder() {
         const section = this.model.env.searchModel.getSections()[0];
         const target = this.isShortcut() ? this.shortcutTarget : this;
-        const folderId = target.data.id;
+        const folderId = target.data.active ? target.data.id : "TRASH";
         this.model.env.searchModel.toggleCategoryValue(section.id, folderId);
         this.model.originalSelection = [this.shortcutTarget.resId];
         this.model.env.documentsView.bus.trigger("documents-expand-folder", { folderId: folderId });

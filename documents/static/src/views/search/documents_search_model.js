@@ -59,8 +59,14 @@ export class DocumentsSearchModel extends SearchModel {
      * @override
      */
     _createCategoryTree(sectionId, result) {
-        super._createCategoryTree(...arguments);
         const category = this.sections.get(sectionId);
+        // Clear non-permanent keys, necessary to 'forget' archived folders.
+        for (const folderId of category.values.keys()) {
+            if (typeof folderId === "number") {
+                category.values.delete(folderId);
+            }
+        }
+        super._createCategoryTree(...arguments);
         const findRootId = (folder)=> {
             if (!folder.parentId) {
                 return folder.id;

@@ -178,6 +178,12 @@ export class DocumentsSearchPanel extends SearchPanel {
      */
     async toggleCategory(category, value) {
         if (category.activeValueId !== value.id) {
+            const folder = this.env.searchModel.getFolderById(value.id);
+            const isShortcut = !!folder.shortcut_document_id?.length;
+            if (isShortcut && !this.env.searchModel.getFolderById(folder.shortcut_document_id[0])) {
+                // Unknown folders are in the Trash.
+                return this.env.searchModel.toggleCategoryValue(category.id, "TRASH");
+            }
             this.env.searchModel.toggleCategoryValue(category.id, value.id);
         }
     }
