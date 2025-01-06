@@ -11,7 +11,7 @@ from lxml import etree
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools.misc import file_path
-
+from odoo.tools import float_compare
 
 _logger = logging.getLogger(__name__)
 
@@ -87,7 +87,7 @@ class L10n_Be281_10(models.Model):
 
     @api.depends('xml_file')
     def _compute_validation_state(self):
-        xsd_schema_file_path = file_path('l10n_be_hr_payroll/data/Belcotax-2023.xsd')
+        xsd_schema_file_path = file_path('l10n_be_hr_payroll/data/Belcotax-2024.xsd')
         xsd_root = etree.parse(xsd_schema_file_path)
         schema = etree.XMLSchema(xsd_root)
 
@@ -123,7 +123,7 @@ class L10n_Be281_10(models.Model):
         invalid_employees = employees.filtered(lambda emp: not emp.contract_ids or not emp.contract_id)
         for employee in invalid_employees:
             history = self.env['hr.contract.history'].search([('employee_id', '=', employee.id)], limit=1)
-            contracts = history.contract_ids.filtered(lambda c: c.active and c.state in ['open', 'close'])[0]
+            contracts = history.contract_ids.filtered(lambda c: c.active and c.state in ['open', 'close'])
             employee.contract_id = contracts[0] if contracts else False
         invalid_employees = employees.filtered(lambda emp: not emp.contract_ids or not emp.contract_id)
         if invalid_employees:
@@ -242,7 +242,7 @@ class L10n_Be281_10(models.Model):
         line_codes = [
             'NET', 'PAY_SIMPLE', 'PPTOTAL', 'M.ONSS', 'ATN.INT', 'ATN.MOB', 'ATN.LAP', 'CYCLE',
             'ATN.CAR', 'REP.FEES', 'REP.FEES.VOLATILE', 'PUB.TRANS', 'CAR.PRIV', 'EmpBonus.1', 'GROSS',
-            'DOUBLE.DECEMBER.GROSS', 'DOUBLE.DECEMBER.P.P',
+            'DOUBLE.DECEMBER.GROSS', 'DOUBLE.DECEMBER.P.P', 'ONSS', 'SALARY',
         ]
         all_line_values = all_payslips._get_line_values(line_codes, vals_list=['total', 'quantity'])
 
@@ -254,7 +254,10 @@ class L10n_Be281_10(models.Model):
         holiday_n1_structure = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_departure_n1_holidays')
         termination_fees_structure = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_termination_fees')
 
+        count = 0
         for employee in employee_payslips:
+            count += 1
+            print("Employee %s / %s: %s" % (count, len(employee_payslips), employee.name))
             is_belgium = employee.private_country_id == belgium
             payslips = employee_payslips[employee]
             sequence += 1
@@ -299,8 +302,50 @@ class L10n_Be281_10(models.Model):
             if round(mapped_total['CAR.PRIV'], 2) + round(mapped_total['ATN.CAR'], 2):
                 other_transport_exemption = max_other_transport_exemption * number_of_month / 12.0
 
-            cycle_days_count = sum(all_line_values['CYCLE'][p.id]['quantity'] for p in payslips)
             cycle_days_amount = sum(all_line_values['CYCLE'][p.id]['total'] for p in payslips)
+
+            total_volet_A, total_volet_B = 0, 0
+            for payslip in payslips:
+                if payslip.date_from < date(2024, 4, 1):
+                    total_volet_A += all_line_values['EmpBonus.1'][payslip.id]['total']
+                else:
+                    total_employment_bonus = all_line_values['EmpBonus.1'][payslip.id]['total']
+                    onss = -all_line_values['ONSS'][payslip.id]['total']
+                    if not total_employment_bonus:
+                        continue
+                    localdict = payslip._get_localdict()
+                    localdict['categories']['BRUT'] = all_line_values['SALARY'][payslip.id]['total']
+                    localdict['categories']['ONSS'] = all_line_values['ONSS'][payslip.id]['total']
+                    if payslip.credit_note:
+                        localdict['categories']['BRUT'] = -localdict['categories']['BRUT']
+                        localdict['categories']['ONSS'] = -localdict['categories']['ONSS']
+                        total_employment_bonus = -total_employment_bonus
+                        onss = -onss
+                    bonus_volet_A = payslip._get_employment_bonus_employees_volet_A(localdict)
+                    bonus_volet_B = payslip._get_employment_bonus_employees_volet_B(localdict)
+                    bonus_volet_A = min(bonus_volet_A, onss)
+                    bonus_volet_B = min(onss - bonus_volet_A, bonus_volet_B)
+                    if not bonus_volet_A and not bonus_volet_B and total_employment_bonus:
+                        bonus_volet_A = total_employment_bonus
+                    if round(abs(total_employment_bonus - (bonus_volet_A + bonus_volet_B)), 2) > 0.01:
+                        if bonus_volet_A < total_employment_bonus and payslip.edited:
+                            bonus_volet_B = total_employment_bonus - bonus_volet_A
+                        elif bonus_volet_A > total_employment_bonus and payslip.edited:
+                            bonus_volet_A = total_employment_bonus
+                            bonus_volet_B = 0
+                        else:
+                            raise UserError(_("Employment bonus: Volet A (%(bonus_volet_A)s €) + Volet B (%(bonus_volet_B)s €) not equal to total (%(total_employment_bonus)s) for payslip (id=%(payslip_id)s) of employee %(employee_name)s",
+                                bonus_volet_A=bonus_volet_A,
+                                bonus_volet_B=bonus_volet_B,
+                                total_employment_bonus=total_employment_bonus,
+                                payslip_id=payslip.id,
+                                employee_name=payslip.employee_id.name))
+                    if payslip.credit_note:
+                        total_volet_A -= bonus_volet_A
+                        total_volet_B -= bonus_volet_B
+                    else:
+                        total_volet_A += bonus_volet_A
+                        total_volet_B += bonus_volet_B
 
             sheet_values = {
                 'employee': employee,
@@ -321,7 +366,6 @@ class L10n_Be281_10(models.Model):
                 'f2112_buitenlandspostnummer': employee.private_zip if not is_belgium else '0',
                 'f2114_voornamen': first_name,
                 'f10_2031_associationactivity': 0,
-                'f10_2034_ex': 0,
                 'f10_2035_verantwoordingsstukken': 0,
                 'f10_2036_inwonersdeenfr': 0,
                 'f10_2037_vergoedingkosten': 0,
@@ -334,7 +378,6 @@ class L10n_Be281_10(models.Model):
                 # 'f10_2055_datumvanindienstt': employee.first_contract_date.strftime('%d/%m/%Y') if employee.first_contract_date.year == self.year else '',
                 'f10_2055_datumvanindienstt': first_contract_date.strftime('%d-%m-%Y') if first_contract_date else '',
                 'f10_2056_datumvanvertrek': employee.end_notice_period.strftime('%d-%m-%Y') if employee.end_notice_period and employee.end_notice_period > first_contract_date else '',
-                'f10_2058_km': int(cycle_days_count * employee.km_home_work * 2),
                 # f10_2059_totaalcontrole
                 'f10_2060_gewonebezoldiginge': _to_eurocent(round(common_gross, 2)),
                 'f10_2061_bedragoveruren300horeca': 0,
@@ -347,7 +390,6 @@ class L10n_Be281_10(models.Model):
                 'f10_2068_rechtvermindering57_75': 0,
                 'f10_2069_fidelitystamps': 0,
                 'f10_2070_decemberremuneration': 0,
-                'f10_2071_totalevergoeding': _to_eurocent(round(cycle_days_amount, 2)),
                 'f10_2072_pensioentoezetting':  0,
                 'f10_2073_tipamount': 0,
                 'f10_2074_bedrijfsvoorheffing': _to_eurocent(round(mapped_total['PPTOTAL'] - mapped_total['DOUBLE.DECEMBER.P.P'], 2)),  # 2.074 = 2.131 + 2.133. YTI Is it ok to include PROF_TAX / should include Double holidays?
@@ -359,7 +401,6 @@ class L10n_Be281_10(models.Model):
                 # f10_2077_totaal
                 'f10_2078_compensationamountwithoutstandards': _to_eurocent(round(mapped_total['REP.FEES.VOLATILE'], 2)),
                 'f10_2079_covidovertimeremuneration2023': 0,
-                'f10_2080_detacheringsvergoed': 0,
                 'f10_2081_gewonebijdragenenpremies': 0,
                 'f10_2082_bedrag': _to_eurocent(round(warrant_gross, 2)),
                 'f10_2083_bedrag': 0,
@@ -383,7 +424,7 @@ class L10n_Be281_10(models.Model):
                 'f10_2110_aantaloveruren360': 0,
                 'f10_2111_achterstalloveruren300horeca': 0,
                 'f10_2113_forfaitrsz': 0,
-                'f10_2115_bonus': _to_eurocent(round(mapped_total['EmpBonus.1'], 2)),
+                'f10_2115_bonus': _to_eurocent(round(total_volet_A, 2)),
                 'f10_2116_badweatherstamps': 0,
                 'f10_2117_nonrecurrentadvantages': 0,
                 'f10_2118_overtimehours180': 0,
@@ -403,7 +444,6 @@ class L10n_Be281_10(models.Model):
                 'f10_2132_horeca': 0,
                 'f10_2133_bedrijfsvoorheffingbuitenlvenverbondenwerkgever': 0,
                 'f10_2134_totaalbedragmobiliteitsbudget': 0,
-                'f10_2135_amountpaidforvolontarysuplementaryhourscovid': 0,
                 'f10_2136_amountcontractofstudent': 0,
                 'f10_2137_amountstudentspecificperiod': 0,
                 'f10_2138_covidovertimehours2023': 0,
@@ -430,12 +470,11 @@ class L10n_Be281_10(models.Model):
                 'f10_2187_amountother3': 0,
                 'f10_2188_amountother4': 0,
                 'f10_2189_purchasingbonus': 0,
-                'f10_2190_covidovertimeremunerationfirstsemester': 0,
-                'f10_2191_covidovertimeremunerationsecondsemester': 0,
-                'f10_2192_covidovertimehoursfirstsemester': 0,
-                'f10_2193_covidovertimehourssecondsemester': 0,
-                'f10_2194_covidovertimehourstotal': 0,
+                'f10_2195_relanceovertimeremuneration': 0,
+                'f10_2196_relanceovertimehours': 0,
                 'f10_2197_covidovertimeremuneration2022': 0,
+                'f10_2197_covidovertimeremuneration2022': 0,
+                'f10_2198_flexijobnotpension': 0,
                 'f10_2199_covidovertimehours2022': 0,
                 'f10_2200_compensationwithstandards': _to_eurocent(round(mapped_total['REP.FEES'], 2)),
                 'f10_2201_compensationwithdocuments': 0,
@@ -443,6 +482,10 @@ class L10n_Be281_10(models.Model):
                 'f10_2203_amount': 0,
                 'f10_2204_repaidsums': 0,
                 'f10_2206_grossamountremuneration': 0,
+                'f10_2207_travelbicycleorspeedpedelec': _to_eurocent(round(cycle_days_amount, 2)),
+                'f10_2208_benefitprovisionbicycleorspeedpedelec': 0,
+                'f10_2209_overtimehours': 0,
+                'f10_2210_workbonus5254': _to_eurocent(max(round(total_volet_B, 2), 0)),
             }
             # Le code postal belge (2016) et le code postal étranger (2112) ne peuvent être
             # ni remplis, ni vides tous les deux.
@@ -464,7 +507,10 @@ class L10n_Be281_10(models.Model):
             sheet_values['f10_2077_totaal'] = sum(sheet_values[code] for code in [
                 'f10_2086_openbaargemeenschap',
                 'f10_2087_bedrag',
-                'f10_2088_andervervoermiddel'])
+                'f10_2088_andervervoermiddel',
+                'f10_2207_travelbicycleorspeedpedelec',
+                'f10_2208_benefitprovisionbicycleorspeedpedelec',
+            ])
 
             # Somme de 2060 à 2088, f10_2062_totaal et f10_2077_totaal inclus
             sheet_values['f10_2059_totaalcontrole'] = sum(sheet_values[code] for code in [
@@ -479,7 +525,6 @@ class L10n_Be281_10(models.Model):
                 'f10_2068_rechtvermindering57_75',
                 'f10_2069_fidelitystamps',
                 'f10_2070_decemberremuneration',
-                'f10_2071_totalevergoeding',
                 'f10_2072_pensioentoezetting',
                 'f10_2073_tipamount',
                 'f10_2074_bedrijfsvoorheffing',
@@ -487,7 +532,6 @@ class L10n_Be281_10(models.Model):
                 'f10_2076_voordelenaardbedrag',
                 'f10_2077_totaal',
                 'f10_2078_compensationamountwithoutstandards',
-                'f10_2080_detacheringsvergoed',
                 'f10_2081_gewonebijdragenenpremies',
                 'f10_2082_bedrag',
                 'f10_2083_bedrag',
@@ -555,7 +599,9 @@ class L10n_Be281_10(models.Model):
         result = {}
         for sheet_values in rendering_data['employees_data']:
             for key, value in sheet_values.items():
-                if isinstance(value, int) and value == 0:
+                if key == "f10_2090_outborderdays":
+                    sheet_values[key] = _("%s days", value)
+                elif isinstance(value, int) and value == 0:
                     sheet_values[key] = '0.00 €'
                 elif isinstance(value, float):
                     sheet_values[key] = '{:,.2f} €'.format(value)

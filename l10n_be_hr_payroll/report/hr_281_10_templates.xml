@@ -91,11 +91,11 @@
                                         <div class="col-11 fw-bold offset-1">d) Stock options</div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-6 fw-bold offset-2">1° Awarded in 2023</div>
+                                        <div class="col-6 fw-bold offset-2">1° Awarded in 2024</div>
                                         <div class="col-4 text-end"><span t-esc="report_data['f10_2082_bedrag']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-6 fw-bold offset-2">2° Awarded before 2023</div>
+                                        <div class="col-6 fw-bold offset-2">2° Awarded before 2024</div>
                                         <div class="col-4 text-end"><span t-esc="report_data['f10_2083_bedrag']"/></div>
                                     </div>
                                     <div class="row border-top">
@@ -285,7 +285,7 @@
                                 <div class="col-12">
                                     <div class="row border-top">
                                         <div class="col-12">
-                                            <span class="text-start text-uppercase fw-bold">14. Contribution to travel costs:</span>
+                                            <span class="text-start text-uppercase fw-bold">14. Allowances and benefits for travel from home to work:</span>
                                         </div>
                                     </div>
                                     <div class="row border-top">
@@ -308,7 +308,15 @@
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2088_andervervoermiddel']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-1">Total: (14a + 14b + 14c)</div>
+                                        <div class="col-9 fw-bold offset-1">d) Travel by bicycle or speed pedelec</div>
+                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2207_travelbicycleorspeedpedelec']"/></div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-9 fw-bold offset-1">e) Advantage resulting from the provision of a cycle or a speed-pedelec</div>
+                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2208_benefitprovisionbicycleorspeedpedelec']"/></div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-8 fw-bold offset-1">Total: (14a + 14b + 14c + 14d + 14e)</div>
                                         <div class="col-1 text-end">254</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2077_totaal']"/></div>
                                     </div>
@@ -439,7 +447,12 @@
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2142_totalovertimehours180']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-7 fw-bold offset-2">2° which are taken into account for the limit up to 360 hours </div>
+                                        <div class="col-7 fw-bold offset-2">2° - provided from 01.06.2024 and which are taken into consideration for the limit up to 280 hours</div>
+                                        <div class="col-1 text-end">238</div>
+                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2209_overtimehours']"/></div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-7 fw-bold offset-2">3° which are taken into account for the limit up to 360 hours </div>
                                         <div class="col-1 text-end">317</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2110_aantaloveruren360']"/></div>
                                     </div>
@@ -470,11 +483,24 @@
                                 <div class="col-12">
                                     <div class="row border-top">
                                         <div class="col-12">
-                                            <span class="text-start text-uppercase fw-bold">19. Remuneration which is taken into account for the exemption for voluntary overtime or net overtime hours in the public sector</span>
+                                            <span class="text-start text-uppercase fw-bold">19. Remuneration which is taken into account for the exemption for voluntary overtime</span>
                                         </div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-1">a) Voluntary overtime worked from 01.07.2023 as part of the relaunch:</div>
+                                        <div class="col-8 fw-bold offset-1">a) Provided in 2024 as part of the relaunch:</div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-7 fw-bold offset-2">1) Remuneration</div>
+                                        <div class="col-1 text-end">368</div>
+                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2195_relanceovertimeremuneration']"/></div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-7 fw-bold offset-2">2) Overtime hours worked and paid in 2024</div>
+                                        <div class="col-1 text-end">369</div>
+                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2196_relanceovertimehours']"/></div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-8 fw-bold offset-1">b) Voluntary overtime worked between 01.07.2023 and 31.12.2023 as part of the relaunch:</div>
                                     </div>
                                     <div class="row border-top">
                                         <div class="col-7 fw-bold offset-2">1) Remuneration</div>
@@ -482,12 +508,12 @@
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2079_covidovertimeremuneration2023']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-7 fw-bold offset-2">2) Overtime hours worked and paid from 01.07.2023</div>
+                                        <div class="col-7 fw-bold offset-2">2) Overtime hours worked and paid between 01.07.2023 and 31.12.2023</div>
                                         <div class="col-1 text-end">382</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2138_covidovertimehours2023']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-1">b) Voluntary overtime worked in 2022 as part of the recovery</div>
+                                        <div class="col-8 fw-bold offset-1">c) Voluntary overtime worked in 2022 as part of the recovery</div>
                                     </div>
                                     <div class="row border-top">
                                         <div class="col-7 fw-bold offset-2">1) Remuneration</div>
@@ -495,44 +521,9 @@
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2197_covidovertimeremuneration2022']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-7 fw-bold offset-2">2) Overtime hours worked in 2022 and paid in 2023</div>
+                                        <div class="col-7 fw-bold offset-2">2) Overtime hours worked in 2022 and paid in 2024</div>
                                         <div class="col-1 text-end">379</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2199_covidovertimehours2022']"/></div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-1">c) Provided in 2021 as part of the fight against COVID-19 and / or as part of the recovery plan or net overtime worked in 2021 in the public sector</div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-2">1) Remuneration</div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-7 fw-bold offset-3">- for overtime worked between 01.01.2021 and 30.06.2021 included with employers belonging to crucial sectors or in the public sector</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2190_covidovertimeremunerationfirstsemester']"/></div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-7 fw-bold offset-3">- for overtime worked between 01.07.2021 and 31.12.2021 as part of the recovery plan</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2191_covidovertimeremunerationsecondsemester']"/></div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-6 fw-bold offset-3">TOTAL</div>
-                                        <div class="col-1 text-end">310</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2135_amountpaidforvolontarysuplementaryhourscovid']"/></div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-2">2) Overtime</div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-7 fw-bold offset-3">- provided from 01.01.2021 to 30.06.2021 inclusive with employers belonging to crucial sectors or in the public sector and paid in 2023</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2192_covidovertimehoursfirstsemester']"/></div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-7 fw-bold offset-3">- provided from 01.07.2021 to 31.12.2021 included as part of the recovery plan and paid in 2023</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2193_covidovertimehourssecondsemester']"/></div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-6 fw-bold offset-3">TOTAL</div>
-                                        <div class="col-1 text-end">311</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2194_covidovertimehourstotal']"/></div>
                                     </div>
                                 </div>
                             </div>
@@ -554,7 +545,35 @@
                                 <div class="col-12">
                                     <div class="row border-top">
                                         <div class="col-12">
-                                            <span class="text-start text-uppercase fw-bold">21. Withholding Taxes</span>
+                                            <span class="text-start text-uppercase fw-bold">21. Remuneration for a flexi-job carried out by a non-pensioner which is taken into account for the exemption</span>
+                                        </div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-8 fw-bold offset-1">Amount</div>
+                                        <div class="col-1 text-end">262</div>
+                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2198_flexijobnotpension']"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row border border-top-0">
+                                <div class="col-12">
+                                    <div class="row border-top">
+                                        <div class="col-12">
+                                            <span class="text-start text-uppercase fw-bold">22. Allowances for volunteer firefighters, volunteer ambulance drivers and volunteer civil protection officers who are eligible for exemption</span>
+                                        </div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-8 fw-bold offset-1">Amount</div>
+                                        <div class="col-1 text-end">391</div>
+                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2180_onkostenbrandweerenambulanciers']"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row border border-top-0">
+                                <div class="col-12">
+                                    <div class="row border-top">
+                                        <div class="col-12">
+                                            <span class="text-start text-uppercase fw-bold">23. Withholding Taxes</span>
                                         </div>
                                     </div>
                                     <div class="row border-top">
@@ -576,7 +595,7 @@
                                 <div class="col-12">
                                     <div class="row border-top">
                                         <div class="col-12">
-                                            <span class="text-start text-uppercase fw-bold">22. Special contributions for social security</span>
+                                            <span class="text-start text-uppercase fw-bold">24. Special contributions for social security</span>
                                         </div>
                                     </div>
                                     <div class="row border-top">
@@ -590,7 +609,7 @@
                                 <div class="col-12">
                                     <div class="row border-top">
                                         <div class="col-12">
-                                            <span class="text-start text-uppercase fw-bold">23. Public sector staff without an employment contract</span>
+                                            <span class="text-start text-uppercase fw-bold">25. Public sector staff without an employment contract</span>
                                         </div>
                                     </div>
                                     <div class="row border-top">
@@ -611,13 +630,18 @@
                                 <div class="col-12">
                                     <div class="row border-top">
                                         <div class="col-12">
-                                            <span class="text-start text-uppercase fw-bold">24. Employment bonus</span>
+                                            <span class="text-start text-uppercase fw-bold">26. Employment bonus</span>
                                         </div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-1">Amount</div>
+                                        <div class="col-8 fw-bold offset-1">a) which is taken into account for the tax credit of 33.14%</div>
                                         <div class="col-1 text-end">284</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2115_bonus']"/></div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-8 fw-bold offset-1">b) which is taken into account for the tax credit of 52.54%</div>
+                                        <div class="col-1 text-end">360</div>
+                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2210_workbonus5254']"/></div>
                                     </div>
                                 </div>
                             </div>
@@ -625,22 +649,11 @@
                                 <div class="col-12">
                                     <div class="row border-top">
                                         <div class="col-12">
-                                            <span class="text-start text-uppercase fw-bold">25. Miscellaneous information</span>
+                                            <span class="text-start text-uppercase fw-bold">27. Miscellaneous information</span>
                                         </div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-11 fw-bold offset-1">a) Movements by cycle or by speed-pedelec</div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-2">* Km</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2058_km']"/></div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-2">* Total compensation</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2071_totalevergoeding']"/></div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-11 fw-bold offset-1">b) Employer-specific expenses</div>
+                                        <div class="col-11 fw-bold offset-1">a) Employer-specific expenses</div>
                                     </div>
                                     <div class="row border-top">
                                         <div class="col-8 fw-bold offset-2">- lump sum reimbursements based on serious standards</div>
@@ -659,7 +672,7 @@
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2084_mobiliteitsvergoedi']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-11 fw-bold offset-1">c) Tips</div>
+                                        <div class="col-11 fw-bold offset-1">b) Tips</div>
                                     </div>
                                     <div class="row border-top">
                                         <div class="col-8 fw-bold offset-2">* code</div>
@@ -674,41 +687,37 @@
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2073_tipamount']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-11 fw-bold offset-1">d) Frontier workers</div>
+                                        <div class="col-11 fw-bold offset-1">c) Frontier workers</div>
                                     </div>
                                     <div class="row border-top">
                                         <div class="col-8 fw-bold offset-2">* number of days out of border area</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2090_outborderdays']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-9 fw-bold offset-1">e) Exempt income received in fulfillment of a flexi-job contract</div>
+                                        <div class="col-9 fw-bold offset-1">d) Income exempt from a flexi-job employment contract exercised by a pensioner</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2166_flexi_job']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-9 fw-bold offset-1">f) Beneficiary premium</div>
+                                        <div class="col-9 fw-bold offset-1">e) Beneficiary premium</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2177_winstpremies']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-9 fw-bold offset-1">g) Mobility budget: total amount</div>
+                                        <div class="col-9 fw-bold offset-1">f) Mobility budget: total amount</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2134_totaalbedragmobiliteitsbudget']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-9 fw-bold offset-1">h) First employment agreement: compensatory supplement</div>
+                                        <div class="col-9 fw-bold offset-1">g) First employment agreement: compensatory supplement</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2179_startersjob']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-9 fw-bold offset-1">i) Volunteer firefighter, volunteer ambulance driver and volunteer Civil Protection agent: allowances which are taken into account for the exemption</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2180_onkostenbrandweerenambulanciers']"/></div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-11 fw-bold offset-1">j) Student job</div>
+                                        <div class="col-11 fw-bold offset-1">h) Student job</div>
                                     </div>
                                     <div class="row border-top">
                                         <div class="col-8 fw-bold offset-2">* total amount of all remuneration paid under a student employment contract</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2136_amountcontractofstudent']"/></div>
                                     </div>
                                     <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-2">* specific remuneration paid in 2023 for specific services performed in 2023, 2022, 2021 and/or 2020</div>
+                                        <div class="col-8 fw-bold offset-2">* specific remuneration paid in 2024 for specific services performed in 2023, 2022, 2021 and/or 2020</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2137_amountstudentspecificperiod']"/></div>
                                     </div>
 
@@ -718,7 +727,7 @@
                                 <div class="col-12">
                                     <div class="row border-top">
                                         <div class="col-12">
-                                            <span class="text-start text-uppercase fw-bold">26. Remuneration and other benefits received from a related foreign company</span>
+                                            <span class="text-start text-uppercase fw-bold">28. Remuneration and other benefits received from a related foreign company</span>
                                         </div>
                                     </div>
                                     <div class="row border-top">
@@ -775,28 +784,13 @@
                                         <div class="col-7 fw-bold offset-3">Amount</div>
                                         <div class="col-2 text-end"><span t-esc="report_data['f10_2188_amountother4']"/></div>
                                     </div>
-                                    <div style="page-break-before: always;"/>
-                                    <div class="row border-top">
-                                        <div class="col-11 fw-bold offset-1">* Compensation granted to insurance inspectors in reimbursement of costs</div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-2">Circ. administrative 19.03.1982 Ci. RH. 241/315.785</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2037_vergoedingkosten']"/></div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-11 fw-bold offset-1">* Mention: MOBILITY ALLOWANCE</div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-2">Total amount paid or awarded (the taxable part must be added to Total remuneration 2.060)</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2084_mobiliteitsvergoedi']"/></div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="row border border-top-0">
                                 <div class="col-12">
                                     <div class="row border-top">
                                         <div class="col-10">
-                                            <span class="text-start text-uppercase fw-bold">27. Foreign seasonal worker in agriculture and horticulture subject to professional withholding tax who provided a residence certificate</span>
+                                            <span class="text-start text-uppercase fw-bold">29. Foreign seasonal worker in agriculture and horticulture subject to professional withholding tax who provided a residence certificate</span>
                                         </div>
                                         <div class="col-2 text-end">
                                             <t t-if="report_data['f10_2038_seasonalworker'] != '0.00 €'">
@@ -809,32 +803,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row border border-top-0">
-                                <div class="col-12">
-                                    <div class="row border-top">
-                                        <div class="col-10">
-                                            <span class="text-start text-uppercase fw-bold">28. Foreign executive or researcher</span>
-                                        </div>
-                                        <div class="col-2 text-end">
-                                            <t t-if="report_data['f10_2034_ex'] != '0.00 €'">
-                                                <span>Yes</span>
-                                            </t>
-                                            <t t-if="report_data['f10_2034_ex'] == '0.00 €'">
-                                                <span>No</span>
-                                            </t>
-                                        </div>
-                                    </div>
-                                    <div class="row border-top">
-                                        <div class="col-8 fw-bold offset-2">Secondment allowance</div>
-                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2080_detacheringsvergoed']"/></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div style="page-break-before: always;"/>
                             <div class="row border border-top-0">
                                 <div class="col-12">
                                     <div class="row border-top">
                                         <div class="col-12">
-                                            <span class="text-start text-uppercase fw-bold">29. Special tax regimes for inpatriate taxpayers and inpatriate researchers</span>
+                                            <span class="text-start text-uppercase fw-bold">30. Special tax regimes for inpatriate taxpayers and inpatriate researchers</span>
                                         </div>
                                     </div>
                                     <div class="row border-top">
@@ -855,7 +829,7 @@
                                 <div class="col-12">
                                     <div class="row border-top">
                                         <div class="col-10">
-                                            <span class="text-start text-uppercase fw-bold">30. Remuneration paid or awarded for services carried out within the framework of association activities after exceeding an hourly limit</span>
+                                            <span class="text-start text-uppercase fw-bold">31. Remuneration paid or awarded for services carried out within the framework of association activities after exceeding an hourly limit</span>
                                         </div>
                                         <div class="col-2 text-end">
                                             <t t-if="report_data['f10_2031_associationactivity'] != '0.00 €'">
@@ -865,6 +839,13 @@
                                                 <span>No</span>
                                             </t>
                                         </div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-11 fw-bold offset-1">* Compensation granted to insurance inspectors in reimbursement of costs</div>
+                                    </div>
+                                    <div class="row border-top">
+                                        <div class="col-8 fw-bold offset-2">Circ. administrative 19.03.1982 Ci. RH. 241/315.785</div>
+                                        <div class="col-2 text-end"><span t-esc="report_data['f10_2037_vergoedingkosten']"/></div>
                                     </div>
                                 </div>
                             </div>

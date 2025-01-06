@@ -436,9 +436,6 @@
                                             la date du 31 décembre de l'année des revenus. -->
                                             <f10_2056_datumvanvertrek t-esc="employee_data['f10_2056_datumvanvertrek']"/>
 
-                                            <!-- a) Déplacements par cycle ou par speed-pedelec  -->
-                                            <f10_2058_km t-esc="employee_data['f10_2058_km']"/>
-
                                             <!-- = somme mathématique des
                                             zones 2.060 à 2.088 -->
                                             <f10_2059_totaalcontrole t-esc="employee_data['f10_2059_totaalcontrole']"/>
@@ -540,10 +537,6 @@
                                             communales). -->
                                             <f10_2070_decemberremuneration t-esc="employee_data['f10_2070_decemberremuneration']"/>
 
-                                            <!-- ) Déplacements par cycle ou par speed-pedelec
-                                            * Indemnité totale 2.071-->
-                                            <f10_2071_totalevergoeding t-esc="employee_data['f10_2071_totalevergoeding']"/>
-
                                             <!-- 19. Retenues pour pensions complémentaires
                                              a) Cotisations et primes normales 285 2.081
                                              b) Cotisations et primes pour la continuation individuelle 283 2.072
@@ -579,9 +572,6 @@
                                             <f10_2078_compensationamountwithoutstandards t-esc="employee_data['f10_2078_compensationamountwithoutstandards']"/>
 
                                             <f10_2079_covidovertimeremuneration2023 t-esc="employee_data['f10_2079_covidovertimeremuneration2023']"/>
-
-                                            <!-- 28. Rémunérations et autres avantages reçus d’une société étrangère liée  -->
-                                            <f10_2080_detacheringsvergoed t-esc="employee_data['f10_2080_detacheringsvergoed']"/>
 
                                             <!-- 19. Retenues pour pensions complémentaires
                                              a) Cotisations et primes normales 285 2.081
@@ -885,14 +875,6 @@
                                             <!--  h) Budget de mobilité: montant total 2.134 -->
                                             <f10_2134_totaalbedragmobiliteitsbudget t-esc="employee_data['f10_2134_totaalbedragmobiliteitsbudget']"/>
 
-                                            <!-- 22. Rémunérations qui entrent en ligne de compte pour l’exonération pour les
-                                            heures supplémentaires volontaires prestées en raison de la pandémie du
-                                            COVID-19 du 01.04 au 30.06.2020 inclus auprès d’employeurs appartenant aux
-                                            secteurs critiques et/ou du 01.10 au 31.12.2020 auprès d’employeurs appartenant
-                                            aux secteurs cruciaux :
-                                            a) Rémunérations 306 2.135 -->
-                                            <f10_2135_amountpaidforvolontarysuplementaryhourscovid t-esc="employee_data['f10_2135_amountpaidforvolontarysuplementaryhourscovid']"/>
-
                                             <!-- k) Job d’étudiant4
                                             :
                                             • montant total de toutes les rémunérations payées dans le cadre d'un
@@ -1009,18 +991,17 @@
                                             <!-- 28. Rémunérations et autres avantages reçus d’une société étrangère liée  -->
                                             <f10_2187_amountother3 t-esc="employee_data['f10_2187_amountother3']"/>
 
-                                            <!-- 28. Rémunérations et autres avantages reçus d’une société étrangère liée  -->
-                                            <f10_2190_covidovertimeremunerationfirstsemester t-esc="employee_data['f10_2190_covidovertimeremunerationfirstsemester']"/>
+                                            <f10_2188_amountother4 t-esc="employee_data['f10_2188_amountother4']"/>
 
-                                            <f10_2191_covidovertimeremunerationsecondsemester t-esc="employee_data['f10_2191_covidovertimeremunerationsecondsemester']"/>
+                                            <f10_2189_purchasingbonus t-esc="employee_data['f10_2189_purchasingbonus']"/>
 
-                                            <f10_2192_covidovertimehoursfirstsemester t-esc="employee_data['f10_2192_covidovertimehoursfirstsemester']"/>
+                                            <f10_2195_relanceovertimeremuneration t-esc="employee_data['f10_2195_relanceovertimeremuneration']"/>
 
-                                            <f10_2193_covidovertimehourssecondsemester t-esc="employee_data['f10_2193_covidovertimehourssecondsemester']"/>
-
-                                            <f10_2194_covidovertimehourstotal t-esc="employee_data['f10_2194_covidovertimehourstotal']"/>
+                                            <f10_2196_relanceovertimehours t-esc="employee_data['f10_2196_relanceovertimehours']"/>
 
                                             <f10_2197_covidovertimeremuneration2022 t-esc="employee_data['f10_2197_covidovertimeremuneration2022']"/>
+
+                                            <f10_2198_flexijobnotpension t-esc="employee_data['f10_2198_flexijobnotpension']"/>
 
                                             <f10_2199_covidovertimehours2022 t-esc="employee_data['f10_2199_covidovertimehours2022']"/>
 
@@ -1035,6 +1016,14 @@
                                             <f10_2204_repaidsums t-esc="employee_data['f10_2204_repaidsums']"/>
 
                                             <f10_2206_grossamountremuneration t-esc="employee_data['f10_2206_grossamountremuneration']"/>
+
+                                            <f10_2207_travelbicycleorspeedpedelec t-esc="employee_data['f10_2207_travelbicycleorspeedpedelec']"/>
+
+                                            <f10_2208_benefitprovisionbicycleorspeedpedelec t-esc="employee_data['f10_2208_benefitprovisionbicycleorspeedpedelec']"/>
+
+                                            <f10_2209_overtimehours t-esc="employee_data['f10_2209_overtimehours']"/>
+
+                                            <f10_2210_workbonus5254 t-esc="employee_data['f10_2210_workbonus5254']"/>
 
                                         </Fiche28110>
                                     </t>

@@ -2010,7 +2010,7 @@ msgstr "<strong>3. Débiteur des revenus :</strong> <br/>"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_281_10
 msgid "<strong>4. Beneficiary:</strong><br/>"
-msgstr "<strong>4. Expéditeur :</strong><br/>"
+msgstr "<strong>4. Destinataire:</strong><br/>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_281_10
