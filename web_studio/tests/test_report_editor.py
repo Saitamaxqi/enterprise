@@ -1296,6 +1296,7 @@ class TestReportEditorUIUnit(HttpCase):
         self.start_tour(self.tour_url, "web_studio.test_image_crop", login="admin")
 
     def test_add_non_searchable_field(self):
+        self.assertFalse(self.env["res.partner"].fields_get(["avatar_1024"])["avatar_1024"]["searchable"])
         with self.with_user("admin"):
             partner = self.env["res.partner"].search([], limit=1)
         partner.image_1024 = "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAF0lEQVR4nGJxKFrEwMDAxAAGgAAAAP//D+IBWx9K7TUAAAAASUVORK5CYII="

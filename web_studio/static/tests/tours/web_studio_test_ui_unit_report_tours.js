@@ -887,7 +887,7 @@ registry.category("web_tour.tours").add("web_studio.test_add_non_searchable_fiel
         {
             trigger:
                 ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_search input",
-            run: "edit New",
+            run: "edit Avatar",
         },
         {
             trigger: "[data-name=avatar_1024] > button.o_model_field_selector_popover_item_name",
