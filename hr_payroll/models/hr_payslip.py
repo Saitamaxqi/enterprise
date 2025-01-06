@@ -564,17 +564,23 @@ class HrPayslip(models.Model):
             )
         formview_ref = self.env.ref('hr_payroll.view_hr_payslip_form', False)
         treeview_ref = self.env.ref('hr_payroll.view_hr_payslip_tree', False)
-        return {
-            'name': ("Refund Payslip"),
-            'view_mode': 'list, form',
-            'view_id': False,
-            'res_model': 'hr.payslip',
-            'type': 'ir.actions.act_window',
-            'target': 'current',
-            'domain': [('id', 'in', copied_payslips.ids)],
-            'views': [(treeview_ref and treeview_ref.id or False, 'list'), (formview_ref and formview_ref.id or False, 'form')],
-            'context': {}
-        }
+        action = {
+                'name': ("Refund Payslip"),
+                'view_id': False,
+                'res_model': 'hr.payslip',
+                'type': 'ir.actions.act_window',
+                'target': 'current',
+                'domain': [('id', 'in', copied_payslips.ids)],
+                'context': {}
+            }
+        if len(copied_payslips.ids) > 1:
+            action['view_mode'] = 'list,form'
+            action['views'] = [(treeview_ref and treeview_ref.id or False, 'list'), (formview_ref and formview_ref.id or False, 'form')]
+        else:
+            action['view_mode'] = 'form'
+            action['views'] = [(formview_ref and formview_ref.id or False, 'form')]
+            action['res_id'] = copied_payslips.ids[0]
+        return action
 
     @api.ondelete(at_uninstall=False)
     def _unlink_if_draft_or_cancel(self):
