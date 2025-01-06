@@ -128,6 +128,8 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
         exempt_reason = line.move_id.invoice_line_ids.tax_ids.filtered(lambda t: t.l10n_es_exempt_reason == 'E2')
         sign = -1 if line.move_id.is_sale_document(include_receipts=True) else 1
 
+        delivery_date = line.move_id.delivery_date
+
         common_line_vals = {
             'year': line.date.year,
             'period': str(get_quarter_number(line.date)) + 'T',
@@ -142,9 +144,9 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
                 'in_receipt': 'F5' if tax.l10n_es_type == 'dua' else 'F1',
                 'in_refund': 'R4',
             }[line.move_type],
-            'date_expedition': format_date(self.env, line.date.isoformat(), date_format='MM/dd/yyyy'),
-            'date_transaction': format_date(self.env, line.invoice_date.isoformat(),
-                                            date_format='MM/dd/yyyy') if line.date != line.invoice_date else '',
+            'date_expedition': format_date(self.env, line.invoice_date, date_format='MM/dd/yyyy'),
+            'date_transaction': format_date(self.env, delivery_date,
+                                            date_format='MM/dd/yyyy') if delivery_date and delivery_date != line.invoice_date else '',
             'partner_name': partner.name,
             'operation_code': '02' if exempt_reason else '01',
             'total_amount': line.balance * sign,
