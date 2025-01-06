@@ -11,6 +11,7 @@
                     <field name="l10n_in_uan" placeholder="12 digit Universal Account Number"/>
                     <field name="l10n_in_esic_number" placeholder="17 digit ESIC Number"/>
                     <field name="l10n_in_pan" placeholder="10 digit Permanent Account Number"/>
+                    <field name="l10n_in_lwf_account_number" placeholder="Labour Welfare Fund Account Number"/>
                 </group>
             </xpath>
             <xpath expr="//field[@name='emergency_contact']" position="after">

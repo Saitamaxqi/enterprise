@@ -50,6 +50,7 @@ Indian Payroll Salary Rules.
         'views/report_hr_esic_views.xml',
         'wizard/hr_yearly_salary_detail_view.xml',
         'wizard/hr_payroll_payment_report.xml',
+        'wizard/l10n_in_labour_welfare_fund_wizard_views.xml',
         'views/report_hr_yearly_salary_detail_template.xml',
         'views/report_payroll_advice_template.xml',
         'views/l10n_in_salary_statement.xml',

@@ -13,6 +13,7 @@ class HrEmployee(models.Model):
     l10n_in_esic_number = fields.Char(string='ESIC Number', groups="hr.group_hr_user")
     l10n_in_relationship = fields.Char("Relationship", groups="hr.group_hr_user", tracking=True)
     l10n_in_residing_child_hostel = fields.Integer("Child Residing in hostel", groups="hr.group_hr_user", tracking=True)
+    l10n_in_lwf_account_number = fields.Char("LWF Account Number", groups="hr.group_hr_user", tracking=True)
 
     _unique_l10n_in_uan = models.Constraint(
         'unique (l10n_in_uan)',
