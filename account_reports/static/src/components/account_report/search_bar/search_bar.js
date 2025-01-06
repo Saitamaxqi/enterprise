@@ -22,7 +22,8 @@ export class AccountReportSearchBar extends Component {
     // Search
     //------------------------------------------------------------------------------------------------------------------
     search() {
-        const query = this.searchText.el.value.trim().toLowerCase();
+        const inputText = this.searchText.el.value.trim();
+        const query = inputText.toLowerCase();
         const linesIDsMatched = [];
 
         if (query.length) {
@@ -35,7 +36,7 @@ export class AccountReportSearchBar extends Component {
                 }
             }
             this.controller.lines_searched = linesIDsMatched;
-            this.controller.updateOption("filter_search_bar", query);
+            this.controller.updateOption("filter_search_bar", inputText);
         } else {
             delete this.controller.lines_searched;
             this.controller.deleteOption("filter_search_bar");
