@@ -38,7 +38,7 @@
                                                     <div>
                                                         <t t-set="is_invalid" t-value="o._is_invalid()"/>
                                                         <t t-if="is_invalid">
-                                                            <strong id="invalid_warning"><t t-out="is_invalid"/></strong>
+                                                            <strong id="invalid_warning">This payslip is not validated and is not a legal document.</strong>
                                                         </t>
                                                     </div>
                                                     <div id="pay_period" class="fs-6">
@@ -56,8 +56,8 @@
                                         <tr>
                                             <td colspan="1"><strong>Employee Name</strong></td>
                                             <td colspan="2">: <span t-field="o.employee_id.legal_name"/></td>
-                                            <td colspan="1"><strong class="me-2">Enmployee No.</strong></td>
-                                            <td colspan="2">: <span t-field="o.employee_id.identification_id"/></td>
+                                            <td colspan="1"><strong class="me-2">Employee ID</strong></td>
+                                            <td colspan="2">: <span t-field="o.employee_id.registration_number"/></td>
                                         </tr>
                                         <tr>
                                             <td colspan="1"><strong>Designation</strong></td>
