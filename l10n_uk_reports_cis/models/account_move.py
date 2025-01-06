@@ -13,7 +13,7 @@ class AccountMove(models.Model):
         purchase_tax_tags = self.env.ref('l10n_uk_reports_cis.account_uk_cis_report_line_purchase_expr_deduction')._get_matching_tags()
 
         for move in self:
-            if move.move_type in ('out_invoice', 'out_refund') or move.company_id.country_code != 'GB' or move.l10n_uk_cis_inactive_partner:
+            if move.move_type in ('out_invoice', 'out_refund') or move.company_id.country_code != 'GB' or move.l10n_uk_cis_inactive_partner or not move.partner_id:
                 move.l10n_uk_cis_wrong_taxes = False
             else:
                 move_percentage_taxes = move.invoice_line_ids.tax_ids.filtered(
@@ -21,7 +21,7 @@ class AccountMove(models.Model):
                     and float_compare(tax.amount, move.partner_id.commercial_partner_id._get_deduction_amount_from_rate(), precision_digits=0) != 0
                 )
 
-                move.l10n_uk_cis_wrong_taxes = move.partner_id and set(move_percentage_taxes.repartition_line_ids.tag_ids.ids) & set(purchase_tax_tags.ids)
+                move.l10n_uk_cis_wrong_taxes = set(move_percentage_taxes.repartition_line_ids.tag_ids.ids) & set(purchase_tax_tags.ids)
 
     @api.depends('partner_id', 'invoice_line_ids.tax_ids', 'partner_id.commercial_partner_id.l10n_uk_cis_enabled')
     def _compute_l10n_uk_cis_inactive_partner(self):
