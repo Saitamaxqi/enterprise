@@ -150,7 +150,7 @@
         <field name="model">sale.commission.plan</field>
         <field name="arch" type="xml">
             <search string="Commission Plan">
-                <field name="name" string="Name" filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self)]"/>
+                <field name="name" string="Name" filter_domain="[('name', 'ilike', self)]"/>
                 <separator/>
                 <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
                 <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>

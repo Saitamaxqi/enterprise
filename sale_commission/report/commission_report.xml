@@ -66,6 +66,12 @@
                         domain="[('plan_id.date_from', '&lt;', context_today().strftime('%Y-%m-%d')), ('plan_id.date_to', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
                 <separator/>
                 <filter string="By Quarter" name="quarter" context="{'group_quarter':'1'}"/>
+                <separator/>
+                <filter string="Period" name="filter_date_to" date="date_to"/>
+                <separator/>
+                <filter string="Last Quarter" name="last_quarter" domain="[('date_to', '&lt;=', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d')), ('date_to', '&gt;=', (context_today() + relativedelta(months=-3)).strftime('%Y-%m-%d'))]"/>
+                <filter string="Last Year" name="last_year" domain="[('date_to', '&lt;=', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d')), ('date_to', '&gt;=', (context_today() + relativedelta(years=-1)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
                 <group expand="1" string="Group By">
                     <filter string="Salesperson" name="group_by_salesperson" context="{'group_by':'user_id'}"/>
                     <filter string="Sales Team" name="group_by_salesteam" context="{'group_by':'team_id'}"/>
