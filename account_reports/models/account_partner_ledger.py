@@ -706,15 +706,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         :param move_name:   The name of the account.move record.
         :return:            The formatted name of the account.move.line record.
         '''
-        names = []
-        if move_name is not None and move_name != '/':
-            names.append(move_name)
-        if move_ref and move_ref != '/':
-            names.append(move_ref)
-        if line_name and line_name != move_name and line_name != '/':
-            names.append(line_name)
-        name = ' - '.join(names)
-        return name
+        return self.env['account.move.line']._format_aml_name(line_name, move_ref, move_name=move_name)
 
     def _get_report_line_move_line(self, options, aml_query_result, partner_line_id, init_bal_by_col_group, level_shift=0):
         if aml_query_result['payment_id']:

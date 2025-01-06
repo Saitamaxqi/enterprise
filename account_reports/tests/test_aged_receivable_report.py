@@ -644,7 +644,7 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
         for name in partner_names:
             partner = self.env['res.partner'].create({'name': name})
             invoice = self.init_invoice('out_invoice', partner=partner, invoice_date=test_date, amounts=[42.0], taxes=[], post=True)
-            invoices_map[name] = f'{invoice.name} {invoice.payment_reference}'
+            invoices_map[name] = self.env['account.move.line']._format_aml_name(invoice.payment_reference, False, invoice.name)
 
         # Without prefix groups
         options = self._generate_options(self.report, test_date, test_date)
@@ -772,7 +772,7 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
             [   0,                                               1,                  2,           3,        5,       11],
             [
                 ('foreign_partner',                             '',                 '',          '',     50.0,     50.0),
-                ('INV/2023/00001 INV/2023/00001',     '05/01/2023',              100.0,       'CAD',     50.0,       ''),
+                ('INV/2023/00001',                    '05/01/2023',              100.0,       'CAD',     50.0,       ''),
             ],
 			options,
             currency_map={
@@ -790,7 +790,7 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
             [   0,                                               1,                  2,           3,        5,       6,       11],
             [
                 ('foreign_partner',                             '',                 '',          '',      0.0,    45.0,     45.0),
-                ('INV/2023/00001 INV/2023/00001',     '05/01/2023',               90.0,       'CAD',      0.0,    45.0,       ''),
+                ('INV/2023/00001',                    '05/01/2023',               90.0,       'CAD',      0.0,    45.0,       ''),
             ],
 			options,
             currency_map={
