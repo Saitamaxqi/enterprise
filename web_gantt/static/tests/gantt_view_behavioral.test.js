@@ -2453,3 +2453,34 @@ test("gantt popover: on close, reload if record changed", async () => {
         },
     ]);
 });
+
+test("markup html server values", async function () {
+    Tasks._fields.description = fields.Html();
+    Tasks._records = Tasks._records.slice(0, 1);
+    Tasks._records[0].description = `<span>Hello</span>`;
+
+    await mountGanttView({
+        type: "gantt",
+        resModel: "tasks",
+        arch: `
+            <gantt date_start="start" date_stop="stop">
+                <field name="description"/>
+                <templates>
+                    <t t-name="gantt-popover">
+                        <div>
+                            <t t-out="description"/>
+                        </div>
+                    </t>
+                </templates>
+            </gantt>
+        `,
+    });
+    expect(".o_popover").toHaveCount(0);
+
+    await contains(SELECTORS.pill).click();
+    expect(".o_popover").toHaveCount(1);
+    expect(queryAllTexts(".o_popover .popover-body")).toEqual(["Hello"]);
+
+    await contains(".o_popover .popover-header i.fa.fa-close").click();
+    expect(".o_popover").toHaveCount(0);
+});

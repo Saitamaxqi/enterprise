@@ -14,6 +14,7 @@ import { KeepLast, Mutex } from "@web/core/utils/concurrency";
 import { pick } from "@web/core/utils/objects";
 import { sprintf } from "@web/core/utils/strings";
 import { Model } from "@web/model/model";
+import { parseServerValue } from "@web/model/relational_model/utils";
 import { formatFloatTime, formatPercentage } from "@web/views/fields/formatters";
 import { getRangeFromDate, localStartOf } from "./gantt_helpers";
 
@@ -121,6 +122,10 @@ export function parseServerValues(fields, values) {
                 } else {
                     parsedValues[fieldName] = value;
                 }
+                break;
+            }
+            case "html": {
+                parsedValues[fieldName] = parseServerValue(field, value);
                 break;
             }
             case "many2one": {
