@@ -374,6 +374,7 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         the approval request and the UoM on the purchase order line. """
         # Set the product UoM on 'fortnight'.
         self.product_earphone.uom_id = self.uom_fortnight
+        self.product_earphone.seller_ids.product_uom_id = self.env.ref('uom.product_uom_day')
         # Create a request for 2 fortnights of the product.
         request_form = self.create_request_form(approver=self.user_approver)
         with request_form.product_line_ids.new() as line:
@@ -390,7 +391,7 @@ class TestApprovalsPurchase(TestApprovalsCommon):
             request_product_line.product_uom_id.id, self.uom_fortnight.id
         )
         self.assertEqual(
-            purchase_order.order_line[0].product_uom_id.id, self.uom_unit.id
+            purchase_order.order_line[0].product_uom_id.id, self.env.ref('uom.product_uom_day').id
         )
         self.assertEqual(
             purchase_order.order_line[0].product_qty, 30,
@@ -401,8 +402,9 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         """ Check the amount of product is correctly set, regarding the UoM of
         the approval request and the UoM on the purchase order line. """
         # Set the product purchase's UoM on 'fortnight'.
-        self.product_earphone.uom_po_id = self.uom_fortnight
         # Create a request for 30 units of the product.
+        uom_day = self.env.ref('uom.product_uom_day')
+        self.product_earphone.uom_id = uom_day
         request_form = self.create_request_form(approver=self.user_approver)
         with request_form.product_line_ids.new() as line:
             line.product_id = self.product_earphone
@@ -415,7 +417,7 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         request_product_line = request_purchase.product_line_ids[0]
         purchase_order = self.get_purchase_order(request_purchase, 0)
         self.assertEqual(
-            request_product_line.product_uom_id.id, self.uom_unit.id
+            request_product_line.product_uom_id.id, uom_day.id
         )
         self.assertEqual(
             purchase_order.order_line[0].product_uom_id.id, self.uom_fortnight.id
@@ -429,6 +431,8 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         """ Check the approval request will use the right UoM for purchase, even
         if a compatible purchase order already exists with an order line using
         an another UoM. """
+        uom_day = self.env.ref('uom.product_uom_day')
+        self.product_earphone.uom_id = uom_day
         # Create a purchase order for partner_seller_1 with an order line.
         purchase_order = self.create_purchase_order(lines=[{
             'product': self.product_earphone,
@@ -437,7 +441,6 @@ class TestApprovalsPurchase(TestApprovalsCommon):
             'uom': self.uom_unit.id,
         }])
         # Set the product UoM on 'fortnight'.
-        self.product_earphone.uom_po_id = self.uom_fortnight
         # Create a request for 2 fortnights of the product.
         request_form = self.create_request_form(approver=self.user_approver)
         with request_form.product_line_ids.new() as line:
@@ -451,7 +454,7 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         request_product_line = request_purchase.product_line_ids[0]
         purchase_order = self.get_purchase_order(request_purchase, 0)
         self.assertEqual(
-            request_product_line.product_uom_id.id, self.uom_unit.id
+            request_product_line.product_uom_id.id, uom_day.id
         )
         self.assertEqual(len(purchase_order.order_line), 2)
         self.assertEqual(
@@ -475,12 +478,13 @@ class TestApprovalsPurchase(TestApprovalsCommon):
             'automated_sequence': True,
             'sequence_code': 'APPR',
         })
+        self.product_earphone.uom_id = self.env.ref('uom.product_uom_day')
         product_with_vendor = self.product_earphone
         product_without_vendor = self.product_mouse
         approval = self.env['approval.request'].create({
             'category_id': category_test.id,
             'product_line_ids': [
-                Command.create({'product_id': product_with_vendor.id}),
+                Command.create({'product_id': product_with_vendor.id, 'quantity': 15}),
                 Command.create({'product_id': product_without_vendor.id}),
             ],
         })

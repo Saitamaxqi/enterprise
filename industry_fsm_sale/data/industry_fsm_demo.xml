@@ -9,7 +9,6 @@
             <field name="type">consu</field>
             <field name="weight">1</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="invoice_policy">delivery</field>
             <field name="image_1920" type="base64" file="industry_fsm_sale/static/img/field_service_product_zero_cost_1.jpg"/>
         </record>
@@ -22,7 +21,6 @@
             <field name="type">consu</field>
             <field name="weight">1</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="invoice_policy">delivery</field>
             <field name="image_1920" type="base64" file="industry_fsm_sale/static/img/field_service_product_zero_cost_2.jpg"/>
         </record>
@@ -35,7 +33,6 @@
             <field name="type">consu</field>
             <field name="weight">1</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="invoice_policy">delivery</field>
         </record>
 
@@ -47,7 +44,6 @@
             <field name="type">consu</field>
             <field name="weight">1</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="invoice_policy">delivery</field>
         </record>
     </data>

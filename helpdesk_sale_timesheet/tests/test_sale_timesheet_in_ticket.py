@@ -160,7 +160,6 @@ class TestSaleTimesheetInTicket(TestCommonSaleTimesheet):
             "list_price": 1000.,
             "service_tracking": "task_in_project",
             "uom_id": uom.id,
-            "uom_po_id": uom.id,
         })
 
         sale_order = self.env["sale.order"].create({

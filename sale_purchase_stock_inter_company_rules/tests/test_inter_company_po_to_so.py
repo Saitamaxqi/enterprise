@@ -50,6 +50,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
                 'partner_id': children[2].id,
             },
         ])
+        self.product_consultant.standard_price = 450.0
 
         def generate_purchase_and_validate_sale_order(first_company, second_company, warehouse_id):
             stock_picking_type = self.env['stock.picking.type'].search(['&', ('warehouse_id', '=', warehouse_id), ('name', '=', 'Receipts')])
@@ -63,6 +64,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
                     line.name = 'Service'
                     line.product_id = self.product_consultant
                     line.price_unit = 450.0
+                    line.product_uom_id = self.product_consultant.uom_id
             purchase_order.with_company(first_company).button_confirm()
             self.validate_generated_sale_order(purchase_order, first_company, second_company)
 
@@ -136,6 +138,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         with Form(purchase_order.with_company(self.company_b)) as po:
             with po.order_line.new() as line:
                 line.product_id = product_storable
+                line.product_uom_id = product_storable.uom_id
 
         purchase_order.date_planned = today + relativedelta(days=7)
         # Confirm Purchase order

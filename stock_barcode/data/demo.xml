@@ -79,7 +79,6 @@
             <field name="weight">1.1</field>
             <field name="tracking">lot</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="image_1920" type="base64" file="stock/static/img/cable_management.png"/>
             <field name="barcode">06016478556677</field>
         </record>
@@ -91,7 +90,6 @@
             <field name="is_storable" eval="True"/>
             <field name="weight">2</field>
             <field name="uom_id" ref="uom.product_uom_cubic_foot"/>
-            <field name="uom_po_id" ref="uom.product_uom_cubic_foot"/>
             <field name="default_code">E-COM99</field>
             <field name="image_1920" type="base64" file="product/static/img/product_product_10-image.jpg"/>
             <field name="barcode">06016478559999</field>
@@ -104,7 +102,6 @@
             <field name="is_storable" eval="True"/>
             <field name="weight">2</field>
             <field name="uom_id" ref="uom.product_uom_cubic_meter"/>
-            <field name="uom_po_id" ref="uom.product_uom_cubic_meter"/>
             <field name="default_code">E-COM98</field>
             <field name="image_1920" type="base64" file="product/static/img/product_product_10-image.jpg"/>
             <field name="barcode">06016478559982</field>

@@ -867,7 +867,6 @@ class TestCFDIInvoice(TestMxEdiCommon):
             'price_unit': 500.0,
             'discount': 0.0,
             'product_id': self.product.id,
-            'product_uom_id': self.product.uom_po_id.id,
             'tax_ids': self.tax_16.ids,
         }])
 
@@ -915,7 +914,7 @@ class TestCFDIInvoice(TestMxEdiCommon):
             'price_unit': 500.0,
             'discount': 0.0,
             'product_id': self.product.id,
-            'product_uom_id': self.product.uom_po_id.id,
+            'product_uom_id': self.product.uom_id.id,
             'tax_ids': self.tax_16_purchase.ids,
         }])
 

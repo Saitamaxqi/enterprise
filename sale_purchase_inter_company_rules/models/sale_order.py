@@ -92,13 +92,13 @@ class SaleOrder(models.Model):
         """
         # price on PO so_line should be so_line - discount
         price = so_line.price_unit - (so_line.price_unit * (so_line.discount / 100))
-        quantity = so_line.product_id and so_line.product_uom_id._compute_quantity(so_line.product_uom_qty, so_line.product_id.uom_po_id) or so_line.product_uom_qty
-        price = so_line.product_id and so_line.product_uom_id._compute_price(price, so_line.product_id.uom_po_id) or price
+        quantity = so_line.product_id and so_line.product_uom_id._compute_quantity(so_line.product_uom_qty, so_line.product_id.uom_id) or so_line.product_uom_qty
+        price = so_line.product_id and so_line.product_uom_id._compute_price(price, so_line.product_id.uom_id) or price
         return {
             'name': so_line.name,
             'product_qty': quantity,
             'product_id': so_line.product_id and so_line.product_id.id or False,
-            'product_uom_id': so_line.product_id and so_line.product_id.uom_po_id.id or so_line.product_uom_id.id,
+            'product_uom_id': so_line.product_id and so_line.product_id.uom_id.id or so_line.product_uom_id.id,
             'price_unit': price or 0.0,
             'company_id': company.id,
             'date_planned': so_line.order_id.commitment_date or so_line.order_id.expected_date or date_order,

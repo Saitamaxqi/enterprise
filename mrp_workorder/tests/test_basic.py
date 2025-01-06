@@ -839,14 +839,12 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
             'name': 'Charger',
             'is_storable': True,
             'tracking': 'lot',
-            'uom_id': unit,
-            'uom_po_id': unit})
+            'uom_id': unit})
         product_keybord = self.env['product.product'].create({
             'name': 'Usb Keybord',
             'is_storable': True,
             'tracking': 'lot',
-            'uom_id': unit,
-            'uom_po_id': unit})
+            'uom_id': unit})
 
         # Create bill of material for customized laptop.
 

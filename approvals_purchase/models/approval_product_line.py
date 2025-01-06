@@ -39,7 +39,7 @@ class ApprovalProductLine(models.Model):
                 uom = line.product_uom_id or line.product_id.uom_id
                 line.po_uom_qty = uom._compute_quantity(
                     line.quantity,
-                    line.product_id.uom_po_id
+                    line.product_id.uom_id,
                 )
             else:
                 line.po_uom_qty = 0.0
@@ -50,7 +50,7 @@ class ApprovalProductLine(models.Model):
             if line.product_id and line.po_uom_qty:
                 line.seller_id = line.product_id.with_company(line.company_id)._select_seller(
                     quantity=line.po_uom_qty,
-                    uom_id=line.product_id.uom_po_id,
+                    uom_id=line.product_id.uom_id,
                 )
 
     @api.depends('product_id', 'po_uom_qty')
@@ -60,7 +60,7 @@ class ApprovalProductLine(models.Model):
             if line.product_id and line.po_uom_qty:
                 line.has_no_seller = not bool(line.product_id.with_company(line.company_id)._select_seller(
                     quantity=line.po_uom_qty,
-                    uom_id=line.product_id.uom_po_id,
+                    uom_id=line.product_id.uom_id,
                 ))
 
     def _check_products_vendor(self):

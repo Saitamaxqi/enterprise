@@ -361,7 +361,6 @@ class TestMxEdiCommon(AccountTestInvoicingCommon):
                 'company_id': cls.env.company.id,
                 **kwargs,
                 # override of the uoms
-                'uom_po_id': cls.env.ref('uom.product_uom_kgm').id,
                 'uom_id': cls.env.ref('uom.product_uom_kgm').id,
             }
         )

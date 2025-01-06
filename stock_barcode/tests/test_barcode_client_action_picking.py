@@ -3483,14 +3483,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'is_storable': True,
             'barcode': '15264893',
             'uom_id': uom_g.id,
-            'uom_po_id': uom_g.id,
         })
         product_by_kg = self.env['product.product'].create({
             'name': 'Product by kg',
             'is_storable': True,
             'barcode': '15264879',
             'uom_id': uom_kg.id,
-            'uom_po_id': uom_kg.id,
         })
         # Creates a new receipt.
         picking_form = Form(self.env['stock.picking'])

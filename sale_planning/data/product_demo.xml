@@ -34,7 +34,6 @@
             <field name="planning_enabled" eval="True"/>
             <field name="planning_role_id" ref="planning_role_technician"/>
             <field name="uom_id" ref="uom.product_uom_hour"/>
-            <field name="uom_po_id" ref="uom.product_uom_hour"/>
             <field name="description">Take a rest. We'll do our best.</field>
         </record>
 
@@ -47,7 +46,6 @@
             <field name="planning_enabled" eval="True"/>
             <field name="planning_role_id" ref="planning.planning_role_developer"/>
             <field name="uom_id" ref="uom.product_uom_hour"/>
-            <field name="uom_po_id" ref="uom.product_uom_hour"/>
             <field name="description">Our developer will help you to add new features to your Software.</field>
         </record>
 

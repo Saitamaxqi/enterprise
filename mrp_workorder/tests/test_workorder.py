@@ -157,7 +157,6 @@ class TestWorkOrder(TestMrpWorkorderCommon):
             'name': 'Drawer',
             'is_storable': True,
             'uom_id': unit,
-            'uom_po_id': unit,
         })
         custom_laptop.tracking = 'none'
         product_charger = self.env['product.product'].create({
@@ -165,12 +164,12 @@ class TestWorkOrder(TestMrpWorkorderCommon):
             'is_storable': True,
             'tracking': 'lot',
             'uom_id': unit,
-            'uom_po_id': unit})
+            })
         product_keybord = self.env['product.product'].create({
             'name': 'Usb Keybord',
             'is_storable': True,
             'uom_id': unit,
-            'uom_po_id': unit})
+            })
         bom_custom_laptop = self.env['mrp.bom'].create({
             'product_tmpl_id': custom_laptop.product_tmpl_id.id,
             'product_qty': 1,

@@ -11,7 +11,6 @@
             <field name="list_price">0.0</field>
             <field name="type">consu</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="available_in_pos">True</field>
             <field name="taxes_id" eval="[]"/>
             <field name="pos_categ_ids" eval="[(6, 0, [ref('pos_category_fdm')])]"/>
@@ -23,7 +22,6 @@
             <field name="list_price">0.0</field>
             <field name="type">consu</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="available_in_pos">True</field>
             <field name="taxes_id" eval="[]"/>
             <field name="pos_categ_ids" eval="[(6, 0, [ref('pos_category_fdm')])]"/>

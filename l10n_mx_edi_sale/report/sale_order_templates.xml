@@ -55,7 +55,7 @@
         </th>
         <td name="td_discount" position="after">
             <td class="text-end">
-                <span t-field="line.product_id.uom_po_id.unspsc_code_id.code">01010101</span>
+                <span t-field="line.product_id.uom_id.unspsc_code_id.code">01010101</span>
             </td>
         </td>
     </template>

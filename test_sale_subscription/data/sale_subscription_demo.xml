@@ -10,7 +10,6 @@
         <field name="list_price">200.0</field>
         <field name="invoice_policy">order</field>
         <field name="uom_id" ref="uom.product_uom_unit"/>
-        <field name="uom_po_id" ref="uom.product_uom_unit"/>
     </record>
 
     <record id="product_pricing_insurance1" model="sale.subscription.pricing">

@@ -51,7 +51,6 @@
             <field name="default_code">D_0045</field>
             <field name="tracking">serial</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="description_sale">Small wooden stool</field>
             <field name="sale_delay">1</field>
             <field name="route_ids" eval="[Command.link(ref('mrp.route_warehouse0_manufacture'))]"/>
@@ -120,7 +119,6 @@
             <field name="weight">2</field>
             <field name="sale_ok" eval="False"/>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="description_sale">wooden stool foot</field>
             <field name="image_1920" type="base64" file="mrp_workorder/static/img/stool_foot.jpeg"/>
         </record>
@@ -196,7 +194,6 @@
             <field name="weight">2</field>
             <field name="sale_ok" eval="False"/>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="description_sale">wooden stool top</field>
             <field name="image_1920" type="base64" file="mrp_workorder/static/img/stool_top.jpeg"/>
         </record>
