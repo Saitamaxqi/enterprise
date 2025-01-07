@@ -53,7 +53,8 @@ class AppointmentType(models.Model):
                 filter_appointment_type_ids=options.get('filter_appointment_type_ids'),
                 search=options.get('search'),
                 invite_token=invite_token,
-                additional_domain=WebsiteAppointment._appointment_website_domain(self)
+                additional_domain=WebsiteAppointment._appointment_website_domain(self),
+                filter_countries=True,
             )
         ).ids
 

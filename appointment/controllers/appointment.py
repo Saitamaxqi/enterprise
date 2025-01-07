@@ -108,7 +108,8 @@ class AppointmentController(http.Controller):
                 filter_appointment_type_ids=kwargs.get('filter_appointment_type_ids'),
                 search=kwargs.get('search'),
                 invite_token=kwargs.get('invite_token'),
-                additional_domain=kwargs.get('domain')
+                additional_domain=kwargs.get('domain'),
+                filter_countries=True,
             )
         )
         appointment_types = appointment_types.sorted('is_published', reverse=True)
@@ -121,7 +122,7 @@ class AppointmentController(http.Controller):
         }
 
     @classmethod
-    def _appointments_base_domain(cls, filter_appointment_type_ids, search=False, invite_token=False, additional_domain=None):
+    def _appointments_base_domain(cls, filter_appointment_type_ids, search=False, invite_token=False, additional_domain=None, filter_countries=False):
         """
         Generate a domain for appointment filtering.
         This method constructs a domain to filter appointment records based on various criteria.
@@ -141,7 +142,8 @@ class AppointmentController(http.Controller):
             filter_appointment_type_ids = unquote_plus(filter_appointment_type_ids)
             domain = expression.AND([domain, [('id', 'in', json.loads(filter_appointment_type_ids))]])
 
-        if not invite_token:
+        # Exclude country only if it's not an invite and it was specified
+        if not invite_token and filter_countries:
             country = cls._get_customer_country()
             if country:
                 country_domain = ['|', ('country_ids', '=', False), ('country_ids', 'in', [country.id])]

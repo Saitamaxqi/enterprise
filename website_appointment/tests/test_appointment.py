@@ -173,7 +173,7 @@ class WebsiteAppointmentTest(AppointmentCommon, MockVisitor):
                 domain = [
                     '|', ('end_datetime', '=', False), ('end_datetime', '>=', datetime.utcnow())
                 ]
-                available_appointments = wa_controller._fetch_and_check_private_appointment_types(None, None, None, "", domain=wa_controller._appointments_base_domain(None, False, None, domain))
+                available_appointments = wa_controller._fetch_and_check_private_appointment_types(None, None, None, "", domain=wa_controller._appointments_base_domain(None, False, None, domain, True))
 
                 self.assertNotIn(appointments_belgium, available_appointments,
                                  "US visitor should not have access to an Appointment Type restricted to Belgium.")

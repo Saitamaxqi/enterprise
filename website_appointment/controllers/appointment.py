@@ -31,6 +31,7 @@ class WebsiteAppointment(AppointmentController):
             search=kwargs.get('search'),
             invite_token=kwargs.get('invite_token'),
             additional_domain=self._appointment_website_domain(),
+            filter_countries=True,
         )
         available_appointment_types = self._fetch_and_check_private_appointment_types(
             kwargs.get('filter_appointment_type_ids'),
@@ -181,7 +182,7 @@ class WebsiteAppointment(AppointmentController):
         return country
 
     @classmethod
-    def _appointments_base_domain(cls, filter_appointment_type_ids, search=False, invite_token=False, additional_domain=None):
-        domain = super()._appointments_base_domain(filter_appointment_type_ids, search, invite_token, additional_domain)
+    def _appointments_base_domain(cls, filter_appointment_type_ids, search=False, invite_token=False, additional_domain=None, filter_countries=False):
+        domain = super()._appointments_base_domain(filter_appointment_type_ids, search, invite_token, additional_domain, filter_countries)
         domain = expression.AND([domain, ['|', ('website_id', '=', request.website.id), ('website_id', '=', False)]])
         return domain
