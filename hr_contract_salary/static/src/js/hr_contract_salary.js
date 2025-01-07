@@ -23,6 +23,7 @@ class SelectMenuWrapper extends Component {
             value: this.props.el.value,
             disabled: false,
             required: this.props.el.required,
+            autoSort: false,
         });
 
         let optgroup = [...this.props.el.querySelectorAll("optgroup")]
