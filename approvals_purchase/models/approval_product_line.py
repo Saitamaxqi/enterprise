@@ -22,8 +22,8 @@ class ApprovalProductLine(models.Model):
             return [('purchase_ok', '=', True)]
 
     po_uom_qty = fields.Float(
-        "Purchase UoM Quantity", compute='_compute_po_uom_qty',
-        help="The quantity converted into the UoM used by the product in Purchase Order.")
+        "Purchase Unit Quantity", compute='_compute_po_uom_qty',
+        help="The quantity converted into the Unit used by the product in Purchase Order.")
     purchase_order_line_id = fields.Many2one('purchase.order.line')
     product_id = fields.Many2one(domain=lambda self: self._domain_product_id())
     product_template_id = fields.Many2one(related='product_id.product_tmpl_id')

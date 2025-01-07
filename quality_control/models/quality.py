@@ -238,7 +238,7 @@ class QualityCheck(models.Model):
     qty_line = fields.Float(compute='_compute_qty_line', string="Quantity")
     qty_passed = fields.Float('Quantity Passed', help="Quantity of product that passed the quality check", compute='_compute_qty_passed', store=True)
     qty_failed = fields.Float('Quantity Failed', help="Quantity of product that failed the quality check", compute='_compute_qty_failed', store=True)
-    uom_id = fields.Many2one(related='product_id.uom_id', string="Product Unit of Measure")
+    uom_id = fields.Many2one(related='product_id.uom_id', string="Unit")
     show_lot_text = fields.Boolean(compute='_compute_show_lot_text')
     is_lot_tested_fractionally = fields.Boolean(related='point_id.is_lot_tested_fractionally')
     testing_percentage_within_lot = fields.Float(related="point_id.testing_percentage_within_lot")

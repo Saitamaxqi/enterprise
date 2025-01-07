@@ -31,7 +31,7 @@ class L10n_Ke_EdiCustomsImport(models.Model):
     package_unit_code_id = fields.Many2one('l10n_ke_edi_oscu.code', domain="[('code_type', '=', '17')]", readonly=True)
     quantity = fields.Float("Quantity", readonly=True)
     uom_code_id = fields.Many2one('l10n_ke_edi_oscu.code', domain="[('code_type', '=', '10')]", readonly=True)
-    uom_id = fields.Many2one('uom.uom', string="UoM", compute='_compute_uom_id')
+    uom_id = fields.Many2one('uom.uom', string="Unit", compute='_compute_uom_id')
 
     supplier_name = fields.Char("Vendor", readonly=True)
 

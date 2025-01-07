@@ -249,7 +249,7 @@
                             <field name="qty_producing" class="oe_inline text-start" required="1" readonly="not allow_producing_quantity_change or product_tracking == 'serial' or state in ('done', 'cancel')"/>
                             / <field name="qty_remaining" class="oe_inline text-start" invisible="state == 'done'"/> <field name="qty_production" class="oe_inline text-start" invisible="state != 'done'"/>
                             <label for="product_uom_id" string="" class="oe_inline"/>
-                            <field name="product_uom_id" options="{'no_open': True}" class="oe_inline" readonly="1"/>
+                            <field name="product_uom_id" options="{'no_open': True}" widget="many2one_uom" class="oe_inline" readonly="1"/>
                         </div>
                     </div>
                     <div class="o_workorder_bar_right o_workorder_bar_content">
