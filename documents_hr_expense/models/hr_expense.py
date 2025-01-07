@@ -20,6 +20,6 @@ class HrExpense(models.Model):
 
     def action_open_attachments(self):
         self.ensure_one()
-        action = self.env['ir.actions.act_window']._for_xml_id('documents.document_action')
+        action = self.env['ir.actions.actions']._for_xml_id('documents.document_action_preference')
         action['domain'] = [('res_model', '=', self._name), ('res_id', '=', self.id)]
         return action

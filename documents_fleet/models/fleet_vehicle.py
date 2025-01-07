@@ -37,7 +37,7 @@ class FleetVehicle(models.Model):
             return True
         fleet_folder = self._get_document_folder()
         fleet_tags = self._get_document_tags()
-        action = self.env['ir.actions.act_window']._for_xml_id('documents.document_action')
+        action = self.env['ir.actions.actions']._for_xml_id('documents.document_action_preference')
         action['domain'] = [
             '|',
                 ('type', '=', 'folder'),

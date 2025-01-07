@@ -73,7 +73,7 @@ class Home(web_home.Home):
         if request.session.debug:
             query['debug'] = request.session.debug
         fragment = {
-           'action': request.env.ref("documents.document_action").id,
+           'action': request.env.ref("documents.document_action_preference").id,
            'menu_id': request.env.ref('documents.menu_root').id,
            'model': 'documents.document',
         }

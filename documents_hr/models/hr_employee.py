@@ -41,7 +41,7 @@ class HrEmployee(models.Model):
             # Prevent opening documents if the employee's address is not set or no user is linked.
             raise ValidationError(_('You must set a work contact address on the Employee in order to use Document\'s features.'))
         hr_folder = self._get_document_folder()
-        action = self.env['ir.actions.act_window']._for_xml_id('documents.document_action')
+        action = self.env['ir.actions.actions']._for_xml_id('documents.document_action_preference')
         # Documents created within that action will be 'assigned' to the employee
         # Also makes sure that the views starts on the hr_holder
         action['context'] = {

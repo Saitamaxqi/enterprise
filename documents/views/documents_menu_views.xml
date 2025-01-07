@@ -7,7 +7,7 @@
     <menuitem name="Documents"
         id="documents.dashboard"
         parent="documents.menu_root"
-        action="document_action"
+        action="document_action_preference"
         groups="documents.group_documents_user"
         sequence="0"/>
     <menuitem name="Configuration"

@@ -3,10 +3,10 @@ import { Many2OneField, many2OneField } from "@web/views/fields/many2one/many2on
 
 export class DocumentsFolderMany2One extends Many2OneField {
     /**
-     * Open the documents kanban view, in the folder instead of redirecting to the form view.
+     * Open the documents kanban/list view, in the folder instead of redirecting to the form view.
      */
     async openAction() {
-        await this.action.doAction("documents.document_action", {
+        await this.action.doAction("documents.document_action_preference", {
             additionalContext: {
                 no_documents_unique_folder_id: true,
                 searchpanel_default_folder_id: this.resId,

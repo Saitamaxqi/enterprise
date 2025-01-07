@@ -34,7 +34,7 @@ class SignRequest(models.Model):
             })
             return {
                 'type': 'ir.actions.act_url',
-                'url': f"/odoo/action-documents.document_action?{url_params}",
+                'url': f"/odoo/action-documents.document_action_preference?{url_params}",
                 'target': 'self',
             }
         else:

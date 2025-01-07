@@ -123,7 +123,7 @@ class AccountMove(models.Model):
         default_folder_id = folder_ids[0] if len(folder_ids) == 1 else False
 
         return {
-            **self.env['ir.actions.act_window']._for_xml_id('documents.document_action'),
+            **self.env['ir.actions.actions']._for_xml_id('documents.document_action_preference'),
             'domain': domain,
             'context': {'searchpanel_default_folder_id': default_folder_id},
         }

@@ -427,6 +427,11 @@
         <field name="target">new</field>
     </record>
 
+    <record id="document_action_preference" model="ir.actions.client">
+        <field name="name">Documents View Preference</field>
+        <field name="tag">document_action_preference</field>
+    </record>
+
     <record id="document_action" model="ir.actions.act_window">
         <field name="name">Documents</field>
         <field name="path">documents</field>
