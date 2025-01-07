@@ -1865,7 +1865,7 @@ class SaleOrder(models.Model):
             # Protect the transaction row to prevent sql concurrent updates.
             # This cron is having the lead and can update the transaction values from the value returned from the API.
             # No other cursor should be able to update the transaction while this cron is handling this TX
-            self.env.cr.execute("SELECT 1 FROM payment_transaction WHERE id=%s FOR UPDATE", [tx_sudo.id])
+            self.env.cr.execute("SELECT 1 FROM payment_transaction WHERE id=%s FOR NO KEY UPDATE", [tx_sudo.id])
             tx_sudo._send_payment_request()
         return transactions_sudo
 
