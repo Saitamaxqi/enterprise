@@ -1,5 +1,6 @@
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { queryFirst } from "@odoo/hoot-dom";
 
 function triggerDragEvent(element, type, data = {}) {
     const event = new DragEvent(type, { bubbles: true });
@@ -11,15 +12,9 @@ function triggerDragEvent(element, type, data = {}) {
     element.dispatchEvent(event);
 }
 
-function dragAndDropSignItemAtHeight(type, page, height = 0.5, width = 0.5) {
+function dragAndDropSignItemAtHeight(from, height = 0.5, width = 0.5) {
     const iframe = document.querySelector("iframe");
-    const iframeDocument = iframe.contentWindow.document;
-    const signItemTypeButtons = iframeDocument.querySelectorAll(
-        ".o_sign_field_type_toolbar_items .o_sign_field_type_button"
-    );
-    const from = Array.from(signItemTypeButtons).find((el) => el.innerText === type);
-
-    const to = iframeDocument.querySelector(`.page[data-page-number="${page}"]`);
+    const to = queryFirst(`:iframe .page[data-page-number="1"]`);
     const toPosition = to.getBoundingClientRect();
     toPosition.x += iframe.contentWindow.scrollX + to.clientWidth * width;
     toPosition.y += iframe.contentWindow.scrollY + to.clientHeight * height;
@@ -29,9 +24,7 @@ function dragAndDropSignItemAtHeight(type, page, height = 0.5, width = 0.5) {
         setData: (key, value) => {
             dataTransferObject[key] = value;
         },
-        getData: (key) => {
-            return dataTransferObject[key];
-        },
+        getData: (key) => dataTransferObject[key],
         setDragImage: () => {},
         items: [],
     };
@@ -93,27 +86,28 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
         },
         {
             content: "Wait for page to be loaded",
-            trigger: ":iframe .page",
+            trigger: ":iframe .page[data-page-number='1'] .textLayer",
+            timeout: 30000, //In view mode, pdf loading can take a long time
         },
         {
             content: "Drop Signature Item",
-            trigger: ":iframe body",
-            run: function () {
-                dragAndDropSignItemAtHeight("Signature", 1, 0.5, 0.25);
+            trigger: ":iframe .o_sign_field_type_button:contains(Signature)",
+            run() {
+                dragAndDropSignItemAtHeight(this.anchor, 0.5, 0.25);
             },
         },
         {
             content: "Drop Name Sign Item",
-            trigger: ":iframe body",
-            run: function () {
-                dragAndDropSignItemAtHeight("Name", 1, 0.25, 0.25);
+            trigger: ":iframe .o_sign_field_type_button:contains(Name)",
+            run() {
+                dragAndDropSignItemAtHeight(this.anchor, 0.25, 0.25);
             },
         },
         {
             content: "Drop Text Sign Item",
-            trigger: ":iframe body",
-            run: function () {
-                dragAndDropSignItemAtHeight("Text", 1, 0.15, 0.25);
+            trigger: ":iframe .o_sign_field_type_button:contains(Text)",
+            run() {
+                dragAndDropSignItemAtHeight(this.anchor, 0.15, 0.25);
             },
         },
         {
@@ -138,9 +132,9 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
         },
         {
             content: "Drop Selection Sign Item",
-            trigger: ":iframe body",
-            run: function () {
-                dragAndDropSignItemAtHeight("Selection", 1, 0.75, 0.25);
+            trigger: ":iframe .o_sign_field_type_button:contains(Selection)",
+            run() {
+                dragAndDropSignItemAtHeight(this.anchor, 0.75, 0.25);
             },
         },
         {
@@ -160,7 +154,8 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
         },
         {
             content: "Check option is added",
-            trigger: '.o_popover #o_sign_select_options_input .o_sign_list_item_label:contains("option")',
+            trigger:
+                '.o_popover #o_sign_select_options_input .o_sign_list_item_label:contains("option")',
             run: "click",
         },
         {
