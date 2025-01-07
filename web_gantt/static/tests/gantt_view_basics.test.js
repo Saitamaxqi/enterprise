@@ -1269,3 +1269,48 @@ test("popover-template with a button in the body", async () => {
     await animationFrame();
     expect(SELECTORS.pill).toHaveCount(0);
 });
+
+test("aggregation with half precision", async () => {
+    Tasks._records = Tasks._records.slice(0, 2);
+    Tasks._records[0].start = "2018-12-31 07:00:00";
+    Tasks._records[0].stop = "2018-12-31 11:00:00";
+    Tasks._records[1].start = "2018-12-31 07:00:00";
+    Tasks._records[1].stop = "2018-12-31 16:00:00";
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt date_start="start" date_stop="stop" total_row="1" default_range="month" precision="{'month':'day:half'}" />
+        `,
+    });
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [
+                {
+                    title: "Task 1",
+                    colSpan: "31 December 2018 -> 31 (1/2) December 2018",
+                    level: 0,
+                },
+                {
+                    title: "Task 2",
+                    colSpan: "31 December 2018 -> 31 December 2018",
+                    level: 1,
+                },
+            ],
+        },
+        {
+            isTotalRow: true,
+            pills: [
+                {
+                    title: "2",
+                    colSpan: "31 December 2018 -> 31 (1/2) December 2018",
+                    level: 0,
+                },
+                {
+                    title: "1",
+                    colSpan: "31 (1/2) December 2018 -> 31 December 2018",
+                    level: 0,
+                },
+            ],
+        },
+    ]);
+});

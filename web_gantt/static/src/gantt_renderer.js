@@ -583,6 +583,7 @@ export class GanttRenderer extends Component {
             return groups[col];
         }
 
+        const lastCol = this.columnCount * this.model.metaData.scale.cellPart + 1;
         for (const pill of pills) {
             let addedInPreviousCol = false;
             let col;
@@ -595,7 +596,7 @@ export class GanttRenderer extends Component {
                 addedInPreviousCol = added;
             }
             // here col = this.getLastGridCol(pill)
-            if (addedInPreviousCol && col <= this.columnCount) {
+            if (addedInPreviousCol && col < lastCol) {
                 const group = getGroup(col);
                 group.break = true;
             }
