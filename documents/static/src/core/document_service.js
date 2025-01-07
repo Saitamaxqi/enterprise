@@ -33,7 +33,7 @@ export class DocumentService {
             Number(urlSearch.documents_init_document_id) || documents_init?.document_id;
         this.documentIdToRestoreOnce = documentId;
         const initFolderId = urlSearch.documents_init_folder_id;
-        const folderId = ["MY", "COMPANY", "SHARED"].includes(initFolderId)
+        const folderId = ["MY", "COMPANY", "SHARED", "TRASH"].includes(initFolderId)
             ? initFolderId
             : Number(initFolderId) || documents_init?.folder_id;
         this._initData = { documentId, folderId, openPreview };

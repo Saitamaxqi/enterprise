@@ -376,17 +376,21 @@ class ShareRoute(http.Controller):
         document.ensure_one()
         documents_init = {}
 
-        # If the user does not have access to the parent folder, we open it in the "SHARED" folder.
-        if document.type != 'folder':
+        # If the document is archived, we open the TRASH
+        if not document.active:
+            documents_init['folder_id'] = 'TRASH'
+            documents_init['document_id'] = document.id
+        # Shortcuts to archived folders behave like binary documents because these folders cannot be browsed.
+        elif document.type != 'folder' or document.shortcut_document_id and not document.shortcut_document_id.active:
             parent = document.folder_id
             shared_root = False if user.share else "SHARED"  # Portal don't have 'Shared with me'
+            # If the user does not have access to the parent folder, we open it in the "SHARED" folder.
             if parent:
                 documents_init['folder_id'] = parent.id if parent.user_permission in {'view', 'edit'} else shared_root
             else:
                 documents_init['folder_id'] = (
                     "MY" if document.owner_id == user
-                    else "COMPANY" if not user.share and (
-                        not document.owner_id or document.access_internal != 'none')
+                    else "COMPANY" if not user.share and not document.owner_id
                     else shared_root
                 )
             documents_init['document_id'] = document.id

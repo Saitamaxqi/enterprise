@@ -841,8 +841,8 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             self.assertEqual(res.status_code, 200)
             self.assertEqual(res.content, self.doc_icon)
 
-    def test_documents_get_init_data_folder_id(self):
-        """Test computed side panel root depending on access rights."""
+    def test_documents_get_init_data(self):
+        """Test computed init data depending on access rights."""
         shared_portal_values = {'access_ids': [
             Command.create({'partner_id': self.user_portal.partner_id.id, 'role': 'view'})
         ]}
@@ -859,38 +859,50 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             'name': 'Restricted Folder',
             'access_internal': 'none',
         })
-        demo_personal, demo_company, company_portal, restricted_portal, restricted_manager, shared_via_link = (
+        demo_personal, company_portal, company_child_portal, restricted_portal, restricted_manager, shared_via_link = (
             doc_as_demo.create([
                 shared_portal_values | {'name': 'demo_personal_share_portal'},
-                shared_portal_values | {'name': 'demo_company_share_portal', 'access_internal': 'view'},
-                shared_portal_values | {'name': 'company_share_portal', 'folder_id': internal_folder.id},
+                shared_portal_values | {'name': 'company_share_portal'},
+                shared_portal_values | {'name': 'company_child_share_portal', 'folder_id': internal_folder.id},
                 shared_portal_values | {'name': 'restricted_share_portal', 'folder_id': restricted_folder.id},
                 shared_manager_values | {'name': 'restricted_manager', 'folder_id': restricted_folder.id},
                 {'name': 'restricted_shared_link', 'folder_id': restricted_folder.id, 'access_via_link': 'view'},
             ])
         )
+        (internal_folder | company_portal).sudo().action_set_as_company_root()
+        archived_doc, archived_folder = archived = doc_as_demo.create([
+            {'type': doc_type, 'name': f'Archived {doc_type}'} for doc_type in ('binary', 'folder')
+        ])
+        archived_doc_shortcut, archived_folder_shortcut = archived.action_create_shortcut()
+        archived.action_archive()
 
-        for document, user, expected_folder_id in [
-            (demo_personal, self.user_demo, 'MY'),
-            (demo_personal, self.user_portal, False),
-            (demo_company, self.user_demo, 'MY'),
-            (demo_company, self.user_portal, False),
-            (demo_company, self.user_manager, 'COMPANY'),  # as would any other internal user
-            (company_portal, self.user_demo, internal_folder.id),
-            (company_portal, self.user_portal, False),
-            (company_portal, self.user_manager, internal_folder.id),
-            (restricted_portal, self.user_demo, restricted_folder.id),
-            (restricted_portal, self.user_portal, False),
-            (restricted_manager, self.user_demo, restricted_folder.id),
-            (restricted_manager, self.user_manager, 'SHARED'),
-            (shared_via_link, self.user_portal, False),
-            (shared_via_link, self.user_manager, 'SHARED'),
+        for document, user, expected_folder_id, expected_document_id in [
+            (demo_personal, self.user_demo, 'MY', demo_personal.id),
+            (demo_personal, self.user_portal, False, demo_personal.id),
+            (demo_personal, self.user_manager, 'SHARED', demo_personal.id),  # as would any other internal user
+            (company_portal, self.user_demo, 'COMPANY', company_portal.id),
+            (company_portal, self.user_portal, False, company_portal.id),
+            (company_child_portal, self.user_demo, internal_folder.id, company_child_portal.id),
+            (company_child_portal, self.user_portal, False, company_child_portal.id),
+            (company_child_portal, self.user_manager, internal_folder.id, company_child_portal.id),  # same comment
+            (restricted_portal, self.user_demo, restricted_folder.id, restricted_portal.id),
+            (restricted_portal, self.user_portal, False, restricted_portal.id),
+            (restricted_manager, self.user_demo, restricted_folder.id, restricted_manager.id),
+            (restricted_manager, self.user_manager, 'SHARED', restricted_manager.id),
+            (shared_via_link, self.user_portal, False, shared_via_link.id),
+            (shared_via_link, self.user_manager, 'SHARED', shared_via_link.id),
+            (archived_doc, self.user_demo, 'TRASH', archived_doc.id),
+            (archived_folder, self.user_demo, 'TRASH', archived_folder.id),
+            (archived_doc_shortcut, self.user_demo, 'MY', archived_doc_shortcut.id),
+            (archived_folder_shortcut, self.user_demo, 'MY', archived_folder_shortcut.id),
+            (internal_folder, self.user_demo, internal_folder.id, None),
         ]:
             document.invalidate_recordset()
             with self.subTest(document_name=document.name, username=user.name):
                 data = ShareRoute._documents_get_init_data(document.with_user(user), user)
                 self.assertEqual(data['folder_id'], expected_folder_id)
-                
+                self.assertEqual(data.get('document_id'), expected_document_id)
+
     def test_from_access_token(self):
         """Check that _from_access_token doesn't raise on a non-existent record"""
         url = self.env['documents.document'].create({'name': 'url', 'type': 'url', 'url': 'https://www.odoo.com/'})
