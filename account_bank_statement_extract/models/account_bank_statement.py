@@ -12,14 +12,6 @@ class AccountBankStatement(models.Model):
     def _compute_is_in_extractable_state(self):
         self.is_in_extractable_state = not self.line_ids
 
-    @api.depends('journal_id', 'date')
-    def _compute_name(self):
-        super()._compute_name()
-        # If it's a blank statement created while waiting for the OCR results, give a generic name.
-        for stmt in self:
-            if not stmt.journal_id or not stmt.date:
-                stmt.name = _("Statement %s", fields.Date.context_today(self))
-
     def _compute_journal_id(self):
         if self.line_ids:
             super()._compute_journal_id()
@@ -43,6 +35,7 @@ class AccountBankStatement(models.Model):
         return iap_tools.iap_jsonrpc(endpoint + '/api/extract/bank_statement/1/' + pathinfo, params=params)
 
     def _fill_document_with_results(self, ocr_results):
+        self.ensure_one()
         balance_start_ocr = self._get_ocr_selected_value(ocr_results, 'balance_start', 0.0)
         balance_end_ocr = self._get_ocr_selected_value(ocr_results, 'balance_end', 0.0)
         date_ocr = self._get_ocr_selected_value(ocr_results, 'date', "")
@@ -51,6 +44,7 @@ class AccountBankStatement(models.Model):
         self.balance_start = balance_start_ocr
         self.balance_end = balance_end_ocr
         self.date = date_ocr
+        self._compute_name()
         self.line_ids = [Command.create({
             'amount': line['amount'],
             'date': line['date'],
