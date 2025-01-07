@@ -11,10 +11,6 @@
             <kanban position="attributes">
                 <attribute name="js_class">fsm_product_kanban</attribute>
             </kanban>
-            <xpath expr="//field[@name='image_128']" position="attributes">
-                <attribute name="options">{'placeholder': '/product/static/img/placeholder_thumbnail.png', 'size': [55, 55]}</attribute>
-                <attribute name="invisible">0</attribute>
-            </xpath>
         </field>
     </record>
 
