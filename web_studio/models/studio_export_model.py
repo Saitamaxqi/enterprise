@@ -25,7 +25,6 @@ PRESET_MODELS_DEFAULTS = [
     ("account.analytic.account", {"is_demo_data": True}),
     ("appointment.type", {"is_demo_data": True}),
     ("project.project", {}),
-    ("uom.category", {}),
     ("uom.uom", {}),
     ("planning.role", {}),
     ("product.template", {}),

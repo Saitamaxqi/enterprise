@@ -400,10 +400,6 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             if line_vals['product_uom_id']
         })
         uoms = self.env['uom.uom'].browse(encountered_product_uom_ids)
-        non_ref_uoms = uoms.filtered(lambda uom: uom.uom_type != 'reference')
-        if non_ref_uoms:
-            # search base UoM for UoM master table
-            uoms |= self.env['uom.uom'].search([('category_id', 'in', non_ref_uoms.category_id.ids), ('uom_type', '=', 'reference')])
 
         # Provide a dict that links each UOM id to its UNECE code
         uom_xmlids = uoms.get_external_id()

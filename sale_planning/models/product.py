@@ -17,13 +17,6 @@ class ProductTemplate(models.Model):
     )
     planning_role_id = fields.Many2one('planning.role')
 
-    @api.constrains('planning_enabled', 'uom_id')
-    def _check_planning_product_uom_is_time(self):
-        time_uom_category = self.env.ref('uom.uom_categ_wtime')
-        unit_uom = self.env.ref('uom.product_uom_unit')
-        if self.filtered(lambda product: product.planning_enabled and product.uom_id.category_id != time_uom_category and product.uom_id != unit_uom):
-            raise ValidationError(_("Plannable services should use an UoM within the %s category.", time_uom_category.name))
-
     @api.constrains('planning_enabled', 'type')
     def _check_planning_product_is_service(self):
         invalid_products = self.filtered(lambda product: product.planning_enabled and product.type != 'service')

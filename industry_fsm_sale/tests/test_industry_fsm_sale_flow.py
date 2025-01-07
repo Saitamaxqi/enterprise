@@ -202,12 +202,10 @@ class TestFsmFlowSale(TestFsmFlowSaleCommon):
     def test_uom_conversion_fsm_task_to_so(self):
         """Checks that the hours recorded on Timesheets are converted to the correct UOM on the Sales Order"""
 
-        working_time = self.env['uom.category'].search([('name', '=', 'Working Time')])
         quarter_hour = self.env['uom.uom'].create({
             'name': 'Quarter-Hours',
-            'category_id': working_time.id,
-            'ratio': 32.0,
-            'uom_type': 'smaller',
+            'relative_factor': 0.25,
+            'relative_uom_id': self.env.ref('uom.product_uom_hour').id,
         })
         self.service_timesheet._inverse_service_policy()  # trigger value changes for invoice policy and service_type
         self.service_timesheet.uom_id = quarter_hour

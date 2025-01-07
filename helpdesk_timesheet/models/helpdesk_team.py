@@ -33,7 +33,7 @@ class HelpdeskTeam(models.Model):
             team = helpdesk_ticket.team_id
             uom_team = team.timesheet_encode_uom_id
             product_uom = product_uom if product_uom else uom_team
-            total_by_team[team.id] += (unit_amount_sum * product_uom.factor_inv) * uom_team.factor
+            total_by_team[team.id] += (unit_amount_sum / product_uom.factor) * uom_team.factor
 
         for team in self:
             team.total_timesheet_time = round(total_by_team[team.id])

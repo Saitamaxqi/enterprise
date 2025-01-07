@@ -20,10 +20,8 @@ class ApprovalProductLine(models.Model):
         store=True, readonly=True, index=True)
     product_id = fields.Many2one('product.product', string="Products", check_company=True)
     product_uom_id = fields.Many2one(
-        'uom.uom', string="Unit of Measure",
-        compute="_compute_product_uom_id", store=True, readonly=False, precompute=True,
-        domain="[('category_id', '=', product_uom_category_id)]")
-    product_uom_category_id = fields.Many2one(related='product_id.uom_id.category_id')
+        'uom.uom', string="Unit",
+        compute="_compute_product_uom_id", store=True, readonly=False, precompute=True)
     quantity = fields.Float("Quantity", default=1.0)
 
     @api.depends('product_id')

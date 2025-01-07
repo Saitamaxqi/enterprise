@@ -10,7 +10,6 @@ class UomUom(models.Model):
     def _get_fields_stock_barcode(self):
         return [
             'name',
-            'category_id',
             'factor',
             'rounding',
         ]

@@ -173,11 +173,9 @@
         <UOMTable>
             <UOMTableEntry>
                 <UnitOfMeasure>C62</UnitOfMeasure>
-                <Description>Unit</Description>
             </UOMTableEntry>
             <UOMTableEntry>
                 <UnitOfMeasure>DZN</UnitOfMeasure>
-                <Description>Unit</Description>
             </UOMTableEntry>
         </UOMTable>
         <AnalysisTypeTable></AnalysisTypeTable>

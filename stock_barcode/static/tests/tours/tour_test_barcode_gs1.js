@@ -1248,27 +1248,11 @@ registry.category("web_tour.tours").add("test_gs1_receipt_quantity_with_uom", {
                 helper.assertLinesCount(0);
             },
         },
-        // Scans 5 kg for the "Product by Units" => Wrong UoM category, should display an error (instead of creating a new line)
+        // Scans 5 kg for the "Product by Units" => Even if the product uses Units as UoM, since
+        // there is no way to know which UoM is compatible, we use the scanned weight as the qty.
         {
             trigger: ".o_barcode_client_action",
             run: "scan 01000000152643293100000005",
-        },
-        {
-            trigger: ".o_notification_bar.bg-danger",
-            run: function () {
-                helper.assertLinesCount(0);
-                const errorMessageTitle = document.querySelector(".o_notification_title");
-                helper.assert(errorMessageTitle.innerText, "Wrong Unit of Measure");
-            },
-        },
-        {
-            trigger: ".o_notification_close",
-            run: "click",
-        },
-        // Scans 4 units for the "Product by Units".
-        {
-            trigger: ".o_barcode_client_action",
-            run: "scan 01000000152643293700000004",
         },
         {
             trigger: ".o_barcode_line",
@@ -1276,28 +1260,36 @@ registry.category("web_tour.tours").add("test_gs1_receipt_quantity_with_uom", {
                 helper.assertLinesCount(1);
                 const line = helper.getLine({ barcode: "15264329" });
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "4 Units");
+                helper.assertLineQty(line, "5 Units");
             },
         },
-        // Scans 5 kg for the "Product by Units" => Wrong UoM category, should display an error (instead of updating the existing line)
+        // Scans 4 units for the "Product by Units".
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan 01000000152643293700000004",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(9)",
+            run: function () {
+                helper.assertLinesCount(1);
+                const line = helper.getLine({ barcode: "15264329" });
+                helper.assertLineIsHighlighted(line, true);
+                helper.assertLineQty(line, "9 Units");
+            },
+        },
+        // Scans 5 kg for the "Product by Units" => Update qty from 9 to 14 Units.
         {
             trigger: ".o_barcode_client_action",
             run: "scan 01000000152643293100000005",
         },
         {
-            trigger: ".o_notification_bar.bg-danger",
+            trigger: ".o_barcode_line .qty-done:contains(14)",
             run: function () {
                 helper.assertLinesCount(1);
                 const line = helper.getLine({ barcode: "15264329" });
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "4 Units");
-                const errorMessageTitle = document.querySelector(".o_notification_title");
-                helper.assert(errorMessageTitle.innerText, "Wrong Unit of Measure");
+                helper.assertLineQty(line, "14 Units");
             },
-        },
-        {
-            trigger: ".o_notification_close",
-            run: "click",
         },
 
         // Scans 5 kg for the "Product by kg".
@@ -1314,28 +1306,22 @@ registry.category("web_tour.tours").add("test_gs1_receipt_quantity_with_uom", {
                 helper.assertLineQty(line, "5 kg");
             },
         },
-        // Scans 6 units for the "Product by kg" => Wrong UoM category, shoud display an error.
+        // Scans 6 units for the "Product by kg" => Update qty from 5 to 11 kg
         {
             trigger: ".o_barcode_client_action",
             run: "scan 01000000152648793700000006",
         },
         {
-            trigger: ".o_notification_bar.bg-danger",
+            trigger: ".o_barcode_line.o_selected .qty-done:contains(11)",
             run: function () {
                 helper.assertLinesCount(2);
                 const line = helper.getLine({ barcode: "15264879" });
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "5 kg");
-                const errorMessageTitle = document.querySelector(".o_notification_title");
-                helper.assert(errorMessageTitle.innerText, "Wrong Unit of Measure");
+                helper.assertLineQty(line, "11 kg");
             },
         },
-        {
-            trigger: ".o_notification_close",
-            run: "click",
-        },
 
-        // Scans 1.25 kg for the "Product by g" => Compatible UoM but kg need to be converted to g.
+        // Scans 1.25 kg for the "Product by g" => kg need to be converted to g.
         {
             trigger: ".o_barcode_client_action",
             run: "scan 01000000152648933102000125",

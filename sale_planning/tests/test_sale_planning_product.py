@@ -29,14 +29,6 @@ class TestSalePlanningProduct(TestCommonSalePlanning):
             product_form.planning_enabled = True
             product_form.save()
 
-        with self.assertRaises(AssertionError, msg='Plannable services should use an UoM within the %s category.' % self.env.ref('uom.uom_categ_wtime').name):
-            product_form = Form(self.env['product.product'])
-            product_form.name = 'Home Help'
-            product_form.type = 'consu'
-            product_form.planning_enabled = True
-            product_form.uom_id = self.env.ref('uom.product_uom_cm')
-            product_form.save()
-
         with self.assertRaises(AssertionError, msg="Should not accept a plannable service without a planning role. Planning Role is required"):
             product_form = Form(self.env['product.product'])
             product_form.name = 'Home Help'

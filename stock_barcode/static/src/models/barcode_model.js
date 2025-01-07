@@ -759,22 +759,6 @@ export default class BarcodeModel extends EventBus {
      * @returns {Object} the newly created line
      */
     async _createNewLine(params) {
-        if (params.fieldsParams && params.fieldsParams.uom && params.fieldsParams.product_id) {
-            const productUOM = this.cache.getRecord(
-                "uom.uom",
-                params.fieldsParams.product_id.uom_id
-            );
-            const paramsUOM = params.fieldsParams.uom;
-            if (paramsUOM.category_id !== productUOM.category_id) {
-                // Not the same UoM's category -> Can't be converted.
-                const message = _t(
-                    "Scanned quantity uses %(unit)s as its Unit of Measure (UoM), but it is not compatible with the product's UoM (%(productUnit)s).",
-                    { unit: paramsUOM.name, productUnit: productUOM.name }
-                );
-                this.notification(message, { title: _t("Wrong Unit of Measure"), type: "danger" });
-                return false;
-            }
-        }
         const newLine = Object.assign(
             {},
             params.copyOf,
@@ -1426,17 +1410,6 @@ export default class BarcodeModel extends EventBus {
         if (currentLine) {
             // If line found, can it be incremented ?
             let exceedingQuantity = 0;
-            if (
-                product.tracking !== "serial" &&
-                barcodeData.uom &&
-                barcodeData.uom.category_id == currentLine.product_uom_id.category_id
-            ) {
-                // convert to current line's uom
-                barcodeData.quantity =
-                    (barcodeData.quantity / barcodeData.uom.factor) *
-                    currentLine.product_uom_id.factor;
-                barcodeData.uom = currentLine.product_uom_id;
-            }
             // Checks the quantity doesn't exceed the line's remaining quantity.
             if (currentLine.reserved_uom_qty && product.tracking === "none") {
                 const remainingQty = currentLine.reserved_uom_qty - currentLine.qty_done;

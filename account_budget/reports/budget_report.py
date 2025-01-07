@@ -118,8 +118,6 @@ class BudgetReport(models.Model):
             LEFT JOIN account_move_line aml ON aml.purchase_line_id = pol.id
             LEFT JOIN uom_uom uom_aml ON uom_aml.id = aml.product_uom_id
             LEFT JOIN uom_uom uom_pol ON uom_pol.id = pol.product_uom_id
-            LEFT JOIN uom_category uom_category_aml ON uom_category_aml.id = uom_pol.category_id
-            LEFT JOIN uom_category uom_category_pol ON uom_category_pol.id = uom_pol.category_id
                 WHERE aml.parent_state = 'posted'
              GROUP BY pol.id
         """)

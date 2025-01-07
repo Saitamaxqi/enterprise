@@ -283,7 +283,8 @@ class QualityCheck(models.Model):
         return res
 
     def _get_print_qty(self):
-        if self.product_id.uom_id.category_id == self.env.ref('uom.product_uom_categ_unit'):
+        uom_unit = self.env.ref('uom.product_uom_unit')
+        if self.product_id.uom_id._has_common_reference(uom_unit):
             qty = int(self.workorder_id.qty_producing)
         else:
             qty = 1

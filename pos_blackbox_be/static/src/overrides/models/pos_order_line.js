@@ -117,20 +117,27 @@ patch(PosOrderline.prototype, {
         if (uom.is_unit) {
             return amount;
         } else {
-            if (uom.category_id[1] === "Weight") {
-                const uom_gram = this.models["uom.uom"].find(
-                    (uom) => uom.category_id.name === "Weight" && uom.name === "g"
-                );
-                if (uom_gram) {
-                    amount = (amount / uom.factor) * uom_gram.factor;
+            const gramUom = this.models["uom.uom"].find((uom) => uom.name === "g");
+            const litreUom = this.models["uom.uom"].find((uom) => uom.name === "L");
+
+            const hasCommonReference = (uom1, uom2) => {
+                const uom1Path = uom1.parent_path.split("/");
+                const uom2Path = uom2.parent_path.split("/");
+                const commonPath = [];
+                for (let i = 0; i < Math.min(uom1Path.length, uom2Path.length); i++) {
+                    if (uom1Path[i] === uom2Path[i]) {
+                        commonPath.push(uom1Path[i]);
+                    } else {
+                        break;
+                    }
                 }
-            } else if (uom.category_id[1] === "Volume") {
-                const uom_milliliter = this.models["uom.uom"].find(
-                    (uom) => uom.category_id.name === "Volume" && uom.name === "Milliliter(s)"
-                );
-                if (uom_milliliter) {
-                    amount = (amount / uom.factor) * uom_milliliter.factor;
-                }
+                return commonPath.length > 0;
+            };
+
+            if (gramUom && hasCommonReference(uom, gramUom)) {
+                amount = (amount * uom.factor) / gramUom.factor;
+            } else if (litreUom && hasCommonReference(uom, litreUom)) {
+                amount = (amount * uom.factor) / litreUom.factor / 1000;
             }
 
             return amount;

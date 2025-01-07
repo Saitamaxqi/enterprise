@@ -1933,22 +1933,10 @@ export default class BarcodePickingModel extends BarcodeModel {
     _updateLineQty(line, args) {
         if (args.qty_done) {
             if (args.uom) {
-                // An UoM was passed alongside the quantity, needs to check it's
-                // compatible with the product's UoM.
                 const lineUOM = line.product_uom_id;
-                if (args.uom.category_id !== lineUOM.category_id) {
-                    // Not the same UoM's category -> Can't be converted.
-                    const message = _t(
-                        "Scanned quantity uses %(unit)s as its Unit of Measure (UoM), but it is not compatible with the line's UoM (%(lineUnit)s).",
-                        { unit: args.uom.name, lineUnit: lineUOM.name }
-                    );
-                    return this.notification(message, {
-                        title: _t("Wrong Unit of Measure"),
-                        type: "danger",
-                    });
-                } else if (args.uom.id !== lineUOM.id) {
-                    // Compatible but not the same UoM => Need a conversion.
-                    args.qty_done = (args.qty_done / args.uom.factor) * lineUOM.factor;
+                if (args.uom.factor !== lineUOM.factor) {
+                    // Convert the scanned qty into the product UoM.
+                    args.qty_done = args.qty_done * (args.uom.factor / lineUOM.factor);
                     args.uom = lineUOM;
                 }
             }

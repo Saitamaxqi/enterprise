@@ -146,14 +146,11 @@ class TestSaleTimesheetInTicket(TestCommonSaleTimesheet):
         - Ensure we got the good remaining time when we change from the view form (47 hours)
         """
 
-        working_time_category = self.env.ref('uom.uom_categ_wtime')
-
         # We create a unit of measure of 50 hours
         uom = self.env["uom.uom"].create({
             "name": "50(hours)",
-            "factor": 0.16,
-            "uom_type": "bigger",
-            "category_id": working_time_category.id,
+            "relative_factor": 6.25,
+            "relative_uom_id": self.env.ref("uom.product_uom_day").id,
         })
 
         service = self.env["product.product"].create({

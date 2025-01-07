@@ -2030,10 +2030,7 @@ class TestRoutingAndKits(TransactionCase):
         grp_workorder = cls.env.ref('mrp.group_mrp_routings')
         cls.env.user.write({'groups_id': [(4, grp_workorder.id)]})
 
-        cls.uom_unit = cls.env['uom.uom'].search([
-            ('category_id', '=', cls.env.ref('uom.product_uom_categ_unit').id),
-            ('uom_type', '=', 'reference')
-        ], limit=1)
+        cls.uom_unit = cls.env.ref('uom.product_uom_unit')
         cls.kit1 = cls.env['product.product'].create({
             'name': 'kit1',
             'type': 'consu',

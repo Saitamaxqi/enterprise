@@ -261,17 +261,17 @@ class AccountEdiFormat(models.Model):
                                         invoice_partner.email or '',
                                     ])),
                 ]
-            lines = invoice.invoice_line_ids.filtered(lambda line: line.product_uom_id.category_id == self.env.ref('uom.product_uom_categ_vol'))
+            lines = invoice.invoice_line_ids.filtered(lambda line: line.product_uom_id and line.product_uom_id._has_common_reference(self.env.ref('uom.product_uom_litre')))
             liters = sum(line.product_uom_id._compute_quantity(line.quantity, self.env.ref('uom.product_uom_litre')) for line in lines)
             total_volume = int(liters)
 
             # Weight has to be reported in kg (not e.g. g).
-            lines = invoice.invoice_line_ids.filtered(lambda line: line.product_uom_id.category_id == self.env.ref('uom.product_uom_categ_kgm'))
+            lines = invoice.invoice_line_ids.filtered(lambda line: line.product_uom_id and line.product_uom_id._has_common_reference(self.env.ref('uom.product_uom_gram')))
             kg = sum(line.product_uom_id._compute_quantity(line.quantity, self.env.ref('uom.product_uom_kgm')) for line in lines)
             total_weight = int(kg)
 
             # Units have to be reported as units (not e.g. boxes of 12).
-            lines = invoice.invoice_line_ids.filtered(lambda line: line.product_uom_id.category_id == self.env.ref('uom.product_uom_categ_unit'))
+            lines = invoice.invoice_line_ids.filtered(lambda line: line.product_uom_id and line.product_uom_id._has_common_reference(self.env.ref('uom.product_uom_unit')))
             units = sum(line.product_uom_id._compute_quantity(line.quantity, self.env.ref('uom.product_uom_unit')) for line in lines)
             total_units = int(units)
 

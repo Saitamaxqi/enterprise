@@ -91,7 +91,6 @@
             <UOMTable>
                 <UOMTableEntry t-foreach="uoms" t-as="uom">
                     <UnitOfMeasure t-out="unece_code_by_uom[uom.id]"/>
-                    <Description t-out="uoms.category_id.name[:256]"/>
                 </UOMTableEntry>
             </UOMTable>
             <AnalysisTypeTable/>

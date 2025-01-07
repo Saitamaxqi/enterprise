@@ -69,7 +69,7 @@ class L10n_Ke_EdiCustomsImport(models.Model):
                 warnings['packaging_code_mismatch'] = {'message': _("Packaging unit code does not match")}
             if item.origin_country_id != item.product_id.l10n_ke_origin_country_id:
                 warnings['origin_country_mismatch'] = {'message': _("Origin Country is not the same as on the product")}
-            if item.uom_id and item.uom_id.category_id != item.product_id.uom_id.category_id:
+            if not item.uom_id._has_common_reference(item.product_id.uom_id):
                 warnings['uom_mismatch'] = {'message': _("UoMs do not match")}
 
             if warnings:
