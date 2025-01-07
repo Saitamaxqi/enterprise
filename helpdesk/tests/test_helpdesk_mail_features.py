@@ -1,12 +1,343 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 from odoo.addons.helpdesk.tests.common import HelpdeskCommon
-from odoo.tests import users
+from odoo.addons.mail.tests.common import MailCommon
+from odoo.addons.test_mail.data.test_mail_data import MAIL_TEMPLATE
+from odoo.tests import tagged, users
 from odoo.tools import formataddr
+from odoo.tools.mail import email_normalize
 
+@tagged('post_install', '-at_install', 'mail_flow')
+class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
 
-class TestHelpdeskMailFeatures(HelpdeskCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        # test partners
+        cls.partner_1, cls.partner_2, cls.partner_3 = cls.env['res.partner'].create([
+            {
+                'email': 'valid.lelitre@agrolait.com',
+                'name': 'Valid Lelitre',
+            }, {
+                'email': 'valid.other@gmail.com',
+                'name': 'Valid Poilvache',
+            }, {
+                'email': 'valid.poilboeuf@gmail.com',
+                'name': 'Valid Poilboeuf',
+            }
+        ])
+
+        # be sure to test emails
+        cls.user_employee.notification_type = 'email'
+        cls.helpdesk_user.notification_type = 'email'
+        cls.helpdesk_manager.notification_type = 'inbox'
+
+        # setup alias configuration for test team
+        cls.ticket_alias = cls.env['mail.alias'].create({
+            'alias_contact': 'everyone',
+            'alias_defaults': "{'team_id': %s}" % cls.test_team.id,
+            'alias_domain_id': cls.mail_alias_domain.id,
+            'alias_model_id': cls.env['ir.model']._get_id('helpdesk.ticket'),
+            'alias_name': 'helpdesk',
+            'alias_parent_model_id': cls.env['ir.model']._get_id('helpdesk.team'),
+            'alias_parent_thread_id': cls.test_team.id,
+        })
+
+        # simple template used in auto acknowledgement
+        cls.test_template = cls.env['mail.template'].create({
+            'auto_delete': True,
+            'body_html': '<p>Hello <t t-out="object.partner_id.name"/>}}</p>',
+            'email_from': '{{ (object.team_id.alias_email_from or object.company_id.email_formatted or object.user_id.email_formatted or user.email_formatted) }}',
+            'lang': '{{ object.partner_id.lang or object.user_id.lang or user.lang }}',
+            'model_id': cls.env['ir.model']._get_id('helpdesk.ticket'),
+            'name': 'Test Acknowledge',
+            'subject': 'Test Acknowledge {{ object.name }}',
+            'use_default_to': True,
+        })
+        cls.stage_new.template_id = cls.test_template.id
+
+        # add some project followers to check followers propagation notably
+        cls.test_team.message_subscribe(
+            partner_ids=cls.helpdesk_user.partner_id.ids,
+            # follow 'new tickets' to receive notification for incoming emails directly
+            subtype_ids=(cls.env.ref('mail.mt_comment') + cls.env.ref('helpdesk.mt_team_ticket_new')).ids
+        )
+
+    def test_assert_initial_values(self):
+        """ Check base values coherency for tests clarity """
+        self.assertEqual(
+            self.test_team.message_partner_ids,
+            self.helpdesk_user.partner_id)
+
+        # check for partner creation, should not pre-exist
+        self.assertFalse(self.env['res.partner'].search(
+            [('email_normalized', 'in', {'new.cc@test.agrolait.com', 'new.customer@test.agrolait.com', 'new.author@test.agrolait.com'})])
+        )
+
+    def test_mailgateway_with_template(self):
+        """ Portal / internal users receive an email when they create a ticket """
+        internal_followers = self.helpdesk_user.partner_id
+        new_partner_email = '"New Author" <new.author@test.agrolait.com>'
+
+        for test_user in (self.user_employee, self.helpdesk_portal, False):
+            with self.subTest(user_name=test_user.name if test_user else new_partner_email):
+                email_from = test_user.email_formatted if test_user else new_partner_email
+                with self.mock_mail_gateway():
+                    ticket = self.format_and_process(
+                        MAIL_TEMPLATE, email_from,
+                        f'{self.ticket_alias.alias_full_name}, {self.partner_1.email_formatted}, "New Customer" <new.customer@test.agrolait.com>',
+                        cc=f'"New Cc" <new.cc@test.agrolait.com>, {self.partner_2.email_formatted}',
+                        subject=f'Test from {email_from}',
+                        target_model='helpdesk.ticket',
+                    )
+                    self.flush_tracking()
+
+                if test_user:
+                    author = test_user.partner_id
+                else:
+                    author = self.env['res.partner'].search([('email_normalized', '=', 'new.author@test.agrolait.com')])
+                    self.assertTrue(author, 'Project automatically creates a partner for incoming email')
+                    self.assertEqual(author.email, 'new.author@test.agrolait.com', 'Should parse name/email correctly')
+                    self.assertEqual(author.name, 'New Author', 'Should parse name/email correctly')
+
+                # converts Cc into partner due to '_message_get_default_recipients'
+                # that checks for 'email_cc' field
+                new_partner_cc = self.env['res.partner'].search([('email_normalized', '=', 'new.cc@test.agrolait.com')])
+                self.assertTrue(new_partner_cc)
+                self.assertEqual(new_partner_cc.email, 'new.cc@test.agrolait.com')
+                # self.assertEqual(new_partner_cc.name, 'New Cc')
+                self.assertEqual(new_partner_cc.name, 'new.cc@test.agrolait.com', 'TDE FIXME: name incorrectly parsed')
+                # do not convert other people in To, simply recognized if they exist
+                new_partner_to = self.env['res.partner'].search([('email_normalized', '=', 'new.customer@test.agrolait.com')])
+                self.assertEqual(new_partner_to.email, 'new.customer@test.agrolait.com')
+                self.assertEqual(new_partner_to.name, 'new.customer@test.agrolait.com', 'TDE FIXME: name incorrectly parsed')
+
+                self.assertIn('Please call me as soon as possible', ticket.description)
+                self.assertEqual(ticket.email_cc, f'"New Cc" <new.cc@test.agrolait.com>, {self.partner_2.email_formatted}')
+                self.assertEqual(
+                    ticket.message_partner_ids,
+                    internal_followers + author + self.partner_1 + self.partner_2 + new_partner_cc + new_partner_to,
+                    'Helpdesk subscribes about everyone in the world to tickets')
+                self.assertEqual(ticket.name, f'Test from {author.email_formatted}')
+                self.assertEqual(ticket.partner_id, author)
+                self.assertEqual(ticket.stage_id, self.stage_new)
+                self.assertEqual(ticket.team_id, self.test_team)
+
+                # check that when a portal user creates a ticket there is two message on the ticket:
+                # - the creation message email
+                # - the mail from the stage mail template
+                self.assertEqual(len(ticket.message_ids), 2)
+                # first message: incoming email: sent to email followers
+                incoming_email = ticket.message_ids[1]
+                self.assertMailNotifications(
+                    incoming_email,
+                    [
+                        {
+                            'content': 'Please call me as soon as possible',
+                            'email_values': {
+                                'email_from': formataddr((author.name, author.email_normalized)),
+                            },
+                            'message_type': 'email',
+                            'message_values': {
+                                # ticket creates a partner due does not update message author
+                                'author_id': test_user.partner_id if test_user else self.env['res.partner'],
+                                'email_from': formataddr((author.name, author.email_normalized)),
+                                'mail_server_id': self.env['ir.mail_server'],
+                                # followers of 'new task' subtype (but not original To as they
+                                # already received the email)
+                                'notified_partner_ids': internal_followers,
+                                # deduced from 'To' and 'Cc' (recognized partners)
+                                'partner_ids': self.partner_1 + self.partner_2,
+                                'parent_id': self.env['mail.message'],
+                                'reply_to': formataddr((
+                                    f'{self.env.company.name} {self.test_team.name}',
+                                    self.ticket_alias.alias_full_name
+                                )),
+                                'subject': f'Test from {author.email_formatted}',
+                                'subtype_id': self.env.ref('helpdesk.mt_ticket_new'),
+                            },
+                            'notif': [
+                                {'partner': self.helpdesk_user.partner_id, 'type': 'email',},
+                            ],
+                        },
+                    ],
+                )
+
+                # second message: acknowledgment: sent to email author
+                acknowledgement = ticket.message_ids[0]
+                # task created by odoobot if not incoming user -> odoobot author of ack email
+                acknowledgement_author = test_user.partner_id if test_user else self.partner_root
+                self.assertMailNotifications(
+                    acknowledgement,
+                    [
+                        {
+                            'content': f'Hello {author.name}',
+                            'email_values': {
+                                # be sure to check email_from of outgoing email not based on author_id
+                                'email_from': self.test_team.alias_email_from,
+                            },
+                            'message_type': 'auto_comment',
+                            'message_values': {
+                                'author_id': acknowledgement_author,
+                                'email_from': self.test_team.alias_email_from,
+                                'mail_server_id': self.env['ir.mail_server'],
+                                # default recipients: partner_id, no note followers
+                                'notified_partner_ids': author,
+                                # default recipients: partner_id
+                                'partner_ids': author,
+                                'parent_id': incoming_email,
+                                'reply_to': formataddr((
+                                    f'{self.env.company.name} {self.test_team.name}',
+                                    self.ticket_alias.alias_full_name
+                                )),
+                                'subject': f'Test Acknowledge {ticket.name}',
+                                'subtype_id': self.env.ref('mail.mt_note'),
+                            },
+                            'notif': [
+                                # specific email for portal customer, due to portal mixin
+                                {'partner': author, 'type': 'email', 'group': 'portal_customer',},
+                            ],
+                        },
+                    ],
+                )
+
+                # uses Chatter: fetches suggested recipients, post a message
+                # - checks all suggested: incoming email to + cc are included
+                # - for all notified people: expected 'email_to' is them
+                # ------------------------------------------------------------
+                suggested_all = ticket.with_user(self.helpdesk_user)._message_get_suggested_recipients()
+                expected_all = [
+                    # ticket creates partners and followers for everyone, hence no suggested people :()
+                ]
+                self.assertEqual(suggested_all, expected_all)
+
+                # finally post the message with recipients
+                with self.mock_mail_gateway():
+                    responsible_answer = ticket.with_user(self.helpdesk_user).message_post(
+                        body='<p>Well received !',
+                        partner_ids=[],
+                        message_type='comment',
+                        subject=f'Re: {ticket.name}',
+                        subtype_id=self.env.ref('mail.mt_comment').id,
+                    )
+                self.assertEqual(
+                    ticket.message_partner_ids,
+                    internal_followers + author + self.partner_1 + self.partner_2 + new_partner_cc + new_partner_to)
+
+                expected_chatter_reply_to = formataddr(
+                    (f'{self.env.company.name} {self.test_team.name}', self.ticket_alias.alias_full_name)
+                )
+                self.assertMailNotifications(
+                    responsible_answer,
+                    [
+                        {
+                            'content': 'Well received !',
+                            'mail_mail_values': {
+                                'mail_server_id': self.env['ir.mail_server'],  # no specified server
+                            },
+                            'message_type': 'comment',
+                            'message_values': {
+                                'author_id': self.helpdesk_user.partner_id,
+                                'email_from': self.helpdesk_user.partner_id.email_formatted,
+                                'mail_server_id': self.env['ir.mail_server'],
+                                # helpdesk_user not notified of its own message, even if follower
+                                'notified_partner_ids': author + self.partner_1 + self.partner_2 + new_partner_cc + new_partner_to,
+                                'parent_id': incoming_email,
+                                'partner_ids': self.env['res.partner'],
+                                'reply_to': expected_chatter_reply_to,
+                                'subtype_id': self.env.ref('mail.mt_comment'),
+                            },
+                            'notif': [
+                                # original author has a specific email with links and tokens
+                                {'partner': author, 'type': 'email', 'group': 'portal_customer'},
+                                {'partner': self.partner_1, 'type': 'email'},
+                                {'partner': self.partner_2, 'type': 'email'},
+                                {'partner': new_partner_cc, 'type': 'email'},
+                                {'partner': new_partner_to, 'type': 'email'},
+                            ],
+                        },
+                    ],
+                )
+
+                # SMTP emails really sent (not Inbox guy then), checking Msg[To] notably
+                # as well as Msg[From] which depends on smtp server
+                for partner in responsible_answer.notified_partner_ids:
+                    with self.subTest(name=partner.name):
+                        self.assertSMTPEmailsSent(
+                            mail_server=self.mail_server_notification,
+                            msg_from=formataddr((self.helpdesk_user.name, f'{self.default_from}@{self.alias_domain}')),
+                            smtp_from=self.mail_server_notification.from_filter,
+                            smtp_to_list=[partner.email_normalized],
+                            msg_to_lst=[partner.email_formatted],
+                        )
+
+                # customer replies using "Reply All" + adds new people
+                # ------------------------------------------------------------
+                self.gateway_mail_reply_from_smtp_email(
+                    MAIL_TEMPLATE, [author.email_normalized], reply_all=True,
+                    cc=f'"Another Cc" <another.cc@test.agrolait.com>, {self.partner_3.email}',  # used mainly for existing partners currently
+                    target_model='project.task',
+                )
+                self.assertEqual(
+                    ticket.email_cc,
+                    '"Another Cc" <another.cc@test.agrolait.com>, valid.poilboeuf@gmail.com, "New Cc" <new.cc@test.agrolait.com>, "Valid Poilvache" <valid.other@gmail.com>',
+                    'Updated with new Cc')
+                self.assertEqual(len(ticket.message_ids), 4, 'Incoming email + acknowledgement + chatter reply + customer reply')
+                self.assertEqual(
+                    ticket.message_partner_ids,
+                    internal_followers + author + self.partner_1 + self.partner_2 + self.partner_3 + new_partner_cc + new_partner_to)
+
+                self.assertMailNotifications(
+                    ticket.message_ids[0],
+                    [
+                        {
+                            'content': 'Please call me as soon as possible',
+                            'message_type': 'email',
+                            'message_values': {
+                                'author_id': author,
+                                'email_from': author.email_formatted,
+                                'mail_server_id': self.env['ir.mail_server'],
+                                # notified: followers, behaves like classic post
+                                'notified_partner_ids': internal_followers + self.partner_1 + self.partner_2 + self.partner_3 + new_partner_cc + new_partner_to,
+                                'parent_id': incoming_email,
+                                # reply-all when being only recipients = no other recipients
+                                'partner_ids': self.partner_3,
+                                'subject': f'Re: Re: {ticket.name}',
+                                'subtype_id': self.env.ref('mail.mt_comment'),
+                            },
+                            'notif': [
+                                {'partner': self.helpdesk_user.partner_id, 'type': 'email',},
+                                {'partner': self.partner_1, 'type': 'email',},
+                                {'partner': self.partner_2, 'type': 'email',},
+                                {'partner': self.partner_3, 'type': 'email',},
+                                {'partner': new_partner_cc, 'type': 'email',},
+                                {'partner': new_partner_to, 'type': 'email',},
+                            ],
+                        },
+                    ],
+                )
+
+                # clear for other loops
+                (new_partner_cc + new_partner_to).unlink()
+
+    def test_mailgateway_without_template(self):
+        """ A mail sent to the alias without mail template on the stage should also create a partner """
+        self.stage_new.template_id = False
+
+        with self.mock_mail_gateway():
+            ticket = self.format_and_process(
+                MAIL_TEMPLATE,
+                '"New Customer" <new.customer@test.example.com>',
+                self.ticket_alias.alias_full_name,
+                subject='Test Send from email',
+                target_model='helpdesk.ticket',
+            )
+        self.flush_tracking()
+        self.assertIn('Please call me as soon as possible this afternoon!', ticket.description,
+                      "the email body should be in the ticket's description")
+        self.assertEqual(ticket.message_partner_ids, ticket.partner_id + self.helpdesk_user.partner_id)
+        self.assertEqual(ticket.name, 'Test Send from email')
+        self.assertTrue(ticket.partner_id)
+        self.assertEqual(ticket.partner_id.name, 'New Customer')
 
     @users('hm')
     def test_suggested_recipients_auto_creation(self):
@@ -33,3 +364,17 @@ class TestHelpdeskMailFeatures(HelpdeskCommon):
 
         # check that the creation of the contact won't fail due to bad values
         _partner = self.env['res.partner'].create(create_vals)
+
+    def test_ticket_create_ticket_email_cc(self):
+        ''' Make sure creating a ticket with an email_cc field creates a follower. '''
+        ticket = self.env['helpdesk.ticket'].create({
+            'partner_name': 'Test Name',
+            'partner_email': 'testmail@test.com',
+            'name': 'Ticket Name',
+            'email_cc': 'testcc@test.com',
+        })
+        follow = self.env['mail.followers'].search([
+            ('res_model', '=', 'helpdesk.ticket'),
+            ('res_id', '=', ticket.id),
+        ], limit=1)
+        self.assertTrue(follow)

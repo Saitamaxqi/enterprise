@@ -4,7 +4,6 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
-from markupsafe import Markup
 
 from .common import HelpdeskCommon
 from odoo.exceptions import AccessError
@@ -21,43 +20,6 @@ class TestHelpdeskFlow(HelpdeskCommon):
         - test_team_assignation_[method]: tests the team assignation method work as expected
         - test_automatic_ticket_closing: tests automatic ticket closing after set number of days
     """
-
-    @classmethod
-    def setUpClass(cls):
-        res = super().setUpClass()
-        ticket_model_id = cls.env['ir.model']._get_id('helpdesk.ticket')
-        helpdesk_team_model_id = cls.env['ir.model']._get_id('helpdesk.team')
-
-        cls.mail_alias = cls.env['mail.alias'].create({
-            'alias_name': 'helpdesk_team',
-            'alias_model_id': ticket_model_id,
-            'alias_parent_model_id': helpdesk_team_model_id,
-            'alias_parent_thread_id': cls.test_team.id,
-            'alias_defaults': "{'team_id': %s}" % cls.test_team.id,
-        })
-
-        cls.email_to_alias_from = 'client_a@someprovider.com'
-        cls.email_to_alias = """MIME-Version: 1.0
-Date: Thu, 27 Dec 2018 16:27:45 +0100
-Message-ID: blablabla1
-Subject: helpdesk team 1 in company 1
-From:  Client A <client_a@someprovider.com>
-To: helpdesk_team@test.mycompany.com
-Content-Type: multipart/alternative; boundary="000000000000a47519057e029630"
-
---000000000000a47519057e029630
-Content-Type: text/plain; charset="UTF-8"
-
-
---000000000000a47519057e029630
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div>A good message ter</div>
-
---000000000000a47519057e029630--
-"""
-        return res
 
     def test_access_rights(self):
         # helpdesk user should only be able to:
@@ -607,58 +569,6 @@ Content-Transfer-Encoding: quoted-printable
         self.assertEqual(helpdesk_ticket.partner_id.email, "client_b@someprovaîdère.com")
         self.assertEqual(helpdesk_ticket.partner_email, "client_b@someprovaîdère.com")
 
-    def test_email_without_mail_template(self):
-        """
-        A mail sent to the alias without mail template on the stage should also create a partner
-        """
-        stage = self.test_team._determine_stage()[self.test_team.id]
-        stage.template_id = False
-
-        helpdesk_ticket = self.env['mail.thread'].message_process('helpdesk.ticket', self.email_to_alias)
-        helpdesk_ticket = self.env['helpdesk.ticket'].browse(helpdesk_ticket)
-
-        self.assertEqual(helpdesk_ticket.partner_id.name, "Client A")
-
-    def test_email_with_mail_template_portal_user(self):
-        """
-        Portal users receive an email when they create a ticket
-        """
-        self.stage_new.template_id = self.env.ref('helpdesk.new_ticket_request_email_template')
-        self.helpdesk_portal.email = self.email_to_alias_from
-
-        helpdesk_ticket = self.env['mail.thread'].message_process('helpdesk.ticket', self.email_to_alias)
-        helpdesk_ticket = self.env['helpdesk.ticket'].browse(helpdesk_ticket)
-        self.assertEqual(helpdesk_ticket.partner_id, self.helpdesk_portal.partner_id)
-
-        self.flush_tracking()
-
-        # check that when a portal user creates a ticket there is two message on the ticket:
-        # - the creation message note
-        # - the mail from the stage mail template
-        template_msg, creation_log = helpdesk_ticket.message_ids
-        self.assertEqual(template_msg.subtype_id, self.env.ref('mail.mt_note'))
-        self.assertEqual(creation_log.subtype_id, self.env.ref('helpdesk.mt_ticket_new'))
-
-    def test_email_with_mail_template_internal_user(self):
-        """
-        Internal users receive an email when they create a ticket by email.
-        """
-        self.stage_new.template_id = self.env.ref('helpdesk.new_ticket_request_email_template')
-        self.helpdesk_user.email = self.email_to_alias_from
-
-        helpdesk_ticket = self.env['mail.thread'].message_process('helpdesk.ticket', self.email_to_alias)
-        helpdesk_ticket = self.env['helpdesk.ticket'].browse(helpdesk_ticket)
-        self.assertEqual(helpdesk_ticket.partner_id, self.helpdesk_user.partner_id)
-
-        self.flush_tracking()
-
-        # check that when an internal user creates a ticket there is two messages on the ticket:
-        # - the creation message note
-        # - the mail from the stage mail template
-        template_msg, creation_log = helpdesk_ticket.message_ids
-        self.assertEqual(template_msg.subtype_id, self.env.ref('mail.mt_note'))
-        self.assertEqual(creation_log.subtype_id, self.env.ref('helpdesk.mt_ticket_new'))
-
     def test_team_assignation_balanced_sla(self):
         #We create an sla policy with minimum priority set as '2'
         self.test_team.use_sla = True
@@ -871,57 +781,6 @@ Content-Transfer-Encoding: quoted-printable
         helpdesk = helpdesk_form.save()
 
         self.assertEqual(helpdesk.member_ids, self.env.user)
-
-    def test_create_from_email_new_customer_ticket_description(self):
-        Partner = self.env['res.partner']
-
-        new_message = """MIME-Version: 1.0
-Date: Thu, 27 Dec 2018 16:27:45 +0100
-Message-ID: blablabla0
-Subject: new customer
-From:  A client <client_a@someprovider.com>
-To: helpdesk_team@aqualung.com
-Content-Type: multipart/alternative; boundary="000000000000a47519057e029630"
-
---000000000000a47519057e029630
-Content-Type: text/plain; charset="UTF-8"
-
-
---000000000000a47519057e029630
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-should be in the ticket's description
-
---000000000000a47519057e029630--
-"""
-
-        partner_exist = Partner.search([('email', 'in', ['client_a@someprovider.com'])])
-        self.assertFalse(partner_exist, "Partner should not exist")
-
-        helpdesk_ticket_id = self.env['mail.thread'].message_process('helpdesk.ticket', new_message)
-        helpdesk_ticket = self.env['helpdesk.ticket'].browse(helpdesk_ticket_id)
-
-        partner = Partner.search([('email', '=', 'client_a@someprovider.com')])
-        self.assertTrue(partner, "Partner should be created")
-
-        self.assertEqual(helpdesk_ticket.partner_id, partner)
-
-        self.assertEqual(helpdesk_ticket.description, Markup("<p>should be in the ticket's description\n</p>"), "the email body should be in the ticket's description")
-
-    def test_create_ticket_cc(self):
-        ''' Make sure creating a ticket with an email_cc field creates a follower. '''
-        ticket = self.env['helpdesk.ticket'].create({
-            'partner_name': 'Test Name',
-            'partner_email': 'testmail@test.com',
-            'name': 'Ticket Name',
-            'email_cc': 'testcc@test.com',
-        })
-        follow = self.env['mail.followers'].search([
-            ('res_model', '=', 'helpdesk.ticket'),
-            ('res_id', '=', ticket.id),
-        ], limit=1)
-        self.assertTrue(follow)
 
     def test_create_from_internal_for_internal(self):
         """
