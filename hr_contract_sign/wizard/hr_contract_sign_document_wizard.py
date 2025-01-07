@@ -23,7 +23,7 @@ class HrContractSignDocumentWizard(models.TransientModel):
         return list_template
 
     def _default_get_template_warning(self):
-        return not bool(self._get_sign_template_ids()) and _('No templates are configured yet. Do you want to set up your first one ?')
+        return not bool(self._get_sign_template_ids()) and _('No documents templates on the database.')
 
     @api.model
     def default_get(self, fields_list):
