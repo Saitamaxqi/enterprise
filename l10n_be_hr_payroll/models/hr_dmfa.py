@@ -1121,15 +1121,18 @@ class L10n_BeDmfa(models.Model):
 
         # Signature File
         # ==============
-        certificate_sudo = self.company_id.sudo().onss_certificate_id
-        if not certificate_sudo:
-            raise UserError(_('No Certificate definer on the Payroll Configuration'))
+        if self.file_type != 'R':
+            self.dmfa_signature = False
+        else:
+            certificate_sudo = self.company_id.sudo().onss_certificate_id
+            if not certificate_sudo:
+                raise UserError(_('No Certificate definer on the Payroll Configuration'))
 
-        sign = certificate_sudo._decode_certificate_for_be_dmfa_xml(self.dmfa_xml)
+            sign = certificate_sudo._decode_certificate_for_be_dmfa_xml(self.dmfa_xml)
 
-        # Remove -----BEGIN PKCS7-----, -----END PKCS7----- and final new line
-        sign = (b'\n').join(sign.split(b'\n')[1:-2])
-        self.dmfa_signature = sign
+            # Remove -----BEGIN PKCS7-----, -----END PKCS7----- and final new line
+            sign = (b'\n').join(sign.split(b'\n')[1:-2])
+            self.dmfa_signature = sign
 
         # GO File
         # =======
