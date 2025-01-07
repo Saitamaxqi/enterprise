@@ -19,9 +19,9 @@ class AccountPayment(models.Model):
             partner_bank_account = partner2bank_accounts.get(payment.partner_id, self.env['res.partner.bank'])[:1]
             if not partner_bank_account:
                 errors.append(_("Partner '%s' has no bank account.", payment.partner_id.display_name))
-            if (not partner_bank_account.acc_number or partner_bank_account.acc_type != 'iban'):
+            elif (not partner_bank_account.acc_number or partner_bank_account.acc_type != 'iban'):
                 errors.append(_("The bank account associated with the partner '%s' has no IBAN.", payment.partner_id.name))
-            if partner_bank_account.acc_number[:2] != 'IT':
+            elif partner_bank_account.acc_number[:2] != 'IT':
                 errors.append(_("Only bank accounts with an Italian IBAN are allowed to use Ri.Ba. payments"))
             if not fiscal_code(payment.partner_id):
                 errors.append(_("Partner '%s' must have a Codice Fiscale", payment.partner_id.name))
