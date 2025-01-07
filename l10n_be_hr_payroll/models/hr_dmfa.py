@@ -1255,6 +1255,9 @@ class L10n_BeDmfa(models.Model):
             for worker_record in natural_person.worker_records:
                 for contribution in worker_record.contributions:
                     total += int(contribution.amount) / 100.0
+                for occupation in worker_record.occupations:
+                    for occupation_deduction in occupation.occupation_deductions:
+                        total -= int(occupation_deduction.deduction_amount) / 100.0
                 for contribution in worker_record.student_contributions:
                     total += int(contribution.student_contribution_amount) / 100.0
         # Sum all employee contributions
