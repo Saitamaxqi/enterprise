@@ -1,13 +1,9 @@
 from datetime import timedelta
-import hashlib
-import hmac
-import json
 import logging
 import secrets
-import time
 
 from odoo import fields, models
-from urllib.parse import urlparse, parse_qsl
+from odoo.addons.iot_base.tools.payload_signature import hmac_sign
 
 _logger = logging.getLogger(__name__)
 
@@ -49,30 +45,18 @@ class IotBox(models.Model):
 
     token = fields.Char(default=lambda self: self._default_token(), readonly=True)
 
-    def hmac_sign(self, url, payload, t=None):
+    def sign_communication(self, iot_box_ip, url, payload):
         """Compute HMAC signature for the url and the payload of a request with
         the IoT Box `token` as key.
 
+        :param iot_box_ip: ip of the ioT box
         :param url: url of the request
         :param payload: payload of the request
-        :param float t: timestamp to use for the signature, if not provided, the current
-            time is used
         :return: HMAC signature of the timestamp, url and payload
         """
-        if not t:
-            t = time.time()
+        iot_id = self.env['iot.box'].search([('ip', '=', iot_box_ip)], limit=1)
 
-        parsed_url = urlparse(url)
-        query_params = dict(parse_qsl(parsed_url.query, keep_blank_values=True))
-
-        payload = "%s|%s|%s|%s" % (
-            int(t),
-            parsed_url.path,
-            json.dumps(query_params, sort_keys=True),
-            json.dumps(payload, sort_keys=True),
-        )
-        return hmac.new(self.token.encode(), payload.encode(), hashlib.sha256).hexdigest()
-
+        return hmac_sign(url, payload, iot_id.token)
 
     def _compute_ip_url(self):
         for box in self:

@@ -167,9 +167,8 @@ export class IoTLongpolling {
         var port = this.protocol === 'http:' ? ':8069' : '';
         var url = this.protocol + '//' + iot_ip + port;
 
-        // Get the id of the IoT Box and sign the request
-        const [{ id }] = await this.orm.call("iot.box", "search_read", [[['ip', '=', iot_ip]]], { fields: [ 'id' ] }, { limit: 1 });
-        const signature = await this.orm.call("iot.box", "hmac_sign", [id, url + route, data.params]);
+        // Sign the request
+        const signature = await this.orm.call("iot.box", "sign_communication", [null, iot_ip, url + route, data.params]);
 
         const requestParams = {
             method: "POST",
