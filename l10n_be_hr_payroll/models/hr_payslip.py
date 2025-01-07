@@ -121,9 +121,8 @@ class HrPayslip(models.Model):
                 ('day', '<=', max(self.mapped('date_to'))),
                 ('day', '>=', min(self.mapped('date_from'))),
             ])
-            query_str, params = query.select('day', 'benefit_name', 'employee_id')
-            self.env.cr.execute(query_str, params)
-            work_entries_benefits_rights = self.env.cr.dictfetchall()
+            work_entries_benefits_rights = self.env.execute_query_dict(
+                query.select('day', 'benefit_name', 'employee_id'))
 
             work_entries_benefits_rights_by_employee = defaultdict(list)
             for work_entries_benefits_right in work_entries_benefits_rights:

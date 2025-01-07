@@ -453,9 +453,8 @@ class L10n_InGstReturnPeriod(models.Model):
             'cess': self.env.ref('l10n_in.tax_tag_cess'),
         }
         journal_items = self.env['account.move.line'].search(domain)
-        tax_details_query, tax_details_params = self.env['account.move.line']._get_query_tax_details_from_domain(domain=[('id', 'in', journal_items.ids)])
-        self._cr.execute(tax_details_query, tax_details_params)
-        tax_details = self._cr.dictfetchall()
+        tax_details_sql = self.env['account.move.line']._get_query_tax_details_from_domain(domain=[('id', 'in', journal_items.ids)])
+        tax_details = self.env.execute_query_dict(tax_details_sql)
         # Retrieve base lines and tax lines based on tax_details
         base_lines = self.env['account.move.line'].browse([tax['base_line_id'] for tax in tax_details])
         tax_lines = self.env['account.move.line'].browse([tax['tax_line_id'] for tax in tax_details])

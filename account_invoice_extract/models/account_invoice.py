@@ -447,7 +447,7 @@ class AccountMove(models.Model):
         if partner:
             return partner.id if partner.id != self.company_id.partner_id.id else 0
 
-        self.env.cr.execute(*self.env['res.partner']._where_calc([
+        self.env.cr.execute(self.env['res.partner']._where_calc([
             *self.env['res.partner']._check_company_domain(self.company_id),
             ('active', '=', True),
             ('name', '!=', False),
