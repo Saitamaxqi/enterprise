@@ -76,6 +76,17 @@ function isStudioEditable(action) {
     return false;
 }
 
+/**
+ * Whether the actionService will actually load this.
+ * @see action_service.js:_getActionParams
+ */
+function isActionStateValid(actionState) {
+    return (
+        actionState.action ||
+        (actionState.model && (actionState.resId || actionState.view_type === "form"))
+    );
+}
+
 function defaultActionForModel({ model, resId, view_id, view_type }) {
     const action = {
         res_model: model,
@@ -255,8 +266,10 @@ export const studioService = {
                         toLoad = {
                             displayName: action.name,
                             model: action.res_model,
-                            resId: resIds[0] || "new",
                         };
+                        if ((viewType || action.views?.[0]?.[1]) === "form") {
+                            toLoad.resId = resIds[0] || "new";
+                        }
                     }
                     actionStack = [toLoad];
                     controllerState = { resIds, resId: resIds[0] };
@@ -315,6 +328,7 @@ export const studioService = {
             // which, in studio are *usually* different.
             resetViewCompilerCache();
             const actionStack = router.current.actionStack.slice(0, -1);
+            let stateLoaded = false;
             if (!actionId && state.studioMode === MODES.EDITOR && actionStack.length) {
                 const lastAction = actionStack.at(-1);
                 const { editedViewType, editedAction } = state;
@@ -340,13 +354,22 @@ export const studioService = {
                         lastAction.resId = undefined;
                     }
                 }
-                await loadState({ actionStack });
-            } else {
+                const currentRouterState = { ...router.current };
+                stateLoaded = await loadState({ actionStack });
+                // We tried our best to leave studio with the current action's light-side sibling
+                // but did not work. Revert the change in the url, and let the code fallback
+                if (!stateLoaded) {
+                    router.replaceState(currentRouterState, { replace: true, sync: true });
+                    await Promise.resolve();
+                }
+            }
+            if (!stateLoaded) {
+                const lastValidActionIndex = actionStack.findLastIndex(isActionStateValid);
                 actionId = actionId || "menu";
-                const options =
-                    actionId === "menu"
-                        ? { stackPosition: "replaceCurrentAction" }
-                        : { clearBreadcrumbs: true };
+                let options = { clearBreadcrumbs: true };
+                if (actionId === "menu" && lastValidActionIndex >= 0) {
+                    options = { index: lastValidActionIndex + 1 };
+                }
                 await env.services.action.doAction(actionId, options);
             }
             // force rendering of the main navbar to allow adaptation of the size

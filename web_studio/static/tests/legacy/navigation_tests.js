@@ -1271,4 +1271,82 @@ QUnit.module("Studio", (hooks) => {
         assert.strictEqual(browser.location.pathname, "/odoo/action-4/1/m-pony/1");
         assert.strictEqual(browser.location.search, "");
     });
+
+    QUnit.test("enter and leave with multirecord view (invalid to load)", async(assert) => {
+        serverData.views["pony,false,pivot"] = "<pivot/>"
+        const wc = await createEnterpriseWebClient({
+            serverData,
+        });
+        await doAction(wc, {
+            type: "ir.actions.act_window",
+            views: [[false, "pivot"]],
+            res_model: "pony",
+            display_name: "some dynamic action",
+        });
+        await contains(".o_pivot_view");
+        await click(target, ".o_web_studio_navbar_item button");
+        await contains(".o_web_studio_view_renderer .o_pivot_view");
+        assert.containsOnce(target, ".o_studio")
+        await click(target, ".o_web_studio_leave a");
+        await contains(".o_home_menu");
+        await contains(".o_main_navbar .o_menu_toggle", {visible: false});
+        assert.containsNone(target, ".o_studio");
+        assert.containsNone(target, ".o_menu_toggle_back");
+    });
+
+    QUnit.test("enter and leave on home menu with multirecord view (invalid to load)", async(assert) => {
+        serverData.views["pony,false,pivot"] = "<pivot/>"
+        const wc = await createEnterpriseWebClient({
+            serverData,
+        });
+        await doAction(wc, {
+            type: "ir.actions.act_window",
+            views: [[false, "pivot"]],
+            res_model: "pony",
+            display_name: "some dynamic action",
+        });
+        await contains(".o_pivot_view");
+        await click(target, ".o_web_studio_navbar_item button");
+        await contains(".o_web_studio_view_renderer .o_pivot_view");
+        assert.containsOnce(target, ".o_studio");
+        await click(target, ".o_studio_navbar .o_menu_toggle");
+        await contains(".o_home_menu");
+        await click(target, ".o_web_studio_leave a");
+        await contains(".o_home_menu:not(.o_studio .o_home_menu)");
+        await contains(".o_main_navbar .o_menu_toggle", {visible: false});
+        assert.containsNone(target, ".o_studio");
+        assert.containsNone(target, ".o_menu_toggle_back");
+    });
+
+    QUnit.test("enter and leave on home menu with multirecord view (invalid to load) and a valid one", async(assert) => {
+        serverData.views["pony,false,pivot"] = "<pivot/>"
+        const wc = await createEnterpriseWebClient({
+            serverData,
+        });
+        await doAction(wc, {
+            type: "ir.actions.act_window",
+            views: [[false, "form"]],
+            res_model: "pony",
+            display_name: "some dynamic action",
+        });
+        await contains(".o_form_view");
+        await doAction(wc, {
+            type: "ir.actions.act_window",
+            views: [[false, "pivot"]],
+            res_model: "pony",
+            display_name: "some dynamic action",
+        });
+
+        await contains(".o_pivot_view");
+        await click(target, ".o_web_studio_navbar_item button");
+        await contains(".o_web_studio_view_renderer .o_pivot_view");
+
+        await click(target, ".o_studio_navbar .o_menu_toggle");
+        await contains(".o_home_menu");
+        await click(target, ".o_web_studio_leave a");
+        await contains(".o_home_menu:not(.o_studio .o_home_menu)");
+        await contains(".o_menu_toggle_back")
+        await click(target, ".o_menu_toggle_back");
+        await contains(".o_form_view");
+    });
 });
