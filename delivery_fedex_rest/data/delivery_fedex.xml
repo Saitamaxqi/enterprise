@@ -106,7 +106,7 @@
     <record id="uom.product_uom_cm" model="uom.uom">
         <field name="fedex_code">CM</field>
     </record>
-    <record id="uom.uom_square_meter" model="uom.uom">
+    <record id="uom.product_uom_square_meter" model="uom.uom">
         <field name="fedex_code">M2</field>
     </record>
     <record id="uom.product_uom_litre" model="uom.uom">
@@ -139,7 +139,7 @@
     <record id="uom.product_uom_yard" model="uom.uom">
         <field name="fedex_code">YD</field>
     </record>
-    <record id="uom.uom_square_foot" model="uom.uom">
+    <record id="uom.product_uom_square_foot" model="uom.uom">
         <field name="fedex_code">SFT</field>
     </record>
     <record id="uom.product_uom_qt" model="uom.uom">
