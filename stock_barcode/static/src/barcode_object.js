@@ -87,7 +87,7 @@ export class BarcodeObject {
         if (!product) {
             const packaging = await this.cache.getRecordByBarcode(
                 productBarcode,
-                "product.packaging",
+                "product.uom",
                 {
                     onlyInCache: true,
                 }
@@ -95,7 +95,7 @@ export class BarcodeObject {
             if (packaging) {
                 product = this.cache.getRecord("product.product", packaging.product_id, false);
                 this.parsedData.packaging = packaging;
-                this.parsedData.quantity = packaging.qty;
+                this.parsedData.quantity = packaging.uom_id.factor;
             }
         }
         if (product) {

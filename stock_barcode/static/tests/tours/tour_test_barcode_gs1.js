@@ -689,7 +689,7 @@ registry.category("web_tour.tours").add("test_gs1_delivery_ambiguous_lot_number"
                 helper.assertLinesCount(1);
                 const line = helper.getLine({ barcode: "22222220" });
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "1");
+                helper.assertLineQty(line, "1 Units");
                 helper.assertLineTrackingNumber(line, "12345");
             },
         },
@@ -708,7 +708,7 @@ registry.category("web_tour.tours").add("test_gs1_delivery_ambiguous_lot_number"
                 helper.assertLinesCount(1);
                 const line = helper.getLine({ barcode: "22222220" });
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "1");
+                helper.assertLineQty(line, "1 Units");
                 helper.assertLineTrackingNumber(line, "12345");
             },
         },
@@ -1384,7 +1384,7 @@ registry.category("web_tour.tours").add("test_gs1_receipt_packaging", {
                 helper.assertLinesCount(1);
                 const line = helper.getLine({ barcode: "1113" });
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "6");
+                helper.assertLineQty(line, "12 Units");
             },
         },
         // Scans 4 packaging
@@ -1393,11 +1393,11 @@ registry.category("web_tour.tours").add("test_gs1_receipt_packaging", {
             run: "scan 01000000000022263700000004",
         },
         {
-            trigger: '.o_barcode_line [name=quantity]:contains("30")',
+            trigger: '.o_barcode_line [name=quantity]:contains("60")',
             run: function () {
                 helper.assertLinesCount(1);
                 helper.assertLineIsHighlighted(0, true);
-                helper.assertLineQty(0, "30");
+                helper.assertLineQty(0, "60 Units");
             },
         },
         // Clicks on the edit button to trigger a save.
@@ -1408,75 +1408,10 @@ registry.category("web_tour.tours").add("test_gs1_receipt_packaging", {
         {
             trigger: '[name="qty_done"] input',
             run: function () {
-                helper.assertFormQuantity("30");
+                helper.assertFormQuantity("60");
             },
         },
         ...stepUtils.discardBarcodeForm(),
-    ],
-});
-
-registry.category("web_tour.tours").add("test_gs1_receipt_packaging_with_uom", {
-    steps: () => [
-        { trigger: ".o_stock_barcode_main_menu", run: "scan WHIN" },
-        /* Scan (01)10347543011337(3103)000900(17)240701(10)100005
-        - (01) 10347543011337: packaging barcode (6 units);
-        - (3103) 000900: 0.9 kg -> Should be ignored;
-        - (17) 240701: expiration date (1st July 2024);
-        - (10) 100005: tracking number.
-    */
-        {
-            trigger: ".o_barcode_client_action",
-            run: "scan 011034754301133731030009001724070110100005",
-        },
-        {
-            trigger: ".o_barcode_line",
-            run: function () {
-                helper.assertLineQty(0, "6 Units");
-            },
-        },
-        /* Scan another lots with both quantity and weight.
-        (01)03287890001332(10)92404603(17)240304(3103)001500(37)5
-        - (01) 03287890001332: product barcode;
-        - (10) 92404603: tracking number;
-        - (17) 240304: expiration date (4th March 2024);
-        - (3103) 001500: 1.5 kg -> Should be ignored;
-        - (37) 5: 5 units -> Should be used as the line quantity.
-        */
-        {
-            trigger: ".o_barcode_client_action",
-            run: "scan 01032878900013321092404603\x1D172403043103001500375",
-        },
-        { trigger: ".o_toggle_sublines .fa-angle-down", run: "click" },
-        {
-            trigger: ".o_toggle_sublines .fa-angle-up",
-            run: function () {
-                helper.assertLinesCount(1);
-                helper.assertSublinesCount(2);
-                const sublines = helper.getSublines();
-                helper.assertLinesTrackingNumbers(sublines, ["100005", "92404603"]);
-                helper.assertLineQty(sublines[0], "6 Units");
-                helper.assertLineQty(sublines[1], "5 Units");
-            },
-        },
-        // Same scenario but with scanning the packaging instead of the product, the weight should
-        // still be ignored but the scanned quantity should multiply the packaging quantity.
-        {
-            trigger: ".o_barcode_client_action",
-            run: "scan 011034754301133710123456\x1D172403043103001500375",
-        },
-        {
-            trigger: ".o_barcode_line:nth-child(3)",
-            run: function () {
-                helper.assertLinesCount(1);
-                helper.assertSublinesCount(3);
-                const sublines = helper.getSublines();
-                helper.assertLinesTrackingNumbers(sublines, ["100005", "92404603", "123456"]);
-                helper.assertLineQty(sublines[0], "6 Units");
-                helper.assertLineQty(sublines[1], "5 Units");
-                // Package qty: 6; scanned qty: 5 -> Line qty = 6 x 5 = 30.
-                helper.assertLineQty(sublines[2], "30 Units");
-            },
-        },
     ],
 });
 
@@ -1489,7 +1424,7 @@ registry.category("web_tour.tours").add("test_gs1_tracked_packaging", {
             trigger: ".o_barcode_line",
             run: () => {
                 helper.assertLinesCount(1);
-                helper.assertLineQty(0, "6", "Scanned packaging has quantity of 6");
+                helper.assertLineQty(0, "12 Units", "Scanned packaging has quantity of 12");
                 helper.assertLineProduct(0, "productlot1");
                 helper.assertLineTrackingNumber(0, "lot-001");
             },
@@ -1503,7 +1438,7 @@ registry.category("web_tour.tours").add("test_gs1_tracked_packaging", {
             trigger: ".o_barcode_line",
             run: () => {
                 helper.assertLinesCount(1);
-                helper.assertLineQty(0, "6", "Scanned packaging has quantity of 6");
+                helper.assertLineQty(0, "12 Units", "Scanned packaging has quantity of 12");
                 helper.assertLineProduct(0, "productlot1");
                 helper.assertLineTrackingNumber(0, "lot-001");
             },

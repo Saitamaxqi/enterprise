@@ -11,9 +11,9 @@ class StockPicking(models.Model):
         kit_boms = self.move_ids.bom_line_id.bom_id.filtered(lambda bom: bom.type == 'phantom')
         if kit_boms:
             packagings = (
-                kit_boms.mapped('product_id.packaging_ids') or
-                kit_boms.mapped('product_tmpl_id.packaging_ids')
+                kit_boms.mapped('product_id.uom_ids') or
+                kit_boms.mapped('product_tmpl_id.uom_ids')
             )
-            data['records']['product.packaging'] += packagings.read(packagings._get_fields_stock_barcode(), load=False)
+            data['records']['uom.uom'] += packagings.read(packagings._get_fields_stock_barcode(), load=False)
 
         return data

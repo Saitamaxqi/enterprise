@@ -365,14 +365,19 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         counted regardless if there is already products in stock or not.
         """
         self.clean_access_rights()
-        grp_pack = self.env.ref('product.group_stock_packaging')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        grp_uom = self.env.ref('uom.group_uom')
+        self.env.user.write({'groups_id': [Command.link(grp_uom.id)]})
 
-        self.env['product.packaging'].create({
-            'name': 'product1 x15',
-            'qty': 15,
+        pack_15 = self.env['uom.uom'].create({
+            'name': 'Pack of 15',
+            'relative_factor': 15,
+            'relative_uom_id': self.env.ref('uom.product_uom_unit').id,
+        })
+        self.product1.uom_ids = pack_15
+        self.env['product.uom'].create({
+            'uom_id': pack_15.id,
+            'product_id': self.product1.id,
             'barcode': 'pack007',
-            'product_id': self.product1.id
         })
         self.start_tour("/odoo/barcode", 'test_inventory_packaging', login='admin', timeout=180)
 
@@ -382,12 +387,17 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         group_lot = self.env.ref('stock.group_production_lot')
-        group_packaging = self.env.ref('product.group_stock_packaging')
-        self.env.user.write({'groups_id': [(4, group_lot.id, 0)]})
-        self.env.user.write({'groups_id': [(4, group_packaging.id)]})
-        self.env['product.packaging'].create({
+        group_uom = self.env.ref('uom.group_uom')
+        self.env.user.write({'groups_id': [Command.link(group_lot.id)]})
+        self.env.user.write({'groups_id': [Command.link(group_uom.id)]})
+        pack_3 = self.env['uom.uom'].create({
             'name': 'Product Serial 1 Packaging',
-            'qty': 3,
+            'relative_factor': 3,
+            'relative_uom_id': self.env.ref('uom.product_uom_unit').id,
+        })
+        self.productserial1.uom_ids = pack_3
+        self.env['product.uom'].create({
+            'uom_id': pack_3.id,
             'product_id': self.productserial1.id,
             'barcode': 'PCK3',
         })
@@ -400,14 +410,14 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         digipad when creating an invetory adjustment.
         """
         self.clean_access_rights()
-        grp_pack = self.env.ref('product.group_stock_packaging')
-        self.env.user.write({'groups_id': [Command.link(grp_pack.id)]})
+        grp_uom = self.env.ref('uom.group_uom')
+        self.env.user.write({'groups_id': [Command.link(grp_uom.id)]})
 
         self.product1.name = "Lovely Product"
-        self.env['product.packaging'].create({
+        self.product1.uom_ids = self.env['uom.uom'].create({
             'name': 'LP x15',
-            'qty': 15,
-            'product_id': self.product1.id
+            'relative_factor': 15,
+            'relative_uom_id': self.env.ref('uom.product_uom_unit').id,
         })
         self.start_tour("/odoo/barcode", "test_inventory_packaging_button", login="admin", timeout=180)
         quant = self.env['stock.quant'].search([("product_id", "=", self.product1.id)], limit=1)

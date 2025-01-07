@@ -90,12 +90,13 @@ class StockPicking(models.Model):
         partners = move_lines.owner_id | self.partner_id
         # Fetch all implied products in `self` and adds last used products to avoid additional rpc.
         products = self.move_ids.product_id | move_lines.product_id
-        packagings = products.packaging_ids
 
-        uoms = products.uom_id | move_lines.product_uom_id
+        uoms = products.uom_id | move_lines.product_uom_id | move_lines.packaging_uom_id | products.uom_ids
         # If UoM setting is active, fetch all UoM's data.
         if self.env.user.has_group('uom.group_uom'):
             uoms |= self.env['uom.uom'].search([])
+
+        product_uoms = products.product_uom_ids
 
         # Fetch `stock.location`
         source_locations = self.env['stock.location'].search([('id', 'child_of', self.location_id.ids)])
@@ -119,13 +120,13 @@ class StockPicking(models.Model):
                 "stock.move.line": move_lines.read(move_lines._get_fields_stock_barcode(), load=False),
                 # `self` can be a record set (e.g.: a picking batch), set only the first partner in the context.
                 "product.product": products.with_context(partner_id=self[:1].partner_id.id).read(products._get_fields_stock_barcode(), load=False),
-                "product.packaging": packagings.read(packagings._get_fields_stock_barcode(), load=False),
                 "res.partner": partners.read(partners._get_fields_stock_barcode(), load=False),
                 "stock.location": locations.read(locations._get_fields_stock_barcode(), load=False),
                 "stock.package.type": package_types.read(package_types._get_fields_stock_barcode(), False),
                 "stock.quant.package": packages.read(packages._get_fields_stock_barcode(), load=False),
                 "stock.lot": lots.read(lots._get_fields_stock_barcode(), load=False),
                 "uom.uom": uoms.read(uoms._get_fields_stock_barcode(), load=False),
+                "product.uom": product_uoms.read(product_uoms._get_fields_stock_barcode(), load=False),
             },
             "nomenclature_id": [self.env.company.nomenclature_id.id],
             "source_location_ids": source_locations.ids,

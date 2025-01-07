@@ -2174,14 +2174,19 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Check a product's packaging can also be scanned when the scan of a product is mandatory.
         """
         self.clean_access_rights()
-        group_packaging = self.env.ref('product.group_stock_packaging')
-        self.env.user.write({'groups_id': [Command.link(group_packaging.id)]})
+        group_uom = self.env.ref('uom.group_uom')
+        self.env.user.write({'groups_id': [Command.link(group_uom.id)]})
         self.picking_type_in.restrict_scan_product = True
-        self.env['product.packaging'].create({
-            'barcode': 'product1x10',
+        pack_10 = self.env['uom.uom'].create({
             'name': "product1 x10",
+            'relative_factor': 10,
+            'relative_uom_id': self.product1.uom_id.id,
+        })
+        self.product1.uom_ids = pack_10
+        self.env['product.uom'].create({
             'product_id': self.product1.id,
-            'qty': 10,
+            'uom_id': pack_10.id,
+            'barcode': 'product1x10',
         })
         receipt = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
@@ -3184,8 +3189,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Do the same test by scanning a packaging instead of the product.
         """
         self.clean_access_rights()
-        group_packaging = self.env.ref('product.group_stock_packaging')
-        self.env.user.write({'groups_id': [Command.link(group_packaging.id)]})
+        group_uom = self.env.ref('uom.group_uom')
+        self.env.user.write({'groups_id': [Command.link(group_uom.id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         product_a, product_b = self.env['product.product'].create([{
             'name': name,
@@ -3198,11 +3203,15 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             {'name': '12345', 'product_id': product.id} for product in [product_b, product_a]
         ])
         # Create a product packaging
-        self.env['product.packaging'].create({
-            'barcode': '10000000240489',
+        packaging = self.env['uom.uom'].create({
             'name': "Packaging - Product A x1",
+            'relative_factor': 1,
+        })
+        product_a.uom_ids = packaging
+        self.env['product.uom'].create({
             'product_id': product_a.id,
-            'qty': 1,
+            'uom_id': packaging.id,
+            'barcode': '10000000240489',
         })
         # For the purpose of the test, lot for product_b has to be created first.
         for [product, lot] in [[product_b, lot_b], [product_a, lot_a]]:
@@ -3455,9 +3464,14 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env.user.write({'groups_id': [(4, grp_uom.id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         # Configures three products using units, kg and g.
-        uom_unit = self.env.ref('uom.product_uom_unit')
         uom_g = self.env.ref('uom.product_uom_gram')
         uom_kg = self.env.ref('uom.product_uom_kgm')
+        uom_unit = self.env['uom.uom'].create({
+            'name': 'Units',
+            'relative_factor': 1.0,
+            'relative_uom_id': uom_kg.id,
+        })
+        self.env['barcode.rule'].search([('sequence', '=', 305)]).associated_uom_id = uom_unit
         product_by_units = self.env['product.product'].create({
             'name': 'Product by Units',
             'is_storable': True,
@@ -3486,20 +3500,11 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = self._get_client_action_url(receipt.id)
         self.start_tour(url, 'test_gs1_receipt_quantity_with_uom', login='admin', timeout=180)
         # Checks the moves' quantities and UoM.
-        self.assertEqual(len(receipt.move_ids), 3)
-        move1, move2, move3 = receipt.move_ids
-        self.assertEqual(move1.product_id.id, product_by_units.id)
-        self.assertEqual(move1.quantity, 4)
-        self.assertTrue(move1.picked)
-        self.assertEqual(move1.product_uom.id, uom_unit.id)
-        self.assertEqual(move2.product_id.id, product_by_kg.id)
-        self.assertEqual(move2.quantity, 5)
-        self.assertTrue(move2.picked)
-        self.assertEqual(move2.product_uom.id, uom_kg.id)
-        self.assertEqual(move3.product_id.id, product_by_g.id)
-        self.assertEqual(move3.quantity, 1250)
-        self.assertTrue(move3.picked)
-        self.assertEqual(move3.product_uom.id, uom_g.id)
+        self.assertRecordValues(receipt.move_ids, [
+            {'picked': True, 'product_id': product_by_units.id, 'product_uom': uom_unit.id, 'quantity': 14},
+            {'picked': True, 'product_id': product_by_kg.id, 'product_uom': uom_kg.id, 'quantity': 11},
+            {'picked': True, 'product_id': product_by_g.id, 'product_uom': uom_g.id, 'quantity': 1250},
+        ])
 
     def test_gs1_receipt_scan_not_gs1_multi_barcode(self):
         """ This test ensures the user can scan a barcode containing multiple
@@ -3570,20 +3575,19 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         This test ensures that a user can scan a packaging when processing a receipt
         """
         self.clean_access_rights()
-
-        group_packaging = self.env.ref('product.group_stock_packaging')
-        self.env.user.write({'groups_id': [(4, group_packaging.id)]})
+        group_uom = self.env.ref('uom.group_uom')
+        self.env.user.write({'groups_id': [Command.link(group_uom.id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
 
         product = self.env['product.product'].create({
             'name': 'Bottle',
             'is_storable': True,
             'barcode': '1113',
-            'packaging_ids': [(0, 0, {
-                'name': '6-bottle pack',
-                'qty': 6,
+            'uom_ids': [Command.link(self.env.ref('uom.product_uom_dozen').id)],
+            'product_uom_ids': [Command.create({
+                'uom_id': self.env.ref('uom.product_uom_dozen').id,
                 'barcode': '2226',
-            })],
+            })]
         })
 
         picking_form = Form(self.env['stock.picking'])
@@ -3595,34 +3599,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         move = receipt.move_ids
         self.assertEqual(move.product_id, product)
-        self.assertEqual(move.quantity, 30)
+        self.assertEqual(move.quantity, 60)
         self.assertEqual(move.picked, True)
-
-    def test_gs1_receipt_packaging_with_uom(self):
-        """ This test ensures that packaging quantity is used when a weight is
-        scanned but the product uses Units as UoM.
-        """
-        self.clean_access_rights()
-        group_lot = self.env.ref('stock.group_production_lot')
-        group_packaging = self.env.ref('product.group_stock_packaging')
-        group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'groups_id': [(4, group_lot.id), (4, group_packaging.id), (4, group_uom.id)]})
-        self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
-        # Create a product and its packaging.
-        self.env['product.product'].create({
-            'name': 'Product by Units',
-            'is_storable': True,
-            'tracking': 'lot',
-            'uom_id': self.uom_unit.id,
-            'uom_po_id': self.uom_unit.id,
-            'barcode': '03287890001332',
-            'packaging_ids': [(0, 0, {
-                'name': 'PBUx6',
-                'qty': 6,
-                'barcode': '10347543011337',
-            })],
-        })
-        self.start_tour('/odoo/barcode', 'test_gs1_receipt_packaging_with_uom', login='admin', timeout=180)
 
     def test_gs1_tracked_packaging(self):
         """ Ensures we can scan a GS1 barcode containing a packaging for a
@@ -3631,22 +3609,22 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         group_tracking = self.env.ref('stock.group_production_lot')
-        group_packaging = self.env.ref('product.group_stock_packaging')
-        self.env.user.write({'groups_id': [(4, group_tracking.id, 0), (4, group_packaging.id, 0)]})
+        group_uom = self.env.ref('uom.group_uom')
+        self.env.user.write({'groups_id': [(4, group_tracking.id, 0), (4, group_uom.id, 0)]})
 
-        self.env['product.packaging'].create({
-            'name': 'productlot1 6 pack',
-            'qty': 6,
+        self.productlot1.uom_ids = self.env.ref('uom.product_uom_dozen')
+        self.env['product.uom'].create({
             'barcode': '12653256',
-            'product_id': self.productlot1.id
+            'product_id': self.productlot1.id,
+            'uom_id': self.env.ref('uom.product_uom_dozen').id,
         })
 
         self.start_tour("/odoo/barcode", 'test_gs1_tracked_packaging', login='admin', timeout=180)
         lot = self.env['stock.lot'].search([('name', '=', 'lot-001')])
         move_lines = self.env['stock.move.line'].search([('product_id', '=', self.productlot1.id)])
         self.assertRecordValues(move_lines, [
-            {'quantity': 6, 'lot_id': lot.id, 'location_id': self.supplier_location.id, 'location_dest_id': self.stock_location.id},
-            {'quantity': 6, 'lot_id': lot.id, 'location_id': self.stock_location.id, 'location_dest_id': self.customer_location.id},
+            {'quantity': 12, 'lot_id': lot.id, 'location_id': self.supplier_location.id, 'location_dest_id': self.stock_location.id},
+            {'quantity': 12, 'lot_id': lot.id, 'location_id': self.stock_location.id, 'location_dest_id': self.customer_location.id},
         ])
 
     def test_serial_product_packaging(self):
@@ -3655,12 +3633,17 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         group_lot = self.env.ref('stock.group_production_lot')
-        group_packaging = self.env.ref('product.group_stock_packaging')
+        group_uom = self.env.ref('uom.group_uom')
         self.env.user.write({'groups_id': [(4, group_lot.id, 0)]})
-        self.env.user.write({'groups_id': [(4, group_packaging.id)]})
-        self.env['product.packaging'].create({
-            'name': 'Product Serial 1 Packaging',
-            'qty': 4,
+        self.env.user.write({'groups_id': [(4, group_uom.id)]})
+        pack_4 = self.env['uom.uom'].create({
+            'name': 'Pack of 4',
+            'relative_factor': 4,
+            'relative_uom_id': self.env.ref('uom.product_uom_unit').id,
+        })
+        self.productserial1.uom_ids = pack_4
+        self.env['product.uom'].create({
+            'uom_id': pack_4.id,
             'product_id': self.productserial1.id,
             'barcode': 'PCK4',
         })

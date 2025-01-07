@@ -929,8 +929,8 @@ registry.category("web_tour.tours").add("test_inventory_packaging", {
         {
             trigger: ".o_barcode_line",
             run: function () {
-                const $line = helper.getLine({ barcode: "product1" });
-                helper.assertLineQty($line, "15");
+                const line = helper.getLine({ barcode: "product1" });
+                helper.assertLineQty(line, "15 Units");
             },
         },
         {
@@ -951,6 +951,13 @@ registry.category("web_tour.tours").add("test_inventory_packaging", {
             run: "scan pack007",
         },
         // Verifies it takes the packaging's quantity.
+        {
+            trigger: ".o_barcode_line",
+            run: function () {
+                const line = helper.getLine({ barcode: "product1" });
+                helper.assertLineQty(line, "15/15 Units");
+            },
+        },
         {
             trigger: ".o_barcode_line .qty-done:contains(15)",
         },
@@ -973,12 +980,12 @@ registry.category("web_tour.tours").add("test_inventory_serial_product_packaging
             run: function () {
                 helper.assertLinesCount(1);
                 helper.assertLineProduct(0, "productserial1");
-                helper.assertLineQty(0, "3");
+                helper.assertLineQty(0, "3 Units");
                 helper.assertSublinesCount(3);
                 const [subline1, subline2, subline3] = helper.getSublines();
-                helper.assertLineQty(subline1, "1");
-                helper.assertLineQty(subline2, "1");
-                helper.assertLineQty(subline3, "1");
+                helper.assertLineQty(subline1, "1 Units");
+                helper.assertLineQty(subline2, "1 Units");
+                helper.assertLineQty(subline3, "1 Units");
             },
         },
         { trigger: ".o_barcode_client_action", run: "scan sn1" },

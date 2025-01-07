@@ -113,17 +113,28 @@ export class Digipad extends Component {
     async _fetchPackagingButtons() {
         const record = this.props.record.data;
         if (record.product_id[0]) {
-            const domain = [["product_id", "=", record.product_id[0]]];
+            let domain = [["id", "=", record.product_id[0]]];
+            const product_uoms = await this.orm.searchRead(
+                "product.product",
+                domain,
+                ["uom_ids"]
+            );
+            if (product_uoms.length === 0) {
+                return;
+            }
+            domain = [["id", "in", product_uoms[0].uom_ids]];
             if (this.quantityToFulfill) {
                 // Doesn't fetch packaging with a too high quantity.
-                domain.push(["qty", "<=", this.quantityToFulfill]);
+                domain.push(["factor", "<=", this.quantityToFulfill]);
             }
             this.state.packagingButtons = await this.orm.searchRead(
-                "product.packaging",
+                "uom.uom",
                 domain,
-                ["name", "product_uom_id", "qty"],
+                ["name", "factor", "package_type_id"],
                 { limit: 2 }
             );
+        } else {
+            this.state.packagingButtons = [];
         }
     }
     //--------------------------------------------------------------------------

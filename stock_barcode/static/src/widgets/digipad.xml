@@ -24,7 +24,7 @@
                 </div>
                 <t t-foreach="state.packagingButtons" t-as="packaging" t-key="packaging.id">
                     <div class="col-6">
-                        <button t-on-click="() => this._increment(packaging.qty, this.quantity === 1)"
+                        <button t-on-click="() => this._increment(packaging.factor, this.quantity === 1, packaging.id)"
                                 class="btn btn-secondary w-100" t-out="packaging.name"/>
                     </div>
                 </t>

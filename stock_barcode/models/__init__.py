@@ -12,7 +12,7 @@ from . import stock_lot
 from . import stock_quant_package
 from . import stock_warehouse
 from . import product_product
-from . import product_packaging
+from . import product_uom
 from . import res_config_settings
 from . import res_partner
 from . import uom_uom
