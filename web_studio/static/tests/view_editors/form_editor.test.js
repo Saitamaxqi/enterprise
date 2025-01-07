@@ -881,6 +881,25 @@ test("form editor - chatter edition", async () => {
     await waitFor(".o-mail-Form-chatter.o-web-studio-editor--element-clicked");
 });
 
+test("always invisible fields are flagged as not present in arch", async () => {
+    await mountViewEditor({
+        type: "form",
+        resModel: "coucou",
+        arch: `<form>
+            <field name="display_name" />
+            <field name="m2o" invisible="True" />
+            <field name="char_field" invisible="1" />
+        </form>
+    `,
+    });
+
+    expect(".o_web_studio_view_renderer .o_field_widget").toHaveCount(1);
+    await contains(".o_web_studio_sidebar .o_web_studio_existing_fields_header").click();
+    expect(".o_web_studio_sidebar .o_web_studio_existing_fields").toHaveText(
+        "Product\nChar field\nId\nLast Modified on\nCreated on\nProducts"
+    );
+});
+
 test("disable creation(no_create options) in many2many_avatar_user and many2many_avatar_employee widget", async () => {
     onRpc("/web_studio/edit_view", async (request) => {
         const { params: args } = await request.json();

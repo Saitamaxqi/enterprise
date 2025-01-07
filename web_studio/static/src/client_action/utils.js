@@ -1,9 +1,17 @@
 import { reactive, useComponent, useEnv, useSubEnv } from "@odoo/owl";
 
 export function getFieldsInArch(xmlDoc) {
-    return Array.from(xmlDoc.querySelectorAll("field"))
-        .filter((el) => !el.parentElement.closest("field,groupby"))
-        .map((n) => n.getAttribute("name"));
+    const res = [];
+    const isInvisible = ["True", "1", "true"];
+    xmlDoc.querySelectorAll("field").forEach((el) => {
+        if (!el.parentElement.closest("field,groupby")) {
+            const invisible = el.getAttribute("invisible");
+            if (!invisible || !isInvisible.includes(invisible)) {
+                res.push(el.getAttribute("name"));
+            }
+        }
+    });
+    return res;
 }
 
 export function useDialogConfirmation({ confirm, cancel, before, close }) {
