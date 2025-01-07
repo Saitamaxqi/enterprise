@@ -17,6 +17,22 @@ msgstr ""
 
 #. module: l10n_in_hr_payroll
 #. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"   a. Select column A; Click Data in Menu Bar on top;  Select Text to Columns ; Click Next (keep default \n"
+" selection of Delimited);  Click Next (keep default selection of Tab); Select  TEXT;  Click FINISH. \n"
+" Excel 97 - 2003 as well have TEXT to COLUMN  conversion facility"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"   b. Repeat the above step for each of the 6 columns. (Columns A - F )"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
 #: code:addons/l10n_in_hr_payroll/models/l10n_in_salary_statement.py:0
 msgid "%(employee_name)s-salary-statement-report-%(month)s-%(year)s"
 msgstr ""
@@ -52,13 +68,56 @@ msgid "01/05/2024"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"1. Enter the IP number,  IP name, No. of Days, Total Monthly Wages, Reason "
+"for 0 wages(If Wages '0') & Last Working Day(only if employee has left "
+"service, Retired, Out of coverage, Expired, Non-Implementedarea or "
+"Retrenchment. For other reasons,  last working day  must be left  BLANK)"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_employee_view_form_in_inherit
 msgid "10 digit Permanent Account Number"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"10. Note that all the column including date column should be in 'Text' "
+"format"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_salary_statement
 msgid "10000"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "10a. To convert  all columns to text"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"10b. Another method that can be used to text conversion is - copy the column"
+" with data and paste it in NOTEPAD.Select the column (in excel) and convert "
+"to text. Copy the data back from notepad to excel"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"11. If problem continues while upload,  download a fresh template by "
+"clicking 'Sample MC Excel Template'. Then copy the data area from Step 8a.a "
+"- eg:  copy Cell A2 to F8 (if there is data in 8 rows); Paste it in cell A2 "
+"in the fresh template. Upload it "
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -77,8 +136,25 @@ msgid "17 digit ESIC Number"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"2. Number of days must me a whole number.  Fractions should be rounded up to"
+" next higher whole number/integer"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_salary_statement
 msgid "2024"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"3. Excel sheet upload will lead to successful transaction only when all the "
+"Employees' (who are currently mapped in the system) details are entered "
+"perfectly in the excel sheet"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -87,10 +163,60 @@ msgid "4% of Tax on Taxable Income + Surcharge"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"4. Reasons are to be assigned numeric code  and date has to be provided as "
+"mentioned in the table above"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"5. Once  0 wages given and last working day is mentioned as in reason codes "
+"(2,3,4,5,10)  IP will be removed from the employer's record. Subsequent "
+"months will not have this IP listed under the employer.Last working day "
+"should be mentioned only if 'Number of days wages paid/payable' is '0'"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"6. In case IP has worked for part of the month(i.e. atleast 1 day wage is "
+"paid/payable) and left in between of the month, then last working day "
+"shouldn't be mentioned"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"7. Calculations - IP Contribution and Employer contribution calculation will"
+" be automatically done by the system"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"8. Date  column format is  dd/mm/yyyy or dd-mm-yyyy. Pad single digit dates "
+"with 0. Eg:- 2/5/2010  or 2-May-2010 is NOT acceptable. Correct format is "
+"02/05/2010 or 02-05-2010"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "9. Excel file should be saved in .xls format (Excel 97-2003)"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 msgid ""
 "<span class=\"o_form_label text-muted\">Generate an Excel report based on "
-"Paid payslips for the selected period of time.</span>"
+"payslips for the selected period of time.</span>"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -103,6 +229,16 @@ msgstr ""
 msgid ""
 "<span class=\"o_form_label\">This wizard will print for employees with paid "
 "payslips on the selected year.</span>"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.l10n_in_labour_welfare_fund_wizard_view_form
+msgid "<span class=\"oe_inline\">From</span>"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.l10n_in_labour_welfare_fund_wizard_view_form
+msgid "<span class=\"oe_inline\">To</span>"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -308,11 +444,6 @@ msgid "Allowance"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:ir.model.fields,help:l10n_in_hr_payroll.field_hr_contract__l10n_in_tds
-msgid "Amount for Tax Deduction at Source"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model_terms:hr.salary.rule,note:l10n_in_hr_payroll.hr_payslip_rule_ernps
 msgid ""
 "Any amount contributed by your employer to your NPS account is treated as "
@@ -330,7 +461,12 @@ msgid "April"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model_terms:hr.salary.rule,note:l10n_in_hr_payroll.hr_payslip_rule_tds
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_arrears
+msgid "Arrears"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model_terms:hr.salary.rule,note:l10n_in_hr_payroll.l10n_in_hr_payslip_rule_tds
 msgid ""
 "As per income tax rules, all payment which are taxable in nature should be "
 "done after deduction of taxes at the source itself. Hence employer compute "
@@ -338,6 +474,22 @@ msgid ""
 " employee’s saving/investment declaration at the start of year. If "
 "investments for tax saving is not done, large amount may be deducted in last"
 " few months."
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_salary_structure_ind_emp_assignment_of_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_employee_salary_assignment_of_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_stipend_assignment_of_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_worker_0001_assignment_of_salary_rule
+msgid "Assignment of Salary"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_salary_structure_ind_emp_attachment_of_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_employee_salary_attachment_of_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_stipend_attachment_of_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_worker_0001_attachment_of_salary_rule
+msgid "Attachment of Salary"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -360,8 +512,21 @@ msgid "Bank Account No."
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_salary_structure_ind_emp_basic_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_employee_salary_basic_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_worker_0001_basic_salary_rule
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_salary_statement
 msgid "Basic Salary"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_bonus
+msgid "Bonus"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_journals
+msgid "Book and Periodicals Allowance (BNP)"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -398,6 +563,11 @@ msgid "Cancel"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_car
+msgid "Car Expenses Reimbursement"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,help:l10n_in_hr_payroll.field_hr_contract__l10n_in_provident_fund
 msgid "Check this box if you contribute for PF"
 msgstr ""
@@ -419,8 +589,46 @@ msgid "Cheque Number"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_child1
+msgid "Child Education Allowance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_child2
+msgid "Child Hostel Allowance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_employee__l10n_in_residing_child_hostel
 msgid "Child Residing in hostel"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_salary_structure_ind_emp_child_support
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_employee_salary_child_support
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_stipend_child_support
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_worker_0001_child_support
+msgid "Child Support"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_metrocity
+msgid "City Allowance for Metro city"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_nonmetrocity
+msgid "City Allowance for Non Metro city"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_city1
+msgid "City Compensatory Allowance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.l10n_in_labour_welfare_fund_wizard_view_form
+msgid "Close"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -469,6 +677,7 @@ msgstr ""
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__company_id
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__company_id
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__company_id
 msgid "Company"
 msgstr ""
@@ -489,6 +698,12 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:hr.salary.rule,note:l10n_in_hr_payroll.hr_payslip_rule_cpt
 msgid "Company provided transport amount is based on company."
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Compliance by Immediate Employer"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -521,6 +736,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_epf_report__create_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__create_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__create_uid
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__create_uid
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__create_uid
@@ -531,6 +748,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_epf_report__create_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__create_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__create_date
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__create_date
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__create_date
@@ -538,8 +757,19 @@ msgid "Created on"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__currency_id
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__currency_id
 msgid "Currency"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__date_from
+msgid "Date From"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__date_to
+msgid "Date To"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -571,8 +801,37 @@ msgid "Declarations"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_salary_structure_ind_emp_deduction_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_employee_salary_deduction_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_stipend_deduction_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_worker_0001_deduction_salary_rule
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_contract_form_in_inherit
 msgid "Deduction"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_cgti
+msgid "Deduction Towards Company Provided Group Term Insurance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_cmt
+msgid "Deduction Towards Company Provided Medical Insurance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_food_coupon_ded
+msgid "Deduction Towards Food Coupons"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payslip_rule_dla
+msgid "Deduction Towards Leave Availed"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_cpt
+msgid "Deduction for Company Provided Transport"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -591,6 +850,7 @@ msgid "Deduction towards company provided medical insurance"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__department_id
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__department_id
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
@@ -616,6 +876,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_epf_report__display_name
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__display_name
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__display_name
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_report_l10n_in_hr_payroll_report_hryearlysalary__display_name
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_report_l10n_in_hr_payroll_report_payrolladvice__display_name
@@ -628,14 +890,32 @@ msgid "Display Name"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Doesnt Belong To This Employer"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__include_done
+#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
+msgid "Done"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_epf_report_view_form
-#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_esic_report_view_form
 msgid "Download the XLSX details file:<br/>"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_driver
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_driver_salay
 msgid "Driver Salary"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Duplicate IP"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -700,6 +980,11 @@ msgid "ESI Report"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__export_report_type__esi
+msgid "ESI Summary Report"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #. odoo-python
 #: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
 msgid "ESI WAGES"
@@ -722,6 +1007,11 @@ msgid "ESIC Number"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__export_report_type__esic
+msgid "ESIC Report"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_payroll_payment_report_wizard__l10n_in_effective_from
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice
 msgid "Effective From"
@@ -734,14 +1024,9 @@ msgstr ""
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model,name:l10n_in_hr_payroll.model_hr_employee
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__employee_id
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice
 msgid "Employee"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
-#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
-msgid "Employee Code"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -750,9 +1035,34 @@ msgid "Employee Contract"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__employee_contibution
+msgid "Employee Contribution"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/controller/main.py:0
+msgid "Employee ID"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__employee_lwf_account
+msgid "Employee LWF Account"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/controller/main.py:0
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__employee_name
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
 msgid "Employee Name"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
+#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
+msgid "Employee Reference"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -766,11 +1076,69 @@ msgid "Employee can claim deduction even of employer's contribution to NPS."
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_lwf_employee
+msgid "Employee's Deduction Towards State Labour Welfare Fund"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_enps
+msgid "Employee's NPS Contribution"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_epf
+msgid "Employee's PF Contribution"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Employee_ESI_report"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__employee_ids
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__employee_ids
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
 msgid "Employees"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.payroll.dashboard.warning,name:l10n_in_hr_payroll.hr_payroll_dashboard_warning_incoming_probation
+msgid "Employees Probation ends within a week"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.payroll.dashboard.warning,name:l10n_in_hr_payroll.hr_payroll_dashboard_warning_missing_esic
+msgid "Employees Without ESIC Number"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.payroll.dashboard.warning,name:l10n_in_hr_payroll.hr_payroll_dashboard_warning_missing_pan
+msgid "Employees Without PAN Number"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.payroll.dashboard.warning,name:l10n_in_hr_payroll.hr_payroll_dashboard_warning_missing_uan
+msgid "Employees Without UAN Number"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/controller/main.py:0
+msgid "Employees' Contribution"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Employees' State Insurance Corporation"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__employer_contribution
+msgid "Employer Contribution"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -788,6 +1156,34 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/controller/main.py:0
+msgid "Employer's Contribution"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_lwf_employer
+msgid "Employer's Deduction Towards State Labour Welfare Fund "
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_ernps
+msgid "Employer's NPS Contribution"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_alw_erpf
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_erpf
+msgid "Employer's PF Contribution"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_employer_alw_esic
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payslip_rule_employer_esics
+msgid "Employer's State Insurance Corporation"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__date_to
 msgid "End Date"
 msgstr ""
@@ -799,13 +1195,29 @@ msgid "End date of %(name)s's contract is today."
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_expenses_reimbursement
+msgid "Expenses Reimbursement"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:hr.job,name:l10n_in_hr_payroll.l10n_in_job_developer
 msgid "Experienced Developer"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Expired"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_payroll_payment_report_wizard__export_format
 msgid "Export Format"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__export_report_type
+msgid "Export Report Name"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -815,6 +1227,7 @@ msgid "Export Salary Register Report into XLSX"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.l10n_in_labour_welfare_fund_wizard_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 msgid "Export XLSX"
 msgstr ""
@@ -836,6 +1249,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__2
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__2
 msgid "February"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_food_coupon
+msgid "Food Allowance"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -863,12 +1281,22 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__xlsx_file
+msgid "Generated File"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_epf_report_view_form
-#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_esic_report_view_form
 msgid "Generation Complete"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_special
+msgid "Grade/Special/Management/Supplementary Allowance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payslip_rule_gratuity
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_gratuity
 msgid "Gratuity"
 msgstr ""
@@ -916,6 +1344,12 @@ msgid "Hours"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_houserentallowancemetro_nonmetro
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_hra
+msgid "House Rent Allowance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_house_rent_allowance_metro_nonmetro
 msgid "House Rent Allowance (%)"
 msgstr ""
@@ -934,6 +1368,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_epf_report__id
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__id
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__id
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__id
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__id
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__id
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_report_l10n_in_hr_payroll_report_hryearlysalary__id
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_report_l10n_in_hr_payroll_report_payrolladvice__id
@@ -955,6 +1391,18 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_salary_statement
 msgid "IN Company"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "IP Name (Only alphabets and space)"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "IP Number (10 Digits)"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1001,7 +1449,9 @@ msgstr ""
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model,name:l10n_in_hr_payroll.model_l10n_in_hr_payroll_esic_report
-msgid "Indian Payroll: Employee State Insurance Report"
+msgid ""
+"Indian Payroll: Employee State Insurance Report / Employees State Insurance "
+"Corporation"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1012,6 +1462,18 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model,name:l10n_in_hr_payroll.model_report_l10n_in_hr_payroll_report_hryearlysalary
 msgid "Indian Yearly Salary Report"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Instructions & Reason Codes"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Instructions to fill in the excel file:"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1077,6 +1539,39 @@ msgid "L10N In State Xlsx"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/controller/main.py:0
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_employee__l10n_in_lwf_account_number
+msgid "LWF Account Number"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model,name:l10n_in_hr_payroll.model_l10n_in_labour_welfare_fund_wizard
+msgid "Labour Welfare Fund"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_employee_view_form_in_inherit
+msgid "Labour Welfare Fund Account Number"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.l10n_in_labour_welfare_fund_wizard_view_form
+msgid "Labour Welfare Fund Export"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model,name:l10n_in_hr_payroll.model_l10n_in_labour_welfare_fund_line_wizard
+msgid "Labour Welfare Fund Line"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.actions.act_window,name:l10n_in_hr_payroll.l10n_in_labour_welfare_fund_wizard_action
+#: model:ir.ui.menu,name:l10n_in_hr_payroll.menu_l10n_in_labour_welfare_fund_wizard
+msgid "Labour Welfare Fund Report"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_salary_statement
 msgid "Lakshya"
 msgstr ""
@@ -1085,6 +1580,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_epf_report__write_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__write_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__write_uid
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__write_uid
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__write_uid
@@ -1095,6 +1592,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_epf_report__write_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__write_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__write_date
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__write_date
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__write_date
@@ -1102,8 +1601,38 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Last Working Day (Format DD/MM/YYYY or DD-MM-YYYY)"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_leave
+#: model:hr.salary.rule.category,name:l10n_in_hr_payroll.LEAVE
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_leave_allowance
 msgid "Leave Allowance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_lta
+msgid "Leave Travel Allowance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Leave last working day as blank"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Left Service"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__line_ids
+msgid "Line"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1147,6 +1676,16 @@ msgid "Medical Insurance"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_medical
+msgid "Medical Reimbursement"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_internet
+msgid "Mobile and Internet Expense"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_epf_report__month
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__month
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__month
@@ -1180,6 +1719,18 @@ msgid "Name Of Employee"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_stipend_net_salary
+msgid "Net"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_salary_structure_ind_emp_net_salary
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_employee_salary_net_salary
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_worker_0001_net_salary
+msgid "Net Salary"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #. odoo-python
 #: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
 msgid "No Employees on the ESI report for the selected period"
@@ -1187,7 +1738,25 @@ msgstr ""
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_esic_report_view_form
-msgid "No Employees on the ESI report for the selected period."
+msgid "No Employees on the selected period."
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "No Work"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "No of Days for which wages paid/payable during the month"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Non Implemented area"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1220,8 +1789,25 @@ msgid "Offical Company Information"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "On Leave"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 msgid "Only)"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_ode
+msgid "Other Deduction from Employer"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Out of Coverage"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1243,6 +1829,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_res_company__l10n_in_pt_number
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_res_config_settings__l10n_in_pt_number
 msgid "PT Number"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__include_paid
+#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
+msgid "Paid"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1298,10 +1890,21 @@ msgid "Payslip Batches"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
+msgid "Payslip Status"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:hr.salary.rule,note:l10n_in_hr_payroll.hr_payroll_rule_child1
 msgid ""
 "Per school going child 1200 per annum is non-taxable.Maximum for 2 children,"
 " so max 2400 per annum becomes non-taxable."
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_p_bonus
+#: model:hr.salary.rule.category,name:l10n_in_hr_payroll.PBS
+msgid "Performance Bonus"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1320,6 +1923,30 @@ msgid "Please proceed with transfer from account"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Please provide last working day (dd/mm/yyyy)"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"Please provide last working day (dd/mm/yyyy). IP will not appear from next "
+"contribution period. This option is valid only if Wage Period is "
+"April/October. In case any other month then IP will continue to appear in "
+"the list"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"Please provide last working day (dd/mm/yyyy). IP will not appear from next "
+"wage period"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
 msgid "Print"
 msgstr ""
@@ -1330,8 +1957,42 @@ msgid "Probation"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_prof_develope
+msgid "Professional Development Allowance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_line_worker_professional_tax
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_pt
+msgid "Professional Tax"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_provident_fund
 msgid "Provident Fund"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_pf
+msgid "Provident fund"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_pf_with_pf
+msgid "Provident fund - Employee"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_pfe_with_pf
+msgid "Provident fund - Employer"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid ""
+"Reason Code for Zero workings days(Numeric Only: provide 0 for all other "
+"reasons)"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1344,6 +2005,19 @@ msgstr ""
 msgid ""
 "Reduces tax liability for resident individuals with income up to ₹7 lakh "
 "(New Regime)"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payslip_rule_expense
+msgid "Refund Expenses"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_salary_structure_ind_emp_reimbursement_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_employee_salary_reimbursement_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_stipend_reimbursement_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_worker_0001_reimbursement_salary_rule
+msgid "Reimbursement"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1365,6 +2039,18 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:hr.department,name:l10n_in_hr_payroll.l10n_in_hr_department_rd
 msgid "Research & Development IN"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Retired"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Retrenchment"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1462,6 +2148,21 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_worker_special
+msgid "Special"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule.category,name:l10n_in_hr_payroll.SPA
+msgid "Special Allowance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_std
+msgid "Standard Allowance"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__standard_deduction
 msgid "Standard Deduction"
 msgstr ""
@@ -1478,6 +2179,18 @@ msgid "Statutory Compliance"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.payroll.structure,payslip_name:l10n_in_hr_payroll.hr_payroll_structure_in_stipend
+msgid "Stipend"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Strike/Lockout"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_spl
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_supplementary_allowance
 msgid "Supplementary Allowance"
 msgstr ""
@@ -1485,6 +2198,12 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__surcharge
 msgid "Surcharge"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Suspension of work"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1516,6 +2235,11 @@ msgid "TOTAL REMITTED"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payslip_rule_tds
+msgid "Tax Deducted at Source"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__tax_on_taxable_income
 msgid "Tax on Taxable Income"
 msgstr ""
@@ -1526,6 +2250,14 @@ msgid "Taxable Income"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_salary_structure_ind_emp_gross_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_employee_salary_gross_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_stipend_gross_salary_rule
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_worker_0001_gross_salary_rule
+msgid "Taxable Salary"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:hr.department,name:l10n_in_hr_payroll.l10n_in_hr_department_tech_support
 msgid "Technical Support & Investigation"
 msgstr ""
@@ -1533,6 +2265,11 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:hr.job,name:l10n_in_hr_payroll.l10n_in_job_intern
 msgid "Technical Support & Investigation Intern"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_telephone
+msgid "Telephone Reimbursement"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1549,6 +2286,13 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice
 msgid "The Manager,"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model.fields,help:l10n_in_hr_payroll.field_hr_contract__l10n_in_tds
+msgid ""
+"The TDS calculator can calculate the TDS amount when at least one payslip is"
+" available. Alternatively, you can enter the amount manually"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1636,6 +2380,13 @@ msgid "Total"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/controller/main.py:0
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__total_contribution
+msgid "Total Contribution"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 msgid "Total Deductions"
 msgstr ""
@@ -1643,6 +2394,12 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__total_income
 msgid "Total Income(Year)"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Total Monthly Wages"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1661,8 +2418,18 @@ msgid "Total net payable"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_worker_trans_allownce
+msgid "Transport/Conveyance Allownace"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_employee__l10n_in_uan
 msgid "UAN"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_uniform_senior
+msgid "Uniform/Dress Allowance for Senior Executive"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1700,6 +2467,22 @@ msgid "Voluntary Provident Fund (%)"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
+#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_vpf
+msgid "Voluntary Provident Fund Contribution"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#. odoo-python
+#: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
+msgid "Without Reason"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
+#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: l10n_in_hr_payroll
 #: model_terms:hr.salary.rule,note:l10n_in_hr_payroll.hr_payslip_line_worker_professional_tax
 msgid ""
 "Workers living in states that impose the professional tax must submit a "
@@ -1713,11 +2496,6 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_epf_report__xls_file
 msgid "XLS file"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__xlsx_file
-msgid "XLSX file"
 msgstr ""
 
 #. module: l10n_in_hr_payroll

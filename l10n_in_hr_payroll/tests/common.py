@@ -39,6 +39,7 @@ class TestPayrollCommon(TransactionCase):
             'name': 'Rahul',
             'country_id': self.in_country.id,
             'department_id': self.rd_dept.id,
+            'l10n_in_esic_number': 93874944361284657,
         })
 
         # I create a new employee “Rahul”
@@ -46,6 +47,7 @@ class TestPayrollCommon(TransactionCase):
             'name': 'Jethalal',
             'country_id': self.in_country.id,
             'department_id': self.rd_dept.id,
+            'l10n_in_esic_number': 93487475100284657,
         })
 
         self.res_bank = self.Bank.create({
@@ -71,6 +73,7 @@ class TestPayrollCommon(TransactionCase):
             'date_end':  date(2023, 1, 31),
             'name': 'Rahul Probation contract',
             'wage': 5000.0,
+            'l10n_in_esic_amount': 20.0,
             'employee_id': self.rahul_emp.id,
             'state': 'open',
             'hr_responsible_id': self.employee_fp.id,
@@ -83,5 +86,6 @@ class TestPayrollCommon(TransactionCase):
             'wage': 5000.0,
             'employee_id': self.jethalal_emp.id,
             'state': 'open',
+            'l10n_in_esic_amount': 20.0,
             'hr_responsible_id': self.employee_fp.id,
         })

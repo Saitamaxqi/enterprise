@@ -21,22 +21,17 @@
                 </header>
                 <sheet>
                     <div role="alert" class="alert alert-warning text-center" invisible="period_has_payslips">
-                        No Employees on the ESI report for the selected period.
+                        No Employees on the selected period.
                     </div>
                     <group>
                         <group>
                             <field name="year" class="o_hr_narrow_field" options="{'type': 'number'}"/>
                             <field name="month" class="o_hr_narrow_field"/>
+                            <field name="export_report_type"/>
                             <field name="xlsx_filename" invisible="1"/>
+                            <field name="xlsx_file" readonly="1" filename="xlsx_filename" invisible="not xlsx_filename"/>
                         </group>
                     </group>
-                    <div invisible="not xlsx_file">
-                        <h2>Generation Complete</h2>
-                        <p class="oe_inline" name="xlsx_file">
-                            Download the XLSX details file:<br/>
-                            <field name="xlsx_file" readonly="1" filename="xlsx_filename"/>
-                        </p>
-                    </div>
                 </sheet>
             </form>
         </field>
