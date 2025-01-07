@@ -103,11 +103,12 @@ class BudgetReport(models.Model):
         )
 
     def _get_pol_query(self, plan_fnames):
+        precision_digits = self.env['decimal.precision'].precision_get('Product Unit')
         qty_invoiced_table = SQL(
             """
                SELECT SUM(
                           CASE WHEN COALESCE(uom_aml.id != uom_pol.id, FALSE)
-                               THEN ROUND((aml.quantity / uom_aml.factor) * uom_pol.factor, -LOG(uom_pol.rounding)::integer)
+                               THEN ROUND(CAST((aml.quantity / uom_aml.factor) * uom_pol.factor AS NUMERIC), %(precision_digits)s)
                                ELSE COALESCE(aml.quantity, 0)
                           END
                           * CASE WHEN aml.balance < 0 THEN -1 ELSE 1 END
@@ -120,7 +121,9 @@ class BudgetReport(models.Model):
             LEFT JOIN uom_uom uom_pol ON uom_pol.id = pol.product_uom_id
                 WHERE aml.parent_state = 'posted'
              GROUP BY pol.id
-        """)
+        """,
+        precision_digits=precision_digits
+        )
         return SQL(
             """
             SELECT (pol.id::TEXT || '-' || ROW_NUMBER() OVER (PARTITION BY pol.id ORDER BY pol.id)) AS id,

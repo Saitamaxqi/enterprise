@@ -19,7 +19,7 @@
                                 <span t-esc="row['partner_name']"/>
                             </td>
                             <td class="text-end">
-                                <span t-esc="row['qty']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/>
+                                <span t-esc="row['qty']" t-options='{"widget": "float", "decimal_precision": "Product Unit"}'/>
                                 <span t-esc="row['uom'].name"/>
                             </td>
                             <td class="text-end">

@@ -222,8 +222,8 @@ class QualityCheck(models.Model):
     tolerance_max = fields.Float('Max Tolerance', related='point_id.tolerance_max', readonly=True)
     warning_message = fields.Text(compute='_compute_warning_message')
     norm_unit = fields.Char(related='point_id.norm_unit', readonly=True)
-    qty_to_test = fields.Float(compute="_compute_qty_to_test", string="Quantity to Test", help="Quantity of product to test within the lot", digits='Product Unit of Measure')
-    qty_tested = fields.Float(string="Quantity Tested", help="Quantity of product tested within the lot", digits='Product Unit of Measure')
+    qty_to_test = fields.Float(compute="_compute_qty_to_test", string="Quantity to Test", help="Quantity of product to test within the lot", digits='Product Unit')
+    qty_tested = fields.Float(string="Quantity Tested", help="Quantity of product tested within the lot", digits='Product Unit')
     measure_on = fields.Selection([
         ('operation', 'Operation'),
         ('product', 'Product'),

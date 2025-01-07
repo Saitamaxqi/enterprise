@@ -11,5 +11,4 @@ class UomUom(models.Model):
         return [
             'name',
             'factor',
-            'rounding',
         ]

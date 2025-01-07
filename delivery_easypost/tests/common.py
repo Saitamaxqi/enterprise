@@ -51,8 +51,6 @@ class EasypostTestCommon(TransactionCase):
         conf.set_param("product.weight_in_lbs", "1")
         precision = self.env.ref("product.decimal_stock_weight")
         precision.digits = 4
-        self.uom_lbs = self.env.ref("uom.product_uom_lb")
-        self.uom_lbs.rounding = 0.0001
         self.server = self.env["product.product"].create(
             {
                 "name": "server",
