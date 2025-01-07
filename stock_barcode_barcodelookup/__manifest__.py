@@ -14,6 +14,9 @@
             'stock_barcode_barcodelookup/static/src/**/*.js',
             'stock_barcode_barcodelookup/static/src/**/*.xml',
         ],
+        'web.assets_tests': [
+            'stock_barcode_barcodelookup/static/tests/tours/**/*',
+        ],
     },
     'license': 'OEEL-1',
 }

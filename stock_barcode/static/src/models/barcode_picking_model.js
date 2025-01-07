@@ -1090,8 +1090,6 @@ export default class BarcodePickingModel extends BarcodeModel {
         const check = { title: _t("Not the expected scan") };
         const { location, lot, product, destLocation, packageType } = barcodeData;
         const resultPackage = barcodeData.package;
-        const packageWithQuant = ((barcodeData.package && barcodeData.package.quant_ids) || [])
-            .length;
 
         if (this.config.restrict_scan_source_location && !barcodeData.location) {
             // Special case where the user can not scan a destination but a source was already scanned.
@@ -1124,11 +1122,7 @@ export default class BarcodePickingModel extends BarcodeModel {
                     this.location.display_name
                 );
             }
-        } else if (
-            this.config.restrict_scan_product && // Restriction on product.
-            !(product || packageWithQuant || this.selectedLine) && // A product/package was scanned.
-            !(this.config.restrict_scan_source_location && location && !this.selectedLine) // Maybe the user scanned the wrong location and trying to scan the right one
-        ) {
+        } else if (this._mustScanProductFirst(barcodeData)) {
             check.message = lot
                 ? _t("Scan a product before scanning a tracking number")
                 : _t("You must scan a product");
@@ -1164,6 +1158,17 @@ export default class BarcodePickingModel extends BarcodeModel {
         }
         check.error = Boolean(check.message);
         return check;
+    }
+
+    _mustScanProductFirst(barcodeData) {
+        const { location, product } = barcodeData;
+        const packageWithQuant = ((barcodeData.package && barcodeData.package.quant_ids) || [])
+            .length;
+        return (
+            this.config.restrict_scan_product && // Restriction on product.
+            !(product || packageWithQuant || this.selectedLine) && // A product/package was scanned.
+            !(this.config.restrict_scan_source_location && location && !this.selectedLine) // Maybe the user scanned the wrong location and trying to scan the right one
+        );
     }
 
     async _closeValidate(ev) {

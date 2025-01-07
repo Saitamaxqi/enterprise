@@ -9,4 +9,7 @@ patch(BarcodePickingModel.prototype, {
         }
         return false;
     },
+    _mustScanProductFirst(barcodeData) {
+        return super._mustScanProductFirst(barcodeData) && !this.isValidForBarcodeLookup;
+    },
 });
