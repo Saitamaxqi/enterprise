@@ -19,7 +19,7 @@
                 <p class="form-control"
                     t-out="partner_sudo.l10n_latam_identification_type_id.name"
                     readonly="1"
-                    title="Changing Identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation."/>
+                    title="Changing identification type is not allowed once document(s) have been issued for your account. Please contact us directly for this operation."/>
                 <input name="l10n_latam_identification_type_id"
                     class="form-control"
                     t-att-value="partner_sudo.l10n_latam_identification_type_id.id"
@@ -44,7 +44,7 @@
                      and res_company.account_fiscal_country_id.code == 'CO'">
                 <!-- Show fiscal regimen and obligation types-->
                 <div id="div_obligation_types" class="col-xl-6 mb-3">
-                    <label class="col-form-label" for="l10n_co_edi_obligation_type_ids">Obligaciones y Responsabilidades</label>
+                    <label class="col-form-label" for="l10n_co_edi_obligation_type_ids">Obligation Types</label>
                     <select multiple="multiple" name="l10n_co_edi_obligation_type_ids" class="form-control">
                         <t t-foreach="obligation_types" t-as="ob_type">
                             <option t-att-value="ob_type.id" t-att-selected="ob_type.id in selected_obligation_types_ids">
@@ -55,7 +55,7 @@
                 </div>
 
                 <div id="div_fiscal_regimen" class="col-xl-6 mb-3" style="display:none">
-                    <label class="col-form-label" for="l10n_co_edi_fiscal_regimen">Fiscal Regimen</label>
+                    <label class="col-form-label" for="l10n_co_edi_fiscal_regimen">Fiscal Regime</label>
                     <select name="l10n_co_edi_fiscal_regimen" class="form-select">
                         <t t-foreach="fiscal_regimen_selection" t-as="regimen">
                             <option t-att-value="regimen[0]" t-att-selected="regimen[0] == partner_sudo.l10n_co_edi_fiscal_regimen">
