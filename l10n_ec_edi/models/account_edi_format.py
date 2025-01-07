@@ -522,7 +522,7 @@ class AccountEdiFormat(models.Model):
         if zeep_errors:
             return auth_state, auth_num, auth_date, zeep_errors, zeep_warnings
         try:
-            response_auth_list = response['autorizaciones'] and response['autorizaciones']['autorizacion'] or []
+            response_auth_list = response.get('autorizaciones', {}).get('autorizacion', []) if response else []
         except AttributeError as err:
             return auth_state, auth_num, auth_date, [_("SRI response unexpected: %s", err)], zeep_warnings
 
