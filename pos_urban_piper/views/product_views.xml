@@ -13,6 +13,7 @@
                     groups="point_of_sale.group_pos_user"/>
                     <field name="is_alcoholic_on_urbanpiper" widget="boolean_toggle"
                     groups="point_of_sale.group_pos_user"/>
+                    <field name="urbanpiper_pos_platform_ids" groups="point_of_sale.group_pos_user" widget="many2many_tags" placeholder="Not available on any platforms."/>
                 </group>
             </xpath>
             <xpath expr="//field[@name='image_1920']" position="attributes">

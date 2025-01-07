@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models, Command
 from collections import defaultdict
 from .pos_urban_piper_request import UrbanPiperClient
 
@@ -11,6 +11,14 @@ class ProductTemplate(models.Model):
         string='Available on Food Delivery',
         help='Check this if the product is available for food delivery.',
         domain="[('urbanpiper_store_identifier', '!=', False), ('module_pos_urban_piper', '=', True)]",
+    )
+    urbanpiper_pos_platform_ids = fields.Many2many(
+        'pos.delivery.provider',
+        string='Available on',
+        help='Check this if the product is available for following platform.',
+        compute='_compute_urbanpiper_pos_config_ids',
+        store=True,
+        readonly=False,
     )
     urbanpiper_meal_type = fields.Selection([
         ('1', 'Vegetarian'),
@@ -26,9 +34,14 @@ class ProductTemplate(models.Model):
     )
     is_alcoholic_on_urbanpiper = fields.Boolean(string='Is Alchoholic', help='Indicates if the product contains alcohol.')
 
+    @api.depends('urbanpiper_pos_config_ids')
+    def _compute_urbanpiper_pos_config_ids(self):
+        for record in self:
+            record.urbanpiper_pos_platform_ids = [Command.set(record.urbanpiper_pos_config_ids.urbanpiper_delivery_provider_ids.ids)]
+
     def write(self, vals):
         field_list = ['name', 'description', 'list_price', 'weight', 'urbanpiper_meal_type', 'pos_categ_ids', 'image_1920',
-                    'product_template_attribute_value_ids', 'taxes_id', 'is_recommended_on_urbanpiper', 'is_alcoholic_on_urbanpiper', 'attribute_line_ids']
+                    'product_template_attribute_value_ids', 'taxes_id', 'is_recommended_on_urbanpiper', 'is_alcoholic_on_urbanpiper', 'attribute_line_ids', 'urbanpiper_pos_platform_ids']
         if any(field in vals for field in field_list):
             urban_piper_statuses = self.urban_piper_status_ids.filtered(lambda s: s.is_product_linked)
             urban_piper_statuses.write({'is_product_linked': False})

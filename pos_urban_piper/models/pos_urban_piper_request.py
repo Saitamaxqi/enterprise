@@ -225,6 +225,9 @@ class UrbanPiperClient:
                 'recommended': product.is_recommended_on_urbanpiper,
                 'img_url': self._get_public_image_url(product),
                 'available': True,
+                'included_platforms': (
+                    [provider.technical_name for provider in (product.urbanpiper_pos_platform_ids & self.config.urbanpiper_delivery_provider_ids)]
+                ),
             }
             name_translations = product.get_field_translations('name')
             description_translations = product.get_field_translations('public_description')
@@ -239,7 +242,7 @@ class UrbanPiperClient:
                         'description': desc_dict.get(lang, '')
                     })
             item['translations'] = translations
-            for provider in self.config.urbanpiper_delivery_provider_ids:
+            for provider in (product.urbanpiper_pos_platform_ids & self.config.urbanpiper_delivery_provider_ids):
                 tags = item.setdefault('tags', {})
                 alcohol_tags = tags.setdefault(provider.technical_name, [])
                 alcohol_tag = 'alcohol-present' if product.is_alcoholic_on_urbanpiper else 'alcohol-absent'
