@@ -1,3 +1,7 @@
+/** @odoo-module **/
+
+const { DateTime } = luxon;
+
 import { Asserts } from "./asserts";
 import { registry } from "@web/core/registry";
 
@@ -34,9 +38,11 @@ registry.category("web_tour.tours").add('account_reports_sections', {
             content: "Check the date chosen by default",
             trigger: "#filter_date",
             run: (actionHelper) => {
-                const currentYear = new Date().getFullYear();
+                // Generic tax report opens on the previous period and in this case the period is one month.
+                // And since we are using the generic tax report, we need to go back one month.
+                const previousMonth = DateTime.now().minus({months: 1});
 
-                Asserts.isTrue(actionHelper.anchor.getElementsByTagName('button')[0].innerText.includes(currentYear));
+                Asserts.isTrue(actionHelper.anchor.getElementsByTagName('button')[0].innerText.includes(previousMonth.year));
             },
         },
         {
@@ -77,10 +83,9 @@ registry.category("web_tour.tours").add('account_reports_sections', {
         },
         {
             content: "Check that the date has changed",
-            trigger: `#filter_date button:not(:contains(${ new Date().getFullYear() }))`,
+            trigger: `#filter_date button:not(:contains(${ DateTime.now().minus({months: 1}).year }))`, // We need to remove one month for the case where we are in january. It will impact the year.
             run: (actionHelper) => {
-                const currentYear = new Date().getFullYear();
-                const nextYear = currentYear + 1;
+                const nextYear = DateTime.now().plus({years: 1}).year;
 
                 Asserts.isTrue(actionHelper.anchor.innerText.includes(nextYear));
             },
@@ -96,7 +101,7 @@ registry.category("web_tour.tours").add('account_reports_sections', {
             run: 'click'
         },
         {
-            trigger: `.dropdown-menu span.dropdown-item:nth-child(3) time:contains(${new Date().getFullYear()})`,
+            trigger: `.dropdown-menu span.dropdown-item:nth-child(3) time:contains(${ DateTime.now().year})`,
         },
         {
             content: "Select another date second time",
@@ -104,9 +109,7 @@ registry.category("web_tour.tours").add('account_reports_sections', {
             run: 'click'
         },
         {
-            trigger: `.dropdown-menu span.dropdown-item:nth-child(3) time:contains(${
-                new Date().getFullYear() - 1
-            })`,
+            trigger: `.dropdown-menu span.dropdown-item:nth-child(3) time:contains(${ DateTime.now().minus({years: 1}).year })`,
         },
         {
             content: "Apply filter by closing the dropdown",
@@ -115,7 +118,7 @@ registry.category("web_tour.tours").add('account_reports_sections', {
         },
         {
             content: "Check that the date has changed",
-            trigger: `#filter_date button:contains(${ new Date().getFullYear() - 1 })`,
+            trigger: `#filter_date button:contains(${ DateTime.now().minus({years: 1}).year })`,
         },
         {
             content: "Switch back to section 1",
