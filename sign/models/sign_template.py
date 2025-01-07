@@ -195,7 +195,7 @@ class SignTemplate(models.Model):
     @api.model
     def _get_pdf_number_of_pages(self, pdf_data):
         file_pdf = PdfFileReader(io.BytesIO(pdf_data), strict=False, overwriteWarnings=False)
-        return file_pdf.getNumPages()
+        return len(file_pdf.pages)
 
     def go_to_custom_template(self, sign_directly_without_mail=False):
         self.ensure_one()
