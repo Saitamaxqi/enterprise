@@ -7,7 +7,8 @@
         <field name="inherit_id" ref="hr_payroll.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//block[@id='hr_payroll_accountant']" position="after">
-                <block title="Belgian Localization" id="l10n_be_hr_payroll">
+                <field name="company_country_code" invisible="1"/>
+                <block title="Belgian Localization" id="l10n_be_hr_payroll" invisible="company_country_code != 'BE'">
                     <setting string="Benefits" help="Configure Default Values for Belgian Benefits">
                         <div name="default_benefits" class="mt16 content-group">
                             <div class="row ms-2">

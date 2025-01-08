@@ -7,7 +7,8 @@
         <field name="inherit_id" ref="hr_payroll.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <block id="hr_payroll_accountant" position="after">
-                <block title="Moroccan Localization">
+                <field name="company_country_code" invisible="1"/>
+                <block title="Moroccan Localization" invisible="company_country_code != 'MA'">
                     <setting string="Company Information" company_dependent="1">
                         <div class="text-muted">
                             Offical Company Information

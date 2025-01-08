@@ -7,7 +7,8 @@
         <field name="inherit_id" ref="hr_payroll.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//block[@id='hr_payroll_accountant']" position="after">
-                <block title="US Localization" id="l10n_us_hr_payroll_localization">
+                <field name="company_country_code" invisible="1"/>
+                <block title="US Localization" id="l10n_us_hr_payroll_localization" invisible="company_country_code != 'US'">
                     <setting string="Company Information" help="Offical Company Information">
                         <div class="mt8" id="l10n_us_suta_text">
                             <button name="action_open_suta_rule_parameters" icon="oi-arrow-right" type="object" string="Configure State Unemployment Taxes (SUI)" class="btn-link"/>

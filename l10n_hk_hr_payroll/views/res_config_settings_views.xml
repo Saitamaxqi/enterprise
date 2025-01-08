@@ -27,7 +27,8 @@
                 </div>
             </xpath>
             <xpath expr="//block[@id='hr_payroll_accountant']" position="after">
-                <block title="Hong Kong Localization" id="l10n_hk_hr_payroll">
+                <field name="company_country_code" invisible="1"/>
+                <block title="Hong Kong Localization" id="l10n_hk_hr_payroll" invisible="company_country_code != 'HK'">
                     <setting id="company_information" string="Company Information" help="Official Company Information" company_dependent="1">
                         <div class="mt16 content-group">
                             <div class="row ms-2">
