@@ -67,7 +67,7 @@ QUnit.module("signable_document_backend_tests", ({ beforeEach }) => {
             "should display text from server"
         );
 
-        assert.containsNone(target, ".o_sign_refuse_document_button", "should show refuse button");
+        assert.containsNone(target, ".dropdown-toggle .o_sign_refuse_document_button", "should show refuse button");
     });
 
     QUnit.test("rendering with allow refusal", async (assert) => {

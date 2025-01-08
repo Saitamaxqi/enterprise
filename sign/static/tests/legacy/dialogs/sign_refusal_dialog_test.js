@@ -97,7 +97,7 @@ QUnit.module("sign refusal dialog", function (hooks) {
             );
             await click(target.querySelector("button.refuse-button"));
 
-            assert.verifySteps(["refuse-route-called", "thank-you-dialog"]);
+            assert.verifySteps(["refuse-route-called"]);
         }
     );
 

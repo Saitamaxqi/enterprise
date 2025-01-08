@@ -25,7 +25,7 @@ export class SignRefusalDialog extends Component {
     get dialogProps() {
         return {
             size: "md",
-            title: _t("Refuse to sign"),
+            title: _t("Decline to sign"),
         };
     }
 
@@ -54,13 +54,17 @@ export class SignRefusalDialog extends Component {
                 }
             );
         }
-        this.dialog.add(ThankYouDialog, {
-            subtitle: _t("The document has been refused"),
-            message: _t(
-                "We'll send an email to warn other contacts in copy & signers with the reason you provided."
-            ),
-        });
+        this.dialog.add(SignRefusalDialogTitle);
 
         this.props.close();
+    }
+}
+
+export class SignRefusalDialogTitle extends ThankYouDialog {
+    static template = "sign.SignRefusalDialogTitle";
+    setup() {
+        super.setup();
+        this.message = this.props.message || _t("Document refusal submitted.");
+        this.dialog = useService("dialog");
     }
 }

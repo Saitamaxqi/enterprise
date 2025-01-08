@@ -126,7 +126,7 @@ export class ThankYouDialog extends Component {
         if (this.suggestSignUp) {
             this.state.signUpButton = {
                 name: _t("Sign Up for free"),
-                classes: "btn btn-primary",
+                classes: "btn btn-primary mt-3",
                 ignored: true,
                 click: () => {
                     window.open(

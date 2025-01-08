@@ -69,7 +69,7 @@
             (<a t-att-href="record._get_mail_link(refuser.email, subject)"
                 style="color:#428BCA; text-decoration:none;"
                 target="_blank"><t t-out="refuser.email"/></a>)
-            has refused the document <t t-out="record.reference"/>
+            has refused to sign the document <t t-out="record.reference"/> with the following reason
         </t>
     </td></tr>
     <tr t-if="body"><td valign="top">

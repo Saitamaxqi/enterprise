@@ -233,6 +233,9 @@
     .o_sign_refuse_confirm_message {
         width: 100%;
     }
+    .placeholder-spacing::placeholder{
+        padding-left: 2px;
+    }
 }
 
 .oe_sign_terms {

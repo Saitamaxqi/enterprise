@@ -379,7 +379,10 @@ class SignRequest(models.Model):
         self.ensure_one()
         if access_token is None:
             access_token = self.access_token
-        subject = _("The document (%s) has been rejected by one of the signers", self.template_id.name)
+        subject = _("The document %(template_name)s has been rejected by %(partner_name)s",
+            template_name=self.template_id.name,
+            partner_name=partner.name,
+        )
         base_url = self.get_base_url()
         partner_lang = get_lang(self.env, lang_code=partner.lang).code
         body = self.env['ir.qweb']._render('sign.sign_template_mail_refused', {

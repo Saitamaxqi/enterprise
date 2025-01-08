@@ -4,13 +4,13 @@
         <Dialog t-props="dialogProps">
             <t t-set-slot="header" t-slot-scope="scope">
                 <h4 class="modal-title text-break text-center" t-att-class="{ 'me-auto': scope.isFullscreen }">
-                    It's signed!
+                    <span id="header-title-content">It's signed!</span>
                 </h4>
-                <button class="btn btn-close float-end" t-on-click="onClickClose"/>
+                <button class="btn btn-close shadow-none float-end" t-on-click="onClickClose"/>
             </t>
             <h5 t-if="props.subtitle" id="thank-you-subtitle"><t t-esc="props.subtitle"/></h5>
             <div t-attf-class="d-flex flex-column align-items-center gap-2">
-                <i class="fa fa-check fa-2x p-2 rounded-circle text-success bg-success-subtle" role="img"/>
+                <i id="sign-thank-you-icon" class="fa fa-check fa-2x p-2 rounded-circle text-success bg-success-subtle" role="img"/>
                 <div id="thank-you-message" class="o_thankyou_message">
                     <t t-esc="message"/>
                 </div>
@@ -45,17 +45,22 @@
                     </tbody>
                 </table>
             </t>
-            <div t-if="suggestSignUp" class="o_thankyou_message d-flex gap-2 border-top mt-3 pt-3">
+            <div t-if="suggestSignUp" class="alert alert-info o_thankyou_message d-flex gap-2 mb-0 mt-2 rounded border-0 align-items-center">
                 <img class="img" height="48" width="48" src="/base/static/img/icons/sign.png"></img>
                 <div>
                     <h6 class="mb-1">Need to sign documents?</h6>
-                    <p class="mb-0"><a class="fw-bold" href="https://www.odoo.com/trial?selected_app=sign&amp;utm_source=db&amp;utm_medium=sign" target="_blank">Odoo Sign</a> is free, forever, with unlimited users - and it's fun to use!</p>
+                    <p class="mb-0">
+                        <a class="fw-bold" href="https://www.odoo.com/trial?selected_app=sign&amp;utm_source=db&amp;utm_medium=sign" target="_blank">Odoo Sign</a>
+                        is free, forever, with unlimited users - and it's fun to use!
+                    </p>
+                    <t t-if="suggestSignUp">
+                        <button t-att-class="state.signUpButton.classes" t-on-click="state.signUpButton.click">
+                            <t t-out="state.signUpButton.name"/>
+                        </button>
+                    </t>
                 </div>
             </div>
             <t t-set-slot="footer">
-                <t t-if="suggestSignUp">
-                    <button t-att-class="state.signUpButton.classes" t-on-click="state.signUpButton.click"><t t-out="state.signUpButton.name"/></button>
-                </t>
                 <t t-foreach="state.buttons" t-as="button" t-key="button.name">
                     <button t-att-class="button.classes" t-on-click="button.click" t-att-disabled="button.disabled"><t t-out="button.name"/></button>
                 </t>

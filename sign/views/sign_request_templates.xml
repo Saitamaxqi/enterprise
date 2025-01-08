@@ -82,13 +82,24 @@
                             <t t-call="sign.signer_status_wrapper"/>
                             <t t-set="has_actions" t-value="(current_request_item and current_request_item.state == 'sent') or sign_request.state == 'signed'"/>
                             <div class="dropdown d-flex btn-group m-1" t-if="portal or has_actions">
-                                <button t-if="current_request_item and current_request_item.state == 'sent'" class="btn btn-primary dropdown-item o_sign_refuse_document_button mobile-tablet-hide">Refuse Document</button>
                                 <!-- Web page dropdown: visible only when user is logged in with options to be shown. -->
                                 <button t-if="portal" class="mobile-tablet-hide btn btn-secondary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-label="Dropdown menu" title="Dropdown menu"/>
+                                <div t-if="not portal and current_request_item and current_request_item.state == 'sent'" class="dropdown">
+                                    <button
+                                        t-if="current_request_item and current_request_item.state == 'sent'"
+                                        class="btn btn-primary mobile-tablet-hide dropdown-toggle btn-sm"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    />
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item o_sign_refuse_document_button">Decline to sign</a></li>
+                                    </ul>
+                                </div>
                                 <div t-if="portal" class="mobile-tablet-hide dropdown-menu dropdown-menu-end" role="menu">
                                     <a t-if="sign_request.state == 'signed'" role="menuitem" t-attf-href="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/completed" class="dropdown-item">Document <i class="fa fa-download"/></a>
                                     <a t-if="sign_request.state == 'signed'" role="menuitem" t-attf-href="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/log" class="dropdown-item">Certificate <i class="fa fa-download"/></a>
                                     <div t-if="sign_request.state == 'signed' and portal" class="dropdown-divider"></div>
+                                    <button t-if="current_request_item and current_request_item.state == 'sent'" class="btn btn-primary dropdown-item o_sign_refuse_document_button">Decline To Sign</button>
                                     <a t-if="portal" role="menuitem" t-attf-href="/my/" class="dropdown-item">Home</a>
                                     <a t-if="portal" role="menuitem" t-attf-href="/my/signature/{{current_request_item.id}}?{{ keep_query() }}" class="dropdown-item">Details</a>
                                 </div>
@@ -98,7 +109,7 @@
                                     <a t-if="sign_request.state == 'signed'" role="menuitem" t-attf-href="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/completed" class="dropdown-item">Document <i class="fa fa-download"/></a>
                                     <a t-if="sign_request.state == 'signed'" role="menuitem" t-attf-href="/sign/download/{{sign_request.id}}/{{sign_request.access_token}}/log" class="dropdown-item">Certificate <i class="fa fa-download"/></a>
                                     <div t-if="sign_request.state == 'signed' and portal" class="dropdown-divider"></div>
-                                    <button t-if="current_request_item and current_request_item.state == 'sent'" role="menuitem" class="btn dropdown-item o_sign_refuse_document_button mobile-tablet-show">Refuse Document</button>
+                                    <button t-if="current_request_item and current_request_item.state == 'sent'" role="menuitem" class="btn dropdown-item o_sign_refuse_document_button mobile-tablet-show">Decline to sign</button>
                                     <a t-if="portal" role="menuitem" t-attf-href="/my/" class="dropdown-item">Home</a>
                                     <a t-if="portal" role="menuitem" t-attf-href="/my/signature/{{current_request_item.id}}?{{ keep_query() }}" class="dropdown-item">Details</a>
                                 </div>
