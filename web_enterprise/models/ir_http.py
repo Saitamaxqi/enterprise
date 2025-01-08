@@ -12,6 +12,7 @@ class IrHttp(models.AbstractModel):
 
     @classmethod
     def _post_logout(cls):
+        super()._post_logout()
         request.future_response.set_cookie('color_scheme', max_age=0)
 
     def session_info(self):
