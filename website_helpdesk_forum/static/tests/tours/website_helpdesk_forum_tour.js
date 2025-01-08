@@ -45,7 +45,7 @@ registry.category("web_tour.tours").add("website_helpdesk_forum_tour", {
             trigger: ".o_wforum_question:contains(test user)",
         },
         {
-            trigger: ".modal:contains(thanks for posting) button.btn-close",
+            trigger: ".modal.modal_shown.show:contains(thanks for posting!) button.btn-close",
             run: "click",
         },
         {
