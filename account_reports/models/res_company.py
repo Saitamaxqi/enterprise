@@ -302,7 +302,7 @@ class ResCompany(models.Model):
                     ('country_id', '=', self.account_fiscal_country_id.id),
                     ('state_ids', '!=', False),
                 ])
-                state_codes = [self.state_id.code] if vat_fpos_with_state_count else []
+                state_codes = [self.state_id.code] if self.state_id and vat_fpos_with_state_count else []
 
             if state_codes:
                 region_string = " (%s - %s)" % (country_code, ', '.join(state_codes))
