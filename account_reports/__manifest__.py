@@ -8,7 +8,7 @@
 Accounting Reports
 ==================
     """,
-    'depends': ['accountant'],
+    'depends': ['account_accountant'],
     'data': [
         'security/ir.model.access.csv',
         'data/pdf_export_templates.xml',
@@ -53,7 +53,6 @@ Accounting Reports
     'auto_install': True,
     'installable': True,
     'license': 'OEEL-1',
-    'post_init_hook': 'set_periodicity_journal_on_companies',
     'assets': {
         'account_reports.assets_pdf_export': [
             ('include', 'web._assets_helpers'),

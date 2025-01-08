@@ -6,5 +6,8 @@ class IrUiMenu(models.Model):
 
     def _get_account_readonly_menu_ids(self):
         res = super()._get_account_readonly_menu_ids()
-        res.append('account_reports.menu_action_account_report_multicurrency_revaluation')
+        res.extend([
+            'account_reports.menu_action_account_report_multicurrency_revaluation',
+            'account_reports.menu_action_account_report_tree',
+        ])
         return res
