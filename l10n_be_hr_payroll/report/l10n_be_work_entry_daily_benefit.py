@@ -26,7 +26,8 @@ class L10n_BeWorkEntryDailyBenefitReport(models.Model):
             CREATE OR REPLACE VIEW %s AS (
                     SELECT work_entry.employee_id,
                            GREATEST(day_serie.day_serie, timezone(calendar.tz::text, work_entry.date_start::timestamp with time zone))::date AS day,
-                           advantage.benefit_name
+                           advantage.benefit_name,
+                           ROW_NUMBER() OVER() AS id
 
                       FROM hr_work_entry work_entry
                       JOIN hr_contract contract ON work_entry.contract_id = contract.id
