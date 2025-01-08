@@ -20,6 +20,8 @@ registry.category("web_tour.tours").add('helpdesk_pick_template_as_message_from_
     run: 'click',
 }, { // check that the content of the template block has been added to the mail composer
     trigger: '.o_mail_composer_form .o_field_html p:contains("Hello world")',
+}, { // check that the mail composer contains the user's signature
+    trigger: '.o_mail_composer_form .o_field_html .o-signature-container:contains("Mitchell Admin")',
 }, { // cancel the message, no need to send it and trigger a backend `write` (see discuss tests for that)
     trigger: 'footer button:contains(Discard)',
     run: 'click'

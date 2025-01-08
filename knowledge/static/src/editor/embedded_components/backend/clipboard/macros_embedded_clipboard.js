@@ -1,11 +1,16 @@
+import { SIGNATURE_CLASS } from "@html_editor/main/signature_plugin";
 import {
     getEditableDescendants,
     getEmbeddedProps,
 } from "@html_editor/others/embedded_component_utils";
+import { isEmptyBlock } from "@html_editor/utils/dom_info";
 import { _t } from "@web/core/l10n/translation";
 import { EmbeddedClipboardComponent } from "@knowledge/editor/embedded_components/core/clipboard/embedded_clipboard";
+import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
+import { renderToElement } from "@web/core/utils/render";
 import { SendAsMessageMacro, UseAsDescriptionMacro } from "@knowledge/macros/clipboard_macros";
+import { markup } from "@odoo/owl";
 
 export class MacrosEmbeddedClipboardComponent extends EmbeddedClipboardComponent {
     static template = "knowledge.MacrosEmbeddedClipboard";
@@ -15,6 +20,7 @@ export class MacrosEmbeddedClipboardComponent extends EmbeddedClipboardComponent
         this.actionService = useService("action");
         this.dialogService = useService("dialog");
         this.knowledgeCommandsService = useService("knowledgeCommandsService");
+        this.orm = useService("orm");
         this.uiService = useService("ui");
         this.macrosServices = {
             action: this.actionService,
@@ -54,8 +60,18 @@ export class MacrosEmbeddedClipboardComponent extends EmbeddedClipboardComponent
      * new message and attaches the associated file to it.
      * @param {Event} ev
      */
-    onClickSendAsMessage(ev) {
-        const dataTransfer = this.createHtmlDataTransfer();
+    async onClickSendAsMessage(ev) {
+        const rows = await this.orm.read("res.users", [user.userId], ["signature"]);
+        const signature = renderToElement("html_editor.Signature", {
+            signature: markup(rows[0]?.signature || ""),
+            signatureClass: SIGNATURE_CLASS,
+        });
+
+        const dataTransfer = new DataTransfer();
+        dataTransfer.setData("application/vnd.odoo.odoo-editor",
+            this.descendants.clipboardContent.innerHTML + (
+                isEmptyBlock(signature) ? "" : signature.outerHTML));
+
         const macro = new SendAsMessageMacro({
             targetXmlDoc: this.targetRecordInfo.xmlDoc,
             breadcrumbs: this.targetRecordInfo.breadcrumbs,

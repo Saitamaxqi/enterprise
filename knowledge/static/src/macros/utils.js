@@ -56,3 +56,18 @@ export function pasteElements(dataTransfer, target) {
     sel.addRange(range);
     target.dispatchEvent(fakePaste);
 }
+
+/**
+ * @param {DataTransfer} dataTransfer
+ * @param {HTMLElement} editable
+ */
+export function replaceHtmlFieldContentWith(dataTransfer, editable) {
+    editable.replaceChildren(); // Hack to avoid having a paragraph after the user's signature
+    const event = new Event("paste", {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+    });
+    event.clipboardData = dataTransfer;
+    editable.dispatchEvent(event);
+}
