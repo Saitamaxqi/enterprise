@@ -120,7 +120,7 @@ export class KnowledgeCommentsHandler extends Component {
 
     computeVerticalDimensions() {
         const activeId = this.mainPositionThreadId;
-        if (!activeId || !this.commentsState.editorThreads[activeId]?.top) {
+        if (!activeId || this.commentsState.editorThreads[activeId]?.top === undefined) {
             return;
         }
         const threadIds = this.props.commentBeaconManager.sortedThreadIds.filter((threadId) => {
