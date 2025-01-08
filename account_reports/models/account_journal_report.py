@@ -914,19 +914,17 @@ class AccountJournalReportHandler(models.AbstractModel):
 
         name = line_entry['name'] or line_entry['reference']
         account_label = line_entry['partner_name'] or line_entry['account_name']
-        if line_entry['partner_name'] and line_entry['account_type'] == 'asset_receivable':
-            formatted_account_label = _('AR %s', account_label)  # AR="Account Receivable"
-        elif line_entry['partner_name'] and line_entry['account_type'] == 'liability_payable':
-            formatted_account_label = _('AP %s', account_label)  # AP="Account Payable"
-        else:
+
+        if line_entry['account_type'] not in ('asset_receivable', 'liability_payable'):
             account_label = line_entry['account_name']
-            formatted_account_label = _('G %s', line_entry["account_code"])  # G="General"
+        elif line_entry['partner_name'] and line_entry['account_type'] in ('asset_receivable', 'liability_payable'):
+            name = f"{line_entry['partner_name']} {name or ''}"
 
         line = {
             'line_class': 'o_even ' if even else 'o_odd ',
             'document': {'data': document, 'class': 'o_bold ' if line_index == 0 else ''},
             'account_code': {'data': line_entry['account_code']},
-            'account_label': {'data': account_label if export_type != 'pdf' else formatted_account_label},
+            'account_label': {'data': account_label if export_type != 'pdf' else line_entry["account_code"]},
             'name': {'data': name},
             'debit': {
                 'data': report._format_value(options, line_entry['debit'], 'monetary'),

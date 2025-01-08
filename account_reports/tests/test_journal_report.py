@@ -313,20 +313,20 @@ class TestJournalReport(TestAccountReportsCommon):
                     'id': self.default_sale_journal.id,
                     'columns': ['document', 'account_label', 'name', 'debit', 'credit', 'taxes', 'tax_grids'],
                     'lines': [
-                        {'name': 'ref123',          'debit': '$\xa03,000.00',             'credit': '$\xa00.00'},
+                        {'name': 'partner_a ref123',          'debit': '$\xa03,000.00',             'credit': '$\xa00.00'},
                         {'name': 'ref123',          'debit': '$\xa00.00',                 'credit': '$\xa03,000.00'},
 
-                        {'name': 'ref234',          'debit': '$\xa01,500.00',             'credit': '$\xa00.00'},
+                        {'name': 'partner_a ref234',          'debit': '$\xa01,500.00',             'credit': '$\xa00.00'},
                         {'name': 'ref234',          'debit': '$\xa00.00',                 'credit': '$\xa01,500.00'},
 
                         {'currency_id': self.other_currency.id, 'amount': 3000},  # Special line for multicurrency
 
-                        {'name': '',                'debit': '$\xa01,000.00',             'credit': '$\xa00.00'},
+                        {'name': 'partner_a ',                'debit': '$\xa01,000.00',             'credit': '$\xa00.00'},
                         {'name': '',                'debit': '$\xa00.00',                 'credit': '$\xa01,000.00'},
 
                         {'currency_id': self.other_currency.id, 'amount': 2000},  # Special line for multicurrency
 
-                        {'name': 'ref345',          'debit': '$\xa01,650.00',             'credit': '$\xa00.00'},
+                        {'name': 'partner_a ref345',          'debit': '$\xa01,650.00',             'credit': '$\xa00.00'},
                         {'name': 'ref345',          'debit': '$\xa00.00',                 'credit': '$\xa01,500.00',    'taxes': 'T: Tax 10%'},
                         {'name': 'Tax 10%',         'debit': '$\xa00.00',                 'credit': '$\xa0150.00',      'taxes': 'B: $\xa01,500.00'},
 
@@ -365,20 +365,20 @@ class TestJournalReport(TestAccountReportsCommon):
                     'id': self.default_sale_journal.id,
                     'columns': ['document', 'account_label', 'name', 'debit', 'credit', 'taxes', 'tax_grids'],
                     'lines': [
-                        {'name': 'ref123',          'debit': '$\xa03,000.00',             'credit': '$\xa00.00'},
+                        {'name': 'partner_a ref123',          'debit': '$\xa03,000.00',             'credit': '$\xa00.00'},
                         {'name': 'ref123',          'debit': '$\xa00.00',                 'credit': '$\xa03,000.00'},
 
-                        {'name': 'ref234',          'debit': '$\xa01,500.00',             'credit': '$\xa00.00'},
+                        {'name': 'partner_a ref234',          'debit': '$\xa01,500.00',             'credit': '$\xa00.00'},
                         {'name': 'ref234',          'debit': '$\xa00.00',                 'credit': '$\xa01,500.00'},
 
                         {'currency_id': self.other_currency.id, 'amount': 3000},  # Special line for multicurrency
 
-                        {'name': '',                'debit': '$\xa01,000.00',             'credit': '$\xa00.00'},
+                        {'name': 'partner_a ',                'debit': '$\xa01,000.00',             'credit': '$\xa00.00'},
                         {'name': '',                'debit': '$\xa00.00',                 'credit': '$\xa01,000.00'},
 
                         {'currency_id': self.other_currency.id, 'amount': 2000},  # Special line for multicurrency
 
-                        {'name': 'ref345',          'debit': '$\xa01,650.00',             'credit': '$\xa00.00'},
+                        {'name': 'partner_a ref345',          'debit': '$\xa01,650.00',             'credit': '$\xa00.00'},
                         {'name': 'ref345',          'debit': '$\xa00.00',                 'credit': '$\xa01,500.00',    'taxes': 'T: Tax 10%'},
                         {'name': 'Tax 10%',         'debit': '$\xa00.00',                 'credit': '$\xa0150.00',      'taxes': 'B: $\xa01,500.00'},
 
