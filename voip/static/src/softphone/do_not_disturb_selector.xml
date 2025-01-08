@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<templates>
+
+<t t-name="voip.DoNotDisturbSelector">
+    <Dropdown position="'bottom-end'">
+        <i t-attf-class="o-voip-DoNotDisturbSelector-statusIcon fa fa-circle text-{{ doNotDisturbUntilDt ? 'danger' : 'success' }}" t-att-title="statusIconTitleText" role="img"/>
+        <t t-set-slot="content">
+            <DropdownItem onSelected="() => this.setDoNotDisturb(0)">
+                <div class="d-flex align-items-center">
+                    <p class="p-1 m-0">
+                        <i class="fa fa-circle text-success" role="img"/>
+                        Available
+                    </p>
+                </div>
+            </DropdownItem>
+            <Dropdown>
+                <div>
+                    <i class="fa fa-circle text-danger" role="img"/>
+                    <div>
+                        <p class="m-0">Do Not Disturb</p>
+                        <p class="m-0 text-muted" t-esc="dndButtonBottomText"/>
+                    </div>
+                </div>
+                <t t-set-slot="content">
+                    <t t-foreach="settings.MUTES" t-as="dndDuration" t-key="dndDuration.label">
+                        <DropdownItem class="'btn rounded-0 d-flex align-items-center px-2 py-2 m-0'" onSelected="() => this.setDoNotDisturb(dndDuration.value)">
+                            <button class="btn p-0 mx-2 text-wrap text-start text-break" t-esc="dndDuration.name"/>
+                        </DropdownItem>
+                    </t>
+                </t>
+            </Dropdown>
+        </t>
+    </Dropdown>
+</t>
+
+</templates>

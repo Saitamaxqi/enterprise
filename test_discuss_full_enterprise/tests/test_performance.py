@@ -33,6 +33,7 @@ def _get_init_store_data_result(self):
         {
             "homemenu_config": False,
             "how_to_call_on_mobile": "ask",
+            "do_not_disturb_until_dt": False,
             "external_device_number": False,
             "onsip_auth_username": False,
             "should_call_from_another_device": False,

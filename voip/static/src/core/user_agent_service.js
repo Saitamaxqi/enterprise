@@ -478,7 +478,7 @@ export class UserAgent {
             sipSession: inviteSession,
         };
         this.softphone.show();
-        if (this.multiTabService.isOnMainTab()) {
+        if (this.multiTabService.isOnMainTab() && !this.voip.store.settings.do_not_disturb_until_dt) {
             this.ringtoneService.incoming.play();
         }
         // TODO send notification

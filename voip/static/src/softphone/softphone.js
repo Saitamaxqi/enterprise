@@ -4,6 +4,7 @@ import { ActivitiesTab } from "@voip/softphone/activities_tab";
 import { CallInvitation } from "@voip/softphone/call_invitation";
 import { ContactsTab } from "@voip/softphone/contacts_tab";
 import { CorrespondenceDetails } from "@voip/softphone/correspondence_details";
+import { DoNotDisturbSelector } from "@voip/softphone/do_not_disturb_selector";
 import { Numpad } from "@voip/softphone/numpad";
 import { RecentTab } from "@voip/softphone/recent_tab";
 
@@ -18,6 +19,7 @@ export class Softphone extends Component {
         CallInvitation,
         ContactsTab,
         CorrespondenceDetails,
+        DoNotDisturbSelector,
         Numpad,
         RecentTab,
     };
