@@ -84,8 +84,8 @@
                                     target="_blank">
                                     <img t-if="record.link_image_url.raw_value" class="me-2 flex-shrink-0" t-att-src="record.link_image_url.raw_value" alt="Link Image"/>
                                     <div class="o_social_stream_post_link_text">
-                                        <field class="fw-bold text-truncate" name="link_title"/>
-                                        <field class="text-truncate" name="link_description"/>
+                                        <field class="d-block fw-bold text-truncate" name="link_title"/>
+                                        <field class="d-block text-truncate" name="link_description"/>
                                     </div>
                                 </a>
                                 <div t-if="has_attachments"
