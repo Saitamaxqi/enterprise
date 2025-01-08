@@ -52,7 +52,7 @@ if vehicle_access and log_contract_access:
 
     if employees_multiple_vehicles:
         warning_count = len(employees_multiple_vehicles)
-        warning_records = self.env['fleet.vehicle'].browse(employees_multiple_vehicles)
+        warning_records = self.env['hr.employee'].browse(employees_multiple_vehicles)
             </field>
         </record>
     </data>
