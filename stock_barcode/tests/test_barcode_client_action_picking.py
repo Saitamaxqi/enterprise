@@ -3775,3 +3775,43 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.assertTrue(delivery2.signature)
         self.assertEqual(delivery1.state, 'done')
         self.assertEqual(delivery2.state, 'done')
+
+    def test_select_with_same_product_and_lot(self):
+        self.clean_access_rights()
+        grp_lot = self.env.ref('stock.group_production_lot')
+        self.env.user.write({'groups_id': [Command.link(grp_lot.id)]})
+        pg = self.env['procurement.group'].create({'name': 'ProcurementGroup'})
+        lot_xyz = self.env['stock.lot'].create({'name': 'lot_xyz', 'product_id': self.productlot1.id, 'company_id': self.env.company.id})
+        self.env['stock.quant']._update_available_quantity(self.productlot1, self.stock_location, 4, lot_id=lot_xyz)
+        self.picking_type_out.show_reserved_sns = True
+        delivery_picking = self.env['stock.picking'].create({
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'picking_type_id': self.picking_type_out.id,
+            'group_id': pg.id,
+        })
+        self.env['stock.move'].create({
+            'name': 'test_delivery_lot_xyz_1',
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'product_id': self.productlot1.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 2,
+            'picking_id': delivery_picking.id,
+            'group_id': pg.id,
+        })
+        delivery_picking.action_confirm()
+        second_move = self.env['stock.move'].create({
+            'name': 'test_delivery_lot_xyz_2',
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'product_id': self.productlot1.id,
+            'product_uom': self.uom_unit.id,
+            'quantity': 2,
+            'picking_id': delivery_picking.id,
+            'group_id': pg.id,
+        })
+        second_move.move_line_ids.lot_id = lot_xyz
+        self.assertEqual(len(delivery_picking.move_ids), 2)
+        url = self._get_client_action_url(delivery_picking.id)
+        self.start_tour(url, 'test_select_with_same_product_and_lot', login='admin', timeout=180)

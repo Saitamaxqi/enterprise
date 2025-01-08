@@ -5828,3 +5828,107 @@ registry.category("web_tour.tours").add("test_scan_location_destination_for_inte
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_select_with_same_product_and_lot", {
+    steps: () => [
+        {
+            trigger: '.o_barcode_client_action',
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertValidateVisible(true);
+                helper.assertValidateEnabled(true);
+            }
+        },
+        // Unfold grouped lines
+        {
+            trigger: '.o_line_button.o_toggle_sublines',
+            run: 'click',
+        },
+        {
+            trigger: '.o_sublines .o_barcode_line',
+            run: () => {
+                const sublines = document.querySelectorAll('.o_sublines .o_barcode_line');
+                helper.assert(sublines.length, 2, 'it should have 2 sublines');
+            }
+        },
+        // Scan source location
+        {
+            trigger: '.o_barcode_client_action',
+            run: 'scan LOC-01-00-00'
+        },
+        // Select the second sub-line
+        {
+            trigger: '.o_sublines .o_barcode_line:last-child',
+            run: 'click',
+        },
+        // Scan the lot 2 times
+        {
+            trigger: '.o_barcode_client_action',
+            run: 'scan lot_xyz',
+        },
+        {
+            trigger: '.o_barcode_scanner_qty .qty-done:contains("1")',
+            run() {},
+        },
+        {
+            trigger: '.o_barcode_client_action',
+            run: 'scan lot_xyz',
+        },
+        {
+            trigger: '.o_barcode_scanner_qty .qty-done:contains("2")',
+            run() {},
+        },
+        {
+            trigger: '.o_barcode_lines',
+            run: () => {
+                const line1 = document.querySelector('.o_sublines .o_barcode_line:first-child');
+                const line2 = document.querySelector('.o_sublines .o_barcode_line:last-child');
+                helper.assert(line1.querySelector(
+                    '.o_barcode_scanner_qty .qty-done').innerText,
+                    '0',
+                    'No product should be scanned for the first line'
+                );
+                helper.assert(
+                    line2.querySelector('.o_barcode_scanner_qty .qty-done').innerText,
+                    '2',
+                    '2 products should be scanned for the second line'
+                );
+            },
+        },
+        // Select the first sub-line
+        {
+            trigger: '.o_sublines .o_barcode_line:first-child',
+            run: 'click',
+        },
+        // Scan the lot 2 times
+        {
+            trigger: '.o_barcode_client_action',
+            run: 'scan lot_xyz',
+        },
+        {
+            trigger: '.o_barcode_scanner_qty .qty-done:contains("3")',
+            run() {},
+        },
+        {
+            trigger: '.o_barcode_client_action',
+            run: 'scan lot_xyz',
+        },
+        {
+            trigger: '.o_barcode_scanner_qty .qty-done:contains("4")',
+            run() {},
+        },
+        {
+            trigger: '.o_barcode_line.o_line_completed',
+            run: () => {
+                // Main line should be completed
+                helper.assertLinesCount(1);
+                // Both sub-lines should be completed
+                helper.assert(
+                    document.querySelectorAll('.o_sublines .o_barcode_line.o_line_completed').length,
+                    2,
+                    'Both sublines should be completed'
+                );
+            },
+        },
+    ]
+});

@@ -1657,7 +1657,16 @@ export default class BarcodeModel extends EventBus {
         const { lot, lotName, product } = barcodeData;
         const quantPackage = barcodeData.package;
         const dataLotName = lotName || (lot && lot.name) || false;
-        for (const line of this.pageLines) {
+        let pageLines = [...this.pageLines]
+        // If a line is selected, unshift it to the first position to start the search by it
+        if (this.selectedLineVirtualId) {
+            const selectedLineIndex = pageLines.findIndex(line => line.virtual_id == this.selectedLineVirtualId);
+            if (selectedLineIndex > -1) {
+                pageLines.splice(selectedLineIndex, 1);
+                pageLines.unshift(this.pageLines[selectedLineIndex]);
+            }
+        }
+        for (const line of pageLines) {
             const lineLotName = this.getlotName(line);
             if (line.product_id.id !== product.id) {
                 continue; // Not the same product.
