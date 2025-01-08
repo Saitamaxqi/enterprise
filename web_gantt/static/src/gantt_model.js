@@ -103,39 +103,7 @@ export function parseServerValues(fields, values) {
         return parsedValues;
     }
     for (const fieldName in values) {
-        const field = fields[fieldName];
-        const value = values[fieldName];
-        switch (field.type) {
-            case "date": {
-                parsedValues[fieldName] = value ? deserializeDate(value) : false;
-                break;
-            }
-            case "datetime": {
-                parsedValues[fieldName] = value ? deserializeDateTime(value) : false;
-                break;
-            }
-            case "selection": {
-                if (value === false) {
-                    // process selection: convert false to 0, if 0 is a valid key
-                    const hasKey0 = field.selection.some((option) => option[0] === 0);
-                    parsedValues[fieldName] = hasKey0 ? 0 : value;
-                } else {
-                    parsedValues[fieldName] = value;
-                }
-                break;
-            }
-            case "html": {
-                parsedValues[fieldName] = parseServerValue(field, value);
-                break;
-            }
-            case "many2one": {
-                parsedValues[fieldName] = value ? [value.id, value.display_name] : false;
-                break;
-            }
-            default: {
-                parsedValues[fieldName] = value;
-            }
-        }
+        parsedValues[fieldName] = parseServerValue(fields[fieldName], values[fieldName]);
     }
     return parsedValues;
 }
