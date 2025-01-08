@@ -128,7 +128,10 @@ class StockMoveLine(models.Model):
                 tracking_number_list = [i for i in range(start_number, start_number + len(move_line_ids), 1)]
                 epc_sequence.write({'number_next_actual': start_number + len(move_line_ids)})
             else:
-                tracking_number_list = move_line_ids.lot_id.mapped('name')
+                tracking_number_list = [m.lot_id.name if m.lot_id else m.lot_name for m in move_line_ids if m.lot_id or m.lot_name]
+                if len(tracking_number_list) == 0:
+                    move_line_ids.electronic_product_code = self.env._("Error: We can't generate an Electronic Product Code for a tracked product without a tracking number.")
+                    continue
                 alphanumeric_tracking = any(re.search(r'[^\d]', tracking_number) for tracking_number in tracking_number_list)
             # NOTE: In the future, obtain the filter & company prefix length rather than providing them explicitly
             gtin = product_id.barcode

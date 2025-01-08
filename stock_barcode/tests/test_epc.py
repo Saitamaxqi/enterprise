@@ -1,6 +1,6 @@
 import json
 
-from odoo.tests import HttpCase, tagged
+from odoo.tests import HttpCase, tagged, TransactionCase
 
 
 @tagged('post_install', '-at_install')
@@ -48,3 +48,36 @@ class TestEpcEncoder(HttpCase):
             )
             received_epc = response.json()['result']  # key is tracking number, value is epc
             self.assertDictEqual(expected_epc, received_epc)
+
+
+@tagged('post_install', '-at_install')
+class TestEpcIntegration(TransactionCase):
+    def test_move_line_no_lot(self):
+        stock_location = self.env.ref('stock.stock_location_stock')
+        supplier_location = self.env.ref('stock.stock_location_suppliers')
+
+        product_serial = self.env['product.product'].create({
+            'name': 'Product S',
+            'is_storable': True,
+            'tracking': 'serial',
+            'barcode': '11223344556677',
+        })
+        picking = self.env['stock.picking'].create({
+            'picking_type_id': self.env.ref('stock.picking_type_in').id,
+            'location_id': supplier_location.id,
+            'location_dest_id': stock_location.id,
+            'state': 'draft',
+        })
+        move = self.env['stock.move'].create({
+            'name': 'In move',
+            'product_id': product_serial.id,
+            'product_uom_qty': 30.0,
+            'product_uom': product_serial.uom_id.id,
+            'location_id': supplier_location.id,
+            'location_dest_id': stock_location.id,
+            'picking_id': picking.id,
+            'state': 'draft',
+        })
+        picking.action_confirm()
+        # move_lines don't have either a lot_id or a lot_name, resulting in an EPC calculation error
+        self.assertIn("Error", move.move_line_ids[0].electronic_product_code)
