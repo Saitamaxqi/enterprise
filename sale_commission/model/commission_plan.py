@@ -47,8 +47,8 @@ class SaleCommissionPlan(models.Model):
     def init(self):
         self.env.cr.execute("""
 CREATE INDEX IF NOT EXISTS sale_order_team_id_date_order_idx ON sale_order (team_id, date_order) WHERE state = 'sale';
-CREATE INDEX IF NOT EXISTS account_move_team_id_date_idx ON account_move (team_id, date) WHERE move_type = 'out_invoice';
-CREATE INDEX IF NOT EXISTS account_move_invoice_user_id_date_idx ON account_move (invoice_user_id, date) WHERE move_type = 'out_invoice';
+CREATE INDEX IF NOT EXISTS account_move_team_id_date_idx ON account_move (team_id, date) WHERE move_type IN ('out_invoice', 'out_refund');
+CREATE INDEX IF NOT EXISTS account_move_invoice_user_id_date_idx ON account_move (invoice_user_id, date) WHERE move_type IN ('out_invoice', 'out_refund');
         """)
         super().init()
 
