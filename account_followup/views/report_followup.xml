@@ -132,7 +132,7 @@
                 <t t-foreach="docs" t-as="doc"> <!-- each doc is a 'res.partner', called doc for the 'web.external_layout' template -->
                     <t t-call="web.external_layout">
                         <t t-set="fallback_address" t-value="doc.browse(doc.address_get(['invoice'])['invoice']) or doc"/>
-                        <t t-call-assets="account_followup.assets_followup_report" />
+                        <t t-call-assets="account_followup.assets_followup_report" t-autoprefix="true"/>
                         <div class="page">
                             <span t-out="doc.get_followup_html(options)">Follow-up details</span>
                         </div>

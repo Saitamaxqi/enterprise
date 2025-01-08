@@ -2,7 +2,7 @@
 <odoo>
     <template id="mrp_cost_structure">
         <t t-call="web.basic_layout">
-            <t t-call-assets="mrp_account_enterprise.assets_mrp_cost_structure_report" t-js="False"/>
+            <t t-call-assets="mrp_account_enterprise.assets_mrp_cost_structure_report" t-js="False" t-autoprefix="true"/>
             <div class="page o_mrp_report_page">
                 <t t-if="not lines">
                     <span class="text-center o_mrp_report_info"><h1>Some of the Manufacturing Order(s) selected are not done yet</h1></span>

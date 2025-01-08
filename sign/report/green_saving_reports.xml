@@ -3,7 +3,7 @@
 <odoo>
     <template id="green_savings_report">
         <t t-call="web.basic_layout">
-            <t t-call-assets="sign.assets_green_report" t-js="false"/>
+            <t t-call-assets="sign.assets_green_report" t-js="false" t-autoprefix="true"/>
             <t t-set="green_report_container_template" t-value="'sign.green_report_container' if report_type == 'html' else 'sign.green_report_container_pdf'"/>
             <t t-call="{{ green_report_container_template }}"/>
 

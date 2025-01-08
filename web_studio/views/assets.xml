@@ -6,7 +6,7 @@
     <!-- Reports -->
     <template id="web_studio.report_layout" inherit_id="web.report_layout">
         <xpath expr="//head" position="inside">
-            <t t-if="studio" t-call-assets="web_studio.report_assets"/>
+            <t t-if="studio" t-call-assets="web_studio.report_assets" t-autoprefix="true"/>
         </xpath>
     </template>
 
