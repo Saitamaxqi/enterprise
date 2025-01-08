@@ -289,7 +289,10 @@ export class CommentBeaconManager {
                 }
                 // Faster than elementsFromPoint, but some rects will be omitted
                 // if they are under another element like the editor toolbar.
-                const target = this.document.elementFromPoint(big.x + big.width / 2, big.y);
+                const target = this.document.elementFromPoint(
+                    big.x + big.width / 2,
+                    big.y + big.height / 2
+                );
                 if (!target) {
                     return;
                 }
