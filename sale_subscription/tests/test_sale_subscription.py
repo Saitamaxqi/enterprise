@@ -142,6 +142,46 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         # 1200 over 4 year = 25/year + 100 per month
         self.assertAlmostEqual(self.subscription.recurring_monthly, 5.84, msg='70 / 12')
 
+    def test_recurring_total(self):
+        """Test rounding of (non-) recurring total"""
+        self.company.write({
+            'currency_id': self.env.ref('base.BGN').id,
+            'account_price_include': 'tax_included',
+            'tax_calculation_rounding_method': 'round_globally',
+        })
+        sub_tax = self.env['account.tax'].create({
+            'name': '20% BG',
+            'amount': 20,
+            'company_id': self.company.id,
+        })
+        subscription = self.env['sale.order'].create({
+            'name': 'TestSubscription',
+            'is_subscription': True,
+            'company_id': self.company.id,
+            'plan_id': self.plan_month.id,
+            'partner_id': self.user_portal.partner_id.id,
+            'order_line': [
+                Command.create({'product_id': self.product.id,
+                                'price_unit': 140,
+                                'tax_ids': [Command.set(sub_tax.ids)]
+                                }),
+                Command.create({'product_id': self.product.id,
+                                'price_unit': 36.97,
+                                'tax_ids': [Command.set(sub_tax.ids)]
+                                }),
+                Command.create({'product_id': self.product.id,
+                                'price_unit': 36.97,
+                                'tax_ids': [Command.set(sub_tax.ids)]
+                                }),
+                Command.create({'product_id': self.product.id,
+                                'price_unit': 21,
+                                'tax_ids': [Command.set(sub_tax.ids)]
+                                }),
+                ]
+        })
+        self.assertEqual(subscription.non_recurring_total, 0)
+        self.assertEqual(subscription.recurring_total, 195.78)
+
     def test_compute_kpi(self):
         self.subscription.action_confirm()
         self.env['sale.order']._cron_update_kpi()
