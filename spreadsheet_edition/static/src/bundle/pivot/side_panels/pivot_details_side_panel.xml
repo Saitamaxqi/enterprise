@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
     <div t-name="spreadsheet_edition.PivotDetailsSidePanel" class="o_spreadsheet_pivot_side_panel h-100 overflow-hidden d-flex justify-content-between flex-column">
-        <div class="h-100 position-relative overflow-x-hidden overflow-y-auto">
+        <div class="h-100 position-relative overflow-x-hidden overflow-y-auto" t-ref="pivotSidePanel">
             <t t-if="isModelValid">
                 <PivotTitleSection pivotId="props.pivotId" flipAxis.bind="flipAxis"/>
                 <t t-set="definition" t-value="store.definition"/>
@@ -18,6 +18,7 @@
                     datetimeGranularities="store.datetimeGranularities"
                     onDimensionsUpdated.bind="onDimensionsUpdated"
                     pivotId="props.pivotId"
+                    getScrollableContainerEl.bind="getScrollableContainerEl"
                 />
                 <SidePanelDomain
                     resModel="definition.model"
