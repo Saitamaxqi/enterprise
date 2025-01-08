@@ -3,13 +3,12 @@ import { useService } from "@web/core/utils/hooks";
 
 export function timesheetLeaderboardTimerHook() {
     const orm = useService("orm");
-    const companyService = useService("company");
 
     return {
         getLeaderboardRendering: async () => {
             const read = await orm.read(
                 "res.company",
-                [companyService.currentCompany.id],
+                [user.activeCompany.id],
                 ["timesheet_show_rates", "timesheet_show_leaderboard"]
             );
             const { timesheet_show_rates, timesheet_show_leaderboard: showLeaderboard } = read[0];

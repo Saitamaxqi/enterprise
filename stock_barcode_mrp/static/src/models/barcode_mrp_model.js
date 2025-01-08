@@ -1,5 +1,5 @@
 import BarcodePickingModel from "@stock_barcode/models/barcode_picking_model";
-import { session } from "@web/session";
+import { user } from "@web/core/user";
 import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
 
@@ -599,7 +599,7 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
 
     _getCompanyId() {
         const defaultCompanyId = this.action.currentController.action.context["default_company_id"];
-        const userCompanyId = session.user_companies.current_company;
+        const userCompanyId = user.defaultCompany.id;
         return defaultCompanyId || userCompanyId;
     }
 }

@@ -1,6 +1,6 @@
 import { Dialog } from "@web/core/dialog/dialog";
 import { Component, useState } from "@odoo/owl";
-import { useService } from "@web/core/utils/hooks";
+import { user } from "@web/core/user";
 import { _t } from "@web/core/l10n/translation";
 
 /** You might wonder why I defined all these strings here and not in the template.
@@ -98,8 +98,7 @@ export class ModelConfigurator extends Component {
 
     setup() {
         this.state = useState({ saving: false });
-        const company = useService("company");
-        this.options = useState(getModelOptions(company.isMultiCompany));
+        this.options = useState(getModelOptions(user.allowedCompanies.length > 1));
     }
 
     /**

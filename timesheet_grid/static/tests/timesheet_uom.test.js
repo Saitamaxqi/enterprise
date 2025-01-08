@@ -1,7 +1,6 @@
 import { beforeEach, expect, test } from "@odoo/hoot";
 import { queryFirst } from "@odoo/hoot-dom";
-import { session } from "@web/session";
-import { contains, mountView, patchWithCleanup } from "@web/../tests/web_test_helpers";
+import { contains, mountView, serverState } from "@web/../tests/web_test_helpers";
 
 import { defineTimesheetModels, HRTimesheet } from "./hr_timesheet_models";
 import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
@@ -35,7 +34,7 @@ test("hr.timesheet (grid): timesheet_uom should be company related", async () =>
 });
 
 test("hr.timesheet (grid): timesheet_uom widget should be float_toggle if uom is days", async () => {
-    patchWithCleanup(session.user_companies.allowed_companies[1], { timesheet_uom_id: 2 });
+    serverState.companies[0].timesheet_uom_id = 2;
     const cell = await mountViewAndGetCell();
 
     expect(cell.textContent).toBe("0.00", {
@@ -48,7 +47,7 @@ test("hr.timesheet (grid): timesheet_uom widget should be float_toggle if uom is
 });
 
 test("hr.timesheet (grid): timesheet_uom widget should be float_factor if uom is foo", async () => {
-    patchWithCleanup(session.user_companies.allowed_companies[1], { timesheet_uom_id: 3 });
+    serverState.companies[0].timesheet_uom_id = 3;
     const cell = await mountViewAndGetCell();
 
     expect(cell.textContent).toBe("0.00", {
@@ -62,7 +61,7 @@ test("hr.timesheet (grid): timesheet_uom widget should be float_factor if uom is
 
 test.tags("desktop");
 test("hr.timesheet (grid): clicking on the magnifying glass shouldn't toggle the cell", async () => {
-    patchWithCleanup(session.user_companies.allowed_companies[1], { timesheet_uom_id: 2 });
+    serverState.companies[0].timesheet_uom_id = 2;
     const cell = await mountViewAndGetCell();
 
     expect(cell.textContent).toBe("0.00", {

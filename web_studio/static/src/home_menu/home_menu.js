@@ -2,6 +2,7 @@ import { HomeMenu } from "@web_enterprise/webclient/home_menu/home_menu";
 import { url } from "@web/core/utils/urls";
 import { patch } from "@web/core/utils/patch";
 import { onMounted, onWillUnmount } from "@odoo/owl";
+import { user } from "@web/core/user";
 
 patch(HomeMenu.prototype, {
     setup() {
@@ -10,7 +11,7 @@ patch(HomeMenu.prototype, {
             return;
         }
         this.backgroundImageUrl = url("/web/image", {
-            id: this.env.services.company.currentCompany.id,
+            id: user.activeCompany.id,
             model: "res.company",
             field: "background_image",
         });

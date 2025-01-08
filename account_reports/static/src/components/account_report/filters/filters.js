@@ -10,6 +10,7 @@ import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { MultiRecordSelector } from "@web/core/record_selectors/multi_record_selector";
 import { formatDate} from "@web/core/l10n/dates";
 const { DateTime } = luxon;
+import { user } from "@web/core/user";
 
 export class AccountReportFilters extends Component {
     static template = "account_reports.AccountReportFilters";
@@ -25,7 +26,6 @@ export class AccountReportFilters extends Component {
         this.dialog = useService("dialog");
         this.orm = useService("orm");
         this.notification = useService("notification");
-        this.companyService = useService("company");
         this.controller = useState(this.env.controller);
         if (this.env.controller.options.date) {
             this.dateFilter = useState(this.initDateFilters());
@@ -561,7 +561,7 @@ export class AccountReportFilters extends Component {
         this.controller.saveSessionOptions(this.controller.options);
 
         // force the company to those impacted by the tax units, the reload will be force by this function
-        this.companyService.setCompanies(taxUnit.company_ids);
+        user.activateCompanies(taxUnit.company_ids);
     }
 
     async toggleHideZeroLines() {

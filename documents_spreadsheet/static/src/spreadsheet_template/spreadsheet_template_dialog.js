@@ -9,6 +9,7 @@ import { useBus, useService } from "@web/core/utils/hooks";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 import { getDefaultConfig } from "@web/views/view";
 import { _t } from "@web/core/l10n/translation";
+import { user } from "@web/core/user";
 
 import { Component, useState, useSubEnv, useChildSubEnv, onWillStart, useEffect } from "@odoo/owl";
 
@@ -25,7 +26,6 @@ export class TemplateDialog extends Component {
         this.orm = useService("orm");
         this.viewService = useService("view");
         this.actionService = useService("action");
-        this.companyService = useService("company");
 
         this.data = this.env.dialogData;
         useHotkey("escape", () => this.data.close());
@@ -62,7 +62,7 @@ export class TemplateDialog extends Component {
         onWillStart(async () => {
             const defaultFolder = await this.orm.searchRead(
                 "res.company",
-                [["id", "=", this.companyService.currentCompany.id]],
+                [["id", "=", user.activeCompany.id]],
                 ["document_spreadsheet_folder_id"]
             );
             this.documentsSpreadsheetFolderId = defaultFolder[0].document_spreadsheet_folder_id[0];

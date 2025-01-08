@@ -20,7 +20,6 @@ export class StreamPostKanbanController extends KanbanController {
     setup() {
         super.setup();
         this.model = useModelWithSampleData(this.props.Model, this.modelParams);
-        this.company = useService('company');
         this.dialog = useService('dialog');
         this.orm = useService('orm');
         this.notification = useService('notification');
@@ -90,7 +89,7 @@ export class StreamPostKanbanController extends KanbanController {
                 isSocialManager: this.isSocialManager,
                 socialMedia: socialMedia,
                 socialAccounts: this.accounts,
-                companies: this._getCompanies(),
+                companies: user.activeCompanies,
                 onSaved: this._onStreamAdded.bind(this),
             })
         )
@@ -133,17 +132,4 @@ export class StreamPostKanbanController extends KanbanController {
             return this.socialMedia;
         }
     }
-
-    /**
-     * Return the list of allowed companies for the current users.
-     * The first element of the array is the current selected company.
-     *
-     * @private
-     * @param {Array} [{id: company_id, name: company_name}, ...]
-     */
-    _getCompanies() {
-        const companies = this.company.allowedCompanies;
-        return this.company.activeCompanyIds.map(companyId => companies[companyId]);
-    }
-
 }

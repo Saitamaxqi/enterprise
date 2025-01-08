@@ -41,9 +41,9 @@ import {
     patchWithCleanup,
     toggleMenu,
     toggleMenuItem,
+    serverState,
 } from "@web/../tests/web_test_helpers";
 import { user } from "@web/core/user";
-import { session } from "@web/session";
 import { WebClient } from "@web/webclient/webclient";
 
 defineDocumentSpreadsheetModels();
@@ -780,15 +780,7 @@ test("Columns of newly inserted pivot are auto-resized", async function () {
 });
 
 test("user related context is not saved in the spreadsheet", async function () {
-    const testSession = {
-        user_companies: {
-            allowed_companies: {
-                15: { id: 15, name: "Hermit" },
-            },
-            current_company: 15,
-        },
-    };
-    patchWithCleanup(session, testSession);
+    serverState.companies = [{ id: 15, name: "Hermit" }];
     const userCtx = user.context;
     patchWithCleanup(user, {
         get context() {

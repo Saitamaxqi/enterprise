@@ -7,7 +7,7 @@
         <FileInput
           acceptedFileExtensions="'image/*'"
           onUpload.bind="onBackgroundUpload"
-          resId="company.currentCompany.id"
+          resId="user.activeCompany.id"
           resModel="'res.company'"
         >
           Change Background

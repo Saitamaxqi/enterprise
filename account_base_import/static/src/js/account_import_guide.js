@@ -4,6 +4,7 @@ import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { Component, onWillStart, onWillRender } from "@odoo/owl";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
+import { user } from "@web/core/user";
 
 export class AccountImportGuide extends Component {
     static template = "account_base_import.accountImportTemplate";
@@ -14,7 +15,7 @@ export class AccountImportGuide extends Component {
         this.orm = useService("orm");
         this.env.config.setDisplayName(_t("Accounting Import Guide"))
         onWillStart(async () => {
-            const current_company_id = this.env.services.company.currentCompany.id
+            const current_company_id = user.activeCompany.id;
             this.data = await this.orm.searchRead("res.company", [["id", "=", current_company_id]], ["country_code"])
             this.isFecImportModuleInstalled = await this.orm.searchCount("ir.module.module", [["name", "=", "l10n_fr_fec_import"], ["state", "=", "installed"]]);
         });

@@ -2980,8 +2980,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
 
         cids = '-'.join(str(cid) for cid in self.env.user.company_ids.ids)
-        url = f'/odoo/action-stock_barcode.stock_barcode_action_main_menu?cids={cids}'
-        self.start_tour(url, 'test_multi_company_record_access_in_barcode', login='admin', timeout=180)
+        url = '/odoo/action-stock_barcode.stock_barcode_action_main_menu'
+        self.start_tour(url, 'test_multi_company_record_access_in_barcode', login='admin', timeout=180, cookies={"cids": cids})
 
         self.assertTrue(
             self.env['stock.picking'].search([

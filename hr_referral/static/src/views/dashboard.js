@@ -3,6 +3,7 @@ import { registry } from '@web/core/registry';
 import { useService } from "@web/core/utils/hooks";
 import { Component, onWillStart, useEffect, useState, useRef } from "@odoo/owl";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
+import { user } from "@web/core/user";
 
 export class HrReferralWelcome extends Component {
     static template = "hr_referral.Welcome";
@@ -13,7 +14,6 @@ export class HrReferralWelcome extends Component {
 
         this.actionService = useService("action");
         this.orm = useService('orm');
-        this.company = useService("company");
 
         this.dashboardData = useState({});
 
@@ -34,7 +34,7 @@ export class HrReferralWelcome extends Component {
                 'hr.applicant',
                 'retrieve_referral_welcome_screen'
             ));
-            this.dashboardData.company_id = this.company.activeCompanyIds[0];
+            this.dashboardData.company_id = user.activeCompany.id;
         });
     }
 

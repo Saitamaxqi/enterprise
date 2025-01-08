@@ -12,6 +12,8 @@ import { useBus, useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
 import { isBarcodeScannerSupported } from "@web/core/barcode/barcode_video_scanner";
 import { ManualBarcodeScanner } from "@barcodes/components/manual_barcode";
+import { user } from "@web/core/user";
+
 export class BillQrScan extends Component {
 
     static template = "l10n_in_qr_code_bill_scan.billScanInput";
@@ -77,7 +79,7 @@ export function qrBillScannerController() {
                 openScanWizard: this.openScanWizard.bind(this),
             });
             onWillStart(async () => {
-                const currentCompanyId = this.env.services.company.currentCompany.id;
+                const currentCompanyId = user.activeCompany.id;
                 this.data = await this.orm.searchRead("res.company", [["id", "=", currentCompanyId]], ["country_code"])
                 this.countryCode = this.data[0].country_code;
             });

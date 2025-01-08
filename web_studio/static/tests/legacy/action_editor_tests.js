@@ -380,14 +380,14 @@ QUnit.module("ActionEditor", (hooks) => {
         const webClient = await createEnterpriseWebClient({ serverData, mockRPC });
         await doAction(webClient, 1, { clearBreadcrumbs: true });
         assert.verifySteps([
-            `action load: {"action_id":1,"context":{"lang":"en","tz":"taht","uid":7}}`,
+            `action load: {"action_id":1,"context":{"lang":"en","tz":"taht","allowed_company_ids":[1],"uid":7}}`,
         ]);
         await openStudio(target, { noEdit: true });
 
         await editInput(target, ".o_web_studio_sidebar #name", "new name");
         assert.verifySteps([
             "edit_action",
-            `action load: {"action_id":1,"context":{"lang":"en","tz":"taht","uid":7,"active_id":90,"active_ids":[90,91]}}`,
+            `action load: {"action_id":1,"context":{"lang":"en","tz":"taht","allowed_company_ids":[1],"uid":7,"active_id":90,"active_ids":[90,91]}}`,
         ]);
     });
 });

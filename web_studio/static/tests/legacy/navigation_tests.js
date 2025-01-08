@@ -13,7 +13,6 @@ import {
 import { registerCleanup } from "@web/../tests/helpers/cleanup";
 
 import { toggleSearchBarMenu, toggleMenuItem } from "@web/../tests/search/helpers";
-import { companyService } from "@web/webclient/company_service";
 import { commandService } from "@web/core/commands/command_service";
 import { createEnterpriseWebClient } from "@web_enterprise/../tests/helpers";
 import { doAction, getActionManagerServerData } from "@web/../tests/webclient/helpers";
@@ -54,8 +53,6 @@ QUnit.module("Studio", (hooks) => {
         }
 
         registerStudioDependencies();
-        const serviceRegistry = registry.category("services");
-        serviceRegistry.add("company", companyService);
 
         // tweak a bit the default config to better fit with studio needs:
         //  - add some menu items we can click on to test the navigation

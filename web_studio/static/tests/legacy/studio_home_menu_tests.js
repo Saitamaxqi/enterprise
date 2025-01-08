@@ -318,6 +318,7 @@ QUnit.module("Studio", (hooks) => {
                 assert.step("edit_menu_icon");
                 assert.deepEqual(args, {
                     context: {
+                        allowed_company_ids: [1],
                         lang: "en",
                         tz: "taht",
                         uid: 7,

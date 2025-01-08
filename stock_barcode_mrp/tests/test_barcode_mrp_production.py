@@ -515,8 +515,8 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         ], limit=1).barcode = 'company2_mrp_operation'
 
         cids = '-'.join(str(cid) for cid in self.env.user.company_ids.ids)
-        url = f'/odoo/action-stock_barcode.stock_barcode_action_main_menu?cids={cids}'
-        self.start_tour(url, 'test_multi_company_manufacture_creation_in_barcode', login='admin', timeout=180)
+        url = '/odoo/action-stock_barcode.stock_barcode_action_main_menu'
+        self.start_tour(url, 'test_multi_company_manufacture_creation_in_barcode', login='admin', timeout=180, cookies={"cids": cids})
 
         self.assertEqual(
             len(self.env['mrp.production'].search([('company_id', '=', company2.id)])),
@@ -546,8 +546,8 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         ], limit=1).barcode = 'company_mrp_operation'
 
         cids = '-'.join(str(cid) for cid in self.env.user.company_ids.ids)
-        url = f'/odoo/action-stock_barcode.stock_barcode_action_main_menu?cids={cids}'
-        self.start_tour(url, 'test_multi_company_record_access_in_mrp_barcode', login='admin', timeout=180)
+        url = '/odoo/action-stock_barcode.stock_barcode_action_main_menu'
+        self.start_tour(url, 'test_multi_company_record_access_in_mrp_barcode', login='admin', timeout=180, cookies={"cids": cids})
 
         self.assertFalse(
             self.env['mrp.production'].search([
@@ -561,8 +561,8 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             ('code', '=', 'mrp_operation'),
             ('company_id', '=', company2.id),
         ], limit=1).barcode = 'company2_mrp_operation'
-        url = url + f'-{company2.id}'
-        self.start_tour(url, 'test_multi_company_record_access_in_mrp_barcode2', login='admin', timeout=180)
+        cids = cids + f'-{company2.id}'
+        self.start_tour(url, 'test_multi_company_record_access_in_mrp_barcode2', login='admin', timeout=180, cookies={"cids": cids})
 
         self.assertTrue(
             self.env['mrp.production'].search([

@@ -9,7 +9,6 @@ import { hotkeyService } from "@web/core/hotkeys/hotkey_service";
 import { popoverService } from "@web/core/popover/popover_service";
 import { registry } from "@web/core/registry";
 import { actionService } from "@web/webclient/actions/action_service";
-import { companyService } from "@web/webclient/company_service";
 import { menuService } from "@web/webclient/menus/menu_service";
 import { createEnterpriseWebClient } from "@web_enterprise/../tests/helpers";
 import { AppMenuEditor } from "@web_studio/client_action/editor/app_menu_editor/app_menu_editor";
@@ -153,8 +152,6 @@ QUnit.module("Studio > Navbar", (hooks) => {
     QUnit.test("homemenu customizer rendering", async (assert) => {
         assert.expect(6);
 
-        serviceRegistry.add("company", companyService);
-
         const fakeHTTPService = {
             start() {
                 return {};
@@ -199,7 +196,6 @@ QUnit.module("Studio > navbar coordination", (hooks) => {
         target = getFixture();
         serverData = getActionManagerServerData();
         registerStudioDependencies();
-        serviceRegistry.add("company", companyService);
     });
 
     QUnit.test("adapt navbar when leaving studio", async (assert) => {

@@ -44,11 +44,11 @@ import {
     patchWithCleanup,
     toggleActionMenu,
     makeServerError,
+    serverState,
 } from "@web/../tests/web_test_helpers";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { Deferred } from "@web/core/utils/concurrency";
-import { session } from "@web/session";
 import { ListRenderer } from "@web/views/list/list_renderer";
 import { mockActionService } from "../helpers/spreadsheet_test_utils";
 
@@ -422,16 +422,8 @@ test("user related context is not saved in the spreadsheet", async function () {
             return result;
         },
     });
+    serverState.companies = [{ id: 15, name: "Hermit" }];
 
-    const testSession = {
-        user_companies: {
-            allowed_companies: {
-                15: { id: 15, name: "Hermit" },
-            },
-            current_company: 15,
-        },
-    };
-    patchWithCleanup(session, testSession);
     const userCtx = user.context;
     patchWithCleanup(user, {
         get context() {
