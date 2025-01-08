@@ -252,48 +252,6 @@ result_rate = 6
         <field name="appears_on_payslip" eval="False"/>
     </record>
 
-    <record id="l10n_ke_employees_salary_gross_taxable" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.GROSS"/>
-        <field name="name">Gross Taxable</field>
-        <field name="code">GROSS_TAXABLE</field>
-        <field name="sequence">39</field>
-        <field name="condition_select">none</field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-taxable_pension = min(contract.l10n_ke_pension_contribution, payslip._rule_parameter('l10n_ke_max_pension_contribution')) - max(0, contract.l10n_ke_pension_allowance - payslip._rule_parameter('l10n_ke_pension_alw_max'))
-result = result_rules['GROSS']['total'] - categories['KE_UT_ALW'] - employee.l10n_ke_mortgage - taxable_pension - result_rules['NSSF_EMPLOYEE_TIER_1']['total'] - result_rules['NSSF_EMPLOYEE_TIER_2']['total']
-        </field>
-        <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
-    </record>
-
-    <record id="l10n_ke_employees_salary_income_tax" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">Income Tax</field>
-        <field name="code">INCOME_TAX</field>
-        <field name="sequence">40</field>
-        <field name="condition_select">none</field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-remaining_gross = result_rules['GROSS_TAXABLE']['total']
-if contract.l10n_ke_is_secondary:
-    result = remaining_gross
-    result_rate = payslip._rule_parameter('l10n_ke_income_tax_secondary')
-else:
-    income_tax_breakdown = payslip._rule_parameter('l10n_ke_income_tax_breakdown')
-    income_tax = 0
-    for amount, coefficient in income_tax_breakdown:
-        deduced_fraction = min(float(amount), remaining_gross)
-        income_tax += deduced_fraction * coefficient
-        remaining_gross -= deduced_fraction
-        if remaining_gross &lt;= 0:
-            break
-    result = income_tax
-        </field>
-        <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
-    </record>
-
     <!-- RELIEFS -->
 
     <record id="l10n_ke_employees_salary_nhif_amount_hidden" model="hr.salary.rule">
@@ -411,7 +369,7 @@ result_rate = payslip._rule_parameter('l10n_ke_ahl_employee') * 100
         <field name="sequence">47</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = payslip.date_from &gt;= datetime(2024, 3, 19).date() and not contract.l10n_ke_is_secondary
+result = payslip.date_from &gt;= datetime(2024, 3, 19).date() and payslip.date_to &lt; datetime(2024,12,27).date() and not contract.l10n_ke_is_secondary
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -465,21 +423,6 @@ result = - payslip._rule_parameter('l10n_ke_personal_relief')
 
     <!-- DEDUCTIONS -->
 
-    <record id="l10n_ke_employees_salary_paye" model="hr.salary.rule">
-        <field name="category_id" ref="l10n_ke_hr_payroll.STATUTORY_DED"/>
-        <field name="name">P.A.Y.E.</field>
-        <field name="code">PAYE</field>
-        <field name="sequence">51</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">result = result_rules['GROSS_TAXABLE']['total'] &gt;= 24000</field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-result = max(result_rules['INCOME_TAX']['total'] + categories['RELIEF'], 0)
-        </field>
-        <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
-    </record>
-
     <record id="l10n_ke_employees_nssf_amount" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ke_hr_payroll.STATUTORY_DED"/>
         <field name="name">NSSF Amount</field>
@@ -526,6 +469,65 @@ if gross &lt; float(payslip._rule_parameter('l10n_ke_shif_min_gross')):
     result = payslip._rule_parameter('l10n_ke_shif_min_amount')
 else:
     result = payslip._rule_parameter('l10n_ke_shif_rate') * gross
+        </field>
+        <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
+        <field name="appears_on_payroll_report" eval="True"/>
+    </record>
+
+    <record id="l10n_ke_employees_salary_gross_taxable" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.GROSS"/>
+        <field name="name">Gross Taxable</field>
+        <field name="code">GROSS_TAXABLE</field>
+        <field name="sequence">55</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+taxable_pension = min(contract.l10n_ke_pension_contribution, payslip._rule_parameter('l10n_ke_max_pension_contribution')) - max(0, contract.l10n_ke_pension_allowance - payslip._rule_parameter('l10n_ke_pension_alw_max'))
+result = result_rules['GROSS']['total'] - categories['KE_UT_ALW'] - employee.l10n_ke_mortgage - taxable_pension - result_rules['NSSF_AMOUNT']['total']
+if payslip.date_to &gt;= datetime(2024,12,27).date():
+    result -= result_rules['SHIF_AMOUNT']['total'] + result_rules['AHL_AMOUNT']['total']
+        </field>
+        <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
+        <field name="appears_on_payroll_report" eval="True"/>
+    </record>
+
+    <record id="l10n_ke_employees_salary_income_tax" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Income Tax</field>
+        <field name="code">INCOME_TAX</field>
+        <field name="sequence">56</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+if contract.l10n_ke_is_secondary:
+    result = remaining_gross
+    result_rate = payslip._rule_parameter('l10n_ke_income_tax_secondary')
+else:
+    remaining_gross = result_rules['GROSS_TAXABLE']['total']
+    income_tax_breakdown = payslip._rule_parameter('l10n_ke_income_tax_breakdown')
+    income_tax = 0
+    for amount, coefficient in income_tax_breakdown:
+        deduced_fraction = min(float(amount), remaining_gross)
+        income_tax += deduced_fraction * coefficient
+        remaining_gross -= deduced_fraction
+        if remaining_gross &lt;= 0:
+            break
+    result = income_tax
+        </field>
+        <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
+        <field name="appears_on_payroll_report" eval="True"/>
+    </record>
+
+    <record id="l10n_ke_employees_salary_paye" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_ke_hr_payroll.STATUTORY_DED"/>
+        <field name="name">P.A.Y.E.</field>
+        <field name="code">PAYE</field>
+        <field name="sequence">57</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = result_rules['GROSS_TAXABLE']['total'] &gt;= 24000</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = max(result_rules['INCOME_TAX']['total'] + categories['RELIEF'], 0)
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payroll_report" eval="True"/>
