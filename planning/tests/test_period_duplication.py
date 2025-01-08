@@ -366,3 +366,59 @@ class TestPeriodDuplication(TestCommonPlanning):
         self.assertEqual(len(resource_ids), 2, "Both shifts should be copied")
         self.assertIn(self.resource_joseph.id, resource_ids, "One of the shifts should be assigned")
         self.assertIn(False, resource_ids, "One of the shifts should open")
+
+    def test_duplication_forecasted_slot_when_unavailabilities(self):
+        """ When copying a forecasted slot (> 24 hours) through the copy previous week action, we need to ensure that
+            the copied slots are correctly split in case of unavailabilities from the resource.
+        """
+        PlanningSlot = self.env['planning.slot']
+        dt = datetime(2023, 8, 14, 0, 0)
+        # create a slot from Monday to Friday (forecasted slot) and assign it to the resource
+        PlanningSlot.create({
+            'resource_id': self.resource_bert.id,
+            'start_datetime': dt + relativedelta(hours=8),
+            'end_datetime': dt + relativedelta(days=4, hours=17),
+        })
+        # create leaves for the resource on the next Tuesday and Thursday
+        dt_next_week = dt + relativedelta(weeks=1)
+        self.env['resource.calendar.leaves'].create([
+            {
+                'resource_id': self.resource_bert.id,
+                'date_from': dt_next_week + relativedelta(days=1, hours=8),
+                'date_to': dt_next_week + relativedelta(days=1, hours=17),
+            },
+            {
+                'resource_id': self.resource_bert.id,
+                'date_from': dt_next_week + relativedelta(days=3, hours=8),
+                'date_to': dt_next_week + relativedelta(days=3, hours=17),
+            },
+        ])
+        # copy the slot to the next week
+        copied_slots_ids, _ = PlanningSlot.with_context(tz='Europe/Brussels').action_copy_previous_week(
+            str(dt_next_week), [
+                ['start_datetime', '<=', dt_next_week],
+                ['end_datetime', '>=', dt],
+                ['resource_id', '=', self.resource_bert.id],
+            ]
+        )
+        copied_slots = PlanningSlot.browse(copied_slots_ids).sorted('start_datetime')
+        self.assertEqual(len(copied_slots), 5, "There should be 5 resulting slots after copying previous week.")
+        for i in range(len(copied_slots)):
+            self.assertEqual(
+                copied_slots[i].start_datetime,
+                dt_next_week + relativedelta(days=i, hours=8),
+                "The start date of the copied slot should be one week after the original one.",
+            )
+            self.assertEqual(copied_slots[i].end_datetime,
+                dt_next_week + relativedelta(days=i, hours=17),
+                "The end date of the copied slot should be one week after the original one.",
+            )
+        self.assertEqual(
+            (copied_slots[0] + copied_slots[2] + copied_slots[4]).resource_id ,
+            self.resource_bert,
+            "The copied slots on Monday, Wednesday and Friday should be assigned to the resource, as the resource works on those days.",
+        )
+        self.assertFalse(
+            (copied_slots[1] + copied_slots[3]).resource_id,
+            "The copied slots on Tuesday and Thursday should be open shifts, as the resource has leaves planned on those days.",
+        )

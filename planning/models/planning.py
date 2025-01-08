@@ -2155,7 +2155,7 @@ class PlanningSlot(models.Model):
         new_slots_vals_list = []
         # accumulator for mergeable slots
         sum_allocated_hours = 0
-        to_merge = []
+        to_merge = None
         # invariants for mergeable slots
         common_allocated_percentage = slots_to_merge[0]['allocated_percentage']
         resource_id = slots_to_merge[0].get('resource_id')
@@ -2180,28 +2180,24 @@ class PlanningSlot(models.Model):
                 )])
                 if not (interval & unforecastable_intervals):
                     sum_allocated_hours += slot['allocated_hours']
-                    if (end_datetime - start_datetime).total_seconds() < 3600 * 24:
-                        # If the elapsed time between the first start_datetime and the
-                        # current end_datetime is not higher than 24hours,
-                        # slots cannot be merged as it won't be a forecast
-                        to_merge.append(slot)
-                    else:
-                        to_merge = [{
-                            **slot,
-                            'start_datetime': start_datetime,
-                            'allocated_hours': sum_allocated_hours,
-                        }]
+                    to_merge = {
+                        **slot,
+                        'start_datetime': start_datetime,
+                        'allocated_hours': sum_allocated_hours,
+                    }
                 else:
                     mergeable = False
             if not mergeable:
-                new_slots_vals_list += to_merge
-                to_merge = [slot]
+                if to_merge:
+                    new_slots_vals_list.append(to_merge)
+                to_merge = slot
                 start_datetime = slot['start_datetime']
                 common_allocated_percentage = slot['allocated_percentage']
                 resource_id = slot.get('resource_id')
                 sum_allocated_hours = slot['allocated_hours']
             previous_end_datetime = slot['end_datetime']
-        new_slots_vals_list += to_merge
+        if to_merge:
+            new_slots_vals_list.append(to_merge)
         return new_slots_vals_list
 
     def _get_working_hours_over_period(self, start_utc, end_utc, work_intervals, calendar_intervals):
