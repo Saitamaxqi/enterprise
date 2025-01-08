@@ -112,7 +112,7 @@ export const studioService = {
     async start(env, { menu, notification }) {
         function _getCurrentAction() {
             const currentController = env.services.action.currentController;
-            return currentController ? currentController.action : null;
+            return currentController && !currentController.virtual ? currentController.action : null;
         }
         async function loadState(state) {
             router.pushState(getStateToLoad(state), { sync: true, replace: true });
