@@ -24,9 +24,6 @@ export class EditorThreadInfo {
         this.hover = false;
         this.top = 0;
         this.anchorText = this.computeCurrentAnchorText();
-        if (this.threadId === "undefined") {
-            this.isNew = true;
-        }
     }
 
     computeCurrentAnchorText() {
