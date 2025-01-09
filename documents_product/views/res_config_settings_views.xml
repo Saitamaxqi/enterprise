@@ -10,6 +10,9 @@
                 <xpath expr="//app[@name='documents']" position="attributes">
                     <attribute name="notApp">0</attribute>
                 </xpath>
+                <xpath expr="//block[@id='files_centralization_section']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
                 <xpath expr="//block[@id='files_centralization_section']" position="inside">
                     <setting company_dependent="1" help="Centralize files attached to products">
                         <field name="documents_product_settings"/>
