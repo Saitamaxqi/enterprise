@@ -22,6 +22,9 @@
         'report/timesheets_analysis_report_views.xml',
     ],
     'assets': {
+        'web.assets_tests': [
+            'helpdesk_timesheet/static/tests/tours/**',
+        ],
         'web.assets_backend': [
             'helpdesk_timesheet/static/src/**/*',
             ('remove', 'helpdesk_timesheet/static/src/views/**'),

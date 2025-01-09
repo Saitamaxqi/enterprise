@@ -92,6 +92,17 @@ class HelpdeskTicket(models.Model):
                 },
             }
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        default_project_id = self.env.context.get('default_project_id')
+        for vals in vals_list:
+            project_id = vals.get('project_id') or default_project_id
+            if not vals.get('team_id') and project_id:
+                project = self.env['project.project'].browse(project_id)
+                if project.helpdesk_team:
+                    vals['team_id'] = project.helpdesk_team[0].id
+        return super().create(vals_list)
+
     @api.depends('project_id')
     def _compute_analytic_account_id(self):
         for ticket in self:

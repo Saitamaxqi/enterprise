@@ -14,14 +14,13 @@ export const timerHelpdeskService = {
                 if (!isHelpdeskUser) {
                     return [];
                 }
-                const result = await orm.formattedReadGroup(
-                    "helpdesk.ticket",
-                    [["project_id", "!=", false]],
-                    ["project_id"],
-                    [],
+                const result = await orm.searchRead(
+                    "project.project",
+                    [["helpdesk_team", "!=", false]],
+                    ["id"],
                 );
                 if (result?.length) {
-                    helpdeskProjects = result.map((r) => r.project_id[0]);
+                    helpdeskProjects = result.map((project) => project.id);
                 }
             },
             get helpdeskProjects() {
