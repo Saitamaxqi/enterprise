@@ -18,8 +18,8 @@ class PosConfig(models.Model):
                 raise UserError(_("You have to set a country in your company setting."))
         return super().open_ui()
 
-    def get_limited_partners_loading(self):
-        partner_ids = super().get_limited_partners_loading()
+    def get_limited_partners_loading(self, offset=0):
+        partner_ids = super().get_limited_partners_loading(offset)
         if (self.env.ref('l10n_cl.par_cfa').id,) not in partner_ids:
             partner_ids.append((self.env.ref('l10n_cl.par_cfa').id,))
         return partner_ids
