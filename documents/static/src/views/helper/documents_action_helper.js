@@ -33,22 +33,25 @@ export class DocumentsActionHelper extends Component {
      * otherwise a message depending on it being the "All" folder or the "Trash" folder
      */
     get noContentHelp() {
-        if (!this.selectedFolderId || ["RECENT", "SHARED", "TRASH", "MY"].includes(this.selectedFolderId)) {
-            return markup(
-                `<p class='o_view_nocontent_smiling_face'>
-                    ${escape(
-                        this.selectedFolderId === "TRASH"
-                            ? _t("Documents moved to trash will show up here")
-                            : this.selectedFolderId === "RECENT" 
-                                ? _t("Recently accessed Documents will show up here")
-                                : this.selectedFolderId === "SHARED"
-                                ? _t("Documents shared with you will appear here")
-                                : this.selectedFolderId === "MY"
-                                    ? _t("Your personal space")
-                                    : _t("Select a folder to upload a document")
-                    )}
-                </p>`
-            );
+        if (
+            !this.selectedFolderId ||
+            ["RECENT", "SHARED", "TRASH", "MY"].includes(this.selectedFolderId)
+        ) {
+            const helpMessage = (() => {
+                switch (this.selectedFolderId) {
+                    case "TRASH":
+                        return _t("Documents moved to trash will show up here");
+                    case "RECENT":
+                        return _t("Recently accessed Documents will show up here");
+                    case "SHARED":
+                        return _t("Documents shared with you will appear here");
+                    case "MY":
+                        return _t("Your personal space");
+                    default:
+                        return _t("Select a folder to upload a document");
+                }
+            })();
+            return markup(`<p class="o_view_nocontent_smiling_face">${escape(helpMessage)}</p>`);
         }
         return this.props.noContentHelp;
     }
