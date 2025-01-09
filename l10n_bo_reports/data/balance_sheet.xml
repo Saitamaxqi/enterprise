@@ -298,7 +298,7 @@
                                 <field name="label">balance_aggregate</field>
                                 <field name="engine">aggregation</field>
                                 <field name="formula">l10n_bo_pl_net_profit.balance</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(l10n_bo_reports.l10n_bo_pl)</field>
                                 <field name="date_scope">from_fiscalyear</field>
                             </record>
                             <record id="l10n_bo_bs_equity_4_balance" model="account.report.expression">

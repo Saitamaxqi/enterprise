@@ -447,7 +447,7 @@
                                                 <field name="label">balance</field>
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">hu_pl_d.balance</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_hu_reports.l10n_hu_profit_loss)</field>
                                                 <field name="date_scope">from_fiscalyear</field>
                                             </record>
                                         </field>

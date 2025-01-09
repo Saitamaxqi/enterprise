@@ -3099,7 +3099,7 @@ class AccountReport(models.Model):
         for expression in expressions:
             add_expressions_to_groups(expression, grouped_formulas)
 
-            if expression.engine == 'aggregation' and expression.subformula == 'cross_report':
+            if expression.engine == 'aggregation' and expression.subformula and expression.subformula.startswith('cross_report'):
                 # Always expand aggregation expressions, in case their subexpressions are not in expressions parameter
                 # (this can happen in cross report, or when auditing an individual aggregation expression)
                 expanded_cross = expression._expand_aggregations()
@@ -3295,7 +3295,7 @@ class AccountReport(models.Model):
             for formula, expressions in formulas_dict.items():
                 for expression in expressions:
                     # group_by are ignored by this engine, so we merge every grouped entry into a common dict
-                    forced_date_scope = date_scope if expression.subformula == 'cross_report' or expression.report_line_id.report_id != self else None
+                    forced_date_scope = date_scope if expression.subformula and expression.subformula.startswith('cross_report') or expression.report_line_id.report_id != self else None
                     aggreation_formula_dict_key = (formula, forced_date_scope)
                     aggregation_formulas_dict.setdefault(aggreation_formula_dict_key, self.env['account.report.expression'])
                     aggregation_formulas_dict[aggreation_formula_dict_key] |= expression
@@ -3546,7 +3546,7 @@ class AccountReport(models.Model):
             precision_string = re.match(r"round\((?P<precision>\d+)\)", subformula)['precision']
             return round(unbound_value, int(precision_string))
 
-        if subformula not in {'cross_report', 'ignore_zero_division'}:
+        if subformula != 'ignore_zero_division' and not subformula.startswith('cross_report'):
             company_currency = self.env.company.currency_id
             date_to = column_group_options['date']['date_to']
 
@@ -4476,7 +4476,7 @@ class AccountReport(models.Model):
             if expression_domain is None:
                 continue
 
-            date_scope = expression.date_scope if expression.subformula == 'cross_report' else expression_to_audit.date_scope
+            date_scope = expression.date_scope if expression.subformula and expression.subformula.startswith('cross_report') else expression_to_audit.date_scope
             audit_or_domains = audit_or_domains_per_date_scope.setdefault(date_scope, [])
             audit_or_domains.append(osv.expression.AND([
                 expression_domain,

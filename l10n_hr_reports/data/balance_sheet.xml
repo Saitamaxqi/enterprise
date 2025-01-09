@@ -1195,7 +1195,7 @@
                                          <field name="label">balance</field>
                                          <field name="engine">aggregation</field>
                                          <field name="formula">HR_profit_loss_before.balance - HR_profit_tax.balance</field>
-                                         <field name="subformula">cross_report</field>
+                                         <field name="subformula">cross_report(l10n_hr_reports.account_financial_report_hr_pnl)</field>
                                      </record>
                                  </field>
                              </record>

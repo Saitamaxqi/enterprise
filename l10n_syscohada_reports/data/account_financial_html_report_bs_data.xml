@@ -1043,7 +1043,7 @@
                                 <field name="label">balance</field>
                                 <field name="engine">aggregation</field>
                                 <field name="formula">SYSCOHADA_XI.balance</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(l10n_syscohada_reports.account_financial_report_l10n_pcg_cdr)</field>
                             </record>
                         </field>
                     </record>

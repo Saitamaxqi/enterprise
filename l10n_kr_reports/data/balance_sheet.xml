@@ -544,7 +544,7 @@
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">KR_NEP.balance</field>
                                                 <field name="date_scope">from_fiscalyear</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_kr_reports.l10n_kr_pl)</field>
                                             </record>
                                             <record id="l10n_kr_bs_line_curr_year_earnings_alloc" model="account.report.expression">
                                                 <field name="label">alloc</field>

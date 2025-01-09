@@ -347,7 +347,7 @@
                                         <field name="label">balance</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">tz_profit_loss_year.balance</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_tz_reports.account_financial_report_tz_pnl)</field>
                                     </record>
                                 </field>
                             </record>

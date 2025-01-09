@@ -436,7 +436,7 @@
                                                 <field name="label">cross_report</field>
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">PL.balance + RCR.balance + RRR.balance - ARR.balance</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_at_reports.account_financial_report_l10n_at_paragraph_231_ugb)</field>
                                                 <field name="date_scope">from_beginning</field>
                                             </record>
                                             <record id="account_financial_report_l10n_at_paragraph_224_ugb_line_passiva_14_accounts" model="account.report.expression">
@@ -461,7 +461,7 @@
                                                         <field name="label">cross_report</field>
                                                         <field name="engine">aggregation</field>
                                                         <field name="formula">RL.previous_pnl</field>
-                                                        <field name="subformula">cross_report</field>
+                                                        <field name="subformula">cross_report(l10n_at_reports.account_financial_report_l10n_at_paragraph_231_ugb)</field>
                                                         <field name="date_scope">to_beginning_of_fiscalyear</field>
                                                     </record>
                                                     <record id="account_financial_report_l10n_at_paragraph_224_ugb_line_passiva_141_balance" model="account.report.expression">

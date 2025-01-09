@@ -316,9 +316,15 @@
                                             <record id="l10n_ca_bs_equity_unallocated_current_balance" model="account.report.expression">
                                                 <field name="label">balance</field>
                                                 <field name="engine">aggregation</field>
-                                                <field name="formula">l10n_ca_net_profit.balance + l10n_ca_e_unallocated_current.account_balance</field>
+                                                <field name="formula">l10n_ca_e_unallocated_current.cross_report_net_profit + l10n_ca_e_unallocated_current.account_balance</field>
                                                 <field name="date_scope">from_fiscalyear</field>
-                                                <field name="subformula">cross_report</field>
+                                            </record>
+                                            <record id="10n_ca_bs_equity_unallocated_current_balance_cross_report_net_profit" model="account.report.expression">
+                                                <field name="label">cross_report_net_profit</field>
+                                                <field name="engine">aggregation</field>
+                                                <field name="formula">l10n_ca_net_profit.balance</field>
+                                                <field name="date_scope">from_fiscalyear</field>
+                                                <field name="subformula">cross_report(l10n_ca_reports.l10n_ca_profit_loss)</field>
                                             </record>
                                             <record id="l10n_ca_bs_equity_unallocated_current_account_balance" model="account.report.expression">
                                                 <field name="label">account_balance</field>
@@ -340,7 +346,7 @@
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">l10n_ca_net_profit.balance</field>
                                                 <field name="date_scope">from_beginning</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_ca_reports.l10n_ca_profit_loss)</field>
                                             </record>
                                             <record id="l10n_ca_bs_equity_unallocated_previous_account_balance" model="account.report.expression">
                                                 <field name="label">account_balance</field>

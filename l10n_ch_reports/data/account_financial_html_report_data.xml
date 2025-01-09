@@ -632,7 +632,7 @@
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">CH_R.balance</field>
                                                 <field name="date_scope">to_beginning_of_fiscalyear</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_ch_reports.account_financial_report_l10n_ch_cdr)</field>
                                             </record>
                                             <record id="account_financial_report_line_ch_290_b_balance" model="account.report.expression">
                                                 <field name="label">balance</field>
@@ -656,7 +656,7 @@
                                         <field name="engine">aggregation</field>
                                         <field name="formula">CH_R.balance</field>
                                         <field name="date_scope">from_fiscalyear</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_ch_reports.account_financial_report_l10n_ch_cdr)</field>
                                     </record>
                                 </field>
                             </record>

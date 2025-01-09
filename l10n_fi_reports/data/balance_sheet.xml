@@ -822,7 +822,7 @@
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">FIPL_19.balance</field>
                                                 <field name="date_scope">to_beginning_of_fiscalyear</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_fi_reports.account_financial_report_l10n_fi_pl)</field>
                                             </record>
                                             <record id="account_financial_report_l10n_fi_bs_line_2_1_23_1_accounts" model="account.report.expression">
                                                 <field name="label">accounts</field>
@@ -902,7 +902,7 @@
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">FIPL_19.balance</field>
                                                 <field name="date_scope">from_fiscalyear</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_fi_reports.account_financial_report_l10n_fi_pl)</field>
                                             </record>
                                         </field>
                                     </record>

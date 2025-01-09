@@ -2022,7 +2022,7 @@
                                                 <field name="label">balance</field>
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">DK_result.balance</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_dk_reports.account_financial_report_dk_pnl)</field>
                                                 <field name="date_scope">from_fiscalyear</field>
                                             </record>
                                         </field>

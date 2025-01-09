@@ -809,7 +809,7 @@
                                                 <field name="label">balance</field>
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">MT_income_statement.balance</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_mt_reports.account_financial_report_mt_pnl)</field>
                                                 <field name="date_scope">to_beginning_of_fiscalyear</field>
                                             </record>
                                         </field>
@@ -822,7 +822,7 @@
                                                 <field name="label">balance</field>
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">MT_income_statement.balance</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_mt_reports.account_financial_report_mt_pnl)</field>
                                                 <field name="date_scope">from_fiscalyear</field>
                                             </record>
                                         </field>

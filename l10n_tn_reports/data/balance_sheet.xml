@@ -302,7 +302,7 @@
                                         <field name="label">balance</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">l10n_tn_V.balance</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_tn_reports.l10n_tn_pl_account_report)</field>
                                         <field name="date_scope">from_fiscalyear</field>
                                     </record>
                                 </field>

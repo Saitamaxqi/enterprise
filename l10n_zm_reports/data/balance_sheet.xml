@@ -120,7 +120,7 @@
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">ZM_NET_PROFIT.balance</field>
                                                 <field name="date_scope">from_fiscalyear</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_zm_reports.profit_loss_zm)</field>
                                             </record>
                                         </field>
                                     </record>

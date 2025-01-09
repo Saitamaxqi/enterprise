@@ -1193,7 +1193,7 @@
                                             <record id="account_financial_report_line_02_0_6_fr_bilan_passif_past_pnl" model="account.report.expression">
                                                 <field name="label">past_pnl</field>
                                                 <field name="engine">aggregation</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_fr_reports.account_financial_report_l10n_fr_cdr)</field>
                                                 <field name="formula">total_all.balance</field>
                                                 <field name="date_scope">to_beginning_of_fiscalyear</field>
                                             </record>
@@ -1219,7 +1219,7 @@
                                                 <field name="label">net</field>
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">total_all.balance</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_fr_reports.account_financial_report_l10n_fr_cdr)</field>
                                                 <field name="date_scope">from_fiscalyear</field>
                                             </record>
                                         </field>

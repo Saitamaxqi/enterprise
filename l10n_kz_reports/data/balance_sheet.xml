@@ -596,7 +596,7 @@
                                                         <field name="engine">aggregation</field>
                                                         <field name="formula">L10N_KZ_PNL_500.balance</field>
                                                         <field name="date_scope">from_fiscalyear</field>
-                                                        <field name="subformula">cross_report</field>
+                                                        <field name="subformula">cross_report(l10n_kz_reports.l10n_kz_pl_report)</field>
                                                     </record>
                                                 </field>
                                             </record>

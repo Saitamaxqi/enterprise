@@ -171,7 +171,7 @@
                                         <field name="engine">aggregation</field>
                                         <field name="formula">NEP.balance</field>
                                         <field name="date_scope">from_fiscalyear</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                                     </record>
                                     <record id="account_financial_current_year_earnings_alloc" model="account.report.expression">
                                         <field name="label">alloc</field>

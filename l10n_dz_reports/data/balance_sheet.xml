@@ -746,7 +746,7 @@
                                         <field name="label">net</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">l10n_dz_X.balance</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_dz_reports.l10n_dz_pl)</field>
                                         <field name="date_scope">from_fiscalyear</field>
                                     </record>
                                 </field>

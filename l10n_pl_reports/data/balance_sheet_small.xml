@@ -332,7 +332,7 @@
                                         <field name="label">balance_aggregate</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">pl_small_pl_j.balance</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_pl_reports.l10n_pl_small_pl)</field>
                                         <field name="date_scope">from_fiscalyear</field>
                                     </record>
                                     <record id="l10n_pl_small_bs_passives_a_6_balance_unallocated" model="account.report.expression"> <!-- Previous year unallocated earnings ? -->

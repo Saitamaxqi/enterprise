@@ -204,7 +204,7 @@
                                                         <field name="engine">aggregation</field>
                                                         <field name="formula">NEP.balance</field>
                                                         <field name="date_scope">from_fiscalyear</field>
-                                                        <field name="subformula">cross_report</field>
+                                                        <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                                                     </record>
                                                 </field>
                                             </record>

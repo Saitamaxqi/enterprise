@@ -247,7 +247,7 @@
                                                     <field name="engine">aggregation</field>
                                                     <field name="formula">NL_RESNB_TAGS.balance</field>
                                                     <field name="date_scope">from_fiscalyear</field>
-                                                    <field name="subformula">cross_report</field>
+                                                    <field name="subformula">cross_report(l10n_nl_reports.account_financial_report_pnl_tags)</field>
                                                 </record>
                                             </field>
                                         </record>
@@ -267,7 +267,7 @@
                                                     <field name="engine">aggregation</field>
                                                     <field name="formula">NL_RESNB_TAGS.balance</field>
                                                     <field name="date_scope">from_fiscalyear</field>
-                                                    <field name="subformula">cross_report</field>
+                                                    <field name="subformula">cross_report(l10n_nl_reports.account_financial_report_pnl_tags)</field>
                                                 </record>
                                                 <record id="account_financial_report_bs_tags_prev_years_earnings_balance" model="account.report.expression">
                                                     <field name="label">balance</field>

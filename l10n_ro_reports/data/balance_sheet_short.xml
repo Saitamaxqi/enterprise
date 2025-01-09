@@ -427,7 +427,7 @@
                                 <field name="label">cross_report</field>
                                 <field name="engine">aggregation</field>
                                 <field name="formula">RO_PNL_smle_23_67.balance_unfiltered</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(l10n_ro_reports.account_financial_report_ro_pnl_smle)</field>
                                 <field name="date_scope">to_beginning_of_fiscalyear</field>
                             </record>
                             <record id="account_financial_report_ro_bs_smle_J_43-44_balance"
@@ -485,7 +485,7 @@
                                 <field name="label">balance</field>
                                 <field name="engine">aggregation</field>
                                 <field name="formula">RO_PNL_smle_23_67.balance_unfiltered</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(l10n_ro_reports.account_financial_report_ro_pnl_smle)</field>
                                 <field name="date_scope">from_fiscalyear</field>
                             </record>
                         </field>

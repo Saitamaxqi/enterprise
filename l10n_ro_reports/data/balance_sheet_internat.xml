@@ -1123,7 +1123,7 @@
                                 <field name="label">cross_report</field>
                                 <field name="engine">aggregation</field>
                                 <field name="formula">RO_PNL_internat_00_87_1.balance_unfiltered</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(l10n_ro_reports.account_financial_report_ro_pnl_internat)</field>
                                 <field name="date_scope">to_beginning_of_fiscalyear</field>
                             </record>
                             <record id="account_financial_report_ro_bs_smle_J_06_105-106_balance"
@@ -1182,7 +1182,7 @@
                                 <field name="label">balance</field>
                                 <field name="engine">aggregation</field>
                                 <field name="formula">RO_PNL_internat_00_87_1.balance_unfiltered</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(l10n_ro_reports.account_financial_report_ro_pnl_internat)</field>
                                 <field name="date_scope">from_fiscalyear</field>
                             </record>
                         </field>

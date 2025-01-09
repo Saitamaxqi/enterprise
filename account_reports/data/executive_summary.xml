@@ -80,7 +80,7 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">REV.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                                 <field name="auditable" eval="False"/>
                             </record>
                         </field>
@@ -94,7 +94,7 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">COS.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                                 <field name="green_on_positive" eval="False"/>
                                 <field name="auditable" eval="False"/>
                             </record>
@@ -108,7 +108,7 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">GRP.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                                 <field name="auditable" eval="False"/>
                             </record>
                         </field>
@@ -121,7 +121,7 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">EXP.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                                 <field name="green_on_positive" eval="False"/>
                                 <field name="auditable" eval="False"/>
                             </record>
@@ -136,7 +136,7 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">NEP.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                                 <field name="auditable" eval="False"/>
                             </record>
                         </field>
@@ -185,7 +185,7 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">TA.balance - L.balance</field>
                                 <field name="date_scope">from_beginning</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.balance_sheet)</field>
                                 <field name="auditable" eval="False"/>
                             </record>
                         </field>
@@ -213,14 +213,14 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">GRP.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                             </record>
                             <record id="account_financial_report_executivesummary_gpmargin0_opinc" model="account.report.expression">
                                 <field name="label">opinc</field>
                                 <field name="engine">aggregation</field>
                                 <field name="formula">REV.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                             </record>
                         </field>
                     </record>
@@ -241,14 +241,14 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">NEP.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                             </record>
                             <record id="account_financial_report_executivesummary_npmargin0_inc" model="account.report.expression">
                                 <field name="label">rev</field>
                                 <field name="engine">aggregation</field>
                                 <field name="formula">REV.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                             </record>
                         </field>
                     </record>
@@ -269,14 +269,14 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">NEP.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                             </record>
                             <record id="account_financial_report_executivesummary_return_investment0_ta" model="account.report.expression">
                                 <field name="label">ta</field>
                                 <field name="engine">aggregation</field>
                                 <field name="formula">TA.balance</field>
                                 <field name="date_scope">from_beginning</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.balance_sheet)</field>
                             </record>
                         </field>
                     </record>
@@ -304,7 +304,7 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">REV.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                             </record>
                             <record id="account_financial_report_executivesummary_avdebt0_ndays" model="account.report.expression">
                                 <field name="label">NDays</field>
@@ -332,14 +332,14 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">COS.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                             </record>
                             <record id="account_financial_report_executivesummary_avgcre0_exp" model="account.report.expression">
                                 <field name="label">exp</field>
                                 <field name="engine">aggregation</field>
                                 <field name="formula">EXP.balance</field>
                                 <field name="date_scope">strict_range</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.profit_and_loss)</field>
                             </record>
                             <record id="account_financial_report_executivesummary_avgcre0_ndays" model="account.report.expression">
                                 <field name="label">NDays</field>
@@ -377,14 +377,14 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">CA.balance</field>
                                 <field name="date_scope">from_beginning</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.balance_sheet)</field>
                             </record>
                             <record id="account_financial_report_executivesummary_ca_to_l0_cl" model="account.report.expression">
                                 <field name="label">cl</field>
                                 <field name="engine">aggregation</field>
                                 <field name="formula">CL.balance</field>
                                 <field name="date_scope">from_beginning</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(account_reports.balance_sheet)</field>
                             </record>
                         </field>
                     </record>

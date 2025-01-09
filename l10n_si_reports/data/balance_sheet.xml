@@ -508,7 +508,7 @@
                                                 <field name="label">cross_report</field>
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">si_pl_19.balance - si_pl_20.balance</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_si_reports.l10n_si_pl)</field>
                                                 <field name="date_scope">to_beginning_of_fiscalyear</field>
                                             </record>
                                             <record id="l10n_si_balance_sheet_liabilities_a_VI_balance" model="account.report.expression">
@@ -530,7 +530,7 @@
                                         <field name="label">balance</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">si_pl_19.balance - si_pl_20.balance</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_si_reports.l10n_si_pl)</field>
                                         <field name="date_scope">from_fiscalyear</field>
                                     </record>
                                 </field>

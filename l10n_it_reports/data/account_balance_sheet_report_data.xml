@@ -1094,7 +1094,7 @@
                                         <field name="label">balance_aggregate</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">UTILE_PERDITA.balance</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_it_reports.account_financial_report_it_ce)</field>
                                         <field name="date_scope">to_beginning_of_fiscalyear</field>
                                     </record>
                                     <record id="account_financial_report_line_it_sp_PASS_A_VIII_balance" model="account.report.expression">
@@ -1115,7 +1115,7 @@
                                         <field name="label">balance</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">UTILE_PERDITA.balance</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_it_reports.account_financial_report_it_ce)</field>
                                         <field name="date_scope">from_fiscalyear</field>
                                     </record>
                                 </field>

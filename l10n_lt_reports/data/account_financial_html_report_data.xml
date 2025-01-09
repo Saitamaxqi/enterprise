@@ -701,7 +701,7 @@
                                                 <field name="label">balance</field>
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">PNL_15_.balance</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_lt_reports.account_financial_report_profitandloss_lt)</field>
                                                 <field name="date_scope">from_fiscalyear</field>
                                             </record>
                                         </field>
@@ -719,7 +719,7 @@
                                                 <field name="label">bs_pl_balance</field>
                                                 <field name="engine">aggregation</field>
                                                 <field name="formula">PNL_15_.balance</field>
-                                                <field name="subformula">cross_report</field>
+                                                <field name="subformula">cross_report(l10n_lt_reports.account_financial_report_profitandloss_lt)</field>
                                                 <field name="date_scope">to_beginning_of_fiscalyear</field>
                                             </record>
                                             <record id="account_financial_html_report_line_bs_lt_d_5_2_balance" model="account.report.expression">

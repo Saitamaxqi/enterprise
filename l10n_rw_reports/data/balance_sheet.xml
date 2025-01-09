@@ -319,7 +319,7 @@
                                         <field name="label">balance</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">rw_profit_loss_year.balance</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_rw_reports.account_financial_report_rw_pnl)</field>
                                     </record>
                                 </field>
                             </record>

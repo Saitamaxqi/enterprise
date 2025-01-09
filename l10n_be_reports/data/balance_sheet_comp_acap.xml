@@ -540,7 +540,7 @@
                                                     <field name="label">balance</field>
                                                     <field name="engine">aggregation</field>
                                                     <field name="formula">BE_PL_COMP_A_9905.balance</field>
-                                                    <field name="subformula">cross_report</field>
+                                                    <field name="subformula">cross_report(l10n_be_reports.account_financial_report_pl_comp_a)</field>
                                                     <field name="date_scope">from_fiscalyear</field>
                                                 </record>
                                             </field>

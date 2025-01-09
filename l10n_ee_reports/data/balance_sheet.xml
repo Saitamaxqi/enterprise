@@ -651,7 +651,7 @@
                                         <field name="label">balance_pl</field>
                                         <field name="engine">aggregation</field>
                                         <field name="formula">EE_PL_1_FINAL.balance</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_ee_reports.account_financial_report_pl_1)</field>
                                         <field name="date_scope">from_fiscalyear</field>
                                     </record>
                                     <record id="account_financial_report_bs_unalloc_pl_cur_balance" model="account.report.expression">

@@ -300,7 +300,7 @@
                                 <field name="engine">aggregation</field>
                                 <field name="formula">L10N_CO_PNL_NET_INCOME.balance</field>
                                 <field name="date_scope">from_fiscalyear</field>
-                                <field name="subformula">cross_report</field>
+                                <field name="subformula">cross_report(l10n_co_reports.l10n_co_pl_account_report_pymes)</field>
                             </record>
                         </field>
                     </record>

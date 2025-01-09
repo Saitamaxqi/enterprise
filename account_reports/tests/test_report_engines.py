@@ -1024,111 +1024,108 @@ class TestReportEngines(TestAccountReportsCommon):
 
     def test_engine_aggregation_cross_report(self):
         moves = self._create_test_account_moves([
-            self._prepare_test_account_move_line(1.0, account_code='100000', date='2020-01-01'),
             self._prepare_test_account_move_line(2.0, account_code='100000', date='2021-01-01'),
-            self._prepare_test_account_move_line(3.0, account_code='200000', date='2020-01-01'),
             self._prepare_test_account_move_line(4.0, account_code='200000', date='2021-01-01'),
-            self._prepare_test_account_move_line(5.0, account_code='300000', date='2021-01-01'),
         ])
 
-        # Other report
-        other_report_line_1 = self._prepare_test_report_line(
+        # First sub report
+        report0_line_1 = self._prepare_test_report_line(
             self._prepare_test_expression_account_codes('1'),
-            name='other_report_line_1', code='other_report_line_1',
+            name='report0_line_1', code='report0_line_1',
         )
-
-        other_report_line_2 = self._prepare_test_report_line(
+        report0_line_2 = self._prepare_test_report_line(
             self._prepare_test_expression_account_codes('2'),
-            name='other_report_line_2', code='other_report_line_2',
+            name='report0_line_2', code='report0_line_2',
+        )
+        report0_line_3 = self._prepare_test_report_line(
+            self._prepare_test_expression_aggregation('report0_line_1.balance + report0_line_2.balance'),
+            name='report_line_3', code='report_line_3',
+        )
+        report0 = self._create_report([report0_line_1, report0_line_2, report0_line_3])
+        report0_options = self._generate_options(report0, '2021-01-01', '2021-01-01')
+
+        # Second sub report
+        report1_line_1 = self._prepare_test_report_line(
+            self._prepare_test_expression_account_codes('1'),
+            name='report1_line_1', code='report1_line_1',
+        )
+        report1_line_2 = self._prepare_test_report_line(
+            self._prepare_test_expression_account_codes('2'),
+            name='report1_line_2', code='report1_line_2',
+        )
+        report1_line_3 = self._prepare_test_report_line(
+            self._prepare_test_expression_aggregation('report1_line_1.balance - report1_line_2.balance'),
+            name='report_line_3', code='report_line_3',
         )
 
-        other_report_line_3 = self._prepare_test_report_line(
-            self._prepare_test_expression_aggregation('other_report_line_1.balance + other_report_line_2.balance'),
-            name='other_report_line_3', code='other_report_line_3',
-        )
+        report1 = self._create_report([report1_line_1, report1_line_2, report1_line_3])
+        report1_options = self._generate_options(report1, '2021-01-01', '2021-01-01')
 
-        other_report_line_4 = self._prepare_test_report_line(
-            self._prepare_test_expression_account_codes('3'),
-            name='other_report_line_4', code='other_report_line_4',
-        )
-
-        other_report = self._create_report([other_report_line_1, other_report_line_2, other_report_line_3, other_report_line_4])
-        other_report_options = self._generate_options(other_report, '2021-01-01', '2021-01-01')
-
-        # Main report
+        # report_line_3 is made ambiguous on purpose to check that we can target the right report using cross_report aggregation
+        # First target the first other report using the xmlID
+        self.env['ir.model.data']._update_xmlids([
+            {
+                'xml_id': "account_reports.test_report_cross_report_0",
+                'record': report0
+            }
+        ])
         main_report_line_1 = self._prepare_test_report_line(
-            self._prepare_test_expression_aggregation('other_report_line_2.balance', subformula='cross_report', date_scope='strict_range'),
-            name='main_report_line_1', code='main_report_line_1',
+            self._prepare_test_expression_aggregation('report_line_3.balance', subformula='cross_report(account_reports.test_report_cross_report_0)', date_scope='strict_range'),
+            name='main_report_line', code='main_report_line',
         )
-
-        main_report_line_2 = self._prepare_test_report_line(
-            self._prepare_test_expression_aggregation('other_report_line_2.balance', subformula='cross_report', date_scope='from_beginning'),
-            name='main_report_line_2', code='main_report_line_2',
-        )
-
-        main_report_line_3 = self._prepare_test_report_line(
-            self._prepare_test_expression_aggregation('other_report_line_3.balance', subformula='cross_report', date_scope='strict_range'),
-            name='main_report_line_3', code='main_report_line_3',
-        )
-
-        main_report_line_4 = self._prepare_test_report_line(
-            self._prepare_test_expression_aggregation('other_report_line_3.balance', subformula='cross_report', date_scope='from_beginning'),
-            name='main_report_line_4', code='main_report_line_4',
-        )
-
-        main_report_line_5 = self._prepare_test_report_line(
-            self._prepare_test_expression_aggregation(
-                'main_report_line_1.balance + main_report_line_2.balance + main_report_line_3.balance + main_report_line_4.balance',
-            ),
-            name='main_report_line_5', code='main_report_line_5',
-        )
-
-        main_report_line_6 = self._prepare_test_report_line(
-            self._prepare_test_expression_aggregation(
-                'main_report_line_1.balance + main_report_line_2.balance + main_report_line_3.balance + main_report_line_4.balance',
-            ),
-            name='main_report_line_6', code='main_report_line_6',
-        )
-
-        main_report = self._create_report([main_report_line_1, main_report_line_2, main_report_line_3, main_report_line_4, main_report_line_5, main_report_line_6])
+        main_report = self._create_report([main_report_line_1])
         main_report_options = self._generate_options(main_report, '2021-01-01', '2021-01-01')
 
-        # First check other_report
         self.assertLinesValues(
-            # pylint: disable=bad-whitespace
-            other_report._get_lines(other_report_options),
-            [   0,                                      1],
+            report0._get_lines(report0_options),
+            [   0,                                  1],
             [
-                ('other_report_line_1',               2.0),
-                ('other_report_line_2',               4.0),
-                ('other_report_line_3',               6.0),
-                ('other_report_line_4',               5.0),
+                ('report0_line_1',                  2.0),
+                ('report0_line_2',                  4.0),
+                ('report_line_3',                   6.0),
             ],
-            other_report_options,
+            report0_options,
         )
 
-        # Check main_report
-        main_report_options = self._generate_options(main_report, '2021-01-01', '2021-01-01')
-        main_report_lines = main_report._get_lines(main_report_options)
         self.assertLinesValues(
-            # pylint: disable=bad-whitespace
-            main_report_lines,
+            main_report._get_lines(main_report_options),
             [   0,                                      1],
             [
-                ('main_report_line_1',                4.0),
-                ('main_report_line_2',                7.0),
-                ('main_report_line_3',                6.0),
-                ('main_report_line_4',               10.0),
-                ('main_report_line_5',               27.0),
-                ('main_report_line_6',               27.0),
+                ('main_report_line',                    6.0),
             ],
             main_report_options,
         )
 
-        # Check redirection.
+        # Target the second other report using the model id
+        main_report_line_1 = self._prepare_test_report_line(
+            self._prepare_test_expression_aggregation('report_line_3.balance', subformula=f'cross_report({report1.id})', date_scope='strict_range'),
+            name='main_report_line', code='main_report_line',
+        )
+        main_report = self._create_report([main_report_line_1])
+        main_report_options = self._generate_options(main_report, '2021-01-01', '2021-01-01')
+
+        self.assertLinesValues(
+            report1._get_lines(report1_options),
+            [   0,                                      1],
+            [
+                ('report1_line_1',                      2.0),
+                ('report1_line_2',                      4.0),
+                ('report_line_3',                       -2.0),
+            ],
+            report1_options,
+        )
+        main_report_lines = main_report._get_lines(main_report_options)
+        self.assertLinesValues(
+            main_report_lines,
+            [   0,                                      1],
+            [
+                ('main_report_line',                    -2.0),
+            ],
+            main_report_options,
+        )
+
         expected_amls_to_test = [
-            ('main_report_line_1', moves[1].line_ids[1]),
-            ('main_report_line_2', moves[1].line_ids[1] + moves[0].line_ids[1]),
+            ('main_report_line', moves[0].line_ids[0:2]),
         ]
 
         for report_line_name, expected_amls in expected_amls_to_test:
@@ -1171,7 +1168,7 @@ class TestReportEngines(TestAccountReportsCommon):
 
         other_report = self._create_report([
             self._prepare_test_report_line(
-                self._prepare_test_expression_aggregation('SIMPLE_AGG.balance + BOUNDED_AGG.balance', subformula='cross_report'),
+                self._prepare_test_expression_aggregation('SIMPLE_AGG.balance + BOUNDED_AGG.balance', subformula=f'cross_report({report.id})'),
                 code='CROSS_REPORT_AGG',
             ),
         ])
@@ -1506,20 +1503,20 @@ class TestReportEngines(TestAccountReportsCommon):
                     )
 
     def test_engine_aggregation_cross_bound(self):
-        report_1 = self._create_report([
-            self._prepare_test_report_line(
-                self._prepare_test_expression_aggregation('line_2_1.balance', subformula='cross_report'),
-                name='Line 1-1',
-                code='line_1_1',
-            ),
-        ])
-
-        self._create_report([
+        other_report = self._create_report([
             self._prepare_test_report_line(
                 self._prepare_test_expression_aggregation('14.0', subformula='if_other_expr_above(line_2_1.dudu, EUR(0))'),
                 self._prepare_test_expression_account_codes('101', label='dudu'),
                 name='Line 2-1',
                 code='line_2_1',
+            ),
+        ])
+
+        report_1 = self._create_report([
+            self._prepare_test_report_line(
+                self._prepare_test_expression_aggregation('line_2_1.balance', subformula=f'cross_report({other_report.id})'),
+                name='Line 1-1',
+                code='line_1_1',
             ),
         ])
 

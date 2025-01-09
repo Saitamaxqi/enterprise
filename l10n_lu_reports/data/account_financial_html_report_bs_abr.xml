@@ -184,7 +184,7 @@
                                     <record id="account_financial_report_l10n_lu_bs_abr_line_2_1_5_past_pnl" model="account.report.expression">
                                         <field name="label">past_pnl</field>
                                         <field name="engine">aggregation</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_lu_reports.account_financial_report_l10n_lu_pl_abr)</field>
                                         <field name="formula">LU_PLABR_669.balance</field>
                                         <field name="date_scope">to_beginning_of_fiscalyear</field>
                                     </record>
@@ -208,7 +208,7 @@
                                     <record id="account_financial_report_l10n_lu_bs_abr_line_2_1_6_balance" model="account.report.expression">
                                         <field name="label">balance</field>
                                         <field name="engine">aggregation</field>
-                                        <field name="subformula">cross_report</field>
+                                        <field name="subformula">cross_report(l10n_lu_reports.account_financial_report_l10n_lu_pl_abr)</field>
                                         <field name="formula">LU_PLABR_669.balance</field>
                                         <field name="date_scope">from_fiscalyear</field>
                                     </record>
