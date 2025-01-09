@@ -76,7 +76,7 @@ class CustomerPortal(portal.CustomerPortal):
         elif search_in in self._ticket_get_searchbar_inputs():
             return [(search_in, 'ilike', search)]
         else:
-            return FALSE_DOMAIN
+            return ['|', ('name', 'ilike', search), ('ticket_ref', 'ilike', search)]
 
     def _prepare_my_tickets_values(self, page=1, date_begin=None, date_end=None, sortby=None, filterby='all', search=None, groupby='none', search_in='name'):
         values = self._prepare_portal_layout_values()

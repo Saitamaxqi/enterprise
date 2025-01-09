@@ -30,7 +30,7 @@ class CustomerPortal(portal.CustomerPortal):
                 values['convert_hours_to_days'] = Timesheet._convert_hours_to_days
         return values
 
-    def _prepare_my_tickets_values(self, page=1, date_begin=None, date_end=None, sortby=None, filterby='all', search=None, groupby='none', search_in='content'):
+    def _prepare_my_tickets_values(self, page=1, date_begin=None, date_end=None, sortby=None, filterby='all', search=None, groupby='none', search_in='name'):
         if (search_in == 'sale_order' or groupby == 'sale_order_id') and not request.env['helpdesk.team']._check_sale_timesheet_feature_enabled():
             search_in = 'name' if search_in == 'sale_order' else search_in
             groupby = 'none' if groupby == 'sale_order_id' else groupby
