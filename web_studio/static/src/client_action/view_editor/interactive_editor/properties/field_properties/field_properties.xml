@@ -64,6 +64,9 @@
                 t-props="defaultValuePropertyProps"
             >
                 Default value
+                <span t-if="multiCompany">
+                for company <b t-esc="activeCompany.name"/>
+                </span>
             </Property>
         </t>
 

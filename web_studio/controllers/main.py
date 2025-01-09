@@ -1493,16 +1493,22 @@ Are you sure you want to remove the selection values of those records?""", len(r
             })
 
     @http.route('/web_studio/get_default_value', type='jsonrpc', auth='user')
-    def get_default_value(self, model_name, field_name):
+    def get_default_value(self, model_name, field_name, company_id=False):
         """ Return the default value associated to the given field. """
+        context = {}
+        if company_id:
+            context["allowed_company_ids"] = [company_id]
         return {
-            'default_value': request.env['ir.default']._get(model_name, field_name, company_id=True)
+            'default_value': request.env['ir.default'].with_context(context)._get(model_name, field_name, company_id=True)
         }
 
     @http.route('/web_studio/set_default_value', type='jsonrpc', auth='user')
-    def set_default_value(self, model_name, field_name, value):
+    def set_default_value(self, model_name, field_name, value, company_id=False):
         """ Set the default value associated to the given field. """
-        request.env['ir.default'].with_context(studio=True).set(model_name, field_name, value, company_id=True)
+        context = { "studio": True }
+        if company_id:
+            context["allowed_company_ids"] = [company_id]
+        request.env['ir.default'].with_context(context).set(model_name, field_name, value, company_id=True)
 
     @http.route('/web_studio/set_currency', type='jsonrpc', auth='user')
     def set_currency(self, model_name, field_name, value):

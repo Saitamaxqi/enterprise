@@ -2071,3 +2071,17 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
                 </xpath>
             </data>
         '''.format(html_field=html_field))
+
+    def test_default_value_company(self):
+        with self.with_user("admin"):
+            company2 = self.env["res.company"].create({"name": "company2"})
+        self.testView.arch = "<form><field name='name' /></form>"
+
+        cookies = {
+            "cids": str(company2.id)
+        }
+        self.start_tour("/web?debug=tests", "web_studio_test_default_value_company", login="admin", cookies=cookies)
+
+        field_name = self.env["ir.model.fields"]._get("res.partner", "name")
+        ir_default = self.env["ir.default"].search(["&", ("field_id", "=", field_name.id), ("company_id", "=", company2.id)])
+        self.assertEqual(ir_default.json_value, '"from studio"')
