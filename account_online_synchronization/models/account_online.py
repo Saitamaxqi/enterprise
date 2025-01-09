@@ -77,6 +77,24 @@ class AccountOnlineAccount(models.Model):
             if len(online_account.journal_ids) > 1:
                 raise ValidationError(_('You cannot have two journals associated with the same Online Account.'))
 
+    @api.model_create_multi
+    def create(self, vals):
+        result = super().create(vals)
+        if any(data.get('fetching_status') in {'waiting', 'processing', 'planned'} for data in vals):
+            self.journal_ids._toggle_asynchronous_fetching_cron()
+        return result
+
+    def write(self, vals):
+        result = super().write(vals)
+        if vals.get('fetching_status') in {'waiting', 'processing', 'planned'}:
+            self.journal_ids._toggle_asynchronous_fetching_cron()
+        return result
+
+    def unlink(self):
+        result = super().unlink()
+        self.journal_ids._toggle_asynchronous_fetching_cron()
+        return result
+
     def _assign_journal(self, swift_code=False, journal_type='bank'):
         """
         This method allows to link an online account to a journal with the following heuristics
@@ -695,7 +713,9 @@ class AccountOnlineLink(models.Model):
                 # Can happen that this call returns a redirect in mode link, in which case we delete the record
                 to_unlink += link
                 continue
-        return super(AccountOnlineLink, to_unlink).unlink()
+        result = super(AccountOnlineLink, to_unlink).unlink()
+        self.env['account.journal']._toggle_asynchronous_fetching_cron()
+        return result
 
     def _fetch_accounts(self, online_identifier=False):
         self.ensure_one()
@@ -837,13 +857,6 @@ class AccountOnlineLink(models.Model):
 
                 sorted_transactions = sorted(transactions, key=lambda transaction: transaction['date'])
                 if not is_cron_running:
-                    # For people in stable who will update their code without upgrading their module,
-                    # we need to be sure to change the cron from running only once every year (original interval is 12 months) to maximum 5 minutes
-                    cron_record_in_sudo = self.env.ref('account_online_synchronization.online_sync_cron_waiting_synchronization').sudo()
-                    if cron_record_in_sudo.nextcall > fields.Datetime.now() + relativedelta(minutes=5) or cron_record_in_sudo.interval_number > 5 or cron_record_in_sudo.interval_type != 'minutes':
-                        cron_record_in_sudo.nextcall = fields.Datetime.now() + relativedelta(minutes=5)
-                        cron_record_in_sudo.interval_number = 5
-                        cron_record_in_sudo.interval_type = 'minutes'
                     # we want to import the first 100 transaction, show them to the user
                     # and import the rest asynchronously with the 'online_sync_cron_waiting_synchronization' cron
                     total = sum([transaction['amount'] for transaction in transactions])

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
+    <data noupdate="1">
         <!-- Cron to synchronize transaction -->
         <record id="online_sync_cron" model="ir.cron">
             <field name="name">Account: Journal online sync</field>
@@ -17,7 +17,7 @@
             <field name="model_id" ref="account.model_account_journal"/>
             <field name="state">code</field>
             <field name="code">model._cron_fetch_waiting_online_transactions()</field>
-            <field name="active" eval="True"/>
+            <field name="active" eval="False"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="interval_number">5</field>
             <field name="interval_type">minutes</field>
