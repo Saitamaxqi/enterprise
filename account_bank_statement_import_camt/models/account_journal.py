@@ -72,6 +72,8 @@ class AccountJournal(models.Model):
                 date = CAMT._get_transaction_date(entry, namespaces=ns) or statement_date
 
                 transaction_details = entry.xpath('.//ns:TxDtls', namespaces=ns)
+                entry_details_sum = 0
+                largest_entry_vals = {'amount': 0}
                 for entry_details in transaction_details or [entry]:
                     sequence += 1
                     counter_party = CAMT._get_counter_party(entry_details, entry, namespaces=ns)
@@ -136,6 +138,16 @@ class AccountJournal(models.Model):
 
                     unique_import_set.add(entry_vals['unique_import_id'])
                     transactions.append(entry_vals)
+
+                    entry_details_sum += entry_vals['amount']
+                    if abs(entry_vals['amount']) >= abs(largest_entry_vals['amount']):
+                        largest_entry_vals = entry_vals
+                
+                # In a multi-currency entry (Ntry) with multiple entry details, we might have some rounding differences when applying the currency rate.
+                # We add this difference back on the largest amount.
+                transaction_amount = float(entry.find('ns:Amt', namespaces=ns).text)
+                transaction_amount = -transaction_amount if entry.find('ns:CdtDbtInd', namespaces=ns).text == 'DBIT' else transaction_amount
+                largest_entry_vals['amount'] += transaction_amount - entry_details_sum
 
             statement_vals['transactions'] = transactions
             statement_vals['balance_start'] = CAMT._get_signed_balance(node=statement, namespaces=ns, getters=CAMT._start_balance_getters)

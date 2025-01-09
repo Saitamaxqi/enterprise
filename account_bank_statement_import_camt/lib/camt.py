@@ -639,8 +639,8 @@ class CAMT:
 
         def get_rate(*entries, target_currency, amount_currency):
             for entry in entries:
-                source_rate = get_value_and_currency_name(entry, CAMT._source_rate_getters, target_currency=target_currency)[0]
-                target_rate = get_value_and_currency_name(entry, CAMT._target_rate_getters, target_currency=target_currency)[0]
+                source_rate = get_value_and_currency_name(entry, CAMT._source_rate_getters)[0]
+                target_rate = get_value_and_currency_name(entry, CAMT._target_rate_getters)[0]
 
                 rate = source_rate or target_rate
                 # According to the camt.053 Swiss Payment Standards, the exchange rate should be divided by 100 if the

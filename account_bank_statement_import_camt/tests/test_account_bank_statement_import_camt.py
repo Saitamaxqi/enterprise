@@ -234,11 +234,11 @@ class TestAccountBankStatementImportCamt(AccountTestInvoicingCommon):
         imported_statement = self.env['account.bank.statement'].search([('company_id', '=', self.env.company.id)], order='id desc', limit=1)
         self.assertEqual(len(imported_statement.line_ids), 3)
         self.assertEqual(imported_statement.line_ids[0].payment_ref, 'label01')
-        self.assertEqual(imported_statement.line_ids[0].amount, expected_amounts[0])
+        self.assertEqual(usd_currency.round(imported_statement.line_ids[0].amount), expected_amounts[0])
         self.assertEqual(imported_statement.line_ids[1].payment_ref, 'label02')
-        self.assertEqual(imported_statement.line_ids[1].amount, expected_amounts[1])
+        self.assertEqual(usd_currency.round(imported_statement.line_ids[1].amount), expected_amounts[1])
         self.assertEqual(imported_statement.line_ids[2].payment_ref, 'label03')
-        self.assertEqual(imported_statement.line_ids[2].amount, expected_amounts[2])
+        self.assertEqual(usd_currency.round(imported_statement.line_ids[2].amount), expected_amounts[2])
 
     def test_camt_with_several_tx_details(self):
         self._test_camt_with_several_tx_details('camt_053_several_tx_details.xml')
@@ -261,6 +261,12 @@ class TestAccountBankStatementImportCamt(AccountTestInvoicingCommon):
     def test_camt_with_several_tx_details_and_multicurrency_04(self):
         self._test_camt_with_several_tx_details('camt_053_several_tx_details_and_multicurrency_04.xml',
             expected_amounts=LARGE_AMOUNTS)
+
+    def test_camt_with_several_tx_details_and_multicurrency_05(self):
+        # Tests when the rounded sum is different by one cent from the sum of the rounded amounts after applying the currency rate.
+        # The difference is put on the largest amount (positive or negative)
+        self._test_camt_with_several_tx_details('camt_053_several_tx_details_and_multicurrency_05.xml',
+            expected_amounts=[-18918.02, -23508.64, -7573.34])
 
     def test_camt_with_several_tx_details_and_charges(self):
         self._test_camt_with_several_tx_details('camt_053_several_tx_details_and_charges.xml')
