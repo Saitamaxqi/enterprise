@@ -267,8 +267,6 @@ export class DocumentsControlPanel extends ControlPanel {
     async onCopyLinks() {
         const documents = this.targetRecords;
 
-        await this.populateMissingAccessURLsIfAny(documents);
-
         const linksToShare =
             documents.length > 1
                 ? documents.map((d) => d.data.access_url).join(", ")
@@ -371,26 +369,5 @@ export class DocumentsControlPanel extends ControlPanel {
                 }
             }
         });
-    }
-
-    /**
-     * At the time of writing, documents in list view are missing
-     * `access_url`. The issue has been fixed by editing the XML;
-     * This method is a fallback for clients still having the old XML.
-     */
-    async populateMissingAccessURLsIfAny(documents) {
-        if (documents.every(({ data }) => data.access_url)) {
-            return;
-        }
-
-        const accessURLsMap = Object.fromEntries(
-            (await this.orm.read(
-                "documents.document",
-                documents.map(({ data: { id } }) => id),
-                ["access_url"]
-            )).map(({ id, access_url}) => [id, access_url])
-        )
-
-        documents.forEach(({ data }) => data.access_url = accessURLsMap[data.id]);
     }
 }
