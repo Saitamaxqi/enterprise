@@ -37,7 +37,7 @@ class SaleCommissionPlan(models.Model):
     target_commission_ids = fields.One2many('sale.commission.plan.target.commission', 'plan_id',
                                             compute='_compute_target_commission_ids',
                                             inverse='_inverse_target_commission_ids',
-                                            store=True, readonly=False, copy=True)
+                                            store=True, readonly=False, copy=False)
     target_commission_graph = fields.Text(compute="_compute_target_commission_graph")
     user_ids = fields.One2many('sale.commission.plan.user', 'plan_id', copy=True)
 
@@ -192,6 +192,15 @@ CREATE INDEX IF NOT EXISTS account_move_invoice_user_id_date_idx ON account_move
             dict(vals, name=_("%s (copy)", cp.name), user_ids=self._extract_past_users(vals.get('user_ids', [])))
             for cp, vals in zip(self, vals_list)
         ]
+
+    def copy(self, default=None):
+        """" copy of computed stored one2many with inverse is not working properly.
+        This is an ORM limition. This override copies independently the target_commission_ids
+        """
+        new_models = super().copy(default=default)
+        for old_model, new_model in zip(self, new_models):
+            old_model.target_commission_ids.copy(default={'plan_id': new_model.id})
+        return new_models
 
     def action_approve(self):
         self.state = 'approved'
