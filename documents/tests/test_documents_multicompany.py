@@ -180,4 +180,31 @@ class TestDocumentsMulticompany(TransactionCaseDocuments):
         self.assertEqual(Documents_with_ctx.search([('id', '=', shortcut.id)]), shortcut)
         self.assertEqual(shortcut.user_permission, 'edit')
 
-    # todo: access via parent
+    def test_company_access_inherit(self):
+        """Check that the accesses are not inherited if the company is disabled."""
+        Documents_with_ctx = self.env['documents.document'] \
+            .with_user(self.internal_user) \
+            .with_context(allowed_company_ids=self.company_allowed.ids)
+        folder = Documents_with_ctx.browse(self.env['documents.document'].create({
+            'name': 'Folder',
+            'company_id': False,
+            'access_via_link': 'view',
+            'type': 'folder',
+        }).id)
+        document = Documents_with_ctx.browse(self.env['documents.document'].create({
+            'name': 'Document',
+            'company_id': self.company_disabled.id,
+            'folder_id': folder.id,
+        }).id)
+        self.env['documents.access'].create({
+            'document_id': folder.id,
+            'partner_id': self.internal_user.partner_id.id,
+            'role': 'edit',
+        })
+
+        # sanity check
+        self.assertEqual(document.with_context(allowed_company_ids=self.company_disabled.ids).user_permission, 'view')
+        self.assertTrue(self.env['documents.document'].search([('id', '=', document.id)]))
+
+        self.assertEqual(document.user_permission, 'none')
+        self.assertFalse(Documents_with_ctx.search([('id', '=', document.id)]))

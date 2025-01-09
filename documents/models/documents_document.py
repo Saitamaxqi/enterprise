@@ -349,7 +349,8 @@ class DocumentsDocument(models.Model):
             if document.user_permission == 'view' and document.access_via_link == 'edit':
                 document.user_permission = 'edit'
             elif document.user_permission == 'none' and document.folder_id and document.access_via_link != 'none' \
-                    and not document.is_access_via_link_hidden:
+                    and not document.is_access_via_link_hidden \
+                    and (document.company_id in self.env.companies or document.company_id not in self.env.user.company_ids):
                 # If the user can access the parent, they have the link.
                 # This only works one level up, as it mimics accessing through the interface.
                 with contextlib.suppress(AccessError):
@@ -473,6 +474,7 @@ class DocumentsDocument(models.Model):
 
         # Look one level up for links unless hidden
         link_via_parent_domain = expression.AND([
+            any_except_disabled_company,
             [('access_via_link', 'in', searched_roles)],
             [('is_access_via_link_hidden', '=', False)],
             [('folder_id', 'any', direct_domain)],
