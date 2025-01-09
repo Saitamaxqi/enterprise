@@ -12,6 +12,7 @@ class AccountMove(models.Model):
         posted_moves = super()._post(soft=soft)
         automatic_invoice = self.env.context.get('recurring_automatic')
         all_subscription_ids = set()
+        log_date_values = {"upsell": {}, "subscription": {}}
         for move in posted_moves:
             if not move.invoice_line_ids.subscription_id:
                 continue
@@ -34,12 +35,16 @@ class AccountMove(models.Model):
                 subscription = aml.subscription_id - upsell_so.subscription_id
                 all_subscription_ids.add(subscription.id)
                 log_order_ids.append(aml.subscription_id.id)
-            # Update the effective date of logs based on post date.
-            uninvoiced_logs = self.env['sale.order.log'].sudo().search([
-                ('order_id', 'in', log_order_ids),
-                ('effective_date', '=', False)
-            ])
-            uninvoiced_logs.effective_date = move.date
+                if upsell_so:
+                    log_date_values["upsell"][upsell_so] = {
+                        'effective_date': aml.deferred_start_date or move.date,
+                        'event_date':  upsell_so.date_order.date(),
+                    }
+                if subscription:
+                    log_date_values["subscription"][subscription] = {
+                        'effective_date': aml.deferred_start_date or move.date,
+                        'event_date': subscription.date_order.date(),
+                    }
 
         all_subscriptions = self.env['sale.order'].browse(all_subscription_ids)
         for subscription in all_subscriptions:
@@ -71,6 +76,7 @@ class AccountMove(models.Model):
         if not automatic_invoice:
             all_subscriptions._post_invoice_hook()
 
+        self.env['sale.order.log']._update_effective_date(log_date_values)
         return posted_moves
 
     def _message_auto_subscribe_followers(self, updated_values, subtype_ids):

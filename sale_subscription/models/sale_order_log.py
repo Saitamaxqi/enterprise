@@ -4,7 +4,8 @@ from datetime import timedelta
 
 from odoo import api, fields, models, _
 from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_STATES, SUBSCRIPTION_PROGRESS_STATE, SUBSCRIPTION_CLOSED_STATE
-
+from odoo.osv import expression
+from odoo.tools import float_compare
 
 class SaleOrderLog(models.Model):
     _name = 'sale.order.log'
@@ -101,11 +102,15 @@ class SaleOrderLog(models.Model):
     def _cancel_renewal_logs(self, order, initial_values):
         order.order_log_ids.unlink()
         # Delete the transfer from the parent to the renewal that is cancelled
-        self.search(
+        transfer_log = self.search(
             [('order_id', '=', order.subscription_id.id),
              ('event_type', '=', '3_transfer'),
              ('amount_signed', '<', 0)
-        ], order='id desc', limit=1).unlink()
+        ], order='id desc', limit=1)
+        order.subscription_id.order_log_ids.filtered(
+            lambda log: log.effective_date in transfer_log.mapped('effective_date')
+        ).effective_date = False
+        transfer_log.unlink()
         return self.env['sale.order.log']
 
     @api.model
@@ -145,6 +150,7 @@ class SaleOrderLog(models.Model):
             'recurring_monthly': 0,
             'subscription_state': parent_order.subscription_state,
         })
+        parent_order.order_log_ids.filtered(lambda log: not log.effective_date).effective_date = parent_order.next_invoice_date
 
         renewal_transfer_amount = parent_transfer.currency_id._convert(parent_transfer_amount,
                                                           to_currency=order.currency_id,
@@ -162,18 +168,26 @@ class SaleOrderLog(models.Model):
 
     @api.model
     def _unlink_churn_log(self, order, initial_values):
-        order.order_log_ids.filtered(lambda log: log.event_type == '2_churn').unlink()
+        churn_logs = order.order_log_ids.filtered(lambda log: log.event_type == '2_churn')
+        effective_at_churn = order.order_log_ids.filtered(
+            lambda log: log.effective_date in churn_logs.mapped('effective_date')
+        )
+        effective_at_churn.effective_date = False
+        churn_logs.unlink()
         initial_values['recurring_monthly'] = sum(order.order_log_ids.mapped('amount_signed'))
         return self._create_mrr_change_log(order, initial_values)
 
     @api.model
     def _create_churn_log(self, order, initial_values):
+        # All change are now effective
+        order.order_log_ids.filtered(lambda log: not log.effective_date).effective_date = order.next_invoice_date
         return self.create({
             'order_id': order.id,
             'event_type': '2_churn',
             'amount_signed': -initial_values.get('recurring_monthly', order.recurring_monthly),
             'recurring_monthly': 0,
             'subscription_state': initial_values.get('subscription_state', order.subscription_state),
+            'effective_date': order.next_invoice_date,
         })
 
     @api.model
@@ -219,3 +233,29 @@ class SaleOrderLog(models.Model):
             'recurring_monthly': new_mrr,
             'subscription_state': order.subscription_state,
         })
+
+    @api.model
+    def _update_effective_date(self, log_date_values):
+        """ Update the effective date of logs based on post date.
+        :param: log_order_values: dict containing the list of ids for
+        upsells and subscriptions
+        """
+        self._write_uninvoiced_logs(log_date_values["subscription"])
+        self._write_uninvoiced_logs(log_date_values["upsell"], upsell=True)
+
+    def _write_uninvoiced_logs(self, log_date_values, upsell=False):
+        if not log_date_values:
+            return
+
+        for order, dates in log_date_values.items():
+            if upsell:
+                ratio = order._get_ratio_value()
+                amount = sum([line.recurring_monthly / ratio for line in order.order_line])
+                logs = order.subscription_id.order_log_ids.filtered(lambda log:
+                    not log.effective_date and
+                    log.event_date == dates['event_date']
+                ).sorted(lambda log: abs(log.amount_signed - amount))[:1]
+            else:
+                logs = order.order_log_ids.filtered(lambda log: not log.effective_date)
+
+            logs.sudo().effective_date = dates['effective_date']

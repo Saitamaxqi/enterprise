@@ -2086,8 +2086,17 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             subscription.action_confirm()
             self.flush_tracking()
             self.assertFalse(subscription.order_log_ids.filtered(lambda l: l.effective_date))
-            self.env['sale.order']._cron_recurring_create_invoice()
-            self.assertEqual(len(subscription.order_log_ids.filtered(lambda l: l.effective_date)), 1, "one log is counted")
+            inv = self.env['sale.order']._cron_recurring_create_invoice()
+        with freeze_time("2025-01-02"):
+            self.assertEqual(subscription.order_log_ids.filtered(lambda l: l.effective_date).effective_date, datetime.date(2025, 1, 1), "one log is counted")
+
+        with freeze_time("2025-01-10"):
+            # update the quantity without upselling. This is a manual change.
+            previous_logs = subscription.order_log_ids
+            subscription.order_line.filtered('product_id').product_uom_qty = 3
+            self.flush_tracking()
+            first_manual_logs = subscription.order_log_ids - previous_logs
+            self.assertFalse(first_manual_logs.effective_date, "other manual log is assimited to the upsell log.")
 
         with freeze_time("2025-01-15"):
             action = subscription.with_context(tracking_disable=False).prepare_upsell_order()
@@ -2097,18 +2106,17 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             upsell_so.name = "Upsell"
             self.flush_tracking()
             previous_logs = subscription.order_log_ids
-            subscription.order_line.filtered('product_id').product_uom_qty = 3
+            subscription.order_line.filtered('product_id').product_uom_qty = 5
             self.flush_tracking()
-            manual_logs = subscription.order_log_ids - previous_logs
+            second_manual_logs = subscription.order_log_ids - previous_logs
             previous_logs = subscription.order_log_ids
             upsell_so.action_confirm() # new log should have effective_date only when the upsell is invoiced
             self.flush_tracking()
             upsell_logs = subscription.order_log_ids - previous_logs
             inv = upsell_so._create_invoices()
             inv._post()
-            self.assertTrue(upsell_logs.effective_date)
-            self.assertTrue(manual_logs.effective_date, "logs that are not yet invoiced are marked as effective if one invoice is posted")
-
+            self.assertEqual(upsell_logs.effective_date, datetime.date(2025, 1, 15))
+            self.assertFalse(second_manual_logs.effective_date, "last manual update is not invoiced")
 
         with freeze_time("2025-02-01"):
             action = subscription.with_context(tracking_disable=False).prepare_renewal_order()
@@ -2123,6 +2131,84 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             renew_logs = renewal_so.order_log_ids - previous_logs
             self.assertFalse(any(renew_logs.mapped('effective_date')))
             self.env['sale.order']._cron_recurring_create_invoice()
-            self.assertTrue(all(renew_logs.mapped('effective_date')))
-            self.assertTrue(manual_logs.effective_date)
-            self.assertTrue(upsell_logs.effective_date)
+            self.assertEqual(renew_logs.mapped('effective_date'), [datetime.date(2025, 2, 1), datetime.date(2025, 2, 1)], "Transfer logs share the move date")
+            # self.assertEqual(first_manual_logs.effective_date, datetime.date(2025, 2, 1), "Previous manual log is effective at renewal date")
+
+    def test_uninvoiced_upsell_close_log(self):
+        """ Test that the behaviour of effective date is correct even if some items are non invoiced (no effective date).
+            Uninvoiced items needs to be kept uninvoiced in case of churn and reopen. """
+        self.subscription_tmpl.plan_id = self.plan_year.id
+        subscription = self.env['sale.order'].create({
+            'name': 'Parent Sub',
+            'is_subscription': True,
+            'note': "original subscription description",
+            'partner_id': self.user_portal.partner_id.id,
+            'sale_order_template_id': self.subscription_tmpl.id,
+            'start_date': '2025-01-01',
+        })
+        self.flush_tracking()
+        subscription.write({'order_line': [(0, 0, {
+            'name': 'TestRecurringLine',
+        'product_id': self.product.id,
+            'product_uom_qty': 1,
+        })]})
+
+        subscription.action_confirm()
+        self.flush_tracking()
+        log1 = subscription.order_log_ids
+        self.assertFalse(log1.effective_date)
+        subscription._create_invoices()._post()
+        self.assertEqual(log1.effective_date, datetime.date(2025, 1, 1))
+
+        # Test upselling with after a manual change
+        order_line = subscription.order_line
+        order_line.product_uom_qty = 2
+        self.flush_tracking()
+        log2 = subscription.order_log_ids[-1]
+        self.assertFalse(log2.effective_date)
+
+        action = subscription.prepare_upsell_order()
+        upsell_so = self.env['sale.order'].browse(action['res_id'])
+        upsell_so.start_date = '2025-04-01'
+        upsell_so.order_line[0].product_uom_qty = 2
+        upsell_so.action_confirm()
+        self.flush_tracking()
+        log3 = subscription.order_log_ids[-1]
+        self.assertEqual(round(log3.amount_signed, 2), 16.66)
+        self.assertFalse(log3.effective_date)
+        upsell_so._create_invoices()._post()
+        self.assertFalse(log2.effective_date)
+        self.assertEqual(log3.effective_date, datetime.date(2025, 4, 1))
+
+        # Test churn and reopen
+        subscription.set_close()
+        self.flush_tracking()
+        log4 = subscription.order_log_ids[-1]
+        self.assertEqual(log2.effective_date, log4.effective_date)
+        self.assertEqual(log4.effective_date, subscription.next_invoice_date)
+        self.assertEqual(round(log4.amount_signed, 2), -33.33)
+
+        subscription.set_open()
+        self.flush_tracking()
+        self.assertFalse(log4.exists())
+        self.assertFalse(log2.effective_date)
+        self.assertEqual(log3.effective_date, datetime.date(2025, 4, 1))
+        self.assertEqual(log1.effective_date, datetime.date(2025, 1, 1))
+
+        # Test renewal and cancel
+        res = subscription.prepare_renewal_order()
+        renewal_order = self.env['sale.order'].browse(res['res_id'])
+        self.flush_tracking()
+        renewal_order.action_confirm()
+        self.flush_tracking()
+        log5 = subscription.order_log_ids[-1]
+        self.assertEqual(log2.effective_date, log5.effective_date)
+        self.assertEqual(log5.effective_date, subscription.next_invoice_date)
+        self.assertEqual(round(log5.amount_signed, 2), -33.33)
+
+        renewal_order._action_cancel()
+        self.flush_tracking()
+        self.assertFalse(log5.exists())
+        self.assertFalse(log2.effective_date)
+        self.assertEqual(log3.effective_date, datetime.date(2025, 4, 1))
+        self.assertEqual(log1.effective_date, datetime.date(2025, 1, 1))
