@@ -147,7 +147,7 @@ class HrContract(models.Model):
             return other_contracts
 
         for contract in self:
-            if contract in done_contracts:
+            if contract in done_contracts or contract.state == 'cancel':
                 continue
             contracts = contract  # hr.contract(38,)
             date_from = contract.date_start
