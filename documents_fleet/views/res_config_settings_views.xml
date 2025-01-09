@@ -21,7 +21,7 @@
                             <field name="documents_fleet_folder" required="documents_fleet_settings" widget="documents_folder_many2one"/>
                         </div>
                         <div class="row">
-                            <label class="o_form_label col-lg-3" for="documents_fleet_tags" string="Default Tags"/>
+                            <label class="o_form_label col-lg-3" for="documents_fleet_tags" string="Tags"/>
                             <field name="documents_fleet_tags" widget="many2many_tags"/>
                         </div>
                     </div>

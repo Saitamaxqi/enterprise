@@ -9,8 +9,8 @@
                 <attribute name="invisible">0</attribute>
             </xpath>
             <xpath expr="//block[@id='files_centralization_section']" position="inside">
-                <setting company_dependent="1" string="Project Base Folder"
-                        help="Default parent folder for new project folders">
+                <setting company_dependent="1" string="Default Project Folder"
+                        help="Folder where new projects are created">
                     <label class="o_form_label col-lg-3" for="documents_project_folder_id" string="Folder"/>
                     <field name="documents_project_folder_id" required="True" widget="documents_folder_many2one"
                         options="{'no_quick_create': True, 'no_create_edit': True}"/>
