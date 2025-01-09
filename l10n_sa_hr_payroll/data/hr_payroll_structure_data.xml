@@ -4,6 +4,7 @@
             <field name="name">Saudi Employees Payroll Structure</field>
             <field name="country_id" ref="base.sa"/>
             <field name="type_id" ref="l10n_sa_hr_payroll.ksa_employee_payroll_structure_type"/>
+            <field name="rule_ids" eval="[]"/>
         </record>
         <record id="l10n_sa_hr_payroll.ksa_employee_payroll_structure_type" model="hr.payroll.structure.type">
             <field name="default_struct_id" ref="ksa_saudi_employee_payroll_structure"/>
@@ -12,6 +13,7 @@
             <field name="name">Expat Employees Payroll Structure</field>
             <field name="country_id" ref="base.sa"/>
             <field name="type_id" ref="l10n_sa_hr_payroll.ksa_employee_payroll_structure_type"/>
+            <field name="rule_ids" eval="[]"/>
         </record>
     </data>
 </odoo>

@@ -1,5 +1,18 @@
 <?xml version="1.0"?>
 <odoo>
+    <record id="l10n_mx_hr_payroll_structure_mx_employee_salary_basic_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="name">Basic Salary</field>
+        <field name="sequence">1</field>
+        <field name="code">BASIC</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = payslip.paid_amount
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_mx_employee_salary"/>
+    </record>
+
     <record id="l10n_mx_regular_pay_holidays_on_time_sub" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_holidays_on_time"/>
         <field name="name">Holidays On Time to Substruct</field>
@@ -491,12 +504,18 @@ result = inputs['EXPENSES'].amount if 'EXPENSES' in inputs else 0
         <field name="struct_id" ref="hr_payroll_structure_mx_employee_salary"/>
     </record>
 
-    <function model="hr.salary.rule" name="write">
-        <value model="hr.salary.rule" search="[
-            ('struct_id', '=', ref('hr_payroll_structure_mx_employee_salary')),
-            ('code', '=', 'GROSS')]"/>
-        <value eval="{'amount_python_compute': 'result = categories[\'BASIC\'] + categories[\'TAXABLE_ALW\']'}"/>
-    </function>
+    <record id="l10n_mx_hr_payroll_structure_mx_employee_salary_gross_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.GROSS"/>
+        <field name="name">Taxable Salary</field>
+        <field name="sequence">100</field>
+        <field name="code">GROSS</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = categories['BASIC'] + categories['TAXABLE_ALW']
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_mx_employee_salary"/>
+    </record>
 
     <record id="l10n_mx_employees_salary_isr" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
@@ -1102,6 +1121,81 @@ result_rate = 5
         <field name="struct_id" ref="hr_payroll_structure_mx_employee_salary"/>
     </record>
 
+    <record id="l10n_mx_hr_payroll_structure_mx_employee_salary_attachment_of_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Attachment of Salary</field>
+        <field name="sequence">174</field>
+        <field name="code">ATTACH_SALARY</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'ATTACH_SALARY' in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -inputs['ATTACH_SALARY'].amount
+result_name = inputs['ATTACH_SALARY'].name
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_mx_employee_salary"/>
+    </record>
+
+    <record id="l10n_mx_hr_payroll_structure_mx_employee_salary_assignment_of_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Assignment of Salary</field>
+        <field name="sequence">174</field>
+        <field name="code">ASSIG_SALARY</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'ASSIG_SALARY' in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -inputs['ASSIG_SALARY'].amount
+result_name = inputs['ASSIG_SALARY'].name
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_mx_employee_salary"/>
+    </record>
+
+    <record id="l10n_mx_hr_payroll_structure_mx_employee_salary_child_support" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Child Support</field>
+        <field name="code">CHILD_SUPPORT</field>
+        <field name="amount_select">code</field>
+        <field name="sequence">174</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'CHILD_SUPPORT' in inputs</field>
+        <field name="amount_python_compute">
+result = -inputs['CHILD_SUPPORT'].amount
+result_name = inputs['CHILD_SUPPORT'].name
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_mx_employee_salary"/>
+    </record>
+
+    <record id="l10n_mx_hr_payroll_structure_mx_employee_salary_deduction_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Deduction</field>
+        <field name="sequence">198</field>
+        <field name="code">DEDUCTION</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'DEDUCTION' in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -inputs['DEDUCTION'].amount
+result_name = inputs['DEDUCTION'].name
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_mx_employee_salary"/>
+    </record>
+
+    <record id="l10n_mx_hr_payroll_structure_mx_employee_salary_reimbursement_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="name">Reimbursement</field>
+        <field name="sequence">199</field>
+        <field name="code">REIMBURSEMENT</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'REIMBURSEMENT' in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs['REIMBURSEMENT'].amount
+result_name = inputs['REIMBURSEMENT'].name
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_mx_employee_salary"/>
+    </record>
+
     <record id="l10n_mx_social_security_total_employee" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_social_security_employee_total"/>
         <field name="name">IMSS Total (Employee)</field>
@@ -1127,6 +1221,19 @@ result = -categories['IMSS_EMPLOYEE']
 result = categories['IMSS_EMPLOYER']
         </field>
         <field name="appears_on_payslip" eval="False"/>
+        <field name="struct_id" ref="hr_payroll_structure_mx_employee_salary"/>
+    </record>
+
+    <record id="l10n_mx_hr_payroll_structure_mx_employee_salary_net_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.NET"/>
+        <field name="name">Net Salary</field>
+        <field name="sequence">200</field>
+        <field name="code">NET</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = categories['BASIC'] + categories['ALW'] + categories['DED']
+        </field>
         <field name="struct_id" ref="hr_payroll_structure_mx_employee_salary"/>
     </record>
 

@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-    <function model="hr.salary.rule" name="write">
-        <value model="hr.salary.rule" search="[('struct_id', '=', ref('l10n_in_hr_payroll.hr_payroll_structure_in_employee_salary')),
-            ('code', '=', 'BASIC')]"/>
-        <value eval="{'amount_python_compute': &quot;result = max(payslip._rule_parameter('l10n_in_basic_value'), payslip.paid_amount * payslip._rule_parameter('l10n_in_basic_percent') * payslip._rule_parameter('l10n_in_basic_days'))&quot;}"/>
-    </function>
-
-    <record id="hr_payslip_rule_tds" model="hr.salary.rule">
-        <field name="code">TDS</field>
-        <field name="name">Tax Deducted at Source</field>
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(contract.l10n_in_tds)</field>
+    <record id="l10n_in_hr_payroll_structure_in_employee_salary_basic_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.BASIC"/>
+        <field name="name">Basic Salary</field>
+        <field name="sequence">1</field>
+        <field name="code">BASIC</field>
+        <field name="condition_select">none</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = -(contract.l10n_in_tds)</field>
-        <field name="partner_id" ref="hr_tds_register"/>
-        <field name="sequence" eval="140"/>
-        <field name="note">As per income tax rules, all payment which are taxable in nature should be done after deduction of taxes at the source itself. Hence employer compute income tax on salary payment and deduct it every month. This TDS is based on employee’s saving/investment declaration at the start of year. If investments for tax saving is not done, large amount may be deducted in last few months.</field>
+        <field name="amount_python_compute">
+result = max(
+    payslip._rule_parameter('l10n_in_basic_value'),
+    payslip.paid_amount * payslip._rule_parameter('l10n_in_basic_percent') * payslip._rule_parameter('l10n_in_basic_days')
+)
+        </field>
         <field name="struct_id" ref="hr_payroll_structure_in_employee_salary"/>
     </record>
 
@@ -124,11 +119,18 @@ result = bonus_base * worked_days_ratio
         <field name="struct_id" ref="l10n_in_hr_payroll.hr_payroll_structure_in_employee_salary"/>
     </record>
 
-    <function model="hr.salary.rule" name="write">
-        <value model="hr.salary.rule" search="[('struct_id', '=', ref('l10n_in_hr_payroll.hr_payroll_structure_in_employee_salary')),
-            ('code', '=', 'GROSS')]"/>
-        <value eval="{'amount_python_compute': &quot;result = payslip.paid_amount * payslip._rule_parameter('l10n_in_basic_percent')&quot;}"/>
-    </function>
+    <record id="l10n_in_hr_payroll_structure_in_employee_salary_gross_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.GROSS"/>
+        <field name="name">Taxable Salary</field>
+        <field name="sequence">100 </field>
+        <field name="code">GROSS</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = payslip.paid_amount * payslip._rule_parameter('l10n_in_basic_percent')
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_in_employee_salary"/>
+    </record>
 
     <record id="l10n_in_hr_salary_rule_leave" model="hr.salary.rule">
         <field name="code">LEAVE</field>
@@ -195,11 +197,25 @@ result = - categories['BASIC'] * payslip._rule_parameter('l10n_in_pf_percent') i
         <field name="struct_id" ref="l10n_in_hr_payroll.hr_payroll_structure_in_employee_salary"/>
     </record>
 
-    <record id="l10n_in_hr_salary_rule_attach_salary" model="hr.salary.rule">
-        <field name="code">ATTACH_SALARY</field>
-        <field name="name">Attachment of Salary</field>
+    <record id="l10n_in_hr_payslip_rule_tds" model="hr.salary.rule">
+        <field name="code">TDS</field>
+        <field name="name">Tax Deducted at Source</field>
         <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="sequence" eval="174"/>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = bool(contract.l10n_in_tds)</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = -(contract.l10n_in_tds)</field>
+        <field name="partner_id" ref="hr_tds_register"/>
+        <field name="sequence" eval="140"/>
+        <field name="note">As per income tax rules, all payment which are taxable in nature should be done after deduction of taxes at the source itself. Hence employer compute income tax on salary payment and deduct it every month. This TDS is based on employee’s saving/investment declaration at the start of year. If investments for tax saving is not done, large amount may be deducted in last few months.</field>
+        <field name="struct_id" ref="hr_payroll_structure_in_employee_salary"/>
+    </record>
+
+    <record id="l10n_in_hr_payroll_structure_in_employee_salary_attachment_of_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Attachment of Salary</field>
+        <field name="sequence">174</field>
+        <field name="code">ATTACH_SALARY</field>
         <field name="condition_select">python</field>
         <field name="condition_python">result = 'ATTACH_SALARY' in inputs</field>
         <field name="amount_select">code</field>
@@ -207,21 +223,37 @@ result = - categories['BASIC'] * payslip._rule_parameter('l10n_in_pf_percent') i
 result = -inputs['ATTACH_SALARY'].amount
 result_name = inputs['ATTACH_SALARY'].name
         </field>
-        <field name="struct_id" ref="l10n_in_hr_payroll.hr_payroll_structure_in_employee_salary"/>
+        <field name="struct_id" ref="hr_payroll_structure_in_employee_salary"/>
     </record>
 
-    <record id="l10n_in_hr_salary_rule_assig_salary" model="hr.salary.rule">
-        <field name="code">ASSIG_SALARY</field>
-        <field name="name">Assignment of Salary</field>
+    <record id="l10n_in_hr_payroll_structure_in_employee_salary_assignment_of_salary_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="sequence" eval="174"/>
-        <field name="amount_select">code</field>
+        <field name="name">Assignment of Salary</field>
+        <field name="sequence">174</field>
+        <field name="code">ASSIG_SALARY</field>
         <field name="condition_select">python</field>
         <field name="condition_python">result = 'ASSIG_SALARY' in inputs</field>
+        <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = -inputs['ASSIG_SALARY'].amount
-result_name = inputs['ASSIG_SALARY'].name</field>
-        <field name="struct_id" ref="l10n_in_hr_payroll.hr_payroll_structure_in_employee_salary"/>
+result_name = inputs['ASSIG_SALARY'].name
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_in_employee_salary"/>
+    </record>
+
+    <record id="l10n_in_hr_payroll_structure_in_employee_salary_child_support" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Child Support</field>
+        <field name="code">CHILD_SUPPORT</field>
+        <field name="amount_select">code</field>
+        <field name="sequence">174</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'CHILD_SUPPORT' in inputs</field>
+        <field name="amount_python_compute">
+result = -inputs['CHILD_SUPPORT'].amount
+result_name = inputs['CHILD_SUPPORT'].name
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_in_employee_salary"/>
     </record>
 
     <record id="l10n_in_hr_salary_rule_expenses_reimbursement" model="hr.salary.rule">
@@ -239,10 +271,47 @@ result_name = inputs['EXPENSES'].name
         <field name="struct_id" ref="l10n_in_hr_payroll.hr_payroll_structure_in_employee_salary"/>
     </record>
 
-    <function model="hr.salary.rule" name="write">
-        <value model="hr.salary.rule" search="[('struct_id', '=', ref('l10n_in_hr_payroll.hr_payroll_structure_in_employee_salary')),
-            ('code', '=', 'NET')]"/>
-        <value eval="{'amount_python_compute': &quot;result = categories['BASIC'] + categories['ALW'] + categories['DED']&quot;}"/>
-    </function>
+    <record id="l10n_in_hr_payroll_structure_in_employee_salary_deduction_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Deduction</field>
+        <field name="sequence">198</field>
+        <field name="code">DEDUCTION</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'DEDUCTION' in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -inputs['DEDUCTION'].amount
+result_name = inputs['DEDUCTION'].name
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_in_employee_salary"/>
+    </record>
 
+    <record id="l10n_in_hr_payroll_structure_in_employee_salary_reimbursement_salary_rule" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="name">Reimbursement</field>
+        <field name="sequence">199</field>
+        <field name="code">REIMBURSEMENT</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'REIMBURSEMENT' in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs['REIMBURSEMENT'].amount
+result_name = inputs['REIMBURSEMENT'].name
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_in_employee_salary"/>
+    </record>
+
+    <record id="l10n_in_hr_payroll_structure_in_employee_salary_net_salary" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.NET"/>
+        <field name="name">Net Salary</field>
+        <field name="sequence">200</field>
+        <field name="code">NET</field>
+        <field name="appears_on_employee_cost_dashboard">True</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = categories['BASIC'] + categories['ALW'] + categories['DED']
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_in_employee_salary"/>
+    </record>
 </odoo>

@@ -7,6 +7,7 @@
         <field name="unpaid_work_entry_type_ids" eval="[(4, ref('hr_work_entry_contract.work_entry_type_unpaid_leave'))]"/>
         <field name="country_id" ref="base.in"/>
         <field name="report_id" ref="payslip_details_report"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
 
     <record id="structure_worker_0001" model="hr.payroll.structure">
@@ -14,6 +15,7 @@
         <field name="type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_worker"/>
         <field name="country_id" ref="base.in"/>
         <field name="report_id" ref="payslip_details_report"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
 
     <record id="hr_payroll_structure_in_stipend" model="hr.payroll.structure">
@@ -22,6 +24,7 @@
         <field name="country_id" ref="base.in"/>
         <field name="report_id" ref="payslip_details_report"/>
         <field name="payslip_name">Stipend</field>
+        <field name="rule_ids" eval="[]"/>
     </record>
 
     <record id="hr_payroll_salary_structure_ind_emp" model="hr.payroll.structure">
@@ -29,6 +32,7 @@
         <field name="country_id" ref="base.in"/>
         <field name="type_id" ref="hr_payroll_salary_structure_type_ind_emp"/>
         <field name="report_id" ref="payslip_details_report"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
 
     <record id="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_emp_pay" model="hr.payroll.structure.type">

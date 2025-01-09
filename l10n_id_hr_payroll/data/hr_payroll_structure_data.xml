@@ -8,6 +8,7 @@
         <field name="unpaid_work_entry_type_ids" eval="[
             (4, ref('hr_work_entry_contract.work_entry_type_unpaid_leave')),
         ]"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
 
     <record id="l10n_id_hr_payroll.structure_type_employee_id" model="hr.payroll.structure.type">

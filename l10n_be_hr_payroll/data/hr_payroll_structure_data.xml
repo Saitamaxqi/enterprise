@@ -22,6 +22,7 @@
             (4, ref('l10n_be_hr_payroll.work_entry_type_credit_time')),
             (4, ref('l10n_be_hr_payroll.work_entry_type_parental_time_off')),
         ]"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
     <record id="hr_contract.structure_type_employee_cp200" model="hr.payroll.structure.type">
         <field name="default_struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
@@ -35,6 +36,7 @@
         <field name="payslip_name">Employee Reimbursement</field>
         <field name="use_worked_day_lines" eval="False"/>
         <field name="type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
 
     <record id="hr_payroll_structure_cp200_double_holiday" model="hr.payroll.structure">
@@ -45,6 +47,7 @@
         <field name="payslip_name">Double Holidays Slip</field>
         <field name="use_worked_day_lines" eval="False"/>
         <field name="type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
 
     <record id="hr_payroll_structure_cp200_employee_termination_fees" model="hr.payroll.structure">
@@ -71,6 +74,7 @@
             (4, ref('l10n_be_hr_payroll.work_entry_type_maternity')),
             (4, ref('l10n_be_hr_payroll.work_entry_type_breast_feeding')),
         ]"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
     <record id="hr_contract.structure_type_employee_cp200_pfi" model="hr.payroll.structure.type">
         <field name="default_struct_id" ref="hr_payroll_structure_cp200_pfi"/>
@@ -114,6 +118,7 @@
             (4, ref('l10n_be_hr_payroll.work_entry_type_part_sick')),
             (4, ref('l10n_be_hr_payroll.work_entry_type_notice')),
         ]"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
 
     <record id="hr_payroll_structure_cp200_structure_warrant" model="hr.payroll.structure">
@@ -124,6 +129,7 @@
         <field name="report_id" ref="l10n_be_hr_payroll.action_report_bonus_month"/>
         <field name="use_worked_day_lines" eval="False"/>
         <field name="payslip_name">Warrants</field>
+        <field name="rule_ids" eval="[]"/>
     </record>
 
     <record id="hr_payroll_structure_student_regular_pay" model="hr.payroll.structure">
@@ -133,6 +139,7 @@
         <field name="report_id" ref="l10n_be_hr_payroll.action_report_payslip_be"/>
         <field name="payslip_name">Student: Regular Pay</field>
         <field name="type_id" ref="l10n_be_hr_payroll.structure_type_student"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
     <record id="structure_type_student" model="hr.payroll.structure.type">
         <field name="default_struct_id" ref="hr_payroll_structure_student_regular_pay"/>

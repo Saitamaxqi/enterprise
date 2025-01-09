@@ -5,6 +5,7 @@
         <field name="country_id" ref="base.pk"/>
         <field name="code">PKMONTHLY</field>
         <field name="type_id" ref="l10n_pk_hr_payroll.structure_type_employee_pk"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
 
     <record id="l10n_pk_hr_payroll.structure_type_employee_pk" model="hr.payroll.structure.type">

@@ -5,6 +5,7 @@
         <field name="country_id" ref="base.jo"/>
         <field name="code">JOMONTHLY</field>
         <field name="type_id" ref="l10n_jo_hr_payroll.structure_type_employee_jo"/>
+        <field name="rule_ids" eval="[]"/>
     </record>
 
     <record id="l10n_jo_hr_payroll.structure_type_employee_jo" model="hr.payroll.structure.type">

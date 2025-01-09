@@ -7,6 +7,7 @@
             <field name="name">Moroccan Payroll Structure</field>
             <field name="type_id" ref="l10n_ma_hr_payroll.structure_type_employee_mar"/>
             <field name="country_id" ref="base.ma"/>
+            <field name="rule_ids" eval="[]"/>
         </record>
 
         <record id="l10n_ma_hr_payroll.structure_type_employee_mar" model="hr.payroll.structure.type">
