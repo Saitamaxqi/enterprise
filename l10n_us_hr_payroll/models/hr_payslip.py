@@ -59,9 +59,3 @@ class HrPayslip(models.Model):
                 'balance': balance,
             })
         return leave_lines
-
-    # FIXME: this should be removed in master (see https://www.odoo.com/odoo/1251/tasks/3844686)
-    def _get_rule_name(self, localdict, rule, employee_lang):
-        if self.country_code == 'US' and rule.code == 'GROSS':
-            return _('Gross Pay')
-        return super()._get_rule_name(localdict, rule, employee_lang)

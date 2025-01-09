@@ -222,22 +222,6 @@ class HrPayslip(models.Model):
                 'data/hr_payroll_dashboard_warning_data.xml',
             ])]
 
-    def _get_rule_name(self, localdict, rule, employee_lang):
-        if rule.struct_id.country_id.code == 'LU':
-            if rule.struct_id.code == 'LUX_MONTHLY':
-                if rule.code == 'GROSS':
-                    return _('Total Gross')
-                elif rule.code == 'NET':
-                    return _('Net To Pay')
-            if rule.struct_id.code in ['LUX_GRATIFICATION', 'LUX_13TH_MONTH']:
-                if rule.code == 'BASIC':
-                    return _('Basic Gratification')
-                elif rule.code == 'GROSS':
-                    return _('Gross Gratification')
-                elif rule.code == 'NET':
-                    return _('Net Gratification')
-        return super()._get_rule_name(localdict, rule, employee_lang)
-
     def _get_paid_amount(self):
         self.ensure_one()
         if self.struct_id.country_id.code == 'LU' and self.struct_id.code == 'LUX_MONTHLY':
