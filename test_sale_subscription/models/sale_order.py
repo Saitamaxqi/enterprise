@@ -29,6 +29,8 @@ class SaleOrder(models.Model):
     def _test_demo_create_invoices(self, automatic=False):
         self._create_recurring_invoice()
         self.invoice_ids.filtered(lambda inv: inv.state == 'draft')._post(False)
+        data = [{"xml_id":f"test_sale_subscription.test_subscription_def_invoice_{inv.id}", "record": inv} for inv in self.invoice_ids.deferred_move_ids]
+        self.env["ir.model.data"]._update_xmlids(data)
 
     @api.model
     def _test_demo_generate_subscriptions(self):
@@ -82,6 +84,7 @@ class SaleOrder(models.Model):
                 'client_order_ref': 'test_subscription_portal_4',
                 'partner_id': self.env.ref('base.res_partner_2').id,
             })
+            self.env["ir.model.data"]._update_xmlids([{"xml_id":f"test_sale_subscription.test_subscription_portal_{sub_4.id}", "record": sub_4}])
             sub_4.order_line.product_uom_qty = 10
             self._test_demo_flush_tracking()
             sub_4.action_confirm()
@@ -102,6 +105,7 @@ class SaleOrder(models.Model):
                 'client_order_ref': 'test_subscription_portal_5',
                 'partner_id': self.env.ref('base.res_partner_3').id,
             })
+            self.env["ir.model.data"]._update_xmlids([{"xml_id":f"test_sale_subscription.test_subscription_portal_{sub_5.id}", "record": sub_5}])
             sub_5.order_line.product_uom_qty = 5
             self._test_demo_flush_tracking()
             sub_5.action_confirm()
@@ -224,3 +228,14 @@ class SaleOrder(models.Model):
             self._test_demo_flush_tracking()
 
         subs_to_invoice.filtered(lambda so: so.state == 'sale')._test_demo_create_invoices(automatic=False)
+
+    def _create_renew_upsell_order(self, subscription_state, message_body):
+        order = super()._create_renew_upsell_order(subscription_state, message_body)
+        self.env["ir.model.data"]._update_xmlids([{"xml_id":f"test_sale_subscription.test_subscription_portal_{order.id}", "record": order}])
+        return order
+
+    def _create_invoices(self, grouped=False, final=False, date=None):
+        invoices = super()._create_invoices(grouped=grouped, final=final, date=date)
+        data = [{"xml_id":f"test_sale_subscription.test_subscription_invoice_{inv.id}", "record": inv} for inv in invoices]
+        self.env["ir.model.data"]._update_xmlids(data)
+        return invoices
