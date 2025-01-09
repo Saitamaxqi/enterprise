@@ -76,11 +76,18 @@ export class AccountReportListRenderer extends ListRenderer {
             if (line.parent_id?.[0]) {
                 let parentLine = lines[idToIndexMap[line.parent_id[0]]];
 
-                parentLine?.children.push(line);
+                if (parentLine) {
+                    parentLine?.children.push(line);
 
-                while (parentLine) {
-                    parentLine.descendants_count += 1;
-                    parentLine = lines[idToIndexMap[parentLine.parent_id?.[0]]];
+                    while (parentLine) {
+                        parentLine.descendants_count += 1;
+                        parentLine = lines[idToIndexMap[parentLine.parent_id?.[0]]];
+                    }
+                } else {
+                    // Since the parentLine doesn't exist yet. It means that this line is out of sequence.
+                    line.out_of_sequence_error = true;
+
+                    tree.push(line);
                 }
             } else {
                 tree.push(line);

@@ -73,8 +73,19 @@
                                 'fixed': !isNameColumn,
                             }"
                             t-on-click="(ev) => this.onCellClicked(record, column, ev)"
-                            t-out="isNameColumn ? line[column.name] : getFormattedValue(column, record)"
-                        />
+                        >
+                            <t t-out="isNameColumn ? line[column.name] : getFormattedValue(column, record)"/>
+
+                            <t t-if="line.out_of_sequence_error">
+                                <span
+                                    class="text-danger"
+                                    data-tooltip="This line is placed before its parent, which is not allowed. You can fix it by dragging it to the proper position."
+                                >
+                                    <i class="fa fa-exclamation-circle text-danger ms-2 me-1"/>
+                                    This line is out of sequence.
+                                </span>
+                            </t>
+                        </span>
                     </t>
 
                     <!-- Trash -->

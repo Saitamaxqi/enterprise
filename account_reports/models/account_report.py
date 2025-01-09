@@ -2531,7 +2531,19 @@ class AccountReport(models.Model):
             # Inject all the dynamic lines whose sequence is inferior to the next static line to add
             while dynamic_lines and line.sequence > dynamic_lines[0][0]:
                 lines.append(dynamic_lines.pop(0)[1])
-            parent_generic_id = line_cache[line.parent_id]['id'] if line.parent_id else None # The parent line has necessarily been treated in a previous iteration
+
+            parent_generic_id = None
+
+            if line.parent_id:
+                # Normally, the parent line has necessarily been treated in a previous iteration
+                try:
+                    parent_generic_id = line_cache[line.parent_id]['id']
+                except KeyError as e:
+                    raise UserError(_(
+                        "Line '%(child)s' is configured to appear before its parent '%(parent)s'. This is not allowed.",
+                        child=line.name, parent=e.args[0].name
+                    ))
+
             line_dict = self._get_static_line_dict(options, line, all_column_groups_expression_totals, parent_id=parent_generic_id)
             line_cache[line] = line_dict
 
