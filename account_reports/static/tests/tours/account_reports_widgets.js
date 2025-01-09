@@ -74,13 +74,8 @@ registry.category("web_tour.tours").add("account_reports_widgets", {
             trigger: "th + th + th + th",
         },
         {
-            content: "open cog menu",
-            trigger: ".o_control_panel_breadcrumbs_actions .dropdown-toggle",
-            run: "click",
-        },
-        {
             content: "export xlsx",
-            trigger: "span:contains('Download Excel')",
+            trigger: "button:contains('XLSX')",
             run: "click",
         },
     ],
