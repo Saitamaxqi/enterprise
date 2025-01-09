@@ -38,9 +38,6 @@ class AccountChartTemplate(models.AbstractModel):
         pp_rule = self.env.ref('l10n_be_hr_payroll.cp200_employees_thirteen_month_p_p')
         rules_mapping[pp_rule]['credit'] = '453000'
 
-        monss_rule = self.env.ref('l10n_be_hr_payroll.cp200_employees_thirteen_month_mis_ex_onss')
-        rules_mapping[monss_rule]['debit'] = '454000'  # Note: this is a credit, but the amount is negative
-
         net_rule = self.env['hr.salary.rule'].search([
             ('struct_id', '=', self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_thirteen_month').id),
             ('code', '=', 'NET')
