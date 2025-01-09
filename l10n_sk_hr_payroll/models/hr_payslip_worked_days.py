@@ -1,11 +1,9 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 
 from odoo import models
 
 
-class HrPayslipWorked_Days(models.Model):
+class HrPayslipWorkedDays(models.Model):
     _inherit = 'hr.payslip.worked_days'
 
     def _compute_amount(self):

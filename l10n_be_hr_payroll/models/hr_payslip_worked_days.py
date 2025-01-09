@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import pytz
@@ -9,7 +8,7 @@ from odoo import api, fields, models
 from odoo.tools.float_utils import float_compare
 
 
-class HrPayslipWorked_Days(models.Model):
+class HrPayslipWorkedDays(models.Model):
     _inherit = 'hr.payslip.worked_days'
 
     @api.depends('is_paid', 'is_credit_time', 'number_of_hours', 'payslip_id', 'contract_id.wage', 'payslip_id.sum_worked_hours')
@@ -181,4 +180,4 @@ class HrPayslipWorked_Days(models.Model):
                         worked_day_amount = wage
                 worked_day.amount = worked_day_amount
 
-        super(HrPayslipWorked_Days, super_self)._compute_amount()
+        super(HrPayslipWorkedDays, super_self)._compute_amount()

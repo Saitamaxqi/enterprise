@@ -1,11 +1,10 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
 from odoo.tools import float_round
 
 
-class HrPayslipWorked_Days(models.Model):
+class HrPayslipWorkedDays(models.Model):
     _name = 'hr.payslip.worked_days'
     _description = 'Payslip Worked Days'
     _order = 'payslip_id, sequence'

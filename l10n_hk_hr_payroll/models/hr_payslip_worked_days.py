@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
 
 
-class HrPayslipWorked_Days(models.Model):
+class HrPayslipWorkedDays(models.Model):
     _inherit = 'hr.payslip.worked_days'
 
     l10n_hk_leave_id = fields.Many2one('hr.leave', string='Leave', readonly=True)
@@ -42,4 +41,4 @@ class HrPayslipWorked_Days(models.Model):
                 number_of_days = worked_days.number_of_hours / worked_days.contract_id.resource_calendar_id.hours_per_day
                 worked_days.amount = daily_wage * number_of_days * rate
 
-        super(HrPayslipWorked_Days, self - hk_worked_days)._compute_amount()
+        super(HrPayslipWorkedDays, self - hk_worked_days)._compute_amount()
