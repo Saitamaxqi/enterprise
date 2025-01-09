@@ -19,4 +19,7 @@ Egypt Payroll and End of Service rules.
         "views/hr_contract_views.xml",
     ],
     "license": "OEEL-1",
+    'demo': [
+        'data/l10n_eg_hr_payroll_demo.xml',
+    ],
 }

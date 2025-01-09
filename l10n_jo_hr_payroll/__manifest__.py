@@ -18,4 +18,7 @@ Jordan Payroll and Tax Rules
         'views/hr_contract_view.xml',
     ],
     'license': 'OEEL-1',
+    'demo': [
+        'data/l10n_jo_hr_payroll_demo.xml',
+    ],
 }

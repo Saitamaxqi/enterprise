@@ -20,4 +20,7 @@ Türkiye Payroll and Tax Rules
         'data/hr_salary_rule_data.xml',
     ],
     'license': 'OEEL-1',
+    'demo':[
+        'data/l10n_tr_hr_payroll_demo.xml'
+    ]
 }

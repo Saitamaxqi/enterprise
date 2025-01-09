@@ -30,4 +30,7 @@ Kingdom of Saudi Arabia Payroll and End of Service rules.
         "views/hr_departure_reason_views.xml",
     ],
     "auto_install": ["hr_payroll"],
+    'demo': [
+        'data/l10n_sa_hr_payroll_demo.xml',
+    ],
 }
