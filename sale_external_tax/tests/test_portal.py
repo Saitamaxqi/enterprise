@@ -50,6 +50,7 @@ class TestSaleExternalTaxesSalePortal(HttpCaseWithUserPortal):
         if sale_management.state != 'installed':
             self.skipTest("sale_management module is not installed")
 
+        self.env['product.pricelist'].search([]).unlink()
         portal_partner = self.env['res.users'].sudo().search([('login', '=', 'portal')]).partner_id
         portal_partner.write({
             'state_id': self.env.ref('base.state_us_25').id,
