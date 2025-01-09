@@ -1254,8 +1254,8 @@ class L10n_InGstReturnPeriod(models.Model):
                                 if section_code == 'cdnur':
                                     invoice_number = invoice.get('nt_num')
                                 msg = " - ".join([error_cd, error_msg])
-                                moves = AccountMove.search([('name', '=', invoice_number),
-                                    ('company_id', 'in', self.company_ids.ids or self.company_id.ids)])
+                                moves = invoice_number and AccountMove.search([('name', '=', invoice_number),
+                                    ('company_id', 'in', self.company_ids.ids or self.company_id.ids)]) or AccountMove
                                 for move in moves:
                                     invoice_link_msg = "".join(
                                         "<a href='#' data-oe-model='account.move' data-oe-id='%s'>%s</a>"
