@@ -1070,6 +1070,16 @@ msgid ""
 msgstr ""
 
 #. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_vendor_document
+msgid "Vendor Bill"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_vendor_document
+msgid "Vendor Credit Note"
+msgstr ""
+
+#. module: l10n_co_dian
 #: model:ir.model.constraint,message:l10n_co_dian.constraint_l10n_co_dian_operation_mode_uniq_software_operation_mode
 msgid "You cannot have two records with same mode"
 msgstr ""

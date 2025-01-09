@@ -1209,6 +1209,16 @@ msgid "You cannot have two records with same mode"
 msgstr "No puede tener dos registros con el mismo modo"
 
 #. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_vendor_document
+msgid "Vendor Bill"
+msgstr "Documento Soporte"
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_vendor_document
+msgid "Vendor Credit Note"
+msgstr "Nota de Ajuste del Documento Soporte"
+
+#. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__zip_key
 msgid "Zip Key"
 msgstr "Clave del zip"
