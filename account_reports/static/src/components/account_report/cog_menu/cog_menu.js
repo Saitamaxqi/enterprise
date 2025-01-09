@@ -23,7 +23,6 @@ export class AccountReportCogMenu extends Component {
                 buttons.push(button);
             }
         }
-        buttons.shift()
 
         return buttons;
     }

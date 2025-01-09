@@ -11,21 +11,14 @@ export class AccountReportButtonsBar extends Component {
     //------------------------------------------------------------------------------------------------------------------
     // Buttons
     //------------------------------------------------------------------------------------------------------------------
-    get mainButton() {
+    get barButtons() {
+        const buttons = [];
+
         for (const button of this.controller.buttons) {
-            if (!button.always_show) {
-                return button;  // other always_show buttons are displayed in the cog menu
+            if (button.always_show) {
+                buttons.push(button);
             }
         }
-        return null;
-    }
-
-    get singleButtons() {
-        const buttons= [];
-
-        for (const button of this.controller.buttons)
-            if (button.always_show)
-                buttons.push(button);
 
         return buttons;
     }

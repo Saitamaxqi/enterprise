@@ -1,36 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="account_reports.AccountReportButtonsBar">
-        <!-- There is only one button -->
-        <t t-if="controller.buttons.length == 1">
-            <t t-set="button" t-value="controller.buttons[0]"/>
-            <button
-                class="btn btn-primary"
-                t-on-click="(ev) => controller.reportAction(ev, button.error_action || button.action, button.action_param, true)"
-            >
-                <t t-out="button.name"/>
-            </button>
-        </t>
-
-        <!-- There is more than one button -->
-        <t t-if="controller.buttons.length > 1">
-            <!-- Grouped buttons -->
-            <t t-if="mainButton">
+        <t t-if="controller.buttons.length">
+            <t t-foreach="barButtons" t-as="barButton" t-key="barButton_index">
                 <button
-                    class="btn btn-primary text-nowrap"
-                    t-on-click="(ev) => controller.reportAction(ev, mainButton.error_action || mainButton.action, mainButton.action_param, true)"
+                    t-att-class="'btn text-nowrap' + (barButton.disabled ? ' disabled' : '') + (barButton_first ? ' btn-primary' : ' btn-secondary')"
+                    t-on-click="(ev) => controller.reportAction(ev, barButton.error_action || barButton.action, barButton.action_param, true)"
                 >
-                    <t t-out="mainButton.name"/>
-                </button>
-            </t>
-
-            <!-- Single buttons -->
-            <t t-foreach="singleButtons" t-as="singleButton" t-key="singleButton_index">
-                <button
-                    class="btn btn-secondary text-nowrap"
-                    t-on-click="(ev) => controller.reportAction(ev, singleButton.error_action || singleButton.action, singleButton.action_param, true)"
-                >
-                    <t t-out="singleButton.name"/>
+                    <t t-out="barButton.name"/>
                 </button>
             </t>
         </t>

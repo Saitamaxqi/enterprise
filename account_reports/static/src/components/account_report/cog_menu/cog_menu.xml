@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-
     <t t-name="account_reports.AccountReportCogMenu">
         <t t-if="cogButtons.length">
             <Dropdown>
@@ -19,5 +18,4 @@
             </Dropdown>
         </t>
     </t>
-
 </templates>
