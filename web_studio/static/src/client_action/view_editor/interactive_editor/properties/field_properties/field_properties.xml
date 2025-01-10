@@ -55,13 +55,13 @@
             onChangeAttribute.bind="onChangeAttribute"
         />
 
-        <t t-if="canShowDefaultValue">
+        <t t-set="defaultValuePropertyProps" t-value="getDefaultValuePropertyProps()" />
+        <t t-if="defaultValuePropertyProps">
             <Property
                 name="'default_value'"
-                type="defaultValuesInputType"
                 value="state.defaultValue"
                 onChange.bind="onChangeDefaultValue"
-                childProps="defaultValuesChoices"
+                t-props="defaultValuePropertyProps"
             >
                 Default value
             </Property>

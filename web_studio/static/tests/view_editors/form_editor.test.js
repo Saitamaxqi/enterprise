@@ -1012,14 +1012,12 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
     expect(".o_web_studio_add_chatter").toHaveCount(1);
 
     await contains(".o_field_one2many").click();
-    expect.verifySteps(["/web_studio/get_default_value"]);
 
     await contains('.o_web_studio_editX2Many[data-type="form"]').click();
     await waitForNone(".o_web_studio_add_chatter");
     expect.verifySteps(["fields_get", "get_views", "web_read"]);
 
     await contains(".o_field_one2many").click();
-    expect.verifySteps(["/web_studio/get_default_value"]);
 
     await contains('.o_web_studio_editX2Many[data-type="form"]').click();
     expect.verifySteps(["fields_get", "web_read"]);

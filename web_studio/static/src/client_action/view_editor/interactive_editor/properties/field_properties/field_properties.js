@@ -87,7 +87,7 @@ export class FieldProperties extends Component {
         );
 
         onWillStart(async () => {
-            if (this.canShowDefaultValue) {
+            if (this._canShowDefaultValue(this.props.node)) {
                 this.state.defaultValue = await this.getDefaultValue(this.props.node);
             }
         });
@@ -160,36 +160,37 @@ export class FieldProperties extends Component {
         };
     }
 
-    get defaultValuesInputType() {
-        const node = this.props.node;
-        return node.attrs?.widget === "statusbar"
-            ? "selection"
-            : node.attrs.widget || node.field.type;
-    }
-
-    get defaultValuesChoices() {
-        if (this.props.node.field.selection) {
-            return {
-                choices: this.props.node.field.selection.map(([value, label]) => {
-                    return {
-                        label,
-                        value,
-                    };
-                }),
-            };
+    getDefaultValuePropertyProps() {
+        if (!this._canShowDefaultValue(this.props.node)) {
+            return null;
         }
-        return undefined;
+        const { field, attrs } = this.props.node;
+        const props = {
+            childProps: {},
+            inputAttributes: {},
+        };
+        if (field.selection) {
+            props.childProps.choices = this.props.node.field.selection.map(([value, label]) => {
+                return {
+                    label,
+                    value,
+                };
+            });
+        }
+        const fieldType = field.type;
+        const widget = attrs.widget;
+        props.type = fieldType;
+        if (widget === "statusbar") {
+            props.type = "selection";
+        }
+        return props;
     }
 
     _canShowDefaultValue(node) {
         if (/^(in_group_|sel_groups_)/.test(node.attrs.name)) {
             return false;
         }
-        return !["image", "many2many", "many2one", "binary"].includes(node.field.type);
-    }
-
-    get canShowDefaultValue() {
-        return this._canShowDefaultValue(this.props.node);
+        return !["image", "many2many", "one2many", "many2one", "binary"].includes(node.field.type);
     }
 
     get canEditSelectionChoices() {

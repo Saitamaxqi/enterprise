@@ -517,6 +517,49 @@ QUnit.module(
             );
         });
 
+        QUnit.test("default value in sidebar according to field type", async function (assert) {
+            const arch = `<form><sheet>
+                    <group>
+                        <field name='display_name'/>
+                        <field name='priority' widget="radio"/>
+                    </group>
+                </sheet></form>`;
+            await createViewEditor({
+                serverData,
+                type: "form",
+                resModel: "coucou",
+                arch: arch,
+                mockRPC: {
+                    "/web_studio/get_default_value": (route, args) => {
+                        if (args.field_name === "priority") {
+                            return Promise.resolve({ default_value: "1" });
+                        }
+                    },
+                },
+            });
+
+            assert.containsN(target, '.o_field_widget[name="priority"] input[type="radio"]', 3);
+            await click(target.querySelector('.o_field_widget[name="priority"]'));
+            await click(
+                target.querySelector(
+                    ".o_web_studio_property_default_value .o_select_menu_toggler_slot"
+                )
+            );
+            assert.strictEqual(
+                target.querySelector(
+                    ".o_web_studio_property_default_value .o_select_menu_toggler_slot"
+                ).textContent,
+                "Low",
+                "the sidebar should display the correct default value"
+            );
+            assert.containsOnce(target, ".o-dropdown--menu");
+            assert.strictEqual(
+                target.querySelector(".o-dropdown--menu").textContent,
+                "HighLowMedium",
+                "the sidebar should have the right options"
+            );
+        });
+
         QUnit.test("default value for new field name", async function (assert) {
             assert.expect(2);
 
