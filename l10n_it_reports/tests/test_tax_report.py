@@ -35,7 +35,7 @@ class TestItalianTaxReport(TestAccountReportsCommon):
             'website': 'http://www.blue-interior.it'
         })
 
-        cls.report = cls.env.ref('l10n_it.tax_report_vat')
+        cls.report = cls.env.ref('l10n_it.tax_monthly_report_vat')
 
     def test_tax_report_carryover_vp14_credit_period(self):
         """
