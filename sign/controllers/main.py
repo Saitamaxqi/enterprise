@@ -294,15 +294,6 @@ class Sign(http.Controller):
             user[signature_type+'_frame'] = frame_datas[frame_datas.find(',') + 1:]
         return True
 
-    @http.route(['/sign/new_partners'], type='jsonrpc', auth='user')
-    def new_partners(self, partners=[]):
-        ResPartner = http.request.env['res.partner']
-        pIDs = []
-        for p in partners:
-            existing = ResPartner.search([('email', '=', p[1])], limit=1)
-            pIDs.append(existing.id if existing else ResPartner.create({'name': p[0], 'email': p[1]}).id)
-        return pIDs
-
     @http.route(['/sign/send_public/<int:request_id>/<token>'], type='jsonrpc', auth='public')
     def make_public_user(self, request_id, token, name=None, mail=None):
         sign_request = http.request.env['sign.request'].sudo().search([('id', '=', request_id), ('access_token', '=', token)])
