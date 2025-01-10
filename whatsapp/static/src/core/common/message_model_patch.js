@@ -13,5 +13,13 @@ const messagePatch = {
     canReplyTo(thread) {
         return super.canReplyTo(thread) && !this.thread?.composer?.threadExpired;
     },
+    isTranslatable(thread) {
+        return (
+            super.isTranslatable(thread) ||
+            (this.store.hasMessageTranslationFeature &&
+                thread?.channel_type === "whatsapp" &&
+                thread?.selfMember?.persona?.isInternalUser)
+        );
+    },
 };
 patch(Message.prototype, messagePatch);
