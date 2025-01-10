@@ -502,21 +502,17 @@ class AccountFecImportWizard(models.TransientModel):
             if partner_ref:
                 line_data["partner_id"] = self._make_xml_id('partner', partner_ref)
 
-            # Currency
             if currency_name in cache["res.currency"] and amount_currency:
-                currency = cache["res.currency"][currency_name]
                 line_data.update({
-                    "currency_id": currency.id,
+                    "currency_id": cache["res.currency"][currency_name].id,
                     "amount_currency": amount_currency,
                 })
-            else:
-                currency = self.company_id.currency_id
 
             # Round the values, save the total balance to detect issues
-            credit, debit, balance = self._get_credit_debit_balance(record, currency)
+            credit, debit, balance = self._get_credit_debit_balance(record, self.company_id.currency_id)
             line_data["credit"] = credit
             line_data["debit"] = debit
-            balance_data["balance"] = currency.round(balance_data["balance"] + balance)
+            balance_data["balance"] = self.company_id.currency_id.round(balance_data["balance"] + balance)
 
             # Montantdevise can be positive while the line is credited:
             # => amount_currency and balance (debit - credit) should always have the same sign

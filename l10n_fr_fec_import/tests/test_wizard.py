@@ -499,3 +499,18 @@ class AccountTestFecImport(AccountTestInvoicingCommon):
         account = self.env['account.account'].search([('name', '=', 'Subscribed capital - uncalled')]).with_context(lang="fr_FR")
 
         self.assertEqual(account.name, 'Capital souscrit - non appelé')
+
+    def test_currency_rounding_with_decimal_values(self):
+        """
+        Test that it doesn't fail even when the currency has a rounding of 1, and the lines include values with decimal points.
+        """
+        test_content = """
+            JournalCode\tJournalLib\tEcritureNum\tEcritureDate\tCompteNum\tCompteLib\tCompAuxNum\tCompAuxLib\tPieceRef\tPieceDate\tEcritureLib\tDebit\tCredit\tEcritureLet\tDateLet\tValidDate\tMontantdevise\tIdevise
+            ACH\tACHATS\tTEST_MONTANT_DEVISE\t20180808\t62270000\tFRAIS D'ACTES ET CONTENTIEUX\t\t\t1\t20180808\tACOMPTE FORMALITES ENTREPRISE\t100,50\t0,00\t\t\t20190725\t100,50\txxx
+            ACH\tACHATS\tTEST_MONTANT_DEVISE\t20180808\t62270000\tFRAIS D'ACTES ET CONTENTIEUX\t\t\t1\t20180808\tACOMPTE FORMALITES ENTREPRISE\t100,50\t0,00\t\t\t20190725\t100,50\txxx
+            ACH\tACHATS\tTEST_MONTANT_DEVISE\t20180808\t44566000\tTVA SUR AUTRES BIEN ET SERVICE\t\t\t1\t20180808\tACOMPTE FORMALITES ENTREPRISE\t0\t201,00\t\t\t20190725\t201,00\txxx
+        """
+
+        self.env["res.currency"].create({"name": "xxx", "symbol": "X", "rounding": 1})
+        self._attach_file_to_wizard(test_content, self.wizard)
+        self.wizard._import_files()
