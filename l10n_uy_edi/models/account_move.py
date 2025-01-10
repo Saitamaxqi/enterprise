@@ -1,5 +1,6 @@
 import base64
 import stdnum.uy
+import unicodedata
 from lxml import etree
 from markupsafe import Markup
 
@@ -573,7 +574,13 @@ class AccountMove(models.Model):
         if self.narration:
             term_and_conditions = html2plaintext(self.narration)
             addenda = addenda + "\n\n" + term_and_conditions if addenda else term_and_conditions
-        return addenda
+        return self._l10n_uy_edi_clean_non_ascii_chars(addenda)
+
+    def _l10n_uy_edi_clean_non_ascii_chars(self, text):
+        """Deletes non-ASCII characters from strings."""
+        if isinstance(text, str):
+            return ''.join(char for char in text if (ord(char) <= 127) or unicodedata.category(char) == 'Ll' or unicodedata.category(char) == 'Lu')
+        return text 
 
     def _l10n_uy_edi_get_line_desc(self, aml):
         # B8 DscItem
