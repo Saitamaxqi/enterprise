@@ -6,7 +6,7 @@ from odoo import fields, models
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    documents_approvals_settings = fields.Boolean(default=False)
+    documents_approvals_settings = fields.Boolean(default=True)
     approvals_folder_id = fields.Many2one(
         'documents.document',
         string="Approvals Folder",

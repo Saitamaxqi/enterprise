@@ -21,4 +21,5 @@ Adds fleet data to documents
     'installable': True,
     'auto_install': True,
     'license': 'OEEL-1',
+    'post_init_hook': '_documents_fleet_post_init',
 }

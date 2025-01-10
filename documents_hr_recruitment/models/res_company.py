@@ -7,7 +7,7 @@ from odoo import fields, models, api, _
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    documents_recruitment_settings = fields.Boolean(default=False)
+    documents_recruitment_settings = fields.Boolean(default=True)
     recruitment_folder_id = fields.Many2one('documents.document', string="Recruitment Folder", check_company=True,
                                             domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)],
                                             default=lambda self: self.env.ref('documents_hr_recruitment.document_recruitment_folder',

@@ -26,4 +26,5 @@ Easily access your documents from your employee profile.
     'installable': True,
     'auto_install': True,
     'license': 'OEEL-1',
+    'post_init_hook': '_documents_hr_post_init',
 }
