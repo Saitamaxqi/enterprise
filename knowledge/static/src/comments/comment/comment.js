@@ -173,14 +173,11 @@ export class KnowledgeCommentsThread extends Component {
                 () => {
                     if (
                         this.editorThread &&
-                        this.editorThread.isNew &&
+                        this.editorThread.threadId === "undefined" &&
                         this.targetRef.el &&
                         this.isActive &&
                         this.smallUI
                     ) {
-                        if (this.props.threadId !== "undefined") {
-                            this.editorThread.isNew = false;
-                        }
                         this.openPopover();
                     }
                 },
