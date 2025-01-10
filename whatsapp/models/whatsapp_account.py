@@ -264,7 +264,7 @@ class WhatsappAccount(models.Model):
                 if messages['location'].get('name'):
                     body += Markup("<br/>{location_name}").format(location_name=messages['location']['name'])
                 if messages['location'].get('address'):
-                    body += Markup("<br/>{location_address}").format(location_name=messages['location']['address'])
+                    body += Markup("<br/>{location_address}").format(location_address=messages['location']['address'])
                 kwargs['body'] = body
             elif message_type == 'contacts':
                 body = ""
