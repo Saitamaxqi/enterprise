@@ -1,11 +1,12 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, leave, queryAll, queryAllTexts, queryFirst } from "@odoo/hoot-dom";
-import { animationFrame, mockDate } from "@odoo/hoot-mock";
+import { click, leave, queryAll, queryAllTexts, queryFirst, queryOne } from "@odoo/hoot-dom";
+import { animationFrame, mockDate, runAllTimers } from "@odoo/hoot-mock";
 import { contains, defineParams, onRpc } from "@web/../tests/web_test_helpers";
 import { Tasks, defineGanttModels } from "./gantt_mock_models";
 import {
     SELECTORS,
     clickCell,
+    dragPill,
     getCell,
     getCellColorProperties,
     getGridContent,
@@ -14,6 +15,7 @@ import {
     hoverGridCell,
     mountGanttView,
     resizePill,
+    setCellParts,
 } from "./web_gantt_test_helpers";
 
 describe.current.tags("desktop");
@@ -747,6 +749,445 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
         "--Gantt__DayOff-background-color",
         "--Gantt__Day-background-color",
     ]);
+});
+
+test(`Fold unavailabilities ("day": "hours:quarter")`, async () => {
+    Tasks._records = [Tasks._records[3]]; // id: 4
+    const unavailabilities = [
+        // in utc
+        {
+            start: "2018-12-18 16:00:00",
+            stop: "2018-12-19 07:00:00",
+        },
+        {
+            start: "2018-12-19 11:00:00",
+            stop: "2018-12-19 12:25:00",
+        },
+        {
+            start: "2018-12-19 16:15:00",
+            stop: "2018-12-20 08:00:00",
+        },
+        {
+            start: "2018-12-20 16:15:00",
+            stop: "2018-12-22 08:00:00",
+        },
+    ];
+    onRpc("get_gantt_data", ({ kwargs, parent }) => {
+        expect(kwargs.unavailability_fields).toEqual([]);
+        const result = parent();
+        result.unavailabilities = { __default: { false: unavailabilities } };
+        return result;
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" scales="day" default_range="day" precision="{'day': 'hours:quarter'}"/>`,
+    });
+    await contains(".o_content").scroll({ left: 0 });
+    const { columnHeaders: initialColumnHeaders, groupHeaders: initialGroupHeaders } =
+        getGridContent();
+    expect(initialColumnHeaders).toHaveLength(38);
+    expect(initialColumnHeaders.some((col) => col.title === "")).toBe(false);
+    expect(initialGroupHeaders).toEqual([
+        {
+            range: [1, 97],
+            title: "19 December 2018",
+        },
+        {
+            range: [97, 193],
+            title: "20 December 2018",
+        },
+    ]);
+    expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(0);
+    await contains(SELECTORS.scaleSelectorToggler).click();
+    await contains(".o-dropdown-item:contains(Fold off hours)").click();
+    let { columnHeaders, groupHeaders } = getGridContent();
+    expect(columnHeaders).toHaveLength(28);
+    expect(groupHeaders).toEqual(
+        [
+            {
+                range: [1, 97],
+                title: "19 December 2018",
+            },
+            {
+                range: [97, 193],
+                title: "20 December 2018",
+            },
+            {
+                range: [193, 289],
+                title: "",
+            },
+        ],
+        { message: "Last group's title is hidden since all of its content is folded" }
+    );
+    expect(columnHeaders).toEqual([
+        { range: [1, 33], title: "" },
+        { range: [33, 37], title: "8am" },
+        { range: [37, 41], title: "9am" },
+        { range: [41, 45], title: "10am" },
+        { range: [45, 49], title: "11am" },
+        { range: [49, 53], title: "12pm" },
+        { range: [53, 57], title: "1pm" },
+        { range: [57, 61], title: "2pm" },
+        { range: [61, 65], title: "3pm" },
+        { range: [65, 69], title: "4pm" },
+        { range: [69, 73], title: "5pm" },
+        { range: [73, 109], title: "" },
+        { range: [109, 113], title: "3am" },
+        { range: [113, 117], title: "4am" },
+        { range: [117, 121], title: "5am" },
+        { range: [121, 125], title: "6am" },
+        { range: [125, 129], title: "7am" },
+        { range: [129, 133], title: "8am" },
+        { range: [133, 137], title: "9am" },
+        { range: [137, 141], title: "10am" },
+        { range: [141, 145], title: "11am" },
+        { range: [145, 149], title: "12pm" },
+        { range: [149, 153], title: "1pm" },
+        { range: [153, 157], title: "2pm" },
+        { range: [157, 161], title: "3pm" },
+        { range: [161, 165], title: "4pm" },
+        { range: [165, 169], title: "5pm" },
+        { range: [169, 289], title: "" },
+    ]);
+    expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(3);
+    const cell1 = queryFirst(".o_gantt_cell");
+    const cell2 = queryOne(".o_gantt_cell:eq(1)");
+    expect(Math.abs(cell1.clientWidth - cell2.clientWidth)).toBeLessThan(4, {
+        message:
+            "Folded cells have similar width compared to regular cells besides covering a wider date range",
+    });
+    await contains(SELECTORS.scaleSelectorToggler).click();
+    await contains(".o-dropdown-item:contains(Unfold off hours)").click();
+    ({ columnHeaders, groupHeaders } = getGridContent());
+    expect(columnHeaders).toEqual(initialColumnHeaders);
+    expect(groupHeaders).toEqual(initialGroupHeaders);
+});
+
+test(`Fold unavailabilities ("month": "day:half")`, async () => {
+    Tasks._records = [Tasks._records[3]]; // id: 4
+    const unavailabilities = [
+        // in utc
+        {
+            start: "2018-11-13 16:00:00",
+            stop: "2018-11-16 07:00:00",
+        },
+        {
+            start: "2018-11-19 16:15:00",
+            stop: "2018-11-29 08:00:00",
+        },
+    ];
+    onRpc("get_gantt_data", ({ kwargs, parent }) => {
+        expect(kwargs.unavailability_fields).toEqual([]);
+        const result = parent();
+        result.unavailabilities = { __default: { false: unavailabilities } };
+        return result;
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="month" scales="month" precision="{'month': 'day:half'}"/>`,
+    });
+    await contains(".o_content").scroll({ left: 0 });
+    let { columnHeaders, groupHeaders } = getGridContent();
+    expect(columnHeaders).toHaveLength(31);
+    expect(columnHeaders.some((col) => col.title === "")).toBe(false);
+    expect(groupHeaders).toEqual([
+        {
+            range: [1, 61],
+            title: "November 2018",
+        },
+        {
+            range: [61, 123],
+            title: "December 2018",
+        },
+    ]);
+    expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(0);
+    await contains(SELECTORS.scaleSelectorToggler).click();
+    await contains(".o-dropdown-item:contains(Fold off hours)").click();
+    ({ columnHeaders, groupHeaders } = getGridContent());
+    expect(columnHeaders).toHaveLength(31);
+    expect(groupHeaders).toEqual([
+        {
+            range: [1, 61],
+            title: "November 2018",
+        },
+        {
+            range: [61, 123],
+            title: "December 2018",
+        },
+    ]);
+    expect(columnHeaders).toEqual([
+        { range: [1, 3], title: "01" },
+        { range: [3, 5], title: "02" },
+        { range: [5, 7], title: "03" },
+        { range: [7, 9], title: "04" },
+        { range: [9, 11], title: "05" },
+        { range: [11, 13], title: "06" },
+        { range: [13, 15], title: "07" },
+        { range: [15, 17], title: "08" },
+        { range: [17, 19], title: "09" },
+        { range: [19, 21], title: "10" },
+        { range: [21, 23], title: "11" },
+        { range: [23, 25], title: "12" },
+        { range: [25, 27], title: "13" },
+        { range: [27, 31], title: "" },
+        { range: [31, 33], title: "16" },
+        { range: [33, 35], title: "17" },
+        { range: [35, 37], title: "18" },
+        { range: [37, 39], title: "19" },
+        { range: [39, 57], title: "" },
+        { range: [57, 59], title: "29" },
+        { range: [59, 61], title: "30" },
+        { range: [61, 63], title: "01" },
+        { range: [63, 65], title: "02" },
+        { range: [65, 67], title: "03" },
+        { range: [67, 69], title: "04" },
+        { range: [69, 71], title: "05" },
+        { range: [71, 73], title: "06" },
+        { range: [73, 75], title: "07" },
+        { range: [75, 77], title: "08" },
+        { range: [77, 79], title: "09" },
+        { range: [79, 81], title: "10" },
+    ]);
+    expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(2);
+    const cell1 = queryFirst(".o_gantt_cell");
+    const cell2 = queryOne(".o_gantt_cell:eq(1)");
+    expect(Math.abs(cell1.clientWidth - cell2.clientWidth)).toBeLessThan(4, {
+        message:
+            "Folded cells have similar width compared to regular cells besides covering a wider date range",
+    });
+    await contains(SELECTORS.scaleSelectorToggler).click();
+    await contains(".o-dropdown-item:contains(Unfold off hours)").click();
+    expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(0);
+});
+
+test(`fold attribute`, async () => {
+    Tasks._records = [Tasks._records[3]]; // id: 4
+    const unavailabilities = [
+        // in utc
+        {
+            start: "2018-12-18 16:00:00",
+            stop: "2018-12-19 07:00:00",
+        },
+        {
+            start: "2018-12-19 11:00:00",
+            stop: "2018-12-19 12:25:00",
+        },
+        {
+            start: "2018-12-19 16:15:00",
+            stop: "2018-12-20 08:00:00",
+        },
+        {
+            start: "2018-12-20 16:15:00",
+            stop: "2018-12-22 08:00:00",
+        },
+    ];
+    onRpc("get_gantt_data", ({ kwargs, parent }) => {
+        expect(kwargs.unavailability_fields).toEqual([]);
+        const result = parent();
+        result.unavailabilities = { __default: { false: unavailabilities } };
+        return result;
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" fold="1" default_range="day" scales="day" precision="{'day': 'hours:quarter'}"/>`,
+    });
+    const { columnHeaders, groupHeaders } = getGridContent();
+    expect(columnHeaders).toHaveLength(28);
+    expect(groupHeaders).toEqual(
+        [
+            {
+                range: [1, 97],
+                title: "19 December 2018",
+            },
+            {
+                range: [97, 193],
+                title: "20 December 2018",
+            },
+            {
+                range: [193, 289],
+                title: "",
+            },
+        ],
+        { message: "Last group's title is hidden since all of its content is folded" }
+    );
+    expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(3);
+});
+
+test(`Fold unavailabilities with multiple rows`, async () => {
+    const unavailabilities1 = [
+        // in utc
+        { start: "2018-12-18 16:00:00", stop: "2018-12-19 07:00:00" },
+        { start: "2018-12-19 11:00:00", stop: "2018-12-19 12:25:00" },
+        { start: "2018-12-19 16:15:00", stop: "2018-12-20 08:00:00" },
+        { start: "2018-12-20 16:15:00", stop: "2018-12-22 08:00:00" },
+    ];
+    const unavailabilities2 = [
+        // in utc
+        { start: "2018-12-18 16:00:00", stop: "2018-12-19 09:00:00" },
+        { start: "2018-12-19 13:15:00", stop: "2018-12-20 08:00:00" },
+        { start: "2018-12-20 20:15:00", stop: "2018-12-22 08:00:00" },
+    ];
+    onRpc("get_gantt_data", ({ kwargs, parent }) => {
+        expect(kwargs.unavailability_fields).toEqual(["user_id"]);
+        const result = parent();
+        result.unavailabilities = { user_id: { 1: unavailabilities1, 2: unavailabilities2 } };
+        return result;
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" fold="1" default_range="day" scales="day" precision="{'day': 'hours:quarter'}"/>`,
+        groupBy: ["user_id"],
+        domain: [["id", "in", [4, 7]]],
+    });
+    const { columnHeaders, groupHeaders } = getGridContent();
+    expect(groupHeaders).toEqual([
+        { range: [1, 97], title: "19 December 2018" },
+        { range: [97, 193], title: "20 December 2018" },
+        { range: [193, 289], title: "" },
+    ]);
+    expect(columnHeaders).toEqual([
+        { range: [1, 33], title: "" },
+        { range: [33, 37], title: "8am" },
+        { range: [37, 41], title: "9am" },
+        { range: [41, 45], title: "10am" },
+        { range: [45, 49], title: "11am" },
+        { range: [49, 53], title: "12pm" },
+        { range: [53, 57], title: "1pm" },
+        { range: [57, 61], title: "2pm" },
+        { range: [61, 65], title: "3pm" },
+        { range: [65, 69], title: "4pm" },
+        { range: [69, 73], title: "5pm" },
+        { range: [73, 109], title: "" },
+        { range: [109, 113], title: "3am" },
+        { range: [113, 117], title: "4am" },
+        { range: [117, 121], title: "5am" },
+        { range: [121, 125], title: "6am" },
+        { range: [125, 129], title: "7am" },
+        { range: [129, 133], title: "8am" },
+        { range: [133, 137], title: "9am" },
+        { range: [137, 141], title: "10am" },
+        { range: [141, 145], title: "11am" },
+        { range: [145, 149], title: "12pm" },
+        { range: [149, 153], title: "1pm" },
+        { range: [153, 157], title: "2pm" },
+        { range: [157, 161], title: "3pm" },
+        { range: [161, 165], title: "4pm" },
+        { range: [165, 169], title: "5pm" },
+        { range: [169, 173], title: "6pm" },
+        { range: [173, 177], title: "7pm" },
+        { range: [177, 181], title: "8pm" },
+        { range: [181, 185], title: "9pm" },
+        { range: [185, 289], title: "" },
+    ]);
+});
+
+test(`Partial fold/unfold in gantt`, async () => {
+    Tasks._records = [Tasks._records[3]]; // id: 4
+    const unavailabilities = [
+        // in utc
+        {
+            start: "2018-12-18 16:00:00",
+            stop: "2018-12-19 07:00:00",
+        },
+        {
+            start: "2018-12-19 11:00:00",
+            stop: "2018-12-19 12:25:00",
+        },
+        {
+            start: "2018-12-19 16:15:00",
+            stop: "2018-12-20 08:00:00",
+        },
+        {
+            start: "2018-12-20 16:15:00",
+            stop: "2018-12-22 08:00:00",
+        },
+    ];
+    onRpc("get_gantt_data", ({ kwargs, parent }) => {
+        expect(kwargs.unavailability_fields).toEqual([]);
+        const result = parent();
+        result.unavailabilities = { __default: { false: unavailabilities } };
+        return result;
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" fold="1" default_range="day" scales="day" precision="{'day': 'hours:quarter'}"/>`,
+    });
+    setCellParts(4);
+    await contains(".o_content").scroll({ left: 0 });
+    let { columnHeaders, rows } = getGridContent();
+    expect(columnHeaders).toHaveLength(28);
+    expect(columnHeaders[11]).toEqual({
+        range: [73, 109],
+        title: "",
+    });
+    expect(rows[0].pills[0]).toEqual({
+        title: "Task 4",
+        colSpan: "3am (2/4) 20 December 2018 -> 7am (2/4) 20 December 2018",
+        level: 0,
+    });
+    await contains(".o_gantt_cell:eq(11)").click();
+    ({ columnHeaders } = getGridContent());
+    expect(columnHeaders).toHaveLength(36);
+    expect(columnHeaders[11]).toEqual({
+        range: [73, 77],
+        title: "6pm",
+    });
+    await runAllTimers();
+    await contains(".o_gantt_cell:eq(0)").click();
+    ({ columnHeaders } = getGridContent());
+    expect(columnHeaders).toHaveLength(38);
+    expect(columnHeaders[11]).toEqual({
+        range: [45, 49],
+        title: "11am",
+    });
+    expect(columnHeaders[18]).toEqual({
+        range: [73, 77],
+        title: "6pm",
+    });
+    await contains(".o_gantt_header_cell:eq(18)").hover();
+    expect(".o_gantt_header_cell:eq(19)").toHaveClass("o_gantt_foldable_hovered");
+    await contains(".o_gantt_header_cell:eq(18)").click();
+    ({ columnHeaders } = getGridContent());
+    expect(columnHeaders).toHaveLength(35);
+    expect(columnHeaders[18]).toEqual({
+        range: [73, 109],
+        title: "",
+    });
+    const { drop } = await dragPill("Task 4");
+    await drop({ column: "5pm 19 December 2018", part: 4 });
+    ({ columnHeaders, rows } = getGridContent());
+    expect(columnHeaders).toHaveLength(39);
+    expect(columnHeaders[18]).toEqual({
+        range: [73, 77],
+        title: "6pm",
+    });
+    expect(columnHeaders[22]).toEqual({
+        range: [89, 109],
+        title: "",
+    });
+    expect(rows[0].pills[0]).toEqual({
+        title: "Task 4",
+        colSpan: "5pm (3/4) 19 December 2018 -> 9pm (3/4) 19 December 2018",
+        level: 0,
+    });
+    await resizePill(getPillWrapper("Task 4"), "end", +1); // wrong but we don't want to rewrite helpers for this
+    ({ columnHeaders, rows } = getGridContent());
+    expect(columnHeaders).toHaveLength(39);
+    expect(columnHeaders[22]).toEqual({
+        range: [89, 93],
+        title: "10pm",
+    });
+    expect(rows[0].pills[0]).toEqual({
+        title: "Task 4",
+        colSpan: "5pm (3/4) 19 December 2018 -> 3am 20 December 2018",
+        level: 0,
+    });
+    await contains(".o_gantt_header_cell:eq(0)").click();
+    await contains(SELECTORS.scaleSelectorToggler).click();
+    expect(".o_popover .dropdown-item:eq(2)").toHaveText("Fold off hours");
+    await contains(".o_gantt_header_cell:eq(22)").click();
+    await contains(SELECTORS.scaleSelectorToggler).click();
+    expect(".o_popover .dropdown-item:eq(2)").toHaveText("Unfold off hours");
 });
 
 test("default_group_by attribute", async () => {

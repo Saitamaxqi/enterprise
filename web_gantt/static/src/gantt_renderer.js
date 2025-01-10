@@ -8,6 +8,7 @@ import {
     useEffect,
     useExternalListener,
     useRef,
+    useState,
 } from "@odoo/owl";
 import { hasTouch, isMobileOS } from "@web/core/browser/feature_detection";
 import { Domain } from "@web/core/domain";
@@ -18,6 +19,7 @@ import { usePopover } from "@web/core/popover/popover_hook";
 import { evaluateBooleanExpr } from "@web/core/py_js/py";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
+import { zipWith } from "@web/core/utils/arrays";
 import { KeepLast } from "@web/core/utils/concurrency";
 import { useService } from "@web/core/utils/hooks";
 import { omit, pick } from "@web/core/utils/objects";
@@ -55,7 +57,6 @@ const viewRegistry = registry.category("views");
 const { DateTime, Interval } = luxon;
 
 /**
- * @typedef {`__column__${number}`} ColumnId
  * @typedef {`__connector__${number | "new"}`} ConnectorId
  * @typedef {import("./gantt_connector").ConnectorProps} ConnectorProps
  * @typedef {luxon.DateTime} DateTime
@@ -65,7 +66,7 @@ const { DateTime, Interval } = luxon;
  * @typedef {import("./gantt_model").RowId} RowId
  *
  * @typedef Column
- * @property {ColumnId} id
+ * @property {number} index
  * @property {GridPosition} grid
  * @property {boolean} [isToday]
  * @property {DateTime} start
@@ -134,7 +135,7 @@ const { DateTime, Interval } = luxon;
  * }} Row
  *
  * @typedef SubColumn
- * @property {ColumnId} columnId
+ * @property {number} columnIndex
  * @property {boolean} [isToday]
  * @property {DateTime} start
  * @property {DateTime} stop
@@ -206,6 +207,7 @@ export class GanttRenderer extends Component {
             connector: null,
             hoverable: null,
             pill: null,
+            collapsableColumnHeader: null,
         };
 
         /** @type {Interaction} */
@@ -258,6 +260,8 @@ export class GanttRenderer extends Component {
             this.computeHoverParams(ev)
         );
 
+        this.offHoursState = useState({});
+
         useExternalListener(window, "keydown", (ev) => this.onWindowKeyDown(ev));
         useExternalListener(window, "keyup", (ev) => this.onWindowKeyUp(ev));
 
@@ -273,6 +277,7 @@ export class GanttRenderer extends Component {
         useMultiHover({
             ref: this.gridRef,
             selector: ".o_gantt_group",
+            exception: "o_gantt_cell_folded",
             related: ["data-row-id"],
             className: "o_gantt_group_hovered",
         });
@@ -392,9 +397,7 @@ export class GanttRenderer extends Component {
                 });
             },
             onDragEnd: ({ pill, removeClass }) => {
-                delete this.resizeBadgeReactive.position;
-                delete this.resizeBadgeReactive.diff;
-                delete this.resizeBadgeReactive.scale;
+                clearObject(this.resizeBadgeReactive);
                 this.setStickyPill();
                 removeClass(pill, "o_resized");
                 this.interaction.mode = null;
@@ -476,7 +479,10 @@ export class GanttRenderer extends Component {
         );
 
         useEffect(() => {
-            if (this.useFocusDate) {
+            if (this.offHoursState.focusedDate) {
+                this.focusDate(this.offHoursState.focusedDate);
+                delete this.offHoursState.focusedDate;
+            } else if (this.useFocusDate) {
                 this.useFocusDate = false;
                 this.focusDate(this.model.metaData.focusDate);
             }
@@ -489,12 +495,31 @@ export class GanttRenderer extends Component {
     // Getters
     //-------------------------------------------------------------------------
 
+    get foldedGridColumnCount() {
+        return this.offHoursState.foldedGridColumnSpans?.length ?? this.columnCount;
+    }
+
     get controlsProps() {
+        const hasFoldableColumns =
+            this.model.metaData.displayUnavailability && this.foldableColumns.includes(1);
         return {
             displayExpandCollapseButtons: this.rows[0]?.isGroup, // all rows on same level have same type
             model: this.model,
+            hasFoldableColumns,
+            offHoursFolded: this.allColumnsFolded,
             focusToday: () => this.focusToday(),
             getCurrentFocusDate: () => this.getCurrentFocusDate(),
+            foldOffHours: () => {
+                delete this.offHoursState.foldedColumns;
+                this.offHoursState.focusedDate = this.getCurrentFocusDate();
+                this.computeFoldedGrid();
+            },
+            unfoldOffHours: () => {
+                const focusedDate = this.getCurrentFocusDate();
+                this.offHoursState.foldedColumns = Array(this.columnCount).fill(0);
+                this.computeFoldedGrid();
+                this.offHoursState.focusedDate = focusedDate;
+            },
         };
     }
 
@@ -516,6 +541,17 @@ export class GanttRenderer extends Component {
      */
     get isTouchDevice() {
         return isMobileOS() || hasTouch();
+    }
+
+    get allColumnsFolded() {
+        if (
+            this.model.metaData.displayUnavailability &&
+            JSON.stringify(this.offHoursState.foldedColumns) ===
+                JSON.stringify(this.foldableColumns)
+        ) {
+            return true;
+        }
+        return false;
     }
 
     //-------------------------------------------------------------------------
@@ -667,7 +703,7 @@ export class GanttRenderer extends Component {
             [this.columnCount * this.model.metaData.scale.cellPart + 1]: true,
         };
 
-        const { globalStart, globalStop, scale } = this.model.metaData;
+        const { displayUnavailability, globalStart, globalStop, scale } = this.model.metaData;
         const { cellPart, interval, unit } = scale;
 
         const now = DateTime.local();
@@ -677,19 +713,30 @@ export class GanttRenderer extends Component {
 
         const groupsLeftBound = DateTime.max(
             globalStart,
-            localStartOf(globalStart.plus({ [interval]: firstIndex }), unit)
+            localStartOf(
+                globalStart.plus({
+                    [interval]: this.getIndexInTotalGrid(firstIndex),
+                }),
+                unit
+            )
         );
         const groupsRightBound = DateTime.min(
-            localEndOf(globalStart.plus({ [interval]: lastIndex }), unit),
+            localEndOf(
+                globalStart.plus({
+                    [interval]: this.getIndexInTotalGrid(lastIndex),
+                }),
+                unit
+            ),
             globalStop
         );
         let currentGroup = null;
         for (let j = firstIndex; j <= lastIndex; j++) {
-            const columnId = `__column__${j + 1}`;
-            const col = j * cellPart + 1;
+            const columnIndex = this.getIndexInTotalGrid(j);
+            const col = columnIndex * cellPart + 1;
             const { start, stop } = this.getColumnFromColNumber(col);
+            const span = this.offHoursState.foldedGridColumnSpans?.[j] || 1;
             const column = {
-                id: columnId,
+                index: columnIndex,
                 grid: { column: [col, col + cellPart] },
                 start,
                 stop,
@@ -698,17 +745,32 @@ export class GanttRenderer extends Component {
             if (isToday) {
                 column.isToday = true;
             }
-            this.columns.push(column);
-
-            for (let i = 0; i < cellPart; i++) {
-                const subColumn = this.getSubColumnFromColNumber(col + i);
-                this.subColumns.push({ ...subColumn, isToday, columnId });
-                this.coarseGridCols[col + i] = true;
+            if (span > 1) {
+                column.stop = this.getColumnFromColNumber(col + (span - 1) * cellPart).stop;
+                column.isFolded = true;
+                column.grid.column[1] = col + span * cellPart;
             }
+            if (displayUnavailability) {
+                const foldableColumnsGroup = this.foldableColumnsMapping[columnIndex];
+                column.isFoldable = foldableColumnsGroup
+                    ? foldableColumnsGroup.stopIndex === columnIndex + span - 1
+                        ? "stop"
+                        : 1
+                    : 0;
+            }
+            if (column.isFolded) {
+                this.coarseGridCols[col] = true;
+            } else {
+                for (let i = 0; i < cellPart; i++) {
+                    const subColumn = this.getSubColumnFromColNumber(col + i);
+                    this.subColumns.push({ ...subColumn, isToday, columnIndex });
+                    this.coarseGridCols[col + i] = true;
+                }
+            }
+            this.columns.push(column);
 
             const groupStart = localStartOf(start, unit);
             if (!currentGroup || !groupStart.equals(currentGroup.start)) {
-                const groupId = `__group__${this.columnsGroups.length + 1}`;
                 const startingBound = DateTime.max(groupsLeftBound, groupStart);
                 const endingBound = DateTime.min(groupsRightBound, localEndOf(groupStart, unit));
                 const [groupFirstCol, groupLastCol] = this.getGridColumnFromDates(
@@ -716,13 +778,19 @@ export class GanttRenderer extends Component {
                     endingBound
                 );
                 currentGroup = {
-                    id: groupId,
                     grid: { column: [groupFirstCol, groupLastCol] },
                     start: groupStart,
+                    isFolded: columnIndex === 0 && groupLastCol < column.grid.column[1],
                 };
                 this.columnsGroups.push(currentGroup);
                 this.coarseGridCols[groupFirstCol] = true;
                 this.coarseGridCols[groupLastCol] = true;
+            }
+            if (j === lastIndex && currentGroup.grid.column[1] < column.grid.column[1]) {
+                this.columnsGroups.push({
+                    grid: { column: [currentGroup.grid.column[1], column.grid.column[1]] },
+                    isFolded: true,
+                });
             }
         }
     }
@@ -741,6 +809,14 @@ export class GanttRenderer extends Component {
             }
             this.addToRowsToRender(row);
         }
+    }
+
+    getIndexInTotalGrid(index) {
+        return this.offHoursState.mappingFoldedGridToTotalGridColumnIndex?.get(index) || index;
+    }
+
+    getColNumberInFoldedGrid(num) {
+        return this.offHoursState.mappingTotalGridToFoldedGridSubColumns?.get(num) || num;
     }
 
     getFirstGridCol({ grid }) {
@@ -780,10 +856,12 @@ export class GanttRenderer extends Component {
      * give bounds only
      */
     getVisibleCols() {
-        const [columnStart, columnEnd] = this.virtualGrid.columnsIndexes;
+        const [firstIndex, lastIndex] = this.virtualGrid.columnsIndexes;
+        const startIndex = this.getIndexInTotalGrid(firstIndex);
+        const endIndex = this.getIndexInTotalGrid(lastIndex);
         const { cellPart } = this.model.metaData.scale;
-        const firstVisibleCol = 1 + cellPart * columnStart;
-        const lastVisibleCol = 1 + cellPart * (columnEnd + 1);
+        const firstVisibleCol = 1 + cellPart * startIndex;
+        const lastVisibleCol = 1 + cellPart * (endIndex + 1);
         return [firstVisibleCol, lastVisibleCol];
     }
 
@@ -791,9 +869,9 @@ export class GanttRenderer extends Component {
      * give bounds only
      */
     getVisibleRows() {
-        const [rowStart, rowEnd] = this.virtualGrid.rowsIndexes;
-        const firstVisibleRow = rowStart + 1;
-        const lastVisibleRow = rowEnd + 1;
+        const [firstIndex, lastIndex] = this.virtualGrid.rowsIndexes;
+        const firstVisibleRow = firstIndex + 1;
+        const lastVisibleRow = lastIndex + 1;
         return [firstVisibleRow, lastVisibleRow];
     }
 
@@ -881,9 +959,11 @@ export class GanttRenderer extends Component {
         for (let i = 0; i < colInCoarseGridKeys.length - 1; i++) {
             const x = +colInCoarseGridKeys[i];
             const y = +colInCoarseGridKeys[i + 1];
+            const X = this.getColNumberInFoldedGrid(x);
+            const Y = this.getColNumberInFoldedGrid(y);
             const colName = `c${x}`;
-            const width = (y - x) * this.cellPartWidth;
-            colsTemplate.push(`[${colName}]minmax(${width}px,1fr)`);
+            const width = (Y - X) * this.cellPartWidth;
+            colsTemplate.push(`[${colName}]minmax(${width}px,${width ? 1 : 0}fr)`);
         }
         colsTemplate.push(`[c${colInCoarseGridKeys.at(-1)}]`);
         return colsTemplate.join("");
@@ -913,13 +993,13 @@ export class GanttRenderer extends Component {
             ? Math.round((rowHeaderWidthPercentage * this.contentRefWidth) / 100)
             : 0;
         const cellContainerWidth = this.contentRefWidth - this.rowHeaderWidth;
-        const columnWidth = Math.floor(cellContainerWidth / this.columnCount);
+        const columnWidth = Math.floor(cellContainerWidth / this.foldedGridColumnCount);
         const rectifiedColumnWidth = Math.max(columnWidth, minimalColumnWidth);
         this.cellPartWidth = Math.floor(rectifiedColumnWidth / cellPart);
         this.columnWidth = this.cellPartWidth * cellPart;
         if (columnWidth <= minimalColumnWidth) {
             // overflow
-            this.totalWidth = this.rowHeaderWidth + this.columnWidth * this.columnCount;
+            this.totalWidth = this.rowHeaderWidth + this.columnWidth * this.foldedGridColumnCount;
         } else {
             this.totalWidth = null;
         }
@@ -939,7 +1019,8 @@ export class GanttRenderer extends Component {
             this.mappingPillToConnectors = {};
         }
 
-        const { globalStart, globalStop, scale, startDate, stopDate } = this.model.metaData;
+        const { displayUnavailability, globalStart, globalStop, scale, startDate, stopDate } =
+            this.model.metaData;
         this.columnCount = diffColumn(globalStart, globalStop, scale.interval);
         if (
             !this.currentStartDate ||
@@ -950,6 +1031,7 @@ export class GanttRenderer extends Component {
             this.useFocusDate = true;
             this.mappingColToColumn = new Map();
             this.mappingColToSubColumn = new Map();
+            delete this.offHoursState.foldedColumns;
         }
         this.currentStartDate = startDate;
         this.currentStopDate = stopDate;
@@ -983,6 +1065,12 @@ export class GanttRenderer extends Component {
             this.generateConnectors();
         }
 
+        if (displayUnavailability) {
+            this.computeUnavailabilityPeriods();
+        }
+        if (this.offHoursState.foldedGridColumnSpans || this.model.metaData.fold) {
+            this.computeFoldedGrid();
+        }
         this.shouldComputeSomeWidths = true;
         this.shouldComputeGridColumns = true;
         this.shouldComputeGridRows = true;
@@ -991,7 +1079,7 @@ export class GanttRenderer extends Component {
     computeDerivedParamsFromHover() {
         const { scale } = this.model.metaData;
 
-        const { connector, hoverable, pill } = this.hovered;
+        const { connector, collapsableColumnHeader, hoverable, pill } = this.hovered;
 
         // Update cell in drag
         const isCellHovered = hoverable?.matches(".o_gantt_cell");
@@ -1037,8 +1125,12 @@ export class GanttRenderer extends Component {
         }
         this.togglePillHighlighting(hoveredPillId, true);
 
+        this.toggleCollapsableColumnHeaderHighlighting(collapsableColumnHeader);
         // Update progress bars
-        this.progressBarsReactive.hoveredRowId = hoverable ? hoverable.dataset.rowId : null;
+        this.progressBarsReactive.hoveredRowId =
+            hoverable && !hoverable.classList.contains("o_gantt_cell_folded")
+                ? hoverable.dataset.rowId
+                : null;
     }
 
     /**
@@ -1064,9 +1156,11 @@ export class GanttRenderer extends Component {
         const isCopyMode = this.interaction.dragAction === "copy";
 
         params.start =
-            (diff || isCopyMode) && dateAddFixedOffset(record[dateStartField], { [time]: cellTime * diff });
+            (diff || isCopyMode) &&
+            dateAddFixedOffset(record[dateStartField], { [time]: cellTime * diff });
         params.stop =
-            (diff || isCopyMode) && dateAddFixedOffset(record[dateStopField], { [time]: cellTime * diff });
+            (diff || isCopyMode) &&
+            dateAddFixedOffset(record[dateStopField], { [time]: cellTime * diff });
         params.rowId = rowId;
 
         const schedule = this.model.getSchedule(params);
@@ -1136,10 +1230,16 @@ export class GanttRenderer extends Component {
     }
 
     focusDate(date, ifInBounds) {
-        const { globalStart, globalStop } = this.model.metaData;
+        const { globalStart, globalStop, scale } = this.model.metaData;
+        const { cellPart } = scale;
         const diff = date.diff(globalStart);
         const totalDiff = globalStop.diff(globalStart);
-        const factor = diff / totalDiff;
+        let factor = diff / totalDiff;
+        if (this.columnCount !== this.foldedGridColumnCount) {
+            const focusedColInTotalGrid = Math.round(factor * cellPart * this.columnCount);
+            const focusedColInFoldedGrid = this.getColNumberInFoldedGrid(focusedColInTotalGrid);
+            factor = focusedColInFoldedGrid / (cellPart * this.foldedGridColumnCount);
+        }
         if (ifInBounds && (factor < 0 || 1 < factor)) {
             return false;
         }
@@ -1264,6 +1364,7 @@ export class GanttRenderer extends Component {
         return {
             o_sample_data_disabled: this.isDisabled(row),
             o_gantt_today: column.isToday,
+            o_gantt_cell_folded: column.isFolded,
             o_gantt_group: row.isGroup,
             o_gantt_hoverable: this.isHoverable(row),
             o_group_open: !this.model.isClosed(row.id),
@@ -1276,8 +1377,15 @@ export class GanttRenderer extends Component {
         const cellGridMiddleX =
             rtlFactor * this.props.contentRef.el.scrollLeft +
             (this.contentRefWidth + this.rowHeaderWidth) / 2;
-        const factor =
-            (cellGridMiddleX - this.rowHeaderWidth) / this.cellContainerRef.el.clientWidth;
+        let factor = (cellGridMiddleX - this.rowHeaderWidth) / this.cellContainerRef.el.clientWidth;
+        if (this.columnCount !== this.foldedGridColumnCount) {
+            const indexInFoldedGrid = Math.max(
+                0,
+                Math.round(this.foldedGridColumnCount * factor) - 1
+            );
+            const indexInTotalGrid = this.getIndexInTotalGrid(indexInFoldedGrid);
+            factor = (indexInTotalGrid + 1) / this.columnCount;
+        }
         const totalDiff = globalStop.diff(globalStart);
         const diff = factor * totalDiff;
         const focusDate = globalStart.plus(diff);
@@ -1782,7 +1890,7 @@ export class GanttRenderer extends Component {
         const cellColors = {};
         const subSlotUnavailabilities = [];
         for (const subColumn of this.subColumns) {
-            const { isToday, start, stop, columnId } = subColumn;
+            const { isToday, start, stop, columnIndex } = subColumn;
             if (index < unavailabilities.length) {
                 let subSlotUnavailable = 0;
                 for (let i = index; i < unavailabilities.length; i++) {
@@ -1800,7 +1908,7 @@ export class GanttRenderer extends Component {
                     const style = getCellColor(cellPart, subSlotUnavailabilities, isToday);
                     subSlotUnavailabilities.splice(0, cellPart);
                     if (style) {
-                        cellColors[columnId] = style;
+                        cellColors[columnIndex] = style;
                     }
                 }
                 j++;
@@ -1963,7 +2071,9 @@ export class GanttRenderer extends Component {
         }
 
         if (this.shouldComputeSomeWidths || this.shouldComputeGridColumns) {
-            this.virtualGrid.setColumnsWidths(new Array(this.columnCount).fill(this.columnWidth));
+            this.virtualGrid.setColumnsWidths(
+                new Array(this.foldedGridColumnCount).fill(this.columnWidth)
+            );
             this.computeVisibleColumns();
         }
 
@@ -2212,19 +2322,6 @@ export class GanttRenderer extends Component {
     }
 
     /**
-     * @param {string} [groupedByField]
-     * @param {false|number} [resId]
-     * @returns {{ start: DateTime, stop: DateTime }[]}
-     */
-    _getRowUnavailabilities(groupedByField, resId) {
-        const { unavailabilities } = this.model.data;
-        if (groupedByField) {
-            return unavailabilities[groupedByField]?.[resId ?? false] || [];
-        }
-        return unavailabilities.__default?.false || [];
-    }
-
-    /**
      * @param {Object} params
      * @param {Element} params.pill
      * @param {number} params.diff
@@ -2370,6 +2467,201 @@ export class GanttRenderer extends Component {
         this.highlightPill(targetPillId, highlighted);
     }
 
+    computeUnavailabilityPeriods() {
+        const { cellPart } = this.model.metaData.scale;
+        const columns = [...Array(this.columnCount).keys()].map((i) =>
+            this.getColumnFromColNumber(i * cellPart + 1)
+        );
+        this.foldableColumns = Array(this.columnCount);
+        let allNull = true;
+        for (const row of this.rows) {
+            if (row.isGroup) {
+                continue;
+            }
+            const { unavailabilities } = row;
+            // We assume that the unavailabilities have been normalized
+            // (i.e. are naturally ordered and are pairwise disjoint).
+            allNull = true;
+            if (unavailabilities) {
+                let index = 0;
+                for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
+                    if (this.foldableColumns[columnIndex] === 0) {
+                        continue;
+                    }
+                    this.foldableColumns[columnIndex] = 0;
+                    if (index < unavailabilities.length) {
+                        const { start, stop } = columns[columnIndex];
+                        for (let i = index; i < unavailabilities.length; i++) {
+                            const u = unavailabilities[i];
+                            if (stop > u.stop) {
+                                index++;
+                                continue;
+                            } else if (u.start <= start) {
+                                this.foldableColumns[columnIndex] = 1;
+                                allNull = false;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            if (allNull) {
+                break;
+            }
+        }
+        if (allNull) {
+            this.foldableColumns.fill(0);
+        } else {
+            for (const pill of Object.values(this.pills)) {
+                this.foldableColumns.fill(
+                    0,
+                    Math.floor((pill.grid.column[0] - 1) / cellPart),
+                    Math.ceil((pill.grid.column[1] - 1) / cellPart)
+                );
+            }
+        }
+
+        this.foldableColumnsMapping = {};
+        let foldableGroupIndex = 0;
+        let foldableSubSet;
+        for (let i = 0; i < this.foldableColumns.length; i++) {
+            if (this.foldableColumns[i]) {
+                const next = this.foldableColumns[i + 1];
+                const previous = this.foldableColumns[i - 1];
+                if (next === 1) {
+                    if (!previous) {
+                        foldableSubSet = { foldableGroupIndex };
+                        foldableGroupIndex++;
+                        foldableSubSet.startIndex = i;
+                    }
+                    this.foldableColumnsMapping[i] = foldableSubSet;
+                    continue;
+                }
+                if (!previous) {
+                    this.foldableColumns[i] = 0;
+                    continue;
+                }
+                foldableSubSet.stopIndex = i;
+                this.foldableColumnsMapping[i] = foldableSubSet;
+            }
+        }
+    }
+
+    computeFoldedGrid() {
+        this.shouldComputeSomeWidths = true;
+        if (this.offHoursState.foldedColumns && !this.offHoursState.foldedColumns.includes(1)) {
+            clearObject(this.offHoursState);
+            return;
+        }
+        let foldedColumns = this.foldableColumns;
+        if (this.offHoursState.foldedColumns?.length === this.columnCount) {
+            foldedColumns = zipWith(
+                this.foldableColumns,
+                this.offHoursState.foldedColumns,
+                (a, b) => a & b
+            );
+        }
+
+        // aggregate unavailability columns
+        let offPeriod = 0;
+        this.offHoursState.foldedGridColumnSpans = foldedColumns.reduce((res, val, index) => {
+            if (val === 1) {
+                offPeriod++;
+            } else {
+                if (offPeriod > 0) {
+                    res.push(offPeriod);
+                }
+                res.push(1);
+                offPeriod = 0;
+            }
+            if (index === foldedColumns.length - 1 && offPeriod > 0) {
+                res.push(offPeriod);
+            }
+            return res;
+        }, []);
+        const { cellPart } = this.model.metaData.scale;
+        this.offHoursState.mappingTotalGridToFoldedGridSubColumns = new Map();
+        this.offHoursState.foldedColumns = [];
+        const halfCut = Math.floor(cellPart / 2);
+        let count = 0;
+        for (let index = 0; index < this.offHoursState.foldedGridColumnSpans.length; index++) {
+            const val = this.offHoursState.foldedGridColumnSpans[index];
+            if (val > 1) {
+                for (let j = 0; j < val; j++) {
+                    for (let i = 1; i <= cellPart; i++) {
+                        const targetIndex =
+                            j === 0
+                                ? index * cellPart + (i <= halfCut ? i : halfCut + 1)
+                                : j === val - 1
+                                ? index * cellPart + (i <= halfCut ? halfCut + 1 : i)
+                                : index * cellPart + halfCut + 1;
+                        this.offHoursState.mappingTotalGridToFoldedGridSubColumns.set(
+                            count * cellPart + i,
+                            targetIndex
+                        );
+                    }
+                    count++;
+                    this.offHoursState.foldedColumns.push(1);
+                }
+            } else {
+                for (let i = 1; i <= cellPart; i++) {
+                    this.offHoursState.mappingTotalGridToFoldedGridSubColumns.set(
+                        count * cellPart + i,
+                        index * cellPart + i
+                    );
+                }
+                count++;
+                this.offHoursState.foldedColumns.push(0);
+            }
+        }
+        this.offHoursState.mappingTotalGridToFoldedGridSubColumns.set(
+            this.columnCount * cellPart + 1,
+            this.offHoursState.foldedGridColumnSpans.length * cellPart + 1
+        );
+        let colIndex = 0;
+        this.offHoursState.mappingFoldedGridToTotalGridColumnIndex = new Map(
+            this.offHoursState.foldedGridColumnSpans.map((val, gridIndex) => {
+                const res = [gridIndex, colIndex];
+                colIndex += val;
+                return res;
+            })
+        );
+    }
+
+    toggleFoldableColumn(column, fold) {
+        if (!this.offHoursState.foldedColumns) {
+            this.offHoursState.foldedColumns = new Array(this.columnCount).fill(0);
+        }
+        const { startIndex, stopIndex } = this.foldableColumnsMapping[column.index];
+        this.offHoursState.foldedColumns.fill(fold ? 1 : 0, startIndex, stopIndex + 1);
+        this.computeFoldedGrid();
+    }
+
+    toggleCollapsableColumnHeaderHighlighting(collapsableColumnHeader) {
+        if (
+            !collapsableColumnHeader ||
+            collapsableColumnHeader.classList.contains("o_gantt_header_folded")
+        ) {
+            const columnHeaders = this.gridRef.el.querySelectorAll(".o_gantt_foldable_hovered");
+            for (const columnHeader of columnHeaders) {
+                columnHeader.classList.remove("o_gantt_foldable_hovered");
+            }
+            return;
+        }
+        const columnHeaders = this.gridRef.el.querySelectorAll(".o_gantt_foldable");
+        const foldableColumnsGroup =
+            this.foldableColumnsMapping[+collapsableColumnHeader.dataset.columnIndex];
+        for (const columnHeader of columnHeaders) {
+            const columnIndex = +columnHeader.dataset.columnIndex;
+            const currentGroup = this.foldableColumnsMapping[columnIndex];
+            if (foldableColumnsGroup.foldableGroupIndex === currentGroup.foldableGroupIndex) {
+                columnHeader.classList.add("o_gantt_foldable_hovered");
+            } else {
+                columnHeader.classList.remove("o_gantt_foldable_hovered");
+            }
+        }
+    }
+
     /**
      * @param {PillId} pillId
      * @param {boolean} highlighted
@@ -2410,10 +2702,15 @@ export class GanttRenderer extends Component {
     // Handlers
     //-------------------------------------------------------------------------
 
-    onCellClicked(rowId, col) {
+    onCellClicked(rowId, column) {
         if (!this.preventClick) {
             this.preventClick = true;
             setTimeout(() => (this.preventClick = false), 1000);
+            if (column.isFolded) {
+                this.toggleFoldableColumn(column, false);
+                return;
+            }
+            const col = column.grid.column[0];
             const { canCellCreate, canPlan } = this.model.metaData;
             if (canPlan) {
                 this.onPlan(rowId, col, col);
@@ -2455,11 +2752,14 @@ export class GanttRenderer extends Component {
 
             const hoveredPillId = this.hovered.pill?.dataset.pillId;
             this.togglePillHighlighting(hoveredPillId, false);
+
+            this.toggleCollapsableColumnHeaderHighlighting(null);
         }
 
         this.hovered.connector = null;
         this.hovered.pill = null;
         this.hovered.hoverable = null;
+        this.hovered.collapsableColumnHeader = null;
 
         this.computeDerivedParamsFromHover();
     }
@@ -2492,6 +2792,7 @@ export class GanttRenderer extends Component {
         this.hovered.connector = find(".o_gantt_connector");
         this.hovered.hoverable = find(".o_gantt_hoverable");
         this.hovered.pill = find(".o_gantt_pill_wrapper");
+        this.hovered.collapsableColumnHeader = find(".o_gantt_foldable");
 
         this.computeDerivedParamsFromHover();
     }
@@ -2608,5 +2909,11 @@ export class GanttRenderer extends Component {
         if (ev.key === "Control") {
             this.interaction.dragAction = this.prevDragAction || "reschedule";
         }
+    }
+}
+
+function clearObject(obj) {
+    for (const key in obj) {
+        delete obj[key];
     }
 }

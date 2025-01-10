@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
 
     <t t-name="web_gantt.GanttRenderer">
-        <GanttRendererControls t-props="controlsProps" />
+        <GanttRendererControls t-props="this.controlsProps" />
         <div t-ref="grid"
             class="o_gantt_renderer o_renderer bg-view"
             t-att-class="{ o_has_row_headers: hasRowHeaders, 'pe-auto': isDragging }"
@@ -57,32 +57,50 @@
             />
         </t>
         <div class="o_gantt_header_groups o_gantt_grid_columns bg-100 position-sticky">
-            <t t-foreach="columnsGroups" t-as="column" t-key="column.id">
+            <t t-foreach="columnsGroups" t-as="columnGroup" t-key="columnGroup_index">
                 <div class="o_gantt_header_title position-sticky d-flex align-items-center ps-2 overflow-hidden bg-100"
-                    t-att-style="getGridPosition({column: column.grid.column})"
+                    t-att-style="getGridPosition({column: columnGroup.grid.column})"
                 >
-                    <t t-esc="model.metaData.scale.groupHeaderFormatter(column.start, env)"/>
+                    <t t-if="!columnGroup.isFolded" t-esc="model.metaData.scale.groupHeaderFormatter(columnGroup.start, env)"/>
                 </div>
             </t>
         </div>
         <div class="o_gantt_header_columns o_gantt_grid_columns bg-view position-sticky">
-            <t t-foreach="columns" t-as="column" t-key="column.id">
+            <t t-foreach="columns" t-as="column" t-key="column.index">
                 <div class="o_gantt_header_cell d-flex align-items-center justify-content-center py-2"
-                    t-att-class="{ o_gantt_today: column.isToday, 'bg-100': !column.isToday }"
+                    t-att-class="{
+                        o_gantt_today: column.isToday,
+                        'bg-100': !column.isToday,
+                        o_gantt_foldable: column.isFoldable,
+                        o_gantt_foldable_stop: column.isFoldable === 'stop',
+                        o_gantt_header_folded: column.isFolded,
+                    }"
+                    t-att-data-column-index="column.index"
                     t-att-style="getGridPosition({column: column.grid.column})"
+                    t-on-click="() => column.isFoldable and this.toggleFoldableColumn(column, !column.isFolded)"
                 >
-                    <t t-if="'colHeaderFormatter' in model.metaData.scale">
-                        <t t-esc="model.metaData.scale.colHeaderFormatter(column.start, env)"/>
+                    <t t-if="column.isFolded">
+                        <div class="o_gantt_header_cell_title">
+                            <i class="fa fa-caret-left pe-1"/><i class="fa fa-caret-right"/>
+                        </div>
                     </t>
-                    <small t-else="" class="text-center">
-                        <t t-if="is24HourFormat">
-                            <b t-esc="column.start.toFormat('H')"/>
-                        </t>
-                        <t t-else="">
-                            <b t-esc="column.start.toFormat('h')"/>
-                            <div class="d-xl-inline-block" t-esc="column.start.toFormat('a').toLowerCase()"/>
-                        </t>
-                    </small>
+                    <t t-else="">
+                        <div class="o_gantt_fold_icons">
+                            <i class="fa fa-caret-right pe-1"/><i class="fa fa-caret-left"/>
+                        </div>
+                        <div class="o_gantt_header_cell_title" t-if="'colHeaderFormatter' in model.metaData.scale">
+                            <t t-esc="model.metaData.scale.colHeaderFormatter(column.start, env)"/>
+                        </div>
+                        <small t-else="" class="o_gantt_header_cell_title text-center">
+                            <t t-if="is24HourFormat">
+                                <b t-esc="column.start.toFormat('H')"/>
+                            </t>
+                            <t t-else="">
+                                <b t-esc="column.start.toFormat('h')"/>
+                                <div class="d-xl-inline-block" t-esc="column.start.toFormat('a').toLowerCase()"/>
+                            </t>
+                        </small>
+                    </t>
                 </div>
             </t>
         </div>
@@ -142,15 +160,15 @@
 
     <t t-name="web_gantt.GanttRenderer.RowContent">
         <!-- Cells -->
-        <t t-foreach="columns" t-as="column" t-key="column.id">
+        <t t-foreach="columns" t-as="column" t-key="column.index">
             <t t-set="col" t-value="column.grid.column[0]" />
             <div
                 class="o_gantt_cell"
                 t-att-class="ganttCellAttClass(row, column)"
-                t-attf-style="{{ getGridPosition({ column: column.grid.column, row: row.grid.row }) }};{{ row.cellColors[column.id] || '' }}"
+                t-attf-style="{{ getGridPosition({ column: column.grid.column, row: row.grid.row }) }};{{ row.cellColors[column.index] || '' }}"
                 t-att-data-row-id="row.id"
                 t-att-data-col="col"
-                t-on-click.synthetic="(ev) => row.isGroup ? this.model.toggleRow(row.id) : this.onCellClicked(row.id, col)"
+                t-on-click.synthetic="(ev) => row.isGroup and !column.isFolded ? this.model.toggleRow(row.id) : this.onCellClicked(row.id, column)"
             />
         </t>
     </t>
@@ -224,11 +242,12 @@
             </div>
         </t>
         <div class="o_gantt_row_total o_gantt_grid_columns bg-view">
-            <t t-foreach="columns" t-as="column" t-key="column.id">
+            <t t-foreach="columns" t-as="column" t-key="column.index">
                 <div
                     class="o_gantt_cell"
-                    t-att-class="{ o_gantt_today: column.isToday, o_sample_data_disabled: isDisabled() }"
+                    t-att-class="{ o_gantt_today: column.isToday, o_sample_data_disabled: isDisabled(), o_gantt_cell_folded: column.isFolded }"
                     t-att-style="getGridPosition({ column: column.grid.column, row: [1, 2] })"
+                    t-on-click="() => column.isFolded and this.toggleFoldableColumn(column, false)"
                 />
             </t>
             <t t-foreach="totalRow.pills" t-as="pill" t-key="pill.id">

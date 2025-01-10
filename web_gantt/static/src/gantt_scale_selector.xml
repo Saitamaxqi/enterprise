@@ -28,9 +28,18 @@
                         <button class="btn btn-sm btn-primary ms-1" t-on-click="() => this.onApply()">Apply</button>
                     </div>
                 </DropdownItem>
+                <t t-if="props.hasFoldableColumns">
+                    <div class="dropdown-divider"/>
+                    <DropdownItem t-if="props.offHoursFolded" onSelected="() => this.props.unfoldOffHours()">
+                        Unfold off hours
+                    </DropdownItem>
+                    <DropdownItem t-else="" onSelected="() => this.props.foldOffHours()">
+                        Fold off hours
+                    </DropdownItem>
+                </t>
             </t>
             <t t-else="">$0</t>
         </xpath>
     </t>
-    
+
 </templates>

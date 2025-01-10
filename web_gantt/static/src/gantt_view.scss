@@ -192,6 +192,25 @@
 		@include media-breakpoint-down(md) {
 			min-width: 0;
 		}
+        .o_gantt_fold_icons {
+            display: none;
+        }
+        &.o_gantt_foldable_hovered {
+            &:not(.o_gantt_foldable_stop) {
+                border-right-color: transparent;
+            }
+            .o_gantt_header_cell_title {
+                opacity: 0.3;
+            }
+            &:hover {
+                .o_gantt_fold_icons {
+                    display: block;
+                }
+                .o_gantt_header_cell_title {
+                    display: none;
+                }
+            }
+        }
 	}
 
 	.o_gantt_header_title {
@@ -233,6 +252,11 @@
 			background: $gantt-highlight-cell-color !important;
 			@include o-gantt-zindex(grid-interact);
 		}
+
+        &.o_gantt_cell_folded {
+            background: $gantt-border-color !important;
+            @include o-gantt-zindex(folded);
+        }
 	}
 
 	// ================================ Pills =================================

@@ -19,7 +19,16 @@ export class GanttRendererControls extends Component {
         DropdownItem,
         GanttScaleSelector,
     };
-    static props = ["model", "displayExpandCollapseButtons", "focusToday", "getCurrentFocusDate"];
+    static props = [
+        "model",
+        "displayExpandCollapseButtons",
+        "hasFoldableColumns",
+        "offHoursFolded",
+        "focusToday",
+        "getCurrentFocusDate",
+        "foldOffHours",
+        "unfoldOffHours",
+    ];
     static toolbarContentTemplate = "web_gantt.GanttRendererControls.ToolbarContent";
     static rangeMenuTemplate = "web_gantt.GanttRendererControls.RangeMenu";
 
@@ -45,6 +54,10 @@ export class GanttRendererControls extends Component {
             selectCustomRange: this.selectCustomRange.bind(this),
             startDate: this.state.startDate,
             stopDate: this.state.stopDate,
+            hasFoldableColumns: this.props.hasFoldableColumns,
+            offHoursFolded: this.props.offHoursFolded,
+            foldOffHours: this.props.foldOffHours,
+            unfoldOffHours: this.props.unfoldOffHours,
         };
     }
 

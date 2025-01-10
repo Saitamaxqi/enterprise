@@ -10,7 +10,7 @@
 
     <t t-name="project_enterprise.TaskGanttRenderer.Header" t-inherit="web_gantt.GanttRenderer.Header">
         <xpath expr="//t[@t-foreach='columns']/div" position="inside">
-            <t t-set="columnInfo" t-value="columnMilestones[column.id]"/>
+            <t t-set="columnInfo" t-value="columnMilestones[column.index]"/>
             <t t-if="columnInfo.edge &amp;&amp; columnInfo.edge.hasStartDate">
                 <div class="o_project_edge_startdate_circle"
                      t-on-mouseenter="(ev) => this.onMilestoneMouseEnter(ev, columnInfo.edge.projects)"
@@ -45,7 +45,7 @@
     </t>
 
     <t t-name="project_enterprise.TaskGanttRenderer.ColoredCellBorder">
-        <t t-set="columnInfo" t-value="columnMilestones[column.id]"/>
+        <t t-set="columnInfo" t-value="columnMilestones[column.index]"/>
         <t t-if="columnInfo.edge &amp;&amp; columnInfo.edge.hasStartDate">
             <div class="o_edge_startdate_pin" t-att-style="coloredCellBorderStyle"/>
         </t>

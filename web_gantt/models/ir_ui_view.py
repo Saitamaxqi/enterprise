@@ -11,6 +11,7 @@ GANTT_VALID_ATTRIBUTES = set([
     'date_stop',
     'default_scale', # should be dropped
     'default_range',
+    'fold',
     'class',
     'js_class',
     'form_view_id',

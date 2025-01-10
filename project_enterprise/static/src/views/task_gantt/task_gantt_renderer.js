@@ -82,7 +82,7 @@ export class TaskGanttRenderer extends GanttRenderer {
         super.computeVisibleColumns();
         this.columnMilestones = {}; // deadlines and milestones by project
         for (const column of this.columns) {
-            this.columnMilestones[column.id] = {
+            this.columnMilestones[column.index] = {
                 hasDeadLineExceeded: false,
                 allReached: true,
                 projects: {},
@@ -92,7 +92,7 @@ export class TaskGanttRenderer extends GanttRenderer {
             };
         }
         // Handle start date at the beginning of the current period
-        this.columnMilestones[this.columns[0].id].edge = {
+        this.columnMilestones[this.columns[0].index].edge = {
             projects: {},
             hasStartDate: false,
         };
@@ -107,7 +107,7 @@ export class TaskGanttRenderer extends GanttRenderer {
         while (i < this.columns.length && (project || projectDeadline || milestone)) {
             const column = this.columns[i];
             const nextColumn = this.columns[i + 1];
-            const info = this.columnMilestones[column.id];
+            const info = this.columnMilestones[column.index];
 
             if (i == 0 && project && column && column.stop > project.date) {
                 // For the first column, start dates have to be displayed at the start of the period

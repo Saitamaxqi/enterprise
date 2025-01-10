@@ -1,3 +1,4 @@
+import { after } from "@odoo/hoot";
 import {
     click,
     hover,
@@ -323,6 +324,14 @@ function getHeaders(selector) {
     return groupHeaders;
 }
 
+let CELL_PART = null;
+export function setCellParts(cellPart) {
+    CELL_PART = cellPart;
+    after(() => {
+        CELL_PART = null;
+    });
+}
+
 export function getGridContent() {
     const columnHeaders = getHeaders(SELECTORS.columnHeader);
     const groupHeaders = getHeaders(SELECTORS.groupHeader);
@@ -331,7 +340,7 @@ export function getGridContent() {
     const colsRange = queryFirst(SELECTORS.columnHeader)
         .style.getPropertyValue("grid-column")
         .split("/");
-    const cellParts = parseNumber(colsRange[1]) - parseNumber(colsRange[0]);
+    const cellParts = CELL_PART || parseNumber(colsRange[1]) - parseNumber(colsRange[0]);
     const pillEls = new Set(queryAll(`${SELECTORS.cellContainer} ${SELECTORS.pillWrapper}`));
     const rowEls = queryAll(`.o_gantt_row_headers > ${SELECTORS.rowHeader}`);
     const singleRowMode = rowEls.length === 0;
@@ -440,7 +449,7 @@ function getCellPositionOffset(cell, part) {
         const colsRange = queryFirst(SELECTORS.columnHeader)
             .style.getPropertyValue("grid-column")
             .split("/");
-        const cellParts = parseNumber(colsRange[1]) - parseNumber(colsRange[0]);
+        const cellParts = CELL_PART || parseNumber(colsRange[1]) - parseNumber(colsRange[0]);
         const partWidth = rect.width / cellParts;
         position.x += Math.ceil(partWidth * (part - 1));
     }
@@ -505,7 +514,7 @@ export async function resizePill(pill, side, deltaOrPosition, shouldDrop = true)
     const colsRange = queryFirst(SELECTORS.columnHeader)
         .style.getPropertyValue("grid-column")
         .split("/");
-    const cellParts = parseNumber(colsRange[1]) - parseNumber(colsRange[0]);
+    const cellParts = CELL_PART || parseNumber(colsRange[1]) - parseNumber(colsRange[0]);
 
     // Calculate delta or position
     const delta = typeof deltaOrPosition === "object" ? 0 : deltaOrPosition;

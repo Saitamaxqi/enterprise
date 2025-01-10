@@ -159,10 +159,11 @@ export function getUnionOfIntersections(interval, intervals) {
  * @param {Object} params
  * @param {Ref<HTMLElement>} params.ref
  * @param {string} params.selector
+ * @param {string} params.exception
  * @param {string} params.related
  * @param {string} params.className
  */
-export function useMultiHover({ ref, selector, related, className }) {
+export function useMultiHover({ ref, selector, exception, related, className }) {
     /**
      * @param {HTMLElement} el
      */
@@ -177,9 +178,11 @@ export function useMultiHover({ ref, selector, related, className }) {
      * @param {PointerEvent} ev
      */
     const onPointerEnter = (ev) => {
-        for (const sibling of findSiblings(ev.target)) {
-            sibling.classList.add(...classList);
-            classedEls.add(sibling);
+        if (!ev.target.classList.contains(exception)) {
+            for (const sibling of findSiblings(ev.target)) {
+                sibling.classList.add(...classList);
+                classedEls.add(sibling);
+            }
         }
     };
 
@@ -326,6 +329,9 @@ export const useGanttDraggable = makeDraggableHook({
 
         if (cell && !cell.matches(cellSelector)) {
             cell = null; // Not a cell
+        }
+        if (cell && cell.classList.contains("o_gantt_cell_folded")) {
+            return;
         }
 
         current.cell.el = cell;
@@ -558,7 +564,9 @@ export const useGanttResizable = makeDraggableHook({
             const width = Math.floor(rect.width);
             part = Math.floor((point[0] - x) / (width / precision));
         }
-
+        if (cell.classList.contains("o_gantt_cell_folded")) {
+            return;
+        }
         const cellStyle = getComputedStyle(cell);
         const cGridColStart = getColumnStart(cellStyle);
 
@@ -662,6 +670,9 @@ export const useGanttSelectable = makeDraggableHook({
                     cell = rtl ? cells[0] : cells.at(-1);
                 }
             }
+        }
+        if (cell.classList.contains("o_gantt_cell_folded")) {
+            return;
         }
         const col = +cell.dataset.col;
         const lastSelectedCol = current.lastSelectedCol;
