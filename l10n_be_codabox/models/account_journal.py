@@ -43,7 +43,7 @@ class AccountJournal(models.Model):
         assert file_type in ("codas", "sodas")
         company._l10n_be_codabox_verify_prerequisites()
         if not date_from:
-            date_from = fields.Date.to_string(fields.Date.today() - relativedelta(months=3))
+            date_from = fields.Date.to_string(fields.Date.today() - relativedelta(years=1))
         params = {
             "db_uuid": self.env["ir.config_parameter"].sudo().get_param("database.uuid"),
             "fidu_vat": re.sub("[^0-9]", "", company.l10n_be_codabox_fiduciary_vat),
@@ -84,7 +84,7 @@ class AccountJournal(models.Model):
         if not company.l10n_be_codabox_is_connected:
             raise UserError(get_error_msg({"type": "error_codabox_not_configured"}))
 
-        date_3_months_ago = fields.Date.to_string(fields.Date.today() - relativedelta(months=3))
+        date_one_year_ago = fields.Date.to_string(fields.Date.today() - relativedelta(years=1))
         ibans = {}  # {iban: last_date} where last_date is the date of the last bank statement or transaction
         codabox_journals = self.search([
             ("bank_statements_source", "=", "l10n_be_codabox"),
@@ -100,12 +100,12 @@ class AccountJournal(models.Model):
                     ("journal_id", "=", journal.id),
                 ], order="date DESC", limit=1).date
             iban = journal.bank_acc_number.replace(" ", "").upper()
-            last_date = fields.Date.to_string(last_date) or date_3_months_ago
+            last_date = fields.Date.to_string(last_date) or date_one_year_ago
             if iban not in ibans:
                 ibans[iban] = last_date
             else:
                 ibans[iban] = min(ibans[iban], last_date)
-        date_from = min(ibans.values()) if ibans else date_3_months_ago
+        date_from = min(ibans.values()) if ibans else date_one_year_ago
         statement_ids_all = []
         skipped_bank_accounts = set()
         session = requests.Session()
