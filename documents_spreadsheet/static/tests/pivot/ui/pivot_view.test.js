@@ -998,6 +998,28 @@ test("sort second pivot measure (descending)", async () => {
     });
 });
 
+test("remove sorting if measure is removed", async () => {
+    const { model, pivotId } = await createSpreadsheetFromPivotView({
+        serverData: {
+            models: getBasicData(),
+            views: {
+                "partner,false,pivot": /* xml */ `
+                    <pivot default_order="probability desc">
+                        <field name="product_id" type="row"/>
+                        <field name="probability" type="measure"/>
+                        <field name="foo" type="measure"/>
+                    </pivot>`,
+                "partner,false,search": /* xml */ `<search/>`,
+            },
+        },
+        actions: async (target) => {
+            await toggleMenu("Measures");
+            await toggleMenuItem("Probability"); // remove probability measure
+        },
+    });
+    expect(model.getters.getPivotCoreDefinition(pivotId).sortedColumn).toBe(undefined);
+});
+
 test("search view with group by and additional row group", async () => {
     const { model } = await createSpreadsheetFromPivotView({
         additionalContext: { search_default_group_name: true },
