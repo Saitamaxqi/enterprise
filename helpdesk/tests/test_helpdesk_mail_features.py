@@ -192,8 +192,8 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                             },
                             'message_type': 'email',
                             'message_values': {
-                                # ticket creates a partner due does not update message author
-                                'author_id': test_user.partner_id if test_user else self.env['res.partner'],
+                                # ticket creates a partner that if then found by mailgateway
+                                'author_id': author,
                                 'email_from': formataddr((author.name, author.email_normalized)),
                                 'mail_server_id': self.env['ir.mail_server'],
                                 # followers of 'new task' subtype (but not original To as they

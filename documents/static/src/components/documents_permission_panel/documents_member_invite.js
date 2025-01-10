@@ -123,6 +123,7 @@ export class DocumentsMemberInvite extends Component {
                 onClose,
             });
         }
+        // TDE FIXME: could probably call partner tool on mail instead of hard create
         const partnerId = await this.orm.call("res.partner", "create", [
             {
                 name: defaultName,
