@@ -73,6 +73,60 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
             [('email_normalized', 'in', {'new.cc@test.agrolait.com', 'new.customer@test.agrolait.com', 'new.author@test.agrolait.com'})])
         )
 
+    def test_mailgateway_multicompany(self):
+        company0 = self.env.company
+        company1 = self.env['res.company'].create({'name': 'new_company0'})
+        Partner = self.env['res.partner']
+
+        self.env.user.write({
+            'company_ids': [(4, company0.id, False), (4, company1.id, False)],
+        })
+
+        team0, team1 = self.env['helpdesk.team'].create([
+            {'name': 'helpdesk team 0', 'company_id': company0.id, 'alias_name': 'helpdesk_team_0'},
+            {'name': 'helpdesk team 1', 'company_id': company1.id, 'alias_name': 'helpdesk_team_1'},
+        ])
+        mail_alias0 = team0.alias_id
+        mail_alias1 = team1.alias_id
+        self.assertEqual((mail_alias0 + mail_alias1).alias_domain_id, self.mail_alias_domain)
+
+        self.assertFalse(self.env['res.partner'].search([('email_normalized', 'in', ['client_a@someprovider.com', 'client_b@someprovider.com'])]))
+        tickets = []
+        for email_from, email_to in [
+            ('A client <client_a@someprovider.com>', mail_alias0.display_name),
+            ('B client <client_b@someprovider.com>', mail_alias1.display_name),
+        ]:
+            with self.mock_mail_gateway():
+                tickets.append(self.format_and_process(
+                    MAIL_TEMPLATE, email_from, email_to,
+                    subject=f'Test from {email_from}',
+                    target_model='helpdesk.ticket',
+                ))
+        helpdesk_ticket0, helpdesk_ticket1 = tickets
+
+        self.assertEqual(helpdesk_ticket0.team_id, team0)
+        self.assertEqual(helpdesk_ticket1.team_id, team1)
+
+        self.assertEqual(helpdesk_ticket0.company_id, company0)
+        self.assertEqual(helpdesk_ticket1.company_id, company1)
+
+        partner0 = Partner.search([('email', '=', 'client_a@someprovider.com')])
+        partner1 = Partner.search([('email', '=', 'client_b@someprovider.com')])
+        self.assertTrue(partner0)
+        self.assertTrue(partner1)
+
+        self.assertEqual(partner0.company_id, company0)
+        self.assertEqual(partner1.company_id, company1)
+
+        self.assertEqual(partner0.name, "A client")
+        self.assertEqual(partner1.name, "B client")
+
+        self.assertEqual(helpdesk_ticket0.partner_id, partner0)
+        self.assertEqual(helpdesk_ticket1.partner_id, partner1)
+
+        self.assertTrue(partner0 in helpdesk_ticket0.message_partner_ids)
+        self.assertTrue(partner1 in helpdesk_ticket1.message_partner_ids)
+
     def test_mailgateway_with_template(self):
         """ Portal / internal users receive an email when they create a ticket """
         internal_followers = self.helpdesk_user.partner_id
