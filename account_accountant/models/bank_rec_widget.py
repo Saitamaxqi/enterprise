@@ -496,6 +496,7 @@ class BankRecWidget(models.Model):
             balance=-aml.amount_residual,
             source_amount_currency=-aml.amount_residual_currency,
             source_balance=-aml.amount_residual,
+            source_rate=(aml.amount_currency / aml.balance) if aml.balance else 0.0,
             **kwargs,
         )
 
@@ -549,7 +550,7 @@ class BankRecWidget(models.Model):
             balance_after_partial = current_balance + auto_balance
 
             # Get the rate of the original journal item.
-            rate = abs(line.source_amount_currency) / abs(line.source_balance)
+            rate = line.source_rate
 
             # Compute the amounts to make a partial.
             new_line_balance = line.company_currency_id.round(balance_after_partial * abs(line.balance) / abs(current_balance))
@@ -1044,9 +1045,8 @@ class BankRecWidget(models.Model):
                 line.balance = line.source_balance
             else:
                 # Apply the rate.
-                if line.source_balance:
-                    rate = abs(line.source_amount_currency / line.source_balance)
-                    line.balance = line.company_currency_id.round(line.amount_currency / rate)
+                if line.source_rate:
+                    line.balance = line.company_currency_id.round(line.amount_currency / line.source_rate)
                 else:
                     line.balance = 0.0
         elif line.flag in ('manual', 'early_payment', 'tax_line'):

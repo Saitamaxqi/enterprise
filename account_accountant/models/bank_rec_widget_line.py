@@ -156,6 +156,7 @@ class BankRecWidgetLine(models.Model):
         currency_field='company_currency_id',
         compute='_compute_from_source_balance',
     )
+    source_rate = fields.Float()
 
     display_stroked_amount_currency = fields.Boolean(compute='_compute_display_stroked_amount_currency')
     display_stroked_balance = fields.Boolean(compute='_compute_display_stroked_balance')

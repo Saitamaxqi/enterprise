@@ -1215,6 +1215,115 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
             {'flag': 'exchange_diff',   'amount_currency': 0.0,         'balance': -1.25},
         ])
 
+    def test_validation_new_aml_from_partially_reconciled_invoice(self):
+        """ In this scenario, the invoice we are reconciling with is already partially reconciled.
+            We need to make sure the new aml's balance is computed using a rate computed from the
+            invoice's balance / amount_currency rather than the invoice's amount_residual / amount_residual_currency.
+        """
+        self.env['res.currency.rate'].create([
+            {
+                'name': '2017-02-01',
+                'rate': 1 / 19.839,
+                'currency_id': self.other_currency.id,
+                'company_id': self.env.company.id,
+            },
+            {
+                'name': '2017-03-01',
+                'rate': 1 / 19.9338,
+                'currency_id': self.other_currency.id,
+                'company_id': self.env.company.id,
+            },
+        ])
+
+        # 600000 comp_curr
+        st_line = self._create_st_line(
+            600000,
+            date='2017-03-01',
+        )
+        liquidity_line, suspense_line, _other_lines = st_line._seek_for_lines()
+        outstanding_account = suspense_line.account_id
+
+        # 23664 curr1 = 469470.10 comp_curr
+        inv_line = self._create_invoice_line(
+            'out_invoice',
+            currency_id=self.other_currency.id,
+            invoice_date='2017-02-01',
+            invoice_line_ids=[{'price_unit': 23664}],
+        )
+
+        # Register a partial payment on the invoice at the same date as the invoice.
+        payment = self.env['account.payment.register'].with_context(active_model='account.move', active_ids=inv_line.move_id.ids).create({
+            'amount': 9.0,
+            'payment_difference_handling': 'open',
+            'currency_id': self.other_currency.id,
+            'payment_method_line_id': self.inbound_payment_method_line.id,
+        })._create_payments()
+
+        # Sanity check that the residuals on the invoice are as expected
+        self.assertRecordValues(inv_line, [{
+            'balance': 469470.1,
+            'amount_currency': 23664.0,
+            'amount_residual': 469291.55,
+            'amount_residual_currency': 23655.0,
+        }])
+
+        # Create the wizard
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+        wizard._action_add_new_amls(inv_line)
+
+        self.assertRecordValues(wizard.line_ids, [
+            # pylint: disable=C0326
+            {'flag': 'liquidity',       'amount_currency': 600000,      'balance': 600000.0},
+            {'flag': 'new_aml',         'amount_currency': -23655.0,    'balance': -469291.55},
+            {'flag': 'exchange_diff',   'amount_currency': 0.0,         'balance': -2242.49},
+            {'flag': 'auto_balance',    'amount_currency': -128465.96,  'balance': -128465.96},
+        ])
+
+        # Custom amount_currency.
+        line = wizard.line_ids.filtered(lambda x: x.flag == 'new_aml')
+        wizard._js_action_mount_line_in_edit(line.index)
+        line.amount_currency = -6954.76
+        wizard._line_value_changed_amount_currency(line)
+
+        # Check that the new aml is adjusted according to the invoice rate rather than the invoice residuals' rate.
+        self.assertRecordValues(wizard.line_ids, [
+            # pylint: disable=C0326
+            {'flag': 'liquidity',       'amount_currency': 600000,      'balance': 600000.0},
+            {'flag': 'new_aml',         'amount_currency': -6954.76,    'balance': -137975.48},
+            {'flag': 'exchange_diff',   'amount_currency': 0.0,         'balance': -659.31},
+            {'flag': 'auto_balance',    'amount_currency': -461365.21,  'balance': -461365.21},
+        ])
+
+        # Check that after reconciling, the new aml has 0 residual.
+        wizard._action_validate()
+        self.assertRecordValues(st_line.line_ids, [
+            {
+                'account_id': st_line.journal_id.default_account_id.id,
+                'amount_currency': 600000.0,
+                'balance': 600000.0,
+                'currency_id': self.company_data['currency'].id,
+                'reconciled': False,
+            },
+            {
+                'account_id': inv_line.account_id.id,
+                'amount_currency': -6954.76,
+                'balance': -138634.79,
+                'currency_id': self.other_currency.id,
+                'reconciled': True,
+            },
+            {
+                'account_id': outstanding_account.id,
+                'amount_currency': -461365.21,
+                'currency_id': self.company_data['currency'].id,
+                'balance': -461365.21,
+                'reconciled': False,
+            },
+        ])
+        self.assertRecordValues(inv_line.move_id, [{
+            'payment_state': 'partial',
+            'amount_residual': 16700.24,
+        }])
+
     def test_validation_with_partner(self):
         partner = self.partner_a.copy()
 
