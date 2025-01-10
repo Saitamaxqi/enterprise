@@ -1620,8 +1620,25 @@ export default class BarcodePickingModel extends BarcodeModel {
         return Array.from(new Set(lines));
     }
 
+    _getLineMoveId(line) {
+        return line.move_id;
+    }
+
     _onExit() {
-        this.orm.call("stock.move", "split_uncompleted_moves", [this.moveIds]);
+        const quantitiesByMove = this.initialState.lines.reduce((res, line) => {
+            const moveId = this._getLineMoveId(line);
+            if (res[moveId]) {
+                res[moveId].quantity_done += line.qty_done;
+                res[moveId].reserved_uom_qty += line.reserved_uom_qty;
+            } else {
+                res[moveId] = {
+                    quantity_done: line.qty_done,
+                    reserved_uom_qty: line.reserved_uom_qty,
+                };
+            }
+            return res;
+        }, {});
+        this.orm.call("stock.move", "post_barcode_process", [this.moveIds, quantitiesByMove]);
     }
 
     async _processLocationDestination(barcodeData) {

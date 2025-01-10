@@ -486,6 +486,52 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             {'product_id': self.product2.id, 'quantity': 1, 'picked': False},
         ])
 
+    def test_mrp_uncompleted_move_split_on_barcode_exit(self):
+        """
+        Test that the move lines are correctly splitted when exiting the barcode app.
+        """
+        self.clean_access_rights()
+
+        available_comp, unavailable_comp = self.component01, self.product1
+        unavailable_comp.write({'name': 'Compo 02', 'code': False, 'default_code': False})
+        self.env['stock.quant']._update_available_quantity(available_comp, self.stock_location, quantity=20)
+
+        manufacturing_order = self.env['mrp.production'].create({
+            'name': 'TMUMSOBE mo',
+            'product_id': self.final_product.id,
+            'product_qty': 20,
+            'move_raw_ids': [
+                Command.create({
+                    'product_id': available_comp.id,
+                    'product_uom_qty': 20,
+                }),
+                Command.create({
+                    'product_id': unavailable_comp.id,
+                    'product_uom_qty': 4,
+                }),
+            ],
+        })
+        manufacturing_order.action_confirm()
+        with Form(manufacturing_order) as mo_form:
+            mo_form.qty_producing = 10.0
+        self.assertRecordValues(manufacturing_order.move_raw_ids.sorted('quantity'), [
+            {'product_uom_qty': 4.0, 'quantity': 2.0, 'picked': True},
+            {'product_uom_qty': 20.0, 'quantity': 10.0, 'picked': True},
+        ])
+        action = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = f"/web#action={action.id}"
+        # under-register 4 x comp 1 and over-register 3 x comp 2 then leave the barcode app
+        self.start_tour(url, 'test_mrp_uncompleted_move_split_on_barcode_exit', login='admin')
+        self.assertRecordValues(manufacturing_order.move_raw_ids.sorted('quantity'), [
+            {'product_uom_qty': 4.0, 'quantity': 3.0, 'picked': True},
+            {'product_uom_qty': 20.0, 'quantity': 10.0, 'picked': True},
+        ])
+        self.assertRecordValues(manufacturing_order.move_raw_ids.move_line_ids.sorted('quantity'), [
+            {'product_id': unavailable_comp.id, 'quantity': 3.0, 'picked': True},
+            {'product_id': available_comp.id, 'quantity': 4.0, 'picked': True},
+            {'product_id': available_comp.id, 'quantity': 6.0, 'picked': False},
+        ])
+
     def test_barcode_production_component_different_uom(self):
         self.clean_access_rights()
         self.env.ref('base.user_admin').group_ids += self.env.ref('uom.group_uom')

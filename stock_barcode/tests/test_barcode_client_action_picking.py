@@ -2779,6 +2779,51 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             {'product_id': self.product2.id, 'quantity': 2, 'picked': False},
         ])
 
+    def test_split_line_on_exit_for_delivery_with_lot(self):
+        """ Ensures that the total quantity handled by the splitted moves does
+        not exceed the initial demand in case another lot than the initially
+        reserved one is scanned from the barcode."""
+        self.clean_access_rights()
+
+        group_pack = self.env.ref('stock.group_production_lot')
+        self.env.user.write({'group_ids': [Command.link(group_pack.id)]})
+        lots = self.env['stock.lot'].create([
+            {'name': 'LOT001', 'product_id': self.productlot1.id},
+            {'name': 'LOT002', 'product_id': self.productlot1.id},
+        ])
+        for lot in lots:
+            self.env['stock.quant']._update_available_quantity(self.productlot1, self.stock_location, 5, lot_id=lot)
+        # Creates a delivery for 3 x productlot1 initially reserved with LOT001
+        delivery = self.env['stock.picking'].create({
+            'name': "delivery_split_move_on_exit",
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'picking_type_id': self.picking_type_out.id,
+            'move_ids': [Command.create({
+                'location_id': self.stock_location.id,
+                'location_dest_id': self.customer_location.id,
+                'name': "productlot1 x3",
+                'product_id': self.productlot1.id,
+                'product_uom_qty': 3,
+            })]
+        })
+        delivery.action_confirm()
+        self.assertRecordValues(delivery.move_ids, [
+            {'product_uom_qty': 3.0, 'quantity': 3.0, 'picked': False, 'lot_ids': lots[0].ids }
+        ])
+        self.assertRecordValues(delivery.move_line_ids, [
+            {'quantity': 3.0, 'picked': False, 'lot_id': lots[0].id }
+        ])
+
+        action = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = f"/web#action={action.id}"
+        self.start_tour(url, 'test_split_line_on_exit_for_delivery_with_lot', login='admin')
+        # Checks receipt moves values.
+        self.assertRecordValues(delivery.move_line_ids.sorted('quantity'), [
+            {'quantity': 1, 'picked': True, 'lot_id': lots[0].id},
+            {'quantity': 2, 'picked': True, 'lot_id': lots[1].id},
+        ])
+
     def test_split_line_on_exit_for_receipt(self):
         """ Ensures that exit an unfinished operation will split the uncompleted move lines to have
         one move line with all picked quantity and one move line with the remaining quantity."""

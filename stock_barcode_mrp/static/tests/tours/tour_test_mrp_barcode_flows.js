@@ -1305,3 +1305,90 @@ registry.category("web_tour.tours").add("test_setting_barcode_mrp_allow_extra_pr
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_mrp_uncompleted_move_split_on_barcode_exit", {
+    steps: () => [
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan TMUMSOBE mo",
+        },
+        {
+            trigger: ".o_barcode_line.o_header",
+            run: function () {
+                const lines = helper.getLines();
+                helper.assert(lines.length, 3, "The header line + 2 components lines");
+                const [headerLine, componentLine1, componentLine2] = lines;
+                helper.assertLineProduct(headerLine, "Final Product");
+                helper.assertLineQty(headerLine, "10/20");
+                helper.assertLineProduct(componentLine1, "Compo 01");
+                helper.assertLineQty(componentLine1, "10/10");
+                helper.assertLineProduct(componentLine2, "Compo 02");
+                helper.assertLineQty(componentLine2, "2/2");
+            },
+        },
+        {
+            trigger: ".o_barcode_line:has(.o_barcode_line_title:contains(Compo 01)) .o_edit",
+            run: "click",
+        },
+        {
+            trigger: "div[name=qty_done] .o_input",
+            run: "edit 4",
+        },
+        {
+            trigger: ".btn.o_save",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line:has(.o_barcode_line_title:contains(Compo 02)) .o_edit",
+            run: "click",
+        },
+        {
+            trigger: "div[name=qty_done] .o_input",
+            run: "edit 3",
+        },
+        {
+            trigger: ".btn.o_save",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line.o_header",
+            run: function () {
+                const lines = helper.getLines();
+                helper.assert(lines.length, 3, "The header line + 2 components lines");
+                const [headerLine, componentLine1, componentLine2] = lines;
+                helper.assertLineProduct(headerLine, "Final Product");
+                helper.assertLineQty(headerLine, "10/20");
+                helper.assertLineProduct(componentLine1, "Compo 01");
+                helper.assertLineQty(componentLine1, "4/10");
+                helper.assertLineProduct(componentLine2, "Compo 02");
+                helper.assertLineQty(componentLine2, "3/2");
+            },
+        },
+        {
+            trigger: ".o_exit",
+            run: "click",
+        },
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan TMUMSOBE mo",
+        },
+        {
+            trigger: ".o_barcode_line.o_header",
+            run: function () {
+                const lines = helper.getLines();
+                helper.assert(lines.length, 4, "The header line + 2 x 2 components lines");
+                const [headerLine, componentLine1backup, componentLine1, componentLine2] = lines;
+                helper.assertLineProduct(headerLine, "Final Product");
+                helper.assertLineQty(headerLine, "10/20");
+                helper.assertLineProduct(componentLine1backup, "Compo 01");
+                helper.assertLineQty(componentLine1backup, "0/6");
+                helper.assertLineProduct(componentLine1, "Compo 01");
+                helper.assertLineQty(componentLine1, "4/4");
+                helper.assertLineProduct(componentLine2, "Compo 02");
+                helper.assertLineQty(componentLine2, "3/3");
+            },
+        },
+        { trigger: ".o_exit", run: "click" },
+        { trigger: ".o_stock_barcode_main_menu", run() {} },
+    ],
+});
