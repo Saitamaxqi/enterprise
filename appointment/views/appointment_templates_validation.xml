@@ -14,6 +14,7 @@
                     <div class="o_appointment_edit_in_backend alert alert-info alert-dismissible fade show d-print-none css_editable_mode_hidden" groups="appointment.group_appointment_manager">
                         <t t-call="appointment.appointment_edit_in_backend"/>
                     </div>
+                    <t t-if="appointment_type">
                     <h2 t-if="is_cancelled" role="alert">
                         <i class="fa fa-times text-danger me-3"/>Appointment Cancelled
                     </h2>
@@ -41,6 +42,7 @@
                             <h2><i class="fa fa-thumbs-up me-3 text-info"/>Appointment Reserved!</h2>
                             <h5>We will come back to you to confirm it.</h5>
                         </span>
+                    </t>
                     </t>
                     <h4 t-attf-class="py-3 {{'text-decoration-line-through' if is_cancelled else ''}}">
                         <span class="fw-normal" t-out="event.name"/>
