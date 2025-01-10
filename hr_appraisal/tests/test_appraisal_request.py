@@ -14,23 +14,23 @@ class TestHrAppraisalRequest(TransactionCase, MockEmail):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.manager_2_user = new_test_user(cls.env, login='Averell Dalton', name='Averell Dalton')
+        cls.manager_2_user = new_test_user(cls.env, login='Averell Dalton', name='Averell Dalton', groups='base.group_partner_manager,base.group_user')
         cls.manager_2 = cls.env['hr.employee'].create({
             'name': 'Averell Dalton',
             'user_id': cls.manager_2_user.id,
         })
-        cls.manager_3_user = new_test_user(cls.env, login='Angus Dalton', name='Angus Dalton')
+        cls.manager_3_user = new_test_user(cls.env, login='Angus Dalton', name='Angus Dalton', groups='base.group_partner_manager,base.group_user')
         cls.manager_3 = cls.env['hr.employee'].create({
             'name': 'Angus Dalton',
             'user_id': cls.manager_3_user.id,
         })
-        cls.manager_user = new_test_user(cls.env, login='Lucky Luke', name='Manager Tiranique')
+        cls.manager_user = new_test_user(cls.env, login='Lucky Luke', name='Manager Tiranique', groups='base.group_partner_manager,base.group_user')
         cls.manager = cls.env['hr.employee'].create({
             'name': 'Manager Tiranique',
             'user_id': cls.manager_user.id,
             'parent_id': cls.manager_2.id,
         })
-        cls.employee_user = new_test_user(cls.env, login='Rantanplan', name='Michaël Hawkins')
+        cls.employee_user = new_test_user(cls.env, login='Rantanplan', name='Michaël Hawkins', groups='base.group_partner_manager,base.group_user')
         cls.employee = cls.env['hr.employee'].create({
             'name': "Michaël Hawkins",
             'parent_id': cls.manager.id,

@@ -3,9 +3,9 @@ from odoo.addons.mail.tests.common import MailCommon
 from odoo.addons.test_mail.data.test_mail_data import MAIL_TEMPLATE
 from odoo.tests import tagged, users
 from odoo.tools import formataddr
-from odoo.tools.mail import email_normalize
 
-@tagged('post_install', '-at_install', 'mail_flow')
+
+@tagged('post_install', '-at_install', 'mail_flow', 'mail_tools')
 class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
 
     @classmethod
@@ -73,6 +73,60 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
             [('email_normalized', 'in', {'new.cc@test.agrolait.com', 'new.customer@test.agrolait.com', 'new.author@test.agrolait.com'})])
         )
 
+    def test_mailgateway_multicompany(self):
+        company0 = self.env.company
+        company1 = self.env['res.company'].create({'name': 'new_company0'})
+        Partner = self.env['res.partner']
+
+        self.env.user.write({
+            'company_ids': [(4, company0.id, False), (4, company1.id, False)],
+        })
+
+        team0, team1 = self.env['helpdesk.team'].create([
+            {'name': 'helpdesk team 0', 'company_id': company0.id, 'alias_name': 'helpdesk_team_0'},
+            {'name': 'helpdesk team 1', 'company_id': company1.id, 'alias_name': 'helpdesk_team_1'},
+        ])
+        mail_alias0 = team0.alias_id
+        mail_alias1 = team1.alias_id
+        self.assertEqual((mail_alias0 + mail_alias1).alias_domain_id, self.mail_alias_domain)
+
+        self.assertFalse(self.env['res.partner'].search([('email_normalized', 'in', ['client_a@someprovider.com', 'client_b@someprovider.com'])]))
+        tickets = []
+        for email_from, email_to in [
+            ('A client <client_a@someprovider.com>', mail_alias0.display_name),
+            ('B client <client_b@someprovider.com>', mail_alias1.display_name),
+        ]:
+            with self.mock_mail_gateway():
+                tickets.append(self.format_and_process(
+                    MAIL_TEMPLATE, email_from, email_to,
+                    subject=f'Test from {email_from}',
+                    target_model='helpdesk.ticket',
+                ))
+        helpdesk_ticket0, helpdesk_ticket1 = tickets
+
+        self.assertEqual(helpdesk_ticket0.team_id, team0)
+        self.assertEqual(helpdesk_ticket1.team_id, team1)
+
+        self.assertEqual(helpdesk_ticket0.company_id, company0)
+        self.assertEqual(helpdesk_ticket1.company_id, company1)
+
+        partner0 = Partner.search([('email', '=', 'client_a@someprovider.com')])
+        partner1 = Partner.search([('email', '=', 'client_b@someprovider.com')])
+        self.assertTrue(partner0)
+        self.assertTrue(partner1)
+
+        self.assertEqual(partner0.company_id, company0)
+        self.assertEqual(partner1.company_id, company1)
+
+        self.assertEqual(partner0.name, "A client")
+        self.assertEqual(partner1.name, "B client")
+
+        self.assertEqual(helpdesk_ticket0.partner_id, partner0)
+        self.assertEqual(helpdesk_ticket1.partner_id, partner1)
+
+        self.assertTrue(partner0 in helpdesk_ticket0.message_partner_ids)
+        self.assertTrue(partner1 in helpdesk_ticket1.message_partner_ids)
+
     def test_mailgateway_with_template(self):
         """ Portal / internal users receive an email when they create a ticket """
         internal_followers = self.helpdesk_user.partner_id
@@ -138,8 +192,8 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                             },
                             'message_type': 'email',
                             'message_values': {
-                                # ticket creates a partner due does not update message author
-                                'author_id': test_user.partner_id if test_user else self.env['res.partner'],
+                                # ticket creates a partner that if then found by mailgateway
+                                'author_id': author,
                                 'email_from': formataddr((author.name, author.email_normalized)),
                                 'mail_server_id': self.env['ir.mail_server'],
                                 # followers of 'new task' subtype (but not original To as they
@@ -353,17 +407,9 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
         })
         ticket.partner_email = formatted_email
         data = ticket._message_get_suggested_recipients()[0]
-        create_vals = data.get('create_values')
-        self.assertFalse(data.get('persona_id'))
-        self.assertEqual(data.get('email'), formatted_email)
-        self.assertEqual(data.get('lang'), None)
-        self.assertEqual(data.get('reason'), 'Customer Email')
-        self.assertEqual(create_vals, ticket._get_customer_information().get(email, {}))
-        self.assertEqual(create_vals['name'], partner_name)
-        self.assertEqual(create_vals['phone'], partner_phone)
-
-        # check that the creation of the contact won't fail due to bad values
-        _partner = self.env['res.partner'].create(create_vals)
+        self.assertEqual(data['email'], email)
+        self.assertEqual(data['name'], partner_name)
+        self.assertDictEqual(data['create_values'], {'company_id': self.helpdesk_manager.company_id.id, 'phone': partner_phone})
 
     def test_ticket_create_ticket_email_cc(self):
         ''' Make sure creating a ticket with an email_cc field creates a follower. '''

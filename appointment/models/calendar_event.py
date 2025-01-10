@@ -6,9 +6,9 @@ import logging
 from datetime import datetime, timedelta
 from markupsafe import Markup
 
-from odoo import _, api, Command, fields, models, SUPERUSER_ID
+from odoo import _, api, Command, fields, models, tools, SUPERUSER_ID
 from odoo.exceptions import ValidationError
-from odoo.tools.mail import email_normalize, email_split_tuples, html_sanitize, is_html_empty, plaintext2html
+from odoo.tools.mail import email_normalize, email_split_and_format_normalize, html_sanitize, is_html_empty, plaintext2html
 from odoo.osv import expression
 from odoo.addons.appointment.utils import invert_intervals
 from odoo.addons.resource.models.utils import Intervals, timezone_datetime
@@ -357,29 +357,18 @@ class CalendarEvent(models.Model):
           fetch or create partners to add them as event attendees;
         :return tuple: partners (recordset)"""
         # Split and normalize guest emails
-        name_emails = email_split_tuples(guest_emails_str)
-        emails_normalized = [email_normalize(email, strict=False) for _, email in name_emails]
-        valid_normalized = set(filter(None, emails_normalized))  # uniquify, valid only
-        partners = self.env['res.partner']
+        formatted_emails = email_split_and_format_normalize(guest_emails_str)
+        valid_normalized = list(tools.misc.unique(email_normalize(email_input, strict=False) for email_input in formatted_emails))
         if not valid_normalized:
-            return partners
-        # Find existing partners
-        partners = self.env['mail.thread']._mail_find_partner_from_emails(list(valid_normalized))
-        partners = self.env['res.partner'].concat(*partners)
-        remaining_emails = valid_normalized - set(partners.mapped('email_normalized'))
+            return self.env['res.partner']
         # limit public usage of guests
-        if self.env.su and len(remaining_emails) > 10:
+        if self.env.su and len(valid_normalized) > 10:
             raise ValueError(
                 _('Guest usage is limited to 10 customers for performance reason.')
             )
-        if remaining_emails:
-            partner_values = [
-                {'email': email, 'name': name if name else email}
-                for name, email in name_emails
-                if email_normalize(email) in remaining_emails
-            ]
-            partners += self.env['res.partner'].create(partner_values)
-        return partners
+
+        # Find or create existing partners
+        return self.env['mail.thread']._partner_find_from_emails_single(formatted_emails)
 
     def _get_mail_tz(self):
         self.ensure_one()

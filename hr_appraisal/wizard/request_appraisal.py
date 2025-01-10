@@ -49,17 +49,14 @@ class RequestAppraisal(models.TransientModel):
 
     @api.model
     def _get_recipients(self, employees):
-        partners = self.env['res.partner']
         employees_with_user = employees.filtered('user_id')
+        partners = employees_with_user.user_id.partner_id
 
-        for employee in employees_with_user:
-            partners |= employee.user_id.partner_id
-
-        for employee in employees - employees_with_user:
-            employee_work_email = tools.email_normalize(employee.work_email)
-            if employee_work_email:
-                name_email = tools.formataddr((employee.name, employee_work_email))
-                partners |= self.env['res.partner'].sudo().find_or_create(name_email)
+        employees_wemail = (employees - employees_with_user).filtered('work_email')
+        for employee_partners in employees_wemail._partner_find_from_emails(
+            {emp: [emp.work_email] for emp in employees_wemail}, no_create=False
+        ).values():
+            partners |= employee_partners
         return partners
 
     appraisal_id = fields.Many2one('hr.appraisal', required=True)

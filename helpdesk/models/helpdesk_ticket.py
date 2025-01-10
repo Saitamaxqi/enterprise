@@ -6,7 +6,6 @@ from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, Command, fields, models, tools, _
-from odoo.exceptions import AccessError
 from odoo.osv import expression
 from odoo.tools import LazyTranslate
 from odoo.addons.web.controllers.utils import clean_action
@@ -428,15 +427,6 @@ class HelpdeskTicket(models.Model):
         return action
 
     @api.model
-    def _find_or_create_partner(self, partner_name, partner_email, company=False):
-        parsed_name, parsed_email_normalized = tools.parse_contact_from_email(partner_email)
-        if not parsed_name:
-            parsed_name = partner_name
-        return self.env['res.partner'].with_context(default_company_id=company).find_or_create(
-            tools.formataddr((parsed_name, parsed_email_normalized))
-        )
-
-    @api.model
     def _assign_vals_by_tags(self, vals_list):
         """
         This method is used to automatically assign unassigned tickets based on added tags.
@@ -530,7 +520,7 @@ class HelpdeskTicket(models.Model):
                     tickets_to_assign_by_tags.append((team.id, list(zip(*tag_ids))[1], vals))
             else:
                 ticket_amount_per_team[team] += 1
-        
+
         self._assign_vals_by_tags(tickets_to_assign_by_tags)
         assignees_per_team_id = self.env['helpdesk.team']._determine_user_to_assign(ticket_amount_per_team)
 
@@ -541,12 +531,12 @@ class HelpdeskTicket(models.Model):
             partner_id = vals.get('partner_id', False)
             partner_name = vals.get('partner_name', False)
             partner_email = vals.get('partner_email', False)
-            if partner_name and partner_email and not partner_id:
-                company = False
-                if vals.get('team_id'):
-                    team = self.env['helpdesk.team'].browse(vals.get('team_id'))
-                    company = team.company_id.id
-                vals['partner_id'] = self._find_or_create_partner(partner_name, partner_email, company).id
+            if partner_email and not partner_id:
+                company_id = self.env['helpdesk.team'].browse(vals['team_id']).company_id.id if vals.get('team_id') else False
+                suggested_name = tools.parse_contact_from_email(partner_name)[0] or tools.parse_contact_from_email(partner_email)[0]
+                vals['partner_id'] = self.env['mail.thread']._partner_find_from_emails_single(
+                    [partner_email], additional_values={tools.mail.email_normalize(partner_email) or partner_email: {'name': suggested_name, 'company_id': company_id}},
+                ).id
 
         # determine partner email for ticket with partner but no email given
         partners = self.env['res.partner'].browse([vals['partner_id'] for vals in list_value if 'partner_id' in vals and vals.get('partner_id') and 'partner_email' not in vals])
@@ -834,50 +824,27 @@ class HelpdeskTicket(models.Model):
     # Messaging API
     # ------------------------------------------------------------
 
-    #DVE FIXME: if partner gets created when sending the message it should be set as partner_id of the ticket.
-    def _message_get_suggested_recipients(self):
-        recipients = super()._message_get_suggested_recipients()
-        try:
-            if self.partner_id and self.partner_id.email:
-                self._message_add_suggested_recipient(recipients, partner=self.partner_id, reason=_('Customer'))
-            elif self.partner_email:
-                self._message_add_suggested_recipient(recipients, email=self.partner_email, reason=_('Customer Email'))
-        except AccessError:  # no read access rights -> just ignore suggested recipients because this implies modifying followers
-            pass
-        return recipients
-
     def _get_customer_information(self):
-        email_normalized_to_values = super()._get_customer_information()
-        Partner = self.env['res.partner']
+        email_keys_to_values = super()._get_customer_information()
 
-        for record in self.filtered('partner_email'):
-            email_normalized = tools.email_normalize(record.partner_email)
-            if not email_normalized:
+        for ticket in self:
+            email_key = tools.email_normalize(ticket.partner_email) or ticket.partner_email
+            # do not fill Falsy with random data, unless monorecord (= always correct)
+            if not email_key and len(self) > 1:
                 continue
-            values = email_normalized_to_values.setdefault(email_normalized, {})
-            values.update({
-                'name': record.partner_name or tools.parse_contact_from_email(record.partner_email)[0] or record.partner_email,
-                'phone': record.partner_phone,
+            email_keys_to_values.setdefault(email_key, {}).update({
+                'company_id': ticket.company_id.id,
+                'name': ticket.partner_name or tools.parse_contact_from_email(ticket.partner_email)[0] or ticket.partner_email,
+                'phone': ticket.partner_phone,
             })
-        return email_normalized_to_values
-
-    def _ticket_email_split(self, msg):
-        email_list = tools.email_split((msg.get('to') or '') + ',' + (msg.get('cc') or ''))
-        # check left-part is not already an alias
-        return [
-            x for x in email_list
-            if x.split('@')[0] not in self.mapped('team_id.alias_name')
-        ]
+        return email_keys_to_values
 
     @api.model
     def message_new(self, msg, custom_values=None):
         values = dict(custom_values or {}, partner_email=msg.get('from'), partner_name=msg.get('from'), partner_id=msg.get('author_id'))
         ticket = super(HelpdeskTicket, self.with_context(mail_notify_author=True)).message_new(msg, custom_values=values)
-        thread_context = self.env['mail.thread']
-        if ticket.company_id:
-            thread_context = thread_context.with_context(default_company_id=ticket.company_id)
-        partner_ids = [x.id for x in thread_context._mail_find_partner_from_emails(ticket._ticket_email_split(msg), records=ticket, force_create=True) if x]
-        customer_ids = [p.id for p in thread_context._mail_find_partner_from_emails(tools.email_split(values['partner_email']), records=ticket, force_create=True) if p]
+        partner_ids = ticket._partner_find_from_emails_single(tools.email_split((msg.get('to') or '') + ',' + (msg.get('cc') or ''))).ids
+        customer_ids = ticket._partner_find_from_emails_single(tools.email_split(values['partner_email'])).ids
         partner_ids += customer_ids
         if customer_ids and not values.get('partner_id'):
             ticket.partner_id = customer_ids[0]
@@ -886,9 +853,9 @@ class HelpdeskTicket(models.Model):
         return ticket
 
     def message_update(self, msg, update_vals=None):
-        partner_ids = [x.id for x in self.env['mail.thread']._mail_find_partner_from_emails(self._ticket_email_split(msg), records=self) if x]
-        if partner_ids:
-            self.message_subscribe(partner_ids)
+        for ticket in self:
+            if partners := ticket._partner_find_from_emails_single(tools.email_split((msg.get('to') or '') + ',' + (msg.get('cc') or '')), no_create=True):
+                self.message_subscribe(partners.ids)
         return super().message_update(msg, update_vals=update_vals)
 
     def _message_compute_subject(self):
