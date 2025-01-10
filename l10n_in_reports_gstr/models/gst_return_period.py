@@ -1240,35 +1240,52 @@ class L10n_InGstReturnPeriod(models.Model):
                     error_report = data.get('error_report', {})
                     message = "[%s] %s"%(error_report.get('error_cd'), error_report.get('error_msg'))
                 else:
-                    for section_code, inv_by_section in data.get('error_report').items():
-                        message += "<li><b>%s :- </b></li>"%(section_code.upper())
-                        for invoice in inv_by_section:
-                            error_cd = invoice.get('error_cd', False)
-                            error_msg = invoice.get('error_msg', False)
-                            invoice_number = ""
-                            if error_cd or error_msg:
+                    error_report_summary = {}
+                    for section_code, invoices in data.get('error_report', {}).items():
+                        error_report_summary[section_code] = {}
+                        for invoice in invoices:
+                            error_code = invoice.get('error_cd', False)
+                            error_message = invoice.get('error_msg', False)
+                            invoice_number = None
+                            if error_code or error_message:
+                                # Extract invoice number based on section_code type
                                 if section_code in ('b2b', 'b2cl', 'exp'):
                                     invoice_number = invoice.get('inv')[0].get('inum')
                                 if section_code == "cdnr":
                                     invoice_number = invoice.get('nt')[0].get('nt_num')
                                 if section_code == 'cdnur':
                                     invoice_number = invoice.get('nt_num')
-                                msg = " - ".join([error_cd, error_msg])
-                                moves = invoice_number and AccountMove.search([('name', '=', invoice_number),
-                                    ('company_id', 'in', self.company_ids.ids or self.company_id.ids)]) or AccountMove
-                                for move in moves:
-                                    invoice_link_msg = "".join(
-                                        "<a href='#' data-oe-model='account.move' data-oe-id='%s'>%s</a>"
-                                        %(move.id, move.name))
-                                    message += "<ul><li>Invoice :- %s</li>" %(invoice_link_msg)
-                                    message += "<ul><li> %s </li></ul></ul>" %(msg)
-                                    # Create activity in Invoice
-                                    move.activity_schedule(
-                                        act_type_xmlid='mail.mail_activity_data_warning',
-                                        user_id=advisor_user.id or self.env.user.id,
-                                        note=_('GSTR-1 Processed with Error:<b>%s</b>', msg))
-                                message += "<ul><li>%s</li></ul>" %(msg) if not moves else ""
-
+                            # Search for the corresponding account move
+                            move = (
+                                AccountMove.search([
+                                    ('name', '=', invoice_number),
+                                    ('company_id', 'in', self.company_ids.ids or self.company_id.ids)
+                                ], limit=1) if invoice_number else AccountMove
+                            )
+                            # Initialize section_code and move in the error report summary
+                            error_report_summary[section_code].setdefault(move, {
+                                "move_name": invoice_number,
+                                "errors": {}
+                            })
+                            # Add error details to the corresponding move
+                            error_report_summary[section_code][move]["errors"].update({error_code: error_message})
+                    # Generate error messages and schedule activities
+                    for section_code, moves in error_report_summary.items():
+                        message += Markup("<li><b>%s :- </b></li>") % section_code.upper()
+                        for move, move_details in moves.items():
+                            error_note = Markup().join(Markup("<ul><li>%s - %s</li></ul>") % (error_code, error_message) for error_code, error_message in move_details["errors"].items())
+                            if move:
+                                # Generate a clickable link for the invoice
+                                message += Markup(
+                                    "<ul><li>Invoice : <a href='#' data-oe-model='account.move' data-oe-id='%s'>%s</a></li>%s</ul>"
+                                ) % (move.id, move.name, error_note)
+                                move.activity_schedule(
+                                    act_type_xmlid='mail.mail_activity_data_warning',
+                                    user_id=advisor_user.id or self.env.user.id,
+                                    note=_('GSTR-1 Processed with Error: %s', error_note)
+                                )
+                            else:
+                                message += error_note
                 # Create message in Return period
                 self.sudo().message_post(
                     subject=_("GSTR-1 Errors"),
