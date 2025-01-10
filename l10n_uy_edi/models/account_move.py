@@ -6,7 +6,7 @@ from markupsafe import Markup
 
 from odoo import _, api, fields, models
 
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from odoo.tools import float_repr, float_round, cleanup_xml_node, format_amount, html2plaintext
 
 
@@ -178,7 +178,18 @@ class AccountMove(models.Model):
     # Helpers
 
     def l10n_uy_edi_action_update_dgi_state(self):
-        return self.l10n_uy_edi_document_id.action_update_dgi_state()
+        res = self.l10n_uy_edi_document_id.action_update_dgi_state()
+        to_cancel = self.filtered(lambda x: x.l10n_uy_edi_cfe_state == 'rejected')
+        if to_cancel:
+            try:
+                to_cancel._check_fiscal_lock_dates()
+                to_cancel.line_ids._check_tax_lock_date()
+            except UserError:
+                pass
+            else:
+                to_cancel.button_draft()
+                to_cancel.button_cancel()
+        return res
 
     def l10n_uy_edi_action_download_preview_xml(self):
         if self.l10n_uy_edi_document_id.attachment_id:
@@ -617,7 +628,7 @@ class AccountMove(models.Model):
 
     def _l10n_uy_edi_cron_update_dgi_status(self, batch_size=10):
         res = self.search([("l10n_uy_edi_cfe_state", "=", "received"), ("journal_id.type", "=", "sale")])
-        res[:batch_size].l10n_uy_edi_document_id.action_update_dgi_state()
+        res[:batch_size].l10n_uy_edi_action_update_dgi_state()
         if len(res) > batch_size:
             self.env.ref("l10n_uy_edi.ir_cron_update_dgi_state")._trigger()
 
