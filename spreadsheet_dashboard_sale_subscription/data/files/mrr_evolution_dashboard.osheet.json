@@ -1329,7 +1329,7 @@
       "label": "Recurrence",
       "defaultValue": [],
       "defaultValueDisplayNames": [],
-      "modelName": "sale.temporal.recurrence"
+      "modelName": "sale.subscription.plan"
     }
   ],
   "lists": {
