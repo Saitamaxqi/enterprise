@@ -16,6 +16,7 @@ GST return filing using IAP
     "depends": ["l10n_in_reports", "l10n_in_edi", "l10n_in_documents"],
     "data": [
         "data/service_cron.xml",
+        "data/mail_activity_type_data.xml",
         "security/ir.model.access.csv",
         "views/gst_return_period.xml",
         "views/account_move_views.xml",
