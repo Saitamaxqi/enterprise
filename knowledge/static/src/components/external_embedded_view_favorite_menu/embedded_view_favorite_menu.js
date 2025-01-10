@@ -68,6 +68,7 @@ class InsertEmbeddedViewMenu extends Component {
             const action = JSON.parse(originalAction);
             // remove action help as it won't be used
             delete action.help;
+            viewProps.actWindow = action;
             return { embeddedProps: { viewProps } };
         }
         return null;
