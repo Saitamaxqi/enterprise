@@ -300,26 +300,22 @@ If you've already opened a ticket for this issue, don't report it again: a suppo
 
         # flush and clear everything for the new "transaction"
         self.env.invalidate_all()
-        try:
-            self.env.registry.enter_test_mode(self.cr)
-            with self.env.registry.cursor() as test_cr:
-                test_env = self.env(cr=test_cr)
-                test_link_account = self.account_online_link.with_env(test_env)
-                test_link_account.state = 'connected'
+        with self.enter_registry_test_mode(), self.env.registry.cursor() as test_cr:
+            test_env = self.env(cr=test_cr)
+            test_link_account = self.account_online_link.with_env(test_env)
+            test_link_account.state = 'connected'
 
-                # this hand-written self.assertRaises() does not roll back self.cr,
-                # which is necessary below to inspect the message being posted
-                try:
-                    test_link_account._fetch_odoo_fin('/testthisurl')
-                except RedirectWarning as exception:
-                    self.assertEqual(exception.args[0], "This kind of things can happen.\n\nIf you've already opened a ticket for this issue, don't report it again: a support agent will contact you shortly.")
-                    self.assertEqual(exception.args[1], return_act_url)
-                    self.assertEqual(exception.args[2], 'Report issue')
-                else:
-                    self.fail("Expected RedirectWarning not raised")
-                self.assertEqual(test_link_account.message_ids[0].body, message_body)
-        finally:
-            self.env.registry.leave_test_mode()
+            # this hand-written self.assertRaises() does not roll back self.cr,
+            # which is necessary below to inspect the message being posted
+            try:
+                test_link_account._fetch_odoo_fin('/testthisurl')
+            except RedirectWarning as exception:
+                self.assertEqual(exception.args[0], "This kind of things can happen.\n\nIf you've already opened a ticket for this issue, don't report it again: a support agent will contact you shortly.")
+                self.assertEqual(exception.args[1], return_act_url)
+                self.assertEqual(exception.args[2], 'Report issue')
+            else:
+                self.fail("Expected RedirectWarning not raised")
+            self.assertEqual(test_link_account.message_ids[0].body, message_body)
 
     def test_account_online_link_having_journal_ids(self):
         """ This test verifies that the account online link object

@@ -373,20 +373,14 @@ class WhatsAppMessageSecurity(WhatsAppSecurityCase):
         # To handle the `cr.commit()` in the `send_cron` method:
         # it shouldn't actually commit the transaction, as we are in a test, but simulate it,
         # which is the goal of the test_mode/TestCursor
-        self.registry.enter_test_mode(self.cr)
-        self.addCleanup(self.registry.leave_test_mode)
-        cron_cr = self.registry.cursor()
-        self.addCleanup(cron_cr.close)
-
-        # Process the queue to send the whatsapp message through the cron/queue,
-        # as the cron queue would do.
-        default_progress = {'done': 0, 'remaining': 0, 'timed_out_counter': 0}
-        with self.mockWhatsappGateway():
-            self.registry['ir.cron']._process_job(
-                self.registry.db_name,
-                cron_cr,
-                {**self.env.ref('whatsapp.ir_cron_send_whatsapp_queue').read(load=None)[0], **default_progress}
-            )
+        with (
+            self.enter_registry_test_mode(),
+            self.mockWhatsappGateway(),
+            env.registry.cursor() as cr,
+        ):
+            # Process the queue to send the whatsapp message through the cron/queue,
+            # as the cron queue would do.
+            env(cr=cr).ref('whatsapp.ir_cron_send_whatsapp_queue').sudo().method_direct_trigger()
 
         # Invalidate the cache of the whatsapp message, to force fetching the new values,
         # as the cron wrote on the message using another cursor

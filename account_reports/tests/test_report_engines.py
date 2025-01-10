@@ -1407,7 +1407,7 @@ class TestReportEngines(TestAccountReportsCommon):
         def lock_via_tax_closing(non_tax_report, tax_report, report_options_map):
             tax_closing_action = self.env['account.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(report_options_map[tax_report])
             closing_move_id = tax_closing_action['res_id']
-            with self.enter_test_mode():
+            with self.enter_registry_test_mode():
                 self.env['account.move'].browse(closing_move_id).action_post()
 
         self._run_external_engine_default_test_case(True, False, lock_via_tax_closing)

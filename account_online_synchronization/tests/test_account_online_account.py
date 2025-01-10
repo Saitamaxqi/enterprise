@@ -229,12 +229,10 @@ class TestAccountOnlineAccount(AccountOnlineSynchronizationCommon):
     @patch('odoo.addons.account_online_synchronization.models.account_online.AccountOnlineAccount._retrieve_transactions', return_value={})
     @patch('odoo.addons.account_online_synchronization.models.account_online.AccountOnlineAccount._refresh', return_value={'success': True, 'data': {}})
     def test_basic_flow_manual_fetching_transactions(self, patched_refresh, patched_transactions):
-        self.addCleanup(self.env.registry.leave_test_mode)
         # flush and clear everything for the new "transaction"
         self.env.invalidate_all()
 
-        self.env.registry.enter_test_mode(self.cr)
-        with self.env.registry.cursor() as test_cr:
+        with self.enter_registry_test_mode(), self.env.registry.cursor() as test_cr:
             test_env = self.env(cr=test_cr)
             test_link_account = self.account_online_link.with_env(test_env)
             test_link_account.state = 'connected'
@@ -274,12 +272,10 @@ class TestAccountOnlineAccount(AccountOnlineSynchronizationCommon):
             patched_refresh.assert_not_called()
             patched_transactions.assert_not_called()
 
-        self.addCleanup(self.env.registry.leave_test_mode)
         # flush and clear everything for the new "transaction"
         self.env.invalidate_all()
 
-        self.env.registry.enter_test_mode(self.cr)
-        with self.env.registry.cursor() as test_cr:
+        with self.enter_registry_test_mode(), self.env.registry.cursor() as test_cr:
             test_env = self.env(cr=test_cr)
             with freeze_time(datetime.now() + timedelta(seconds=(limit_time + 100))):
                 # Call to fetch_transaction should be started by the cron when the time limit is exceeded and still in processing
