@@ -299,7 +299,8 @@ class L10n_InGstReturnPeriod(models.Model):
             )
         else:
             for record in self:
-                if record.gstr1_status != 'to_send' or record.gstr2b_status != 'not_received':
+                if not (record.gstr1_blocking_level == 'error' and record.gstr1_status == 'sending') and \
+                        (record.gstr1_status != 'to_send' or record.gstr2b_status != 'not_received'):
                     raise UserError(_("You cannot delete GST Return Period after sending/receiving GSTR data"))
 
     def _cron_refresh_gst_token(self):
