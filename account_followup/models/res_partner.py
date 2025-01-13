@@ -194,16 +194,25 @@ class ResPartner(models.Model):
             ('company_id', 'child_of', self.env.company.id),
         ]
 
-    def _get_followup_responsible(self):
+    def _get_followup_responsible(self, multiple_responsible=False):
         self.ensure_one()
 
         responsible_type = self.followup_line_id.activity_default_responsible_type
         if responsible_type == 'account_manager' and self.user_id:
             return self.user_id
 
-        most_delayed_aml = self._included_unreconciled_aml_max_followup().get('most_delayed_aml')
-        if responsible_type == 'salesperson' and most_delayed_aml and most_delayed_aml.move_id.invoice_user_id:
-            return most_delayed_aml.move_id.invoice_user_id
+        all_aml_responsible = self.env['res.users']
+        max_amount_aml = self.env['account.move.line']
+        for aml in self.unreconciled_aml_ids:
+            all_aml_responsible += aml.move_id.invoice_user_id
+            if max_amount_aml.amount_residual < aml.amount_residual:
+                max_amount_aml = aml
+
+        if responsible_type == 'salesperson' and max_amount_aml:
+            if multiple_responsible:
+                return all_aml_responsible
+            else:
+                return max_amount_aml.move_id.invoice_user_id
 
         if self.followup_responsible_id:
             return self.followup_responsible_id
@@ -211,8 +220,8 @@ class ResPartner(models.Model):
         if self.user_id:
             return self.user_id
 
-        if most_delayed_aml and most_delayed_aml.move_id.invoice_user_id:
-            return most_delayed_aml.move_id.invoice_user_id
+        if max_amount_aml and max_amount_aml.move_id.invoice_user_id:
+            return max_amount_aml.move_id.invoice_user_id
 
         return super()._get_followup_responsible()
 
@@ -227,45 +236,6 @@ class ResPartner(models.Model):
             followup_contacts = self.env['res.partner'].browse(self.address_get(['invoice'])['invoice'])
         return followup_contacts
 
-    def _included_unreconciled_aml_max_followup(self):
-        """ Computes the maximum delay in days and the highest level of followup (followup line with highest delay) of all the unreconciled amls included.
-        Also returns the delay for the next level (after the highest_followup_line), the most delayed aml and a boolean specifying if any invoice is overdue.
-        :return dict with key/values: most_delayed_aml, max_delay, highest_followup_line, next_followup_delay, has_overdue_invoices
-        """
-        self.ensure_one()
-        today = fields.Date.context_today(self)
-        highest_followup_line = None
-        most_delayed_aml = self.env['account.move.line']
-        first_followup_line = self._get_first_followup_level()
-        # Minimum value for delay, will always be smaller than any other delay
-        max_delay = first_followup_line.delay - 1
-        has_overdue_invoices = False
-        for aml in self.unreconciled_aml_ids:
-            aml_delay = (today - (aml.date_maturity or aml.date)).days
-
-            is_overdue = aml_delay > 0
-            if is_overdue:
-                has_overdue_invoices = True
-
-            if self.env.company in aml.company_id.parent_ids:
-                if aml.followup_line_id and aml.followup_line_id.delay >= (highest_followup_line or first_followup_line).delay:
-                    highest_followup_line = aml.followup_line_id
-                max_delay = max(max_delay, aml_delay)
-                if most_delayed_aml.amount_residual < aml.amount_residual:
-                    most_delayed_aml = aml
-        followup_lines_info = self._get_followup_lines_info()
-        next_followup_delay = None
-        if followup_lines_info:
-            key = highest_followup_line.id if highest_followup_line else None
-            current_followup_line_info = followup_lines_info.get(key)
-            next_followup_delay = current_followup_line_info.get('next_delay')
-        return {
-            'most_delayed_aml': most_delayed_aml,
-            'max_delay': max_delay,
-            'highest_followup_line': highest_followup_line,
-            'next_followup_delay': next_followup_delay,
-            'has_overdue_invoices': has_overdue_invoices,
-        }
 
     def _get_invoices_to_print(self, options):
         self.ensure_one()
@@ -482,12 +452,13 @@ class ResPartner(models.Model):
 
             if followup_line.create_activity:
                 # log a next activity for today
-                self.activity_schedule(
-                    activity_type_id=followup_line.activity_type_id and followup_line.activity_type_id.id or self._default_activity_type().id,
-                    note=followup_line.activity_note,
-                    summary=followup_line.activity_summary,
-                    user_id=(self._get_followup_responsible()).id
-                )
+                for user in self._get_followup_responsible(multiple_responsible=True):
+                    self.activity_schedule(
+                        activity_type_id=followup_line.activity_type_id and followup_line.activity_type_id.id or self._default_activity_type().id,
+                        note=followup_line.activity_note,
+                        summary=followup_line.activity_summary,
+                        user_id=user.id
+                    )
 
             self._update_next_followup_action_date(followup_line)
 

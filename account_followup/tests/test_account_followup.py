@@ -93,10 +93,36 @@ class TestAccountFollowupReports(AccountTestInvoicingCommon):
         # 4- Modify the default responsible on followup level
         self.partner_a.followup_line_id.activity_default_responsible_type = 'salesperson'
         self.assertEqual(self.partner_a._get_followup_responsible(), user1)
+        self.assertEqual(self.partner_a._get_followup_responsible(multiple_responsible=True), (user1 + user2))
 
         self.partner_a.followup_line_id.activity_default_responsible_type = 'account_manager'
         self.partner_a.user_id = user2
         self.assertEqual(self.partner_a._get_followup_responsible(), self.partner_a.user_id)
+
+    def test_followup_activity(self):
+        first_followup_line = self.create_followup(delay=10)
+        first_followup_line.create_activity = True
+        first_followup_line.activity_default_responsible_type = 'salesperson'
+        user1 = self.env['res.users'].create({
+            'name': 'A User',
+            'login': 'a_user',
+            'email': 'a@user.com',
+            'groups_id': [Command.set([self.env.ref('account.group_account_user').id])]
+        })
+        user2 = self.env['res.users'].create({
+            'name': 'Another User',
+            'login': 'another_user',
+            'email': 'another@user.com',
+            'groups_id': [Command.set([self.env.ref('account.group_account_user').id])]
+        })
+        inv1 = self.create_invoice('2022-01-02')
+        inv1.invoice_user_id = user1
+        inv2 = self.create_invoice('2022-01-02')
+        inv2.invoice_user_id = user2
+
+        with freeze_time('2022-01-13'):
+            self.partner_a._execute_followup_partner(options={'snailmail': False})
+            self.assertEqual(self.partner_a.activity_ids.user_id, (user1 + user2))
 
     def test_followup_line_and_status(self):
         self.first_followup_line = self.create_followup(delay=-10)
