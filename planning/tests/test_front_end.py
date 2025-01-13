@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 
 from odoo.tests import tagged
-from .test_ui_common import TestUiCommon
+from .common import TestUiCommon
 
 
 @tagged('-at_install', 'post_install')

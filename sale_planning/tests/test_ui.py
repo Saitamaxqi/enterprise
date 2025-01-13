@@ -3,8 +3,8 @@
 
 from odoo.tests import tagged
 
-from .test_sale_planning import TestCommonSalePlanning
-from odoo.addons.planning.tests.test_ui_common import TestUiCommon
+from .common import TestCommonSalePlanning
+from odoo.addons.planning.tests.common import TestUiCommon
 
 @tagged('post_install', '-at_install')
 class TestSalePlanningUi(TestCommonSalePlanning, TestUiCommon):

@@ -6,7 +6,7 @@ from datetime import datetime, date, time
 from dateutil.relativedelta import relativedelta
 
 from odoo.tests import new_test_user, tagged
-from .test_ui_common import TestUiCommon
+from .common import TestUiCommon
 
 
 @tagged('-at_install', 'post_install')
