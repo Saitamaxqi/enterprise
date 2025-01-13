@@ -9,7 +9,7 @@ class ResPartner(models.Model):
     def get_total_due(self, config_id):
         config = self.env['pos.config'].browse(config_id)
         pos_payments = self.env['pos.order'].search([
-            ('partner_id', '=', self.id), ('state', '=', 'paid'),
+            ('partner_id', 'in', self.get_company_partner_ids()), ('state', '=', 'paid'),
             ('session_id.state', '!=', 'closed')]).mapped('payment_ids')
         total_settled = sum(pos_payments.filtered_domain(
             [('payment_method_id.type', '=', 'pay_later')]).mapped('amount'))
@@ -29,6 +29,15 @@ class ResPartner(models.Model):
         return {
             'res.partner': [partner],
         }
+
+    def get_company_partner_ids(self):
+        self.ensure_one()
+        if self.is_company:
+            return self.child_ids.ids + [self.id]
+        elif self.parent_id:
+            return self.parent_id.child_ids.ids + [self.parent_id.id]
+        else:
+            return [self.id]
 
     def get_all_total_due(self, config_id):
         due_amounts = []

@@ -21,10 +21,8 @@ patch(PosStore.prototype, {
         if (!partner) {
             return partnerInfos;
         }
-
         if (partner.parent_name) {
             const parent = this.models["res.partner"].find((p) => p.name === partner.parent_name);
-
             if (parent) {
                 partner = parent;
             }
@@ -42,8 +40,19 @@ patch(PosStore.prototype, {
         return partnerInfos;
     },
     async refreshTotalDueOfPartner(partner) {
-        await this.data.callRelated("res.partner", "get_total_due", [partner.id, this.config.id]);
-        return [partner];
+        const res = await this.data.callRelated("res.partner", "get_total_due", [
+            partner.id,
+            this.config.id,
+        ]);
+        const updatePartner = res["res.partner"][0];
+        if (partner.parent_name) {
+            const parent = this.models["res.partner"].find((p) => p.name === partner.parent_name);
+            if (parent) {
+                partner = parent;
+            }
+        }
+        partner.total_due = updatePartner.total_due;
+        return [updatePartner];
     },
     async setAllTotalDueOfPartners(partners) {
         const partners_total_due = await this.data.call("res.partner", "get_all_total_due", [
@@ -57,9 +66,25 @@ patch(PosStore.prototype, {
         }
         return [partners];
     },
-    async settleCustomerDue(partner) {
-        const updatedDue = await this.refreshTotalDueOfPartner(partner);
-        const totalDue = updatedDue ? updatedDue[0].total_due : partner.total_due;
+    async getCompanyPartnerIds(partnerId) {
+        return await this.data.call("res.partner", "get_company_partner_ids", [partnerId]);
+    },
+    async onClickSettleDue(orderIds, partner_id, partner_ids) {
+        const orders = await this.data.read("pos.order", orderIds);
+        const currentOrder = this.getOrder();
+        currentOrder.selectedDuePartnerIds = partner_ids;
+        currentOrder.setPartner(partner_id);
+        for (const order of orders) {
+            await this.addLineToCurrentOrder({
+                price_unit: order.customer_due_total,
+                qty: 1,
+                taxes_id: [],
+                product_tmpl_id: this.config.settle_due_product_id,
+                settled_order_id: order,
+            });
+        }
+    },
+    async depositMoney(partner) {
         const paymentMethods = this.config.payment_method_ids.filter(
             (method) => method.type != "pay_later"
         );
@@ -69,7 +94,7 @@ patch(PosStore.prototype, {
             item: paymentMethod,
         }));
         this.dialog.add(SelectionPopup, {
-            title: _t("Select the payment method to settle the due"),
+            title: _t("Select the payment method to deposit money"),
             list: selectionList,
             getPayload: async (selectedPaymentMethod) => {
                 // Reuse an empty order that has no partner or has partner equal to the selected partner.
@@ -88,9 +113,12 @@ patch(PosStore.prototype, {
                     newOrder = this.addNewOrder();
                 }
                 const payment = newOrder.addPaymentline(selectedPaymentMethod);
-                payment.setAmount(totalDue);
+                payment.setAmount(0);
                 newOrder.setPartner(partner);
-                this.showScreen("PaymentScreen", { orderUuid: this.selectedOrderUuid });
+                this.showScreen("PaymentScreen", {
+                    orderUuid: this.selectedOrderUuid,
+                    isDepositOrder: true,
+                });
             },
         });
     },

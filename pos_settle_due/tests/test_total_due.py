@@ -84,6 +84,7 @@ class TestPointOfSaleFlow(TestPointOfSaleCommon):
         current_session.action_pos_session_closing_control()
 
         accounting_partner = self.env['res.partner']._find_accounting_partner(self.partner1)
+        accounting_partner._invalidate_cache()
         self.assertEqual(accounting_partner.total_due, 8.0)
 
         # create invoice

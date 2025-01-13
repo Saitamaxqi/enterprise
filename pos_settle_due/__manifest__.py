@@ -12,6 +12,10 @@
     'installable': True,
     'auto_install': True,
     'license': 'OEEL-1',
+    'data': [
+        'views/pos_order_views.xml',
+        'data/pos_settle_due_data.xml',
+    ],
     'assets': {
         'point_of_sale._assets_pos': [
             'pos_settle_due/static/src/**/*',
