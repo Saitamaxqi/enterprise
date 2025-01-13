@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from odoo.addons.account_accountant.tests.test_bank_rec_widget_common import TestBankRecWidgetCommon
-from odoo.tests import tagged, HttpCase
 from odoo import Command
+from odoo.tests import tagged, HttpCase
+
+from .common import TestBankRecWidgetCommon
 
 
 @tagged('post_install', '-at_install')

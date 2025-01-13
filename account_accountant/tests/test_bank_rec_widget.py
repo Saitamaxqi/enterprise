@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-from odoo.addons.account_accountant.tests.test_bank_rec_widget_common import TestBankRecWidgetCommon
-from odoo.tests import tagged
-from odoo.tools import html2plaintext
-from odoo import fields, Command
+import re
+from unittest.mock import patch
 
 from freezegun import freeze_time
-from unittest.mock import patch
-import re
+
+from odoo import fields, Command
+from odoo.tests import tagged
+from odoo.tools import html2plaintext
+
+from .common import TestBankRecWidgetCommon
 
 
 @tagged('post_install', '-at_install')

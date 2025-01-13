@@ -2,7 +2,7 @@
 
 from odoo import Command
 from odoo.tests import tagged
-from odoo.addons.account_accountant.tests.test_bank_rec_widget_common import TestBankRecWidgetCommon
+from odoo.addons.account_accountant.tests.common import TestBankRecWidgetCommon
 
 
 @tagged('post_install', '-at_install')
