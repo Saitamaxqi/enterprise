@@ -34,7 +34,7 @@ registry.category("web_tour.tours").add("test_optional_products_portal", {
         },
         {
             content: "Check optional product are shown",
-            trigger: 'div[id="content"] h3[id="quote_3"]',
+            trigger: 'div[id="content"] h3[id="quote_2"]',
         },
     ],
 });
