@@ -11,7 +11,7 @@
             <div class="d-grid" t-attf-style="{{state.gridStyle}}" t-if="!state.isLoading and state.institutions.length">
                 <div class="dashboard_bank" t-on-click="() => this.connectBank()">
                     <button class="h-100 w-100 rounded btn btn-primary fw-normal" name="action_configure_bank_journal">
-                        <span class="img-fluid">Search over <span class="text-nowrap">36 000</span> banks</span>
+                        <span class="img-fluid">Search over <span class="text-nowrap">26 000</span> banks</span>
                     </button>
                 </div>
                 <div t-foreach="state.institutions" t-as="institution" t-key="institution.id"
