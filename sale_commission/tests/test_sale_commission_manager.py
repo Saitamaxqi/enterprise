@@ -230,3 +230,32 @@ class TestSaleCommissionManager(TestSaleCommissionCommon):
         self.assertEqual(len(commissions), 12)
         self.assertEqual(sum(commissions.mapped('achieved')), 6000)
         self.assertEqual(sum(commissions.mapped('commission')), 4000, 'We have reached the 3rd level')
+
+    def test_copy_plan(self):
+        self.commission_plan_user.write({
+            'periodicity': 'month',
+            'type': 'target',
+            'user_type': 'person',
+            'target_commission_ids': [
+                Command.clear(),
+                Command.create({
+                    'target_rate': 0,
+                    'amount': 0,
+                }), Command.create({
+                    'target_rate': 0.1,
+                    'amount': 10,
+                }), Command.create({
+                    'target_rate': 1,
+                    'amount': 100,
+                }),
+            ],
+        })
+        new_plan = self.commission_plan_user.copy()
+        self.assertEqual(
+            new_plan.target_commission_ids.mapped('target_rate'),
+            self.commission_plan_user.target_commission_ids.mapped('target_rate'),
+        )
+        self.assertEqual(
+            new_plan.target_commission_ids.mapped('amount'),
+            self.commission_plan_user.target_commission_ids.mapped('amount'),
+        )
