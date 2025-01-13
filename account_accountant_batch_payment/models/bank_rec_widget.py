@@ -104,6 +104,7 @@ class BankRecWidget(models.Model):
             'domain': [('journal_id', '=', journal.id)],
         })
         context['search_default_same_journal'] = True
+        context['search_default_unreconciled'] = True
 
         # == Dynamic Currency filter ==
         if self.transaction_currency_id != self.company_currency_id:

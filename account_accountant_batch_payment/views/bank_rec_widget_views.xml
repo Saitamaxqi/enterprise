@@ -18,6 +18,8 @@
                     <separator/>
                     <filter name="amount_received" string="Received" domain="[('batch_type', '=', 'inbound')]"/>
                     <filter name="amount_paid" string="Paid" domain="[('batch_type', '=', 'outbound')]"/>
+                    <separator/>
+                    <filter name="unreconciled" string="Unreconciled" domain="[('state', '!=', 'reconciled')]"/>
                     <separator name="inject_after"/>
                     <filter name="date" string="Date" date="date"/>
                 </search>
