@@ -43,17 +43,18 @@ class SDDTest(SDDTestCommon):
         self.partner_china_export.write({'city': 'China Town', 'country_id': self.country_china})
         payment.generate_xml(self.sdd_company, fields.Date.today(), True)
 
-    @freeze_time('2020-01-01')
+    @freeze_time('2019-01-01')
     def test_expiry(self):
         self.mandate_agrolait.action_revoke_mandate()  # We will use a new one here
         self.assertEqual(self.mandate_agrolait.state, 'revoked')
 
         mandate = self.create_mandate(self.partner_agrolait, self.partner_bank_agrolait, False, self.sdd_company, 'CORE')
+        mandate.start_date = '2020-01-01'
         mandate.end_date = '2025-01-30'
         self.assertEqual(mandate.state, 'draft')
         mandate.action_validate_mandate()
         mandate.cron_update_mandates_states()
-        self.assertEqual(mandate.state, 'active')
+        self.assertEqual(mandate.state, 'active') # The mandate should stay active even if the start_date is in the future
 
         with freeze_time('2022-12-02'):  # In the 36-month without any use automatic close 30-days warning period (to be closed the 2023-01-01)
             mandates_per_validity = mandate._update_and_partition_state_by_validity()
