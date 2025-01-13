@@ -5,8 +5,9 @@
         <field name="model">hr.leave.type</field>
         <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='work_entry_type_id']" position="after">
-                <field name="l10n_ae_is_annual_leave" invisible="country_code != 'AE' or requires_allocation != 'yes'"/>
+            <xpath expr="//group[@name='configuration']" position="inside">
+                <field name="l10n_ae_is_annual_leave" invisible="country_code != 'AE' or requires_allocation != 'yes'" nolabel="1"/>
+                <label for="l10n_ae_is_annual_leave" invisible="country_code != 'AE' or requires_allocation != 'yes'"/>
             </xpath>
         </field>
     </record>
