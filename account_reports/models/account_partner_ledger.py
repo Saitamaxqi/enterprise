@@ -381,14 +381,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         return SQL(" UNION ALL ").join(queries)
 
     def _report_expand_unfoldable_line_partner_ledger(self, line_dict_id, groupby, options, progress, offset, unfold_all_batch_data=None):
-        def init_load_more_progress(line_dict):
-            return {
-                column['column_group_key']: line_col.get('no_format', 0)
-                for column, line_col in  zip(options['columns'], line_dict['columns'])
-                if column['expression_label'] == 'balance'
-            }
-
-        report = self.env.ref('account_reports.partner_ledger_report')
+        report = self.env['account.report'].browse(options['report_id'])
         markup, model, record_id = report._parse_line_id(line_dict_id)[-1]
 
         if model != 'res.partner':
@@ -403,7 +396,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         lines = []
 
         # Get initial balance
-        if offset == 0:
+        if offset == 0 and not options.get('hide_initial_balance'):
             if unfold_all_batch_data:
                 init_balance_by_col_group = unfold_all_batch_data['initial_balances'][record_id]
             else:
@@ -413,7 +406,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 lines.append(initial_balance_line)
 
                 # For the first expansion of the line, the initial balance line gives the progress
-                progress = init_load_more_progress(initial_balance_line)
+                progress = self._init_load_more_progress(options, initial_balance_line)
 
         limit_to_load = report.load_more_limit + 1 if report.load_more_limit and options['export_mode'] != 'print' else None
 
@@ -422,19 +415,8 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         else:
             aml_results = self._get_aml_values(options, [record_id], offset=offset, limit=limit_to_load)[record_id]
 
-        has_more = False
-        treated_results_count = 0
-        next_progress = progress
-        for result in aml_results:
-            if options['export_mode'] != 'print' and report.load_more_limit and treated_results_count == report.load_more_limit:
-                # We loaded one more than the limit on purpose: this way we know we need a "load more" line
-                has_more = True
-                break
-
-            new_line = self._get_report_line_move_line(options, result, line_dict_id, next_progress, level_shift=level_shift)
-            lines.append(new_line)
-            next_progress = init_load_more_progress(new_line)
-            treated_results_count += 1
+        aml_report_lines, next_progress, treated_results_count, has_more = self._get_partner_aml_report_lines(report, options, line_dict_id, aml_results, progress, offset, level_shift=level_shift)
+        lines.extend(aml_report_lines)
 
         return {
             'lines': lines,
@@ -442,6 +424,33 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             'has_more': has_more,
             'progress': next_progress
         }
+
+    def _init_load_more_progress(self, options, line_dict):
+        return {
+            column['column_group_key']: line_col.get('no_format', 0)
+            for column, line_col in zip(options['columns'], line_dict['columns'])
+            if column['expression_label'] == 'balance'
+        }
+
+    def _get_partner_aml_report_lines(self, report, options, partner_line_id, aml_results, progress, offset=0, level_shift=0):
+        lines = []
+        has_more = False
+        treated_results_count = 0
+        next_progress = progress
+        for result in aml_results:
+            if self._is_report_limit_reached(report, options, treated_results_count):
+                # We loaded one more than the limit on purpose: this way we know we need a "load more" line
+                has_more = True
+                break
+
+            new_line = self._get_report_line_move_line(options, result, partner_line_id, next_progress, level_shift=level_shift)
+            lines.append(new_line)
+            next_progress = self._init_load_more_progress(options, new_line)
+            treated_results_count += 1
+        return lines, next_progress, treated_results_count, has_more
+
+    def _is_report_limit_reached(self, report, options, results_count):
+        return options['export_mode'] != 'print' and report.load_more_limit and results_count == report.load_more_limit
 
     def _get_additional_column_aml_values(self):
         """
@@ -453,6 +462,9 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         By default, it returns an empty SQL object.
         """
         return SQL()
+
+    def _get_order_by_aml_values(self):
+        return SQL('account_move_line.date, account_move_line.id')
 
     def _get_aml_values(self, options, partner_ids, offset=0, limit=None):
         rslt = {partner_id: [] for partner_id in partner_ids}
@@ -471,6 +483,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         journal_name = self.env['account.journal']._field_to_sql('journal', 'name')
         report = self.env.ref('account_reports.partner_ledger_report')
         additional_columns = self._get_additional_column_aml_values()
+        order_by = self._get_order_by_aml_values()
         for column_group_key, group_options in report._split_options_per_column_group(options).items():
             query = report._get_report_query(group_options, 'strict_range')
             account_alias = query.left_join(lhs_alias='account_move_line', lhs_column='account_id', rhs_table='account_account', rhs_column='id', link='account_id')
@@ -516,7 +529,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 LEFT JOIN res_partner partner               ON partner.id = account_move_line.partner_id
                 LEFT JOIN account_journal journal           ON journal.id = account_move_line.journal_id
                 WHERE %(search_condition)s AND %(directly_linked_aml_partner_clause)s
-                ORDER BY account_move_line.date, account_move_line.id
+                ORDER BY %(order_by)s
                 ''',
                 additional_columns=additional_columns,
                 debit_select=report._currency_table_apply_rate(SQL("account_move_line.debit")),
@@ -530,6 +543,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 currency_table_join=report._currency_table_aml_join(group_options),
                 search_condition=query.where_clause,
                 directly_linked_aml_partner_clause=directly_linked_aml_partner_clause,
+                order_by=order_by,
             ))
 
             # For the move lines linked to no partner, but reconciled with this partner. They will appear in grey in the report
@@ -579,7 +593,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                     AND %(account_alias)s.id = account_move_line.account_id
                     AND %(search_condition)s
                     AND partial.max_date BETWEEN %(date_from)s AND %(date_to)s
-                ORDER BY account_move_line.date, account_move_line.id
+                ORDER BY %(order_by)s
                 ''',
                 additional_columns=additional_columns,
                 debit_select=report._currency_table_apply_rate(SQL("CASE WHEN aml_with_partner.balance > 0 THEN 0 ELSE partial.amount END")),
@@ -596,6 +610,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 search_condition=query.where_clause,
                 date_from=group_options['date']['date_from'],
                 date_to=group_options['date']['date_to'],
+                order_by=order_by,
             ))
 
         query = SQL(" UNION ALL ").join(SQL("(%s)", query) for query in queries)
@@ -640,7 +655,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         report = self.env['account.report'].browse(options['report_id'])
         for column in options['columns']:
             col_expr_label = column['expression_label']
-            value = partner_values[column['column_group_key']].get(col_expr_label)
+            value = None if options.get('hide_partner_totals') else partner_values[column['column_group_key']].get(col_expr_label)
             unfoldable = unfoldable or (col_expr_label in ('debit', 'credit', 'amount') and not company_currency.is_zero(value))
             column_values.append(report._build_column_dict(value, column, options=options))
 

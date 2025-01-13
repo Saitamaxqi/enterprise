@@ -33,3 +33,4 @@ from . import test_deferred_reports
 from . import test_report_sections
 from . import test_budget
 from . import test_currency_table
+from . import test_followup_report

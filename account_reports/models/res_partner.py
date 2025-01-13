@@ -18,7 +18,6 @@ class ResPartner(models.Model):
             'options': {
                 'partner_ids': self.ids,
                 'unfold_all': len(self.ids) == 1,
-                'unreconciled': True,
             },
             'ignore_session': True,
         }
