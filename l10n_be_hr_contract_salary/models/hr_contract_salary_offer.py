@@ -41,11 +41,14 @@ class HrContractSalaryOffer(models.Model):
         for offer in self:
             offer.contract_type_id = offer.contract_template_id.contract_type_id
 
-    @api.depends('applicant_id')
+    @api.depends('applicant_id', 'contract_template_id.available_cars_amount', 'contract_template_id.max_unused_cars')
     def _compute_new_car(self):
         for offer in self:
             # new_car defaults to True for applicants
-            offer.new_car = bool(offer.applicant_id)
+            if offer.applicant_id:
+                offer.new_car = True
+            else:
+                offer.new_car = offer.contract_template_id.available_cars_amount < offer.contract_template_id.max_unused_cars
 
     @api.depends('applicant_id.partner_id', 'employee_id')
     def _compute_car_id(self):
@@ -101,7 +104,7 @@ class HrContractSalaryOffer(models.Model):
     @api.depends('new_car')
     def _compute_wishlist_car_warning(self):
         for offer in self:
-            if offer.contract_template_id.available_cars_amount > offer.contract_template_id.max_unused_cars:
+            if offer.contract_template_id.available_cars_amount >= offer.contract_template_id.max_unused_cars:
                 offer.wishlist_car_warning = _("We already have %s car(s) without driver(s) available",
                                               offer.employee_contract_id.available_cars_amount)
             else:

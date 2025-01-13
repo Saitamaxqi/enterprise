@@ -1134,7 +1134,11 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         {
             content: "Enable wishlist",
             trigger: ".o_field_widget.o_field_boolean[name='new_car'] input",
-            run: "click",
+            run: function () {
+                if (this.anchor.value == "false"){
+                    this.anchor.value = "true";
+                }    
+            },
         },
         {
             content: "Open compose email wizard",
