@@ -34,8 +34,11 @@
                 <button class="oe_stat_button"
                         type="object" name="action_view_so" icon="fa-dollar"
                         invisible="not use_helpdesk_sale_timesheet or not sale_order_id and not sale_line_id"
-                        string="Sales Order"
-                        groups="sales_team.group_sale_salesman"/>
+                        groups="sales_team.group_sale_salesman">
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">Sales Order</span>
+                        </div>
+                </button>
                 <button class="oe_stat_button"
                         type="object" name="action_view_invoices" icon="fa-pencil-square-o"
                         invisible="not display_invoice_button"
@@ -50,15 +53,19 @@
                 <div class="o_row" invisible="not use_helpdesk_sale_timesheet or not partner_id">
                     <field name="sale_line_id" groups="!sales_team.group_sale_salesman" placeholder="Non-billable" options="{'no_open': True}" readonly="True"/>
                     <field name="sale_line_id" groups="sales_team.group_sale_salesman" placeholder="Non-billable"
+                        options="{'no_create': True}"
                         context="{
-                            'create': False, 'edit': False,
-                            'with_remaining_hours': True,
-                            'with_price_unit': True,
-                            'form_view_ref': 'sale_project.sale_order_line_view_form_editable',
+                            'form_view_ref': 'sale_project.view_order_simple_form',
+                            'create_for_ticket_id': id,
                             'default_partner_id': partner_id,
                             'default_company_id': company_id,
+                            'default_project_id': project_id,
+                            'with_remaining_hours': True,
+                            'with_price_unit': True,
                             'is_downpayment': False,
-                        }"
+                            'dialog_size': 'large',
+                         }"
+                        widget="so_line_create_button"
                     />
                     <span
                         class="fa fa-exclamation-triangle text-warning"

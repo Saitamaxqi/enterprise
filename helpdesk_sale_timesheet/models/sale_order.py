@@ -1,11 +1,20 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
+
+    @api.model
+    def default_get(self, fields_list):
+        res = super().default_get(fields_list)
+        if 'origin' in fields_list and (ticket_id := self.env.context.get('create_for_ticket_id')):
+            ticket = self.env['helpdesk.ticket'].browse(ticket_id)
+            res['origin'] = self.env._('[Helpdesk] %(ticket_name)s', ticket_name=ticket.name)
+        return res
 
     ticket_count = fields.Integer(string='Ticket Count', compute='_compute_ticket_count')
 
@@ -22,6 +31,19 @@ class SaleOrder(models.Model):
         mapped_data = {sale_order.id: count for sale_order, count in ticket_data}
         for so in self:
             so.ticket_count = mapped_data.get(so.id, 0)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        created_records = super().create(vals_list)
+        ticket = self.env['helpdesk.ticket'].browse(self.env.context.get('create_for_ticket_id'))
+        if ticket:
+            service_sol = next((sol for sol in created_records.order_line if sol.is_service), False)
+            if not service_sol and not self.env.context.get('from_embedded_action'):
+                raise UserError(_('The Sales Order must contain at least one service product.'))
+            if ticket and not ticket.sale_line_id:
+                created_records.with_context(disable_project_task_generation=True).action_confirm()
+                ticket.sale_line_id = service_sol
+        return created_records
 
     def action_view_tickets(self):
         self.ensure_one()
