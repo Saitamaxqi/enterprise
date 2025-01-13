@@ -1725,6 +1725,9 @@ class L10n_InGstReturnPeriod(models.Model):
                                 or matched_bills.move_type != 'in_refund' and bill_type == 'bill')
                         ):
                             exception.append(_("The reference number as per GSTR-2B is %s", bill_number))
+                        if exception and matched_bills.l10n_in_gstr2b_reconciliation_status == "manually_matched":
+                            checked_bills += matched_bills
+                            continue
                         matched_bills.write({
                             "l10n_in_exception": '<br/>'.join(exception),
                             "l10n_in_gstr2b_reconciliation_status": exception and "partially_matched" or "matched",
@@ -1759,7 +1762,7 @@ class L10n_InGstReturnPeriod(models.Model):
                         *self.env['account.journal']._check_company_domain(self.company_id),
                         ('type', '=', 'purchase')
                     ], limit=1)
-                    if partner.l10n_in_gst_treatment not in ('deemed_export', 'uin_holders'):
+                    if not partner or partner.l10n_in_gst_treatment not in ('deemed_export', 'uin_holders'):
                         l10n_in_gst_treatment = {
                             'impg': 'overseas',
                             'impgsez': 'special_economic_zone',
@@ -1770,7 +1773,7 @@ class L10n_InGstReturnPeriod(models.Model):
                         "move_type": bill_type == 'credit_note' and "in_refund" or "in_invoice",
                         "ref": bill_number,
                         "invoice_date": bill_date,
-                        "partner_id": partner.id,
+                        "partner_id": partner and partner.id or False,
                         "l10n_in_gst_treatment": l10n_in_gst_treatment,
                         "journal_id": journal.id,
                         "l10n_in_gstr2b_reconciliation_status": "gstr2_bills_not_in_odoo",

@@ -99,6 +99,7 @@ class TestReports(L10nInTestAccountReportsCommon):
 
         self.assertEqual(self.bill_not_in_gstr2b.l10n_in_gstr2b_reconciliation_status, "bills_not_in_gstr2")
         self.assertEqual(self.overseas_bill.l10n_in_gstr2b_reconciliation_status, "matched")
+        self.assertEqual(self.overseas_bill.l10n_in_gst_treatment, "overseas")
         bill_not_in_odoo = self.env['account.move'].search([('ref', '=', '533515'), ('company_id', '=', self.default_company.id)])
         self.assertEqual(len(bill_not_in_odoo), 1)
         self.assertEqual(bill_not_in_odoo.l10n_in_gstr2b_reconciliation_status, 'gstr2_bills_not_in_odoo')

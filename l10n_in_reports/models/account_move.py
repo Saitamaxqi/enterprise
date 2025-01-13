@@ -60,10 +60,12 @@ class AccountMove(models.Model):
         ("partially_matched", "Partially Matched"),
         ("exception", "Exception"),
         ("bills_not_in_gstr2", "Bills Not in GSTR-2"),
+        ("manually_matched", "Manually Matched"),
         ("gstr2_bills_not_in_odoo", "GSTR-2 Bills not in Odoo")],
         string="GSTR-2B Reconciliation",
         readonly=True,
-        default="pending"
+        default="pending",
+        tracking=True,
     )
     l10n_in_reversed_entry_warning = fields.Boolean(
         string="Display reversed entry warning",
@@ -387,6 +389,34 @@ class AccountMove(models.Model):
             return {'action': bill_action}
 
         return {'warning': _("To Get Bill by IRN First activate Fetch Vendor E-Invoiced Document in setting.")}
+
+    # ==========================================
+    # Vendor Bills Manual Matching with GSTR-2B
+    # ==========================================
+
+    def _l10n_in_change_gstr2b_reconciliation_status(self, status, message=None):
+        """ Manually match the vendor bill with GSTR-2B bills. """
+        self.write({'l10n_in_gstr2b_reconciliation_status': status})
+        if message:
+            self.message_post(body=message)
+
+    def action_l10n_in_bill_set_gstr2b_manual_matching(self):
+        self.ensure_one()
+        if (
+            self.move_type in ['in_invoice', 'in_refund']
+            and self.l10n_in_gstr2b_reconciliation_status == 'partially_matched'
+        ):
+            exception_message = Markup("<strong>%s</strong> <br/> %s") % (_("Manually matched with GSTR-2B bills:"), self.l10n_in_exception)
+            self._l10n_in_change_gstr2b_reconciliation_status(status='manually_matched', message=exception_message)
+
+    def action_l10n_in_bill_reset_gstr2b_manual_matching(self):
+        """ Reset the manual matching of the vendor bill with GSTR-2B bills. """
+        self.ensure_one()
+        if (
+            self.move_type in ['in_invoice', 'in_refund']
+            and self.l10n_in_gstr2b_reconciliation_status == 'manually_matched'
+        ):
+            self._l10n_in_change_gstr2b_reconciliation_status(status='partially_matched')
 
     # ===============================
     # QR Code Bill Scan Methods
