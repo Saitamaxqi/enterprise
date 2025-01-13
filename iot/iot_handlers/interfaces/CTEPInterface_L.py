@@ -34,7 +34,7 @@ class CTEPInterface(Interface):
     connection_type = 'ctep'
 
     def __init__(self):
-        super(CTEPInterface, self).__init__()
+        super().__init__()
         self.manager = easyCTEP.createCTEPManager()
 
     def get_devices(self):

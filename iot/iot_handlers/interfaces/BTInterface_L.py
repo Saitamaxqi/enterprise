@@ -5,7 +5,6 @@ import logging
 from threading import Thread
 
 from odoo.addons.hw_drivers.interface import Interface
-from odoo.addons.hw_drivers.main import iot_devices
 
 bt_devices = {}
 
