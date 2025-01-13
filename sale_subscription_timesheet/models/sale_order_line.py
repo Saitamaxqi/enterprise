@@ -15,7 +15,7 @@ class SaleOrderLine(models.Model):
     def _get_timesheet_subscription_lines(self):
         return self.filtered(lambda sol: sol.recurring_invoice and sol.qty_delivered_method == 'timesheet')
 
-    @api.depends('timesheet_ids')
+    @api.depends('timesheet_ids', 'next_invoice_date')
     def _compute_qty_delivered(self):
         timesheet_lines = self._get_timesheet_subscription_lines()
         res = super(SaleOrderLine, self - timesheet_lines)._compute_qty_delivered()
