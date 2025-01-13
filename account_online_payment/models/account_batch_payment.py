@@ -46,37 +46,39 @@ class AccountBatchPayment(models.Model):
         return self.with_context(xml_export=False).validate_batch()
 
     def validate_batch(self):
-        action = super().validate_batch()
+        if not self.payment_method_code == 'sepa_ct' or not self.account_online_linked:
+            return super().validate_batch()
 
+        action = self._check_batch_validity()
         if (action and action.get('res_model') == 'account.batch.error.wizard') or self._context.get('xml_export'):
             return action
 
-        if self.payment_method_code == 'sepa_ct' and self.account_online_linked:
-            account_online_link = self.journal_id.account_online_link_id
-            data = self._prepare_payment_data()
-            while True:
-                response = account_online_link._fetch_odoo_fin('/proxy/v1/initiate_payment', data)
-                # In case of token expiration, we receive a special next_data field that we use to redo the request
-                if not response.get('next_data'):
-                    break
-                data['next_data'] = response['next_data']
+        account_online_link = self.journal_id.account_online_link_id
+        data = self._prepare_payment_data()
+        while True:
+            response = account_online_link._fetch_odoo_fin('/proxy/v1/initiate_payment', data)
+            # In case of token expiration, we receive a special next_data field that we use to redo the request
+            if not response.get('next_data'):
+                break
+            data['next_data'] = response['next_data']
 
-            if response.get('kyc_flow'):
-                self.with_user(SUPERUSER_ID).message_post(body=_("""
-                    This payment requires a KYC flow. As this process can take a few days, please use SEPA XML export in the meantime.
-                    You will be notified once the KYC flow is completed and you can proceed with the online payment.
-                """))
-            else:
-                self.write({
-                    'payment_identifier': response.get('payment_identifier'),
-                    'payment_online_status': response.get('payment_online_status'),
-                })
+        if response.get('kyc_flow'):
+            self.with_user(SUPERUSER_ID).message_post(body=_("""
+                This payment requires a KYC flow. As this process can take a few days, please use SEPA XML export in the meantime.
+                You will be notified once the KYC flow is completed and you can proceed with the online payment.
+            """))
+        else:
+            self._send_after_validation()
+            self.write({
+                'payment_identifier': response.get('payment_identifier'),
+                'payment_online_status': response.get('payment_online_status'),
+            })
 
-            return {
-                'type': 'ir.actions.act_url',
-                'url': response.get('redirect_url'),
-                'target': '_blank',
-            }
+        return {
+            'type': 'ir.actions.act_url',
+            'url': response.get('redirect_url'),
+            'target': '_blank',
+        }
 
     def check_online_payment_status(self):
         statuses = {}

@@ -238,6 +238,10 @@ class AccountBatchPayment(models.Model):
         """ Verifies the content of a batch and proceeds to its sending if possible.
         If not, opens a wizard listing the errors and/or warnings encountered.
         """
+        self._check_batch_validity()
+        return self._send_after_validation()
+
+    def _check_batch_validity(self):
         self.ensure_one()
         if not self.payment_ids:
             raise UserError(_("Cannot validate an empty batch. Please add some payments to it first."))
@@ -256,8 +260,6 @@ class AccountBatchPayment(models.Model):
                 'target': 'new',
                 'res_id': self.env['account.batch.error.wizard'].create_from_errors_list(self, errors, warnings).id,
             }
-
-        return self._send_after_validation()
 
     def validate_batch_button(self):
         return self.validate_batch()
