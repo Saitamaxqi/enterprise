@@ -82,7 +82,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'height': 0.015,
             }, {
                 'type_id': cls.env.ref('sign.sign_item_type_text').id,
-                'name': 'employee_id.private_street2',
+                'name': 'employee_id.private_street',
                 'required': True,
                 'responsible_id': cls.env.ref('sign.sign_item_role_employee').id,
                 'page': 1,
