@@ -5,9 +5,10 @@ from datetime import datetime
 from freezegun import freeze_time
 
 from odoo.addons.appointment.tests.common import AppointmentCommon
-from odoo.tests.common import users
+from odoo.tests.common import tagged, users
 
 
+@tagged('post_install', '-at_install', 'mail_flow')
 class TestAppointmentEventNotifications(AppointmentCommon):
 
     @classmethod
@@ -38,9 +39,7 @@ class TestAppointmentEventNotifications(AppointmentCommon):
             ):
                 # Invitation
                 with self.mock_mail_gateway():
-                    event = self.env['calendar.event'].sudo().with_context(
-                        mail_notify_author=True,
-                    ).create({
+                    event = self.env['calendar.event'].sudo().create({
                         "appointment_booker_id": self.user_portal.partner_id.id,
                         "appointment_type_id": appointment_type_id,
                         "name": "Appointment",
@@ -60,9 +59,7 @@ class TestAppointmentEventNotifications(AppointmentCommon):
 
                 # Cancellation
                 with self.mock_mail_gateway():
-                    event.with_context(
-                        mail_notify_author=True,
-                    ).action_cancel_meeting(self.user_portal.partner_id.ids)
+                    event.action_cancel_meeting(self.user_portal.partner_id.ids)
                     self.flush_tracking()  # Cancellation notifications are sent through tracking
                 cancellation_mails = self.env['mail.mail']
                 for recipient in cancel_recipients:

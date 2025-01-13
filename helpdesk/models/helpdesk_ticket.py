@@ -907,6 +907,7 @@ class HelpdeskTicket(models.Model):
         return super()._message_post_after_hook(message, msg_vals)
 
     def _send_email_notify_to_cc(self, partners_to_notify):
+        # TDE TODO: this should be removed with email-like recipients management
         self.ensure_one()
         template_id = self.env['ir.model.data']._xmlid_to_res_id('helpdesk.ticket_invitation_follower', raise_if_not_found=False)
         if not template_id:
@@ -931,10 +932,7 @@ class HelpdeskTicket(models.Model):
     def _track_template(self, changes):
         res = super()._track_template(changes)
         ticket = self[0]
-        if 'stage_id' in changes and ticket.stage_id.template_id and ticket.partner_email and (
-            not self.env.user.partner_id or not ticket.partner_id or ticket.partner_id != self.env.user.partner_id
-            or self.env.user._is_portal() or ticket._context.get('mail_notify_author')
-        ):
+        if 'stage_id' in changes and ticket.stage_id.template_id and ticket.partner_email:
             res['stage_id'] = (ticket.stage_id.template_id, {
                 'auto_delete_keep_log': False,
                 'subtype_id': self.env['ir.model.data']._xmlid_to_res_id('mail.mt_note'),

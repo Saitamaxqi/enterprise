@@ -135,7 +135,7 @@ class AppointmentCalendarController(CalendarController):
             return request.not_found()
         if cancel_status := self._get_prevent_cancel_status(event):
             return request.redirect(f'/calendar/view/{access_token}?state={cancel_status}&partner_id={partner_id}')
-        event.with_context(mail_notify_author=True).sudo().action_cancel_meeting([int(partner_id)] if partner_id else [])
+        event.sudo().action_cancel_meeting([int(partner_id)] if partner_id else [])
         if appointment_invite:
             redirect_url = appointment_invite.redirect_url + '&state=cancel'
         else:

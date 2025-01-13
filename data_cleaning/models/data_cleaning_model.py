@@ -221,7 +221,6 @@ class Data_CleaningModel(models.Model):
                     )
                 ),
                 model=self._name,
-                notify_author=True,
                 partner_ids=partner_ids,
                 res_id=self.id,
                 subject=self.env._('Data to Clean'),
