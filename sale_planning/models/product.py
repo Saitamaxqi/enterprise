@@ -10,6 +10,9 @@ class ProductTemplate(models.Model):
 
     planning_enabled = fields.Boolean(
         'Plan Services',
+        compute='_compute_planning_enabled',
+        readonly=False,
+        store=True,
         help="""If enabled, a shift will automatically be generated for the selected role when confirming the Sales Order. \
                 With the 'auto plan' feature, only employees with this role will be automatically assigned shifts for Sales Orders containing this service. \
                 The system will consider employee availability and the remaining time to be planned. \
@@ -22,3 +25,8 @@ class ProductTemplate(models.Model):
         invalid_products = self.filtered(lambda product: product.planning_enabled and product.type != 'service')
         if invalid_products:
             raise ValidationError(_("Plannable services should be a service product, product\n%s.", '\n'.join(invalid_products.mapped('name'))))
+
+    @api.depends('planning_role_id')
+    def _compute_planning_enabled(self):
+        for product in self:
+            product.planning_enabled = bool(product.planning_role_id)
