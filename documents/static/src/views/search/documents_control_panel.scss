@@ -11,6 +11,10 @@
         }
     }
 
+    .btn-group > :not(.btn-check:first-child) + .btn, .btn-group > .btn-group:not(:first-child) {
+        margin-left: 0.2rem;
+    }
+
     @media (min-width: 992px) {
         .o_control_panel_breadcrumbs {
             min-height: 5.6vh;

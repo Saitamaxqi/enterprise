@@ -16,6 +16,7 @@ from . import ir_attachment
 from . import ir_binary
 
 # inherit
+from . import ir_actions_server
 from . import mail_activity
 from . import mail_activity_type
 from . import res_partner

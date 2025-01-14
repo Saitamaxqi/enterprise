@@ -10,6 +10,7 @@ import {
     documentsCogMenuItemStarAdd,
     documentsCogMenuItemStarRemove,
 } from "./documents_cog_menu_item_star";
+import { documentsCogMenuItemAutomations } from "./documents_cog_menu_item_automations";
 
 const documentMenuItems = [
     documentsCogMenuItemDownload,
@@ -21,6 +22,7 @@ const documentMenuItems = [
     documentsCogMenuItemDetails,
     documentsCogMenuItemArchive,
     documentCogMenuPinAction,
+    documentsCogMenuItemAutomations,
 ];
 
 /**
