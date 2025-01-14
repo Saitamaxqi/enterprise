@@ -13,10 +13,10 @@ class HrApplicant(models.Model):
         self.ensure_one()
 
         # if an applicant does not already has associated partner_id create it
-        if not self.candidate_id.partner_id:
+        if not self.partner_id:
             if not self.partner_name:
                 raise UserError(_('You must define a Contact Name for this applicant.'))
-            self.candidate_id.partner_id = self.env['res.partner'].create({
+            self.partner_id = self.env['res.partner'].create({
                 'is_company': False,
                 'name': self.partner_name,
                 'email': self.email_from,
@@ -47,3 +47,10 @@ class HrApplicant(models.Model):
                 'view_ids': [(view_id, 'kanban'), (False, 'list')],
                 'domain': [('id', 'in', request_ids.ids)]
             }
+
+    def _get_employee_create_vals(self):
+        vals = super()._get_employee_create_vals()
+        request_ids = self.env['sign.request.item'].search([
+            ('partner_id', '=', self.partner_id.id)]).sign_request_id
+        vals['sign_request_ids'] = request_ids.ids
+        return vals

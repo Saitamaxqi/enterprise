@@ -52,7 +52,6 @@
                     ('date_begin', '>=', (context_today() + relativedelta(days=-365)).strftime('%Y-%m-%d')),
                     ('date_begin', '&lt;', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
                 <separator/>
-                <filter string="Exclude Duplicates" name="exclude_duplicates" domain="[('unique_candidate', '=', True)]"/>
                 <separator/>
                 <filter name="filter_date_begin" date="date_begin"/>
                 <separator/>

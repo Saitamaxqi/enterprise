@@ -50,11 +50,12 @@ class TestLinkExpirationDate(HttpCase):
             'structure_type_id': self.structure_type.id,
             'job_id': self.job.id,
         })
-        applicant = self.env['hr.applicant'].create({
-            'candidate_id': self.env['hr.candidate'].create({
-                'partner_name': 'Guillermo De La Cruz',
-                'email_from': 'Guillermo@example.com'}).id,
-        })
+        applicant = self.env["hr.applicant"].create(
+            {
+                "partner_name": "Guillermo De La Cruz",
+                "email_from": "Guillermo@example.com",
+            }
+        )
 
         with freeze_time(self.offer_date):
             applicant.action_generate_offer()
@@ -94,9 +95,7 @@ class TestLinkExpirationDate(HttpCase):
                         'The Employee should be redirected to the invalid link page')
 
     def test_applicant_with_archived_contract(self):
-        applicant = self.env['hr.applicant'].create({
-            'candidate_id': self.env['hr.candidate'].create({'partner_name': 'demo'}).id,
-        })
+        applicant = self.env["hr.applicant"].create({"partner_name": "demo"})
 
         applicant_contract = self.env['hr.contract'].create({
             'name': "Contract",

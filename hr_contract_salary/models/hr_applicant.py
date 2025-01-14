@@ -50,7 +50,7 @@ class HrApplicant(models.Model):
             self.stage_id = first_hired_stage[0].id
 
     def action_show_proposed_contracts(self):
-        self.candidate_id._check_interviewer_access()
+        self._check_interviewer_access()
         action_vals = {
             "type": "ir.actions.act_window",
             "res_model": "hr.contract",

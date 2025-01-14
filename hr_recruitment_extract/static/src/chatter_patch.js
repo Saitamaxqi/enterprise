@@ -11,7 +11,7 @@ patch(Chatter.prototype, {
             id: this.props.threadId,
         });
         this.attachmentUploadService.onFileUploaded(thread, () => {
-            if (this.state.thread?.model === "hr.candidate") {
+            if (this.state.thread?.model === "hr.applicant") {
                 this.reloadParentView();
             }
         });

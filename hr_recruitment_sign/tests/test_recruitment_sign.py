@@ -19,9 +19,7 @@ class TestHrRecruitmentSign(HttpCase):
             'name': 'test_applicant_contract.pdf',
         })
 
-        cls.applicant = cls.env['hr.applicant'].create({
-            'candidate_id': cls.env['hr.candidate'].create({'partner_name': 'Caped Baldy'}).id,
-        })
+        cls.applicant = cls.env['hr.applicant'].create({'partner_name': 'Caped Baldy'})
         cls.template = cls.env['sign.template'].create({
             'name': 'recruitment test template',
             'attachment_id': cls.attachment.id,

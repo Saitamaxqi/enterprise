@@ -5,16 +5,16 @@ from odoo.exceptions import UserError
 class DocumentsDocument(models.Model):
     _inherit = 'documents.document'
 
-    def document_hr_recruitment_create_hr_candidate(self):
+    def document_hr_recruitment_create_hr_applicant(self):
         if self.filtered(lambda doc: doc.type != 'binary' or doc.shortcut_document_id):
             raise UserError(_("This action can only be applied on documents."))
-        candidates = self.env['hr.candidate']
+        applicants = self.env['hr.applicant']
         for document in self:
-            candidate = self.env['hr.candidate'].create({
-                'partner_name': "New Candidate from Documents",
+            applicant = self.env['hr.applicant'].create({
+                'partner_name': "New Applicant from Documents",
                 'user_id': False,
             })
-            candidates |= candidate
+            applicants |= applicant
             this_document = document
             if (document.res_model or document.res_id) and document.res_model != 'documents.document':
                 this_document = document.copy()
@@ -22,22 +22,22 @@ class DocumentsDocument(models.Model):
                 this_document.write({'attachment_id': attachment_id_copy.id})
 
             this_document.attachment_id.with_context(no_document=True).write({
-                'res_model': 'hr.candidate',
-                'res_id': candidate.id
+                'res_model': 'hr.applicant',
+                'res_id': applicant.id
             })
         action = {
             'type': 'ir.actions.act_window',
-            'res_model': 'hr.candidate',
-            'name': 'Candidate',
+            'res_model': 'hr.applicant',
+            'name': 'Applicant',
             'view_mode': 'list,form',
             'views': [(False, "list"), (False, "form")],
-            'domain': [('id', 'in', candidates.ids)],
+            'domain': [('id', 'in', applicants.ids)],
             'context': self._context,
         }
-        if len(candidates) == 1:
+        if len(applicants) == 1:
             action.update(
                 view_mode='form',
                 views=[(False, "form")],
-                res_id=candidates[0].id,
+                res_id=applicants[0].id,
             )
         return action

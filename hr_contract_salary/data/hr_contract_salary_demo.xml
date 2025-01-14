@@ -175,15 +175,11 @@
         <field name="image_1920" type="base64" file="hr_contract_salary/static/img/employee_chs-image.jpg"/>
     </record>
 
-    <record id="hr_candidate_developper" model="hr.candidate">
+    <record id="hr_applicant_developper" model="hr.applicant">
         <field name="email_from">billy_kyle@example.com</field>
         <field name="partner_name">Billy Kyle</field>
         <field name="partner_phone">(555)-233-3213</field>
         <field name="partner_id" ref="partner_developper"/>
-    </record>
-
-    <record id="hr_applicant_developper" model="hr.applicant">
-        <field name="candidate_id" ref="hr_candidate_developper"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="hr.dep_rd"/>
         <field name="type_id" ref="hr_recruitment.degree_graduate"/>

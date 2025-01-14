@@ -15,8 +15,6 @@ class HrRecruitmentStageReport(models.Model):
     job_id = fields.Many2one('hr.job', readonly=True)
     days_in_stage = fields.Float(readonly=True, aggregator='avg')
 
-    unique_candidate = fields.Boolean('Unique Candidate', readonly=True)
-
     state = fields.Selection([
         ('is_hired', 'Hired'),
         ('in_progress', 'In Progress'),
@@ -34,14 +32,9 @@ class HrRecruitmentStageReport(models.Model):
 SELECT
     ROW_NUMBER() OVER () AS ID,
     ha.id AS applicant_id,
-    c.partner_name AS name,
+    ha.partner_name AS name,
     ha.job_id AS job_id,
     ha.company_id AS company_id,
-    CASE
-        WHEN (ha.create_date = MAX(ha.create_date) OVER (PARTITION BY ha.job_id, c.id))
-        THEN TRUE
-        ELSE FALSE
-    END AS unique_candidate,
     CASE
         WHEN ha.active IS FALSE and ha.refuse_reason_id IS NOT NULL THEN 'refused'
         WHEN ha.active IS FALSE and ha.refuse_reason_id IS NULL THEN 'archived'
@@ -57,10 +50,6 @@ SELECT
     END AS stage_id
 FROM
     hr_applicant ha
-JOIN
-    hr_candidate c
-ON
-    c.id = ha.candidate_id
 JOIN
     mail_message mm
 ON
@@ -82,14 +71,9 @@ UNION ALL
 SELECT
     ROW_NUMBER() OVER () AS id,
     ha.id AS applicant_id,
-    c.partner_name AS name,
+    ha.partner_name AS name,
     ha.job_id AS job_id,
     ha.company_id AS company_id,
-    CASE
-        WHEN (ha.create_date = MAX(ha.create_date) OVER (PARTITION BY ha.job_id, c.id))
-        THEN TRUE
-        ELSE FALSE
-    END AS unique_candidate,
     CASE
         WHEN ha.active IS FALSE AND ha.refuse_reason_id IS NOT NULL THEN 'refused'
         WHEN ha.active IS FALSE AND ha.refuse_reason_id IS NULL THEN 'archived'
@@ -106,10 +90,6 @@ SELECT
     ha.stage_id
 FROM
     hr_applicant ha
-JOIN
-    hr_candidate c
-ON
-    c.id = ha.candidate_id
 JOIN
     hr_recruitment_stage hrs
 ON
@@ -137,5 +117,6 @@ LEFT JOIN LATERAL (
 ) md ON TRUE
 WHERE
     hrs.hired_stage IS NOT TRUE
+    AND ha.job_id IS NOT NULL
         """
         self.env.cr.execute(SQL("CREATE OR REPLACE VIEW %s AS (%s)", SQL.identifier(self._table), SQL(query)))

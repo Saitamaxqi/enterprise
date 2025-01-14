@@ -51,7 +51,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
         },
         {
             content: "Select Recruitment Tab",
-            trigger: ".o_notebook ul > li > a:contains(Recruitment)",
+            trigger: ".o_notebook ul > li > a:contains(Details)",
             run: "click",
         },
         {
@@ -87,14 +87,9 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
         },
         // Test Applicant
         {
-            content: "Applicant Name",
-            trigger: 'div [name="candidate_id"] input',
+            content: "Applicant's Name",
+            trigger: '.oe_title [name="partner_name"] input',
             run: "edit Mitchell Admin 2",
-        },
-        {
-            content: "Applicant Name",
-            trigger: "a:contains('Mitchell Admin 2')",
-            run: "click",
         },
         {
             content: "Applicant's Email",
@@ -934,13 +929,8 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         },
         {
             content: "Applicant Name",
-            trigger: 'div [name="candidate_id"] input',
+            trigger: '.oe_title [name="partner_name"] input',
             run: "edit Mitchell Admin 3",
-        },
-        {
-            content: "Applicant Name",
-            trigger: "a:contains('Mitchell Admin 3')",
-            run: "click",
         },
         {
             content: "Add Email Address",

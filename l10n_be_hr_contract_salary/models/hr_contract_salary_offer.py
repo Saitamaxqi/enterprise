@@ -56,8 +56,8 @@ class HrContractSalaryOffer(models.Model):
                 partner |= offer.employee_id.work_contact_id
                 # In case the car was reserved for an applicant, while
                 # the offer is sent for the corresponding employee
-                if offer.employee_id.candidate_id:
-                    partner |= offer.employee_id.candidate_id.partner_id
+                if offer.employee_id.applicant_ids:
+                    partner |= offer.employee_id.applicant_ids.partner_id
             elif offer.applicant_id:
                 partner |= offer.applicant_id.partner_id
             if partner:
@@ -89,8 +89,8 @@ class HrContractSalaryOffer(models.Model):
                 partners |= offer.applicant_id.partner_id
             elif offer.employee_id:
                 partners |= offer.employee_id.work_contact_id
-                if offer.employee_id.candidate_id:
-                    partners |= offer.employee_id.candidate_id.partner_id
+                if offer.employee_id.applicant_ids:
+                    partners |= offer.employee_id.applicant_ids.partner_id
             if offer.car_id.driver_id and offer.car_id.driver_id not in partners:
                 warning.append(f"Car is already assigned to {offer.car_id.driver_id.name} as a driver.")
             if offer.car_id.future_driver_id and offer.car_id.future_driver_id not in partners:

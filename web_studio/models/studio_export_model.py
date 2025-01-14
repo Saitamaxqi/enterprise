@@ -12,7 +12,6 @@ PRESET_MODELS_DEFAULTS = [
     ("res.partner", {"domain": "[('user_ids', '=', False)]", "is_demo_data": True}),
     ("hr.employee", {"is_demo_data": True}),
     ("hr.applicant", {"is_demo_data": True}),
-    ("hr.candidate", {"is_demo_data": True}),
     ("hr.department", {"is_demo_data": True}),
     ("hr.job", {"is_demo_data": True}),
     ("hr.recruitment.stage", {}),

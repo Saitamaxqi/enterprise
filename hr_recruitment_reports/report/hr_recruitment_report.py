@@ -29,9 +29,6 @@ class HrRecruitmentReport(models.Model):
     ], readonly=True)
 
     user_id = fields.Many2one('res.users', 'Recruiter', readonly=True)
-
-    unique_candidate = fields.Boolean('Unique Candidate', readonly=True)
-
     create_date = fields.Date('Application Date', readonly=True)
     create_uid = fields.Many2one('res.users', 'Creator', readonly=True)
     date_closed = fields.Date('End Date', readonly=True)
@@ -75,34 +72,27 @@ class HrRecruitmentReport(models.Model):
                     WHEN a.date_closed IS NOT NULL THEN 'is_hired'
                     ELSE 'in_progress'
                 END AS state,
-                c.partner_name as name,
+                a.partner_name as name,
                 CASE WHEN a.refuse_reason_id IS NOT NULL OR a.active IS TRUE THEN 1 ELSE 0 END as count,
                 CASE WHEN a.refuse_reason_id IS NOT NULL THEN 1 ELSE 0 END as refused,
                 CASE WHEN a.refuse_reason_id IS NULL AND a.active IS TRUE AND a.date_closed IS NOT NULL THEN 1 ELSE 0 END as hired,
                 CASE WHEN a.date_closed IS NOT NULL THEN 100 ELSE 0 END as hiring_ratio,
                 CASE WHEN a.active IS NOT FALSE AND a.date_closed IS NULL THEN 1 ELSE 0 END as in_progress,
-                CASE WHEN (
-                    ROW_NUMBER() OVER (
-                        PARTITION BY a.job_id, a.candidate_id
-                        ORDER BY a.create_date DESC
-                    ) = 1) THEN True ELSE False
-                END AS unique_candidate,
                 CASE WHEN a.date_closed IS NOT NULL THEN date_part('day', a.date_closed - a.create_date) ELSE NULL END as process_duration
                 %s
         """ % fields
 
         from_ = """
                 hr_applicant a
-                JOIN hr_candidate c ON c.id = a.candidate_id
                 %s
         """ % from_clause
 
         join_ = """
                 calendar_event m
                 ON a.id = m.applicant_id
-                GROUP BY a.id, c.partner_name
+                WHERE a.job_id IS NOT NULL
+                GROUP BY a.id
         """
-
         return '(SELECT %s FROM %s LEFT OUTER JOIN %s)' % (select_, from_, join_)
 
     def init(self):

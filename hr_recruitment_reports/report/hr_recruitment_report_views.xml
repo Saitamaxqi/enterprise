@@ -111,7 +111,6 @@
                         ('create_date', '>=', (context_today() + relativedelta(days=-365)).strftime('%Y-%m-%d')),
                         ('create_date', '&lt;', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
                     <separator/>
-                    <filter string="Exclude Duplicates" name="exclude_duplicates" domain="[('unique_candidate', '=', True)]"/>
                     <separator/>
                     <filter name="filter_create_date" date="create_date" string="Application Date"/>
                     <filter name="filter_date_closed" date="date_closed" string="Hired Date"/>

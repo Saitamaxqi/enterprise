@@ -34,7 +34,7 @@ class AppointmentCrmUITest(AppointmentCommon, common.HttpCase):
             'no_of_recruitment': 5,
         })
         applicant = self.env['hr.applicant'].sudo().create({
-            'candidate_id': self.env['hr.candidate'].sudo().create({'partner_name': 'Test Applicant'}).id,
+            'partner_name': 'Test Applicant',
             'job_id': job_developer.id,
         })
         request = self.url_open(

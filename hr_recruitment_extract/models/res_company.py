@@ -12,6 +12,6 @@ class ResCompany(models.Model):
             ('no_send', 'Do not digitize'),
             ('manual_send', "Digitize on demand only"),
             ('auto_send', 'Digitize automatically')],
-        string="Send mode on candidate attachments",
+        string="Send mode on applicant attachments",
         required=False,
         default='auto_send')
