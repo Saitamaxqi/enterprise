@@ -588,7 +588,7 @@ class AccountReport(models.Model):
             company_fiscalyear_dates = {}
             # This loop is needed because a fiscal year can be a month, quarter, etc
             for _ in range(abs(periods)):
-                date_to = (date_from if periods < 0 else date_to) + relativedelta(days=periods)
+                date_to = (date_from if periods < 0 else date_to) + relativedelta(days=periods / abs(periods))
                 company_fiscalyear_dates = self.env.company.compute_fiscalyear_dates(date_to)
                 if periods < 0:
                     date_from = company_fiscalyear_dates['date_from']
