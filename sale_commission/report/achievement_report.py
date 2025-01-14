@@ -125,7 +125,7 @@ JOIN sale_commission_plan_target era
         return f"""
           aml.display_type = 'product'
           AND am.move_type in ('out_invoice', 'out_refund')
-          AND am.state != 'cancel'
+          AND am.state = 'posted'
           {self._get_company_condition('am')}
         """
 

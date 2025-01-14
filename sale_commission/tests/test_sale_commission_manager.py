@@ -65,6 +65,7 @@ class TestSaleCommissionManager(TestSaleCommissionCommon):
         self.assertEqual(sum(commissions.mapped('commission')), 80)
 
         AM = SO._create_invoices()
+        AM._post()
         self.env.invalidate_all()
 
         achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_manager.id)]).\
@@ -101,6 +102,7 @@ class TestSaleCommissionManager(TestSaleCommissionCommon):
         self.assertEqual(sum(commissions.mapped('commission')), 480, '200 + 280')
 
         AM2 = SO2._create_invoices()
+        AM2._post()
         self.env.invalidate_all()
 
         achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_manager.id)]).\
@@ -182,6 +184,7 @@ class TestSaleCommissionManager(TestSaleCommissionCommon):
         self.assertEqual(sum(commissions.mapped('commission')), 0, 'Achieved Rate(0.4) < 0.5')
 
         AM = SO._create_invoices()
+        AM._post()
         self.env.invalidate_all()
 
         achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_manager.id)]).\
@@ -219,6 +222,7 @@ class TestSaleCommissionManager(TestSaleCommissionCommon):
                                                        'Achieved Rate = 2.4'
                                                        'Amount = 3500 (AR = 2) + 200 (AR-2 * 500)')
         AM2 = SO2._create_invoices()
+        AM2._post()
         self.env.invalidate_all()
 
         achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_manager.id)]).\

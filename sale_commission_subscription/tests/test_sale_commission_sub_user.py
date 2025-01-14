@@ -119,6 +119,7 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
         })
         other_sale.action_confirm()
         inv2 = other_sale._create_invoices()
+        inv2._post()
         self.assertAlmostEqual(inv2.amount_untaxed, 100, 2, msg="The amount of the non recurring invoice is 100")
         achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
         commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
