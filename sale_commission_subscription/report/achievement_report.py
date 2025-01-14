@@ -75,8 +75,7 @@ subscription_rules AS (
         MAX(rules.company_id),
         log.id AS related_res_id
     FROM subscription_rules rules
-    JOIN sale_order_log log
-      ON log.company_id = rules.company_id
+    CROSS JOIN sale_order_log log
     WHERE rules.team_rule
       AND log.event_type != '3_transfer'
       AND (rules.recurring_plan_id IS NULL OR log.plan_id = rules.recurring_plan_id)
@@ -97,8 +96,7 @@ subscription_rules AS (
         MAX(rules.company_id),
         log.id AS related_res_id
     FROM subscription_rules rules
-    JOIN sale_order_log log
-      ON log.company_id = rules.company_id
+    CROSS JOIN sale_order_log log
     WHERE NOT rules.team_rule
       AND (rules.recurring_plan_id IS NULL OR log.plan_id = rules.recurring_plan_id)
       AND log.user_id = rules.user_id

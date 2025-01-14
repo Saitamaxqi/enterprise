@@ -110,8 +110,7 @@ JOIN sale_commission_plan_target era
     @api.model
     def _join_invoices(self):
         return """
-          JOIN account_move am
-            ON am.company_id = rules.company_id
+          CROSS JOIN account_move am
           JOIN account_move_line aml
             ON aml.move_id = am.id
           JOIN product_product pp
@@ -142,8 +141,7 @@ JOIN sale_commission_plan_target era
     @api.model
     def _join_sales(self):
         return """
-        JOIN sale_order so
-          ON so.company_id = rules.company_id
+        CROSS JOIN sale_order so
         JOIN sale_order_line sol
           ON sol.order_id = so.id
         """
