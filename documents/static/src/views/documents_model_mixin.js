@@ -105,9 +105,13 @@ export const DocumentsModelMixin = (component) =>
 
 export const DocumentsRecordMixin = (component) => class extends component {
 
-    async update() {
+    async update(changes, options = {}) {
+        if (this.resId === this.model.documentService.previewedDocument?.record.resId) {
+            // As previewed documents are not selected, force `save=true` to save any changes as the record is updated
+            options.save = true;
+        }
         const originalFolderId = this.data.folder_id[0];
-        const ret = await super.update(...arguments);
+        const ret = await super.update(changes, options);
         if (this.data.folder_id && this.data.folder_id[0] !== originalFolderId) {
             this.model.root._removeRecords(this.model.root.selection.map((rec) => rec.id));
         }

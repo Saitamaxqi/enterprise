@@ -19,7 +19,8 @@ export const DocumentsRendererMixin = (component) =>
                 type: "folder",
                 file_size: (this.props.list.model.fileSize || 0) * 1e6, // from MB to B to be precise on single doc.
             });
-            const record = new this.env.model.constructor.Record(this.env.model, this.env.model.config, data);
+            const config =  {...this.env.model.config, resId: data.id}
+            const record = new this.env.model.constructor.Record(this.env.model, config, data);
             record.isContainer = true;
 
             /**

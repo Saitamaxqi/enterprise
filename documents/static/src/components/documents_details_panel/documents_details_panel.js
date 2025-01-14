@@ -5,16 +5,17 @@ import { formatFloat } from "@web/core/utils/numbers";
 import { CharField } from "@web/views/fields/char/char_field";
 import { Many2OneAvatarField } from "@web/views/fields/many2one_avatar/many2one_avatar_field";
 import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
-import { Many2ManyTagsField } from "@web/views/fields/many2many_tags/many2many_tags_field";
+
+import { DocumentsDetailsMany2ManyTagsField } from "@documents/views/fields/documents_details_many2many_tags"
 
 import { Component, onWillRender, reactive } from "@odoo/owl";
 
 export class DocumentsDetailsPanel extends Component {
     static components = {
         CharField,
+        DocumentsDetailsMany2ManyTagsField,
         Many2OneAvatarField,
         Many2OneField,
-        Many2ManyTagsField,
     };
     static props = {
         record: { type: Object, optional: true },
@@ -24,6 +25,7 @@ export class DocumentsDetailsPanel extends Component {
 
     setup() {
         this.action = useService("action");
+        /** @type {import("@documents/core/document_service").DocumentService} */
         this.documentService = useService("document.document");
         this.orm = useService("orm");
         onWillRender(() => {
