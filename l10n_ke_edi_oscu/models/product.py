@@ -338,6 +338,7 @@ class ProductProduct(models.Model):
         and stock move reporting.
         """
         validation_messages = self._l10n_ke_get_validation_messages(for_invoice=False)
+        validation_messages.update(self.uom_id._l10n_ke_get_validation_messages())
         for message in validation_messages.values():
             if message.get('blocking'):
                 raise UserError(_("Cannot register '%(name)s' on eTIMS:\n%(msg)s", name=self.name, msg=message['message']))
