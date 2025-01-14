@@ -409,12 +409,26 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         )
 
         lines = []
-        ratio = self.computed_vat_amount / sum(tax_carried_forward_line_ids.mapped('balance'))
-        for tax_line in tax_carried_forward_line_ids:
+        if amount_carried_forward := sum(tax_carried_forward_line_ids.mapped('balance')):
+            ratio = self.computed_vat_amount / amount_carried_forward
+            for tax_line in tax_carried_forward_line_ids:
+                lines.append(Command.create({
+                    'account_id': tax_line.account_id.id,
+                    'debit': 0,
+                    'credit': tax_line.balance * ratio,
+                    'name': _("VAT receivable"),
+                }))
+        else:
+            # Case where tax closing is empty for this month while amount is carried forward from previous months
+            # We put the amount arbitrarily on the receivable account of the tax group of 20%
+            receivable_account = (
+                    self.env['account.chart.template'].ref('tax_group_tva_20', raise_if_not_found=False)
+                    or self.env['account.tax.group'].search([*self.env['account.tax.group']._check_company_domain(self.env.company.id)], limit=1)
+            ).tax_receivable_account_id
             lines.append(Command.create({
-                'account_id': tax_line.account_id.id,
+                'account_id': receivable_account.id,
                 'debit': 0,
-                'credit': tax_line.balance * ratio,
+                'credit': self.computed_vat_amount,
                 'name': _("VAT receivable"),
             }))
 
@@ -425,7 +439,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             'line_ids': [
                 *lines,
                 Command.create({
-                    'account_id': self.env.ref(f'account.{self.env.company.id}_pcg_445671').id,
+                    'account_id': self.env['account.chart.template'].ref(f'pcg_445671').id,
                     'debit': self.computed_vat_amount,
                     'credit': 0,
                 }),
