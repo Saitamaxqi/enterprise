@@ -155,7 +155,7 @@
         <TotalCredit>19200.00</TotalCredit>
         <Journal>
             <JournalID>___ignore___</JournalID>
-            <Description>Customer Invoices</Description>
+            <Description>Sales</Description>
             <Type>sale</Type>
             <Transaction>
                 <GLPostingDate>2023-10-01</GLPostingDate>
@@ -234,7 +234,7 @@
             </Transaction>
             </Journal><Journal>
             <JournalID>___ignore___</JournalID>
-            <Description>Vendor Bills</Description>
+            <Description>Purchases</Description>
             <Type>purchase</Type>
             <Transaction>
                 <GLPostingDate>2023-10-30</GLPostingDate>

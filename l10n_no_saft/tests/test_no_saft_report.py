@@ -250,7 +250,7 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                         <TotalCredit>10000.00</TotalCredit>
                         <Journal>
                             <JournalID>___ignore___</JournalID>
-                            <Description>Customer Invoices</Description>
+                            <Description>Sales</Description>
                             <Type>sale</Type>
                             <Transaction>
                                 <TransactionID>___ignore___</TransactionID>

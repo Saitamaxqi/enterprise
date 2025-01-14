@@ -223,7 +223,7 @@
         <Journals>
             <Journal>
                 <JournalID>___ignore___</JournalID>
-                <Description>Customer Invoices</Description>
+                <Description>Sales</Description>
                 <Type>sale</Type>
                 <Transactions>
                     <Transaction>
@@ -386,7 +386,7 @@
             </Journal>
             <Journal>
                 <JournalID>___ignore___</JournalID>
-                <Description>Vendor Bills</Description>
+                <Description>Purchases</Description>
                 <Type>purchase</Type>
                 <Transactions>
                     <Transaction>

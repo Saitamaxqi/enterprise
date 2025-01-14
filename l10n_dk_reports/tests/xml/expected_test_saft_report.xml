@@ -214,7 +214,7 @@
         <TotalCredit>23750.00</TotalCredit>
         <Journal>
             <JournalID>___ignore___</JournalID>
-            <Description>Customer Invoices</Description>
+            <Description>Sales</Description>
             <Type>sale</Type>
             <Transaction>
                 <TransactionID>___ignore___</TransactionID>
@@ -375,7 +375,7 @@
         </Journal>
         <Journal>
             <JournalID>___ignore___</JournalID>
-            <Description>Vendor Bills</Description>
+            <Description>Purchases</Description>
             <Type>purchase</Type>
             <Transaction>
                 <TransactionID>___ignore___</TransactionID>

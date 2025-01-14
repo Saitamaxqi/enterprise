@@ -176,7 +176,7 @@ class TestInterCompanyInvoice(TestInterCompanyRulesCommon):
         # It's required to have an intercompany_journal_id set to be able to do the generation
         for branch in [branch_1, branch_2]:
             branch.intercompany_purchase_journal_id = self.env['account.journal'].create({
-                'name': 'Vendor Bills - Test',
+                'name': 'Purchases - Test',
                 'code': 'TEXJ',
                 'type': 'purchase',
                 'company_id': branch.id,

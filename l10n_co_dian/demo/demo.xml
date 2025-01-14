@@ -41,7 +41,7 @@
 
     <!-- One journal for Invoices / Credit Notes (dedicated sequence for credit notes) -->
     <record id="l10n_co_dian.invoice_journal" model="account.journal">
-        <field name="name">DIAN Customer Invoices</field>
+        <field name="name">DIAN Sales</field>
         <field name="code">SETP</field>
         <field name="type">sale</field>
         <field name="default_account_id" model="res.company"

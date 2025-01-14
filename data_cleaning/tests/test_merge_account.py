@@ -15,7 +15,7 @@ class TestMerge(TransactionCase):
         if 'account.account' not in cls.env:
             cls.skipTest(cls, "`account` module not installed")
 
-        cls.customer_invoice_journal = cls.env['account.journal'].search([('company_id', '=', cls.env.company.id), ('name', '=', 'Customer Invoices')])
+        cls.customer_invoice_journal = cls.env['account.journal'].search([('company_id', '=', cls.env.company.id), ('name', '=', 'Sales')])
         cls.account_sale_a = cls.env['account.account'].create({
             'code': '40001',
             'name': 'Account Sale A',

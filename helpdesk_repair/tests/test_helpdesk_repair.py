@@ -76,7 +76,7 @@ class TestRepair(HelpdeskCommon):
             'account_type': 'income',
         })
         self.sales_journal = self.env['account.journal'].create({
-            'name': 'Customer Invoices - Test',
+            'name': 'Sales - Test',
             'code': 'TINV',
             'type': 'sale',
             'default_account_id': a_sale.id,

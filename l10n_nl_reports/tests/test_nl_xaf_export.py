@@ -297,7 +297,7 @@ class TestNlXafExport(TestNlXafExportCommon):
                         <totalCredit>7137.6</totalCredit>
                         <journal>
                             <jrnID>INV</jrnID>
-                            <desc>Customer Invoices</desc>
+                            <desc>Sales</desc>
                             <jrnTp>S</jrnTp>
                             <transaction>
                                 <nr>___ignore___</nr>
@@ -610,7 +610,7 @@ class TestNlXafExport(TestNlXafExportCommon):
                             </transaction>
                         </journal><journal>
                             <jrnID>BILL</jrnID>
-                            <desc>Vendor Bills</desc>
+                            <desc>Purchases</desc>
                             <jrnTp>P</jrnTp>
                             <transaction>
                                 <nr>___ignore___</nr>

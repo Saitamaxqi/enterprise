@@ -241,7 +241,7 @@ class TestLuSaftReport(TestSaftReport):
                         <TotalCredit>9360.00</TotalCredit>
                         <Journal>
                             <JournalID>___ignore___</JournalID>
-                            <Description>Customer Invoices</Description>
+                            <Description>Sales</Description>
                             <Type>sale</Type>
                             <Transaction>
                                 <TransactionID>___ignore___</TransactionID>

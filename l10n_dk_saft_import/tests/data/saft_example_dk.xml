@@ -235,7 +235,7 @@
         <TotalCredit>276762.50</TotalCredit>
         <Journal>
             <JournalID>JOU16</JournalID>
-            <Description>Customer Invoices</Description>
+            <Description>Sales</Description>
             <Type>sale</Type>
             <Transaction>
                 <TransactionID>INV/2023/00001</TransactionID>
@@ -885,7 +885,7 @@
         </Journal>
         <Journal>
             <JournalID>JOU17</JournalID>
-            <Description>Vendor Bills</Description>
+            <Description>Purchases</Description>
             <Type>purchase</Type>
             <Transaction>
                 <TransactionID>BILL/2023/11/0001</TransactionID>

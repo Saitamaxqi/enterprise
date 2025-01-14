@@ -83,7 +83,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_rain
         ...accountTourSteps.goToAccountMenu("Reset back to accounting module"),
         {
             content: "check that we're back on the dashboard",
-            trigger: 'a:contains("Customer Invoices")',
+            trigger: 'a:contains("Sales")',
         },
     ],
 });
