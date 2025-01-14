@@ -55,9 +55,12 @@ class TestExtractMixin(common.TransactionCase):
 
     @contextmanager
     def _mock_iap_extract(self, extract_response=None, partner_autocomplete_response=None, assert_params=None):
+        test_instance = self
+
         def _trigger(self, *args, **kwargs):
             # A call to _trigger will directly run the cron
-            self.method_direct_trigger()
+            with test_instance.enter_registry_test_mode():
+                self.method_direct_trigger()
 
         def _mock_autocomplete(*args, **kwargs):
             return partner_autocomplete_response or {}

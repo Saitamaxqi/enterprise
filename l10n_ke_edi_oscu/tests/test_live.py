@@ -26,11 +26,13 @@ class TestKeEdi(TestKeEdiCommon):
 
     def _test_update_notices(self):
         self.env['ir.config_parameter'].set_param('l10n_ke_oscu.last_notice_request_date', '20180101000000')
-        self.env.ref('l10n_ke_edi_oscu.ir_cron_fetch_notice').method_direct_trigger()
+        with self.enter_registry_test_mode():
+            self.env.ref('l10n_ke_edi_oscu.ir_cron_fetch_notice').method_direct_trigger()
 
     def _test_update_unspsc_codes(self):
         self.env['ir.config_parameter'].set_param('l10n_ke_oscu.last_unspsc_code_request_date', '20180101000000')
-        self.env.ref('l10n_ke_edi_oscu.ir_cron_fetch_unspsc').method_direct_trigger()
+        with self.enter_registry_test_mode():
+            self.env.ref('l10n_ke_edi_oscu.ir_cron_fetch_unspsc').method_direct_trigger()
 
     def _test_save_customer(self):
         self.partner_a.action_l10n_ke_oscu_register_bhf_customer()

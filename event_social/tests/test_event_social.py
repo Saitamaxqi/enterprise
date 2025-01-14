@@ -125,9 +125,12 @@ class EventSocialCase(EventCase, MockEmail):
         def _patched_action_post(self, *args, **kwargs):
             raise ValidationError('Some error')
 
-        with patch.object(type(self.env["social.post"]), "_action_post", _patched_action_post):
-            with self.mock_datetime_and_now(self.reference_now + relativedelta(days=3)):
-                cron.method_direct_trigger()
+        with (
+            patch.object(self.env.registry["social.post"], "_action_post", _patched_action_post),
+            self.mock_datetime_and_now(self.reference_now + relativedelta(days=3)),
+            self.enter_registry_test_mode(),
+        ):
+            cron.method_direct_trigger()
         self.assertFalse(before_scheduler.mail_done)
 
     @users('user_eventmanager')

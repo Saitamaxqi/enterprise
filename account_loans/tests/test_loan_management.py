@@ -247,7 +247,7 @@ class TestLoanManagement(AccountTestInvoicingCommon):
         # Create a new loan that should be automatically closed when the last generated move is posted
         loan2 = self.create_loan('Odoomobile Loan 🚗', '2024-01-01', 12, 24_000, 2_400, validate=True)
         self.assertEqual(loan2.state, 'running')
-        with freeze_time('2024-12-31'):
+        with freeze_time('2024-12-31'), self.enter_registry_test_mode():
             self.env.ref('account.ir_cron_auto_post_draft_entry').method_direct_trigger()
             self.assertEqual(loan2.state, 'closed')
 

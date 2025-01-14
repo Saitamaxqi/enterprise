@@ -1,4 +1,4 @@
-
+import contextlib
 from datetime import timedelta
 from unittest.mock import patch
 
@@ -113,6 +113,19 @@ class TestEventMailFullCommon(TestEventMailCommon):
 @tagged('event_mail', 'post_install', '-at_install')
 class TestEventMailSchedule(TestEventMailFullCommon, WhatsAppCase):
 
+    def execute_event_cron(self, *, freeze_date=None):
+        cron = self.event_cron_id.sudo()
+        with contextlib.ExitStack() as stack:
+            if freeze_date:
+                stack.enter_context(self.mock_datetime_and_now(freeze_date))
+            stack.enter_context(self.mockSMSGateway())
+            stack.enter_context(self.mock_mail_gateway())
+            stack.enter_context(self.mockWhatsappGateway())
+            stack.enter_context(self.enter_registry_test_mode())
+            capture = stack.enter_context(self.capture_triggers('event.event_mail_scheduler'))
+            cron.method_direct_trigger()
+            return capture
+
     @users('user_eventmanager')
     def test_schedule_event_scalability(self):
         """ Test scalability / iterative work on event-based schedulers """
@@ -140,13 +153,8 @@ class TestEventMailSchedule(TestEventMailFullCommon, WhatsAppCase):
         exec_origin = EventMail._execute_event_based_for_registrations
         with patch.object(
                 EventMail, '_execute_event_based_for_registrations', autospec=True, wraps=EventMail, side_effect=exec_origin,
-             ) as mock_exec, \
-             self.mock_datetime_and_now(current_now), \
-             self.mockSMSGateway(), \
-             self.mock_mail_gateway(), \
-             self.mockWhatsappGateway(), \
-             self.capture_triggers('event.event_mail_scheduler') as capture:
-            self.event_cron_id.method_direct_trigger()
+             ) as mock_exec:
+            capture = self.execute_event_cron(freeze_date=current_now)
 
         self.assertEqual(after_social.mail_count_done, 0)
         self.assertFalse(after_social.mail_done)
@@ -163,24 +171,14 @@ class TestEventMailSchedule(TestEventMailFullCommon, WhatsAppCase):
         self.assertSchedulerCronTriggers(capture, [current_now] * 3)
 
         # relaunch to close scheduler
-        with self.mock_datetime_and_now(current_now), \
-             self.mockSMSGateway(), \
-             self.mock_mail_gateway(), \
-             self.mockWhatsappGateway(), \
-             self.capture_triggers('event.event_mail_scheduler') as capture:
-            self.event_cron_id.method_direct_trigger()
+        capture = self.execute_event_cron(freeze_date=current_now)
         self.assertEqual(before_wa.mail_count_done, 30)
         self.assertTrue(before_wa.mail_done)
         self.assertFalse(capture.records)
 
         # launch after event schedulers -> all communications are sent
         current_now = self.event_date_end + timedelta(hours=1)
-        with self.mock_datetime_and_now(current_now), \
-             self.mockSMSGateway(), \
-             self.mock_mail_gateway(), \
-             self.mockWhatsappGateway(), \
-             self.capture_triggers('event.event_mail_scheduler') as capture:
-            self.event_cron_id.method_direct_trigger()
+        capture = self.execute_event_cron(freeze_date=current_now)
 
         # social does one-shot
         self.assertEqual(after_social.mail_count_done, 1)
@@ -193,12 +191,7 @@ class TestEventMailSchedule(TestEventMailFullCommon, WhatsAppCase):
         self.assertSchedulerCronTriggers(capture, [current_now] * 3)
 
         # relaunch to close scheduler
-        with self.mock_datetime_and_now(current_now), \
-             self.mockSMSGateway(), \
-             self.mock_mail_gateway(), \
-             self.mockWhatsappGateway(), \
-             self.capture_triggers('event.event_mail_scheduler') as capture:
-            self.event_cron_id.method_direct_trigger()
+        capture = self.execute_event_cron(freeze_date=current_now)
         self.assertEqual(after_wa.mail_count_done, 30)
         self.assertTrue(after_wa.mail_done)
         self.assertFalse(capture.records)
@@ -238,14 +231,9 @@ class TestEventMailSchedule(TestEventMailFullCommon, WhatsAppCase):
 
         # iterative work on registrations, force cron to close those
         with patch.object(
-                EventMailRegistration, '_execute_on_registrations', autospec=True, wraps=EventMailRegistration, side_effect=exec_origin,
-             ) as mock_exec, \
-             self.mock_datetime_and_now(self.reference_now + timedelta(hours=1)), \
-             self.mockSMSGateway(), \
-             self.mock_mail_gateway(), \
-             self.mockWhatsappGateway(), \
-             self.capture_triggers('event.event_mail_scheduler') as capture:
-            self.event_cron_id.method_direct_trigger()
+               EventMailRegistration, '_execute_on_registrations', autospec=True, wraps=EventMailRegistration, side_effect=exec_origin,
+            ) as mock_exec:
+            capture = self.execute_event_cron(freeze_date=self.reference_now + timedelta(hours=1))
 
         # finished sending communications
         self.assertEqual(sub_wa.mail_count_done, 30)

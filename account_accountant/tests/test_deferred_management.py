@@ -497,7 +497,7 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
         move._post()
         self.assertFalse(move.deferred_move_ids)
 
-        with freeze_time(tomorrow):
+        with freeze_time(tomorrow), self.enter_registry_test_mode():
             self.env.ref('account.ir_cron_auto_post_draft_entry').method_direct_trigger()
             self.assertEqual(move.state, 'posted')
             self.assertTrue(move.deferred_move_ids)

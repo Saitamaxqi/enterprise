@@ -87,7 +87,8 @@ class TestEtimsPos(TestKeEdiCommon, TestPointOfSaleCommon):
         self.assertEqual(pos_order.l10n_ke_oscu_receipt_number, 169)
 
         # # 4) Send stock move to eTIMS
-        self.env.ref('l10n_ke_edi_oscu_stock.ir_cron_send_stock_moves').method_direct_trigger()
+        with self.enter_registry_test_mode():
+            self.env.ref('l10n_ke_edi_oscu_stock.ir_cron_send_stock_moves').method_direct_trigger()
 
         self.assertEqual(pos_order.picking_ids.l10n_ke_oscu_sar_number, 1)
 

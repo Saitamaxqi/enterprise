@@ -285,14 +285,22 @@ class TestAccountFollowupReports(AccountTestInvoicingCommon):
         self.create_invoice('2022-01-01')
 
         # Check that no followup is automatically done if there is no action needed
-        with freeze_time('2022-01-10'), patch.object(type(self.env['res.partner']), '_send_followup') as patched:
+        with (
+            freeze_time('2022-01-10'),
+            patch.object(self.env.registry['res.partner'], '_send_followup') as patched,
+            self.enter_registry_test_mode(),
+        ):
             self.assertPartnerFollowup(self.partner_a, 'with_overdue_invoices', followup_10)
             cron.method_direct_trigger()
             patched.assert_not_called()
             self.assertPartnerFollowup(self.partner_a, 'with_overdue_invoices', followup_10)
 
         # Check that the action is taken one and only one time when there is an action needed
-        with freeze_time('2022-01-11'), patch.object(type(self.env['res.partner']), '_send_followup') as patched:
+        with (
+            freeze_time('2022-01-11'),
+            patch.object(self.env.registry['res.partner'], '_send_followup') as patched,
+            self.enter_registry_test_mode(),
+        ):
             self.assertPartnerFollowup(self.partner_a, 'in_need_of_action', followup_10)
             cron.method_direct_trigger()
             patched.assert_called_once()

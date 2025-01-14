@@ -33,7 +33,11 @@ class TestWhatsAppFollowup(WhatsAppCommon, TestAccountFollowupReports):
         followup_10.auto_execute = True
 
         self.create_invoice('2022-01-01')
-        with freeze_time('2022-01-11'), self.mockWhatsappGateway():
+        with (
+            freeze_time('2022-01-11'),
+            self.mockWhatsappGateway(),
+            self.enter_registry_test_mode(),
+        ):
             self.assertPartnerFollowup(self.partner_a, 'in_need_of_action', followup_10)
             cron.method_direct_trigger()
             self.assertWAMessageFromRecord(

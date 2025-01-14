@@ -183,10 +183,13 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         def _patched_composer_send(self, *args, **kwargs):
             raise exceptions.ValidationError('Some error')
 
-        with patch.object(type(self.env["whatsapp.composer"]), "_send_whatsapp_template", _patched_composer_send):
-            with self.mock_datetime_and_now(self.reference_now + timedelta(days=3)), \
-                 self.mockWhatsappGateway():
-                cron.method_direct_trigger()
+        with (
+            patch.object(self.env.registry["whatsapp.composer"], "_send_whatsapp_template", _patched_composer_send),
+            self.mock_datetime_and_now(self.reference_now + timedelta(days=3)),
+            self.mockWhatsappGateway(),
+            self.enter_registry_test_mode(),
+        ):
+            cron.method_direct_trigger()
         self.assertFalse(before_scheduler.mail_done)
 
     @users('user_eventmanager')
@@ -195,8 +198,11 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         cron = self.env.ref("event.event_mail_scheduler").sudo()
 
         self.test_event.registration_ids.unlink()
-        with self.mock_datetime_and_now(self.reference_now + timedelta(days=3)), \
-             self.mockWhatsappGateway():
+        with (
+            self.mock_datetime_and_now(self.reference_now + timedelta(days=3)),
+            self.mockWhatsappGateway(),
+            self.enter_registry_test_mode(),
+        ):
             cron.method_direct_trigger()
 
     @mute_logger('odoo.addons.whatsapp_event.models.event_mail')
@@ -222,8 +228,11 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
             ("id", "!=", tpl_draft.id)
         ]).unlink()
 
-        with self.mock_datetime_and_now(self.reference_now + timedelta(days=3)), \
-             self.mockWhatsappGateway():
+        with (
+            self.mock_datetime_and_now(self.reference_now + timedelta(days=3)),
+            self.mockWhatsappGateway(),
+            self.enter_registry_test_mode(),
+        ):
             cron.method_direct_trigger()
         self.assertFalse(before_scheduler.mail_done)
 
@@ -245,7 +254,7 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         def _patched_composer_send(self, *args, **kwargs):
             raise exceptions.ValidationError('Some error')
 
-        with patch.object(type(self.env["whatsapp.composer"]), "_send_whatsapp_template", _patched_composer_send):
+        with patch.object(self.env.registry["whatsapp.composer"], "_send_whatsapp_template", _patched_composer_send):
             with self.mockWhatsappGateway():
                 registration = self.env['event.registration'].create({
                     "email": "test@email.com",

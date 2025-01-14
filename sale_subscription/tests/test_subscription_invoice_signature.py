@@ -30,7 +30,8 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
 
     def test_subscription_automated_invoice_should_have_signing_user_set_to_salesman(self):
         self.assertEqual(self.subscription.invoice_count, 0)
-        self.sale_subscription_cron.method_direct_trigger()
+        with self.enter_registry_test_mode():
+            self.sale_subscription_cron.method_direct_trigger()
         self.assertEqual(self.subscription.invoice_count, 1)
         inv = self.subscription.invoice_ids
         self.assertEqual(
@@ -43,7 +44,8 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
         representative_user = self.company_data['default_user_salesman']
         self.env.company.signing_user = representative_user  # set the representative user of the company
         self.assertEqual(self.subscription.invoice_count, 0)
-        self.sale_subscription_cron.method_direct_trigger()
+        with self.enter_registry_test_mode():
+            self.sale_subscription_cron.method_direct_trigger()
         self.assertEqual(self.subscription.invoice_count, 1)
         inv = self.subscription.invoice_ids
         self.assertEqual(

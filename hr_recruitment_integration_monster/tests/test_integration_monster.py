@@ -149,11 +149,14 @@ class TestMonsterIntegration(TransactionCase):
         self.assertEqual(job_post.apply_vector, 'example@test.com')
         self.assertEqual(job_post.status, 'pending')
 
-        with freeze_time(self.today + timedelta(days=2)):
+        with (
+            freeze_time(self.today + timedelta(days=2)),
             # Patch API call as it complains with the freeze_time
-            with self.patch_post_api_call():
-                self.env.ref('hr_recruitment_integration_base.job_board_campaign_manager_start').method_direct_trigger()
-                self.assertEqual(job_post.status, 'success')
+            self.patch_post_api_call(),
+            self.enter_registry_test_mode(),
+        ):
+            self.env.ref('hr_recruitment_integration_base.job_board_campaign_manager_start').method_direct_trigger()
+            self.assertEqual(job_post.status, 'success')
 
     def test_postpone_already_posted(self):
         job_post = self.create_publish_job_post(self.job1.id, self.today)
@@ -165,11 +168,14 @@ class TestMonsterIntegration(TransactionCase):
         tomorrow = self.today + timedelta(days=1)
         job_post = self.create_publish_job_post(self.job1.id, self.today, tomorrow)
         self.assertEqual(job_post.status, 'success')
-        with freeze_time(self.today + timedelta(days=2)):
+        with (
+            freeze_time(self.today + timedelta(days=2)),
             # Patch API call as it complains with the freeze_time
-            with self.patch_post_api_call():
-                self.env.ref('hr_recruitment_integration_base.job_board_campaign_manager_stop').method_direct_trigger()
-                self.assertEqual(job_post.status, 'deleted')
+            self.patch_post_api_call(),
+            self.enter_registry_test_mode(),
+        ):
+            self.env.ref('hr_recruitment_integration_base.job_board_campaign_manager_stop').method_direct_trigger()
+            self.assertEqual(job_post.status, 'deleted')
 
 
 @tagged('standard', '-external')

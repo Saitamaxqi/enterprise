@@ -387,7 +387,8 @@ class TestKeEdiStock(TestKeEdiCommon):
         out_picking.button_validate()
 
         # Step 3: Run picking cron as superuser
-        self.env.ref('l10n_ke_edi_oscu_stock.ir_cron_send_stock_moves').method_direct_trigger()
+        with self.enter_registry_test_mode():
+            self.env.ref('l10n_ke_edi_oscu_stock.ir_cron_send_stock_moves').method_direct_trigger()
 
         # Step 4: Create receipt in Kakamega
         branch_receipt_type = self.env['stock.picking.type'].search([('company_id', '=', branch.id), ('code', '=', 'incoming')], limit=1)
@@ -412,7 +413,8 @@ class TestKeEdiStock(TestKeEdiCommon):
         in_picking.button_validate()
 
         # Step 5: Run picking cron as superuser
-        self.env.ref('l10n_ke_edi_oscu_stock.ir_cron_send_stock_moves').method_direct_trigger()
+        with self.enter_registry_test_mode():
+            self.env.ref('l10n_ke_edi_oscu_stock.ir_cron_send_stock_moves').method_direct_trigger()
 
     def _test_send_inventory_adjustment(self):
         self.user.write({'groups_id': [Command.link(self.env.ref('stock.group_stock_user').id)]})
