@@ -37,7 +37,7 @@ class DocumentsDocument(models.Model):
         return domain
 
     def _project_folder_in_self_or_ancestors(self, project_folder):
-        project_folder_ancestors = {int(ancestor_id) for ancestor_id in project_folder.parent_path.split('/')[:-1]}
+        project_folder_ancestors = {int(ancestor_id) for ancestor_id in project_folder.sudo().parent_path.split('/')[:-1]}
         return project_folder_ancestors & set(self.ids)
 
     @api.ondelete(at_uninstall=False)
