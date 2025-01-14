@@ -14,7 +14,7 @@ class PosOrder(models.Model):
         if len(orders) > 0:
             orders = self.browse([o['id'] for o in data["pos.order"]])
             for order in orders:
-                if order.state == 'paid':
+                if order.state == 'paid' and not order.config_id.module_pos_restaurant:
                     self.env['pos_preparation_display.order'].process_order(order.id)
 
         return data
