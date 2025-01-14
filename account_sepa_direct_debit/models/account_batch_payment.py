@@ -5,19 +5,22 @@ from datetime import datetime, timedelta
 
 from odoo import models, fields, api, _
 from odoo.exceptions import RedirectWarning, ValidationError, UserError
-from odoo.tools import SQL, format_date
+from odoo.tools import format_date
+
+from odoo.addons.account_sepa_direct_debit.models.sdd_mandate import SDD_MIN_PRENOT_PERIOD, SDD_FIRST_MIN_PRENOT_PERIOD
 
 
 class AccountBatchPayment(models.Model):
     _inherit = 'account.batch.payment'
 
     sdd_required_collection_date = fields.Date(
-        string='Required collection date',
+        string='Required Collection Date',
         compute='_compute_sdd_required_collection_date', store=True,
         help="Date when the company expects to receive the payments of this batch. "
-             "It can't be inferior to the sending day + the longest pre-notification period defined "
-             "in the mandates linked to this batch.",
+             "It can't be inferior to the sending day + the minimum pre-notification period.",
     )
+    sdd_min_required_collection_date = fields.Date(compute='_compute_sdd_min_required_collection_date', export_string_translation=False)
+    sdd_first_time_payment_ids = fields.One2many('account.payment', compute='_compute_sdd_first_time_payment_ids', export_string_translation=False)
     sdd_batch_booking = fields.Boolean(string="SDD Batch Booking", default=True, help="Request batch booking from the bank for the related bank statements.")
     sdd_scheme = fields.Selection(string="SDD Scheme", selection=[('CORE', 'CORE'), ('B2B', 'B2B')],
     help='The B2B scheme is an optional scheme,\noffered exclusively to business payers.\nSome banks/businesses might not accept B2B SDD.',
@@ -28,7 +31,7 @@ class AccountBatchPayment(models.Model):
         """
         The regulation requires that the payer's bank must receive the request for a first direct debit collection
         the latest 5 business days prior to the due date. For subsequent direct debit collections,
-        the payer's bank must receive such a request the latest 2 business days prior to the due date
+        the payer's bank must receive such a request the latest 2 business days prior to the due date.
         """
         sepa_codes = set(self.env['account.payment.method']._get_sdd_payment_method_code())
         for batch in self.filtered(lambda batch: batch.payment_method_code in sepa_codes):
@@ -36,23 +39,51 @@ class AccountBatchPayment(models.Model):
                 batch.sdd_required_collection_date = batch.sdd_required_collection_date
                 continue
 
-            minimum_offset = 5
-            mandates = self.payment_ids.sdd_mandate_id
+            minimum_offset = SDD_FIRST_MIN_PRENOT_PERIOD
+            mandates = batch.payment_ids.sdd_mandate_id
+            all_used_mandates = batch._get_all_used_mandates()
+            if all(all_used_mandates.get(mandate, 0) > 0 for mandate in mandates):
+                # The minimum delay is 5 days in all cases, except when all the mandates involved were already used once
+                # before, then it can be 2 days.
+                minimum_offset = SDD_MIN_PRENOT_PERIOD
 
-            all_mandates_used = dict(self.env['account.payment']._read_group([
-                ('sdd_mandate_id', 'in', mandates.ids),
-                ('is_matched', '=', True),
-                ],
-                groupby=['sdd_mandate_id'],
-                aggregates=['__count'],
-            ))
-            if all(all_mandates_used.get(mandate, 0) > 0 for mandate in mandates):
-                # The minimum delay is 5 days in all cases, except when all the mandates involved were already used once before,
-                # then it can be 2 days
-                minimum_offset = 2
+            batch.sdd_required_collection_date = fields.Date.context_today(batch) + timedelta(
+                max(minimum_offset, *mandates.mapped('pre_notification_period'))
+            )
 
-            offset = max((minimum_offset, *mandates.mapped('pre_notification_period')))
-            batch.sdd_required_collection_date = fields.Date.context_today(batch) + timedelta(days=offset)
+    @api.depends('payment_ids')
+    def _compute_sdd_min_required_collection_date(self):
+        """Compute the minimum required collection date according to SEPA if there are unused mandates."""
+        sepa_codes = set(self.env['account.payment.method']._get_sdd_payment_method_code())
+        for batch in self:
+            if batch.payment_method_code not in sepa_codes:
+                batch.sdd_min_required_collection_date = False
+                continue
+
+            mandates = batch.payment_ids.sdd_mandate_id
+            all_used_mandates = batch._get_all_used_mandates()
+            if all(all_used_mandates.get(mandate, 0) > 0 for mandate in mandates):
+                # The minimum delay is 5 days in all cases, except when all the mandates involved were already used once
+                # before, then it can be 2 days.
+                batch.sdd_min_required_collection_date = False
+            else:
+                batch.sdd_min_required_collection_date = fields.Date.context_today(batch) + timedelta(
+                    SDD_FIRST_MIN_PRENOT_PERIOD
+                )
+
+    @api.depends('payment_ids')
+    def _compute_sdd_first_time_payment_ids(self):
+        """Compute the payments in the batch having mandates that were never used before."""
+        sepa_codes = set(self.env['account.payment.method']._get_sdd_payment_method_code())
+        for batch in self:
+            if batch.payment_method_code not in sepa_codes:
+                batch.sdd_first_time_payment_ids = False
+                continue
+
+            all_used_mandates = batch._get_all_used_mandates()
+            batch.sdd_first_time_payment_ids = batch.payment_ids.filtered(
+                lambda p: all_used_mandates.get(p.sdd_mandate_id, 0) == 0
+            )
 
     @api.depends('payment_method_id')
     def _compute_sdd_scheme(self):
@@ -65,6 +96,22 @@ class AccountBatchPayment(models.Model):
                     batch.sdd_scheme = batch.sdd_scheme
                 else:
                     batch.sdd_scheme = batch.payment_ids and batch.payment_ids[0].sdd_mandate_scheme or 'CORE'
+
+    def _get_all_used_mandates(self):
+        """Retrieve a dict, mapping all used mandates in this batch payment to the number of uses.
+
+        :return: Used mandates mapped to the number of uses.
+        :rtype: dict[:class:`odoo.addons.account_sepa_direct_debit.models.SDDMandate`, int]
+        """
+        self.ensure_one()
+        mandates = self.payment_ids.sdd_mandate_id
+        return dict(self.env['account.payment']._read_group([
+            ('sdd_mandate_id', 'in', mandates.ids),
+            ('is_matched', '=', True),
+            ],
+            groupby=['sdd_mandate_id'],
+            aggregates=['__count'],
+        ))
 
     def _get_methods_generating_files(self):
         rslt = super()._get_methods_generating_files()
@@ -79,40 +126,15 @@ class AccountBatchPayment(models.Model):
         if not sepa_batch_payment:
             return
 
-        related_mandates = sepa_batch_payment.payment_ids.sdd_mandate_id
-        self.env['account.payment'].flush_model(['is_matched', 'batch_payment_id'])
-        self.env['sdd.mandate'].flush_model()
-
-        if related_mandates:
-            # Need to use SQL due to ORM limitations
-            # We are trying to fetch all account_batch_payment that contain at least one payment using a mandate that was never used before
-            self.env.cr.execute(SQL("""
-                      WITH mandate_used AS (
-                          SELECT DISTINCT mandate.id
-                            FROM sdd_mandate mandate
-                            JOIN account_payment payment ON payment.sdd_mandate_id = mandate.id
-                           WHERE payment.is_matched IS TRUE AND mandate.id IN %(mandate_ids)s
-                         )
-                    SELECT DISTINCT payment.batch_payment_id
-                      FROM account_payment payment
-                      JOIN sdd_mandate mandate ON payment.sdd_mandate_id = mandate.id
-                 LEFT JOIN mandate_used ON mandate.id = mandate_used.id
-                     WHERE mandate_used.id IS NULL
-                """,
-                mandate_ids=tuple(related_mandates.ids),
-            ))
-            batch_with_new_mandate_ids = {row[0] for row in self.env.cr.fetchall()}
-        else:
-            batch_with_new_mandate_ids = set()
-
         for batch in sepa_batch_payment:
-            minimum_offset = 5 if batch.id in batch_with_new_mandate_ids else 2
-            minimum_date = fields.Date.context_today(batch) + timedelta(days=minimum_offset)
+            minimum_date = fields.Date.context_today(batch) + timedelta(days=SDD_MIN_PRENOT_PERIOD)
             if batch.payment_method_code in sepa_codes and batch.sdd_required_collection_date < minimum_date:
                 raise ValidationError(_(
-                    "The bank needs to be informed at least 5 days in advance for collections related to a new mandate "
-                    "and 2 days in advance when the mandate is already known by them. "
-                    "In this case, the minimum collection date must be the %(date)s",
+                    "The bank needs to be informed at least %(min_days_new)s days in advance for collections related "
+                    "to a new mandate and %(min_days)s days in advance when the mandate is already known by them.\n"
+                    "The minimum collection date must be %(date)s.",
+                    min_days_new=SDD_FIRST_MIN_PRENOT_PERIOD,
+                    min_days=SDD_MIN_PRENOT_PERIOD,
                     date=format_date(self.env, minimum_date),
                 ))
 
@@ -170,13 +192,13 @@ class AccountBatchPayment(models.Model):
 
             # Check that the pre-notification delay is good
             collection_date = self.sdd_required_collection_date
-            pre_notification_period = max(self.payment_ids.sdd_mandate_id.mapped('pre_notification_period'))  # Empty batch already checked
-            min_collection_date = today + timedelta(days=pre_notification_period)
+            min_collection_date = today + timedelta(days=SDD_MIN_PRENOT_PERIOD)
             if collection_date < min_collection_date:
                 raise UserError(_(
-                    "You cannot generate a SEPA Direct Debit file with a required collection date inferior to the sending day"
-                    " + the longest pre-notification period defined in the mandates linked to this batch.\n"
-                    "According to these payments mandates, the minimum required date should be the %(minimum_date)s",
+                    "You cannot generate a SEPA Direct Debit file with a required collection date inferior to the "
+                    "sending day + the minimum pre-notification period of %(prenot_days)s days.\n"
+                    "The minimum required date should be %(minimum_date)s.",
+                    prenot_days=SDD_MIN_PRENOT_PERIOD,
                     minimum_date=format_date(self.env, min_collection_date),
                 ))
 

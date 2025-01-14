@@ -6,6 +6,9 @@ from odoo import Command, api, fields, models, _
 from odoo.exceptions import RedirectWarning, UserError
 from odoo.tools import date_utils
 
+SDD_MIN_PRENOT_PERIOD = 2
+SDD_FIRST_MIN_PRENOT_PERIOD = 5
+
 
 class SddMandate(models.Model):
     """ A class containing the data of a mandate sent by a customer to give its
@@ -82,7 +85,7 @@ class SddMandate(models.Model):
     )
     pre_notification_period = fields.Integer(
         string="Pre-notification",
-        default=2, required=True,
+        default=SDD_MIN_PRENOT_PERIOD, required=True,
         help="The minimum notice period in days, used to inform the customer prior to collection.",
     )
     sdd_scheme = fields.Selection(string="SDD Scheme", selection=[('CORE', 'CORE'), ('B2B', 'B2B')],
@@ -324,10 +327,11 @@ class SddMandate(models.Model):
     @api.constrains('pre_notification_period')
     def _validate_pre_notification_period(self):
         for mandate in self:
-            if mandate.pre_notification_period < 2:  # Minimum required for collection
+            if mandate.pre_notification_period < SDD_MIN_PRENOT_PERIOD:  # Minimum required for collection
                 raise UserError(_(
-                    "SEPA regulations set the minimum pre-notification period to a minimum of 2 days "
-                    "to allow enough time for the customer to check that their account is adequately funded."
+                    "SEPA regulations set the minimum pre-notification period to a minimum of %s days "
+                    "to allow enough time for the customer to check that their account is adequately funded.",
+                    SDD_MIN_PRENOT_PERIOD
                 ))
 
     def _ensure_required_data(self):

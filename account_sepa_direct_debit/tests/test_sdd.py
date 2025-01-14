@@ -135,7 +135,7 @@ class SDDTest(SDDTestCommon):
             Tests that the batch payment collection date doesn't fall inside the minimum period required for the customer and the bank to act
             The basic idea is that these rule should all apply:
             - the minimum period for the bank to react is,
-                - 5 days in the case of a new mandate (we check if a bank statement is matched to the payment as proof that they received it
+                - 5 days in the case of a new mandate (here we only show a warning, for users coming from other software)
                 - 2 days in all other cases
             - the minimum period for the user to react (pre-notification period) is 14 days by SEPA default, overridden to 2 days in Odoo.
               in these tests it's changed back to 14 days to test all periods separately
@@ -172,25 +172,34 @@ class SDDTest(SDDTestCommon):
             'payment_ids': [Command.set(payment.ids)],
             'journal_id': payment.journal_id.id,
         }
-        with self.assertRaises(ValidationError, msg="Collection date should not be in the 5 day period required for the bank to process"):
+        with self.assertRaises(ValidationError, msg="Collection date should not be in the 2 day period required for the bank to process"):
             self.env['account.batch.payment'].create({
                 **unchanged_data,
-                'sdd_required_collection_date': fields.Date.context_today(mandate) + datetime.timedelta(days=4)
+                'sdd_required_collection_date': fields.Date.context_today(mandate) + datetime.timedelta(days=1)
             })
 
         # Test minimal pre-notification period collection date
         batch_payment = self.env['account.batch.payment'].create({
             **unchanged_data,
-            'sdd_required_collection_date': fields.Date.context_today(mandate) + datetime.timedelta(days=5)
+            'sdd_required_collection_date': fields.Date.context_today(mandate) + datetime.timedelta(days=2)
         })
-        with self.assertRaises(UserError, msg="Collection date should not be in the pre-notification period required to allow the user to process the payment"):
-            batch_payment.validate_batch()
-        batch_payment.sdd_required_collection_date = fields.Date.context_today(mandate) + datetime.timedelta(days=14)
+
+        # Check the values used to display the warning.
+        self.assertEqual(
+            batch_payment.sdd_first_time_payment_ids,
+            payment,
+            "The first-time payments should be set correctly.",
+        )
+        self.assertEqual(
+            batch_payment.sdd_min_required_collection_date,
+            fields.Date.context_today(mandate) + datetime.timedelta(days=5),
+            "The minimum required collection date should be set at 5 days after today.",
+        )
+
         batch_payment.validate_batch()
 
-        # Test that after a mandate has been used once, the minimal period for the bank is 2 days,
-        # if the pre-notification is also 2 days it's now possible to have batches collected 2 days in the future
-        mandate.pre_notification_period = 2
+        # Test that after a mandate has been used once, the minimal period for the bank is 2 days.
+        # It's now possible to have batches collected 2 days in the future.
 
         # Reconcile the previous payment with a bank statement line
         bank_statement_line = self.env['account.bank.statement.line'].create({
@@ -218,11 +227,19 @@ class SDDTest(SDDTestCommon):
                 'sdd_required_collection_date': fields.Date.context_today(mandate) + datetime.timedelta(days=1)
             })
 
-        # Now, 2 days is ok
+        # 2 days is ok
         new_batch_payment = self.env['account.batch.payment'].create({
             **unchanged_data,
             'sdd_required_collection_date': fields.Date.context_today(mandate) + datetime.timedelta(days=2)
         })
+
+        # Check the values used to display the warning.
+        self.assertFalse(batch_payment.sdd_first_time_payment_ids, "The first-time payments should be empty.")
+        self.assertFalse(
+            batch_payment.sdd_min_required_collection_date,
+            "The minimum required collection date should not be set.",
+        )
+
         new_batch_payment.validate_batch()
 
     def test_batch_register_payment_all_valids(self):
