@@ -41,8 +41,13 @@ creates next activities for the related approvers.
     'installable': True,
     'assets': {
         'web.assets_backend': [
-            'approvals/static/src/**',
+            'approvals/static/src/common/**',
+            'approvals/static/src/web/**',
+            'approvals/static/src/views/**',
         ],
+        'mail.assets_public': [
+            'approvals/static/src/common/**',
+         ],
         'web.assets_tests': [
             'approvals/static/tests/tours/**/*',
         ],

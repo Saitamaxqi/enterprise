@@ -27,6 +27,9 @@
             "voip/static/src/**/*",
             ("remove", "voip/static/src/**/*.dark.scss"),
         ],
+        'mail.assets_public': [
+            'mail/static/src/core/common/**/*',
+        ],
         "web.assets_web_dark": [
             "voip/static/src/**/*.dark.scss",
         ],

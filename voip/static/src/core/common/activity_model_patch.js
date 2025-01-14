@@ -1,5 +1,5 @@
 import { Record } from "@mail/core/common/record";
-import { Activity } from "@mail/core/web/activity_model";
+import { Activity } from "@mail/core/common/activity_model";
 
 import { patch } from "@web/core/utils/patch";
 
