@@ -2074,7 +2074,7 @@ class DocumentsDocument(models.Model):
                 for company_field_name, field in self.env['res.company']._fields.items()
                 if field.comodel_name == "documents.document"
             ]
-            if self.env['res.company'].search_count(expression.OR([
+            if self.env['res.company'].sudo().search_count(expression.OR([
                 [(field_name, 'in', folder_ids)] for field_name in company_field_names
             ]), limit=1):
                 raise ValidationError(_("Impossible to delete folders used by other applications."))

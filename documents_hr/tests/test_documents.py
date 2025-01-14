@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import http
+from odoo.exceptions import UserError
 from odoo.tests.common import HttpCase, RecordCapturer, tagged
 
 from .test_documents_hr_common import TransactionCaseDocumentsHr
@@ -112,3 +113,30 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
             1,
             "Employee related document is visible")
         self.assertEqual(filtered_documents, employee_related_doc, "Only employee-related document is visible")
+
+    def test_raise_if_used_folder(self):
+        """It shouldn't be possible to archive/delete a folder used by a company (see _unlink_except_company_folders)"""
+        company_b = self.env['res.company'].create({'name': 'Company B'})
+        root = self.env['documents.document'].create({'name': 'root', 'type': 'folder', 'access_internal': 'edit'})
+        folder_parent = self.env['documents.document'].create(
+            {'name': 'parent', 'type': 'folder', 'folder_id': root.id})
+        folder_hr_company2 = self.env['documents.document'].create({
+            'name': 'hr company 2', 'type': 'folder', 'folder_id': folder_parent.id})
+        company_b.documents_hr_folder = folder_hr_company2
+
+        self.assertEqual(folder_parent.with_user(self.doc_user).user_permission, 'edit')
+        self.assertEqual(folder_hr_company2.with_user(self.doc_user).user_permission, 'edit')
+        with self.assertRaises(UserError,
+                               msg="It should not be possible to archive a 'HR' folder"):
+            folder_hr_company2.with_user(self.doc_user).action_archive()
+        with self.assertRaises(UserError,
+                               msg="It should not be possible to archive an ancestor of the 'HR' folder"):
+            folder_parent.with_user(self.doc_user).action_archive()
+        with self.assertRaises(UserError,
+                               msg="It should not be possible to unlink a 'HR' folder"):
+            folder_hr_company2.with_user(self.doc_user).unlink()
+        with self.assertRaises(UserError,
+                               msg="It should not be possible to delete an ancestor of the 'HR' folder"):
+            folder_parent.with_user(self.doc_user).unlink()
+        self.assertTrue(folder_parent.exists())
+        self.assertTrue(folder_hr_company2.exists())
