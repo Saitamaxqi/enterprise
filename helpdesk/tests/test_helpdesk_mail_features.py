@@ -45,7 +45,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
         # simple template used in auto acknowledgement
         cls.test_template = cls.env['mail.template'].create({
             'auto_delete': True,
-            'body_html': '<p>Hello <t t-out="object.partner_id.name"/>}}</p>',
+            'body_html': '<p>Hello <t t-out="object.partner_id.name"/></p>',
             'email_from': '{{ (object.team_id.alias_email_from or object.company_id.email_formatted or object.user_id.email_formatted or user.email_formatted) }}',
             'lang': '{{ object.partner_id.lang or object.user_id.lang or user.lang }}',
             'model_id': cls.env['ir.model']._get_id('helpdesk.ticket'),
@@ -132,14 +132,16 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
         internal_followers = self.helpdesk_user.partner_id
         new_partner_email = '"New Author" <new.author@test.agrolait.com>'
 
+        incoming_cc = f'"New Cc" <new.cc@test.agrolait.com>, {self.partner_2.email_formatted}'
+        incoming_to = f'{self.ticket_alias.alias_full_name}, {self.partner_1.email_formatted}, "New Customer" <new.customer@test.agrolait.com>'
         for test_user in (self.user_employee, self.helpdesk_portal, False):
             with self.subTest(user_name=test_user.name if test_user else new_partner_email):
                 email_from = test_user.email_formatted if test_user else new_partner_email
                 with self.mock_mail_gateway():
                     ticket = self.format_and_process(
                         MAIL_TEMPLATE, email_from,
-                        f'{self.ticket_alias.alias_full_name}, {self.partner_1.email_formatted}, "New Customer" <new.customer@test.agrolait.com>',
-                        cc=f'"New Cc" <new.cc@test.agrolait.com>, {self.partner_2.email_formatted}',
+                        incoming_to,
+                        cc=incoming_cc,
                         subject=f'Test from {email_from}',
                         target_model='helpdesk.ticket',
                     )
@@ -149,7 +151,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                     author = test_user.partner_id
                 else:
                     author = self.env['res.partner'].search([('email_normalized', '=', 'new.author@test.agrolait.com')])
-                    self.assertTrue(author, 'Project automatically creates a partner for incoming email')
+                    self.assertTrue(author, 'Helpdesk automatically creates a partner for incoming email')
                     self.assertEqual(author.email, 'new.author@test.agrolait.com', 'Should parse name/email correctly')
                     self.assertEqual(author.name, 'New Author', 'Should parse name/email correctly')
 
@@ -165,17 +167,21 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                 self.assertEqual(new_partner_to.email, 'new.customer@test.agrolait.com')
                 self.assertEqual(new_partner_to.name, 'new.customer@test.agrolait.com', 'TDE FIXME: name incorrectly parsed')
 
+                expected_chatter_reply_to = formataddr(
+                    (f'{self.env.company.name} {self.test_team.name}', self.ticket_alias.alias_full_name)
+                )
+
                 self.assertIn('Please call me as soon as possible', ticket.description)
                 self.assertEqual(ticket.email_cc, f'"New Cc" <new.cc@test.agrolait.com>, {self.partner_2.email_formatted}')
-                self.assertEqual(
-                    ticket.message_partner_ids,
-                    internal_followers + author + self.partner_1 + self.partner_2 + new_partner_cc + new_partner_to,
-                    'Helpdesk subscribes about everyone in the world to tickets')
                 self.assertEqual(ticket.name, f'Test from {author.email_formatted}')
                 self.assertEqual(ticket.partner_id, author)
                 self.assertEqual(ticket.stage_id, self.stage_new)
                 self.assertEqual(ticket.team_id, self.test_team)
-
+                # followers
+                self.assertEqual(
+                    ticket.message_partner_ids,
+                    internal_followers + author + self.partner_1 + self.partner_2 + new_partner_cc + new_partner_to,
+                    'Helpdesk subscribes about everyone in the world to tickets')
                 # check that when a portal user creates a ticket there is two message on the ticket:
                 # - the creation message email
                 # - the mail from the stage mail template
@@ -195,6 +201,9 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                                 # ticket creates a partner that if then found by mailgateway
                                 'author_id': author,
                                 'email_from': formataddr((author.name, author.email_normalized)),
+                                # coming from incoming email
+                                'incoming_email_cc': incoming_cc,
+                                'incoming_email_to': incoming_to,
                                 'mail_server_id': self.env['ir.mail_server'],
                                 # followers of 'new task' subtype (but not original To as they
                                 # already received the email)
@@ -202,10 +211,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                                 # deduced from 'To' and 'Cc' (recognized partners)
                                 'partner_ids': self.partner_1 + self.partner_2,
                                 'parent_id': self.env['mail.message'],
-                                'reply_to': formataddr((
-                                    f'{self.env.company.name} {self.test_team.name}',
-                                    self.ticket_alias.alias_full_name
-                                )),
+                                'reply_to': expected_chatter_reply_to,
                                 'subject': f'Test from {author.email_formatted}',
                                 'subtype_id': self.env.ref('helpdesk.mt_ticket_new'),
                             },
@@ -233,17 +239,17 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                             'message_values': {
                                 'author_id': acknowledgement_author,
                                 'email_from': self.test_team.alias_email_from,
+                                'incoming_email_cc': False,
+                                'incoming_email_to': False,
                                 'mail_server_id': self.env['ir.mail_server'],
                                 # default recipients: partner_id, no note followers
                                 'notified_partner_ids': author,
                                 # default recipients: partner_id
                                 'partner_ids': author,
                                 'parent_id': incoming_email,
-                                'reply_to': formataddr((
-                                    f'{self.env.company.name} {self.test_team.name}',
-                                    self.ticket_alias.alias_full_name
-                                )),
+                                'reply_to': expected_chatter_reply_to,
                                 'subject': f'Test Acknowledge {ticket.name}',
+                                # subtype from '_track_template'
                                 'subtype_id': self.env.ref('mail.mt_note'),
                             },
                             'notif': [
@@ -273,13 +279,9 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                         subject=f'Re: {ticket.name}',
                         subtype_id=self.env.ref('mail.mt_comment').id,
                     )
-                self.assertEqual(
-                    ticket.message_partner_ids,
-                    internal_followers + author + self.partner_1 + self.partner_2 + new_partner_cc + new_partner_to)
+                external_partners = self.partner_1 + self.partner_2 + new_partner_cc + new_partner_to
+                self.assertEqual(ticket.message_partner_ids, internal_followers + author + external_partners)
 
-                expected_chatter_reply_to = formataddr(
-                    (f'{self.env.company.name} {self.test_team.name}', self.ticket_alias.alias_full_name)
-                )
                 self.assertMailNotifications(
                     responsible_answer,
                     [
@@ -292,12 +294,16 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                             'message_values': {
                                 'author_id': self.helpdesk_user.partner_id,
                                 'email_from': self.helpdesk_user.partner_id.email_formatted,
+                                'incoming_email_cc': False,
+                                'incoming_email_to': False,
                                 'mail_server_id': self.env['ir.mail_server'],
                                 # helpdesk_user not notified of its own message, even if follower
-                                'notified_partner_ids': author + self.partner_1 + self.partner_2 + new_partner_cc + new_partner_to,
+                                'notified_partner_ids': author + external_partners,
                                 'parent_id': incoming_email,
+                                # coming from post
                                 'partner_ids': self.env['res.partner'],
                                 'reply_to': expected_chatter_reply_to,
+                                'subject': f'Re: {ticket.name}',
                                 'subtype_id': self.env.ref('mail.mt_comment'),
                             },
                             'notif': [
@@ -324,11 +330,11 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                             msg_to_lst=[partner.email_formatted],
                         )
 
-                # customer replies using "Reply All" + adds new people
+                # customer replies using "Reply" + adds new people
                 # ------------------------------------------------------------
                 self.gateway_mail_reply_from_smtp_email(
-                    MAIL_TEMPLATE, [author.email_normalized], reply_all=True,
-                    cc=f'"Another Cc" <another.cc@test.agrolait.com>, {self.partner_3.email}',  # used mainly for existing partners currently
+                    MAIL_TEMPLATE, [author.email_normalized], reply_all=False,
+                    cc=f'"Another Cc" <another.cc@test.agrolait.com>, {self.partner_3.email}',
                     target_model='project.task',
                 )
                 self.assertEqual(
@@ -338,7 +344,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                 self.assertEqual(len(ticket.message_ids), 4, 'Incoming email + acknowledgement + chatter reply + customer reply')
                 self.assertEqual(
                     ticket.message_partner_ids,
-                    internal_followers + author + self.partner_1 + self.partner_2 + self.partner_3 + new_partner_cc + new_partner_to)
+                    internal_followers + author + external_partners + self.partner_3)
 
                 self.assertMailNotifications(
                     ticket.message_ids[0],
@@ -349,6 +355,10 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                             'message_values': {
                                 'author_id': author,
                                 'email_from': author.email_formatted,
+                                # coming from incoming email
+                                'incoming_email_cc': f'"Another Cc" <another.cc@test.agrolait.com>, {self.partner_3.email}',
+                                # expected reply to reply-to
+                                'incoming_email_to': expected_chatter_reply_to,
                                 'mail_server_id': self.env['ir.mail_server'],
                                 # notified: followers, behaves like classic post
                                 'notified_partner_ids': internal_followers + self.partner_1 + self.partner_2 + self.partner_3 + new_partner_cc + new_partner_to,

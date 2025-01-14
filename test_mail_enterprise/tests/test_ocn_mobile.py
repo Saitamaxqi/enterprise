@@ -14,7 +14,7 @@ from markupsafe import Markup
 from unittest.mock import patch
 
 
-@tagged('mail_enterprise_mobile')
+@tagged('mail_push')
 class TestMailMobile(SMSCommon):
 
     @classmethod
@@ -42,7 +42,7 @@ class TestMailMobile(SMSCommon):
         self.assertFalse(url.startswith('https://redirect-url.email/'))
 
 
-@tagged('post_install', '-at_install')
+@tagged('post_install', '-at_install', 'mail_push')
 class TestPushNotification(SMSCommon):
 
     @classmethod
@@ -72,6 +72,12 @@ class TestPushNotification(SMSCommon):
             cls.user_email.partner_id.id,
             cls.user_inbox.partner_id.id,
         ])
+        cls.alias_gateway = cls.env['mail.alias'].create({
+            'alias_contact': 'everyone',
+            'alias_domain': cls.mail_alias_domain.id,
+            'alias_model_id': cls.env['ir.model']._get_id('mail.test.gateway.company'),
+            'alias_name': 'alias.gateway',
+        })
 
         cls.direct_message_channel = channel.with_user(cls.user_email).create({
             'channel_partner_ids': [
@@ -214,28 +220,24 @@ class TestPushNotification(SMSCommon):
 
     @patch('odoo.addons.mail_mobile.models.mail_thread.iap_tools.iap_jsonrpc')
     def test_push_notifications_mail_replay(self, jsonrpc):
-        test_record = self.env['mail.test.gateway'].with_context(self._test_context).create({
-            'name': 'Test',
-            'email_from': 'ignasse@example.com',
-        })
+        with self.mock_mail_gateway():
+            test_record = self.format_and_process(
+                MAIL_TEMPLATE, self.user_email.email_formatted,
+                f'{self.alias_gateway.display_name}, {self.user_inbox.email_formatted}',
+                subject='Test Record Creation',
+                target_model='mail.test.gateway.company',
+            )
+        self.assertEqual(len(test_record.message_ids), 1)
+        self.assertEqual(test_record.message_partner_ids, self.user_email.partner_id)
         test_record.message_subscribe(partner_ids=[self.user_inbox.partner_id.id])
 
-        fake_email = self.env['mail.message'].create({
-            'model': 'mail.test.gateway',
-            'res_id': test_record.id,
-            'subject': 'Public Discussion',
-            'message_type': 'email',
-            'subtype_id': self.env.ref('mail.mt_comment').id,
-            'author_id': self.user_email.partner_id.id,
-            'message_id': '<123456-openerp-%s-mail.test.gateway@%s>' % (test_record.id, socket.gethostname()),
-        })
-
-        self.format_and_process(
-            MAIL_TEMPLATE, self.user_email.email_formatted,
-            self.user_inbox.email_formatted,
-            subject='Test Subject Reply By mail',
-            extra='In-Reply-To:\r\n\t%s\n' % fake_email.message_id,
-        )
+        with self.mock_mail_gateway():
+            self.format_and_process(
+                MAIL_TEMPLATE, self.user_email.email_formatted,
+                f'{self.alias_gateway.display_name}, {self.user_inbox.email_formatted}',
+                subject='Repy By Email',
+                extra='In-Reply-To:\r\n\t%s\n' % test_record.message_ids.message_id,
+            )
         jsonrpc.assert_called_once()
         self.assertEqual(jsonrpc.call_args[1]['params']['data']['author_name'], self.user_email.name)
         self.assertIn(
