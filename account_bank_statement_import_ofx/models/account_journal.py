@@ -109,6 +109,18 @@ class AccountJournal(models.Model):
         except ElementTree.ParseError:
             return False
 
+    def _fill_transaction_vals_line_ofx(self, transaction, length_transactions, partner_bank):
+        return {
+            'date': transaction.date,
+            'payment_ref': transaction.payee + (transaction.memo and ': ' + transaction.memo or ''),
+            'ref': transaction.id,
+            'amount': float(transaction.amount),
+            'unique_import_id': transaction.id,
+            'account_number': partner_bank.acc_number,
+            'partner_id': partner_bank.partner_id.id,
+            'sequence': length_transactions + 1,
+        }
+
     def _parse_bank_statement_file(self, attachment):
         if not self._check_ofx(attachment):
             return super()._parse_bank_statement_file(attachment)
@@ -135,16 +147,7 @@ class AccountJournal(models.Model):
                 # Since ofxparse doesn't provide account numbers, we'll have to find res.partner and res.partner.bank here
                 # (normal behaviour is to provide 'account_number', which the generic module uses to find partner/bank)
                 partner_bank = self.env['res.partner.bank'].search([('partner_id.name', '=', transaction.payee)], limit=1)
-                vals_line = {
-                    'date': transaction.date,
-                    'payment_ref': transaction.payee + (transaction.memo and ': ' + transaction.memo or ''),
-                    'ref': transaction.id,
-                    'amount': float(transaction.amount),
-                    'unique_import_id': transaction.id,
-                    'account_number': partner_bank.acc_number,
-                    'partner_id': partner_bank.partner_id.id,
-                    'sequence': len(transactions) + 1,
-                }
+                vals_line = self._fill_transaction_vals_line_ofx(transaction, len(transactions), partner_bank)
                 total_amt += float(transaction.amount)
                 transactions.append(vals_line)
 
