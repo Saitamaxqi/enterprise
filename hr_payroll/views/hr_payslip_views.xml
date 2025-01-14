@@ -63,8 +63,8 @@
                 <button string="Confirm" name="action_payslip_done" type="object" invisible="state != 'verify'" class="oe_highlight" context="{'payslip_generate_pdf': True}"/>
                 <button string="Mark as paid" name="action_payslip_paid" type="object" class="oe_highlight" invisible="state != 'done'"/>
                 <button string="Create Payment Report" name="action_payslip_payment_report" type="object" invisible="state != 'done'"/>
-                <button string="Refund" name="refund_sheet" type='object' invisible="has_refund_slip or credit_note or state not in ('done', 'paid')"/>
-                <button string="Refund" name="refund_sheet" type='object' invisible="not has_refund_slip or credit_note or state not in ('done', 'paid')"
+                <button string="Refund" name="refund_sheet" type='object' invisible="has_refund_slip or credit_note or state != 'paid'"/>
+                <button string="Refund" name="refund_sheet" type='object' invisible="not has_refund_slip or credit_note or state != 'paid'"
                     confirm="Another refund payslip with the same amount has been found. Do you want to create a new one?"/>
                 <button string="Set to Draft" name="action_payslip_draft" type="object" invisible="state != 'cancel'"/>
                 <button string="Compute Sheet" name="compute_sheet" type="object" invisible="state != 'draft' or credit_note" class="oe_highlight" help="Recompute the payslip lines only, not the worked days / input lines"/>
