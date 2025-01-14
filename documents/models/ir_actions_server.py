@@ -7,6 +7,7 @@ class IrActionsServer(models.Model):
 
     def action_open_documents_server_action_view(self):
         self.check_access('read')
+        form_view = self.env.ref('documents.ir_actions_server_view_form_documents', raise_if_not_found=False)
         return {
             'context': {
                 'default_model_id': self.env['ir.model']._get_id('documents.document'),
@@ -24,5 +25,5 @@ class IrActionsServer(models.Model):
             'target': 'current',
             'type': 'ir.actions.act_window',
             'view_mode': 'list,form',
-            'views': [(False, 'list'), (False, 'form')]
+            'views': [(False, 'list'), (form_view.id if form_view else False, 'form')]
         }
