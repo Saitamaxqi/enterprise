@@ -138,15 +138,26 @@ class AccountJournal(models.Model):
         vals_bank_statement = []
         account_lst = set()
         currency_lst = set()
+        # Since ofxparse doesn't provide account numbers, we'll have to find res.partner and res.partner.bank here
+        # (normal behaviour is to provide 'account_number', which the generic module uses to find partner/bank)
+        transaction_payees = [
+            transaction.payee
+            for account in ofx.accounts
+            for transaction in account.statement.transactions
+        ]
+        partner_banks_dict = {
+            partner_bank.partner_id.name: partner_bank
+            for partner_bank in self.env['res.partner.bank'].search([
+                ('partner_id.name', 'in', transaction_payees)
+            ])
+        }
         for account in ofx.accounts:
             account_lst.add(account.number)
             currency_lst.add(account.statement.currency)
             transactions = []
             total_amt = 0.00
             for transaction in account.statement.transactions:
-                # Since ofxparse doesn't provide account numbers, we'll have to find res.partner and res.partner.bank here
-                # (normal behaviour is to provide 'account_number', which the generic module uses to find partner/bank)
-                partner_bank = self.env['res.partner.bank'].search([('partner_id.name', '=', transaction.payee)], limit=1)
+                partner_bank = partner_banks_dict.get(transaction.payee, self.env['res.partner.bank'])
                 vals_line = self._fill_transaction_vals_line_ofx(transaction, len(transactions), partner_bank)
                 total_amt += float(transaction.amount)
                 transactions.append(vals_line)
