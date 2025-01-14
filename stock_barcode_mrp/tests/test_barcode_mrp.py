@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from odoo import Command
 from odoo.tests import tagged
 from odoo.addons.stock_barcode.tests.test_barcode_client_action import TestBarcodeClientAction
 
@@ -103,25 +103,26 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         in Barcode
         """
         self.clean_access_rights()
+        group_uom = self.env.ref('uom.group_uom')
+        self.env.user.write({'groups_id': [Command.link(group_uom.id)]})
 
-        packaging = self.env['product.packaging'].create({
+        packaging = self.env['uom.uom'].create({
             'name': 'test packaging',
-            'qty': 1,
-            'product_id': self.simple_kit.id,
+            'relative_factor': 1.0,
         })
+        self.simple_kit.uom_ids = packaging
 
         picking = self.env['stock.picking'].create({
             'picking_type_id': self.picking_type_internal.id,
             'location_id': self.stock_location.id,
             'location_dest_id': self.stock_location.id,
-            'move_ids': [(0, 0, {
+            'move_ids': [Command.create({
                 'name': 'test_picking_product_with_packaging stock move',
                 'product_id': self.simple_kit.id,
                 'product_uom_qty': 1.0,
                 'product_uom': self.simple_kit.uom_id.id,
                 'location_id': self.stock_location.id,
                 'location_dest_id': self.stock_location.id,
-                'product_packaging_id': packaging.id,
             })],
         })
         picking.action_confirm()

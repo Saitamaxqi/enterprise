@@ -113,7 +113,6 @@ class TestPeEdiCommon(AccountEdiTestCommon):
         cls.product = cls.env['product.product'].create({
             'name': 'product_pe',
             'weight': 2,
-            'uom_po_id': cls.env.ref('uom.product_uom_kgm').id,
             'uom_id': cls.env.ref('uom.product_uom_kgm').id,
             'lst_price': 1000.0,
             'property_account_income_id': cls.company_data['default_account_revenue'].id,

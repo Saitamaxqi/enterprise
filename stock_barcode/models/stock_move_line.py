@@ -16,14 +16,14 @@ class StockMoveLine(models.Model):
     parent_location_id = fields.Many2one('stock.location', compute='_compute_parent_location_id')
     parent_location_dest_id = fields.Many2one('stock.location', compute='_compute_parent_location_id')
     product_stock_quant_ids = fields.One2many('stock.quant', compute='_compute_product_stock_quant_ids')
-    product_packaging_id = fields.Many2one(related='move_id.product_packaging_id')
-    product_packaging_uom_qty = fields.Float('Packaging Quantity', compute='_compute_product_packaging_uom_qty', help="Quantity of the Packaging in the UoM of the Stock Move Line.")
     hide_lot_name = fields.Boolean(compute='_compute_hide_lot_name', default=True)
     hide_lot = fields.Boolean(compute='_compute_hide_lot_name', default=True)
     image_1920 = fields.Image(related="product_id.image_1920")
     product_reference_code = fields.Char(related="product_id.code", string="Product Reference Code")
-    qty_done = fields.Float(compute='_compute_qty_done', inverse='_inverse_qty_done', digits='Product Unit of Measure')  # Dummy field
+    qty_done = fields.Float(compute='_compute_qty_done', inverse='_inverse_qty_done', digits='Product Unit')  # Dummy field
     electronic_product_code = fields.Char(compute='_compute_electronic_product_code')
+    packaging_uom_id = fields.Many2one('uom.uom', related='move_id.packaging_uom_id', string='Packaging Unit of Measure')
+    packaging_uom_qty = fields.Float(related='move_id.packaging_uom_qty', string='Packaging Quantity')
 
     @api.depends('tracking', 'picking_type_use_existing_lots', 'picking_type_use_create_lots', 'lot_name')
     def _compute_hide_lot_name(self):
@@ -51,10 +51,6 @@ class StockMoveLine(models.Model):
     def _compute_qty_done(self):
         for line in self:
             line.qty_done = line.quantity if line.picked else 0
-
-    def _compute_product_packaging_uom_qty(self):
-        for sml in self:
-            sml.product_packaging_uom_qty = sml.product_packaging_id.product_uom_id._compute_quantity(sml.product_packaging_id.qty, sml.product_uom_id)
 
     @api.depends('product_barcode')
     def _compute_product_barcode(self):
@@ -103,9 +99,9 @@ class StockMoveLine(models.Model):
             'result_package_id',
             'dummy_id',
             'picked',
-            'product_packaging_id',
-            'product_packaging_uom_qty',
             'move_id',
+            'packaging_uom_id',
+            'packaging_uom_qty',
         ]
 
     def _compute_electronic_product_code(self):

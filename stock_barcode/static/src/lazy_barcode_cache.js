@@ -8,7 +8,7 @@ export default class LazyBarcodeCache {
         this.barcodeFieldByModel = {
             "stock.location": "barcode",
             "product.product": "barcode",
-            "product.packaging": "barcode",
+            "product.uom": "barcode",
             "stock.package.type": "barcode",
             "stock.picking": "name",
             "stock.quant.package": "name",
@@ -16,7 +16,7 @@ export default class LazyBarcodeCache {
         };
         this.gs1LengthsByModel = {
             "product.product": 14,
-            "product.packaging": 14,
+            "product.uom": 14,
             "stock.location": 13,
             "stock.quant.package": 18,
         };
@@ -110,6 +110,10 @@ export default class LazyBarcodeCache {
             if (this.dbBarcodeCache[model] === undefined) {
                 if (fetchLater) {
                     this.waitingFetch.push({ barcode, model, options });
+                    if (model === "product.product") {
+                        // If the model is a product, we can also try to fetch it as a packaging.
+                        this.waitingFetch.push({ barcode, model: "product.uom", options });
+                    }
                     return null;
                 }
                 if (onlyInCache) {
@@ -120,6 +124,10 @@ export default class LazyBarcodeCache {
             if (this.dbBarcodeCache[model][barcode] === undefined) {
                 if (fetchLater) {
                     this.waitingFetch.push({ barcode, model, options });
+                    if (model === "product.product") {
+                        // If the model is a product, we can also try to fetch it as a packaging.
+                        this.waitingFetch.push({ barcode, model: "product.uom", options });
+                    }
                     return null;
                 }
                 if (onlyInCache) {

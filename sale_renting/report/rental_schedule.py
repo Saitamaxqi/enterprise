@@ -49,7 +49,7 @@ class SaleRentalSchedule(models.Model):
     pickup_date = fields.Datetime('Pickup Date', readonly=True)
     return_date = fields.Datetime('Return Date', readonly=True)
     product_id = fields.Many2one('product.product', 'Product', readonly=True, group_expand="_read_group_product_ids")
-    product_uom_id = fields.Many2one('uom.uom', 'Unit of Measure', readonly=True)
+    product_uom_id = fields.Many2one('uom.uom', 'Unit', readonly=True)
     product_uom_qty = fields.Float('Qty Ordered', readonly=True)
     qty_delivered = fields.Float('Qty Picked-Up', readonly=True)
     qty_returned = fields.Float('Qty Returned', readonly=True)

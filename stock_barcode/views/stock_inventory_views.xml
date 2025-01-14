@@ -36,7 +36,7 @@
                             options="{'type': 'number'}" placeholder="Counted Quantity"/>
                     </div>
                     <div class="col-3 ps-0" groups="uom.group_uom" invisible="not product_uom_id">
-                        <field name="product_uom_id" options="{'no_open': True}" groups="uom.group_uom"/>
+                        <field name="product_uom_id" options="{'no_open': True}" groups="uom.group_uom" widget="many2one_uom"/>
                     </div>
                 </div>
                 <div name="digipad" class="row">

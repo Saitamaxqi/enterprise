@@ -30,12 +30,12 @@
                         <label for="qty_to_test" invisible="not is_lot_tested_fractionally"/>
                         <div class="o_row" invisible="not is_lot_tested_fractionally">
                             <field name="qty_to_test"/>
-                            <field name="uom_id"/>
+                            <field name="uom_id" widget="many2one_uom"/>
                         </div>
                         <label for="qty_tested" invisible="not is_lot_tested_fractionally"/>
                         <div class="o_row" invisible="not is_lot_tested_fractionally">
                             <field name="qty_tested" readonly="quality_state != 'none'"/>
-                            <field name="uom_id"/>
+                            <field name="uom_id" widget="many2one_uom"/>
                         </div>
                     </group>
                 </group>
@@ -88,7 +88,7 @@
                         <label for="qty_failed" string="Quantity Failed"/>
                         <div>
                             <field name="qty_failed" required="True" class="oe_inline"/>
-                            <field name="uom_id" class="oe_inline"/>
+                            <field name="uom_id" widget="many2one_uom" class="oe_inline"/>
                         </div>
                         <field name="lot_name" string="Lot/SN" invisible="not show_lot_text or product_tracking == 'none'"/>
                         <field name="lot_line_id" string="Lot/SN" invisible="show_lot_text or product_tracking == 'none'"/>

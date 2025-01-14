@@ -11,6 +11,8 @@ class StockMove(models.Model):
             'location_id',
             'product_uom_qty',
             'move_line_ids',
+            'packaging_uom_id',
+            'packaging_uom_qty'
         ]
 
     def split_uncompleted_moves(self):

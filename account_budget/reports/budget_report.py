@@ -103,11 +103,12 @@ class BudgetReport(models.Model):
         )
 
     def _get_pol_query(self, plan_fnames):
+        precision_digits = self.env['decimal.precision'].precision_get('Product Unit')
         qty_invoiced_table = SQL(
             """
                SELECT SUM(
                           CASE WHEN COALESCE(uom_aml.id != uom_pol.id, FALSE)
-                               THEN ROUND((aml.quantity / uom_aml.factor) * uom_pol.factor, -LOG(uom_pol.rounding)::integer)
+                               THEN ROUND(CAST((aml.quantity / uom_aml.factor) * uom_pol.factor AS NUMERIC), %(precision_digits)s)
                                ELSE COALESCE(aml.quantity, 0)
                           END
                           * CASE WHEN aml.balance < 0 THEN -1 ELSE 1 END
@@ -118,11 +119,11 @@ class BudgetReport(models.Model):
             LEFT JOIN account_move_line aml ON aml.purchase_line_id = pol.id
             LEFT JOIN uom_uom uom_aml ON uom_aml.id = aml.product_uom_id
             LEFT JOIN uom_uom uom_pol ON uom_pol.id = pol.product_uom_id
-            LEFT JOIN uom_category uom_category_aml ON uom_category_aml.id = uom_pol.category_id
-            LEFT JOIN uom_category uom_category_pol ON uom_category_pol.id = uom_pol.category_id
                 WHERE aml.parent_state = 'posted'
              GROUP BY pol.id
-        """)
+        """,
+        precision_digits=precision_digits
+        )
         return SQL(
             """
             SELECT (pol.id::TEXT || '-' || ROW_NUMBER() OVER (PARTITION BY pol.id ORDER BY pol.id)) AS id,

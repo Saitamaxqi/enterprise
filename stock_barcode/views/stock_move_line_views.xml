@@ -14,7 +14,6 @@
             <field name="picking_id" invisible="1"/>
             <field name="picking_type_use_create_lots" invisible="1"/>
             <field name="picking_type_use_existing_lots" invisible="1"/>
-            <field name="product_uom_category_id" invisible="1" />
             <field name="quantity" invisible="1"/>
             <div name="product" class="row my-2">
                 <div class="col d-flex align-items-baseline">
@@ -45,7 +44,7 @@
                         options="{'type': 'number'}" placeholder="Quantity"/>
                 </div>
                 <div class="col-3 ps-0" groups="uom.group_uom">
-                    <field name="product_uom_id" options="{'no_open': True}" groups="uom.group_uom"/>
+                    <field name="product_uom_id" options="{'no_open': True}" groups="uom.group_uom" widget="many2one_uom"/>
                 </div>
             </div>
             <div name="digipad" class="row">
@@ -140,7 +139,7 @@
                     <field name="lot_id" groups="stock.group_production_lot" class="d-block" invisible="not lot_id"/>
                     <div>
                         <field name="quantity" string="Quantity Done"/>
-                        <field name="product_uom_id" string="Unit of Measure" groups="uom.group_uom" class="ms-1"/>
+                        <field name="product_uom_id" groups="uom.group_uom" widget="many2one_uom" class="ms-1"/>
                     </div>
                 </t>
             </templates>
@@ -158,7 +157,7 @@
                 <t t-name="card">
                     <field name="location_id" class="fw-bolder"/>
                     <div class="mb4">
-                        <field name="quantity"/> <field name="product_uom_id" groups="uom.group_uom"/>
+                        <field name="quantity"/> <field name="product_uom_id" groups="uom.group_uom" widget="many2one_uom"/>
                         <field name="lot_id" class="ms-4" invisible="not lot_id" groups="stock.group_production_lot"/>
                     </div>
                     <div class="mb4" invisible="not package_id" groups="stock.group_tracking_lot">

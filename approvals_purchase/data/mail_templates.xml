@@ -20,7 +20,7 @@
                         <t t-esc="line.approval_request_id.name"/>
                     </a>:
                     <t t-esc="line.po_uom_qty"/>
-                    <t t-esc="line.product_uom_category_id.name"/> of
+                    <t t-esc="line.product_uom_id.name"/> of
                     <t t-esc="line.product_id.name"/> cancelled
                 </li>
             </ul>

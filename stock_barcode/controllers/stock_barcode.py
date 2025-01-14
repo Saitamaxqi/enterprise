@@ -93,7 +93,7 @@ class StockBarcodeController(http.Controller):
             target_record = request.env[model].browse(res_id).with_context(allowed_company_ids=self._get_allowed_company_ids())
         data = target_record._get_stock_barcode_data()
         data['records'].update(self._get_barcode_nomenclature())
-        data['precision'] = request.env['decimal.precision'].precision_get('Product Unit of Measure')
+        data['precision'] = request.env['decimal.precision'].precision_get('Product Unit')
         mute_sound = request.env['ir.config_parameter'].sudo().get_param('stock_barcode.mute_sound_notifications')
         data['config'] = data.get('config', {})
         data['config']['play_sound'] = bool(not mute_sound or mute_sound == "False")
@@ -419,7 +419,6 @@ class StockBarcodeController(http.Controller):
             'group_tracking_lot': request.env.user.has_group('stock.group_tracking_lot'),
             'group_production_lot': request.env.user.has_group('stock.group_production_lot'),
             'group_uom': request.env.user.has_group('uom.group_uom'),
-            'group_stock_packaging': request.env.user.has_group('product.group_stock_packaging'),
             'group_stock_sign_delivery': request.env.user.has_group('stock.group_stock_sign_delivery'),
         }
 
@@ -435,7 +434,8 @@ class StockBarcodeController(http.Controller):
         list_model = [
             'stock.location',
             'product.product',
-            'product.packaging',
+            'uom.uom',
+            'product.uom',
             'stock.picking',
             'stock.lot',
             'stock.quant.package',

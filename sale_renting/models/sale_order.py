@@ -192,7 +192,7 @@ class SaleOrder(models.Model):
 
     def action_open_pickup(self):
         self.ensure_one()
-        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        precision = self.env['decimal.precision'].precision_get('Product Unit')
         lines_to_pickup = self.order_line.filtered(
             lambda r:
                 r.is_rental
@@ -202,7 +202,7 @@ class SaleOrder(models.Model):
 
     def action_open_return(self):
         self.ensure_one()
-        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        precision = self.env['decimal.precision'].precision_get('Product Unit')
         lines_to_return = self.order_line.filtered(
             lambda r:
                 r.is_rental

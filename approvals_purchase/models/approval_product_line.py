@@ -22,8 +22,8 @@ class ApprovalProductLine(models.Model):
             return [('purchase_ok', '=', True)]
 
     po_uom_qty = fields.Float(
-        "Purchase UoM Quantity", compute='_compute_po_uom_qty',
-        help="The quantity converted into the UoM used by the product in Purchase Order.")
+        "Purchase Unit Quantity", compute='_compute_po_uom_qty',
+        help="The quantity converted into the Unit used by the product in Purchase Order.")
     purchase_order_line_id = fields.Many2one('purchase.order.line')
     product_id = fields.Many2one(domain=lambda self: self._domain_product_id())
     product_template_id = fields.Many2one(related='product_id.product_tmpl_id')
@@ -39,7 +39,7 @@ class ApprovalProductLine(models.Model):
                 uom = line.product_uom_id or line.product_id.uom_id
                 line.po_uom_qty = uom._compute_quantity(
                     line.quantity,
-                    line.product_id.uom_po_id
+                    line.product_id.uom_id,
                 )
             else:
                 line.po_uom_qty = 0.0
@@ -50,7 +50,7 @@ class ApprovalProductLine(models.Model):
             if line.product_id and line.po_uom_qty:
                 line.seller_id = line.product_id.with_company(line.company_id)._select_seller(
                     quantity=line.po_uom_qty,
-                    uom_id=line.product_id.uom_po_id,
+                    uom_id=line.product_id.uom_id,
                 )
 
     @api.depends('product_id', 'po_uom_qty')
@@ -60,7 +60,7 @@ class ApprovalProductLine(models.Model):
             if line.product_id and line.po_uom_qty:
                 line.has_no_seller = not bool(line.product_id.with_company(line.company_id)._select_seller(
                     quantity=line.po_uom_qty,
-                    uom_id=line.product_id.uom_po_id,
+                    uom_id=line.product_id.uom_id,
                 ))
 
     def _check_products_vendor(self):

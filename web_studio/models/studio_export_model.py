@@ -25,7 +25,6 @@ PRESET_MODELS_DEFAULTS = [
     ("account.analytic.account", {"is_demo_data": True}),
     ("appointment.type", {"is_demo_data": True}),
     ("project.project", {}),
-    ("uom.category", {}),
     ("uom.uom", {}),
     ("planning.role", {}),
     ("product.template", {}),
@@ -52,7 +51,6 @@ PRESET_MODELS_DEFAULTS = [
     ("project.task", {"is_demo_data": True}),
     ("project.project.stage", {}),
     ("product.attribute", {}),
-    ("product.packaging", {}),
     ("product.attribute.value", {}),
     ("product.pricelist", {}),
     ("product.pricelist.item", {}),
@@ -188,8 +186,6 @@ DEFAULT_FIELDS_TO_EXCLUDE = {
     },
     "sale.order.line": {
         "invoice_lines",
-        "product_packaging_id",
-        "product_packaging_qty",
         "task_id",
         "price_subtotal",
         "price_tax",
@@ -217,7 +213,6 @@ DEFAULT_FIELDS_TO_EXCLUDE = {
     },
     "purchase.order.line": {
         "currency_id",
-        "product_packaging_id",
         "move_dest_ids",
         "price_subtotal",
         "price_total",

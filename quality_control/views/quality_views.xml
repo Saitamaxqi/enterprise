@@ -235,18 +235,18 @@
                             <label for="qty_line" invisible="not move_line_id or quality_state != 'fail'" string="Failed Quantity"/>
                             <div class="o_row" invisible="not move_line_id">
                                 <field name="qty_line"/> 
-                                <field name="uom_id" groups="uom.group_uom"/>
+                                <field name="uom_id" widget="many2one_uom" groups="uom.group_uom"/>
                             </div>
                             <field name="failure_location_id" invisible="not failure_location_id" readonly="True"/>
                             <label for="qty_to_test" invisible="not move_line_id or measure_on != 'move_line' or not is_lot_tested_fractionally"/>
                             <div class="o_row" invisible="not move_line_id or measure_on != 'move_line' or not is_lot_tested_fractionally">
                                 <field name="qty_to_test"/> 
-                                <field name="uom_id" groups="uom.group_uom"/>
+                                <field name="uom_id" widget="many2one_uom" groups="uom.group_uom"/>
                             </div>
                             <label for="qty_tested" invisible="measure_on != 'move_line' or not is_lot_tested_fractionally"/>
                             <div class="o_row" invisible="measure_on != 'move_line' or not is_lot_tested_fractionally">
                                 <field name="qty_tested" readonly="quality_state != 'none'"/> 
-                                <field name="uom_id" groups="uom.group_uom"/>
+                                <field name="uom_id" widget="many2one_uom" groups="uom.group_uom"/>
                             </div>
                             <field name="test_type" invisible="1"/>
                             <field name="measure" invisible="test_type != 'measure'"/>

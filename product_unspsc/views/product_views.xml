@@ -21,18 +21,8 @@
             <field name="model">uom.uom</field>
             <field name="inherit_id" ref="uom.product_uom_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='uom_type']" position="after">
-                    <field name="unspsc_code_id"/>
-                </xpath>
-            </field>
-        </record>
-        <record model="ir.ui.view" id="view_product_uom_categ_form_unspsc">
-            <field name="name">view.uom.categ.unspsc.form</field>
-            <field name="model">uom.category</field>
-            <field name="inherit_id" ref="uom.product_uom_categ_form_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='uom_type']" position="after">
-                    <field name="unspsc_code_id"/>
+                <xpath expr="//div[@name='relative_factor']" position="after">
+                    <field name="unspsc_code_id" readonly="(context.get('product_id') or context.get('product_ids')) and id"/>
                 </xpath>
             </field>
         </record>

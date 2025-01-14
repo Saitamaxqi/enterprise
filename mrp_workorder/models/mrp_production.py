@@ -130,7 +130,6 @@ class MrpProduction(models.Model):
             'name': name,
             'is_storable': True,
             'uom_id': self.env.ref('uom.product_uom_unit').id,
-            'uom_po_id': self.env.ref('uom.product_uom_unit').id,
             'description': desc,
             'default_code': code,
             'image_1920': base64.b64encode(file_open(img, "rb").read()),

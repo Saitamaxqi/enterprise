@@ -195,7 +195,7 @@
                                             <strong>Quantity</strong>
                                         </th>
                                         <th groups="uom.group_uom">
-                                            <strong>UoM</strong>
+                                            <strong>Unit</strong>
                                         </th>
                                         <th name="unit_price" class="text-end" t-if="has_unit_price">
                                             <strong>Unit Price</strong>

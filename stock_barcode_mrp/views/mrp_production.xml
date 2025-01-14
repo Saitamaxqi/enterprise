@@ -140,8 +140,9 @@
                     </div>
                     <div class="col-3 ps-0 no-radius-left" groups="uom.group_uom">
                         <field name="product_uom_id" options="{'no_open': True}"
-                               readonly="not product_id"
-                               placeholder="Unit of Measure"/>
+                            widget="many2one_uom"
+                            readonly="not product_id"
+                            placeholder="Unit"/>
                     </div>
                 </div>
                 <div name="digipad" class="row">

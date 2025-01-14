@@ -82,7 +82,6 @@
             <field name="list_price">25.0</field>
             <field name="invoice_policy">order</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
         </record>
 
         <!-- Recurring products -->
@@ -94,7 +93,6 @@
             <field name="list_price">200.0</field>
             <field name="invoice_policy">order</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="product_subscription_pricing_ids" eval="[(6,0,[ref('subscription_pricing_1'), ref('subscription_pricing_2'), ref('subscription_pricing_3')])]"/>
         </record>
 
@@ -106,7 +104,6 @@
             <field name="list_price">200.0</field>
             <field name="invoice_policy">delivery</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="uom_po_id" ref="uom.product_uom_unit"/>
             <field name="product_subscription_pricing_ids" eval="[(6,0,[ref('subscription_pricing_4'), ref('subscription_pricing_5'), ref('subscription_pricing_6')])]"/>
         </record>
 

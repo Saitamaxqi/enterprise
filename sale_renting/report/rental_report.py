@@ -14,7 +14,7 @@ class SaleRentalReport(models.Model):
     date = fields.Date('Date', readonly=True)
     order_id = fields.Many2one('sale.order', 'Order #', readonly=True)
     product_id = fields.Many2one('product.product', 'Product', readonly=True)
-    product_uom_id = fields.Many2one('uom.uom', 'Unit of Measure', readonly=True)
+    product_uom_id = fields.Many2one('uom.uom', 'Unit', readonly=True)
     quantity = fields.Float('Daily Ordered Qty', readonly=True)
     qty_delivered = fields.Float('Daily Picked-Up Qty', readonly=True)
     qty_returned = fields.Float('Daily Returned Qty', readonly=True)

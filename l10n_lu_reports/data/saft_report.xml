@@ -87,7 +87,6 @@
                 <UOMTable t-if="uoms">
                     <UOMTableEntry t-foreach="uoms" t-as="uom">
                         <UnitOfMeasure t-out="uom.name[:9]"/>
-                        <Description t-out="uom.category_id.name[:256]"/>
                     </UOMTableEntry>
                 </UOMTable>
                 <Products t-if="product_vals_list">
@@ -95,9 +94,7 @@
                         <ProductCode t-out="product_vals['default_code'][:70]"/>
                         <ProductGroup t-out="product_vals['product_category'][:70]"/>
                         <Description t-out="product_vals['name'][:256]"/>
-                        <UOMBase t-out="product_vals['base_uom'][:9]"/>
-                        <UOMStandard t-if="product_vals.get('uom_type') != 'reference'" t-out="product_vals['standard_uom'][:9]"/>
-                        <UOMToUOMBaseConversionFactor t-if="product_vals.get('uom_type') != 'reference'" t-out="product_vals['uom_ratio']"/>
+                        <UOMStandard t-out="product_vals['standard_uom'][:9]"/>
                     </Product>
                 </Products>
             </t>

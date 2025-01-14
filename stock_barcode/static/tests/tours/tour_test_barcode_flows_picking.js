@@ -5680,7 +5680,7 @@ registry.category("web_tour.tours").add("test_serial_product_packaging", {
                 helper.assertLinesCount(1);
                 helper.assertScanMessage("scan_serial");
                 helper.assertLineProduct(0, "productserial1");
-                helper.assertLineQty(0, "0/4");
+                helper.assertLineQty(0, "0/4 Units");
                 helper.assertButtonIsVisible(0, "toggle_sublines", false);
                 helper.assertButtonIsVisible(0, "edit");
             },
@@ -5694,14 +5694,14 @@ registry.category("web_tour.tours").add("test_serial_product_packaging", {
             trigger: ".o_barcode_line.o_selected .o_sublines",
             run: function () {
                 const line = helper.getLine();
-                helper.assertLineQty(line, "4/4");
+                helper.assertLineQty(line, "4/4 Units");
                 helper.assertSublinesCount(4);
                 const sublines = helper.getSublines();
                 helper.assertLinesTrackingNumbers(sublines, ["sn4", "sn3", "sn2", "sn1"]);
-                helper.assertLineQty(sublines[0], "1/1");
-                helper.assertLineQty(sublines[1], "1/1");
-                helper.assertLineQty(sublines[2], "1/1");
-                helper.assertLineQty(sublines[3], "1/1");
+                helper.assertLineQty(sublines[0], "1/1 Units");
+                helper.assertLineQty(sublines[1], "1/1 Units");
+                helper.assertLineQty(sublines[2], "1/1 Units");
+                helper.assertLineQty(sublines[3], "1/1 Units");
             },
         },
     ],

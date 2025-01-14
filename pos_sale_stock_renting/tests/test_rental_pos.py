@@ -13,7 +13,6 @@ class TestPoSRental(TestPointOfSaleHttpCommon):
         self.tracked_product_id = self.env['product.product'].create({
             'name': 'Test2',
             'uom_id': self.env.ref('uom.product_uom_unit').id,
-            'uom_po_id': self.env.ref('uom.product_uom_unit').id,
             'available_in_pos': True,
             'rent_ok': True,
             'is_storable': True,

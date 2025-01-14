@@ -10,7 +10,6 @@
             <field name="type">service</field>
             <field name="recurring_invoice">True</field>
             <field name="uom_id" ref="uom.product_uom_hour"/>
-            <field name="uom_po_id" ref="uom.product_uom_hour"/>
             <field name="service_tracking">task_global_project</field>
             <field name="project_id" ref="project.project_home_construction"/>
         </record>
@@ -23,7 +22,6 @@
             <field name="type">service</field>
             <field name="recurring_invoice">True</field>
             <field name="uom_id" ref="uom.product_uom_hour"/>
-            <field name="uom_po_id" ref="uom.product_uom_hour"/>
             <field name="service_tracking">task_global_project</field>
             <field name="project_id" ref="project.project_home_construction"/>
         </record>

@@ -150,7 +150,7 @@ class TestSoLineDeterminedInTimesheet(TestFsmFlowSaleCommon):
         """
         self.task.write({'partner_id': self.partner_1.id})
         product_uom_qty = 0.333333
-        quantity_precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        quantity_precision = self.env['decimal.precision'].precision_get('Product Unit')
         # timesheet
         values = {
             'task_id': self.task.id,

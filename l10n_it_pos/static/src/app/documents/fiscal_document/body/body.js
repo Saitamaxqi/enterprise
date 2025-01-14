@@ -35,7 +35,7 @@ export class Body extends Component {
     }
     _itFormatQty(qty) {
         const uom_decimal_places = this.pos.models["decimal.precision"].find(
-            (dp) => dp.name === "Product Unit of Measure"
+            (dp) => dp.name === "Product Unit"
         ).digits;
         const decimal_places = Math.min(3, uom_decimal_places);
         return formatFloat(qty, {

@@ -760,7 +760,7 @@ class AccountMove(models.Model):
                     'L': self.env.ref('uom.product_uom_litre'),
                     'M': self.env.ref('uom.product_uom_meter'),
                     'MM': self.env.ref('uom.product_uom_millimeter'),
-                    'M2': self.env.ref('uom.uom_square_meter'),
+                    'M2': self.env.ref('uom.product_uom_square_meter'),
                     'M3': self.env.ref('uom.product_uom_cubic_meter'),
                     'DZ': self.env.ref('uom.product_uom_dozen'),
                     'GL': self.env.ref('uom.product_uom_gal'),

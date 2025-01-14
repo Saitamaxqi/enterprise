@@ -89,10 +89,6 @@ export default class BarcodeModel extends EventBus {
         return !(line.lot_id || line.lot_name) || this.getQtyDone(line) === 0;
     }
 
-    getDisplayIncrementPackagingBtn(line) {
-        return false;
-    }
-
     getActionRefresh(newId) {
         return {
             route: "/stock_barcode/get_barcode_data",
@@ -707,7 +703,7 @@ export default class BarcodeModel extends EventBus {
             if (!product) {
                 const packaging = await this.cache.getRecordByBarcode(
                     productRule.value,
-                    "product.packaging"
+                    "product.uom"
                 );
                 if (packaging) {
                     product = this.cache.getRecord("product.product", packaging.product_id);
@@ -759,22 +755,6 @@ export default class BarcodeModel extends EventBus {
      * @returns {Object} the newly created line
      */
     async _createNewLine(params) {
-        if (params.fieldsParams && params.fieldsParams.uom && params.fieldsParams.product_id) {
-            const productUOM = this.cache.getRecord(
-                "uom.uom",
-                params.fieldsParams.product_id.uom_id
-            );
-            const paramsUOM = params.fieldsParams.uom;
-            if (paramsUOM.category_id !== productUOM.category_id) {
-                // Not the same UoM's category -> Can't be converted.
-                const message = _t(
-                    "Scanned quantity uses %(unit)s as its Unit of Measure (UoM), but it is not compatible with the product's UoM (%(productUnit)s).",
-                    { unit: paramsUOM.name, productUnit: productUOM.name }
-                );
-                this.notification(message, { title: _t("Wrong Unit of Measure"), type: "danger" });
-                return false;
-            }
-        }
         const newLine = Object.assign(
             {},
             params.copyOf,
@@ -1080,8 +1060,8 @@ export default class BarcodeModel extends EventBus {
             result.product = product;
             result.match = true;
         }
-        if (this.groups.group_stock_packaging) {
-            const packaging = recordByData.get("product.packaging");
+        if (this.groups.group_uom) {
+            const packaging = recordByData.get("product.uom");
             if (packaging) {
                 result.match = true;
                 result.packaging = packaging;
@@ -1171,8 +1151,8 @@ export default class BarcodeModel extends EventBus {
             if (product) {
                 result.product = product;
                 result.match = true;
-            } else if (this.groups.group_stock_packaging) {
-                const packaging = await this.cache.getRecordByBarcode(value, "product.packaging");
+            } else if (this.groups.group_uom) {
+                const packaging = await this.cache.getRecordByBarcode(value, "product.uom");
                 if (packaging) {
                     result.packaging = packaging;
                     result.match = true;
@@ -1426,17 +1406,6 @@ export default class BarcodeModel extends EventBus {
         if (currentLine) {
             // If line found, can it be incremented ?
             let exceedingQuantity = 0;
-            if (
-                product.tracking !== "serial" &&
-                barcodeData.uom &&
-                barcodeData.uom.category_id == currentLine.product_uom_id.category_id
-            ) {
-                // convert to current line's uom
-                barcodeData.quantity =
-                    (barcodeData.quantity / barcodeData.uom.factor) *
-                    currentLine.product_uom_id.factor;
-                barcodeData.uom = currentLine.product_uom_id;
-            }
             // Checks the quantity doesn't exceed the line's remaining quantity.
             if (currentLine.reserved_uom_qty && product.tracking === "none") {
                 const remainingQty = currentLine.reserved_uom_qty - currentLine.qty_done;
@@ -1477,7 +1446,17 @@ export default class BarcodeModel extends EventBus {
                 fieldsParams.uom = barcodeData.uom;
             }
             if (this.createSingleLinesForPackaging(barcodeData)) {
-                for (let lineCount = 0; lineCount < barcodeData.packaging.qty; lineCount++) {
+                const productUoM = await this.cache.getRecord(
+                    "uom.uom",
+                    barcodeData.product.uom_id
+                );
+                const qtyUoM = barcodeData.uom;
+                let { quantity } = barcodeData;
+                if (productUoM.factor !== qtyUoM.factor) {
+                    quantity *= qtyUoM.factor / productUoM.factor;
+                    fieldsParams.uom = productUoM;
+                }
+                for (let lineCount = 0; lineCount < quantity; lineCount++) {
                     currentLine = await this.createNewLine({ fieldsParams });
                 }
             } else {
@@ -1580,17 +1559,10 @@ export default class BarcodeModel extends EventBus {
     }
 
     _retrievePackagingData(barcodeData) {
-        const product = this.cache.getRecord("product.product", barcodeData.packaging.product_id);
-        const uom = this.cache.getRecord("uom.uom", product.uom_id);
-        let quantity = "quantity" in barcodeData ? barcodeData.quantity : 1;
-        if (barcodeData.uom && barcodeData.uom.category_id !== uom.category_id) {
-            // In case the scanned quantity uses an UoM not compatible with the
-            // product UoM, we drop it and uses the packaging quantity instead.
-            quantity = barcodeData.packaging.qty;
-        } else {
-            // Otherwise, multiply the scanned quantity (or 1 by default) by the package quantity.
-            quantity *= barcodeData.packaging.qty;
-        }
+        const { packaging } = barcodeData;
+        const product = this.cache.getRecord("product.product", packaging.product_id);
+        const uom = this.cache.getRecord("uom.uom", packaging.uom_id || product.uom_id);
+        const quantity = "quantity" in barcodeData ? barcodeData.quantity : 1;
         return { product, quantity, uom };
     }
 

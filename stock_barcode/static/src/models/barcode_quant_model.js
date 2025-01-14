@@ -668,25 +668,13 @@ export default class BarcodeQuantModel extends BarcodeModel {
             line.quantity = args.quantity;
         }
         if (args.inventory_quantity) {
-            // Increments inventory quantity.
             if (args.uom) {
-                // An UoM was passed alongside the quantity, needs to check it's
-                // compatible with the product's UoM.
-                const productUOM = this.cache.getRecord("uom.uom", line.product_id.uom_id);
-                if (args.uom.category_id !== productUOM.category_id) {
-                    // Not the same UoM's category -> Can't be converted.
-                    const message = _t(
-                        "Scanned quantity uses %(unit)s as its Unit of Measure (UoM), but it is not compatible with the product's UoM (%(productUnit)s).",
-                        { unit: args.uom.name, productUnit: productUOM.name }
-                    );
-                    return this.notification(message, {
-                        title: _t("Wrong Unit of Measure"),
-                        type: "warning",
-                    });
-                } else if (args.uom.id !== productUOM.id) {
-                    // Compatible but not the same UoM => Need a conversion.
-                    args.inventory_quantity =
-                        (args.inventory_quantity / args.uom.factor) * productUOM.factor;
+                const lineUOM = line.product_uom_id;
+                if (args.uom.factor !== lineUOM.factor) {
+                    // Convert the scanned qty into the product UoM.
+                    const factor = args.uom.factor / lineUOM.factor;
+                    args.inventory_quantity = args.inventory_quantity * factor;
+                    args.uom = lineUOM;
                 }
             }
             line.inventory_quantity += args.inventory_quantity;

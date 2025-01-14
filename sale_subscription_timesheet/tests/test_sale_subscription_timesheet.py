@@ -19,7 +19,6 @@ class TestSubscriptionTask(TestSubscriptionCommon, TestCommonSaleTimesheet):
             'type': 'service',
             'invoice_policy': 'delivery',
             'uom_id': self.uom_hour.id,
-            'uom_po_id': self.uom_hour.id,
             'default_code': 'SERV-ORDERED2',
             'service_type': 'timesheet',
             'recurring_invoice': True,

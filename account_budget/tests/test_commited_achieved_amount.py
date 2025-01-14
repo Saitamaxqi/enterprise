@@ -219,13 +219,11 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         gravel_ton = self.env['product.product'].create({
             'name': 'Gravel 1T',
             'uom_id': self.env.ref('uom.product_uom_ton').id,
-            'uom_po_id': self.env.ref('uom.product_uom_ton').id,
             'standard_price': 1000,
         })
         gravel_kilo = self.env['product.product'].create({
             'name': 'Gravel 1kg',
             'uom_id': self.env.ref('uom.product_uom_kgm').id,
-            'uom_po_id': self.env.ref('uom.product_uom_kgm').id,
             'standard_price': 1,
         })
         # Create a new purchase order

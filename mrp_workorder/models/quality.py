@@ -203,7 +203,7 @@ class QualityCheck(models.Model):
     component_id = fields.Many2one(
         'product.product', 'Component', check_company=True)
     component_barcode = fields.Char(related='component_id.barcode')
-    component_uom_id = fields.Many2one('uom.uom', related='move_id.product_uom', readonly=True)
+    component_uom_id = fields.Many2one('uom.uom', related='move_id.product_uom', string='Component Unit', readonly=True)
 
     finished_lot_id = fields.Many2one('stock.lot', 'Finished Lot/Serial', related='production_id.lot_producing_id')
     component_tracking = fields.Selection(related='component_id.tracking', string="Is Component Tracked")
@@ -283,7 +283,8 @@ class QualityCheck(models.Model):
         return res
 
     def _get_print_qty(self):
-        if self.product_id.uom_id.category_id == self.env.ref('uom.product_uom_categ_unit'):
+        uom_unit = self.env.ref('uom.product_uom_unit')
+        if self.product_id.uom_id._has_common_reference(uom_unit):
             qty = int(self.workorder_id.qty_producing)
         else:
             qty = 1

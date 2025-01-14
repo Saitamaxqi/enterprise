@@ -1536,7 +1536,7 @@ class TestAccountAsset(TestAccountReportsCommon):
                     "name": "stuff",
                     "quantity": 3.0,
                     "price_unit": 1000.0,
-                    "product_uom_id": self.env.ref('uom.product_uom_categ_unit').id,
+                    "product_uom_id": self.env.ref('uom.product_uom_unit').id,
                 }),
                 (0, 0, {
                     'account_id': self.company_data['default_account_assets'].id,

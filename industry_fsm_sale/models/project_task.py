@@ -597,7 +597,7 @@ class ProjectTask(models.Model):
                 mapping_uom = self.env['uom.uom'].browse(uom_id)
                 total_amount = 0
                 for timesheet in timesheets:
-                    if timesheet.product_uom_category_id == mapping_uom.category_id and timesheet.product_uom_id != mapping_uom:
+                    if timesheet.product_uom_id != mapping_uom:
                         total_amount += timesheet.product_uom_id._compute_quantity(timesheet.unit_amount, mapping_uom, rounding_method='HALF-UP')
                     else:
                         total_amount += timesheet.unit_amount

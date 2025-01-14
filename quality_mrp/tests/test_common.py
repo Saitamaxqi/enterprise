@@ -16,7 +16,6 @@ class TestQualityMrpCommon(TestQualityCommon):
             'name': 'Drawer',
             'is_storable': True,
             'uom_id': cls.product_uom_id,
-            'uom_po_id': cls.product_uom_id,
             'tracking': 'lot',
         })
         cls.product_id = cls.product.id

@@ -110,7 +110,7 @@ class AccountMoveLine(models.Model):
         between this order and the invoice did not change (otherwise, again,
         the line is put in exception).
         """
-        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        precision = self.env['decimal.precision'].precision_get('Product Unit')
         for invoice_line in self:
             po_line = invoice_line.purchase_line_id
             if po_line:

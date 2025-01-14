@@ -45,19 +45,16 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                     product.default_code,
                     product_category.name               AS product_category,
                     %(uom_name)s                        AS standard_uom,
-                    uom.uom_type                        AS uom_type,
-                    TRUNC(uom.factor, 8)                AS uom_ratio,
+                    TRUNC(CAST(uom.factor AS NUMERIC), 8)                AS uom_ratio,
                     CASE
                         WHEN uom.factor != 0
-                        THEN TRUNC((1.0 / uom.factor), 8)
+                        THEN TRUNC(CAST(1.0 / uom.factor AS NUMERIC), 8)
                         ELSE 0
-                    END                                 AS ratio,
-                    %(base_uom_name)s                   AS base_uom
+                    END                                 AS ratio
                 FROM product_product product
                     LEFT JOIN product_template          ON product_template.id = product.product_tmpl_id
                     LEFT JOIN product_category          ON product_category.id = product_template.categ_id
                     LEFT JOIN uom_uom uom               ON uom.id = product_template.uom_id
-                    LEFT JOIN uom_uom base_uom          ON base_uom.category_id = uom.category_id AND base_uom.uom_type='reference'
                 WHERE product.id in %(encountered_product_ids)s
                 ORDER BY default_code
                 ''',
@@ -143,10 +140,6 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
 
         # Fill 'uoms'.
         uoms = self.env['uom.uom'].browse(list(encountered_product_uom_ids))
-        non_ref_uoms = uoms.filtered(lambda uom: uom.uom_type != 'reference')
-        if non_ref_uoms:
-            # search base UoM for UoM master table
-            uoms |= self.env['uom.uom'].search([('category_id', 'in', non_ref_uoms.category_id.ids), ('uom_type', '=', 'reference')])
         res['uoms'] = uoms
 
         # Fill 'product_vals_list'.

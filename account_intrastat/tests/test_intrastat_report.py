@@ -54,7 +54,6 @@ class TestIntrastatReport(TestAccountReportsCommon):
             'intrastat_code_id': cls.env.ref('account_intrastat.commodity_code_2018_37061020').id,
             'intrastat_supplementary_unit_amount': 1,
             'uom_id': cls.env.ref('uom.product_uom_meter').id,
-            'uom_po_id': cls.env.ref('uom.product_uom_meter').id,
         })
         # A product with the product origin country set to spain
         cls.spanish_rioja = cls.env['product.product'].create({

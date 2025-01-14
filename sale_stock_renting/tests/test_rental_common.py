@@ -23,7 +23,6 @@ class TestRentalCommon(common.TransactionCase):
         cls.product_id = cls.env['product.product'].create({
             'name': 'Test1',
             'uom_id': cls.env.ref('uom.product_uom_unit').id,
-            'uom_po_id': cls.env.ref('uom.product_uom_unit').id,
             'rent_ok': True,
             'is_storable': True,
             'extra_daily': 10.0
@@ -31,7 +30,6 @@ class TestRentalCommon(common.TransactionCase):
         cls.tracked_product_id = cls.env['product.product'].create({
             'name': 'Test2',
             'uom_id': cls.env.ref('uom.product_uom_unit').id,
-            'uom_po_id': cls.env.ref('uom.product_uom_unit').id,
             'rent_ok': True,
             'is_storable': True,
             'tracking': 'serial',

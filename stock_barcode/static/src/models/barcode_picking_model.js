@@ -145,15 +145,6 @@ export default class BarcodePickingModel extends BarcodeModel {
         return super.getEditedLineParams(...arguments);
     }
 
-    getDisplayIncrementPackagingBtn(line) {
-        const packagingQty = line.product_packaging_uom_qty;
-        return (
-            packagingQty &&
-            (!this.getQtyDemand(line) ||
-                this.getQtyDemand(line) >= this.getQtyDone(line) + packagingQty)
-        );
-    }
-
     groupKey(line) {
         return super.groupKey(...arguments) + `_${line.location_dest_id.id}`;
     }
@@ -1268,6 +1259,7 @@ export default class BarcodePickingModel extends BarcodeModel {
         smlData.virtual_id = smlData.dummy_id || previousVirtualId || this._uniqueVirtualId;
         smlData.product_id = this.cache.getRecord("product.product", smlData.product_id);
         smlData.product_uom_id = this.cache.getRecord("uom.uom", smlData.product_uom_id);
+        smlData.packaging_uom_id = smlData.packaging_uom_id && this.cache.getRecord("uom.uom", smlData.packaging_uom_id);
         smlData.location_id = this.cache.getRecord("stock.location", smlData.location_id);
         smlData.location_dest_id = this.cache.getRecord("stock.location", smlData.location_dest_id);
         smlData.lot_id = smlData.lot_id && this.cache.getRecord("stock.lot", smlData.lot_id);
@@ -1275,9 +1267,6 @@ export default class BarcodePickingModel extends BarcodeModel {
             smlData.owner_id && this.cache.getRecord("res.partner", smlData.owner_id);
         smlData.package_id =
             smlData.package_id && this.cache.getRecord("stock.quant.package", smlData.package_id);
-        smlData.product_packaging_id =
-            smlData.product_packaging_id &&
-            this.cache.getRecord("product.packaging", smlData.product_packaging_id);
 
         if (this.reloadingMoveLines) {
             if (prevLine) {
@@ -1933,22 +1922,10 @@ export default class BarcodePickingModel extends BarcodeModel {
     _updateLineQty(line, args) {
         if (args.qty_done) {
             if (args.uom) {
-                // An UoM was passed alongside the quantity, needs to check it's
-                // compatible with the product's UoM.
                 const lineUOM = line.product_uom_id;
-                if (args.uom.category_id !== lineUOM.category_id) {
-                    // Not the same UoM's category -> Can't be converted.
-                    const message = _t(
-                        "Scanned quantity uses %(unit)s as its Unit of Measure (UoM), but it is not compatible with the line's UoM (%(lineUnit)s).",
-                        { unit: args.uom.name, lineUnit: lineUOM.name }
-                    );
-                    return this.notification(message, {
-                        title: _t("Wrong Unit of Measure"),
-                        type: "danger",
-                    });
-                } else if (args.uom.id !== lineUOM.id) {
-                    // Compatible but not the same UoM => Need a conversion.
-                    args.qty_done = (args.qty_done / args.uom.factor) * lineUOM.factor;
+                if (args.uom.factor !== lineUOM.factor) {
+                    // Convert the scanned qty into the product UoM.
+                    args.qty_done = args.qty_done * (args.uom.factor / lineUOM.factor);
                     args.uom = lineUOM;
                 }
             }

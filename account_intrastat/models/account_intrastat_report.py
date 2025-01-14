@@ -283,21 +283,11 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 COALESCE(inv_transport.code, comp_transport.code) AS transport_code,
                 %(system)s,
                 SUM(ROUND(
-                    COALESCE(prod.weight, 0) * account_move_line.quantity / (
-                        CASE WHEN inv_line_uom.category_id IS NULL OR inv_line_uom.category_id = prod_uom.category_id
-                        THEN inv_line_uom.factor ELSE 1 END
-                    ) * (
-                        CASE WHEN prod_uom.uom_type <> 'reference'
-                        THEN prod_uom.factor ELSE 1 END
-                    ),
-                    SCALE(ref_weight_uom.rounding)
+                    CAST(COALESCE(prod.weight, 0) * account_move_line.quantity * inv_line_uom.factor / prod_uom.factor AS numeric),
+                    %(weight_rounding)s
                 )) AS weight,
                 CASE WHEN code.supplementary_unit IS NOT NULL and SUM(prod.intrastat_supplementary_unit_amount) != 0
-                    THEN CAST(SUM(prod.intrastat_supplementary_unit_amount * (
-                        account_move_line.quantity / (
-                            CASE WHEN inv_line_uom.category_id IS NULL OR inv_line_uom.category_id = prod_uom.category_id
-                            THEN inv_line_uom.factor ELSE 1 END
-                        ))) AS numeric)
+                    THEN CAST(SUM(prod.intrastat_supplementary_unit_amount * account_move_line.quantity * inv_line_uom.factor / prod_uom.factor) AS numeric)
                     ELSE NULL END AS supplementary_units,
                 code.supplementary_unit AS supplementary_units_code,
                 -- We double sign the balance to make sure that we keep consistency between invoice/bill and the intrastat report
@@ -339,14 +329,12 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 LEFT JOIN account_intrastat_code comp_transport ON company.intrastat_transport_mode_id = comp_transport.id
                 LEFT JOIN res_country product_country ON product_country.id = account_move_line.intrastat_product_origin_country_id
                 LEFT JOIN res_country partner_country ON partner.country_id = partner_country.id AND partner_country.intrastat IS TRUE
-                LEFT JOIN uom_uom ref_weight_uom on ref_weight_uom.category_id = %(weight_category_id)s and ref_weight_uom.uom_type = 'reference'
                 LEFT JOIN res_currency invoice_currency ON invoice_currency.id = account_move.currency_id
             WHERE
                 %(search_condition)s
                 AND account_move_line.display_type = 'product'
                 AND (account_move_line.price_subtotal != 0 OR account_move_line.price_unit * account_move_line.quantity != 0)
                 AND (company_country.id != country.id OR country.id IS NULL)
-                AND ref_weight_uom.active
                 %(product_type_condition)s
                 %(vat_condition)s
                 %(country_condition)s
@@ -383,7 +371,7 @@ class AccountIntrastatReportHandler(models.AbstractModel):
             table_references=report_query.from_clause,
             currency_table_join=report._currency_table_aml_join(options),
             country_table_join=query_params['country_table_join'],
-            weight_category_id=self.env['ir.model.data']._xmlid_to_res_id('uom.product_uom_categ_kgm'),
+            weight_rounding=self.env['decimal.precision'].precision_get('Stock Weight'),
             # where
             search_condition=report_query.where_clause,
             product_type_condition=query_params['product_type_condition'],
@@ -506,7 +494,7 @@ class AccountIntrastatReportHandler(models.AbstractModel):
     def _get_export_groupby_clause(self):
         return SQL("""country.id, transaction.id, company_region.id, code.id, inv_incoterm.id, comp_incoterm.id,
              inv_transport.id, comp_transport.id, product_country.id, account_move_line.id, account_move.id,
-             inv_line_uom.factor, prod_uom.id, ref_weight_uom.rounding, partner.id, prod.id, prodt.id""")
+             inv_line_uom.factor, prod_uom.id, partner.id, prod.id, prodt.id""")
 
     ####################################################
     # ACTIONS

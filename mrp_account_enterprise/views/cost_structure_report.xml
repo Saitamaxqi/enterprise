@@ -53,7 +53,7 @@
                                         res-model="product.product"/>
                                 </td>
                                 <td class="text-end">
-                                    <span t-esc="m['qty']" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/>
+                                    <span t-esc="m['qty']" t-options='{"widget": "float", "decimal_precision": "Product Unit"}'/>
                                     <span t-esc="m['product_id'].uom_id.name"/>
                                 </td>
                                 <td class="text-end">

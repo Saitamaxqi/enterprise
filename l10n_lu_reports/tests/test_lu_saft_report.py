@@ -205,7 +205,6 @@ class TestLuSaftReport(TestSaftReport):
                         <UOMTable>
                             <UOMTableEntry>
                                 <UnitOfMeasure>Units</UnitOfMeasure>
-                                <Description>Unit</Description>
                             </UOMTableEntry>
                         </UOMTable>
                         <Products>
@@ -213,7 +212,7 @@ class TestLuSaftReport(TestSaftReport):
                                 <ProductCode>PA</ProductCode>
                                 <ProductGroup>Test Category</ProductGroup>
                                 <Description>product_a</Description>
-                                <UOMBase>Units</UOMBase>
+                                <UOMStandard>Units</UOMStandard>
                             </Product>
                         </Products>
                         <Owners>
