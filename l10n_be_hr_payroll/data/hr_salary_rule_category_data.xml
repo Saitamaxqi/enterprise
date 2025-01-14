@@ -216,4 +216,16 @@
         <field name="code">VOUCHERS</field>
         <field name="country_id" ref="base.be"/>
     </record>
+
+    <record id="hr_salary_rule_category_employment_bonus_A" model="hr.salary.rule.category">
+        <field name="name">Employment Bonus (Volet A)</field>
+        <field name="code">EmpBonus.A</field>
+        <field name="country_id" ref="base.be"/>
+    </record>
+
+    <record id="hr_salary_rule_category_employment_bonus_B" model="hr.salary.rule.category">
+        <field name="name">Employment Bonus (Volet B)</field>
+        <field name="code">EmpBonus.B</field>
+        <field name="country_id" ref="base.be"/>
+    </record>
 </odoo>

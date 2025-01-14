@@ -902,12 +902,9 @@ class HrPayslip(models.Model):
         self.ensure_one()
         categories = localdict['categories']
         if self.date_from >= date(2024, 4, 1):
-            bonus_volet_A = self._get_employment_bonus_employees_volet_A(localdict)
-            bonus_volet_B = self._get_employment_bonus_employees_volet_B(localdict)
+            bonus_volet_A = localdict['result_rules']['EmpBonus.A']['total']
+            bonus_volet_B = localdict['result_rules']['EmpBonus.B']['total']
             result = bonus_volet_A + bonus_volet_B
-            # Nasty lazy dev
-            localdict['result_rules']['bonus_volet_A']['total'] = bonus_volet_A
-            localdict['result_rules']['bonus_volet_B']['total'] = bonus_volet_B
             return min(result, -categories['ONSS'])
 
         bonus_basic_amount = self._rule_parameter('work_bonus_basic_amount')
@@ -1047,8 +1044,8 @@ class HrPayslip(models.Model):
         categories = localdict['categories']
         if categories['EmpBonus']:
             if self.date_from >= date(2024, 4, 1):
-                bonus_volet_A = localdict['result_rules']['bonus_volet_A']['total']
-                bonus_volet_B = localdict['result_rules']['bonus_volet_B']['total']
+                bonus_volet_A = localdict['result_rules']['EmpBonus.A']['total']
+                bonus_volet_B = localdict['result_rules']['EmpBonus.B']['total']
                 reduction = bonus_volet_A * 0.3314 + bonus_volet_B * 0.5254
             else:
                 reduction = categories['EmpBonus'] * 0.3314

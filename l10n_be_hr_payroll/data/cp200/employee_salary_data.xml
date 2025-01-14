@@ -249,6 +249,44 @@ result = min(abs(result_rules['ONSS']['total']), result)
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
     </record>
 
+    <record id="cp200_employees_salary_employment_bonus_volet_A" model="hr.salary.rule">
+        <field name="category_id" ref="hr_salary_rule_category_employment_bonus_A"/>
+        <field name="name">Employment Bonus (Volet A: 33.14%)</field>
+        <field name="code">EmpBonus.A</field>
+        <field name="sequence">42</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+wage = result_rules['SALARY']['total']
+result = payslip.date_from >= date(2024, 4, 1) and categories['BASIC'] and wage &lt;= payslip._rule_parameter('work_bonus_reference_wage_high')
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = payslip._get_employment_bonus_employees_volet_A(localdict)
+onss = result_rules['ONSS']['total'] + result_rules['ONSSRESTRUCTURING']['total']
+result = min(abs(onss), result)
+        </field>
+        <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
+    </record>
+
+    <record id="cp200_employees_salary_employment_bonus_volet_B" model="hr.salary.rule">
+        <field name="category_id" ref="hr_salary_rule_category_employment_bonus_B"/>
+        <field name="name">Employment Bonus (Volet B: 52.54%)</field>
+        <field name="code">EmpBonus.B</field>
+        <field name="sequence">42</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+wage = result_rules['SALARY']['total']
+result = payslip.date_from >= date(2024, 4, 1) and categories['BASIC'] and wage &lt;= payslip._rule_parameter('work_bonus_reference_wage_high')
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = payslip._get_employment_bonus_employees_volet_B(localdict)
+onss = result_rules['ONSS']['total'] + result_rules['ONSSRESTRUCTURING']['total'] - result_rules['EmpBonus.A']['total']
+result = min(abs(onss), result)
+        </field>
+        <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
+    </record>
+
     <record id="cp200_employees_salary_employment_bonus_employees" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll_head_employment_bonus"/>
         <field name="name">Employment Bonus</field>
