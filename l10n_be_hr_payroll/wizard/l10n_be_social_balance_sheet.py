@@ -2,6 +2,7 @@
 
 import base64
 import collections
+import logging
 
 from io import BytesIO
 from dateutil.relativedelta import relativedelta
@@ -9,6 +10,8 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools.misc import xlsxwriter, format_date
+
+_logger = logging.getLogger(__name__)
 
 
 class L10nBeSocialBalanceSheet(models.TransientModel):
@@ -171,6 +174,8 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 ['GROSS', 'CAR.PRIV', 'ONSSEMPLOYER', 'MEAL_V_EMP', 'PUB.TRANS', 'REP.FEES', 'IP.PART'], vals_list=['total', 'quantity'])
             for payslip in payslips:
                 gender = payslip.employee_id.gender
+                if gender not in ['male', 'female']:
+                    raise UserError(_('Please configure a gender (either male or female) for the following employee: %s', payslip.employee_id.name))
                 calendar = payslip.contract_id.resource_calendar_id
                 contract_type = 'full' if calendar.full_time_required_hours == calendar.hours_per_week else 'part'
                 gross = round(line_values['GROSS'][payslip.id]['total'], 2) - round(line_values['IP.PART'][payslip.id]['total'], 2)
@@ -231,6 +236,17 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             }
 
             for contract in end_contracts:
+                if contract.contract_type_id not in mapped_types:
+                    _logger.info(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CDI, CDD. Replacement, For a clearly defined work", contract_name=contract.name, employee=contract.employee_id.name))
+                    continue
+                structure_type = contract.structure_type_id
+                if cip and contract.contract_type_id == cip:
+                    # CIP Contracts are considered as trainees
+                    structure_type = cp200_students
+                if structure_type not in mapped_categories:
+                    _logger.info(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CP200 Employees or Student", contract_name=contract.name, employee=contract.employee_id.name))
+                    continue
+
                 gender = contract.employee_id.gender
                 calendar = contract.resource_calendar_id
                 contract_time = 'full' if calendar.full_time_required_hours == calendar.hours_per_week else 'part'
@@ -238,8 +254,6 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 workers_data['105'][contract_time] += 1
                 workers_data['105']['fte'] += 1 * calendar.work_time_rate / 100.0
 
-                if contract.contract_type_id not in mapped_types:
-                    raise UserError(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CDI, CDD. Replacement, For a clearly defined work", contract_name=contract.name, employee=contract.employee_id.name))
                 contract_type = mapped_types[contract.contract_type_id]
                 workers_data[contract_type][contract_time] += 1
                 workers_data[contract_type]['fte'] += 1 * calendar.work_time_rate / 100.0
@@ -253,13 +267,6 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 workers_data[gender_certificate_code][contract_time] += 1
                 workers_data[gender_certificate_code]['fte'] += 1 * calendar.work_time_rate / 100.0
 
-                structure_type = contract.structure_type_id
-                if cip and contract.contract_type_id == cip:
-                    # CIP Contracts are considered as trainees
-                    structure_type = cp200_students
-
-                if structure_type not in mapped_categories:
-                    raise UserError(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CP200 Employees or Student", contract_name=contract.name, employee=contract.employee_id.name))
                 category_code = mapped_categories[structure_type]
                 workers_data[category_code][contract_time] += 1
                 workers_data[category_code]['fte'] += 1 * calendar.work_time_rate / 100.0
@@ -297,6 +304,9 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     payslip = employee_payslips
                 employee = payslip.employee_id
                 contract = payslip.contract_id
+                if contract.contract_type_id not in in_mapped_types:
+                    _logger.info(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CDI, CDD. Replacement, For a clearly defined work", contract_name=contract.name, employee=contract.employee_id.name))
+                    continue
                 calendar = contract.resource_calendar_id
                 contract_time = 'full' if calendar.full_time_required_hours == calendar.hours_per_week else 'part'
                 if employee not in in_employees and employee.first_contract_date and (date_from <= employee.first_contract_date <= date_to):
@@ -305,8 +315,6 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     workers_data['205'][contract_time] += 1
                     workers_data['205']['fte'] += 1 * calendar.work_time_rate / 100.0
 
-                    if contract.contract_type_id not in in_mapped_types:
-                        raise UserError(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CDI, CDD. Replacement, For a clearly defined work", contract_name=contract.name, employee=contract.employee_id.name))
                     contract_type = in_mapped_types[contract.contract_type_id]
                     workers_data[contract_type][contract_time] += 1
                     workers_data[contract_type]['fte'] += 1 * calendar.work_time_rate / 100.0
@@ -317,8 +325,6 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     workers_data['305'][contract_time] += 1
                     workers_data['305']['fte'] += 1 * calendar.work_time_rate / 100.0
 
-                    if contract.contract_type_id not in out_mapped_types:
-                        raise UserError(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CDI, CDD. Replacement, For a clearly defined work", contract_name=contract.name, employee=contract.employee_id.name))
                     contract_type = out_mapped_types[contract.contract_type_id]
                     workers_data[contract_type][contract_time] += 1
                     workers_data[contract_type]['fte'] += 1 * calendar.work_time_rate / 100.0
