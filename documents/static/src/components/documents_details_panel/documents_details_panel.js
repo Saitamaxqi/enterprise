@@ -9,8 +9,6 @@ import { Many2ManyTagsField } from "@web/views/fields/many2many_tags/many2many_t
 
 import { Component, onWillRender, reactive } from "@odoo/owl";
 
-const COMPANY_ROOT_OWNER_ID = 1;
-
 export class DocumentsDetailsPanel extends Component {
     static components = {
         CharField,
@@ -68,8 +66,8 @@ export class DocumentsDetailsPanel extends Component {
     get rootFolderPlaceholder() {
         return this.props.record.data?.owner_id[0] === user.userId
             ? _t("My Drive")
-            : this.props.record.data?.owner_id[0] === COMPANY_ROOT_OWNER_ID
-                ? _t("Company")
-                : _t("Shared with me");
+            : this.props.record.data?.owner_id
+                ? _t("Shared with me")
+                : _t("Company");
     }
 }
