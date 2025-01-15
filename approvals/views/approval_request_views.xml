@@ -332,7 +332,7 @@
     <menuitem
         id="approvals_category_menu_config"
         parent="approvals_menu_config"
-        name="Approvals Types"
+        name="Approval Categories"
         action="approval_category_action"
         groups="group_approval_manager"
         sequence="10"/>

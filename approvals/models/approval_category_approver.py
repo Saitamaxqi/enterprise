@@ -9,12 +9,12 @@ class ApprovalCategoryApprover(models.Model):
         To know whether an approver for this category is required or not
     """
     _name = 'approval.category.approver'
-    _description = 'Approval Type Approver'
+    _description = 'Approval Category Approver'
     _rec_name = 'user_id'
     _order = 'sequence'
 
     sequence = fields.Integer('Sequence', default=10)
-    category_id = fields.Many2one('approval.category', string='Approval Type', ondelete='cascade', required=True)
+    category_id = fields.Many2one('approval.category', string='Approval Category', ondelete='cascade', required=True)
     company_id = fields.Many2one('res.company', related='category_id.company_id')
     user_id = fields.Many2one('res.users', string='User', ondelete='cascade', required=True,
         check_company=True, domain="[('company_ids', 'in', company_id), ('id', 'not in', existing_user_ids)]")
