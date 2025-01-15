@@ -12,7 +12,7 @@
     <record id="document_internal_folder" model="documents.document" forcecreate="0">
         <field name="type">folder</field>
         <field name="access_internal">view</field>
-        <field name="name">Internal</field>
+        <field name="name">Administrative</field>
     </record>
 
     <record id="document_finance_folder" model="documents.document" forcecreate="0">
