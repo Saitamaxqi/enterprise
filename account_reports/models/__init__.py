@@ -23,6 +23,7 @@ from . import res_config_settings
 from . import chart_template
 from . import account_journal_dashboard
 from . import ir_actions
+from . import ir_ui_menu
 from . import account_sales_report
 from . import account_move
 from . import account_tax
