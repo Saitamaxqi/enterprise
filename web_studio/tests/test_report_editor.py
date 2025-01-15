@@ -1442,3 +1442,23 @@ class TestReportEditorUIUnit(HttpCase):
            </data>
          </data>
         """)
+
+    def test_edit_header_only_company(self):
+        external_layout = self.env["ir.ui.view"]._get("web.external_layout_standard")
+        with self.with_user("admin"):
+            self.env.user.company_id.external_report_layout_id = external_layout
+        self.main_view_document.arch = '''
+            <t t-name="web_studio.test_report_document">
+                <t t-call="web.external_layout">
+                    <div><p t-field="doc.name" /></div>
+                    <p><br/></p>
+                </t>
+            </t>
+        '''
+
+        self.start_tour(self.tour_url, "web_studio.test_edit_header_only_company", login="admin")
+        combined = external_layout._get_combined_arch()
+        added_field = combined.xpath("//span[hasclass('studio-added')]")[0]
+        added_field = added_field[0]
+        self.assertTrue(added_field.get("t-field").startswith("company."))
+        self.assertEqual(added_field.text, "studio company id")

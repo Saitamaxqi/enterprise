@@ -1552,3 +1552,45 @@ registry.category("web_tour.tours").add("web_studio.test_do_not_delete_unspecial
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio.test_edit_header_only_company", {
+    steps: () => [
+        {
+            trigger: "body :iframe .odoo-editor-editable#wrapwrap .header img",
+            run() {
+                const el = this.anchor;
+                const span = el.ownerDocument.createElement("span");
+                span.classList.add("studio-added");
+                el.insertAdjacentElement("afterend", span);
+                openEditorPowerBox(span);
+            },
+        },
+        {
+            trigger: ".o-we-powerbox .o-we-command:contains(Insert a field)",
+            run: "click",
+        },
+        {
+            trigger: ".o_model_field_selector_popover_item_name:contains(Company ID)",
+            run: "click",
+        },
+        {
+            trigger: ".o_model_field_selector_default_value_input input",
+            run: "edit studio company id",
+        },
+        {
+            trigger: ".o_model_field_selector_popover button:contains(Insert)",
+            run: "click",
+        },
+        {
+            trigger:
+                "body :iframe .odoo-editor-editable#wrapwrap .header [t-field]:contains(studio company id)",
+        },
+        {
+            trigger: ".o-web-studio-save-report.btn-primary",
+            run: "click",
+        },
+        {
+            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+        },
+    ],
+});

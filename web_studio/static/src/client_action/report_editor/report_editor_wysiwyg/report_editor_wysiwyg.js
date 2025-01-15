@@ -485,6 +485,13 @@ export class ReportEditorWysiwyg extends Component {
     }
 
     getUserCommands() {
+        const isAvailable = (selection) => {
+            const { anchorNode } = selection;
+            const { availableQwebVariables } = this.getQwebVariables(
+                anchorNode.nodeType === 1 ? anchorNode : anchorNode.parentElement
+            );
+            return Object.keys(availableQwebVariables || {}).length > 0;
+        };
         return [
             {
                 id: "insertField",
@@ -492,6 +499,7 @@ export class ReportEditorWysiwyg extends Component {
                 description: _t("Insert a field"),
                 icon: "fa-magic",
                 run: this.insertField.bind(this),
+                isAvailable,
             },
             {
                 id: "insertDynamicTable",
@@ -499,6 +507,7 @@ export class ReportEditorWysiwyg extends Component {
                 description: _t("Insert a table based on a relational field."),
                 icon: "fa-magic",
                 run: this.insertTableX2Many.bind(this),
+                isAvailable,
             },
         ];
     }
@@ -516,29 +525,47 @@ export class ReportEditorWysiwyg extends Component {
         ];
     }
 
-    getFieldPopoverParams() {
-        const odooEditor = this.editor;
-        const doc = odooEditor.document;
-
-        const resModel = this.reportEditorModel.reportResModel;
-        const docSelection = odooEditor.shared.selection.getEditableSelection();
-        const { anchorNode } = docSelection;
-        const isEditingFooterHeader =
-            !!(doc.querySelector(".header") && doc.querySelector(".header").contains(anchorNode)) ||
-            !!(doc.querySelector(".footer") && doc.querySelector(".footer").contains(anchorNode));
-
-        const popoverAnchor = anchorNode.nodeType === 1 ? anchorNode : anchorNode.parentElement;
-
-        const nodeOeContext = popoverAnchor.closest("[oe-context]");
-        const availableQwebVariables =
+    getQwebVariables(element) {
+        if (!element) {
+            return {};
+        }
+        const nodeOeContext = element.closest("[oe-context]");
+        let availableQwebVariables =
             nodeOeContext && JSON.parse(nodeOeContext.getAttribute("oe-context"));
+
+        const isInHeaderFooter = closestElement(element, ".header,.footer");
+        let initialQwebVar;
+        if (isInHeaderFooter) {
+            const companyVars = Object.entries(availableQwebVariables).filter(
+                ([k, v]) => v.model === "res.company"
+            );
+            initialQwebVar = companyVars[0]?.[0];
+            availableQwebVariables = Object.fromEntries(companyVars);
+        } else {
+            initialQwebVar = getOrderedTAs(element)[0] || "";
+        }
+        return {
+            isInHeaderFooter,
+            availableQwebVariables,
+            initialQwebVar,
+        };
+    }
+
+    getFieldPopoverParams() {
+        const resModel = this.reportEditorModel.reportResModel;
+        const odooEditor = this.editor;
+
+        const { anchorNode } = odooEditor.shared.selection.getEditableSelection();
+        const popoverAnchor = anchorNode.nodeType === 1 ? anchorNode : anchorNode.parentElement;
+        const { availableQwebVariables, initialQwebVar, isInHeaderFooter } =
+            this.getQwebVariables(popoverAnchor);
 
         return {
             popoverAnchor,
             props: {
                 availableQwebVariables,
-                initialQwebVar: getOrderedTAs(popoverAnchor)[0] || "",
-                isEditingFooterHeader,
+                initialQwebVar,
+                isEditingFooterHeader: !!isInHeaderFooter,
                 resModel,
             },
         };
@@ -601,8 +628,8 @@ export class ReportEditorWysiwyg extends Component {
 
                 this.editor.shared.dom.insert(table);
                 this.editor.shared.selection.setSelection({
-                  anchorNode: td,
-                  focusOffset: nodeSize(td),
+                    anchorNode: td,
+                    focusOffset: nodeSize(td),
                 });
                 this.editor.shared.history.addStep();
             },
