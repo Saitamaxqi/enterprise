@@ -49,13 +49,9 @@ class Pos_Preparation_DisplayOrder(models.Model):
 
             if order.table_id:
                 table = order.table_id
-                parents = table.get_all_parents()
-                name = ""
-                for parent in parents:
-                    if not name:
-                        name = f"T{parent.table_number}"
-                    else:
-                        name += f" & {parent.table_number}"
+                name = f"T{table.table_number}"
+                if table.parent_id:
+                    name += f" &{table.parent_id.name}"
                 return name
 
         return super()._get_order_name()
