@@ -410,7 +410,6 @@ class AccountMove(models.Model):
 
         if response and response.get('company_data'):
             country_id = self.env['res.country'].search([('code', '=', response.get('company_data').get('country_code',''))])
-            state_id = self.env['res.country.state'].search([('name', '=', response.get('company_data').get('state_name',''))])
             resp_values = response.get('company_data')
 
             values = {field: resp_values[field] for field in ('name', 'vat', 'street', 'city', 'zip', 'phone', 'email', 'partner_gid') if field in resp_values}
@@ -421,6 +420,10 @@ class AccountMove(models.Model):
 
             if country_id:
                 values['country_id'] = country_id.id
+                state_id = self.env['res.country.state'].search([
+                    ('name', '=', response.get('company_data').get('state_name','')),
+                    ('country_id', '=', country_id.id),
+                ], limit = 1)
                 if state_id:
                     values['state_id'] = state_id.id
             return values
