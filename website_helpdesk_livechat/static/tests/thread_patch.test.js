@@ -68,6 +68,6 @@ test("canned response should work in helpdesk ticket", async () => {
     await click(".o-mail-Chatter button", { text: "Send message" });
     await contains(".o-mail-Composer-suggestion strong", { count: 0, text: "hello" });
 
-    await insertText(".o-mail-Composer-input", ":");
+    await insertText(".o-mail-Composer-input", "::");
     await contains(".o-mail-Composer-suggestion strong", { text: "hello" });
 });
