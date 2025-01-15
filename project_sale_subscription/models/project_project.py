@@ -146,7 +146,7 @@ class ProjectProject(models.Model):
             ('is_subscription', '=', True),
         ])
         display_load_more = False
-        subscriptions_lines = self.env['sale.order.line'].search(offset=offset, limit=limit + 1, domain=[('order_id', 'in', all_subscription_ids)])
+        subscriptions_lines = self.env['sale.order.line'].search(offset=offset, limit=limit + 1, domain=[('order_id', 'in', all_subscription_ids), ('display_type', '=', False)])
         if len(subscriptions_lines) > limit:
             subscriptions_lines = subscriptions_lines - subscriptions_lines[limit]
             display_load_more = True
