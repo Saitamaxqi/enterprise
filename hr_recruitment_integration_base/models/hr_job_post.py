@@ -72,10 +72,10 @@ class HrJobPost(models.Model):
             {
                 'job_id': post.job_id.id,
                 'apply_method': post.apply_method,
-                'platforms_ids': [(6, 0, post.platform_id.ids)],
+                'platform_ids': [(6, 0, post.platform_id.ids)],
                 'campaign_start_date': post.campaign_start_date,
                 'campaign_end_date': post.campaign_end_date,
-                'post_html': post.post,
+                'post_html': post.post_html,
                 'post_ids': post.ids,
                 post._contact_point_to_vector(): post.apply_vector,
             } for post in posts_to_start
