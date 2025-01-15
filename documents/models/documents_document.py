@@ -1043,7 +1043,7 @@ class DocumentsDocument(models.Model):
             # first pinned action should be displayed first
             last_action = self.env['ir.embedded.actions'].search(
                 [], order='sequence DESC', limit=1)
-            self.env['ir.embedded.actions'].create({
+            embedded_action = self.env['ir.embedded.actions'].create({
                 'name': action.name,
                 'parent_action_id': self.env.ref("documents.document_action").id,
                 'action_id': action.id,
@@ -1052,6 +1052,9 @@ class DocumentsDocument(models.Model):
                 'groups_ids': groups_ids,
                 'sequence': last_action.sequence + 1 if last_action else 1,
             })
+            action_name_translations = action._fields['name']._get_stored_translations(action)
+            for lang, translation in action_name_translations.items():
+                embedded_action.with_context(lang=lang).name = translation
 
         return self.get_documents_actions(folder_id)
 
