@@ -197,6 +197,7 @@ export function defineStudioEnvironment() {
             res_model: "partner",
             type: "ir.actions.act_window",
             xml_id: "partner_action_1",
+            view_mode: "kanban",
             views: [
                 [1, "kanban"],
                 [2, "list"],
