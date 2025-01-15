@@ -881,55 +881,55 @@
                   "content": "=_t(\"Technical name\")"
               },
               "C31": {
-                  "content": "=_t(\"asset_receivable\")"
+                  "content": "asset_receivable"
               },
               "C32": {
-                  "content": "=_t(\"asset_cash\")"
+                  "content": "asset_cash"
               },
               "C33": {
-                  "content": "=_t(\"asset_current\")"
+                  "content": "asset_current"
               },
               "C34": {
-                  "content": "=_t(\"asset_prepayments\")"
+                  "content": "asset_prepayments"
               },
               "C35": {
-                  "content": "=_t(\"asset_non_current\")"
+                  "content": "asset_non_current"
               },
               "C36": {
-                  "content": "=_t(\"asset_fixed\")"
+                  "content": "asset_fixed"
               },
               "C37": {
-                  "content": "=_t(\"liability_payable\")"
+                  "content": "liability_payable"
               },
               "C38": {
-                  "content": "=_t(\"liability_credit_card\")"
+                  "content": "liability_credit_card"
               },
               "C39": {
-                  "content": "=_t(\"liability_current\")"
+                  "content": "liability_current"
               },
               "C40": {
-                  "content": "=_t(\"liability_non_current\")"
+                  "content": "liability_non_current"
               },
               "C41": {
-                  "content": "=_t(\"equity\")"
+                  "content": "equity"
               },
               "C42": {
-                  "content": "=_t(\"income\")"
+                  "content": "income"
               },
               "C43": {
-                  "content": "=_t(\"income_other\")"
+                  "content": "income_other"
               },
               "C44": {
-                  "content": "=_t(\"expense\")"
+                  "content": "expense"
               },
               "C45": {
-                  "content": "=_t(\"expense_depreciation\")"
+                  "content": "expense_depreciation"
               },
               "C46": {
-                  "content": "=_t(\"expense_direct_cost\")"
+                  "content": "expense_direct_cost"
               },
               "C47": {
-                  "content": "=_t(\"off_balance\")"
+                  "content": "off_balance"
               },
               "E1": {
                   "content": "=_t(\"Month-Year\")"
