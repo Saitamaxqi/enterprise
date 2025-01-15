@@ -8,7 +8,7 @@
             </div>
             <t t-set-slot="footer">
                 <button class="btn btn-primary" t-if="props.onConfirmAll" t-on-click="props.onConfirmAll" t-att-disabled="footerState.signAllButtonsDisabled">Sign all</button>
-                <button class="btn btn-secondary" t-on-click="props.onConfirm" t-att-disabled="footerState.buttonsDisabled">Sign</button>
+                <button class="btn btn-secondary" t-on-click="props.onConfirm" t-att-disabled="footerState.signButtonDisabled">Sign</button>
                 <button class="btn btn-secondary" t-on-click="props.close">Cancel</button>
             </t>
         </Dialog>

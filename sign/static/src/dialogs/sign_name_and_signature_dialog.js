@@ -72,6 +72,7 @@ export class SignNameAndSignature extends NameAndSignature {
     onSignatureAreaClick() {
         if (this.state.signMode === "draw") {
             this.props.signature.signatureChanged = true;
+            this.props.onSignatureChange(this.state.signMode);
         }
     }
 
@@ -132,7 +133,7 @@ export class SignNameAndSignatureDialog extends Component {
 
     setup() {
         this.footerState = useState({
-            buttonsDisabled: !this.props.signature.name,
+            signButtonDisabled: !this.props.signature.name || !this.props.signature.signatureChanged,
             signAllButtonsDisabled: !this.props.signature.name,
         });
     }
@@ -161,21 +162,15 @@ export class SignNameAndSignatureDialog extends Component {
     }
 
     onNameChange(name) {
-        const isNameEmpty = !name;
-        if (this.footerState.buttonsDisabled !== isNameEmpty) {
-            this.footerState.buttonsDisabled = isNameEmpty;
-        }
-        if (this.footerState.signAllButtonsDisabled !== isNameEmpty) {
-            this.footerState.signAllButtonsDisabled = isNameEmpty;
-        }
+        const isNameFilled = Boolean(name);
+        this.footerState.signButtonDisabled = !isNameFilled;
+        this.footerState.signAllButtonsDisabled = !isNameFilled;
     }
 
     onSignatureChange(signMode) {
         const signature = this.props.signature;
-        const buttonsDisabled =
-            !signature.name || (signature.isSignatureEmpty && (!signMode || signMode !== "auto"));
-        if (this.footerState.buttonsDisabled !== buttonsDisabled) {
-            this.footerState.buttonsDisabled = buttonsDisabled;
-        }
+        const isNotValidSignature = !signature.name || (signature.isSignatureEmpty && (!signMode || signMode !== "auto"));
+        this.footerState.signAllButtonsDisabled = isNotValidSignature;
+        this.footerState.signButtonDisabled = isNotValidSignature || !signature.signatureChanged;
     }
 }
