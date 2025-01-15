@@ -28,8 +28,8 @@ class HrExpenseSheet(models.Model):
         :rtype: set[int, bool]
         """
         return {
-            country.id if country else False
-            for (country,) in self.env['hr.payroll.structure']._read_group(
+            country_sudo.id if country_sudo else False
+            for (country_sudo,) in self.env['hr.payroll.structure'].sudo()._read_group(
                 domain=[('rule_ids.code', '=', 'EXPENSES')],
                 groupby=['country_id'],
             )

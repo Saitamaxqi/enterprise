@@ -724,3 +724,11 @@ class TestPayrollExpense(TestExpenseCommon, TestHrPayrollAccountCommon):
 
         payslip.move_id.with_user(user).button_draft()
         payslip.move_id.with_user(user).unlink()
+
+    @freeze_time('2025-01-01')
+    def test_report_in_next_payslip_manager_rights(self):
+        with self.with_user(self.expense_user_manager.login):
+            sheet = self.create_expense_report({'accounting_date': '2024-01-15'})
+            sheet.action_submit_sheet()
+            sheet.action_approve_expense_sheets()
+            sheet.action_report_in_next_payslip()
