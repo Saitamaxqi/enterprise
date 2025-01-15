@@ -411,4 +411,4 @@ class AccountJournal(models.Model):
     def _toggle_asynchronous_fetching_cron(self):
         cron = self.env.ref('account_online_synchronization.online_sync_cron_waiting_synchronization', raise_if_not_found=False)
         if cron:
-            cron.toggle(model=self._name, domain=[('account_online_account_id', '!=', False)])
+            cron.sudo().toggle(model=self._name, domain=[('account_online_account_id', '!=', False)])
