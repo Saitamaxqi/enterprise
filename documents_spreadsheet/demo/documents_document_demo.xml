@@ -3,7 +3,8 @@
     <data noupdate="1">
     <record id="spreadsheet_demo_pipeline" model="documents.document" forcecreate="0">
         <field name="name">Pipeline dashboard</field>
-        <field name="folder_id" eval="ref('documents_spreadsheet.document_spreadsheet_folder')"/>
+        <field name="folder_id" eval="ref('documents.document_internal_folder')"/>
+        <field name="access_internal">edit</field>
         <field name="handler">spreadsheet</field>
         <field name="mimetype">application/o-spreadsheet</field>
         <field name="datas" type="base64" file="documents_spreadsheet/demo/files/pipeline_dashboard.json"/>
@@ -11,7 +12,8 @@
     </record>
     <record id="spreadsheet_demo_sales_commission" model="documents.document" forcecreate="0">
         <field name="name">Sales Commissions</field>
-        <field name="folder_id" eval="ref('documents_spreadsheet.document_spreadsheet_folder')"/>
+        <field name="folder_id" eval="ref('documents.document_internal_folder')"/>
+        <field name="access_internal">edit</field>
         <field name="handler">spreadsheet</field>
         <field name="mimetype">application/o-spreadsheet</field>
         <field name="datas" type="base64" file="documents_spreadsheet/demo/files/sales_commission.json"/>
