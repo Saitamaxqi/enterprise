@@ -34,19 +34,24 @@ export class PaymentIngenico extends PaymentInterfaceIot {
     onTerminalMessageReceived(data, line) {
         this._setCardAndReceipt(data, line);
         if (data.Error) {
-            this.env.services.dialog.add(AlertDialog, {
-                title: _t("Payment terminal error"),
-                body: _t(data.Error),
-            });
+            const isCancellation = data.Error === "Canceled";
+            if (!isCancellation) {
+                this.env.services.dialog.add(AlertDialog, {
+                    title: _t("Payment terminal error"),
+                    body: _t(data.Error),
+                });
+            }
             this._resolvePayment?.(false);
-            this._resolveCancellation?.();
+            this._resolveCancellation?.(isCancellation);
         } else if (data.Response === "Approved") {
             this._resolvePayment?.(true);
         } else if (["WaitingForCard", "WaitingForPin"].includes(data.Stage)) {
-            line.setPaymentStatus("waitingCard");
+            if (line.payment_status !== "waitingCancel") {
+                line.setPaymentStatus("waitingCard");
+            }
         }
-        if (["Finished", "None"].includes(data.Stage)) {
-            this._resolveCancellation?.();
+        if (["Finished"].includes(data.Stage)) {
+            this._resolveCancellation?.(true);
         }
     }
 

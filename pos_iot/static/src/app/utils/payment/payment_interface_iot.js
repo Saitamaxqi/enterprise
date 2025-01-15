@@ -50,7 +50,8 @@ export class PaymentInterfaceIot extends PaymentInterface {
      * The method should call:
      * - `this._resolvePayment(true)` for a successful payment
      * - `this._resolvePayment(false)` for a failed payment
-     * - `this._resolveCancellation()` for a cancellation
+     * - `this._resolveCancellation(true)` for cancellation
+     * - `this._resolveCancellation(false)` for failed cancellation
      * @param {object} data
      * The message data received from the terminal.
      * @param {PosPayment} line

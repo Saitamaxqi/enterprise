@@ -38,15 +38,14 @@ export class PaymentSix extends PaymentInterfaceIot {
         this._setCardAndReceipt(data, line);
         if (data.Stage === "Cancel") {
             // Result of a cancel request
-            this._resolveCancellation?.();
             if (data.Error) {
-                // Cancel failed, wait for transaction response
-                line.setPaymentStatus("waitingCard");
+                this._resolveCancellation?.(false);
                 this.env.services.dialog.add(AlertDialog, {
                     title: _t("Transaction could not be cancelled"),
                     body: data.Error,
                 });
             } else {
+                this._resolveCancellation?.(true);
                 this._resolvePayment?.(false);
             }
         } else if (data.Disconnected) {
