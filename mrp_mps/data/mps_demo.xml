@@ -22,8 +22,6 @@
             <field name="product_id" ref="product.product_product_12"/>
             <field name="warehouse_id" ref="stock.warehouse0"/>
             <field name="company_id" ref="base.main_company"/>
-            <field name="enable_max_replenish">True</field>
-            <field name="max_to_replenish_qty">50</field>
             <field name="forecast_target_qty">15</field>
         </record>
 
@@ -31,8 +29,6 @@
             <field name="product_id" ref="product.product_product_3"/>
             <field name="warehouse_id" ref="stock.warehouse0"/>
             <field name="company_id" ref="base.main_company"/>
-            <field name="enable_max_replenish">True</field>
-            <field name="max_to_replenish_qty">20</field>
             <field name="forecast_target_qty">5</field>
         </record>
 

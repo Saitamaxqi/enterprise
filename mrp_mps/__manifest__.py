@@ -20,7 +20,7 @@ orders or purchase orders.
 
 You need to choose the products you want to add to the report.  You can choose
 the period for the report: day, week, month, ...  It is also possible to define
-safety stock, min/max to supply and to manually override the amount you will
+safety stock, minimum to supply and to manually override the amount you will
 procure.
 """,
     'data': [

@@ -36,13 +36,6 @@
                             <field name="min_to_replenish_qty"/>
                             <field name="product_uom_id" groups="uom.group_uom" readonly="1"/>
                         </div>
-                        <label for="max_to_replenish_qty"/>
-                        <div class="o_row">
-                            <field name="enable_max_replenish" no_label="1"/>
-                            <span invisible="enable_max_replenish">No Maximum</span>
-                            <field name="max_to_replenish_qty" invisible="not enable_max_replenish" required="enable_max_replenish"/>
-                            <field name="product_uom_id" groups="uom.group_uom" readonly="1" invisible="not enable_max_replenish"/>
-                        </div>
                         <label for="replenish_trigger"/>
                         <div class="o_row">
                             <field name="replenish_trigger"/>
