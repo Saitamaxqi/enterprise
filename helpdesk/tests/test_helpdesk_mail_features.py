@@ -264,7 +264,9 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                 # - checks all suggested: incoming email to + cc are included
                 # - for all notified people: expected 'email_to' is them
                 # ------------------------------------------------------------
-                suggested_all = ticket.with_user(self.helpdesk_user)._message_get_suggested_recipients()
+                suggested_all = ticket.with_user(self.helpdesk_user)._message_get_suggested_recipients(
+                    reply_discussion=True, no_create=False,
+                )
                 expected_all = [
                     # ticket creates partners and followers for everyone, hence no suggested people :()
                 ]
@@ -318,22 +320,27 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                     ],
                 )
 
-                # SMTP emails really sent (not Inbox guy then), checking Msg[To] notably
-                # as well as Msg[From] which depends on smtp server
+                # SMTP emails really sent (not Inbox guy then)
+                # expected Msg['To'] : Reply-All behavior: actual recipient, then
+                # all "not internal partners" and catchall (to receive answers)
                 for partner in responsible_answer.notified_partner_ids:
+                    exp_msg_to_partners = partner | external_partners
+                    if author != self.user_employee.partner_id:  # external only !
+                        exp_msg_to_partners |= author
+                    exp_msg_to = exp_msg_to_partners.mapped('email_formatted')
                     with self.subTest(name=partner.name):
                         self.assertSMTPEmailsSent(
                             mail_server=self.mail_server_notification,
                             msg_from=formataddr((self.helpdesk_user.name, f'{self.default_from}@{self.alias_domain}')),
                             smtp_from=self.mail_server_notification.from_filter,
                             smtp_to_list=[partner.email_normalized],
-                            msg_to_lst=[partner.email_formatted],
+                            msg_to_lst=exp_msg_to,
                         )
 
-                # customer replies using "Reply" + adds new people
+                # customer replies using "Reply All" + adds new people
                 # ------------------------------------------------------------
                 self.gateway_mail_reply_from_smtp_email(
-                    MAIL_TEMPLATE, [author.email_normalized], reply_all=False,
+                    MAIL_TEMPLATE, [author.email_normalized], reply_all=True,
                     cc=f'"Another Cc" <another.cc@test.agrolait.com>, {self.partner_3.email}',
                     target_model='project.task',
                 )
@@ -344,7 +351,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                 self.assertEqual(len(ticket.message_ids), 4, 'Incoming email + acknowledgement + chatter reply + customer reply')
                 self.assertEqual(
                     ticket.message_partner_ids,
-                    internal_followers + author + external_partners + self.partner_3)
+                    internal_followers + author + self.partner_1 + self.partner_2 + self.partner_3 + new_partner_cc + new_partner_to)
 
                 self.assertMailNotifications(
                     ticket.message_ids[0],
@@ -357,24 +364,19 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                                 'email_from': author.email_formatted,
                                 # coming from incoming email
                                 'incoming_email_cc': f'"Another Cc" <another.cc@test.agrolait.com>, {self.partner_3.email}',
-                                # expected reply to reply-to
-                                'incoming_email_to': expected_chatter_reply_to,
+                                # To: received email Msg-To - customer who replies + email Reply-To
+                                'incoming_email_to': ', '.join(external_partners.mapped('email_formatted') + [expected_chatter_reply_to]),
                                 'mail_server_id': self.env['ir.mail_server'],
-                                # notified: followers, behaves like classic post
-                                'notified_partner_ids': internal_followers + self.partner_1 + self.partner_2 + self.partner_3 + new_partner_cc + new_partner_to,
+                                # notified: followers - already emailed, aka internal only
+                                'notified_partner_ids': internal_followers,
                                 'parent_id': incoming_email,
-                                # reply-all when being only recipients = no other recipients
-                                'partner_ids': self.partner_3,
+                                # same reasoning as email_to/cc
+                                'partner_ids': external_partners + self.partner_3,
                                 'subject': f'Re: Re: {ticket.name}',
                                 'subtype_id': self.env.ref('mail.mt_comment'),
                             },
                             'notif': [
                                 {'partner': self.helpdesk_user.partner_id, 'type': 'email',},
-                                {'partner': self.partner_1, 'type': 'email',},
-                                {'partner': self.partner_2, 'type': 'email',},
-                                {'partner': self.partner_3, 'type': 'email',},
-                                {'partner': new_partner_cc, 'type': 'email',},
-                                {'partner': new_partner_to, 'type': 'email',},
                             ],
                         },
                     ],
@@ -416,7 +418,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
             'partner_name': partner_name,
         })
         ticket.partner_email = formatted_email
-        data = ticket._message_get_suggested_recipients()[0]
+        data = ticket._message_get_suggested_recipients(no_create=True)[0]
         self.assertEqual(data['email'], email)
         self.assertEqual(data['name'], partner_name)
         self.assertDictEqual(data['create_values'], {'company_id': self.helpdesk_manager.company_id.id, 'phone': partner_phone})

@@ -257,10 +257,11 @@ class HrContractSalaryOffer(models.Model):
             'target': 'current',
         }
 
-    def _message_get_suggested_recipients(self):
-        recipients = super()._message_get_suggested_recipients()
+    def _message_add_suggested_recipients(self):
+        email_to_lst, partners = super()._message_add_suggested_recipients()
         if self.applicant_id:
-            self._message_add_suggested_recipient(recipients, email=self.applicant_id.email_from, reason=_('Contact Email'))
+            email_to_lst.append(self.applicant_id.email_from)
         elif self.employee_id:
-            self._message_add_suggested_recipient(recipients, partner=self.employee_id.work_contact_id.sudo(), reason=_('Contact'))
-        return recipients
+            # tde FIXME: check sudo ?
+            partners += self.employee_id.work_contact_id.sudo()
+        return email_to_lst, partners

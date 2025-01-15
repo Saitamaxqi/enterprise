@@ -231,20 +231,28 @@ class TestPushNotification(SMSCommon):
         self.assertEqual(test_record.message_partner_ids, self.user_email.partner_id)
         test_record.message_subscribe(partner_ids=[self.user_inbox.partner_id.id])
 
-        with self.mock_mail_gateway():
-            self.format_and_process(
-                MAIL_TEMPLATE, self.user_email.email_formatted,
-                f'{self.alias_gateway.display_name}, {self.user_inbox.email_formatted}',
-                subject='Repy By Email',
-                extra='In-Reply-To:\r\n\t%s\n' % test_record.message_ids.message_id,
-            )
-        jsonrpc.assert_called_once()
-        self.assertEqual(jsonrpc.call_args[1]['params']['data']['author_name'], self.user_email.name)
-        self.assertIn(
-            "Please call me as soon as possible this afternoon!\n\n--\nSylvie",
-            jsonrpc.call_args[1]['params']['data']['body'],
-            'The body must contain the text send by mail'
-        )
+        for include_as_external, has_notif in ((False, True), (True, False)):
+            with self.mock_mail_gateway():
+                to = f'{self.alias_gateway.display_name}'
+                if include_as_external:
+                    to += f', {self.user_inbox.email_formatted}'
+                self.format_and_process(
+                    MAIL_TEMPLATE, self.user_email.email_formatted, to,
+                    subject='Repy By Email',
+                    extra='In-Reply-To:\r\n\t%s\n' % test_record.message_ids[-1].message_id,
+                )
+            if has_notif:
+                # user_inbox is notified by Odoo, hence receives a push notification
+                jsonrpc.assert_called_once()
+                self.assertEqual(jsonrpc.call_args[1]['params']['data']['author_name'], self.user_email.name)
+                self.assertIn(
+                    "Please call me as soon as possible this afternoon!\n\n--\nSylvie",
+                    jsonrpc.call_args[1]['params']['data']['body'],
+                    'The body must contain the text send by mail'
+                )
+            else:
+                jsonrpc.assert_not_called()
+            jsonrpc.reset_mock()
 
     @patch('odoo.addons.mail_mobile.models.mail_thread.iap_tools.iap_jsonrpc')
     @patch.object(odoo.addons.mail.models.mail_thread, 'push_to_end_point')

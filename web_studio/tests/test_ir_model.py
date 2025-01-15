@@ -74,13 +74,14 @@ class TestStudioIrModel(TransactionCase):
             'x_studio_partner_id': self.partner_elon.id,
         })
         # ensure the partner is suggested in email and sms communication
-        mail_suggested_recipients = bfr._message_get_suggested_recipients()
+        mail_suggested_recipients = bfr._message_get_suggested_recipients(
+            reply_discussion=True, no_create=False,
+        )
         self.assertDictEqual(
             {
                 'partner_id': self.partner_elon.id,
                 'name': 'Elon Tusk',
                 'email': 'elon@spacex.com',
-                'reason': 'Customer',
                 'create_values': {},
             },
             mail_suggested_recipients[0],
