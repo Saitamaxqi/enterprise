@@ -1,7 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from datetime import datetime
 
 from odoo import models, api, fields
+from odoo.tools import SQL
+
+from odoo.addons.resource.models.utils import filter_domain_leaf
 
 
 class SaleCommissionAchievementReport(models.Model):
@@ -22,6 +26,19 @@ class SaleCommissionAchievementReport(models.Model):
     related_res_model = fields.Char(readonly=True)
     related_res_id = fields.Many2oneReference("Related", model_field='related_res_model', readonly=True)
 
+    @api.model
+    def _search(self, domain, offset=0, limit=None, order=None):
+        """ Extract the currency conversion date form the date_to field.
+        It is used to be able to get fixed results not depending on the currency daily rates.
+        The date is converted to a string to allow updating the date value in view customizations.
+        """
+        date_to_domain = domain and filter_domain_leaf(domain, lambda field: 'date_to' in field)
+        date_list = date_to_domain and [datetime.strptime(d[2], '%Y-%m-%d') for d in date_to_domain if len(d) == 3]
+        if date_list and not 'conversion_date' in self.env.context:
+            conversion_date = max(date_list)
+            self = self.with_context(conversion_date=conversion_date.strftime('%Y-%m-%d'))
+        return super(SaleCommissionAchievementReport, self)._search(domain, offset, limit, order)
+
     def open_related(self):
         return {
             'view_mode': 'form',
@@ -29,6 +46,21 @@ class SaleCommissionAchievementReport(models.Model):
             'res_id': self.related_res_id,
             'type': 'ir.actions.act_window',
         }
+
+    @api.model
+    def _get_currency_rate(self):
+        companies = self.env['res.company'].search([], order='id asc')
+        current_company = self.env.company
+        conversion_date = fields.Date.today()
+        if self.env.context.get('conversion_date'):
+            conversion_date = datetime.strptime(self.env.context['conversion_date'], '%Y-%m-%d')
+        currency_rate = [(current_company.id, current_company.currency_id.id, conversion_date.strftime('%Y-%m-%d'), 1)]
+        for comp in companies - current_company:
+            rate = comp.currency_id._convert(from_amount=1, to_currency=current_company.currency_id, company=current_company, date=conversion_date, round=False)
+            currency_rate.append((comp.id, comp.currency_id.id, conversion_date.strftime('%Y-%m-%d'), rate))
+        return f"""currency_rate AS (
+            SELECT * FROM (VALUES {", ".join(map(str, currency_rate))}) AS currency_values(company_id, currency_id, conversion_date,rate)
+        )"""
 
     @property
     def _table_query(self):
@@ -38,6 +70,9 @@ class SaleCommissionAchievementReport(models.Model):
         teams = self.env.context.get('commission_team_ids', [])
         if teams:
             teams = self.env['crm.team'].browse(teams).exists()
+        return self.with_context(achievement_report=True)._query(users=users, teams=teams)
+
+    def _query(self,users=None, teams=None):
         return f"""
 WITH {self._commission_lines_query(users=users, teams=teams)}
 SELECT
@@ -75,14 +110,14 @@ JOIN sale_commission_plan_target era
     @api.model
     def _get_sale_rates_product(self):
         return """
-            rules.amount_sold_rate * sol.price_subtotal / so.currency_rate +
+            rules.amount_sold_rate * sol.price_subtotal * cr.rate / so.currency_rate +
             rules.qty_sold_rate * sol.product_uom_qty
         """
 
     @api.model
     def _get_invoice_rates_product(self):
         return """
-            rules.amount_invoiced_rate * aml.price_subtotal / am.invoice_currency_rate +
+            rules.amount_invoiced_rate * aml.price_subtotal * cr.rate / am.invoice_currency_rate +
             rules.qty_invoiced_rate * aml.quantity
         """
     @api.model
@@ -101,7 +136,7 @@ JOIN sale_commission_plan_target era
           MAX(am.team_id),
           rules.plan_id,
           SUM({self._get_invoice_rates_product()}) AS achieved,
-          MAX(rules.currency_id),
+          {self.env.company.currency_id.id} AS currency_id,
           MAX(am.date) AS date,
           MAX(rules.company_id),
           am.id AS related_res_id
@@ -117,6 +152,8 @@ JOIN sale_commission_plan_target era
             ON aml.product_id = pp.id
           JOIN product_template pt
             ON pp.product_tmpl_id = pt.id
+          JOIN currency_rate cr
+            ON cr.company_id = am.company_id
         """
 
     @api.model
@@ -144,6 +181,8 @@ JOIN sale_commission_plan_target era
         CROSS JOIN sale_order so
         JOIN sale_order_line sol
           ON sol.order_id = so.id
+        JOIN currency_rate cr
+          ON cr.company_id=so.company_id
         """
 
     @api.model
@@ -166,8 +205,8 @@ achievement_commission_lines AS (
         sca.user_id,
         sca.team_id,
         scp.id AS plan_id,
-        sca.currency_rate * sca.amount * scpa.rate AS achieved,
-        scp.currency_id,
+        sca.currency_rate * sca.amount * scpa.rate * cr.rate AS achieved,
+        {self.env.company.currency_id.id} AS currency_id,
         sca.date,
         scp.company_id,
         sca.id AS related_res_id,
@@ -176,6 +215,7 @@ achievement_commission_lines AS (
     JOIN sale_commission_plan scp ON scp.company_id = sca.company_id
     JOIN sale_commission_plan_achievement scpa ON scpa.plan_id = scp.id
     JOIN sale_commission_plan_user scpu ON scpu.plan_id = scp.id
+    JOIN currency_rate cr ON cr.currency_id=scp.currency_id
     WHERE scp.active
       AND scp.state = 'approved'
       AND sca.type = scpa.type
@@ -199,7 +239,7 @@ invoices_rules AS (
         scpa.product_id,
         scpa.product_categ_id,
         scp.company_id,
-        scp.currency_id,
+        {self.env.company.currency_id.id} AS currency_id,
         scp.user_type = 'team' AS team_rule,
         {self._rate_to_case(self._get_invoices_rates())}
         {self._select_rules()}
@@ -258,7 +298,7 @@ sale_rules AS (
         scpa.product_id,
         scpa.product_categ_id,
         scp.company_id,
-        scp.currency_id,
+        {self.env.company.currency_id.id} AS currency_id,
         scp.user_type = 'team' AS team_rule,
         {self._rate_to_case(self._get_sale_rates())}
         {self._select_rules()}
@@ -276,7 +316,7 @@ sale_rules AS (
         MAX(rules.team_id),
         rules.plan_id,
         SUM({self._get_sale_rates_product()}) AS achieved,
-        MAX(rules.currency_id),
+        {self.env.company.currency_id.id},
         MAX(so.date_order) AS date,
         MAX(rules.company_id),
         {self._select_sales()}
@@ -299,7 +339,7 @@ sale_rules AS (
         MAX(so.team_id),
         rules.plan_id,
         SUM({self._get_sale_rates_product()}) AS achieved,
-        MAX(rules.currency_id),
+        {self.env.company.currency_id.id} AS currency_id,
         MAX(so.date_order) AS date,
         MAX(rules.company_id),
         {self._select_sales()}
@@ -326,12 +366,15 @@ sale_rules AS (
         return [self._achievement_lines(users, teams), self._sale_lines(users, teams), self._invoices_lines(users, teams)]
 
     def _commission_lines_query(self, users=None, teams=None):
+        # create temporary table to convert currencies
         ctes = self._commission_lines_cte(users, teams)
         queries = [x[0] for x in ctes]
         table_names = [x[1] for x in ctes]
-        return f"""
+        res =  f"""
+{self._get_currency_rate()},
 {','.join(queries)},
 commission_lines AS (
     {' UNION ALL '.join(f'(SELECT * FROM {name})' for name in table_names)}
 )
 """
+        return res

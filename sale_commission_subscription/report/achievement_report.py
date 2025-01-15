@@ -15,7 +15,7 @@ class SaleCommissionAchievementReport(models.Model):
     def _get_sale_order_log_product(self):
         # TODO BIG CURRENCY CHANGES 0_0
         return """
-            rules.mrr_rate * log.amount_signed
+            rules.mrr_rate * log.amount_signed * cr.rate
         """
 
     @api.model
@@ -70,12 +70,14 @@ subscription_rules AS (
         MAX(rules.team_id),
         rules.plan_id,
         SUM({self._get_sale_order_log_product()}) AS achieved,
-        MAX(log.currency_id),
+        {self.env.company.currency_id.id} AS currency_id,
         MAX(log.event_date) AS date,
         MAX(rules.company_id),
         log.id AS related_res_id
     FROM subscription_rules rules
     CROSS JOIN sale_order_log log
+    JOIN currency_rate cr
+        ON cr.company_id = log.company_id
     WHERE rules.team_rule
       AND log.event_type != '3_transfer'
       AND (rules.recurring_plan_id IS NULL OR log.plan_id = rules.recurring_plan_id)
@@ -84,19 +86,22 @@ subscription_rules AS (
       AND log.event_date BETWEEN rules.date_from AND rules.date_to
     GROUP BY
         log.id,
-        rules.plan_id
+        rules.plan_id,
+        cr.rate
 ), subscription_commission_lines_user AS (
     SELECT
         MAX(rules.user_id),
         MAX(rules.team_id),
         rules.plan_id,
-        SUM({self._get_sale_order_log_product()}) AS achieved,
-        MAX(log.currency_id),
+        SUM({self._get_sale_order_log_product()}) * cr.rate AS achieved,
+        {self.env.company.currency_id.id} AS currency_id,
         MAX(log.event_date) AS date,
         MAX(rules.company_id),
         log.id AS related_res_id
     FROM subscription_rules rules
     CROSS JOIN sale_order_log log
+    JOIN currency_rate cr
+        ON cr.company_id = log.company_id
     WHERE NOT rules.team_rule
       AND (rules.recurring_plan_id IS NULL OR log.plan_id = rules.recurring_plan_id)
       AND log.user_id = rules.user_id
@@ -104,7 +109,8 @@ subscription_rules AS (
       AND log.event_date BETWEEN rules.date_from AND rules.date_to
     GROUP BY
         log.id,
-        rules.plan_id
+        rules.plan_id,
+        cr.rate
 ), subscription_commission_lines AS (
     (SELECT *, 'sale.order.log' AS related_res_model FROM subscription_commission_lines_team)
     UNION ALL

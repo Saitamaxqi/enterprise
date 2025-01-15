@@ -1,8 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from datetime import datetime
 
-from odoo import models, fields, _
-
+from odoo import api, models, fields, _
+from odoo.addons.resource.models.utils import filter_domain_leaf
 
 class SaleCommissionReport(models.Model):
     _name = 'sale.commission.report'
@@ -24,6 +25,19 @@ class SaleCommissionReport(models.Model):
     payment_date = fields.Date("Payment Date", readonly=True)
     forecast = fields.Monetary("Forecast", readonly=True, currency_field='currency_id')
     date_to = fields.Date(related='target_id.date_to')
+
+    @api.model
+    def _search(self, domain, offset=0, limit=None, order=None):
+        """ Extract the currency conversion date form the date_to field.
+        It is used to be able to get fixed results not depending on the currency daily rates.
+        The date is converted to a string to allow updating the date value in view customizations.
+        """
+        date_to_domain = domain and filter_domain_leaf(domain, lambda field: 'date_to' in field)
+        date_list = date_to_domain and [datetime.strptime(d[2], '%Y-%m-%d') for d in date_to_domain if len(d) == 3]
+        if date_list:
+            conversion_date = max(date_list)
+            self = self.with_context(conversion_date=conversion_date.strftime('%Y-%m-%d'))
+        return super(SaleCommissionReport, self)._search(domain, offset, limit, order)
 
     def action_achievement_detail(self):
         self.ensure_one()
@@ -72,7 +86,8 @@ class SaleCommissionReport(models.Model):
         teams = self.env.context.get('commission_team_ids', [])
         if teams:
             teams = self.env['crm.team'].browse(teams).exists()
-        return f"""
+
+        res = f"""
 WITH {self.env['sale.commission.achievement.report']._commission_lines_query(users=users, teams=teams)},
 achievement AS (
     SELECT
@@ -81,7 +96,7 @@ achievement AS (
         era.plan_id AS plan_id,
         u.user_id AS user_id,
         MIN(cl.team_id) AS team_id,
-        cl.company_id AS company_id,
+        COALESCE(cl.company_id, MAX(scp.company_id)) AS company_id,
         SUM(achieved) AS achieved,
         CASE
             WHEN MAX(era.amount) > 0 THEN GREATEST(SUM(achieved), 0) / MAX(era.amount)
@@ -104,6 +119,7 @@ achievement AS (
         AND cl.user_id = u.user_id
     LEFT JOIN sale_commission_plan_target_forecast scpf
         ON (scpf.target_id = era.id AND u.user_id = scpf.user_id)
+    LEFT JOIN sale_commission_plan scp ON scp.id = scpf.plan_id
     GROUP BY
         era.id,
         era.plan_id,
@@ -128,24 +144,26 @@ achievement AS (
         a.user_id,
         a.team_id,
         a.company_id,
-        a.currency_id,
-        min(a.forecast_id) as forecast_id,
+        {self.env.company.currency_id.id} AS currency_id,
+        MIN(a.forecast_id) as forecast_id,
         {self._get_date_range()} as payment_date,
-        sum(a.achieved) as achieved,
-        case WHEN sum(a.amount) > 0 THEN sum(a.achieved) / sum(a.amount) ELSE NULL END as achieved_rate,
-        sum(a.amount) AS target_amount,
-        sum(a.forecast) as forecast,
-        count(1) as ct
+        SUM(a.achieved) AS achieved,
+        CASE WHEN SUM(a.amount) > 0 THEN SUM(a.achieved) / (SUM(a.amount) * cr.rate) ELSE NULL END AS achieved_rate,
+        SUM(a.amount) * cr.rate AS target_amount,
+        SUM(a.forecast) * cr.rate AS forecast,
+        COUNT(1) AS ct
     FROM achievement a
-    group by
-        a.plan_id, a.user_id, a.team_id, a.company_id, a.currency_id, {self._get_date_range()}
+    LEFT JOIN currency_rate cr
+        ON cr.company_id = a.company_id
+    GROUP BY
+        a.plan_id, a.user_id, a.team_id, a.company_id, a.currency_id, cr.rate, {self._get_date_range()}
 )
 SELECT
     a.*,
     CASE
-        WHEN tc.before IS NULL THEN a.achieved
-        WHEN tc.rate_high IS NULL THEN tc.before * a.ct
-        ELSE (tc.before + (tc.amount - tc.before) * (a.achieved_rate - tc.rate_low) / (tc.rate_high - tc.rate_low)) * a.ct
+        WHEN tc.before IS NULL THEN a.achieved * cr.rate
+        WHEN tc.rate_high IS NULL THEN tc.before * a.ct * cr.rate
+        ELSE (tc.before + (tc.amount - tc.before) * (a.achieved_rate - tc.rate_low) / (tc.rate_high - tc.rate_low)) * a.ct * cr.rate
     END AS commission
  FROM achievement_target a
     LEFT JOIN target_com tc ON (
@@ -153,4 +171,8 @@ SELECT
         tc.rate_low <= a.achieved_rate AND
         (tc.rate_high IS NULL OR tc.rate_high > a.achieved_rate)
     )
+    LEFT JOIN currency_rate cr
+        ON cr.company_id = a.company_id
+
 """
+        return res

@@ -319,16 +319,19 @@ class TestSaleCommissionUser(TestSaleCommissionCommon):
 
         self.assertEqual(sum(commissions.mapped('forecast')), 0)
         commissions.write({'forecast': 100})
+
         self.assertEqual(sum(commissions.mapped('forecast')), 2400, "Each forecast line has a value equal to 100")
 
         self.env.invalidate_all()
+        # Once the cache is invalidated, the plan values are still updated and the report provide the right values
         commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_user.id)])
+        self.assertEqual(sum(commissions.mapped('forecast')), 2400, "Each forecast line has a value equal to 100, writing forecast update the plan values")
 
-        self.assertEqual(sum(commissions.mapped('forecast')), 2400)
         commissions.write({'forecast': 200})
         self.assertEqual(sum(commissions.mapped('forecast')), 4800)
 
         self.env.invalidate_all()
+        # Same, all forecast are identical
         commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_user.id)])
         self.assertEqual(sum(commissions.mapped('forecast')), 4800)
 
