@@ -103,7 +103,7 @@
             <!-- Email Alias Section -->
             <div t-if="record.data.type === 'folder' and !record.data.shortcut_document_id"
                 class="text-dark d-flex mb-3 w-100">
-                <span class="fw-bold me-2 text-nowrap">Email Alias</span>
+                <span class="fw-bold me-2 text-nowrap">Email</span>
                 <div t-if="!userPermissionViewOnly and !!documentService.userIsDocumentManager" class="d-flex">
                     <div class="o_field_widget o_field_char w-50">
                         <CharField
@@ -166,7 +166,7 @@
                 t-if="record.data.type === 'folder' and !record.data.shortcut_document_id and record.data.alias_name and record.data.alias_domain_id"
                 class="o_field_widget o_field_many2many_tags d-flex mb-3 w-100"
             >
-                <span class="fw-bold me-2">Alias Tags</span>
+                <span class="fw-bold me-2">Tags</span>
                 <DocumentsDetailsMany2ManyTagsField
                     name="'alias_tag_ids'"
                     readonly="userPermissionViewOnly"

@@ -14,7 +14,7 @@
         </field>
     </record>
 
-    <!-- todo - transform share_action -->
+    <!-- todo - remove in master (with view(s)) -->
     <record id="mail_alias_action" model="ir.actions.act_window">
         <field name="name">Email links</field>
         <field name="res_model">mail.alias</field>

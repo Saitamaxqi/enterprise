@@ -3900,3 +3900,9 @@ msgstr ""
 #: code:addons/documents/static/src/views/hooks.js:0
 msgid "Put in %s"
 msgstr ""
+
+#. module: documents
+#. odoo-javascript
+#: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
+msgid "Email"
+msgstr ""

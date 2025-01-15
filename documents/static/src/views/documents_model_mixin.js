@@ -191,7 +191,7 @@ export const DocumentsModelMixin = (component) =>
          * Open/Close the chatter (the info will be stored in the local storage of the current user).
          */
         async onToggleChatter() {
-            await this.env.documentsView.bus.trigger("documents-toggle-chatter");
+            await this.documentService.toggleChatterState();
         }
 
         /**

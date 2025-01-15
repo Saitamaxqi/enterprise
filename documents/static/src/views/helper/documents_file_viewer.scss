@@ -4,7 +4,7 @@
 }
 
 .o-DocumentsFileViewer-main-with-chatter {
-    width: calc(100vw - (#{$o-mail-Chatter-minWidth})) !important;
+    width: calc(100vw - (#{$o-mail-Chatter-minWidth}  + 20px)) !important;
 }
 
 .o-DocumentsFileViewer-main-without-chatter {

@@ -107,7 +107,7 @@
             }
 
             .o_kanban_image_wrapper {
-                background-color: $gray-200;
+                background-color: $body-bg;
                 height: 140px;
                 width: 100%;
                 display: flex;
@@ -123,8 +123,8 @@
                 }
 
                 img {
-                    width: 100%;
-                    height: 100%;
+                    max-width: 100%;
+                    max-height: 100%;
                 }
 
                 .fa-star,.fa-star-o {

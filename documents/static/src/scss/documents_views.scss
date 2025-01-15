@@ -182,5 +182,14 @@
     border-left: 1px solid var(--border-color);
     .o-mail-Chatter-topbar {
         padding-top: 0.25rem;
+        @include media-breakpoint-up(lg) {
+            &:not(:hover) {
+                overflow-x: hidden !important;
+            }
+        }
+
+    }
+    &.o-mail-ChatterContainer.o-aside {
+        width: calc(#{$o-mail-Chatter-minWidth} + 20px + var(--Chatter-asideExtraWidth));
     }
 }

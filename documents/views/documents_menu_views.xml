@@ -22,12 +22,6 @@
         action="configuration_action"
         groups="base.group_system"
         sequence="10"/>
-    <menuitem name="Email Aliases"
-        id="documents.mail_alias_menu"
-        parent="documents.Config"
-        action="mail_alias_action"
-        groups="documents.group_documents_manager"
-        sequence="30"/>
 
     <menuitem name="Structure"
         id="documents.structure"

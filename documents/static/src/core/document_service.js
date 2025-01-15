@@ -346,11 +346,30 @@ export class DocumentService {
     toggleChatterState() {
         this.chatterState.visible = !this.chatterState.visible;
 
-        if (this.env.isSmall && this.chatterState.visible) {
+        if (this.chatterState.visible) {
             this.observer = new MutationObserver(() => {
                 const chatterContainer = document.querySelector('.o-mail-Thread');
-                if (chatterContainer) {
-                    chatterContainer.scrollIntoView({ behavior: "smooth"});
+                if (chatterContainer && this.env.isSmall) {
+                    chatterContainer.scrollIntoView({ behavior: "smooth" });
+                    this.observer.disconnect();
+                    return;
+                }
+                const view = this.action.currentController.props.type;
+                if (
+                    chatterContainer &&
+                    ["kanban", "list"].includes(view)
+                ) {
+                    const selectedRecordClass =
+                        view === "kanban"
+                            ? ".o_kanban_record.o_record_selected"
+                            : ".o_data_row.o_data_row_selected";
+                    const selectedRecords = document.querySelectorAll(selectedRecordClass);
+                    if (selectedRecords?.length > 0) {
+                        selectedRecords[0].scrollIntoView({
+                            behavior: "instant",
+                            block: view === "kanban" ? "start" : "center",
+                        });
+                    }
                     this.observer.disconnect();
                 }
             });

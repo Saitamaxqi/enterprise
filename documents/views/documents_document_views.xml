@@ -90,10 +90,10 @@
                                 <t t-set="youtubeVideoToken" t-value="youtubeUrlMatch ? youtubeUrlMatch.length > 1 ? youtubeUrlMatch[1] : false : false"/>
                                 <div name="document_preview" class="o_kanban_image_wrapper d-flex justify-content-center position-relative" t-att-title="fileRequest ? 'Upload file' : ''">
                                     <field name="is_favorited" nolabel="1" widget="boolean_favorite" class="position-absolute top-0 end-0 p-1 pt-2"/>
-                                    <img t-if="youtubeVideoToken" class="w-100 h-100" alt="Document"
+                                    <img t-if="youtubeVideoToken" alt="Document"
                                          t-attf-src="https://img.youtube.com/vi/{{youtubeVideoToken}}/0.jpg"/>
                                     <a t-elif="record.type.raw_value =='url'" target="_blank" t-att-href="record.url.raw_value" class="o_kanban_image_wrapper">
-                                        <img t-if="record.url_preview_image.raw_value" class="w-100 h-100"
+                                        <img t-if="record.url_preview_image.raw_value"
                                             t-att-src="record.url_preview_image.raw_value" t-att-alt="record.name.raw_value"/>
                                         <t t-else="">
                                             <span class="fa fa-link fa-3x text-muted"/>
@@ -101,7 +101,7 @@
                                     </a>
                                     <t t-elif="hasStoredThumbnail">
                                         <t t-set="unique" t-value="record.checksum.value ? record.checksum.value.slice(-8) : ''"/>
-                                        <img t-attf-src="/documents/thumbnail/#{record.access_token.raw_value}?unique=#{unique}" class="w-100 h-100" alt="Document preview"/>
+                                        <img t-attf-src="/documents/thumbnail/#{record.access_token.raw_value}?unique=#{unique}" alt="Document preview"/>
                                     </t>
                                     <div t-elif="fileRequest" class="fa fa-upload fa-3x text-muted">
                                         <input type="file" class="o_input_file o_hidden o_kanban_replace_document"/>
@@ -384,8 +384,9 @@
                 <field name="shortcut_document_id" column_invisible="1"/>
                 <field name="mimetype" column_invisible="1"/>
                 <field name="access_url" column_invisible="1"/>
-                <field name="alias_name" optional="hide"/>
-                <field name="alias_domain_id" optional="hide"/>
+                <field name="alias_email" optional="hide" widget="email"/>
+                <field name="alias_name" column_invisible="1"/>
+                <field name="alias_domain_id" column_invisible="1"/>
                 <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" column_invisible="1"/> <!-- fetch `color` too -->
                 <field name="create_activity_type_id" column_invisible="1"/>
                 <field name="create_activity_user_id" column_invisible="1"/>
