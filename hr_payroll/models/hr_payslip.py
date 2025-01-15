@@ -559,6 +559,9 @@ class HrPayslip(models.Model):
                 line.amount = -line.amount
                 line.total = -line.total
             copied_payslips |= copied_payslip
+            payslip.message_post(
+                body=_('This is a refunded payslip.\nFind the refund under this name: %(payslip)s', payslip=copied_payslip.name)
+            )
         formview_ref = self.env.ref('hr_payroll.view_hr_payslip_form', False)
         treeview_ref = self.env.ref('hr_payroll.view_hr_payslip_tree', False)
         return {
