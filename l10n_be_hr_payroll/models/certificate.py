@@ -17,7 +17,7 @@ class CertificateCertificate(models.Model):
 
         if not self.is_valid:
             raise UserError(self.loading_error or _("This certificate is not valid, its validity has expired."))
-        if not self.private_key_id_id:
+        if not self.private_key_id:
             raise UserError(_("No private key linked to the certificate, it is required to sign documents."))
 
         cert = x509.load_pem_x509_certificate(base64.b64decode(self.pem_certificate))
