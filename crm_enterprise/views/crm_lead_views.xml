@@ -2,6 +2,17 @@
 <odoo>
     <data>
 
+        <record id="crm_lead_view_list_opportunities" model="ir.ui.view">
+            <field name="name">crm.lead.view.list.opportunities.inherit.business.cards</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//list" position="attributes">
+                    <attribute name="js_class">crm_business_cards_scanner_list</attribute>
+                </xpath>
+            </field>
+        </record>
+
         <record id="crm_opportunity_view_graph" model="ir.ui.view">
             <field name="name">crm.lead.graph.view</field>
             <field name="model">crm.lead</field>
