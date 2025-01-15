@@ -129,7 +129,9 @@ test("Update the pivot title from the side panel", async function () {
     const { model, env, pivotId } = await createSpreadsheetFromPivotView();
     env.openSidePanel("PivotSidePanel", { pivotId });
     await animationFrame();
-    await contains(".os-input").edit("new name");
+    const target = await contains(".os-input");
+    await target.click();
+    await target.edit("new name");
     expect(model.getters.getPivotName(pivotId)).toBe("new name");
 });
 

@@ -715,7 +715,9 @@ test("Update the list title from the side panel", async function () {
     const [listId] = model.getters.getListIds();
     env.openSidePanel("LIST_PROPERTIES_PANEL", { listId });
     await animationFrame();
-    await contains(".os-input").edit("new name");
+    const target = await contains(".os-input");
+    await target.click();
+    await target.edit("new name");
     expect(model.getters.getListName(listId)).toBe("new name");
 });
 
