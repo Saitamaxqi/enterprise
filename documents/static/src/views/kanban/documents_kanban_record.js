@@ -89,6 +89,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
                         : _t("Company")
                 );
         }
+        context.mimetype = this.props.record.shortcutTarget.data.mimetype;
         return context;
     }
     /**

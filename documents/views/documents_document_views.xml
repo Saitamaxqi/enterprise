@@ -106,7 +106,7 @@
                                     <div t-elif="fileRequest" class="fa fa-upload fa-3x text-muted">
                                         <input type="file" class="o_input_file o_hidden o_kanban_replace_document"/>
                                     </div>
-                                    <div t-else="!hasStoredThumbnail" class="o_image o_image_thumbnail" t-att-data-mimetype="record.mimetype.value"/>
+                                    <div t-else="!hasStoredThumbnail" class="o_image o_image_thumbnail" t-att-data-mimetype="mimetype"/>
                                 </div>
                             </div>
                             <div class="flex-shrink-1 flex-auto">

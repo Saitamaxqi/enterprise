@@ -831,7 +831,7 @@ class DocumentsDocument(models.Model):
     def _get_shortcuts_copy_fields(self):
         # Note that current simple usage in action_create_shortcut supports scalar and m2o fields.
         return {'company_id', 'file_size', 'file_extension', 'is_access_via_link_hidden', 'is_multipage',
-                'name', 'partner_id', 'type'}
+                'name', 'partner_id', 'type', 'url', 'url_preview_image'}
 
     def action_update_access_rights(self, access_internal=None, access_via_link=None, is_access_via_link_hidden=None,
                                     partners=None, notify=False, message=""):
