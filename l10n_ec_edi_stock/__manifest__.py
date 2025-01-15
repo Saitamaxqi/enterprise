@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     "name": "Ecuadorian Delivery Guide",
-    "version": "1.0",
+    "version": "1.1",
     "description": """
 The delivery guide (Guía de Remisión) is needed as a proof
 that you are sending goods between A and B.

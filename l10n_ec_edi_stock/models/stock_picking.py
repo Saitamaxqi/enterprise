@@ -185,8 +185,8 @@ class StockPicking(models.Model):
             error_list.append(_("You must define an address(street) in the settings for company %s", self.company_id.name))
         if not self.picking_type_id.warehouse_id.partner_id.street:
             error_list.append(_("You must define an address(street) for warehouse %s", self.picking_type_id.warehouse_id.name))
-        if not self.partner_id.vat:
-            error_list.append(_("You must set a VAT number for partner %s", self.partner_id.display_name))
+        if not self.partner_id.commercial_partner_id.vat:
+            error_list.append(_("You must set a VAT number for partner %s", self.partner_id.commercial_partner_id.display_name))
         if not self.partner_id.street:
             error_list.append(_("You must define an address(street) for partner %s", self.partner_id.display_name))
         if error_list:
@@ -342,13 +342,14 @@ class StockPicking(models.Model):
             'l10n_ec_delivery_start_date': self.l10n_ec_delivery_start_date.strftime('%d/%m/%Y'),
             'l10n_ec_delivery_end_date': self.l10n_ec_delivery_end_date.strftime('%d/%m/%Y'),
             'l10n_ec_plate_number': self.l10n_ec_plate_number.replace('-', ''),
-            'partner_vat': self.partner_id.vat,
-            'partner_name': self.partner_id.name,
+            'partner_vat': self.partner_id.commercial_partner_id.vat,
+            'partner_name': self.partner_id.commercial_partner_id.name,
             'partner_address': self.partner_id._display_address().replace('\n', ' - '),
             'l10n_ec_transfer_reason': self.l10n_ec_transfer_reason,
             'lines': [{
-                'product_barcode': line.product_id.barcode[:25] if line.product_id.barcode else None,
-                'l10n_ec_auxiliary_code': line.product_id.l10n_ec_auxiliary_code or line.product_id.default_code,
+                'product_barcode': line.product_id.barcode or line.product_id.default_code or 'N/A', # TODO: remove in master and keep main_code
+                'main_code': line.product_id.barcode or line.product_id.default_code or 'N/A',
+                'l10n_ec_auxiliary_code': line.product_id.l10n_ec_auxiliary_code or '',
                 'product_partner_ref': line.product_id.with_context(lang=self.partner_id.lang).partner_ref,
                 'qty_done': line.qty_done,
                 'lot_id': line.lot_id,
@@ -370,7 +371,7 @@ class StockPicking(models.Model):
         sequential = self.l10n_ec_edi_document_number.split('-')[-1]
         num_filler = '31215214'  # can be any 8 digits, thanks @3cloud !
         emission = '1'  # corresponds to "normal" emission, "contingencia" no longer supported
-        now_date = self.date_done.strftime('%d%m%Y')
+        now_date = self.l10n_ec_delivery_start_date.strftime('%d%m%Y')
         key_value = now_date + document_code_sri + company.partner_id.vat + \
             environment + serie + sequential + num_filler + emission
         return key_value + str(self._l10n_ec_get_check_digit(key_value))

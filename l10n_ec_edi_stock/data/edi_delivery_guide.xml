@@ -37,7 +37,7 @@
                         <detalles>
                             <t t-foreach="lines" t-as="line">
                                 <detalle>
-                                    <codigoInterno t-out="line['product_barcode']"/>
+                                    <codigoInterno t-out="line['main_code']"/>
                                     <codigoAdicional t-if="line['l10n_ec_auxiliary_code']" t-out="line['l10n_ec_auxiliary_code']"/>
                                     <descripcion t-if="line['product_partner_ref']" t-out="line['product_partner_ref']"/>
                                     <cantidad t-out="line['qty_done']"/>

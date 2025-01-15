@@ -133,13 +133,13 @@
                                 <div class="row">
                                     <div class="col">
                                         <strong>Identification (Recipient): </strong>
-                                        <span t-esc="o.partner_id.vat"/>
+                                        <span t-esc="o.partner_id.commercial_partner_id.vat"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <strong>Company Name / Name and Surname: </strong>
-                                        <span t-esc="o.partner_id.name"/>
+                                        <span t-esc="o.partner_id.commercial_partner_id.name"/>
                                     </div>
                                 </div>
                             </div>
@@ -164,8 +164,8 @@
                                                 <tr>
                                                     <td><span t-field="line.qty_done"/></td>
                                                     <td><span t-field="line.product_id.partner_ref" t-options="{'widget': 'text'}"/></td>
-                                                    <td><span t-esc="line.product_id.barcode[:25] if line.product_id.barcode else ''"/></td>
-                                                    <td><span t-esc="line.product_id.l10n_ec_auxiliary_code or line.product_id.default_code" /></td>
+                                                    <td><span t-esc="line.product_id.barcode or line.product_id.default_code or ''"/></td>
+                                                    <td><span t-esc="line.product_id.l10n_ec_auxiliary_code or ''"/></td>
                                                     <td groups="stock.group_lot_on_delivery_slip"><span t-field="line.lot_id" /></td>
                                                 </tr>
                                             </t>
