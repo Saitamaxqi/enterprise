@@ -3,6 +3,7 @@
 from markupsafe import escape
 
 from odoo import fields
+from odoo.tools.misc import limited_field_access_token
 from odoo.addons.test_whatsapp.tests.common import WhatsAppFullCase
 from odoo.addons.whatsapp.tests.common import MockIncomingWhatsApp
 from odoo.tests import tagged, users
@@ -199,6 +200,9 @@ class DiscussChannel(WhatsAppFullCase, MockIncomingWhatsApp):
                         ),
                         "res.partner": self._filter_partners_fields(
                             {
+                                "avatar_128_access_token": limited_field_access_token(
+                                    message.author_id, "avatar_128"
+                                ),
                                 "id": message.author_id.id,
                                 "name": "+32499123456",
                                 "write_date": fields.Datetime.to_string(
