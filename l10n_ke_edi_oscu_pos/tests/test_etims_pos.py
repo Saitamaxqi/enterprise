@@ -178,3 +178,65 @@ class TestEtimsPos(TestKeEdiCommon, TestPointOfSaleCommon):
             # 3) Send order to eTIMS, should raise an error
             pos_make_payment.with_context(context_make_payment).check()
             pos_order.action_post_order()
+
+    def test_refund_pos_order(self):
+        self.pos_config.open_ui()
+        current_session = self.pos_config.current_session_id
+        price_unit = 300
+        tax_rate = self.tax_sale_a.amount / 100
+
+        # 1) create a pos order
+        pos_order = self.PosOrder.create({
+            'session_id': current_session.id,
+            'partner_id': self.partner1.id,
+            'lines': [
+                Command.create({
+                    'product_id': self.product3.id,
+                    'price_unit': price_unit,
+                    'price_subtotal': price_unit,
+                    'price_subtotal_incl': float_round((1 + tax_rate) * price_unit, precision_digits=2),
+                    'qty': 1,
+                    'tax_ids': self.tax_sale_a.ids,
+                }),
+            ],
+            'amount_tax': float_round(tax_rate * price_unit, precision_digits=2),
+            'amount_total': float_round((1 + tax_rate) * price_unit, precision_digits=2),
+            'amount_paid': 0.0,
+            'amount_return': 0.0,
+            'to_invoice': True,
+        })
+
+        # 2) pay the order
+        context_make_payment = {
+            'active_ids': pos_order.ids,
+            'active_id': pos_order.id,
+        }
+        pos_make_payment = self.PosMakePayment.with_context(context_make_payment).create({
+            'amount': pos_order.amount_total,
+            'payment_method_id': self.cash_payment_method.id,
+        })
+
+        # 3) Send order to eTIMS
+        pos_make_payment.with_context(context_make_payment).check()
+        pos_order.action_post_order()
+
+        # 4) Refund the order
+        refund_action = pos_order.refund()
+        refund = self.PosOrder.browse(refund_action['res_id'])
+
+        context_make_payment = {
+            'active_ids': refund.ids,
+            'active_id': refund.id,
+        }
+        pos_make_payment = self.PosMakePayment.with_context(context_make_payment).create({
+            'amount': refund.amount_total,
+            'payment_method_id': self.cash_payment_method.id,
+        })
+
+        # 5) Send order to eTIMS
+        pos_make_payment.with_context(context_make_payment).check()
+        refund.action_post_order()
+
+        self.assertEqual(refund.l10n_ke_oscu_internal_data, 'GRKJVWYCFBPTYQ225X2UEYONVE')
+        self.assertEqual(refund.l10n_ke_oscu_signature, '123456789ODOOGR3')
+        self.assertEqual(refund.l10n_ke_oscu_receipt_number, 169)

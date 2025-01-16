@@ -153,6 +153,10 @@ class PosOrder(models.Model):
             for field in fields_to_round:
                 line_values[field] = json_float_round(line_values[field], 2)
 
+            fields_to_abs = ('pkg', 'qty', 'splyAmt', 'taxblAmt', 'taxAmt', 'totAmt')
+            for field in fields_to_abs:
+                line_values[field] = abs(line_values[field])
+
             if product.barcode:
                 line_values.update({'bcd': product.barcode})
 
@@ -190,6 +194,10 @@ class PosOrder(models.Model):
         }
 
         self.env["account.move"]._update_receipt_content(content, confirmation_datetime, order_date, self.partner_id)
+
+        fields_to_abs = ('totTaxblAmt', 'totTaxAmt', 'totAmt')
+        for field in fields_to_abs:
+            content[field] = abs(content[field])
 
         if self.refunded_order_id:
             content.update({'rfdRsnCd': '06'})

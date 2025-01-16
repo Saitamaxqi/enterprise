@@ -19,10 +19,11 @@
                                 </thead>
                                 <tbody>
                                     <t t-set="tax_types" t-value="{'B': '16%', 'E': '8%', 'C': '0%', 'D': 'Non-VAT', 'A': 'Exempt'}"/>
+                                    <t t-set="sign" t-value="order.refunded_order_id === undefined ? 1 : -1"/>
                                     <t t-foreach="tax_types" t-as="tax_rate" t-key="tax_rate">
                                         <tr>
-                                            <t t-set="taxable_amount" t-value="order.l10n_ke_edi_oscu_pos_order_json[`taxblAmt${tax_rate}`]"/>
-                                            <t t-set="tax_amount" t-value="order.l10n_ke_edi_oscu_pos_order_json[`taxAmt${tax_rate}`]"/>
+                                            <t t-set="taxable_amount" t-value="order.l10n_ke_edi_oscu_pos_order_json[`taxblAmt${tax_rate}`] * sign"/>
+                                            <t t-set="tax_amount" t-value="order.l10n_ke_edi_oscu_pos_order_json[`taxAmt${tax_rate}`] * sign"/>
                                             <td name="td_tax_rate" class="text-nowrap col-2">
                                                 <span t-out="tax_types[tax_rate]"/>
                                             </td>
@@ -39,9 +40,9 @@
                                     </t>
                                     <tr class="border-black">
                                         <td name="td_total_tax_rate" class="text-start"><span>Total</span></td>
-                                        <td name="td_total_taxable_amount" class="text-end"><span t-out="formatCurrency(order.l10n_ke_edi_oscu_pos_order_json['totTaxblAmt'])"/></td>
-                                        <td name="td_total_tax_amount" class="text-end"><span t-out="formatCurrency(order.l10n_ke_edi_oscu_pos_order_json['totTaxAmt'])"/></td>
-                                        <td name="td_total_total_amount" class="text-end"><span t-out="formatCurrency(order.l10n_ke_edi_oscu_pos_order_json['totAmt'])"/></td>
+                                        <td name="td_total_taxable_amount" class="text-end"><span t-out="formatCurrency(order.l10n_ke_edi_oscu_pos_order_json['totTaxblAmt'] * sign)"/></td>
+                                        <td name="td_total_tax_amount" class="text-end"><span t-out="formatCurrency(order.l10n_ke_edi_oscu_pos_order_json['totTaxAmt'] * sign)"/></td>
+                                        <td name="td_total_total_amount" class="text-end"><span t-out="formatCurrency(order.l10n_ke_edi_oscu_pos_order_json['totAmt'] * sign)"/></td>
                                     </tr>
                                 </tbody>
                             </table>
