@@ -1,3 +1,5 @@
+import logging
+
 from odoo import _, api, fields, models
 from odoo.addons.base.models.res_bank import sanitize_account_number
 from odoo.exceptions import UserError
@@ -8,6 +10,7 @@ from itertools import product
 from lxml import etree
 from markupsafe import Markup
 
+_logger = logging.getLogger(__name__)
 
 class AccountBankStatement(models.Model):
     _name = 'account.bank.statement'
@@ -157,7 +160,11 @@ class AccountBankStatementLine(models.Model):
                             ', '.join(st_line.move_id.line_ids.reconcile_model_id.mapped('name')),
                         ))
                         nb_auto_reconciled_lines += 1
-                except UserError:
+                except UserError as e:
+                    _logger.info("Failed to auto reconcile statement line %s due to user error: %s",
+                        st_line.id,
+                        str(e)
+                    )
                     continue
 
         st_lines.write({'cron_last_check': start_time})
