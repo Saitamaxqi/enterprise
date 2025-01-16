@@ -231,9 +231,8 @@ export class DocumentService {
     }
 
     async toggleFavorite(document) {
-        const [unlinkCmd, linkCmd] = [3, 4];
         await this.orm.write("documents.document", [document.id], {
-            favorited_ids: [[document.is_favorited ? unlinkCmd : linkCmd, user.userId, 0]],
+            is_favorited: !document.is_favorited,
         });
     }
 

@@ -44,7 +44,7 @@
                             <span class="d-inline-block" t-if="singleSelection">Split PDF</span>
                             <span class="d-inline-block" t-else="">Merge PDFs</span>
                         </button>
-                        <hr t-if="!isInTrash"/>
+                        <hr t-if="!isInTrash and userIsInternal"/>
                         <button class="dropdown-item w-100"
                             t-on-click="() => this.onRename()"
                             t-if="(userIsInternal or editMode) and singleSelection and !isInTrash">
@@ -53,7 +53,7 @@
                         </button>
                         <button class="dropdown-item w-100"
                             t-on-click="() => this.onDuplicate()"
-                            t-if="!isInTrash">
+                            t-if="canDuplicateSelection">
                             <i class="fa fa-fw fa-copy me-1"/>
                             <span class="d-inline-block">Duplicate</span>
                         </button>
@@ -86,7 +86,7 @@
             </div>
 
             <button type="button" class="btn btn-secondary o_documents_share_button"
-                t-if="selectionCount === 1"
+                t-if="documentService.userIsInternal and selectionCount === 1"
                 t-on-click="() => this.onShare()">
                 Share
             </button>

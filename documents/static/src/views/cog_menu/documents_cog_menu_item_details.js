@@ -18,5 +18,9 @@ export const documentsCogMenuItemDetails = {
     Component: DocumentsCogMenuItemDetails,
     groupNumber: STATIC_COG_GROUP_ACTION_ADVANCED,
     isDisplayed: (env) =>
-        DocumentsCogMenuItem.isVisible(env, ({ folder }) => typeof folder.id === "number"),
+        DocumentsCogMenuItem.isVisible(
+            env,
+            ({ documentService, folder }) =>
+                documentService.userIsInternal && typeof folder.id === "number"
+        ),
 };

@@ -20,7 +20,9 @@ export const documentsCogMenuItemArchive = {
     Component: DocumentsCogMenuItemArchive,
     groupNumber: STATIC_COG_GROUP_ACTION_CLEANUP,
     isDisplayed: (env) =>
-        DocumentsCogMenuItem.isVisible(env, ({ folder, documentService }) =>
-            documentService.isEditable(folder)
+        DocumentsCogMenuItem.isVisible(
+            env,
+            ({ folder, documentService }) =>
+                documentService.userIsInternal && documentService.isEditable(folder)
         ),
 };

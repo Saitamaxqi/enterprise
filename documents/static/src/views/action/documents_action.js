@@ -257,6 +257,11 @@ export class DocumentsAction extends Component {
         this.notificationService.add(message, { type: "success" });
     }
 
+    get canDuplicateSelection() {
+        const currentFolder = this.env.searchModel.getSelectedFolder();
+        return currentFolder?.id !== "TRASH" && this.documentService.isEditable(currentFolder);
+    }
+
     /**
      * Return the common list of actions for the selected / previewed document folders.
      */

@@ -23,7 +23,9 @@ export const documentsCogMenuItemShare = {
     Component: DocumentsCogMenuItemShare,
     groupNumber: STATIC_COG_GROUP_ACTION_ADVANCED,
     isDisplayed: (env) =>
-        DocumentsCogMenuItem.isVisible(env, ({ folder, documentService }) =>
-            documentService.isFolderSharable(folder)
+        DocumentsCogMenuItem.isVisible(
+            env,
+            ({ folder, documentService }) =>
+                documentService.userIsInternal && documentService.isFolderSharable(folder)
         ),
 };
