@@ -19,6 +19,7 @@
 <template id="s_appointments" name="Appointments">
     <t t-call="website.s_dynamic_snippet_template">
         <t t-set="snippet_name" t-value="'s_appointments'"/>
+        <t t-set="main_page_url" t-value="'/appointment'"/>
         <t t-call="website_appointment.s_appointments_preview_data"/>
     </t>
 </template>

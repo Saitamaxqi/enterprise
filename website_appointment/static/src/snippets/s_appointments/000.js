@@ -42,13 +42,6 @@ const AppointmentsListSnippet = DynamicSnippet.extend({
         }
         return searchDomain.toList();
     },
-    /**
-     * @override
-     * @private
-     */
-    _getMainPageUrl() {
-        return "/appointment";
-    },
 });
 
 publicWidget.registry.s_appointments = AppointmentsListSnippet;
