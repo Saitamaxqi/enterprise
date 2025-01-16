@@ -20,9 +20,31 @@
             navigationOptions="dropdownProps"
         >
             <button class="btn btn-secondary">
-                <i class="fa fa-percent me-1"/>Comparison
+                <i class="fa fa-percent me-1"/>
+                <span>Comparison</span>
                 <t t-if="controller.options.comparison.string">
-                    : <t t-out="controller.options.comparison.string"/>
+                    <span>: </span>
+                    <t t-if="controller.options.comparison.filter === 'previous_period'">
+                        <t t-if="controller.options.comparison.number_period === 1">
+                            <span>Previous Period</span>
+                        </t>
+                        <t t-elif="controller.options.comparison.number_period > 1">
+                            <t t-esc="`${ controller.options.comparison.number_period } `"/>
+                            <span>Previous Periods</span>
+                        </t>
+                    </t>
+                    <t t-elif="controller.options.comparison.filter === 'same_last_year'">
+                        <t t-if="controller.options.comparison.number_period === 1">
+                            <span>Previous Year</span>
+                        </t>
+                        <t t-elif="controller.options.comparison.number_period > 1">
+                            <t t-esc="`${ controller.options.comparison.number_period } `"/>
+                            <span>Previous Years</span>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <t t-esc="`${ controller.options.comparison.string }`"/>
+                    </t>
                 </t>
             </button>
 
