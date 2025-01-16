@@ -13,7 +13,6 @@
                 <sheet>
                     <widget name="web_ribbon" title="Done" bg_color="text-bg-success" invisible="progression != '100'"/>
                     <div class="oe_title">
-                        <label for="name" string="Goal"/>
                         <h1>
                             <field name="name" placeholder="e.g. Improve your English level"/>
                         </h1>
@@ -33,11 +32,14 @@
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                         </group>
                     </group>
-                    <notebook>
-                        <page string="Description" name="description">
-                            <field name="description"/>
-                        </page>
-                    </notebook>
+                    <group>
+                        <label for="description">Description</label>
+                    </group>
+                    <group>
+                        <field name="description" nolabel='1'
+                            placeholder="Provide visible information on the goal, how the employee can achieve it. Which benefit he will get from it.
+                            Maybe some process or steps to help her/him along the way."/>
+                    </group>
                 </sheet>
                 <chatter/>
             </form>
@@ -48,15 +50,16 @@
         <field name="name">hr.appraisal.goal.view.list</field>
         <field name="model">hr.appraisal.goal</field>
         <field name="arch" type="xml">
-            <list sample="1" class="o_goal_list">
-                <field name="name" class="fw-bold"/>
-                <field name="create_date" widget="timeless_date"/>
-                <field name="deadline" widget="remaining_days" optional="hidden"/>
+            <list sample="1" class="o_goal_list" default_order="deadline asc">
+                <field name="name"/>
                 <field name="activity_ids" widget="list_activity" optional="hidden"/>
                 <field name="progression" widget="badge" decoration-success="progression == '100'"/>
                 <field name="employee_id" widget="many2one_avatar_employee" options="{'no_open': True}"/>
-                <field name="manager_id" widget="many2one_avatar_employee" optional="hidden" options="{'no_open': True}"/>
+                <field name="deadline" widget="remaining_days"/>
+                <field name="create_date" widget="timeless_date" optional="hidden"/>
                 <field name="tag_ids" widget="many2many_tags" readonly="1" optional="hidden" options="{'color_field': 'color'}"/>
+                <field name="description" optional="hidden"/>
+                <field name="manager_id" widget="many2one_avatar_employee" optional="hidden" options="{'no_open': True}"/>
             </list>
         </field>
     </record>
@@ -67,24 +70,18 @@
         <field name="arch" type="xml">
             <kanban quick_create="false" class="o_hr_employee_kanban" sample="1">
                 <templates>
-                    <t t-name="menu">
-                        <t t-if="widget.deletable"><a type="delete" class="dropdown-item" role="menuitem">Delete</a></t>
-                        <a type="object" name="action_confirm" class="dropdown-item" invisible="progression == '100'" role="menuitem">Mark as Done</a>
-                    </t>
-                    <t t-name="card">
+                    <t t-name="card" class="overflow-hidden">
                         <widget name="web_ribbon" title="Done" bg_color="text-bg-success" invisible="progression != '100'"/>
-                        <div class="d-flex">
-                            <field name="name" class="fs-4 mb-1"/>
-                            <field t-if="record.progression.raw_value != 100" name="progression" class="fw-bold ms-auto me-2"/>
-                        </div>
-                        <field name="employee_id"/>
-                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                        <footer class="pt-1 ms-2 me-2">
-                            <div class="d-flex align-items-center">
-                                <field name="activity_ids" widget="kanban_activity"/>
-                                <field name="create_date" widget="timeless_date" class="ms-2"/>
-                            </div>
-                            <field name="employee_id" widget="many2one_avatar_employee" class="ms-auto"/>
+                        <field name="name" class="fs-4 mb-1"/>
+                        <span t-if="record.progression.raw_value != 100">
+                            Progress:
+                            <field name="progression"/>
+                        </span>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" class="pt-2" invisible="not tag_ids"/>
+                        <footer>
+                            <field name="deadline" />
+                            <field name="activity_ids" widget="kanban_activity" class="ms-auto"/>
+                            <field name="employee_id" widget="many2one_avatar_employee" />
                         </footer>
                     </t>
                 </templates>

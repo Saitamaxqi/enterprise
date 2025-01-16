@@ -25,7 +25,7 @@ class HrAppraisalGoal(models.Model):
         ('050', '50%'),
         ('075', '75%'),
         ('100', '100%')
-    ], string="Progress", default="000", tracking=True, required=True)
+    ], string="Progress", default="000", tracking=True, required=True, copy=False)
     description = fields.Html()
     deadline = fields.Date(tracking=True)
     is_manager = fields.Boolean(compute='_compute_is_manager', search='_search_is_manager')
@@ -69,3 +69,11 @@ class HrAppraisalGoal(models.Model):
 
     def action_confirm(self):
         self.write({'progression': '100'})
+
+    def copy_data(self, default=None):
+        vals_list = super().copy_data(default)
+        for goal, vals in zip(self, vals_list):
+            vals['name'] = _('%s (copy)', goal.name)
+            if goal.deadline < fields.Date.today():
+                vals['deadline'] = False
+        return vals_list
