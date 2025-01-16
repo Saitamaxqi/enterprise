@@ -740,7 +740,7 @@ class AccountReport(models.Model):
             # Use the 'date' options.
             date_from = options['date']['date_from']
             date_to = options['date']['date_to']
-            number_period = previous_comparison.get('number_period', 1) or 0
+            number_period = max(previous_comparison.get('number_period', 1) or 0, 0)
             options_filter = number_period and previous_filter or 'no_comparison'
 
         options['comparison'] = {
