@@ -34,10 +34,10 @@ He must attach to this form the documents establishing the reality of the charge
 
 Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, of the Royal Decree of 27 December 2004 implementing Articles 1409, § 1, paragraph 4, and 1409, § 1 bis, paragraph 4 , of the Judicial Code relating to the limitation of seizure when there are dependent children, MB, December 13, 2019.""")
     other_dependent_people = fields.Boolean(string="Other Dependent People", help="If other people are dependent on the employee", groups="hr.group_hr_user", tracking=True)
-    other_senior_dependent = fields.Integer('# seniors (>=65)', help="Number of seniors dependent on the employee, including the disabled ones", groups="hr.group_hr_user", tracking=True)
-    other_disabled_senior_dependent = fields.Integer('# disabled seniors (>=65)', groups="hr.group_hr_user", tracking=True)
-    other_juniors_dependent = fields.Integer('# people (<65)', help="Number of juniors dependent on the employee, including the disabled ones", groups="hr.group_hr_user", tracking=True)
-    other_disabled_juniors_dependent = fields.Integer('# disabled people (<65)', groups="hr.group_hr_user", tracking=True)
+    other_senior_dependent = fields.Integer('# seniors (>=66)', help="Number of seniors dependent on the employee, including the disabled ones", groups="hr.group_hr_user", tracking=True)
+    other_disabled_senior_dependent = fields.Integer('# disabled seniors (>=66)', groups="hr.group_hr_user", tracking=True)
+    other_juniors_dependent = fields.Integer('# people (<66)', help="Number of juniors dependent on the employee, including the disabled ones", groups="hr.group_hr_user", tracking=True)
+    other_disabled_juniors_dependent = fields.Integer('# disabled people (<66)', groups="hr.group_hr_user", tracking=True)
     dependent_seniors = fields.Integer(compute='_compute_dependent_people', string="Considered number of dependent seniors", groups="hr.group_hr_user")
     dependent_juniors = fields.Integer(compute='_compute_dependent_people', string="Considered number of dependent juniors", groups="hr.group_hr_user")
 

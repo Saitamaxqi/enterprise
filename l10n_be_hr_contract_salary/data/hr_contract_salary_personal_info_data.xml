@@ -239,7 +239,7 @@
 
     <record id="hr_contract_salary_personal_info_other_senior_dependent" model="hr.contract.salary.personal.info">
         <field name="name">Seniors</field>
-        <field name="helper">&gt;= 65 years old</field>
+        <field name="helper">&gt;= 66 years old</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'other_senior_dependent')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">integer</field>
@@ -254,7 +254,7 @@
 
     <record id="hr_contract_salary_personal_info_other_disabled_senior_dependent" model="hr.contract.salary.personal.info">
         <field name="name">Disabled seniors</field>
-        <field name="helper">&gt;= 65 years old</field>
+        <field name="helper">&gt;= 66 years old</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'other_disabled_senior_dependent')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">integer</field>
@@ -269,7 +269,7 @@
 
     <record id="hr_contract_salary_personal_info_other_juniors_dependent" model="hr.contract.salary.personal.info">
         <field name="name">People</field>
-        <field name="helper">&lt; 65 years old</field>
+        <field name="helper">&lt; 66 years old</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'other_juniors_dependent')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">integer</field>
@@ -284,7 +284,7 @@
 
     <record id="hr_contract_salary_personal_info_other_disabled_juniors_dependant" model="hr.contract.salary.personal.info">
         <field name="name">Disabled people</field>
-        <field name="helper">&lt; 65 years old</field>
+        <field name="helper">&lt; 66 years old</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'other_disabled_juniors_dependent')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">integer</field>
