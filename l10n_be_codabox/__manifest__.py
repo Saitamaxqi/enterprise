@@ -1,14 +1,13 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'CodaBox',
+    'countries': ['be'],
     'version': '1.0',
     'author': 'Odoo',
     'website': 'https://www.odoo.com/documentation/master/applications/finance/fiscal_localizations/belgium.html#codabox',
     'category': 'Accounting/Localizations',
-    'summary': 'For Accounting Firms',
-    'description': '''This module allows Accounting Firms to connect to CodaBox
-and automatically import CODA and SODA statements for their clients in Odoo.
-The connection must be done by the Accounting Firm.
+    'description': '''This module allows connection to CodaBox
+and automatically imports CODA and SODA statements in Odoo.
     ''',
     'depends': [
         'l10n_be_coda',
@@ -25,5 +24,4 @@ The connection must be done by the Accounting Firm.
         'wizard/validation_wizard.xml',
     ],
     'license': 'OEEL-1',
-    'pre_init_hook': '_l10n_be_codabox_pre_init_hook',
 }

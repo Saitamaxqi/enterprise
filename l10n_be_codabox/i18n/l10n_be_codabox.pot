@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.3+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 09:03+0000\n"
-"PO-Revision-Date: 2024-06-28 09:03+0000\n"
+"POT-Creation-Date: 2025-02-25 10:35+0000\n"
+"PO-Revision-Date: 2025-02-25 10:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -48,12 +48,6 @@ msgstr ""
 #. module: l10n_be_codabox
 #: model:ir.actions.server,name:l10n_be_codabox.codabox_sync_soda_cron_ir_actions_server
 msgid "Account: Sync Soda Files from CodaBox"
-msgstr ""
-
-#. module: l10n_be_codabox
-#: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__fidu_password
-#: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__fidu_password
-msgid "Accounting Firm Password"
 msgstr ""
 
 #. module: l10n_be_codabox
@@ -217,7 +211,7 @@ msgstr ""
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.validation_wizard_view
-msgid "Confirm the Accounting Firm Password"
+msgid "Confirm the Password"
 msgstr ""
 
 #. module: l10n_be_codabox
@@ -322,7 +316,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_codabox/const.py:0
 msgid ""
-"It seems that the Accounting Firm VAT number you provided does not exist in "
+"It seems that the VAT/Company ID number you provided does not exist in "
 "CodaBox. Please check your configuration."
 msgstr ""
 
@@ -330,8 +324,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_codabox/const.py:0
 msgid ""
-"It seems that the company or Accounting Firm VAT number you provided is not "
-"valid. Please check your configuration."
+"It seems that the VAT/Company ID number you provided is not valid. Please "
+"check your configuration."
 msgstr ""
 
 #. module: l10n_be_codabox
@@ -352,9 +346,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_codabox/const.py:0
 msgid ""
-"It seems you have already created a connection to CodaBox with this "
-"Accounting Firm. To create a new connection, you must first revoke the old "
-"one on myCodaBox portal."
+"It seems you have already created a connection to CodaBox with this account."
+" To create a new connection, you must first revoke the old one on myCodaBox "
+"portal."
 msgstr ""
 
 #. module: l10n_be_codabox
@@ -418,8 +412,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_codabox/const.py:0
 msgid ""
-"No connection exists with these Accounting Firm and Company ID numbers. "
-"Please check your configuration."
+"No connection exists with these VAT/Company ID number(s). Please check your "
+"configuration."
 msgstr ""
 
 #. module: l10n_be_codabox
@@ -447,6 +441,12 @@ msgid "Original CodaBox Payroll Statement.pdf"
 msgstr ""
 
 #. module: l10n_be_codabox
+#: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__fidu_password
+#: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__fidu_password
+msgid "Password"
+msgstr ""
+
+#. module: l10n_be_codabox
 #. odoo-python
 #: code:addons/l10n_be_codabox/wizard/change_password_wizard.py:0
 msgid "Password successfully changed."
@@ -465,7 +465,7 @@ msgstr ""
 #. module: l10n_be_codabox
 #: model:ir.model.fields,help:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__confirm_fidu_password
 msgid ""
-"Please confirm the new password you want to set for the accounting firm."
+"Please confirm the new password you want to set for the Codabox connection."
 msgstr ""
 
 #. module: l10n_be_codabox
@@ -514,23 +514,6 @@ msgstr ""
 
 #. module: l10n_be_codabox
 #. odoo-python
-#: code:addons/l10n_be_codabox/__init__.py:0
-msgid ""
-"The CodaBox module must be installed and configured by an Accounting Firm."
-msgstr ""
-
-#. module: l10n_be_codabox
-#: model:ir.model.fields,help:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__fiduciary_vat
-#: model:ir.model.fields,help:l10n_be_codabox.field_res_company__l10n_be_codabox_fiduciary_vat
-#: model:ir.model.fields,help:l10n_be_codabox.field_res_config_settings__l10n_be_codabox_fiduciary_vat
-msgid ""
-"The Tax Identification Number. Values here will be validated based on the "
-"country format. You can use '/' to indicate that the partner is not subject "
-"to tax."
-msgstr ""
-
-#. module: l10n_be_codabox
-#. odoo-python
 #: code:addons/l10n_be_codabox/models/res_company.py:0
 msgid "The company VAT/ID number is not set."
 msgstr ""
@@ -545,20 +528,7 @@ msgstr ""
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
 msgid ""
-"The connection must be made by the Accounting Firm that has valid\n"
-"                    CodaBox Connect credentials."
-msgstr ""
-
-#. module: l10n_be_codabox
-#. odoo-python
-#: code:addons/l10n_be_codabox/models/res_company.py:0
-msgid "The feature is restricted to Accounting Firms."
-msgstr ""
-
-#. module: l10n_be_codabox
-#: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
-msgid ""
-"The following VAT/ID numbers will be used for the CodaBox connection.\n"
+"The following VAT/ID number(s) will be used for the CodaBox connection.\n"
 "                    You can edit them in the Company Settings if they are not correct."
 msgstr ""
 
@@ -571,14 +541,14 @@ msgstr ""
 #. module: l10n_be_codabox
 #. odoo-python
 #: code:addons/l10n_be_codabox/const.py:0
-msgid "The provided password is not valid for this Accounting Firm."
+msgid "The provided password is not valid for this VAT/Company ID number."
 msgstr ""
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
 msgid ""
-"This is the last connection for this Accounting Firm. Are you sure you want "
-"to revoke it ?"
+"This is the last connection for this account. Are you sure you want to "
+"revoke it ?"
 msgstr ""
 
 #. module: l10n_be_codabox
@@ -599,7 +569,7 @@ msgstr ""
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,help:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__new_fidu_password
-msgid "This is the password you want to set for the accounting firm."
+msgid "This is the password you want to set for the Codabox connection."
 msgstr ""
 
 #. module: l10n_be_codabox

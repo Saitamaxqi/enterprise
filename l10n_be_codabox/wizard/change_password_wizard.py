@@ -23,11 +23,11 @@ class L10n_Be_CodaboxChangePasswordWizard(models.TransientModel):
     )
     new_fidu_password = fields.Char(
         string='New Password',
-        help='This is the password you want to set for the accounting firm.',
+        help='This is the password you want to set for the Codabox connection.',
     )
     confirm_fidu_password = fields.Char(
         string='Confirm New Password',
-        help='Please confirm the new password you want to set for the accounting firm.',
+        help='Please confirm the new password you want to set for the Codabox connection.',
     )
 
     def l10n_be_codabox_change_password(self):

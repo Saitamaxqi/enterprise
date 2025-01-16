@@ -27,7 +27,7 @@
                         </li>
                         <li>
                             <p>
-                                <p>Confirm the Accounting Firm Password</p>
+                                <p>Confirm the Password</p>
                                 <field name="pasted_password" placeholder="Paste it here" class="w-100"/>
                             </p>
                         </li>

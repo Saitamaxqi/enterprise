@@ -12,11 +12,7 @@
                 <field name="show_fidu_password" invisible="1"/>
 
                 <div>
-                    The connection must be made by the Accounting Firm that has valid
-                    CodaBox Connect credentials.
-                </div>
-                <div>
-                    The following VAT/ID numbers will be used for the CodaBox connection.
+                    The following VAT/ID number(s) will be used for the CodaBox connection.
                     You can edit them in the Company Settings if they are not correct.
                 </div>
 
@@ -33,7 +29,7 @@
                 <br/>
 
                 <group>
-                    <field name="fiduciary_vat"/>
+                    <field name="fiduciary_vat" invisible="company_vat == fiduciary_vat"/>
                     <field name="company_vat"/>
                     <field name="fidu_password" password="True" invisible="not show_fidu_password"/>
                 </group>
@@ -55,7 +51,7 @@
                     <button name="l10n_be_codabox_revoke" string="Revoke" type="object" class="btn-secondary"
                             confirm="Are you sure you want to revoke this connection ?" invisible="nb_connections == 1 or not connection_exists"/>
                     <button name="l10n_be_codabox_revoke" string="Revoke" type="object" class="btn-secondary" invisible="nb_connections > 1 or not connection_exists"
-                            confirm="This is the last connection for this Accounting Firm. Are you sure you want to revoke it ?"/>
+                            confirm="This is the last connection for this account. Are you sure you want to revoke it ?"/>
                     <button string="Close" class="btn-secondary" special="cancel" data-hotkey="x"/>
                 </footer>
             </form>

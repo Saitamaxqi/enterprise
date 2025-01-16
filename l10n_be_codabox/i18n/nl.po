@@ -4,16 +4,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.3+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 09:04+0000\n"
-"PO-Revision-Date: 2024-06-28 09:04+0000\n"
+"POT-Creation-Date: 2025-02-20 15:12+0000\n"
+"PO-Revision-Date: 2025-02-20 15:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.res_config_settings_view_form
@@ -58,12 +59,6 @@ msgstr "Account: Synchroniseer Coda-bestanden van CodaBox"
 #: model:ir.actions.server,name:l10n_be_codabox.codabox_sync_soda_cron_ir_actions_server
 msgid "Account: Sync Soda Files from CodaBox"
 msgstr "Account: Synchroniseer Soda-bestanden van CodaBox"
-
-#. module: l10n_be_codabox
-#: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__fidu_password
-#: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__fidu_password
-msgid "Accounting Firm Password"
-msgstr "Wachtwoord van het accountantskantoor"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__fiduciary_vat
@@ -211,27 +206,27 @@ msgstr "Bedrijf"
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__company_vat
 msgid "Company ID"
-msgstr "Bedrijf ID"
+msgstr "Btw- of ondernemingsnummer"
 
 #. module: l10n_be_codabox
 #: model:ir.model,name:l10n_be_codabox.model_res_config_settings
 msgid "Config Settings"
-msgstr "Configuratie instellingen"
+msgstr "Configuratie-instellingen"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__confirm_fidu_password
 msgid "Confirm New Password"
-msgstr ""
+msgstr "Nieuw wachtwoord bevestigen"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.change_password_wizard_view
 msgid "Confirm new password"
-msgstr "Bevestig nieuw wachtwoord"
+msgstr "Nieuw wachtwoord bevestigen"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.validation_wizard_view
-msgid "Confirm the Accounting Firm Password"
-msgstr "Bevestig het wachtwoord van het accountantskantoor"
+msgid "Confirm the Password"
+msgstr "Wachtwoord bevestigen"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__confirmation_url
@@ -241,13 +236,13 @@ msgstr "Bevestigings-URL"
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__connection_exists
 msgid "Connection Exists"
-msgstr "Verbinding bestaat"
+msgstr "Bestaande verbinding"
 
 #. module: l10n_be_codabox
 #. odoo-python
 #: code:addons/l10n_be_codabox/wizard/connection_wizard.py:0
 msgid "Connection Validation"
-msgstr "Validatie van verbinding"
+msgstr "Bevestiging van de verbinding"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.validation_wizard_view
@@ -289,7 +284,7 @@ msgstr "Weergavenaam"
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.account_journal_dashboard_inherit_l10n_be_codabox
 msgid "Drafts to Validate"
-msgstr "Concepten om te valideren"
+msgstr "Te bevestigen concepten"
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -318,7 +313,7 @@ msgstr "ID"
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.res_config_settings_view_form
 msgid "Import SODA's in"
-msgstr "Importeer SODA's in"
+msgstr "SODA's importeren in"
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -329,27 +324,27 @@ msgstr "Informatie"
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__is_fidu_consent_valid
 msgid "Is Fidu Consent Valid"
-msgstr "Is Fidu-toestemming geldig"
+msgstr "Toestemming accountantskantoor is geldig"
 
 #. module: l10n_be_codabox
 #. odoo-python
 #: code:addons/l10n_be_codabox/const.py:0
 msgid ""
-"It seems that the Accounting Firm VAT number you provided does not exist in "
+"It seems that the VAT/Company ID number you provided does not exist in "
 "CodaBox. Please check your configuration."
 msgstr ""
-"Het lijkt erop dat het opgegeven btw-nummer van het accountantskantoor niet "
-"bestaat in CodaBox. Controleer je configuratie."
+"Het lijkt erop dat het opgegeven btw- of ondernemingsnummer niet bestaat in "
+"CodaBox. Controleer je configuratie."
 
 #. module: l10n_be_codabox
 #. odoo-python
 #: code:addons/l10n_be_codabox/const.py:0
 msgid ""
-"It seems that the company or Accounting Firm VAT number you provided is not "
-"valid. Please check your configuration."
+"It seems that the VAT/Company ID number you provided is not valid. Please "
+"check your configuration."
 msgstr ""
-"Het lijkt erop dat het opgegeven btw-nummer van je bedrijf of van je "
-"accountantskantoor niet geldig is. Controleer je configuratie."
+"Het lijkt erop dat het opgegeven btw- of ondernemingsnummer niet geldig is. "
+"Controleer je configuratie."
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.validation_wizard_view
@@ -357,7 +352,7 @@ msgid ""
 "It seems that you have not yet validated the connection on CodaBox's side."
 msgstr ""
 "Het lijkt erop dat je de verbinding aan de kant van CodaBox nog niet hebt "
-"gevalideerd."
+"bevestigd."
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -366,20 +361,20 @@ msgid ""
 "It seems that your CodaBox connection is not valid anymore.  Please connect "
 "again."
 msgstr ""
-"Het lijkt erop dat je CodaBox-verbinding niet meer geldig is. Verbind "
-"opnieuw."
+"Het lijkt erop dat je CodaBox-verbinding niet meer geldig is. Maak opnieuw "
+"verbinding."
 
 #. module: l10n_be_codabox
 #. odoo-python
 #: code:addons/l10n_be_codabox/const.py:0
 msgid ""
-"It seems you have already created a connection to CodaBox with this "
-"Accounting Firm. To create a new connection, you must first revoke the old "
-"one on myCodaBox portal."
+"It seems you have already created a connection to CodaBox with this account."
+" To create a new connection, you must first revoke the old one on myCodaBox "
+"portal."
 msgstr ""
 "Het lijkt erop dat je al een verbinding met CodaBox hebt gemaakt met dit "
-"accountantskantoor. Om een nieuwe verbinding te maken, dien je eerst de oude"
-" verbinding in te trekken op het myCodaBox-portaal."
+"account. Om een nieuwe verbinding te maken, dien je eerst de oude verbinding"
+" in te trekken op het myCodaBox-portaal."
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.validation_wizard_view
@@ -421,7 +416,7 @@ msgstr "Laatst bijgewerkt op"
 #: code:addons/l10n_be_codabox/wizard/connection_wizard.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.res_config_settings_view_form
 msgid "Manage Connection"
-msgstr "Beheer verbinding"
+msgstr "Verbinding beheren"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__nb_connections
@@ -444,11 +439,11 @@ msgstr "Geen SODA geïmporteerd"
 #. odoo-python
 #: code:addons/l10n_be_codabox/const.py:0
 msgid ""
-"No connection exists with these Accounting Firm and Company ID numbers. "
-"Please check your configuration."
+"No connection exists with these VAT/Company ID number(s). Please check your "
+"configuration."
 msgstr ""
-"Er bestaat geen verbinding gekoppeld aan de btw-nummers van dit "
-"accountantskantoor en dit bedrijf. Controleer je configuratie."
+"Er bestaat geen verbinding gekoppeld aan deze btw- of ondernemingsnummer(s)."
+" Controleer je configuratie."
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -460,19 +455,25 @@ msgstr "Er zijn geen bestanden gevonden. Controleer je configuratie."
 #. odoo-python
 #: code:addons/l10n_be_codabox/models/account_journal.py:0
 msgid "No new SODA is available for import."
-msgstr "Er is geen nieuwe SODA beschikbaar voor import"
+msgstr "Er is geen nieuwe SODA beschikbaar voor import."
 
 #. module: l10n_be_codabox
 #. odoo-python
 #: code:addons/l10n_be_codabox/models/account_journal.py:0
 msgid "Original CodaBox Bank Statement.pdf"
-msgstr ""
+msgstr "Origineel CodaBox bankuittreksel.pdf"
 
 #. module: l10n_be_codabox
 #. odoo-python
 #: code:addons/l10n_be_codabox/models/account_journal.py:0
 msgid "Original CodaBox Payroll Statement.pdf"
-msgstr ""
+msgstr "Origineel CodaBox loonboekingsdocument.pdf"
+
+#. module: l10n_be_codabox
+#: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__fidu_password
+#: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__fidu_password
+msgid "Password"
+msgstr "Wachtwoord"
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -488,15 +489,15 @@ msgstr "Plak het hier"
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__pasted_password
 msgid "Pasted Password"
-msgstr "Geplakt Wachtwoord"
+msgstr "Geplakt wachtwoord"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,help:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__confirm_fidu_password
 msgid ""
-"Please confirm the new password you want to set for the accounting firm."
+"Please confirm the new password you want to set for the Codabox connection."
 msgstr ""
-"Bevestig het nieuwe wachtwoord dat je wilt instellen voor het "
-"boekhoudkantoor."
+"Bevestig het nieuwe wachtwoord dat je wilt instellen voor de CodaBox-"
+"verbinding."
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -517,7 +518,7 @@ msgstr "Instellingen"
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__show_fidu_password
 msgid "Show Fidu Password"
-msgstr "Toon Fidu-wachtwoord"
+msgstr "Wachtwoord accountantskantoor weergeven"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.res_config_settings_view_form
@@ -550,25 +551,6 @@ msgstr "Succes"
 
 #. module: l10n_be_codabox
 #. odoo-python
-#: code:addons/l10n_be_codabox/__init__.py:0
-msgid ""
-"The CodaBox module must be installed and configured by an Accounting Firm."
-msgstr ""
-"De CodaBox-module moet worden geïnstalleerd en geconfigureerd door een "
-"accountantskantoor."
-
-#. module: l10n_be_codabox
-#: model:ir.model.fields,help:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__fiduciary_vat
-#: model:ir.model.fields,help:l10n_be_codabox.field_res_company__l10n_be_codabox_fiduciary_vat
-#: model:ir.model.fields,help:l10n_be_codabox.field_res_config_settings__l10n_be_codabox_fiduciary_vat
-msgid ""
-"The Tax Identification Number. Values here will be validated based on the "
-"country format. You can use '/' to indicate that the partner is not subject "
-"to tax."
-msgstr ""
-
-#. module: l10n_be_codabox
-#. odoo-python
 #: code:addons/l10n_be_codabox/models/res_company.py:0
 msgid "The company VAT/ID number is not set."
 msgstr "Het btw- of ondernemingsnummer van je bedrijf is niet ingesteld."
@@ -579,32 +561,17 @@ msgid ""
 "The connection has successfully been created on Odoo's side. Please follow "
 "these steps:"
 msgstr ""
-"De verbinding is succesvol aangemaakt aan de kant van Odoo. Gelieve volgende"
-" stappen te volgen:"
+"De verbinding is succesvol aangemaakt in Odoo. Gelieve volgende stappen te "
+"volgen:"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
 msgid ""
-"The connection must be made by the Accounting Firm that has valid\n"
-"                    CodaBox Connect credentials."
-msgstr ""
-"De verbinding moet worden gemaakt door het accountantskantoor dat geldige "
-"CodaBox Connect-inloggegevens heeft."
-
-#. module: l10n_be_codabox
-#. odoo-python
-#: code:addons/l10n_be_codabox/models/res_company.py:0
-msgid "The feature is restricted to Accounting Firms."
-msgstr "De functie is beperkt tot accountantskantoren."
-
-#. module: l10n_be_codabox
-#: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
-msgid ""
-"The following VAT/ID numbers will be used for the CodaBox connection.\n"
+"The following VAT/ID number(s) will be used for the CodaBox connection.\n"
 "                    You can edit them in the Company Settings if they are not correct."
 msgstr ""
-"De volgende btw-nummers worden gebruikt voor de CodaBox-verbinding.\n"
-"Je kan ze bewerken in de bedrijfsinstellingen als ze niet correct zijn."
+"De volgende btw- of ondernemingsnummer(s) worden gebruikt voor de CodaBox verbinding.\n"
+"                    Je kan ze aanpassen in de bedrijfsinstellingen als ze niet correct zijn."
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -615,17 +582,18 @@ msgstr "Het nieuwe wachtwoord en de bevestiging komen niet overeen."
 #. module: l10n_be_codabox
 #. odoo-python
 #: code:addons/l10n_be_codabox/const.py:0
-msgid "The provided password is not valid for this Accounting Firm."
-msgstr "Het verstrekte wachtwoord is niet geldig voor dit accountantskantoor."
+msgid "The provided password is not valid for this VAT/Company ID number."
+msgstr ""
+"Het opgegeven wachtwoord is niet geldig voor dit btw- of ondernemingsnummer."
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
 msgid ""
-"This is the last connection for this Accounting Firm. Are you sure you want "
-"to revoke it ?"
+"This is the last connection for this account. Are you sure you want to "
+"revoke it ?"
 msgstr ""
-"Dit is de laatste verbinding voor dit accountantskantoor. Weet je zeker dat "
-"je deze wilt intrekken?"
+"Dit is de laatste verbinding voor dit account. Weet je zeker dat je deze "
+"wilt intrekken?"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,help:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__current_fidu_password
@@ -646,12 +614,13 @@ msgid ""
 msgstr ""
 "Dit is het wachtwoord dat je de eerste keer van Odoo hebt ontvangen toen je "
 "verbinding maakte met CodaBox. Gelieve de documentatie te controleren als je"
-" je wachtwoord vergeten hebt.
+" je wachtwoord vergeten bent."
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,help:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__new_fidu_password
-msgid "This is the password you want to set for the accounting firm."
-msgstr "Dit is het wachtwoord dat je wilt instellen voor het boekhoudkantoor."
+msgid "This is the password you want to set for the Codabox connection."
+msgstr ""
+"Dit is het wachtwoord dat je wilt instellen voor de CodaBox-verbinding."
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.validation_wizard_view
@@ -678,13 +647,13 @@ msgid ""
 "Validate the connection on CodaBox's side (with your usual myCodaBox credentials).\n"
 "                                This needs to be done only once."
 msgstr ""
-"Valideer de verbinding aan de kant van CodaBox (met je gebruikelijke myCodaBox-inloggegevens).\n"
+"Bevestig de verbinding bij CodaBox (met je gebruikelijke myCodaBox-inloggegevens).\n"
 "Dit hoeft slechts eenmaal te worden gedaan."
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
 msgid "You can access the documentation"
-msgstr "U kunt de documentatie raadplegen"
+msgstr "Je kan de documentatie raadplegen"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view

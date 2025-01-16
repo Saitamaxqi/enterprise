@@ -27,7 +27,12 @@ class ResCompany(models.Model):
     def _compute_l10n_be_codabox_fiduciary_vat(self):
         for company in self:
             codabox_contract_sys_param = self.env['ir.config_parameter'].sudo().get_param("l10n_be_codabox.codabox_contract")
-            company.l10n_be_codabox_fiduciary_vat = codabox_contract_sys_param or company.account_representative_id.vat
+            if codabox_contract_sys_param:
+                company.l10n_be_codabox_fiduciary_vat = codabox_contract_sys_param
+            elif company.account_representative_id:
+                company.l10n_be_codabox_fiduciary_vat = company.account_representative_id.vat
+            else:
+                company.l10n_be_codabox_fiduciary_vat = self.vat or self.company_registry
 
     @api.model
     def _l10n_be_codabox_return_wizard(self, name, view_id, res_model, res_id):
@@ -57,8 +62,6 @@ class ResCompany(models.Model):
         self.ensure_one()
         if not self.vat and not self.company_registry:
             raise UserError(_("The company VAT/ID number is not set."))
-        if not self.l10n_be_codabox_fiduciary_vat:
-            raise UserError(_("The feature is restricted to Accounting Firms."))
 
     @api.depends("l10n_be_codabox_iap_token")
     def _compute_l10n_be_codabox_is_connected(self):
