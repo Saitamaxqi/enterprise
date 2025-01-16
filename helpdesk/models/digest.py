@@ -23,5 +23,5 @@ class DigestDigest(models.Model):
 
     def _compute_kpis_actions(self, company, user):
         res = super()._compute_kpis_actions(company, user)
-        res['kpi_helpdesk_tickets_closed'] = 'helpdesk.helpdesk_team_dashboard_action_main&menu_id=%s' % self.env.ref('helpdesk.menu_helpdesk_root').id
+        res['kpi_helpdesk_tickets_closed'] = 'helpdesk.helpdesk_team_dashboard_action_main?menu_id=%s' % self.env.ref('helpdesk.menu_helpdesk_root').id
         return res

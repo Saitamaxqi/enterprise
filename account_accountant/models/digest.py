@@ -30,5 +30,5 @@ class DigestDigest(models.Model):
 
     def _compute_kpis_actions(self, company, user):
         res = super()._compute_kpis_actions(company, user)
-        res.update({'kpi_account_bank_cash': 'account.open_account_journal_dashboard_kanban&menu_id=%s' % (self.env.ref('account.menu_finance').id)})
+        res.update({'kpi_account_bank_cash': 'account.open_account_journal_dashboard_kanban?menu_id=%s' % (self.env.ref('account.menu_finance').id)})
         return res
