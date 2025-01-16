@@ -99,7 +99,7 @@ registry.category("web_tour.tours").add('knowledge_history_tour', {
         trigger: '.history-container .tab-pane',
         run: function () {
             const comparisonHtml = document.querySelector('.history-container .tab-pane .o_readonly').innerHTML;
-            const correctHtml = '<h1 class="oe-hint" data-oe-version="1.0"><added>' + testArticleName + '</added><removed>Modified Title 03</removed></h1>';;
+            const correctHtml = '<h1 class="oe-hint" data-oe-version="1.1"><added>' + testArticleName + '</added><removed>Modified Title 03</removed></h1>';;
             if (comparisonHtml !== correctHtml) {
                 throw new Error('Expect comparison to be ' + correctHtml + ', got ' + comparisonHtml);
             }
