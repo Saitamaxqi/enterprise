@@ -85,25 +85,25 @@ export class IotWebsocket {
 }
 
 export const IotWebsocketService = {
-    dependencies: ["bus_service", "notification", "orm"],
+    dependencies: ["bus_service", "lazy_session", "notification", "orm"],
 
-    async start(env, { bus_service, notification, orm }) {
+    start(env, { bus_service, lazy_session, notification, orm }) {
         const ws = new IotWebsocket(bus_service, notification, orm);
         if (navigator.onLine) {
             try {
-                const iot_channel = await orm.call("iot.channel", "get_iot_channel", [0]);
-
-                if (iot_channel) {
-                    bus_service.addChannel(iot_channel);
-                    bus_service.subscribe("print_confirmation", (payload) => {
-                        if (ws.jobs[payload["print_id"]]) {
-                            ws.onPrintConfirmation(
-                                payload["device_identifier"],
-                                payload["print_id"]
-                            );
-                        }
-                    });
-                }
+                lazy_session.getValue("iot_channel", (iot_channel) => {
+                    if (iot_channel) {
+                        bus_service.addChannel(iot_channel);
+                        bus_service.subscribe("print_confirmation", (payload) => {
+                            if (ws.jobs[payload["print_id"]]) {
+                                ws.onPrintConfirmation(
+                                    payload["device_identifier"],
+                                    payload["print_id"]
+                                );
+                            }
+                        });
+                    }
+                });
             } catch (error) {
                 console.warn(error);
             }
