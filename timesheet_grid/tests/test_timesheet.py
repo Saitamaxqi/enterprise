@@ -441,6 +441,20 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
         self.assertEqual(working_hours_gmt_plus_12, expected_hours)
         self.assertEqual(working_hours_gmt_minus_12, expected_hours)
 
+        # test that we get correct daily hours with flexible schedules
+        employee.resource_calendar_id.flexible_hours = True
+        employee.resource_calendar_id.hours_per_day = 2
+
+        flexible_expected_hours = {
+            '2021-03-22': 2.0,
+            '2021-03-23': 2.0,
+            '2021-03-24': 2.0,
+            '2021-03-25': 2.0,
+            '2021-03-26': 2.0,
+        }
+        flexible_daily_hours = self.user_employee.with_user(self.user_employee).get_daily_working_hours('2021-3-22', '2021-3-26')
+        self.assertEqual(flexible_expected_hours, flexible_daily_hours)
+
     def test_action_start_timer_on_old_timesheet(self):
         """ Test start timer in timesheet with a date before the current one.
 

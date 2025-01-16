@@ -100,14 +100,18 @@ class HrEmployee(models.Model):
 
         for employee in self:
             working_hours = resource_work_intervals[employee.resource_id.id]
+            hours_per_day = employee.resource_calendar_id.hours_per_day or employee.company_id.resource_calendar_id.hours_per_day or HOURS_PER_DAY
             for day_count in range(delta.days + 1):
                 date = date_start_date + timedelta(days=day_count)
                 if employee.resource_calendar_id:
-                    value = sum(
-                        (stop - start).total_seconds() / 3600
-                        for start, stop, meta in working_hours
-                        if start.date() == date
-                    )
+                    if employee.resource_calendar_id.flexible_hours:
+                        value = hours_per_day
+                    else:
+                        value = sum(
+                            (stop - start).total_seconds() / 3600
+                            for start, stop, meta in working_hours
+                            if start.date() == date
+                        )
                 else:
                     value = employee.company_id.resource_calendar_id.hours_per_day or HOURS_PER_DAY
                 result[employee.id][fields.Date.to_string(date)] = value
