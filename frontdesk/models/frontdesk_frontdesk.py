@@ -101,7 +101,7 @@ class FrontdeskFrontdesk(models.Model):
     @api.depends('access_token')
     def _compute_kiosk_url(self):
         for frontdesk in self:
-            frontdesk.kiosk_url = url_join(frontdesk.get_base_url(), '/kiosk/%s/%s' % (frontdesk.id, frontdesk.access_token))
+            frontdesk.kiosk_url = url_join(self.env['frontdesk.frontdesk'].get_base_url(), '/kiosk/%s/%s' % (frontdesk.id, frontdesk.access_token))
 
     def action_open_kiosk(self):
         self.ensure_one()

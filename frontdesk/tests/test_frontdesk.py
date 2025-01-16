@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.addons.mail.tests.common import MailCommon
+from odoo.tests.common import TransactionCase, tagged
 
 class TestFrontDesk(MailCommon):
     @classmethod
@@ -112,3 +113,35 @@ class TestFrontDesk(MailCommon):
         notify_drink_user = self.visitor_2.drink_ids.notify_user_ids.name
         self.visitor_2.state = 'checked_in'
         self.assert_discuss_notification(notify_drink_user)
+
+
+@tagged('post_install', '-at_install')  # Run this test after all modules are installed
+class TestKioskUrlGeneration(TransactionCase):
+
+    def test_kiosk_url_generation(self):
+        # Dynamically check if the website module is installed
+        Website = self.env['ir.module.module'].sudo().search([('name', '=', 'website')])
+        if not Website or Website.state != 'installed':
+            self.skipTest("The 'website' module is not installed, skipping the test.")
+
+        # Set up the website
+        website = self.env['website'].create({
+            'name': 'Test Website',
+        })
+
+        # Create the frontdesk station
+        station = self.env['frontdesk.frontdesk'].create({
+            'name': 'test_1',
+            'host_selection': True,
+        })
+        station.company_id.website_id = website
+        # Compute the initial URL
+        old = station.kiosk_url
+
+        # Update the website domain and recompute the URL
+        website.domain = "https://www.test.com"
+        station._compute_kiosk_url()
+        new = station.kiosk_url
+
+        # Assert that the URL has not changed due to the website domain
+        self.assertEqual(old, new, "HR related links should not be changed by the website domain.")

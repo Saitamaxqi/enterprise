@@ -407,7 +407,7 @@ class HrContract(models.Model):
             'default_res_ids': self.ids,
             'default_template_id': template_id,
             'default_composition_mode': 'comment',
-            'salary_package_url': self.get_base_url() + path,
+            'salary_package_url': self.env['hr.contract'].get_base_url() + path,
         }
         return {
             'type': 'ir.actions.act_window',
