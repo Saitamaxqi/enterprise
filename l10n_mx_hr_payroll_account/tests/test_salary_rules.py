@@ -127,3 +127,14 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 12, 31), self.env.ref('l10n_mx_hr_payroll.hr_payroll_structure_mx_christmas_bonus').id)
         payslip_results = {'BASIC': 13456.28, 'EXEMPT': 1628.55, 'GROSS': 11827.73, 'ISR': -3548.32, 'NET': 9907.96}
         self._validate_payslip(payslip, payslip_results)
+
+    def test_weekly_schedule_pay_no_code(self):
+        structure = self.env['hr.payroll.structure'].create({
+            'name': 'Test Structure',
+            'country_id': self.env.ref('base.mx').id,
+            'type_id': self.env.ref('l10n_mx_hr_payroll.structure_type_employee_mx').id,
+            'report_id': self.env.ref('l10n_mx_hr_payroll.action_report_payslip_mx').id,
+        })
+        payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 12, 31), struct_id=structure.id)
+        payslip_results = {'BASIC': 50000.0, 'GROSS': 50000.0, 'NET': 50000.0}
+        self._validate_payslip(payslip, payslip_results)

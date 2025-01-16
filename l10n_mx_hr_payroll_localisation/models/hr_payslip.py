@@ -69,6 +69,7 @@ class HrPayslip(models.Model):
             salary_factor = in_contract_days / actual_period_days
 
             return self.l10n_mx_daily_salary * days_in_period * salary_factor
+        return super()._get_paid_amount()
 
     def _get_schedule_timedelta(self):
         if self.country_code == 'MX':
