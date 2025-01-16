@@ -17,6 +17,7 @@ Add the ability to create invoices from the document module.
         'views/project_views.xml',
     ],
     'demo': [
+        'data/ir_actions_server_demo.xml',
         'data/documents_project_demo.xml',
     ],
     'auto_install': True,

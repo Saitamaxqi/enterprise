@@ -118,5 +118,34 @@
             <field name="access_via_link">view</field>
         </record>
 
+        <!-- server action -->
+        <record id="ir_actions_server_send_to_finance" model="ir.actions.server" forcecreate="0">
+            <field name="name">Send To Finance</field>
+            <field name="model_id" ref="documents.model_documents_document"/>
+            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
+            <field name="state">code</field>
+            <field name="code">
+target = env.ref('documents.document_finance_folder', raise_if_not_found=False)
+if target:
+    permissions = records.mapped('user_permission')
+    records.action_move_documents(target.id)
+    for record, permission in zip(records, permissions):
+        record.sudo().action_update_access_rights(partners={env.user.partner_id: (permission, None)})
+    action = {
+        'type': 'ir.actions.client',
+        'tag': 'display_notification',
+        'params': {
+            'message': env._("%(nb_records)s document(s) sent to Finance", nb_records=len(records)),
+            'type': 'success',
+        }
+    }
+            </field>
+        </record>
+
+        <function model="documents.document" name="action_folder_embed_action" eval="[
+            ref('documents.document_internal_folder'),
+            ref('documents.ir_actions_server_send_to_finance'),
+        ]"/>
+
     </data>
 </odoo>
