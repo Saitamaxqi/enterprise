@@ -4,8 +4,9 @@ import { getOnNotified } from "@point_of_sale/utils";
 import { useService } from "@web/core/utils/hooks";
 
 export const preparationDisplayService = {
-    dependencies: ["orm", "bus_service", "mail.sound_effects"],
-    async start(env, { orm, bus_service }) {
+    dependencies: ["orm", "bus_service", "mail.sound_effects", "notification"],
+
+    async start(env, { orm, bus_service, notification }) {
         const sound = env.services["mail.sound_effects"];
         const datas = await orm.call(
             "pos_preparation_display.display",
@@ -13,7 +14,6 @@ export const preparationDisplayService = {
             [[odoo.preparation_display.id]],
             {}
         );
-
         const preparationDisplayService = await new PreparationDisplay(
             datas,
             env,
@@ -31,6 +31,9 @@ export const preparationDisplayService = {
                 {}
             );
             preparationDisplayService.processOrders();
+            if (data.notification) {
+                notification.add(data.notification);
+            }
         });
         onNotified("CHANGE_ORDER_STAGE", ({ order_id, stage_id, last_stage_change }) => {
             const order = preparationDisplayService.orders[order_id];
@@ -46,6 +49,14 @@ export const preparationDisplayService = {
                     continue;
                 }
                 preparationDisplayService.orderlines[status.id].todo = status.todo;
+            }
+        });
+        onNotified("NOTIFICATION", async (data) => {
+            if (data.sound) {
+                sound.play("notification");
+            }
+            if (data.notification) {
+                notification.add(data.notification);
             }
         });
         bus_service.addEventListener("reconnect", () => {

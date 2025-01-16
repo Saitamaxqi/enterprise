@@ -22,24 +22,33 @@ class Pos_Preparation_DisplayOrder(models.Model):
     def process_order(self, order_id, cancelled=False, general_customer_note=None, note_history=None, internal_note=None):
         if not order_id:
             return
-
         order = self.env['pos.order'].browse(order_id)
         if not order:
             return
-
         data = order._process_preparation_changes(cancelled, general_customer_note, note_history, internal_note)
-        preparation_displays = self.env['pos_preparation_display.display'].search([
+        self._send_order_to_preparation_displays(order, data)
+        return True
+
+    @api.model
+    def _send_order_to_preparation_displays(self, order, data):
+        preparation_displays = self._search_preparation_displays(data, order)
+        if data['change']:
+            for p_dis in preparation_displays:
+                p_dis._send_load_orders_message(data['sound'], data.get('notification'))
+
+    @api.model
+    def _send_notification_to_preparation_displays(self, order, data):
+        for p_dis in self._search_preparation_displays(data, order):
+            p_dis._send_notification(data.get('sound'), data.get('notification'))
+
+    @api.model
+    def _search_preparation_displays(self, data, order):
+        return self.env['pos_preparation_display.display'].search([
             '&',
             '|', ('pos_config_ids', '=', False),
             ('pos_config_ids', 'in', [order.config_id.id]),
             '|', ('category_ids', 'in', list(data['category_ids'])),
             ('category_ids', '=', False)])
-
-        if data['change']:
-            for p_dis in preparation_displays:
-                p_dis._send_load_orders_message(data['sound'])
-
-        return True
 
     @api.model
     def _send_orders_to_preparation_display(self, preparation_display_id):

@@ -22,6 +22,7 @@ class PosOrder(models.Model):
     def _process_preparation_changes(self, cancelled=False, general_customer_note=None, note_history=None, internal_note=None):
         self.ensure_one()
         flag_change = False
+        flag_order_added = False
         sound = False
 
         pdis_order = self.env['pos_preparation_display.order'].search(
@@ -42,7 +43,6 @@ class PosOrder(models.Model):
             self.env["pos.order.line"].search_read([("uuid", "in", pdis_lines.mapped("pos_order_line_uuid"))], ["uuid", "order_id"], load=False),
             {}
         )
-
         # If cancelled flag, we flag all lines as cancelled
         if cancelled:
             for line in pdis_lines:
@@ -50,6 +50,7 @@ class PosOrder(models.Model):
                 category_ids.update(line.product_id.pos_categ_ids.ids)
             return {'change': True, 'sound': False, 'category_ids': category_ids}
 
+        order_line_filter = self._context.get('ppc_order_line_filter', lambda x: True)
         # create a dictionary with the key as a tuple of product_id, internal_note and attribute_value_ids
         for pdis_line in pdis_lines:
             key = (pdis_line.product_id.id, pdis_line.internal_note or '', json.dumps(pdis_line.attribute_value_ids.ids), pdis_line.pos_order_line_uuid)
@@ -123,8 +124,9 @@ class PosOrder(models.Model):
                         quantity_data[key_new]["order"] += old_quantity["order"]
 
         # Check if pos_order have new lines or if some lines have more quantity than before
-        if any([quantities['order'] > quantities['display'] for quantities in quantity_data.values()]):
+        if any([quantities['order'] > quantities['display'] and order_line_filter(quantities['uuid']) for quantities in quantity_data.values()]):
             flag_change = True
+            flag_order_added = True
             sound = True
             pdis_ticket = self.env['pos_preparation_display.order'].create({
                 'displayed': True,
@@ -135,12 +137,13 @@ class PosOrder(models.Model):
             })
 
         product_ids = self.env['product.product'].browse([data['product_id'] for data in quantity_data.values()])
+
         for data in quantity_data.values():
             product_id = data['product_id']
             product = product_ids.filtered(lambda p: p.id == product_id)
             if data['order'] > data['display']:
                 missing_qty = data['order'] - data['display']
-                filtered_lines = self.lines.filtered(lambda li: li.uuid == data['uuid'])
+                filtered_lines = self.lines.filtered(lambda li: li.uuid == data['uuid'] and order_line_filter(li.uuid))
                 line_qty = 0
 
                 for line in filtered_lines:
@@ -157,6 +160,7 @@ class PosOrder(models.Model):
 
                     if missing_qty == 0 and line_qty > 0:
                         flag_change = True
+                        flag_order_added = True
                         category_ids.update(product.pos_categ_ids.ids)
 
                         parent = False
@@ -209,4 +213,4 @@ class PosOrder(models.Model):
                     flag_change = True
                     category_ids.update(pdis_lines[0].product_id.pos_categ_ids.ids)  # necessary to send when only ordernote changed
 
-        return {'change': flag_change, 'sound': sound, 'category_ids': category_ids}
+        return {'change': flag_change, 'sound': sound, 'category_ids': category_ids, 'order_added': flag_order_added}

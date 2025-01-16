@@ -154,9 +154,13 @@ class Pos_Preparation_DisplayDisplay(models.Model):
 
             preparation_display._send_load_orders_message()
 
-    def _send_load_orders_message(self, sound=False):
+    def _send_load_orders_message(self, sound=False, notification=None):
         self.ensure_one()
-        self._notify('LOAD_ORDERS', {'sound': sound})
+        self._notify('LOAD_ORDERS', {'sound': sound, 'notification': notification})
+
+    def _send_notification(self, sound=False, notification=None):
+        self.ensure_one()
+        self._notify('NOTIFICATION', {'sound': sound, 'notification': notification})
 
     @api.depends('stage_ids', 'pos_config_ids', 'category_ids')
     def _compute_order_count(self):

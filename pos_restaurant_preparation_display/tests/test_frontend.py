@@ -121,7 +121,7 @@ class TestUi(test_frontend.TestFrontendCommon):
 
         notifications = []
 
-        def _send_load_orders_message(self, sound):
+        def _send_load_orders_message(self, sound, notification):
             notifications.append(self.id)
 
         # open a session, the /pos/ui controller will redirect to it

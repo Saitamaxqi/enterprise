@@ -21,14 +21,18 @@ export class Order extends Component {
         });
 
         this.actionInProgress = false;
-        this.state.duration = this._computeDuration();
+        this._updateDuration();
         this.interval = setInterval(() => {
-            this.state.duration = this._computeDuration();
+            this._updateDuration();
         }, 1000);
 
         onWillUnmount(() => {
             clearInterval(this.interval);
         });
+    }
+
+    _updateDuration() {
+        this.state.duration = this._computeDuration();
     }
 
     get presetTime() {
@@ -62,7 +66,7 @@ export class Order extends Component {
         });
     }
     _computeDuration() {
-        const timeDiff = this.props.order.computeDuration();
+        const timeDiff = this._getOrderDuration();
 
         if (timeDiff > this.stage.alertTimer) {
             this.isAlert = true;
@@ -71,6 +75,10 @@ export class Order extends Component {
         }
 
         return timeDiff;
+    }
+
+    _getOrderDuration() {
+        return this.props.order.computeDuration();
     }
 
     async doneOrder() {

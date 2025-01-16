@@ -54,10 +54,11 @@ export class Order extends Reactive {
     }
 
     computeDuration() {
-        const timeDiff = (
-            (luxon.DateTime.now().ts - deserializeDateTime(this.lastStageChange).ts) /
-            1000
-        ).toFixed(0);
+        return this.computeDurationSinceDate(deserializeDateTime(this.lastStageChange));
+    }
+
+    computeDurationSinceDate(startDateTime) {
+        const timeDiff = ((luxon.DateTime.now().ts - startDateTime.ts) / 1000).toFixed(0);
         return Math.round(timeDiff / 60);
     }
 }
