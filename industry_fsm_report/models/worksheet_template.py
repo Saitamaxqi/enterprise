@@ -58,7 +58,7 @@ class WorksheetTemplate(models.Model):
 
     @api.model
     def _create_demo_data_fsm(self, model_id=False):
-        # create demo data in batch for performance reasons (avoid multiple calls to setup_models)
+        # create demo data in batch for performance reasons (avoid multiple calls to _setup_models__)
         if not model_id:
             model_id = self.env.ref('industry_fsm_report.fsm_worksheet_template2').model_id.id
         self.env['ir.model.fields'].create([{

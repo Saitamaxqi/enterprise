@@ -60,7 +60,7 @@ class WorksheetTemplate(models.Model):
 
     @api.model
     def _create_demo_data_quality(self):
-        # create demo data in batch for performance reasons (avoid multiple calls to setup_models)
+        # create demo data in batch for performance reasons (avoid multiple calls to _setup_models__)
         model_id = self.env.ref('quality_control_worksheet.quality_control_worksheet_template1').model_id.id
         self.env['ir.model.fields'].create([{
             'name': 'x_date',

@@ -329,7 +329,7 @@ class StudioExportModel(models.Model):
             )
 
             # also exclude fields of abstract models
-            to_search = {m for m in RecordModel._BaseModel__base_classes if m._abstract}
+            to_search = {m for m in RecordModel._base_classes__ if m._abstract}
             searched = set()
             while to_search:
                 current = to_search.pop()
@@ -339,10 +339,10 @@ class StudioExportModel(models.Model):
                 to_search |= (
                     {
                         m
-                        for m in current._BaseModel__base_classes
+                        for m in current._base_classes__
                         if m not in searched and m._abstract
                     }
-                    if "_BaseModel__base_classes" in dir(current)
+                    if "_base_classes__" in dir(current)
                     else set()
                 )
 

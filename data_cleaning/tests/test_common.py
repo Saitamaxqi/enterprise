@@ -11,12 +11,12 @@ class TestCommon(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.addClassCleanup(lambda: cls.registry.setup_models(cls.cr))
+        cls.addClassCleanup(lambda: cls.registry._setup_models__(cls.cr))
 
     def setUp(self):
         super(TestCommon, self).setUp()
 
-        self.registry.setup_models(self.cr)
+        self.registry._setup_models__(self.cr)
 
         self.DMModel  = self.env['data_merge.model']
         self.DMRule   = self.env['data_merge.rule']
