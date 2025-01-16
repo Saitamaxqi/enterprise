@@ -1,0 +1,17 @@
+.o-voip-Numpad-key {
+    width: 80px;
+    height: 80px;
+    transition: transform 0.3s;
+    
+    &:hover {
+        transform: scale(1.05);
+    }
+    
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.country-flag {
+    height: 24px;
+}

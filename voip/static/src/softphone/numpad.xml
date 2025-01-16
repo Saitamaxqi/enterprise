@@ -2,13 +2,36 @@
 <templates>
     <t t-name="voip.Numpad">
         <div t-attf-class="o-voip-Numpad {{ props.extraClass }}">
-            <div class="d-flex border-bottom">
-                <input class="o_input form-control-lg ps-3 border-0" type="text" placeholder="Enter the number…" t-model.trim="softphone.numpad.value" t-att-data-value="softphone.numpad.value" t-ref="input" t-on-keydown="onKeydown"/>
+            <div class="d-flex border-bottom mb-3">
+                <div t-if="softphone.numpad.countryCode" class="d-flex align-items-center ms-3">
+                    <img t-attf-src="base/static/img/country_flags/{{ softphone.numpad.countryCode }}.png" t-att-alt="flagAltLabel" class="country-flag"/>
+                </div>
+                <input class="o_input form-control-lg ps-3 border-0" type="text" placeholder="Enter the number…" t-model="softphone.numpad.value" t-att-data-value="softphone.numpad.value" t-ref="input" t-on-input="updateCountryCodeDebounced" t-on-keydown="onKeydown"/>
                 <button class="btn fa fa-long-arrow-left shadow-none" title="Backspace" t-on-click="onClickBackspace"/>
             </div>
-            <div class="container justify-content-center">
-                <div class="row row-cols-3">
-                    <button t-foreach="'123456789*0#'" t-as="key" t-key="key" t-esc="key" t-on-click="onClickKey" class="btn btn-light py-3 fw-normal fs-2"/>
+            <div class="container-fluid">
+                <div class="d-flex justify-content-center row g-0">
+                    <button class="o-voip-Numpad-key btn col-4 p-0" t-foreach="[
+                        {key: '1', letters: ''},
+                        {key: '2', letters: 'ABC'},
+                        {key: '3', letters: 'DEF'},
+                        {key: '4', letters: 'GHI'},
+                        {key: '5', letters: 'JKL'},
+                        {key: '6', letters: 'MNO'},
+                        {key: '7', letters: 'PQRS'},
+                        {key: '8', letters: 'TUV'},
+                        {key: '9', letters: 'WXYZ'},
+                        {key: '*', letters: ''},
+                        {key: '0', letters: '+'},
+                        {key: '#', letters: ''},
+                    ]" t-as="item" t-key="item.key" t-on-click="() => this.onClickKey(item.key)">
+                        <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                            <span class="fs-1 lh-1" t-att-class="{ 'mb-4': !item.letters }" t-esc="item.key"/>
+                            <t t-if="item.letters">
+                                <span class="small text-muted mt-1" t-esc="item.letters"/>
+                            </t>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
