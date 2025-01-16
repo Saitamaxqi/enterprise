@@ -51,7 +51,7 @@ class Pos_Preparation_DisplayOrder(models.Model):
                 table = order.table_id
                 name = f"T{table.table_number}"
                 if table.parent_id:
-                    name += f" &{table.parent_id.name}"
+                    name += f" &{table.parent_id.table_number}"
                 return name
 
         return super()._get_order_name()
