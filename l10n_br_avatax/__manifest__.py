@@ -18,6 +18,7 @@
         'views/ir_logging_views.xml',
         'views/res_config_settings_views.xml',
         'data/iap_service_data.xml',
+        'views/l10n_br_ncm_code_views.xml',
         'data/l10n_br.ncm.code.csv',
         'data/l10n_br.cnae.code.csv',
         'data/product_product.xml',

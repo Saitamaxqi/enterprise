@@ -330,7 +330,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
             line['benefitsAbroad'] = self.partner_shipping_id.country_id.code != 'BR'
             descriptor['serviceCodeOrigin'] = product.l10n_br_property_service_code_origin_id.code
             descriptor['withLaborAssignment'] = product.l10n_br_labor
-            descriptor['hsCode'] = (product.l10n_br_ncm_code_id.code or '').lstrip('0')
+            descriptor['hsCode'] = product.l10n_br_ncm_code_id.code or ''
 
             # Explicitly filter on company, this can be called via controllers which run as superuser and bypass record rules.
             service_codes = product.product_tmpl_id.l10n_br_service_code_ids.filtered(lambda code: code.company_id == self.env.company)
