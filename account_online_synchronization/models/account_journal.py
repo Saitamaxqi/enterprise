@@ -262,6 +262,25 @@ class AccountJournal(models.Model):
         ])
         return [res[0] for res in self.env.execute_query(query)]
 
+    def _get_provider_duplicate_transactions(self, date_from):
+        """
+            Find all transaction with that have a "duplicated: True" in the transaction details.
+        """
+        statement_lines = self.env.execute_query(
+            SQL('''
+                SELECT st_line.id
+                  FROM account_bank_statement_line st_line
+                  JOIN account_move move ON move.id = st_line.move_id
+                 WHERE st_line.journal_id = %(journal_id)s
+                   AND move.date >= %(date_from)s
+                   AND st_line.transaction_details::JSONB->>'duplicated' = 'true';
+                ''',
+                journal_id=self.id,
+                date_from=date_from,
+            )
+        )
+        return [res[0] for res in statement_lines]
+
     def _get_duplicate_amount_date_account_transactions_query(self, date_from):
         self.ensure_one()
         return SQL('''
