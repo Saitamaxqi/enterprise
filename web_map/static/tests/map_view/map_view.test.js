@@ -156,6 +156,35 @@ const TEST_RECORDS = {
                 name: "Bar",
             },
         ],
+        threeRecords: [
+            {
+                id: 1,
+                name: "Foo",
+                partner_latitude: 10.0,
+                partner_longitude: 10.5,
+                contact_address_complete: "Chaussée de Namur 40, 1367, Ramillies",
+                sequence: 1,
+                user_id: 1
+            },
+            {
+                id: 2,
+                name: "Bar",
+                partner_latitude: 11.0,
+                partner_longitude: 11.5,
+                contact_address_complete: "Chaussée de Wavre 50, 1367, Ramillies",
+                sequence: 2,
+                user_id: 2
+            },
+            {
+                id: 3,
+                name: "Baz",
+                partner_latitude: 12.0,
+                partner_longitude: 12.5,
+                contact_address_complete: "Chaussée de Louvain 94, 5310 Éghezée",
+                sequence: 3,
+                user_id: false
+            }
+        ],
         unlocatedRecords: [{ id: 1, name: "Foo" }],
         noCoordinatesWrongAddress: [
             {
@@ -199,6 +228,16 @@ class Task extends models.Model {
     _records = [{ id: 1, name: "project", partner_id: 1 }];
 }
 
+class Users extends models.Model {
+    _name = "res.users";
+
+    name = fields.Char();
+    _records = [
+        { id: 1, name: "Mitchell Admin" },
+        { id: 2, name: "Marc Demo" }
+    ];
+}
+
 class Partner extends models.Model {
     _name = "res.partner";
 
@@ -212,6 +251,10 @@ class Partner extends models.Model {
         relation_field: "partner_id",
     });
     sequence = fields.Integer();
+    user_id = fields.Many2one({
+        string: "Salesperson",
+        relation: "res.users",
+    });
 
     _records = [
         {
@@ -221,6 +264,7 @@ class Partner extends models.Model {
             partner_longitude: 10.5,
             contact_address_complete: "Chaussée de Namur 40, 1367, Ramillies",
             sequence: 1,
+            user_id: 1
         },
         {
             id: 2,
@@ -229,6 +273,7 @@ class Partner extends models.Model {
             partner_longitude: 10.5,
             contact_address_complete: "Chaussée de Namur 40, 1367, Ramillies",
             sequence: 3,
+            user_id: 2
         },
         {
             id: 3,
@@ -237,6 +282,7 @@ class Partner extends models.Model {
             partner_longitude: 11.5,
             contact_address_complete: "Chaussée de Wavre 50, 1367, Ramillies",
             sequence: 4,
+            user_id: false,
         },
     ];
 
@@ -245,7 +291,7 @@ class Partner extends models.Model {
     }
 }
 
-defineModels([Task, Partner]);
+defineModels([Task, Users, Partner]);
 
 beforeEach(() => {
     patchWithCleanup(MapModel, {
@@ -767,6 +813,43 @@ describe("map_view_desktop", () => {
             message: "There should be a marker for two records",
         });
         expect(".leaflet-overlay-pane path").toHaveCount(0);
+    });
+
+    /**
+     * Data: 3 partner records with user_id used as groupBy
+     * Test if the map view displays the many2one field's name as the group name
+     */
+    test("Create a view with many2one groupBy and res.partner model", async () => {
+        patchWithCleanup(session, { map_box_token: MAP_BOX_TOKEN });
+        
+        Partner._records = TEST_RECORDS.partner.threeRecords;
+
+        await mountView({
+            type: "map",
+            resModel: "res.partner",
+            arch: `<map res_partner="id" />`,
+            groupBy: ["user_id"]
+        });
+
+        expect(".o-map-renderer--pin-list-group-header").toHaveCount(3, {
+            message: "Should have 3 groups"
+        });
+        
+        expect(queryAllTexts(".o-map-renderer--pin-list-group-header")).toEqual([
+            "Mitchell Admin",
+            "Marc Demo", 
+            "None"
+        ], {
+            message: "Should have correct group headers"
+        });
+
+        expect(".o-map-renderer--pin-list-details").toHaveCount(3, {
+            message: "Should have 3 group detail sections"
+        });
+
+        expect(".o-map-renderer--pin-list-details li").toHaveCount(3, {
+            message: "Should have 3 total records across all groups"
+        });
     });
 
     /**
