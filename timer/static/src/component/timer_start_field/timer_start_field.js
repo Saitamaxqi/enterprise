@@ -29,7 +29,7 @@ export class TimerStartField extends Component {
         clearInterval(this.timer);
         const timerPause = record.data.timer_pause;
         if (timerPause && !record.data.timer_pause) {
-            this.timerReactive.clearTimer();
+            this.timerReactive.resetTimer();
         }
         this.startTimer(record.data[this.props.name], timerPause);
     }
@@ -55,7 +55,7 @@ export class TimerStartField extends Component {
             }, 1000);
         } else if (!timerPause) {
             clearInterval(this.timer);
-            this.timerReactive.clearTimer();
+            this.timerReactive.resetTimer();
         }
     }
 }

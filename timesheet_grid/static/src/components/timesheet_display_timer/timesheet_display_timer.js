@@ -77,7 +77,7 @@ export class TimesheetDisplayTimer extends Component {
             this.props.value !== nextProps.value;
         if (this.state.timerRunning && shouldReloadTimer) {
             this._stopTimeRefresh();
-            this.timerReactive.clearTimer();
+            this.timerReactive.resetTimer();
             if (nextProps.record.data.timer_start) {
                 this.state.timerStart = nextProps.record.data.timer_start;
             }

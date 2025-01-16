@@ -7,7 +7,7 @@ export class TimerReactive extends Reactive {
     constructor(env) {
         super();
         this.orm = env.services.orm;
-        this.clearTimer();
+        this.resetTimer();
     }
 
     get toSeconds() {
@@ -116,9 +116,5 @@ export class TimerReactive extends Reactive {
         this.minutes = 0;
         this.seconds = 0;
         this.time = "";
-    }
-
-    clearTimer() {
-        this.resetTimer();
     }
 }
