@@ -80,10 +80,10 @@
                     Display Mode
                 </Property>
                 <Property
-                    name="'default_scale'"
+                    name="'default_range'"
                     type="'selection'"
-                    value="modelParams.defaultScale"
-                    childProps="{ choices: defaultScalesChoices }"
+                    value="modelParams.defaultRange"
+                    childProps="{ choices: defaultRangesChoices }"
                     onChange.bind="onViewAttributeChanged"
                 >
                     Default Scale

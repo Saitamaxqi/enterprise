@@ -7,12 +7,7 @@ import { formatDate } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
 import { pick } from "@web/core/utils/objects";
 import { debounce } from "@web/core/utils/timing";
-import {
-    diffColumn,
-    getRangeFromDate,
-    localStartOf,
-    useGanttResponsivePopover,
-} from "./gantt_helpers";
+import { diffColumn, localStartOf, useGanttResponsivePopover } from "./gantt_helpers";
 
 const { DateTime } = luxon;
 
@@ -33,15 +28,11 @@ export class GanttRendererControls extends Component {
         this.updateMetaData = debounce(() => this.model.fetchData(this.makeParams()), 500);
 
         const { metaData } = this.model;
-        this.state = useState({
-            scaleIndex: this.getScaleIndex(metaData.scale.id),
-            ...pick(metaData, ...KEYS),
-        });
+        this.state = useState(pick(metaData, ...KEYS));
         this.pickerValues = useState({
             startDate: metaData.startDate,
             stopDate: metaData.stopDate,
         });
-        this.scalesRange = { min: 0, max: Object.keys(metaData.scales).length - 1 };
 
         const getPickerProps = (key) => ({ type: "date", value: this.pickerValues[key] });
         this.startPicker = useDateTimePicker({
@@ -88,7 +79,7 @@ export class GanttRendererControls extends Component {
             case "day":
                 return formatDate(focusDate);
             default:
-                return this.model.metaData.ranges[rangeId].groupHeaderFormatter(
+                return this.model.metaData.scales[rangeId].groupHeaderFormatter(
                     focusDate,
                     this.env
                 );
@@ -104,36 +95,6 @@ export class GanttRendererControls extends Component {
 
     getFormattedDate(date) {
         return formatDate(date);
-    }
-
-    getScaleIdFromIndex(index) {
-        const keys = Object.keys(this.model.metaData.scales);
-        return keys[keys.length - 1 - index];
-    }
-
-    getScaleIndex(scaleId) {
-        const keys = Object.keys(this.model.metaData.scales);
-        return keys.length - 1 - keys.findIndex((id) => id === scaleId);
-    }
-
-    getScaleIndexFromRangeId(rangeId) {
-        const { ranges } = this.model.metaData;
-        const scaleId = ranges[rangeId].scaleId;
-        return this.getScaleIndex(scaleId);
-    }
-
-    /**
-     * @param {1|-1} inc
-     */
-    incrementScale(inc) {
-        if (
-            inc === 1
-                ? this.state.scaleIndex < this.scalesRange.max
-                : this.scalesRange.min < this.state.scaleIndex
-        ) {
-            this.state.scaleIndex += inc;
-            this.updateMetaData();
-        }
     }
 
     isSelected(rangeId) {
@@ -154,17 +115,18 @@ export class GanttRendererControls extends Component {
     }
 
     makeParams() {
-        return {
-            currentFocusDate: this.props.getCurrentFocusDate(),
-            scaleId: this.getScaleIdFromIndex(this.state.scaleIndex),
-            ...pick(this.state, ...KEYS),
-        };
+        const params = pick(this.state, ...KEYS);
+        if (this.state.keepCurrentFocusDate) {
+            params.currentFocusDate = this.props.getCurrentFocusDate();
+        }
+        return params;
     }
 
     onApply() {
         this.state.startDate = this.pickerValues.startDate;
         this.state.stopDate = this.pickerValues.stopDate;
         this.state.rangeId = "custom";
+        this.state.keepCurrentFocusDate = true;
         this.updateMetaData();
         this.dropdownState.close();
     }
@@ -182,9 +144,12 @@ export class GanttRendererControls extends Component {
             this.state.startDate = this.state.focusDate.minus({ day: n });
             this.state.stopDate = this.state.focusDate.plus({ day: m - 1 });
         } else {
-            this.state.startDate = this.state.focusDate.startOf(this.state.rangeId);
-            this.state.stopDate = this.state.focusDate.endOf(this.state.rangeId).startOf("day");
+            Object.assign(
+                this.state,
+                this.model.getRangeFromDate(this.state.rangeId, this.state.focusDate)
+            );
         }
+        delete this.state.keepCurrentFocusDate;
         this.updatePickerValues();
         this.updateMetaData();
     }
@@ -200,22 +165,21 @@ export class GanttRendererControls extends Component {
         } else {
             Object.assign(
                 this.state,
-                getRangeFromDate(rangeId, focusDate.plus({ [rangeId]: sign }))
+                this.model.getRangeFromDate(rangeId, focusDate.plus({ [rangeId]: sign }))
             );
         }
+        delete this.state.keepCurrentFocusDate;
         this.updatePickerValues();
         this.updateMetaData();
     }
 
     selectRangeId(rangeId) {
-        Object.assign(this.state, getRangeFromDate(rangeId, DateTime.now().startOf("day")));
-        this.state.scaleIndex = this.getScaleIndexFromRangeId(rangeId);
+        Object.assign(
+            this.state,
+            this.model.getRangeFromDate(rangeId, DateTime.now().startOf("day"))
+        );
+        delete this.state.keepCurrentFocusDate;
         this.updatePickerValues();
-        this.updateMetaData();
-    }
-
-    selectScale(index) {
-        this.state.scaleIndex = Number(index);
         this.updateMetaData();
     }
 

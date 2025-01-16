@@ -8,16 +8,8 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     tooltipPosition: 'bottom',
     run: "click",
 }, {
-    trigger: 'input[type="range"]',
-    content: "The initial default scale should be week (2)",
-    run() {
-        const subjectValue = document.querySelector('input[type="range"]').value;
-        if (subjectValue !== "2") {
-            console.error(
-                `Default scale should be week (2) (actual: ${subjectValue})`
-            );
-        }
-    },
+    trigger: '.o_gantt_renderer_controls .dropdown-toggle:contains("Week")',
+    content: "The initial default range should be week",
 },{
     trigger: ".o_searchview_dropdown_toggler",
     content: "Open Filter",

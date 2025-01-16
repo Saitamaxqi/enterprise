@@ -1,12 +1,12 @@
 import { browser } from "@web/core/browser/browser";
 import { Domain } from "@web/core/domain";
-import { _t } from "@web/core/l10n/translation";
 import {
     deserializeDate,
     deserializeDateTime,
     serializeDate,
     serializeDateTime,
 } from "@web/core/l10n/dates";
+import { _t } from "@web/core/l10n/translation";
 import { x2ManyCommands } from "@web/core/orm_service";
 import { registry } from "@web/core/registry";
 import { groupBy, unique } from "@web/core/utils/arrays";
@@ -16,7 +16,8 @@ import { sprintf } from "@web/core/utils/strings";
 import { Model } from "@web/model/model";
 import { parseServerValue } from "@web/model/relational_model/utils";
 import { formatFloatTime, formatPercentage } from "@web/views/fields/formatters";
-import { getRangeFromDate, localStartOf } from "./gantt_helpers";
+import { getScaleForCustomRange } from "./gantt_arch_parser";
+import { localStartOf } from "./gantt_helpers";
 
 const { DateTime } = luxon;
 
@@ -46,15 +47,10 @@ const { DateTime } = luxon;
  * @property {string} dateStartField
  * @property {string} dateStopField
  * @property {string[]} decorationFields
- * @property {ScaleId} defaultScale
+ * @property {ScaleId} defaultRange
  * @property {string} dependencyField
- * @property {boolean} dynamicRange
- * @property {Record<string, Field>} fields
- * @property {DateTime} focusDate
- * @property {number | false} formViewId
- * @property {string[]} groupedBy
- * @property {Element | null} popoverTemplate
- * @property {string} resModel
+ * @property {DateTime} stopDate
+ *
  * @property {Scale} scale
  * @property {Scale[]} scales
  * @property {DateTime} startDate
@@ -253,6 +249,13 @@ export class GanttModel extends Model {
         }
 
         return Object.assign({}, this.searchParams.context, context);
+    }
+
+    getRangeFromDate(rangeId, date) {
+        // 3 periods of type rangeId centered at date
+        const startDate = localStartOf(date, rangeId).minus({ [rangeId]: 1 });
+        const stopDate = startDate.plus({ [rangeId]: 3 }).minus({ day: 1 });
+        return { focusDate: date, startDate, stopDate, rangeId };
     }
 
     /**
@@ -507,10 +510,6 @@ export class GanttModel extends Model {
         if (params.groupedBy) {
             this._nextMetaData.groupedBy = params.groupedBy;
         }
-        if (params.scaleId) {
-            browser.localStorage.setItem(this._getLocalStorageKey(), params.scaleId);
-            this._nextMetaData.scale = { ...this._nextMetaData.scales[params.scaleId] };
-        }
         if (params.focusDate) {
             this._nextMetaData.focusDate = params.focusDate;
         }
@@ -521,7 +520,11 @@ export class GanttModel extends Model {
             this._nextMetaData.stopDate = params.stopDate;
         }
         if (params.rangeId) {
+            browser.localStorage.setItem(this._getLocalStorageKey(), params.rangeId);
             this._nextMetaData.rangeId = params.rangeId;
+            if (this._nextMetaData.rangeId !== "custom") {
+                this._nextMetaData.scale = this._nextMetaData.scales[params.rangeId];
+            }
         }
 
         if ("pagerLimit" in params) {
@@ -531,7 +534,10 @@ export class GanttModel extends Model {
             this._nextMetaData.pagerOffset = params.pagerOffset;
         }
 
-        if ("scaleId" in params || "startDate" in params || "stopDate" in params) {
+        if ("rangeId" in params || "startDate" in params || "stopDate" in params) {
+            if (this._nextMetaData.rangeId === "custom") {
+                this._nextMetaData.scale = getScaleForCustomRange(this._nextMetaData);
+            }
             // we assume that scale, startDate, and stopDate are already set in this._nextMetaData
 
             let exchange = false;
@@ -897,37 +903,36 @@ export class GanttModel extends Model {
      */
     _getInitialRangeParams(metaData, searchParams) {
         const { context } = searchParams;
-        const localScaleId = this._getScaleIdFromLocalStorage(metaData);
-        /** @type {ScaleId} */
-        const scaleId = localScaleId || context.default_scale || metaData.defaultScale;
-        const { defaultRange } = metaData.scales[scaleId];
+        const localRangeId = this._getRangeIdFromLocalStorage(metaData);
 
-        const rangeId =
-            context.default_range in metaData.ranges
-                ? context.range_type
-                : metaData.defaultRange || "custom";
+        const rangeFromContext = context.default_range || context.default_scale;
+        let rangeId =
+            localRangeId ||
+            (rangeFromContext in metaData.ranges ? rangeFromContext : metaData.defaultRange);
+
         let focusDate;
         if (rangeId in metaData.ranges) {
             focusDate = this._getDefaultFocusDate(searchParams);
-            return { scaleId, ...getRangeFromDate(rangeId, focusDate) };
+            return { ...this.getRangeFromDate(rangeId, focusDate) };
         }
+        rangeId = "custom";
         let startDate = context.default_start_date && deserializeDate(context.default_start_date);
         let stopDate = context.default_stop_date && deserializeDate(context.default_stop_date);
+        const defaultRangeCount = 3;
+        const defaultRangeUnit = "month";
         if (!startDate && !stopDate) {
             /** @type {DateTime} */
             focusDate = this._getDefaultFocusDate(searchParams);
-            startDate = firstColumnBefore(focusDate, defaultRange.unit);
-            stopDate = startDate
-                .plus({ [defaultRange.unit]: defaultRange.count })
-                .minus({ day: 1 });
+            startDate = firstColumnBefore(focusDate, defaultRangeUnit);
+            stopDate = startDate.plus({ [defaultRangeUnit]: defaultRangeCount }).minus({ day: 1 });
         } else if (startDate && !stopDate) {
-            const column = firstColumnBefore(startDate, defaultRange.unit);
+            const column = firstColumnBefore(startDate, defaultRangeUnit);
             focusDate = startDate;
-            stopDate = column.plus({ [defaultRange.unit]: defaultRange.count }).minus({ day: 1 });
+            stopDate = column.plus({ [defaultRangeUnit]: defaultRangeCount }).minus({ day: 1 });
         } else if (!startDate && stopDate) {
-            const column = firstColumnAfter(stopDate, defaultRange.unit);
+            const column = firstColumnAfter(stopDate, defaultRangeUnit);
             focusDate = stopDate;
-            startDate = column.minus({ [defaultRange.unit]: defaultRange.count });
+            startDate = column.minus({ [defaultRangeUnit]: defaultRangeCount });
         } else {
             focusDate = DateTime.local();
             if (focusDate < startDate) {
@@ -937,11 +942,11 @@ export class GanttModel extends Model {
             }
         }
 
-        return { focusDate, scaleId, startDate, stopDate, rangeId };
+        return { focusDate, startDate, stopDate, rangeId };
     }
 
     _getLocalStorageKey() {
-        return `scaleOf-viewId-${this.env.config.viewId}`;
+        return `rangeOf-viewId-${this.env.config.viewId}`;
     }
 
     _getProgressBarFields(metaData) {
@@ -971,10 +976,10 @@ export class GanttModel extends Model {
         return this._getFieldFormattedValue(value, field);
     }
 
-    _getScaleIdFromLocalStorage(metaData) {
-        const { scales } = metaData;
-        const localScaleId = browser.localStorage.getItem(this._getLocalStorageKey());
-        return localScaleId in scales ? localScaleId : null;
+    _getRangeIdFromLocalStorage(metaData) {
+        const { ranges } = metaData;
+        const localRangeId = browser.localStorage.getItem(this._getLocalStorageKey());
+        return localRangeId in ranges ? localRangeId : null;
     }
 
     /**

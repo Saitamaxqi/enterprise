@@ -102,7 +102,7 @@ QUnit.module(
                 arch: `<gantt date_start='start' date_stop='stop' scales="day,month"/>`,
             });
 
-            await click(target, ".o_web_studio_property_default_scale .dropdown-toggle");
+            await click(target, ".o_web_studio_property_default_range .dropdown-toggle");
             assert.deepEqual(
                 Array.from(target.querySelectorAll(".o_select_menu_menu .dropdown-item")).map(
                     (e) => e.textContent

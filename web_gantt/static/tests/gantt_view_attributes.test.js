@@ -1,12 +1,11 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, leave, queryAll, queryOne, queryFirst } from "@odoo/hoot-dom";
+import { click, leave, queryAll, queryAllTexts, queryFirst } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import { contains, defineParams, onRpc } from "@web/../tests/web_test_helpers";
 import { Tasks, defineGanttModels } from "./gantt_mock_models";
 import {
     SELECTORS,
     clickCell,
-    getActiveScale,
     getCell,
     getCellColorProperties,
     getGridContent,
@@ -188,35 +187,33 @@ test("total_row attribute", async () => {
     ]);
 });
 
-test("default_scale attribute", async () => {
+test("default_range attribute excluded from scales", async () => {
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="day"/>`,
-    });
-    expect(getActiveScale()).toBe(5); // day scale
-    const { columnHeaders, range } = getGridContent();
-    expect(range).toBe("From: 12/20/2018 to: 12/22/2018");
-    expect(columnHeaders).toHaveLength(38);
-});
-
-test("default_scale attribute excluded from scales", async () => {
-    await mountGanttView({
-        resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="day" scales="week"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" default_range="day" scales="week"/>`,
     });
     const { columnHeaders, range } = getGridContent();
-    expect(range).toBe("From: 12/20/2018 to: 12/22/2018");
-    expect(columnHeaders).toHaveLength(38);
+    expect(range).toBe("Day");
+    expect(columnHeaders).toHaveLength(42);
 });
 
-test("default_scale omitted, scales provided", async () => {
+test("default_range omitted, scales provided", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `<gantt date_start="start" date_stop="stop" scales="day,week"/>`,
     });
     const { columnHeaders, range } = getGridContent();
-    expect(range).toBe("From: 12/20/2018 to: 12/22/2018");
-    expect(columnHeaders).toHaveLength(38);
+    expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
+    expect(columnHeaders).toHaveLength(10);
+
+    await contains(SELECTORS.rangeMenuToggler).click();
+    await animationFrame();
+    expect(".o_gantt_range_menu .dropdown-item").toHaveCount(3);
+    expect(queryAllTexts(".o_gantt_range_menu .dropdown-item")).toEqual([
+        "Day",
+        "Week",
+        "From\n12/01/2018\nto\n02/28/2019\nApply",
+    ]);
 });
 
 test("scales attribute", async () => {
@@ -224,10 +221,17 @@ test("scales attribute", async () => {
         resModel: "tasks",
         arch: `<gantt date_start="start" date_stop="stop" scales="month,day,trololo"/>`,
     });
-    expect(queryOne(".o_gantt_renderer_controls input").max).toBe("1", {
-        message: "there are only 2 valid scales (starting from 0)",
-    });
-    expect(getActiveScale()).toBe(1);
+    const { columnHeaders, range } = getGridContent();
+    expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
+    expect(columnHeaders).toHaveLength(34);
+
+    await contains(SELECTORS.rangeMenuToggler).click();
+    await animationFrame();
+    expect(queryAllTexts(".o_gantt_range_menu .dropdown-item")).toEqual([
+        "Day",
+        "Month",
+        "From\n12/01/2018\nto\n02/28/2019\nApply",
+    ]);
 });
 
 test("precision attribute", async () => {
@@ -238,10 +242,13 @@ test("precision attribute", async () => {
             <gantt
                 date_start="start"
                 date_stop="stop"
-                precision="{'day': 'hour:quarter', 'week': 'day:half', 'month': 'day', 'year': 'month:quarter'}"
-                default_scale="day"
+                precision="{'day': 'hour:quarter'}"
             />
         `,
+        context: {
+            default_start_date: "2018-12-20",
+            default_stop_date: "2018-12-20",
+        },
         domain: [["id", "=", 7]],
     });
 
@@ -534,7 +541,7 @@ test(`Today style with unavailabilities ("week": "day:half")`, async () => {
     });
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_scale="week" scales="week" precision="{'week': 'day:half'}"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="week" scales="week" precision="{'week': 'day:half'}"/>`,
     });
 
     // Normal day / unavailability
@@ -571,7 +578,7 @@ test("Today style of group rows", async () => {
     });
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_scale="week" scales="week" precision="{'week': 'day:half'}"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="week" scales="week" precision="{'week': 'day:half'}"/>`,
         groupBy: ["user_id", "project_id"],
     });
     expect.verifySteps(["get_gantt_data"]);
@@ -683,16 +690,16 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
     const unavailabilities = [
         // in utc
         {
-            start: "2018-12-20 08:15:00",
-            stop: "2018-12-20 08:30:00",
+            start: "2018-12-19 08:15:00",
+            stop: "2018-12-19 08:30:00",
         },
         {
-            start: "2018-12-20 10:35:00",
-            stop: "2018-12-20 12:29:00",
+            start: "2018-12-19 10:35:00",
+            stop: "2018-12-19 12:29:00",
         },
         {
-            start: "2018-12-20 20:15:00",
-            stop: "2018-12-20 20:50:00",
+            start: "2018-12-19 20:15:00",
+            stop: "2018-12-19 20:50:00",
         },
     ];
     onRpc("get_gantt_data", ({ kwargs, parent }) => {
@@ -703,9 +710,9 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
     });
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_scale="day" scales="day" precision="{'day': 'hours:quarter'}"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="day" precision="{'day': 'hours:quarter'}"/>`,
     });
-    expect(getCellColorProperties("9am 20 December 2018")).toEqual([
+    expect(getCellColorProperties("9am 19 December 2018")).toEqual([
         "--Gantt__Day-background-color",
         "--Gantt__DayOff-background-color",
         "--Gantt__DayOff-background-color",
@@ -713,7 +720,7 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
         "--Gantt__Day-background-color",
         "--Gantt__Day-background-color",
     ]);
-    expect(getCellColorProperties("11am 20 December 2018")).toEqual([
+    expect(getCellColorProperties("11am 19 December 2018")).toEqual([
         "--Gantt__Day-background-color",
         "--Gantt__Day-background-color",
         "--Gantt__Day-background-color",
@@ -721,10 +728,10 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
         "--Gantt__Day-background-color",
         "--Gantt__DayOff-background-color",
     ]);
-    expect(getCellColorProperties("12pm 20 December 2018")).toEqual([
+    expect(getCellColorProperties("12pm 19 December 2018")).toEqual([
         "--Gantt__DayOff-background-color",
     ]);
-    expect(getCellColorProperties("1pm 20 December 2018")).toEqual([
+    expect(getCellColorProperties("1pm 19 December 2018")).toEqual([
         "--Gantt__DayOff-background-color",
         "--Gantt__Day-background-color",
         "--Gantt__Day-background-color",
@@ -732,7 +739,7 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
         "--Gantt__Day-background-color",
         "--Gantt__Day-background-color",
     ]);
-    expect(getCellColorProperties("9pm 20 December 2018")).toEqual([
+    expect(getCellColorProperties("9pm 19 December 2018")).toEqual([
         "--Gantt__Day-background-color",
         "--Gantt__DayOff-background-color",
         "--Gantt__DayOff-background-color",
@@ -940,15 +947,14 @@ test("default_range attribute", async () => {
         resModel: "tasks",
         arch: `<gantt date_start="start" date_stop="stop" default_range="day"/>`,
     });
-    expect(getActiveScale()).toBe(2); // month scale
     const { columnHeaders, range } = getGridContent();
-    expect(range).toBe("12/20/2018");
-    expect(columnHeaders).toHaveLength(1);
+    expect(range).toBe("Day");
+    expect(columnHeaders).toHaveLength(42);
     await click(SELECTORS.rangeMenuToggler);
     await animationFrame();
     const firstRangeMenuItem = queryFirst(`${SELECTORS.rangeMenu} .dropdown-item`);
     expect(firstRangeMenuItem).toHaveClass("selected");
-    expect(firstRangeMenuItem).toHaveText("Today");
+    expect(firstRangeMenuItem).toHaveText("Day");
 });
 
 test("consolidation and unavailabilities", async () => {
@@ -1005,7 +1011,16 @@ test("default_range not in scales", async () => {
         arch: `<gantt date_start="start" date_stop="stop" scales="month" default_range="year"/>`,
     });
     const { range } = getGridContent();
-    expect(range).toBe("2018");
+    expect(range).toBe("Year");
+
+    await contains(SELECTORS.rangeMenuToggler).click();
+    await animationFrame();
+    expect(".o_gantt_range_menu .dropdown-item").toHaveCount(3);
+    expect(queryAllTexts(".o_gantt_range_menu .dropdown-item")).toEqual([
+        "Month",
+        "Year",
+        "From\n01/01/2017\nto\n12/31/2019\nApply",
+    ]);
 });
 
 test("kanban_view_id attribute", async () => {

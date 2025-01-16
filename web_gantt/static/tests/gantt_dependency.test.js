@@ -46,7 +46,7 @@ import { GanttRenderer } from "@web_gantt/gantt_renderer";
 
 const ganttViewParams = {
     resModel: "project.task",
-    arch: /* xml */ `<gantt date_start="planned_date_begin" date_stop="date_deadline" default_scale="month" dependency_field="depend_on_ids" color="color" />`,
+    arch: /* xml */ `<gantt date_start="planned_date_begin" date_stop="date_deadline" dependency_field="depend_on_ids" color="color" />`,
     groupBy: ["user_ids"],
 };
 
@@ -395,7 +395,7 @@ test("Connectors are correctly computed and rendered when consolidation is activ
 
     await mountGanttView({
         ...ganttViewParams,
-        arch: /* xml */ `<gantt date_start="planned_date_begin" date_stop="date_deadline" default_scale="month" dependency_field="depend_on_ids" consolidation_max="{'user_ids': 100 }"/>`,
+        arch: /* xml */ `<gantt date_start="planned_date_begin" date_stop="date_deadline" default_range="month" dependency_field="depend_on_ids" consolidation_max="{'user_ids': 100 }"/>`,
     });
 
     // groups have been created of r

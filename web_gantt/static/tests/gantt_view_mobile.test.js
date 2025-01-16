@@ -6,13 +6,7 @@ import { Domain } from "@web/core/domain";
 import { deserializeDateTime } from "@web/core/l10n/dates";
 import { WebClient } from "@web/webclient/webclient";
 import { Tasks, defineGanttModels } from "./gantt_mock_models";
-import {
-    CLASSES,
-    SELECTORS,
-    getActiveScale,
-    getGridContent,
-    mountGanttView,
-} from "./web_gantt_test_helpers";
+import { CLASSES, SELECTORS, getGridContent, mountGanttView } from "./web_gantt_test_helpers";
 
 defineGanttModels();
 
@@ -59,7 +53,6 @@ test("ungrouped gantt rendering", async () => {
     expect(columnHeaders).toHaveLength(10);
     expect(columnHeaders.at(0).title).toBe("15");
     expect(columnHeaders.at(-1).title).toBe("24");
-    expect(getActiveScale()).toBe(2);
     expect(SELECTORS.expandCollapseButtons).not.toBeVisible();
     expect(rows).toEqual([
         {
@@ -175,7 +168,6 @@ test("single-level grouped gantt rendering", async () => {
         arch: `<gantt string="Tasks" date_start="start" date_stop="stop"/>`,
         groupBy: ["project_id"],
     });
-    expect(getActiveScale()).toBe(2);
     expect(SELECTORS.expandCollapseButtons).not.toBeVisible();
 
     const { range, viewTitle, columnHeaders, rows } = getGridContent();
@@ -259,7 +251,7 @@ test("Progressbar: check the progressbar percentage visibility.", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" default_scale="week" scales="week" default_group_by="user_id" progress_bar="user_id">
+            <gantt date_start="start" date_stop="stop" default_range="week" scales="week" default_group_by="user_id" progress_bar="user_id">
                 <field name="user_id"/>
             </gantt>
         `,
@@ -307,7 +299,7 @@ test("Progressbar: grouped row", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" default_scale="week" scales="week" default_group_by="user_id,user_id" progress_bar="user_id">
+            <gantt date_start="start" date_stop="stop" default_range="week" scales="week" default_group_by="user_id,user_id" progress_bar="user_id">
                 <field name="user_id"/>
             </gantt>
         `,

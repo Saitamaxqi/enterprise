@@ -26,12 +26,10 @@ export class GanttEditorSidebar extends Component {
     }
 
     get colorChoices() {
-        return this.modelParams.decorationFields.map((value) => {
-            return {
-                label: this.modelParams.fields[value].string,
-                value,
-            };
-        });
+        return this.modelParams.decorationFields.map((value) => ({
+            label: this.modelParams.fields[value].string,
+            value,
+        }));
     }
 
     get currentDayPrecision() {
@@ -63,16 +61,15 @@ export class GanttEditorSidebar extends Component {
         ];
     }
 
-    get defaultScalesChoices() {
-        const allowedScales = Object.keys(this.modelParams.scales);
+    get defaultRangesChoices() {
+        const allowedRanges = Object.keys(this.modelParams.ranges);
         return [
             { value: "day", label: _t("Day") },
             { value: "week", label: _t("Week") },
-            { value: "week_2", label: _t("Week (expanded)") },
             { value: "month", label: _t("Month") },
-            { value: "month_3", label: _t("Month (expanded)") },
+            { value: "quarter", label: _t("Quarter") },
             { value: "year", label: _t("Year") },
-        ].filter((e) => allowedScales.includes(e.value));
+        ].filter((e) => allowedRanges.includes(e.value));
     }
 
     get displayModeChoices() {
@@ -85,23 +82,19 @@ export class GanttEditorSidebar extends Component {
     get fieldsChoices() {
         return Object.values(this.modelParams.fields)
             .filter((f) => f.store && this.viewEditorModel.GROUPABLE_TYPES.includes(f.type))
-            .map((f) => {
-                return {
-                    label: f.string,
-                    value: f.name,
-                };
-            });
+            .map((f) => ({
+                label: f.string,
+                value: f.name,
+            }));
     }
 
     get fieldsDateChoices() {
         return Object.values(this.modelParams.fields)
             .filter((f) => f.store && ["date", "datetime"].includes(f.type))
-            .map((f) => {
-                return {
-                    label: f.string,
-                    value: f.name,
-                };
-            });
+            .map((f) => ({
+                label: f.string,
+                value: f.name,
+            }));
     }
 
     get modelParams() {

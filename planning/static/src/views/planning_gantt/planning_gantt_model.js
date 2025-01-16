@@ -1,10 +1,11 @@
-import { _t } from "@web/core/l10n/translation";
+import { router } from "@web/core/browser/router";
+import { Domain } from "@web/core/domain";
 import { deserializeDateTime, getStartOfLocalWeek, serializeDateTime } from "@web/core/l10n/dates";
+import { _t } from "@web/core/l10n/translation";
+import { pick } from "@web/core/utils/objects";
+import { localStartOf } from "@web_gantt/gantt_helpers";
 import { GanttModel } from "@web_gantt/gantt_model";
 import { usePlanningModelActions } from "../planning_hooks";
-import { Domain } from "@web/core/domain";
-import { pick } from "@web/core/utils/objects";
-import { router } from "@web/core/browser/router";
 
 const GROUPBY_COMBINATIONS = [
     "role_id",
@@ -124,6 +125,12 @@ export class PlanningGanttModel extends GanttModel {
     getDomain() {
         const metaData = this._buildMetaData();
         return this._getDomain(metaData);
+    }
+
+    getRangeFromDate(rangeId, date) {
+        const startDate = localStartOf(date, rangeId);
+        const stopDate = startDate.plus({ [rangeId]: 1 }).minus({ day: 1 });
+        return { focusDate: date, startDate, stopDate, rangeId };
     }
 
     /**
@@ -314,7 +321,7 @@ export class PlanningGanttModel extends GanttModel {
      * @override
      */
     _getInitialRangeParams() {
-        let { focusDate, scaleId, startDate, stopDate, rangeId } = super._getInitialRangeParams(...arguments);
+        let { focusDate, startDate, stopDate, rangeId } = super._getInitialRangeParams(...arguments);
         // take parameters from url if set https://example.com/web?date_start=2020-11-08
         // this is used by the mail of planning.planning
         const urlState = router.current;
@@ -325,17 +332,17 @@ export class PlanningGanttModel extends GanttModel {
                 const startOfWeek1 = getStartOfLocalWeek(focusDate);
                 const startOfWeek2 = getStartOfLocalWeek(end);
                 if (startOfWeek1.equals(startOfWeek2)) {
-                    scaleId = "week";
+                    rangeId = "week";
                 } else {
-                    scaleId = "month";
+                    rangeId = "month";
                 }
             }
-            const { unit } = this.metaData.scales[scaleId];
+            const { unit } = this.metaData.scales[rangeId];
             startDate = focusDate.startOf(unit);
-            stopDate = startDate.plus({ [unit]: 1 });
+            stopDate = startDate.plus({ [unit]: 1 }).minus({ day: 1 });
         }
         // TODO: use scale from url like in example (no date_end in example!)?
-        return { focusDate, scaleId, startDate, stopDate, rangeId };
+        return { focusDate, startDate, stopDate, rangeId };
     }
 
     /**

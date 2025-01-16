@@ -164,7 +164,7 @@ test(`empty gantt with sample="1"`, async () => {
 test(`non empty gantt with sample="1"`, async () => {
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="year" sample="1"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" default_range="year" sample="1"/>`,
         searchViewArch: `
             <search>
                 <filter name="filter" string="False Domain" domain="[(0, '=', 1)]"/>
@@ -172,7 +172,7 @@ test(`non empty gantt with sample="1"`, async () => {
         `,
     });
     expect(SELECTORS.viewContent).not.toHaveClass("o_view_sample_data");
-    expect(SELECTORS.cell).toHaveCount(12);
+    expect(SELECTORS.cell).toHaveCount(27);
     expect(SELECTORS.pill).toHaveCount(7);
     expect(SELECTORS.noContentHelper).toHaveCount(0);
 
@@ -181,13 +181,13 @@ test(`non empty gantt with sample="1"`, async () => {
     expect(SELECTORS.viewContent).not.toHaveClass("o_view_sample_data");
     expect(SELECTORS.pill).toHaveCount(0);
     expect(SELECTORS.noContentHelper).toHaveCount(0);
-    expect(SELECTORS.cell).toHaveCount(12);
+    expect(SELECTORS.cell).toHaveCount(27);
 });
 
 test(`non empty grouped gantt with sample="1"`, async () => {
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="year" sample="1"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" default_range="year" sample="1"/>`,
         groupBy: ["project_id"],
         searchViewArch: `
             <search>
@@ -196,7 +196,7 @@ test(`non empty grouped gantt with sample="1"`, async () => {
         `,
     });
     expect(SELECTORS.viewContent).not.toHaveClass("o_view_sample_data");
-    expect(SELECTORS.cell).toHaveCount(24);
+    expect(SELECTORS.cell).toHaveCount(50);
     expect(SELECTORS.pill).toHaveCount(7);
 
     await toggleSearchBarMenu();
@@ -204,7 +204,7 @@ test(`non empty grouped gantt with sample="1"`, async () => {
     expect(SELECTORS.viewContent).not.toHaveClass("o_view_sample_data");
     expect(SELECTORS.pill).toHaveCount(0);
     expect(SELECTORS.noContentHelper).toHaveCount(0);
-    expect(SELECTORS.cell).toHaveCount(12);
+    expect(SELECTORS.cell).toHaveCount(25);
 });
 
 test("no content helper from action when no data and sample mode", async () => {

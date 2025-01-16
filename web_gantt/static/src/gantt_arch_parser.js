@@ -1,9 +1,11 @@
 import { getLocalYearAndWeek } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
 import { evaluateExpr } from "@web/core/py_js/py";
+import { omit } from "@web/core/utils/objects";
 import { exprToBoolean } from "@web/core/utils/strings";
 import { visitXML } from "@web/core/utils/xml";
 import { getActiveActions } from "@web/views/utils";
+import { diffColumn } from "./gantt_helpers";
 
 const DECORATIONS = [
     "decoration-danger",
@@ -28,8 +30,6 @@ const SCALES = {
         // determines column groups
         unit: "day",
         groupHeaderFormatter: (date) => date.toFormat("dd MMMM yyyy"),
-
-        defaultRange: { unit: "day", count: 3 },
     },
     week: {
         cellPrecisions: { full: 24, half: 12 },
@@ -43,23 +43,6 @@ const SCALES = {
 
         unit: "week",
         groupHeaderFormatter: formatLocalWeekYear,
-
-        defaultRange: { unit: "week", count: 3 },
-    },
-    week_2: {
-        cellPrecisions: { full: 24, half: 12 },
-        defaultPrecision: "half",
-        time: "hour",
-        unitDescription: _t("hours"),
-
-        interval: "day",
-        minimalColumnWidth: 96,
-        colHeaderFormatter: (date) => date.toFormat("dd"),
-
-        unit: "week",
-        groupHeaderFormatter: formatLocalWeekYear,
-
-        defaultRange: { unit: "week", count: 6 },
     },
     month: {
         cellPrecisions: { full: 24, half: 12 },
@@ -73,23 +56,6 @@ const SCALES = {
 
         unit: "month",
         groupHeaderFormatter: (date, env) => date.toFormat(env.isSmall ? "MMM yyyy" : "MMMM yyyy"),
-
-        defaultRange: { unit: "month", count: 3 },
-    },
-    month_3: {
-        cellPrecisions: { full: 24, half: 12 },
-        defaultPrecision: "half",
-        time: "hour",
-        unitDescription: _t("hours"),
-
-        interval: "day",
-        minimalColumnWidth: 18,
-        colHeaderFormatter: (date) => date.toFormat("dd"),
-
-        unit: "month",
-        groupHeaderFormatter: (date, env) => date.toFormat(env.isSmall ? "MMM yyyy" : "MMMM yyyy"),
-
-        defaultRange: { unit: "month", count: 6 },
     },
     year: {
         cellPrecisions: { full: 1 },
@@ -103,8 +69,6 @@ const SCALES = {
 
         unit: "year",
         groupHeaderFormatter: (date) => date.toFormat("yyyy"),
-
-        defaultRange: { unit: "year", count: 1 },
     },
 };
 
@@ -140,12 +104,29 @@ function getPreferedScaleId(scaleId, scales) {
     }
 }
 
+export function getScaleForCustomRange(params) {
+    const { scales, startDate, stopDate } = params;
+    const lengthInDays = diffColumn(startDate, stopDate, "day");
+    let unit;
+    if (lengthInDays < 6) {
+        unit = "day";
+    } else if (lengthInDays < 27) {
+        unit = "week";
+    } else if (lengthInDays < 364) {
+        unit = "month";
+    } else {
+        unit = "year";
+    }
+    const scaleId = getPreferedScaleId(unit, scales);
+    return scales[scaleId];
+}
+
 const RANGES = {
-    day: { scaleId: "day", description: _t("Today") },
-    week: { scaleId: "week", description: _t("This week") },
-    month: { scaleId: "month", description: _t("This month") },
-    quarter: { scaleId: "month_3", description: _t("This quarter") },
-    year: { scaleId: "year", description: _t("This year") },
+    day: { scaleId: "day", description: _t("Day") },
+    week: { scaleId: "week", description: _t("Week") },
+    month: { scaleId: "month", description: _t("Month") },
+    quarter: { scaleId: "month", description: _t("Quarter") },
+    year: { scaleId: "year", description: _t("Year") },
 };
 
 export class GanttArchParser {
@@ -242,27 +223,27 @@ function getInfoFromRootNode(rootNode) {
     const dependencyEnabled = !!dependencyField;
     const dependencyInvertedField = attrs.dependency_inverted_field || null;
 
-    const allowedScales = [];
+    const allowedRanges = new Set();
     if (attrs.scales) {
         for (const key of attrs.scales.split(",")) {
-            if (SCALES[key]) {
-                allowedScales.push(key);
+            if (RANGES[key]) {
+                allowedRanges.add(key);
             }
         }
     }
-    if (allowedScales.length === 0) {
-        allowedScales.push(...Object.keys(SCALES));
+    if (allowedRanges.size === 0) {
+        for (const rangeId in RANGES) {
+            allowedRanges.add(rangeId);
+        }
     }
 
-    let defaultScale = attrs.default_scale;
-    if (defaultScale) {
-        if (!allowedScales.includes(defaultScale) && SCALES[defaultScale]) {
-            allowedScales.push(defaultScale);
+    let defaultRange = attrs.default_range || attrs.default_scale;
+    if (defaultRange && RANGES[defaultRange]) {
+        if (!allowedRanges.has(defaultRange)) {
+            allowedRanges.add(defaultRange);
         }
-    } else if (allowedScales.includes("month")) {
-        defaultScale = "month";
     } else {
-        defaultScale = allowedScales[0];
+        defaultRange = "custom";
     }
 
     // Cell precision
@@ -285,32 +266,31 @@ function getInfoFromRootNode(rootNode) {
         cellPrecisions[scaleId] ||= SCALES[scaleId].defaultPrecision;
     }
 
-    const scales = {};
-    for (const scaleId of allowedScales) {
+    function getScale(scaleId) {
         const precision = cellPrecisions[scaleId];
         const referenceScale = SCALES[scaleId];
-        scales[scaleId] = {
-            ...referenceScale,
+        return {
+            ...omit(referenceScale, "cellPrecisions"),
             cellPart: PARTS[precision],
             cellTime: referenceScale.cellPrecisions[precision],
             id: scaleId,
             unitDescription: referenceScale.unitDescription.toString(),
         };
-        // protect SCALES content
-        delete scales[scaleId].cellPrecisions;
     }
 
+    const scales = {};
     const ranges = {};
     for (const rangeId in RANGES) {
-        const referenceRange = RANGES[rangeId];
-        const { groupHeaderFormatter } = SCALES[referenceRange.scaleId];
+        if (!allowedRanges.has(rangeId)) {
+            continue;
+        }
+        const { scaleId, description } = RANGES[rangeId];
         ranges[rangeId] = {
-            ...referenceRange,
-            groupHeaderFormatter,
+            scaleId,
             id: rangeId,
-            scaleId: getPreferedScaleId(referenceRange.scaleId, scales),
-            description: referenceRange.description.toString(),
+            description: description.toString(),
         };
+        scales[rangeId] = getScale(scaleId);
     }
 
     let pillDecorations = null;
@@ -335,8 +315,7 @@ function getInfoFromRootNode(rootNode) {
         createAction: attrs.on_create || null,
         dateStartField: attrs.date_start,
         dateStopField: attrs.date_stop,
-        defaultRange: attrs.default_range,
-        defaultScale,
+        defaultRange,
         dependencyEnabled,
         dependencyField,
         dependencyInvertedField,

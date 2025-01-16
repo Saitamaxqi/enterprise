@@ -15,28 +15,7 @@
                 data-hotkey="t"
                 t-on-click="onTodayClicked"
             >
-                <i class="fa fa-crosshairs"/>
-            </button>
-            <button class="btn btn-secondary"
-                t-att-disabled="state.scaleIndex === scalesRange.min"
-                data-hotkey="j"
-                t-on-click="() => this.incrementScale(-1)"
-            >
-                <i class="fa fa-search-minus"/>
-            </button>
-            <input
-                type="range"
-                class="form-range flex-grow-1 w-0"
-                t-att-min="scalesRange.min" t-att-max="scalesRange.max" step="1"
-                t-att-value="state.scaleIndex"
-                t-on-change="(ev) => this.selectScale(ev.target.value)"
-            />
-            <button class="btn btn-secondary"
-                t-att-disabled="state.scaleIndex === scalesRange.max"
-                data-hotkey="i"
-                t-on-click="() => this.incrementScale(1)"
-            >
-                <i class="fa fa-search-plus"/>
+                Today
             </button>
             <t t-if="env.isSmall">
                 <div class="flex-grow-1 w-0"/>
@@ -121,7 +100,8 @@
                     <t t-esc="formattedDateRange"/>
                 </t>
                 <t t-else="">
-                    <t t-esc="dateDescription"/>
+                    <t t-set="range" t-value="model.metaData.ranges[state.rangeId]"/>
+                    <t t-esc="range.description" />
                 </t>
             </div>
             <t t-set-slot="content">

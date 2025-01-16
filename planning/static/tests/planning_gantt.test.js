@@ -124,7 +124,7 @@ function _getCreateViewArgsForGanttViewTotalsTests() {
     return {
         resModel: "planning.slot",
         arch: `
-            <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" total_row="1" default_scale="week"
+            <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" total_row="1" default_range="week"
                     precision="{'day': 'hour:full', 'week': 'day:full', 'month': 'day:full', 'year': 'day:full'}">
                 <field name="allocated_percentage"/>
                 <field name="resource_id"/>
@@ -250,7 +250,7 @@ test("open a dialog to add a new shift", async function () {
 
     await mountGanttView({
         resModel: "planning.slot",
-        arch: '<gantt js_class="planning_gantt" default_scale="day" date_start="start_datetime" date_stop="end_datetime"/>',
+        arch: '<gantt js_class="planning_gantt" default_range="day" date_start="start_datetime" date_stop="end_datetime"/>',
     });
     expect(".modal").toHaveCount(0);
 
@@ -335,11 +335,11 @@ test("gantt view totals are taking unavailability into account for the total dis
     ]);
 });
 
-test("gantt view totals are taking unavailability into account according to scale", async function () {
+test("gantt view totals are taking unavailability into account according to range", async function () {
     const createViewArgs = _getCreateViewArgsForGanttViewTotalsTests();
     createViewArgs.arch = createViewArgs.arch.replace(
-        'default_scale="week"',
-        'default_scale="year"'
+        'default_range="week"',
+        'default_range="year"'
     );
 
     await mountGanttView(createViewArgs);
@@ -415,7 +415,7 @@ test("total computes correctly for open shifts", async () => {
         allocated_percentage: 100,
     };
     createViewArgs.arch = createViewArgs.arch
-        .replace('default_scale="week"', 'default_scale="week" default_group_by="resource_id"')
+        .replace('default_range="week"', 'default_range="week" default_group_by="resource_id"')
         .replace(
             '<field name="allocated_percentage"/>',
             '<field name="allocated_percentage"/><field name="allocated_hours"/>'
@@ -467,7 +467,7 @@ test("the grouped gantt view is coloured correctly and the occupancy percentage 
     await mountGanttView({
         resModel: "planning.slot",
         arch: `
-            <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" total_row="1" default_scale="week"
+            <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" total_row="1" default_range="week"
                 precision="{'day': 'hour:full', 'week': 'day:full', 'month': 'day:full', 'year': 'day:full'}" display_unavailability="1" progress_bar="resource_id"
             >
                 <field name="allocated_percentage"/>
@@ -533,7 +533,7 @@ test("Gantt Planning : pill name should not display allocated hours if allocated
     await mountGanttView({
         resModel: "planning.slot",
         arch: `
-                <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_scale="week" pill_label="True">
+                <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_range="week" pill_label="True">
                     <field name="allocated_hours"/>
                     <field name="allocated_percentage"/>
                 </gantt>
@@ -566,7 +566,7 @@ test("Resize or Drag-Drop should open recurrence update wizard", async () => {
     await mountGanttView({
         resModel: "planning.slot",
         arch: `
-            <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" total_row="1" default_scale="month"
+            <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" total_row="1" default_range="month"
                 precision="{'day': 'hour:full', 'week': 'day:full', 'month': 'day:full', 'year': 'day:full'}" display_unavailability="1" progress_bar="resource_id"
             >
                 <field name="allocated_percentage"/>
@@ -652,7 +652,7 @@ test("Test split tool in gantt view", async function () {
     await mountGanttView({
         resModel: "planning.slot",
         arch: `
-            <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" scales="week" default_scale="week"/>
+            <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_range="week" scales="week"/>
         `,
     });
     expect(".o_gantt_pill").toHaveCount(2);
@@ -714,7 +714,6 @@ test("Test highlight shifts added by executed action", async function () {
                 date_stop="end_datetime"
                 default_group_by="resource_id"
                 default_range="week"
-                default_scale="week"
                 scales="week,month"
             />
         `,
@@ -794,7 +793,7 @@ test("The date should take into the account when created through the button in G
     await mountGanttView({
         resModel: "planning.slot",
         arch: `<gantt js_class="planning_gantt" date_start="start_datetime"
-                date_stop="end_datetime" default_scale="week" sample="1" plan="false"/>`,
+                date_stop="end_datetime" default_range="week" sample="1" plan="false"/>`,
         groupBy: ["resource_id"],
     });
 

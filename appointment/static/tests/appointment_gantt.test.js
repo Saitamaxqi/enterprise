@@ -171,7 +171,7 @@ test("group pill colors", async () => {
         stop: "2022-01-12 13:00:00",
     });
     await mountGanttView({ resModel: "calendar.event", arch: ganttViewArch });
-    await selectRange("Today");
+    await selectRange("Day");
     testGroupPillColorsCheckColors();
     await click(SELECTORS.sparse);
     await animationFrame();
@@ -235,7 +235,7 @@ test("appointment status pill colors", async () => {
         CalendarEvent._records[1]['appointment_status'] = status;
         CalendarEvent._records[2]['appointment_status'] = status;
         const ganttView = await mountGanttView({ resModel: "calendar.event", arch: ganttViewArch });
-        await selectRange("Today");
+        await selectRange("Day");
         const latePill = getPill("Event 1", { nth: 1 });
         const currentPill = getPill("Event 2", { nth: 1 });
         const futurePill = getPill("Event 3", { nth: 1 });

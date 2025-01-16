@@ -1,5 +1,6 @@
-import { GanttModel } from "@web_gantt/gantt_model";
 import { useWorkEntry } from "@hr_work_entry_contract/views/work_entry_hook";
+import { localStartOf } from "@web_gantt/gantt_helpers";
+import { GanttModel } from "@web_gantt/gantt_model";
 
 const { DateTime } = luxon;
 
@@ -16,6 +17,12 @@ export class WorkEntriesGanttModel extends GanttModel {
     getRange() {
         const { globalStart, globalStop } = this._buildMetaData();
         return { start: globalStart, end: globalStop.minus({ millisecond: 1 }) };
+    }
+
+    getRangeFromDate(rangeId, date) {
+        const startDate = localStartOf(date, rangeId);
+        const stopDate = startDate.plus({ [rangeId]: 1 }).minus({ day: 1 });
+        return { focusDate: date, startDate, stopDate, rangeId };
     }
 
     /**

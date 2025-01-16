@@ -21,12 +21,10 @@ import {
     clickCell,
     dragPill,
     editPill,
-    ganttControlsChanges,
     getGridContent,
     hoverGridCell,
     mountGanttView,
-    selectGanttRange,
-    setScale,
+    selectCustomRange,
 } from "./web_gantt_test_helpers";
 
 import { Domain } from "@web/core/domain";
@@ -77,9 +75,10 @@ test("DST spring forward", async () => {
     ];
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="day"/>`,
+        arch: `<gantt date_start="start" date_stop="stop"/>`,
         context: {
-            initialDate: `${DST_DATES.winterToSummer.before} 08:00:00`,
+            default_start_date: DST_DATES.winterToSummer.before,
+            default_stop_date: DST_DATES.winterToSummer.after,
         },
     });
 
@@ -118,9 +117,10 @@ test("DST fall back", async () => {
     ];
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="day"/>`,
+        arch: `<gantt date_start="start" date_stop="stop"/>`,
         context: {
-            initialDate: `${DST_DATES.summerToWinter.before} 08:00:00`,
+            default_start_date: DST_DATES.summerToWinter.before,
+            default_stop_date: DST_DATES.summerToWinter.after,
         },
     });
 
@@ -160,7 +160,7 @@ test("Records spanning across DST should be displayed normally", async () => {
     ];
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="year"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" default_range="year"/>`,
         context: {
             initialDate: `${DST_DATES.summerToWinter.before} 08:00:00`,
         },
@@ -292,7 +292,7 @@ test("No progress bar when no option set.", async () => {
     });
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="week" scales="week"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" default_range="week" scales="week"/>`,
     });
     expect(SELECTORS.progressBar).toHaveCount(0);
 });
@@ -311,7 +311,7 @@ test("Progress bar rpc is triggered when option set.", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" default_scale="week" scales="week" default_group_by="user_id" progress_bar="user_id">
+            <gantt date_start="start" date_stop="stop" default_range="week" scales="week" default_group_by="user_id" progress_bar="user_id">
                 <field name="user_id"/>
             </gantt>
         `,
@@ -353,7 +353,7 @@ test("Progress bar component will not render when hovering cells of the same row
     await mountGanttView({
         resModel: "tasks",
         arch: `
-                <gantt date_start="start" date_stop="stop" default_scale="week" scales="week" default_group_by="user_id" progress_bar="user_id">
+                <gantt date_start="start" date_stop="stop" default_range="week" scales="week" default_group_by="user_id" progress_bar="user_id">
                     <field name="user_id"/>
                 </gantt>
             `,
@@ -380,7 +380,7 @@ test("Progress bar when multilevel grouped.", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" default_scale="week" scales="week" default_group_by="user_id,user_id" progress_bar="user_id">
+            <gantt date_start="start" date_stop="stop" default_range="week" scales="week" default_group_by="user_id,user_id" progress_bar="user_id">
                 <field name="user_id"/>
             </gantt>
         `,
@@ -421,7 +421,7 @@ test("Progress bar warning when max_value is zero", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" default_scale="week" scales="week" default_group_by="user_id" progress_bar="user_id">
+            <gantt date_start="start" date_stop="stop" default_range="week" scales="week" default_group_by="user_id" progress_bar="user_id">
                 <field name="user_id"/>
             </gantt>
         `,
@@ -447,7 +447,7 @@ test("Progress bar when value less than hour", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" default_scale="week" scales="week" default_group_by="user_id" progress_bar="user_id">
+            <gantt date_start="start" date_stop="stop" default_range="week" scales="week" default_group_by="user_id" progress_bar="user_id">
                 <field name="user_id"/>
             </gantt>
         `,
@@ -471,7 +471,7 @@ test("Progress bar danger when ratio > 100", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" default_scale="week" scales="week" default_group_by="user_id" progress_bar="user_id">
+            <gantt date_start="start" date_stop="stop" default_range="week" scales="week" default_group_by="user_id" progress_bar="user_id">
                 <field name="user_id"/>
             </gantt>
         `,
@@ -489,7 +489,7 @@ test("Falsy search field will return an empty rows", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" default_scale="week" scales="week" progress_bar="user_id">
+            <gantt date_start="start" date_stop="stop" default_range="week" scales="week" progress_bar="user_id">
                 <field name="user_id"/>
             </gantt>
         `,
@@ -513,7 +513,7 @@ test("Search field return rows with progressbar", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" default_scale="week" scales="week" progress_bar="user_id">
+            <gantt date_start="start" date_stop="stop" default_range="week" scales="week" progress_bar="user_id">
                 <field name="user_id"/>
             </gantt>
         `,
@@ -551,7 +551,7 @@ test("add record in empty gantt", async () => {
 test("Only the task name appears in the pill title when the pill_label option is not set", async () => {
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="week" scales="week"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" default_range="week" scales="week"/>`,
     });
     expect(queryAllTexts(SELECTORS.pill)).toEqual([
         "Task 1", // the pill should not include DateTime in the title
@@ -564,7 +564,7 @@ test("Only the task name appears in the pill title when the pill_label option is
 test("The date and task name appears in the pill title when the pill_label option is set", async () => {
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="week" scales="week" pill_label="True"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" default_range="week" scales="week" pill_label="True"/>`,
     });
     expect(queryAllTexts(SELECTORS.pill)).toEqual([
         "11/30 - 12/31 - Task 1", // the task span across in week then DateTime should be displayed on the pill label
@@ -616,7 +616,7 @@ test("A task should always have a title (pill_label='1', scale 'week')", async (
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" pill_label="True" default_scale="week">
+            <gantt date_start="start" date_stop="stop" pill_label="True" default_range="week">
                 <field name="allocated_hours"/>
             </gantt>
         `,
@@ -733,7 +733,7 @@ test("A task should always have a title (pill_label='1', scale 'year')", async (
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" pill_label="True" default_scale="year">
+            <gantt date_start="start" date_stop="stop" pill_label="True" default_range="year">
                 <field name="allocated_hours"/>
             </gantt>
         `,
@@ -810,10 +810,11 @@ test("date grid and dst winterToSummer (1 cell part)", async () => {
 
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="day" precision="{'day':'hour:full', 'week':'day:full', 'month':'day:full', 'year':'month:full' }"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" precision="{'day':'hour:full', 'week':'day:full', 'month':'day:full', 'year':'month:full' }"/>`,
         domain: [["id", "=", 8]],
         context: {
-            initialDate: `${DST_DATES.winterToSummer.before} 08:00:00`,
+            default_start_date: DST_DATES.winterToSummer.before,
+            default_stop_date: DST_DATES.winterToSummer.after,
         },
     });
 
@@ -861,9 +862,7 @@ test("date grid and dst winterToSummer (1 cell part)", async () => {
         "2019-03-31T14:00:00.000+02:00",
     ]);
 
-    await setScale(4);
-    await ganttControlsChanges();
-    await selectGanttRange({ startDate: "2019-03-31", stopDate: "2019-04-07" });
+    await selectCustomRange({ startDate: "2019-03-31", stopDate: "2019-04-07" });
     expect(getGridInfo()).toEqual([
         "2019-03-31T00:00:00.000+01:00",
         "2019-04-01T00:00:00.000+02:00",
@@ -875,9 +874,7 @@ test("date grid and dst winterToSummer (1 cell part)", async () => {
         "2019-04-07T00:00:00.000+02:00",
     ]);
 
-    await setScale(2);
-    await ganttControlsChanges();
-    await selectGanttRange({ startDate: "2019-03-01", stopDate: "2019-04-01" });
+    await selectCustomRange({ startDate: "2019-03-01", stopDate: "2019-04-01" });
     expect(getGridInfo()).toEqual([
         "2019-03-02T00:00:00.000+01:00",
         "2019-03-03T00:00:00.000+01:00",
@@ -912,9 +909,7 @@ test("date grid and dst winterToSummer (1 cell part)", async () => {
         "2019-04-01T00:00:00.000+02:00",
     ]);
 
-    await setScale(0);
-    await ganttControlsChanges();
-    await selectGanttRange({ startDate: "2019-01-01", stopDate: "2020-01-01" });
+    await selectCustomRange({ startDate: "2019-01-01", stopDate: "2020-01-01" });
     expect(getGridInfo()).toEqual([
         "2019-01-01T00:00:00.000+01:00",
         "2019-02-01T00:00:00.000+01:00",
@@ -946,10 +941,11 @@ test("date grid and dst summerToWinter (1 cell part)", async () => {
 
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="day" precision="{'day':'hour:full', 'week':'day:full', 'month':'day:full', 'year':'month:full' }"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" precision="{'day':'hour:full', 'week':'day:full', 'month':'day:full', 'year':'month:full' }"/>`,
         domain: [["id", "=", 8]],
         context: {
-            initialDate: `${DST_DATES.summerToWinter.before} 08:00:00`,
+            default_start_date: DST_DATES.summerToWinter.before,
+            default_stop_date: DST_DATES.summerToWinter.after,
         },
     });
 
@@ -997,9 +993,7 @@ test("date grid and dst summerToWinter (1 cell part)", async () => {
         "2019-10-27T12:00:00.000+01:00",
     ]);
 
-    await setScale(4);
-    await ganttControlsChanges();
-    await selectGanttRange({ startDate: "2019-10-27", stopDate: "2019-11-03" });
+    await selectCustomRange({ startDate: "2019-10-27", stopDate: "2019-11-03" });
     expect(getGridInfo()).toEqual([
         "2019-10-27T00:00:00.000+02:00",
         "2019-10-28T00:00:00.000+01:00",
@@ -1011,9 +1005,7 @@ test("date grid and dst summerToWinter (1 cell part)", async () => {
         "2019-11-03T00:00:00.000+01:00",
     ]);
 
-    await setScale(2);
-    await ganttControlsChanges();
-    await selectGanttRange({ startDate: "2019-10-01", stopDate: "2019-11-01" });
+    await selectCustomRange({ startDate: "2019-10-01", stopDate: "2019-11-01" });
     expect(getGridInfo()).toEqual([
         "2019-10-02T00:00:00.000+02:00",
         "2019-10-03T00:00:00.000+02:00",
@@ -1048,9 +1040,7 @@ test("date grid and dst summerToWinter (1 cell part)", async () => {
         "2019-11-01T00:00:00.000+01:00",
     ]);
 
-    await setScale(0);
-    await ganttControlsChanges();
-    await selectGanttRange({ startDate: "2019-01-01", stopDate: "2020-01-01" });
+    await selectCustomRange({ startDate: "2019-01-01", stopDate: "2020-01-01" });
     expect(getGridInfo()).toEqual([
         "2019-01-01T00:00:00.000+01:00",
         "2019-02-01T00:00:00.000+01:00",
@@ -1082,10 +1072,11 @@ test("date grid and dst winterToSummer (2 cell part)", async () => {
 
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="day" precision="{'day':'hour:half', 'week':'day:half', 'month':'day:half'}"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" precision="{'day':'hour:half', 'week':'day:half', 'month':'day:half'}"/>`,
         domain: [["id", "=", 8]],
         context: {
-            initialDate: `${DST_DATES.winterToSummer.before} 08:00:00`,
+            default_start_date: DST_DATES.winterToSummer.before,
+            default_stop_date: DST_DATES.winterToSummer.after,
         },
     });
 
@@ -1171,9 +1162,7 @@ test("date grid and dst winterToSummer (2 cell part)", async () => {
         "2019-03-31T14:30:00.000+02:00",
     ]);
 
-    await setScale(4);
-    await ganttControlsChanges();
-    await selectGanttRange({ startDate: "2019-03-31", stopDate: "2019-04-07" });
+    await selectCustomRange({ startDate: "2019-03-31", stopDate: "2019-04-07" });
     expect(getGridInfo()).toEqual([
         "2019-03-31T00:00:00.000+01:00",
         "2019-03-31T12:00:00.000+02:00",
@@ -1193,9 +1182,7 @@ test("date grid and dst winterToSummer (2 cell part)", async () => {
         "2019-04-07T12:00:00.000+02:00",
     ]);
 
-    await setScale(2);
-    await ganttControlsChanges();
-    await selectGanttRange({ startDate: "2019-03-01", stopDate: "2019-04-01" });
+    await selectCustomRange({ startDate: "2019-03-01", stopDate: "2019-04-01" });
     expect(getGridInfo()).toEqual([
         "2019-03-02T00:00:00.000+01:00",
         "2019-03-02T12:00:00.000+01:00",
@@ -1276,9 +1263,10 @@ test("date grid and dst summerToWinter (2 cell part)", async () => {
 
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_scale="day" precision="{'day':'hour:half', 'week':'day:half', 'month':'day:half'}"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" precision="{'day':'hour:half', 'week':'day:half', 'month':'day:half'}"/>`,
         context: {
-            initialDate: `${DST_DATES.summerToWinter.before} 08:00:00`,
+            default_start_date: DST_DATES.summerToWinter.before,
+            default_stop_date: DST_DATES.summerToWinter.after,
         },
     });
 
@@ -1364,9 +1352,7 @@ test("date grid and dst summerToWinter (2 cell part)", async () => {
         "2019-10-27T12:30:00.000+01:00",
     ]);
 
-    await setScale(4);
-    await ganttControlsChanges();
-    await selectGanttRange({ startDate: "2019-10-27", stopDate: "2019-11-03" });
+    await selectCustomRange({ startDate: "2019-10-27", stopDate: "2019-11-03" });
     expect(getGridInfo()).toEqual([
         "2019-10-27T00:00:00.000+02:00",
         "2019-10-27T12:00:00.000+01:00",
@@ -1386,9 +1372,7 @@ test("date grid and dst summerToWinter (2 cell part)", async () => {
         "2019-11-03T12:00:00.000+01:00",
     ]);
 
-    await setScale(2);
-    await ganttControlsChanges();
-    await selectGanttRange({ startDate: "2019-10-01", stopDate: "2019-11-01" });
+    await selectCustomRange({ startDate: "2019-10-01", stopDate: "2019-11-01" });
     expect(getGridInfo()).toEqual([
         "2019-10-02T00:00:00.000+02:00",
         "2019-10-02T12:00:00.000+02:00",
@@ -1827,7 +1811,7 @@ test("The date and task should appear even if the pill is planned on 2 days but 
         arch: `<gantt date_start="start"
                           date_stop="stop"
                           pill_label="True"
-                          default_scale="week"
+                          default_range="week"
                           scales="week"
                           precision="{'week': 'day:full'}"
                     >

@@ -66,7 +66,7 @@ test("Open Ended record today", async () => {
     mockDate("2018-12-10 16:00:00");
     await mountGanttView({
         resModel: "attendances",
-        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' default_scale="day" date_stop="check_out"/>`,
+        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' date_stop="check_out"/>`,
         context: {
             default_start_date: "2018-12-10",
             default_stop_date: "2018-12-10",
@@ -107,7 +107,7 @@ test("Future Open Ended record not displayed", async () => {
     mockDate("2018-12-10 12:00:00");
     await mountGanttView({
         resModel: "attendances",
-        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' default_scale="day" date_stop="check_out"/>`,
+        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' date_stop="check_out"/>`,
         context: {
             default_start_date: "2018-12-10",
             default_stop_date: "2018-12-10",
@@ -143,7 +143,7 @@ test("Open Ended record spanning multiple days", async () => {
     mockDate("2018-12-12 14:00:00");
     await mountGanttView({
         resModel: "attendances",
-        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' default_scale="day" date_stop="check_out"/>`,
+        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' date_stop="check_out"/>`,
         context: {
             default_start_date: "2018-12-12",
             default_stop_date: "2018-12-12",
@@ -235,7 +235,7 @@ test("Concurrent open-ended records", async () => {
 
     await mountGanttView({
         resModel: "attendances",
-        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' default_scale="day" date_stop="check_out"/>`,
+        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' date_stop="check_out"/>`,
         context: {
             default_start_date: "2018-12-20",
             default_stop_date: "2018-12-20",
@@ -276,7 +276,7 @@ test("Open ended record Precision", async () => {
 
     await mountGanttView({
         resModel: "attendances",
-        arch: `<gantt js_class="attendance_gantt" date_start="check_in" precision="{'day': 'hour:quarter'}" default_group_by='user_id' default_scale="day" date_stop="check_out"/>`,
+        arch: `<gantt js_class="attendance_gantt" date_start="check_in" precision="{'day': 'hour:quarter'}" default_group_by='user_id' date_stop="check_out"/>`,
         context: {
             default_start_date: "2018-12-20",
             default_stop_date: "2018-12-20",
@@ -312,7 +312,7 @@ test("Open ended record updated correctly", async () => {
 
     await mountGanttView({
         resModel: "attendances",
-        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' default_scale="day" date_stop="check_out"/>`,
+        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' date_stop="check_out"/>`,
         context: {
             default_start_date: "2018-12-20",
             default_stop_date: "2018-12-20",
@@ -379,7 +379,7 @@ test("Future Open ended record not shown before it happens and appears after sta
 
     await mountGanttView({
         resModel: "attendances",
-        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' default_scale="day" date_stop="check_out"/>`,
+        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' date_stop="check_out"/>`,
         context: {
             default_start_date: "2018-11-02",
             default_stop_date: "2018-11-02",
@@ -455,7 +455,7 @@ test("Domain correctly applied when allow_open_ended=1.", async () => {
 
     await mountGanttView({
         resModel: "attendances",
-        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' default_scale="day" date_stop="check_out"/>`,
+        arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' date_stop="check_out"/>`,
         domain: ["|", ["user_id", "=", 2], ["check_out", "=", false]],
         context: {
             default_start_date: "2018-11-02",

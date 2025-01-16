@@ -31,7 +31,6 @@ import {
     editPill,
     focusToday,
     ganttControlsChanges,
-    getActiveScale,
     getCell,
     getGridContent,
     getPill,
@@ -39,9 +38,8 @@ import {
     hoverGridCell,
     mountGanttView,
     resizePill,
-    selectGanttRange,
+    selectCustomRange,
     selectRange,
-    setScale,
 } from "./web_gantt_test_helpers";
 
 import { omit, pick } from "@web/core/utils/objects";
@@ -86,25 +84,39 @@ test("date navigation with timezone (1h)", async () => {
     expect(getGridContent().range).toBe("From: 12/01/2018 to: 02/28/2019");
 
     // switch to day view and check day navigation
-    await setScale(5);
+    await selectRange("Day");
     await ganttControlsChanges();
 
-    expect.verifySteps(["&,start,<,2019-02-28 23:00:00,stop,>,2018-11-30 23:00:00"]);
-    expect(getGridContent().range).toBe("From: 12/01/2018 to: 02/28/2019");
+    expect.verifySteps(["&,start,<,2018-12-21 23:00:00,stop,>,2018-12-18 23:00:00"]);
+    expect(getGridContent().range).toBe("Day");
 
     // switch to week view and check week navigation
-    await setScale(1);
+    await selectRange("Week");
     await ganttControlsChanges();
 
-    expect.verifySteps(["&,start,<,2019-02-28 23:00:00,stop,>,2018-11-30 23:00:00"]);
-    expect(getGridContent().range).toBe("From: 12/01/2018 to: 02/28/2019");
+    expect.verifySteps(["&,start,<,2018-12-29 23:00:00,stop,>,2018-12-08 23:00:00"]);
+    expect(getGridContent().range).toBe("Week");
+
+    // switch to month view and check week navigation
+    await selectRange("Month");
+    await ganttControlsChanges();
+
+    expect.verifySteps(["&,start,<,2019-01-31 23:00:00,stop,>,2018-10-31 23:00:00"]);
+    expect(getGridContent().range).toBe("Month");
+
+    // switch to quarter view and check week navigation
+    await selectRange("Quarter");
+    await ganttControlsChanges();
+
+    expect.verifySteps(["&,start,<,2019-03-31 23:00:00,stop,>,2018-06-30 23:00:00"]);
+    expect(getGridContent().range).toBe("Quarter");
 
     // switch to year view and check year navigation
-    await setScale(5);
+    await selectRange("Year");
     await ganttControlsChanges();
 
-    expect.verifySteps(["&,start,<,2019-02-28 23:00:00,stop,>,2018-11-30 23:00:00"]);
-    expect(getGridContent().range).toBe("From: 12/01/2018 to: 02/28/2019");
+    expect.verifySteps(["&,start,<,2019-12-31 23:00:00,stop,>,2016-12-31 23:00:00"]);
+    expect(getGridContent().range).toBe("Year");
 });
 
 test("if a on_create is specified, execute the action rather than opening a dialog. And reloads after the action", async () => {
@@ -897,7 +909,7 @@ test("resize a pill", async () => {
     // resize to one cell smaller at end (-1 day)
     await resizePill(getPillWrapper("Task 1"), "end", -1);
 
-    await selectGanttRange({ startDate: "2018-11-10", stopDate: "2018-11-30" });
+    await selectCustomRange({ startDate: "2018-11-10", stopDate: "2018-11-30" });
 
     expect(".o_gantt_pill").toHaveCount(1, { message: "there should still be one pill (Task 1)" });
     expect(SELECTORS.resizable).toHaveCount(1);
@@ -927,7 +939,7 @@ test("resize pill in year mode", async () => {
     });
     await mountGanttView({
         resModel: "tasks",
-        arch: '<gantt date_start="start" date_stop="stop" default_scale="year" />',
+        arch: '<gantt date_start="start" date_stop="stop" default_range="year" />',
     });
 
     const initialPillWidth = getPillWrapper("Task 5").getBoundingClientRect().width;
@@ -1569,38 +1581,6 @@ test("should not be draggable when disable_drag_drop is set", async () => {
     expect(SELECTORS.draggable).toHaveCount(0);
 });
 
-test("view reload when scale changes", async () => {
-    let reloadCount = 0;
-    onRpc("get_gantt_data", () => {
-        reloadCount++;
-    });
-
-    await mountGanttView({
-        resModel: "tasks",
-
-        arch: '<gantt date_start="start" date_stop="stop" display_unavailability="1" />',
-    });
-    expect(reloadCount).toBe(1, { message: "view should have loaded" });
-
-    await setScale(4);
-    await ganttControlsChanges();
-    expect(reloadCount).toBe(2, {
-        message: "view should have reloaded when switching scale to week",
-    });
-
-    await setScale(2);
-    await ganttControlsChanges();
-    expect(reloadCount).toBe(3, {
-        message: "view should have reloaded when switching scale to month",
-    });
-
-    await setScale(0);
-    await ganttControlsChanges();
-    expect(reloadCount).toBe(4, {
-        message: "view should have reloaded when switching scale to year",
-    });
-});
-
 test("view reload when period changes", async () => {
     let reloadCount = 0;
     onRpc("get_gantt_data", () => {
@@ -1613,10 +1593,10 @@ test("view reload when period changes", async () => {
 
     expect(reloadCount).toBe(1, { message: "view should have loaded" });
 
-    await selectGanttRange({ startDate: "2019-01-01", stopDate: "2019-02-28" });
+    await selectCustomRange({ startDate: "2019-01-01", stopDate: "2019-02-28" });
     expect(reloadCount).toBe(2);
 
-    await selectGanttRange({ startDate: "2019-01-01", stopDate: "2019-01-31" });
+    await selectCustomRange({ startDate: "2019-01-01", stopDate: "2019-01-31" });
     expect(reloadCount).toBe(3);
 });
 
@@ -1632,10 +1612,10 @@ test("unavailabilities should not be reloaded when period changes if display_una
 
     expect.verifySteps(["get_gantt_data"]);
 
-    await selectGanttRange({ startDate: "2019-01-01", stopDate: "2019-02-28" });
+    await selectCustomRange({ startDate: "2019-01-01", stopDate: "2019-02-28" });
     expect.verifySteps(["get_gantt_data"]);
 
-    await selectGanttRange({ startDate: "2019-01-01", stopDate: "2019-01-31" });
+    await selectCustomRange({ startDate: "2019-01-01", stopDate: "2019-01-31" });
     expect.verifySteps(["get_gantt_data"]);
 });
 
@@ -1645,7 +1625,7 @@ test("close tooltip when drag pill", async () => {
 
     await mountGanttView({
         resModel: "tasks",
-        arch: '<gantt default_scale="week" date_start="start" date_stop="stop" />',
+        arch: '<gantt default_range="week" date_start="start" date_stop="stop" />',
     });
 
     expect(getGridContent().rows).toEqual([
@@ -1653,7 +1633,7 @@ test("close tooltip when drag pill", async () => {
             pills: [
                 {
                     title: "Task 1",
-                    colSpan: "16 W51 2018 -> Out of bounds (33) ",
+                    colSpan: "Out of bounds (1)  -> Out of bounds (43) ",
                     level: 0,
                 },
                 {
@@ -1701,7 +1681,7 @@ test("drag&drop on other pill in grouped view", async () => {
 
     await mountGanttView({
         resModel: "tasks",
-        arch: '<gantt default_scale="week" date_start="start" date_stop="stop" />',
+        arch: '<gantt default_range="week" date_start="start" date_stop="stop" />',
         groupBy: ["project_id"],
     });
 
@@ -2202,20 +2182,28 @@ test("unavailabilities fetched with right parameters", async () => {
     });
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_scale="day"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="day"/>`,
     });
-    expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00", "day"]]);
-    await setScale(4);
+    expect.verifySteps([["2018-12-18 23:00:00", "2018-12-21 23:00:00", "day"]]);
+
+    await selectRange("Week");
     await ganttControlsChanges();
-    expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00", "week"]]);
-    await setScale(2);
+    expect.verifySteps([["2018-12-08 23:00:00", "2018-12-29 23:00:00", "week"]]);
+
+    await selectRange("Month");
     await ganttControlsChanges();
-    expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00", "month"]]);
-    await setScale(0);
+    expect.verifySteps([["2018-10-31 23:00:00", "2019-01-31 23:00:00", "month"]]);
+
+    await selectRange("Quarter");
     await ganttControlsChanges();
-    expect.verifySteps([["2018-11-30 23:00:00", "2018-12-31 23:00:00", "year"]]);
-    await selectGanttRange({ startDate: "2018-12-31", stopDate: "2019-06-15" });
-    expect.verifySteps([["2018-11-30 23:00:00", "2019-06-30 23:00:00", "year"]]);
+    expect.verifySteps([["2018-06-30 23:00:00", "2019-03-31 23:00:00", "month"]]);
+
+    await selectRange("Year");
+    await ganttControlsChanges();
+    expect.verifySteps([["2016-12-31 23:00:00", "2019-12-31 23:00:00", "year"]]);
+
+    await selectCustomRange({ startDate: "2018-12-31", stopDate: "2019-06-15" });
+    expect.verifySteps([["2018-12-30 23:00:00", "2019-06-15 23:00:00", "month"]]);
 });
 
 test("progress bars fetched with the right start/stop dates", async () => {
@@ -2231,23 +2219,31 @@ test("progress bars fetched with the right start/stop dates", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `
-            <gantt date_start="start" date_stop="stop" default_group_by="user_id" progress_bar="user_id" default_scale="day" >
+            <gantt date_start="start" date_stop="stop" default_group_by="user_id" progress_bar="user_id" default_range="day" >
                 <field name="user_id"/>
             </gantt>
         `,
     });
-    expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00"]]);
-    await setScale(4);
+    expect.verifySteps([["2018-12-18 23:00:00", "2018-12-21 23:00:00"]]);
+
+    await selectRange("Week");
     await ganttControlsChanges();
-    expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00"]]);
-    await setScale(2);
+    expect.verifySteps([["2018-12-08 23:00:00", "2018-12-29 23:00:00"]]);
+
+    await selectRange("Month");
     await ganttControlsChanges();
-    expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00"]]);
-    await setScale(0);
+    expect.verifySteps([["2018-10-31 23:00:00", "2019-01-31 23:00:00"]]);
+
+    await selectRange("Quarter");
     await ganttControlsChanges();
-    expect.verifySteps([["2018-11-30 23:00:00", "2018-12-31 23:00:00"]]);
-    await selectGanttRange({ startDate: "2018-12-31", stopDate: "2019-06-15" });
-    expect.verifySteps([["2018-11-30 23:00:00", "2019-06-30 23:00:00"]]);
+    expect.verifySteps([["2018-06-30 23:00:00", "2019-03-31 23:00:00"]]);
+
+    await selectRange("Year");
+    await ganttControlsChanges();
+    expect.verifySteps([["2016-12-31 23:00:00", "2019-12-31 23:00:00"]]);
+
+    await selectCustomRange({ startDate: "2018-12-31", stopDate: "2019-06-15" });
+    expect.verifySteps([["2018-12-30 23:00:00", "2019-06-15 23:00:00"]]);
 });
 
 test("focus today with scroll (in range & outside)", async () => {
@@ -2319,7 +2315,7 @@ test("focus today with range change (in range & outside)", async () => {
     expect(gridContent.columnHeaders[0].title).toBe("03"); // December
     expect(gridContent.columnHeaders.at(-1).title).toBe("05"); // January
 
-    await selectGanttRange({ startDate: "2018-11-15", stopDate: "2019-02-15" });
+    await selectCustomRange({ startDate: "2018-11-15", stopDate: "2019-02-15" });
     expect.verifySteps(["get_gantt_data"]);
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
     expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20 December 2018"));
@@ -2332,7 +2328,7 @@ test("focus today with range change (in range & outside)", async () => {
     await ganttControlsChanges();
     // nothing happens
 
-    await selectGanttRange({ startDate: "2019-01-01", stopDate: "2019-02-28" });
+    await selectCustomRange({ startDate: "2019-01-01", stopDate: "2019-02-28" });
     expect(getGridContent().range).toBe("From: 01/01/2019 to: 02/28/2019");
     expect.verifySteps(["get_gantt_data"]);
     expect(".o_gantt_cell.o_gantt_today").not.toBeVisible();
@@ -2344,29 +2340,6 @@ test("focus today with range change (in range & outside)", async () => {
     expect(getGridContent().range).toBe("From: 11/21/2018 to: 01/17/2019");
 });
 
-test("set scale: should keep focused date", async () => {
-    await mountGanttView({
-        resModel: "tasks",
-        arch: '<gantt date_start="start" date_stop="stop"/>',
-    });
-    // set focus around 23 January 2019
-    await scroll(".o_content", { left: 2000 });
-    await animationFrame();
-    expect(getCell("23 January 2019")).toBeVisible();
-    // day view
-    await setScale(5);
-    await ganttControlsChanges();
-    expect(getCell("12pm 23 January 2019")).toBeVisible();
-    // week view
-    await setScale(4);
-    await ganttControlsChanges();
-    expect(getCell("23 W4 2019")).toBeVisible();
-    // year view
-    await setScale(0);
-    await ganttControlsChanges();
-    expect(getCell("January 2019")).toBeVisible();
-});
-
 test("set start/stop date: should keep focused date", async () => {
     await mountGanttView({
         resModel: "tasks",
@@ -2375,11 +2348,11 @@ test("set start/stop date: should keep focused date", async () => {
     // set focus around 23 January 2019
     await scroll(".o_content", { left: 2000 });
     await animationFrame();
-    await selectGanttRange({ startDate: "2018-12-01", stopDate: "2019-05-28" });
+    await selectCustomRange({ startDate: "2018-12-01", stopDate: "2019-05-28" });
     expect(getCell("23 January 2019")).toBeVisible();
-    await selectGanttRange({ startDate: "2019-01-22", stopDate: "2019-05-28" });
+    await selectCustomRange({ startDate: "2019-01-22", stopDate: "2019-05-28" });
     expect(getCell("23 January 2019")).toBeVisible();
-    await selectGanttRange({ startDate: "2018-12-01", stopDate: "2019-01-22" });
+    await selectCustomRange({ startDate: "2018-12-01", stopDate: "2019-01-22" });
     expect(getCell("22 January 2019")).toBeVisible();
 });
 
@@ -2424,25 +2397,25 @@ test("Select a range via the range menu", async () => {
     let content = getGridContent();
     expect(content.range).toBe("From: 12/01/2018 to: 02/28/2019");
 
-    await selectRange("Today");
+    await selectRange("Day");
     content = getGridContent();
-    expect(content.range).toBe("12/20/2018");
+    expect(content.range).toBe("Day");
 
-    await selectRange("This week");
+    await selectRange("Week");
     content = getGridContent();
-    expect(content.range).toBe("W51 2018");
+    expect(content.range).toBe("Week");
 
-    await selectRange("This month");
+    await selectRange("Month");
     content = getGridContent();
-    expect(content.range).toBe("December 2018");
+    expect(content.range).toBe("Month");
 
-    await selectRange("This quarter");
+    await selectRange("Quarter");
     content = getGridContent();
-    expect(content.range).toBe("Q4 2018");
+    expect(content.range).toBe("Quarter");
 
-    await selectRange("This year");
+    await selectRange("Year");
     content = getGridContent();
-    expect(content.range).toBe("2018");
+    expect(content.range).toBe("Year");
 });
 
 test("Select range with left/rigth arrows", async () => {
@@ -2455,11 +2428,11 @@ test("Select range with left/rigth arrows", async () => {
         arch: '<gantt date_start="start" date_stop="stop" default_range="month"/>',
     });
     expect.verifySteps([
-        ["&", ["start", "<", "2018-12-31 23:00:00"], ["stop", ">", "2018-11-30 23:00:00"]],
+        ["&", ["start", "<", "2019-01-31 23:00:00"], ["stop", ">", "2018-10-31 23:00:00"]],
     ]);
 
     let content = getGridContent();
-    expect(content.range).toBe("December 2018");
+    expect(content.range).toBe("Month");
 
     for (let i = 0; i < 3; i++) {
         await click(SELECTORS.nextButton);
@@ -2468,60 +2441,18 @@ test("Select range with left/rigth arrows", async () => {
     await ganttControlsChanges();
 
     expect.verifySteps([
-        ["&", ["start", "<", "2019-02-28 23:00:00"], ["stop", ">", "2019-01-31 23:00:00"]],
+        ["&", ["start", "<", "2019-03-31 23:00:00"], ["stop", ">", "2018-12-31 23:00:00"]],
     ]);
     content = getGridContent();
-    expect(content.range).toBe("February 2019");
+    expect(content.range).toBe("Month");
 
     await press("alt+n");
     await ganttControlsChanges();
     expect.verifySteps([
-        ["&", ["start", "<", "2019-03-31 23:00:00"], ["stop", ">", "2019-02-28 23:00:00"]],
+        ["&", ["start", "<", "2019-04-30 23:00:00"], ["stop", ">", "2019-01-31 23:00:00"]],
     ]);
     content = getGridContent();
-    expect(content.range).toBe("March 2019");
-});
-
-test("Select scale with +/- buttons", async () => {
-    onRpc("get_gantt_data", () => {
-        expect.step("get_gantt_data");
-    });
-
-    await mountGanttView({
-        resModel: "tasks",
-        arch: '<gantt date_start="start" date_stop="stop" default_scale="day"/>',
-    });
-
-    expect(getActiveScale()).toBe(5);
-    expect(SELECTORS.minusButton).toBeEnabled();
-    expect(SELECTORS.plusButton).not.toBeEnabled();
-    expect.verifySteps(["get_gantt_data"]);
-
-    for (let i = 0; i < 9; i++) {
-        await click(SELECTORS.minusButton);
-    }
-    await ganttControlsChanges();
-
-    expect(getActiveScale()).toBe(0);
-    expect(SELECTORS.minusButton).not.toBeEnabled();
-    expect(SELECTORS.plusButton).toBeEnabled();
-    expect.verifySteps(["get_gantt_data"]);
-
-    await click(SELECTORS.plusButton);
-    await click(SELECTORS.plusButton);
-    await ganttControlsChanges();
-
-    expect(getActiveScale()).toBe(2);
-    expect(SELECTORS.minusButton).toBeEnabled();
-    expect(SELECTORS.plusButton).toBeEnabled();
-    expect.verifySteps(["get_gantt_data"]);
-
-    await press("alt+i");
-    await ganttControlsChanges();
-    expect(getActiveScale()).toBe(3);
-    expect(SELECTORS.minusButton).toBeEnabled();
-    expect(SELECTORS.plusButton).toBeEnabled();
-    expect.verifySteps(["get_gantt_data"]);
+    expect(content.range).toBe("Month");
 });
 
 test("make tooltip visible for a long pill", async () => {
@@ -2531,7 +2462,7 @@ test("make tooltip visible for a long pill", async () => {
     Tasks._records[0].stop = "2024-11-16 00:00:00";
     await mountGanttView({
         resModel: "tasks",
-        arch: '<gantt default_scale="day" date_start="start" date_stop="stop" />',
+        arch: '<gantt default_range="day" date_start="start" date_stop="stop" />',
         context: {
             default_start_date: "2024-01-01",
             default_stop_date: "2024-12-31",
@@ -2551,14 +2482,15 @@ test("make tooltip visible for a long pill", async () => {
 });
 
 test("date fields: domain", async () => {
-    expect.assertions(4);
+    expect.assertions(5);
     Tasks._fields.start = fields.Date();
     Tasks._fields.stop = fields.Date();
     const domains = [
-        ["&", ["start", "<", "2018-12-21"], ["stop", ">=", "2018-12-20"]],
-        ["&", ["start", "<", "2018-12-23"], ["stop", ">=", "2018-12-16"]],
-        ["&", ["start", "<", "2019-01-01"], ["stop", ">=", "2018-01-01"]],
-        ["&", ["start", "<", "2019-01-01"], ["stop", ">=", "2018-12-01"]],
+        ["&", ["start", "<", "2018-12-22"], ["stop", ">=", "2018-12-19"]],
+        ["&", ["start", "<", "2018-12-30"], ["stop", ">=", "2018-12-09"]],
+        ["&", ["start", "<", "2019-02-01"], ["stop", ">=", "2018-11-01"]],
+        ["&", ["start", "<", "2019-04-01"], ["stop", ">=", "2018-07-01"]],
+        ["&", ["start", "<", "2020-01-01"], ["stop", ">=", "2017-01-01"]],
     ];
     onRpc("get_gantt_data", ({ kwargs }) => {
         expect(kwargs.domain).toEqual(domains.pop());
@@ -2566,11 +2498,12 @@ test("date fields: domain", async () => {
     await mountGanttView({
         type: "gantt",
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" default_range="month"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" default_range="year"/>`,
     });
-    await selectRange("This year");
-    await selectRange("This week");
-    await selectRange("Today");
+    await selectRange("Quarter");
+    await selectRange("Month");
+    await selectRange("Week");
+    await selectRange("Day");
 });
 
 test("date fields: pill columns", async () => {

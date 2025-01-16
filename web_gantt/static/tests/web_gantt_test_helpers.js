@@ -6,7 +6,6 @@ import {
     queryFirst,
     queryOne,
     queryText,
-    setInputRange,
 } from "@odoo/hoot-dom";
 import { advanceTime, animationFrame, runAllTimers } from "@odoo/hoot-mock";
 import { getPickerCell, zoomOut } from "@web/../tests/core/datetime/datetime_test_helpers";
@@ -104,7 +103,7 @@ export const SELECTORS = {
     stopDatePicker: ".o_gantt_picker:nth-child(4)",
     thumbnail: ".o_gantt_row_thumbnail",
     rangeMenu: ".o_gantt_range_menu",
-    rangeMenuToggler: ".o_gantt_renderer_controls div.dropdown:nth-child(2)",
+    rangeMenuToggler: ".o_gantt_renderer_controls .dropdown-toggle",
     todayButton: ".o_gantt_button_today",
     toolbar: ".o_gantt_renderer_controls div[name='ganttToolbar']",
     undraggable: ".o_undraggable",
@@ -159,7 +158,7 @@ async function selectDateInDatePicker(selector, datetime) {
  * @param {string} [param0.startDate]
  * @param {string} [param0.stopDate]
  */
-export async function selectGanttRange({ startDate, stopDate }) {
+export async function selectCustomRange({ startDate, stopDate }) {
     const {
         startDatePicker: START_SELECTOR,
         stopDatePicker: STOP_SELECTOR,
@@ -182,17 +181,6 @@ export async function selectRange(label) {
     await animationFrame();
     await click(`${SELECTORS.rangeMenu} .dropdown-item:contains(/^${label}$/)`);
     await ganttControlsChanges();
-}
-
-export function getActiveScale() {
-    return Number(queryFirst(".o_gantt_renderer_controls input").value);
-}
-
-/**
- * @param {Number} scale
- */
-export async function setScale(scale) {
-    await setInputRange(".o_gantt_renderer_controls input", scale);
 }
 
 export async function focusToday() {
@@ -301,7 +289,7 @@ export function getCellColorProperties(columnHeader, rowHeader = null, options) 
  * @param {HTMLElement} pill
  * @returns {HTMLElement}
  */
-export function getCellFromPill(pill) {
+function getCellFromPill(pill) {
     if (!pill.matches(SELECTORS.pillWrapper)) {
         pill = pill.closest(SELECTORS.pillWrapper);
     }
@@ -428,17 +416,15 @@ export function getGridContent() {
 /**
  * @param {HTMLElement} el
  */
-export function getGridStyle(el) {
+function getGridStyle(el) {
     /**
      * @param {"row" | "column"} prop
      * @returns {[number, number]}
      */
-    const getGridProp = (prop) => {
-        return [
-            parseNumber(style.getPropertyValue(`grid-${prop}-start`)),
-            parseNumber(style.getPropertyValue(`grid-${prop}-end`)),
-        ];
-    };
+    const getGridProp = (prop) => [
+        parseNumber(style.getPropertyValue(`grid-${prop}-start`)),
+        parseNumber(style.getPropertyValue(`grid-${prop}-end`)),
+    ];
 
     const style = getComputedStyle(el);
 

@@ -9,7 +9,7 @@ GANTT_VALID_ATTRIBUTES = set([
     '__validate__',                     # ir.ui.view implementation detail
     'date_start',
     'date_stop',
-    'default_scale',
+    'default_scale', # should be dropped
     'default_range',
     'class',
     'js_class',
@@ -34,7 +34,7 @@ GANTT_VALID_ATTRIBUTES = set([
     'total_row',
     'collapse_first_level',
     'offset',
-    'scales',
+    'scales', # should be renamed to ranges
     'thumbnails',
     'precision',
     'color',

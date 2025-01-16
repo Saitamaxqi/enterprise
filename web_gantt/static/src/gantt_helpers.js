@@ -50,12 +50,6 @@ export function diffColumn(col1, col2, unit) {
     return col2.diff(col1, unit).values[`${unit}s`];
 }
 
-export function getRangeFromDate(rangeId, date) {
-    const startDate = localStartOf(date, rangeId);
-    const stopDate = startDate.plus({ [rangeId]: 1 }).minus({ day: 1 });
-    return { focusDate: date, startDate, stopDate, rangeId };
-}
-
 export function localStartOf(date, unit) {
     return unit === "week" ? getStartOfLocalWeek(date) : date.startOf(unit);
 }
