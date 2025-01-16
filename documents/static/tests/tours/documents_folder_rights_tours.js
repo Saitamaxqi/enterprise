@@ -10,8 +10,8 @@ registry.category("web_tour.tours").add("test_document_folder_rights_for_multi_c
             run: "click",
         },
         {
-            trigger: "header.o_search_panel_section_header:contains('HOME')",
-            content: "Verify that the HOME folder is opened by default",
+            trigger: 'li[title="All"]',
+            content: "Verify that the All folder is opened by default",
         },
         {
             trigger: 'li[title="Company"] header button',

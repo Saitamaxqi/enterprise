@@ -1,3 +1,5 @@
+import { _t } from "@web/core/l10n/translation";
+import { user } from "@web/core/user";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
 import { FileUploadProgressBar } from "@web/core/file_upload/file_upload_progress_bar";
 import { useBus, useService } from "@web/core/utils/hooks";
@@ -68,6 +70,20 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         return result;
     }
 
+    get renderingContext() {
+        const context = super.renderingContext;
+        if ([false, "TRASH", "RECENT"].includes(this.env.searchModel.getSelectedFolderId())) {
+            context.inFolder = this.props.record.data.folder_id?.[1] ||
+                (
+                    this.props.record.data?.owner_id?.[0] === user.userId
+                    ? _t("My Drive")
+                    : this.props.record.data?.owner_id
+                        ? _t("Shared with me")
+                        : _t("Company")
+                );
+        }
+        return context;
+    }
     /**
      * Get the current file upload for this record if there is any
      */

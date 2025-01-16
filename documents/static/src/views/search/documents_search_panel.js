@@ -46,6 +46,7 @@ export class DocumentsSearchPanel extends SearchPanel {
               filtersGroup: "documents.SearchPanel.FiltersGroup.Small",
           };
     static rootIcons = {
+        false: "fa-folder-o",
         COMPANY: "fa-building",
         MY: "fa-hdd-o",
         RECENT: "fa-clock-o",
@@ -87,6 +88,7 @@ export class DocumentsSearchPanel extends SearchPanel {
         useBus(this.env.documentsView.bus, "documents-expand-folder", (ev) => {
             this._expandFolder(ev.detail);
         });
+        // todo: remove in master
         useBus(this.env.documentsView.bus, "documents-open-edit-selected-folder", () => {
             const selectedFolderId = this.env.searchModel.getSelectedFolderId();
             if (selectedFolderId) {

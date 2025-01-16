@@ -1,4 +1,6 @@
 .o_documents_search_panel {
+    padding-inline-start: 0.25rem !important;
+
     .o_search_panel_label:not(:hover) .o_documents_search_panel_section_edit {
         display: none;
     }

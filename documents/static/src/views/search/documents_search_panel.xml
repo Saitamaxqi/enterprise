@@ -1,30 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <t t-name="documents.SearchPanelContent" t-inherit="web.SearchPanelContent" t-inherit-mode="primary">
+        <xpath expr="//div[hasclass('o_search_panel')]" position="attributes">
+            <attribute name="class" remove="pe-1 ps-3"/>
+        </xpath>
         <xpath expr="//section" position="attributes">
             <attribute name="t-att-data-section-id">section.id</attribute>
         </xpath>
         <xpath expr="//button[@t-on-click='toggleSidebar']" position="replace"/>
-        <xpath expr="//header" position="replace">
-            <header class="o_search_panel_section_header pt-4 pb-2 ms-1 text-uppercase cursor-pointer"
-                t-if="!this.env.model.config.context.active_model" t-on-click="() => this.env.searchModel.toggleCategoryValue(1, false)">
-                <div t-attf-class="o_documents_search_panel_section_header_bg {{ (state.active[1] === false and !this.env.searchModel.query.length) ? 'active' : ''}}">
-                    <i t-attf-class="fa {{ section.icon }} o_search_panel_section_icon {{ !section.color &amp;&amp; section.type == 'filter' ? 'text-warning' : !section.color ? 'text-primary': '' }} me-2"
-                        t-att-style="section.color and ('color: ' + section.color)"
-                    />
-                    <b class="user-select-none">Home</b>
-                </div>
-            </header>
-        </xpath>
+        <xpath expr="//header" position="replace"/>
     </t>
 
     <t t-name="documents.SearchPanel.Regular" t-inherit="documents.SearchPanelContent" t-inherit-mode="primary"/>
 
     <t t-name="documents.SearchPanel.Category" t-inherit="web.SearchPanel.Category" t-inherit-mode="primary">
-        <xpath expr="t[@t-foreach='values']" position="attributes">
-            <attribute name="t-foreach">values.filter((v) => !!v)</attribute>
-        </xpath>
         <xpath expr="//li[hasclass('o_search_panel_category_value')]" position="attributes">
+            <attribute name="t-if">valueId || !this.env.model.config.context.active_model</attribute>
             <attribute name="class" add="pe-0" separator=" "/>
             <attribute name="t-att-class">{
                     'o_treeEntry' : isChildList,

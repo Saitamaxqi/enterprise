@@ -108,11 +108,10 @@ export class DocumentService {
     }
 
     canUploadInFolder(folder) {
-        // "All" (!folder.id) and "My Drive" ("MY") are only editable by internal user.
         return (
             folder &&
             ((typeof folder.id === "number" && folder.user_permission === "edit") ||
-                (this.userIsInternal && (folder.id === "MY" || !folder.id)) ||
+                (this.userIsInternal && ["MY", "RECENT", false].includes(folder.id)) ||
                 (this.userIsDocumentManager && folder.id === "COMPANY"))
         );
     }

@@ -15,6 +15,7 @@ import {
     onRpc,
     patchWithCleanup,
     preloadBundle,
+    serverState,
 } from "@web/../tests/web_test_helpers";
 import { loadBundle } from "@web/core/assets";
 import { browser } from "@web/core/browser/browser";
@@ -37,6 +38,7 @@ const basicDocumentKanbanArch = /* xml */ `
         <field name="access_token"/>
         <field name="mimetype"/>
         <field name="folder_id"/>
+        <field name="owner_id"/>
         <field name="active"/>
         <field name="type"/>
         <field name="attachment_id"/>
@@ -58,6 +60,17 @@ const basicDocumentKanbanArch = /* xml */ `
 function getTestServerData(spreadsheetData = {}) {
     return {
         models: {
+            "res.users": {
+                records: [
+                    { name: "OdooBot", id: serverState.odoobotId },
+                    {
+                        name: serverState.partnerName,
+                        id: serverState.userId,
+                        active: true,
+                        partner_id: serverState.partnerId,
+                    },
+                ],
+            },
             "documents.document": {
                 records: [
                     {
@@ -65,6 +78,7 @@ function getTestServerData(spreadsheetData = {}) {
                         name: "Workspace1",
                         type: "folder",
                         available_embedded_actions_ids: [],
+                        owner_id: serverState.odoobotId,
                     },
                     {
                         id: 2,
@@ -74,6 +88,7 @@ function getTestServerData(spreadsheetData = {}) {
                         folder_id: 1,
                         handler: "spreadsheet",
                         access_token: "accessTokenMyspreadsheet",
+                        owner_id: serverState.userId,
                     },
                 ],
             },

@@ -199,6 +199,7 @@ QUnit.module("documents", {}, function () {
                         file_size: 70000,
                         folder_id: documentsFolderIds[1],
                         name: "pom",
+                        owner_id:  resUsersIds[0],
                         partner_id: resPartnerIds[2],
                         res_id: documentsDocumentId1,
                         res_model: "documents.document",
@@ -3840,6 +3841,7 @@ QUnit.module("documents", {}, function () {
                         resModel: "documents.document",
                         arch: `<kanban js_class="documents_kanban"><templates><t t-name="card">
                         <field name="name"/>
+                        <field name="owner_id"/>
                     </t></templates></kanban>`,
                     });
 

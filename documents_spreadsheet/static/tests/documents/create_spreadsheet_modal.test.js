@@ -5,7 +5,7 @@ import { describe, expect, test } from "@odoo/hoot";
 import { click, dblclick, queryFirst, select, press } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
-import { contains, mountView } from "@web/../tests/web_test_helpers";
+import { contains, mountView, serverState } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");
 defineDocumentSpreadsheetModels();
@@ -18,6 +18,7 @@ const kanbanArch = /* xml */ `
             <field name="access_token"/>
             <field name="mimetype"/>
             <field name="folder_id"/>
+            <field name="owner_id"/>
             <field name="active"/>
             <field name="type"/>
             <field name="attachment_id"/>
@@ -43,6 +44,17 @@ const TEST_TEMPLATES = [
 function getDocumentBasicData(views = {}) {
     const models = {};
     models["mail.alias"] = { records: [{ alias_name: "hazard@rmcf.es", id: 1 }] };
+    models["res.users"] = {
+        records: [
+            { name: "OdooBot", id: serverState.odoobotId },
+            {
+                name: "Test User",
+                id: serverState.userId,
+                active: true,
+                partner_id: serverState.partnerId,
+            },
+        ],
+    };
     models["documents.document"] = {
         records: [
             {
@@ -52,6 +64,7 @@ function getDocumentBasicData(views = {}) {
                 type: "folder",
                 id: 1,
                 available_embedded_actions_ids: [],
+                owner_id: serverState.odoobotId,
             },
         ],
     };
@@ -430,7 +443,7 @@ test("Can create a blank spreadsheet from template dialog in a specific folder",
     });
     mockActionService(mockDoAction);
 
-    await contains(".o_search_panel_section .o_search_panel_section_header").click();
+    await contains(".o_search_panel_section").click();
 
     await openTemplateDialog();
 
