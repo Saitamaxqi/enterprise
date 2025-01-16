@@ -22,7 +22,7 @@ patch(ErrorDialog.prototype, {
         this.state.processed = false;
         this.canUploadTraceback = false;
         useBus(this.fileUpload.bus, "FILE_UPLOAD_LOADED", async (ev) => {
-            if (ev.detail.upload.xhr.status === 200) {
+            if (ev.detail.upload.xhr.status === 200 && this.state.processed) {
                 const response = JSON.parse(ev.detail.upload.xhr.response);
                 if (response.length === 1) {
                     this.state.tracebackUrl = response[0];

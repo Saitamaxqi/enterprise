@@ -38,12 +38,15 @@ test("Shareable error dialog", async () => {
         upload: (route, files, params = {}) => {
             if (route === "/documents/upload_traceback") {
                 _bus.trigger("FILE_UPLOAD_LOADED", {
-                    upload: { data: new FormData(), xhr: { status : 200, response: '["test url"]' } }
+                    upload: {
+                        data: new FormData(),
+                        xhr: { status: 200, response: '["test url"]' },
+                    },
                 });
                 expect.step("Upload traceback");
             }
         },
-    })
+    });
 
     const error = makeServerError({
         subType: "Odoo Client Error",
@@ -68,6 +71,85 @@ test("Shareable error dialog", async () => {
     await animationFrame();
     expect.verifySteps([
         "Check access rights",
+        "Upload traceback",
+        "test url",
+        "Success notification",
+    ]);
+    expect(".modal-footer .o_field_CopyClipboardChar").toHaveCount(1);
+    expect(".modal-footer .o_field_CopyClipboardChar").toHaveText("test url");
+    await contains(".o_clipboard_button").click();
+    await animationFrame();
+    expect.verifySteps(["test url"]);
+});
+
+test("Multipls error dialogs", async () => {
+    expect.errors(3);
+    const _bus = new EventBus();
+    patchWithCleanup(browser.navigator.clipboard, {
+        async writeText(text) {
+            expect.step(text);
+        },
+    });
+
+    mockService("notification", {
+        add: (message, options) => {
+            expect(message).toBe("The document URL has been copied to your clipboard.");
+            expect(options).toEqual({ type: "success" });
+            expect.step("Success notification");
+        },
+    });
+
+    mockService("file_upload", {
+        bus: _bus,
+        upload: (route, files, params = {}) => {
+            if (route === "/documents/upload_traceback") {
+                _bus.trigger("FILE_UPLOAD_LOADED", {
+                    upload: {
+                        data: new FormData(),
+                        xhr: { status: 200, response: '["test url"]' },
+                    },
+                });
+                expect.step("Upload traceback");
+            }
+        },
+    });
+
+    const error1 = makeServerError({
+        subType: "Odoo Client Error",
+        message: "Message",
+        errorName: "client error",
+    });
+    const error2 = makeServerError({
+        subType: "Odoo Client Error",
+        message: "Message",
+        errorName: "client error",
+    });
+    const error3 = makeServerError({
+        subType: "Odoo Client Error",
+        message: "Message",
+        errorName: "client error",
+    });
+
+    await mountWithCleanup(MainComponentsContainer);
+    onRpc("documents.document", "can_upload_traceback", () => {
+        expect.step("Check access rights");
+        return true;
+    });
+
+    Promise.reject(error1);
+    await animationFrame();
+    expect.verifyErrors(["Message"]);
+    Promise.reject(error2);
+    await animationFrame();
+    expect.verifyErrors(["Message"]);
+    Promise.reject(error3);
+    await animationFrame();
+    expect.verifyErrors(["Message"]);
+    expect.verifySteps(["Check access rights", "Check access rights", "Check access rights"]);
+    await contains(".modal-footer button:contains(Share):eq(2)").click();
+    expect(".modal-footer button:contains(Share):eq(2)").not.toBeEnabled();
+    await animationFrame();
+    expect.verifySteps([
         "Upload traceback",
         "test url",
         "Success notification",
