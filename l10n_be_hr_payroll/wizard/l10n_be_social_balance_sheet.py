@@ -367,6 +367,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 report_data[code] = 0
             if i == number_of_months_period:
                 reports_data['social_balance_sheet'] = report_data
+                report_data['year'] = date_from.strftime('%Y')
             else:
                 report_data['month'] = date_from.strftime('%B')
                 report_data['year'] = date_from.strftime('%Y')
@@ -375,7 +376,6 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
     def print_report(self):
         report_data = self._get_report_data()
-        report_data.pop('social_balance_sheet')
         filename = _(
             'SocialBalance-%(date_from)s-%(date_to)s.pdf',
             date_from=format_date(self.env, self.date_from),
