@@ -105,7 +105,7 @@
                                                 invisible="state == 'new' and employee_user_id == uid" class="ms-2 me-0"/>
                                         </div>
                                     </div>
-                                    <div class="col-12 o_appraisal_input position-relative o_height">
+                                    <div class="col-12 o_appraisal_input scrollable-section position-relative o_height">
                                         <span class="o_appraisal_overlay o_highlight" invisible="can_see_employee_publish or employee_feedback_published or not employee_feedback_template">
                                             <div>Self Assessment will show here</div>
                                             <div>once published</div>
@@ -126,7 +126,7 @@
                                             <field name="manager_feedback_published" nolabel="1" widget="boolean_toggle" class="ms-2 me-0" invisible="not can_see_manager_publish"/>
                                         </div>
                                     </div>
-                                    <div class="col-12 o_appraisal_input position-relative o_height">
+                                    <div class="col-12 o_appraisal_input scrollable-section position-relative o_height">
                                         <span class="o_appraisal_overlay" invisible="can_see_manager_publish or manager_feedback_published or not manager_feedback_template">
                                             <div>Manager Assessment will show here</div>
                                             <div>once published</div>
