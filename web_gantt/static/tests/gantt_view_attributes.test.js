@@ -1657,3 +1657,33 @@ test("if kanban_view_id attribute is not set, kanban view id is retrieved from c
     await contains(`.o_popover .popover-footer i.fa.fa-close`).click();
     expect(`.o_popover`).toHaveCount(0);
 });
+
+test("verifies context-driven text visibility in Kanban view", async () => {
+    Tasks._views.kanban = `
+        <kanban>
+            <templates>
+                <t t-name="card">
+                    Allocated Hours: <field name="allocated_hours"/>
+                    <div invisible="context.get('isProjectNameHidden')">Project A</div>
+                    <div invisible="context.get('isTaskNameHidden')">Test 5</div>
+                </t>
+            </templates>
+        </kanban>
+    `;
+
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop"/>`,
+        config: {
+            views: [
+                [false, "kanban"],
+                [false, "gantt"],
+            ],
+        },
+        context: { isTaskNameHidden: true, isProjectNameHidden: false },
+    });
+    await contains(SELECTORS.pill).click();
+    expect(`.o_popover .popover-body .o_kanban_record`).toHaveText(
+        "Allocated Hours:\n0.00\nProject A"
+    );
+});

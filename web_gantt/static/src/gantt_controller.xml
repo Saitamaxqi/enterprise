@@ -36,6 +36,7 @@
                         openDialog.bind="openDialog"
                         scrollPosition="props.scrollPosition"
                         contentRef="layout.contentRef"
+                        context="props.context"
                     />
                 </t>
             </Layout>

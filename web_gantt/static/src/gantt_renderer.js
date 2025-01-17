@@ -173,6 +173,7 @@ export class GanttRenderer extends Component {
         "openDialog",
         "scrollPosition?",
         "contentRef?",
+        "context?",
     ];
 
     static template = "web_gantt.GanttRenderer";
@@ -1892,6 +1893,7 @@ export class GanttRenderer extends Component {
             KanbanRecord,
             title: displayName,
             context: { ...record },
+            actionContext: this.props.context,
             resId,
             resModel,
             reloadOnClose: () => {

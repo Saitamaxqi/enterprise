@@ -21,6 +21,7 @@ export class GanttPopover extends Component {
         "close",
         "reloadOnClose",
         "buttons",
+        "actionContext?",
     ];
 
     setup() {
@@ -59,6 +60,7 @@ export class GanttPopover extends Component {
                 hooks: {
                     onRecordSaved: this.props.reloadOnClose,
                 },
+                context: this.props.actionContext,
             };
             this.kanbanRecordProps = { archInfo };
         }
