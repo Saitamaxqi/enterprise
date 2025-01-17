@@ -227,7 +227,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
         },
         {
             content: "Remove the kanban filter for line2",
-            trigger: ".o_kanban_view .o_searchview_facet:nth-child(3) .o_facet_remove",
+            trigger: ".o_kanban_view .o_searchview_facet:nth-child(4) .o_facet_remove",
             run: "click",
         },
         {
@@ -438,7 +438,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
         // Test Reset, "Matched" badge and double-click
         {
             content: "Remove the kanban filter for 'Not Matched'",
-            trigger: ".o_kanban_view .o_searchview_facet:nth-child(2) .o_facet_remove",
+            trigger: ".o_kanban_view .o_searchview_facet:nth-child(3) .o_facet_remove",
             run: "click",
         },
         {
@@ -770,7 +770,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
         },
         {
             content: "Remove the kanbans 'not matched' filter",
-            trigger: ".o_kanban_view .o_searchview_facet:nth-child(2) .o_facet_remove",
+            trigger: ".o_kanban_view .o_searchview_facet:nth-child(3) .o_facet_remove",
             run: "click",
         },
         {

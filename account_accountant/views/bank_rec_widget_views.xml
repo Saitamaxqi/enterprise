@@ -75,6 +75,10 @@
                     <filter name="deposits" string="Deposits" domain="[('amount', '>', 0.0)]"/>
                     <filter name="payments" string="Payments" domain="[('amount', '&lt;', 0.0)]"/>
                     <separator/>
+                    <filter name="posted" string="Posted" domain="[('state', '=', 'posted')]"/>
+                    <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                    <filter name="cancelled" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+                    <separator/>
                     <filter name="no_statement" string="No statement" domain="[('statement_id', '=', False)]"/>
                     <filter name="invalid_statement" string="Invalid statements"
                             domain="['|',('statement_complete', '=', False), ('statement_valid', '=', False)]"/>
@@ -142,13 +146,13 @@
                                 </div>
 
                                     <!-- Row 2 -->
-                                <div class="d-flex">
+                                <div class="d-flex gap-2 align-items-center">
                                     <field name="payment_ref" class="text-truncate flex-fill"/>
-                                    <div class="m-1 d-flex flex-row flex-nowrap">
-                                        <span t-if="!record.checked.raw_value" class="badge text-bg-warning fw-normal">To check</span>
-                                        <div t-if="record.is_reconciled.raw_value" class="badge text-bg-success fw-normal" title="Matched">
-                                            <i class="fa fa-check"/>
-                                        </div>
+                                    <span invisible="state != 'cancel'" class="badge rounded-pill align-middle">Cancelled</span>
+                                    <span invisible="state != 'draft'" class="badge rounded-pill text-bg-info align-middle">Draft</span>
+                                    <span t-if="!record.checked.raw_value" class="badge text-bg-warning">To check</span>
+                                    <div t-if="record.is_reconciled.raw_value" class="badge text-bg-success" title="Matched">
+                                        <i class="fa fa-check"/>
                                     </div>
                                 </div>
                             </div>
@@ -170,7 +174,6 @@
                     <!--Invisible fields-->
                     <field name="statement_complete" column_invisible="True"/>
                     <field name="statement_valid" column_invisible="True"/>
-                    <field name="state" column_invisible="True"/>
                     <field name="is_reconciled" column_invisible="True"/>
                     <field name="checked" column_invisible="True"/>
                     <field name="country_code" column_invisible="True"/>
@@ -223,6 +226,10 @@
                     <field name="id"
                            widget="bank_rec_list_view_switcher"
                            invisible="not id"/>
+                    <field name="state"
+                           widget="badge"
+                           decoration-info="state == 'draft'"
+                           decoration-success="state == 'posted'"/>
                 </list>
             </field>
         </record>

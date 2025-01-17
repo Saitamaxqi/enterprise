@@ -85,8 +85,8 @@ class AccountBankStatementLine(models.Model):
 
         action.update({
             'name': name or _("Bank Reconciliation"),
-            'context': default_context or {},
-            'domain': [('state', '!=', 'cancel')] + (extra_domain or []),
+            'context': {**(default_context or {}), 'search_default_posted': 1},
+            'domain': (extra_domain or []),
         })
 
         return action

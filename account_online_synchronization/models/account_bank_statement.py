@@ -20,6 +20,25 @@ class AccountBankStatementLine(models.Model):
         readonly=True,
     )
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        """
+            Some transactions can be marked as "Zero Balancing",
+            which is a transaction used at the end of the day to summarize all the transactions
+            of the day. As we already manage the details of all the transactions, this one is not
+            useful and moreover create duplicates. To deal with that, we cancel the move and so
+            the bank statement line.
+        """
+        # EXTEND account
+        bank_statement_lines = super().create(vals_list)
+        for bank_statement_line in bank_statement_lines:
+            transaction_details = bank_statement_line.transaction_details or {}
+            if not transaction_details.get('is_zero_balancing'):
+                continue
+            bank_statement_line.move_id.button_cancel()
+
+        return bank_statement_lines
+
     @api.model
     def _online_sync_bank_statement(self, transactions, online_account):
         """

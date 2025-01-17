@@ -58,7 +58,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_rain
         },
         {
             content: "Remove the filter while rainbow man is on screen",
-            trigger: ".o_kanban_view .o_searchview_facet:nth-child(3) .o_facet_remove",
+            trigger: ".o_kanban_view .o_searchview_facet:nth-child(4) .o_facet_remove",
             run: "click",
         },
         {
