@@ -42,10 +42,13 @@ const openPreparedView = async (size) => {
     await start();
     await waitForSteps([
         `/mail/data - ${JSON.stringify({
-            init_messaging: {},
-            failures: true,
-            systray_get_activities: true,
-            context: { lang: "en", tz: "taht", uid: serverState.userId, allowed_company_ids: [1] },
+            fetch_params: ["failures", "systray_get_activities", "init_messaging"],
+            context: {
+                lang: "en",
+                tz: "taht",
+                uid: serverState.userId,
+                allowed_company_ids: [1],
+            },
         })}`,
     ]);
     await openListView("account.move.line", {

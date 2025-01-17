@@ -9,16 +9,22 @@ import { registry } from "@web/core/registry";
 registry
     .category("web_tour.tours")
     .add("mail_enterprise/static/tests/tours/discuss_channel_expand_test_tour.js", {
+        url: "/odoo",
         steps: () => [
             {
-                content:
-                    "Click on 'Open Actions Menu' in the chat window header to show expand button",
+                trigger: ".o-mail-DiscussSystray-class .fa-comments",
+                run: "click",
+            },
+            {
+                trigger: ".o-mail-NotificationItem:contains('test-mail-channel-expand-tour')",
+                run: "click",
+            },
+            {
                 trigger:
                     '.o-mail-ChatWindow:contains("test-mail-channel-expand-tour") [title="Open Actions Menu"]',
                 run: "click",
             },
             {
-                content: "Click on expand button to open channel in Discuss",
                 trigger: '.o-dropdown-item:contains("Open in Discuss")',
                 run: "click",
             },

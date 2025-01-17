@@ -4,11 +4,12 @@ import {
     defineMailModels,
     patchUiSize,
     SIZES,
+    setupChatHub,
     start,
     startServer,
 } from "@mail/../tests/mail_test_helpers";
 import { describe, expect, test } from "@odoo/hoot";
-import { Command, patchWithCleanup, serverState } from "@web/../tests/web_test_helpers";
+import { patchWithCleanup } from "@web/../tests/web_test_helpers";
 import { methods } from "@web_mobile/js/services/core";
 
 describe.current.tags("desktop");
@@ -21,16 +22,9 @@ test("'backbutton' event should close chat window", async () => {
         overrideBackButton({ enabled }) {},
     });
     const pyEnv = await startServer();
-    pyEnv["discuss.channel"].create({
-        channel_member_ids: [
-            Command.create({
-                fold_state: "open",
-                partner_id: serverState.partnerId,
-            }),
-        ],
-    });
+    const channelId = pyEnv["discuss.channel"].create({});
+    setupChatHub({ opened: [channelId] });
     await start();
-
     await contains(".o-mail-ChatWindow");
     // simulate 'backbutton' event triggered by the mobile app
     const backButtonEvent = new Event("backbutton");

@@ -20,7 +20,6 @@ class TestDiscussChannelExpand(HttpCase, MailCommon):
         })
         DiscussChannelAsUser = self.env['discuss.channel'].with_user(testuser)
         channel = DiscussChannelAsUser._create_channel(name="test-mail-channel-expand-tour", group_id=self.ref("base.group_user"))
-        channel.channel_member_ids.filtered(lambda m: m.is_self)._channel_fold(state='open', state_count=0)
         channel.message_post(
             body=Markup("<p>test-message-mail-channel-expand-tour</p>"),
             message_type='comment',

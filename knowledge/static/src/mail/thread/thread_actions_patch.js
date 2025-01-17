@@ -16,7 +16,7 @@ patch(threadActionsRegistry.get("expand-form"), {
                     res_id: articleThreadData["article_id"],
                 },
             });
-            await component.props.chatWindow.close();
+            component.props.chatWindow.close();
         } else {
             super.open(component);
         }

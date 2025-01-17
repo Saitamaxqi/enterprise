@@ -81,7 +81,12 @@ test("Attachment on side", async () => {
             </form>`,
     });
     patchUiSize({ size: SIZES.XXL });
-    onRpc("/mail/thread/data", () => asyncStep("/mail/thread/data"));
+    onRpc("/mail/data", async (request) => {
+        const { params } = await request.json();
+        if (params.fetch_params.some((fetch_param) => fetch_param[0] === "mail.thread")) {
+            asyncStep("thread-data");
+        }
+    });
     onRpc("ir.attachment", "register_as_main_attachment", () =>
         asyncStep("register_as_main_attachment")
     );
@@ -95,11 +100,11 @@ test("Attachment on side", async () => {
     await contains(".arrow", { count: 0 });
     // send a message with attached PDF file
     await click("button", { text: "Send message" });
-    await waitForSteps(["/mail/thread/data", "register_as_main_attachment"]);
+    await waitForSteps(["thread-data", "register_as_main_attachment"]);
     await inputFiles(".o-mail-Composer .o_input_file", [file]);
     await click(".o-mail-Composer-send:enabled");
     await contains(".arrow", { count: 2 });
-    await waitForSteps(["/mail/thread/data"]);
+    await waitForSteps(["thread-data"]);
     await click(".o_move_next");
     await contains(".o-mail-Attachment-imgContainer > img", { count: 0 });
     await contains(".o-mail-Attachment > iframe");
