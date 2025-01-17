@@ -63,11 +63,10 @@ subscription_rules AS (
     WHERE scp.state = 'approved'
       AND scpa.type IN ({','.join("'%s'" % r for r in self._get_sale_order_log_rates())})
     {'AND scpu.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
-    {'AND scp.team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
 ), subscription_commission_lines_team AS (
     SELECT
         MAX(rules.user_id),
-        MAX(rules.team_id),
+        MAX(log.team_id),
         rules.plan_id,
         SUM({self._get_sale_order_log_product()}) AS achieved,
         {self.env.company.currency_id.id} AS currency_id,
@@ -91,7 +90,7 @@ subscription_rules AS (
 ), subscription_commission_lines_user AS (
     SELECT
         MAX(rules.user_id),
-        MAX(rules.team_id),
+        MAX(log.team_id),
         rules.plan_id,
         SUM({self._get_sale_order_log_product()}) * cr.rate AS achieved,
         {self.env.company.currency_id.id} AS currency_id,
