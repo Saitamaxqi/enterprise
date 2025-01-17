@@ -22,6 +22,9 @@
                 <attribute name="invisible">not sale_ok and not recurring_invoice</attribute>
                 <attribute name="class">page_sales</attribute>
             </page>
+            <group name="upsell" position="inside">
+                <field name="allow_one_time_sale" invisible="not recurring_invoice or type != 'consu'"/>
+            </group>
             <div name="options" position="inside">
                 <span class="d-inline-flex">
                     <field name="recurring_invoice"/>

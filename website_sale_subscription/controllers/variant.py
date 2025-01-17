@@ -13,6 +13,8 @@ class WebsiteSaleRentingVariantController(WebsiteSaleVariantController):
     def get_combination_info_website(self, *args, **kwargs):
         res = super().get_combination_info_website(*args, **kwargs)
         res['is_combination_possible'] = res.get('is_combination_possible', True) and res.get('is_plan_possible', True)
+        if res.get('allow_one_time_sale') and not res.get('is_plan_possible'):
+            res['is_combination_possible'] = True
         return res
 
 

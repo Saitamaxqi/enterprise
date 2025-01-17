@@ -17,6 +17,11 @@ class ProductTemplate(models.Model):
         auto_join=True, copy=False, groups='sales_team.group_sale_salesman'
     )
     display_subscription_pricing = fields.Char('Display Price', compute='_compute_display_subscription_pricing')
+    allow_one_time_sale = fields.Boolean(
+        string='Accept One-Time',
+        default=False,
+        help='Define if the subscription product can also be bought as a one-time.'
+    )
 
     @api.model
     def _get_incompatible_types(self):

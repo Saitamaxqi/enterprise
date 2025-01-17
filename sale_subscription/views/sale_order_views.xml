@@ -140,8 +140,7 @@
                            required="has_recurring_line"/>
                     <field name="plan_id" groups="sales_team.group_sale_manager"
                            readonly="subscription_state == '7_upsell'"
-                           options="{'no_create': True}"
-                           required="has_recurring_line"/>
+                           options="{'no_create': True}"/>
                     <span invisible="not plan_id or subscription_state == '7_upsell'">until</span>
                     <field name="end_date" invisible="not plan_id or subscription_state == '7_upsell'"/>
                 </div>

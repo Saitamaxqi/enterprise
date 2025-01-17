@@ -90,3 +90,30 @@ class TestWebsiteSaleSubscription(TestWebsiteSaleSubscriptionCommon):
         with MockRequest(self.env, website=self.current_website, website_sale_current_pl=self.pricelist_222.id):
             combination_info = product._get_combination_info(only_template=True)
             self.assertEqual(combination_info['price'], 222)
+
+    def test_cart_add_one_time_and_plan_product(self):
+        one_time_product = self.one_time_sub_product.with_context(website_id=self.current_website.id)
+
+        # Case 1: Add to cart without a plan (one-time purchase)
+        with MockRequest(self.env, website=self.current_website) as request:
+            so = request.website._create_cart()
+            self.assertFalse(so.plan_id)
+            so._cart_add(product_id=one_time_product.product_variant_ids.id, quantity=1)
+
+            # Check product in order line
+            so.plan_id = False
+
+            self.assertTrue(so.order_line)
+            self.assertEqual(so.order_line.product_id, one_time_product.product_variant_ids)
+            self.assertEqual(so.order_line.price_unit, one_time_product.list_price)
+
+        # Case 2: Add to cart with a plan selected
+        with MockRequest(self.env, website=self.current_website) as request:
+            so = request.website._create_cart()
+            so._cart_add(product_id=one_time_product.product_variant_ids.id, quantity=1)
+
+            # Check product and price with plan applied
+
+            self.assertTrue(so.order_line)
+            self.assertEqual(so.order_line.product_id, one_time_product.product_variant_ids)
+            self.assertEqual(so.plan_id, self.plan_month)

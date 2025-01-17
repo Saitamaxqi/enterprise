@@ -168,7 +168,6 @@ class SaleOrder(models.Model):
 
     @api.constrains('plan_id', 'state', 'order_line')
     def _constraint_subscription_plan(self):
-        recurring_product_orders = self.order_line.filtered(lambda l: l.product_id.recurring_invoice).order_id
         for so in self:
             if so.state in ['draft', 'cancel'] or so.subscription_state == '7_upsell':
                 continue
@@ -177,7 +176,7 @@ class SaleOrder(models.Model):
                 # This is the so that created the sale.subscription records.
                 continue
 
-            if so.has_recurring_line and not so.plan_id:
+            if not so.plan_id and (so.has_recurring_line and not so._subscription_is_one_time_sale()):
                 raise UserError(_('Please add a recurring plan on the subscription or remove the recurring product.'))
             if so.plan_id and not so.has_recurring_line:
                 raise UserError(_('Please add a recurring product in the subscription or remove the recurring plan.'))
@@ -777,7 +776,7 @@ class SaleOrder(models.Model):
         if len(self) == 1:
             # Raise error before other popup if used on one SO.
             has_recurring_line = self.order_line.filtered(lambda l: l.product_id.recurring_invoice)
-            if has_recurring_line and not self.plan_id:
+            if not self.plan_id and (self.has_recurring_line and not self._subscription_is_one_time_sale()):
                 raise UserError(_('Please set a recurring plan on the subscription before sending the email.'))
             if self.plan_id and not has_recurring_line:
                 raise UserError(_('Please remove the recurring plan on the subscription before sending the email.'))
@@ -2179,6 +2178,16 @@ class SaleOrder(models.Model):
                     partner_ids=follower.partner_id.ids,
                     subtype_ids=follower.subtype_ids.ids
                 )
+
+    def _subscription_is_one_time_sale(self):
+        """ Determines whether the user has made a one-time purchase. """
+        res = []
+        for line in self.order_line:
+            if not line.recurring_invoice:
+                continue
+            value = bool(line.product_id.allow_one_time_sale)
+            res.append(value)
+        return all(res)
 
     def _is_subscription_postpaid(self):
         self.ensure_one()

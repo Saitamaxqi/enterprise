@@ -203,7 +203,7 @@ class SaleOrderLine(models.Model):
 
     def _get_invoice_lines(self):
         self.ensure_one()
-        if not self.recurring_invoice:
+        if not self.recurring_invoice or (self.recurring_invoice and not self.order_id.plan_id):
             return super()._get_invoice_lines()
         else:
             last_invoice_date = self.order_id.last_invoice_date or self.order_id.start_date
@@ -278,7 +278,7 @@ class SaleOrderLine(models.Model):
         other_lines = self.env['sale.order.line']
         subscription_qty_invoiced = self._get_subscription_qty_invoiced()
         for line in self:
-            if not line.recurring_invoice:
+            if not line.recurring_invoice or (line.recurring_invoice and not line.order_id.plan_id):
                 other_lines |= line
                 continue
             line.qty_invoiced = subscription_qty_invoiced.get(line.id, 0.0)
@@ -620,7 +620,7 @@ class SaleOrderLine(models.Model):
     # === PRICE COMPUTING HOOKS === #
 
     def _get_pricelist_price(self):
-        if self.recurring_invoice:
+        if self.recurring_invoice and self.order_id.plan_id:
             pricing = self.env['sale.subscription.pricing']._get_first_suitable_recurring_pricing(self.product_id, self.order_id.plan_id, self.order_id.pricelist_id)
             if pricing:
                 return pricing.currency_id._convert(pricing.price, self.currency_id, self.company_id, fields.Date.today())

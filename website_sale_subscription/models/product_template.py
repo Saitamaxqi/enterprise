@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from math import floor
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.http import request
@@ -42,6 +44,11 @@ class ProductTemplate(models.Model):
         if not self.recurring_invoice:
             return True
         so = request and request.cart or self.env['sale.order']
+        if (
+            so.allow_one_time_purchase()
+            and (self.type != 'consu' or not self.allow_one_time_sale)
+        ):
+            return False
         if not so or not so.plan_id:
             return True
         if pricing:
@@ -107,16 +114,28 @@ class ProductTemplate(models.Model):
                 price = pricing['price_value'] / plan_id.billing_period_value * to_year[plan_id.billing_period_unit] \
                         / to_year[minimum_period]
                 pricing['to_minimum_billing_period'] = f'{format_amount(self.env, amount=price, currency=currency)} / {translation_mapping.get(minimum_period, minimum_period)}'
+                # discount calculation for one time purchase
+                discount = 0.0
+                if product_or_template.type == 'consu':
+                    if pricing['price_value'] > 0 and self.list_price > 0 and self.list_price >= pricing['price_value']:
+                        discount = ((self.list_price - pricing['price_value']) * 100) / self.list_price
+                        pricing['discounted_price'] = floor(discount)  # Round down to the nearest integer
+                    else:
+                        pricing['discounted_price'] = 0.0
 
+        sale_order = website and request.cart or self.env['sale.order']
         if not pricings:
             res.update({
                 'is_subscription': True,
                 'is_plan_possible': False,
                 'pricings': False,
+                'allow_one_time_sale': self.allow_one_time_sale,
+                'show_all_pricing': sale_order._show_all_pricing(),
             })
             return res
 
         unit_price = default_pricing['price_value'] if default_pricing else 0
+
         return {
             **res,
             'is_subscription': True,
@@ -129,6 +148,10 @@ class ProductTemplate(models.Model):
             'prevent_zero_price_sale': website.prevent_zero_price_sale and currency.is_zero(
                 unit_price,
             ),
+            'allow_one_time_sale': self.allow_one_time_sale,
+            'product_type': self.type,
+            'show_all_pricing': sale_order._show_all_pricing(),
+            'currency_symbol': self.env.company.currency_id.symbol
         }
 
     # Search bar

@@ -16,11 +16,16 @@ VariantMixin._onChangeCombinationSubscription = function (ev, $parent, combinati
     const parent = $parent.get(0);
     const unit = parent.querySelector(".o_subscription_unit");
     const price = parent.querySelector(".o_subscription_price") || parent.querySelector(".product_price h5");
-    const pricingSelect =
-        parent.querySelector(".js_main_product h5:has(.o_subscription_price)") ||
-        parent.querySelector(".js_main_product select.plan_select");
     const pricingTable = document.querySelector("#oe_wsale_subscription_pricing_table");
     const addToCartButton = document.querySelector('#add_to_cart');
+
+    if(combination.allow_one_time_sale){
+        const productPrice = $parent.find('.product_price');
+        if(productPrice){
+            productPrice.removeClass('d-inline-block')
+        }
+    }
+
     if (addToCartButton) {
         addToCartButton.dataset.subscriptionPlanId = combination.pricings.length > 0 ? combination.subscription_default_pricing_plan_id : '';
     }
@@ -29,21 +34,6 @@ VariantMixin._onChangeCombinationSubscription = function (ev, $parent, combinati
     }
     if (price) {
         price.textContent = combination.subscription_default_pricing_price;
-    }
-    if (pricingSelect) {
-        pricingSelect.replaceWith(
-            renderToElement("website_sale_subscription.SubscriptionPricingSelect", {
-                combination_info: combination,
-            })
-        );
-    } else {
-        // we dont find the element in the dom which means there was no pricings in the previous combination so there is no `select` or `h5` elements to replace then we append one.
-        const nodeToAppend = parent.querySelector(".js_main_product div div");
-        nodeToAppend.append(
-            renderToElement("website_sale_subscription.SubscriptionPricingSelect", {
-                combination_info: combination,
-            })
-        );
     }
     if (pricingTable) {
         pricingTable.replaceWith(

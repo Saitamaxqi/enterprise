@@ -83,6 +83,22 @@ class TestWebsiteSaleSubscriptionCommon(TestSubscriptionCommon):
             }
         ])
 
+        # create product one time subscription
+        cls.one_time_sub_product = ProductTemplate.create({
+            'name': 'One time subscription',
+            'list_price': 30.0,
+            'recurring_invoice': True,
+            'allow_one_time_sale': True,
+            'type': 'consu',
+        })
+        Pricing.create([
+            {
+                'plan_id': cls.plan_month.id,
+                'price': 10.0,
+                'product_template_id': cls.one_time_sub_product.id,
+            }
+        ])
+
         # create product with variants
         product_attribute = cls.env['product.attribute'].create({'name': 'Color'})
         product_attribute_val1 = ProductAttributeVal.create({

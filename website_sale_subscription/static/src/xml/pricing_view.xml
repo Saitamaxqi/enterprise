@@ -3,11 +3,32 @@
     <div t-name="website_sale_subscription.SubscriptionPricingTable" id="oe_wsale_subscription_pricing_table">
         <table class="o_not_editable table w-50">
             <tbody t-if="combination_info.pricings and combination_info.pricings.length > 1">
+                <t t-if="combination_info.allow_one_time_sale">
+                    <tr>
+                        <td class="w-50">
+                            One-Time
+                        </td>
+                        <td class="w-50 text-muted">
+                            <span class="me-1" t-out="combination_info.currency_symbol"/>
+                            <span t-out="combination_info.list_price.toFixed(2)"/>
+                        </td>
+                    </tr>
+                </t>
                 <t t-foreach="combination_info.pricings" t-as="pricing" t-key="pricing.table_name">
                     <tr>
                         <td class="w-50" t-esc="pricing.table_name"/>
                         <td class="w-50 text-muted" t-esc="pricing.table_price"/>
-                        <td class="w-50 text-muted" t-esc="pricing.to_minimum_billing_period"/>
+                        <t t-value="pricing['discounted_price']" t-set="discounted_percentage"/>
+                        <t t-if="combination_info['product_type'] == 'consu' and combination_info['allow_one_time_sale']">
+                            <t t-if="discounted_percentage > 0">
+                                <td class="text-muted border border-success text-success bg-light rounded px-2 py-1 d-inline-block mt-2">
+                                    <t t-out="discounted_percentage"/>%
+                                </td>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <td class="w-50 text-muted" t-esc="pricing.to_minimum_billing_period"/>
+                        </t>
                     </tr>
                 </t>
             </tbody>
