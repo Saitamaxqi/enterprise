@@ -473,15 +473,6 @@ registry.category("web_tour.tours").add("test_inventory_adjustment_tracked_produ
             trigger: ".o_barcode_client_action",
             run: "scan OBTVALI",
         },
-        // Confirm modal (because one of the line tracked by serial number has no SN.)
-        {
-            trigger: ".modal-header",
-            run: "click",
-        },
-        {
-            trigger: "button[name=action_confirm]:enabled",
-            run: "click",
-        },
         {
             trigger: ".o_notification_bar.bg-success",
             run: "click",

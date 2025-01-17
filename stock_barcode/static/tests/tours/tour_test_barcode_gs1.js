@@ -292,15 +292,6 @@ registry.category("web_tour.tours").add("test_gs1_inventory_lot_serial", {
             trigger: ".o_barcode_client_action",
             run: "scan OBTVALI",
         },
-        // Ask for confirmation when validate because of quantities for tracked product without SN.
-        {
-            trigger: '.modal-content:contains("Tracked Products in Inventory Adjustment")',
-            run: "click",
-        },
-        {
-            trigger: ".modal-content .btn[name=action_confirm]",
-            run: "click",
-        },
         {
             trigger: ".o_notification_bar.bg-success",
         },
