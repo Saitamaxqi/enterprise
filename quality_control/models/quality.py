@@ -505,7 +505,7 @@ class QualityCheck(models.Model):
         self.ensure_one()
         action_name = self.title or "Quality Check"
         if self.product_id:
-            action_name += ' : %s' % self.product_id.name
+            action_name += ' : %s' % self.product_id.display_name
         if self.qty_line and self.uom_id:
             action_name += ' - %s %s' % (self.qty_line, self.uom_id.name)
         if self.lot_name or self.lot_line_id:
