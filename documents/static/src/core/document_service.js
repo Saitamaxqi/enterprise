@@ -8,6 +8,13 @@ import { rpc } from "@web/core/network/rpc";
 import { user } from "@web/core/user";
 import { debounce } from "@web/core/utils/timing";
 import { session } from "@web/session";
+import { formatFloat } from "@web/views/fields/formatters";
+import { memoize } from "@web/core/utils/functions";
+
+// Small hack, memoize uses the first argument as cache key, but we need the orm which will not be the same.
+const loadMaxUploadSize = memoize((_null, orm) =>
+    orm.call("documents.document", "get_document_max_upload_limit")
+);
 
 export class DocumentService {
     documentList;
@@ -19,6 +26,7 @@ export class DocumentService {
         this.orm = services["orm"];
         this.action = services["action"];
         this.notification = services["notification"];
+        this.fileUpload = services["file_upload"];
         this.logAccess = debounce(this._logAccess, 1000, false);
         this.currentFolderAccessToken = null;
         this.userIsInternal = false;
@@ -330,10 +338,42 @@ export class DocumentService {
         this.previewedDocument = document;
         this.bus.trigger("DOCUMENT_PREVIEWED");
     }
+
+    async uploadDocument(files, accessToken, context) {
+        const maxUploadSize = await loadMaxUploadSize(null, this.orm);
+        const validFiles = [...files].filter((file) => file.size <= maxUploadSize);
+        if (validFiles.length !== 0) {
+            await this.fileUpload.upload(`/documents/upload/${accessToken || ""}`, validFiles, {
+                buildFormData: (formData) => {
+                    if (context) {
+                        for (const key of [
+                            "default_owner_id",
+                            "default_partner_id",
+                            "default_res_id",
+                            "default_res_model",
+                        ]) {
+                            if (context[key]) {
+                                formData.append(key.replace("default_", ""), context[key]);
+                            }
+                        }
+                    }
+                },
+                displayErrorNotification: false,
+            });
+        }
+        if (validFiles.length >= files.length) {
+            return;
+        }
+        const message = _t(
+            "Some files could not be uploaded (max size: %s).",
+            formatFloat(maxUploadSize, { humanReadable: true })
+        );
+        this.notification.add(message, { type: "danger" });
+    }
 }
 
 export const documentService = {
-    dependencies: ["action", "mail.store", "notification", "orm"],
+    dependencies: ["action", "mail.store", "notification", "orm", "file_upload"],
     async start(env, services) {
         const service = new DocumentService(env, services);
         await service.start();

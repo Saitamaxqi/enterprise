@@ -2938,6 +2938,7 @@ msgstr ""
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/hooks.js:0
+#: code:addons/documents/static/src/core/document_service.js:0
 msgid "Some files could not be uploaded (max size: %s)."
 msgstr ""
 

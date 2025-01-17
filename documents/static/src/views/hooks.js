@@ -4,12 +4,14 @@ import { _t } from "@web/core/l10n/translation";
 import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { escape } from "@web/core/utils/strings";
-import { memoize } from "@web/core/utils/functions";
 import { useSetupAction } from "@web/search/action_hook";
-import { formatFloat } from "@web/views/fields/formatters";
 import { DocumentsPermissionPanel } from "@documents/components/documents_permission_panel/documents_permission_panel";
 import { PdfManager } from "@documents/owl/components/pdf_manager/pdf_manager";
 import { EventBus, onMounted, onWillStart, markup, useComponent, useEnv, useRef, useSubEnv } from "@odoo/owl";
+
+// TODO: clean in master
+import { loadMaxUploadSize as loadMaxUploadSizeDocumentService } from "@documents/core/document_service";
+export const loadMaxUploadSize = loadMaxUploadSizeDocumentService;
 
 /**
  * Controller/View hooks
@@ -65,11 +67,6 @@ export function preSuperSetupFolder() {
         component._deletionDelay = await orm.call("documents.document", "get_deletion_delay", [[]]);
     });
 }
-
-// Small hack, memoize uses the first argument as cache key, but we need the orm which will not be the same.
-const loadMaxUploadSize = memoize((_null, orm) =>
-    orm.call("documents.document", "get_document_max_upload_limit")
-);
 
 /**
  * To be executed before calling super.setup in view controllers.
@@ -185,15 +182,7 @@ export function useDocumentView(helpers) {
         _openAutomations(ev.detail);
     });
 
-    let maxUploadSize;
-    Object.defineProperty(component, "maxUploadSize", {
-        get: () => maxUploadSize,
-        set: (newVal) => {
-            maxUploadSize = newVal;
-        },
-    });
     onWillStart(async () => {
-        component.maxUploadSize = await loadMaxUploadSize(null, orm);
         component.isDocumentsManager = await user.hasGroup("documents.group_documents_manager");
     });
 
@@ -553,34 +542,7 @@ function useDocumentsViewFileUpload() {
             // (value will be passed as string, so we need to use 0 instead of false)
             context.default_owner_id = "0";
         }
-
-        const validFiles = [...files].filter((file) => file.size <= component.maxUploadSize);
-        if (validFiles.length !== 0) {
-            await fileUpload.upload(`/documents/upload/${accessToken || ""}`, validFiles, {
-                buildFormData: (formData) => {
-                    if (context) {
-                        for (const key of [
-                            "default_owner_id",
-                            "default_partner_id",
-                            "default_res_id",
-                            "default_res_model",
-                        ]) {
-                            if (context[key]) {
-                                formData.append(key.replace("default_", ""), context[key]);
-                            }
-                        }
-                    }
-                },
-                displayErrorNotification: false,
-            });
-        }
-        if (validFiles.length < files.length) {
-            const message = _t(
-                "Some files could not be uploaded (max size: %s).",
-                formatFloat(component.maxUploadSize, { humanReadable: true })
-            );
-            return notification.add(message, { type: "danger" });
-        }
+        await documentService.uploadDocument(files, accessToken, context);
     };
 
     useBus(bus, "documents-upload-files", (ev) => {
