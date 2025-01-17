@@ -106,6 +106,10 @@ export class GridCell extends Component {
         return formatFloat(this.value, { digits: digits || 2 });
     }
 
+    get inputMode() {
+        return "numeric";
+    }
+
     isEditable(props = this.props) {
         return (
             !props.readonly && this.state.cell?.readonly === false && !this.state.cell.row.isSection

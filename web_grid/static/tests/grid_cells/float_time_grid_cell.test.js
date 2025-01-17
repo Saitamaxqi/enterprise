@@ -68,6 +68,7 @@ test("FloatTimeGridCell in grid view", async () => {
     expect(".o_grid_cell input").toHaveCount(1, {
         message: "The component should be in edit mode.",
     });
+    expect(".o_grid_cell input").toHaveAttribute("inputmode", "text");
     expect(".o_grid_cell span").toHaveCount(0, {
         message: "The component should no longer be in readonly mode.",
     });
