@@ -175,7 +175,7 @@
     <record id="project_task_action_to_invoice_fsm2_view_gantt" model="ir.actions.act_window.view">
         <field name="sequence" eval="25"/>
         <field name="view_mode">gantt</field>
-        <field name="view_id" ref="industry_fsm.project_task_view_gantt_fsm2"/>
+        <field name="view_id" ref="project_enterprise.project_task_view_gantt"/>
         <field name="act_window_id" ref="project_task_action_to_invoice_fsm2"/>
     </record>
 

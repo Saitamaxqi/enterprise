@@ -10,7 +10,6 @@ import { GanttRenderer } from "@web_gantt/gantt_renderer";
 import { escape } from "@web/core/utils/strings";
 import { MilestonesPopover } from "./milestones_popover";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
-import { formatFloatTime } from "@web/views/fields/formatters";
 
 import { TaskGanttRendererControls } from "./task_gantt_renderer_controls";
 
@@ -193,11 +192,7 @@ export class TaskGanttRenderer extends GanttRenderer {
 
     async getPopoverProps(pill) {
         const props = await super.getPopoverProps(...arguments);
-        const { record } = pill;
-        if (record.planning_overlap) {
-            props.context.planningOverlapHtml = markup(record.planning_overlap);
-        }
-        props.context.allocated_hours = formatFloatTime(props.context.allocated_hours);
+        props.actionContext.is_form_gantt = true;
         return props;
     }
 

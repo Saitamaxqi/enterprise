@@ -24,15 +24,17 @@
             <xpath expr="//gantt" position="attributes">
                 <attribute name="decoration-danger">planning_overlap or leave_warning</attribute>
             </xpath>
-            <xpath expr="//gantt" position="inside">
-                <field name="leave_warning"/>
-                <field name="planning_overlap"/>
-            </xpath>
-            <xpath expr="//div[@t-if='planning_overlap']" position="after">
-                <p t-if="leave_warning" class="text-danger mt-2 mb-0">
-                    <t t-esc="leave_warning"/>
-                </p>
-            </xpath>
+        </field>
+    </record>
+
+    <record id="project_task_view_kanban_inherit_project_holidays" model="ir.ui.view">
+        <field name="name">project.task.task.kanban</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project_enterprise.view_task_kanban_inherited"/>
+        <field name="arch" type="xml">
+            <field name="planning_overlap" position="after">
+                <field name="leave_warning" class="text-danger mb-2" invisible="not context.get('is_form_gantt', False)"/>
+            </field>
         </field>
     </record>
 </odoo>

@@ -202,6 +202,7 @@
                         •<field name="partner_city" class="ms-1"/>
                     </span>
                 </div>
+                <field name="partner_phone" t-if="record.is_fsm.raw_value" invisible="not context.get('is_form_gantt')"/>
             </xpath>
         </field>
     </record>
@@ -302,36 +303,10 @@
         </field>
     </record>
 
-    <record id="project_task_view_gantt_fsm" model="ir.ui.view">
-        <field name="name">project.task.view.gantt.fsm</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project_enterprise.project_task_view_gantt"/>
-        <field name="arch" type="xml">
-            <field name="partner_id" position="after">
-                <field name="partner_phone"/>
-            </field>
-            <xpath expr="//div[@t-if='partner_id']" position="after">
-                <div t-if="partner_phone">
-                    <strong>Contact Number — </strong> <t t-out="partner_phone"/>
-                </div>
-            </xpath>
-        </field>
-    </record>
-
-    <record id="project_task_view_gantt_fsm2" model="ir.ui.view">
-        <field name="name">project.task.gantt.fsm2</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project_task_view_gantt_fsm"/>
-        <field name="mode">primary</field>
-        <field name="arch" type="xml">
-            <xpath expr="//div[@name='project_id']" position="replace"/>
-        </field>
-    </record>
-
     <record id="project_task_gantt_view_grouped_by_project_and_users" model="ir.ui.view">
         <field name="name">project.task.gantt.fsm</field>
         <field name="model">project.task</field>
-        <field name="inherit_id" ref="project_task_view_gantt_fsm"/>
+        <field name="inherit_id" ref="project_enterprise.project_task_view_gantt"/>
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <xpath expr="//gantt" position="attributes">
@@ -340,15 +315,6 @@
         </field>
     </record>
 
-    <record id="project_task_gantt_view_grouped_by_project_and_users2" model="ir.ui.view">
-        <field name="name">project.task.gantt.fsm2</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project_task_gantt_view_grouped_by_project_and_users"/>
-        <field name="mode">primary</field>
-        <field name="arch" type="xml">
-            <xpath expr="//div[@name='project_id']" position="replace"/>
-        </field>
-    </record>
 
     <record id="project_task_pivot_view_grouped_by_project_and_users" model="ir.ui.view">
         <field name="name">project.task.pivot.fsm</field>
@@ -371,16 +337,6 @@
             <xpath expr="//gantt" position="attributes">
                 <attribute name="default_group_by">partner_zip,user_ids</attribute>
             </xpath>
-        </field>
-    </record>
-
-    <record id="project_task_gantt_view_grouped_by_location2" model="ir.ui.view">
-        <field name="name">project.task.view.gantt.fsm.group.by.location2</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project_task_gantt_view_grouped_by_location"/>
-        <field name="mode">primary</field>
-        <field name="arch" type="xml">
-            <xpath expr="//div[@name='project_id']" position="replace"/>
         </field>
     </record>
 
@@ -441,16 +397,6 @@
                 <attribute name="js_class">fsm_task_gantt</attribute>
                 <attribute name="default_range">day</attribute>
             </gantt>
-        </field>
-    </record>
-
-    <record id="fsm_project_task_view_gantt2" model="ir.ui.view">
-        <field name="name">fsm.project.task.view.gantt</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="fsm_project_task_view_gantt"/>
-        <field name="mode">primary</field>
-        <field name="arch" type="xml">
-            <xpath expr="//div[@name='project_id']" position="replace"/>
         </field>
     </record>
 
@@ -617,7 +563,7 @@
     <record id="project_task_action_fsm2_view_gantt" model="ir.actions.act_window.view">
         <field name="sequence" eval="25"/>
         <field name="view_mode">gantt</field>
-        <field name="view_id" ref="fsm_project_task_view_gantt2"/>
+        <field name="view_id" ref="fsm_project_task_view_gantt"/>
         <field name="act_window_id" ref="project_task_action_fsm2"/>
     </record>
 
@@ -801,7 +747,7 @@
     <record id="project_task_action_fsm_map2_view_gantt" model="ir.actions.act_window.view">
         <field name="sequence" eval="15"/>
         <field name="view_mode">gantt</field>
-        <field name="view_id" ref="fsm_project_task_view_gantt2"/>
+        <field name="view_id" ref="fsm_project_task_view_gantt"/>
         <field name="act_window_id" ref="project_task_action_fsm_map2"/>
     </record>
 
@@ -982,7 +928,7 @@
     <record id="project_task_action_all_fsm2_view_gantt" model="ir.actions.act_window.view">
         <field name="sequence" eval="12"/>
         <field name="view_mode">gantt</field>
-        <field name="view_id" ref="project_task_view_gantt_fsm2"/>
+        <field name="view_id" ref="project_enterprise.project_task_view_gantt"/>
         <field name="act_window_id" ref="project_task_action_all_fsm2"/>
     </record>
 
@@ -1116,7 +1062,7 @@
     <record id="project_task_action_to_schedule_fsm2_view_gantt" model="ir.actions.act_window.view">
         <field name="sequence" eval="21"/>
         <field name="view_mode">gantt</field>
-        <field name="view_id" ref="project_task_view_gantt_fsm2"/>
+        <field name="view_id" ref="project_enterprise.project_task_view_gantt"/>
         <field name="act_window_id" ref="project_task_action_to_schedule_fsm2"/>
     </record>
 
@@ -1284,7 +1230,7 @@
     <record id="project_task_action_planning_groupby_user2_gantt" model="ir.actions.act_window.view">
         <field name="sequence" eval="5"/>
         <field name="view_mode">gantt</field>
-        <field name="view_id" ref="project_task_view_gantt_fsm2"/>
+        <field name="view_id" ref="project_enterprise.project_task_view_gantt"/>
         <field name="act_window_id" ref="project_task_action_fsm_planning_groupby_user2"/>
     </record>
 
@@ -1444,7 +1390,7 @@
     <record id="project_task_action_planning_groupby_project2_gantt" model="ir.actions.act_window.view">
         <field name="sequence" eval="5"/>
         <field name="view_mode">gantt</field>
-        <field name="view_id" ref="project_task_gantt_view_grouped_by_project_and_users2"/>
+        <field name="view_id" ref="project_task_gantt_view_grouped_by_project_and_users"/>
         <field name="act_window_id" ref="project_task_action_fsm_planning_groupby_project2"/>
     </record>
 
@@ -1613,7 +1559,7 @@
     <record id="project_task_action_planning_groupby_location2_fsm2_view_gantt" model="ir.actions.act_window.view">
         <field name="sequence" eval="5"/>
         <field name="view_mode">gantt</field>
-        <field name="view_id" ref="project_task_gantt_view_grouped_by_location2"/>
+        <field name="view_id" ref="project_task_gantt_view_grouped_by_location"/>
         <field name="act_window_id" ref="project_task_action_fsm_planning_groupby_location2"/>
     </record>
     

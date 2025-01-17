@@ -1,6 +1,5 @@
 import { formatFloatTime } from "@web/views/fields/formatters";
 import { user } from "@web/core/user";
-import { formatFloat } from "@web/core/utils/numbers";
 import { GanttRenderer } from "@web_gantt/gantt_renderer";
 import { getColumnStart, getUnionOfIntersections } from "@web_gantt/gantt_helpers";
 import { PlanningEmployeeAvatar } from "./planning_employee_avatar";
@@ -283,14 +282,6 @@ export class PlanningGanttRenderer extends GanttRenderer {
     async getPopoverProps(pill) {
         const popoverProps = await super.getPopoverProps(...arguments);
         const { record } = pill;
-        if (popoverProps.bodyTemplate || popoverProps.footerTemplate) {
-            Object.assign(popoverProps.context, {
-                allocatedHoursFormatted:
-                    record.allocated_hours && formatFloatTime(record.allocated_hours),
-                allocatedPercentageFormatted:
-                    record.allocated_percentage && formatFloat(record.allocated_percentage),
-            });
-        }
         if (this.isPlanningManager) {
             const recurrenceProps = { resId: record.id, resModel: this.model.metaData.resModel };
             popoverProps.buttons.push({

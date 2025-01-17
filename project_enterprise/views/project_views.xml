@@ -14,16 +14,10 @@
                 js_class="project_gantt"
                 precision="{'week': 'day:full', 'month': 'day:full'}"
                 default_group_by="user_id"
-                total_row="True">
+                total_row="True"
+                kanban_view_id="%(project.view_project_kanban)d">
                 <templates>
                     <div t-name="gantt-popover">
-                        <div t-if="user_id"><strong>Project Manager — </strong> <t t-esc="user_id[1]"/></div>
-                        <div t-if="partner_id"><strong>Customer — </strong> <t t-esc="partner_id[1]"/></div>
-                        <div>
-                            <t t-esc="date_start.toFormat('D ')"/>
-                            <i class="fa fa-long-arrow-right" title="Arrow"/>
-                            <t t-esc="date.toFormat(' D')"/>
-                        </div>
                         <footer replace="0">
                             <button name="action_view_tasks" type="object" string="View Tasks" class="btn btn-sm btn-secondary"/>
                         </footer>
@@ -66,6 +60,7 @@
                         <field name="planned_date_begin" widget="daterange" options="{'end_date_field': 'date_deadline', 'show_time': False, 'condensed': True}"/>
                     </t>
                 </div>
+                <field name="planning_overlap" class="text-danger mt-2 mb-0" invisible="not context.get('is_form_gantt', False)"/>
             </field>
         </field>
     </record>

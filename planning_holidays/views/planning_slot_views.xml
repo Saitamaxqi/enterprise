@@ -23,6 +23,17 @@
         </field>
     </record>
 
+    <record id="planning_view_kanban_inherit_planning_holidays" model="ir.ui.view">
+        <field name="name">planning.slot.kanban</field>
+        <field name="model">planning.slot</field>
+        <field name="inherit_id" ref="planning.planning_view_kanban_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//p[@t-if='record.overlap_slot_count.raw_value']" position="after">
+                <field name="leave_warning" class="text-danger mb-2"/>
+           </xpath>
+        </field>
+    </record>
+
     <record id="planning_slot_view_gantt" model="ir.ui.view">
         <field name="name">planning.slot.view.gantt</field>
         <field name="model">planning.slot</field>
@@ -30,14 +41,6 @@
         <field name="arch" type="xml">
             <xpath expr="//gantt" position="attributes">
                 <attribute name="decoration-danger">overlap_slot_count > 0 or leave_warning</attribute>
-            </xpath>
-            <xpath expr="//gantt" position="inside">
-                <field name="leave_warning" />
-            </xpath>
-            <xpath expr="//p[@t-if='overlap_slot_count']" position="after">
-                <p t-if="leave_warning" class="text-danger mt-2 mb-0">
-                    <t t-esc="leave_warning"/>
-                </p>
             </xpath>
         </field>
     </record>

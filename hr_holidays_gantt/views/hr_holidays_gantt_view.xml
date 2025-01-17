@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <gantt
                        js_class="hr_holidays_gantt"
+                       kanban_view_id="%(hr_holidays.hr_leave_view_kanban_approve_department)d"
                        date_start="date_from"
                        date_stop="date_to"
                        string="Days"
@@ -21,27 +22,6 @@
                        display_unavailability="1"
                 >
                     <field name="state" invisible="1"/>
-                    <field name="holiday_status_id" invisible="1"/>
-                    <field name="number_of_days" invisible="1"/>
-                    <field name="manager_id" invisible="1"/>
-                    <templates>
-                        <div t-name="gantt-popover">
-                            <div>
-                                <strong>Name: </strong><t t-out="holiday_status_id[1]"/>: <t t-out="number_of_days"/> days
-                                (<t t-out="date_from.toFormat('MM/dd/yyyy')" /> to <t t-out="date_to.toFormat('MM/dd/yyyy')" />)
-                            </div>
-                            <div><strong>Start: </strong> <t t-out="date_from.toFormat('f')"/></div>
-                            <div><strong>Stop: </strong> <t t-out="date_to.toFormat('f')"/></div>
-                            <footer>
-                                <button name="action_approve_gantt" class="btn btn-secondary btn-sm" string="Approve" type="object"
-                                    t-if="['confirm', 'refuse'].includes(state)"/>
-                                <button name="action_validate" class="btn btn-secondary btn-sm" string="Validate" type="object"
-                                    t-if="state == 'validate1'"/>
-                                <button name="action_refuse" class="btn btn-secondary btn-sm" string="Refuse" type="object"
-                                    t-if="state != 'refuse'"/>
-                            </footer>
-                        </div>
-                    </templates>
                 </gantt>
             </field>
         </record>

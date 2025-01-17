@@ -8,14 +8,6 @@
             <xpath expr="//gantt" position="attributes">
                 <attribute name="color">worksheet_template_id</attribute>
             </xpath>
-            <field name="partner_id" position="before">
-                <field name="worksheet_template_id"/>
-            </field>
-            <xpath expr="//div[@name='project_id']" position="after">
-                <div t-if="worksheet_template_id">
-                    <strong>Worksheet Template — </strong> <t t-out="worksheet_template_id[1]"/>
-                </div>
-            </xpath>
         </field>
     </record>
 
@@ -165,16 +157,6 @@
         </field>
     </record>
 
-    <record id="project_task_gantt_view_groupby_worksheet2" model="ir.ui.view">
-        <field name="name">project.task.gantt.fsm2</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project_task_gantt_view_groupby_worksheet"/>
-        <field name="mode">primary</field>
-        <field name="arch" type="xml">
-            <xpath expr="//div[@name='project_id']" position="replace"/>
-        </field>
-    </record>
-
     <record id="project_task_pivot_view_groupby_worksheet" model="ir.ui.view">
         <field name="name">project.task.pivot.fsm</field>
         <field name="model">project.task</field>
@@ -313,7 +295,7 @@
     <record id="project_task_action_planning_groupby_worksheet2_gantt" model="ir.actions.act_window.view">
         <field name="sequence" eval="5"/>
         <field name="view_mode">gantt</field>
-        <field name="view_id" ref="project_task_gantt_view_groupby_worksheet2"/>
+        <field name="view_id" ref="project_task_gantt_view_groupby_worksheet"/>
         <field name="act_window_id" ref="project_task_action_fsm_planning_groupby_worksheet2"/>
     </record>
 

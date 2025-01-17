@@ -62,8 +62,7 @@
                 <attribute name="progress_bar">resource_id,project_id</attribute>
                 <attribute name="progress">percentage_hours</attribute>
             </gantt>
-            <xpath expr="//field[@name='allocated_percentage']" position="after">
-                <field name="effective_hours"/>
+            <xpath expr="/gantt" position="inside">
                 <field name="percentage_hours" invisible="1"/>
             </xpath>
         </field>

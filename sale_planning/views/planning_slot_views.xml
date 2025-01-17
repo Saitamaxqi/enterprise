@@ -80,14 +80,7 @@
                 <attribute name="progress_bar" separator="," add="sale_line_id"/>
             </xpath>
             <xpath expr="//gantt" position="inside">
-                <field name="sale_line_id" />
                 <field name="sale_line_plannable" invisible="1"/>
-            </xpath>
-            <xpath expr="//div[@id='allocated_hours']" position="after">
-                <div t-if="sale_line_id" id="sale_line">
-                    <strong>Sales Order Item  — </strong>
-                    <t t-esc="sale_line_id[1]"/>
-                </div>
             </xpath>
         </field>
     </record>

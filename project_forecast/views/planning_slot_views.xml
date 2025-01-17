@@ -36,7 +36,7 @@
     </record>
 
     <record id="planning_view_kanban" model="ir.ui.view">
-        <field name="name">planning.slot.form</field>
+        <field name="name">planning.slot.kanban</field>
         <field name="model">planning.slot</field>
         <field name="inherit_id" ref="planning.planning_view_kanban"/>
         <field name="priority">10</field>
