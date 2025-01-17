@@ -142,6 +142,7 @@ class HelpdeskTeam(models.Model):
             team.to_stage_id = stage_ids[0][1] if stage_ids else team.stage_ids and team.stage_ids.ids[-1]
 
     def _compute_alias_email_from(self):
+        # TDE FIXME: probably to remove to become standard
         res = self._notify_get_reply_to()
         for team in self:
             team.alias_email_from = res.get(team.id, False)

@@ -950,13 +950,13 @@ class HelpdeskTicket(models.Model):
             return self.env.ref('helpdesk.mt_ticket_stage')
         return super()._track_subtype(init_values)
 
-    def _notify_get_reply_to(self, default=None):
+    def _notify_get_reply_to(self, default=None, author_id=False):
         """ Override to set alias of tickets to their team if any. """
-        aliases = self.mapped('team_id').sudo()._notify_get_reply_to(default=default)
+        aliases = self.mapped('team_id').sudo()._notify_get_reply_to(default=default, author_id=author_id)
         res = {ticket.id: aliases.get(ticket.team_id.id) for ticket in self}
         leftover = self.filtered(lambda rec: not rec.team_id)
         if leftover:
-            res.update(super(HelpdeskTicket, leftover)._notify_get_reply_to(default=default))
+            res.update(super(HelpdeskTicket, leftover)._notify_get_reply_to(default=default, author_id=author_id))
         return res
 
     # ------------------------------------------------------------

@@ -168,7 +168,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                 self.assertEqual(new_partner_to.name, 'new.customer@test.agrolait.com', 'TDE FIXME: name incorrectly parsed')
 
                 expected_chatter_reply_to = formataddr(
-                    (f'{self.env.company.name} {self.test_team.name}', self.ticket_alias.alias_full_name)
+                    (author.name, self.ticket_alias.alias_full_name)
                 )
 
                 self.assertIn('Please call me as soon as possible', ticket.description)
@@ -247,7 +247,9 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                                 # default recipients: partner_id
                                 'partner_ids': author,
                                 'parent_id': incoming_email,
-                                'reply_to': expected_chatter_reply_to,
+                                'reply_to': formataddr((
+                                    acknowledgement_author.name, self.ticket_alias.alias_full_name,
+                                )),
                                 'subject': f'Test Acknowledge {ticket.name}',
                                 # subtype from '_track_template'
                                 'subtype_id': self.env.ref('mail.mt_note'),
@@ -284,6 +286,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                 external_partners = self.partner_1 + self.partner_2 + new_partner_cc + new_partner_to
                 self.assertEqual(ticket.message_partner_ids, internal_followers + author + external_partners)
 
+                expected_answer_reply_to = formataddr((self.helpdesk_user.name, self.ticket_alias.alias_full_name))
                 self.assertMailNotifications(
                     responsible_answer,
                     [
@@ -304,7 +307,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                                 'parent_id': incoming_email,
                                 # coming from post
                                 'partner_ids': self.env['res.partner'],
-                                'reply_to': expected_chatter_reply_to,
+                                'reply_to': expected_answer_reply_to,
                                 'subject': f'Re: {ticket.name}',
                                 'subtype_id': self.env.ref('mail.mt_comment'),
                             },
@@ -365,7 +368,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                                 # coming from incoming email
                                 'incoming_email_cc': f'"Another Cc" <another.cc@test.agrolait.com>, {self.partner_3.email}',
                                 # To: received email Msg-To - customer who replies + email Reply-To
-                                'incoming_email_to': ', '.join(external_partners.mapped('email_formatted') + [expected_chatter_reply_to]),
+                                'incoming_email_to': ', '.join(external_partners.mapped('email_formatted') + [expected_answer_reply_to]),
                                 'mail_server_id': self.env['ir.mail_server'],
                                 # notified: followers - already emailed, aka internal only
                                 'notified_partner_ids': internal_followers,
