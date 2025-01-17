@@ -7,10 +7,10 @@ from odoo.tests import tagged
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
-class TestPayrollCommon(TransactionCase):
+class TestPayrollAccountCommon(TransactionCase):
 
     def setUp(self):
-        super(TestPayrollCommon, self).setUp()
+        super(TestPayrollAccountCommon, self).setUp()
 
         self.Bank = self.env['res.partner.bank']
         self.Employee = self.env['hr.employee']
@@ -66,6 +66,15 @@ class TestPayrollCommon(TransactionCase):
         })
         self.jethalal_emp.bank_account_id = self.res_bank_1
 
+        self.account_journal = self.env['account.journal'].create({
+            'name' : 'MISC',
+            'code' : 'MSC',
+            'type' : 'general',
+            'company_id': self.company_in.id,
+        })
+
+        self.env.ref('l10n_in_hr_payroll.hr_payroll_structure_in_employee_salary').journal_id = self.account_journal
+
         self.contract_rahul = self.env['hr.contract'].create({
             'date_start': date(2023, 1, 1),
             'date_end':  date(2023, 1, 31),
@@ -74,6 +83,7 @@ class TestPayrollCommon(TransactionCase):
             'employee_id': self.rahul_emp.id,
             'state': 'open',
             'hr_responsible_id': self.employee_fp.id,
+            'structure_type_id': self.env.ref('l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_emp_pay').id,
         })
 
         self.contract_jethalal = self.env['hr.contract'].create({
@@ -84,4 +94,5 @@ class TestPayrollCommon(TransactionCase):
             'employee_id': self.jethalal_emp.id,
             'state': 'open',
             'hr_responsible_id': self.employee_fp.id,
+            'structure_type_id': self.env.ref('l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_emp_pay').id,
         })

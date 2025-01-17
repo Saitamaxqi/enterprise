@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+<data noupdate="1">
     <!-- work entry -->
     <record id="hr_work_entry.work_entry_type_attendance" model="hr.work.entry.type">
         <field name="ucm_code">100</field>
@@ -62,4 +63,5 @@
     <record id="l10n_be_hr_payroll.work_entry_type_unjustified_reason" model="hr.work.entry.type">
         <field name="ucm_code">AI </field>
     </record>
+</data>
 </odoo>

@@ -430,6 +430,8 @@ result = categories['BASIC'] + categories['ALW'] + categories['DED']
             <field name="name">Payroll Rate</field>
             <field name="digits">4</field>
         </record>
+    </data>
+    <data noupdate="1">
 
         <!-- Work Entry Type -->
          <record id="hr_work_entry_contract.work_entry_type_leave" model="hr.work.entry.type">
@@ -471,6 +473,8 @@ result = categories['BASIC'] + categories['ALW'] + categories['DED']
             <field name="round_days">HALF</field>
             <field name="round_days_type">HALF-UP</field>
         </record>
+    </data>
+    <data noupdate="0">
 
         <record id="input_deduction" model="hr.payslip.input.type">
             <field name="name">Deduction</field>

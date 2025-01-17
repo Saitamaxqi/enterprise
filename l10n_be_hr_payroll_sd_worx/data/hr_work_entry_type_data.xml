@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+<data noupdate="1">
     <record id="hr_work_entry.work_entry_type_attendance" model="hr.work.entry.type">
         <field name="sdworx_code">7010</field>
     </record>
@@ -76,5 +77,6 @@
     <record id="l10n_be_hr_payroll.work_entry_type_european" model="hr.work.entry.type">
         <field name="sdworx_code">T040</field>
     </record>
+</data>
 
 </odoo>

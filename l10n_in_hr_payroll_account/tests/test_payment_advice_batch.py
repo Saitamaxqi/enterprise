@@ -4,12 +4,12 @@ from datetime import date
 
 
 from odoo import Command
-from odoo.addons.l10n_in_hr_payroll.tests.common import TestPayrollCommon
+from odoo.addons.l10n_in_hr_payroll_account.tests.common import TestPayrollAccountCommon
 from odoo.tests import tagged
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
-class TestPaymentAdviceBatch(TestPayrollCommon):
+class TestPaymentAdviceBatch(TestPayrollAccountCommon):
     def _prepare_payslip_run(self):
         payslip_run = self.env['hr.payslip.run'].create({
             'date_start': '2023-01-01',
