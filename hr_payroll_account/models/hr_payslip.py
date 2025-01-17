@@ -248,7 +248,8 @@ class HrPayslip(models.Model):
             raise UserError(_("You can only register payment for posted journal entries."))
         return self.move_id.line_ids.action_register_payment(
             ctx={"default_partner_id": self.employee_id.work_contact_id.id,
-                 "default_partner_bank_id": bank_account.id})
+                 "default_partner_bank_id": bank_account.id,
+                 "default_company_id": self.company_id.id})
 
     def action_open_move(self):
         return {

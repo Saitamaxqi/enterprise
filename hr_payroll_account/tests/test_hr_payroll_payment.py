@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.tests import tagged
+from odoo.tests import tagged, Form
 from odoo.exceptions import UserError
 
 from .test_hr_payroll_account import TestHrPayrollAccountCommon
@@ -63,3 +63,75 @@ class TestHrPayrollPayment(TestHrPayrollAccountCommon):
         payment = self.env[action_create_payment['res_model']].browse(action_create_payment['res_id'])
         self.assertAlmostEqual(payment.amount, self.hr_payslip_john.move_id.amount_total, 'Payment amount is not correct!')
         self.assertEqual(payment.partner_bank_id, self.hr_employee_john.bank_account_id)
+
+    def test_hr_payslip_payment_reverse(self):
+        payslip = self.hr_payslip_john
+        asset_cash = self.env['account.account'].search([('code', '=', '101501')], limit=1)
+        salary_account = self.env['account.account'].search([('code', '=', '230000')], limit=1)
+        salary_journal = self.env['account.journal'].search([
+            ('code', '=', 'SLR'),
+            ('company_id', '=', self.env.company.id)],
+            limit=1
+        )
+
+        payslip.compute_sheet()
+        payslip.action_payslip_done()
+
+        self.assertEqual(payslip.state, 'done')
+        self.assertTrue(payslip.move_id)
+
+        payslip.move_id.line_ids.unlink()
+        payslip.move_id.write({
+            'move_type': 'entry',
+            'journal_id': salary_journal.id,
+            'payslip_ids': payslip.ids,
+            'line_ids': [
+                (0, 0, {
+                    'debit': 1200.0,
+                    'credit': 0.0,
+                    'account_id': asset_cash.id,
+                }),
+                (0, 0, {
+                    'debit': 0.0,
+                    'credit': 1200.0,
+                    'account_id': salary_account.id,
+                }),
+            ],
+        })
+
+        payslip.move_id.action_post()
+        action_register_payment = payslip.action_register_payment()
+
+        wizard =  self.env['account.payment.register'].with_context(action_register_payment['context'],
+            hr_payroll_payment_register=True,
+            dont_redirect_to_payments=True,
+        )
+        account_payment = Form(wizard)
+        account_payment.journal_id = self.env['account.journal'].search([
+            ('name', 'ilike', 'bank'),
+            ('company_id', '=', self.env.company.id)],
+            limit=1
+        )
+        acc_payment = account_payment.save()
+        acc_payment.action_create_payments()
+        payment = self.env['account.payment'].search([('invoice_ids', '=', payslip.move_id.id)], limit=1)
+        self.assertTrue(payment)
+        self.assertEqual(payment.currency_id, self.env.company.currency_id)
+
+        reversal = self.env['account.move.reversal'].with_context(active_model="account.move", active_ids= payslip.move_id.ids).create({
+        'journal_id': salary_journal.id,
+        }).refund_moves()
+
+        reversal = self.env['account.move'].browse(reversal['res_id'])
+        self.assertRecordValues(reversal.line_ids, [
+            {
+                'account_id':asset_cash.id,
+                'debit': 0.0,
+                'credit': 1200.0,
+            },
+            {
+                'account_id': salary_account.id,
+                'debit': 1200.0,
+                'credit':0.0,
+            }
+        ])
