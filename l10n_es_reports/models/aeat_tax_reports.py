@@ -1353,7 +1353,12 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
                 for res_line in query_res_lines:
                     if ((res_line['move_type'] in ('in_invoice', 'out_invoice') and move_type == 'invoice') or
                             (res_line['move_type'] in ('in_refund', 'out_refund') and move_type == 'refund')):
-                        result_dict['value'] += 1
+                        if move_type == 'refund':
+                            reversed_move = reversed_moves_dict.get(res_line['reversed_entry_id'])
+                            if reversed_move and reversed_move.invoice_date.strftime('%Y-%m-%d') <= options['date']['date_from']:
+                                result_dict['value'] += 1
+                        else:
+                            result_dict['value'] += 1
 
             result_dict['has_sublines'] = float_compare(result_dict['value'], 0, precision_rounding=2)
 
@@ -1402,7 +1407,7 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
         self._cr.execute(query)
         query_res_lines = self._cr.dictfetchall()
 
-        reversed_entry_ids = [res_line['reversed_entry_id'] for res_line in query_res_lines if res_line['reversed_entry_id']]
+        reversed_entry_ids = {res_line['reversed_entry_id'] for res_line in query_res_lines if res_line['reversed_entry_id']}
         reversed_moves_dict = self.env['account.move'].browse(reversed_entry_ids).grouped('id')
 
         if not current_groupby:

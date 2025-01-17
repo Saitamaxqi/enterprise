@@ -266,9 +266,9 @@ class TestAccountReportsModelo(TestAccountReportsCommon):
         options = self._generate_options(self.report, fields.Date.from_string('2019-04-01'), fields.Date.from_string('2019-04-30'))
 
         invoice = self.env['account.move'].create({
-            'move_type': 'out_refund',
-            'date': fields.Date.from_string('2019-04-05'),
-            'invoice_date': fields.Date.from_string('2019-04-05'),
+            'move_type': 'out_invoice',
+            'date': fields.Date.from_string('2019-03-05'),
+            'invoice_date': fields.Date.from_string('2019-03-05'),
             'partner_id': self.partner_a.id,
             'l10n_es_reports_mod349_invoice_type': 'E',
             'line_ids': [
@@ -283,6 +283,16 @@ class TestAccountReportsModelo(TestAccountReportsCommon):
         })
 
         invoice.action_post()
+
+        credit_note = invoice._reverse_moves()
+
+        credit_note.write({
+            'date': fields.Date.from_string('2019-04-05'),
+            'invoice_date': fields.Date.from_string('2019-04-05'),
+        })
+
+        credit_note.action_post()
+        (invoice.line_ids | credit_note.line_ids).filtered(lambda l: l.display_type == 'payment_term').remove_move_reconcile()
 
         self.assertLinesValues(
             self.report._get_lines(options),
