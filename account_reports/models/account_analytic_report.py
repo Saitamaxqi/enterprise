@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields, api, osv
+from odoo import _, models, fields, api, osv
 from odoo.addons.web.controllers.utils import clean_action
 from odoo.tools import SQL, Query
 
@@ -84,12 +84,13 @@ class AccountReport(models.AbstractModel):
             })
         if analytic_headers:
             has_selected_budgets = any([budget for budget in options.get('budgets', []) if budget['selected']])
-            if has_selected_budgets:
+
+            if has_selected_budgets and not options['selected_horizontal_group_id']:
                 # if budget is selected, then analytic headers are placed on the same header level
                 options['column_headers'][-1] = analytic_headers + options['column_headers'][-1]
             else:
                 # We add the analytic layer to the column_headers before creating the columns
-                analytic_headers.append({'name': ''})
+                analytic_headers.append({'name': _("Total")})
 
                 options['column_headers'] = [
                     *options['column_headers'],

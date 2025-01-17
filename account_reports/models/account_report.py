@@ -782,12 +782,11 @@ class AccountReport(models.Model):
             options['comparison'].update(options['comparison']['periods'][0])
 
     def _init_options_column_percent_comparison(self, options, previous_options):
-        if options['selected_horizontal_group_id'] is None:
-            if self.filter_growth_comparison and len(options['columns']) == 2 and len(options.get('comparison', {}).get('periods', [])) == 1:
-                options['column_percent_comparison'] = 'growth'
+        if self.filter_growth_comparison and len(options['columns']) == 2 and len(options.get('comparison', {}).get('periods', [])) == 1:
+            options['column_percent_comparison'] = 'growth'
 
-            if self.filter_budgets and any(budget['selected'] for budget in options.get('budgets', [])):
-                options['column_percent_comparison'] = 'budget'
+        if self.filter_budgets and any(budget['selected'] for budget in options.get('budgets', [])):
+            options['column_percent_comparison'] = 'budget'
 
     def _get_options_date_domain(self, options, date_scope):
         date_from, date_to = self._get_date_bounds_info(options, date_scope)
@@ -1580,36 +1579,43 @@ class AccountReport(models.Model):
                     for record in records
                 ]
                 column_headers.append(header_level)
-        else:
-            # Insert budget column headers if needed
-            selected_budgets = [budget for budget in options.get('budgets', []) if budget['selected']]
-            if selected_budgets:
-                budget_headers = [{
-                    'name': '',
-                    'forced_options': {
-                        'budget_base': True,
-                    }
-                }]
 
-                for budget in selected_budgets:
-                    # Add budget amount column
+        # Insert budget column headers if needed
+        selected_budgets = [budget for budget in options.get('budgets', []) if budget['selected']]
+        if selected_budgets:
+            budget_headers = [{
+                'name': _("Period Total"),
+                'forced_options': {
+                    'budget_base': True,
+                    'no_subheader_division': True,
+                },
+                'colspan': len(self.column_ids),
+            }]
+
+            for budget in selected_budgets:
+                # Add budget amount column
+                budget_headers.append({
+                    'name': budget['name'],
+                    'forced_options': {
+                        'compute_budget': budget['id'],
+                        'no_subheader_division': True,
+                    },
+                    'colspan': 1,
+                })
+                if len(self.column_ids.filtered(lambda column: column.figure_type == 'monetary')) == 1:
+                    # Add budget percentage column (only if one column in the report)
                     budget_headers.append({
-                        'name': budget['name'],
+                        'name': "%",
                         'forced_options': {
-                            'compute_budget': budget['id'],
+                            'budget_percentage': budget['id'],
+                            'no_subheader_division': True,
                         },
                         'colspan': 1,
                     })
-                    if len(self.column_ids.filtered(lambda column: column.figure_type == 'monetary')) == 1:
-                        # Add budget percentage column (only if one column in the report)
-                        budget_headers.append({
-                            'name': "%",
-                            'forced_options': {
-                                'budget_percentage': budget['id'],
-                            },
-                            'colspan': 1,
-                        })
 
+            if selected_horizontal_group_id:
+                column_headers[1] += budget_headers
+            else:
                 column_headers.append(budget_headers)
 
         options['column_headers'] = column_headers
@@ -1632,21 +1638,45 @@ class AccountReport(models.Model):
                                        and len(options['column_groups']) == 1 \
                                        and len(self.line_ids) > 0 # No debug column on fully dynamic reports by default (they can customize this)
 
-        # Show an additional column summing all the horizontal groups if there is no comparison and only one level of horizontal group
+        selected_budgets = [budget for budget in options.get('budgets', []) if budget['selected']]
+
+        # Show an additional column summing all the horizontal groups if there is no comparison or budget, and only one level of horizontal group
         options['show_horizontal_group_total'] = options.get('selected_horizontal_group_id') \
                                                  and options.get('comparison', {}).get('filter') == 'no_comparison' \
                                                  and len(self.column_ids) == 1 \
-                                                 and len(options['column_headers']) == 2
+                                                 and len(options['column_headers']) == 2 \
+                                                 and not selected_budgets
 
     def _generate_columns_group_vals_recursively(self, next_levels_headers, previous_levels_group_vals):
         if next_levels_headers:
             rslt = []
-            for header_element in next_levels_headers[0]:
-                current_level_group_vals = {}
-                for key in previous_levels_group_vals:
-                    current_level_group_vals[key] = {**previous_levels_group_vals.get(key, {}), **header_element.get(key, {})}
 
+            # Separate headers into those with "no_subheader_division" and those without
+            headers_with_no_subdivision = [
+                header for header in next_levels_headers[0]
+                if 'no_subheader_division' in header.get('forced_options', {})
+            ]
+            valid_next_level_headers = [
+                header for header in next_levels_headers[0]
+                if 'no_subheader_division' not in header.get('forced_options', {})
+            ]
+
+            # Process headers without "no_subheader_division"
+            for header_element in valid_next_level_headers:
+                current_level_group_vals = {
+                    key: {**previous_levels_group_vals.get(key, {}), **header_element.get(key, {})}
+                    for key in previous_levels_group_vals
+                }
                 rslt += self._generate_columns_group_vals_recursively(next_levels_headers[1:], current_level_group_vals)
+
+            # Process headers with "no_subheader_division" as standalone groups
+            for header_element in headers_with_no_subdivision:
+                current_level_group_vals = {
+                    key: {**previous_levels_group_vals.get(key, {}), **header_element.get(key, {})}
+                    for key in previous_levels_group_vals
+                }
+                rslt.append(current_level_group_vals)
+
             return rslt
         else:
             return [previous_levels_group_vals]
@@ -5251,28 +5281,38 @@ class AccountReport(models.Model):
         # Compute the colspan of each header level, aka the number of single columns it contains at the base of the hierarchy
         level_colspan_list = column_headers_render_data['level_colspan'] = []
         for i in range(len(options['column_headers'])):
-            colspan = max(len(columns), 1)
-            for column_header in options['column_headers'][i + 1:]:
+            nb_columns = max(len(columns), 1)
+            colspan = nb_columns
+            budget_col_number = 0
+
+            for level_header in options['column_headers'][i + 1:]:
                 # Separate non-budget and budget headers
-                budget_count = sum(
-                    any(key in header.get('forced_options', {}) for key in ('compute_budget', 'budget_percentage'))
-                    for header in column_header
+                budget_base_count = sum(
+                    [1 for header in level_header if header.get('forced_options', {}).get('budget_base')]
                 )
-                non_budget_count = len(column_header) - budget_count
+                budget_amount_and_percentage_count = sum(
+                    any(key in header.get('forced_options', {}) for key in ('compute_budget', 'budget_percentage'))
+                    for header in level_header
+                )
+                non_budget_count = len(level_header) - budget_base_count - budget_amount_and_percentage_count
 
                 # budget headers (amount and percentage) can only contain a single column each, regardless of the amount of columns in the report.
                 # This implies that we first need to multiply for the 'regular' columns and then add the budget columns.
                 colspan *= non_budget_count
-                colspan += budget_count
+                budget_col_number += (budget_base_count * nb_columns) + budget_amount_and_percentage_count
 
-            level_colspan_list.append(colspan)
+            level_colspan_list.append(colspan + budget_col_number)
 
         # Compute the number of times each header level will have to be repeated, and its colspan to properly handle horizontal groups/comparisons
         column_headers_render_data['level_repetitions'] = []
         for i in range(len(options['column_headers'])):
             colspan = 1
             for column_header in options['column_headers'][:i]:
-                colspan *= len(column_header)
+                valid_headers_length = sum(
+                    1 for item in column_header
+                    if 'no_subheader_division' not in item.get('forced_options', {})
+                )
+                colspan *= valid_headers_length
             column_headers_render_data['level_repetitions'].append(colspan)
 
         # Custom reports have the possibility to define custom subheaders that will be displayed between the generic header and the column names.
@@ -5931,15 +5971,15 @@ class AccountReport(models.Model):
                 # This won't give great result, but it will work.
                 fonts[font_type] = ImageFont.load_default()
 
-        def write_cell(sheet, x, y, value, style, colspan=1, datetime=False):
+        def write_cell(sheet, x, y, value, style, colspan=1, rowspan=1, datetime=False):
             self._set_xlsx_cell_sizes(sheet, fonts, x, y, value, style, colspan > 1)
-            if colspan == 1:
+            if colspan == 1 and rowspan == 1:
                 if datetime:
                     sheet.write_datetime(y, x, value, style)
                 else:
                     sheet.write(y, x, value, style)
             else:
-                sheet.merge_range(y, x, y, x + colspan - 1, value, style)
+                sheet.merge_range(y, x, y + rowspan - 1, x + colspan - 1, value, style)
 
         date_default_col1_style = workbook.add_format({'font_name': 'Lato', 'align': 'left', 'font_size': 12, 'font_color': '#666666', 'indent': 2, 'num_format': 'yyyy-mm-dd'})
         date_default_style = workbook.add_format({'font_name': 'Lato', 'align': 'left', 'font_size': 12, 'font_color': '#666666', 'num_format': 'yyyy-mm-dd'})
@@ -5980,6 +6020,9 @@ class AccountReport(models.Model):
         else:
             sheet.set_column(0, 0, 50)
 
+        # keep tracks of cells merged vertically
+        merged_rowspan_cells = set()
+
         original_x_offset = 1 if len(account_lines_split_names) > 0 else 0
 
         y_offset = 0
@@ -5992,8 +6035,22 @@ class AccountReport(models.Model):
         for header_level_index, header_level in enumerate(options['column_headers']):
             for header_to_render in header_level * column_headers_render_data['level_repetitions'][header_level_index]:
                 colspan = header_to_render.get('colspan', column_headers_render_data['level_colspan'][header_level_index])
-                write_cell(sheet, x_offset, y_offset, header_to_render.get('name', ''), title_style, colspan + (1 if options['show_horizontal_group_total'] and header_level_index == 0 else 0))
+                colspan_with_horizontal_group = colspan + (1 if options['show_horizontal_group_total'] and header_level_index == 0 else 0)
+                rowspan = len(options['column_headers']) - 1 if header_to_render.get('forced_options', {}).get('no_subheader_division') else 1
+
+                while (x_offset, y_offset) in merged_rowspan_cells:
+                    x_offset += 1
+
+                write_cell(sheet, x_offset, y_offset, header_to_render.get('name', ''), title_style, colspan_with_horizontal_group, rowspan=rowspan)
+
+                # tracks cells merged vertically
+                if rowspan > 1:
+                    for row in range(1, rowspan):
+                        for col in range(colspan_with_horizontal_group):
+                            merged_rowspan_cells.add((x_offset + col, y_offset + row))
+
                 x_offset += colspan
+
             if options.get('column_percent_comparison') == 'growth':
                 write_cell(sheet, x_offset, y_offset, '%', title_style)
                 x_offset += 1
@@ -6358,7 +6415,7 @@ class AccountReport(models.Model):
         """
         for col_index, col in enumerate(line['columns']):
             col_group_data = options['column_groups'][col['column_group_key']]
-            if 'budget_percentage' in col_group_data.get('forced_options'):
+            if 'budget_percentage' in col_group_data.get('forced_options', {}):
                 budget_id = col_group_data['forced_options']['budget_percentage']
                 date_key = col_group_data.get('forced_options', {}).get('date')
                 if not date_key:

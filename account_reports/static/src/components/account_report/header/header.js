@@ -44,6 +44,12 @@ export class AccountReportHeader extends Component {
         return colspan;
     }
 
+    columnHeadersRowspan(header) {
+        return header?.forced_options?.no_subheader_division
+            ? this.controller.options.column_headers.length - 1
+            : 1;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
     // Subheaders
     //------------------------------------------------------------------------------------------------------------------

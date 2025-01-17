@@ -550,7 +550,7 @@ class TestBudgetReport(TestAccountReportsCommon):
 
         self.assertEqual(
             [header['name'] for header in options['column_headers'][1]],
-            ['Account A1', 'Account A2', '', 'Budget A', '%', 'Budget B', '%']
+            ['Account A1', 'Account A2', 'Period Total', 'Budget A', '%', 'Budget B', '%']
         )
 
         self.assertLinesValues(
@@ -621,6 +621,99 @@ class TestBudgetReport(TestAccountReportsCommon):
                 (self.account_2.display_name,     200,        '',         0,          0,       '',         0),
                 (self.account_3.display_name,     300,        '',       100,          0,       '',         0),
                 (self.account_4.display_name,       0,        '',        10,          0,       '',         0),
+            ],
+            options,
+        )
+
+    def test_financial_budget_with_horizontal_and_analytic_groupbys(self):
+        """ Ensure that financial budgets are properly computed when combined with horizontal groupby filters and analytic filters """
+
+        budget = self.env['account.report.budget'].create([{'name': "Budget test"}])
+
+        budget._create_or_update_budget_items(
+            value_to_set=1200,  # 100 each month
+            account_id=self.account_1.id,
+            rounding=self.env.company.currency_id.decimal_places,
+            date_from='2025-01-01',
+            date_to='2025-12-31',
+        )
+
+        self.env.user.groups_id += self.env.ref('analytic.group_analytic_accounting')
+        self.report.write({'filter_analytic_groupby': True})
+
+        analytic_plan = self.env['account.analytic.plan'].create([{
+            'name': 'Plan test',
+        }])
+        analytic_account_1 = self.env['account.analytic.account'].create([{
+            'name': 'Account A1',
+            'plan_id': analytic_plan.id
+        }])
+        analytic_account_2 = self.env['account.analytic.account'].create([{
+            'name': 'Account A2',
+            'plan_id': analytic_plan.id
+        }])
+
+        moves_2025 = self._create_moves({self.account_1.id: 150}, '2025-01-01', '2025-12-31', to_post=False)
+        for move_line in moves_2025.line_ids:
+            move_line.partner_id = self.partner_a
+            move_line.analytic_distribution = {str(analytic_account_1.id): 50.0, str(analytic_account_2.id): 25.0}
+
+        moves_2025.action_post()
+
+        move_partner_b = self._create_moves({self.account_1.id: 300}, '2025-01-01', '2025-01-31', to_post=False)
+        move_partner_b.line_ids.partner_id = self.partner_b
+        move_partner_b.action_post()
+
+        horizontal_group = self.env['account.report.horizontal.group'].create([{
+            'name': 'Horizontal Group',
+            'rule_ids': [
+                Command.create({
+                    'field_name': 'partner_id',
+                    'domain': f"[('id', 'in', {(self.partner_a + self.partner_b).ids})]",
+                }),
+            ],
+        }])
+        self.report.horizontal_group_ids |= horizontal_group
+
+        options = self._generate_options(
+            self.report,
+            '2025-01-01',
+            '2025-12-31',
+            default_options={
+                'analytic_accounts_groupby': [analytic_account_1.id, analytic_account_2.id],
+                'selected_horizontal_group_id': horizontal_group.id,
+                'budgets': [{'id': budget.id, 'selected': True}],
+            }
+        )
+
+        self.assertEqual(
+            [
+                [header['name'] for header in header_level]
+                for header_level in options['column_headers']
+            ],
+            [
+                ['2025'],
+                ['partner_a', 'partner_b', 'Period Total', 'Budget test', '%'],
+                ['Account A1', 'Account A2', 'Total'],
+            ]
+        )
+
+        self.assertEqual(
+            self.report._get_column_headers_render_data(options),
+            {'level_colspan': [9, 3, 1], 'level_repetitions': [1, 1, 2], 'custom_subheaders': []}
+        )
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #                                   [                                                2025                                           ]
+            #                                   [           Partner A           ] [         Partner B         ] [ Period Total ] [ Budget ] [ % ]
+            #                                   [   A1   ] [   A2   ] [  Total  ] [  A1  ] [  A2  ] [  Total  ] [              ] [        ] [   ]
+            [0,                                     1,         2,          3,         4,       5,        6,             7,           8,       9],
+            [
+                ('line_domain',                   900,        450,       1800,        0,       0,       300,          2100,         1200,   '175.0%'),
+                (self.account_1.display_name,     900,        450,       1800,        0,       0,       300,          2100,         1200,   '175.0%'),
+                ('line_account_codes',            900,        450,       1800,        0,       0,       300,          2100,         1200,   '175.0%'),
+                (self.account_1.display_name,     900,        450,       1800,        0,       0,       300,          2100,         1200,   '175.0%'),
             ],
             options,
         )

@@ -632,29 +632,10 @@ export class AccountReportFilters extends Component {
         if (horizontalGroupId === this.controller.options.selected_horizontal_group_id) {
             return;
         }
-
-        if (this.isBudgetSelected) {
-            this.notification.add(
-                _t("It's not possible to select a budget with the horizontal group feature."),
-                {
-                    type: "warning",
-                }
-            );
-            return;
-        }
         await this.filterClicked({ optionKey: "selected_horizontal_group_id", optionValue: horizontalGroupId, reload: true});
     }
 
     selectBudget(budget) {
-        if (this.isHorizontalGroupSelected) {
-            this.notification.add(
-                _t("It's not possible to select a horizontal group with the budget feature."),
-                {
-                    type: "warning",
-                }
-            );
-            return;
-        }
         budget.selected = !budget.selected;
         this.applyFilters( 'budgets')
     }

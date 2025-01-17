@@ -21,6 +21,7 @@
                         <th
                             class="column_header"
                             t-att-colspan="this.columnHeadersColspan(columnHeader_index, header)"
+                            t-att-rowspan="this.columnHeadersRowspan(header)"
                         >
                             <t t-out="header.name"/>
                         </th>

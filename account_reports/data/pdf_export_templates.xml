@@ -202,7 +202,12 @@
 
                     <!-- Other columns -->
                     <t t-foreach="column_header * column_headers_render_data['level_repetitions'][column_header_index]" t-as="header">
-                        <th t-att-colspan="header.get('colspan', column_headers_render_data['level_colspan'][column_header_index]) + (1 if options.get('show_horizontal_group_total') and column_header_first else 0)" class="o_overflow_name">
+                        <t t-set="no_subheader_division" t-value="header.get('forced_options', {}).get('no_subheader_division')"/>
+                        <th
+                                t-att-colspan="header.get('colspan', column_headers_render_data['level_colspan'][column_header_index]) + (1 if options.get('show_horizontal_group_total') and column_header_first else 0)"
+                                t-att-rowspan="len(options['column_headers']) - 1 if no_subheader_division else 1"
+                                class="o_overflow_name"
+                        >
                             <t t-out="header.get('name')"/>
                         </th>
                     </t>
