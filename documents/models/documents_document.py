@@ -723,6 +723,22 @@ class DocumentsDocument(models.Model):
             }
         } for document in self]).sudo(False)
 
+    def action_delete_from_history(self, attachment_id):
+        """Delete an attachment from the document's history."""
+        self.ensure_one()
+        attachment = self.env['ir.attachment'].browse(attachment_id)
+
+        if (
+            attachment not in self.previous_attachment_ids
+            and (attachment != self.attachment_id or not self.previous_attachment_ids)
+        ):
+            raise UserError(_('You cannot delete this attachment.'))
+
+        if attachment == self.attachment_id:
+            self.attachment_id = max(self.previous_attachment_ids, key=lambda a: (a.create_date, a.id))
+
+        attachment.unlink()
+
     @api.model
     def _get_shortcuts_copy_fields(self):
         # Note that current simple usage in action_create_shortcut supports scalar and m2o fields.

@@ -1,4 +1,5 @@
 import { Document } from "./document_model";
+import { DocumentsManageVersions } from "@documents/components/documents_manage_versions_panel/documents_manage_versions_panel";
 import { EventBus } from "@odoo/owl";
 import { browser } from "@web/core/browser/browser";
 import { parseSearchQuery, router } from "@web/core/browser/router";
@@ -26,6 +27,7 @@ export class DocumentService {
         this.orm = services["orm"];
         this.action = services["action"];
         this.notification = services["notification"];
+        this.dialog = services["dialog"];
         this.fileUpload = services["file_upload"];
         this.logAccess = debounce(this._logAccess, 1000, false);
         this.currentFolderAccessToken = null;
@@ -180,6 +182,10 @@ export class DocumentService {
                 }
             );
         });
+    }
+
+    async openDialogManageVersions(documentId) {
+        this.dialog.add(DocumentsManageVersions, { documentId });
     }
 
     async goToServerActionsView() {
@@ -373,7 +379,7 @@ export class DocumentService {
 }
 
 export const documentService = {
-    dependencies: ["action", "mail.store", "notification", "orm", "file_upload"],
+    dependencies: ["action", "mail.store", "notification", "orm", "dialog", "file_upload"],
     async start(env, services) {
         const service = new DocumentService(env, services);
         await service.start();

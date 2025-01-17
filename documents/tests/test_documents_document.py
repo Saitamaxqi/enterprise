@@ -54,6 +54,38 @@ class TestCaseDocuments(TransactionCaseDocuments):
         self.assertEqual(shortcut.file_size, self.document_gif.file_size)
         self.assertEqual(shortcut.file_extension, self.document_gif.file_extension)
 
+    def test_documents_action_delete_from_history(self):
+        """Test the `action_delete_from_history` action of documents."""
+        current_attachment = self.document_gif.attachment_id
+
+        # We can not delete the attachment if the history is empty
+        with self.assertRaises(UserError):
+            self.document_gif.action_delete_from_history(current_attachment.id)
+        self.assertTrue(current_attachment.exists())
+
+        new_attachment, other_attachment = self.env['ir.attachment'].create([{'name': 'Test'}] * 2)
+        self.document_gif.previous_attachment_ids = new_attachment
+
+        # We can not delete the attachment if it's not in the history of the document
+        with self.assertRaises(UserError):
+            self.document_gif.action_delete_from_history(other_attachment.id)
+        self.assertTrue(current_attachment.exists())
+        self.assertTrue(new_attachment.exists())
+        self.assertTrue(other_attachment.exists())
+
+        # Delete the history version delete the attachment
+        self.document_gif.action_delete_from_history(new_attachment.id)
+        self.assertFalse(new_attachment.exists(), "The attachment should have been deleted")
+        self.assertTrue(current_attachment.exists())
+
+        # Deleting the current attachment restore the most recent version
+        current_attachment = self.document_gif.attachment_id
+        versions = self.env['ir.attachment'].create([{'name': 'Test'}] * 3)
+        self.document_gif.previous_attachment_ids = versions
+        self.document_gif.action_delete_from_history(current_attachment.id)
+        self.assertFalse(current_attachment.exists())
+        self.assertEqual(self.document_gif.attachment_id.id, max(versions.ids))
+
     def test_documents_create_from_attachment(self):
         """
         Tests a documents.document create method when created from an already existing ir.attachment.

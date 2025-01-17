@@ -39,4 +39,8 @@ patch(DocumentsAction.prototype, {
             shortcut_document_id: record.shortcut_document_id,
         });
     },
+
+    get canManageVersions() {
+        return super.canManageVersions && !this.props.targetRecords[0].data.handler;
+    },
 });

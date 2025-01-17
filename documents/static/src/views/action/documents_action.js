@@ -262,6 +262,28 @@ export class DocumentsAction extends Component {
         return currentFolder?.id !== "TRASH" && this.documentService.isEditable(currentFolder);
     }
 
+    get canManageVersions() {
+        if (this.props.targetRecords.length !== 1) {
+            return false;
+        }
+        const singleSelection = this.props.targetRecords[0];
+        const currentFolder = this.env.searchModel.getSelectedFolder();
+        return (
+            this.documentService.userIsInternal &&
+            singleSelection &&
+            currentFolder?.id !== "TRASH" &&
+            singleSelection.data.type === "binary" &&
+            singleSelection.data.attachment_id
+        );
+    }
+
+    /**
+     * Open the "Version" modal.
+     */
+    async onManageVersions() {
+        await this.documentService.openDialogManageVersions(this.props.targetRecords[0].data.id);
+    }
+
     /**
      * Return the common list of actions for the selected / previewed document folders.
      */
@@ -284,7 +306,7 @@ export class DocumentsAction extends Component {
     get areTargetRecordsDeletable() {
         // Portal user can delete their own documents while internal user can only delete document in the Trash.
         const documents = this.props.targetRecords.map((r) => r.data);
-        if (this.userIsInternal) {
+        if (this.documentService.userIsInternal) {
             return documents.some((d) => !d.active);
         }
         return documents.every(

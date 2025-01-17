@@ -37,6 +37,12 @@
                             <i class="fa fa-fw fa-external-link-square me-1"/>
                             <span class="d-inline-block">Create Shortcut</span>
                         </button>
+                        <button class="o_documents_manage_versions dropdown-item w-100"
+                            t-on-click="() => this.onManageVersions()"
+                            t-if="canManageVersions">
+                            <i class="fa fa-fw fa-history me-1"/>
+                            <span class="d-inline-block">Manage Versions</span>
+                        </button>
                         <button class="dropdown-item w-100"
                             t-on-click="() => this.onSplitPDF()"
                             t-if="userIsInternal and selectionCount and props.targetRecords.every((record) => record.isPdf()) and !isInTrash">
