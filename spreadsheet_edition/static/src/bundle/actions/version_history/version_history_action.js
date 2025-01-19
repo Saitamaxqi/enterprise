@@ -9,7 +9,6 @@ import { UNTITLED_SPREADSHEET_NAME } from "@spreadsheet/helpers/constants";
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { Model, stores } from "@odoo/o-spreadsheet";
 
-import { loadSpreadsheetDependencies } from "@spreadsheet/assets_backend/helpers";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 
 import { SpreadsheetComponent } from "@spreadsheet/actions/spreadsheet_component";
@@ -159,10 +158,7 @@ export class VersionHistoryAction extends Component {
     }
 
     async fetchData() {
-        const [spreadsheetHistoryData] = await Promise.all([
-            this._fetchData(),
-            loadSpreadsheetDependencies(),
-        ]);
+        const spreadsheetHistoryData = await this._fetchData();
         this.spreadsheetData = spreadsheetHistoryData.data;
         this.spreadsheetDataLastDate = spreadsheetHistoryData.initial_date;
         this.state.revisions = spreadsheetHistoryData.revisions;
