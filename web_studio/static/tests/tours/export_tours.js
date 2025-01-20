@@ -36,11 +36,17 @@ registry.category("web_tour.tours").add("can_export_new_module", {
             run: "click",
         },
         {
+            trigger: ".o_form_renderer div:contains(description)",
+        },
+        {
             trigger: ".o_web_studio_leave > a",
             run: "click",
         },
         {
-            trigger: ".o_menu_toggle",
+            trigger: ".o_form_renderer h1 input[placeholder^='Name']",
+        },
+        {
+            trigger: ".o_menu_toggle:contains(my new app)",
             run: "click",
         },
         {
