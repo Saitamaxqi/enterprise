@@ -130,6 +130,8 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Accounts receivable</AccountDescription>
                                 <StandardAccountID>1500</StandardAccountID>
+                                <GroupingCategory>RF-1167</GroupingCategory>
+                                <GroupingCode>1500</GroupingCode>
                                 <AccountType>GL</AccountType>
                                 <OpeningDebitBalance>0.00</OpeningDebitBalance>
                                 <ClosingDebitBalance>2500.00</ClosingDebitBalance>
@@ -138,6 +140,8 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Retained result</AccountDescription>
                                 <StandardAccountID>2099</StandardAccountID>
+                                <GroupingCategory>RF-1167</GroupingCategory>
+                                <GroupingCode>2099</GroupingCode>
                                 <AccountType>GL</AccountType>
                                 <OpeningDebitBalance>8000.00</OpeningDebitBalance>
                                 <ClosingDebitBalance>0.00</ClosingDebitBalance>
@@ -146,6 +150,8 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Trade creditors (copy)</AccountDescription>
                                 <StandardAccountID>2401</StandardAccountID>
+                                <GroupingCategory>RF-1167</GroupingCategory>
+                                <GroupingCode>2401</GroupingCode>
                                 <AccountType>GL</AccountType>
                                 <OpeningCreditBalance>10000.00</OpeningCreditBalance>
                                 <ClosingCreditBalance>10000.00</ClosingCreditBalance>
@@ -154,6 +160,8 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Output VAT, high rate</AccountDescription>
                                 <StandardAccountID>2700</StandardAccountID>
+                                <GroupingCategory>RF-1167</GroupingCategory>
+                                <GroupingCode>2700</GroupingCode>
                                 <AccountType>GL</AccountType>
                                 <OpeningDebitBalance>0.00</OpeningDebitBalance>
                                 <ClosingCreditBalance>500.00</ClosingCreditBalance>
@@ -162,6 +170,8 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Input VAT, high rate</AccountDescription>
                                 <StandardAccountID>2710</StandardAccountID>
+                                <GroupingCategory>RF-1167</GroupingCategory>
+                                <GroupingCode>2710</GroupingCode>
                                 <AccountType>GL</AccountType>
                                 <OpeningDebitBalance>2000.00</OpeningDebitBalance>
                                 <ClosingDebitBalance>2000.00</ClosingDebitBalance>
@@ -170,6 +180,8 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                 <AccountID>___ignore___</AccountID>
                                 <AccountDescription>Sales revenue, merchandise, subject to VAT, high rate</AccountDescription>
                                 <StandardAccountID>3000</StandardAccountID>
+                                <GroupingCategory>RF-1167</GroupingCategory>
+                                <GroupingCode>3000</GroupingCode>
                                 <AccountType>GL</AccountType>
                                 <OpeningDebitBalance>0.00</OpeningDebitBalance>
                                 <ClosingCreditBalance>2000.00</ClosingCreditBalance>
