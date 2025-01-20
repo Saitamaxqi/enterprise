@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component, onWillStart, useState } from "@odoo/owl";
 import { browser } from "@web/core/browser/browser";
 import { serializeDate } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
@@ -22,6 +22,14 @@ export class DocumentsAction extends Component {
         this.documentService = useService("document.document");
         this.notificationService = useService("notification");
         this.orm = useService("orm");
+
+        this.documentsState = useState({
+            viewType: false,
+        });
+
+        onWillStart(async () => {
+            this.canExport = await user.hasGroup("base.group_allow_export");
+        });
     }
 
     /**
@@ -326,5 +334,21 @@ export class DocumentsAction extends Component {
         this.documentService.reload();
         // The preview will be closed, just update the state for now
         this.documentService.setPreviewedDocument(null);
+    }
+
+    /**
+     * The control panel is loaded before the view, and so it's needed in order to
+     * show / hide the button when we switch the view.
+     */
+    async onDropdownOpen() {
+        const currentController = this.action.currentController;
+        this.documentsState.viewType = currentController.state.view_type;
+    }
+
+    /**
+     * Export the selection, only available in list view (like for all models in Odoo).
+     */
+    onExport() {
+        this.env.documentsView.bus.trigger("documents-export-selection");
     }
 }

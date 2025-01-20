@@ -8,6 +8,14 @@
                 <t t-call="spreadsheet_edition.SpreadsheetIcon"/> Freeze and share
             </button>
         </xpath>
+        <xpath expr="//*[hasclass('o_documents_export')]" position="after">
+            <button class="dropdown-item w-100"
+                t-if="userIsInternal and this.documentsState.viewType === 'list'"
+                t-on-click="() => this.onInsertInSpreadsheet()">
+                <i class="oi oi-view-list fa-fw me-1"/>
+                <span class="d-inline-block">Insert in spreadsheet</span>
+            </button>
+        </xpath>
         <xpath expr="//*[hasclass('o_documents_download_button')]" position="attributes">
             <attribute name="t-if">
                 props.targetRecords.some((r) => this.hasDocumentAttachment(r) and r.data.handler !== "spreadsheet")

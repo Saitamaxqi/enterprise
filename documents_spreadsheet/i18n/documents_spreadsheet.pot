@@ -237,6 +237,12 @@ msgid "ID"
 msgstr ""
 
 #. module: documents_spreadsheet
+#. odoo-javascript
+#: code:addons/documents_spreadsheet/static/src/documents_control_panel/documents_control_panel.xml:0
+msgid "Insert in spreadsheet"
+msgstr ""
+
+#. module: documents_spreadsheet
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_save_spreadsheet_template__write_uid
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_spreadsheet_contributor__write_uid
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_spreadsheet_template__write_uid

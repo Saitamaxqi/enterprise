@@ -43,4 +43,8 @@ patch(DocumentsAction.prototype, {
     get canManageVersions() {
         return super.canManageVersions && !this.props.targetRecords[0].data.handler;
     },
+
+    onInsertInSpreadsheet() {
+        this.env.bus.trigger("insert-list-spreadsheet");
+    },
 });
