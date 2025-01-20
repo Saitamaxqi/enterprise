@@ -128,7 +128,7 @@ class ProjectTask(models.Model):
         tu1_alias = planning_overlap_query.join(ProjectTask._table, 'id', 'project_task_user_rel', 'task_id', 'TU1')
         task2_alias = planning_overlap_query.make_alias(ProjectTask._table, 'T2')
         task2_query = Query(ProjectTask.env, task2_alias, ProjectTask._table_sql)
-        task2_query.add_where(domain._to_sql(ProjectTask, task2_alias, task2_query))
+        task2_query.add_where(domain._optimize_for_sql(ProjectTask)._to_sql(ProjectTask, task2_alias, task2_query))
 
         # add additional condition to join with the main query
         task2_query.add_where(
