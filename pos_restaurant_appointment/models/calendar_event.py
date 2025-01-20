@@ -58,7 +58,6 @@ class CalendarEvent(models.Model):
             }))
 
     def action_open_booking_gantt_view(self):
-        appointment_type_id = self.appointment_resource_ids[0].appointment_type_ids[0].id if self.appointment_resource_ids else self.id
         return {
             'name': 'Manage Bookings',
             'type': 'ir.actions.act_window',
@@ -69,7 +68,7 @@ class CalendarEvent(models.Model):
                 'appointment_booking_gantt_show_all_resources': True,
                 'active_model': 'appointment.type',
                 'default_partner_ids': [],
-                "search_default_appointment_type_id": appointment_type_id,
+                "search_default_appointment_type_id": self._context.get("appointment_type_id"),
                 "no_breadcrumbs": True,
             }
         }
