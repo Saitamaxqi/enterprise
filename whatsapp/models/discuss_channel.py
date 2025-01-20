@@ -93,7 +93,7 @@ class DiscussChannel(models.Model):
 
     def _notify_thread(self, message, msg_vals=False, **kwargs):
         parent_msg_id = kwargs.pop('parent_msg_id') if 'parent_msg_id' in kwargs else False
-        recipients_data = super()._notify_thread(message, msg_vals=msg_vals, **kwargs)
+        # WhatsApp msg must exist before notify to ensure it's included in notifications.
         if kwargs.get('whatsapp_inbound_msg_uid') and self.channel_type == 'whatsapp':
             self.env['whatsapp.message'].create({
                 'mail_message_id': message.id,
@@ -106,7 +106,7 @@ class DiscussChannel(models.Model):
             })
             if parent_msg_id:
                 self.env['whatsapp.message'].browse(parent_msg_id).state = 'replied'
-        return recipients_data
+        return super()._notify_thread(message, msg_vals=msg_vals, **kwargs)
 
     def message_post(self, *args, body='', attachment_ids=None, message_type='notification', parent_id=False, **kwargs):
         valid_parent_id = False

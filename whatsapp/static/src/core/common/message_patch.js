@@ -1,4 +1,5 @@
 import { Message } from "@mail/core/common/message";
+import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
 
 patch(Message.prototype, {
@@ -23,5 +24,38 @@ patch(Message.prototype, {
             return;
         }
         super.onClick(ev);
+    },
+
+    getWhatsappStatusClass() {
+        const statusClasses = {
+            outgoing: "text-warning",
+            sent: "text-success",
+            delivered: "text-success",
+            read: "text-success",
+            replied: "text-success",
+            received: "text-success",
+            error: "text-danger",
+            bounced: "text-danger",
+            cancel: "text-danger",
+        };
+        return statusClasses[this.message.whatsappStatus] || "text-muted";
+    },
+
+    getWhatsappStatusTitle() {
+        const statusTitles = {
+            outgoing: _t("The message is being processed."),
+            sent: _t("The message has been sent."),
+            delivered: _t("The message has been successfully delivered."),
+            read: _t("The message has been read by the recipient."),
+            replied: _t("The recipient has replied to the message."),
+            received: _t("The message has been successfully received."),
+            error: _t("There was an issue sending this message."),
+            bounced: _t("The message has been bounced."),
+            cancel: _t("The message has been canceled."),
+        };
+        return (
+            statusTitles[this.message.whatsappStatus] ||
+            _t("The status of this message is currently unknown.")
+        );
     },
 });
