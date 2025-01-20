@@ -15,7 +15,7 @@ class HrAppraisal(models.Model):
     @api.depends('survey_ids', 'survey_ids.user_input_ids.state')
     def _compute_completed_survey_count(self):
         grouped_data = self.env['survey.user_input']._read_group(
-            domain=[('state', '=', 'done'), ('appraisal_id', 'in', self.ids)],
+            domain=[('state', '=', '3_done'), ('appraisal_id', 'in', self.ids)],
             groupby=['appraisal_id'],
             aggregates=['__count'])
         mapped_data = dict(grouped_data)

@@ -9,7 +9,7 @@ export class AppraisalRemainingDays extends RemainingDaysField {
     get diffDays() {
         const result = super.diffDays;
         const state = this.props.record.data.state;
-        if (result != null && ['done', 'cancel'].includes(state)) {
+        if (result != null && state == '3_done') {
             // force the date's color to be grey
             return 1;
         }

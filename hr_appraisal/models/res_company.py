@@ -58,7 +58,7 @@ class ResCompany(models.Model):
             'employee_id': employee.id,
             'date_close': employee.next_appraisal_date + relativedelta(days=days),
             'manager_ids': employee.parent_id,
-            'state': 'pending',
+            'state': '2_pending',
             'employee_feedback_published': False,
             'manager_feedback_published': False,
         } for employee in employees]

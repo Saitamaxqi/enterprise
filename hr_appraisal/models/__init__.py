@@ -2,7 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from . import res_company
-from . import calendar_event
 from . import hr_appraisal
 from . import hr_appraisal_goal
 from . import hr_appraisal_note

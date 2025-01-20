@@ -33,7 +33,7 @@ class TestHrAppraisalFeedback(TransactionCase):
         self.appraisal = self.env['hr.appraisal'].create({
             'employee_id': self.test_employee.id,
             'manager_ids': [self.manager.id],
-            'state': 'pending',
+            'state': '2_pending',
         })
 
         self.appraisal_survey = self.env['survey.survey'].create({

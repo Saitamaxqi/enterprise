@@ -28,8 +28,8 @@ class HrEmployeeBase(models.AbstractModel):
     def action_open_last_appraisal(self):
         self.ensure_one()
         employee_appraisals = self.with_context(active_test=False).appraisal_ids
-        opened_appraisals = employee_appraisals.filtered(lambda a: a.state in ['new', 'pending'])
-        done_appraisals = employee_appraisals.filtered(lambda a: a.state == 'done')
+        opened_appraisals = employee_appraisals.filtered(lambda a: a.state in ['1_new', '2_pending'])
+        done_appraisals = employee_appraisals.filtered(lambda a: a.state == '3_done')
         relevant_appraisals = employee_appraisals
         if opened_appraisals:
             relevant_appraisals = opened_appraisals

@@ -70,7 +70,7 @@ class HrAppraisalSkillReport(models.BaseModel):
             JOIN hr_skill_type st ON st.id = s.skill_type_id
             WHERE a.id = (
                 SELECT a2.id FROM hr_appraisal a2
-                WHERE a2.employee_id = e.id AND e.active IS TRUE AND a2.state = 'done'
+                WHERE a2.employee_id = e.id AND e.active IS TRUE AND a2.state = '3_done'
                 ORDER BY a2.create_date desc limit 1
             ) and st.active IS True
         )

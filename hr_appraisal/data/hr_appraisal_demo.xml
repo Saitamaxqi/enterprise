@@ -32,25 +32,17 @@
 
         <record id="hr_appraisal_1" model="hr.appraisal">
             <field name="employee_id" ref="hr.employee_qdp"/>
-            <field name="state">new</field>
+            <field name="state">1_new</field>
             <field name="date_close" eval="(DateTime.now() + relativedelta(months=1)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
         </record>
-
-        <record id="hr_appraisal_2" model="hr.appraisal">
-            <field name="employee_id" ref="hr.employee_qdp"/>
-            <field name="state">new</field>
-            <field name="date_close" eval="(DateTime.now() + relativedelta(months=-1)).strftime('%Y-%m-%d')"/>
-            <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
-        </record>
-        <function model="hr.appraisal" name="action_cancel" eval="[ref('hr_appraisal.hr_appraisal_2')]"/>
 
         <record id="note_good" model="hr.appraisal.note">
             <field name="name">Good</field>
         </record>
         <record id="hr_appraisal_3" model="hr.appraisal">
             <field name="employee_id" ref="hr.employee_qdp"/>
-            <field name="state">new</field>
+            <field name="state">1_new</field>
             <field name="date_close" eval="(DateTime.now() + relativedelta(months=-12)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
             <field name="manager_feedback_published" eval="True"/>
@@ -64,7 +56,7 @@
 
         <record id="hr_appraisal_4" model="hr.appraisal">
             <field name="employee_id" ref="hr.employee_al"/>
-            <field name="state">new</field>
+            <field name="state">1_new</field>
             <field name="date_close" eval="(DateTime.now() + relativedelta(months=2)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
             <field name="assessment_note" ref="note_good"/>
@@ -74,7 +66,7 @@
 
         <record id="hr_appraisal_4bis" model="hr.appraisal">
             <field name="employee_id" ref="hr.employee_al"/>
-            <field name="state">new</field>
+            <field name="state">1_new</field>
             <field name="date_close" eval="(DateTime.now() + relativedelta(months=1)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]" />
             <field name="manager_feedback_published" eval="True"/>
@@ -413,55 +405,43 @@
 
         <record id="hr_appraisal_5" model="hr.appraisal">
             <field name="employee_id" ref="hr.employee_mit"/>
-            <field name="state">new</field>
+            <field name="state">1_new</field>
             <field name="date_close" eval="(DateTime.now() + relativedelta(months=3)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
         </record>
 
         <record id="hr_appraisal_6" model="hr.appraisal">
             <field name="employee_id" ref="hr.employee_niv"/>
-            <field name="state">new</field>
+            <field name="state">1_new</field>
             <field name="date_close" eval="(DateTime.now() + relativedelta(months=4)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
         </record>
 
         <record id="hr_appraisal_7" model="hr.appraisal">
             <field name="employee_id" ref="hr.employee_stw"/>
-            <field name="state">new</field>
+            <field name="state">1_new</field>
             <field name="date_close" eval="(DateTime.now() + relativedelta(months=5)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
         </record>
 
         <record id="hr_appraisal_8" model="hr.appraisal">
             <field name="employee_id" ref="hr.employee_chs"/>
-            <field name="state">new</field>
+            <field name="state">1_new</field>
             <field name="date_close" eval="(DateTime.now() + relativedelta(months=6)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
         </record>
         <function model="hr.appraisal" name="action_confirm" eval="[ref('hr_appraisal.hr_appraisal_8')]"/>
 
-        <record id="calendar_event_appraisal_8" model="calendar.event">
-            <field name="active" eval="True"/>
-            <field name="user_id" ref="base.user_admin"/>
-            <field name="name">Appraisal of Jennie Fletcher</field>
-            <field name="partner_ids" eval="[(6,0,[ref('hr.work_contact_chs'), ref('base.partner_admin')])]"/>
-            <field name="start" eval="DateTime.now().strftime('%Y-%m-%d 12:00:%S')"/>
-            <field name="stop" eval="DateTime.now().strftime('%Y-%m-%d 13:00:%S')"/>
-            <field name="res_model_id" ref="hr_appraisal.model_hr_appraisal"/>
-            <field name="res_model">hr.appraisal</field>
-            <field name="res_id" ref="hr_appraisal_8"/>
-        </record>
-
         <record id="hr_appraisal_9" model="hr.appraisal">
             <field name="employee_id" ref="hr.employee_fme"/>
-            <field name="state">new</field>
+            <field name="state">1_new</field>
             <field name="date_close" eval="(DateTime.now() + relativedelta(months=7)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
         </record>
 
         <record id="hr_appraisal_10" model="hr.appraisal">
             <field name="employee_id" ref="hr.employee_fpi"/>
-            <field name="state">new</field>
+            <field name="state">1_new</field>
             <field name="date_close" eval="(DateTime.now() + relativedelta(months=11)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
         </record>

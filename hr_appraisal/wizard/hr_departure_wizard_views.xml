@@ -12,7 +12,7 @@
                 <attribute name="invisible">0</attribute>
             </xpath>
             <xpath expr="//div[@id='activities']" position="inside">
-                <div><field colspan="1" name="cancel_appraisal"/><label colspan="1" for="cancel_appraisal" string="Appraisals"/></div>
+                <div><field colspan="1" name="delete_appraisal"/><label colspan="1" for="delete_appraisal" string="Appraisals"/></div>
             </xpath>
         </field>
     </record>

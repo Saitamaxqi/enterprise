@@ -15,7 +15,7 @@
         <record id="hr_appraisal_0" model="hr.appraisal" forcecreate="1">
             <field name="active">True</field>
             <field name="employee_id" ref="hr.employee_sj"/>
-            <field name="state">pending</field>
+            <field name="state">2_pending</field>
             <field name="date_close" eval="(datetime.now()+relativedelta(months=1)).strftime('%Y-%m-1')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_mw'))]"/>
             <field name="employee_feedback" type="html">
@@ -317,7 +317,7 @@
         <record id="hr_appraisal_1" model="hr.appraisal" forcecreate="1">
             <field name="active">True</field>
             <field name="employee_id" ref="hr.employee_eg"/>
-            <field name="state">pending</field>
+            <field name="state">2_pending</field>
             <field name="date_close" eval="(datetime.now()+relativedelta(months=1)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[Command.set([ref('hr.employee_mw'), ref('hr.employee_sj')])]"/>
             <field name="employee_feedback_published">False</field>
@@ -490,7 +490,7 @@
         <record id="hr_appraisal_2" model="hr.appraisal" forcecreate="1">
             <field name="active">True</field>
             <field name="employee_id" ref="hr.employee_eg"/>
-            <field name="state">done</field>
+            <field name="state">3_done</field>
             <field name="assessment_note" ref="hr_appraisal.note_good"/>
             <field name="date_close" eval="(datetime.now()+relativedelta(months=-3)).strftime('%Y-%m-1')"/>
             <field name="manager_ids" eval="[Command.set([ref('hr.employee_mw')])]"/>

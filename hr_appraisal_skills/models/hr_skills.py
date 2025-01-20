@@ -7,14 +7,14 @@ from odoo import api, fields, models
 class HrAppraisal(models.Model):
     _inherit = 'hr.appraisal'
 
-    skill_ids = fields.One2many('hr.appraisal.skill', 'appraisal_id', string="Skills", domain=['|', ('skill_type_id.active', '=', True), ('appraisal_id.state', '=', 'done')])
+    skill_ids = fields.One2many('hr.appraisal.skill', 'appraisal_id', string="Skills", domain=['|', ('skill_type_id.active', '=', True), ('appraisal_id.state', '=', '3_done')])
 
     def write(self, vals):
-        if 'state' in vals and vals['state'] == 'pending':
-            new_appraisals = self.filtered(lambda a: a.state == 'new')
+        if 'state' in vals and vals['state'] == '2_pending':
+            new_appraisals = self.filtered(lambda a: a.state == '1_new')
             new_appraisals._copy_skills_when_confirmed()
 
-        if 'state' in vals and (vals['state'] == 'done'):
+        if 'state' in vals and (vals['state'] == '3_done'):
             for appraisal in self:
                 employee_skills = appraisal.employee_id.employee_skill_ids
                 appraisal_skills = appraisal.skill_ids

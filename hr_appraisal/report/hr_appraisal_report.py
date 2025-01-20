@@ -7,7 +7,6 @@ from odoo.addons.hr_appraisal.models.hr_appraisal import HrAppraisal
 
 COLORS_BY_STATE = {
     'new': 0,
-    'cancel': 1,
     'pending': 2,
     'done': 3,
 }
@@ -29,7 +28,6 @@ class HrAppraisalReport(models.Model):
         ('new', 'To Start'),
         ('pending', 'Appraisal Sent'),
         ('done', 'Done'),
-        ('cancel', "Cancelled"),
     ], 'Status', readonly=True)
     color = fields.Integer(compute='_compute_color')
 

@@ -56,7 +56,7 @@ class TestHrAppraisalFeedbackController(HttpCase):
         cls.appraisal = cls.env['hr.appraisal'].create({
             'employee_id': cls.user_employee.id,
             'manager_ids': [cls.manager.id],
-            'state': 'pending',
+            'state': '2_pending',
         })
 
         cls.appraisal_survey = cls.env['survey.survey'].create({

@@ -9,14 +9,14 @@
                 <field name="employee_feedback_ids" invisible="1"/>
             </field>
             <button name="action_done" position="replace">
-                <button name="action_done" string="Mark as Done" type="object" invisible="state != 'pending' or employee_feedback_ids or 'uid' not in manager_user_ids and not is_manager" data-hotkey="v"/>
-                <button name="action_done" class="oe_highlight" string="Mark as Done" type="object" invisible="state != 'pending' or not employee_feedback_ids or 'uid' not in manager_user_ids and not is_manager" data-hotkey="v"/>
+                <button name="action_done" string="Mark as Done" type="object" invisible="state != '2_pending' or employee_feedback_ids or 'uid' not in manager_user_ids and not is_manager" data-hotkey="v"/>
+                <button name="action_done" class="oe_highlight" string="Mark as Done" type="object" invisible="state != '2_pending' or not employee_feedback_ids or 'uid' not in manager_user_ids and not is_manager" data-hotkey="v"/>
             </button>
-            <xpath expr="//button[@name='action_cancel']" position="before">
-                <button name="action_ask_feedback" data-hotkey="a" string="Ask Feedback" invisible="state != 'pending' or not employee_feedback_ids" type="object"/>
+            <xpath expr="//button[@name='action_done' and hasclass('oe_highlight')]" position="after">
+                <button name="action_ask_feedback" data-hotkey="a" string="Ask Feedback" invisible="state != '2_pending' or not employee_feedback_ids" type="object"/>
             </xpath>
             <xpath expr="//button[@name='action_done']" position="before">
-                <button name="action_ask_feedback" class="oe_highlight" data-hotkey="a" string="Ask Feedback" invisible="state != 'pending' or employee_feedback_ids" type="object"/>
+                <button name="action_ask_feedback" class="oe_highlight" data-hotkey="a" string="Ask Feedback" invisible="state != '2_pending' or employee_feedback_ids" type="object"/>
             </xpath>
             <xpath expr="//button[@name='action_open_goals']" position="before">
                 <button class="oe_stat_button" name="action_open_survey_inputs" icon="fa-pencil-square-o" type="object" invisible="not employee_feedback_ids or 'uid' not in manager_user_ids and not is_manager">

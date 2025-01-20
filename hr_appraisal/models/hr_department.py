@@ -15,7 +15,7 @@ class HrDepartment(models.Model):
 
     def _compute_appraisals_to_process(self):
         appraisals = self.env['hr.appraisal']._read_group(
-            [('department_id', 'in', self.ids), ('state', 'in', ['new', 'pending'])], ['department_id'], ['__count'])
+            [('department_id', 'in', self.ids), ('state', 'in', ['1_new', '2_pending'])], ['department_id'], ['__count'])
         result = {department.id: count for department, count in appraisals}
         for department in self:
             department.appraisals_to_process_count = result.get(department.id, 0)

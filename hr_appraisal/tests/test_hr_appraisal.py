@@ -78,24 +78,11 @@ class TestHrAppraisal(TransactionCase):
             appraisals.action_confirm()
 
             # I check that state is "Appraisal Sent".
-            self.assertEqual(appraisals.state, 'pending', "appraisal should be 'Appraisal Sent' state")
-            # I check that "Final Interview Date" is set or not.
-            self.env['calendar.event'].create({
-                "name": "Appraisal Meeting",
-                "start": datetime.now() + relativedelta(months=1),
-                "stop": datetime.now() + relativedelta(months=1, hours=2),
-                "duration": 2,
-                "allday": False,
-                'res_id': appraisals.id,
-                'res_model_id': self.env.ref('hr_appraisal.model_hr_appraisal').id
-            })
-            self.assertTrue(appraisals.date_final_interview, "Interview Date is not created")
-            # I check whether final interview meeting is created or not
-            self.assertTrue(appraisals.meeting_ids, "Meeting is not linked")
+            self.assertEqual(appraisals.state, '2_pending', "appraisal should be 'Appraisal Sent' state")
             # I close this Apprisal
             appraisals.action_done()
             # I check that state of Appraisal is done.
-            self.assertEqual(appraisals.state, 'done', "Appraisal should be in done state")
+            self.assertEqual(appraisals.state, '3_done', "Appraisal should be in done state")
 
     def test_01_appraisal_next_appraisal_date(self):
         """
@@ -117,7 +104,7 @@ class TestHrAppraisal(TransactionCase):
         self.HrAppraisal.create({
             'employee_id': self.hr_employee.id,
             'date_close': date.today() + relativedelta(months=1),
-            'state': 'new'
+            'state': '1_new'
         })
         self.assertEqual(self.hr_employee.next_appraisal_date, False, 'There is an ongoing appraisal for an employee, next_appraisal_date should be empty.')
 
@@ -192,7 +179,7 @@ class TestHrAppraisal(TransactionCase):
         self.HrAppraisal.create({
             'employee_id': self.hr_employee.id,
             'date_close': date.today() - relativedelta(months=self.duration_first_appraisal, days=10),
-            'state': 'done'
+            'state': '3_done'
         })
 
         self.env['res.company']._run_employee_appraisal_plans()
@@ -213,16 +200,16 @@ class TestHrAppraisal(TransactionCase):
         self.HrAppraisal.create({
             'employee_id': self.hr_employee.id,
             'date_close': date.today() - relativedelta(months=self.duration_first_appraisal + 2, days=10),
-            'state': 'done'
+            'state': '3_done'
         })
         self.HrAppraisal.create({
             'employee_id': self.hr_employee.id,
             'date_close': date.today() - relativedelta(months=2, days=10),
-            'state': 'done'
+            'state': '3_done'
         })
 
         self.env['res.company']._run_employee_appraisal_plans()
-        appraisals = self.HrAppraisal.search([('employee_id', '=', self.hr_employee.id), ('state', '=', 'new')])
+        appraisals = self.HrAppraisal.search([('employee_id', '=', self.hr_employee.id), ('state', '=', '1_new')])
         self.assertFalse(appraisals, "Appraisal created")
 
     def test_12_check_recurring_appraisal(self):
@@ -236,12 +223,12 @@ class TestHrAppraisal(TransactionCase):
         self.HrAppraisal.create({
             'employee_id': self.hr_employee.id,
             'date_close': date.today() - relativedelta(months=self.duration_first_appraisal + self.duration_next_appraisal, days=10),
-            'state': 'done'
+            'state': '3_done'
         })
         self.HrAppraisal.create({
             'employee_id': self.hr_employee.id,
             'date_close': date.today() - relativedelta(months=self.duration_next_appraisal, days=10),
-            'state': 'done'
+            'state': '3_done'
         })
 
         self.env['res.company']._run_employee_appraisal_plans()

@@ -43,7 +43,7 @@ class HrEmployee(models.Model):
 
     @api.depends('appraisal_ids.state')
     def _compute_ongoing_appraisal_count(self):
-        read_group_result = self.env['hr.appraisal'].with_context(active_test=False)._read_group([('employee_id', 'in', self.ids), ('state', 'in', ['new', 'pending'])], ['employee_id'], ['__count'])
+        read_group_result = self.env['hr.appraisal'].with_context(active_test=False)._read_group([('employee_id', 'in', self.ids), ('state', 'in', ['1_new', '2_pending'])], ['employee_id'], ['__count'])
         result = {employee.id: count for employee, count in read_group_result}
         for employee in self:
             employee.ongoing_appraisal_count = result.get(employee.id, 0)

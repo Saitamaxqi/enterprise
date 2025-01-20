@@ -18,7 +18,7 @@ class HrAppraisal(models.Model):
     _name = 'hr.appraisal'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Employee Appraisal"
-    _order = 'state desc, date_close, id desc'
+    _order = 'state, date_close, id desc'
     _rec_name = 'employee_id'
     _mail_post_access = 'read'
 
@@ -59,20 +59,16 @@ class HrAppraisal(models.Model):
     previous_appraisal_date = fields.Date(
         string='Previous Appraisal Date', help='Closing date of the previous appraisal', compute="_compute_previous_appraisal_date", compute_sudo=True)
     state = fields.Selection(
-        [('new', 'To Confirm'),
-         ('pending', 'Confirmed'),
-         ('done', 'Done'),
-         ('cancel', "Cancelled")],
+        [('1_new', 'To Confirm'),
+         ('2_pending', 'Confirmed'),
+         ('3_done', 'Done')],
         string='Status', tracking=True, required=True, copy=False,
-        default='new', index=True, group_expand=True)
+        default='1_new', index=True, group_expand=True)
     manager_ids = fields.Many2many(
         'hr.employee', 'appraisal_manager_rel', 'hr_appraisal_id',
         context={'active_test': False},
         domain="[('id', '!=', employee_id), ('active', '=', 'True'), '|', ('company_id', '=', False), ('company_id', 'in', allowed_company_ids)]")
     manager_user_ids = fields.Many2many('res.users', string="Manager Users", compute='_compute_user_manager_rights')
-    meeting_ids = fields.Many2many('calendar.event', string='Meetings')
-    meeting_count_display = fields.Char(string='Meeting Count', compute='_compute_meeting_count')
-    date_final_interview = fields.Date(string="Final Interview", compute='_compute_final_interview')
     is_manager = fields.Boolean(compute='_compute_user_manager_rights')
     employee_autocomplete_ids = fields.Many2many('hr.employee', compute='_compute_user_manager_rights')
     waiting_feedback = fields.Boolean(
@@ -101,13 +97,13 @@ class HrAppraisal(models.Model):
         and for performance reasons it should rather stay that way.
         """
         ongoing_appraisals = self.search([
-            ('state', 'in', ['new', 'pending']),
+            ('state', 'in', ['1_new', '2_pending']),
             ('employee_id', 'in', self.employee_id.ids),
             ('manager_ids', 'in', self.manager_ids.ids),
         ], order='date_close')
         self.duplicate_appraisal_id = False
         for appraisal in self:
-            if appraisal.id or appraisal.state != 'new':
+            if appraisal.id or appraisal.state != '1_new':
                 continue
             for ongoing_appraisal in ongoing_appraisals:
                 if ongoing_appraisals.manager_ids == appraisal.manager_ids._origin\
@@ -128,7 +124,7 @@ class HrAppraisal(models.Model):
     def _compute_previous_appraisal_date(self):
         appraisals = self.env['hr.appraisal'].sudo().search([
             ('employee_id', 'in', self.employee_id.ids),
-            ('state', '=', 'done'),
+            ('state', '=', '3_done'),
             ], order='date_close desc')
         for appraisal in self:
             appraisal.previous_appraisal_date = False
@@ -142,7 +138,7 @@ class HrAppraisal(models.Model):
     @api.depends_context('uid')
     @api.depends('employee_id', 'manager_ids')
     def _compute_buttons_display(self):
-        new_appraisals = self.filtered(lambda a: a.state == 'new')
+        new_appraisals = self.filtered(lambda a: a.state == '1_new')
         new_appraisals.update({
             'can_see_employee_publish': False,
             'can_see_manager_publish': False,
@@ -153,7 +149,7 @@ class HrAppraisal(models.Model):
             user_employee_in_appraisal_manager = bool(set(user_employees.ids) & set(appraisal.manager_ids.ids))
             # Appraisal manager can edit feedback in draft state
             appraisal.can_see_employee_publish = appraisal.employee_id in user_employees or \
-                (user_employee_in_appraisal_manager and appraisal.state == 'new')
+                (user_employee_in_appraisal_manager and appraisal.state == '1_new')
             appraisal.can_see_manager_publish = user_employee_in_appraisal_manager
         for appraisal in self - new_appraisals:
             if is_manager and not appraisal.can_see_employee_publish and not appraisal.can_see_manager_publish:
@@ -185,18 +181,18 @@ class HrAppraisal(models.Model):
 
     @api.depends('department_id', 'appraisal_template_id')
     def _compute_employee_feedback(self):
-        for appraisal in self.filtered(lambda a: a.state in ['new', 'pending']):
+        for appraisal in self.filtered(lambda a: a.state in ['1_new', '2_pending']):
             employee_template = appraisal._get_appraisal_template('employee')
-            if appraisal.state == 'new':
+            if appraisal.state == '1_new':
                 appraisal.employee_feedback = employee_template
             else:
                 appraisal.employee_feedback = appraisal.employee_feedback or employee_template
 
     @api.depends('department_id', 'appraisal_template_id')
     def _compute_manager_feedback(self):
-        for appraisal in self.filtered(lambda a: a.state in ['new', 'pending']):
+        for appraisal in self.filtered(lambda a: a.state in ['1_new', '2_pending']):
             manager_template = appraisal._get_appraisal_template('manager')
-            if appraisal.state == 'new':
+            if appraisal.state == '1_new':
                 appraisal.manager_feedback = manager_template
             else:
                 appraisal.manager_feedback = appraisal.manager_feedback or manager_template
@@ -218,37 +214,6 @@ class HrAppraisal(models.Model):
     def _compute_waiting_feedback(self):
         for appraisal in self:
             appraisal.waiting_feedback = not appraisal.employee_feedback_published or not appraisal.manager_feedback_published
-
-    @api.depends_context('uid')
-    @api.depends('meeting_ids.start')
-    def _compute_final_interview(self):
-        today = fields.Date.today()
-        user_tz = self.env.user.tz or self.env.context.get('tz')
-        user_pytz = pytz.timezone(user_tz) if user_tz else pytz.utc
-        with_meeting = self.filtered('meeting_ids')
-        (self - with_meeting).date_final_interview = False
-        for appraisal in with_meeting:
-            all_dates = appraisal.meeting_ids.mapped('start')
-            min_date, max_date = min(all_dates), max(all_dates)
-            if min_date.date() >= today:
-                appraisal.date_final_interview = min_date.astimezone(user_pytz)
-            else:
-                appraisal.date_final_interview = max_date.astimezone(user_pytz)
-
-    @api.depends_context('lang')
-    @api.depends('meeting_ids')
-    def _compute_meeting_count(self):
-        today = fields.Date.today()
-        for appraisal in self:
-            count = len(appraisal.meeting_ids)
-            if not count:
-                appraisal.meeting_count_display = _('No Meeting')
-            elif count == 1:
-                appraisal.meeting_count_display = _('1 Meeting')
-            elif appraisal.date_final_interview >= today:
-                appraisal.meeting_count_display = _('Next Meeting')
-            else:
-                appraisal.meeting_count_display = _('Last Meeting')
 
     @api.depends('employee_id', 'date_close')
     @api.depends_context('include_date_in_name')
@@ -328,18 +293,15 @@ class HrAppraisal(models.Model):
                         note=_('Fill appraisal for %s', appraisal.employee_id._get_html_link()),
                         user_id=employee.user_id.id)
 
-    def action_cancel(self):
-        self.state = 'cancel'
-
     @api.model_create_multi
     def create(self, vals_list):
         appraisals = super().create(vals_list)
         appraisals_to_send = self.env['hr.appraisal']
         current_date = datetime.date.today()
         for appraisal, vals in zip(appraisals, vals_list):
-            if vals.get('state') and vals['state'] == 'pending':
+            if vals.get('state') and vals['state'] == '2_pending':
                 appraisals_to_send |= appraisal
-            if vals.get('state') and vals['state'] == 'new':
+            if vals.get('state') and vals['state'] == '1_new':
                 appraisal.employee_id.sudo().write({
                     'last_appraisal_id': appraisal.id,
                     'last_appraisal_date': current_date,
@@ -394,7 +356,6 @@ class HrAppraisal(models.Model):
         result = {}
         all_appraisals = self.env['hr.appraisal'].search([
             ('employee_id', 'in', self.mapped('employee_id').ids),
-            ('state', '!=', 'cancel'),
         ], order='employee_id, id desc')
         for appraisal in self:
             previous_appraisals = all_appraisals.filtered(lambda x: x.employee_id == appraisal.employee_id and x.id != appraisal.id and x.create_date < appraisal.create_date)
@@ -410,7 +371,7 @@ class HrAppraisal(models.Model):
         if vals.get('employee_feedback_published'):
             user_employees = self.env.user.employee_ids
             force_published = self.filtered(lambda a: (a.is_manager) and not (a.employee_feedback_published or a.employee_id in user_employees))
-        if vals.get('state') in ['pending', 'done']:
+        if vals.get('state') in ['2_pending', '3_done']:
             self.activity_ids.action_feedback()
             not_done_appraisal = self.env['hr.appraisal']
             for appraisal in self:
@@ -418,9 +379,9 @@ class HrAppraisal(models.Model):
                     'last_appraisal_id': appraisal.id,
                     'last_appraisal_date': appraisal.date_close,
                 })
-                if appraisal.state != 'done':
+                if appraisal.state != '3_done':
                     not_done_appraisal |= appraisal
-            if vals.get('state') == 'pending':
+            if vals.get('state') == '2_pending':
                 vals['employee_feedback_published'] = False
                 vals['manager_feedback_published'] = False
                 not_done_appraisal.send_appraisal()
@@ -435,17 +396,6 @@ class HrAppraisal(models.Model):
                     partner_ids=appraisal.message_partner_ids.ids,
                 )
                 self.message_post(body=body)
-        elif vals.get('state') == 'cancel':
-            self.meeting_ids.unlink()
-            self.activity_unlink(['mail.mail_activity_data_meeting', 'mail.mail_activity_data_todo'])
-            previous_appraisals = self._find_previous_appraisals()
-            for appraisal in self:
-                if appraisal.employee_id and appraisal.employee_id.last_appraisal_id == appraisal:
-                    previous_appraisal = previous_appraisals.get(appraisal.id)
-                    appraisal.employee_id.sudo().write({
-                        'last_appraisal_id': previous_appraisal.id if previous_appraisal else False,
-                        'last_appraisal_date': previous_appraisal.date_close if previous_appraisal else False,
-                    })
         previous_managers = {}
         if 'manager_ids' in vals:
             previous_managers = {x: y for x, y in self.mapped(lambda a: (a.id, a.manager_ids))}
@@ -454,8 +404,6 @@ class HrAppraisal(models.Model):
             for appraisal in force_published:
                 role = _('Manager') if self.env.user.employee_id in appraisal.manager_ids else _('Appraisal Officer')
                 appraisal.message_post(body=_('%(user)s decided, as %(role)s, to publish the employee\'s feedback', user=self.env.user.name, role=role))
-        if 'manager_ids' in vals:
-            self._sync_meeting_attendees(previous_managers)
         return result
 
     def unlink(self):
@@ -515,23 +463,10 @@ class HrAppraisal(models.Model):
                         summary=_('Appraisal for %s to fill', employee.name),
                         note=note, user_id=manager.user_id.id)
 
-    def _sync_meeting_attendees(self, manager_ids):
-        for appraisal in self.filtered('meeting_ids'):
-            previous_managers = manager_ids.get(appraisal.id, self.env['hr.employee'])
-            to_add = self.manager_ids - previous_managers
-            to_del = previous_managers - self.manager_ids
-            if to_add or to_del:
-                appraisal.meeting_ids.write({
-                    'partner_ids': [
-                        *[(3, x) for x in to_del.mapped('related_partner_id').ids],
-                        *[(4, x) for x in to_add.mapped('related_partner_id').ids],
-                    ]
-                })
-
     @api.ondelete(at_uninstall=False)
     def _unlink_if_new_or_cancel(self):
-        if any(appraisal.state not in ['new', 'cancel'] for appraisal in self):
-            raise UserError(_("You cannot delete appraisal which is not in draft or cancelled state"))
+        if any(appraisal.state != '1_new' for appraisal in self):
+            raise UserError(_("You cannot delete appraisal which is not in draft state"))
 
     def read(self, fields=None, load='_classic_read'):
         check_notes = set(fields) & {'note', 'assessment_note'}
@@ -558,13 +493,13 @@ class HrAppraisal(models.Model):
         return action
 
     def action_confirm(self):
-        self.state = 'pending'
+        self.state = '2_pending'
 
     def action_done(self):
-        self.state = 'done'
+        self.state = '3_done'
 
     def action_back(self):
-        self.state = 'new'
+        self.state = '1_new'
 
     def action_open_employee_appraisals(self):
         self.ensure_one()

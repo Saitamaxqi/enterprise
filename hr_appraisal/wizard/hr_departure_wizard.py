@@ -7,13 +7,13 @@ from odoo import api, fields, models
 class HrDepartureWizard(models.TransientModel):
     _inherit = 'hr.departure.wizard'
 
-    cancel_appraisal = fields.Boolean(string="Cancel Future Appraisals", default=True,
-        help="Cancel all appraisal after contract end date.")
+    delete_appraisal = fields.Boolean(string="Delete Future Appraisals", default=True,
+        help="Delete all appraisal after contract end date.")
 
     def action_register_departure(self):
         super(HrDepartureWizard, self).action_register_departure()
-        if self.cancel_appraisal:
+        if self.delete_appraisal:
             future_appraisals = self.env["hr.appraisal"].search([
                 ('employee_id', 'in', self.employee_ids.ids),
-                ('state', 'in', ['new', 'pending'])])
-            future_appraisals.action_cancel()
+                ('state', 'in', ['1_new', '2_pending'])])
+            future_appraisals.unlink()
