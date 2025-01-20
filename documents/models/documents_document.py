@@ -5,6 +5,7 @@ import contextlib
 import io
 import logging
 import re
+import string
 import uuid
 from ast import literal_eval
 from collections import Counter, OrderedDict, defaultdict
@@ -248,6 +249,13 @@ class DocumentsDocument(models.Model):
         for record in self:
             file_extension = _sanitize_file_extension(record.file_extension) if record.file_extension else False
             (record | record.shortcut_ids).file_extension = file_extension
+
+    @api.constrains('document_token')
+    def _check_document_token(self):
+        charset = set(string.ascii_letters + string.digits + '-_')
+        for document in self:
+            if len(document.document_token or '') != 22 or set(document.document_token) - charset:
+                raise ValidationError(_('Invalid document token'))
 
     @api.constrains('shortcut_document_id', 'shortcut_ids', 'type', 'folder_id', 'children_ids', 'company_id')
     def _check_shortcut_fields(self):
