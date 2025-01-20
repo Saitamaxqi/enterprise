@@ -25,6 +25,12 @@ class SDDTest(SDDTestCommon):
         self.assertEqual(self.mandate_china_export.state, 'closed', 'A one-off mandate should be closed after accepting a payment')
         self.assertEqual(self.mandate_no_bic.state, 'closed', 'A one-off mandate should be closed after accepting a payment')
 
+        # Test when cancelling a payment
+        payment_agrolait = self.invoice_agrolait._get_reconciled_payments()
+        payment_agrolait.action_draft()
+        self.assertEqual(self.invoice_agrolait.payment_state, 'not_paid')
+        self.assertFalse(self.invoice_agrolait.sdd_mandate_id)
+
     def test_xml_pain_008_001_08_generation(self):
         self.sdd_company_bank_journal.debit_sepa_pain_version = 'pain.008.001.08'
 
