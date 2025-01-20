@@ -56,7 +56,9 @@ class AccountAnalyticLine(models.Model):
         # set helpdesk_ticket_id to false when a task_id has been assigned
         timesheet_to_update = self.filtered(lambda line: line.task_id and line.helpdesk_ticket_id)
         # no need to recompute the project_id if nothing changes.
-        self.env.remove_to_compute(self._fields['project_id'], self - timesheet_to_update)
+        # unless the record is not yet created
+        self.env.remove_to_compute(self._fields['project_id'],
+                                   (self - timesheet_to_update).filtered(lambda line: line._origin))
         timesheet_to_update.helpdesk_ticket_id = False
 
     @api.constrains('task_id', 'helpdesk_ticket_id')
