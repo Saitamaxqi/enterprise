@@ -1,6 +1,6 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import { expect, test } from "@odoo/hoot";
-import { animationFrame } from "@odoo/hoot-mock";
+import { animationFrame, runAllTimers } from "@odoo/hoot-mock";
 import { EventBus } from "@odoo/owl";
 import {
     contains,
@@ -35,7 +35,7 @@ test("Shareable error dialog", async () => {
 
     mockService("file_upload", {
         bus: _bus,
-        upload: (route, files, params = {}) => {
+        upload: (route) => {
             if (route === "/documents/upload_traceback") {
                 _bus.trigger("FILE_UPLOAD_LOADED", {
                     upload: {
@@ -82,7 +82,7 @@ test("Shareable error dialog", async () => {
     expect.verifySteps(["test url"]);
 });
 
-test("Multipls error dialogs", async () => {
+test("Multiple error dialogs", async () => {
     expect.errors(3);
     const _bus = new EventBus();
     patchWithCleanup(browser.navigator.clipboard, {
@@ -101,7 +101,7 @@ test("Multipls error dialogs", async () => {
 
     mockService("file_upload", {
         bus: _bus,
-        upload: (route, files, params = {}) => {
+        upload: (route) => {
             if (route === "/documents/upload_traceback") {
                 _bus.trigger("FILE_UPLOAD_LOADED", {
                     upload: {
@@ -116,17 +116,17 @@ test("Multipls error dialogs", async () => {
 
     const error1 = makeServerError({
         subType: "Odoo Client Error",
-        message: "Message",
+        message: "Message 1",
         errorName: "client error",
     });
     const error2 = makeServerError({
         subType: "Odoo Client Error",
-        message: "Message",
+        message: "Message 2",
         errorName: "client error",
     });
     const error3 = makeServerError({
         subType: "Odoo Client Error",
-        message: "Message",
+        message: "Message 3",
         errorName: "client error",
     });
 
@@ -137,14 +137,17 @@ test("Multipls error dialogs", async () => {
     });
 
     Promise.reject(error1);
+    await runAllTimers();
     await animationFrame();
-    expect.verifyErrors(["Message"]);
+    expect.verifyErrors(["Message 1"]);
     Promise.reject(error2);
+    await runAllTimers();
     await animationFrame();
-    expect.verifyErrors(["Message"]);
+    expect.verifyErrors(["Message 2"]);
     Promise.reject(error3);
+    await runAllTimers();
     await animationFrame();
-    expect.verifyErrors(["Message"]);
+    expect.verifyErrors(["Message 3"]);
     expect.verifySteps(["Check access rights", "Check access rights", "Check access rights"]);
     await contains(".modal-footer button:contains(Share):eq(2)").click();
     expect(".modal-footer button:contains(Share):eq(2)").not.toBeEnabled();
