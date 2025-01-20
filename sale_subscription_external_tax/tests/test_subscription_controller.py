@@ -42,14 +42,17 @@ class TestExternalTaxSubscriptionController(TestSaleSubscriptionExternalCommon, 
             "flow": "direct",
         }
 
-        with self.patch_set_external_taxes() as mocked_set:
-            self.make_jsonrpc_request(url, data)
 
+        self.make_jsonrpc_request(url, data)
+        tx =  self.subscription.transaction_ids
+        tx._set_done()
+        with self.patch_set_external_taxes() as mocked_set:
+            tx._post_process()
         self.assertEqual(
             len(self.subscription.invoice_ids), 1, "One invoice should have been created."
         )
         self.assertEqual(
-            [self.subscription.invoice_ids[0]],
-            [args[0] for args, kwargs in mocked_set.call_args_list if args[0]],
+            set(self.subscription.invoice_ids[0]),
+            set(args[0] for args, kwargs in mocked_set.call_args_list if args[0]),
             "Should have queried avatax on the created invoice when manually initiating a payment.",
         )

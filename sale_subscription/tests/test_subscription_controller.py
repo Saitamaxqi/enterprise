@@ -226,25 +226,17 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
                 }
         self.make_jsonrpc_request(url, data)
         # the transaction is associated to the invoice in tx._post_process()
-        invoice_transactions = subscription.invoice_ids.transaction_ids
-        self.assertEqual(len(invoice_transactions), 2, "Two transactions should be created. Calling /my/subscriptions/transaction/ creates a new one")
         last_transaction_id = subscription.transaction_ids - first_transaction_id
+        last_transaction_id._set_done()
+        last_transaction_id._post_process()
         self.assertEqual(len(subscription.transaction_ids), 2)
         self.assertEqual(last_transaction_id.sale_order_ids, subscription)
-        last_transaction_id._set_done()
-        self.assertEqual(subscription.invoice_ids.sorted('id').mapped('state'), ['posted', 'draft'])
-        subscription.invoice_ids.filtered(lambda am: am.state == 'draft')._post()
+        self.assertEqual(subscription.invoice_ids.sorted('id').mapped('state'), ['posted'])
         subscription.transaction_ids._post_process()  # Create the payment
         # subscription has a payment_token_id, the invoice is created by the flow.
         subscription.invoice_ids.invoice_line_ids.account_id.account_type = 'asset_cash'
         subscription.invoice_ids.auto_post = 'at_date'
         subscription.invoice_ids.filtered(lambda am: am.state == 'draft')._post()
-        self.env['account.payment.register'] \
-            .with_context(active_model='account.move', active_ids=subscription.invoice_ids.ids) \
-            .create({
-            'currency_id': subscription.currency_id.id,
-            'amount': subscription.amount_total,
-        })._create_payments()
         self.assertFalse(set(subscription.invoice_ids.mapped('payment_state')) & {'not_paid', 'partial'},
                          "All invoices should be in paid or in_payment status")
         return subscription
@@ -557,6 +549,7 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
         subscription.action_confirm()
         inv1 = subscription._create_invoices()
         inv1._post()  # we won't pay it
+        existing_tx = subscription.transaction_ids
         data = {'access_token': subscription.access_token,
                 'landing_route': subscription.get_portal_url(),
                 'provider_id': self.dummy_provider.id,
@@ -568,10 +561,12 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
         }
         url = self._build_url("/my/subscriptions/%s/transaction" % subscription.id)
         self.make_jsonrpc_request(url, data)
-        self.assertEqual(subscription.invoice_count, 2, "subscription_anticipate should for a new invoice creation")
+        self.assertEqual(subscription.invoice_count, 1, "Portal don't create new invoices")
         self.assertEqual(inv1.payment_state, 'not_paid', "inv 1 is not paid")
+        tx = subscription.transaction_ids - existing_tx
+        tx._set_done()
+        tx._post_process()
         inv2 = subscription.invoice_ids - inv1
-        inv2._post()
         self.env['account.payment.register'] \
                 .with_context(active_model='account.move', active_ids=inv2.ids) \
                 .create({
@@ -602,7 +597,7 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
 
         with freeze_time('2024-01-15'):
             subscription.set_close()
-
+            existing_tx = subscription.transaction_ids
             data = {'access_token': subscription.access_token,
                     'landing_route': subscription.get_portal_url(),
                     'provider_id': self.dummy_provider.id,
@@ -614,9 +609,11 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
             }
             url = self._build_url("/my/subscriptions/%s/transaction" % subscription.id)
             self.make_jsonrpc_request(url, data)
+            new_tx = subscription.transaction_ids - existing_tx
+            new_tx._set_done()
+            new_tx._post_process()
             self.assertEqual(subscription.invoice_count, 2, "subscription_anticipate should for a new invoice creation")
             inv2 = subscription.invoice_ids - inv1
-            inv2._post()
             self.env['account.payment.register'] \
                     .with_context(active_model='account.move', active_ids=inv2.ids) \
                     .create({
