@@ -2,56 +2,6 @@
 
 <odoo>
     <data noupdate="1">
-        <record id="ir_actions_server_create_activity" model="ir.actions.server" forcecreate="0">
-            <field name="name">Create Activity</field>
-            <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
-            <field name="state">next_activity</field>
-            <field name="activity_type_id" ref="documents.mail_documents_activity_data_tv"/>
-        </record>
-
-        <record id="ir_actions_server_remove_activities" model="ir.actions.server" forcecreate="0">
-            <field name="name">Mark activities as completed</field>
-            <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
-            <field name="state">code</field>
-            <field name="code">
-for record in records:
-    record.activity_ids.action_feedback(feedback="completed")
-            </field>
-        </record>
-
-        <record id="ir_actions_server_remove_tags" model="ir.actions.server" forcecreate="0">
-            <field name="name">Remove all tags</field>
-            <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
-            <field name="state">object_write</field>
-            <field name="update_m2m_operation">clear</field>
-            <field name="update_path">tag_ids</field>
-        </record>
-
-        <record id="ir_actions_server_tag_remove_inbox" model="ir.actions.server" forcecreate="0">
-            <field name="name">Remove Tag Inbox</field>
-            <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
-            <field name="update_path">tag_ids</field>
-            <field name="usage">ir_actions_server</field>
-            <field name="state">object_write</field>
-            <field name="update_m2m_operation">remove</field>
-            <field name="resource_ref" ref="documents.documents_tag_inbox"/>
-        </record>
-
-        <record id="ir_actions_server_tag_remove_to_validate" model="ir.actions.server" forcecreate="0">
-            <field name="name">Remove Tag To Validate</field>
-            <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
-            <field name="update_path">tag_ids</field>
-            <field name="usage">ir_actions_server</field>
-            <field name="state">object_write</field>
-            <field name="update_m2m_operation">remove</field>
-            <field name="resource_ref" ref="documents.documents_tag_to_validate"/>
-        </record>
-
         <record id="ir_actions_server_tag_add_validated" model="ir.actions.server" forcecreate="0">
             <field name="name">Add Tag Validated</field>
             <field name="model_id" ref="documents.model_documents_document"/>
@@ -61,17 +11,6 @@ for record in records:
             <field name="state">object_write</field>
             <field name="update_m2m_operation">add</field>
             <field name="resource_ref" ref="documents.documents_tag_validated"/>
-        </record>
-
-        <record id="ir_actions_server_tag_add_bill" model="ir.actions.server" forcecreate="0">
-            <field name="name">Add Tag Bill</field>
-            <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
-            <field name="update_path">tag_ids</field>
-            <field name="usage">ir_actions_server</field>
-            <field name="state">object_write</field>
-            <field name="update_m2m_operation">add</field>
-            <field name="resource_ref" ref="documents.documents_tag_bill"/>
         </record>
     </data>
 </odoo>
