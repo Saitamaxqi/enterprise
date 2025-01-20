@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from urllib.parse import urlencode
+from urllib.parse import urlencode, quote
 
 from odoo.http import request, route
 
@@ -47,7 +47,7 @@ class Home(web_home.Home):
         # Public/Portal users use the /documents/<access_token> route
         if not request.env.user._is_internal():
             return request.redirect(
-                f'/documents/{access_token}',
+                f'/documents/{quote(access_token, safe="")}',
                 HTTPStatus.TEMPORARY_REDIRECT,
             )
 
@@ -57,7 +57,7 @@ class Home(web_home.Home):
             Redirect = request.env['documents.redirect'].sudo()
             if document_sudo := Redirect._get_redirection(access_token):
                 return request.redirect(
-                    f'/odoo/documents/{document_sudo.access_token}',
+                    f'/odoo/documents/{quote(document_sudo.access_token, safe="")}',
                     HTTPStatus.MOVED_PERMANENTLY,
                 )
 

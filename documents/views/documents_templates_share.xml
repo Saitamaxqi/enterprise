@@ -77,8 +77,8 @@
             <t t-set="document" t-value="folder"/>  <!-- for public_page_layout -->
             <t t-set="shareType" t-value="'o_share_workspace'"/>
 
-            <t t-set="folder_downloadzip_url" t-valuef="/documents/content/#{folder.access_token}"/>
-            <t t-set="folder_upload_url" t-valuef="/documents/upload/#{folder.access_token}"/>
+            <t t-set="folder_downloadzip_url" t-valuef="/documents/content/#{quote(folder.access_token)}"/>
+            <t t-set="folder_upload_url" t-valuef="/documents/upload/#{quote(folder.access_token)}"/>
 
             <section class="o_docs_share_multible_bar d-flex mt-5 mb-4">
                 <div class="flex-grow-1 mb16">
@@ -91,7 +91,7 @@
                     <span class="align-middle">
                         shared by
                         <img class="o_author rounded align-middle o_object_fit_cover"
-                             t-attf-src="/documents/avatar/#{folder.access_token}"
+                             t-attf-src="/documents/avatar/#{quote(folder.access_token)}"
                              t-att-alt="author"
                              t-att-title="author"/>
                         <b t-esc="folder.owner_id.name"/>
@@ -124,9 +124,9 @@
             <div class="o_docs_cards_container row mb32">
                 <t t-foreach="documents.filtered(lambda doc: doc.type == 'folder')"
                    t-as="subfolder">
-                    <t t-set="subfolder_open_url" t-valuef="/documents/redirect/#{subfolder.access_token}"/>
-                    <t t-set="subfolder_downloadzip_url" t-valuef="/documents/content/#{subfolder.access_token}"/>
-                    <t t-set="subfolder_upload_url" t-valuef="/documents/upload/#{subfolder.access_token}"/>
+                    <t t-set="subfolder_open_url" t-valuef="/documents/redirect/#{quote(subfolder.access_token)}"/>
+                    <t t-set="subfolder_downloadzip_url" t-valuef="/documents/content/#{quote(subfolder.access_token)}"/>
+                    <t t-set="subfolder_upload_url" t-valuef="/documents/upload/#{quote(subfolder.access_token)}"/>
                     <div class="col-sm-6 col-lg-3">
                         <article id="documents-folder" class="o_card d-flex mb16 border">
                             <figure class="o_card_left d-flex position-relative flex-column flex-nowrap justify-content-between m-0">
@@ -164,7 +164,7 @@
                                      class="o_object_fit_cover rounded"
                                      width="15"
                                      height="15"
-                                     t-attf-src="/documents/avatar/#{subfolder.access_token}"/>
+                                     t-attf-src="/documents/avatar/#{quote(subfolder.access_token)}"/>
                                 <a t-att-href="subfolder_downloadzip_url"
                                    t-attf-title="Download zip #{subfolder.name}">
                                     <i t-attf-class="fa fa-download"/>
@@ -178,7 +178,7 @@
                    t-as="document">
                     <t t-set="document_request"
                         t-value="document.type == 'binary' and not document.attachment_id and not document.shortcut_document_id.attachment_id"/>
-                    <t t-set="document_content_url" t-valuef="/documents/content/#{document.access_token}"/>
+                    <t t-set="document_content_url" t-valuef="/documents/content/#{quote(document.access_token)}"/>
                     <div class="col-sm-6 col-lg-3">
                         <article id="documents-binary" t-attf-class="o_card d-flex mb16 border
                                                #{'o_request_card' if document_request else ''}">
@@ -186,7 +186,7 @@
                                 <form t-if="(document.access_via_link == 'edit' or document.user_permission == 'edit') and document_request"
                                       class="o_hidden"
                                       enctype="multipart/form-data"
-                                      t-attf-action="/documents/upload/#{document.access_token}"
+                                      t-attf-action="/documents/upload/#{quote(document.access_token)}"
                                       method="POST">
                                     <input name="ufile" class="o_request_upload" type="file" onchange="form.submit()"/>
                                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -200,7 +200,7 @@
                                 <div t-else="" class="o_image" t-att-data-mimetype="document.mimetype" t-attf-style="#{document.mimetype and 'image/' in document.mimetype and 'background-image:None;' ''}"/>
                                 <div t-if="(document.shortcut_document_id or document).mimetype and 'image/' in (document.shortcut_document_id or document).mimetype"
                                      class="o_image_preview"
-                                     t-attf-style="background-image:url(/documents/thumbnail/#{document.access_token})"/>
+                                     t-attf-style="background-image:url(/documents/thumbnail/#{quote(document.access_token)})"/>
                             </figure>
                             <div class="o_card_content d-flex flex-column flex-nowrap flex-grow-1 flex-shrink-1 justify-content-between">
                                 <header>
@@ -230,7 +230,7 @@
                                      class="o_object_fit_cover rounded"
                                      width="15"
                                      height="15"
-                                     t-attf-src="/documents/avatar/#{document.access_token}"/>
+                                     t-attf-src="/documents/avatar/#{quote(document.access_token)}"/>
                                 <a t-if="not document_request"
                                    t-attf-href="#{document_content_url}?download=1"
                                    t-attf-title="Download #{document.name}">
@@ -273,7 +273,7 @@
                                      class="o_object_fit_cover rounded"
                                      width="15"
                                      height="15"
-                                     t-attf-src="/documents/avatar/#{document_url.access_token}"/>
+                                     t-attf-src="/documents/avatar/#{quote(document_url.access_token)}"/>
                             </div>
                         </article>
                     </div>
@@ -309,7 +309,7 @@
         <t t-call="documents.public_page_layout">
             <t t-set="shareType" t-valuef="o_share_files"/>
             <t t-set="document_content_url"
-               t-valuef="#{document.get_base_url()}/documents/content/#{document.access_token}"/>
+               t-valuef="#{document.get_base_url()}/documents/content/#{quote(document.access_token)}"/>
 
             <div class="shadow-lg text-center bg-white p-3 rounded-3">
                 <span class="fa-stack text-black-25 fa-3x">
@@ -342,7 +342,7 @@
                     </button>
                     <form t-if="document.access_via_link == 'edit' or document.user_permission == 'edit'"
                           enctype="multipart/form-data"
-                          t-attf-action="/documents/upload/#{document.access_token}"
+                          t-attf-action="/documents/upload/#{quote(document.access_token)}"
                           method="POST">
                         <input type="hidden"
                                name="csrf_token"
@@ -368,7 +368,7 @@
             <div class="o_docs_single_container">
                 <article class="o_card d-flex mb4 o_request_card " title="">
                     <figure class="o_card_left d-flex position-relative flex-column flex-nowrap justify-content-between m-0">
-                        <form class="o_hidden" enctype="multipart/form-data" t-attf-action="/documents/upload/#{document.access_token}" method="POST">
+                        <form class="o_hidden" enctype="multipart/form-data" t-attf-action="/documents/upload/#{quote(document.access_token)}" method="POST">
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                             <input name="ufile" class="o_request_upload" type="file" onchange="form.submit()"/>
                         </form>

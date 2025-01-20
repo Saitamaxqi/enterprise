@@ -38,7 +38,7 @@ export const documentsPdfThumbnailService = {
             let thumbnail = undefined;
             try {
                 const pdf = await globalThis.pdfjsLib.getDocument(
-                    `/documents/content/${record.data.access_token}?download=0`
+                    `/documents/content/${encodeURIComponent(record.data.access_token)}?download=0`
                 ).promise;
                 const page = await pdf.getPage(1);
 

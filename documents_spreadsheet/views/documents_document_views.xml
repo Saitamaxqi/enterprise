@@ -21,7 +21,7 @@
             <xpath expr="(//div[@name='document_preview']/div)[last()]" position="before">
                 <div t-elif="isSpreadsheet" class="o_attachment_image o_documents_image">
                     <t t-set="unique" t-value="record.spreadsheet_thumbnail_checksum.raw_value.slice(-8)"/>
-                    <img t-attf-src="/documents/thumbnail/#{record.access_token.raw_value}?unique=#{unique}" alt="Spreadsheet Preview"/>
+                    <img t-attf-src="/documents/thumbnail/#{encodeURIComponent(record.access_token.raw_value)}?unique=#{unique}" alt="Spreadsheet Preview"/>
                 </div>
             </xpath>
         </field>

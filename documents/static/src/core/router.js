@@ -7,8 +7,9 @@ patch(router, {
     stateToUrl(state) {
         const url = super.stateToUrl(state);
         if (url.startsWith("/odoo/documents") && state.access_token) {
-            return `/odoo/documents/${state.access_token}` + (
-                odoo.debug ? `?debug=${odoo.debug}` : ''
+            return (
+                `/odoo/documents/${encodeURIComponent(state.access_token)}` +
+                (odoo.debug ? `?debug=${odoo.debug}` : "")
             );
         }
         return url;

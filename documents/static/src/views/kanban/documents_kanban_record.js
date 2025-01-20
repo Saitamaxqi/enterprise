@@ -77,6 +77,8 @@ export class DocumentsKanbanRecord extends KanbanRecord {
 
     get renderingContext() {
         const context = super.renderingContext;
+        context.encodeURIComponent = encodeURIComponent;
+
         if ([false, "TRASH", "RECENT"].includes(this.env.searchModel.getSelectedFolderId())) {
             context.inFolder = this.props.record.data.folder_id?.[1] ||
                 (

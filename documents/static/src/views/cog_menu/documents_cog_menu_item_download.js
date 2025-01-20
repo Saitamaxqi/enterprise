@@ -14,7 +14,7 @@ export class DocumentsCogMenuItemDownload extends DocumentsCogMenuItem {
     async doActionOnFolder(folder) {
         this.action.doAction({
             type: "ir.actions.act_url",
-            url: `/documents/content/${folder.access_token}`,
+            url: `/documents/content/${encodeURIComponent(folder.access_token)}`,
         });
     }
 }

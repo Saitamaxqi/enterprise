@@ -318,7 +318,7 @@ export class DocumentService {
         if (!accessToken) {
             return;
         }
-        rpc(`/documents/touch/${accessToken}`);
+        rpc(`/documents/touch/${encodeURIComponent(accessToken)}`);
     }
 
     /**
@@ -389,7 +389,8 @@ export class DocumentService {
         const maxUploadSize = await loadMaxUploadSize(null, this.orm);
         const validFiles = [...files].filter((file) => file.size <= maxUploadSize);
         if (validFiles.length !== 0) {
-            await this.fileUpload.upload(`/documents/upload/${accessToken || ""}`, validFiles, {
+            const encodedToken = encodeURIComponent(accessToken || "");
+            await this.fileUpload.upload(`/documents/upload/${encodedToken}`, validFiles, {
                 buildFormData: (formData) => {
                     if (context) {
                         for (const key of [

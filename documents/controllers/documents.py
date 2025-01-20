@@ -10,6 +10,7 @@ from collections import defaultdict
 from contextlib import ExitStack
 from http import HTTPStatus
 from typing import NamedTuple
+from urllib.parse import quote
 
 from werkzeug.exceptions import BadRequest, Forbidden
 
@@ -291,7 +292,7 @@ class ShareRoute(http.Controller):
             Redirect = request.env['documents.redirect'].sudo()
             if document_sudo := Redirect._get_redirection(access_token):
                 return request.redirect(
-                    f'/documents/{document_sudo.access_token}',
+                    f'/documents/{quote(document_sudo.access_token, safe="")}',
                     HTTPStatus.MOVED_PERMANENTLY,
                 )
 
@@ -302,7 +303,7 @@ class ShareRoute(http.Controller):
         else:  # assume internal user
             # Internal users use the /odoo/documents/<access_token> route
             return request.redirect(
-                f'/odoo/documents/{access_token}',
+                f'/odoo/documents/{quote(access_token, safe="")}',
                 HTTPStatus.TEMPORARY_REDIRECT,
             )
 
@@ -313,7 +314,7 @@ class ShareRoute(http.Controller):
             and target_sudo.access_via_link != 'none'
             and not target_sudo.is_access_via_link_hidden
         ):
-            return request.redirect(f'/odoo/documents/{target_sudo.access_token}')
+            return request.redirect(f'/odoo/documents/{quote(target_sudo.access_token, safe="")}')
         if target_sudo or not document_sudo:
             return request.render(
                 'documents.not_available', {'document': document_sudo}, status=404)
@@ -321,9 +322,9 @@ class ShareRoute(http.Controller):
             return request.redirect(
                 document_sudo.url, code=HTTPStatus.TEMPORARY_REDIRECT, local=False)
         if document_sudo.type == 'binary' and document_sudo.attachment_id:
-            return request.render('documents.share_file', {'document': document_sudo})
+            return request.render('documents.share_file', {'document': document_sudo, 'quote': lambda v: quote(v, safe='')})
         if document_sudo.type == 'binary':
-            return request.render('documents.document_request_page', {'document': document_sudo})
+            return request.render('documents.document_request_page', {'document': document_sudo, 'quote': lambda v: quote(v, safe='')})
         if document_sudo.type == 'folder':
             sub_documents_sudo = ShareRoute._get_folder_children(document_sudo)
             return request.render('documents.public_folder_page', {
@@ -333,7 +334,8 @@ class ShareRoute(http.Controller):
                     sub_folder_sudo.id: ShareRoute._get_folder_children(sub_folder_sudo)
                     for sub_folder_sudo in sub_documents_sudo
                     if sub_folder_sudo.type == 'folder'
-                }
+                },
+                'quote': lambda v: quote(v, safe=''),
             })
         else:
             e = f"unknown document type {document_sudo.type}"
@@ -450,7 +452,7 @@ class ShareRoute(http.Controller):
 
     @http.route('/documents/redirect/<access_token>', type='http', auth='public', readonly=True)
     def documents_redirect(self, access_token):
-        return request.redirect(f'/odoo/documents/{access_token}', HTTPStatus.MOVED_PERMANENTLY)
+        return request.redirect(f'/odoo/documents/{quote(access_token, safe="")}', HTTPStatus.MOVED_PERMANENTLY)
 
     @http.route('/documents/touch/<access_token>', type='jsonrpc', auth='user')
     def documents_touch(self, access_token):
@@ -514,14 +516,14 @@ class ShareRoute(http.Controller):
         '/document/download/all/<access_token>'], type='http', auth='public')
     def documents_download_all_legacy(self, access_token=None, share_id=None):
         logger.warning("Deprecated since Odoo 18. Please access /documents/content/<access_token> instead.")
-        return request.redirect(f'/documents/content/{access_token}', HTTPStatus.MOVED_PERMANENTLY)
+        return request.redirect(f'/documents/content/{quote(access_token or "", safe="")}', HTTPStatus.MOVED_PERMANENTLY)
 
     @http.route([
         '/document/share/<int:share_id>/<token>',
         '/document/share/<token>'], type='http', auth='public')
     def share_portal(self, share_id=None, token=None):
         logger.warning("Deprecated since Odoo 18. Please access /odoo/documents/<access_token> instead.")
-        return request.redirect(f'/odoo/documents/{token}', code=HTTPStatus.MOVED_PERMANENTLY)
+        return request.redirect(f'/odoo/documents/{quote(token or "", safe="")}', code=HTTPStatus.MOVED_PERMANENTLY)
 
     @http.route(['/documents/upload/', '/documents/upload/<access_token>'],
                 type='http', auth='public', methods=['POST'],

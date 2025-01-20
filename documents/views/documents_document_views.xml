@@ -101,7 +101,7 @@
                                     </a>
                                     <t t-elif="hasStoredThumbnail">
                                         <t t-set="unique" t-value="record.checksum.value ? record.checksum.value.slice(-8) : ''"/>
-                                        <img t-attf-src="/documents/thumbnail/#{record.access_token.raw_value}?unique=#{unique}" alt="Document preview"/>
+                                        <img t-attf-src="/documents/thumbnail/#{encodeURIComponent(record.access_token.raw_value)}?unique=#{unique}" alt="Document preview"/>
                                     </t>
                                     <div t-elif="fileRequest" class="fa fa-upload fa-3x text-muted">
                                         <input type="file" class="o_input_file o_hidden o_kanban_replace_document"/>

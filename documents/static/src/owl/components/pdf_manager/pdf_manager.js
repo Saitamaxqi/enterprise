@@ -114,7 +114,7 @@ export class PdfManager extends Component {
                 }
                 for (const pdf_document of this.props.documents) {
                     this._addFile(pdf_document.name, {
-                        url: `/documents/content/${pdf_document.access_token}`,
+                        url: `/documents/content/${encodeURIComponent(pdf_document.access_token)}`,
                         documentId: pdf_document.id,
                     });
                 }

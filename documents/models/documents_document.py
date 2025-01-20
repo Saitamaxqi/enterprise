@@ -12,6 +12,7 @@ from collections import Counter, OrderedDict, defaultdict
 import requests
 from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
+from urllib.parse import quote
 from werkzeug.urls import url_encode
 
 import odoo
@@ -200,7 +201,7 @@ class DocumentsDocument(models.Model):
     @api.depends('access_token')
     def _compute_access_url(self):
         for document in self:
-            document.access_url = f'{document.sudo().get_base_url()}/odoo/documents/{document.access_token}'
+            document.access_url = f'{document.sudo().get_base_url()}/odoo/documents/{quote(document.access_token, safe="")}'
 
     @api.depends('create_activity_type_id', 'create_activity_user_id')
     def _compute_create_activity_option(self):
@@ -1578,7 +1579,7 @@ class DocumentsDocument(models.Model):
         if self.url:
             action['url'] = self.url
         elif self.type == 'binary':
-            action['url'] = f'/documents/content/{self.access_token}'
+            action['url'] = f'/documents/content/{quote(self.access_token, safe="")}'
         return action
 
     def open_resource(self):

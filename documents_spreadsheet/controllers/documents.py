@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import re
+from urllib.parse import quote
 
 from odoo.http import request, route
 from odoo.addons.documents.controllers.documents import ShareRoute
@@ -32,8 +33,8 @@ class SpreadsheetShareRoute(ShareRoute):
                 "is_frozen": document.handler == "frozen_spreadsheet",
                 "session_info": request.env["ir.http"].session_info(),
                 "props": {
-                    "dataUrl": f"/documents/spreadsheet/{document.access_token}",
-                    "downloadExcelUrl": document.excel_export and f"/documents/content/{document.access_token}",
+                    "dataUrl": f"/documents/spreadsheet/{quote(document.access_token, safe='')}",
+                    "downloadExcelUrl": document.excel_export and f"/documents/content/{quote(document.access_token, safe='')}",
                 },
             },
         )
