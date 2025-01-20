@@ -18,11 +18,17 @@ import {
 } from "@sign/dialogs/dialogs";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 
-function datasetFromElements(elements) {
+export function datasetFromElements(elements) {
     return Array.from(elements).map((el) => {
         return Object.entries(el.dataset).reduce((dataset, [key, value]) => {
             try {
-                dataset[key] = JSON.parse(value);
+                const parsed = JSON.parse(value);
+                if (key === "value" && typeof parsed === 'number' && parsed > Number.MAX_SAFE_INTEGER) {
+                    // Keep numbers as strings below to avoid MAX_SAFE_INTEGER issues.
+                    dataset[key] = value;
+                } else {
+                    dataset[key] = parsed;
+                }
             } catch {
                 dataset[key] = value;
             }
