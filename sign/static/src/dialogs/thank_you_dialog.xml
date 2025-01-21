@@ -48,7 +48,7 @@
                 <img class="img" height="48" width="48" src="/base/static/img/icons/sign.png"></img>
                 <div>
                     <h6 class="mb-1">Need to sign documents?</h6>
-                    <p class="mb-0"><a class="fw-bold" href="https://www.odoo.com/trial?selected_app=sign&amp;utm_source=db&amp;utm_medium=sign" target="_blank">Odoo Sign</a> is free, foreverer, with unlimited users - and it's fun to use!</p>
+                    <p class="mb-0"><a class="fw-bold" href="https://www.odoo.com/trial?selected_app=sign&amp;utm_source=db&amp;utm_medium=sign" target="_blank">Odoo Sign</a> is free, forever, with unlimited users - and it's fun to use!</p>
                 </div>
             </div>
             <t t-set-slot="footer">
