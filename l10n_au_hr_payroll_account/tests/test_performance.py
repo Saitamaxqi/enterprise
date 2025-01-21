@@ -119,7 +119,7 @@ class TestPerformance(AccountTestInvoicingCommon):
             'company_id': cls.company.id,
             'date_generated_from': datetime(2020, 9, 1, 0, 0, 0),
             'date_generated_to': datetime(2020, 9, 1, 0, 0, 0),
-            'structure_type_id': cls.env.ref('l10n_au_hr_payroll.hr_payroll_structure_au_regular').id,
+            'structure_type_id': cls.env.ref('l10n_au_hr_payroll.structure_type_schedule_1').id,
             'date_start': date(2018, 12, 31),
             'wage': 10000,
             'state': "open",
