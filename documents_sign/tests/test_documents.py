@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import base64
+import io
+
 from odoo import Command
 from odoo.exceptions import AccessError, UserError
 from odoo.tools import file_open, mute_logger
+from odoo.tools.pdf import OdooPdfFileWriter
 from odoo.addons.sign.tests.sign_request_common import SignRequestCommon
 
 GIF = b"R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs="
@@ -138,3 +141,63 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
         self.assertEqual(len(all_documents_signed), 8)
         for doc in all_documents_signed:
             doc.with_user(user_sign_manager).name = "Name overridden by the manager"
+
+    def test_correct_reference_doc_set(self):
+        """Verifies that the correct reference document is linked to a sign request.
+        Ensures that when documents have identical checksums, the sign request is 
+        only linked to the document it originated from."""
+        writer = OdooPdfFileWriter()
+        writer.addBlankPage(width=200, height=200)
+        stream = io.BytesIO()
+        writer.write(stream)
+        # create a document
+        self.env['documents.document'].create({
+            'name': 'another.pdf',
+            'datas': base64.b64encode(stream.getvalue()),
+            'access_internal': 'view',
+            'folder_id': self.folder_a_a.id,
+        })
+        # create a document to sign with the same content
+        document_to_sign = self.env['documents.document'].create({
+            'name': 'test.pdf',
+            'datas': base64.b64encode(stream.getvalue()),
+            'access_internal': 'view',
+            'folder_id': self.folder_a_a.id,
+        })
+            
+        with self.subTest("Ensure sign request does not link to unrelated documents and cause access errors"):
+            # create a sign template with the same content then request a signature
+            with self.with_user(self.user_1.login):
+                attachment = self.env['ir.attachment'].create({
+                    'name': 'test.pdf',
+                    'datas': base64.b64encode(stream.getvalue()),
+                    'mimetype': 'application/pdf',
+                })
+                template = self.env['sign.template'].create({
+                    'attachment_id': attachment.id,
+                    'folder_id': self.folder_a_a.id,
+                })
+                wizard = self.env['sign.send.request'].create({
+                    'template_id': template.id,
+                    'subject': 'test test',
+                    'filename': 'test.pdf',
+                    'signer_id': self.user_1.partner_id.id,
+                })
+                unrelated_request = wizard.create_request()
+                wizard._create_request_log_note(unrelated_request)
+            self.assertIsNone(unrelated_request.reference_doc, "Sign request should not be linked to unrelated documents")
+
+        with self.subTest("Ensure sign request links to the correct document"):
+            # create a sign request from the document_to_sign
+            action = document_to_sign.document_sign_create_sign_template_x('sign.template.direct')
+            document_sign_template = self.env['sign.template'].browse(action['params']['id'])
+            wizard = self.env['sign.send.request'].create({
+                'template_id': document_sign_template.id,
+                'subject': 'test test',
+                'filename': 'test.pdf',
+                'signer_id': self.env.user.partner_id.id,
+            })
+            related_request = wizard.create_request()
+            wizard._create_request_log_note(related_request)
+            # Verify that the request got linked to the document_to_sign
+            self.assertEqual(related_request.reference_doc, document_to_sign)

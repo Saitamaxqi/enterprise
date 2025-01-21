@@ -11,16 +11,13 @@ class SignRequest(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         sign_requets = super().create(vals_list)
-        attachment_checksums = sign_requets.template_id.attachment_id.mapped('checksum')
-        documents = self.env['documents.document'].search([('attachment_id.checksum', 'in', attachment_checksums)])
-        doc_by_checksum = {}
-        for doc in documents:
-            doc_by_checksum[doc.checksum] = doc.id
+        attachment_ids = sign_requets.template_id.attachment_id.ids
+        documents = self.env['documents.document'].search([('attachment_id', 'in', attachment_ids)]).grouped('attachment_id')
         for sr in sign_requets:
             if sr.template_id.folder_id and not sr.reference_doc:
                 # The Sign Request was created from the Document application
-                doc_id = doc_by_checksum.get(sr.template_id.attachment_id.checksum)
-                sr.reference_doc = doc_id and f"documents.document,{doc_id}"
+                doc = documents.get(sr.template_id.attachment_id)
+                sr.reference_doc = doc and f"documents.document,{doc.id}"
         return sign_requets
 
     def _get_linked_record_action(self, default_action=None):
