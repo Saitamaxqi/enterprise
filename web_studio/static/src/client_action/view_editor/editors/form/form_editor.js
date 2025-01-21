@@ -68,7 +68,7 @@ export const formEditor = {
             }
         );
         const props = formView.props(genericProps, editor, config);
-        props.Model = makeModelErrorResilient(Model);
+        props.Model = makeModelErrorResilient(Model, props.archInfo.activeActions);
         props.preventEdit = true;
         return props;
     },

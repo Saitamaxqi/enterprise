@@ -198,7 +198,7 @@ const kanbanEditor = {
     prepareForDrag: prepareForKanbanDrag,
     props(genericProps, editor, config) {
         const props = kanbanView.props(genericProps, editor, config);
-        props.Model = makeModelErrorResilient(OneRecordModel);
+        props.Model = makeModelErrorResilient(OneRecordModel, props.archInfo.activeActions);
         props.limit = 1;
         props.Renderer = KanbanEditorRenderer;
         return props;
