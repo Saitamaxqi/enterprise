@@ -225,13 +225,13 @@
                         </field>
                     </record>
                     <record id="account_financial_report_executivesummary_npmargin0" model="account.report.line">
-                        <field name="name">Net profit margin (net profit / income)</field>
+                        <field name="name">Net profit margin (net profit / revenue)</field>
                         <field name="code">NPMARGIN0</field>
                         <field name="expression_ids">
                             <record id="account_financial_report_executivesummary_npmargin0_balance" model="account.report.expression">
                                 <field name="label">balance</field>
                                 <field name="engine">aggregation</field>
-                                <field name="formula">NPMARGIN0.nep / NPMARGIN0.inc * 100</field>
+                                <field name="formula">NPMARGIN0.nep / NPMARGIN0.rev * 100</field>
                                 <field name="subformula">ignore_zero_division</field>
                                 <field name="figure_type">percentage</field>
                                 <field name="auditable" eval="False"/>
@@ -244,9 +244,9 @@
                                 <field name="subformula">cross_report</field>
                             </record>
                             <record id="account_financial_report_executivesummary_npmargin0_inc" model="account.report.expression">
-                                <field name="label">inc</field>
+                                <field name="label">rev</field>
                                 <field name="engine">aggregation</field>
-                                <field name="formula">INC.balance</field>
+                                <field name="formula">REV.balance</field>
                                 <field name="date_scope">strict_range</field>
                                 <field name="subformula">cross_report</field>
                             </record>
