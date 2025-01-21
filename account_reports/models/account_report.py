@@ -5991,23 +5991,61 @@ class AccountReport(models.Model):
             else:
                 sheet.merge_range(y, x, y + rowspan - 1, x + colspan - 1, value, style)
 
-        date_default_col1_style = workbook.add_format({'font_name': 'Lato', 'align': 'left', 'font_size': 12, 'font_color': '#666666', 'indent': 2, 'num_format': 'yyyy-mm-dd'})
-        date_default_style = workbook.add_format({'font_name': 'Lato', 'align': 'left', 'font_size': 12, 'font_color': '#666666', 'num_format': 'yyyy-mm-dd'})
-        default_col1_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'indent': 2})
-        default_col2_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666'})
-        default_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'num_format': '#,##0.00'})
-        annotation_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'text_wrap': True})
-        title_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'bold': True, 'bottom': 2})
-        level_0_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 6, 'font_color': '#666666', 'num_format': '#,##0.00'})
-        level_1_col1_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666', 'indent': 1})
-        level_1_col1_total_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666', 'num_format': '#,##0.00'})
-        level_1_col2_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666'})
-        level_1_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666', 'num_format': '#,##0.00'})
-        level_2_col1_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'indent': 2})
-        level_2_col1_total_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'indent': 1, 'num_format': '#,##0.00'})
-        level_2_col2_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'indent': 1})
-        level_2_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'num_format': '#,##0.00'})
-        col1_styles = {}
+        default_format_props = {'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'num_format': '#,##0.00'}
+        text_format_props = {'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666'}
+        date_format_props = {'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'align': 'left', 'num_format': 'yyyy-mm-dd'}
+        title_format = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'bold': True, 'bottom': 2})
+        annotation_format = workbook.add_format({**text_format_props, 'text_wrap': True})
+        workbook_formats = {
+            0: {
+                'default': workbook.add_format({**default_format_props, 'bold': True, 'font_size': 13, 'bottom': 6}),
+                'text': workbook.add_format({**text_format_props, 'bold': True, 'font_size': 13, 'bottom': 6}),
+                'date': workbook.add_format({**date_format_props, 'bold': True, 'font_size': 13, 'bottom': 6}),
+                'total': workbook.add_format({**default_format_props, 'bold': True, 'font_size': 13, 'bottom': 6}),
+            },
+            1: {
+                'default': workbook.add_format({**default_format_props, 'bold': True, 'font_size': 13, 'bottom': 1}),
+                'text': workbook.add_format({**text_format_props, 'bold': True, 'font_size': 13, 'bottom': 1}),
+                'date': workbook.add_format({**date_format_props, 'bold': True, 'font_size': 13, 'bottom': 1}),
+                'total': workbook.add_format({**default_format_props, 'bold': True, 'font_size': 13, 'bottom': 1}),
+                'default_indent': workbook.add_format({**default_format_props, 'bold': True, 'font_size': 13, 'bottom': 1, 'indent': 1}),
+                'date_indent': workbook.add_format({**date_format_props, 'bold': True, 'font_size': 13, 'bottom': 1, 'indent': 1}),
+            },
+            2: {
+                'default': workbook.add_format({**default_format_props, 'bold': True}),
+                'text': workbook.add_format({**text_format_props, 'bold': True}),
+                'date': workbook.add_format({**date_format_props, 'bold': True}),
+                'initial': workbook.add_format(default_format_props),
+                'total': workbook.add_format({**default_format_props, 'bold': True}),
+                'default_indent': workbook.add_format({**default_format_props, 'bold': True, 'indent': 2}),
+                'date_indent': workbook.add_format({**date_format_props, 'bold': True, 'indent': 2}),
+                'initial_indent': workbook.add_format({**default_format_props, 'indent': 2}),
+                'total_indent': workbook.add_format({**default_format_props, 'bold': True, 'indent': 1}),
+            },
+            'default': {
+                'default': workbook.add_format(default_format_props),
+                'text': workbook.add_format(text_format_props),
+                'date': workbook.add_format(date_format_props),
+                'total': workbook.add_format(default_format_props),
+                'default_indent': workbook.add_format({**default_format_props, 'indent': 2}),
+                'date_indent': workbook.add_format({**date_format_props, 'indent': 2}),
+                'total_indent': workbook.add_format({**default_format_props, 'indent': 2}),
+            },
+        }
+
+        def get_format(content_type='default', level='default'):
+            if isinstance(level, int) and level not in workbook_formats:
+                workbook_formats[level] = {
+                    **workbook_formats['default'],
+                    'default_indent': workbook.add_format({**default_format_props, 'indent': level}),
+                    'date_indent': workbook.add_format({**date_format_props, 'indent': level}),
+                    'total_indent': workbook.add_format({**default_format_props, 'bold': True, 'indent': level - 1}),
+                }
+
+            level_formats = workbook_formats[level]
+            if '_indent' in content_type and not level_formats.get(content_type):
+                return level_formats.get('default_indent', level_formats.get(content_type.removesuffix('_indent'), level_formats['default']))
+            return level_formats.get(content_type, level_formats['default'])
 
         print_mode_self = self.with_context(no_format=True)
         lines = self._filter_out_folded_children(print_mode_self._get_lines(options))
@@ -6051,134 +6089,132 @@ class AccountReport(models.Model):
                 while (x_offset, y_offset) in merged_rowspan_cells:
                     x_offset += 1
 
-                write_cell(sheet, x_offset, y_offset, header_to_render.get('name', ''), title_style, colspan_with_horizontal_group, rowspan=rowspan)
+                write_cell(sheet, x_offset, y_offset, header_to_render.get('name', ''), title_format, colspan_with_horizontal_group, rowspan=rowspan)
 
                 # tracks cells merged vertically
                 if rowspan > 1:
                     for row in range(1, rowspan):
-                        for col in range(colspan_with_horizontal_group):
-                            merged_rowspan_cells.add((x_offset + col, y_offset + row))
+                        merged_rowspan_cells.update((x_offset + col, y_offset + row) for col in range(colspan_with_horizontal_group))
 
                 x_offset += colspan
 
             if options.get('column_percent_comparison') == 'growth':
-                write_cell(sheet, x_offset, y_offset, '%', title_style)
+                write_cell(sheet, x_offset, y_offset, '%', title_format)
                 x_offset += 1
 
             if options['show_horizontal_group_total'] and header_level_index != 0:
                 horizontal_group_name = next((group['name'] for group in options['available_horizontal_groups'] if group['id'] == options['selected_horizontal_group_id']), None)
-                write_cell(sheet, x_offset, y_offset, horizontal_group_name, title_style)
+                write_cell(sheet, x_offset, y_offset, horizontal_group_name, title_format)
                 x_offset += 1
             if annotations:
                 annotations_x_offset = x_offset
-                write_cell(sheet, annotations_x_offset, y_offset, 'Annotations', title_style)
+                write_cell(sheet, annotations_x_offset, y_offset, 'Annotations', title_format)
                 x_offset += 1
             y_offset += 1
             x_offset = original_x_offset + 1
 
         for subheader in column_headers_render_data['custom_subheaders']:
             colspan = subheader.get('colspan', 1)
-            write_cell(sheet, x_offset, y_offset, subheader.get('name', ''), title_style, colspan)
+            write_cell(sheet, x_offset, y_offset, subheader.get('name', ''), title_format, colspan)
             x_offset += colspan
         y_offset += 1
         x_offset = original_x_offset + 1
 
         if account_lines_split_names:
             # If we have a separate account code column, add a title for it
-            write_cell(sheet, x_offset - 2, y_offset, _("Code"), title_style)
-            write_cell(sheet, x_offset - 1, y_offset, _("Account Name"), title_style)
+            write_cell(sheet, x_offset - 2, y_offset, _("Code"), title_format)
+            write_cell(sheet, x_offset - 1, y_offset, _("Account Name"), title_format)
         sheet.set_column(x_offset, x_offset + len(options['columns']), 10)
 
         for column in options['columns']:
             colspan = column.get('colspan', 1)
-            write_cell(sheet, x_offset, y_offset, column.get('name', ''), title_style, colspan)
+            write_cell(sheet, x_offset, y_offset, column.get('name', ''), title_format, colspan)
             x_offset += colspan
 
         if options['show_horizontal_group_total']:
-            write_cell(sheet, x_offset, y_offset, options['columns'][0].get('name', ''), title_style, colspan)
+            write_cell(sheet, x_offset, y_offset, options['columns'][0].get('name', ''), title_format, colspan)
 
         if options.get('column_percent_comparison') == 'growth':
-            write_cell(sheet, x_offset, y_offset, '', title_style, colspan)
-
+            write_cell(sheet, x_offset, y_offset, '', title_format, colspan)
         y_offset += 1
 
         if options.get('order_column'):
             lines = self.sort_lines(lines, options)
 
+        # Disable bold styling for the max level.
+        max_level = max(line.get('level', -1) for line in lines) if lines else -1
+        if max_level in {0, 1, 2}:
+            # Total lines are supposed to be a level above, so we don't touch them.
+            for wb_format in (s for s in workbook_formats[max_level] if 'total' not in s):
+                workbook_formats[max_level][wb_format].set_bold(False)
+
         # Add lines.
         counter = 1
-        for y in range(0, len(lines)):
-            level = lines[y].get('level')
-            is_total_line = 'total' in lines[y].get('class', '').split(' ')
+        for y, line in enumerate(lines):
+            level = line.get('level')
             if level == 0:
                 y_offset += 1
-                style = level_0_style
-                col1_style = style
-                col2_style = style
-            elif level == 1:
-                style = level_1_style
-                col1_style = level_1_col1_total_style if is_total_line else level_1_col1_style
-                col2_style = level_1_col2_style
-            elif level == 2:
-                style = level_2_style
-                col1_style = level_2_col1_total_style if is_total_line else level_2_col1_style
-                col2_style = level_2_col2_style
-            elif level and level >= 3:
-                style = default_style
-                col2_style = style
-                level_col1_styles = col1_styles.get(level)
-                if not level_col1_styles:
-                    level_col1_base_format = {'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'num_format': '#,##0.00'}
-                    level_col1_styles = col1_styles[level] = {
-                        'default': workbook.add_format({**level_col1_base_format, 'indent': level}),
-                        'total': workbook.add_format({**level_col1_base_format, 'bold': True, 'indent': level - 1}),
-                    }
-                col1_style = level_col1_styles['total'] if is_total_line else level_col1_styles['default']
-            else:
-                style = default_style
-                col1_style = default_col1_style
-                col2_style = default_col2_style
+            elif not level:
+                level = 'default'
 
-            # write the (Account) Name column, with a specific style to manage the indentation
+            line_id = self._parse_line_id(line.get('id'))
+            is_initial_line = line_id[-1][0] == 'initial' if line_id else False
+            is_total_line = line_id[-1][0] == 'total' if line_id else False
+
+            # Write the first column(s), with a specific style to manage the indentation.
+            cell_type, cell_value = self._get_cell_type_value(line)
+            account_code_cell_format = get_format('text', level)
+
+            if cell_type == 'date':
+                cell_format = get_format('date_indent', level)
+            elif is_initial_line:
+                cell_format = get_format('initial_indent', level)
+            elif is_total_line:
+                cell_format = get_format('total_indent', level)
+            else:
+                cell_format = get_format('default_indent', level)
+
             x_offset = original_x_offset + 1
             if lines[y]['id'] in account_lines_split_names:
+                # Write the Account Code and Name columns.
                 code, name = account_lines_split_names[lines[y]['id']]
-                write_cell(sheet, 0, y + y_offset, code, col2_style)
-                write_cell(sheet, 1, y + y_offset, name, col1_style)
+                # Don't indent the account code and don't format is as a monetary value either.
+                write_cell(sheet, 0, y + y_offset, code, account_code_cell_format)
+                write_cell(sheet, 1, y + y_offset, name, cell_format)
             else:
-                cell_type, cell_value = self._get_cell_type_value(lines[y])
-                if cell_type == 'date':
-                    write_cell(sheet, original_x_offset, y + y_offset, cell_value, date_default_col1_style, datetime=True)
-                else:
-                    write_cell(sheet, original_x_offset, y + y_offset, cell_value, col1_style)
+                write_cell(sheet, original_x_offset, y + y_offset, cell_value, cell_format, datetime=cell_type == 'date')
 
-                if lines[y].get('parent_id') and lines[y]['parent_id'] in account_lines_split_names:
-                    write_cell(sheet, 1 + original_x_offset, y + y_offset, account_lines_split_names[lines[y]['parent_id']][0], col2_style)
+                if 'parent_id' in line and line['parent_id'] in account_lines_split_names:
+                    write_cell(sheet, 1 + original_x_offset, y + y_offset, account_lines_split_names[line['parent_id']][0], account_code_cell_format)
                 elif account_lines_split_names:
-                    write_cell(sheet, 1 + original_x_offset, y + y_offset, "", col2_style)
+                    write_cell(sheet, 1 + original_x_offset, y + y_offset, "", account_code_cell_format)
 
-            #write all the remaining cells
-            columns = lines[y]['columns']
-            if options.get('column_percent_comparison') and 'column_percent_comparison_data' in lines[y]:
-                columns += [lines[y].get('column_percent_comparison_data')]
+            # Write all the remaining cells.
+            columns = line['columns']
+            if options.get('column_percent_comparison') and 'column_percent_comparison_data' in line:
+                columns += [line['column_percent_comparison_data']]
 
             if options['show_horizontal_group_total']:
-                columns += [lines[y].get('horizontal_group_total_data', {'name': 0})]
-
+                columns += [line.get('horizontal_group_total_data', {'name': 0})]
             for x, column in enumerate(columns, start=x_offset):
                 cell_type, cell_value = self._get_cell_type_value(column)
                 if cell_type == 'date':
-                    write_cell(sheet, x + lines[y].get('colspan', 1) - 1, y + y_offset, cell_value, date_default_style, datetime=True)
+                    cell_format = get_format('date', level)
+                elif is_initial_line:
+                    cell_format = get_format('initial', level)
+                elif is_total_line:
+                    cell_format = get_format('total', level)
                 else:
-                    write_cell(sheet, x + lines[y].get('colspan', 1) - 1, y + y_offset, cell_value, style)
+                    cell_format = get_format('default', level)
+                write_cell(sheet, x + line.get('colspan', 1) - 1, y + y_offset, cell_value, cell_format, datetime=cell_type == 'date')
 
             # Write annotations.
-            if annotations and (line_annotations := annotations.get(lines[y]['id'])):
+            if annotations and (line_annotations := annotations.get(line['id'])):
                 line_annotation_text = []
                 for line_annotation in line_annotations:
                     line_annotation_text.append(f"{counter} - {line_annotation['text']}")
                     counter += 1
-                write_cell(sheet, annotations_x_offset, y + y_offset, "\n".join(line_annotation_text), annotation_style)
+                write_cell(sheet, annotations_x_offset, y + y_offset, "\n".join(line_annotation_text), annotation_format)
 
     def _add_options_xlsx_sheet(self, workbook, options_list):
         """Adds a new sheet for xlsx report exports with a summary of all filters and options activated at the moment of the export."""

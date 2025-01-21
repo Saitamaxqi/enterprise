@@ -337,6 +337,8 @@ msgid "Accounts"
 msgstr ""
 
 #. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
 msgid "Accounts Coverage Report"
 msgstr ""
@@ -648,8 +650,8 @@ msgstr ""
 #: model:account.report.column,name:account_reports.balance_sheet_balance
 #: model:account.report.column,name:account_reports.cash_flow_report_balance
 #: model:account.report.column,name:account_reports.customer_statement_report_balance
-#: model:account.report.column,name:account_reports.followup_report_report_balance
 #: model:account.report.column,name:account_reports.executive_summary_column
+#: model:account.report.column,name:account_reports.followup_report_report_balance
 #: model:account.report.column,name:account_reports.general_ledger_report_balance
 #: model:account.report.column,name:account_reports.journal_report_balance
 #: model:account.report.column,name:account_reports.partner_ledger_report_balance
@@ -1135,11 +1137,6 @@ msgid "Create Menu Item"
 msgstr ""
 
 #. module: account_reports
-#: model:ir.model,website_form_label:account_reports.model_res_partner
-msgid "Create a Customer"
-msgstr ""
-
-#. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_multicurrency_revaluation_wizard__create_uid
 #: model:ir.model.fields,field_description:account_reports.field_account_report_annotation__create_uid
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget__create_uid
@@ -1428,6 +1425,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reports.field_account_ec_sales_report_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_year_op__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_fiscal_position__display_name
+#: model:ir.model.fields,field_description:account_reports.field_account_followup_report_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_general_ledger_report_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_generic_tax_report_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_generic_tax_report_handler_account_tax__display_name
@@ -1499,12 +1497,6 @@ msgid "Download Anyway"
 msgstr ""
 
 #. module: account_reports
-#. odoo-python
-#: code:addons/account_reports/models/account_report.py:0
-msgid "Download Excel"
-msgstr ""
-
-#. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
 msgid "Download the Data Inalterability Check Report"
 msgstr ""
@@ -1529,12 +1521,6 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/journal_report/line/line.xml:0
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_journal_report_taxes_summary
 msgid "Due"
-msgstr ""
-
-#. module: account_reports
-#. odoo-python
-#: code:addons/account_reports/models/account_followup_report.py:0
-msgid "Overdue"
 msgstr ""
 
 #. module: account_reports
@@ -2075,6 +2061,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reports.field_account_ec_sales_report_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_year_op__id
 #: model:ir.model.fields,field_description:account_reports.field_account_fiscal_position__id
+#: model:ir.model.fields,field_description:account_reports.field_account_followup_report_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_general_ledger_report_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_generic_tax_report_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_generic_tax_report_handler_account_tax__id
@@ -2823,6 +2810,12 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.line,name:account_reports.outstanding
 msgid "Outstanding Receipts/Payments"
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_followup_report.py:0
+msgid "Overdue"
 msgstr ""
 
 #. module: account_reports
