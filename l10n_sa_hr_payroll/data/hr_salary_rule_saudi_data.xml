@@ -146,7 +146,7 @@ result = compensation * 2
             <field name="name">End of Service Provision</field>
             <field name="category_id" ref="hr_payroll.COMP"/>
             <field name="code">EOSP</field>
-            <field name="appears_on_payslip">False</field>
+            <field name="appears_on_payslip" eval="False"/>
             <field name="sequence">90</field>
             <field name="condition_select">python</field>
             <field name="condition_python">result = employee.active</field>
@@ -160,7 +160,7 @@ result = (contract.l10n_sa_number_of_days / 12) * ((payslip._get_contract_wage()
             <field name="name">Annual Leave Payment Compensation</field>
             <field name="category_id" ref="hr_payroll.COMP"/>
             <field name="code">ANNUALCOMP</field>
-            <field name="appears_on_payslip">False</field>
+            <field name="appears_on_payslip" eval="False"/>
             <field name="sequence">95</field>
             <field name="condition_select">python</field>
             <field name="condition_python">result = employee.departure_date and employee.departure_reason_id and employee.l10n_sa_leaves_count_compensable &gt; 0</field>
@@ -175,7 +175,7 @@ result = daily_salary * employee.l10n_sa_leaves_count_compensable
         <record id="l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_gross_salary_rule" model="hr.salary.rule">
             <field name="category_id" ref="hr_payroll.GROSS"/>
             <field name="name">Taxable Salary</field>
-            <field name="sequence">100 </field>
+            <field name="sequence">100</field>
             <field name="code">GROSS</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -265,7 +265,7 @@ result_name = inputs['REIMBURSEMENT'].name
             <field name="name">Net Salary</field>
             <field name="sequence">200</field>
             <field name="code">NET</field>
-            <field name="appears_on_employee_cost_dashboard">True</field>
+            <field name="appears_on_employee_cost_dashboard" eval="True"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">

@@ -31,7 +31,7 @@ ote_worked_day = payslip.worked_days_line_ids.filtered(lambda l: l.work_entry_ty
 result = sum(ote_inputs.mapped('amount')) + sum(ote_worked_day.mapped('amount'))
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
-        <field name="appears_on_payslip">False</field>
+        <field name="appears_on_payslip" eval="False"/>
     </record>
 
     <!-- Extra Pay Rule for inputs -->
@@ -197,7 +197,7 @@ result = -inputs['F'].amount
     <record id="l10n_au_hr_payroll_structure_au_regular_gross_salary_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.GROSS"/>
         <field name="name">Taxable Salary</field>
-        <field name="sequence">100 </field>
+        <field name="sequence">100</field>
         <field name="code">GROSS</field>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
@@ -241,7 +241,7 @@ result = sum(payslip.input_line_ids.filtered(lambda l: l.input_type_id.l10n_au_p
 result = tax_free_component
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
-        <field name="appears_on_payslip">False</field>
+        <field name="appears_on_payslip" eval="False"/>
     </record>
 
     <record id="l10n_au_termination_etp_structure_1" model="hr.salary.rule">
@@ -256,7 +256,7 @@ result = tax_free_component
 result = sum(payslip.input_line_ids.filtered(lambda l: l.input_type_id.l10n_au_payment_type == 'etp').mapped('amount')) - tax_free_component
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
-        <field name="appears_on_payslip">False</field>
+        <field name="appears_on_payslip" eval="False"/>
     </record>
 
     <record id="l10n_au_termination_leave_structure_1" model="hr.salary.rule">
@@ -416,7 +416,7 @@ if "BBC" in inputs:
     result += backpay_stsl
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
-        <field name="appears_on_payroll_report">False</field>
+        <field name="appears_on_payroll_report" eval="False"/>
     </record>
 
     <record id="l10n_au_tax_offset_structure_1" model="hr.salary.rule">
@@ -626,7 +626,7 @@ result_name = inputs['REIMBURSEMENT'].name
         <field name="name">Net Salary</field>
         <field name="sequence">200</field>
         <field name="code">NET</field>
-        <field name="appears_on_employee_cost_dashboard">True</field>
+        <field name="appears_on_employee_cost_dashboard" eval="True"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">

@@ -170,7 +170,7 @@ result_rate = payslip._rule_parameter('l10n_id_alw_bpjs_kesehatan_percent')
     <record id="l10n_id_hr_payroll_structure_id_employee_salary_gross_salary_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.GROSS"/>
         <field name="name">Taxable Salary</field>
-        <field name="sequence">100 </field>
+        <field name="sequence">100</field>
         <field name="code">GROSS</field>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
@@ -388,7 +388,7 @@ result_name = inputs['REIMBURSEMENT'].name
         <field name="name">Net Salary</field>
         <field name="sequence">200</field>
         <field name="code">NET</field>
-        <field name="appears_on_employee_cost_dashboard">True</field>
+        <field name="appears_on_employee_cost_dashboard" eval="True"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">

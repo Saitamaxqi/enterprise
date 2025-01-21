@@ -59,7 +59,7 @@ result_rate = -payslip._rule_parameter('l10n_lu_dependency_insurance_tax')
         <field name="name">Gross Gratification</field>
         <field name="code">GROSS_GRATIFICATION</field>
         <field name="sequence">20</field>
-        <field name="appears_on_payslip">False</field>
+        <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -73,7 +73,7 @@ result = result_rules['BASIC']['total'] + categories['ALW']
         <field name="name">Gross Gratification Rounding</field>
         <field name="code">GROSS_GRATIFICATION_ROUNDING</field>
         <field name="sequence">25</field>
-        <field name="appears_on_payslip">False</field>
+        <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -85,7 +85,7 @@ result = - (result_rules['GROSS_GRATIFICATION']['total'] % 5)
     <record id="l10n_lu_hr_payroll_structure_lux_employee_gratification_gross_salary_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.GROSS"/>
         <field name="name">Gross Gratification</field>
-        <field name="sequence">100 </field>
+        <field name="sequence">100</field>
         <field name="code">GROSS</field>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
@@ -244,7 +244,7 @@ result_name = inputs['REIMBURSEMENT'].name
         <field name="name">Net Gratification</field>
         <field name="sequence">200</field>
         <field name="code">NET</field>
-        <field name="appears_on_employee_cost_dashboard">True</field>
+        <field name="appears_on_employee_cost_dashboard" eval="True"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">

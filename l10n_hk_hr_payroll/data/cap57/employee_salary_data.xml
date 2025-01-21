@@ -248,7 +248,7 @@ if first_mpf_date == payslip.date_from:
     result -= sum([min(0.05 * gross, payslip._rule_parameter('l10n_hk_mpf_maximum')) for gross in gross_list])
         </field>
         <field name="struct_id" ref="l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary" />
-        <field name="appears_on_payslip">False</field>
+        <field name="appears_on_payslip" eval="False"/>
     </record>
 
     <record id="cap57_employees_salary_eevc" model="hr.salary.rule">
@@ -279,7 +279,7 @@ else:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = result_rules['EEVC']['total']</field>
         <field name="struct_id" ref="l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary" />
-        <field name="appears_on_payslip">False</field>
+        <field name="appears_on_payslip" eval="False"/>
     </record>
 
     <record id="l10n_hk_hr_payroll_structure_cap57_employee_salary_attachment_of_salary_rule" model="hr.salary.rule">
@@ -379,7 +379,7 @@ result_name = inputs['REIMBURSEMENT'].name
         <field name="name">Taxable Salary</field>
         <field name="sequence">200</field>
         <field name="code">GROSS</field>
-        <field name="appears_on_payslip">False</field>
+        <field name="appears_on_payslip" eval="False"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
@@ -394,7 +394,7 @@ result = categories['BASIC'] + categories['ALW'] - categories['ERMPF']
         <field name="name">Net Salary</field>
         <field name="sequence">210</field>
         <field name="code">NET</field>
-        <field name="appears_on_employee_cost_dashboard">True</field>
+        <field name="appears_on_employee_cost_dashboard" eval="True"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">

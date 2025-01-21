@@ -84,7 +84,7 @@ result_rate = 2
         <record id="l10n_tr_hr_payroll_structure_tr_employee_salary_gross_salary_rule" model="hr.salary.rule">
             <field name="category_id" ref="hr_payroll.GROSS"/>
             <field name="name">Taxable Salary</field>
-            <field name="sequence">100 </field>
+            <field name="sequence">100</field>
             <field name="code">GROSS</field>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
@@ -236,7 +236,7 @@ result = categories['STAXD'] + categories['BNETTAX']
             <field name="name">Net Salary</field>
             <field name="sequence">250</field>
             <field name="code">NET</field>
-            <field name="appears_on_employee_cost_dashboard">True</field>
+            <field name="appears_on_employee_cost_dashboard" eval="True"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">

@@ -361,7 +361,7 @@ result_name = inputs['REIMBURSEMENT'].name
         <field name="name">Net</field>
         <field name="code">NET</field>
         <field name="sequence">200</field>
-        <field name="appears_on_employee_cost_dashboard">True</field>
+        <field name="appears_on_employee_cost_dashboard" eval="True"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
