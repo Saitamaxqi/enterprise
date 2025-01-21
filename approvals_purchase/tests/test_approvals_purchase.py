@@ -509,7 +509,7 @@ class TestApprovalsPurchase(TestApprovalsCommon):
                     'partner_id': self.partner_seller_2.id,
                     'min_qty': 1,
                     'price': 8,
-                    'product_uom_id': self.uom_fortnight.id,
+                    'product_uom_id': self.uom_unit.id,
         })
         approval_request = self.env['approval.request'].create({
             'name': 'test_approval_request',
