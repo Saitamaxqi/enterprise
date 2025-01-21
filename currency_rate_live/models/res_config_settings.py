@@ -13,6 +13,7 @@ from pytz import timezone
 
 from odoo import api, fields, models
 from odoo.addons.account.tools import LegacyHTTPAdapter
+from odoo.addons.iap.tools.iap_tools import iap_jsonrpc
 from odoo.tools.zeep import Client
 from odoo.tools.zeep.helpers import serialize_object
 from odoo.exceptions import UserError
@@ -632,34 +633,45 @@ class ResCompany(models.Model):
         return rslt
 
     def _parse_xe_com_data(self, available_currencies):
-        """ Parses the currency rates data from xe.com provider.
-        As this provider does not have an API, we directly extract what we need
-        from HTML.
         """
-        url_format = 'http://www.xe.com/currencytables/?from=%(currency_code)s'
+        Parse currency exchange rate data retrieved from the XE.com API.
 
-        # We generate all the exchange rates relative to the USD. This is purely arbitrary.
-        response = requests.get(url_format % {'currency_code': 'USD'}, timeout=30)
-        response.raise_for_status()
+        This function parses exchange rate data for available currencies from the XE.com provider
+        via a JSON-RPC request and processes the data into a structured format. It filters the rates
+        to include only those matching the given `available_currencies`.
 
+        :param available_currencies: A recordset containing available currency objects. Each object
+            is expected to have a `name` attribute representing the currency code (e.g., 'USD', 'EUR').
+        :returns: A dictionary where keys are currency codes (strings) and values are tuples:
+            - The exchange rate (float).
+            - The timestamp of the rate, formatted as a string in `DEFAULT_SERVER_DATE_FORMAT`.
+        :rtype: dict
+            
+        Example:
+            If the XE.com API returns the following data:
+                {
+                    '2025-01-21T00:00:00Z': {
+                        'EUR': 1.2345,
+                        'USD': 1.0,
+                    },
+                }
+            and `available_currencies` contains 'USD' and 'EUR',
+            the function will return:
+                {
+                    'EUR': (1.2345, '2025-01-20'),
+                    'USD': (1.0, '2025-01-20'),
+                }
+        """
+        iap_proxy_url = self.env['ir.config_parameter'].sudo().get_param('currency_rate_live.iap_proxy_url', PROXY_URL)
+        currency_data = iap_jsonrpc(f'{iap_proxy_url}/api/currency_rate/1/get_currency_rates', params={'provider': 'xe_com'})
+        available_currency_names = available_currencies.mapped('name')
         rslt = {}
 
-        available_currency_names = available_currencies.mapped('name')
-
-        htmlelem = etree.fromstring(response.content, etree.HTMLParser())
-        rates_entries = htmlelem.xpath(".//div[@id='table-section']//tbody/tr")
-        time_element = htmlelem.xpath(".//div[@id='table-section']/section/p")[0]
-        date_rate = datetime.datetime.strptime(time_element.text, '%b %d, %Y, %H:%M UTC').date()
-
-        if 'USD' in available_currency_names:
-            rslt['USD'] = (1.0, date_rate)
-
-        for rate_entry in rates_entries:
-            # line structure is <th>CODE</th><td>NAME<td><td>UNITS PER CURRENCY</td><td>CURRENCY PER UNIT</td>
-            currency_code = ''.join(rate_entry.find('.//th').itertext()).strip()
-            if currency_code in available_currency_names:
-                rate = float(rate_entry.find("td[2]").text.replace(',', ''))
-                rslt[currency_code] = (rate, date_rate)
+        for timestamp, rates in currency_data.items():
+            for currency, rate in rates.items():
+                if currency in available_currency_names and rate:
+                    date_rate = datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ")
+                    rslt[currency] = (rate, date_rate.strftime(DEFAULT_SERVER_DATE_FORMAT))
 
         return rslt
 
