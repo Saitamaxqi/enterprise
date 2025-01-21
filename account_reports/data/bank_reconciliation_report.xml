@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo auto_sequence="1">
     <record id="bank_reconciliation_report" model="account.report">
         <field name="name">Bank Reconciliation Report</field>
         <field name="filter_show_draft" eval="True"/>

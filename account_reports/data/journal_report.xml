@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+  <data auto_sequence="1">
     <record id="journal_report" model="account.report">
         <field name="name">Journal Report</field>
         <field name="filter_journals" eval="True"/>
@@ -64,7 +65,9 @@
             </record>
         </field>
     </record>
+  </data>
 
+  <data>
     <template id="journal_report_pdf_export_main">
         <html>
             <head>
@@ -232,4 +235,5 @@
             </t>
         </div>
     </template>
+  </data>
 </odoo>

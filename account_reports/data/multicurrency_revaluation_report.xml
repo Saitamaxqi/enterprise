@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo auto_sequence="1">
     <record id="multicurrency_revaluation_report" model="account.report">
         <field name="name">Unrealized Currency Gains/Losses</field>
         <field name="filter_date_range" eval="False"/>

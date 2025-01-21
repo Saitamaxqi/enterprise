@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo auto_sequence="1">
     <record id="general_ledger_report" model="account.report">
         <field name="name">General Ledger</field>
         <field name="filter_journals" eval="True"/>

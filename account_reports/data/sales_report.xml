@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<odoo>
+<odoo auto_sequence="1">
     <record id="generic_ec_sales_report" model="account.report">
         <field name="name">Generic EC Sales List</field>
         <field name="filter_show_draft" eval="True"/>

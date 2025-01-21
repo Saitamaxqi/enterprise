@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo auto_sequence="1">
     <record id="trial_balance_report" model="account.report">
         <field name="name">Trial Balance</field>
         <field name="filter_journals" eval="True"/>
