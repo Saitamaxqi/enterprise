@@ -295,6 +295,19 @@
         </field>
     </record>
 
+    <record id="documents_view_list_add_documents_attachment" model="ir.ui.view">
+        <field name="name">add documents attachment</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="documents_view_list_main"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <list position="attributes">
+                <attribute name="expand">1</attribute>
+                <attribute name="default_group_by">folder_id</attribute>
+            </list>
+        </field>
+    </record>
+
     <record id="documents_view_activity" model="ir.ui.view">
         <field name="name">documents.document activity</field>
         <field name="model">documents.document</field>

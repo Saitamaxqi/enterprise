@@ -2423,3 +2423,31 @@ class DocumentsDocument(models.Model):
             and (folder := self.env.ref(folder_xmlid, raise_if_not_found=False))
         ):
             self.action_folder_embed_action(folder.id, action.id)
+
+    def add_documents_attachment(self, res_model, res_id, is_public=False):
+        """Unified method to create document attachments with optional plugin handling
+
+        :param str res_model: model name to attach the document to
+        :param int res_id: record ID to attach the document to
+        :param bool is_public: specify attachment can publicly accessible
+
+        :return: Data of newly created attachments
+        :rtype: list[dict]
+        """
+        # Build attachment data with conditional plugin parameters
+        new_attachments = self.env['ir.attachment']
+        for attachment in self.attachment_id:
+            copied = attachment.copy({
+                "res_model": res_model,
+                "res_id": res_id,
+                "public": is_public,
+                "original_id": attachment.id,
+            })
+            new_attachments |= copied
+
+        # Generate access tokens if needed
+        if is_public:
+            for attachment in new_attachments:
+                attachment.generate_access_token()
+
+        return [attachment._get_media_info() for attachment in new_attachments]

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="mail.Composer.quickActionButton" t-inherit-mode="extension">
+
+        <xpath expr="//i" position="attributes">
+            <attribute name="t-if">action.id !== 'add-documents'</attribute>
+        </xpath>
+        <xpath expr="//button" position="attributes">
+            <attribute name="class" add="opacity-trigger-hover" separator=" "/>
+        </xpath>
+        <xpath expr="//button" position="inside">
+            <t t-if="action.id === 'add-documents'">
+                <span>Document IMAGE</span>
+            </t>
+        </xpath>
+    </t>
+</templates>

@@ -306,3 +306,12 @@
         min-height: 6em;
     }
 }
+
+// AddDocumentsAttachmentPlugin powerbox icon
+.o_add_documents_icon {
+    background-image: url('/documents/static/description/icon.svg');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: grayscale(1);
+}

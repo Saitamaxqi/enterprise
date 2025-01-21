@@ -548,5 +548,29 @@ class DocumentsDocument(models.Model):
     def _get_writable_record_name_field(self):
         return 'name'
 
+    @api.model
+    def create_xlsx_attachment_from_spreadsheet(self, spreadsheet_files):
+        """Creates XLSX attachments from spreadsheet JSON exports
+
+        :param spreadsheet_files: list of dicts with 'name', 'files', 'res_model' and 'res_id'
+
+        :return: list of media info dicts
+        :rtype: list[dict]
+        """
+        attachments = []
+
+        for sheet in spreadsheet_files:
+            content = self.env['spreadsheet.mixin']._zip_xslx_files(sheet["files"])
+            attachment = self.env["ir.attachment"].create({
+                "name": sheet["name"],
+                "datas": base64.b64encode(content).decode(),
+                "res_model": sheet["res_model"],
+                "res_id": sheet["res_id"],
+                "type": "binary",
+                "mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            })
+            attachments.append(attachment)
+        return [a._get_media_info() for a in attachments]
+
 class XSLXReadUserError(UserError):
     pass

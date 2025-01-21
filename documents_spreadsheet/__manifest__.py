@@ -40,6 +40,8 @@
             'documents_spreadsheet/static/src/helpers.js',
             'documents_spreadsheet/static/src/spreadsheet_action_loader.js',
             'documents_spreadsheet/static/src/mail/**/*',
+            'documents_spreadsheet/static/src/views/**/*',
+            'documents_spreadsheet/static/src/editor/**/*',
         ],
         'web.assets_backend_lazy': [
             'documents_spreadsheet/static/src/documents_view/activity/**',

@@ -44,6 +44,8 @@ App to upload and manage your documents.
         'views/documents_templates_share.xml',
         'views/documents_templates_thumbnails.xml',
         'views/ir_actions_views.xml',
+        'views/mail_compose_message_views.xml',
+        'views/mail_scheduled_message_views.xml',
         'wizard/documents_access_invite_views.xml',
         'wizard/documents_link_to_record_wizard_views.xml',
         'wizard/documents_request_wizard_views.xml',
@@ -68,6 +70,7 @@ App to upload and manage your documents.
             ('after', 'web/static/src/core/errors/error_dialogs.xml', 'documents/static/src/web/error_dialog/error_dialog_patch.xml'),
             'documents/static/src/web/**/*',
             'documents/static/src/components/**/*',
+            'documents/static/src/editor/**/*',
         ],
         'web.assets_backend_lazy': [
             'documents/static/src/views/activity/**',
