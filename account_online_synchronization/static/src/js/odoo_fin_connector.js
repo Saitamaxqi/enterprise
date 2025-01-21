@@ -3,12 +3,13 @@ import { loadJS } from "@web/core/assets";
 import { cookie } from "@web/core/browser/cookie";
 import { markup } from "@odoo/owl";
 const actionRegistry = registry.category('actions');
-/* global OdooFin, debugMode */
+/* global OdooFin */
 
 function OdooFinConnector(parent, action) {
     const orm = parent.services.orm;
     const actionService = parent.services.action;
     const notificationService = parent.services.notification;
+    const debugMode = parent.debug;
 
     const id = action.id;
     action.params.colorScheme = cookie.get("color_scheme");
@@ -70,8 +71,9 @@ function OdooFinConnector(parent, action) {
                 }
             };
             // propagate parent debug mode to iframe
-            if(typeof debugMode !== 'undefined' && debugMode)
-                params.data['debug'] = debugMode;
+            if (typeof debugMode !== "undefined" && debugMode) {
+                params.data["debug"] = debugMode;
+            }
             OdooFin.create(params);
             OdooFin.open();
         });
