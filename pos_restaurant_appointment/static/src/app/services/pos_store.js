@@ -4,7 +4,7 @@ import { PosStore } from "@point_of_sale/app/services/pos_store";
 patch(PosStore.prototype, {
     async setup() {
         await super.setup(...arguments);
-        this.onNotified("TABLE_BOOKING", (payload) => {
+        this.data.connectWebSocket("TABLE_BOOKING", (payload) => {
             const { command, event } = payload;
             if (!event) {
                 return;

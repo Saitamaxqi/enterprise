@@ -4,7 +4,7 @@ import { patch } from "@web/core/utils/patch";
 patch(Chrome.prototype, {
     setup() {
         super.setup(...arguments);
-        this.pos.onNotified("DELIVERY_ORDER_COUNT", async (order_id) => {
+        this.pos.data.connectWebSocket("DELIVERY_ORDER_COUNT", async (order_id) => {
             const response = await this.pos.data.call(
                 "pos.config",
                 "get_delivery_data",

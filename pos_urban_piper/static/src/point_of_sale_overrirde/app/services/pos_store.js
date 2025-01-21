@@ -12,7 +12,8 @@ patch(PosStore.prototype, {
         this.delivery_providers = [];
         this.total_new_order = 0;
         this.delivery_providers_active = false;
-        this.onNotified("DELIVERY_ORDER_COUNT", async (order_id) => {
+        this.delivery_order_count = {};
+        this.data.connectWebSocket("DELIVERY_ORDER_COUNT", async (order_id) => {
             await this._fetchUrbanpiperOrderCount(order_id);
         });
         if (this.config.module_pos_urban_piper && this.config.urbanpiper_store_identifier) {

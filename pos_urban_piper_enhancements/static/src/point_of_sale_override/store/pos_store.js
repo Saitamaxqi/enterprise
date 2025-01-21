@@ -8,7 +8,7 @@ patch(PosStore.prototype, {
      */
     async setup() {
         await super.setup(...arguments);
-        this.onNotified("FUTURE_ORDER_NOTIFICATION", async (orderIds) => {
+        this.data.connectWebSocket("FUTURE_ORDER_NOTIFICATION", async (orderIds) => {
             this.sound.play("notification");
             this.notification.add(_t("Scheduled Order"), {
                 type: "info",
