@@ -48,6 +48,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
         toolbar_groups: [
             withSequence(60, {
                 id: "knowledge",
+                namespaces: ["compact", "expanded"],
             }),
             withSequence(60, {
                 id: "knowledge_image",
@@ -61,6 +62,14 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 commandId: "addComments",
                 description: _t("Add a comment to selection"),
                 text: _t("Comment"),
+                namespaces: ["expanded"],
+            },
+            {
+                id: "comments_small",
+                groupId: "knowledge",
+                commandId: "addComments",
+                description: _t("Add a comment to selection"),
+                namespaces: ["compact"],
             },
             {
                 id: "comments_image",
@@ -73,7 +82,6 @@ export class KnowledgeCommentsPlugin extends Plugin {
 
         /** Handlers */
         layout_geometry_change_handlers: () => {
-            // TODO ABD: why is this called
             this.commentBeaconManager?.drawThreadOverlays();
             this.config.onLayoutGeometryChange();
         },
@@ -105,7 +113,6 @@ export class KnowledgeCommentsPlugin extends Plugin {
         normalize_handlers: this.normalize.bind(this),
 
         /** Overrides */
-        // TODO ABD: arbitrary sequence, investigate what makes sense
         delete_forward_overrides: withSequence(1, this.handleDeleteForward.bind(this)),
         delete_backward_overrides: withSequence(1, this.handleDeleteBackward.bind(this)),
 
@@ -308,8 +315,6 @@ export class KnowledgeCommentsPlugin extends Plugin {
     }
 
     addCommentToSelection() {
-        // TODO ABD: can this method ever be called if either the start or the
-        // end of the selection are in a non-editable positon ?
         const { startContainer, startOffset, endContainer, endOffset } =
             this.dependencies.selection.getEditableSelection({ deep: true });
         const isCollapsed = startContainer === endContainer && startOffset === endOffset;
@@ -382,7 +387,6 @@ export class KnowledgeCommentsPlugin extends Plugin {
         this.commentBeaconManager.removeBogusBeacons();
         for (const beacon of elem.querySelectorAll(".oe_thread_beacon")) {
             if (beacon.isConnected && !isAllowedBeaconPosition(beacon.parentElement)) {
-                // TODO ABD: evaluate cleanupThread ?
                 this.commentBeaconManager.cleanupBeaconPair(beacon.dataset.id);
                 this.removeBeacon(beacon);
                 continue;

@@ -113,16 +113,12 @@ export function appendArticleLink(htmlFieldContainerSelector, articleName, previ
         trigger: '.o-we-powerbox .o-we-command .o-we-command-img.fa-newspaper-o',
         run: 'click',
     }, {
-        // select an article in the list
-        // 'not has span' is used to remove children articles as they also contain the article name
-        trigger: `.o_select_menu_item > span:not(:has(span)):contains(${articleName})`,
+        trigger: ".o_article_search_input input",
+        run: `edit ${articleName}`,
+    }, {
+        trigger: `.o_article_search_item .o_article_search_name:contains(${articleName})`,
         run: 'click',
-    }, { // wait for the choice to be registered
-        trigger: `.o_select_menu_toggler_slot:contains(${articleName})`,
-    }, { // click on the "Insert Link" button
-        trigger: '.modal-dialog:contains(Link an Article) .modal-footer button.btn-primary',
-        run: 'click'
-    }];
+    }]
 }
 
 /**

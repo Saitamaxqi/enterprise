@@ -7,10 +7,10 @@
                 <!-- Search bar -->
                 <div class="d-flex align-items-center gap-1 pe-md-1 ps-1 pb-3 pt-2">
                     <a role="button" t-on-click="() => env.toggleAsideMobile()"
-                        class="o_knowledge_burger_icon d-md-none btn btn-light px-2 py-1">
-                        <i class="fa fa-lg fa-bars" title="Toggle aside menu"/>
+                        class="o_knowledge_toggle_sidebar d-md-none btn btn-light px-2 py-1">
+                        <i class="oi oi-lg oi-panel-right" title="Toggle aside menu"/>
                     </a>
-                    <a t-if="isPortalUser" class="flex-grow-1 ps-3 fs-3 fw-bold" href="/my" data-hotkey="h">
+                    <a t-if="isPortalUser" class="flex-grow-1 ps-3 fs-3 fw-bold text-black" href="/my" data-hotkey="h">
                         <i class="fa fa-home pe-2"/>Home
                     </a>
                     <button t-if="isInternalUser" data-hotkey="n" t-on-click="() => this.env.createArticle('private')"
@@ -18,7 +18,9 @@
                         <i class="fa fa-fw fa-plus pe-2"/>New Article
                     </button>
                     <button data-hotkey="f" t-on-click="onSearchBarClick"
-                        class="o_knowledge_search btn fw-normal text-black text-start text-truncate">
+                        class="o_knowledge_search btn fw-normal text-black text-start text-truncate"
+                        data-tooltip="Search for an article or a keyword"
+                        aria-label="Search for an article or a keyword">
                         <i class="fa fa-search"/>
                     </button>
                 </div>

@@ -1,4 +1,4 @@
-import { HtmlViewer } from "@html_editor/fields/html_viewer";
+import { HtmlViewer } from "@html_editor/components/html_viewer/html_viewer";
 import { LocalOverlayContainer } from "@html_editor/local_overlay_container";
 import { usePositionHook } from "@html_editor/position_hook";
 import { onWillDestroy, useEffect, useExternalListener, useState, useSubEnv } from "@odoo/owl";

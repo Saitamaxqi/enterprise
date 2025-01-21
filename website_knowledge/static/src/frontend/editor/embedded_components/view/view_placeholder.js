@@ -5,7 +5,6 @@ export class ViewPlaceholderComponent extends Component {
     static props = {};
 
     setup() {
-        super.setup();
         this.url = `/knowledge/article/${this.env.articleId}`;
     }
 }

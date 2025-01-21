@@ -18,22 +18,9 @@
         # Having the editor add a lot of files to the PoS bundle.
         # We can maybe find a way to have a "light editor" with smaller bundle
         'pos_appointment.html_editor': [
-            "html_editor/static/src/utils/*.js",
+            ('include', 'html_editor.assets_editor'),
             ("remove", "html_editor/static/src/utils/regex.js"),
-
-            'html_editor/static/src/html_migrations/**/*',
-            'html_editor/static/src/plugin.js',
-            'html_editor/static/src/plugin_sets.js',
-            'html_editor/static/src/wysiwyg.js',
-            'html_editor/static/src/wysiwyg.xml',
-            'html_editor/static/src/position_hook.js',
-            'html_editor/static/src/local_overlay_container.js',
-            'html_editor/static/src/local_overlay_container.xml',
-            'html_editor/static/src/core/**/*',
-            'html_editor/static/src/main/**/*',
-            'html_editor/static/src/fields/**/*',
-            'html_editor/static/src/others/**/*',
-            'html_editor/static/src/editor.js',
+            'html_editor/static/src/fields/html_field*',
 
             'web/static/lib/dompurify/DOMpurify.js',
         ],

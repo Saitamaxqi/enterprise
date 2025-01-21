@@ -7,7 +7,7 @@ import { user } from "@web/core/user";
 
 // Articles command
 class KnowledgeCommand extends DefaultCommandItem {
-    static template = "KnowledgeCommandTemplate";
+    static template = "knowledge.KnowledgeCommandTemplate";
     static props = {
         ...DefaultCommandItem.props,
         headline: String,
@@ -20,7 +20,7 @@ class KnowledgeCommand extends DefaultCommandItem {
 
 // "Not found, create one" command
 class Knowledge404Command extends DefaultCommandItem {
-    static template = "Knowledge404CommandTemplate";
+    static template = "knowledge.Knowledge404CommandTemplate";
     static props = {
         ...DefaultCommandItem.props,
         articleName: String,
@@ -29,7 +29,7 @@ class Knowledge404Command extends DefaultCommandItem {
 
 // Advanced search command
 class KnowledgeExtraCommand extends HotkeyCommandItem {
-    static template = "KnowledgeExtraCommandTemplate";
+    static template = "knowledge.KnowledgeExtraCommandTemplate";
 }
 
 const commandSetupRegistry = registry.category("command_setup");
@@ -37,7 +37,7 @@ commandSetupRegistry.add("?", {
     debounceDelay: 500,
     emptyMessage: _t("No article found."),
     name: _t("articles"),
-    placeholder: _t("Search for an article..."),
+    placeholder: _t("Search for an article or a keyword..."),
 });
 
 const commandProviderRegistry = registry.category("command_provider");
@@ -90,9 +90,6 @@ const fn = (hidden) => {
                 }
             }
         }
-        const knowledgeMainMenuId = env.services.menu.getAll().find(
-            menu => menu.xmlid === 'knowledge.knowledge_menu_root'
-        ).id;
         // display the articles
         const result = articlesData.map(article => ({
             Component: KnowledgeCommand,
@@ -105,7 +102,7 @@ const fn = (hidden) => {
 
             },
             category: "knowledge_articles",
-            href: `/odoo/knowledge.article/${article.id}?menu_id=${knowledgeMainMenuId}`,
+            href: `/odoo/knowledge.article/${article.id}`,
             name: article.name || _t("Untitled"),
             props: {
                 isFavorite: article.is_user_favorite,
@@ -115,8 +112,8 @@ const fn = (hidden) => {
                 icon_string: article.icon || '📄',
             },
         }));
-        if(!hidden){
-        // add the "advanced search" command
+        if (!hidden && !(await user.hasGroup("base.group_portal"))) {
+            // add the "advanced search" command
             result.push({
                 Component: KnowledgeExtraCommand,
                 async action() {

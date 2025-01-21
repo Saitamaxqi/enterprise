@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-    <t t-name="KnowledgeCommandTemplate">
+    <t t-name="knowledge.KnowledgeCommandTemplate">
         <div class="o_command_default px-4 py-2">
             <div class="o_command_palette_box_header d-flex align-items-center">
                 <span class="pe-2" t-if="props.icon_string" t-out="props.icon_string"/>
@@ -11,8 +11,8 @@
                 <span t-if="props.subjectName" class="text-muted small pe-2">—</span>
                 <span t-if="props.subjectName" class="o_command_name text-ellipsis text-muted small">
                     <t t-foreach="props.splitSubjectName" t-as="name" t-key="name_index">
-                        <t t-if="name" t-out="name"/>
-                        <t t-else="">Untitled</t>
+                        <b t-if="name_index % 2" t-out="name" class="text-primary"/>
+                        <t t-else="" t-out="name"/>
                     </t>
                 </span>
                 <span class="ms-auto flex-shrink-0">
@@ -21,11 +21,11 @@
             </div>
             <div t-if="props.headline"
                 t-out="props.headline"
-                class="border rounded text-muted my-2 p-2"/>
+                class="border rounded text-muted my-2 p-2 text-break"/>
         </div>
     </t>
 
-    <t t-name="Knowledge404CommandTemplate">
+    <t t-name="knowledge.Knowledge404CommandTemplate">
         <div class="o_command_hotkey">
             <span>
                 No Article found.
@@ -36,7 +36,7 @@
         </div>
     </t>
 
-    <t t-name="KnowledgeExtraCommandTemplate">
+    <t t-name="knowledge.KnowledgeExtraCommandTemplate">
         <div class="o_command_hotkey">
             <span>
                 <i class="fa fa-arrows-alt pe-2" />

@@ -1,5 +1,5 @@
 import { _t } from "@web/core/l10n/translation";
-import { ArticleSelectionDialog } from "../../components/article_selection_dialog/article_selection_dialog";
+import { ArticleSearchDialog } from "@knowledge/components/article_search_dialog/article_search_dialog";
 import { ArticleTemplatePickerDialog } from "@knowledge/components/article_template_picker_dialog/article_template_picker_dialog";
 import { browser } from "@web/core/browser/browser";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
@@ -16,7 +16,15 @@ import { useNestedSortable } from "@web/core/utils/nested_sortable";
 import { useService } from "@web/core/utils/hooks";
 import { useRecordObserver } from "@web/model/relational_model/utils";
 
-import { Component, onWillStart, reactive, useRef, useState, useChildSubEnv } from "@odoo/owl";
+import {
+    Component,
+    onWillStart,
+    reactive,
+    useRef,
+    useState,
+    useChildSubEnv,
+    useExternalListener,
+} from "@odoo/owl";
 
 export const SORTABLE_TOLERANCE = 10;
 
@@ -50,9 +58,12 @@ export class KnowledgeSidebar extends Component {
     
     setup() {
         super.setup();
+        // In case a portal user loads a hidden website_published article,
+        // subsequent searches should include articles in that hidden tree.
 
         this.actionService = useService("action");
         this.dialog = useService("dialog");
+        this.hotkey = useService("hotkey");
         this.orm = useService("orm");
 
         this.favoriteTree = useRef("favoriteTree");
@@ -91,6 +102,21 @@ export class KnowledgeSidebar extends Component {
         });
 
         this.loadArticles();
+
+        // Reassign the Control+k hotkey for portal users from the CommandPalette
+        // to the article search feature.
+        useExternalListener(
+            browser,
+            "keydown",
+            (ev) => {
+                if (this.isPortalUser && ev.key === "k" && (ev.ctrlKey || ev.metaKey)) {
+                    ev.preventDefault();
+                    ev.stopImmediatePropagation();
+                    this.onSearchBarClick();
+                }
+            },
+            { capture: true }
+        );
 
         // Resequencing of the favorite articles
         useNestedSortable({
@@ -719,17 +745,32 @@ export class KnowledgeSidebar extends Component {
      * article selection dialog if the user is a portal user
      */
     onSearchBarClick() {
+        // Ensure that if the command palette is already open, it is forcibly
+        // closed to be open again with the search configuration.
+        this.dialog.closeAll();
         if (this.isInternalUser) {
-            this.env.services.command.openMainPalette({searchValue: '?'});
+            this.env.services.command.openMainPalette({ searchValue: "?" });
         } else {
-            this.dialog.add(
-                ArticleSelectionDialog,
-                {
-                    title: _t('Search an Article...'),
-                    confirmLabel: _t('Open'),
-                    articleSelected: (article) => this.env.openArticle(article.articleId),
-                }
-            );
+            this.dialog.add(ArticleSearchDialog, {
+                search: (searchValue) => {
+                    const params = { search_query: searchValue };
+                    let searchFunction = "get_user_sorted_articles";
+                    if (searchValue) {
+                        searchFunction = "get_sorted_articles";
+                        params.domain = [
+                            "|",
+                            "|",
+                            ["is_article_visible", "=", true],
+                            ["is_user_favorite", "=", true],
+                            "&",
+                            ["website_published", "=", true],
+                            ["id", "child_of", this.props.record.data.root_article_id.id],
+                        ];
+                    }
+                    return this.orm.call("knowledge.article", searchFunction, [[]], params);
+                },
+                select: (article) => this.env.openArticle(article.id),
+            });
         }
     }
 

@@ -12,6 +12,10 @@ export class PublicEmbeddedViewLinkComponent extends Component {
         linkStyle: "link",
     };
 
+    setup() {
+        this.url = `/knowledge/article/${this.env.articleId}`;
+    }
+
     getLinkClass() {
         return EMBEDDED_VIEW_LINK_STYLES[this.props.linkStyle].class;
     }

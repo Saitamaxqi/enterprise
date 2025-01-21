@@ -3,7 +3,7 @@ import { useBus, useService } from '@web/core/utils/hooks';
 import { ActionContainer } from '@web/webclient/actions/action_container';
 import { MainComponentsContainer } from "@web/core/main_components_container";
 import { useOwnDebugContext } from "@web/core/debug/debug_context";
-import { Component, onMounted, useExternalListener } from "@odoo/owl";
+import { Component, onMounted } from "@odoo/owl";
 
 export class KnowledgePortalWebClient extends Component {
     static props = {};
@@ -16,7 +16,6 @@ export class KnowledgePortalWebClient extends Component {
         useOwnDebugContext({ categories: ["default"] });
         useBus(routerBus, "ROUTE_CHANGE", this._showView);
         onMounted(() => { this._showView(); });
-        useExternalListener(window, "keydown", this.onGlobalKeyDown, { capture: true });
     }
 
     /**
@@ -47,15 +46,5 @@ export class KnowledgePortalWebClient extends Component {
                 : {},
             stackPosition: "replaceCurrentAction",
         });
-    }
-
-    /**
-     * Prevent opening the command palette when CTRL+K is pressed, as portal users cannot have
-     * access to its features (searching users, menus, ...).
-     */
-    onGlobalKeyDown(event) {
-        if (event.key === 'k' && (event.ctrlKey || event.metaKey)) {
-            event.stopPropagation();
-        }
     }
 }

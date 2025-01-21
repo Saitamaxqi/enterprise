@@ -24,6 +24,10 @@
         }
     }
 
+    .o_knowledge_toggle_sidebar i.oi-panel-right {
+        transform: scaleX(-1);
+    }
+
     span.o_knowledge_add_properties {
         cursor: not-allowed;
     }

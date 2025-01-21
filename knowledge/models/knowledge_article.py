@@ -1543,11 +1543,38 @@ class KnowledgeArticle(models.Model):
         return values
 
     def get_user_sorted_articles(self, search_query, limit=40, hidden_mode=False):
-        """ Called when using the Command palette to search for articles matching
-            with the given search terms. If no search terms are provided, the
-            function returns the user's favorite articles when hidden_mode is False;
-            otherwise, it returns all the hidden articles the user has access to,
-            not exceeding the limit.
+        """
+        Called when using the Command palette to search for articles matching
+        with the given search terms. If no search terms are provided, the
+        function returns the user's favorite articles when hidden_mode is False;
+        otherwise, it returns all the hidden articles the user has access to,
+        not exceeding the limit.
+
+        :param str search_query: Search terms of the user
+        :param int limit: Maximal number of records to return
+        :param bool hidden_mode: If True, scope the search to the hidden articles.
+                                 If False, scope the search to the visible articles.
+        """
+        domain = [
+            ('is_article_visible', '!=', hidden_mode),
+            ("user_has_access", "=", True)  # Admins won't see other's private articles.
+        ]
+        if not search_query:
+            if not hidden_mode:
+                domain = [('is_user_favorite', '=', True)]
+            domain = expression.AND([domain, [('is_template', '=', False)]])
+            return self.search_read(domain, limit=limit, fields=[
+                'id',
+                'icon',
+                'name',
+                'is_user_favorite',
+                'root_article_id'
+            ])
+        return self.get_sorted_articles(search_query, domain, limit)
+
+    def get_sorted_articles(self, search_query, domain=False, limit=40):
+        """
+            Get the articles matching with the given search term.
 
             To reduce the query runtime, the search method limits the number of
             candidates to consider using the `knowledge.fts_search_cut_off`
@@ -1571,26 +1598,16 @@ class KnowledgeArticle(models.Model):
               we pre-select relevant matches first, the query should return
               relevant results but not necessarily the most relevant ones.
 
-        :param str search_query: Search terms of the user
+        :param str search_query: Search terms
+        :param domain: domain used to filter the articles
         :param int limit: Maximal number of records to return
-        :param bool hidden_mode: If True, scope the search to the hidden articles.
-                                 If False, scope the search to the visible articles.
         """
-        domain = [
-            ('is_template', '=', False),
-            ('is_article_visible', '!=', hidden_mode),
-            ('user_has_access', '=', True),  # Admins won't see other's private articles.
-        ]
         if not search_query:
-            if not hidden_mode:
-                domain = [('is_user_favorite', '=', True)]
-            return self.search(domain, limit=limit).read([
-                'id',
-                'icon',
-                'name',
-                'is_user_favorite',
-                'root_article_id'
-            ])
+            return []
+        domain = expression.AND([
+            domain or [],
+            [('is_template', '=', False)],
+        ])
 
         query = self._search(domain)
 
