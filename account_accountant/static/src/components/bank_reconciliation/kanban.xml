@@ -48,7 +48,10 @@
                 <t t-set="stGroup" t-value="statementGroups.shift()"/>
                 <t t-set="stClass" t-value="!(recData.statement_complete and recData.statement_valid) and 'text-danger' or ''"/>
                 <span t-if="stGroup" class="kanban-statement d-flex text-truncate align-self-center fw-bold w-100">
-                    <span t-attf-class="{{stClass}} kanban-statement-subline flex-fill text-start" t-out="stGroup.name"/>
+                    <span t-attf-class="{{stClass}} kanban-statement-subline text-truncate flex-fill text-start"
+                          t-att-title="stGroup.name"
+                          t-out="stGroup.name"
+                        />
                     <span t-on-click.stop.prevent="() => this.openStatementDialog(recData.statement_id[0])"
                           t-attf-class="kanban-statement-subline btn btn-link"
                           name="kanban-subline-clickable-amount"
