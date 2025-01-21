@@ -408,7 +408,8 @@ test("consolidation feature (single level)", async () => {
 
     const { rows, range } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(".o_gantt_button_expand_rows").toHaveCount(1);
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
     expect(rows).toEqual([
         {
             isGroup: true,

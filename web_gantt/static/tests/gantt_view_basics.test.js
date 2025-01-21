@@ -329,7 +329,8 @@ test("multi-level grouped gantt rendering", async () => {
         groupBy: ["user_id", "project_id", "stage"],
     });
     expect(getActiveScale()).toBe(2);
-    expect(SELECTORS.expandCollapseButtons).toHaveCount(2);
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
 
     const { range, viewTitle, columnHeaders, rows } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
@@ -495,7 +496,8 @@ test("multi-level grouped with many2many field in gantt view", async () => {
         groupBy: ["user_ids", "project_id"],
     });
     expect(getActiveScale()).toBe(2);
-    expect(SELECTORS.expandCollapseButtons).toHaveCount(2);
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
 
     const { range, viewTitle, columnHeaders, rows } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
@@ -571,7 +573,8 @@ test("full precision gantt rendering", async () => {
         groupBy: ["user_id", "project_id"],
     });
     expect(getActiveScale()).toBe(4);
-    expect(SELECTORS.expandCollapseButtons).toHaveCount(2);
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
 
     const { range, viewTitle, columnHeaders, rows } = getGridContent();
     expect(range).toBe("From: 12/16/2018 to: 01/05/2019");

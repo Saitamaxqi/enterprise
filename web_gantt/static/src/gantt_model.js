@@ -224,6 +224,10 @@ export class GanttModel extends Model {
         this.notify();
     }
 
+    get rowsAreExpanded() {
+        return this.closedRows.size === 0;
+    }
+
     async fetchData(params) {
         await this._fetchData(this._buildMetaData(params));
         this.useSampleModel = false;
@@ -470,6 +474,7 @@ export class GanttModel extends Model {
     async toggleDisplayMode() {
         this.displayParams.displayMode =
             this.displayParams.displayMode === "dense" ? "sparse" : "dense";
+        this.closedRows.clear();
         this.notify();
     }
 
@@ -631,6 +636,9 @@ export class GanttModel extends Model {
 
         await this.keepLast.add(this._fetchDataPostProcess(metaData, data));
 
+        if (JSON.stringify(this.metaData.groupedBy) !== JSON.stringify(groupedBy)) {
+            this.closedRows.clear();
+        }
         this.data = data;
         this.metaData = metaData;
         this._nextMetaData = null;

@@ -19,6 +19,8 @@ import {
     onRpc,
     patchWithCleanup,
     validateSearch,
+    toggleMenuItem,
+    toggleSearchBarMenu,
 } from "@web/../tests/web_test_helpers";
 import { ResUsers, Tasks, defineGanttModels } from "./gantt_mock_models";
 import {
@@ -743,6 +745,8 @@ test("expand/collapse rows", async () => {
         arch: '<gantt date_start="start" date_stop="stop" />',
         groupBy: ["user_id", "project_id", "stage"],
     });
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
     expect(getGridContent().rows.map((r) => omit(r, "pills"))).toEqual([
         { title: "User 1", isGroup: true },
         { title: "Project 1", isGroup: true },
@@ -760,6 +764,8 @@ test("expand/collapse rows", async () => {
 
     // collapse all groups
     await contains(SELECTORS.collapseButton).click();
+    expect(SELECTORS.expandButton).toHaveCount(1);
+    expect(SELECTORS.collapseButton).toHaveCount(0);
     expect(getGridContent().rows.map((r) => omit(r, "pills"))).toEqual([
         { title: "User 1", isGroup: true },
         { title: "User 2", isGroup: true },
@@ -767,6 +773,8 @@ test("expand/collapse rows", async () => {
 
     // expand all groups
     await contains(SELECTORS.expandButton).click();
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
     expect(getGridContent().rows.map((r) => omit(r, "pills"))).toEqual([
         { title: "User 1", isGroup: true },
         { title: "Project 1", isGroup: true },
@@ -793,6 +801,27 @@ test("expand/collapse rows", async () => {
         { title: "Project 2", isGroup: true },
         { title: "Cancelled" },
     ]);
+    expect(SELECTORS.expandButton).toHaveCount(1);
+    expect(SELECTORS.collapseButton).toHaveCount(0);
+
+    // expand the first group
+    await contains(`${SELECTORS.rowHeader}${SELECTORS.group}:nth-child(1)`).click();
+    expect(getGridContent().rows.map((r) => omit(r, "pills"))).toEqual([
+        { title: "User 1", isGroup: true },
+        { title: "Project 1", isGroup: true },
+        { title: "To Do" },
+        { title: "In Progress" },
+        { title: "Project 2", isGroup: true },
+        { title: "Done" },
+        { title: "User 2", isGroup: true },
+        { title: "Project 1", isGroup: true },
+        { title: "Done" },
+        { title: "Cancelled" },
+        { title: "Project 2", isGroup: true },
+        { title: "Cancelled" },
+    ]);
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
 });
 
 test("collapsed rows remain collapsed at reload", async () => {
@@ -1826,6 +1855,345 @@ test("display mode button", async () => {
     expect(getGridContent().rows).toEqual(rowsInSparseMode);
 
     expect.verifySteps([]);
+});
+
+test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () => {
+    onRpc("get_gantt_data", () => {
+        expect.step("get_gantt_data");
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" default_group_by="user_id,project_id"/>`,
+    });
+    expect.verifySteps(["get_gantt_data"]);
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
+
+    const rowsInDenseMode = [
+        {
+            title: "User 1",
+            isGroup: true,
+            pills: [
+                { title: "1", colSpan: "Out of bounds (8)  -> 19 December 2018" },
+                { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
+                { title: "1", colSpan: "20 (1/2) December 2018 -> 31 December 2018" },
+            ],
+        },
+        {
+            title: "Project 1",
+            pills: [
+                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                {
+                    title: "Task 4",
+                    colSpan: "20 December 2018 -> 20 (1/2) December 2018",
+                    level: 1,
+                },
+            ],
+        },
+        { title: "Project 2" },
+        {
+            title: "User 2",
+            isGroup: true,
+            pills: [
+                { title: "1", colSpan: "17 (1/2) December 2018 -> 20 (1/2) December 2018" },
+                { title: "2", colSpan: "20 (1/2) December 2018 -> 20 December 2018" },
+                { title: "1", colSpan: "21 December 2018 -> 22 (1/2) December 2018" },
+                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+            ],
+        },
+        {
+            title: "Project 1",
+            pills: [
+                {
+                    title: "Task 2",
+                    colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018",
+                    level: 0,
+                },
+                { title: "Task 3", colSpan: "27 December 2018 -> 03 (1/2) January 2019", level: 0 },
+            ],
+        },
+        {
+            title: "Project 2",
+            pills: [
+                {
+                    title: "Task 7",
+                    colSpan: "20 (1/2) December 2018 -> 20 December 2018",
+                    level: 0,
+                },
+            ],
+        },
+    ];
+
+    const rowsInSparseMode = [
+        {
+            title: "User 1",
+            isGroup: true,
+            pills: [
+                { title: "1", colSpan: "Out of bounds (8)  -> 19 December 2018" },
+                { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
+                { title: "1", colSpan: "20 (1/2) December 2018 -> 31 December 2018" },
+            ],
+        },
+        {
+            title: "Project 1",
+            isGroup: true,
+            pills: [
+                { title: "1", colSpan: "Out of bounds (1)  -> 19 December 2018" },
+                { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
+                { title: "1", colSpan: "20 (1/2) December 2018 -> 31 December 2018" },
+            ],
+        },
+        {
+            title: "Task 1",
+            pills: [
+                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+            ],
+        },
+        {
+            title: "Task 4",
+            pills: [
+                {
+                    title: "Task 4",
+                    colSpan: "20 December 2018 -> 20 (1/2) December 2018",
+                    level: 0,
+                },
+            ],
+        },
+        { title: "Project 2", isGroup: true },
+        { title: "Task 5" },
+        {
+            title: "User 2",
+            isGroup: true,
+            pills: [
+                { title: "1", colSpan: "17 (1/2) December 2018 -> 20 (1/2) December 2018" },
+                { title: "2", colSpan: "20 (1/2) December 2018 -> 20 December 2018" },
+                { title: "1", colSpan: "21 December 2018 -> 22 (1/2) December 2018" },
+                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+            ],
+        },
+        {
+            title: "Project 1",
+            isGroup: true,
+            pills: [
+                { title: "1", colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018" },
+                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+            ],
+        },
+        {
+            title: "Task 2",
+            pills: [
+                {
+                    title: "Task 2",
+                    colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018",
+                    level: 0,
+                },
+            ],
+        },
+        {
+            title: "Task 3",
+            pills: [
+                { title: "Task 3", colSpan: "27 December 2018 -> 03 (1/2) January 2019", level: 0 },
+            ],
+        },
+        {
+            title: "Project 2",
+            isGroup: true,
+            pills: [{ title: "1", colSpan: "20 (1/2) December 2018 -> 20 December 2018" }],
+        },
+        {
+            title: "Task 7",
+            pills: [
+                {
+                    title: "Task 7",
+                    colSpan: "20 (1/2) December 2018 -> 20 December 2018",
+                    level: 0,
+                },
+            ],
+        },
+    ];
+
+    const rowsInCollapsedMode = [
+        {
+            title: "User 1",
+            isGroup: true,
+            pills: [
+                { title: "1", colSpan: "Out of bounds (8)  -> 19 December 2018" },
+                { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
+                { title: "1", colSpan: "20 (1/2) December 2018 -> 31 December 2018" },
+            ],
+        },
+        {
+            title: "User 2",
+            isGroup: true,
+            pills: [
+                { title: "1", colSpan: "17 (1/2) December 2018 -> 20 (1/2) December 2018" },
+                { title: "2", colSpan: "20 (1/2) December 2018 -> 20 December 2018" },
+                { title: "1", colSpan: "21 December 2018 -> 22 (1/2) December 2018" },
+                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+            ],
+        },
+    ];
+
+    expect(getGridContent().rows).toEqual(rowsInDenseMode);
+
+    await click(SELECTORS.collapseButton);
+    await animationFrame();
+    expect(SELECTORS.expandButton).toHaveCount(1);
+    expect(SELECTORS.collapseButton).toHaveCount(0);
+    expect(getGridContent().rows).toEqual(rowsInCollapsedMode);
+
+    await click(SELECTORS.sparse);
+    await animationFrame();
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
+    expect(getGridContent().rows).toEqual(rowsInSparseMode);
+
+    await click(SELECTORS.collapseButton);
+    await animationFrame();
+    expect(SELECTORS.expandButton).toHaveCount(1);
+    expect(SELECTORS.collapseButton).toHaveCount(0);
+    expect(getGridContent().rows).toEqual(rowsInCollapsedMode);
+
+    await click(SELECTORS.dense);
+    await animationFrame();
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
+    expect(getGridContent().rows).toEqual(rowsInDenseMode);
+
+    expect.verifySteps([]);
+});
+
+test("rows expanded after a grouby change", async () => {
+    onRpc("get_gantt_data", () => {
+        expect.step("get_gantt_data");
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" default_group_by="project_id,user_id"/>`,
+        searchViewArch: `
+            <search>
+                <filter name="goup_by_project_id" string="Project" context="{'group_by':'project_id'}" />
+            </search>
+        `,
+    });
+    expect.verifySteps(["get_gantt_data"]);
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
+    expect(getGridContent().rows).toEqual([
+        {
+            title: "Project 1",
+            isGroup: true,
+            pills: [
+                { title: "1", colSpan: "Out of bounds (1)  -> 17 (1/2) December 2018" },
+                { title: "2", colSpan: "17 (1/2) December 2018 -> 19 December 2018" },
+                { title: "3", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
+                { title: "2", colSpan: "20 (1/2) December 2018 -> 22 (1/2) December 2018" },
+                { title: "1", colSpan: "22 (1/2) December 2018 -> 26 December 2018" },
+                { title: "2", colSpan: "27 December 2018 -> 31 December 2018" },
+                { title: "1", colSpan: "01 January 2019 -> 03 (1/2) January 2019" },
+            ],
+        },
+        {
+            title: "User 1",
+            pills: [
+                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                {
+                    title: "Task 4",
+                    colSpan: "20 December 2018 -> 20 (1/2) December 2018",
+                    level: 1,
+                },
+            ],
+        },
+        {
+            title: "User 2",
+            pills: [
+                {
+                    title: "Task 2",
+                    colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018",
+                    level: 0,
+                },
+                { title: "Task 3", colSpan: "27 December 2018 -> 03 (1/2) January 2019", level: 0 },
+            ],
+        },
+        {
+            title: "Project 2",
+            isGroup: true,
+            pills: [{ title: "1", colSpan: "20 (1/2) December 2018 -> 20 December 2018" }],
+        },
+        { title: "User 1" },
+        {
+            title: "User 2",
+            pills: [
+                {
+                    title: "Task 7",
+                    colSpan: "20 (1/2) December 2018 -> 20 December 2018",
+                    level: 0,
+                },
+            ],
+        },
+    ]);
+
+    await click(SELECTORS.collapseButton);
+    await animationFrame();
+    expect.verifySteps([]);
+    expect(SELECTORS.expandButton).toHaveCount(1);
+    expect(SELECTORS.collapseButton).toHaveCount(0);
+    expect(getGridContent().rows).toEqual([
+        {
+            title: "Project 1",
+            isGroup: true,
+            pills: [
+                { title: "1", colSpan: "Out of bounds (1)  -> 17 (1/2) December 2018" },
+                { title: "2", colSpan: "17 (1/2) December 2018 -> 19 December 2018" },
+                { title: "3", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
+                { title: "2", colSpan: "20 (1/2) December 2018 -> 22 (1/2) December 2018" },
+                { title: "1", colSpan: "22 (1/2) December 2018 -> 26 December 2018" },
+                { title: "2", colSpan: "27 December 2018 -> 31 December 2018" },
+                { title: "1", colSpan: "01 January 2019 -> 03 (1/2) January 2019" },
+            ],
+        },
+        {
+            title: "Project 2",
+            isGroup: true,
+            pills: [{ title: "1", colSpan: "20 (1/2) December 2018 -> 20 December 2018" }],
+        },
+    ]);
+
+    await toggleSearchBarMenu();
+    await toggleMenuItem("Project");
+    await animationFrame();
+    expect.verifySteps(["get_gantt_data"]);
+    expect(SELECTORS.expandButton).toHaveCount(0);
+    expect(SELECTORS.collapseButton).toHaveCount(1);
+    expect(getGridContent().rows).toEqual([
+        {
+            title: "Project 1",
+            pills: [
+                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                {
+                    title: "Task 2",
+                    colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018",
+                    level: 1,
+                },
+                {
+                    title: "Task 4",
+                    colSpan: "20 December 2018 -> 20 (1/2) December 2018",
+                    level: 2,
+                },
+                { title: "Task 3", colSpan: "27 December 2018 -> 03 (1/2) January 2019", level: 1 },
+            ],
+        },
+        {
+            title: "Project 2",
+            pills: [
+                {
+                    title: "Task 7",
+                    colSpan: "20 (1/2) December 2018 -> 20 December 2018",
+                    level: 0,
+                },
+            ],
+        },
+    ]);
 });
 
 test("unavailabilities fetched with right parameters", async () => {

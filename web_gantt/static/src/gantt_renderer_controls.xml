@@ -63,12 +63,16 @@
                 >
                 </button>
                 <div class="btn-group" t-att-class="{ invisible: !props.displayExpandCollapseButtons }" name="expandCollapseButtons">
-                    <button class="o_gantt_button_expand_rows btn btn-secondary" title="Expand rows" t-on-click="model.expandRows.bind(model)">
-                        <i class="fa fa-caret-square-o-right"/>
-                    </button>
-                    <button class="o_gantt_button_collapse_rows btn btn-secondary" title="Collapse rows" t-on-click="model.collapseRows.bind(model)">
-                        <i class="fa fa-caret-square-o-down"/>
-                    </button>
+                    <t t-if="model.rowsAreExpanded">
+                        <button class="o_gantt_button_collapse_rows btn btn-secondary" title="Collapse rows" t-on-click="model.collapseRows.bind(model)">
+                            <i class="fa fa-caret-down"/>
+                        </button>
+                    </t>
+                    <t t-else="">
+                        <button class="o_gantt_button_expand_rows btn btn-secondary" title="Expand rows" t-on-click="model.expandRows.bind(model)">
+                            <i class="fa fa-caret-right"/>
+                        </button>
+                    </t>
                 </div>
             </div>
         </t>
@@ -85,14 +89,18 @@
             </DropdownItem>
             <t t-if="props.displayExpandCollapseButtons">
                 <div class="dropdown-divider" role="separator"/>
-                <DropdownItem onSelected="model.expandRows.bind(model)">
-                    <i class="fa fa-fw fa-caret-square-o-right"/>
-                    <span class="ms-1">Expand rows</span>
-                </DropdownItem>
-                <DropdownItem onSelected="model.collapseRows.bind(model)">
-                    <i class="fa fa-fw fa-caret-square-o-down"/>
-                    <span class="ms-1">Collapse rows</span>
-                </DropdownItem>
+                <t t-if="model.rowsAreExpanded">
+                    <DropdownItem onSelected="model.collapseRows.bind(model)">
+                        <i class="fa fa-fw fa-caret-square-o-down"/>
+                        <span class="ms-1">Collapse rows</span>
+                    </DropdownItem>
+                </t>
+                <t t-else="">
+                    <DropdownItem onSelected="model.expandRows.bind(model)">
+                        <i class="fa fa-fw fa-caret-square-o-right"/>
+                        <span class="ms-1">Expand rows</span>
+                    </DropdownItem>
+                </t>
             </t>
         </t>
     </t>
