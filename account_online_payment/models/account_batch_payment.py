@@ -140,11 +140,12 @@ class AccountBatchPayment(models.Model):
         }
 
     def _cron_check_payment_status(self):
-        self.env['account.batch.payment'].search(
-            [('state', '!=', 'reconciled'),
+        self.env['account.batch.payment'].search([
+            ('state', '!=', 'reconciled'),
             ('payment_method_code', '=', 'sepa_ct'),
-            ('account_online_linked', '=', 'True')]
-        ).check_online_payment_status()
+            ('account_online_linked', '=', 'True'),
+            ('payment_online_status', 'in', ('unsigned', 'pending')),
+        ]).check_online_payment_status()
 
     @api.depends('journal_id.account_online_link_id')
     def _compute_account_online_linked(self):
