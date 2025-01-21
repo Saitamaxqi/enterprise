@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <function model="hr.salary.rule" name="unlink">
+    <function model="hr.salary.rule" name="write">
         <value model="hr.salary.rule" search="[('struct_id', '=', ref('l10n_in_hr_payroll.hr_payroll_structure_in_stipend')),
         ('code', '=', 'BASIC')]"/>
+        <value eval="{'active': False}"/>
     </function>
 
     <function model="hr.salary.rule" name="write">
