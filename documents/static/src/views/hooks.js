@@ -145,14 +145,6 @@ export function useDocumentView(helpers) {
             [["model", "=", "documents.document"]],
             { limit: 1 }
         );
-        const defaultTriggerFieldIds = await orm.search(
-            "ir.model.fields",
-            [
-                ["model", "=", "documents.document"],
-                ["name", "=", "folder_id"],
-            ],
-            { limit: 1 }
-        );
         return await action.doAction("base_automation.base_automation_act", {
             additionalContext: {
                 active_test: false,
@@ -161,7 +153,6 @@ export function useDocumentView(helpers) {
                 default_name: _t("Put in %s", folderDisplayName),
                 default_filter_domain: [["folder_id", "in", [folderId]]],
                 default_trigger: "on_create_or_write",
-                default_trigger_field_ids: defaultTriggerFieldIds,
             },
         });
     };
