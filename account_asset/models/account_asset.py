@@ -462,7 +462,7 @@ class AccountAsset(models.Model):
         for asset in self:
             if asset.original_move_line_ids and asset.related_purchase_value == 0:
                 raise UserError(_("You cannot create an asset from lines containing credit and debit on the account or with a null amount"))
-            if asset.state != 'draft':
+            if asset.state not in ('model', 'draft'):
                 raise UserError(_("You cannot add or remove bills when the asset is already running or closed."))
 
     # -------------------------------------------------------------------------
