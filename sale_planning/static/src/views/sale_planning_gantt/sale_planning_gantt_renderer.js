@@ -110,8 +110,8 @@ patch(PlanningGanttRenderer.prototype, {
     /**
      * @override
      */
-    getPopoverProps(pill) {
-        const popoverProps = super.getPopoverProps(pill);
+    async getPopoverProps(pill) {
+        const popoverProps = await super.getPopoverProps(pill);
         const { record } = pill;
         if (record.sale_line_plannable && this.isPlanningManager) {
             const deleteBtnIndex = popoverProps.buttons.findIndex((btn) => btn.class.includes("btn-delete"));
