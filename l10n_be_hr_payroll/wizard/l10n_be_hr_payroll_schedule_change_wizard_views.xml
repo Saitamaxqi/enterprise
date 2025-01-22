@@ -56,9 +56,9 @@
                             <span>days</span>
                         </div>
                     </group>
-                    <strong class="o_group_col_12" invisible="not leave_type_id or found_leave_allocation" style="color:#ff6600;">
+                    <div class="alert alert-warning" role="alert" invisible="not leave_type_id or found_leave_allocation">
                         No time off allocation has been found for this time off type, no changes will occur to time off for this employee.
-                    </strong>
+                    </div>
                 </group>
                 <footer>
                     <button name="action_validate" string="Create new contract and adapt time off allocation" type="object" class="oe_highlight"
