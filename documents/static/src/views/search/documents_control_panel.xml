@@ -7,22 +7,23 @@
         </xpath>
 
         <xpath expr="//div[hasclass('o_control_panel_actions')]" position="inside">
-            <t t-set="selectionCount" t-value="targetRecords.length"/>
-            <SearchBar t-if="!selectionCount" toggler="env.searchBarToggler" autofocus="firstLoad"/>
-            <t t-call="web.ListView.Selection" t-if="this.env.model.root.selection.length">
-                <t t-set="isDomainSelected" t-value="false"/>
-                <t t-set="isPageSelected" t-value="false"/>
-                <t t-set="model" t-value="this.env.model"/>
-                <t t-set="nbSelected" t-value="this.env.model.root.selection.length"/>
+            <t t-if="!this.documentService.previewedDocument">
+                <SearchBar t-if="!this.env.model.root.selection.length" toggler="env.searchBarToggler" autofocus="firstLoad"/>
+                <t t-call="web.ListView.Selection" t-if="this.env.model.root.selection.length">
+                    <t t-set="isDomainSelected" t-value="false"/>
+                        <t t-set="isPageSelected" t-value="false"/>
+                        <t t-set="model" t-value="this.env.model"/>
+                        <t t-set="nbSelected" t-value="this.env.model.root.selection.length"/>
+                </t>
+                <DocumentsAction folderId="currentFolderId" targetRecords="this.env.model.root.selection"/>
             </t>
-            <DocumentsAction folderId="currentFolderId" targetRecords="targetRecords"/>
         </xpath>
 
         <xpath expr="//*[hasclass('o_cp_switch_buttons')]" position="before">
             <button t-if="documentService.userIsInternal"
-                t-on-click="() => this.onToggleChatter()"
+                t-on-click="() => this.documentService.toggleChatterState()"
                 class="btn btn-secondary o_switch_view o_kanban"
-                t-att-class="{'active': this.documentsState.isChatterVisible}">
+                t-att-class="{'active': this.chatterState.visible}">
                 <i class="fa fa-fw fa-info-circle mt-1"/>
             </button>
         </xpath>

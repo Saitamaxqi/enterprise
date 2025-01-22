@@ -1,6 +1,6 @@
 import { Document } from "./document_model";
 import { DocumentsManageVersions } from "@documents/components/documents_manage_versions_panel/documents_manage_versions_panel";
-import { EventBus } from "@odoo/owl";
+import { EventBus, reactive } from "@odoo/owl";
 import { browser } from "@web/core/browser/browser";
 import { parseSearchQuery, router } from "@web/core/browser/router";
 import { _t } from "@web/core/l10n/translation";
@@ -66,6 +66,11 @@ export class DocumentService {
         this.userIsInternal = await user.hasGroup("base.group_user");
         this.userIsDocumentManager = await user.hasGroup("documents.group_documents_manager");
         this.userIsDocumentUser = await user.hasGroup("documents.group_documents_user");
+
+        const initialState = this.userIsInternal && JSON.parse(localStorage.getItem("documentsChatterVisible"));
+        this.chatterState = reactive({ visible: initialState }, () => {
+            localStorage.setItem("documentsChatterVisible", this.chatterState.visible);
+        });
     }
 
     /**
@@ -328,12 +333,8 @@ export class DocumentService {
         ]);
     }
 
-    isChatterVisible() {
-        return this.userIsInternal && localStorage.getItem("documentsChatterVisible") === "true";
-    }
-
-    setChatterVisible(visible) {
-        localStorage.setItem("documentsChatterVisible", visible);
+    toggleChatterState() {
+        this.chatterState.visible = !this.chatterState.visible;
     }
 
     /**

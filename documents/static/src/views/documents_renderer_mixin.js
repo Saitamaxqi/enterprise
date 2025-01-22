@@ -1,5 +1,19 @@
+import { useBus, useService } from "@web/core/utils/hooks";
+import { useState } from "@odoo/owl";
+
 export const DocumentsRendererMixin = (component) =>
     class extends component {
+        setup() {
+            super.setup();
+            this.documentService = useService("document.document");
+
+            this.documentService.chatterState.previewedDocument = null;
+            this.chatterState = useState(this.documentService.chatterState);
+
+            useBus(this.documentService.bus, "DOCUMENT_PREVIEWED", async (ev) => {
+                this.chatterState.previewedDocument = this.documentService.previewedDocument;
+            });
+        }
         /**
          * Record for showing/modifying details of containing folder
          */

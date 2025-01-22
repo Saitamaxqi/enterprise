@@ -6,8 +6,8 @@
                 <DocumentsAction folderId="folderId" targetRecords="[previewed.document?.record]"/>
                 <button t-if="isChatterButtonVisible"
                     class="ms-1 btn btn-secondary"
-                    t-att-class="{'active': this.documentsState.isChatterVisible}"
-                    t-on-click="toggleChatter">
+                    t-att-class="{'active': this.chatterState.visible}"
+                    t-on-click="() => this.documentService.toggleChatterState()">
                     <i class="fa fa-fw fa-info-circle"/>
                 </button>
             </div>

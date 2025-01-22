@@ -17,22 +17,13 @@ export class DocumentsControlPanel extends ControlPanel {
     setup() {
         super.setup();
         this.documentService = useService("document.document");
-        this.documentsState = useState({
-            isChatterVisible: this.documentService.isChatterVisible(),
-        });
+
+        this.chatterState = useState(this.documentService.chatterState);
 
         this.firstLoad = true;
         onWillPatch(() => {
             this.firstLoad = false;
         });
-    }
-
-    /**
-     * Open the chatter (the info will be stored in the local storage of the current user).
-     */
-    async onToggleChatter() {
-        await this.env.documentsView.bus.trigger("documents-toggle-chatter");
-        this.documentsState.isChatterVisible = !this.documentsState.isChatterVisible;
     }
 
     /**
@@ -50,15 +41,6 @@ export class DocumentsControlPanel extends ControlPanel {
      */
     get currentFolderId() {
         return this.env.searchModel.getSelectedFolderId();
-    }
-
-    /**
-     * Records on which we will execute the actions / see the chatter.
-     */
-    get targetRecords() {
-        return this.documentsState.previewedDocument
-            ? [this.documentsState.previewedDocument.record]
-            : this.env.model.root.selection;
     }
 
     get pathBreadcrumbs() {

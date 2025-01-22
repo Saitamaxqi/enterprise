@@ -1,7 +1,7 @@
 import { _t } from "@web/core/l10n/translation";
 import { ListRenderer } from "@web/views/list/list_renderer";
 
-import { useService, useBus } from "@web/core/utils/hooks";
+import { useService } from "@web/core/utils/hooks";
 import { FileUploadProgressContainer } from "@web/core/file_upload/file_upload_progress_container";
 import { FileUploadProgressDataRow } from "@web/core/file_upload/file_upload_progress_record";
 import { DocumentsDropZone } from "../helper/documents_drop_zone";
@@ -11,7 +11,7 @@ import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixi
 import { DocumentsListRendererCheckBox } from "./documents_list_renderer_checkbox";
 import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
 import { useCommand } from "@web/core/commands/command_hook";
-import { useRef, useState } from "@odoo/owl";
+import { useRef } from "@odoo/owl";
 import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
 import { Chatter } from "@mail/chatter/web_portal/chatter";
 
@@ -34,7 +34,6 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
         super.setup();
         this.root = useRef("root");
         const { uploads } = useService("file_upload");
-        this.documentService = useService("document.document");
 
         this.documentUploads = uploads;
         useCommand(
@@ -51,16 +50,6 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
                 hotkey: "control+a",
             }
         );
-
-        // TODO: clean that crap
-        this.chatterState = useState({ visible: this.documentService.isChatterVisible() });
-        useBus(this.env.documentsView.bus, "documents-toggle-chatter", (event) => {
-            this.chatterState.visible = !this.chatterState.visible;
-            this.documentService.setChatterVisible(this.chatterState.visible);
-        });
-        useBus(this.documentService.bus, "DOCUMENT_PREVIEWED", async (ev) => {
-            this.chatterState.previewedDocument = this.documentService.previewedDocument;
-        });
     }
 
     getDocumentsAttachmentViewerProps() {

@@ -223,13 +223,6 @@ export class DocumentsAction extends Component {
     }
 
     /**
-     * Open/Close the chatter (the info will be stored in the local storage of the current user).
-     */
-    async onToggleChatter() {
-        await this.env.documentsView.bus.trigger("documents-toggle-chatter");
-    }
-
-    /**
      * Create a shortcut for the selected document.
      */
     async onCreateShortcut() {

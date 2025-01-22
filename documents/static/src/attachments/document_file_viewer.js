@@ -1,5 +1,5 @@
 import { DocumentsAction } from "@documents/views/action/documents_action";
-import { useBus, useService } from "@web/core/utils/hooks";
+import { useService } from "@web/core/utils/hooks";
 import { FileViewer as WebFileViewer } from "@web/core/file_viewer/file_viewer";
 import { onWillUpdateProps, reactive, useState } from "@odoo/owl";
 
@@ -21,12 +21,7 @@ export class FileViewer extends WebFileViewer {
             }
         );
         this.folderId = this.documentService.documentList?.folderId;
-        this.documentsState = useState({
-            isChatterVisible: this.documentService.isChatterVisible(),
-        });
-        useBus(this.env.documentsView.bus, "documents-toggle-chatter", (event) => {
-            this.documentsState.isChatterVisible = !this.documentsState.isChatterVisible;
-        });
+        this.chatterState = useState(this.documentService.chatterState);
         onWillUpdateProps((nextProps) => {
             const indexOfFileToPreview = nextProps.startIndex;
             if (
@@ -45,10 +40,6 @@ export class FileViewer extends WebFileViewer {
             this.documentService.userIsInternal &&
             !this.env.isSmall
         );
-    }
-
-    async toggleChatter() {
-        await this.env.documentsView.bus.trigger("documents-toggle-chatter");
     }
 
     close() {

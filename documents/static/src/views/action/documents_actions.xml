@@ -57,7 +57,7 @@
                             <span class="d-inline-block">Rename</span>
                         </button>
                         <button class="dropdown-item w-100"
-                            t-on-click="() => this.onToggleChatter()"
+                            t-on-click="() => this.documentService.toggleChatterState()"
                             t-if="userIsInternal and singleSelection">
                             <i class="fa fa-fw fa-info-circle me-1"/>
                             <span class="d-inline-block">Info &amp; tags </span>
