@@ -8,7 +8,7 @@ patch(StockBarcodeKanbanRenderer.prototype, {
         super.setup(...arguments);
         this.actionService = useService("action");
         this.orm = useService("orm");
-        this.activeIds = this.props.list.evalContext.active_ids;
+        this.activeId = this.props.list.evalContext.active_id;
         this.displayTransferProtip =
             this.displayTransferProtip || this.resModel === "stock.picking.batch";
     },
@@ -20,7 +20,7 @@ patch(StockBarcodeKanbanRenderer.prototype, {
         const action = await this.orm.call(
             "stock.picking.type",
             "get_action_picking_tree_ready_kanban",
-            [this.activeIds]
+            [this.activeId]
         );
         return this.displayAction(action);
     },
@@ -32,7 +32,7 @@ patch(StockBarcodeKanbanRenderer.prototype, {
         const action = await this.orm.call(
             "stock.picking.type",
             "action_picking_batch_barcode_kanban",
-            [this.activeIds]
+            [this.activeId]
         );
         return this.displayAction(action);
     },
@@ -52,7 +52,7 @@ patch(StockBarcodeKanbanRenderer.prototype, {
         this.otherRecordsCount = await this.orm.call(
             "stock.picking.type",
             "get_model_records_count",
-            [this.activeIds, modelToSearch]
+            [this.activeId, modelToSearch]
         );
     },
 });
