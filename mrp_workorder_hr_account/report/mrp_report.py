@@ -137,7 +137,7 @@ class MrpReport(models.Model):
                         COALESCE(
                             CEIL(
                                 wo.qty_produced
-                                / COALESCE(cap.capacity,wc.default_capacity)
+                                / COALESCE(cap_specific.capacity,cap_generic.capacity,bom.product_qty,1)
                             ),
                             1
                         )
@@ -145,9 +145,18 @@ class MrpReport(models.Model):
                 FROM mrp_workorder                                              AS wo
                 JOIN mrp_workcenter                                             AS wc
                     ON wc.id = wo.workcenter_id
-                LEFT JOIN mrp_workcenter_capacity                               AS cap
-                    ON cap.workcenter_id = wc.id
-                        AND cap.product_id = bom.product_tmpl_id
+                JOIN product_product                                            AS product
+                    ON product.id = mo.product_id
+                JOIN product_template                                           AS template
+                    ON template.id = product.product_tmpl_id
+                LEFT JOIN mrp_workcenter_capacity                               AS cap_specific
+                    ON cap_specific.workcenter_id = wc.id
+                        AND cap_specific.product_id = product.id
+                        AND cap_specific.product_uom_id = template.uom_id
+                LEFT JOIN mrp_workcenter_capacity                               AS cap_generic
+                    ON cap_generic.workcenter_id = wc.id
+                        AND cap_generic.product_id IS NULL
+                        AND cap_generic.product_uom_id = template.uom_id
                 WHERE wo.operation_id = op.id
                     AND wo.qty_produced > 0
                     AND wo.state = 'done'

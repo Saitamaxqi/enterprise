@@ -54,7 +54,6 @@ class TestMrpReportEmployeeCost(TestMrpCommon):
 
     def test_mrp_report_expected_cost_fields(self):
         self.workcenter_2.write({
-            'default_capacity': 2,
             'costs_hour': 20,
             'employee_costs_hour': 30,
         })

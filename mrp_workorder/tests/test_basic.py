@@ -21,19 +21,25 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
         # setting up alternative workcenters
         cls.wc_alt_1 = cls.env['mrp.workcenter'].create({
             'name': 'Nuclear Workcenter bis',
-            'default_capacity': 3,
             'time_start': 9,
             'time_stop': 5,
             'time_efficiency': 80,
         })
         cls.wc_alt_2 = cls.env['mrp.workcenter'].create({
             'name': 'Nuclear Workcenter ter',
-            'default_capacity': 1,
             'time_start': 10,
             'time_stop': 5,
             'time_efficiency': 85,
         })
         cls.bom_1.product_uom_id = cls.uom_dozen
+        for (workcenter, default_capacity) in [(cls.wc_alt_1, 3), (cls.wc_alt_2, 1)]:
+            cls.env['mrp.workcenter.capacity'].create({
+                'workcenter_id': workcenter.id,
+                'product_uom_id': cls.uom_unit.id,
+                'capacity': default_capacity,
+                'time_start': workcenter.time_start,
+                'time_stop': workcenter.time_stop,
+            })
         cls.product_4.uom_id = cls.uom_unit
         cls.planning_bom = cls.env['mrp.bom'].create({
             'product_id': cls.product_4.id,
@@ -702,7 +708,16 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
 
         # Update capacity, start time, stop time, and time efficiency.
         # ------------------------------------------------------------
-        self.workcenter_1.write({'default_capacity': 1, 'time_start': 0, 'time_stop': 0, 'time_efficiency': 100})
+        self.workcenter_1.write({'time_efficiency': 100})
+        self.env['mrp.workcenter.capacity'].search([
+            ('workcenter_id', '=', self.workcenter_1.id),
+            ('product_id', '=', False),
+            ('product_uom_id', '=', self.uom_unit.id)
+        ]).write({
+            'capacity': 1,
+            'time_start': 0,
+            'time_stop': 0,
+        })
 
         # Set manual time cycle 20 and 10.
         # --------------------------------
@@ -1612,10 +1627,16 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
     def test_planning_7(self):
         """ set the workcenter capacity to 10. Produce a dozen of product tracked by
         SN. The production should be done in two batches"""
-        self.workcenter_1.default_capacity = 10
         self.workcenter_1.time_efficiency = 100
-        self.workcenter_1.time_start = 0
-        self.workcenter_1.time_stop = 0
+        self.env['mrp.workcenter.capacity'].search([
+            ('workcenter_id', '=', self.workcenter_1.id),
+            ('product_id', '=', False),
+            ('product_uom_id', '=', self.uom_unit.id)
+        ]).write({
+            'capacity': 10,
+            'time_start': 0,
+            'time_stop': 0,
+        })
         self.planning_bom.operation_ids.time_cycle = 60
         self.product_4.tracking = 'serial'
         mo_form = Form(self.env['mrp.production'])
@@ -1635,8 +1656,14 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         The production should be done in only 1 batch
         -> Reproduce test_planning_7 with specific product capacity
         """
-        self.workcenter_1.default_capacity = 10
-        self.workcenter_1.capacity_ids = [Command.create({'product_id': self.product_4.id, 'capacity': 12})]
+        self.env['mrp.workcenter.capacity'].search([
+            ('workcenter_id', '=', self.workcenter_1.id),
+            ('product_id', '=', False),
+            ('product_uom_id', '=', self.uom_unit.id)
+        ]).write({
+            'capacity': 10,
+        })
+        self.workcenter_1.capacity_ids = [Command.create({'product_id': self.product_4.id, 'product_uom_id': self.uom_unit.id, 'capacity': 12})]
         self.workcenter_1.time_efficiency = 100
         self.workcenter_1.time_start = 0
         self.workcenter_1.time_stop = 0

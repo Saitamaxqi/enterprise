@@ -199,7 +199,6 @@ class TestShopFloor(HttpCase):
         # Create three workcenters.
         wc1, wc2 = self.env['mrp.workcenter'].create([{
             'name': f'Preparation Table {i}',
-            'default_capacity': 1,
         } for i in (1, 2)])
         wc1.alternative_workcenter_ids = wc2
         wc2.alternative_workcenter_ids = wc1

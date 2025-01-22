@@ -33,7 +33,6 @@ class TestProjectProfitabilityMrpEmployee(TestProjectProfitabilityCommon):
         }])
         cls.workcenter = cls.env['mrp.workcenter'].create([{
             'name': 'Workcenter',
-            'default_capacity': 1,
             'time_efficiency': 100,
             'costs_hour': 30,
         }])

@@ -607,7 +607,6 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
             'tracking': 'serial'})
         workcenter_2 = self.env['mrp.workcenter'].with_company(company1).with_user(user_admin).create({
             'name': 'Nuclear Workcenter',
-            'default_capacity': 2,
             'time_start': 10,
             'time_stop': 5,
             'time_efficiency': 80,
