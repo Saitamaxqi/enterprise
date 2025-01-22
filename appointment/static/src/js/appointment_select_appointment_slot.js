@@ -17,6 +17,7 @@ publicWidget.registry.appointmentSlotSelect = publicWidget.Widget.extend({
         'click .o_slot_hours': '_onClickHoursSlot',
         'click button[name="submitSlotInfoSelected"]': '_onClickConfirmSlot',
         'click .o_appointment_show_calendar': '_onClickShowCalendar',
+        'close.bs.alert .o_appointment_close_upcoming_appointment_alert': '_onClickCloseUpcomingAppointmentAlert',
     },
 
     /**
@@ -140,19 +141,20 @@ publicWidget.registry.appointmentSlotSelect = publicWidget.Widget.extend({
                 calendar_event_access_tokens: allAppointmentsToken,
             });
             if (upcomingAppointmentData) {
-                this.el.querySelector('div.o_appointment_calendar').classList.add('d-none');
-                this.el.querySelector('div.o_appointment_calendar_form').classList.add('d-none');
-                const timezone = this.el.querySelector('.o_appointment_info_main').dataset.timezone;
-                const upcomingFormattedStart = deserializeDateTime(
-                    upcomingAppointmentData.next_upcoming_appointment.start
-                ).setZone(timezone).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY);
-                this.el.querySelector('.o_appointment_no_slot_overall_helper').replaceChildren(
-                    renderToElement('Appointment.appointment_info_upcoming_appointment', {
-                        appointmentTypeName: upcomingAppointmentData.next_upcoming_appointment.appointment_type_id[1],
-                        appointmentStart: upcomingFormattedStart,
-                        appointmentToken: upcomingAppointmentData.next_upcoming_appointment.access_token,
-                        partnerId: upcomingAppointmentData.next_upcoming_appointment.appointment_booker_id[0],
-                    }));
+                if (!localStorage.getItem('appointment.hide_upcoming_appointment_alert')){
+                    const timezone = this.el.querySelector('.o_appointment_info_main').dataset.timezone;
+                    const upcomingFormattedStart = deserializeDateTime(
+                        upcomingAppointmentData.next_upcoming_appointment.start
+                    ).setZone(timezone).toLocaleString(DateTime.DATETIME_MED_WITH_WEEKDAY);
+                    this.el.querySelector('.o_appointment_upcoming_appointment_alert').replaceChildren(
+                        renderToElement('Appointment.appointment_info_upcoming_appointment', {
+                            appointmentTypeName: upcomingAppointmentData.next_upcoming_appointment.appointment_type_id[1],
+                            appointmentStart: upcomingFormattedStart,
+                            appointmentToken: upcomingAppointmentData.next_upcoming_appointment.access_token,
+                            partnerId: upcomingAppointmentData.next_upcoming_appointment.appointment_booker_id[0],
+                        })
+                    );
+                }
                 if (user.userId === false) {
                     localStorage.setItem('appointment.upcoming_events_access_token', JSON.stringify(upcomingAppointmentData.valid_access_tokens));
                 }
@@ -451,5 +453,9 @@ publicWidget.registry.appointmentSlotSelect = publicWidget.Widget.extend({
         this.el.querySelectorAll("#calendar, .o_appointment_timezone_selection").forEach((el) => {
             el.classList.remove("o_appointment_disable_calendar");
         });
+    },
+
+    _onClickCloseUpcomingAppointmentAlert: function () {
+        localStorage.setItem('appointment.hide_upcoming_appointment_alert', true);
     },
 });

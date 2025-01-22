@@ -65,21 +65,11 @@
     </t>
 
     <t t-name="Appointment.appointment_info_upcoming_appointment">
-        <div class="o_appointment_upcoming_event_info col-12 mx-auto">
-            <div class="pt-2 mb-3">
-                <span class="d-flex justify-content-center text-center mb-1">
-                    Heads-up, you already booked an appointment <span class="d-contents fw-bold" t-out="appointmentTypeName"/> on
-                </span>
-                <span t-out="appointmentStart"
-                    class="d-flex justify-content-center fw-bold mb-2"/>
-                <div class="d-flex justify-content-center gap-1">
-                    <a class="btn btn-primary" t-attf-href="/calendar/view/#{appointmentToken}?partner_id=#{partnerId}">Review Booking</a>
-                    <button class="o_appointment_show_calendar btn btn-secondary">Add Another</button>
-                </div>
-            </div>
-            <div class="o_appointment_no_slot_overall_helper_svg col-8 mx-auto">
-                <t t-call="Appointment.appointment_svg"/>
-            </div>
+        <div class="o_appointment_close_upcoming_appointment_alert col-12 mx-auto alert alert-danger alert-dismissible fade show" data-bs-backdrop="static">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"/>
+            You already booked "<span class="d-contents" t-out="appointmentTypeName"/>" on
+            <a t-out="appointmentStart" t-attf-href="/calendar/view/#{appointmentToken}?partner_id=#{partnerId}"
+                target="_blank" class="fw-bold text-underline text-decoration-underline" title="Review Booking"/>
         </div>
     </t>
 </templates>
