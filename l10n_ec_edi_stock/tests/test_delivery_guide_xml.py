@@ -3,7 +3,6 @@ from datetime import datetime
 from freezegun import freeze_time
 from lxml import etree
 import pytz
-from unittest import mock
 
 from odoo.tests import tagged
 from .common import TestECDeliveryGuideCommon
@@ -12,61 +11,58 @@ from .common import TestECDeliveryGuideCommon
 @tagged('post_install_l10n', 'post_install', '-at_install')
 class TestECDeliveryGuide(TestECDeliveryGuideCommon):
 
+    @freeze_time('2025-02-24')
     def test_send_delivery_guide_flow(self):
         ''' Test the delivery guide submission + cancellation flow. '''
-        mocked_responses = iter([
-            # First call: send the delivery guide
-            {
-                'estado': 'RECIBIDA',
-                'comprobantes': None
-            },
-            # Second call: retrieve the status
-            {
-                'numeroComprobantes': '1',
-                'autorizaciones': {
-                    'autorizacion': [{
-                        'estado': 'AUTORIZADO',
-                        'numeroAutorizacion': '1912202406010364761600110010010001912253121521419',
-                        'fechaAutorizacion': datetime(2024, 12, 19, 12, 5, 29, tzinfo=pytz.FixedOffset(-5 * 60)),
-                        'ambiente': 'PRUEBAS',
-                        'comprobante': 'dummy',
-                        'mensajes': None,
-                    }],
+        with self.mock_zeep_client((
+            (
+                # First call: send the delivery guide
+                'validarComprobante',
+                {
+                    'xml': b'<guiaRemision id="comprobante" version="1.1.0">\n  <infoTributaria>\n    <ambiente>2</ambiente>\n    <tipoEmision>1</tipoEmision>\n    <razonSocial>EC Test Company (official)</razonSocial>\n    <nombreComercial>EC Test Company</nombreComercial>\n    <ruc>1792366836001</ruc>\n    <claveAcceso>2402202506179236683600120010010000000013121521416</claveAcceso>\n    <codDoc>06</codDoc>\n    <estab>001</estab>\n    <ptoEmi>001</ptoEmi>\n    <secuencial>000000001</secuencial>\n    <dirMatriz>Avenida Machala 42</dirMatriz>\n  </infoTributaria>\n  <infoGuiaRemision>\n    <dirEstablecimiento>Avenida Machala 42</dirEstablecimiento>\n    <dirPartida>Avenida Machala 42</dirPartida>\n    <razonSocialTransportista>Delivery guide Carrier EC</razonSocialTransportista>\n    <tipoIdentificacionTransportista>05</tipoIdentificacionTransportista>\n    <rucTransportista>0750032310</rucTransportista>\n    <obligadoContabilidad>SI</obligadoContabilidad>\n    <fechaIniTransporte>24/02/2025</fechaIniTransporte>\n    <fechaFinTransporte>11/03/2025</fechaFinTransporte>\n    <placa>OBA1413</placa>\n  </infoGuiaRemision>\n  <destinatarios>\n    <destinatario>\n      <identificacionDestinatario>0453661050152</identificacionDestinatario>\n      <razonSocialDestinatario>EC Test Partner A\xc3\xa0\xc3\x81\xc2\xb3$\xc2\xa3\xe2\x82\xac\xc3\xa8\xc3\xaa\xc3\x88\xc3\x8a\xc3\xb6\xc3\x94\xc3\x87\xc3\xa7\xc2\xa1\xe2\x85\x9b&amp;@\xe2\x84\xa2</razonSocialDestinatario>\n      <dirDestinatario>Av. Libertador Sim\xc3\xb3n Bol\xc3\xadvar 1155 -  - Quito - Ecuador</dirDestinatario>\n      <motivoTraslado>Goods Dispatch</motivoTraslado>\n      <detalles>\n        <detalle>\n          <descripcion>Computadora</descripcion>\n          <cantidad>1.0</cantidad>\n        </detalle>\n      </detalles>\n    </destinatario>\n  </destinatarios>\n</guiaRemision>\n',
                 },
-            },
-            # Third call: retrieve the status
-            {
-                'numeroComprobantes': '1',
-                'autorizaciones': {
-                    'autorizacion': [{
-                        'estado': 'CANCELADO',
-                        'mensajes': None,
-                    }],
+                {
+                    'estado': 'RECIBIDA',
+                    'comprobantes': None
                 },
-            },
-        ])
-
-        def mocked_l10n_ec_get_client_service_response_new(self, company_id, mode, **kwargs):
-            return next(mocked_responses), [], []
-
-        def mocked_l10n_ec_generate_signed_xml(self, company_id, xml_node_or_string):
-            return ''
-
-        with (
-            mock.patch.object(
-                self.env['account.edi.format'].__class__,
-                '_l10n_ec_get_client_service_response_new',
-                new=mocked_l10n_ec_get_client_service_response_new,
             ),
-            mock.patch.object(
-                self.env['account.edi.format'].__class__,
-                '_l10n_ec_generate_signed_xml',
-                new=mocked_l10n_ec_generate_signed_xml,
+            (
+                # Second call: retrieve the status
+                'autorizacionComprobante',
+                {
+                    'claveAccesoComprobante': '2402202506179236683600120010010000000013121521416',
+                },
+                {
+                    'numeroComprobantes': '1',
+                    'autorizaciones': {
+                        'autorizacion': [{
+                            'estado': 'AUTORIZADO',
+                            'numeroAutorizacion': '1912202406010364761600110010010001912253121521419',
+                            'fechaAutorizacion': datetime(2024, 12, 19, 12, 5, 29, tzinfo=pytz.FixedOffset(-5 * 60)),
+                            'ambiente': 'PRUEBAS',
+                            'comprobante': 'dummy',
+                            'mensajes': None,
+                        }],
+                    },
+                },
             ),
-        ):
-            # Set this to True in order to mock sending invoices to SRI
-            self.env.company.l10n_ec_production_env = True
-
+            (
+                # Third call: retrieve the status
+                'autorizacionComprobante',
+                {
+                    'claveAccesoComprobante': '2402202506179236683600120010010000000013121521416',
+                },
+                {
+                    'numeroComprobantes': '1',
+                    'autorizaciones': {
+                        'autorizacion': [{
+                            'estado': 'CANCELADO',
+                            'mensajes': None,
+                        }],
+                    },
+                },
+            )
+        )):
             # Send the delivery guide
             stock_picking = self.get_stock_picking()
             self.prepare_delivery_guide(stock_picking)
@@ -85,9 +81,6 @@ class TestECDeliveryGuide(TestECDeliveryGuideCommon):
                 'l10n_ec_delivery_guide_error': False,
                 'l10n_ec_authorization_date': False,
             }])
-
-        # Check that all calls to `_l10n_ec_get_client_service_response` were made.
-        self.assertEqual(next(mocked_responses, None), None, 'Fewer calls than expected were made to _l10n_ec_get_client_service_response!')
 
     def test_xml_tree_delivery_guide_basic(self):
         '''
