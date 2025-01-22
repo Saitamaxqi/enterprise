@@ -19,10 +19,6 @@
             <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>
 
-        <record id="base.default_user" model="res.users">
-            <field name="group_ids" eval="[(4,ref('group_sign_manager'))]"/>
-        </record>
-
         <record id="ir_rule_sign_template_group_sign_manager" model="ir.rule">
             <field name="name">sign.template: group_sign_manager: Create and manage templates</field>
             <field name="model_id" ref="sign.model_sign_template"/>

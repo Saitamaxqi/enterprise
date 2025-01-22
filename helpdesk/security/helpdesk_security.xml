@@ -30,8 +30,8 @@
 
     <data noupdate="1">
 
-        <record id="base.default_user" model="res.users">
-            <field name="group_ids" eval="[(4, ref('helpdesk.group_helpdesk_manager'))]"/>
+        <record id="base.default_user_group" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('helpdesk.group_helpdesk_manager'))]"/>
         </record>
 
         <!-- Manager gets all team access rights -->

@@ -8,6 +8,10 @@
             ]"/>
         </record>
 
+        <record id="base.default_user_group" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('approvals.group_approval_manager'))]"/>
+        </record>
+
         <record id="approval_request_demo_business_trip" model="approval.request">
             <field name="name">Business trip to London</field>
             <field name="request_status">pending</field>

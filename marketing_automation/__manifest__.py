@@ -25,6 +25,9 @@
         'data/ir_cron_data.xml',
         'data/marketing_activity_data_templates.xml',
     ],
+    'demo': [
+        'data/res_groups_demo.xml',
+    ],
     'application': True,
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

@@ -270,6 +270,10 @@
                 (3, ref('project.group_project_manager'))]"/>
         </record>
 
+        <record id="base.default_user_group" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('industry_fsm.group_fsm_manager'))]"/>
+        </record>
+
         <record id="industry_fsm.planning_project_stage_1" model="project.task.type">
             <field name="mail_template_id" ref="industry_fsm.mail_template_data_intervention_details"/>
         </record>

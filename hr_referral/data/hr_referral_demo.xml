@@ -8,6 +8,10 @@
             ]"/>
         </record>
 
+        <record id="base.default_user_group" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('hr_recruitment.group_hr_recruitment_manager'))]"/>
+        </record>
+
         <record id="shop_mug" model="hr.referral.reward">
             <field name="name">Mug</field>
             <field name="cost">100</field>

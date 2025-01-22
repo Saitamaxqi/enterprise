@@ -11,10 +11,6 @@
         <field name="implied_ids" eval="[(4, ref('frontdesk.frontdesk_group_user'))]"/>
     </record>
 
-    <record id="base.default_user" model="res.users">
-        <field name="group_ids" eval="[(4, ref('frontdesk.frontdesk_group_administrator'))]"/>
-    </record>
-
     <record id="frontdesk_frontdesk_company_rule" model="ir.rule">
         <field name="name">Access stations of own companies only</field>
         <field name="model_id" ref="model_frontdesk_frontdesk"/>

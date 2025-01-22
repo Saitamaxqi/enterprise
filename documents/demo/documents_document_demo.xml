@@ -5,6 +5,10 @@
             <field name="group_ids" eval="[(3, ref('documents.group_documents_manager'))]"/>
         </record>
 
+        <record id="base.default_user_group" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('documents.group_documents_manager'))]"/>
+        </record>
+
         <!-- folders -->
         <record id="document_marketing_brand1_folder" model="documents.document" forcecreate="0">
             <field name="type">folder</field>

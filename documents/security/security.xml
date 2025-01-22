@@ -26,12 +26,6 @@
             <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>
 
-        <data noupdate="1">
-            <record id="base.default_user" model="res.users">
-                <field name="group_ids" eval="[(4, ref('documents.group_documents_manager'))]"/>
-            </record>
-        </data>
-
         <!-- documents rules -->
         <!-- duplicated for spreadsheetCellThreads in rule documents_spreadsheet.documents_document_thread_global_rule
         Please update aforemetioned the rule accordingly -->

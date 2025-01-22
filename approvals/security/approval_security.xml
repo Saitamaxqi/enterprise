@@ -19,10 +19,6 @@
     </record>
 
     <data noupdate="1">
-        <record id="base.default_user" model="res.users">
-            <field name="group_ids" eval="[(4,ref('approvals.group_approval_manager'))]"/>
-        </record>
-
         <!-- Regular User -->
         <record id="approval_request_request_approver_rule" model="ir.rule">
             <field name="name">Approval Request: request approver rule</field>
