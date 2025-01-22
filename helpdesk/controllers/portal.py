@@ -83,8 +83,7 @@ class CustomerPortal(portal.CustomerPortal):
         domain = self._prepare_helpdesk_tickets_domain()
 
         searchbar_sortings = {
-            'create_date desc': {'label': _('Newest')},
-            'id desc': {'label': _('Reference')},
+            'id desc': {'label': _('Newest')},
             'name': {'label': _('Subject')},
             'user_id': {'label': _('Assigned to')},
             'stage_id': {'label': _('Stage')},
@@ -102,7 +101,7 @@ class CustomerPortal(portal.CustomerPortal):
 
         # default sort by value
         if not sortby:
-            sortby = 'create_date desc'
+            sortby = next(iter(searchbar_sortings))
 
         domain = AND([domain, searchbar_filters[filterby]['domain']])
 
