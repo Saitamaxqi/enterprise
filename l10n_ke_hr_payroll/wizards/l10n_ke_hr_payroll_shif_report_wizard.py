@@ -93,13 +93,14 @@ class L10nKeHrPayrollShifReportWizard(models.TransientModel):
                         shif_or_nhif_amount = line.total
                         break
 
-                result.append(Command.create({
-                    'employee_id': payslip.employee_id.id,
-                    'employee_identification_id': payslip.employee_id.identification_id,
-                    'shif_or_nhif_number': payslip.employee_id.l10n_ke_nhif_number if wizard.is_nhif else payslip.employee_id.l10n_ke_shif_number,
-                    'shif_or_nhif_amount': shif_or_nhif_amount,
-                    'payslip_number': payslip.number,
-                }))
+                if shif_or_nhif_amount :
+                    result.append(Command.create({
+                        'employee_id': payslip.employee_id.id,
+                        'employee_identification_id': payslip.employee_id.identification_id,
+                        'shif_or_nhif_number': payslip.employee_id.l10n_ke_nhif_number if wizard.is_nhif else payslip.employee_id.l10n_ke_shif_number,
+                        'shif_or_nhif_amount': shif_or_nhif_amount,
+                        'payslip_number': payslip.name,
+                    }))
             wizard.line_ids = result
 
     def action_export_xlsx(self):
@@ -131,4 +132,4 @@ class L10nKeHrPayrollShifReportLineWizard(models.TransientModel):
     employee_identification_id = fields.Char(related='employee_id.identification_id', readonly=True)
     shif_or_nhif_number = fields.Char()
     shif_or_nhif_amount = fields.Float()
-    payslip_number = fields.Char(string='Payslip Number')
+    payslip_number = fields.Char(string='Payslip Name')
