@@ -113,6 +113,7 @@ class TestMxEdiCommon(AccountTestInvoicingCommon):
         cls.tax_6_ieps = cls.tax_8_ieps.copy(default={'amount': 6.0})
         cls.tax_7_ieps = cls.tax_8_ieps.copy(default={'amount': 7.0})
         cls.tax_26_5_ieps = cls.env["account.chart.template"].ref('ieps_26_5_sale')
+        cls.tax_30_ieps = cls.env["account.chart.template"].ref('ieps_30_sale')
         cls.tax_53_ieps = cls.env["account.chart.template"].ref('ieps_53_sale')
         cls.tax_10_ret_isr = cls.env["account.chart.template"].ref('tax3')
         cls.tax_10_ret_isr.type_tax_use = 'sale'

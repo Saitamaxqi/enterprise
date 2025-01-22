@@ -1538,7 +1538,7 @@ class TestCFDIInvoice(TestMxEdiCommon):
                 **kwargs,
             )
 
-        self.tax_16.price_include = True
+        self.tax_16.price_include_override = 'tax_included'
         with self.mx_external_setup(self.frozen_today):
             invoice = create_invoice()
             with self.with_mocked_pac_sign_success():
@@ -1556,7 +1556,7 @@ class TestCFDIInvoice(TestMxEdiCommon):
             self._assert_global_invoice_cfdi_from_invoices(invoice, 'test_cfdi_rounding_10_ginvoice')
 
     def test_cfdi_rounding_11(self):
-        self.tax_16.price_include = True
+        self.tax_16.price_include_override = 'tax_included'
         with self.mx_external_setup(self.frozen_today):
             invoices = self.env['account.move']
             for price_unit in (2803.0, 1842.0, 2798.0, 3225.0, 3371.0):
@@ -1655,6 +1655,75 @@ class TestCFDIInvoice(TestMxEdiCommon):
             with self.with_mocked_pac_sign_success():
                 invoice._l10n_mx_edi_cfdi_invoice_try_send()
             self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_15_inv')
+
+    def test_cfdi_rounding_16(self):
+        (self.tax_8_ieps + self.tax_26_5_ieps + self.tax_30_ieps + self.tax_53_ieps + self.tax_16).write({
+            'active': True,
+            'price_include_override': 'tax_included',
+            'include_base_amount': True,
+        })
+        product1 = self._create_product(
+            lst_price=489.57,
+            taxes_id=[Command.set((self.tax_26_5_ieps + self.tax_16).ids)],
+        )
+        product2 = self._create_product(
+            lst_price=789.57,
+            taxes_id=[Command.set((self.tax_30_ieps + self.tax_16).ids)],
+        )
+        product3 = self._create_product(
+            lst_price=7989.57,
+            taxes_id=[Command.set((self.tax_53_ieps + self.tax_16).ids)],
+        )
+        product4 = self._create_product(
+            lst_price=289.57,
+            taxes_id=[Command.set((self.tax_8_ieps + self.tax_16).ids)],
+        )
+        product5 = self._create_product(
+            lst_price=378.0,
+            taxes_id=[Command.set(self.tax_0.ids)],
+        )
+        product6 = self._create_product(
+            lst_price=1000.0,
+            taxes_id=[Command.set(self.tax_16.ids)],
+        )
+        with self.mx_external_setup(self.frozen_today):
+            invoices = self._create_invoice(
+                l10n_mx_edi_cfdi_to_public=True,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': product.id,
+                        'quantity': quantity,
+                    })
+                    for product, quantity in (
+                        (product1, 3),
+                        (product2, 4),
+                        (product3, 3),
+                        (product4, 2),
+                        (product5, 1),
+                        (product6, 3),
+                    )
+                ],
+            )
+            invoices += self._create_invoice(
+                l10n_mx_edi_cfdi_to_public=True,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': product.id,
+                        'quantity': quantity,
+                    })
+                    for product, quantity in (
+                        (product1, 3),
+                        (product2, 4),
+                        (product3, 2),
+                        (product4, 2),
+                        (product5, 1),
+                        (product6, 3),
+                    )
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoices._l10n_mx_edi_cfdi_global_invoice_try_send()
+            self._assert_global_invoice_cfdi_from_invoices(invoices, 'test_cfdi_rounding_16_ginvoice')
 
     def test_partial_payment_1(self):
         date1 = self.frozen_today - relativedelta(days=2)
