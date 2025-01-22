@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     "name": "Ecuadorian Accounting EDI",
-    "version": "1.2",
+    "version": "1.3",
     "description": """
 EDI Ecuadorian Localization
 ===========================

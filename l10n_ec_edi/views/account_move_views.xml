@@ -74,10 +74,9 @@
                                 <field name="l10n_ec_withhold_tax_amount"/>
                             </list>
                         </field>
-                        <!-- Widget has a JS issue account-tax-totals-field-for-withhold. We hide it temporarily-->
-                        <!--<group class="oe_subtotal_footer">
+                        <group class="oe_subtotal_footer">
                             <field name="l10n_ec_withhold_subtotals" widget="account-tax-totals-field-for-withhold" nolabel="1"/>
-                        </group>-->
+                        </group>>
                         <field name="narration" placeholder="Add an internal note..." nolabel="1" height="50"/>
                     </page>
                 </xpath>
