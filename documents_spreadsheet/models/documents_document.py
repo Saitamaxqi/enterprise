@@ -5,7 +5,6 @@ import contextlib
 import io
 import json
 import zipfile
-import datetime
 
 from lxml import etree
 
@@ -532,15 +531,7 @@ class DocumentsDocument(models.Model):
 
     @api.autovacuum
     def _gc_spreadsheet(self):
-        yesterday = datetime.datetime.utcnow() - datetime.timedelta(days=1)
-        domain = [
-            ('handler', 'in', ('spreadsheet', 'frozen_spreadsheet')),
-            ('create_date', '<', yesterday),
-            ('spreadsheet_revision_ids', '=', False),
-            ('spreadsheet_snapshot', '=', False),
-            ('previous_attachment_ids', '=', False)
-        ]
-        self.search(domain).action_archive()
+        """TODO: remove in master"""
 
     def action_open_spreadsheet(self):
         self.ensure_one()

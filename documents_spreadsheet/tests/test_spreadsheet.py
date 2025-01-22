@@ -2,12 +2,11 @@
 
 import json
 import base64
-from datetime import datetime
 
 from .common import SpreadsheetTestCommon, TEST_CONTENT, GIF
 from odoo.exceptions import AccessError, ValidationError
 from odoo.tests import Form
-from odoo.tests.common import freeze_time, new_test_user
+from odoo.tests.common import new_test_user
 
 
 class SpreadsheetDocuments(SpreadsheetTestCommon):
@@ -752,63 +751,6 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         spreadsheet = self.create_spreadsheet({"name": "spreadsheet"})
         copy = spreadsheet.copy({'name': 'sheet'})
         self.assertEqual(copy.name, 'sheet')
-
-    def test_autovacuum_remove_old_empty_spreadsheet(self):
-        self.env["documents.document"].search([('handler', 'in', ('spreadsheet', 'frozen_spreadsheet'))]).unlink()
-
-        spreadsheet = self.create_spreadsheet(name="Spreadsheet", values={
-            "create_date": datetime(2023, 5, 15, 18)
-        })
-        spreadsheet.previous_attachment_ids = False
-        self.assertEqual(len(self.env["documents.document"].search([('handler', 'in', ('spreadsheet', 'frozen_spreadsheet'))])), 1)
-
-        with self._freeze_time("2023-05-16 19:00"):
-            self.env["documents.document"]._gc_spreadsheet()
-        self.assertEqual(len(self.env["documents.document"].search([('handler', 'in', ('spreadsheet', 'frozen_spreadsheet'))])), 0)
-
-    def test_autovacuum_keep_new_empty_spreadsheet(self):
-        self.env["documents.document"].search([('handler', 'in', ('spreadsheet', 'frozen_spreadsheet'))]).unlink()
-
-        self.create_spreadsheet(name="Spreadsheet", values={
-            "create_date": datetime(2023, 5, 16, 18)
-        })
-        self.assertEqual(len(self.env["documents.document"].search([('handler', 'in', ('spreadsheet', 'frozen_spreadsheet'))])), 1)
-
-        with self._freeze_time("2023-05-16 19:00"):
-            self.env["documents.document"]._gc_spreadsheet()
-        self.assertEqual(len(self.env["documents.document"].search([('handler', 'in', ('spreadsheet', 'frozen_spreadsheet'))])), 1)
-
-    def test_autovacuum_keep_old_spreadsheet_with_revision(self):
-        self.env["documents.document"].search([('handler', 'in', ('spreadsheet', 'frozen_spreadsheet'))]).unlink()
-
-        spreadsheet = self.create_spreadsheet(name="Spreadsheet", values={
-            "create_date": datetime(2023, 5, 15, 18)
-        })
-        commands = self.new_revision_data(spreadsheet)
-        spreadsheet.dispatch_spreadsheet_message(commands)
-
-        self.assertEqual(len(self.env["documents.document"].search([('handler', 'in', ('spreadsheet', 'frozen_spreadsheet'))])), 1)
-
-        with self._freeze_time("2023-05-16 19:00"):
-            self.env["documents.document"]._gc_spreadsheet()
-        self.assertEqual(len(self.env["documents.document"].search([('handler', 'in', ('spreadsheet', 'frozen_spreadsheet'))])), 1)
-
-    def test_autovacuum_preserve_spreadsheet_with_attachment(self):
-        self.env["documents.document"].search([('handler', '=', 'spreadsheet')]).unlink()
-
-        spreadsheet = self.create_spreadsheet(name="Spreadsheet", values={
-            "create_date": datetime(2024, 8, 12, 18)
-        })
-        spreadsheet.previous_attachment_ids = self.env["ir.attachment"].create({
-            "name": "image.png",
-            "datas": b"test",
-            "res_model": "documents.document",
-            "res_id": spreadsheet.id,
-        })
-        self.assertEqual(len(self.env["documents.document"].search([('handler', '=', 'spreadsheet')])), 1)
-        with freeze_time("2024-08-13 19:00"):
-            self.env["documents.document"]._gc_spreadsheet()
-        self.assertEqual(len(self.env["documents.document"].search([('handler', '=', 'spreadsheet')])), 1)
 
     def test_copy_image_in_snapshot(self):
         spreadsheet = self.create_spreadsheet()
