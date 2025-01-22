@@ -5,15 +5,15 @@
         <field name="model">res.partner.grade</field>
         <field name="inherit_id" ref="website_crm_partner_assign.view_partner_grade_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='active']" position="after">
+            <field name="partner_weight" position="after">
                 <field name="default_commission_plan_id"/>
-            </xpath>
+            </field>
         </field>
     </record>
     <record id="view_partner_grade_tree_inherit_partner_commission" model="ir.ui.view">
         <field name="name">res.partner.grade.tree.partner.commission</field>
         <field name="model">res.partner.grade</field>
-        <field name="inherit_id" ref="website_crm_partner_assign.view_partner_grade_tree"/>
+        <field name="inherit_id" ref="partnership.view_partner_grade_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
                 <field name="default_commission_plan_id"/>
@@ -25,7 +25,7 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="website_crm_partner_assign.view_crm_partner_assign_form"/>
         <field name="arch" type="xml">
-            <field name="grade_id" position="after">
+            <field name="activation" position="before">
                 <field name="commission_plan_id" domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]" />
             </field>
         </field>

@@ -70,6 +70,6 @@
         id="menu_commission_plans"
         name="Commission Plans"
         action="action_commission_plans"
-        parent="website_crm_partner_assign.crm_menu_resellers"
+        parent="partnership.crm_menu_partners"
         sequence="10"/>
 </odoo>
