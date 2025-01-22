@@ -39,6 +39,11 @@ class HrLeave(models.Model):
         res = super().action_validate(check_state=check_state)
         self.sudo()._recompute_payslips()
         return res
+    
+    def _get_to_clean_activities(self):
+        activities = super()._get_to_clean_activities()
+        activities.append('hr_payroll_holidays.mail_activity_data_hr_leave_to_defer')
+        return activities
 
     def action_refuse(self):
         res = super().action_refuse()
@@ -47,8 +52,14 @@ class HrLeave(models.Model):
 
     def _action_user_cancel(self, reason):
         res = super()._action_user_cancel(reason)
+        self.sudo().payslip_state = 'done'
         self.sudo()._recompute_payslips()
         return res
+    
+    def action_reset_confirm(self):
+        super().action_reset_confirm()
+        self.sudo().payslip_state = 'normal'
+        return True
 
     def _recompute_payslips(self):
         # Recompute draft/waiting payslips
