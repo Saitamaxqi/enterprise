@@ -18,6 +18,12 @@
         'point_of_sale._assets_pos': [
             'l10n_it_pos/static/src/**/*',
         ],
+        'web.assets_tests': [
+            'l10n_it_pos/static/tests/tours/**/*',
+        ],
+        'web.assets_frontend': [
+            'l10n_it_pos/static/src/app/overrides/helpers/account_tax.js',
+        ],
     },
     'license': 'OEEL-1',
 }
