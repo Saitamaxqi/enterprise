@@ -1,3 +1,4 @@
+import base64
 import json
 import zipfile
 from base64 import b64decode, b64encode
@@ -719,6 +720,24 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             files={'ufile': ('hello.txt', BytesIO(b"Hello"), 'text/plain')},
         )
         self.assertEqual(res.status_code, 404)
+
+        # Check that the images are not compressed
+        img_byte = BytesIO()
+        Image.new(mode='RGB', size=(10_000, 2_000)).save(img_byte, format='PNG')
+        img_byte = img_byte.getvalue()
+
+        res = self.url_open(f'/documents/upload/{self.internal_request.access_token}',
+            data={
+                'res_id': self.user_demo.id,
+                'res_model': 'res.users',
+                'csrf_token': http.Request.csrf_token(self),
+            },
+            files={'ufile': ('test.bmp', img_byte, 'image/bmp')},
+            allow_redirects=False,
+        )
+        res.raise_for_status()
+        self.assertEqual(self.internal_request.name, 'test.bmp')
+        self.assertEqual(base64.b64decode(self.internal_request.datas), img_byte)
 
     def test_doc_ctrl_upload_shortcut(self):
         self.authenticate(None, None)
