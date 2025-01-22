@@ -1035,8 +1035,8 @@ class L10n_Mx_EdiDocument(models.Model):
                 cfdi_values['subtotal'] += values['tax_amount_currency']
             cfdi_values['total'] += values['tax_amount_currency']
             if not grouping_key or grouping_key['account_base']:
-                cfdi_values['subtotal'] += values['base_amount_currency']
-                cfdi_values['total'] += values['base_amount_currency']
+                cfdi_values['subtotal'] += values['total_excluded_currency']
+                cfdi_values['total'] += values['total_excluded_currency']
 
         # Post-fix discount.
         # We have to deal with a special case: 100.05 with 50% of discount. In that case,

@@ -327,7 +327,7 @@ class AccountEdiFormat(models.Model):
             rate = base_line['rate']
             tax_details = base_line['tax_details']
             base_line['co_edi_index'] = index
-            base_line['co_price_subtotal'] = tax_details['total_excluded'] + tax_details['delta_base_amount']
+            base_line['co_price_subtotal'] = tax_details['total_excluded'] + tax_details['delta_total_excluded']
 
             if discount == 100:
                 co_price_subtotal_before_discount = (price_unit * quantity) / rate if rate else 0.0
