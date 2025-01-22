@@ -287,3 +287,20 @@ class SDDTest(SDDTestCommon):
         )
         with self.assertRaises(UserError, msg="As there is no payment that can be generated, we raise an error when trying to do so"):
             wizard.action_create_payments()
+
+    def test_register_payment_other_journal(self):
+        """ Test payment from a different journal than the default one """
+        bank_journal_copy = self.sdd_company_bank_journal.copy()
+        bank_journal_copy.bank_acc_number = 'CH9300762011623852958'
+        invoices = self.create_invoice(self.partner_agrolait)
+        wizard = (
+            self.env['account.payment.register']
+            .with_context({'active_ids': invoices.line_ids.ids, 'active_model': 'account.move.line'})
+            .create({
+                'journal_id': bank_journal_copy.id,
+                'payment_method_line_id': bank_journal_copy.inbound_payment_method_line_ids.filtered(lambda l: l.code == 'sdd').id
+            })
+        )
+        res = wizard.action_create_payments()
+        payments = self.env['account.payment'].search(res.get('domain', []))
+        self.assertTrue(payments, 'A payment should have been generated')
