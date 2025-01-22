@@ -14,7 +14,7 @@
                 </button>
             </div>
             </xpath>
-            <xpath expr="//field[@name='time_cycle']" position="before">
+            <xpath expr="//group[@name='workorder']/field[@name='company_id']" position="before">
                 <field name="employee_ratio" groups="base.group_no_one"/>
             </xpath>
         </field>
