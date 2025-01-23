@@ -114,7 +114,7 @@ class AccountMove(models.Model):
             unspsc_tax_mismatch_products = self.env['product.product']
 
             for line in product_lines:
-                vat_taxes = line.tax_ids.filtered(lambda t: t.l10n_ke_tax_type_id)
+                vat_taxes = line.tax_ids.filtered(lambda t: t.l10n_ke_tax_type_id and (t.amount_type != 'group' or t.children_tax_ids))
                 if len(vat_taxes) != 1 and line.product_id:
                     lines_not_single_tax |= line
                 if (product_tax_type := line.product_id.unspsc_code_id.l10n_ke_tax_type_id) and product_tax_type not in vat_taxes.l10n_ke_tax_type_id:
@@ -122,7 +122,7 @@ class AccountMove(models.Model):
 
             if lines_not_single_tax:
                 messages['lines_not_single_vat_tax'] = {
-                    'message': _("All invoice lines must have exactly one VAT tax (on which the KRA Tax Code is set)!"),
+                    'message': _("All invoice lines must have Tax line and exactly one VAT tax (on which the KRA Tax Code is set)!"),
                     'blocking': True,
                 }
 

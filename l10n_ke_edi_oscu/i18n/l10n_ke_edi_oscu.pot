@@ -237,8 +237,8 @@ msgstr ""
 #: code:addons/l10n_ke_edi_oscu/models/account_move.py:0
 #, python-format
 msgid ""
-"All invoice lines must have exactly one VAT tax (on which the KRA Tax Code "
-"is set)!"
+"All invoice lines must have Tax line and exactly one VAT tax (on which the "
+"KRA Tax Code is set)!"
 msgstr ""
 
 #. module: l10n_ke_edi_oscu
