@@ -5,13 +5,11 @@
       class="o-version-history-item border rounded p-2 mb-2 d-flex"
       t-att-class="{'active': this.props.active}"
       t-ref="item"
-      t-on-contextmenu.prevent.stop="this.openMenu"
-      t-on-click="() => props.onActivation(this.revision.nextRevisionId)">
-
+      t-on-contextmenu.prevent.stop="this.activate"
+      t-on-pointerdown.capture="this.activate">
       <div>
         <span t-if="isLatestVersion" class="o-sp-badge badge rounded-4 mb-1">Current</span>
-
-        <div class="d-flex o-version-history-item-text" t-ref="revisionNameDiv">
+        <div class="d-flex o-version-history-item-text" t-ref="label">
           <TextInput
             t-if="props.editable"
             value="state.editName"
@@ -36,21 +34,16 @@
         </div>
       </div>
       <div class="ms-auto">
-        <span
-          class="o-version-history-menu px-2"
-          t-ref="menuButton"
-          t-att-class="{'active': this.props.active}"
-          t-on-click.stop="this.openMenu"
-          t-on-contextmenu.prevent.stop="this.openMenu">
-          <i class="fa fa-ellipsis-v text-muted" />
-        </span>
+        <Dropdown items="menuItems">
+          <span
+            class="d-flex btn px-2 border-0 o-version-history-menu"
+            t-on-click="this.activate"
+            t-on-contextmenu.prevent.stop="this.activate"
+          >
+            <i class="fa fa-ellipsis-v text-muted" />
+          </span>
+        </Dropdown>
       </div>
     </div>
-    <Menu
-      t-if="menuState.isOpen"
-      position="menuState.position"
-      menuItems="menuItems"
-      onClose.bind="closeMenu"
-    />
   </t>
 </templates>

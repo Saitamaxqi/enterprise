@@ -1,26 +1,30 @@
-import { components, helpers } from "@odoo/o-spreadsheet";
 import { Component, useRef, useState, useEffect } from "@odoo/owl";
-import { formatToLocaleString } from "../../helpers/misc";
+import { Dropdown } from "@web/core/dropdown/dropdown";
+import { components } from "@odoo/o-spreadsheet";
+
+import { formatToLocaleString } from "../../../helpers/misc";
 import { _t } from "@web/core/l10n/translation";
 import { pyToJsLocale } from "@web/core/l10n/utils";
 
-const { createActions } = helpers;
 
 export class VersionHistoryItem extends Component {
     static template = "spreadsheet_edition.VersionHistoryItem";
-    static components = { Menu: components.Menu, TextInput: components.TextInput };
+    static components = { Dropdown, TextInput: components.TextInput };
     static props = {
         active: Boolean,
         revision: Object,
-        onActivation: { optional: true, type: Function },
-        onBlur: { optional: true, type: Function },
+        onActivation: Function,
+        onBlur: Function,
+        getRevisions: Function,
+        renameRevision: Function,
+        restoreRevision: Function,
+        forkHistory: Function,
+        getLocale: Function,
         editable: { optional: true, type: Boolean },
     };
+
     setup() {
-        this.menuState = useState({
-            isOpen: false,
-            position: null,
-        });
+        this.menuState = useState({ isOpen: false });
         this.state = useState({ editName: this.defaultName });
         this.menuButtonRef = useRef("menuButton");
         this.itemRef = useRef("item");
@@ -29,11 +33,12 @@ export class VersionHistoryItem extends Component {
             if (this.props.active) {
                 this.itemRef.el.scrollIntoView({
                     behavior: "smooth",
-                    block: "center",
+                    block: "nearest",
                     inline: "nearest",
                 });
             }
         });
+
     }
 
     get revision() {
@@ -52,8 +57,7 @@ export class VersionHistoryItem extends Component {
 
     get isLatestVersion() {
         return (
-            this.env.historyManager.getRevisions()[0].nextRevisionId ===
-            this.revision.nextRevisionId
+            this.props.getRevisions()[0].nextRevisionId === this.revision.nextRevisionId
         );
     }
 
@@ -63,45 +67,31 @@ export class VersionHistoryItem extends Component {
             this.state.editName = this.defaultName;
         }
         if (this.state.editName !== this.defaultName) {
-            this.env.historyManager.renameRevision(this.revision.id, this.state.editName);
+            this.props.renameRevision(this.revision.id, this.state.editName);
         }
     }
 
     get menuItems() {
-        const actions = [
+        return [
             {
-                name: _t("Make a copy"),
-                execute: (env) => {
-                    env.historyManager.forkHistory(this.revision.id);
-                },
-                isReadonlyAllowed: true,
+                label: _t("Make a copy"),
+                onSelected: () => this.props.forkHistory(this.revision.id),
+                id: "copy_" + this.revision.id,
             },
             {
-                name: _t("Restore this version"),
-                execute: (env) => {
-                    env.historyManager.restoreRevision(this.revision.id);
-                },
-                isReadonlyAllowed: true,
+                label: _t("Restore this version"),
+                onSelected: () => this.props.restoreRevision(this.revision.id),
+                id: "restore_" + this.revision.id,
             },
         ];
-
-        return createActions(actions);
     }
 
-    openMenu() {
+    activate() {
         this.props.onActivation(this.revision.nextRevisionId);
-        const { x, y, height, width } = this.menuButtonRef.el.getBoundingClientRect();
-        this.menuState.isOpen = true;
-        this.menuState.position = { x: x + width, y: y + height };
-    }
-
-    closeMenu() {
-        this.menuState.isOpen = false;
-        this.menuState.position = null;
     }
 
     formatRevisionTimeStamp(ISOdatetime) {
-        const code = pyToJsLocale(this.env.model.getters.getLocale().code);
+        const code = pyToJsLocale(this.props.getLocale().code);
         return formatToLocaleString(ISOdatetime, code);
     }
 }

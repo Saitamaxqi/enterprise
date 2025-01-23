@@ -1,4 +1,4 @@
-import { Component, onMounted, useRef, useState } from "@odoo/owl";
+import { Component, useEffect, useRef, useState } from "@odoo/owl";
 import { components } from "@odoo/o-spreadsheet";
 import { VersionHistoryItem } from "./version_history_item";
 
@@ -6,7 +6,16 @@ const { Section } = components;
 
 export class VersionHistorySidePanel extends Component {
     static template = "spreadsheet_edition.VersionHistory";
-    static props = { onCloseSidePanel: Function };
+    static props = { 
+        onCloseSidePanel: Function,
+        getRevisions: Function,
+        forkHistory: Function,
+        restoreRevision: Function,
+        renameRevision: Function,
+        loadToRevision: Function,
+        getCurrentRevisionId: Function,
+        getLocale: Function,
+     };
     static components = {
         VersionHistoryItem,
         Section,
@@ -18,18 +27,18 @@ export class VersionHistorySidePanel extends Component {
         this.containerRef = useRef("container");
 
         this.state = useState({
-            currentRevisionId: this.revisions[0]?.nextRevisionId,
+            currentRevisionId: this.props.getCurrentRevisionId(),
             isEditingName: false,
             loaded: this.revNbr,
         });
 
-        onMounted(() => {
+        useEffect(() => {
             this.focus();
         });
     }
 
     get revisions() {
-        return this.env.historyManager.getRevisions();
+        return this.props.getRevisions();
     }
 
     get loadedRevisions() {
@@ -41,8 +50,8 @@ export class VersionHistorySidePanel extends Component {
     }
 
     onRevisionClick(revisionId) {
-        this.env.model.dispatch("GO_TO_REVISION", { revisionId });
         this.state.currentRevisionId = revisionId;
+        this.props.loadToRevision(revisionId);
     }
 
     onLoadMoreClicked() {
@@ -69,9 +78,7 @@ export class VersionHistorySidePanel extends Component {
             const nextIndex = Math.max(0, Math.min(revisions.length - 1, currentIndex + increment));
             if (nextIndex !== currentIndex) {
                 this.state.currentRevisionId = revisions[nextIndex].nextRevisionId;
-                this.env.model.dispatch("GO_TO_REVISION", {
-                    revisionId: this.state.currentRevisionId,
-                });
+                this.props.loadToRevision(this.state.currentRevisionId);
             }
         }
     }
