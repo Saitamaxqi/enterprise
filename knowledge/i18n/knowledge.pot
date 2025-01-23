@@ -2044,6 +2044,12 @@ msgid ""
 msgstr ""
 
 #. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/backend/file/macros_file_mixin.xml:0
+msgid "Attach"
+msgstr ""
+
+#. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_attachment_count
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_attachment_count
 msgid "Attachment Count"
@@ -4954,6 +4960,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/external_embedded_view_favorite_menu/embedded_view_favorite_menu.js:0
 msgid "Select an article"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/backend/file/macros_file_mixin.xml:0
+msgid "Send"
 msgstr ""
 
 #. module: knowledge

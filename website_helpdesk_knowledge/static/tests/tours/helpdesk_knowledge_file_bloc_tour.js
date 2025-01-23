@@ -7,8 +7,11 @@ const createEmbeddedFileSteps = [
         run: function () {
             openPowerbox(this.anchor);
         },
-    }, { // click on the /article command
-        trigger: '.o-we-command-name:contains("File")',
+    }, { // click on the /media command
+        trigger: '.o-we-command-name:contains("Media")',
+        run: 'click',
+    }, { // Pick  the "Documents" tab
+        trigger: '.o_select_media_dialog .nav-tabs .nav-link:contains("Documents")',
         run: 'click',
     }, { // choose "Onboarding" file
         trigger: '.o_existing_attachment_cell .o_file_name:contains("Onboarding")',
@@ -31,7 +34,7 @@ registry.category("web_tour.tours").add('helpdesk_pick_file_as_attachment_from_k
     trigger: '.o_knowledge_form_view',
 }, ...createEmbeddedFileSteps,
 { // click on the "Use as Attachment" button located in the toolbar of the file block
-    trigger: '[data-embedded="file"] .o_embedded_toolbar_button_text:contains("Use as Attachment")',
+    trigger: '[data-embedded="file"] .o_embedded_toolbar_button_text:contains("Attach")',
     run: 'click',
 }, { // check that the file is added to the attachments
     trigger: '.o-mail-Chatter .o-mail-AttachmentCard:contains("Onboarding")',
@@ -52,7 +55,7 @@ registry.category("web_tour.tours").add('helpdesk_pick_file_as_message_attachmen
     trigger: '.o_knowledge_form_view',
 }, ...createEmbeddedFileSteps,
 { // click on the "Use as Attachment" button located in the toolbar of the file block
-    trigger: '[data-embedded="file"] .o_embedded_toolbar_button_text:contains("Send as Message")',
+    trigger: '[data-embedded="file"] .o_embedded_toolbar_button_text:contains("Send")',
     run: 'click',
 }, { // wait for the file to be uploaded
     trigger: '.o-mail-Composer .o-mail-AttachmentCard i.fa-check',
