@@ -57,7 +57,6 @@ class ProductTemplate(models.Model):
 
     # === Computes === #
 
-    @api.depends_context('allowed_company_ids')
     def compute_is_storable(self):
         super().compute_is_storable()
         fiscal_country_codes = self.env.companies.mapped('account_fiscal_country_id.code')

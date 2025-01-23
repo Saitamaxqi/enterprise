@@ -8,9 +8,9 @@
         'point_of_sale',
     ],
     'data': [
-      'views/account_move_views.xml',
-      'views/pos_order.xml',
-      'views/product_views.xml',
+        'views/account_move_views.xml',
+        'views/pos_order.xml',
+        'views/product_views.xml',
     ],
     'demo': [
         'demo/demo_product.xml',

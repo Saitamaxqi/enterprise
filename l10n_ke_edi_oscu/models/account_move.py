@@ -61,7 +61,7 @@ class AccountMove(models.Model):
         compute=lambda self: self._compute_linked_attachment_id('l10n_ke_oscu_attachment_id', 'l10n_ke_oscu_attachment_file'),
         depends=['l10n_ke_oscu_attachment_file'],
     )
-    l10n_ke_validation_message = fields.Json(compute='_compute_l10n_ke_validation_message')
+    l10n_ke_validation_message = fields.Json(compute='_compute_l10n_ke_validation_message', compute_sudo=True)
 
     # === Computes === #
 
