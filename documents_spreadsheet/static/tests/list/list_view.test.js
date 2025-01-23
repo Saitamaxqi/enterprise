@@ -46,6 +46,7 @@ import {
     toggleActionMenu,
     makeServerError,
     serverState,
+    mockService,
 } from "@web/../tests/web_test_helpers";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
@@ -1117,4 +1118,36 @@ test("Inserting a grouped list ignore groups", async function () {
     expect(getEvaluatedCell(model, "A2").value <= getEvaluatedCell(model, "A3").value).not.toBe(
         undefined
     );
+});
+
+test("Middle-click on 'See record' opens the record in a new tab", async function () {
+    const { model, env } = await createSpreadsheetFromListView({
+        serverData: {
+            models: getBasicData(),
+            views: {
+                "partner,false,list": `
+                    <list string="Partners">
+                        <field name="foo"/>
+                        <field name="bar"/>
+                    </list>`,
+                "partner,false,search": "<search/>",
+            },
+        },
+    });
+
+    mockService("action", {
+        doAction(_, options) {
+            expect.step("doAction");
+            expect(options).toEqual({
+                newWindow: true,
+                viewType: "form",
+            });
+            return Promise.resolve(true);
+        },
+    });
+
+    selectCell(model, "A2");
+    const root = cellMenuRegistry.getAll().find((item) => item.id === "list_see_record");
+    await root.execute(env, true);
+    expect.verifySteps(["doAction"]);
 });
