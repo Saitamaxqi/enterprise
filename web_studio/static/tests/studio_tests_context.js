@@ -9,6 +9,35 @@ import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { handleDefaultStudioRoutes } from "./view_editor_tests_utils";
 
 export function defineStudioEnvironment() {
+
+    class IrMenu extends models.Model {
+        _name = "ir.ui.menu"
+
+        name = fields.Char();
+
+        _records = [
+            {
+                id: 1,
+                name: "Partner 1",
+            },
+            {
+                id: 11,
+                name: "Partner 11",
+            },
+            {
+                id: 12,
+                name: "Partner 12",
+            },
+        ]
+
+        _views = {
+            "form": `
+                <form>
+                    <field name="name"/>
+                </form>`,
+        }
+    }
+
     class Partner extends models.Model {
         _name = "partner";
 
@@ -188,7 +217,7 @@ export function defineStudioEnvironment() {
         }
     }
 
-    defineModels({ ...mailModels, Pony, Partner, Dog, Settings, BaseAutomation });
+    defineModels({ ...mailModels, Pony, Partner, Dog, Settings, BaseAutomation, IrMenu });
 
     defineActions([
         {
@@ -274,19 +303,19 @@ export function defineStudioEnvironment() {
             children: [{
                 id: 11,
                 children: [],
-                name: "Partners",
+                name: "Partners 11",
                 appID: 1,
                 actionID: 1,
                 xmlid: "menu_11",
             },{
                 id: 12,
                 children: [],
-                name: "Partners",
+                name: "Partners 12",
                 appID: 1,
                 actionID: 11,
                 xmlid: "menu_12",
             },],
-            name: "Partners",
+            name: "Partners 1",
             appID: 1,
             actionID: 1,
             xmlid: "app_1",
