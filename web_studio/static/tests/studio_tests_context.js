@@ -222,7 +222,7 @@ export function defineStudioEnvironment() {
     defineActions([
         {
             id: 1,
-            name: "partner Action (kanban first)",
+            name: "partner Action",
             res_model: "partner",
             type: "ir.actions.act_window",
             xml_id: "partner_action_1",
@@ -327,6 +327,7 @@ export function defineStudioEnvironment() {
             appID: 2,
             actionID: 2,
             xmlid: "app_2",
+            webIcon: "fa fa-diamond,#FFFFFF,#C6572A",
         },
         {
             id: 3,
