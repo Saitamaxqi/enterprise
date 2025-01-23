@@ -165,7 +165,7 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 else:
                     supplementary_units = None
                 value = res['value'] or None if current_groupby == 'intrastat_grouping' else sum(line['value'] for line in query_res_lines if not line['missing_product'])
-                value_currency = res['value_currency'] if res['currency_id_of_value_currency'] != self.env.company.currency_id.id else None
+                value_currency = res['value_currency'] if res['invoice_currency_id'] != self.env.company.currency_id.id else None
                 result_dict = {
                     'system': f"{res['system']} ({res['intrastat_type']})",
                     'intrastat_type': res['intrastat_type'],
@@ -183,7 +183,7 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                     'supplementary_units': supplementary_units,
                     'value': value,
                     'value_currency': value_currency,
-                    'currency_id_of_value_currency': res['currency_id_of_value_currency'],
+                    'currency_id_of_value_currency': res['invoice_currency_id'],
                     'has_sublines': True,
                 }
                 if options.get('export_mode') == 'file':
@@ -295,7 +295,6 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 -- One for 10 items minus one for the free item
                 SUM(SIGN(account_move_line.quantity) * SIGN(account_move_line.price_unit) * ABS(%(balance_select)s)) AS value,
                 SUM(SIGN(account_move_line.quantity) * SIGN(account_move_line.price_unit) * ABS(account_move_line.amount_currency)) AS value_currency,
-                account_move.currency_id AS currency_id_of_value_currency,
                 CASE WHEN product_country.code = 'GB' THEN 'XU' ELSE COALESCE(product_country.code, %(unknown_country_code)s) END AS intrastat_product_origin_country_code,
                 %(product_country_name)s AS intrastat_product_origin_country_name,
                 CASE WHEN partner.vat IS NOT NULL THEN partner.vat
