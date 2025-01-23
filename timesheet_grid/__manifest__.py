@@ -13,6 +13,7 @@
     'sequence': 65,
     'data': [
         'data/ir_cron_data.xml',
+        'data/ir_config_parameter_data.xml',
         'data/mail_template_data.xml',
         'data/web_tour_data.xml',
         'security/timesheet_security.xml',
