@@ -45,6 +45,7 @@
                            readonly="state != 'draft'"
                            options="{'no_open': True}"/>
                     <field name="l10n_mx_edi_payment_policy"
+                           invisible="not l10n_mx_edi_is_cfdi_needed"
                            readonly="l10n_mx_edi_cfdi_state == 'sent'"/>
                     <field name="l10n_mx_edi_usage"
                            invisible="not l10n_mx_edi_is_cfdi_needed"
