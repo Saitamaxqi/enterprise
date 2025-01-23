@@ -214,3 +214,38 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
             wizard._create_request_log_note(related_request)
             # Verify that the request got linked to the document_to_sign
             self.assertEqual(related_request.reference_doc, document_to_sign)
+
+    def test_import_document(self):
+        """
+        This test verifies that a user can import a document from the Documents app
+        and create a sign template from it by calling the action_import_and_create method.
+        """
+        writer = OdooPdfFileWriter()
+        writer.addBlankPage(width=200, height=200)
+        stream = io.BytesIO()
+        writer.write(stream)
+
+        # Create a document
+        document = self.env['documents.document'].create({
+            'name': 'test_import_document.pdf',
+            'datas': base64.b64encode(stream.getvalue()),
+            'access_internal': 'view',
+            'folder_id': self.folder_a_a.id,
+        })
+
+        # Create a wizard for importing documents
+        wizard = self.env['sign.import.documents'].with_user(self.env.user).create({
+            'selected_document': document.id,
+        })
+
+        # Perform the import and create action
+        result = wizard.action_import_and_create()
+
+        # Assertions to verify the result
+        self.assertEqual(result['type'], 'ir.actions.client')
+        self.assertEqual(result['tag'], 'sign.Template')
+        self.assertTrue(result['params']['id'], "Template ID should be created")
+
+        # Verify template creation
+        template = self.env['sign.template'].browse(result['params']['id'])
+        self.assertTrue(template.exists(), "Sign template should be created")
