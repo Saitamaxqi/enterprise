@@ -5,7 +5,7 @@
         <field name="name">hr.payslip.list</field>
         <field name="model">hr.payslip</field>
         <field name="arch" type="xml">
-            <list string="Payslips" sample="1" multi_edit="1" duplicate="0">
+            <list string="Payslips" sample="1" multi_edit="1" duplicate="0" js_class="hr_payroll_payslip_list">
                 <header>
                     <button string="Print" name="action_print_payslip" type="object"/>
                 </header>
@@ -67,6 +67,7 @@
                 <button string="Refund" name="refund_sheet" type='object' invisible="not has_refund_slip or credit_note or state != 'paid'"
                     confirm="Another refund payslip with the same amount has been found. Do you want to create a new one?"/>
                 <button string="Set to Draft" name="action_payslip_draft" type="object" invisible="state != 'cancel'"/>
+                <button string="Unpaid" name="action_payslip_unpaid" type="object" invisible="state != 'paid'"/>
                 <button string="Compute Sheet" name="compute_sheet" type="object" invisible="state != 'draft' or credit_note" class="oe_highlight" help="Recompute the payslip lines only, not the worked days / input lines"/>
                 <button string="Compute Sheet" name="compute_sheet" type="object" invisible="state != 'verify' or credit_note" help="Recompute the payslip lines only, not the worked days / input lines"/>
                 <button string="Cancel" name="action_payslip_cancel" type="object" invisible="state not in ('draft', 'done', 'verify')"/>
@@ -328,67 +329,4 @@
         <field name="view_mode">list,form</field>
         <field name="context">{'search_default_employee_id': [active_id], 'default_employee_id': active_id}</field>
     </record>
-
-
-    <record model="ir.actions.server" id="action_hr_payroll_draft">
-        <field name="name">Set to Draft</field>
-        <field name="sequence" eval="10"/>
-        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="binding_view_types">list</field>
-        <field name="state">code</field>
-        <field name="code">
-            records.action_payslip_draft()
-        </field>
-    </record>
-
-    <record model="ir.actions.server" id="action_hr_payroll_compute_payroll">
-        <field name="name">Compute Sheet</field>
-        <field name="sequence" eval="20"/>
-        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="binding_view_types">list</field>
-        <field name="state">code</field>
-        <field name="code">
-            records.compute_sheet()
-        </field>
-    </record>
-
-    <record model="ir.actions.server" id="action_hr_payroll_confirm_payroll">
-        <field name="name">Confirm</field>
-        <field name="sequence" eval="30"/>
-        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="binding_view_types">list</field>
-        <field name="state">code</field>
-        <field name="code">
-            if records:
-                records.with_context(payslip_generate_pdf=True).action_payslip_done()
-        </field>
-    </record>
-
-    <record model="ir.actions.server" id="action_hr_payroll_cancel_payroll">
-        <field name="name">Cancel</field>
-        <field name="sequence" eval="40"/>
-        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="state">code</field>
-        <field name="code">
-            if records:
-                records.action_payslip_cancel()
-        </field>
-    </record>
-
-    <record model="ir.actions.server" id="action_hr_payroll_recompute_whole_sheet">
-        <field name="name">Recompute Whole Sheet</field>
-        <field name="sequence" eval="50"/>
-        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
-        <field name="binding_view_types">list,form</field>
-        <field name="state">code</field>
-        <field name="code">
-            records.action_refresh_from_work_entries()
-        </field>
-    </record>
-
 </odoo>

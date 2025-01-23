@@ -28,6 +28,8 @@ class HrPayslip(models.Model):
             Generate the accounting entries related to the selected payslips
             A move is created for each journal and for each month.
         """
+        if any(slip.state == 'paid' for slip in self):
+            raise ValidationError(_("You can't create a journal entry for a paid payslip."))
         res = super().action_payslip_done()
         self._action_create_account_move()
         return res

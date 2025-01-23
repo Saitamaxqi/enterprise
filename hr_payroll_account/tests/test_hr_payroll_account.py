@@ -9,6 +9,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import fields, Command
 from odoo.addons.hr_payroll.tests.common import TestPayslipContractBase
+from odoo.exceptions import ValidationError
 
 
 @odoo.tests.tagged('post_install', '-at_install')
@@ -590,3 +591,18 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
             ('move_id', '!=', invoice.id),
         ])
         self.assertTrue(reverse_invoice, 'Reverse move not created')
+
+    def test_payslip_paid_create_journal_entry(self):
+        """ Check that you cannot create a journal entry for a paid payslip """
+
+        # I compute the payslip sheet.
+        self.hr_payslip_john.compute_sheet()
+
+        # I validate the payslip.
+        self.hr_payslip_john.action_payslip_done()
+
+        # I mark the payslip as paid.
+        self.hr_payslip_john.action_payslip_paid()
+
+        # I verify that an error is thrown if we try to recreate a journal entry on paid payslip.
+        self.assertRaises(ValidationError, self.hr_payslip_john.action_payslip_done)

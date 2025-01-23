@@ -74,6 +74,7 @@
                 <button string="Mark as paid" name="action_paid" type="object" class="oe_highlight" invisible="state != 'close'"/>
                 <button string="Create Payment Report" name="action_payment_report" type="object" invisible="state != 'close'"/>
                 <button string="Set to Draft" name="action_draft" type="object" invisible="state not in ('verify', 'close')"/>
+                <button string="Unpaid" name="action_unpaid" type="object" invisible="state != 'paid'"/>
                 <field name="state" widget="statusbar"/>
             </header>
             <sheet>

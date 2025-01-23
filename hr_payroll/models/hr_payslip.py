@@ -529,6 +529,12 @@ class HrPayslip(models.Model):
             'export_format': export_format
         }).generate_payment_report()
 
+    def action_payslip_unpaid(self):
+        if any(slip.state != 'paid' for slip in self):
+            raise UserError(_('You cannot cancel the payment if the payslip has not been paid.'))
+        self.write({'state': 'done'})
+        self.payslip_run_id.write({'state': 'close'})
+
     def action_open_work_entries(self):
         self.ensure_one()
         return self.employee_id.action_open_work_entries(initial_date=self.date_from)

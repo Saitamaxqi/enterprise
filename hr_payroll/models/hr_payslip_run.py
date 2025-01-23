@@ -75,6 +75,10 @@ class HrPayslipRun(models.Model):
         self.mapped('slip_ids').action_payslip_paid()
         self.write({'state': 'paid'})
 
+    def action_unpaid(self):
+        self.slip_ids.action_payslip_unpaid()
+        self.write({'state': 'close'})
+
     def action_validate(self):
         payslip_done_result = self.mapped('slip_ids').filtered(lambda slip: slip.state not in ['draft', 'cancel']).action_payslip_done()
         self.action_close()

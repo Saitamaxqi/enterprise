@@ -1,7 +1,8 @@
 import { TimeOffToDeferWarning, useTimeOffToDefer } from "@hr_payroll_holidays/views/hooks";
-import { registry } from "@web/core/registry";
 import { ListRenderer } from "@web/views/list/list_renderer";
-import { listView } from "@web/views/list/list_view";
+import { payslipListView } from "@hr_payroll/views/payslip_list/hr_payslip_list_controller";
+import { registry } from '@web/core/registry';
+import { listView } from '@web/views/list/list_view';
 
 class PayslipListRenderer extends ListRenderer {
     static template = "hr_payroll_holidays.PayslipListRenderer";
@@ -12,9 +13,12 @@ class PayslipListRenderer extends ListRenderer {
         this.timeOff = useTimeOffToDefer();
     }
 }
-const PayslipListView = {
+
+payslipListView.Renderer = PayslipListRenderer;
+
+const payslipRunListView = {
     ...listView,
     Renderer: PayslipListRenderer,
-};
+}
 
-registry.category("views").add("hr_payroll_payslip_tree", PayslipListView);
+registry.category('views').add('hr_payroll_payslip_run_list', payslipRunListView)
