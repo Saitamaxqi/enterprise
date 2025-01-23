@@ -101,7 +101,7 @@ export const dragAndDropArticle = (from, to) => {
  */
 export function appendArticleLink(htmlFieldContainerSelector, articleName, previousSiblingSelector = "") {
     return [{ // open the command bar
-        trigger: `${htmlFieldContainerSelector} .odoo-editor-editable ${previousSiblingSelector}`,
+        trigger: `${htmlFieldContainerSelector} .odoo-editor-editable p:last-child ${previousSiblingSelector}`,
         run: function () {
             if (previousSiblingSelector) {
                 openPowerbox(this.anchor.parentElement, this.anchor);

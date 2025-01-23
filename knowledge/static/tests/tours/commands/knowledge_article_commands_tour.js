@@ -106,16 +106,17 @@ const fileCommandSteps = [{ // open the command bar
     run: function () {
         openPowerbox(this.anchor);
     },
-}, { // click on the /file command
-    trigger: '.o-we-command-name:contains("File")',
+}, { // click on the /media command
+    trigger: '.o-we-command-name:contains("Media")',
     run: 'click',
-}, { // wait for the media dialog to open
-    trigger: '.o_select_media_dialog',
+}, { // Pick  the "Documents" tab
+    trigger: '.o_select_media_dialog .nav-tabs .nav-link:contains("Documents")',
+    run: 'click',
 }, { // click on the first item of the modal
     trigger: '.o_existing_attachment_cell:contains(Onboarding)',
     run: 'click'
 }, { // wait for the block to appear in the editor
-    trigger: "div[data-embedded='file'] a.o_image",
+    trigger: "[data-embedded='file'] span.o_file_image a",
     run: 'click',
 },
 {
@@ -125,12 +126,12 @@ const fileCommandSteps = [{ // open the command bar
     trigger: '.o-FileViewer-headerButton[aria-label="Close"]',
     run: 'click',
 }, {
-    trigger: ".o_embedded_file_name_container:contains(Onboarding)",
+    trigger: ".o_file_name_container:contains(Onboarding)",
     run: function() {
         this.anchor.dispatchEvent(new Event("focus"));
     }
 }, {
-    trigger: ".o_embedded_file_name_container + input",
+    trigger: ".o_file_name_container + input",
     run: function() {
         this.anchor.value = "Renamed";
         this.anchor.dispatchEvent(new Event("blur"));
@@ -308,7 +309,11 @@ const videoCommandSteps = [{ // patch the components
 },
 { // wait for the block to appear in the editor
     trigger: '[data-embedded="video"]',
-    run: "click",
+    run: function () {
+        // ensure that the video element is not in the DOM, to avoid
+        // rendering it in the readonly tour.
+        this.anchor.remove();
+    },
 }];
 
 const unpatchSteps = [{ // unpatch the components
@@ -586,6 +591,11 @@ const articleCommandComposerSteps = [{ // open the chatter
 }, { // open the full composer
     trigger: "button[title='Open Full Composer']",
     run: "click",
+}, {
+    trigger: `${composeBody} .odoo-editor-editable p`,
+    // ensure the p content is replaced by something known (not signature)
+    // so that this test is not influenced by the implementation of signature.
+    run: "editor brol",
 }, ...appendArticleLink(`${composeBody}`, 'EditorCommandsArticle'), { // wait for the block to appear in the editor
     trigger: `${composeBody} .o_knowledge_article_link:contains("EditorCommandsArticle")`,
 }, ...appendArticleLink(`${composeBody}`, 'LinkedArticle', `.o_knowledge_article_link:contains("EditorCommandsArticle")`), { // wait for the block to appear in the editor, after the previous one
