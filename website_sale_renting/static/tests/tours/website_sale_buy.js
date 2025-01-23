@@ -30,13 +30,13 @@ registry.category("web_tour.tours").add('shop_buy_rental_product', {
         },
         {
             content: "Pick start time",
-            trigger: '.o_time_picker_select:eq(0)',
-            run: "select 8",
+            trigger: '.o_time_picker_input:eq(0)',
+            run: "edit 8:00",
         },
         {
             content: "Pick end time",
-            trigger: '.o_time_picker_select:eq(2)',
-            run: "select 12",
+            trigger: '.o_time_picker_input:eq(1)',
+            run: "edit 12:00",
         },
         {
             content: "Apply change",

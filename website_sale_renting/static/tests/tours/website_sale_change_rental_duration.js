@@ -32,23 +32,13 @@ registry.category("web_tour.tours").add("rental_cart_update_duration", {
         },
         {
             content: "Pick start time",
-            trigger: ".o_time_picker_select:eq(0)",
-            run: "select 6",
-        },
-        {
-            content: "Pick start time",
-            trigger: ".o_time_picker_select:eq(1)",
-            run: "select 0",
+            trigger: ".o_time_picker_input:eq(0)",
+            run: "edit 6:00 && press Enter",
         },
         {
             content: "Pick end time",
-            trigger: ".o_time_picker_select:eq(2)",
-            run: "select 12",
-        },
-        {
-            content: "Pick end time",
-            trigger: ".o_time_picker_select:eq(3)",
-            run: "select 0",
+            trigger: ".o_time_picker_input:eq(1)",
+            run: "edit 12:00 && press Enter",
         },
         {
             content: "Apply change",
@@ -73,8 +63,8 @@ registry.category("web_tour.tours").add("rental_cart_update_duration", {
         },
         {
             content: "Pick start time",
-            trigger: ".o_time_picker_select:eq(0)",
-            run: "select 8",
+            trigger: ".o_time_picker_input:eq(0)",
+            run: "edit 8:00",
         },
         {
             content: "Apply change",

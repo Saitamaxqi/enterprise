@@ -12,7 +12,8 @@ import {
 } from "@odoo/owl";
 import { hasTouch, isMobileOS } from "@web/core/browser/feature_detection";
 import { Domain } from "@web/core/domain";
-import { is24HourFormat, serializeDate, serializeDateTime } from "@web/core/l10n/dates";
+import { serializeDate, serializeDateTime } from "@web/core/l10n/dates";
+import { is24HourFormat } from "@web/core/l10n/time";
 import { localization } from "@web/core/l10n/localization";
 import { _t } from "@web/core/l10n/translation";
 import { usePopover } from "@web/core/popover/popover_hook";
