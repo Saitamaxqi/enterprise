@@ -29,7 +29,7 @@ export const DocumentsModelMixin = (component) =>
          */
         async load() {
             const selection = this.root?.selection;
-            if (selection && selection.length > 0) {
+            if (!this.originalSelection && selection && selection.length > 0) {
                 this.originalSelection = selection.map((rec) => rec.resId);
             }
             for (let arg of arguments) {
