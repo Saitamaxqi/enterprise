@@ -89,10 +89,8 @@ paymentForm.include({
             window.location = '/payment/status';
         }).catch((error) => {
             if (error instanceof RPCError) {
-                this._displayErrorDialog(
-                    _t("Payment processing failed"),
-                    error.data.message,
-                );
+                this._displayErrorDialog(_t("Payment processing failed"), error.data.message);
+                this._enableButton();
             } else {
                 return Promise.reject(error);
             }
