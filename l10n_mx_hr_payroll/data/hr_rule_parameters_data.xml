@@ -173,6 +173,11 @@
         <field name="rule_parameter_id" ref="rule_parameter_uma"/>
         <field name="date_from" eval="datetime(2024, 2, 1).date()"/>
     </record>
+    <record id="rule_parameter_uma_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">113.14</field>
+        <field name="rule_parameter_id" ref="rule_parameter_uma"/>
+        <field name="date_from" eval="datetime(2025, 2, 1).date()"/>
+    </record>
 
     <record id="rule_parameter_umi" model="hr.rule.parameter">
         <field name="name">Mexico: Daily UMI</field>
