@@ -292,12 +292,16 @@ class AccountAssetReportHandler(models.AbstractModel):
                 (None, 'account.asset', res_id)
             ])
 
+            is_parent_in_unfolded_lines = any(
+                report._get_model_info_from_id(unfolded_line_id) == (parent_model, parent_id)
+                for unfolded_line_id in options.get('unfolded_lines')
+            )
             line_vals_per_grouping_field_id.setdefault(parent_id, {
                 # We don't assign a name to the line yet, so that we can batch the browsing of the parent objects
                 'id': report._build_line_id([(None, parent_model, parent_id)]),
                 'columns': [], # Filled later
                 'unfoldable': True,
-                'unfolded': options.get('unfold_all', False),
+                'unfolded': is_parent_in_unfolded_lines or options.get('unfold_all'),
                 'level': 1,
 
                 # This value is stored here for convenience; it will be removed from the result
