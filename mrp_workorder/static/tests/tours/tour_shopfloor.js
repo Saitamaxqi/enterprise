@@ -260,7 +260,7 @@ registry.category("web_tour.tours").add("test_shop_floor", {
                     filters.length !== 4 ||
                     filters[0] !== mo ||
                     filters[1] !== "MO Ready" ||
-                    filters[2] !== "Ready" ||
+                    filters[2] !== "To Do" ||
                     filters[3] !== "In Progress"
                 ) {
                     console.error(`Unexpected search filters: "${filters.join(", ")}"`);

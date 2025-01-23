@@ -515,7 +515,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         # ----------------------------------------------------------
 
         workorder = production_table.workorder_ids[0]
-        self.assertEqual(workorder.state, 'waiting', "workorder state should be waiting.")
+        self.assertEqual(workorder.state, 'ready', "workorder state should be ready.")
         production_table.action_assign()
 
         # --------------------------------------------------------------
@@ -635,9 +635,9 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         # ----------------------------------------------------------
 
         workorders = production_table.workorder_ids
-        self.assertEqual(workorders[0].state, 'waiting', "First workorder state should be waiting.")
-        self.assertEqual(workorders[1].state, 'pending')
-        self.assertEqual(workorders[2].state, 'pending')
+        self.assertEqual(workorders[0].state, 'ready', "First workorder state should be ready.")
+        self.assertEqual(workorders[1].state, 'blocked')
+        self.assertEqual(workorders[2].state, 'blocked')
 
         # --------------------------------------------------------------
         # Process cutting operation...
@@ -730,7 +730,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         # assign consume material
         man_order.action_confirm()
         man_order.action_assign()
-        self.assertEqual(man_order.reservation_state, 'confirmed', "Production order should be in waiting state.")
+        self.assertEqual(man_order.reservation_state, 'confirmed', "Production order should be in confirmed state.")
 
         # check consume materials of manufacturing order
         self.assertEqual(len(man_order.move_raw_ids), 4, "Consume material lines are not generated properly.")
@@ -791,8 +791,8 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         for workorder in workorders:
             self.assertEqual(workorder.workcenter_id, self.workcenter_1, "Workcenter does not match.")
         self.assertEqual(kit_wo.state, 'ready', "Workorder should be in ready state.")
-        self.assertEqual(door_wo_1.state, 'pending', "Workorder should be in pending state.")
-        self.assertEqual(door_wo_2.state, 'pending', "Workorder should be in pending state.")
+        self.assertEqual(door_wo_1.state, 'blocked', "Workorder should be in blocked state.")
+        self.assertEqual(door_wo_2.state, 'blocked', "Workorder should be in blocked state.")
         self.assertEqual(kit_wo.duration_expected, 960, "Workorder duration should be 960 instead of %s." % str(kit_wo.duration_expected))
         self.assertEqual(door_wo_1.duration_expected, 480, "Workorder duration should be 480 instead of %s." % str(door_wo_1.duration_expected))
         self.assertEqual(door_wo_2.duration_expected, 480, "Workorder duration should be 480 instead of %s." % str(door_wo_2.duration_expected))
@@ -1919,10 +1919,10 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         workorders = production_table.workorder_ids
         wo1, wo2, wo3 = workorders[0], workorders[1], workorders[2]
 
-        self.assertEqual(wo1.state, 'waiting', "First workorder state should be ready.")
+        self.assertEqual(wo1.state, 'ready', "First workorder state should be ready.")
         self.assertEqual(wo1.workcenter_id.id, self.mrp_workcenter_3.id)
-        self.assertEqual(wo2.state, 'pending')
-        self.assertEqual(wo3.state, 'pending')
+        self.assertEqual(wo2.state, 'blocked')
+        self.assertEqual(wo3.state, 'blocked')
 
         self.assertFalse(wo1.id in wo1._get_conflicted_workorder_ids(), "Shouldn't conflict")
         self.assertFalse(wo2.id in wo2._get_conflicted_workorder_ids(), "Shouldn't conflict")
@@ -2096,6 +2096,7 @@ class TestRoutingAndKits(TransactionCase):
         mo.button_plan()
 
         self.assertEqual(len(mo.workorder_ids), 3)
+        # following can work if we order workorders by id rather than by sequence
         self.assertEqual(len(mo.workorder_ids[0].move_raw_ids.move_line_ids), 0)
         self.assertEqual(mo.workorder_ids[1].move_raw_ids.product_id, self.compfinished1)
         self.assertEqual(mo.workorder_ids[2].move_raw_ids.product_id, self.compkit1)
@@ -2237,7 +2238,7 @@ class TestRoutingAndKits(TransactionCase):
 
         mo.action_confirm()
         mo.button_plan()
-        wo1 = mo.workorder_ids.filtered(lambda wo: wo.state == 'waiting')[0]
+        wo1 = mo.workorder_ids.filtered(lambda wo: wo.state == 'blocked')[0]
         wo1.button_start()
         wo1.qty_producing = 4
         wo1.finished_lot_id = lot1

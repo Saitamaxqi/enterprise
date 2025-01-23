@@ -9,23 +9,18 @@ export class MrpDisplaySearchModel extends SearchModel {
             workorderFilters: [
                 {
                     name: "ready",
-                    string: _t("Ready"),
+                    string: _t("To Do"),
                     isActive: !!args.search_default_ready,
+                },
+                {
+                    name: "blocked",
+                    string: _t("Blocked"),
+                    isActive: !!args.search_default_blocked,
                 },
                 {
                     name: "progress",
                     string: _t("In Progress"),
                     isActive: !!args.search_default_progress,
-                },
-                {
-                    name: "waiting",
-                    string: _t("Waiting"),
-                    isActive: !!args.search_default_waiting,
-                },
-                {
-                    name: "pending",
-                    string: _t("Pending"),
-                    isActive: !!args.search_default_pending,
                 },
                 {
                     name: "done",

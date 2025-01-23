@@ -222,7 +222,7 @@ class TestShopFloor(HttpCase):
         all_mo.button_plan()
         # Mark as done the 2th MO 1st WO.
         all_mo[1].workorder_ids[0].button_start()
-        all_mo[1].workorder_ids[0].button_done()
+        all_mo[1].workorder_ids[0].action_mark_as_done()
         self.start_tour("/odoo/shop-floor", "test_shop_floor_auto_select_workcenter", login='admin')
 
     def test_shop_floor_catalog_add_component_in_two_steps(self):

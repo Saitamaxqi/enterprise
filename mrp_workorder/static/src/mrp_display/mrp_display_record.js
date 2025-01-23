@@ -247,7 +247,7 @@ export class MrpDisplayRecord extends Component {
             return [];
         }
         return this.props.record.data.workorder_ids.records.filter(
-            (wo) => !["pending", "waiting"].includes(wo.data.state)
+            (wo) => !["blocked"].includes(wo.data.state)
         );
     }
 

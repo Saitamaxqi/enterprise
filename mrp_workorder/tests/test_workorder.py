@@ -506,21 +506,21 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         wo1_1, wo1_2 = mo.workorder_ids.sorted()
         wo2_1, wo2_2 = mo2.workorder_ids.sorted()
         self.assertEqual(wo1_1.state, 'ready')
-        self.assertEqual(wo1_2.state, 'pending')
+        self.assertEqual(wo1_2.state, 'blocked')
         self.assertEqual(wo2_1.state, 'ready')
-        self.assertEqual(wo2_2.state, 'pending')
+        self.assertEqual(wo2_2.state, 'blocked')
 
         wo1_1.qty_producing = 1
         wo1_1.do_finish()
         self.assertEqual(wo1_1.state, 'done')
         self.assertEqual(wo1_2.state, 'ready')
         self.assertEqual(wo2_1.state, 'progress', "Completion of first MO's WOs should auto-started second MO's first WO")
-        self.assertEqual(wo2_2.state, 'pending')
+        self.assertEqual(wo2_2.state, 'blocked')
         wo1_2.do_finish()
         self.assertEqual(wo1_1.state, 'done')
         self.assertEqual(wo1_2.state, 'done')
         self.assertEqual(wo2_1.state, 'progress')
-        self.assertEqual(wo2_2.state, 'pending')
+        self.assertEqual(wo2_2.state, 'blocked')
         self.assertEqual(mo.state, 'to_close')
 
     def test_workorder_tracked_final_product(self):

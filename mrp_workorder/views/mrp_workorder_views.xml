@@ -43,7 +43,7 @@
                 <attribute name="column_invisible">True</attribute>
             </xpath>
             <xpath expr="//field[@name='workcenter_id']" position="after">
-                <field name="employee_assigned_ids" widget="many2many_avatar_employee"/>
+                <field name="employee_assigned_ids" widget="many2many_avatar_employee" readonly="state == 'done'"/>
             </xpath>
             <xpath expr="//header" position="inside">
                 <button name="action_open_mes" type="object" icon="oi-view-kanban" string="Open Shop Floor" groups="mrp_workorder.group_mrp_wo_shop_floor" invisible="state in ['done', 'cancel']"/>
@@ -329,7 +329,7 @@
             launch a maintenance request, perform quality tests, etc.
           </p>
         </field>
-        <field name="context">{'search_default_my_work_order': False, 'search_default_ready': True, 'search_default_waiting': True, 'search_default_progress': True, 'search_default_pending': True}</field>
+        <field name="context">{'search_default_my_work_order': False, 'search_default_ready': True, 'search_default_waiting': True, 'search_default_progress': True, 'search_default_blocked': True}</field>
     </record>
 
 

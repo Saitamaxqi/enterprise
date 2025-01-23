@@ -115,7 +115,7 @@ class MrpWorkorder(models.Model):
         self.ensure_one()
         if self._should_be_pending():
             self.button_pending()
-        domain = [('state', 'not in', ['done', 'cancel', 'pending'])]
+        domain = [('state', 'not in', ['done', 'cancel', 'blocked'])]
         if self.env.context.get('from_manufacturing_order'):
             # from workorder on MO
             action = self.env["ir.actions.actions"]._for_xml_id("mrp_workorder.mrp_workorder_action_tablet")
@@ -686,7 +686,7 @@ class MrpWorkorder(models.Model):
         return self.is_user_working and self.working_state != 'blocked' and len(self.employee_ids.ids) == 0
 
     def _should_start(self):
-        if self.working_state != 'blocked' and self.state in ('ready', 'waiting', 'progress', 'pending'):
+        if self.working_state != 'blocked' and self.state in ('ready', 'blocked', 'progress'):
             if self.env['hr.employee'].get_session_owner():
                 return True
             else:
