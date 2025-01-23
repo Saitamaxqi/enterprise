@@ -63,6 +63,12 @@ class SddMandate(models.Model):
         check_company=True,
         help="Customer whose payments are to be managed by this mandate.",
     )
+    partner_parent_id = fields.Many2one(
+        related='partner_id.parent_id',
+        comodel_name='res.partner',
+        string="Parent Partner",
+        readonly=True,
+    )
     company_id = fields.Many2one(comodel_name='res.company', default=lambda self: self.env.company, help="Company for whose invoices the mandate can be used.")
     partner_bank_id = fields.Many2one(
         comodel_name='res.partner.bank',
@@ -306,6 +312,10 @@ class SddMandate(models.Model):
 
     def action_view_payments_to_collect(self):
         return self.payment_ids._get_records_action(name=_('Payments to Collect'))
+
+    def action_parent_id_from_sdd_mandate(self):
+        parent = self.partner_id.parent_id
+        return parent._get_records_action(name=_("Partner's Parent"))
 
     @api.constrains('end_date', 'start_date')
     def _validate_end_date(self):

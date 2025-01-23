@@ -32,6 +32,13 @@
                                 <field name="paid_invoices_nber" widget="statinfo" string="Invoices Paid" help="Invoices paid with this mandate."/>
                             </button>
                         </div>
+                        <div>
+                            <field name="partner_parent_id" invisible="1"/>
+                            <div class="alert alert-warning text-center" invisible="not partner_parent_id" role="alert">
+                                The selected customer is a child of <a type="action" name="action_parent_id_from_sdd_mandate"><field name="partner_parent_id"/></a>.
+                                Make sure the mandate isn't meant for the parent contact.
+                            </div>
+                        </div>
 
                         <group>
                             <group>
