@@ -7,7 +7,7 @@
     'summary': 'Link between self orders paid online and the preparation display',
     'category': 'Sales/Point of Sale',
     'version': '1.0',
-    'depends': ['pos_online_payment_self_order', 'pos_preparation_display'],
+    'depends': ['pos_online_payment_self_order', 'pos_enterprise'],
     'installable': True,
     'auto_install': True,
     'author': 'Odoo S.A.',

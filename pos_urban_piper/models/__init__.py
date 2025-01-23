@@ -7,7 +7,8 @@ from . import pos_urban_piper_request
 from . import pos_order
 from . import pos_payment
 from . import pos_session
-from . import preparation_display_order
+from . import pos_prep_order
+from . import pos_prep_display
 from . import product
 from . import product_urban_piper_status
 from . import pos_payment_method

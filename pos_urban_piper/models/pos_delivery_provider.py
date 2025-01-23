@@ -27,3 +27,7 @@ class PosDeliveryProvider(models.Model):
     @api.model
     def _load_pos_data_fields(self, config_id):
         return ['id', 'name', 'technical_name']
+
+    @api.model
+    def _load_pos_preparation_data_fields(self):
+        return ['id']

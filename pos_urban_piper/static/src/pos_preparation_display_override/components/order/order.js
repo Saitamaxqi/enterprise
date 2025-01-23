@@ -1,4 +1,4 @@
-import { Order } from "@pos_preparation_display/app/components/order/order";
+import { Order } from "@pos_enterprise/app/components/order/order";
 import { patch } from "@web/core/utils/patch";
 import { useService } from "@web/core/utils/hooks";
 
@@ -24,13 +24,13 @@ patch(Order.prototype, {
      */
     async doneOrder() {
         super.doneOrder();
-        if (this.props.order.delivery_identifier) {
+        if (this.order.pos_order_id.delivery_identifier) {
             await this.orm.call("pos.config", "order_status_update", [
-                this.props.order.config_id,
-                this.props.order.posOrderId,
+                this.order.pos_order_id.config_id.id,
+                this.order.pos_order_id.id,
                 "Food Ready",
                 null,
-                this.props.order.urban_piper_test,
+                this.order.urban_piper_test,
             ]);
         }
     },

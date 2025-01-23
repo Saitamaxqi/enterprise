@@ -63,7 +63,7 @@ PRESET_MODELS_DEFAULTS = [
     ("pos.order.line", {"is_demo_data": True}),
     ("pos.payment.method", {}),
     ("pos.session", {"is_demo_data": True}),
-    ("pos_preparation_display.display", {"is_demo_data": True}),
+    ("pos.prep.display", {"is_demo_data": True}),
     ("sale.order.template", {}),
     ("sale.order.template.line", {}),
     ("knowledge.cover", {"include_attachment": True}),

@@ -10,13 +10,22 @@ Advanced features for the PoS like better views
 for IoT Box config.   
 """,
     'data': [
+        'security/ir.model.access.csv',
+        'security/preparation_display_security.xml',
         'views/res_config_settings_views.xml',
+        'views/preparation_display_assets_index.xml',
+        'views/preparation_display_view.xml',
+        'wizard/preparation_display_reset_wizard.xml',
+        'data/preparation_display_cron.xml',
     ],
     'depends': ['web_enterprise', 'point_of_sale'],
+    'auto_install': True,
+    'author': 'Odoo S.A.',
+    'license': 'OEEL-1',
     'assets': {
         'point_of_sale._assets_pos': [
-            'pos_enterprise/static/src/**/*',
-            ('remove', 'pos_enterprise/static/src/**/*.dark.scss'),
+            'pos_enterprise/static/src/override/point_of_sale/**/*',
+            ('remove', 'pos_enterprise/static/src/override/point_of_sale/**/*.dark.scss'),
         ],
         'point_of_sale.assets_prod_dark': [
             ('include', 'web.dark_mode_variables'),
@@ -27,8 +36,33 @@ for IoT Box config.
             'web_enterprise/static/src/**/*.dark.scss',
             'pos_enterprise/static/src/**/*.dark.scss',
         ],
+        'pos_preparation_display.assets': [
+            # 'preparation_display' bootstrap customization layer
+            'web/static/src/scss/functions.scss',
+            'pos_enterprise/static/src/scss/primary_variables.scss',
+            ("include", "point_of_sale.base_app"),
+            'web/static/src/webclient/webclient.scss',
+            'web/static/src/webclient/icons.scss',
+            'point_of_sale/static/src/utils.js',
+
+            'mail/static/src/core/common/sound_effects_service.js',
+            'point_of_sale/static/src/overrides/sound_effects_service.js',
+            'pos_enterprise/static/src/app/**/*',
+
+            # Related models from point_of_sale
+            'point_of_sale/static/src/proxy_trap.js',
+            'point_of_sale/static/src/lazy_getter.js',
+            "point_of_sale/static/src/app/models/data_service_options.js",
+            "point_of_sale/static/src/app/models/utils/indexed_db.js",
+            "point_of_sale/static/src/app/models/related_models/**/*",
+            "point_of_sale/static/src/app/services/data_service.js",
+        ],
+        'pos_preparation_display.assets_tour_tests': [
+            ("include", "point_of_sale.base_tests"),
+        ],
+        'web.assets_tests': [
+            'pos_enterprise/static/tests/tours/point_of_sale/**/*',
+        ],
+
     },
-    'auto_install': True,
-    'author': 'Odoo S.A.',
-    'license': 'OEEL-1',
 }

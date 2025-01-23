@@ -6,8 +6,8 @@ import * as FloorScreen from "@pos_restaurant/../tests/tours/utils/floor_screen_
 import * as ProductScreenPos from "@point_of_sale/../tests/pos/tours/utils/product_screen_util";
 import * as Dialog from "@point_of_sale/../tests/generic_helpers/dialog_util";
 import * as ProductScreenResto from "@pos_restaurant/../tests/tours/utils/product_screen_util";
-import * as PreparationDisplay from "@pos_restaurant_preparation_display/../tests/tours/utils/preparation_display_util";
-const ProductScreen = { ...ProductScreenPos, ...ProductScreenResto, ...PreparationDisplay };
+import * as PrepDisplay from "@pos_restaurant_preparation_display/../tests/tours/utils/preparation_display_util";
+const ProductScreen = { ...ProductScreenPos, ...ProductScreenResto, ...PrepDisplay };
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("PreparationDisplayTourResto", {
@@ -150,18 +150,14 @@ registry.category("web_tour.tours").add("PreparationDisplayPaymentNotCancelDispl
             ProductScreen.addOrderline("Coca-Cola", "2"),
             ProductScreen.addInternalNote("To Serve"),
             ProductScreen.clickOrderButton(),
-            ProductScreen.orderlinesHaveNoChange(),
             FloorScreen.clickTable("5"),
             ProductScreen.addOrderline("Coca-Cola", "2"),
             ProductScreen.addInternalNote("To Serve"),
             ProductScreen.clickOrderButton(),
-            ProductScreen.orderlinesHaveNoChange(),
             FloorScreen.clickTable("5"),
             ProductScreen.clickOrderline("Coca-Cola", "2"),
-            ProductScreen.clickNumpad("⌫"),
             ProductScreen.clickNumpad("1"),
             ProductScreen.clickOrderButton(),
-            ProductScreen.orderlinesHaveNoChange(),
             FloorScreen.clickTable("5"),
             ProductScreen.clickPayButton(),
             PaymentScreen.clickPaymentMethod("Bank"),

@@ -62,7 +62,7 @@ class TestFrontend(TestPosUrbanPiperCommon):
                 'quantity': 1,
                 'delivery_provider_id': self.env.ref('pos_urban_piper.pos_delivery_provider_justeat').id,
             }).make_test_order(identifier_2)
-        self.env['pos_preparation_display.display'].create({
+        self.env['pos.prep.display'].create({
             'name': 'Preparation Display',
             'pos_config_ids': [(4, self.urban_piper_config.id)],
         })
@@ -77,10 +77,10 @@ class TestFrontend(TestPosUrbanPiperCommon):
         self.assertEqual(200.0, order_2.amount_paid)
         self.assertEqual(0.0, order_2.amount_tax)
         self.assertEqual(200.0, order_2.payment_ids[0].amount)
-        pdis_order1 = self.env['pos_preparation_display.order'].search([('pos_order_id', '=', order_1.id)], limit=1)
-        pdis_order1 = self.env['pos_preparation_display.order'].search([('pos_order_id', '=', order_2.id)], limit=1)
-        self.assertEqual(len(pdis_order1.preparation_display_order_line_ids), 1, "Should have 1 preparation orderlines")
-        self.assertEqual(len(pdis_order1.preparation_display_order_line_ids), 1, "Should have 1 preparation orderlines")
+        pdis_order1 = self.env['pos.prep.order'].search([('pos_order_id', '=', order_1.id)], limit=1)
+        pdis_order1 = self.env['pos.prep.order'].search([('pos_order_id', '=', order_2.id)], limit=1)
+        self.assertEqual(len(pdis_order1.prep_line_ids), 1, "Should have 1 preparation orderlines")
+        self.assertEqual(len(pdis_order1.prep_line_ids), 1, "Should have 1 preparation orderlines")
 
     def test_02_order_with_instruction(self):
         self.urban_piper_config.open_ui()

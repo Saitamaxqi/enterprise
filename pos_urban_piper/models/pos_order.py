@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class PosOrder(models.Model):
@@ -23,3 +23,8 @@ class PosOrder(models.Model):
         string='Food Preparation Time',
         help='Preparation time for the food as provided by UrbanPiper.'
     )
+
+    @api.model
+    def _load_pos_preparation_data_fields(self):
+        res = super()._load_pos_preparation_data_fields()
+        return res + ['delivery_status', 'delivery_provider_id', 'delivery_identifier', 'prep_time', 'config_id']

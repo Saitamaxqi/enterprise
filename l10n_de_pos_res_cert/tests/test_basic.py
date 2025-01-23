@@ -30,7 +30,7 @@ class TestFiskalyPoS(TestFrontend):
         self.env['pos.printer'].search([]).write({
             "product_categories_ids": [Command.clear()],
         })
-        self.env['pos_preparation_display.display'].create({
+        self.env['pos.prep.display'].create({
             'name': 'Preparation Display',
         })
         # Create a valid tax for fiskaly

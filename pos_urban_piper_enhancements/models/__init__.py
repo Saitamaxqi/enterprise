@@ -6,4 +6,4 @@ from . import product
 from . import pos_order
 from . import res_config_settings
 from . import pos_session
-from . import preparation_display_order
+from . import pos_prep_order

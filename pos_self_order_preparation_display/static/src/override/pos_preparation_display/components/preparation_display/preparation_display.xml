@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-    <t t-name="pos_self_order_preparation_display.PreparationDisplay" t-inherit="pos_preparation_display.PreparationDisplay" t-inherit-mode="extension">
+    <t t-name="pos_self_order_preparation_display.PrepDisplay" t-inherit="pos_enterprise.PrepDisplay" t-inherit-mode="extension">
         <xpath expr="//button[hasclass('burger-menu')]//div" position="inside">
             <span t-if="filterSelected>0" class="openMenu badge right text-bg-info rounded-pill" t-esc="filterSelected"/>
             <span t-if="outOfPaperListFiltered.length>0" class="openMenu badge left text-bg-danger rounded-pill" t-esc="outOfPaperListFiltered.length"/>

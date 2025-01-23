@@ -1,20 +1,20 @@
 import { patch } from "@web/core/utils/patch";
-import { PreparationDisplay } from "@pos_preparation_display/app/models/preparation_display";
+import { PrepDisplay } from "@pos_enterprise/app/services/preparation_display_service";
 
-patch(PreparationDisplay.prototype, {
+patch(PrepDisplay.prototype, {
     async setup() {
-        this.tables = {};
         await super.setup(...arguments);
     },
-    filterOrders() {
-        this.tables = {};
-        super.filterOrders(...arguments);
-
+    get tables() {
+        const result = {};
         for (const order of this.filteredOrders) {
-            if (!this.tables[order.table.id]) {
-                this.tables[order.table.id] = [];
+            if (order.prepOrder.pos_order_id.table_id) {
+                if (!result[order.prepOrder.pos_order_id.table_id?.id]) {
+                    result[order.prepOrder.pos_order_id.table_id.id] = [];
+                }
+                result[order.prepOrder.pos_order_id.table_id.id].push(order.stage.id);
             }
-            this.tables[order.table.id].push(order);
         }
+        return result;
     },
 });

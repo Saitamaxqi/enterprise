@@ -6,7 +6,7 @@
     'category': 'Sales/Point of Sale',
     'sequence': 7,
     'summary': 'Display customer\'s order status',
-    'depends': ['pos_preparation_display', 'pos_self_order'],
+    'depends': ['pos_enterprise', 'pos_self_order'],
     'installable': True,
     'auto_install': True,
     'data': [

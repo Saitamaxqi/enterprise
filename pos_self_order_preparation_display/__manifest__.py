@@ -5,7 +5,7 @@
     'version': '1.0.0',
     'category': 'Sales/Point of Sale',
     'sequence': 7,
-    'depends': ['pos_self_order', 'pos_preparation_display'],
+    'depends': ['pos_self_order', 'pos_enterprise'],
     'installable': True,
     'auto_install': True,
     'assets': {

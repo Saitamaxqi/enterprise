@@ -4,7 +4,7 @@
     'description': """
 This module integrates with UrbanPiper to receive and manage orders from various food delivery platforms.
     """,
-    'depends': ['pos_preparation_display', 'pos_discount'],
+    'depends': ['pos_enterprise', 'pos_discount'],
     'data': [
         'data/res_config_settings_data.xml',
         'data/pos_delivery_provider_data.xml',
