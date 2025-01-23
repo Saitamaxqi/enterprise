@@ -46,8 +46,11 @@ aim to deliver a cleaner and more intuitive user interface.
     inset-block: unset;
 }
 
-#toolbarViewer {
+#toolbarContainer #toolbarViewer {
     position: relative;
+    width: 100%;
+    height: 100%;
+    justify-content: center !important;
 }
 
 #toolbarViewerLeft {
@@ -56,7 +59,7 @@ aim to deliver a cleaner and more intuitive user interface.
     display: flex;
 }
 
-#sidebarToggle {
+#sidebarToggleButton {
     order: 6;
 }
 
@@ -67,7 +70,7 @@ aim to deliver a cleaner and more intuitive user interface.
     flex-direction: row-reverse;
 }
 
-#secondaryToolbarToggle::before{
+#secondaryToolbarToggleButton::before{
     -webkit-mask-image:var(--toolbarButton-secondaryToolbarToggle-icon);
             mask-image:var(--toolbarButton-secondaryToolbarToggle-icon);
 }
@@ -84,7 +87,7 @@ aim to deliver a cleaner and more intuitive user interface.
 }
 
 #findbar {
-    inset-inline-end: 180px;
+    inset-inline-end: 7px;
     inset-inline-start: unset !important;
 }
 

@@ -84,9 +84,22 @@ export class SignTemplateBody extends Component {
             }
         });
     }
+    
+    // Apply custom styles for templates PDF viewers as early as possible to minimize the visibility of default PDF.js styles during rendering.
+    injectPDFCustomStyles() {
+        const iframeDoc = this.PDFIframe.el.contentDocument;
+        const link = iframeDoc.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/sign/static/src/css/pdfjs_overrides.css';
+        iframeDoc.head.appendChild(link);
+    }
 
     waitForPDF() {
-        this.PDFIframe.el.onload = () => setTimeout(() => this.doPDFPostLoad(), 1);
+        this.PDFIframe.el.onload = () => {
+            this.injectPDFCustomStyles();
+            setTimeout(() => this.doPDFPostLoad(), 1);
+        };
     }
 
     async discardChanges() {
