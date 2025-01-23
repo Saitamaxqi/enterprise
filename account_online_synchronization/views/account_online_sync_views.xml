@@ -41,7 +41,7 @@
                                     <field name="journal_ids"
                                         widget="many2many_tags"
                                         options="{'no_quick_create': True}"
-                                        domain="[('type', '=', 'bank'), ('account_online_account_id', '=', False)]"
+                                        domain="[('type', 'in', ('bank', 'credit')), ('account_online_account_id', '=', False)]"
                                         context="{'default_type': 'bank', 'default_bank_statements_source': 'online_sync', 'default_account_online_account_id': id}"/>
                                     <field name="last_sync"/>
                                     <field name="balance" readonly="1"/>
@@ -71,7 +71,7 @@
                         <group>
                             <group>
                                 <field name="account_number" readonly="1"/>
-                                <field name="journal_ids" widget="many2many_tags" domain="[('type', '=', 'bank'), ('account_online_account_id', '=', False)]"/>
+                                <field name="journal_ids" widget="many2many_tags" domain="[('type', 'in', ('bank', 'credit')), ('account_online_account_id', '=', False)]"/>
                             </group>
                             <group>
                                 <field name="last_sync"/>

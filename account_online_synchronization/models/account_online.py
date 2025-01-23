@@ -49,7 +49,7 @@ class AccountOnlineAccount(models.Model):
     account_data = fields.Char(help='Extra information needed by third party provider', readonly=True)
 
     account_online_link_id = fields.Many2one('account.online.link', readonly=True, ondelete='cascade')
-    journal_ids = fields.One2many('account.journal', 'account_online_account_id', string='Journal', domain=[('type', '=', 'bank')])
+    journal_ids = fields.One2many('account.journal', 'account_online_account_id', string='Journal', domain=[('type', 'in', ('bank', 'credit'))])
     last_sync = fields.Date("Last synchronization")
     company_id = fields.Many2one('res.company', related='account_online_link_id.company_id')
     currency_id = fields.Many2one('res.currency')
@@ -235,7 +235,7 @@ class AccountOnlineAccount(models.Model):
             'start_date': start_date and format_date(self.env, start_date, date_format='yyyy-MM-dd'),
             'account_id': self.online_identifier,
             'last_transaction_identifier': last_stmt_line.online_transaction_identifier if transactions_type == 'posted' else None,
-            'currency_code': self.currency_id.name or self.journal_ids[0].currency_id.name or self.company_id.currency_id.name,
+            'currency_code': self.currency_id.name or self.journal_ids[:1].currency_id.name or self.company_id.currency_id.name,
             'include_foreign_currency': True,
         }
         while True:
@@ -287,7 +287,7 @@ class AccountOnlineAccount(models.Model):
         """
         self.ensure_one()
 
-        journal_id = self.journal_ids[0]
+        journal_id = self.journal_ids[:1]
         existing_bank_statement_lines = self.env['account.bank.statement.line'].search_fetch(
             [
                 ('journal_id', '=', journal_id.id),
@@ -339,7 +339,7 @@ class AccountOnlineAccount(models.Model):
                 'amount': transaction['amount'] * transaction_sign,
                 'date': fields.Date.from_string(transaction['date']),
                 'online_account_id': self.id,
-                'journal_id': self.journal_ids[0].id,
+                'journal_id': self.journal_ids[:1].id,
                 'company_id': self.company_id.id,
             })
         return formatted_transactions
