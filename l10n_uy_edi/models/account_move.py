@@ -123,6 +123,7 @@ class AccountMove(models.Model):
         """ If journal configured to auto open the send and print wizard is set then
         will do it. """
         res = super().action_post()
+        self.filtered("l10n_uy_edi_error").l10n_uy_edi_document_id.unlink()
         if any(self.journal_id.mapped("l10n_uy_edi_send_print")):
             return self.action_send_and_print()
         return res
