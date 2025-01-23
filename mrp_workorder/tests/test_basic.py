@@ -16,8 +16,6 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
     def setUpClass(cls):
         super(TestWorkOrderProcessCommon, cls).setUpClass()
         cls.env.company.resource_calendar_id.tz = "Europe/Brussels"
-        cls.source_location_id = cls.stock_location_14.id
-        cls.warehouse = cls.env.ref('stock.warehouse0')
         # setting up alternative workcenters
         cls.wc_alt_1 = cls.env['mrp.workcenter'].create({
             'name': 'Nuclear Workcenter bis',
@@ -48,12 +46,12 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
             'product_qty': 4.0,
             'consumption': 'flexible',
             'operation_ids': [
-                (0, 0, {'name': 'Gift Wrap Maching', 'workcenter_id': cls.workcenter_1.id, 'time_cycle': 15, 'sequence': 1}),
+                Command.create({'name': 'Gift Wrap Maching', 'workcenter_id': cls.workcenter_1.id, 'time_cycle': 15, 'sequence': 1}),
             ],
             'type': 'normal',
             'bom_line_ids': [
-                (0, 0, {'product_id': cls.product_2.id, 'product_qty': 2}),
-                (0, 0, {'product_id': cls.product_1.id, 'product_qty': 4})
+                Command.create({'product_id': cls.product_2.id, 'product_qty': 2}),
+                Command.create({'product_id': cls.product_1.id, 'product_qty': 4}),
             ]})
         cls.dining_table = cls.env['product.product'].create({
             'name': 'Table (MTO)',
@@ -90,35 +88,39 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
             'ready_to_produce': 'asap',
             'consumption': 'flexible',
             'operation_ids': [
-                (0, 0, {'workcenter_id': cls.mrp_workcenter.id, 'name': 'Manual Assembly'}),
+                Command.create({'workcenter_id': cls.mrp_workcenter.id, 'name': 'Manual Assembly'}),
             ],
         })
         cls.mrp_bom_desk.write({
             'bom_line_ids': [
-                (0, 0, {
+                Command.create({
                     'product_id': cls.product_table_sheet.id,
                     'product_qty': 1,
                     'product_uom_id': cls.env.ref('uom.product_uom_unit').id,
                     'sequence': 1,
-                    'operation_id': cls.mrp_bom_desk.operation_ids.id}),
-                (0, 0, {
+                    'operation_id': cls.mrp_bom_desk.operation_ids.id,
+                }),
+                Command.create({
                     'product_id': cls.product_table_leg.id,
                     'product_qty': 4,
                     'product_uom_id': cls.env.ref('uom.product_uom_unit').id,
                     'sequence': 2,
-                    'operation_id': cls.mrp_bom_desk.operation_ids.id}),
-                (0, 0, {
+                    'operation_id': cls.mrp_bom_desk.operation_ids.id,
+                }),
+                Command.create({
                     'product_id': cls.product_bolt.id,
                     'product_qty': 4,
                     'product_uom_id': cls.env.ref('uom.product_uom_unit').id,
                     'sequence': 3,
-                    'operation_id': cls.mrp_bom_desk.operation_ids.id}),
-                (0, 0, {
+                    'operation_id': cls.mrp_bom_desk.operation_ids.id,
+                }),
+                Command.create({
                     'product_id': cls.product_screw.id,
                     'product_qty': 10,
                     'product_uom_id': cls.env.ref('uom.product_uom_unit').id,
                     'sequence': 4,
-                    'operation_id': cls.mrp_bom_desk.operation_ids.id}),
+                    'operation_id': cls.mrp_bom_desk.operation_ids.id,
+                }),
             ]
         })
         cls.mrp_workcenter_1 = cls.env['mrp.workcenter'].create({
@@ -134,13 +136,13 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
             'product_qty': 1,
             'product_uom_id': cls.uom_unit.id,
             'consumption': 'flexible',
-            'bom_line_ids': [(0, 0, {
+            'bom_line_ids': [Command.create({
                 'product_id': cls.graphics_card.id,
                 'product_qty': 1,
                 'product_uom_id': cls.uom_unit.id,
             })],
             'operation_ids': [
-                (0, 0, {'name': 'Cutting Machine', 'workcenter_id': cls.mrp_workcenter_1.id, 'time_cycle': 12, 'sequence': 1}),
+                Command.create({'name': 'Cutting Machine', 'workcenter_id': cls.mrp_workcenter_1.id, 'time_cycle': 12, 'sequence': 1}),
             ],
         })
         # remove leaves that may affect our tests
@@ -172,11 +174,11 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
             'consumption': 'strict',
             'type': 'normal',
             'bom_line_ids': [
-                (0, 0, {'product_id': product_to_use_2.id, 'product_qty': 4}),
-                (0, 0, {'product_id': product_to_use_1.id, 'product_qty': 1})
+                Command.create({'product_id': product_to_use_2.id, 'product_qty': 4}),
+                Command.create({'product_id': product_to_use_1.id, 'product_qty': 1}),
             ],
             'operation_ids': [
-                (0, 0, {'name': 'Gift Wrap Maching', 'workcenter_id': self.workcenter_1.id, 'time_cycle': 15, 'sequence': 1}),
+                Command.create({'name': 'Gift Wrap Maching', 'workcenter_id': self.workcenter_1.id, 'time_cycle': 15, 'sequence': 1}),
             ]
         })
         mo_form = Form(self.env['mrp.production'])
@@ -217,7 +219,6 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
         """ This test checks a manufactured product without tracking will go to
         location defined in putaway strategy.
         """
-        self.stock_location = self.env.ref('stock.stock_location_stock')
         self.depot_location = self.env['stock.location'].create({
             'name': 'Depot',
             'usage': 'internal',
@@ -260,7 +261,6 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
         """ This test checks a tracked manufactured product will go to location
         defined in putaway strategy.
         """
-        self.stock_location = self.env.ref('stock.stock_location_stock')
         self.depot_location = self.env['stock.location'].create({
             'name': 'Depot',
             'usage': 'internal',
@@ -327,12 +327,12 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
             'consumption': 'flexible',
             'type': 'normal',
             'bom_line_ids': [
-                (0, 0, {'product_id': self.compfinished1.id, 'product_qty': 1}),
-                (0, 0, {'product_id': self.compfinished2.id, 'product_qty': 1}),
+                Command.create({'product_id': self.compfinished1.id, 'product_qty': 1}),
+                Command.create({'product_id': self.compfinished2.id, 'product_qty': 1}),
             ],
             'operation_ids': [
-                (0, 0, {'sequence': 1, 'name': 'finished operation 1', 'workcenter_id': self.workcenter1.id}),
-                (0, 0, {'sequence': 2, 'name': 'finished operation 2', 'workcenter_id': self.workcenter2.id}),
+                Command.create({'sequence': 1, 'name': 'finished operation 1', 'workcenter_id': self.workcenter1.id}),
+                Command.create({'sequence': 2, 'name': 'finished operation 2', 'workcenter_id': self.workcenter2.id}),
             ],
         })
         self.bom_finished1.bom_line_ids[0].operation_id = self.bom_finished1.operation_ids[0].id
@@ -404,10 +404,10 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
             'consumption': 'flexible',
             'type': 'normal',
             'bom_line_ids': [
-                (0, 0, {'product_id': component.id, 'product_qty': 1}),
+                Command.create({'product_id': component.id, 'product_qty': 1}),
             ],
             'operation_ids': [
-                (0, 0, {'sequence': 1, 'name': 'finished operation 1', 'workcenter_id': workcenter.id}),
+                Command.create({'sequence': 1, 'name': 'finished operation 1', 'workcenter_id': workcenter.id}),
             ],
         })
         bom.bom_line_ids[0].operation_id = bom.operation_ids[0].id
@@ -421,7 +421,7 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
             'note': 'Installing VIM (pcs xi ipzth adi du ixbt)',
         })
 
-        self.env['stock.quant']._update_available_quantity(component, self.stock_location_14, 10)
+        self.env['stock.quant']._update_available_quantity(component, self.shelf_1, 10)
 
         mo_form = Form(self.env['mrp.production'])
         mo_form.product_id = finished_product
@@ -445,13 +445,13 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         calendar = self.env['resource.calendar'].search([])
         calendar.write({'attendance_ids': [(5, 0, 0)]})
         calendar.write({'attendance_ids': [
-            (0, 0, {'name': 'Monday', 'dayofweek': '0', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
-            (0, 0, {'name': 'Tuesday', 'dayofweek': '1', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
-            (0, 0, {'name': 'Wednesday', 'dayofweek': '2', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
-            (0, 0, {'name': 'Thursday', 'dayofweek': '3', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
-            (0, 0, {'name': 'Friday', 'dayofweek': '4', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
-            (0, 0, {'name': 'Saturday', 'dayofweek': '5', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
-            (0, 0, {'name': 'Sunday', 'dayofweek': '6', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
+            Command.create({'name': 'Monday', 'dayofweek': '0', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
+            Command.create({'name': 'Tuesday', 'dayofweek': '1', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
+            Command.create({'name': 'Wednesday', 'dayofweek': '2', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
+            Command.create({'name': 'Thursday', 'dayofweek': '3', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
+            Command.create({'name': 'Friday', 'dayofweek': '4', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
+            Command.create({'name': 'Saturday', 'dayofweek': '5', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
+            Command.create({'name': 'Sunday', 'dayofweek': '6', 'hour_from': 0, 'hour_to': 24, 'day_period': 'morning'}),
         ]})
 
     def test_00_workorder_process(self):
@@ -491,24 +491,24 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
             'product_id': product_table_sheet.id,
             'inventory_quantity': 20,
             'lot_id': lot_sheet.id,
-            'location_id': self.source_location_id
+            'location_id': self.shelf_1.id,
         })
         quants |= self.env['stock.quant'].create({
             'product_id': product_table_leg.id,
             'inventory_quantity': 20,
             'lot_id': lot_leg.id,
-            'location_id': self.source_location_id
+            'location_id': self.shelf_1.id,
         })
         quants |= self.env['stock.quant'].create({
             'product_id': product_bolt.id,
             'inventory_quantity': 20,
             'lot_id': lot_bolt.id,
-            'location_id': self.source_location_id
+            'location_id': self.shelf_1.id,
         })
         quants |= self.env['stock.quant'].create({
             'product_id': product_screw.id,
             'inventory_quantity': 20,
-            'location_id': self.source_location_id
+            'location_id': self.shelf_1.id,
         })
         quants.action_apply_inventory()
 
@@ -575,21 +575,24 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         bom.operation_ids = False
         bom.write({
             'operation_ids': [
-                (0, 0, {
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_1.id,
                     'name': 'Packing',
                     'time_cycle': 30,
-                    'sequence': 5}),
-                (0, 0, {
+                    'sequence': 5,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Testing',
                     'time_cycle': 60,
-                    'sequence': 10}),
-                (0, 0, {
+                    'sequence': 10,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Long time assembly',
                     'time_cycle': 180,
-                    'sequence': 15}),
+                    'sequence': 15,
+                }),
             ]
         })
 
@@ -615,19 +618,19 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
             'product_id': product_table_sheet.id,
             'inventory_quantity': 20,
             'lot_id': lot_sheet.id,
-            'location_id': self.source_location_id
+            'location_id': self.shelf_1.id,
         }).action_apply_inventory()
         self.env['stock.quant'].create({
             'product_id': product_table_leg.id,
             'inventory_quantity': 20,
             'lot_id': lot_leg.id,
-            'location_id': self.source_location_id
+            'location_id': self.shelf_1.id,
         }).action_apply_inventory()
         self.env['stock.quant'].create({
             'product_id': product_bolt.id,
             'inventory_quantity': 20,
             'lot_id': lot_bolt.id,
-            'location_id': self.source_location_id
+            'location_id': self.shelf_1.id,
         }).action_apply_inventory()
 
         # Create work order
@@ -769,18 +772,18 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
             'product_id': self.product_2.id,
             'inventory_quantity': 30,
             'lot_id': lot_product_2.id,
-            'location_id': self.stock_location_14.id
+            'location_id': self.shelf_1.id,
         }).action_apply_inventory()
         self.env['stock.quant'].create({
             'product_id': self.product_3.id,
             'inventory_quantity': 60,
-            'location_id': self.stock_location_14.id
+            'location_id': self.shelf_1.id,
         }).action_apply_inventory()
         self.env['stock.quant'].create({
             'product_id': self.product_4.id,
             'inventory_quantity': 60,
             'lot_id': lot_product_4.id,
-            'location_id': self.stock_location_14.id
+            'location_id': self.shelf_1.id,
         }).action_apply_inventory()
 
         # re-assign consume material
@@ -841,7 +844,6 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
 
     def test_01_without_workorder(self):
         """ Testing consume quants and produced quants without workorder """
-        unit = self.ref("uom.product_uom_unit")
         custom_laptop = self.env['product.product'].create({
             'name': 'Drawer',
             'is_storable': True,
@@ -854,29 +856,34 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
             'name': 'Charger',
             'is_storable': True,
             'tracking': 'lot',
-            'uom_id': unit})
+            'uom_id': self.uom_unit.id,
+        })
         product_keybord = self.env['product.product'].create({
             'name': 'Usb Keybord',
             'is_storable': True,
             'tracking': 'lot',
-            'uom_id': unit})
+            'uom_id': self.uom_unit.id,
+        })
 
         # Create bill of material for customized laptop.
 
         bom_custom_laptop = self.env['mrp.bom'].create({
             'product_tmpl_id': custom_laptop.product_tmpl_id.id,
             'product_qty': 10,
-            'product_uom_id': unit,
+            'product_uom_id': self.uom_unit.id,
             'consumption': 'flexible',
-            'bom_line_ids': [(0, 0, {
-                'product_id': product_charger.id,
-                'product_qty': 20,
-                'product_uom_id': unit
-            }), (0, 0, {
-                'product_id': product_keybord.id,
-                'product_qty': 20,
-                'product_uom_id': unit
-            })]
+            'bom_line_ids': [
+                Command.create({
+                    'product_id': product_charger.id,
+                    'product_qty': 20,
+                    'product_uom_id': self.uom_unit.id,
+                }),
+                Command.create({
+                    'product_id': product_keybord.id,
+                    'product_qty': 20,
+                    'product_uom_id': self.uom_unit.id,
+                }),
+            ]
         })
 
         # Create production order for customize laptop.
@@ -909,13 +916,13 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
             'product_id': product_charger.id,
             'inventory_quantity': 20,
             'lot_id': lot_charger.id,
-            'location_id': self.source_location_id
+            'location_id': self.shelf_1.id,
         }).action_apply_inventory()
         self.env['stock.quant'].create({
             'product_id': product_keybord.id,
             'inventory_quantity': 20,
             'lot_id': lot_keybord.id,
-            'location_id': self.source_location_id
+            'location_id': self.shelf_1.id,
         }).action_apply_inventory()
 
         # Check consumed move status
@@ -991,8 +998,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         laptop = self.laptop
         graphics_card = self.graphics_card
         unit = self.env.ref("uom.product_uom_unit")
-        stock_location = self.env.ref('stock.stock_location_stock')
-        self.env['stock.quant']._update_available_quantity(graphics_card, stock_location, 20)
+        self.env['stock.quant']._update_available_quantity(graphics_card, self.stock_location, 20)
 
         laptop.tracking = 'serial'
 
@@ -1001,27 +1007,30 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
             'product_qty': 1,
             'product_uom_id': unit.id,
             'consumption': 'flexible',
-            'bom_line_ids': [(0, 0, {
+            'bom_line_ids': [Command.create({
                 'product_id': graphics_card.id,
                 'product_qty': 1,
                 'product_uom_id': unit.id
             })],
             'operation_ids': [
-                (0, 0, {
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_1.id,
                     'name': 'Packing',
                     'time_cycle': 30,
-                    'sequence': 5}),
-                (0, 0, {
+                    'sequence': 5,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Testing',
                     'time_cycle': 60,
-                    'sequence': 10}),
-                (0, 0, {
+                    'sequence': 10,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Long time assembly',
                     'time_cycle': 180,
-                    'sequence': 15}),
+                    'sequence': 15,
+                }),
             ],
         })
 
@@ -1088,33 +1097,39 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
             'consumption': 'flexible',
             'sequence': 2,
             'operation_ids': [
-                (0, 0, {
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_1.id,
                     'name': 'Packing',
                     'time_cycle': 30,
-                    'sequence': 5}),
-                (0, 0, {
+                    'sequence': 5,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Testing',
                     'time_cycle': 60,
-                    'sequence': 10}),
-                (0, 0, {
+                    'sequence': 10,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Long time assembly',
                     'time_cycle': 180,
-                    'sequence': 15}),
+                    'sequence': 15,
+                }),
             ],
-            'bom_line_ids': [(0, 0, {
-                'product_id': drawer_drawer.id,
-                'product_qty': 1,
-                'product_uom_id': self.env.ref('uom.product_uom_unit').id,
-                'sequence': 1,
-            }), (0, 0, {
-                'product_id': drawer_case.id,
-                'product_qty': 1,
-                'product_uom_id': self.env.ref('uom.product_uom_unit').id,
-                'sequence': 2,
-            })]
+            'bom_line_ids': [
+                Command.create({
+                    'product_id': drawer_drawer.id,
+                    'product_qty': 1,
+                    'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                    'sequence': 1,
+                }),
+                Command.create({
+                    'product_id': drawer_case.id,
+                    'product_qty': 1,
+                    'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                    'sequence': 2,
+                }),
+            ]
         })
         drawer_drawer_lot = self.env['stock.lot'].create({
             'product_id': drawer_drawer.id,
@@ -1128,13 +1143,13 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         self.env['stock.quant'].create({
             'product_id': drawer_drawer.id,
             'inventory_quantity': 50.0,
-            'location_id': self.stock_location_14.id,
+            'location_id': self.shelf_1.id,
             'lot_id': drawer_drawer_lot.id,
         }).action_apply_inventory()
         self.env['stock.quant'].create({
             'product_id': drawer_case.id,
             'inventory_quantity': 50.0,
-            'location_id': self.stock_location_14.id,
+            'location_id': self.shelf_1.id,
             'lot_id': drawer_case_lot.id,
         }).action_apply_inventory()
 
@@ -1264,33 +1279,39 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
             'consumption': 'flexible',
             'sequence': 2,
             'operation_ids': [
-                (0, 0, {
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_1.id,
                     'name': 'Packing',
                     'time_cycle': 30,
-                    'sequence': 5}),
-                (0, 0, {
+                    'sequence': 5,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Testing',
                     'time_cycle': 60,
-                    'sequence': 10}),
-                (0, 0, {
+                    'sequence': 10,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Long time assembly',
                     'time_cycle': 180,
-                    'sequence': 15}),
+                    'sequence': 15,
+                }),
             ],
-            'bom_line_ids': [(0, 0, {
-                'product_id': drawer_drawer.id,
-                'product_qty': 1,
-                'product_uom_id': self.env.ref('uom.product_uom_unit').id,
-                'sequence': 1,
-            }), (0, 0, {
-                'product_id': drawer_case.id,
-                'product_qty': 1,
-                'product_uom_id': self.env.ref('uom.product_uom_unit').id,
-                'sequence': 2,
-            })]
+            'bom_line_ids': [
+                Command.create({
+                    'product_id': drawer_drawer.id,
+                    'product_qty': 1,
+                    'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                    'sequence': 1,
+                }),
+                Command.create({
+                    'product_id': drawer_case.id,
+                    'product_qty': 1,
+                    'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                    'sequence': 2,
+                }),
+            ]
         })
 
         production_table_form = Form(self.env['mrp.production'])
@@ -1580,7 +1601,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         })
         self.planning_bom.operation_ids = False
         self.planning_bom.write({
-            'operation_ids': [(0, 0, {
+            'operation_ids': [Command.create({
                 'workcenter_id': mrp_workcenter_3.id,
                 'name': 'Manual Assembly',
                 'time_cycle': 60,
@@ -1588,7 +1609,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         })
         self.planning_bom.operation_ids = False
         self.planning_bom.write({
-            'operation_ids': [(0, 0, {
+            'operation_ids': [Command.create({
                 'workcenter_id': mrp_workcenter_3.id,
                 'name': 'Manual Assembly',
                 'time_cycle': 60,
@@ -1831,8 +1852,8 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
             'consumption': 'flexible',
             'type': 'phantom',
             'bom_line_ids': [
-                (0, 0, {'product_id': self.product_2.id, 'product_qty': 1}),
-                (0, 0, {'product_id': self.product_1.id, 'product_qty': 4})
+                Command.create({'product_id': self.product_2.id, 'product_qty': 1}),
+                Command.create({'product_id': self.product_1.id, 'product_qty': 4}),
             ]})
 
         # Main bom
@@ -1843,26 +1864,29 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
             'product_qty': 1.0,
             'consumption': 'flexible',
             'operation_ids': [
-                (0, 0, {
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_1.id,
                     'name': 'Packing',
                     'time_cycle': 30,
-                    'sequence': 5}),
-                (0, 0, {
+                    'sequence': 5,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Testing',
                     'time_cycle': 60,
-                    'sequence': 10}),
-                (0, 0, {
+                    'sequence': 10,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Long time assembly',
                     'time_cycle': 180,
-                    'sequence': 15}),
+                    'sequence': 15,
+                }),
             ],
             'type': 'normal',
             'bom_line_ids': [
-                (0, 0, {'product_id': self.product_1.id, 'product_qty': 1}),
-                (0, 0, {'product_id': self.product_4.id, 'product_qty': 1})
+                Command.create({'product_id': self.product_1.id, 'product_qty': 1}),
+                Command.create({'product_id': self.product_4.id, 'product_qty': 1}),
             ]})
 
         self.env['quality.point'].create({
@@ -1907,21 +1931,24 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         bom.operation_ids = False
         bom.write({
             'operation_ids': [
-                (0, 0, {
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Packing',
                     'time_cycle': 30,
-                    'sequence': 5}),
-                (0, 0, {
+                    'sequence': 5,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Testing',
                     'time_cycle': 60,
-                    'sequence': 10}),
-                (0, 0, {
+                    'sequence': 10,
+                }),
+                Command.create({
                     'workcenter_id': self.mrp_workcenter_3.id,
                     'name': 'Long time assembly',
                     'time_cycle': 180,
-                    'sequence': 15}),
+                    'sequence': 15,
+                }),
             ]})
 
 
@@ -2086,12 +2113,12 @@ class TestRoutingAndKits(TransactionCase):
             'product_qty': 1,
             'type': 'normal',
             'bom_line_ids': [
-                (0, 0, {'product_id': cls.compfinished1.id, 'product_qty': 1}),
-                (0, 0, {'product_id': cls.kit1.id, 'product_qty': 1}),
+                Command.create({'product_id': cls.compfinished1.id, 'product_qty': 1}),
+                Command.create({'product_id': cls.kit1.id, 'product_qty': 1}),
             ],
             'operation_ids': [
-                (0, 0, {'sequence': 1, 'name': 'finished operation 1', 'workcenter_id': cls.workcenter_finished1.id}),
-                (0, 0, {'sequence': 2, 'name': 'finished operation 2', 'workcenter_id': cls.workcenter_finished1.id}),
+                Command.create({'sequence': 1, 'name': 'finished operation 1', 'workcenter_id': cls.workcenter_finished1.id}),
+                Command.create({'sequence': 2, 'name': 'finished operation 2', 'workcenter_id': cls.workcenter_finished1.id}),
             ],
         })
         cls.bom_kit1 = cls.env['mrp.bom'].create({
@@ -2101,10 +2128,10 @@ class TestRoutingAndKits(TransactionCase):
             'product_qty': 1,
             'type': 'phantom',
             'bom_line_ids': [
-                (0, 0, {'product_id': cls.compkit1.id, 'product_qty': 1}),
+                Command.create({'product_id': cls.compkit1.id, 'product_qty': 1}),
             ],
             'operation_ids': [
-                (0, 0, {'name': 'Kit operation', 'workcenter_id': cls.workcenter_kit1.id})
+                Command.create({'name': 'Kit operation', 'workcenter_id': cls.workcenter_kit1.id}),
             ]
         })
 
@@ -2182,9 +2209,9 @@ class TestRoutingAndKits(TransactionCase):
             'product_uom_id': self.uom_unit.id,
             'product_qty': 1,
             'type': 'phantom',
-            'bom_line_ids': [(0, 0, {'product_id': compkit2.id, 'product_qty': 1})]
+            'bom_line_ids': [Command.create({'product_id': compkit2.id, 'product_qty': 1})]
         })
-        self.bom_finished1.write({'bom_line_ids': [(0, 0, {'product_id': kit2.id, 'product_qty': 1})]})
+        self.bom_finished1.write({'bom_line_ids': [Command.create({'product_id': kit2.id, 'product_qty': 1})]})
 
         mo_form = Form(self.env['mrp.production'])
         mo_form.product_id = self.finished1
@@ -2226,9 +2253,9 @@ class TestRoutingAndKits(TransactionCase):
             'product_uom_id': self.uom_unit.id,
             'product_qty': 1,
             'type': 'phantom',
-            'bom_line_ids': [(0, 0, {'product_id': compkit2.id, 'product_qty': 1})]
+            'bom_line_ids': [Command.create({'product_id': compkit2.id, 'product_qty': 1})]
         })
-        self.bom_finished1.write({'bom_line_ids': [(0, 0, {'product_id': kit2.id, 'product_qty': 1})]})
+        self.bom_finished1.write({'bom_line_ids': [Command.create({'product_id': kit2.id, 'product_qty': 1})]})
 
         mo_form = Form(self.env['mrp.production'])
         mo_form.product_id = self.finished1

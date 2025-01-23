@@ -19,7 +19,7 @@ class TestAllReportsGeneration(AccountTestInvoicingCommon):
 
         cls.reports = cls.env['account.report'].with_context(active_test=False).search([])
 
-        # Make the reports always available, so that they don't clash with the comany's country
+        # Make the reports always available, so that they don't clash with the company's country
         cls.reports.availability_condition = 'always'
         # We keep the country set on each of these reports, so that we can load the proper test data when testing exports
 

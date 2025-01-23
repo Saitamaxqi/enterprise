@@ -17,8 +17,8 @@ class TestWorkOrder(TestMrpWorkorderCommon):
     def setUpClass(cls):
         super(TestWorkOrder, cls).setUpClass()
         cls.env.ref('base.group_user').write({'implied_ids': [
-            (4, cls.env.ref('mrp.group_mrp_routings').id),
-            (4, cls.env.ref('stock.group_production_lot').id)
+            Command.link(cls.env.ref('mrp.group_mrp_routings').id),
+            Command.link(cls.env.ref('stock.group_production_lot').id),
         ]})
         # Products and lots
         cls.submarine_pod = cls.env['product.product'].create({
@@ -143,17 +143,15 @@ class TestWorkOrder(TestMrpWorkorderCommon):
 #        })
 
         # Update quantities
-        cls.location_1 = cls.env.ref('stock.stock_location_stock')
         Quant = cls.env['stock.quant']
-        Quant._update_available_quantity(cls.elon_musk, cls.location_1, 1.0, lot_id=cls.elon1)
-        Quant._update_available_quantity(cls.elon_musk, cls.location_1, 1.0, lot_id=cls.elon2)
-        Quant._update_available_quantity(cls.elon_musk, cls.location_1, 1.0, lot_id=cls.elon3)
-        Quant._update_available_quantity(cls.metal_cylinder, cls.location_1, 6.0, lot_id=cls.mc1)
-        Quant._update_available_quantity(cls.trapped_child, cls.location_1, 36.0)
+        Quant._update_available_quantity(cls.elon_musk, cls.stock_location, 1.0, lot_id=cls.elon1)
+        Quant._update_available_quantity(cls.elon_musk, cls.stock_location, 1.0, lot_id=cls.elon2)
+        Quant._update_available_quantity(cls.elon_musk, cls.stock_location, 1.0, lot_id=cls.elon3)
+        Quant._update_available_quantity(cls.metal_cylinder, cls.stock_location, 6.0, lot_id=cls.mc1)
+        Quant._update_available_quantity(cls.trapped_child, cls.stock_location, 36.0)
 
     def test_assign_1(self):
-        unit = self.ref("uom.product_uom_unit")
-        self.stock_location = self.env.ref('stock.stock_location_stock')
+        unit = self.uom_unit.id
         custom_laptop = self.env['product.product'].create({
             'name': 'Drawer',
             'is_storable': True,
@@ -165,12 +163,12 @@ class TestWorkOrder(TestMrpWorkorderCommon):
             'is_storable': True,
             'tracking': 'lot',
             'uom_id': unit,
-            })
+        })
         product_keybord = self.env['product.product'].create({
             'name': 'Usb Keybord',
             'is_storable': True,
             'uom_id': unit,
-            })
+        })
         bom_custom_laptop = self.env['mrp.bom'].create({
             'product_tmpl_id': custom_laptop.product_tmpl_id.id,
             'product_qty': 1,
@@ -272,15 +270,14 @@ class TestWorkOrder(TestMrpWorkorderCommon):
 
     def test_suggested_lot_in_multi_step(self):
         """Suggest the assigned lot in multi step system."""
-        self.warehouse = self.env.ref('stock.warehouse0')
         self.env['quality.point'].create({
-            'product_ids': [(4, self.submarine_pod.id)],
-            'picking_type_ids': [(4, self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')], limit=1).id)],
+            'product_ids': [Command.link(self.submarine_pod.id)],
+            'picking_type_ids': [Command.link(self.picking_type_manu.id)],
             'operation_id': self.bom_submarine.operation_ids[0].id,
             'test_type_id': self.env.ref('mrp_workorder.test_type_register_consumed_materials').id,
             'component_id': self.elon_musk.id,
         })
-        self.warehouse.manufacture_steps = 'pbm'
+        self.warehouse_1.manufacture_steps = 'pbm'
         self.submarine_pod.tracking = 'none'
         self.bom_submarine.bom_line_ids.filtered(lambda l: l.product_id.id != self.elon_musk.id).unlink()
         self.bom_submarine.operation_ids[1:].unlink()
@@ -331,8 +328,8 @@ class TestWorkOrder(TestMrpWorkorderCommon):
 
         manufacture_picking_type = self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')], limit=1)
         p1 = self.env['quality.point'].create({
-            'product_ids': [(4, product_a1.id)],
-            'picking_type_ids': [(4, manufacture_picking_type.id)],
+            'product_ids': [Command.link(product_a1.id)],
+            'picking_type_ids': [Command.link(manufacture_picking_type.id)],
             'operation_id': bom_who.operation_ids[0].id,
             'test_type_id': self.env.ref('quality.test_type_instructions').id,
             'note': 'Installing VIM (pcs xi ipzth adi du ixbt)',
@@ -347,8 +344,8 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         self.assertTrue(p1.operation_id)
 
         p2 = self.env['quality.point'].create({
-            'product_ids': [(4, product_a2.id)],
-            'picking_type_ids': [(4, self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')], limit=1).id)],
+            'product_ids': [Command.link(product_a2.id)],
+            'picking_type_ids': [Command.link(self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')], limit=1).id)],
             'operation_id': bom_who.operation_ids[0].id,
             'test_type_id': self.env.ref('quality.test_type_instructions').id,
             'note': 'Taking lot of coffee with UElN',
@@ -434,7 +431,7 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         pre-completed: the qty_producing should be set and the consumed quantity
         of C should come from SL
         """
-        location = self.location_1.child_ids[0]
+        location = self.shelf_1
         compo = self.bom_4.bom_line_ids.product_id
         compo.is_storable = True
 
@@ -536,8 +533,8 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         })
         comp_1, comp_2 = self.product_1, self.product_2
         (comp_1 | comp_2).is_storable = True
-        self.env['stock.quant']._update_available_quantity(comp_1, self.env.ref("stock.warehouse0").lot_stock_id, 5)
-        self.env['stock.quant']._update_available_quantity(comp_2, self.env.ref("stock.warehouse0").lot_stock_id, 5)
+        self.env['stock.quant']._update_available_quantity(comp_1, self.stock_location, 5)
+        self.env['stock.quant']._update_available_quantity(comp_2, self.stock_location, 5)
         bom = self.env['mrp.bom'].create({
             'product_tmpl_id': tracked_product.product_tmpl_id.id,
             'product_qty': 1.0,
@@ -589,7 +586,7 @@ class TestWorkOrder(TestMrpWorkorderCommon):
 @tagged("post_install", "-at_install")
 class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
     @unittest.skip  # TODO: tour needs to be updated.
-    def test_access_shop_floor_with_multicomany(self):
+    def test_access_shop_floor_with_multicompany(self):
         """
             test the flow when we have multicompany situation and
             we want to access shop floor from a company after switching
@@ -598,8 +595,8 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         company1 = self.env['res.company'].create({'name': 'Test Company'})
         user_admin = self.env.ref('base.user_admin')
         user_admin.write({
-            'company_ids': [(4, company1.id)],
-            'group_ids': [(4, self.env.ref('mrp.group_mrp_routings').id)],
+            'company_ids': [Command.link(company1.id)],
+            'group_ids': [Command.link(self.env.ref('mrp.group_mrp_routings').id)],
         })
         submarine_pod = self.env['product.product'].with_company(company1).with_user(user_admin).create({
             'name': 'Submarine pod',
@@ -628,10 +625,10 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         mo.action_assign()
         mo.button_plan()
         self.start_tour(
-            "/", 'test_access_shop_floor_with_multicomany', login="admin")
+            "/", 'test_access_shop_floor_with_multicompany', login="admin")
 
     @unittest.skip  # TODO: tour needs to be updated.
-    def test_add_component_from_shop_foor(self):
+    def test_add_component_from_shop_floor(self):
         """
         Check that components added to a WO from the shopfloor are visible
         on both the WO and the MO.
@@ -658,7 +655,7 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         self.env['stock.quant']._update_available_quantity(self.product_1, mo.warehouse_id.lot_stock_id, quantity=10.0)
         action = mo.workorder_ids.action_open_mes()
         url = '/web?#action=%s' % (action['id'])
-        self.start_tour(url, "test_add_component_from_shop_foor", login='admin')
+        self.start_tour(url, "test_add_component_from_shop_floor", login='admin')
         # Check that the Wood was added to the component
         self.assertRecordValues(mo.move_raw_ids.filtered(lambda m: m.product_id == self.product_2), [{
             "product_uom_qty": 1.0,
@@ -667,7 +664,7 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         self.assertEqual(mo.workorder_ids, mo.move_raw_ids.filtered(lambda m: m.product_id == self.product_1).workorder_id)
 
     @unittest.skip  # TODO: tour needs to be updated.
-    def test_add_component_from_shop_foor_in_multi_step_manufacturing(self):
+    def test_add_component_from_shop_floor_in_multi_step_manufacturing(self):
         """
         Check that components added from the shopfloor in multi step
         manufacturing generate the associated transfers.
@@ -675,7 +672,7 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         self.env.ref('base.group_user').implied_ids += (
             self.env.ref('mrp.group_mrp_routings')
         )
-        warehouse = self.env.ref('stock.warehouse0')
+        warehouse = self.warehouse_1
         # manufacture in 2 steps
         warehouse.manufacture_steps = "pbm"
         mo_form = Form(self.env['mrp.production'].with_context(warehouse_id=warehouse.id))
@@ -696,7 +693,7 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         self.env['stock.quant']._update_available_quantity(self.product_1, mo.warehouse_id.lot_stock_id, quantity=10.0)
         action = mo.workorder_ids.action_open_mes()
         url = '/web?#action=%s' % (action['id'])
-        self.start_tour(url, "test_add_component_from_shop_foor_in_multi_step_manufacturing", login='admin')
+        self.start_tour(url, "test_add_component_from_shop_floor_in_multi_step_manufacturing", login='admin')
         new_pick = mo.picking_ids - pick
         self.assertEqual(new_pick.picking_type_id, warehouse.pbm_type_id)
         self.assertRecordValues(new_pick.move_ids, [{

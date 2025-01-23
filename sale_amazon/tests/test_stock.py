@@ -40,9 +40,9 @@ class TestStock(common.TestAmazonCommon, TestStockCommon):
 
         # Create picking
         self.picking = self.PickingObj.create({
-            'picking_type_id': self.picking_type_in,
-            'location_id': self.supplier_location,
-            'location_dest_id': self.customer_location,
+            'picking_type_id': self.picking_type_in.id,
+            'location_id': self.supplier_location.id,
+            'location_dest_id': self.customer_location.id,
         })
         move_vals = {
             'name': self.productA.name,
@@ -50,8 +50,8 @@ class TestStock(common.TestAmazonCommon, TestStockCommon):
             'product_uom_qty': 1,
             'product_uom': self.productA.uom_id.id,
             'picking_id': self.picking.id,
-            'location_id': self.supplier_location,
-            'location_dest_id': self.customer_location,
+            'location_id': self.supplier_location.id,
+            'location_dest_id': self.customer_location.id,
             'sale_line_id': self.sale_order.order_line[0].id,
         }
         self.move_1 = self.MoveObj.create(move_vals)
@@ -320,9 +320,9 @@ class TestStock(common.TestAmazonCommon, TestStockCommon):
             self.picking.update({'amazon_sync_status': 'error', 'state': 'cancel'})
             # Create a new picking
             pending_picking = self.PickingObj.create({
-                'picking_type_id': self.picking_type_in,
-                'location_id': self.supplier_location,
-                'location_dest_id': self.customer_location,
+                'picking_type_id': self.picking_type_in.id,
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.customer_location.id,
             })
             move_vals = {
                 'name': self.productA.name,
@@ -330,8 +330,8 @@ class TestStock(common.TestAmazonCommon, TestStockCommon):
                 'product_uom_qty': 1,
                 'product_uom': self.productA.uom_id.id,
                 'picking_id': pending_picking.id,
-                'location_id': self.supplier_location,
-                'location_dest_id': self.customer_location,
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.customer_location.id,
                 'sale_line_id': self.sale_order.order_line[0].id,
             }
             self.MoveObj.create(move_vals)
@@ -409,9 +409,11 @@ class TestStock(common.TestAmazonCommon, TestStockCommon):
 
     def test_generate_stock_moves_for_not_tracked_product_sets_move_done(self):
         self.product.tracking = 'none'
-        self.env['stock.quant'].create(
-            {'product_id': self.product.id, 'location_id': self.stock_location, 'quantity': 30}
-        )
+        self.env['stock.quant'].create({
+            'product_id': self.product.id,
+            'location_id': self.stock_location.id,
+            'quantity': 30,
+        })
         sale_order = self.env['sale.order'].create({
             'partner_id': self.partner.id,
             'order_line': [Command.create({

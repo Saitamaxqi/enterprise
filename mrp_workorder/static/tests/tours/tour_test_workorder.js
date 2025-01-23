@@ -106,7 +106,7 @@ registry.category("web_tour.tours").add("test_serial_tracked_and_register", {
     ],
 });
 
-registry.category("web_tour.tours").add("test_access_shop_floor_with_multicomany", {
+registry.category("web_tour.tours").add("test_access_shop_floor_with_multicompany", {
     url: "/odoo/action-menu",
     steps: () => [
         {
@@ -165,7 +165,7 @@ registry.category("web_tour.tours").add("test_access_shop_floor_with_multicomany
     ],
 });
 
-registry.category("web_tour.tours").add("test_add_component_from_shop_foor", {
+registry.category("web_tour.tours").add("test_add_component_from_shop_floor", {
     steps: () => [
         {
             trigger: ".form-check-input[name='All MO']",
@@ -302,7 +302,7 @@ registry.category("web_tour.tours").add("test_add_component_from_shop_foor", {
 
 registry
     .category("web_tour.tours")
-    .add("test_add_component_from_shop_foor_in_multi_step_manufacturing", {
+    .add("test_add_component_from_shop_floor_in_multi_step_manufacturing", {
         steps: () => [
             {
                 trigger: ".form-check-input[name='Nuclear Workcenter']",

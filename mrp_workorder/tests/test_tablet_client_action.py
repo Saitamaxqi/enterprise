@@ -2,6 +2,7 @@
 
 from markupsafe import Markup
 
+from odoo import Command
 from odoo.addons.mrp_workorder.tests.common import TestMrpWorkorderCommon
 from odoo.tests import Form
 
@@ -19,7 +20,6 @@ class TestWorkorderClientActionCommon(TestMrpWorkorderCommon):
             'name': 'Mitchell Admin',
             'email': 'mitchell.admin@example.com'
         })
-        cls.picking_type_manufacturing = cls.env.ref('stock.warehouse0').manu_type_id
         cls.potion = cls.env['product.product'].create({
             'name': 'Magic Potion',
             'is_storable': True})
@@ -30,7 +30,7 @@ class TestWorkorderClientActionCommon(TestMrpWorkorderCommon):
             'product_tmpl_id': cls.potion.product_tmpl_id.id,
             'consumption': 'flexible',
             'product_qty': 1.0,
-            'bom_line_ids': [(0, 0, {'product_id': cls.ingredient_1.id, 'product_qty': 1})]})
+            'bom_line_ids': [Command.create({'product_id': cls.ingredient_1.id, 'product_qty': 1})]})
         cls.wizard_op_1 = cls.env['mrp.routing.workcenter'].create({
             'name': 'Wizarding Operation',
             'workcenter_id': cls.workcenter_2.id,
@@ -39,8 +39,8 @@ class TestWorkorderClientActionCommon(TestMrpWorkorderCommon):
             'sequence': 1})
         cls.wizarding_step_1 = cls.env['quality.point'].create({
             'title': 'Gather Magic Step',
-            'product_ids': [(4, cls.potion.id)],
-            'picking_type_ids': [(4, cls.picking_type_manufacturing.id)],
+            'product_ids': [Command.link(cls.potion.id)],
+            'picking_type_ids': [Command.link(cls.picking_type_manu.id)],
             'operation_id': cls.wizard_op_1.id,
             'test_type_id': cls.env.ref('quality.test_type_instructions').id,
             'sequence': 1,
@@ -48,8 +48,8 @@ class TestWorkorderClientActionCommon(TestMrpWorkorderCommon):
         cls.step_image_html = '<p><img src="/stock/static/description/icon.png"></p>'
         cls.wizarding_step_2 = cls.env['quality.point'].create({
             'title': 'Cast Magic Step',
-            'product_ids': [(4, cls.potion.id)],
-            'picking_type_ids': [(4, cls.picking_type_manufacturing.id)],
+            'product_ids': [Command.link(cls.potion.id)],
+            'picking_type_ids': [Command.link(cls.picking_type_manu.id)],
             'operation_id': cls.wizard_op_1.id,
             'test_type_id': cls.env.ref('quality.test_type_instructions').id,
             'sequence': 2,

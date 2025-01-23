@@ -46,8 +46,8 @@ class TestReportsCommon(TestMrpAccount):
             'product_uom': byproduct.uom_id.id,
             'product_uom_qty': 1,
             'production_id': production_table.id,
-            'location_id': self.ref('stock.stock_location_stock'),
-            'location_dest_id': self.ref('stock.stock_location_output'),
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.output_location.id,
             'cost_share': byproduct_cost_share
         })
 

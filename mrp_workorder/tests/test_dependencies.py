@@ -48,7 +48,6 @@ class TestWorkOrderDependencies(TestMrpWorkorderCommon):
             ],
             'allow_operation_dependencies': True,
         })
-        cls.stock_location = cls.env.ref('stock.stock_location_stock')
         cls.env['stock.quant']._update_available_quantity(cls.component1, cls.stock_location, 100)
         cls.env['stock.quant']._update_available_quantity(cls.component2, cls.stock_location, 100)
 
@@ -148,7 +147,7 @@ class TestWorkOrderDependencies(TestMrpWorkorderCommon):
 
         bo = self.env['mrp.production.backorder'].create({
             "mrp_production_backorder_line_ids": [
-                [0, 0, {"mrp_production_id": mo.id, "to_backorder": True}]
+                Command.create({"mrp_production_id": mo.id, "to_backorder": True})
             ]
         })
         bo.action_backorder()
@@ -183,7 +182,7 @@ class TestWorkOrderDependencies(TestMrpWorkorderCommon):
 
         bo = self.env['mrp.production.backorder'].create({
             "mrp_production_backorder_line_ids": [
-                [0, 0, {"mrp_production_id": mo_2.id, "to_backorder": True}]
+                Command.create({"mrp_production_id": mo_2.id, "to_backorder": True})
             ]
         })
         bo.action_backorder()
