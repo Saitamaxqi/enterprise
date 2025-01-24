@@ -254,6 +254,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             'folder_id': False,
             'owner_id': self.internal_user,
         })
+        self.folder_a.access_ids = False
         self._assert_no_members(self.folder_a)
 
         not_authorized = self.doc_user + self.document_manager + self.portal_user
@@ -420,6 +421,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             'folder_id': False,
             'owner_id': self.document_manager,
         })
+        self.folder_a.access_ids = False
         self._assert_no_members(self.folder_a)
         folder_a_as_internal = self.folder_a.with_user(self.internal_user)
         # Members
@@ -581,6 +583,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.assertFalse(self.folder_a.folder_id)
 
         self.folder_a.owner_id = self.document_manager
+        self.folder_a.access_ids = False
         self.folder_a.action_update_access_rights(
             access_internal='none',
             partners={self.internal_user.partner_id.id: ('edit', False)}
@@ -1135,7 +1138,22 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         with self.assertRaises(AccessError):
             self.folder_a_a.with_user(self.internal_user).owner_id = self.internal_user
 
+        self.folder_a_a.action_update_access_rights(access_internal='none')
+        self.assertEqual(self.folder_a_a.with_user(self.internal_user).user_permission, 'none')
+
+        # Add a document in their folder but set their access to viewer.
+        self.document_txt.folder_id = self.folder_a_a
+        self.document_txt.owner_id = self.document_manager
+        self.document_txt.action_update_access_rights(partners={self.doc_user.partner_id: ('view', False)})
+
+        self.assertEqual(self.document_txt.with_user(self.doc_user).user_permission, 'view')
+
         self.folder_a_a.with_user(self.doc_user).owner_id = self.internal_user
+        self.assertEqual(self.folder_a_a.with_user(self.doc_user).user_permission, 'edit',
+                         "Previous owner should have kept edit permission on folder")
+
+        self.assertEqual(self.document_txt.with_user(self.doc_user).user_permission, 'view',
+                         "Previous owner should not have gained rights on folder content")
 
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_embedded_action(self):
