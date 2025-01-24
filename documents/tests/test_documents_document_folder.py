@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import Command
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, AccessError
 from odoo.tests.common import TransactionCase
 from odoo.addons.mail.tests.common import mail_new_test_user
 
@@ -167,3 +167,72 @@ class TestDocumentsDocumentFolder(TransactionCase):
         self.assertEqual(len(action_copied_child), 1)
         self.assertEqual(action_original_child.action_id, action_copied_child.action_id)
         self.assertNotEqual(action_original_child, action_copied_child)
+
+    def test_action_move_folder(self):
+        self.document_manager, self.internal_user = self.env['res.users'].create([
+            {
+                'email': "dtdm@yourcompany.com",
+                'groups_id': [Command.link(self.env.ref('documents.group_documents_manager').id)],
+                'login': "dtdm",
+                'name': "Documents Manager",
+            },
+            {
+                'login': 'internal_user',
+                'groups_id': [Command.link(self.env.ref('base.group_user').id)],
+                'name': 'Internal user'
+            }
+        ])
+        self.folder_cpy_1, self.folder_cpy_2, self.folder_cpy_3 = self.env['documents.document'].create(
+            [{
+                'access_internal': 'view',
+                'folder_id': False,
+                'name': f'COMPANY folder {i + 1}',
+                'sequence': i,
+                'type': 'folder',
+                'owner_id': False}
+                for i in range(3)])
+        self.company_folders = self.folder_cpy_1 | self.folder_cpy_2 | self.folder_cpy_3
+
+        # Moving folders in COMPANY
+        for company_folder in self.company_folders:
+            self.assertTrue(company_folder.is_company_root_folder)
+            self.assertTrue(company_folder.with_user(self.document_manager).user_permission == 'edit')
+            self.assertTrue(company_folder.with_user(self.internal_user).user_permission == 'view')
+
+        self.assertTrue(self.folder_cpy_1.sequence < self.folder_cpy_2.sequence < self.folder_cpy_3.sequence)
+        with self.assertRaises(AccessError):
+            self.folder_cpy_1.with_user(self.internal_user).action_move_folder("COMPANY", self.folder_cpy_2.id)
+        # Insert before a folder
+        self.folder_cpy_3.with_user(self.document_manager).action_move_folder("COMPANY", self.folder_cpy_1.id)
+        self.assertTrue(self.folder_cpy_3.sequence < self.folder_cpy_1.sequence < self.folder_cpy_2.sequence)
+        # Move at the end
+        self.folder_cpy_3.with_user(self.document_manager).action_move_folder("COMPANY", False)
+        self.assertTrue(self.folder_cpy_3.sequence > self.folder_cpy_1.sequence)
+        self.assertTrue(self.folder_cpy_3.sequence > self.folder_cpy_2.sequence)
+
+        # Moving folders in MY DRIVE
+        self.folder_my_1, self.folder_my_2, self.folder_my_3 = self.env['documents.document'].create([
+            {
+                'folder_id': False,
+                'name': f"My Drive folder {i + 1}",
+                'sequence': i,
+                'type': 'folder',
+                'owner_id': self.internal_user.id,
+            }
+            for i in range(3)])
+        self.my_drive_folders = self.folder_my_1 | self.folder_my_2 | self.folder_my_3
+
+        for my_drive_folder in self.my_drive_folders:
+            self.assertTrue(my_drive_folder.with_user(self.document_manager).user_permission == 'none')
+            self.assertTrue(my_drive_folder.with_user(self.internal_user).user_permission == 'edit')
+
+        with self.assertRaises(AccessError):
+            self.folder_my_2.with_user(self.document_manager).action_move_folder("MY", self.folder_my_1.id)
+
+        # Insert before a folder
+        self.folder_my_3.with_user(self.internal_user).action_move_folder("MY", self.folder_my_1.id)
+        self.assertTrue(self.folder_my_3.sequence < self.folder_my_1.sequence < self.folder_my_2.sequence)
+        # Move at the end
+        self.folder_my_3.with_user(self.internal_user).action_move_folder("MY", False)
+        self.assertTrue(self.folder_my_3.sequence > self.folder_my_1.sequence)
+        self.assertTrue(self.folder_my_3.sequence > self.folder_my_2.sequence)

@@ -36,7 +36,7 @@ class DocumentsDocument(models.Model):
     _name = 'documents.document'
     _description = 'Document'
     _inherit = ['mail.thread.cc', 'mail.activity.mixin', 'mail.alias.mixin']
-    _order = 'id desc'
+    _order = 'sequence, id desc'
     _parent_name = 'folder_id'
     _parent_store = True
     _systray_view = 'activity'
@@ -67,7 +67,7 @@ class DocumentsDocument(models.Model):
     previous_attachment_ids = fields.Many2many('ir.attachment', string="History")
 
     # Document
-    name = fields.Char('Name', copy=True, store=True, compute='_compute_name_and_preview', readonly=False)
+    name = fields.Char('Name', copy=True, store=True, compute='_compute_name_and_preview', readonly=False, translate=True)
     active = fields.Boolean(default=True, string="Active")
     thumbnail = fields.Binary(
         readonly=False, store=True, attachment=True, compute='_compute_thumbnail', recursive=True)
@@ -101,6 +101,7 @@ class DocumentsDocument(models.Model):
     is_locked = fields.Boolean(compute="_compute_is_locked", string="Locked")
     request_activity_id = fields.Many2one('mail.activity')
     requestee_partner_id = fields.Many2one('res.partner')
+    sequence = fields.Integer('Sequence', default=10)
 
     # Access
     document_token = fields.Char(
@@ -665,6 +666,57 @@ class DocumentsDocument(models.Model):
         :param int|bool folder_id: new parent folder id
         """
         self.folder_id = self.browse(folder_id)
+
+    def action_move_folder(self, target, before_folder_id=False):
+        """Unlike action_move_documents, move one folder to the given position
+        and update its sequence. If no parent_folder is given, check whether the
+        parent is 'COMPANY' or 'MY'. If no before_folder is given, place it as
+        last child of its parent (last root if no parent is given)
+
+        :param str|int target: id of the new parent folder or 'COMPANY' or 'MY'
+        :param int|bool before_folder_id: id of the folder before which to move
+        """
+        self.ensure_one()
+        if self.type != 'folder' or not self.active:
+            return
+
+        values = {'folder_id': False}
+        sibling_folders_domain = [('type', '=', 'folder'), ('id', '!=', self.id)]
+
+        if target == "COMPANY":
+            self.action_set_as_company_root()  # Changes owner and updates access rights if necessary
+            sibling_folders_domain += [('owner_id', '=', False), ('folder_id', '=', False)]
+        elif target == "MY":
+            sibling_folders_domain += [('owner_id', '=', self.env.user.id), ('folder_id', '=', False)]
+        else:
+            sibling_folders_domain += [('folder_id', '=', target)]
+            values['folder_id'] = target
+
+        # If before_folder is indeed a sibling given the passed target (as it could have been moved by someone else),
+        # assign its current sequence value to the current record and shift the following folders to keep ordering.
+        if before_folder := self.browse(before_folder_id):
+            located_after_domain = expression.OR([
+                [('sequence', '>', before_folder.sequence)],
+                [('sequence', '=', before_folder.sequence), ('id', '<=', before_folder_id)],
+            ])
+            folders_to_resequence_domain = expression.AND([sibling_folders_domain, located_after_domain])
+            folders_to_resequence_sudo = self.sudo().search(folders_to_resequence_domain)
+            if before_folder == folders_to_resequence_sudo[0]:
+                values['sequence'] = before_folder.sequence
+                new_sequence = before_folder.sequence + 1
+                for folder_sudo in folders_to_resequence_sudo:
+                    if folder_sudo.sequence >= new_sequence:
+                        break
+                    folder_sudo.sequence = new_sequence
+                    new_sequence += 1
+                return self.write(values)
+
+        # Otherwise, move the folder as last child of its parent
+        if result := self.env['documents.document'].sudo().search_read(
+                sibling_folders_domain, fields=['sequence'], order="sequence DESC", limit=1):
+            values['sequence'] = result[0]["sequence"] + 1
+
+        return self.write(values)
 
     def action_change_owner(self, new_user_id):
         if not self.env.user._is_admin() and not self.env.user.has_group('documents.group_documents_system'):

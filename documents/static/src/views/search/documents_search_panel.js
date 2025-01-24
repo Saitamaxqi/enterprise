@@ -3,7 +3,6 @@ import { browser } from "@web/core/browser/browser";
 import { SearchPanel } from "@web/search/search_panel/search_panel";
 import { useNestedSortable } from "@web/core/utils/nested_sortable";
 import { usePopover } from "@web/core/popover/popover_hook";
-import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { utils as uiUtils } from "@web/core/ui/ui_service";
 import { Component, onWillStart, useState } from "@odoo/owl";
@@ -70,7 +69,6 @@ export class DocumentsSearchPanel extends SearchPanel {
         this.root = useState(this.env.model.root);
 
         onWillStart(async () => {
-            this.isDocumentManager = await user.hasGroup("documents.group_documents_manager");
             if (this.env.model.config.context.active_model) {
                 // Ensure folders in search panel are folded when users come from another app
                 const categories = await this.env.searchModel.getSections((s) => s.type === "category");
@@ -107,7 +105,7 @@ export class DocumentsSearchPanel extends SearchPanel {
             ref: this.root,
             groups: ".o_search_panel_category",
             elements: "li:not(.o_all_or_trash_category)",
-            enable: () => this.isDocumentManager,
+            enable: () => this.documentService.userIsInternal,
             nest: true,
             nestInterval: 10,
             /**
@@ -132,17 +130,26 @@ export class DocumentsSearchPanel extends SearchPanel {
                     prevPos.parent.classList.remove("o_has_treeEntry");
                 }
             },
-            onDrop: async ({ element, parent }) => {
+            onDrop: async ({ element, parent, next }) => {
                 const draggingFolderId = parseInt(element.dataset.valueId);
-                const draggingFolderRootId = this.env.searchModel.getFolderById(draggingFolderId).rootId;
+                const draggingFolderRootId =
+                    this.env.searchModel.getFolderById(draggingFolderId).rootId;
                 let parentFolderId = parent ? parent.dataset.valueId : false;
+                const beforeFolderId = next ? parseInt(next.dataset.valueId) : false;
                 if (draggingFolderId === parentFolderId) {
                     return;
                 }
                 if (!parentFolderId || this._notify_wrong_drop_destination(parentFolderId)) {
                     return;
                 }
-                const parentFolderRootId =this.env.searchModel.getFolderById(parentFolderId).rootId;
+                const parentFolderRootId =
+                    this.env.searchModel.getFolderById(parentFolderId).rootId;
+                if (
+                    !this.documentService.userIsDocumentManager &&
+                    (!parentFolderRootId || parentFolderRootId === "COMPANY")
+                ) {
+                    return;
+                }
                 if (parentFolderRootId === "MY" && draggingFolderRootId !== "MY") {
                     await this.orm.call(
                         "documents.document",
@@ -151,21 +158,15 @@ export class DocumentsSearchPanel extends SearchPanel {
                         { location_folder_id: parentFolderId === "MY" ? false : parentFolderId },
                     );
                     return this.env.searchModel._reloadSearchModel(true);
-                } else if (parentFolderId === "COMPANY") {
-                    await this.orm.call(
-                        "documents.document",
-                        "action_set_as_company_root",
-                        [draggingFolderId],
-                    );
-                    return this.env.searchModel._reloadSearchModel(true);
-                } else if (parentFolderId) {
+                }
+                if (!["COMPANY", "MY"].includes(parentFolderId)) {
                     parentFolderId = parseInt(parentFolderId);
                 }
-                await this.orm.call(
-                    "documents.document",
-                    "action_move_documents",
-                    [draggingFolderId, parentFolderId],
-                );
+                await this.orm.call("documents.document", "action_move_folder", [
+                    [draggingFolderId],
+                    parentFolderId ? parentFolderId : false,
+                    beforeFolderId,
+                ]);
                 await this.env.searchModel._reloadSearchModel(true);
             },
         });
@@ -389,7 +390,7 @@ export class DocumentsSearchPanel extends SearchPanel {
             return (
                 !folder.id ||
                 folder.user_permission === "edit" ||
-                (folder.id === "COMPANY" && this.isDocumentManager)
+                (folder.id === "COMPANY" && this.documentService.userIsDocumentManager)
             );
         };
 
