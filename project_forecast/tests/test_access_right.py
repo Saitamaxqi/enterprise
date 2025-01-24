@@ -1,9 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 
-from datetime import datetime
-
-from odoo.exceptions import AccessError
 from .common import TestCommonForecast
+from odoo import Command
+from odoo.tests import new_test_user
 
 
 class TestForecastAccessRights(TestCommonForecast):
@@ -14,148 +13,39 @@ class TestForecastAccessRights(TestCommonForecast):
         cls.setUpEmployees()
         cls.setUpProjects()
 
-        user_group_portal = cls.env.ref('base.group_portal')
-        user_group_employee = cls.env.ref('base.group_user')
-        user_group_project_user = cls.env.ref('project.group_project_user')
-        user_group_project_manager = cls.env.ref('project.group_project_manager')
+        cls.user_projectuser = new_test_user(cls.env, login='project_user', groups='project.group_project_user')
+        cls.user_projectmanager = new_test_user(cls.env, login='project_manager', groups='project.group_project_manager')
 
-        # public user
-        cls.user_public = cls.env['res.users'].with_context({'no_reset_password': True}).create({
-            'name': 'Bert Tartignole',
-            'login': 'bert',
-            'email': 'b.t@example.com',
-            'signature': 'SignBert',
-            'notification_type': 'email',
-            'groups_id': [(6, 0, [cls.env.ref('base.group_public').id])]
-        })
-        # portal user
-        cls.user_portal = cls.env['res.users'].with_context({'no_reset_password': True}).create({
-            'name': 'portal',
-            'login': 'portal_user',
-            'email': 'portal@example.com',
-            'groups_id': [(6, 0, [user_group_portal.id])]
-        })
-        # employee user
-        cls.user_projectuser_joseph = cls.env['res.users'].with_context({'no_reset_password': True}).create({
-            'name': 'Joseph',
-            'login': 'Joseph',
-            'email': 'Joseph@test.com',
-            'groups_id': [(6, 0, [user_group_employee.id, user_group_project_user.id])],
-        })
-        cls.employee_joseph.write({
-            'user_id': cls.user_projectuser_joseph.id
-        })
-        # manager user
-        cls.user_projectmanager_bert = cls.env['res.users'].with_context({'no_reset_password': True}).create({
-            'name': 'Bert',
-            'login': 'Bert',
-            'email': 'Bert@test.com',
-            'groups_id': [(6, 0, [user_group_employee.id, user_group_project_manager.id])],
-        })
-        cls.employee_bert.write({
-            'user_id': cls.user_projectmanager_bert.id
-        })
+        cls.private_project_1, cls.private_project_2 = cls.env['project.project'].create([
+            {
+                'name': 'Private project 1',
+                'privacy_visibility': 'followers',
+                'message_partner_ids': [Command.set([cls.user_projectuser.partner_id.id])],
+            }, {
+                'name': 'Private project 2',
+                'privacy_visibility': 'followers',
+                'message_partner_ids': [Command.set([cls.user_projectmanager.partner_id.id])],
+            },
+        ])
 
-        # Tinyhouse project, on invitation
-        cls.tinyhouse_followers = [cls.user_projectmanager_bert.partner_id]
-        cls.project_tinyhouse = cls.env['project.project'].create({
-            'name': 'Tinyhouse',
-            'color': 1,
-            'privacy_visibility': 'followers',
-        })
-        values_list = []
-        for partner in cls.tinyhouse_followers:
-            values_list.append({
-                'res_model': 'project.project',
-                'res_id': cls.project_tinyhouse.id,
-                'partner_id': partner.id,
-            })
-        cls.env['mail.followers'].create(values_list)
+        # Create planning slot templates related to these private projects
+        cls.PlanningSlotTemplates = cls.env['planning.slot.template']
+        cls.slot_templates = cls.PlanningSlotTemplates.create([
+            {'name': 'Template 1', 'project_id': cls.private_project_1.id, 'start_time': 11, 'end_time': 16},
+            {'name': 'Template 2', 'project_id': cls.private_project_2.id, 'start_time': 11, 'end_time': 16},
+            {'name': 'Template 3', 'start_time': 11, 'end_time': 16},
+        ])
 
-        # create a forecast in each project
-        forecast_values = {
-            'employee_id': cls.employee_joseph.id,
-            'start_datetime': datetime(2019, 6, 5, 8),
-            'end_datetime': datetime(2019, 6, 5, 17),
-            'allocated_hours': 8,
-        }
+    def test_project_manager_access_slot_template(self):
+        """Test that a project manager can access all planning slot templates."""
+        slot_templates_count = self.PlanningSlotTemplates.with_user(self.user_projectmanager).search_count([('id', 'in', self.slot_templates.ids)])
+        self.assertEqual(slot_templates_count, 3, "Project manager should have access to all planning slots template.")
 
-        cls.project_tinyhouse_forecast = cls.env['planning.slot'].create({'project_id': cls.project_tinyhouse.id, **forecast_values})
-        cls.project_opera_forecast = cls.env['planning.slot'].create({'project_id': cls.project_opera.id, **forecast_values})
-        cls.project_horizon_forecast = cls.env['planning.slot'].create({'project_id': cls.project_horizon.id, **forecast_values})
-
-    def test_public_user_access_rights(self):
-        # create
-        with self.assertRaises(AccessError):
-            self.env['planning.slot'].with_user(self.user_public.id).create({
-                'employee_id': self.employee_bert.id,
-                'start_datetime': datetime(2019, 6, 5, 8),
-                'end_datetime': datetime(2019, 6, 5, 17),
-                'project_id': self.project_horizon.id,
-                'allocated_hours': 8,
-            })
-        # read
-        with self.assertRaises(AccessError):
-            self.project_opera_forecast.with_user(self.user_public.id).read()
-        # update
-        with self.assertRaises(AccessError):
-            self.project_opera_forecast.with_user(self.user_public.id).write({'allocated_hours': 6})
-        # delete
-        with self.assertRaises(AccessError):
-            self.project_opera_forecast.with_user(self.user_public.id).unlink()
-
-    def test_portal_user_access_right(self):
-        # create
-        with self.assertRaises(AccessError):
-            self.env['planning.slot'].with_user(self.user_portal.id).create({
-                'employee_id': self.employee_bert.id,
-                'start_datetime': datetime(2019, 6, 5, 8),
-                'end_datetime': datetime(2019, 6, 5, 17),
-                'project_id': self.project_horizon.id,
-                'allocated_hours': 8,
-            })
-        # read
-        with self.assertRaises(AccessError):
-            self.project_opera_forecast.with_user(self.user_portal.id).read()
-        # update
-        with self.assertRaises(AccessError):
-            self.project_opera_forecast.with_user(self.user_portal.id).write({'allocated_hours': 6})
-        # delete
-        with self.assertRaises(AccessError):
-            self.project_opera_forecast.with_user(self.user_portal.id).unlink()
-
-    def test_regular_user_access_rights(self):
-        # create
-        with self.assertRaises(AccessError):
-            self.env['planning.slot'].with_user(self.employee_joseph.user_id.id).create({
-                'employee_id': self.employee_bert.id,
-                'start_datetime': datetime(2019, 6, 5, 8),
-                'end_datetime': datetime(2019, 6, 5, 17),
-                'allocated_hours': 8,
-            })
-        # update
-        with self.assertRaises(AccessError):
-            self.project_opera_forecast.with_user(self.employee_joseph.user_id.id).write({'allocated_hours': 6})
-        # delete
-        with self.assertRaises(AccessError):
-            self.project_opera_forecast.with_user(self.employee_joseph.user_id.id).unlink()
-        # joseph is not part of the tinyhouse project which is restricted to followers
-        with self.assertRaises(AccessError):
-            self.project_tinyhouse_forecast.with_user(self.employee_joseph.user_id).read()
-        self.project_opera_forecast.with_user(self.employee_joseph.user_id).read()
-
-    def test_manager_access_rights(self):
-        # read
-        self.project_tinyhouse_forecast.with_user(self.employee_bert.user_id.id).read()
-        # create
-        self.env['planning.slot'].with_user(self.employee_bert.user_id.id).create({
-            'employee_id': self.employee_bert.id,
-            'start_datetime': datetime(2019, 6, 5, 8),
-            'project_id': self.project_horizon.id,
-            'end_datetime': datetime(2019, 6, 5, 17),
-            'allocated_hours': 8,
-        })
-        # update
-        self.project_opera_forecast.with_user(self.employee_bert.user_id.id).write({'allocated_hours': 6})
-        # delete
-        self.project_opera_forecast.with_user(self.employee_bert.user_id.id).unlink()
+    def test_project_user_access_slot_template(self):
+        """Test that a project user can access only specific planning slot templates."""
+        slot_templates = self.PlanningSlotTemplates.with_user(self.user_projectuser).search([('id', 'in', self.slot_templates.ids)])
+        self.assertEqual(len(slot_templates), 2, "Project users should have access to specific project and non-project templates.")
+        self.assertTrue(
+            self.slot_templates[1] not in slot_templates,
+            "The slot template linked to the second private project should not be accessible to the project user if he does not have access to the project linked."
+        )

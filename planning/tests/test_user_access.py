@@ -29,6 +29,9 @@ class TestUserAccess(HttpCase):
             'user_id': self.planning_mgr.id,
         })
 
+        self.user_public = new_test_user(self.env, login='bert', groups='base.group_public')
+        self.user_portal = new_test_user(self.env, login='portal_plan', groups='base.group_portal')
+
         # create a planning user
         self.planning_user = new_test_user(self.env,
                                            login='planuser',
@@ -74,7 +77,7 @@ class TestUserAccess(HttpCase):
             'state': 'published',
         })
 
-        self.env['planning.slot'].create({
+        self.slot = self.env['planning.slot'].create({
             'start_datetime': datetime(2019, 6, 28, 8, 0, 0),
             'end_datetime': datetime(2019, 6, 28, 17, 0, 0),
             'resource_id': self.res_internal_user.id,
@@ -84,6 +87,44 @@ class TestUserAccess(HttpCase):
             'repeat_interval': 1,
             'state': 'published',
         })
+
+    def test_public_user_access_rights(self):
+        # create
+        with self.assertRaises(AccessError):
+            self.env['planning.slot'].with_user(self.user_public.id).create({
+                'resource_id': self.res_planning_user.id,
+                'start_datetime': datetime(2019, 6, 5, 8),
+                'end_datetime': datetime(2019, 6, 5, 17),
+                'allocated_hours': 8,
+            })
+        # read
+        with self.assertRaises(AccessError):
+            self.slot.with_user(self.user_public.id).read()
+        # update
+        with self.assertRaises(AccessError):
+            self.slot.with_user(self.user_public.id).write({'allocated_hours': 6})
+        # delete
+        with self.assertRaises(AccessError):
+            self.slot.with_user(self.user_public.id).unlink()
+
+    def test_portal_user_access_right(self):
+        # create
+        with self.assertRaises(AccessError):
+            self.env['planning.slot'].with_user(self.user_portal.id).create({
+                'resource_id': self.res_planning_user.id,
+                'start_datetime': datetime(2019, 6, 5, 8),
+                'end_datetime': datetime(2019, 6, 5, 17),
+                'allocated_hours': 8,
+            })
+        # read
+        with self.assertRaises(AccessError):
+            self.slot.with_user(self.user_portal.id).read()
+        # update
+        with self.assertRaises(AccessError):
+            self.slot.with_user(self.user_portal.id).write({'allocated_hours': 6})
+        # delete
+        with self.assertRaises(AccessError):
+            self.slot.with_user(self.user_portal.id).unlink()
 
     def test_01_internal_user_read_own_slots(self):
         """
