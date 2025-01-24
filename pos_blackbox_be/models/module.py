@@ -11,7 +11,7 @@ class IrModuleModule(models.Model):
 
     def module_uninstall(self):
         for module_to_remove in self:
-            if module_to_remove.name == "pos_blackbox_be":
+            if module_to_remove.name == "pos_blackbox_be" and self.env['pos.config'].search_count([('certified_blackbox_identifier', '!=', False)], limit=1):
                 raise UserError(_("This module is not allowed to be removed."))
 
         return super().module_uninstall()

@@ -12,7 +12,7 @@ class PosMakePayment(models.TransientModel):
     def check(self):
         order = self.env["pos.order"].browse(self.env.context.get("active_id"))
 
-        if order.config_id.iface_fiscal_data_module:
+        if order.config_id.certified_blackbox_identifier:
             raise UserError(
                 _("Adding additional payments to registered orders is not allowed.")
             )

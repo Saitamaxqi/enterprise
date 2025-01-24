@@ -18,7 +18,6 @@
             <field name="arch" type="xml">
                 <field name="insz_or_bis_number" position="attributes">
                     <attribute name="readonly">False</attribute>
-                    groups="base.group_no_one"
                 </field>
             </field>
         </record>

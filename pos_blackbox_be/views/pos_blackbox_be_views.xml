@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+        <record id="view_pos_pos_form" model="ir.ui.view">
+            <field name="name">pos.order.form.view.inherit</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="duplicate">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_pos_order_kanban" model="ir.ui.view">
+            <field name="name">pos.order.kanban.view.inherit</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_kanban"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="duplicate">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_pos_order_tree" model="ir.ui.view">
+            <field name="name">pos.order.list.view.inherit</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//list" position="attributes">
+                    <attribute name="duplicate">0</attribute>
+                </xpath>
+            </field>
+        </record>
         <record model="ir.actions.act_window" id="action_log_book_form">
             <field name="name">Log book</field>
             <field name="type">ir.actions.act_window</field>
@@ -29,6 +61,23 @@
                     <field name="record_name"/>
                     <field name="description"/>
                 </list>
+            </field>
+        </record>
+
+        <record id="view_pos_config_kanban" model="ir.ui.view">
+            <field name="name">pos.config.kanban.view.inherit.pos_blackbox_be</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_kanban" />
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="certified_blackbox_identifier" invisible="1"/>
+                    <field name="pos_version" invisible="1"/>
+                    <t t-if="record.certified_blackbox_identifier.value">
+                        <div class="badge text-bg-info o_kanban_inline_block me-2" t-esc="record.pos_version.value"/>
+                        <div class="badge text-bg-info o_kanban_inline_block me-2" t-esc="record.certified_blackbox_identifier.value"/>
+                        <span invisible="not self_ordering_mode == 'kiosk' or not has_active_session" class="text-warning d-block">In order to clock out from the kiosk, make sure to have a kiosk window open.</span>
+                    </t>
+                </field>
             </field>
         </record>
 

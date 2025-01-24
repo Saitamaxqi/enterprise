@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import logging
 import serial
+import requests
 
 from odoo.addons.hw_drivers.tools import helpers
 from odoo.addons.hw_drivers.event_manager import event_manager
@@ -34,24 +34,25 @@ ACK = b'\x06'
 NACK = b'\x15'
 
 errors = {
-    '000000': "No error",
-    '001000': "PIN accepted.",
-    '101000': "Fiscal Data Module memory 90% full.",
-    '102000': "Already handled request.",
-    '103000': "No record.",
-    '199000': "Unspecified warning.",
-    '201000': "No Vat Signing Card or Vat Signing Card broken.",
-    '202000': "Please initialize the Vat Signing Card with PIN.",
-    '203000': "Vat Signing Card blocked.",
-    '204000': "Invalid PIN.",
-    '205000': "Fiscal Data Module memory full.",
-    '206000': "Unknown identifier.",
-    '207000': "Invalid data in message.",
-    '208000': "Fiscal Data Module not operational.",
-    '209000': "Fiscal Data Module real time clock corrupt.",
-    '210000': "Vat Signing Card not compatible with Fiscal Data Module.",
-    '299000': "Unspecified error.",
+    '000': "No error",
+    '001': "PIN accepted.",
+    '101': "Fiscal Data Module memory 90% full.",
+    '102': "Already handled request.",
+    '103': "No record.",
+    '199': "Unspecified warning.",
+    '201': "No Vat Signing Card or Vat Signing Card broken.",
+    '202': "Please initialize the Vat Signing Card with PIN.",
+    '203': "Vat Signing Card blocked.",
+    '204': "Invalid PIN.",
+    '205': "Fiscal Data Module memory full.",
+    '206': "Unknown identifier.",
+    '207': "Invalid data in message.",
+    '208': "Fiscal Data Module not operational.",
+    '209': "Fiscal Data Module real time clock corrupt.",
+    '210': "Vat Signing Card not compatible with Fiscal Data Module.",
+    '299': "Unspecified error.",
 }
+
 
 class BlackBoxDriver(SerialDriver):
     """Driver for the blackbox fiscal data module."""
@@ -59,7 +60,7 @@ class BlackBoxDriver(SerialDriver):
     _protocol = BlackboxProtocol
 
     def __init__(self, identifier, device):
-        super(BlackBoxDriver, self).__init__(identifier, device)
+        super().__init__(identifier, device)
         self.device_type = 'fiscal_data_module'
         self.sequence_number = 0
         self._set_actions()
@@ -69,8 +70,9 @@ class BlackBoxDriver(SerialDriver):
         """Initializes `self._actions`, a map of action keys sent by the frontend to backend action methods."""
 
         self._actions.update({
-            'registerReceipt': self._request_registerReceipt, # 'H'
-            'registerPIN': self._request_registerReceipt, # 'P'
+            'registerReceiptWeb': self._request_registerReceiptWeb,  # 'H' from server (websocket) so requires an answer
+            'registerReceipt': self._request_registerReceipt,  # 'H'
+            'registerPIN': self._request_registerPIN,  # 'P'
         })
 
     @classmethod
@@ -90,7 +92,7 @@ class BlackBoxDriver(SerialDriver):
         except serial.serialutil.SerialTimeoutException:
             pass
         except Exception:
-            _logger.exception('Error while probing %s with protocol %s' % (device, protocol.name))
+            _logger.exception('Error while probing %s with protocol %s', device, protocol.name)
 
     @classmethod
     def _wrap_low_level_message_around(cls, high_level_message):
@@ -99,6 +101,7 @@ class BlackBoxDriver(SerialDriver):
         :type high_level_message: str
         :return: The modified message as it is transmitted to the blackbox
         :rtype: bytearray
+        :return: the response to the sent message, or None if no valid response was received
         """
 
         bcc = cls._lrc(high_level_message)
@@ -153,7 +156,7 @@ class BlackBoxDriver(SerialDriver):
 
     def _parse_blackbox_response(self, response):
         error_code = response[4:10]
-        error_message = errors.get(error_code)
+        error_message = errors.get(error_code[:3])
 
         return {
             'identifier': response[0:1],
@@ -170,6 +173,29 @@ class BlackBoxDriver(SerialDriver):
             'signature': response[69:109]
         }
 
+    def send_blackbox_response(self, data, retry_nbr=0):
+        server_url = helpers.get_odoo_server_url() + "/pos_self_blackbox/confirmation"
+        try:
+            response = requests.post(server_url, json=data, timeout=5)
+            response.raise_for_status()
+        except requests.Timeout:
+            if retry_nbr < 3:
+                self.send_blackbox_response(data, retry_nbr + 1)
+            else:
+                _logger.exception('Could not reach confirmation status URL: %s', server_url)
+        except requests.exceptions.RequestException:
+            _logger.exception('Could not reach confirmation status URL: %s', server_url)
+
+    def _request_registerReceiptWeb(self, data):
+        self._request_registerReceipt(data)
+
+        self.send_blackbox_response({
+            'order_id': data['id'],
+            'device_identifier': self.device_identifier,
+            'blackbox_response': self.data['value'],
+            'iot_mac': helpers.get_mac_address()
+        })
+
     def _request_registerReceipt(self, data):
         if data['high_level_message'].get('clock'):
             packet = self._wrap_low_level_message_around(self._wrap_high_level_message_around('I', data['high_level_message']))
@@ -177,6 +203,13 @@ class BlackBoxDriver(SerialDriver):
 
         packet = self._wrap_low_level_message_around(self._wrap_high_level_message_around('H', data['high_level_message']))
         blackbox_response = self._send_to_blackbox(packet, 109, self._connection)
+        if blackbox_response:
+            self.data['value'] = self._parse_blackbox_response(blackbox_response)
+        event_manager.device_changed(self)
+
+    def _request_registerPIN(self, data):
+        packet = self._wrap_low_level_message_around("P040%s" % data['high_level_message'])
+        blackbox_response = self._send_to_blackbox(packet, 35, self._connection)
         if blackbox_response:
             self.data['value'] = self._parse_blackbox_response(blackbox_response)
         event_manager.device_changed(self)
@@ -216,9 +249,9 @@ class BlackBoxDriver(SerialDriver):
                     'errorCode': '208000',
                     'errorMessage': errors.get('208000'),
                 }
-            },
+            }
         else:
-            _logger.error(type(response))
+            _logger.info("Blackbox Response: %s", response)
             return response
 
     def _wrap_high_level_message_around(self, request_type, data):

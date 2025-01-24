@@ -77,7 +77,7 @@ patch(PaymentPage.prototype, {
         );
 
         if (!paymentMethod.iot_device_id) {
-            await super.startPayment(...arguments);
+            return await super.startPayment(...arguments);
         }
 
         try {

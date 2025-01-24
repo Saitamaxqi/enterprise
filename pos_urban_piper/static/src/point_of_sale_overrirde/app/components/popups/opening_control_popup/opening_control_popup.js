@@ -6,7 +6,7 @@ patch(OpeningControlPopup.prototype, {
      * @override
      */
     async confirm() {
+        await super.confirm();
         await this.pos.updateStoreStatus(true);
-        return super.confirm();
     },
 });

@@ -6,9 +6,6 @@
             <field name="model">pos.order</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='tax_ids']" position="after">
-                    <field name="vat_letter"/>
-                </xpath>
                 <xpath expr="//page[@name='extra']" position="inside">
                     <group string="Belgian Fiscal Data Module information">
                         <field name="blackbox_date" readonly="1"/>

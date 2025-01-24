@@ -22,7 +22,7 @@ class ResUsers(models.Model):
         result = super()._load_pos_data_fields(config_id)
         config_id = self.env["pos.config"].browse(config_id)
         if config_id.iface_fiscal_data_module:
-            result['fields'] += ['insz_or_bis_number']
+            result += ['insz_or_bis_number']
         return result
 
     @property
@@ -48,38 +48,11 @@ class ResUsers(models.Model):
         partial_number = number[:-2]
         modulo = int(partial_number) % 97
 
+        if modulo == 97 - int(number[-2:]):
+            return True
+
+        # Allow employee and user born after 2000.
+        partial_number = '2' + partial_number
+        modulo = int(partial_number) % 97
+
         return modulo == 97 - int(number[-2:])
-
-    @api.model_create_multi
-    def create(self, values):
-        for value_dict in values:
-            filtered_values = {
-                field: ("********" if field in self._get_invalidation_fields() else value)
-                for field, value in value_dict.items()
-            }
-
-            self.env["pos_blackbox_be.log"].sudo().create(
-                filtered_values, "create", self._name, value_dict.get("name")
-            )
-
-        return super().create(values)
-
-    def write(self, values):
-        filtered_values = {
-            field: ("********" if field in self._get_invalidation_fields() else value)
-            for field, value in values.items()
-        }
-        for user in self:
-            self.env["pos_blackbox_be.log"].sudo().create(
-                filtered_values, "modify", user._name, user.name
-            )
-
-        return super().write(values)
-
-    def unlink(self):
-        for user in self:
-            self.env["pos_blackbox_be.log"].sudo().create(
-                {}, "delete", user._name, user.name
-            )
-
-        return super().unlink()

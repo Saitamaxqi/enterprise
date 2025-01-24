@@ -9,7 +9,7 @@ from odoo.tools.translate import _
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
-    insz_or_bis_number = fields.Char("INSZ or BIS number", groups="hr.group_hr_user")
+    insz_or_bis_number = fields.Char("INSZ or BIS number", groups="hr.group_hr_manager")
     clocked_session_ids = fields.Many2many(
         "pos.session",
         "employees_session_clocking_info",
@@ -22,24 +22,5 @@ class HrEmployee(models.Model):
     def _check_insz_or_bis_number(self):
         for emp in self:
             insz_number = emp.insz_or_bis_number
-            if insz_number and not self.is_valid_insz_or_bis_number(insz_number):
+            if insz_number and not self.env['res.users'].is_valid_insz_or_bis_number(insz_number):
                 raise ValidationError(_("The INSZ or BIS number is not valid."))
-
-    def is_valid_insz_or_bis_number(self, number):
-        if not number:
-            return False
-        if len(number) != 11 or not number.isdigit():
-            return False
-
-        partial_number = number[:-2]
-        modulo = int(partial_number) % 97
-
-        return modulo == 97 - int(number[-2:])
-
-    @api.model
-    def _load_pos_data_fields(self, config_id):
-        result = super()._load_pos_data_fields(config_id)
-        config_id = self.env["pos.config"].browse(config_id)
-        if config_id.iface_fiscal_data_module:
-            result += ['insz_or_bis_number']
-        return result
