@@ -744,18 +744,21 @@ class AccountJournal(models.Model):
             temp_data = {}
             for line in statement['lines']:
                 to_add = statement_line and statement_line[-1]['ref'][:4] == line.get('ref_move') and statement_line[-1] or temp_data
+                transaction_details = {}
                 if line['type'] == 'information':
-                    if line['communication_struct']:
-                        to_add['narration'] = "\n".join([to_add.get('narration', ''), 'Communication: '] + self._parse_structured_communication(line['communication_type'], line['communication'])[1])
-                    else:
-                        to_add['narration'] = "\n".join([to_add.get('narration', ''), line['communication']])
+                    communication = (
+                        "\n".join(self._parse_structured_communication(line['communication_type'], line['communication'])[1])
+                        if line['communication_struct']
+                        else line['communication']
+                    )
+                    to_add.setdefault('transaction_details', {})
+                    to_add['transaction_details']['communication'] = to_add['transaction_details'].get('communication', '') + communication
                 elif line['type'] == 'communication':
                     statement['coda_note'] = "%s[%s] %s\n" % (statement['coda_note'], str(line['ref']), line['communication'])
                 elif line['type'] == 'normal'\
                         or (line['type'] == 'globalisation' and line['ref_move'] in statement['globalisation_stack'] and line['transaction_type'] in [1, 2]):
-                    note = []
                     if line.get('counterpartyName'):
-                        note.append(_('Counter Party: %s', line['counterpartyName']))
+                        transaction_details['counterpartyName'] = line['counterpartyName']
                     else:
                         line['counterpartyName'] = False
                     if line.get('counterpartyNumber'):
@@ -770,25 +773,24 @@ class AccountJournal(models.Model):
                         ):
                             line['counterpartyNumber'] = False
                         if line['counterpartyNumber']:
-                            note.append(_('Counter Party Account: %s', line['counterpartyNumber']))
+                            transaction_details['counterpartyNumber'] = line['counterpartyNumber']
                     else:
                         line['counterpartyNumber'] = False
 
                     if line.get('counterpartyAddress'):
-                        note.append(_('Counter Party Address: %s', line['counterpartyAddress']))
+                        transaction_details['counterpartyAddress'] = line['counterpartyAddress']
                     structured_com = False
                     if line['communication_struct']:
                         structured_com, extend_notes = self._parse_structured_communication(line['communication_type'], line['communication'])
-                        note.extend(extend_notes)
+                        transaction_details['communication_struct'] = extend_notes
                     elif line.get('communication'):
-                        note.append(_('Communication: %s', rmspaces(line['communication'])))
+                        transaction_details['communication'] = rmspaces(line['communication'])
                     if not self.coda_split_transactions and statement_line and line['ref_move'] == statement_line[-1]['ref'][:4]:
                         to_add['amount'] = to_add.get('amount', 0) + line['amount']
-                        to_add['narration'] = to_add.get('narration', '') + "\n" + "\n".join(note)
                     else:
                         line_data = {
                             'payment_ref': structured_com or line.get('communication', '') or '/',
-                            'narration': "\n".join(note),
+                            'transaction_details': transaction_details,
                             'transaction_type': parse_operation(line['transaction_type'], line['transaction_family'], line['transaction_code'], line['transaction_category']),
                             'date': line['entryDate'],
                             'amount': line['amount'],
@@ -798,10 +800,6 @@ class AccountJournal(models.Model):
                             'sequence': line['sequence'],
                             'unique_import_id': str(statement['codaSeqNumber']) + '-' + str(statement['date']) + '-' + str(line['ref']),
                         }
-                        if temp_data.get('narration'):
-                            line_data['narration'] = temp_data.pop('narration') + '\n' + line_data['narration']
-                        if temp_data.get('amount'):
-                            line_data['amount'] += temp_data.pop('amount')
                         statement_line.append(line_data)
             if statement['coda_note'] != '':
                 statement_data.update({'coda_note': _('Communication:\n%s', statement['coda_note'])})
