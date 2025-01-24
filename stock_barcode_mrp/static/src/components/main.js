@@ -120,7 +120,7 @@ patch(MainComponent.prototype, {
                 this.toggleBarcodeLines();
             }
             if (
-                lineRecord.context.set_qty_producing === true &&
+                lineRecord.context.set_qty_producing === true && lineRecord.data.lot_producing_id &&
                 lineRecord.data.lot_producing_id[0] != this.env.model.record.lot_producing_id?.id
             ) {
                 await this.orm.call("mrp.production", "set_qty_producing", [[recordId]]);
