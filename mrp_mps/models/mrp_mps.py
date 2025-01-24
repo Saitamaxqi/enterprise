@@ -1003,18 +1003,35 @@ class MrpProductionSchedule(models.Model):
         location = type == 'incoming' and 'location_dest_id' or 'location_id'
         location_dest = type == 'incoming' and 'location_id' or 'location_dest_id'
         domain = []
+
+        # In case of delivery in multi-steps, the real outgoing move does not exist
+        # before confirming the previous moves (pick and/or pack), so we must use
+        # that/those move(s) instead but only once.
+        warehouse_view_location_ids = self.mapped('warehouse_id.view_location_id').ids
+        if type == 'outgoing':
+            sub_dest_domain = [
+                '|',
+                    '!', (location_dest, 'child_of', warehouse_view_location_ids),
+                    '&', '&',
+                        ('location_final_id', '!=', False),
+                        ('location_final_id.usage', 'not in', ('internal', 'inventory')),
+                        ('move_dest_ids', '=', False)
+            ]
+        else:
+            sub_dest_domain = ['!',(location_dest, 'child_of', warehouse_view_location_ids)]
+
         common_domain = [
+            ('is_inventory', '=', False),
+            ('date', '<=', date_stop),
             ('state', 'not in', ['cancel', 'draft']),
             (location + '.usage', '!=', 'inventory'),
             '|',
                 (location_dest + '.usage', 'not in', ('internal', 'inventory')),
                 '&',
-                (location_dest + '.usage', '=', 'internal'),
-                '!',
-                    (location_dest, 'child_of', self.mapped('warehouse_id.view_location_id').ids),
-            ('is_inventory', '=', False),
-            ('date', '<=', date_stop),
+                    (location_dest + '.usage', '=', 'internal'),
+                    *sub_dest_domain,
         ]
+
         groupby_delay = defaultdict(list)
         for schedule in self:
             rules = schedule.product_id._get_rules_from_location(schedule.warehouse_id.lot_stock_id)
