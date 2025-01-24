@@ -23,6 +23,7 @@
                             <field name="reminder_enabled" class="oe_inline mb-0" nolabel="1" widget="boolean_toggle" options="{'autosave': False}"/> Send a reminder
                             <span invisible="not reminder_enabled">every<field name="reminder" class="text-center mb-0 o_sign_reminder_field"/> days.</span>
                         </div>
+                        <field name="certificate_reference"/>
                     </group>
                     <group invisible="not context.get('sign_directly_without_mail', False)" string="Options">
                         <field name="subject" placeholder="Signature Request"/>
@@ -32,6 +33,7 @@
                             <field name="message_cc" placeholder="Optional Message..."/>
                             <field name="attachment_ids" widget="many2many_binary" class="o_sign_attachments"/>
                         </div>
+                        <field name="certificate_reference"/>
                     </group>
                 </group>
 

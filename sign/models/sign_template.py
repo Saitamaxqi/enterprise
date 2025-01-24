@@ -529,7 +529,7 @@ CRM, eCommerce, accounting, inventory, point of sale,\n project management, etc.
         signed_values = values_dict
         return signed_values, values_dict
 
-    def _render_template_with_items(self, password="", signed_values=None, values_dict=None):
+    def _render_template_with_items(self, password="", signed_values=None, values_dict=None, final_log_hash=None):
         self.ensure_one()
         items_by_page = self._get_sign_items_by_page()
         if not signed_values or not values_dict:
@@ -555,6 +555,12 @@ CRM, eCommerce, accounting, inventory, point of sale,\n project management, etc.
             # Absolute values are taken as it depends on the MediaBox template PDF metadata, they may be negative
             width = float(abs(page.mediaBox.getWidth()))
             height = float(abs(page.mediaBox.getHeight()))
+            
+            #add the final_log_hash as the certificate reference id on each page
+            if final_log_hash:
+                can.setFont(font, height * 0.01)
+                ref_text = f"Signature: {final_log_hash}"
+                can.drawCentredString(width/3, height-15, ref_text)
 
             # Set page orientation (either 0, 90, 180 or 270)
             rotation = page.get('/Rotate', 0)

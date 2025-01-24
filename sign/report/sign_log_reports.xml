@@ -12,7 +12,9 @@
                 <t t-set="view_logs" t-value="o.sudo().sign_log_ids.filtered(lambda l: l.action == 'open')"/>
                 <t t-set="change_logs" t-value="o.sudo().sign_log_ids - view_logs"/>
                 <t t-set="creation_log" t-value="o.sudo().sign_log_ids.filtered(lambda l: l.action == 'create')"/>
-                <t t-call="web.external_layout">
+                <t t-set="last_sign_log" t-value="o.sudo().sign_log_ids.filtered(lambda l: l.action == 'sign').sorted(key=lambda r: r.id, reverse=True)"/>
+
+                <t t-call="web.internal_layout">
                     <div class="oe_structure"></div>
                     <h2 class="mt16">
                         Certificate of Completion<br/>
@@ -33,7 +35,7 @@
                         </div>
                         <div class="col-6">
                             <div><b>Document ID:</b> <span t-out="o.id">1001</span></div>
-                            <div><b>Signature:</b> <small t-out="creation_log and creation_log[0].log_hash">ABCD1234</small></div>
+                            <div><b>Signature:</b> <small t-out="(last_sign_log and last_sign_log[0].log_hash) or (creation_log and creation_log[0].log_hash)">ABCD1234</small></div>
                         </div>
                     </div>
                     <br/>
@@ -193,7 +195,7 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">sign.sign_request_logs_user</field>
         <field name="report_file">sign.sign_request_logs_user</field>
-        <field name="binding_model_id" ref="model_sign_request"/>
+        <field name="binding_model_id" ref="model_sign_template"/>
         <field name="binding_type">report</field>
     </record>
 

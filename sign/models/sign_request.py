@@ -77,6 +77,7 @@ class SignRequest(models.Model):
     reminder_enabled = fields.Boolean(default=False)
     reminder = fields.Integer(string='Reminder', default=7)
     last_reminder = fields.Date(string='Last reminder', default=lambda self: fields.Date.today())
+    certificate_reference = fields.Boolean(string="Certificate Reference", default=False)
 
     @api.constrains('reminder_enabled', 'reminder')
     def _check_reminder(self):
@@ -536,6 +537,21 @@ class SignRequest(models.Model):
         user_date_format, user_time_format = lang.date_format, lang.time_format
         return datetime_val.strftime(f"{user_date_format} {user_time_format}")
 
+    def _get_final_signature_log_hash(self):
+        """
+        Fetch the log_hash of the final signature from the sign.log table.
+        """
+        self.ensure_one()
+        if not self.certificate_reference:
+            return False
+
+        final_log = self.env['sign.log'].search([
+            ('sign_request_id', '=', self.id),
+            ('action', 'in', ['sign', 'create']),
+        ], order='id DESC', limit=1)
+
+        return final_log.log_hash if final_log else False
+
     def _generate_completed_document(self, password="", preview=False):
         if not preview:
             self.ensure_one()
@@ -559,7 +575,8 @@ class SignRequest(models.Model):
                 }
                 for sign_item, values, frame_values, frame_has_hashes in values_dict
             }
-            output = self.template_id._render_template_with_items(password=password, signed_values=signed_values, values_dict=values_dict)
+            final_log_hash = self._get_final_signature_log_hash()
+            output = self.template_id._render_template_with_items(password=password, signed_values=signed_values, values_dict=values_dict, final_log_hash=final_log_hash)
             self.completed_document = base64.b64encode(output.getvalue())
             output.close()
 

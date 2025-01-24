@@ -97,6 +97,7 @@ class SignSendRequest(models.TransientModel):
     validity = fields.Date(string='Valid Until', default=lambda self: fields.Date.today() + relativedelta(months=6), help="Leave empty for requests without expiration.")
     reminder_enabled = fields.Boolean(default=False)
     reminder = fields.Integer(string='Reminder', default=7)
+    certificate_reference = fields.Boolean(string="Certificate Reference", default=False, help="If checked, the unique certificate reference will be added on the final signed document.")
 
     @api.onchange('validity')
     def _onchange_validity(self):
@@ -184,6 +185,7 @@ class SignSendRequest(models.TransientModel):
             'reminder': self.reminder,
             'reminder_enabled': self.reminder_enabled,
             'reference_doc': self.reference_doc,
+            'certificate_reference': self.certificate_reference,
         })
         sign_request.message_subscribe(partner_ids=cc_partner_ids)
         return sign_request
