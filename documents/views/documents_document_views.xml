@@ -358,6 +358,7 @@
                 <field name="url" optional="hide"/>
                 <field name="lock_uid" optional="hide"/>
                 <field name="company_id" optional="hide"/>
+                <field name="folder_id" optional="hide"/>
                 <field name="document_count" string="" widget="document_count"/>
                 <field name="available_embedded_actions_ids" optional="hide" widget="many2many_tags" groups="base.group_user"/>
                 <field name="create_date" optional="hide"/>
@@ -369,7 +370,6 @@
                 <field name="active" column_invisible="1"/>
                 <field name="user_permission" column_invisible="1"/>
                 <field name="attachment_id" column_invisible="1"/>
-                <field name="folder_id" column_invisible="1"/>
                 <field name="res_id" column_invisible="1"/>
                 <field name="res_model" column_invisible="1"/>
                 <field name="res_name" column_invisible="1"/>

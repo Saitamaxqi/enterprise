@@ -19,9 +19,9 @@
                     <t t-if="multipleSelection" t-set="itemsNumber" t-value="targetRecords.length"/>
                 </t>
                 <DocumentsDetailsPanel t-if="!chatterDisabled" record="chatterRecord" nbViewItems="getNbViewItems()"/>
-                <Chatter t-if="chatterRecord and documentService.userIsInternal"
-                    has_activities="!chatterRecord.res_model || chatterRecord.res_model === 'documents.document'"
-                    threadId="typeof chatterRecord.id === 'number' and chatterRecord.id"
+                <Chatter t-if="chatterRecord.data and documentService.userIsInternal"
+                    has_activities="!chatterRecord.data.res_model || chatterRecord.data.res_model === 'documents.document'"
+                    threadId="typeof chatterRecord.data.id === 'number' and chatterRecord.data.id"
                     threadModel="'documents.document'"
                     compactHeight="true"
                     isChatterAside="!isMobile"/>
