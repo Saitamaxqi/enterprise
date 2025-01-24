@@ -36,7 +36,7 @@ class HrPayslipRun(models.Model):
 
     def _compute_stp_count(self):
         for run in self:
-            run.l10n_au_stp_count = self.env['l10n_au.stp'].search_count([('payslip_batch_id', '=', run.id)])
+            run.l10n_au_stp_count = self.env['l10n_au.stp'].search_count([('payslip_batch_id', 'in', run.ids)])
 
     def action_register_payment(self):
         self.ensure_one()

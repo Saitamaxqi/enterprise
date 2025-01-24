@@ -85,7 +85,6 @@ class L10n_BeForm28150(models.Model):
     partner_job_position = fields.Char(
         string='Job position',
         tracking=True,
-        compute='_compute_partner_job_position', store=True, readonly=False,
     )
     partner_citizen_identification = fields.Char(
         string='Citizen identification number',

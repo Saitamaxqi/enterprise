@@ -114,7 +114,7 @@ class HrRuleParameter(models.Model):
                 '|',
                 ('condition_python', 'like', '"' + rule_parameter.code + '"'),
                 ('amount_python_compute', 'like', '"' + rule_parameter.code + '"'),
-            ])
+            ]) if rule_parameter.code else False
             rule_parameter.salary_rule_count = len(rule_parameter.salary_rule_ids)
 
     def action_open_salary_rules(self):

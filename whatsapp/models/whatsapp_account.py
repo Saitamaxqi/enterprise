@@ -71,7 +71,7 @@ class WhatsappAccount(models.Model):
 
     def _compute_templates_count(self):
         for tmpl in self:
-            tmpl.templates_count = self.env['whatsapp.template'].search_count([('wa_account_id', '=', tmpl.id)])
+            tmpl.templates_count = self.env['whatsapp.template'].search_count([('wa_account_id', 'in', tmpl.ids)])
 
     def button_sync_whatsapp_account_templates(self):
         """

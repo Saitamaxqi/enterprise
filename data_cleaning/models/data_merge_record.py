@@ -289,14 +289,21 @@ class Data_MergeRecord(models.Model):
 
     @api.depends('res_model_name', 'res_id')
     def _compute_fields(self):
-        groups = itertools.groupby(self, key=lambda r: r.res_model_name)
-        for _, group_records in groups:
-            group_records_ids = [r.id for r in group_records]
-            records = self.browse(group_records_ids)
-            existing_records = {r.id:r for r in records._original_records()}
+        groups = self.grouped('res_model_name')
+        for res_model_name, records in groups.items():
+            if not res_model_name:
+                records.is_deleted = False
+                records.name = False
+                records.company_id = False
+                records.record_create_date = False
+                records.record_create_uid = False
+                records.record_write_date = False
+                records.record_write_uid = False
+                continue
 
+            existing_records = {r.id:r for r in records._original_records()}
             for record in records:
-                original_record = existing_records.get(record.res_id) or self.env[record.res_model_name]
+                original_record = existing_records.get(record.res_id) or self.env[res_model_name]
                 name = original_record.display_name
                 record.is_deleted = record.res_id not in existing_records.keys()
                 record.name = name if name else '*Record Deleted*'

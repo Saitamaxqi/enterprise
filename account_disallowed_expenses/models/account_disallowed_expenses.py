@@ -3,6 +3,7 @@
 
 from odoo import fields, models, api, _
 from odoo.osv import expression
+from odoo.tools import SQL
 
 
 class AccountDisallowedExpensesCategory(models.Model):
@@ -33,19 +34,21 @@ class AccountDisallowedExpensesCategory(models.Model):
     def _compute_current_rate(self):
         rates = self._get_current_rates()
         for rec in self:
-            rec.current_rate = ('%g%%' % rates[rec.id]) if rates.get(rec.id) else None
+            rate = rates.get(rec._origin.id)
+            rec.current_rate = ('%g%%' % rate) if rate else None
 
     def _get_current_rates(self):
-        sql = """
-            SELECT
-                DISTINCT category_id,
-                first_value(rate) OVER (PARTITION BY category_id ORDER BY date_from DESC)
-            FROM account_disallowed_expenses_rate
-            WHERE date_from < CURRENT_DATE
-            AND category_id IN %(ids)s
-        """
-        self.env.cr.execute(sql, {'ids': tuple(self.ids)})
-        return dict(self.env.cr.fetchall())
+        if not self.ids:
+            return {}
+        return dict(self.env.execute_query(SQL(
+            """ SELECT
+                    DISTINCT category_id,
+                    first_value(rate) OVER (PARTITION BY category_id ORDER BY date_from DESC)
+                FROM account_disallowed_expenses_rate
+                WHERE date_from < CURRENT_DATE
+                AND category_id IN %s """,
+            tuple(self.ids),
+        )))
 
     @api.model
     def _search_display_name(self, operator, value):

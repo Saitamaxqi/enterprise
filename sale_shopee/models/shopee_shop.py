@@ -136,7 +136,7 @@ class ShopeeShop(models.Model):
 
     def _compute_order_count(self):
         for shop in self:
-            order_count = self.env['sale.order'].search_count([('shopee_shop_id', '=', shop.id)])
+            order_count = self.env['sale.order'].search_count([('shopee_shop_id', 'in', shop.ids)])
             shop.order_count = order_count
 
     @api.depends('shopee_item_ids')

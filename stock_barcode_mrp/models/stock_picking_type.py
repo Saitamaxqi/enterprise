@@ -10,7 +10,7 @@ class StockPickingType(models.Model):
         for pick_type in self:
             pick_type.count_mo_confirmed = self.env['mrp.production'].search_count([
                 ('state', 'in', ['confirmed', 'progress']),
-                ('picking_type_id', '=', pick_type.id),
+                ('picking_type_id', 'in', pick_type.ids),
                 ('reservation_state', '=', 'assigned'),
             ])
 

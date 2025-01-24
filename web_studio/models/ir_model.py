@@ -87,7 +87,8 @@ class IrModel(models.Model):
 
     def _compute_abstract(self):
         for record in self:
-            record.abstract = self.env[record.model]._abstract
+            model = self.env.get(record.model)
+            record.abstract = model is not None and model._abstract
 
     def _search_abstract(self, operator, value):
         abstract_models = [

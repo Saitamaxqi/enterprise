@@ -32,19 +32,19 @@ class MrpEcoType(models.Model):
         MrpEco = self.env['mrp.eco']
         for eco_type in self:
             eco_type.nb_ecos = MrpEco.search_count([
-                ('type_id', '=', eco_type.id), ('state', '!=', 'done')
+                ('type_id', 'in', eco_type.ids), ('state', '!=', 'done')
             ])
             eco_type.nb_validation = MrpEco.search_count([
-                ('type_id', '=', eco_type.id),
+                ('type_id', 'in', eco_type.ids),
                 ('stage_id.allow_apply_change', '=', True),
                 ('state', '=', 'progress')
             ])
             eco_type.nb_approvals = MrpEco.search_count([
-                ('type_id', '=', eco_type.id),
+                ('type_id', 'in', eco_type.ids),
                 ('approval_ids.status', '=', 'none')
             ])
             eco_type.nb_approvals_my = MrpEco.search_count([
-                ('type_id', '=', eco_type.id),
+                ('type_id', 'in', eco_type.ids),
                 ('approval_ids.status', '=', 'none'),
                 ('approval_ids.required_user_ids', '=', self.env.user.id)
             ])

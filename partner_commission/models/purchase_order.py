@@ -23,7 +23,9 @@ class PurchaseOrder(models.Model):
 
     def _compute_source_invoice_count(self):
         for purchase_order in self:
-            purchase_order.invoice_commission_count = self.env['account.move'].search_count([('commission_po_line_id.order_id', '=', purchase_order.id)])
+            purchase_order.invoice_commission_count = self.env['account.move'].search_count(
+                [('commission_po_line_id.order_id', 'in', purchase_order.ids)]
+            )
 
     def action_view_customer_invoices(self):
         self.ensure_one()
