@@ -74,6 +74,8 @@ class CalendarEvent(models.Model):
                 'appointment_booking_gantt_show_all_resources': True,
                 'active_model': 'appointment.type',
                 'default_partner_ids': [],
+                'default_duration': 2,
+                'default_resource_total_capacity_reserved': 2,
                 "search_default_appointment_type_id": self._context.get("appointment_type_id"),
                 "no_breadcrumbs": True,
                 'hide_no_content_helper': True,
@@ -105,3 +107,9 @@ class CalendarEvent(models.Model):
     def unlink(self):
         self._send_table_notifications(self, "REMOVED")
         return super().unlink()
+
+    def set_attended(self):
+        self.appointment_status = 'attended'
+
+    def set_cancelled(self):
+        self.appointment_status = 'cancelled'

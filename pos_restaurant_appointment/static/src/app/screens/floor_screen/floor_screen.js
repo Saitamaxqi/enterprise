@@ -83,7 +83,12 @@ patch(FloorScreen.prototype, {
         const possible_appointments = appointments.filter((a) => {
             const ts_now = dt_now - (a.duration / 2) * 3600000;
             const dt_ts = deserializeDateTime(a.start).ts;
-            return dt_ts > ts_now && dt_ts < dt_tomorrow_ts && a.appointment_status !== "no_show";
+            return (
+                dt_ts > ts_now &&
+                dt_ts < dt_tomorrow_ts &&
+                a.appointment_status !== "no_show" &&
+                a.appointment_status !== "attended"
+            );
         });
         if (possible_appointments.length === 0) {
             return false;
