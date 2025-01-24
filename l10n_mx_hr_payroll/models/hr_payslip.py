@@ -16,10 +16,10 @@ class HrPayslip(models.Model):
     l10n_mx_days_of_year = fields.Integer('MX: Days of the Year', compute='_compute_days_of_year')
     l10n_mx_integration_factor = fields.Float('MX: Integration Factor', compute='_compute_integration_factor')
 
-    @api.depends('version_id')
+    @api.depends('version_id.wage', 'version_id.schedule_pay')
     def _compute_daily_salary(self):
         for payslip in self:
-            payslip.l10n_mx_daily_salary = payslip.version_id._get_contract_wage() / payslip._rule_parameter('l10n_mx_days_per_month')
+            payslip.l10n_mx_daily_salary = payslip.version_id.wage / payslip._rule_parameter('l10n_mx_schedule_table')[payslip.version_id.schedule_pay]
 
     @api.depends('date_to')
     def _compute_days_of_year(self):
@@ -51,25 +51,6 @@ class HrPayslip(models.Model):
                 'data/salary_rules/hr_salary_rule_christmas_bonus_data.xml',
                 'data/salary_rules/hr_salary_rule_regular_pay_data.xml',
             ])]
-
-    def _get_paid_amount(self):
-        self.ensure_one()
-        mx_payslip = self.struct_id.country_id.code == "MX"
-        if not mx_payslip:
-            return super()._get_paid_amount()
-
-        if self.struct_id.code == "MX_REGULAR":
-            coefficients = self._rule_parameter('l10n_mx_schedule_table')
-            days_in_period = coefficients[self.version_id.schedule_pay or 'monthly']
-
-            start_date = max(self.date_from, self.version_id.contract_date_start)
-            end_date = min(self.date_to, self.version_id.contract_date_end) if self.version_id.contract_date_end else self.date_to
-            in_contract_days = (end_date - start_date).days + 1
-            actual_period_days = (self.date_to - self.date_from).days + 1
-            salary_factor = in_contract_days / actual_period_days
-
-            return self.l10n_mx_daily_salary * days_in_period * salary_factor
-        return super()._get_paid_amount()
 
     def _get_schedule_timedelta(self):
         if self.country_code == 'MX':

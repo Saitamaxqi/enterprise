@@ -411,8 +411,8 @@ result = version.l10n_mx_savings_fund
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[version.schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
-result = version.wage * payslip._rule_parameter('l10n_mx_exemption_saving_fund_salary') * month_to_period_ratio
+result = version.wage
+result_rate = payslip._rule_parameter('l10n_mx_exemption_saving_fund_salary') * 100
         </field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
