@@ -341,6 +341,46 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         url = self._get_batch_client_action_url(batch_delivery.id)
         self.start_tour(url, 'test_barcode_batch_delivery_2_move_entire_package', login='admin', timeout=180)
 
+    def test_barcode_batch_operation_buttons_count(self):
+        """ Checks the count number of regular pickings and batch pickings
+        buttons is correctly computed in the Baroce app.
+        """
+        self.clean_access_rights()
+        # Create a company for this test purpose and assign it to the user.
+        company = self.env['res.company'].create({'name': 'Company Test'})
+        self.env.user.write({
+            'company_ids': [Command.link(company.id)],
+            'company_id': company.id,
+        })
+
+        warehouse = self.env['stock.warehouse'].search([('company_id', '=', company.id)])
+        warehouse.code = "TEST"
+        picking_type_in = warehouse.in_type_id
+        # Disable auto-batch for the receipts, so a batch will be created only for deliveries.
+        picking_type_in.auto_batch = False
+        picking_type_out = warehouse.out_type_id
+        src_location = picking_type_out.default_location_src_id
+        self.env['stock.quant']._update_available_quantity(self.product3, src_location, 99)
+
+        # Create 2 receipts and 3 deliveries.
+        pickings = self.env['stock.picking']
+        for (i, ptype) in enumerate(([picking_type_in] * 2) + ([picking_type_out] * 3)):
+            pickings |= self.env['stock.picking'].create({
+                'location_id': ptype.default_location_src_id.id,
+                'location_dest_id': ptype.default_location_dest_id.id,
+                'picking_type_id': ptype.id,
+                'move_ids_without_package': [Command.create({
+                    'name': f'test_move_{i}',
+                    'location_id': ptype.default_location_src_id.id,
+                    'location_dest_id': ptype.default_location_dest_id.id,
+                    'product_id': self.product3.id,
+                    'product_uom': self.uom_unit.id,
+                    'product_uom_qty': 1,
+                })],
+            })
+        pickings.action_confirm()
+        self.start_tour('odoo/barcode/', 'test_barcode_batch_operation_buttons_count', login='admin')
+
     def test_barcode_batch_scan_lots(self):
         """ Checks while scanning lots for a tracked product, the currently selected line must be
         completed before changing the line, even if the scanned lot is planned for another picking

@@ -642,6 +642,60 @@ registry.category("web_tour.tours").add("test_barcode_batch_delivery_2_move_enti
     ],
 });
 
+registry.category("web_tour.tours").add("test_barcode_batch_operation_buttons_count", {
+    steps: () => [
+        { trigger: "button.o_button_operations", run: "click" },
+        { trigger: "article:contains(RECEIPTS) [name=pickings_count]:contains(2)" },
+        { trigger: "article:contains(DELIVERY ORDERS) [name=pickings_count]:contains(3)" },
+        // Open receipts.
+        { trigger: "article:first-child", run: "click" },
+        {
+            trigger: ".o_batch_picking",
+            run: () => {
+                const batchCount = document.querySelector(".o_batch_picking .badge");
+                helper.assert(batchCount.innerText, "0");
+            },
+        },
+        { trigger: ".o_batch_picking a", run: "click" },
+        {
+            trigger: ".o_regular_picking .badge",
+            run: () => {
+                const batchCount = document.querySelector(".o_regular_picking .badge");
+                helper.assert(batchCount.innerText, "2");
+            },
+        },
+        // Go back and open deliveries.
+        { trigger: ".o_back_button", run: "click" },
+        { trigger: "article:contains('DELIVERY ORDERS')", run: "click" },
+        {
+            trigger: ".o_batch_picking",
+            run: () => {
+                const batchCount = document.querySelector(".o_batch_picking .badge");
+                helper.assert(batchCount.innerText, "1");
+            },
+        },
+        { trigger: ".o_batch_picking a", run: "click" },
+        {
+            trigger: ".o_regular_picking .badge",
+            run: () => {
+                const batchCount = document.querySelector(".o_regular_picking .badge");
+                helper.assert(batchCount.innerText, "3");
+            },
+        },
+        // Take the opportunity to also test to filter pickings by scanning one.
+        { trigger: ".o_regular_picking", run: "scan TEST/OUT/00001" },
+        {
+            trigger: ".o_regular_picking .active",
+            run: () => {
+                const deliveries = document.querySelectorAll("article");
+                helper.assert(deliveries.length, 1);
+                const deliveryTitle = deliveries[0].querySelector("div > button > span").innerText;
+                helper.assert(deliveryTitle, "TEST/OUT/00001");
+            },
+        },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_barcode_batch_scan_lots", {
     steps: () => [
         // RECEIPT PART:

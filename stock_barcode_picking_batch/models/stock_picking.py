@@ -54,6 +54,8 @@ class StockPickingType(models.Model):
         if res_model == 'stock.picking':
             return self.count_picking_ready
 
-        return self.env['stock.picking.batch'].search_count(
-            [('user_id', 'in', [self.env.user.id, False]), ('state', '=', 'in_progress')],
-        )
+        return self.env['stock.picking.batch'].search_count([
+            ('picking_type_id', '=', self.id),
+            ('user_id', 'in', [self.env.user.id, False]),
+            ('state', '=', 'in_progress'),
+        ])
