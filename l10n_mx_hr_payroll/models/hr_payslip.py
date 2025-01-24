@@ -36,3 +36,4 @@ class HrPayslip(models.Model):
                 'yearly': 365,
             }
             return self._get_contract_wage() / coefficients[self.contract_id.l10n_mx_schedule_pay or 'monthly'] * self.contract_id.l10n_mx_christmas_bonus
+        return super()._get_paid_amount()
