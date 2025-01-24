@@ -46,11 +46,11 @@ class AccountBatchPayment(models.Model):
         return self.with_context(xml_export=False).validate_batch()
 
     def validate_batch(self):
-        if not self.payment_method_code == 'sepa_ct' or not self.account_online_linked:
+        if not self.payment_method_code == 'sepa_ct' or not self.account_online_linked or self._context.get('xml_export'):
             return super().validate_batch()
 
         action = self._check_batch_validity()
-        if (action and action.get('res_model') == 'account.batch.error.wizard') or self._context.get('xml_export'):
+        if action and action.get('res_model') == 'account.batch.error.wizard':
             return action
 
         account_online_link = self.journal_id.account_online_link_id
