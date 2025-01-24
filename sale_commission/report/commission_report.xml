@@ -65,7 +65,8 @@
                 <filter string="Active Plans" name="active_plans"
                         domain="[('plan_id.date_from', '&lt;', context_today().strftime('%Y-%m-%d')), ('plan_id.date_to', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
                 <separator/>
-                <filter string="By Quarter" name="quarter" context="{'group_quarter':'1'}"/>
+                <filter string="By Quarter" name="quarter" context="{'group_quarter':'1'}"
+                    domain="[('company_id', '!=', False)]"/>
                 <separator/>
                 <filter string="Period" name="filter_date_to" date="date_to"/>
                 <separator/>

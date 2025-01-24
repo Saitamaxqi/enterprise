@@ -12,7 +12,7 @@
                 <field name="target_id"/>
                 <field name="related_res_id" string="Source"/>
                 <field name="currency_id" optional="hide"/>
-                <field name="achieved"/>
+                <field name="achieved" sum="Total Achieved"/>
             </list>
         </field>
     </record>

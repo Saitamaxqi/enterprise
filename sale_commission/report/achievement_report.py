@@ -138,13 +138,13 @@ JOIN sale_commission_plan_target era
     @api.model
     def _select_invoices(self):
         return f"""
-          MAX(rules.user_id),
-          MAX(am.team_id),
+          MAX(rules.user_id) AS user_id,
+          MAX(am.team_id) AS team_id,
           rules.plan_id,
           SUM({self._get_invoice_rates_product()}) AS achieved,
           {self.env.company.currency_id.id} AS currency_id,
           MAX(am.date) AS date,
-          MAX(rules.company_id),
+          MAX(rules.company_id) AS company_id,
           am.id AS related_res_id
         """
 
@@ -221,7 +221,7 @@ achievement_commission_lines AS (
     JOIN sale_commission_plan scp ON scp.company_id = sca.company_id
     JOIN sale_commission_plan_achievement scpa ON scpa.plan_id = scp.id
     JOIN sale_commission_plan_user scpu ON scpu.plan_id = scp.id
-    JOIN currency_rate cr ON cr.currency_id=scp.currency_id
+    JOIN currency_rate cr ON cr.company_id=scp.company_id
     WHERE scp.active
       AND scp.state = 'approved'
       AND sca.type = scpa.type
@@ -372,10 +372,10 @@ sale_rules AS (
         return [self._achievement_lines(users, teams), self._sale_lines(users, teams), self._invoices_lines(users, teams)]
 
     def _commission_lines_query(self, users=None, teams=None):
-        # create temporary table to convert currencies
         ctes = self._commission_lines_cte(users, teams)
         queries = [x[0] for x in ctes]
         table_names = [x[1] for x in ctes]
+        # create temporary table to convert currencies
         res =  f"""
 {self._get_currency_rate()},
 {','.join(queries)},

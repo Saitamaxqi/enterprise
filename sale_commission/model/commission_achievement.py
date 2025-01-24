@@ -8,20 +8,26 @@ class SaleCommissionAchievement(models.Model):
     _description = 'Manual Commission Achievement'
     _order = 'id desc'
 
-    user_id = fields.Many2one('res.users', "Sales Person", default=lambda self: self.env.user, required=True)
-    team_id = fields.Many2one('crm.team', related='user_id.sale_team_id', depends=['user_id'], store=True, required=True, readonly=False)
+    # ARJ TODO remove master
+    user_id = fields.Many2one('res.users', "Sales Person", default=lambda self: self.env.user)
+    # ARJ TODO remove master
+    team_id = fields.Many2one('crm.team', related='user_id.sale_team_id', depends=['user_id'], store=True, readonly=False)
     company_id = fields.Many2one('res.company', string='Company', required=True, readonly=False,
         default=lambda self: self.env.company)
 
+    # ARJ TODO remove master
     type = fields.Selection([
         ('amount_invoiced', "Amount Invoiced"),
         ('amount_sold', "Amount Sold"),
         ('qty_invoiced', "Quantity Invoiced"),
         ('qty_sold', "Quantity Sold"),
-    ], required=True)
+    ])
+
     date = fields.Date("Date", default=fields.Date.today, required=True)
 
-    amount = fields.Monetary("Amount", required=True, currency_field='currency_id')
+    # ARJ TODO remove master
+    amount = fields.Monetary("Amount", currency_field='currency_id')
+
     currency_id = fields.Many2one('res.currency', default=lambda self: self.env.company.currency_id)
     currency_rate = fields.Float(compute='_compute_currency_rate', store=True)
 

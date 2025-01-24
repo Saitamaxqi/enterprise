@@ -33,6 +33,12 @@ class SaleCommissionPlanUser(models.Model):
             if user.date_to and user.plan_id.date_to and user.date_to > user.plan_id.date_to:
                 raise exceptions.UserError(_("User period cannot end after the plan."))
 
+    def _compute_display_name(self):
+        for record in self:
+            record.display_name = _("%(user)s - %(plan)s",
+                                    plan=record.plan_id.name,
+                                    user=record.user_id.name)
+
     @api.depends('user_id', 'plan_id.date_from', 'plan_id.date_to', 'date_from', 'date_to')
     def _compute_other_plans(self):
         plan_ids = self.search([

@@ -70,7 +70,7 @@
                                 </group>
                             </group>
                         </page>
-                        <page string="Targets" invisible="type == 'achieve'">
+                        <page string="Targets" invisible="type != 'target'">
                             <field name="target_ids" readonly="state != 'draft'">
                                 <list create="0" delete="0" editable="bottom">
                                     <field name="name" force_save="1"/>
@@ -96,7 +96,7 @@
                         </page>
                         <page string="Periods" invisible="type == 'target'">
                             <field name="target_ids" readonly="state != 'draft'">
-                                <list create="0" delete="0">
+                                <list create="0" delete="0" editable="bottom">
                                     <field name="name" force_save="1"/>
                                     <field name="date_from" optional="hide" force_save="1"/>
                                     <field name="date_to" optional="hide" force_save="1"/>

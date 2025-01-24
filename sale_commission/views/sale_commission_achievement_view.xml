@@ -9,8 +9,7 @@
                 <field name="team_id" optional="hide"/>
                 <field name="company_id" optional="hide"/>
                 <field name="date"/>
-                <field name="type"/>
-                <field name="amount"/>
+                <field name="amount" optional="hide" sum="Total Amount"/>
                 <field name="currency_id" optional="hide"/>
                 <field name="note"/>
             </list>

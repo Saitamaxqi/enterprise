@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields
+from odoo import models, fields, _
 
 
 class SaleCommissionPlanAchievement(models.Model):
@@ -21,3 +21,13 @@ class SaleCommissionPlanAchievement(models.Model):
     product_categ_id = fields.Many2one('product.category', "Category")
 
     rate = fields.Float("Rate", default=lambda self: 1 if self.plan_id.type == 'target' else 0.05, required=True)
+
+    def _compute_display_name(self):
+        for record in self:
+            product_name = record.product_id.name or ""
+            product_categ_id_name = record.product_categ_id.name or ""
+            record.display_name = _("%(plan)s %(type)s %(product)s %(categ)s",
+                                    plan=record.plan_id.name,
+                                    type=record.type ,
+                                    product=product_name,
+                                    categ=product_categ_id_name)

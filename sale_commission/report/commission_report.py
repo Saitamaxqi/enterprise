@@ -15,6 +15,7 @@ class SaleCommissionReport(models.Model):
     target_amount = fields.Monetary("Target Amount", readonly=True, currency_field='currency_id')
     plan_id = fields.Many2one('sale.commission.plan', "Commission Plan", readonly=True)
     user_id = fields.Many2one('res.users', "Sales Person", readonly=True)
+    # TODO master: remove
     team_id = fields.Many2one('crm.team', "Sales Team", readonly=True)
     achieved = fields.Monetary("Achieved", readonly=True, currency_field='currency_id')
     achieved_rate = fields.Float("Achieved Rate", readonly=True)
@@ -33,10 +34,12 @@ class SaleCommissionReport(models.Model):
         The date is converted to a string to allow updating the date value in view customizations.
         """
         date_to_domain = domain and filter_domain_leaf(domain, lambda field: 'date_to' in field)
-        date_list = date_to_domain and [datetime.strptime(d[2], '%Y-%m-%d') for d in date_to_domain if len(d) == 3]
-        if date_list:
-            conversion_date = max(date_list)
-            self = self.with_context(conversion_date=conversion_date.strftime('%Y-%m-%d'))
+        date_to_list = date_to_domain and [datetime.strptime(d[2], '%Y-%m-%d') for d in date_to_domain if len(d) == 3]
+        context = self.env.context.copy()
+        if date_to_list:
+            date_to = max(date_to_list)
+            context.update(conversion_date=date_to.strftime('%Y-%m-%d'))
+        self = self.with_context(context)
         return super(SaleCommissionReport, self)._search(domain, offset, limit, order)
 
     def action_achievement_detail(self):
@@ -47,7 +50,11 @@ class SaleCommissionReport(models.Model):
             "name": _('Commission Detail: %(name)s', name=self.target_id.name),
             "views": [[self.env.ref('sale_commission.sale_achievement_report_view_list').id, "list"]],
             "context": {'commission_user_ids': self.user_id.ids, 'commission_team_ids': self.team_id.ids},
-            "domain": [('plan_id', '=', self.plan_id.id), ('user_id', '=', self.user_id.id), ('team_id', '=', self.team_id.id)], # FP TODO: add date filter based on context
+            "domain": [('plan_id', '=', self.plan_id.id),
+                       ('user_id', '=', self.user_id.id),
+                       ('date', '>=', self.target_id.date_from),
+                       ('date', '<=', self.target_id.date_to),
+                    ], # FP TODO: add date filter based on context
         }
 
     def write(self, values):
