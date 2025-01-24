@@ -104,7 +104,7 @@ class AccountMove(models.Model):
                     'message': _("A KRA reason code is required when creating credit notes. "),
                     'blocking': True,
                 }
-            if product_lines.filtered(lambda line: not line.product_id and line.name):
+            if product_lines.filtered(lambda line: not line.product_id):
                 messages['no_product_warning'] = {
                     'message': _("Some lines are missing a product where one must be set. "),
                     'blocking': True,
