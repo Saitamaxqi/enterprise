@@ -1900,7 +1900,7 @@ class DocumentsDocument(models.Model):
                                    'is_favorited', 'is_company_root_folder', 'owner_id', 'shortcut_document_id',
                                    'user_permission', 'active']
             if not self.env.user.share:
-                search_panel_fields += ['alias_name', 'alias_domain_id', 'alias_tag_ids']
+                search_panel_fields += ['alias_name', 'alias_domain_id', 'alias_tag_ids', 'partner_id']
             domain = [('type', '=', 'folder')]
 
             if unique_folder_id := self.env.context.get('documents_unique_folder_id'):

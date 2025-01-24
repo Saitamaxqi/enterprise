@@ -87,13 +87,13 @@
 
             <!-- Tags Section -->
             <div t-if="record.data.type !== 'folder'" class="o_field_widget o_field_many2many_tags d-flex mb-3 w-100">
-                <Many2ManyTagsField
+                <DocumentsDetailsMany2ManyTagsField
                     name="'tag_ids'"
                     readonly="userPermissionViewOnly"
                     record="record"
-                    canCreate="false"
-                    canQuickCreate="false"
-                    canCreateEdit="false"
+                    canCreate="true"
+                    canQuickCreate="true"
+                    canCreateEdit="true"
                     placeholder.translate="Add a tag..."
                     colorField="'color'"
                 />
@@ -145,13 +145,13 @@
                 class="o_field_widget o_field_many2many_tags d-flex mb-3 w-100"
             >
                 <span class="fw-bold me-2">Alias Tags</span>
-                <Many2ManyTagsField
+                <DocumentsDetailsMany2ManyTagsField
                     name="'alias_tag_ids'"
                     readonly="userPermissionViewOnly"
                     record="record"
-                    canCreate="false"
-                    canQuickCreate="false"
-                    canCreateEdit="false"
+                    canCreate="true"
+                    canQuickCreate="true"
+                    canCreateEdit="true"
                     placeholder.translate="Add an alias tag..."
                     colorField="'color'"
                 />

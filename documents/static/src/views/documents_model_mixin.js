@@ -105,12 +105,24 @@ export const DocumentsModelMixin = (component) =>
 
 export const DocumentsRecordMixin = (component) => class extends component {
 
-    async update() {
-        const originalFolderId = this.data.folder_id[0];
-        const ret = await super.update(...arguments);
-        if (this.data.folder_id && this.data.folder_id[0] !== originalFolderId) {
-            this.model.root._removeRecords(this.model.root.selection.map((rec) => rec.id));
+    async update(changes, options = {}) {
+        const modelMultiEdit = this.model.multiEdit;
+        let movedRecordsIds = this.model.root.selection.map((rec) => rec.id);
+        if (this.resId === this.model.documentService.previewedDocument?.record.resId) {
+            // As previewed documents are not selected, force `save=true` to save any changes as the record is updated
+            options.save = true;
+            // Prevent multiEditing/moving the selection as it is not what we intend to modify when previewing.
+            this.model.multiEdit = false;
+            movedRecordsIds = [this.model.root.records.find((rec)=> rec.data.id === this.resId).id];
         }
+        const originalFolderId = this.data.folder_id[0];
+        const ret = await super.update(changes, options);
+        if (this.data.folder_id && this.data.folder_id[0] !== originalFolderId) {
+            this.model.root._removeRecords(movedRecordsIds);
+            // Same as moving when not in preview
+            this.model.env.documentsView.bus.trigger("documents-close-preview");
+        }
+        this.model.multiEdit = modelMultiEdit;
         return ret;
     }
 
