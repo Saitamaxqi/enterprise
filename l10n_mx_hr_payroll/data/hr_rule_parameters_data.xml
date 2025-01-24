@@ -218,6 +218,11 @@
         <field name="rule_parameter_id" ref="rule_parameter_daily_minimum_wage"/>
         <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
     </record>
+    <record id="rule_parameter_daily_minimum_wage_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">278.80</field>
+        <field name="rule_parameter_id" ref="rule_parameter_daily_minimum_wage"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+    </record>
 
     <!-- EXEMPTIONS -->
     <record id="rule_parameter_exemption_saving_fund_salary" model="hr.rule.parameter">
