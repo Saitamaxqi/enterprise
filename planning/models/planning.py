@@ -2293,8 +2293,8 @@ class PlanningSlot(models.Model):
             return sum_intervals(work_intervals)
         if num_days == 1:
             return resource.calendar_id.hours_per_day
-        # final result is rounded to the hour (e.g. 177.5 hours -> 178 hours)
-        return round(resource.calendar_id.full_time_required_hours * (num_days / 7))
+        # final result is rounded to the minute (e.g. 8h15 * 5 days schedule will display '41h15')
+        return round(resource.calendar_id.full_time_required_hours * (num_days / 7), 2)
 
     def _gantt_progress_bar_resource_id(self, res_ids, start, stop):
         start_naive, stop_naive = start.replace(tzinfo=None), stop.replace(tzinfo=None)
