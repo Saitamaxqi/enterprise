@@ -110,6 +110,16 @@
             <xpath expr="//list" position="attributes">
                 <attribute name="default_order">date</attribute>
             </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="deferred_start_date" optional="show"/>
+                <field name="deferred_end_date" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='credit']" position="after">
+                <field name="balance" optional="show"/>
+            </xpath>
             <xpath expr="//field[@name='tax_ids']" position="attributes">
                 <attribute name="optional">hide</attribute>
             </xpath>
@@ -119,6 +129,9 @@
             <xpath expr="//field[@name='analytic_distribution']" position="attributes">
                 <attribute name="optional">hide</attribute>
             </xpath>
+            <xpath expr="//field[@name='matching_number']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
             <xpath expr="//field[@name='discount_date']" position="attributes">
                 <attribute name="column_invisible">1</attribute>
             </xpath>
@@ -126,6 +139,12 @@
                 <attribute name="column_invisible">1</attribute>
             </xpath>
             <xpath expr="//field[@name='date_maturity']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_residual']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_residual_currency']" position="attributes">
                 <attribute name="column_invisible">1</attribute>
             </xpath>
         </field>
