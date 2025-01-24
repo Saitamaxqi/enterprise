@@ -2,8 +2,7 @@
 <odoo>
     <data>
         <record id="payment_method_riba" model="account.payment.method">
-            <field name="name">Bank Receipt (IT)</field>
-            <field name="name@it">Ricevuta Bancaria (IT)</field>
+            <field name="name">Ri.Ba.</field>
             <field name="code">riba</field>
             <field name="payment_type">inbound</field>
         </record>
