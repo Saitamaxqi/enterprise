@@ -260,8 +260,8 @@ class HrContractSalaryOffer(models.Model):
             'target': 'current',
         }
 
-    def _message_add_suggested_recipients(self):
-        email_to_lst, partners = super()._message_add_suggested_recipients()
+    def _message_add_suggested_recipients(self, primary_email=False):
+        email_to_lst, partners = super()._message_add_suggested_recipients(primary_email)
         if self.applicant_id:
             email_to_lst.append(self.applicant_id.email_from)
         elif self.employee_id:

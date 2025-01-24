@@ -5,7 +5,7 @@
             <Chatter
                 threadModel="'knowledge.article'"
                 threadId="this.props.record.resId"
-                webRecord="this.props.record"
+                record="this.props.record"
                 hasParentReloadOnAttachmentsChanged="true"
                 hasParentReloadOnFollowersUpdate="true"
                 hasParentReloadOnMessagePosted="true"

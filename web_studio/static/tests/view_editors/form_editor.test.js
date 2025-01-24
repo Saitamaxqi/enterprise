@@ -1008,6 +1008,7 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
         "/web_studio/chatter_allowed",
         "/web_studio/get_studio_view_arch",
         "web_read",
+        "/mail/thread/recipients/fields",
     ]);
     expect(".o_web_studio_add_chatter").toHaveCount(1);
 

@@ -216,6 +216,8 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                         "default_subject": "employee channel",
                                         "email_from": '"Mitchell Admin" <test.admin@test.example.com>',
                                         "id": message.id,
+                                        "incoming_email_cc": False,
+                                        "incoming_email_to": False,
                                         "is_discussion": True,
                                         "is_note": False,
                                         "link_preview_ids": [],
