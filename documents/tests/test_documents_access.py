@@ -1076,6 +1076,57 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         with self.assertRaises(ValidationError):
             self.folder_b.with_user(self.portal_user).copy()
 
+    @mute_logger('odoo.addons.base.models.ir_rule')
+    def test_deleting_in_non_edit_folder(self):
+        """Check required rights on document and containing folder to archive/unlink.
+
+        Archiving a document requires being the owner of the document or having
+        edit permission on both the document and its containing folder.
+        """
+        # Manager creates a folder in their drive and gives editor right to user
+        folder = self.env['documents.document'].with_user(self.document_manager).create({
+            'folder_id': False,
+            'name': 'Folder with User',
+            'type': 'folder',
+            'access_ids': [Command.create({'partner_id': self.doc_user.partner_id.id, 'role': 'edit'})],
+        })
+        # User creates two documents in that folder
+        user_doc_1, user_doc_2 = user_docs = self.env['documents.document'].with_user(self.doc_user).create([{
+            'folder_id': folder.id,
+            'name': f'User doc #{idx}',
+            'type': 'binary',
+        } for idx in range(2)])
+        self.assertEqual(user_docs.owner_id, self.doc_user)
+        # Manager removes user's role on the folder
+        folder.with_user(self.document_manager).action_update_access_rights(
+            partners={self.doc_user.partner_id: (False, None)},
+        )
+        self.assertEqual(folder.with_user(self.doc_user).user_permission, 'none')
+        user_doc_1.with_user(self.doc_user).action_archive()
+        self.assertFalse(user_doc_1.active, 'Owner should be able to archive the document')
+        user_doc_1.with_user(self.doc_user).action_unarchive()
+        self.assertTrue(user_doc_1.active, 'Owner should be able to restore the document')
+        user_doc_1.with_user(self.doc_user).unlink()
+        self.assertFalse(user_doc_1.exists(), 'Owner should be able to unlink the document')
+
+        user_doc_2.with_user(self.document_manager).owner_id = self.document_manager
+        user_doc_2.with_user(self.document_manager).action_update_access_rights(
+            partners={self.doc_user.partner_id: ('edit', None)},
+        )
+        self.assertEqual(user_doc_2.with_user(self.doc_user).user_permission, 'edit')
+        with self.assertRaises(UserError, msg="Editor without edit permission on folder shouldn't be able to archive"):
+            user_doc_2.with_user(self.doc_user).action_archive()
+        with self.assertRaises(UserError, msg="Editor without edit permission on folder shouldn't be able to delete"):
+            user_doc_2.with_user(self.doc_user).unlink()
+
+        user_doc_2.folder_id.sudo().access_internal = 'none'
+        with self.assertRaises(UserError, msg="Editor with no permission on folder shouldn't be able to delete"):
+            user_doc_2.with_user(self.doc_user).unlink()
+
+        user_doc_2.folder_id.sudo().access_internal = 'view'
+        with self.assertRaises(UserError, msg="Editor with view permission on folder shouldn't be able to delete"):
+            user_doc_2.with_user(self.doc_user).unlink()
+
     def test_updating_owner(self):
         self.assertEqual(self.folder_a_a.owner_id, self.doc_user)
         self.folder_a.action_update_access_rights(access_internal='edit')
