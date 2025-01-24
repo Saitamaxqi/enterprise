@@ -15,6 +15,7 @@
                 <field name="is_lot_tested_fractionally" invisible="1"/>
                 <field name="show_lot_text" invisible="1"/>
                 <field name="product_tracking" invisible="1"/>
+                <field name="product_id" invisible="1"/>
 
                 <div class="o_row d-flex justify-content-between">
                     <span>
@@ -83,6 +84,7 @@
                 <field name="show_lot_text" invisible="1"/>
                 <field name="product_tracking" invisible="1"/>
                 <field name="potential_failure_location_ids" invisible="1"/>
+                <field name="product_id" invisible="1"/>
                 <group>
                     <group>
                         <label for="qty_failed" string="Quantity Failed" invisible="measure_on != 'move_line'"/>
