@@ -123,13 +123,15 @@
                         </div>
                         <field name="marketing_activity_ids" widget="hierarchy_kanban" mode="kanban" nolabel="1"
                             class="o_ma_hierarchy_container o_ma_campaign_hierarchy"
-                            add-label="Add new activity"
                             context="{
                                 'default_campaign_id': id,
                                 'default_model_id': model_id,
                                 'default_utm_campaign_id': utm_campaign_id,
                             }">
                             <kanban limit="1000" default_order="interval_standardized" can_open="false">
+                                <control>
+                                    <create class="o-kanban-button-new" string="Add new activity"/>
+                                </control>
                                 <field name="interval_standardized" />
                                 <field name="model_name" />
                                 <field name="trigger_type" />
