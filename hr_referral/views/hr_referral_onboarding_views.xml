@@ -7,12 +7,14 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <field name="image" widget='image' class="oe_avatar bg-black" nolabel="1"/>
                     <group>
                         <group name="main_details">
                             <field name="text"/>
                             <field name="sequence" groups="base.group_no_one"/>
                             <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" placeholder="Visible to all"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image" class="o_onboarding_form_img bg-dark" nolabel="1" colspan="2"/>
                         </group>
                     </group>
                 </sheet>
@@ -27,11 +29,14 @@
             <list>
                 <header>
                     <button name="action_relaunch_onboarding" type="object"
-                            string="Force Onboarding" display="always"
-                            confirm="This will make the onboarding visible to all employees who have already seen it. Do you want to continue?"/>
+                            string="Restart Onboarding" display="always"
+                            confirm="This will make the onboarding process visible to all users who have previously completed it. Do you want to proceed?"
+                            confirm-label="Confirm" cancel-label="Discard"/>
                 </header>
                 <field name="sequence" widget="handle"/>
                 <field name="text"/>
+                <field name="image" optional="show" widget="image" class="o_onboarding_list_img bg-dark"/>
+                <field name="company_id" optional="hide" groups="base.group_multi_company"/>
             </list>
         </field>
     </record>

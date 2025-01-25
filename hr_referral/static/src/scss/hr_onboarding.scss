@@ -92,3 +92,22 @@
         }
     }
 }
+
+.o_onboarding_form_img {
+    display: flex;
+    img {
+        max-height: 12rem;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+}
+.o_onboarding_list_img {
+    display: flex;
+    img {
+        max-height: 6rem;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+}
