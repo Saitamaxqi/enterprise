@@ -54,7 +54,7 @@ class TestDashboardUi(HttpCase):
                 'attachment_id': attachment.id,
                 'sign_item_ids': [(6, 0, [])],
             })
-        self.start_tour("/", "payroll_dashboard_ui_tour", login='dashboarder', timeout=300)
+        self.start_tour("/web", "payroll_dashboard_ui_tour", login='dashboarder', timeout=300)
 
 @tagged('-at_install', 'post_install', 'payroll_dashboard')
 class TestDashboard(TransactionCase):
