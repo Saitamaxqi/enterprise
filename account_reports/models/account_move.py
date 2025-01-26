@@ -166,9 +166,11 @@ class AccountMove(models.Model):
 
             # Log a note on depending closings, redirecting to the main one
             for closing_move in depending_closings:
-                closing_move.message_post(
-                    body=Markup("%s") % _("The attachments of the tax report can be found on the <a href='#' data-oe-model='account.move' data-oe-id='%s'>closing entry</a> of the representative company.", self.id),
-                )
+                closing_move.message_post(body=_(
+                    "The attachments of the tax report can be found on the %(link_start)sclosing entry%(link_end)s of the representative company.",
+                    link_start=Markup('<a href="#" data-oe-model="account.move" data-oe-id="%s">') % self.id,
+                    link_end=Markup("</a>"),
+                ))
 
             # End activity
             activity = self.company_id._get_tax_closing_reminder_activity(report.id, self.date, self.fiscal_position_id.id)
