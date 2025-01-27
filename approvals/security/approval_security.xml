@@ -40,6 +40,22 @@
                                         ('request_owner_id.parent_id.user_id', '=', user.id)]</field>
         </record>
 
+        <record id="approval_request_product_line_approver_rule" model="ir.rule">
+            <field name="name">Approval Product Line: request approver rule</field>
+            <field name="model_id" ref="model_approval_product_line"/>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="domain_force">['|', '|',
+                                        ('approval_request_id.request_owner_id', '=', user.id),
+                                        ('approval_request_id.approver_ids.user_id','=', user.id),
+                                        '&amp;',
+                                        ('approval_request_id.category_id.manager_approval', 'in', ['approver', 'required']),
+                                        ('approval_request_id.request_owner_id.parent_id.user_id', '=', user.id)]</field>
+        </record>
+
         <record id="approval_request_unlink_request_owner_rule" model="ir.rule">
             <field name="name">Approval Request: unlink request owner rule</field>
             <field name="model_id" ref="model_approval_request"/>
@@ -116,6 +132,28 @@
             <field name="perm_create" eval="0"/>
             <field name="perm_unlink" eval="1"/>
             <field name="domain_force">[('request_status','=','cancel')]</field>
+        </record>
+
+        <record id="approval_product_line_user" model="ir.rule">
+            <field name="name">Approval Product Line: user</field>
+            <field name="model_id" ref="model_approval_product_line"/>
+            <field name="groups" eval="[(4, ref('group_approval_user'))]"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="approval_product_line_user_unlink" model="ir.rule">
+            <field name="name">Approval Product Line: user unlink</field>
+            <field name="model_id" ref="model_approval_product_line"/>
+            <field name="groups" eval="[(4, ref('group_approval_user'))]"/>
+            <field name="perm_read" eval="0"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="domain_force">[('approval_request_id.request_status','=','cancel')]</field>
         </record>
 
         <record id="approval_approver_manager" model="ir.rule">
