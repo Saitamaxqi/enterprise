@@ -10,7 +10,6 @@ export class AccountDuplicateTransactionsListRenderer extends ListRenderer {
 
     setup() {
         super.setup();
-        this.firstIdsInGroup = this.env.model.root.data.first_ids_in_group;
         this.duplicateCheckService = useCheckDuplicateService();
 
         onMounted(() => {
@@ -30,7 +29,8 @@ export class AccountDuplicateTransactionsListRenderer extends ListRenderer {
 
     getRowClass(record) {
         let classes = super.getRowClass(record);
-        if (this.firstIdsInGroup.includes(record.data.id)) {
+        const firstIdsInGroup = this.env.model.root.data.first_ids_in_group;
+        if (firstIdsInGroup instanceof Array && firstIdsInGroup.includes(record.data.id)) {
             classes += " account_duplicate_transactions_lines_list_x2many_group_line";
         }
         return classes;
