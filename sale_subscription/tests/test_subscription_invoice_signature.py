@@ -246,7 +246,7 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
         subscription2.prepare_renewal_order()
         first_renewal_sub1 = subscription1.subscription_child_ids[0]
         first_renewal_sub1.action_confirm()
-        first_renewal_sub1.with_context(disable_cancel_warning=True).action_cancel()
+        first_renewal_sub1.action_cancel()
         subscription1.subscription_state = '3_progress'
         subscription1.prepare_renewal_order()
         second_renewal_sub1 = subscription1.subscription_child_ids.filtered(lambda so: so.state == 'draft')

@@ -393,10 +393,7 @@ class TestSalePlanning(TestCommonSalePlanning):
         # Hours to plan should be 80 as 40 hours of shift is planned
         self.assertEqual(so.planning_hours_to_plan, 80)
 
-        # Create a sale order cancel wizard, and cancel the sale order
-        return_form = Form(self.env['sale.order.cancel'].with_context({'default_order_id': so.id}))
-        return_wizard = return_form.save()
-        return_wizard.action_cancel()
+        so.action_cancel()
 
         with freeze_time('2021-08-02'):
             slot.auto_plan_ids(view_domain=[('start_datetime', '=', '2021-08-01 00:00:00'), ('end_datetime', '=', '2021-08-07 23:59:59')])
