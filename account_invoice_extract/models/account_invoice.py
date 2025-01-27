@@ -289,10 +289,6 @@ class AccountMove(models.Model):
                 partner = self._create_supplier_from_vat(vat)
                 if partner and self.is_purchase_document():
                     self.partner_id = partner
-                    bank_vals = (self.extract_prefill_data or {}).get('bank_ids', [{}])[0]
-                    if bank_vals:
-                        bank_vals['partner_id'] = partner.id
-                        self.partner_bank_id = self.with_context(clean_context(self.env.context)).env['res.partner.bank'].create(bank_vals)
                 return [partner.id, self.partner_bank_id.id] if partner else False
 
         if word.field == "supplier":
@@ -351,10 +347,9 @@ class AccountMove(models.Model):
             return None
 
         try:
-            response, error = self.env['iap.autocomplete.api']._request_partner_autocomplete(
-                action='enrich',
-                params={'vat': vat_number},
-            )
+            response, error = self.env['iap.autocomplete.api']._request_partner_autocomplete('enrich_by_vat', {
+                'vat': vat_number,
+            })
             if error:
                 raise Exception(error)
             if 'credit_error' in response and response['credit_error']:
@@ -366,20 +361,17 @@ class AccountMove(models.Model):
             _logger.error('Check VAT error: %s' % str(exception))
             return None
 
-        if response and response.get('company_data'):
-            country_id = self.env['res.country'].search([('code', '=', response.get('company_data').get('country_code',''))])
-            resp_values = response.get('company_data')
+        if response and response.get('data'):
+            country_id = self.env['res.country'].search([('code', '=', response.get('data').get('country_code',''))])
+            resp_values = response.get('data')
 
-            values = {field: resp_values[field] for field in ('name', 'vat', 'street', 'city', 'zip', 'phone', 'email', 'partner_gid') if field in resp_values}
+            values = {field: resp_values[field] for field in ('name', 'vat', 'street', 'city', 'zip', 'phone', 'email') if field in resp_values}
             values['is_company'] = True
-
-            if 'bank_ids' in resp_values:
-                values['bank_ids'] = [(0, 0, vals) for vals in resp_values['bank_ids']]
 
             if country_id:
                 values['country_id'] = country_id.id
                 state_id = self.env['res.country.state'].search([
-                    ('name', '=', response.get('company_data').get('state_name','')),
+                    ('name', '=', response.get('data').get('state_name','')),
                     ('country_id', '=', country_id.id),
                 ], limit = 1)
                 if state_id:
@@ -393,7 +385,7 @@ class AccountMove(models.Model):
             return False
 
         for field, val in (self.extract_prefill_data or {}).items():
-            if field not in values and field != 'bank_ids':
+            if field not in values:
                 values[field] = val
         return self.env["res.partner"].with_context(clean_context(self.env.context)).create(values)
 
@@ -677,7 +669,6 @@ class AccountMove(models.Model):
         SWIFT_code_ocr = json.loads(self._get_ocr_selected_value(ocr_results, 'SWIFT_code', "{}"))
         self.extract_prefill_data = {
             'country_id': self.env['res.country'].search([('code', '=', country_code)], limit=1).id,
-            'bank_ids': [self._get_bank_account_vals(iban_ocr, SWIFT_code_ocr)] if iban_ocr else None,
             'email': get_first_value_without('email', (self.company_id.email,)),
             'website': get_first_value_without('website', (self.company_id.website,)),
             'phone': get_first_value_without('phone', (self.company_id.phone,)),

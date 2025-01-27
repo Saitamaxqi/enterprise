@@ -116,11 +116,10 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCase)
 
     def get_partner_autocomplete_response(self):
         return {
-            'company_data': {
+            'data': {
                 'name': 'Partner',
                 'country_code': 'BE',
                 'vat': 'BE0477472701',
-                'partner_gid': False,
                 'city': 'Namur',
                 'bank_ids': [],
                 'zip': '2110',
