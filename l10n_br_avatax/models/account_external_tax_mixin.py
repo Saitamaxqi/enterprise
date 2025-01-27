@@ -6,6 +6,7 @@ from pprint import pformat
 
 from odoo import models, fields, _, api
 from odoo.addons.iap.tools.iap_tools import iap_jsonrpc
+from odoo.addons.l10n_br_avatax.models.product_template import USE_TYPE_SELECTION
 from odoo.exceptions import UserError, ValidationError, RedirectWarning
 from odoo.tools import format_list, partition
 from odoo.tools.float_utils import float_round, json_float_round
@@ -51,6 +52,11 @@ class AccountExternalTaxMixin(models.AbstractModel):
         copy=False,
         string="Goods Operation Type",
         help="Brazil: this is the operation type related to the goods transaction. This will define the CFOP used on the NF-e."
+    )
+    l10n_br_use_type = fields.Selection(
+        USE_TYPE_SELECTION,
+        string="Purpose of Use",
+        help="Brazil: this will override the purpose of use for all products sold here."
     )
     l10n_br_is_avatax = fields.Boolean(
         compute="_compute_l10n_br_is_avatax",
@@ -317,7 +323,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
         """
         line = {
             'lineCode': line_id,
-            'useType': product.l10n_br_use_type,
+            'useType': self.l10n_br_use_type or product.l10n_br_use_type,
             'otherCostAmount': 0,
             'freightAmount': 0,
             'insuranceAmount': 0,

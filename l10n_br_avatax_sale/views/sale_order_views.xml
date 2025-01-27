@@ -22,6 +22,10 @@
                            invisible="country_code != 'BR' or not l10n_br_is_avatax"
                            readonly="locked"
                     />
+                    <field name="l10n_br_use_type"
+                           invisible="country_code != 'BR' or not l10n_br_is_avatax"
+                           readonly="locked"
+                    />
                 </group>
             </field>
         </record>

@@ -2,6 +2,15 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
 
+USE_TYPE_SELECTION = [
+    ('use or consumption', 'Use or consumption'),
+    ('resale', 'Resale'),
+    ('agricultural production', 'Agricultural production'),
+    ('production', 'Production'),
+    ('fixed assets', 'Fixed assets'),
+    ('notApplicable', 'Not applicable'),
+]
+
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
@@ -68,14 +77,7 @@ class ProductTemplate(models.Model):
         ('MATERIAL FOR USAGE AND CONSUMPTION', 'Material for usage and consumption'),
         ('OTHER INPUTS', 'Other inputs'),
     ], string='SPED Fiscal Product Type', help='Brazil: Fiscal product type according to SPED list table')
-    l10n_br_use_type = fields.Selection([
-        ('use or consumption', 'Use or consumption'),
-        ('resale', 'Resale'),
-        ('agricultural production', 'Agricultural production'),
-        ('production', 'Production'),
-        ('fixed assets', 'Fixed assets'),
-        ('notApplicable', 'Not applicable'),
-    ], string='Purpose of Use', help='Brazil: indicate what is the usage purpose for this product')
+    l10n_br_use_type = fields.Selection(USE_TYPE_SELECTION, string='Purpose of Use', help='Brazil: indicate what is the usage purpose for this product')
     l10n_br_transport_cost_type = fields.Selection([
         ('freight', 'Freight'),
         ('insurance', 'Insurance'),
