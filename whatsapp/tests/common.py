@@ -101,21 +101,18 @@ class MockOutgoingWhatsApp(common.BaseCase):
             self._new_wa_msg += res.sudo()
             return res
 
-        try:
-            with patch.object(ResPartner, 'create', autospec=True, wraps=ResPartner, side_effect=_res_partner_create), \
-                 patch.object(WhatsAppApi, '_get_all_template', side_effect=_get_all_template), \
-                 patch.object(WhatsAppApi, '_get_template_data', side_effect=_get_template_data), \
-                 patch.object(WhatsAppApi, '_get_whatsapp_document', side_effect=_get_whatsapp_document), \
-                 patch.object(WhatsAppApi, '_upload_demo_document', side_effect=_upload_demo_document), \
-                 patch.object(WhatsAppApi, '_upload_whatsapp_document', side_effect=_upload_whatsapp_document), \
-                 patch.object(WhatsAppApi, '_send_whatsapp', side_effect=_send_whatsapp), \
-                 patch.object(WhatsAppApi, '_submit_template_new', side_effect=_submit_template_new), \
-                 patch.object(WhatsAppApi, '_get_header_data_from_handle', side_effect=_get_header_data_from_handle), \
-                 patch.object(WhatsAppApi, '_get_phone_number', side_effect=_get_phone_number), \
-                 patch.object(WhatsappMessage, 'create', autospec=True, wraps=WhatsappMessage, side_effect=_wa_message_create):
-                yield
-        finally:
-            pass
+        with patch.object(ResPartner, 'create', autospec=True, wraps=ResPartner, side_effect=_res_partner_create), \
+             patch.object(WhatsAppApi, '_get_all_template', side_effect=_get_all_template), \
+             patch.object(WhatsAppApi, '_get_template_data', side_effect=_get_template_data), \
+             patch.object(WhatsAppApi, '_get_whatsapp_document', side_effect=_get_whatsapp_document), \
+             patch.object(WhatsAppApi, '_upload_demo_document', side_effect=_upload_demo_document), \
+             patch.object(WhatsAppApi, '_upload_whatsapp_document', side_effect=_upload_whatsapp_document), \
+             patch.object(WhatsAppApi, '_send_whatsapp', side_effect=_send_whatsapp), \
+             patch.object(WhatsAppApi, '_submit_template_new', side_effect=_submit_template_new), \
+             patch.object(WhatsAppApi, '_get_header_data_from_handle', side_effect=_get_header_data_from_handle), \
+             patch.object(WhatsAppApi, '_get_phone_number', side_effect=_get_phone_number), \
+             patch.object(WhatsappMessage, 'create', autospec=True, wraps=WhatsappMessage, side_effect=_wa_message_create):
+            yield
 
     def _init_wa_mock(self):
         self._new_partners = self.env['res.partner'].sudo()
