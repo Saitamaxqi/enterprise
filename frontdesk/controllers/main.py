@@ -7,6 +7,7 @@ from odoo.tools import consteq
 
 class Frontdesk(http.Controller):
     def _get_additional_info(self, frontdesk, lang, is_mobile=False):
+        request.session.logout(keep_db=True)
         return request.render('frontdesk.frontdesk', {
             'frontdesk': frontdesk,
             'is_mobile': is_mobile,

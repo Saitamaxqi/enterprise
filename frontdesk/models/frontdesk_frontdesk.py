@@ -108,7 +108,7 @@ class FrontdeskFrontdesk(models.Model):
         return {
             'type': 'ir.actions.act_url',
             'url': self.kiosk_url,
-            'target': 'new',
+            'target': 'self',
         }
 
     def action_open_visitors(self):
