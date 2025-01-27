@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="recruitment_stage_report_view_list" model="ir.ui.view">
+        <field name="model">hr.recruitment.stage.report</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="stage_id"/>
+                <field name="days_in_stage"/>
+                <field name="date_begin"/>
+                <field name="date_end"/>
+                <field name="state" optional="hide"/>
+                <field name="job_id" optional="hide"/>
+                <field name="company_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
     <record id="recruitment_stage_report_view_graph" model="ir.ui.view">
         <field name="model">hr.recruitment.stage.report</field>
         <field name="arch" type="xml">
