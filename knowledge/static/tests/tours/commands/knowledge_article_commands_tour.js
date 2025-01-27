@@ -536,7 +536,7 @@ const embedViewFiltersSteps = [{
     trigger: '.o_searchview_input_container input',
     run: "edit 1",
 }, {
-    trigger: 'li[id="1"]',
+    trigger: '.o_searchview_autocomplete [role="menuitem"]:contains(Title)',
     run: "click",
 }, { // Check that the filter is effective
     trigger: 'tbody:not(tr.o_data_row:nth-child(2))',
