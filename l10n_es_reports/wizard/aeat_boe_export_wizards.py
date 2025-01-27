@@ -2,10 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
-
-from odoo.exceptions import ValidationError, UserError
-
-import json
+from odoo.exceptions import RedirectWarning, UserError, ValidationError
 
 import re
 
@@ -210,7 +207,7 @@ class L10n_Es_ReportsAeatBoeMod390ExportWizard(models.TransientModel):
 
     MODELO_NUMBER = 390
 
-    physical_person_name = fields.Char(string="Natural Person - Name", required=True)
+    physical_person_name = fields.Char(string="Natural Person - Name")
     monthly_return = fields.Boolean(string="Monthly return record in some period of the fiscal year")
 
     # The group number is not related to the NIF and must be completed if the company is in a group of entities.
@@ -227,13 +224,13 @@ class L10n_Es_ReportsAeatBoeMod390ExportWizard(models.TransientModel):
     previous_decl_number = fields.Char(string="Previous declaration no.")
 
     principal_activity = fields.Char(string="Principal activity", required=True)
-    principal_iae_epigrafe = fields.Char(string="Principal activity - Epígrafe", required=True)
+    principal_iae_epigrafe = fields.Char(string="Principal activity - Epígrafe")
     principal_code_activity = fields.Char(string="Principal activity - Activity Code", required=True)
 
-    judicial_person_name = fields.Char(string="Representative - Name and Surname", required=True)
-    judicial_person_nif = fields.Char(string="Representative - NIF", required=True)
-    judicial_person_procuration_date = fields.Date(string="Representative - Power of Attorney Date", required=True)
-    judicial_person_notary = fields.Char(string="Representative - Notary", required=True)
+    judicial_person_name = fields.Char(string="Representative - Name and Surname")
+    judicial_person_nif = fields.Char(string="Representative - NIF")
+    judicial_person_procuration_date = fields.Date(string="Representative - Power of Attorney Date")
+    judicial_person_notary = fields.Char(string="Representative - Notary")
 
     def _compute_is_in_tax_unit(self):
         options = self.env.context.get('l10n_es_reports_report_options', {})

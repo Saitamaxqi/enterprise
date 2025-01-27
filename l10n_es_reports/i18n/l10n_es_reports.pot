@@ -1081,6 +1081,22 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_es_reports/models/aeat_tax_reports.py:0
 msgid ""
+"Please update the \"Spain - Accounting (PGCE 2008)\" (l10n_es) module to be able to export BOE"
+msgstr ""
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/aeat_tax_reports.py:0
+#, python-format
+msgid ""
+"Go to Apps"
+msgstr ""
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/aeat_tax_reports.py:0
+#, python-format
+msgid ""
 "Wrong report dates for BOE generation : please select a range of one month "
 "or a trimester."
 msgstr ""

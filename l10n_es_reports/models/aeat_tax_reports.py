@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import RedirectWarning, UserError
 import odoo.release
 from odoo.tools import SQL
 from odoo.tools.float_utils import float_split_str, float_compare
@@ -207,8 +207,7 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
         :param align: 'left' or 'right', depending on the side of the result string where string must placed (no effect if no length is given)
         :param fill_char: the character that will be used to bring the result string to a size of length (no effect if length is not specified)
         """
-        string = string.upper()
-
+        string = string and string.upper() or ''
         rslt = b''
         for char in unicodedata.normalize('NFKC', string):  # We use a normalized version of the string here so that we are sure accentuated charcaters are each time encoded with only one character (and not a regular character followed by a combining one)
             if not char in ('Ñ', 'Ç'):
@@ -1663,7 +1662,7 @@ class L10n_EsMod390TaxReportHandler(models.AbstractModel):
         # Only one persona juridica is mandatory, the others are left blank
         rslt += self._l10n_es_boe_format_string(boe_wizard.judicial_person_name, length=80)
         rslt += self._l10n_es_boe_format_string(boe_wizard.judicial_person_nif, length=9)
-        rslt += self._l10n_es_boe_format_string(datetime.strftime(boe_wizard.judicial_person_procuration_date, "%d%m%Y"), length=8)
+        rslt += self._l10n_es_boe_format_string(datetime.strftime(boe_wizard.judicial_person_procuration_date, "%d%m%Y") if boe_wizard.judicial_person_procuration_date else '', length=8)
         rslt += self._l10n_es_boe_format_string(boe_wizard.judicial_person_notary, length=12)
         rslt += self._l10n_es_boe_format_string(((' ' * (80 + 9)) + '00000000' + (' ' * 12)) * 2)
 
@@ -1677,56 +1676,14 @@ class L10n_EsMod390TaxReportHandler(models.AbstractModel):
         # Operations carried out under the general regime : accrued VAT
         # Header
         rslt = self._l10n_es_boe_format_string('<T39002000> ')
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['01'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['02'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(3, 7):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['0%s' % casilla], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['500'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['501'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(502, 506):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['643'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['644'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(645, 649):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['07'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['08'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['09'], length=17, decimal_places=2, in_currency=True)
-        for casilla in range(10, 15):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['21'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['22'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(23, 27):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['545'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['546'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['547'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['548'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['551'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['552'], length=17, decimal_places=2, in_currency=True)
-        for casilla in range(27, 31):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['649'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['650'], length=17, decimal_places=2, in_currency=True)
-        for casilla in range(31, 37):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        for casilla in range(599, 603):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        for casilla in range(41, 48):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
+        casillas = [700, 701, 667, 668, 1, 2, 702, 703, 669, 670, 3, 4, 5, 6, 704, 705, 671, 672,
+        500, 501, 706, 707, 673, 674, 502, 503, 504, 505, 708, 709, 675, 675, 643, 644, 710, 711,
+        677, 678, 645, 646, 647, 648, 712, 713, 679, 680, 7, 8, 714, 715, 681, 682, 9, 10, 11, 12,
+        13, 14, 716, 717, 683, 684, 23, 24, 25, 26, 720, 721, 687, 688, 545, 546, 722, 723, 689,
+        690, 547, 548, 551, 552, 27, 28, 29, 30, 649, 650, 31, 32, 33, 34]
+        for casilla in casillas:
+            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[f'{casilla:02d}'],
+                                                    length=17, decimal_places=2, in_currency=True)
         # Blank space for AEAT
         rslt += self._l10n_es_boe_format_string(' ' * 150)
         # Footer
@@ -1740,69 +1697,15 @@ class L10n_EsMod390TaxReportHandler(models.AbstractModel):
         rslt = self._l10n_es_boe_format_string('<T39003000> ')
 
         # Casillas
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['190'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['191'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(603, 607):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['48'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['49'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['506'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['507'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(607, 611):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['512'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['513'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['196'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['197'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(611, 615):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['50'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['51'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['514'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['515'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(615, 619):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['520'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['521'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['202'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['203'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(619, 623):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['52'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['53'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['208'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['209'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(623, 627):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['54'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['55'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['214'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['215'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(627, 631):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['56'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['57'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['220'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['221'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(631, 635):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['58'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['59'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['587'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['588'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string('0' * 17 * 2)
-        for casilla in range(635, 639):
-            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['597'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['598'], length=17, decimal_places=2, in_currency=True)
+        casillas = [695, 696, 190, 191, 724, 725, 697, 698, 603, 604, 605, 606, 48, 49, 745, 746,
+        506, 507, 726, 727, 747, 748, 607, 608, 609, 610, 512, 513, 749, 750, 196, 197, 728, 729,
+        751, 752, 611, 612, 613, 614, 50, 51, 753, 754, 514, 515, 730, 731, 755, 756, 615, 616, 617,
+        618, 520, 521, 757, 758, 202, 203, 732, 733, 759, 760, 619, 620, 621, 622, 52, 53, 761, 762,
+        208, 209, 734, 735, 763, 764, 623, 624, 625, 626, 54, 55, 765, 766, 214, 215, 736, 737, 767,
+        768, 627, 628, 629, 630, 56, 57]
+        for casilla in casillas:
+            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)],
+                                                    length=17, decimal_places=2, in_currency=True)
 
         # Blank space for AEAT
         rslt += self._l10n_es_boe_format_string(' ' * 150)
@@ -1814,21 +1717,13 @@ class L10n_EsMod390TaxReportHandler(models.AbstractModel):
     def _generate_mod_390_page4(self, options, casilla_lines_map):
         #Header
         rslt = self._l10n_es_boe_format_string('<T39004000> ')
-
         # Casillas
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['60'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['61'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['660'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['661'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['639'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['62'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['651'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['652'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['63'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['522'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['64'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['65'], length=17, decimal_places=2, in_currency=True)
-
+        casillas = [769, 770, 220, 221, 738, 739, 771, 772, 631, 632, 633, 634, 58, 59, 773, 774,
+        587,588, 740, 741, 775, 776, 635, 636, 637, 638, 597, 598, 60, 61, 660, 661, 639, 62, 651,
+        652, 63, 522, 64, 65]
+        for casilla in casillas:
+            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)],
+                                                    length=17, decimal_places=2, in_currency=True)
         # Blank space for AEAT
         rslt += self._l10n_es_boe_format_string(' ' * 150)
         # Footer
