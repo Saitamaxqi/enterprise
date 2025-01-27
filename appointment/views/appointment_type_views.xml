@@ -51,10 +51,10 @@
                         </a>
                     </t>
                     <div t-name="card" class="o_appointment_kanban_card">
-                        <div class="o_appointment_kanban_card_ungrouped row">
+                        <div class="o_appointment_kanban_card_ungrouped row px-2">
                             <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                             <div class="col-lg-3 col-sm-5 col-11 py-0 my-auto text-large text-truncate">
-                                <span class="fw-bold ms-2 o_appointment_kanban_ungrouped_name" t-att-title="record.name.value"><field name="name"/></span><br/>
+                                <span class="fw-bold o_appointment_kanban_ungrouped_name" t-att-title="record.name.value"><field name="name"/></span><br/>
                             </div>
                             <div class="col-lg-5 col-sm-7 col-12 py-0 mt-3 mb-2 my-lg-auto d-flex">
                                 <div class="align-self-center me-sm-0 me-3 text-large w-50 w-lg-50 text-nowrap">

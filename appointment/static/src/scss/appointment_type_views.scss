@@ -78,16 +78,23 @@
                 border-top: 0 !important;
             }
         }
-        .o_m2m_avatar, .o_m2m_avatar_empty {
+        .o_m2m_avatar {
             width: 32px;
             height: 32px;
         }
         .o_m2m_avatar_empty {
+            width: 20px;
+            height: 20px;
+            margin-top: auto;
+            margin-bottom: auto;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: var(--Tag-font-size, #{$font-size-sm});
             background-color: lightgray;
+        }
+        .o_field_many2many_avatar_user .o_m2m_avatar_empty {
+            margin-top: 0;
         }
     }
     // Ungrouped specific
@@ -96,8 +103,16 @@
             margin-right: 12rem;
         }
         min-height: 4rem;
-        .ribbon {
-            --Ribbon-wrapper-height: 100%;
+        .o_widget_web_ribbon {
+            position: absolute;
+            width: var(--Ribbon-wrapper-width, var(--Ribbon-wrapper-width-default));
+            right: var(--Ribbon-gap-right, var(--Ribbon-gap-right-default));
+            top: 0;
+            bottom: 0;
+            .ribbon {
+                --Ribbon-wrapper-height: 100%;
+                margin-top: 0;
+            }
         }
         .text-large {
             line-height: 1.1em;
