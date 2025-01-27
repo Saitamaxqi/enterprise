@@ -17,8 +17,8 @@ class SaleOrderLine(models.Model):
             values['warehouse_id'] = self.env.user._get_default_warehouse_id()
         return values
 
-    def _action_launch_stock_rule(self, previous_product_uom_qty=False):
-        result = super()._action_launch_stock_rule(previous_product_uom_qty)
+    def _action_launch_stock_rule(self, **kwargs):
+        result = super()._action_launch_stock_rule(**kwargs)
         ml_to_create = []
         for sol_to_treat in self:
             if not (sol_to_treat.task_id.is_fsm and sol_to_treat.product_id.type == 'consu'):

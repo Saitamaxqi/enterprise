@@ -82,7 +82,7 @@ class SaleOrderLine(models.Model):
         stock_subscription_line.with_context(clean_context(self._context))._action_launch_stock_rule()
         return super(SaleOrderLine, self - stock_subscription_line)._reset_subscription_quantity_post_invoice()
 
-    def _action_launch_stock_rule(self, previous_product_uom_qty=False):
+    def _action_launch_stock_rule(self, **kwargs):
         """ Only launch stock rule if we know they won't be empty
         """
         stock_line_ids = []
@@ -99,7 +99,7 @@ class SaleOrderLine(models.Model):
             elif line._is_postpaid_line() and line.last_invoiced_date:
                 # postpaid already invoiced
                 stock_line_ids.append(line.id)
-        return super(SaleOrderLine, self.env['sale.order.line'].browse(stock_line_ids))._action_launch_stock_rule(previous_product_uom_qty)
+        return super(SaleOrderLine, self.env['sale.order.line'].browse(stock_line_ids))._action_launch_stock_rule(**kwargs)
 
     @api.model
     def _get_incoming_outgoing_moves_filter(self):

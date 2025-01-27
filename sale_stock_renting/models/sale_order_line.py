@@ -356,7 +356,7 @@ class SaleOrderLine(models.Model):
                     self.product_id.display_name, origin, self.order_id.company_id, return_values)]
         return super()._create_procurements(product_qty, procurement_uom, origin, values)
 
-    def _action_launch_stock_rule(self, previous_product_uom_qty=False):
+    def _action_launch_stock_rule(self, **kwargs):
         """ If the rental picking setting is deactivated:
         Disable stock moves for rental order lines.
         Stock moves for rental orders are created on pickup/return.
@@ -366,7 +366,7 @@ class SaleOrderLine(models.Model):
         If the rental picking setting is activated:
         Process all lines at the same time. """
         if not self or self._are_rental_pickings_enabled():
-            super()._action_launch_stock_rule(previous_product_uom_qty)
+            super()._action_launch_stock_rule(**kwargs)
             returns = self.move_ids.filtered(lambda m: m.location_id == self.company_id.rental_loc_id)
             picks = self.move_ids.filtered(lambda m: m.location_id == self.warehouse_id.lot_stock_id)
             moves_by_order_line = defaultdict(lambda: {'picks': self.env['stock.move'], 'returns': self.env['stock.move']})
@@ -388,7 +388,7 @@ class SaleOrderLine(models.Model):
             returns._recompute_state()
         else:
             other_lines = self.filtered(lambda sol: not sol.is_rental)
-            super(SaleOrderLine, other_lines)._action_launch_stock_rule(previous_product_uom_qty)
+            super(SaleOrderLine, other_lines)._action_launch_stock_rule(**kwargs)
 
     def _get_outgoing_incoming_moves(self, strict=True):
         outgoing_moves, incoming_moves = super()._get_outgoing_incoming_moves(strict)
