@@ -276,3 +276,15 @@ table.table-borderless {
         }
     }
 }
+svg {
+    pointer-events: none;
+}
+
+main:has(> .footer), t[t-name^='web.external_layout_']:has(> .footer) {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    & > .footer {
+        margin-top: auto;
+    }
+}

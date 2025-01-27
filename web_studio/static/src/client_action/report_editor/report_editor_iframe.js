@@ -90,9 +90,9 @@ export class ReportEditorIframe extends Component {
         const footerStyle = footer?.style;
         if (footerStyle) {
             const { width } = iframeContent.querySelector(".page")?.getBoundingClientRect() || {};
-            footer.setAttribute("oe-origin-style", footer.getAttribute("style") || "");
-            footerStyle.setProperty("position", "fixed");
-            footerStyle.setProperty("bottom", "0");
+            if (!footer.hasAttribute("oe-origin-style")) {
+                footer.setAttribute("oe-origin-style", footer.getAttribute("style") || "");
+            }
             if (width) {
                 footerStyle.setProperty("width", `${width}px`);
             }

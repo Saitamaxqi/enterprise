@@ -10,7 +10,7 @@
 
 <t t-name="web_studio.ReportEditor.Iframe">
     <div class="h-100 w-100 overflow-auto position-relative" t-on-scroll="onContainerScroll">
-        <div class="o-web-studio-report-container shadow my-0 mx-auto my-lg-5" t-att-style="paperFormatStyle">
+        <div class="o-web-studio-report-container shadow my-0 mx-auto my-lg-5 d-flex" t-att-style="paperFormatStyle">
             <iframe t-if="!reportEditorModel.fullErrorDisplay" class="w-100" t-ref="iframeRef" t-att-srcdoc="iframeSource" t-key="iframeKey" t-att-style="iframeStyle" type="text/plain" t-on-load="onIframeLoaded"/>
             <ErrorDisplay t-if="reportEditorModel.fullErrorDisplay" error="reportEditorModel.fullErrorDisplay" />
         </div>
