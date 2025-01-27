@@ -75,7 +75,7 @@ class WhatsappMessage(models.Model):
     wa_template_id = fields.Many2one(comodel_name='whatsapp.template')
     msg_uid = fields.Char(string="WhatsApp Message ID")
     wa_account_id = fields.Many2one(comodel_name='whatsapp.account', string="WhatsApp Business Account")
-    parent_id = fields.Many2one('whatsapp.message', 'Response To', ondelete="set null")
+    parent_id = fields.Many2one('whatsapp.message', 'Response To', index='btree_not_null', ondelete="set null")
 
     mail_message_id = fields.Many2one(comodel_name='mail.message', index=True)
     body = fields.Html(related='mail_message_id.body', string="Body", related_sudo=False)

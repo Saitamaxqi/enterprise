@@ -6,7 +6,7 @@ class MarketingTrace(models.Model):
 
     whatsapp_message_id = fields.Many2one(
         'whatsapp.message', string='Marketing Template',
-        readonly=False)
+        index='btree_not_null', readonly=False)
 
     @api.depends('whatsapp_message_id')
     def _compute_links_click_datetime(self):
