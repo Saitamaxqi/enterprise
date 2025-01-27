@@ -8,6 +8,8 @@ class TestFrontDesk(MailCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.company = cls.env['res.company'].create({'name': 'Test Company'})
+        cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company.ids))
         cls.partner_1, cls.partner_2 = cls.env['res.partner'].create([{
             'name': 'Test Partner 1',
             'email': 'test1@example.com',

@@ -139,7 +139,7 @@
                                 <field name="drink_to_serve"/> Drinks to serve</a>
                             </div>
                         </div>
-                        <footer class="mt-2">
+                        <footer>
                             <field name="latest_check_in" class="ms-2 fs-6"/>
                             <field class="ms-auto me-2" name="responsible_ids" widget="many2many_avatar_user"/>
                         </footer>

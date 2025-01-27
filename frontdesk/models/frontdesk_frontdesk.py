@@ -20,6 +20,7 @@ PLANNED_VISITOR_TIME = 45
 class FrontdeskFrontdesk(models.Model):
     _name = 'frontdesk.frontdesk'
     _description = 'Frontdesk'
+    _order = 'is_favorite desc'
 
     name = fields.Char('Frontdesk Name', required=True)
     responsible_ids = fields.Many2many('res.users', string='Responsibles', required=True)
@@ -67,7 +68,7 @@ class FrontdeskFrontdesk(models.Model):
         checked_in_mapped = {station.id: count for station, state, count in visitor_data if state == 'checked_in'}
         planned_mapped = {station.id: count for station, state, count in visitor_data if state == 'planned'}
         drinks_data = self.env['frontdesk.visitor']._read_group([
-                ('drink_ids', '!=', False), ('served', '=', False),
+                ('drink_ids', '!=', False), ('served', '=', False), ('state', '!=', 'canceled'),
                 ('station_id', 'in', self.ids),
             ], ['station_id'], ['__count'])
         drinks_data_mapped = {station.id: count for station, count in drinks_data}
@@ -96,6 +97,12 @@ class FrontdeskFrontdesk(models.Model):
     def _compute_kiosk_url(self):
         for frontdesk in self:
             frontdesk.kiosk_url = url_join(self.env['frontdesk.frontdesk'].get_base_url(), '/kiosk/%s/%s' % (frontdesk.id, frontdesk.access_token))
+
+    def copy_data(self, default=None):
+        vals_list = super().copy_data(default=default)
+        if default and 'name' in default:
+            return vals_list
+        return [dict(vals, name=self.env._("%s (copy)", front_desk.name)) for front_desk, vals in zip(self, vals_list)]
 
     def action_open_kiosk(self):
         self.ensure_one()

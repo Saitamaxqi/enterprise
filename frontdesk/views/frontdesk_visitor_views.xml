@@ -33,15 +33,16 @@
                 <field name="state" widget="badge" optional="show"
                     decoration-info="state in ('checked_out')"
                     decoration-success="state in ('checked_in')"
-                    decoration-warning="state == 'planned'" decoration-muted="state in ('canceled')"/>
+                    decoration-warning="state == 'planned'"
+                    decoration-danger="state == 'canceled'"/>
                 <field name="email" optional="hide"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide"/>
                 <button name="action_check_in" type="object" string="Check in" class="btn-primary"
-                    invisible="state not in ('planned','canceled')"/>
+                    invisible="state != 'planned'"/>
                 <button name="action_check_out" type="object" string="Check out" class="btn-secondary"
                     invisible="state not in ('checked_in')"/>
                 <button name="action_served" type="object" string="Drink Served" class="btn-muted"
-                    invisible="served or not drink_ids"/>
+                    invisible="served or not drink_ids or state == 'canceled'"/>
                 <button name="%(frontdesk_visitor_print_badge)d" string="Print Badge" class="btn btn-link" type="action"
                     invisible="state != 'planned'"/>
             </list>
@@ -56,41 +57,47 @@
                 <header>
                     <button name="action_check_in" type="object"
                         string="Check in" class="btn-primary"
-                        invisible="state not in ('planned','canceled')"/>
+                        invisible="state != 'planned'"/>
                     <button name="action_canceled" type="object" string="Cancel"
                         class="btn-muted" invisible="state not in ('planned')"/>
                     <button name="action_check_out" type="object"
                         string="Check out" class="btn-secondary"
                         invisible="state not in ('checked_in')"/>
-                    <field name="state" widget="statusbar"/>
+                    <button name="action_planned" type="object"
+                        string="Set as Planned" class="btn-secondary"
+                        invisible="state != 'canceled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="planned,checked_in,checked_out,canceled"
+                        invisible="state != 'canceled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="planned,checked_in,checked_out"
+                        invisible="state == 'canceled'"/>
                 </header>
                 <sheet>
                     <field name="active" invisible="1"/>
                     <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <group>
                         <group>
-                            <field name="name" placeholder="E.g. What's your Name"/>
-                            <field name="phone" widget="phone"/>
-                            <field name="email" widget="email"/>
-                            <field name="company"/>
-                            <field name="drink_ids" widget="many2many_tags"/>
-                            <field name="served" invisible="not drink_ids"/>
+                            <field name="name" placeholder="E.g. What's your Name" readonly="state == 'canceled'"/>
+                            <field name="phone" widget="phone" readonly="state == 'canceled'"/>
+                            <field name="email" widget="email" readonly="state == 'canceled'"/>
+                            <field name="company" readonly="state == 'canceled'"/>
+                            <field name="drink_ids" widget="many2many_tags" readonly="state == 'canceled'"/>
+                            <field name="served" invisible="not drink_ids" readonly="state == 'canceled'"/>
                         </group>
                         <group>
-                            <field name="station_id"/>
-                            <field name="host_ids" widget="many2many_avatar_employee"/>
-                            <field name="check_in"/>
-                            <field name="duration" widget="float_time"/>
-                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="station_id" readonly="state == 'canceled'"/>
+                            <field name="host_ids" widget="many2many_avatar_employee" readonly="state == 'canceled'"/>
+                            <field name="check_in" readonly="state == 'canceled'"/>
+                            <field name="duration" widget="float_time" readonly="state == 'canceled'"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="state == 'canceled'"/>
                         </group>
                     </group>
-                    <div class="d-flex">
+                    <div class="d-flex" readonly="state == 'canceled'">
                         <field name="visitor_properties" nolabel="1" columns="2"
                             hideKanbanOption="1" hideAddButton="1"/>
                     </div>
                     <notebook>
                         <page string="Message">
-                            <field name="message"/>
+                            <field name="message" readonly="state == 'canceled'"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -110,7 +117,7 @@
                             <field name="name" class="fw-bolder fs-5"/>
                             <field name="state" widget="label_selection"
                                 options="{'classes': {'checked_out': 'info',
-                                'checked_in': 'success', 'planned': 'warning', 'canceled': 'muted'}}" class="ms-auto"/>
+                                'checked_in': 'success', 'planned': 'warning', 'canceled': 'danger'}}" class="ms-auto"/>
                         </div>
                         <field name="station_id"/>
                         <footer>
@@ -183,7 +190,7 @@
                     domain="[('state', '=', 'checked_out')]"/>
                 <separator/>
                 <filter string="Drink to Serve" name="drink_to_serve"
-                    domain="[('drink_ids', '!=', False), ('served', '=', False)]"/>
+                    domain="[('drink_ids', '!=', False), ('served', '=', False), ('state', '!=', 'canceled')]"/>
                 <filter string="Today" name="today"
                     domain="[('check_in', '&gt;=', datetime.datetime.combine(context_today(),
                     datetime.time(0,0,0))), ('check_in', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
@@ -223,6 +230,7 @@
         <field name="name">Station Visitors</field>
         <field name="res_model">frontdesk.visitor</field>
         <field name="view_mode">list,form,kanban,graph,pivot,calendar,gantt</field>
+        <field name="context">{'default_station_id': active_id}</field>
         <field name="domain">[("station_id", "=", active_id)]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

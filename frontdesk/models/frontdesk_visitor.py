@@ -19,7 +19,7 @@ class FrontdeskVisitor(models.Model):
     email = fields.Char('Email')
     company = fields.Char('Visitor Company')
     message = fields.Html()
-    host_ids = fields.Many2many('hr.employee', string='Host Name', domain="[('user_id', '!=', False)]")
+    host_ids = fields.Many2many('hr.employee', string='Host Name', domain=lambda self : [('user_id', '!=', False), ('company_id', 'in', self.env.companies.ids)])
     drink_ids = fields.Many2many('frontdesk.drink', string='Drinks')
     check_in = fields.Datetime(string='Check In')
     check_out = fields.Datetime(string='Check Out')
@@ -60,6 +60,10 @@ class FrontdeskVisitor(models.Model):
     def action_canceled(self):
         self.ensure_one()
         self.state = 'canceled'
+
+    def action_planned(self):
+        self.ensure_one()
+        self.state = 'planned'
 
     def action_check_out(self):
         self.ensure_one()
