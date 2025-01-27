@@ -123,7 +123,7 @@ class TestSignController(TestSignControllerCommon):
             timestamp = sign_request_item_id._generate_expiry_link_timestamp()
             expiry_hash = sign_request_item_id._generate_expiry_signature(sign_request_item_id.id, timestamp)
 
-        with freeze_time('2020-01-04'):
+        with freeze_time('2020-01-17'):
             url = '/sign/document/mail/%(sign_request_id)s/%(access_token)s?timestamp=%(timestamp)s&exp=%(exp)s' % {
                 'sign_request_id': sign_request.id,
                 'access_token': sign_request.request_item_ids[0].access_token,
@@ -167,7 +167,7 @@ class TestSignController(TestSignControllerCommon):
             mail = self.env['mail.mail'].search([('email_to', '=', formataddr((self.partner_1.name, self.partner_1.email)))])
             self.assertEqual(len(mail.ids), 2)
 
-        with freeze_time('2020-01-04'):
+        with freeze_time('2020-01-17'):
             self.start_tour(url, 'sign_resend_expired_link_tour', login='demo')
 
     def test_cancel_request_as_public_user(self):

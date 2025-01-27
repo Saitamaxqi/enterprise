@@ -422,7 +422,7 @@ class SignRequestItem(models.Model):
 
     @api.model
     def _generate_expiry_link_timestamp(self):
-        duration = int(self.env['ir.config_parameter'].sudo().get_param('sign.link_expiry_duration', 48))
+        duration = int(self.env['ir.config_parameter'].sudo().get_param('sign.link_expiry_duration', 360))
         expiry_date = fields.Datetime.now() + timedelta(hours=duration)
         return int(expiry_date.timestamp())
 
