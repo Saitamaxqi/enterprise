@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 class TestEdi(TestAr):
 
     @staticmethod
-    def setup_afip_ws(afip_ws):
+    def setup_afip_ws(afip_ws="wsfe"):
         def _decorator(function):
             def wrapper(self):
                 self.afip_ws = afip_ws
