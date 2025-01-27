@@ -88,7 +88,11 @@ msgid "Dispatches"
 msgstr "Expéditions"
 
 #. module: l10n_fr_intrastat
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_intrastat_goods_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_intrastat_services_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr "Nom d'affichage"
 
@@ -123,14 +127,23 @@ msgid "Flow Direction"
 msgstr "Direction du flux"
 
 #. module: l10n_fr_intrastat
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_intrastat_goods_report_handler__id
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_intrastat_services_report_handler__id
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__id
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_res_company__id
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_res_config_settings__id
 msgid "ID"
 msgstr "ID"
 
 #. module: l10n_fr_intrastat
-#: model:ir.model,name:l10n_fr_intrastat.model_account_intrastat_report_handler
-msgid "Intrastat Report Custom Handler"
-msgstr "Gestionnaire personnalisé du rapport Intrastat"
+#: model:ir.model,name:l10n_fr_intrastat.model_account_intrastat_goods_report_handler
+msgid "Intrastat Goods Report Custom Handler"
+msgstr "Gestionnaire personnalisé du rapport Intrastat (Biens)"
+
+#. module: l10n_fr_intrastat
+#: model:ir.model,name:l10n_fr_intrastat.model_account_intrastat_services_report_handler
+msgid "Intrastat Services Report Custom Handler"
+msgstr "Gestionnaire personnalisé du rapport Intrastat (Services)"
 
 #. module: l10n_fr_intrastat
 #. odoo-python
@@ -310,6 +323,12 @@ msgstr ""
 #: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
 msgid "XML (DEBWEB2)"
 msgstr "XML (DEBWEB2)"
+
+#. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
+msgid "XML (DES)"
+msgstr "XML (DES)"
 
 #. module: l10n_fr_intrastat
 #: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.l10n_fr_intrastat_export_wizard
