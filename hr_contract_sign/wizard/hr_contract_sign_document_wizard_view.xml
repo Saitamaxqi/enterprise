@@ -5,10 +5,10 @@
         <field name="model">hr.contract.sign.document.wizard</field>
         <field name="arch" type="xml">
             <form string="Signature Request">
-                <div role="alert" class="alert alert-warning text-center d-block d-flex align-items-center justify-content-center gap-1" invisible="not template_warning"
+                <div role="alert" class="alert alert-warning text-center d-flex align-items-center justify-content-center gap-1" invisible="not template_warning"
                     title="No template available">
                     <field name="template_warning" nolabel="1" readonly="1"/>
-                    <widget name="upload_pdf_button"/>
+                    <widget name="upload_pdf_button" title="Upload a PDF to set a new one."/>
                 </div>
                 <group class="o_label_nowrap">
                     <field name="contract_id" invisible="1"/>

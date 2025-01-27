@@ -3,6 +3,7 @@
 import { registry } from "@web/core/registry";
 import { Component } from "@odoo/owl";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
+import { _t } from "@web/core/l10n/translation";
 
 import { useSignViewButtons } from "@sign/views/hooks";
 
@@ -10,6 +11,7 @@ export class UploadPdfButton extends Component {
     static template = "hr_contract_sign.upload_pdf_button"
     static props = {
         ...standardWidgetProps,
+        title: { type: String, optional: true }
     };
 
     setup() {
@@ -28,6 +30,13 @@ export class UploadPdfButton extends Component {
     }
 }
 
-registry.category("view_widgets").add("upload_pdf_button", {
+export const uploadPdfButton = {
     component: UploadPdfButton,
-});
+    extractProps: ({ attrs }) => {
+        return {
+            title: attrs.title || _t("Upload PDF"),
+        };
+    },
+};
+
+registry.category("view_widgets").add("upload_pdf_button", uploadPdfButton);

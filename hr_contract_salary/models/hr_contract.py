@@ -19,6 +19,10 @@ _logger = logging.getLogger(__name__)
 class HrContract(models.Model):
     _inherit = 'hr.contract'
 
+    def _default_get_template_warning(self):
+        sign_template_count = self.env['sign.template'].search_count([('active', '=', True)], limit=1)
+        return not sign_template_count and _('No templates are configured yet. Do you want to set up first one?')
+
     origin_contract_id = fields.Many2one('hr.contract', string="Origin Contract", domain="[('company_id', '=', company_id)]", help="The contract from which this contract has been duplicated.")
     is_origin_contract_template = fields.Boolean(compute='_compute_is_origin_contract_template', string='Is origin contract a contract template?', readonly=True)
     hash_token = fields.Char('Created From Token', copy=False)
@@ -50,6 +54,7 @@ class HrContract(models.Model):
     salary_offer_ids = fields.One2many('hr.contract.salary.offer', 'employee_contract_id')
     originated_offer_id = fields.Many2one('hr.contract.salary.offer', help="The original offer")
     salary_offers_count = fields.Integer(compute='_compute_salary_offers_count', compute_sudo=True)
+    template_warning = fields.Char(default=_default_get_template_warning, store=False)
 
     # Employer costs fields
     final_yearly_costs = fields.Monetary(
