@@ -21,7 +21,7 @@ from PIL import ImageFont
 from odoo import models, fields, api, _, osv
 from odoo.addons.web.controllers.utils import clean_action
 from odoo.exceptions import RedirectWarning, UserError, ValidationError
-from odoo.models import check_method_name
+from odoo.service.model import get_public_method
 from odoo.tools import date_utils, get_lang, float_is_zero, float_repr, SQL, parse_version, Query
 from odoo.tools.float_utils import float_round, float_compare
 from odoo.tools.misc import file_path, format_date, formatLang, split_every, xlsxwriter
@@ -2469,12 +2469,13 @@ class AccountReport(models.Model):
         if self.id not in (options['report_id'], options.get('sections_source_id')):
             raise UserError(_("Trying to dispatch an action on a report not compatible with the provided options."))
 
-        check_method_name(action)
-        args = [options, action_param] if action_param is not None else [options]
+        model = self
         custom_handler_model = self._get_custom_handler_model()
         if custom_handler_model and hasattr(self.env[custom_handler_model], action):
-            return getattr(self.env[custom_handler_model], action)(*args)
-        return getattr(self, action)(*args)
+            model = self.env[custom_handler_model]
+        report_method = get_public_method(model, action)
+        args = [options, action_param] if action_param is not None else [options]
+        return report_method(model, *args)
 
     def _get_custom_report_function(self, function_name, prefix):
         """ Returns a report function from its name, first checking it to ensure it's private (and raising if it isn't).

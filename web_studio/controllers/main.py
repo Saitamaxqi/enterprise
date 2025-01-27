@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
 import json
@@ -9,10 +8,10 @@ from lxml import etree
 
 from odoo import http, _
 from odoo.http import request
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.osv import expression
+from odoo.service.model import get_public_method
 from odoo.tools import sql, clean_context
-from odoo.models import check_method_name
 
 _logger = logging.getLogger(__name__)
 
@@ -1566,9 +1565,8 @@ Are you sure you want to remove the selection values of those records?""", len(r
             raise ValidationError(_('The model %s doesn\'t exist.', model_name))
         elif not method_name:
             raise ValidationError(_('It lacks a method to check.'))
-        else:
-            check_method_name(method_name)
-            if not callable(getattr(model, method_name, None)):
-                raise ValidationError(_('The method %(method)s does not exist on the model %(model)s.', method=method_name, model=model))
-            else:
-                return True
+        try:
+            get_public_method(model, method_name)
+        except (AttributeError, AccessError):
+            raise ValidationError(_('The method %(method)s does not exist on the model %(model)s.', method=method_name, model=model))
+        return True

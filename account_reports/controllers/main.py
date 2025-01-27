@@ -5,7 +5,6 @@ from werkzeug.exceptions import InternalServerError
 from odoo.addons.account_reports.models.account_report import AccountReportFileDownloadException
 from odoo.addons.account.controllers.download_docs import _get_headers
 from odoo import http
-from odoo.models import check_method_name
 from odoo.http import content_disposition, request
 from odoo.tools.misc import html_escape
 
@@ -27,7 +26,6 @@ class AccountReportController(http.Controller):
         report = request.env['account.report'].with_user(uid).with_context(allowed_company_ids=allowed_company_ids).browse(options['report_id'])
 
         try:
-            check_method_name(file_generator)
             generated_file_data = report.dispatch_report_action(options, file_generator)
             file_content = generated_file_data['file_content']
             file_type = generated_file_data['file_type']
