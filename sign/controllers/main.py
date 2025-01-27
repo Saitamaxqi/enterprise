@@ -556,7 +556,7 @@ class Sign(http.Controller):
 
         result = {'success': True}
         if request_item_sudo.role_id.auth_method:
-            result = self._validate_auth_method(request_item_sudo, sms_token=sms_token)
+            result = self._validate_auth_method(request_item_sudo, sms_token=sms_token, **kwargs)
             if not result.get('success'):
                 return result
 

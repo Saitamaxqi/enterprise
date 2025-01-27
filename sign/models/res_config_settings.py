@@ -20,6 +20,7 @@ class ResConfigSettings(models.TransientModel):
     group_manage_template_access = fields.Boolean(string="Manage template access", implied_group='sign.manage_template_access')
 
     module_sign_itsme = fields.Boolean(string="Identify with itsme®")
+    module_sign_emsigner = fields.Boolean(string="Sign with Aadhaar eSign")
 
     signing_certificate_id = fields.Many2one("certificate.certificate", string="Signing certificate", related="company_id.signing_certificate_id", readonly=False)
 

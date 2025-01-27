@@ -7,6 +7,7 @@ from . import wizard
 from . import PYPDF2_MonkeyPatch
 
 ITSME_AVAILABLE_COUNTRIES = ['BE', 'NL']
+EMSIGNER_AVAILABLE_COUNTRIES = 'IN'
 
 
 def _sign_post_init(env):
@@ -15,6 +16,11 @@ def _sign_post_init(env):
     if any(country_code in ITSME_AVAILABLE_COUNTRIES for country_code in country_codes):
         # auto install localization module(s) if available
         module = env.ref('base.module_sign_itsme')
+        if module:
+            module.sudo().button_install()
+
+    if EMSIGNER_AVAILABLE_COUNTRIES in country_codes:
+        module = env.ref('base.module_sign_emsigner')
         if module:
             module.sudo().button_install()
 

@@ -45,6 +45,10 @@
                         <setting id="sms" string="Authenticate by SMS" documentation="/applications/marketing/sms_marketing/pricing/pricing_and_faq.html" help="Deliver one-time codes by SMS to identify signatories when signing a document">
                             <widget name="iap_buy_more_credits" service_name="sms" hide_service="1"/>
                         </setting>
+                        <setting help="Sign your important documents using Aadhaar esign." id="module_sign_emsigner">
+                            <field name="module_sign_emsigner"/>
+                            <widget name="iap_buy_more_credits" service_name="emsigner_proxy" hide_service="1"/>
+                        </setting>
                         <setting id="company_sign_info" string="Cryptographic signature" help="Allow users to provide the files used in the cryptographic signature process." groups="base.group_system">
                             <group>
                                 <field name="signing_certificate_id" options="{'no_quick_create': True}"/>
