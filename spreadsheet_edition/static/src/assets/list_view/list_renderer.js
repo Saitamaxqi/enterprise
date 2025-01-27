@@ -27,7 +27,7 @@ patch(ListRenderer.prototype, {
         const threshold = selection.length > 0 ? selection.length : Math.min(count, model.limit);
         let name = this.env.config.getDisplayName();
         const sortBy = model.orderBy[0];
-        if (sortBy) {
+        if (sortBy && model.fields[sortBy.name]) {
             name = _t("%(field name)s by %(order)s", {
                 "field name": name,
                 order: model.fields[sortBy.name].string,
@@ -70,11 +70,13 @@ patch(ListRenderer.prototype, {
         const model = this.env.model.root;
         const { actionId } = this.env.config;
         const { xml_id } = actionId ? await this.actionService.loadAction(actionId, this.props.list.context) : {};
+        const fields = this.env.model.root.fields;
+
         return {
             list: {
                 model: model.resModel,
                 domain: this.env.searchModel.domainString,
-                orderBy: model.orderBy,
+                orderBy: model.orderBy.filter((field) => fields[field.name]),
                 context: omit(model.context, ...Object.keys(user.context)),
                 columns: this.getColumnsForSpreadsheet(),
                 name,
