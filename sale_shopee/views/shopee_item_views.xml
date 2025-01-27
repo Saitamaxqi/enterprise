@@ -21,7 +21,7 @@
                 <field name="shopee_model_identifier" optional="show"/>
                 <field name="shopee_item_identifier" optional="show"/>
                 <field name="sync_to_shopee" optional="show"/>
-                <field name="last_inventory_sync_date" optional="hide"/>
+                <field name="last_inventory_sync_date" groups="base.group_no_one" optional="hide"/>
             </list>
         </field>
     </record>

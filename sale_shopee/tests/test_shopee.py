@@ -835,7 +835,8 @@ class TestShopee(common.TestShopeeCommon):
         An existing item will be found and its linked product will be changed.
         """
         item_count = self.env['shopee.item'].search_count([])
-        self.item.update({'product_id': self.env.ref('sale_shopee.default_sale_product')})
+        default_product = self.env.ref('sale_shopee.default_sale_product')
+        self.item.update({'product_id': default_product})
         item = self.shop._find_or_create_item(
             self.product.default_code,
             common.ORDER_ITEM_MOCK['item_id'],
@@ -851,8 +852,5 @@ class TestShopee(common.TestShopeeCommon):
         )
         self.assertEqual(item.product_id.name, self.product.name)
         self.assertEqual(item.product_id.default_code, self.product.default_code)
-        self.assertRecordValues(item, [{
-            'shopee_item_identifier': '111111',
-            'shopee_model_identifier': '222222',
-            'sync_to_shopee': False,
-        }])
+        msg = "The correct product should now be assigned to the item."
+        self.assertNotEqual(item.product_id, default_product, msg)

@@ -126,11 +126,19 @@
                         <group string="Shop Information">
                             <field name="shop_identifier" options="{'enable_formatting': false}"/>
                             <field name="account_id"/>
-                            <field name="company_id" options="{'no_open': True}"/>
+                            <field
+                                name="company_id"
+                                options="{'no_open': True}"
+                                groups="base.group_multi_company"
+                            />
                         </group>
                         <group string="Synchronization Information">
-                            <field name="last_orders_sync_date"/>
-                            <field name="last_shop_status_sync_date" readonly="1"/>
+                            <field name="last_orders_sync_date" groups="base.group_no_one"/>
+                            <field
+                                name="last_shop_status_sync_date"
+                                readonly="1"
+                                groups="base.group_no_one"
+                            />
                             <label for="authorization_remaining_days"/>
                             <div class="oe-inline">
                                 <field class="w-25" name="authorization_remaining_days"/> Days
@@ -143,7 +151,10 @@
                                 <field name="synchronize_inventory"/>
                                 <field name="user_id"/>
                                 <field name="team_id"/>
-                                <field name="fbs_location_id"/>
+                                <field
+                                    name="fbs_location_id"
+                                    groups="stock.group_stock_multi_locations"
+                                />
                             </group>
                         </page>
                         <page string="Tokens" groups="base.group_no_one">

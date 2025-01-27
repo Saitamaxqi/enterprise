@@ -25,9 +25,7 @@ class ShopeeItem(models.Model):
     shopee_model_identifier = fields.Char(string="Shopee Model ID")
     shopee_item_identifier = fields.Char(string="Shopee Item ID", required=True)
     company_id = fields.Many2one(related='shop_id.company_id')
-    sync_to_shopee = fields.Boolean(
-        string="Synchronize Inventory to Shopee", default=False, readonly=True
-    )
+    sync_to_shopee = fields.Boolean(string="Synchronize Inventory to Shopee", default=False)
     last_inventory_sync_date = fields.Datetime(
         string="Last Sync Date", readonly=True, default=fields.Datetime.now
     )

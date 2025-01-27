@@ -6,13 +6,16 @@
         <field name="inherit_id" ref="stock.vpicktree"/>
         <field name="arch" type="xml">
             <field name="state" position="after">
-                <field name="shopee_delivery_status"
-                       widget="badge"
-                       decoration-info="shopee_delivery_status in ['draft', 'confirmed']"
-                       decoration-success="shopee_delivery_status == 'done'"
-                       decoration-danger="shopee_delivery_status == 'cancelled'"
-                       decoration-warning="shopee_delivery_status == 'error'"
-                       optional="hide"/>
+                <field
+                    name="shopee_delivery_status"
+                    widget="badge"
+                    invisible="not shopee_order_ref"
+                    decoration-info="shopee_delivery_status in ['draft', 'confirmed']"
+                    decoration-success="shopee_delivery_status == 'done'"
+                    decoration-danger="shopee_delivery_status == 'cancelled'"
+                    decoration-warning="shopee_delivery_status == 'error'"
+                    optional="hide"
+                />
             </field>
         </field>
     </record>
@@ -51,7 +54,7 @@
                 </div>
             </div>
             <field name="origin" position="after">
-                <field name="shopee_order_ref" readonly="1"/>
+                <field name="shopee_order_ref" readonly="1" invisible="not shopee_order_ref"/>
             </field>
         </field>
     </record>

@@ -62,11 +62,15 @@
                     <group>
                         <group>
                             <field name="api_endpoint"/>
-                            <field name="company_ids" widget="many2many_tags"/>
+                            <field
+                                name="company_ids"
+                                widget="many2many_tags"
+                                groups="base.group_multi_company"
+                            />
                         </group>
                     </group>
-                    <notebook>
-                        <page string="Credentials" groups="base.group_no_one">
+                    <notebook groups="base.group_no_one">
+                        <page string="Credentials">
                             <group>
                                 <field
                                     name="partner_identifier"

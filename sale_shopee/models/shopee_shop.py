@@ -827,8 +827,6 @@ class ShopeeShop(models.Model):
             if product:
                 shopee_item.product_id = product.id
 
-        if shopee_item.sync_to_shopee != sync_to_shopee:
-            shopee_item.sync_to_shopee = sync_to_shopee
         return shopee_item
 
     def _get_promotion_type(self, promotion_type):
