@@ -12,6 +12,7 @@
                 <field name="company_id" column_invisible="True"/>
                 <field name="currency_id" column_invisible="True"/>
                 <field name="employee_id" widget="many2one_avatar_employee" readonly="state not in ['draft', 'verify']"/>
+                <field name="employee_reference" optional="hide"/>
                 <field name="payslip_run_id" readonly="state not in ['draft', 'verify']"/>
                 <field name="struct_id" optional="hide" readonly="state in ['cancel', 'done', 'paid']"/>
                 <field name="date_from" optional="hide" readonly="state in ['cancel', 'done', 'paid']"/>
@@ -269,7 +270,7 @@
         <field name="arch" type="xml">
             <search string="Search Payslips">
                 <field name="employee_id"/>
-                <field name="employee_id" string="Employee Code" filter_domain="[('employee_id.registration_number', 'ilike', self)]"/>
+                <field name="employee_id" string="Employee Reference" filter_domain="[('employee_id.registration_number', 'ilike', self)]"/>
                 <field name="name" string="Payslips" filter_domain="[('name', 'ilike', self)]"/>
                 <field name="date_from"/>
                 <field name="contract_id"/>

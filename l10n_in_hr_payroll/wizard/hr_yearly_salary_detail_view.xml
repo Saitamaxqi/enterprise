@@ -26,7 +26,7 @@
                                 domain="[('id', 'in', related_employee_ids)]">
                             <list no_open="True" create="False">
                                 <field name="name" string="Employee Name"/>
-                                <field name="registration_number" string="Employee Code"/>
+                                <field name="registration_number" string="Employee Reference"/>
                                 <field name="department_id" string="Department"/>
                                 <field name="job_id" string="Job Position"/>
                             </list>

@@ -13,6 +13,7 @@ class HrContract(models.Model):
     _inherit = 'hr.contract'
     _description = 'Employee Contract'
 
+    employee_reference = fields.Char(related='employee_id.registration_number')
     schedule_pay = fields.Selection([
         ('annually', 'Annually'),
         ('semi-annually', 'Semi-annually'),

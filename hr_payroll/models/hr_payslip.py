@@ -49,6 +49,7 @@ class HrPayslip(models.Model):
     employee_id = fields.Many2one(
         'hr.employee', string='Employee', required=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), '|', ('active', '=', True), ('active', '=', False)]")
+    employee_reference = fields.Char(related='employee_id.registration_number')
     image_128 = fields.Image(related='employee_id.image_128')
     image_1920 = fields.Image(related='employee_id.image_1920')
     avatar_128 = fields.Image(related='employee_id.avatar_128')
