@@ -34,7 +34,6 @@ class TestRiba(AccountTestInvoicingCommon):
             'acc_type': 'bank',
             'acc_number': 'IT94W0333201600000001112418',
             'bank_id': partner_bank.id,
-            'allow_out_payment': True,
         })
         isernia = cls.env.ref('base.state_it_is')
         cls.partner_a.write({
