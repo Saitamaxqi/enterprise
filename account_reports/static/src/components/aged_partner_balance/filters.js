@@ -1,5 +1,4 @@
 import { _t } from "@web/core/l10n/translation";
-import { patch } from "@web/core/utils/patch";
 import { WarningDialog } from "@web/core/errors/error_dialogs";
 import { AccountReport } from "@account_reports/components/account_report/account_report";
 import { AccountReportFilters } from "@account_reports/components/account_report/filters/filters";
@@ -23,11 +22,6 @@ export class AgedPartnerBalanceFilters extends AccountReportFilters {
         await this.filterClicked({ optionKey:"aging_interval", optionValue: agingInterval, reload: true });
     }
 
-}
-
-AccountReport.registerCustomComponent(AgedPartnerBalanceFilters);
-
-patch(AccountReportFilters.prototype, {
     get filterExtraOptionsData() {
         return { 
             ...super.filterExtraOptionsData,
@@ -39,5 +33,7 @@ patch(AccountReportFilters.prototype, {
                 'name': _t("Show Account"),
             },
         };
-    },
-});
+    }
+}
+
+AccountReport.registerCustomComponent(AgedPartnerBalanceFilters);

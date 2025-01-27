@@ -1,8 +1,9 @@
 import { _t } from "@web/core/l10n/translation";
-import { patch } from "@web/core/utils/patch";
+
+import { AccountReport } from "@account_reports/components/account_report/account_report";
 import { AccountReportFilters } from "@account_reports/components/account_report/filters/filters";
 
-patch(AccountReportFilters.prototype, {
+export class DisallowedExpenseFleetFilters extends AccountReportFilters {
     get filterExtraOptionsData() {
         return {
             ...super.filterExtraOptionsData,
@@ -10,5 +11,7 @@ patch(AccountReportFilters.prototype, {
                 'name': _t("Vehicle Split"),
             },
         };
-    },
-});
+    }
+}
+
+AccountReport.registerCustomComponent(DisallowedExpenseFleetFilters);

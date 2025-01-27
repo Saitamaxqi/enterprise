@@ -10,6 +10,14 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
     _inherit = ['account.disallowed.expenses.report.handler']
     _description = 'Disallowed Expenses Fleet Custom Handler'
 
+    def _get_custom_display_config(self):
+        return {
+            **super()._get_custom_display_config(),
+            'components': {
+                'AccountReportFilters': 'account_reports.DisallowedExpenseFleetFilters',
+            },
+        }
+
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
 

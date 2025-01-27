@@ -1,10 +1,9 @@
 import { _t } from "@web/core/l10n/translation";
 
-import { patch } from "@web/core/utils/patch";
+import { AccountReport } from "@account_reports/components/account_report/account_report";
 import { AccountReportFilters } from "@account_reports/components/account_report/filters/filters";
 
-patch(AccountReportFilters.prototype, {
-
+export class InstrastReportFilters extends AccountReportFilters {
     get selectedIntrastatOptions() {
         let selectedIntrastatOptions = [];
         // display selected options if any is selected and not all are selected
@@ -24,5 +23,7 @@ patch(AccountReportFilters.prototype, {
                 : _t("All partners"),
         );
         return selectedIntrastatOptions.join(", ");
-    },
-});
+    }
+};
+
+AccountReport.registerCustomComponent(InstrastReportFilters, "account_intrastat");

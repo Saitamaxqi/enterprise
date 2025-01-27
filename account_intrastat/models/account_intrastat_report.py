@@ -56,6 +56,9 @@ class AccountIntrastatReportHandler(models.AbstractModel):
             'templates': {
                 'AccountReportFilters': 'account_intrastat.IntrastatReportFilters',
             },
+            'components': {
+                'AccountReportFilters': 'account_intrastat.InstrastReportFilters',
+            },
         }
 
     def _custom_options_initializer(self, report, options, previous_options):

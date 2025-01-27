@@ -13,12 +13,18 @@ import io
 class L10n_ArTaxReportHandler(models.AbstractModel):
     _name = 'l10n_ar.tax.report.handler'
     _inherit = ['account.tax.report.handler']
-    _description = 'Argentinian Report Custom Handler'
+    _description = 'Argentinian Tax Report Custom Handler'
 
     def _get_custom_display_config(self):
-        parent_config = super()._get_custom_display_config()
-        parent_config['templates']['AccountReportFilters'] = 'l10n_ar_reports.L10nArReportsFiltersCustomizable'
-        return parent_config
+        return {
+            **super()._get_custom_display_config(),
+            'templates': {
+                'AccountReportFilters': 'l10n_ar_reports.L10nArTaxReportFiltersCustomizable',
+            },
+            'components': {
+                'AccountReportFilters': 'l10n_ar_reports.L10nArTaxReportFilters',
+            },
+        }
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         # dict of the form {move_id: {column_group_key: {expression_label: value}}}

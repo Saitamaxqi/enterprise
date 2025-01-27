@@ -1,8 +1,9 @@
 import { _t } from "@web/core/l10n/translation";
-import { patch } from "@web/core/utils/patch";
+
+import { AccountReport } from "@account_reports/components/account_report/account_report";
 import { AccountReportFilters } from "@account_reports/components/account_report/filters/filters";
 
-patch(AccountReportFilters.prototype, {
+export class L10nArTaxReportFilters extends AccountReportFilters {
     get selectedTaxType() {
         const availableTypes = Object.keys(this.controller.options.ar_vat_book_tax_types_available);
         const selectedTypes = Object.values(
@@ -14,7 +15,7 @@ patch(AccountReportFilters.prototype, {
         }
 
         return selectedTypes.map((type) => type.name).join(", ");
-    },
+    }
 
     selectArVatBookTaxType(taxType) {
         const newArVatBookTaxTypes = Object.assign(
@@ -23,5 +24,7 @@ patch(AccountReportFilters.prototype, {
         );
         newArVatBookTaxTypes[taxType]["selected"] = !newArVatBookTaxTypes[taxType]["selected"];
         this.filterClicked({ optionKey: "ar_vat_book_tax_types_available", optionValue: newArVatBookTaxTypes, reload: true});
-    },
-});
+    }
+}
+
+AccountReport.registerCustomComponent(L10nArTaxReportFilters, "l10n_ar_reports");
