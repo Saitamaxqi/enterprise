@@ -26,8 +26,10 @@ class SaleCommissionPlanAchievement(models.Model):
         for record in self:
             product_name = record.product_id.name or ""
             product_categ_id_name = record.product_categ_id.name or ""
-            record.display_name = _("%(plan)s %(type)s %(product)s %(categ)s",
+            labels = dict(self._fields['type']._description_selection(self.env))
+            record_type = _("%s", record.type and labels[record.type]) or ""
+            record.display_name = _("%(plan)s - %(type)s %(product)s %(categ)s",
                                     plan=record.plan_id.name,
-                                    type=record.type ,
+                                    type=record_type,
                                     product=product_name,
                                     categ=product_categ_id_name)

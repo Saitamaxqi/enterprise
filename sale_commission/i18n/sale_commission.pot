@@ -17,6 +17,12 @@ msgstr ""
 
 #. module: sale_commission
 #. odoo-python
+#: code:addons/sale_commission/model/commission_plan_achievement.py:0
+msgid "%(plan)s - %(type)s %(product)s %(categ)s"
+msgstr ""
+
+#. module: sale_commission
+#. odoo-python
 #: code:addons/sale_commission/model/commission_plan.py:0
 msgid "%s (copy)"
 msgstr ""
@@ -299,6 +305,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_achievement__company_id
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_achievement_report__company_id
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan__company_id
+#: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan_achievement__company_id
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_report__company_id
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_achievement_report_view_search
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_search
@@ -737,11 +744,6 @@ msgstr ""
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan_achievement__rate
 msgid "Rate"
-msgstr ""
-
-#. module: sale_commission
-#: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan__rating_ids
-msgid "Ratings"
 msgstr ""
 
 #. module: sale_commission
