@@ -161,6 +161,13 @@ msgid "Tax Payer Type"
 msgstr ""
 
 #. module: l10n_cl_edi_pos
+#. odoo-python
+#: code:addons/l10n_cl_edi_pos/models/pos_config.py:0
+#, python-format
+msgid "The 'Consumidor Final Anónimo' must be present and active."
+msgstr ""
+
+#. module: l10n_cl_edi_pos
 #. odoo-javascript
 #: code:addons/l10n_cl_edi_pos/static/src/overrides/components/receipt/receipt.xml:0
 #, python-format
