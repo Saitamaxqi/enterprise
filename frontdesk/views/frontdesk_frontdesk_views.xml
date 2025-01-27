@@ -62,9 +62,6 @@
                                 </setting>
                                 <setting help="Notify the host on guest arrival" invisible="not host_selection">
                                     <field name="notify_email"/>
-                                    <group invisible="not notify_email">
-                                        <field name="mail_template_id"/>
-                                    </group>
                                 </setting>
                                 <setting help="Open host chat window when guest arrives" invisible="not host_selection">
                                     <field name="notify_discuss"/>

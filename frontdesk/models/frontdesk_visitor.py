@@ -10,6 +10,7 @@ from odoo import models, fields, api, _, SUPERUSER_ID
 class FrontdeskVisitor(models.Model):
     _name = 'frontdesk.visitor'
     _description = 'Frontdesk Visitors'
+    _inherit = ['mail.thread']
     _order = 'check_in'
 
     active = fields.Boolean(default=True)
@@ -28,7 +29,7 @@ class FrontdeskVisitor(models.Model):
                    ('checked_in', 'Checked-In'),
                    ('checked_out', 'Checked-Out'),
                    ('canceled', 'Cancelled')],
-        default='planned'
+        default='planned', tracking=True
     )
     station_id = fields.Many2one('frontdesk.frontdesk', required=True)
     visitor_properties = fields.Properties('Properties', definition='station_id.visitor_properties_definition', copy=True)
@@ -116,15 +117,13 @@ class FrontdeskVisitor(models.Model):
         for host in self.host_ids:
             if host.work_email:
                 odoobot = self.env.ref('base.partner_root')
-                mail_template = self.station_id.mail_template_id
-                ctx = {'host_name': host.name, 'lang': host.user_partner_id.lang}
-                body = mail_template.with_context(ctx)._render_field('body_html', self.ids, compute_lang=True)[self.id]
-                subject = mail_template.with_context(ctx)._render_field('subject', self.ids, compute_lang=True)[self.id]
+                values = {'host_name': host.name, 'object': self}
+                body = self.env['ir.qweb']._render('frontdesk.frontdesk_mail_template', values, lang=host.user_partner_id.lang)
                 host.message_notify(
                     email_from=odoobot.email_formatted,
                     author_id=self.env.user.partner_id.id,
                     body=body,
-                    subject=subject,
+                    subject=_('Your Visitor %(name)s Requested To Meet You', name=self.name),
                     partner_ids=host.user_partner_id.ids,
                     email_layout_xmlid='mail.mail_notification_light',
                     force_send=True,

@@ -32,12 +32,6 @@ class FrontdeskFrontdesk(models.Model):
     ask_company = fields.Selection(string='Organization', selection=ASK_FIELDS_SELECTION, default='optional', required=True)
     ask_email = fields.Selection(string='Email', selection=ASK_FIELDS_SELECTION, default='none', required=True)
     notify_email = fields.Boolean('Notify by email', groups='frontdesk.frontdesk_group_user')
-    mail_template_id = fields.Many2one(
-        'mail.template',
-        string='Email Template',
-        domain="[('model', '=', 'frontdesk.frontdesk')]",
-        default=lambda self: self.env.ref('frontdesk.frontdesk_mail_template', raise_if_not_found=False)
-    )
     notify_sms = fields.Boolean('Notify by SMS', groups='frontdesk.frontdesk_group_user')
     sms_template_id = fields.Many2one(
         'sms.template',

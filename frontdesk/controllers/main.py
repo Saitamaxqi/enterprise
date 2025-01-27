@@ -103,3 +103,11 @@ class Frontdesk(http.Controller):
             visitor = request.env['frontdesk.visitor'].sudo().create(vals)
             visitor._notify()
             return {'visitor_id': visitor.id}
+
+    @http.route('/frontdesk/visitor/check_out/<int:visitor_id>', type='http', auth='user')
+    def frontdesk_visitor_check_out(self, visitor_id):
+        visitor = request.env['frontdesk.visitor'].browse(visitor_id)
+        if not visitor.exists():
+            return request.not_found()
+        visitor.action_check_out()
+        return request.render("frontdesk.frontdesk_visitor_check_out")
