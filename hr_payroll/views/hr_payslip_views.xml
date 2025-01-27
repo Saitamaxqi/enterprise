@@ -70,7 +70,7 @@
                 <button string="Compute Sheet" name="compute_sheet" type="object" invisible="state != 'draft' or credit_note" class="oe_highlight" help="Recompute the payslip lines only, not the worked days / input lines"/>
                 <button string="Compute Sheet" name="compute_sheet" type="object" invisible="state != 'verify' or credit_note" help="Recompute the payslip lines only, not the worked days / input lines"/>
                 <button string="Cancel" name="action_payslip_cancel" type="object" invisible="state not in ('draft', 'done', 'verify')"/>
-                <button string="Print" name="action_print_payslip" type="object"/>
+                <button string="Print" name="action_print_payslip" type="object" invisible= "not line_ids"/>
                 <button string="Export Payslip" name="action_export_payslip" type="object" invisible="not is_superuser"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,done,paid"/>
             </header>
