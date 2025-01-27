@@ -49,7 +49,9 @@ class SaleCommissionPlanUser(models.Model):
             pu_date_from = pu.date_from or pu.plan_id.date_from
             pu_date_to = pu.date_to or pu.plan_id.date_to
             other_plans_ids = []
-            for plan in (plan_ids - pu.plan_id._origin -pu.plan_id):
+            for plan in (plan_ids - pu.plan_id._origin - pu.plan_id):
+                if not pu.user_id in plan.user_ids.user_id:
+                    continue
                 if plan.date_to < pu_date_from or plan.date_from > pu_date_to:
                     # no overlap
                     continue
