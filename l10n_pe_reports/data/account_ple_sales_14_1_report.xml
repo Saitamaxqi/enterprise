@@ -2,6 +2,7 @@
 <odoo>
     <record id="tax_report_ple_sales_14_1" model="account.report">
         <field name="name">VAT Report (RVIE Sales 14.4)</field>
+        <field name="name@es_419">RVIE Registro de Ventas 14.4</field>
         <field name="root_report_id" ref="account.generic_tax_report" />
         <field name="country_id" ref="base.pe" />
         <field name="filter_fiscal_position" eval="True" />
@@ -10,21 +11,25 @@
         <field name="column_ids">
             <record id="tax_report_ple_14_1_date" model="account.report.column">
                 <field name="name">Date</field>
+                <field name="name@es_419">Fecha</field>
                 <field name="expression_label">invoice_date</field>
                 <field name="figure_type">date</field>
             </record>
             <record id="tax_report_ple_14_1_doc_type" model="account.report.column">
                 <field name="name">Doc. Type</field>
+                <field name="name@es_419">Tipo Doc.</field>
                 <field name="expression_label">document_type</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="tax_report_ple_14_1_customer_vat" model="account.report.column">
                 <field name="name">Customer VAT</field>
+                <field name="name@es_419">Num. ID</field>
                 <field name="expression_label">customer_vat</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="tax_report_ple_14_1_customer" model="account.report.column">
                 <field name="name">Customer</field>
+                <field name="name@es_419">Tercero</field>
                 <field name="expression_label">customer</field>
                 <field name="figure_type">string</field>
             </record>
@@ -66,6 +71,7 @@
             </record>
             <record id="tax_report_ple_14_1_amount_total" model="account.report.column">
                 <field name="name">Amount Total</field>
+                <field name="name@es_419">Total</field>
                 <field name="expression_label">amount_total</field>
             </record>
         </field>

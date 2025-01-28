@@ -2,6 +2,7 @@
 <odoo>
     <record id="account_financial_report_pl" model="account.report">
         <field name="name">Profit and Loss Statement</field>
+        <field name="name@fr">Compte de Produits et Charges (CPC)</field>
         <field name="root_report_id" ref="account_reports.profit_and_loss"/>
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_journals" eval="True"/>
@@ -11,29 +12,35 @@
         <field name="column_ids">
             <record id="account_financial_report_pl_column_cur_op" model="account.report.column">
                 <field name="name">Operations</field>
+                <field name="name@fr">Opérations</field>
                 <field name="expression_label">cur_op</field>
             </record>
             <record id="account_financial_report_pl_column_prev_op" model="account.report.column">
                 <field name="name">Prev. Years' Operations</field>
+                <field name="name@fr">Opér. des exerc. précéd.</field>
                 <field name="expression_label">prev_op</field>
             </record>
             <record id="account_financial_report_pl_column_cur_tot" model="account.report.column">
                 <field name="name">Totals</field>
+                <field name="name@fr">Totaux</field>
                 <field name="expression_label">cur_tot</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="account_financial_report_pl_op" model="account.report.line">
                 <field name="name">OPERATIONS</field>
+                <field name="name@fr">EXPLOITATION</field>
                 <field name="code">MA_PL_OP</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="account_financial_report_pl_i" model="account.report.line">
                 <field name="name">I - OPERATING INCOME</field>
+                <field name="name@fr">I - PRODUITS D'EXPLOITATION</field>
                 <field name="code">MA_PL_I</field>
                 <field name="children_ids">
                     <record id="account_financial_report_pl_i_sg" model="account.report.line">
                         <field name="name">Sales of Goods</field>
+                        <field name="name@fr">Ventes de marchandises (en l'état)</field>
                         <field name="code">MA_PL_I_SG</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -57,6 +64,7 @@
                     </record>
                     <record id="account_financial_report_pl_i_sgsp" model="account.report.line">
                         <field name="name">Sales of Goods and Services Produced</field>
+                        <field name="name@fr">Ventes de biens et services produits</field>
                         <field name="code">MA_PL_I_SGSP</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -80,6 +88,7 @@
                     </record>
                     <record id="account_financial_report_pl_i_sr" model="account.report.line">
                         <field name="name">Sales Revenues</field>
+                        <field name="name@fr">Chiffres d'affaires</field>
                         <field name="code">MA_PL_I_SR</field>
                         <field name="hierarchy_level">2</field>
                         <field name="expression_ids">
@@ -102,6 +111,7 @@
                     </record>
                     <record id="account_financial_report_pl_i_cip" model="account.report.line">
                         <field name="name">Change in Inventory of Products (±)</field>
+                        <field name="name@fr">Variation de stock de produits (±)</field>
                         <field name="code">MA_PL_I_CIP</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -120,6 +130,7 @@
                     </record>
                     <record id="account_financial_report_pl_i_ncapcou" model="account.report.line">
                         <field name="name">Non-Current Assets Produced by the Company for its Own Use</field>
+                        <field name="name@fr">Immobilisations produites par l'Ese pour elle même</field>
                         <field name="code">MA_PL_I_NCAPCOU</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -143,6 +154,7 @@
                     </record>
                     <record id="account_financial_report_pl_i_os" model="account.report.line">
                         <field name="name">Operating Subsidies</field>
+                        <field name="name@fr">Subvention d'exploitation</field>
                         <field name="code">MA_PL_I_OS</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -166,6 +178,7 @@
                     </record>
                     <record id="account_financial_report_pl_i_ooi" model="account.report.line">
                         <field name="name">Other Operating Income</field>
+                        <field name="name@fr">Autres produits d'exploitation</field>
                         <field name="code">MA_PL_I_OOI</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -189,6 +202,7 @@
                     </record>
                     <record id="account_financial_report_pl_i_oret" model="account.report.line">
                         <field name="name">Operating Reversals; Expense Transfers</field>
+                        <field name="name@fr">Reprises d'exploitation; transfert de charges</field>
                         <field name="code">MA_PL_I_ORET</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -212,6 +226,7 @@
                     </record>
                     <record id="account_financial_report_pl_total_i" model="account.report.line">
                         <field name="name">TOTAL I</field>
+                        <field name="name@fr">TOTAL I</field>
                         <field name="code">MA_PL_TOTAL_I</field>
                         <field name="hierarchy_level">2</field>
                         <field name="expression_ids">
@@ -236,10 +251,12 @@
             </record>
             <record id="account_financial_report_pl_ii" model="account.report.line">
                 <field name="name">II - OPERATING EXPENSES</field>
+                <field name="name@fr">II - CHARGES D'EXPLOITATION</field>
                 <field name="code">MA_PL_II</field>
                 <field name="children_ids">
                     <record id="account_financial_report_pl_ii_pgr" model="account.report.line">
                         <field name="name">Purchases of Goods Resold</field>
+                        <field name="name@fr">Achats revendus de marchandises</field>
                         <field name="code">MA_PL_II_PGR</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -263,6 +280,7 @@
                     </record>
                     <record id="account_financial_report_pl_ii_pmsc" model="account.report.line">
                         <field name="name">Purchases of Materials and Supplies Consumed</field>
+                        <field name="name@fr">Achats consommés de matières et de fournitures</field>
                         <field name="code">MA_PL_II_PMSC</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -286,6 +304,7 @@
                     </record>
                     <record id="account_financial_report_pl_ii_oee" model="account.report.line">
                         <field name="name">Other External Expenses</field>
+                        <field name="name@fr">Autres charges externes</field>
                         <field name="code">MA_PL_II_OEE</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -309,6 +328,7 @@
                     </record>
                     <record id="account_financial_report_pl_ii_td" model="account.report.line">
                         <field name="name">Taxes and Duties</field>
+                        <field name="name@fr">Impôts et taxes</field>
                         <field name="code">MA_PL_II_TD</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -332,6 +352,7 @@
                     </record>
                     <record id="account_financial_report_pl_ii_pe" model="account.report.line">
                         <field name="name">Personnel Expenses</field>
+                        <field name="name@fr">Charges de personnel</field>
                         <field name="code">MA_PL_II_PE</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -355,6 +376,7 @@
                     </record>
                     <record id="account_financial_report_pl_ii_ooe" model="account.report.line">
                         <field name="name">Other Operating Expenses</field>
+                        <field name="name@fr">Autres charges d'exploitation</field>
                         <field name="code">MA_PL_II_OOE</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -378,6 +400,7 @@
                     </record>
                     <record id="account_financial_report_pl_ii_oa" model="account.report.line">
                         <field name="name">Operating Allocations</field>
+                        <field name="name@fr">Dotations d'exploitation</field>
                         <field name="code">MA_PL_II_OA</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -401,6 +424,7 @@
                     </record>
                     <record id="account_financial_report_pl_total_ii" model="account.report.line">
                         <field name="name">TOTAL II</field>
+                        <field name="name@fr">TOTAL II</field>
                         <field name="code">MA_PL_TOTAL_II</field>
                         <field name="hierarchy_level">2</field>
                         <field name="expression_ids">
@@ -425,6 +449,7 @@
             </record>
             <record id="account_financial_report_pl_iii" model="account.report.line">
                 <field name="name">III - OPERATING RESULT (I - II)</field>
+                <field name="name@fr">III - RÉSULTAT D'EXPLOITATION (I - II)</field>
                 <field name="code">MA_PL_III</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_pl_iii_cur_tot" model="account.report.expression">
@@ -436,15 +461,18 @@
             </record>
             <record id="account_financial_report_pl_fin" model="account.report.line">
                 <field name="name">FINANCIAL</field>
+                <field name="name@fr">FINANCIER</field>
                 <field name="code">MA_PL_FIN</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="account_financial_report_pl_iv" model="account.report.line">
                 <field name="name">IV - FINANCIAL INCOME</field>
+                <field name="name@fr">IV - PRODUITS FINANCIERS</field>
                 <field name="code">MA_PL_IV</field>
                 <field name="children_ids">
                     <record id="account_financial_report_pl_iv_iesonca" model="account.report.line">
                         <field name="name">Income from Equity Securities and Other Non-Current Assets</field>
+                        <field name="name@fr">Produits des titres de participation et autres t. immo</field>
                         <field name="code">MA_PL_IV_IESONCA</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -468,6 +496,7 @@
                     </record>
                     <record id="account_financial_report_pl_iv_feg" model="account.report.line">
                         <field name="name">Foreign Exchange Gains</field>
+                        <field name="name@fr">Gains de change</field>
                         <field name="code">MA_PL_IV_FEG</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -491,6 +520,7 @@
                     </record>
                     <record id="account_financial_report_pl_iv_iofi" model="account.report.line">
                         <field name="name">Interest and Other Financial Income</field>
+                        <field name="name@fr">Intérêts et autres produits financiers</field>
                         <field name="code">MA_PL_IV_IOFI</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -514,6 +544,7 @@
                     </record>
                     <record id="account_financial_report_pl_iv_fret" model="account.report.line">
                         <field name="name">Financial Reversals; Expense Transfers</field>
+                        <field name="name@fr">Reprises financières; transferts de charges</field>
                         <field name="code">MA_PL_IV_FRET</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -537,6 +568,7 @@
                     </record>
                     <record id="account_financial_report_pl_total_iv" model="account.report.line">
                         <field name="name">TOTAL IV</field>
+                        <field name="name@fr">TOTAL IV</field>
                         <field name="code">MA_PL_TOTAL_IV</field>
                         <field name="hierarchy_level">2</field>
                         <field name="expression_ids">
@@ -561,10 +593,12 @@
             </record>
             <record id="account_financial_report_pl_v" model="account.report.line">
                 <field name="name">V - FINANCIAL EXPENSES</field>
+                <field name="name@fr">V - CHARGES FINANCIÈRES</field>
                 <field name="code">MA_PL_V</field>
                 <field name="children_ids">
                     <record id="account_financial_report_pl_v_ie" model="account.report.line">
                         <field name="name">Interest Expenses</field>
+                        <field name="name@fr">Charges d'intérêts</field>
                         <field name="code">MA_PL_V_IE</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -588,6 +622,7 @@
                     </record>
                     <record id="account_financial_report_pl_v_fel" model="account.report.line">
                         <field name="name">Foreign Exchange Losses</field>
+                        <field name="name@fr">Pertes de change</field>
                         <field name="code">MA_PL_V_FEL</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -611,6 +646,7 @@
                     </record>
                     <record id="account_financial_report_pl_v_ofe" model="account.report.line">
                         <field name="name">Other Financial Expenses</field>
+                        <field name="name@fr">Autres charges financières</field>
                         <field name="code">MA_PL_V_OFE</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -634,6 +670,7 @@
                     </record>
                     <record id="account_financial_report_pl_v_fa" model="account.report.line">
                         <field name="name">Financial Allocations</field>
+                        <field name="name@fr">Dotations financières</field>
                         <field name="code">MA_PL_V_FA</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -657,6 +694,7 @@
                     </record>
                     <record id="account_financial_report_pl_total_v" model="account.report.line">
                         <field name="name">TOTAL V</field>
+                        <field name="name@fr">TOTAL V</field>
                         <field name="code">MA_PL_TOTAL_V</field>
                         <field name="hierarchy_level">2</field>
                         <field name="expression_ids">
@@ -681,6 +719,7 @@
             </record>
             <record id="account_financial_report_pl_vi" model="account.report.line">
                 <field name="name">VI - FINANCIAL RESULT (IV - V)</field>
+                <field name="name@fr">VI - RÉSULTAT FINANCIER (IV - V)</field>
                 <field name="code">MA_PL_VI</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_pl_vi_cur_tot" model="account.report.expression">
@@ -692,11 +731,13 @@
             </record>
             <record id="account_financial_report_pl_cur" model="account.report.line">
                 <field name="name">CURRENT</field>
+                <field name="name@fr">COURANT</field>
                 <field name="code">MA_PL_CUR</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="account_financial_report_pl_vii" model="account.report.line">
                 <field name="name">VII - CURRENT RESULT (III + VI)</field>
+                <field name="name@fr">VII - RÉSULTAT COURANT (III + VI)</field>
                 <field name="code">MA_PL_VII</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_pl_vii_cur_tot" model="account.report.expression">
@@ -708,15 +749,18 @@
             </record>
             <record id="account_financial_report_pl_noncur" model="account.report.line">
                 <field name="name">NON-CURRENT</field>
+                <field name="name@fr">NON COURANT</field>
                 <field name="code">MA_PL_NONCUR</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="account_financial_report_pl_viii" model="account.report.line">
                 <field name="name">VIII - NON-CURRENT INCOME</field>
+                <field name="name@fr">VIII - PRODUITS NON COURANTS</field>
                 <field name="code">MA_PL_VIII</field>
                 <field name="children_ids">
                     <record id="account_financial_report_pl_viii_idnca" model="account.report.line">
                         <field name="name">Income from Disposal of Non-Current Assets</field>
+                        <field name="name@fr">Produits des cessions d'immobilisations</field>
                         <field name="code">MA_PL_VIII_IDNCA</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -740,6 +784,7 @@
                     </record>
                     <record id="account_financial_report_pl_viii_bs" model="account.report.line">
                         <field name="name">Balancing Subsidies</field>
+                        <field name="name@fr">Subventions d'équilibre</field>
                         <field name="code">MA_PL_VIII_BS</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -763,6 +808,7 @@
                     </record>
                     <record id="account_financial_report_pl_viii_ris" model="account.report.line">
                         <field name="name">Reversals of Investment Subsidies</field>
+                        <field name="name@fr">Reprises sur subventions d'investissement</field>
                         <field name="code">MA_PL_VIII_RIS</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -786,6 +832,7 @@
                     </record>
                     <record id="account_financial_report_pl_viii_onci" model="account.report.line">
                         <field name="name">Other Non-Current Income</field>
+                        <field name="name@fr">Autres produits non courants</field>
                         <field name="code">MA_PL_VIII_ONCI</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -809,6 +856,7 @@
                     </record>
                     <record id="account_financial_report_pl_viii_ncret" model="account.report.line">
                         <field name="name">Non-Current Reversals; Expense Transfers</field>
+                        <field name="name@fr">Reprises non courantes; transferts de charges</field>
                         <field name="code">MA_PL_VIII_NCRET</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -832,6 +880,7 @@
                     </record>
                     <record id="account_financial_report_pl_total_viii" model="account.report.line">
                         <field name="name">TOTAL VIII</field>
+                        <field name="name@fr">TOTAL VIII</field>
                         <field name="code">MA_PL_TOTAL_VIII</field>
                         <field name="hierarchy_level">2</field>
                         <field name="expression_ids">
@@ -856,10 +905,12 @@
             </record>
             <record id="account_financial_report_pl_ix" model="account.report.line">
                 <field name="name">IX - NON-CURRENT EXPENSES</field>
+                <field name="name@fr">IX - CHARGES NON COURANTES</field>
                 <field name="code">MA_PL_IX</field>
                 <field name="children_ids">
                     <record id="account_financial_report_pl_ix_ndvncas" model="account.report.line">
                         <field name="name">Net Depreciation Value of Non-Current Assets Sold</field>
+                        <field name="name@fr">Valeurs nettes d'amort. des immo. cédées</field>
                         <field name="code">MA_PL_IX_NDVNCAS</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -883,6 +934,7 @@
                     </record>
                     <record id="account_financial_report_pl_ix_sg" model="account.report.line">
                         <field name="name">Subsidies Granted</field>
+                        <field name="name@fr">Subventions accordées</field>
                         <field name="code">MA_PL_IX_SG</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -906,6 +958,7 @@
                     </record>
                     <record id="account_financial_report_pl_ix_once" model="account.report.line">
                         <field name="name">Other Non-Current Expenses</field>
+                        <field name="name@fr">Autres charges non courantes</field>
                         <field name="code">MA_PL_IX_ONCE</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -929,6 +982,7 @@
                     </record>
                     <record id="account_financial_report_pl_ix_ncadp" model="account.report.line">
                         <field name="name">Non-Current Allocations for Depreciations and Provisions</field>
+                        <field name="name@fr">Dotations non courantes aux amort. et provisions</field>
                         <field name="code">MA_PL_IX_NCADP</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -952,6 +1006,7 @@
                     </record>
                     <record id="account_financial_report_pl_total_ix" model="account.report.line">
                         <field name="name">TOTAL IX</field>
+                        <field name="name@fr">TOTAL IX</field>
                         <field name="code">MA_PL_TOTAL_IX</field>
                         <field name="hierarchy_level">2</field>
                         <field name="expression_ids">
@@ -976,6 +1031,7 @@
             </record>
             <record id="account_financial_report_pl_x" model="account.report.line">
                 <field name="name">X - NON-CURRENT RESULT (VIII - IX)</field>
+                <field name="name@fr">X - RÉSULTAT NON COURANT (VIII - IX)</field>
                 <field name="code">MA_PL_X</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_pl_x_cur_tot" model="account.report.expression">
@@ -987,11 +1043,13 @@
             </record>
             <record id="account_financial_report_pl_res" model="account.report.line">
                 <field name="name">RESULTS</field>
+                <field name="name@fr">RÉSULTATS</field>
                 <field name="code">MA_PL_RES</field>
                 <field name="hierarchy_level">0</field>
             </record>
             <record id="account_financial_report_pl_xi" model="account.report.line">
                 <field name="name">XI - INCOME BEFORE TAXES (VII + X)</field>
+                <field name="name@fr">XI - RÉSULTAT AVANT IMPÔTS (VII + X)</field>
                 <field name="code">MA_PL_XI</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_pl_xi_cur_tot" model="account.report.expression">
@@ -1003,6 +1061,7 @@
             </record>
             <record id="account_financial_report_pl_xii" model="account.report.line">
                 <field name="name">XII - INCOME TAXES</field>
+                <field name="name@fr">XII - IMPÔTS SUR LES RÉSULTATS</field>
                 <field name="code">MA_PL_XII</field>
                 <field name="groupby">account_id</field>
                 <field name="foldable" eval="True"/>
@@ -1016,6 +1075,7 @@
             </record>
             <record id="account_financial_report_pl_xiii" model="account.report.line">
                 <field name="name">XIII - NET RESULT (XI - XII)</field>
+                <field name="name@fr">XIII - RÉSULTAT NET (XI - XII)</field>
                 <field name="code">MA_PL_XIII</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_pl_xiii_cur_tot" model="account.report.expression">
@@ -1031,6 +1091,7 @@
             </record>
             <record id="account_financial_report_pl_xiv" model="account.report.line">
                 <field name="name">XIV - TOTAL INCOME (I + IV + VIII)</field>
+                <field name="name@fr">XIV - TOTAL DES PRODUITS (I + IV + VIII)</field>
                 <field name="code">MA_PL_XIV</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_pl_xiv_cur_tot" model="account.report.expression">
@@ -1042,6 +1103,7 @@
             </record>
             <record id="account_financial_report_pl_xv" model="account.report.line">
                 <field name="name">XV - TOTAL EXPENSES (II + V + IX + XII)</field>
+                <field name="name@fr">XV - TOTAL DES CHARGES (II + V + IX + XII)</field>
                 <field name="code">MA_PL_XV</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_pl_xv_cur_tot" model="account.report.expression">
@@ -1053,6 +1115,7 @@
             </record>
             <record id="account_financial_report_pl_xvi" model="account.report.line">
                 <field name="name">XVI - NET RESULT (XIV - XV)</field>
+                <field name="name@fr">XVI - RÉSULTAT NET (XIV - XV)</field>
                 <field name="code">MA_PL_XVI</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_pl_xvi_cur_tot" model="account.report.expression">

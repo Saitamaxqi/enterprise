@@ -134,18 +134,6 @@ msgid "<strong>Working Schedule</strong>"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_ahl_amount
-msgid "AHL Amount"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employer_salary_ahl_amount
-msgid "AHL Amount (employer)"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_taxed_airtime_allowance
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_untaxed_airtime_allowance
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_hr_contract__l10n_ke_airtime_allowance
 msgid "Airtime Allowance"
 msgstr ""
@@ -291,14 +279,8 @@ msgid "E3<br/>Fixed"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_education
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_hr_contract__l10n_ke_education
 msgid "Education"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_education_relief
-msgid "Education Relief"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -359,18 +341,6 @@ msgid "February"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_fixed_bonus
-msgid "Fixed Bonus"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_fixed_commission
-msgid "Fixed Commission"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_taxed_food_allowance
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_untaxed_food_allowance
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_hr_contract__l10n_ke_food_allowance
 msgid "Food Allowance"
 msgstr ""
@@ -383,21 +353,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_fringe_benefit
-msgid "Fringe Benefit"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_gross_taxable
-msgid "Gross Taxable"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_helb
-msgid "HELB"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_hr_employee__l10n_ke_helb_number
 msgid "HELB Number"
 msgstr ""
@@ -405,11 +360,6 @@ msgstr ""
 #. module: l10n_ke_hr_payroll
 #: model:ir.model,name:l10n_ke_hr_payroll.model_l10n_ke_tax_deduction_card
 msgid "HR Tax Deduction Card Report By Employee"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_ke_hr_payroll.HIDDEN
-msgid "Hidden Content for Calculation Purpose"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -438,19 +388,11 @@ msgid "Income"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_income_tax
-msgid "Income Tax"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_ke_hr_payroll.INSURANCES
 #: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.hr_contract_view_form
 msgid "Insurance"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_insurance_relief
-#: model:hr.salary.rule.category,name:l10n_ke_hr_payroll.INS_RELIEF
 #: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.report_tax_deduction_card
 msgid "Insurance Relief"
 msgstr ""
@@ -541,14 +483,8 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_life_insurance
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_hr_contract__l10n_ke_life_insurance
 msgid "Life Insurance"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_life_insurance_relief
-msgid "Life Insurance Relief"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -585,11 +521,6 @@ msgid "May"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_med_insurance_relief
-msgid "Medical Insurance Relief"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
 #: model:ir.model,name:l10n_ke_hr_payroll.model_ir_ui_menu
 msgid "Menu"
 msgstr ""
@@ -613,20 +544,13 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_nhif_amount
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_l10n_ke_hr_payroll_nhif_report_line_wizard__nhif_amount
 msgid "NHIF Amount"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_shif_amount
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_l10n_ke_hr_payroll_shif_report_line_wizard__shif_amount
 msgid "SHIF Amount"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_nhif_amount_hidden
-msgid "NHIF Amount (Hidden)"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -639,11 +563,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_hr_employee__l10n_ke_shif_number
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_l10n_ke_hr_payroll_shif_report_line_wizard__shif_number
 msgid "SHIF Number"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_nhif_relief
-msgid "NHIF Relief"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -664,19 +583,8 @@ msgid "SHIF Report Wizard Line"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employer_nita
-msgid "NITA Employer Cost"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_ke_hr_payroll.NSSF
 #: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.view_company_form
 msgid "NSSF"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_nssf_amount
-msgid "NSSF Amount"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -692,11 +600,6 @@ msgstr ""
 #. module: l10n_ke_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_l10n_ke_hr_payroll_nssf_report_line_wizard__payslip_nssf_code
 msgid "NSSF Code"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employer_nssf_employer
-msgid "NSSF Employer Cost"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -738,24 +641,9 @@ msgid "NSSF Report Wizard Line"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_nssf_tier_1_hidden
-msgid "NSSF Tier 1 Employee Deduction"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_nssf_tier_2_hidden
-msgid "NSSF Tier 2 Employee Deduction"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_l10n_ke_hr_payroll_nhif_report_wizard__name
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_l10n_ke_hr_payroll_nssf_report_wizard__name
 msgid "Name"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_non_cash
-msgid "Non-Cash Benefit"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -771,23 +659,8 @@ msgid "October"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_ke_hr_payroll.OTHER_DED
-msgid "Other Deduction"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_other_deductions
-msgid "Other Deductions"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.report_tax_deduction_card
 msgid "Owner-Occupied Interest"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_paye
-msgid "P.A.Y.E."
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -812,20 +685,16 @@ msgid "Payslip Number"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_taxed_pension_allowance
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_untaxed_pension_allowance
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_hr_contract__l10n_ke_pension_allowance
 msgid "Pension Allowance"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_pension_contribution
 #: model:ir.model.fields,field_description:l10n_ke_hr_payroll.field_hr_contract__l10n_ke_pension_contribution
 msgid "Pension Contribution"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_personal_relief
 #: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.report_tax_deduction_card
 msgid "Personal Relief"
 msgstr ""
@@ -843,11 +712,6 @@ msgid "Populate"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_ke_hr_payroll.RELIEF
-msgid "Relief"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.report_tax_deduction_card
 msgid "Retirement Contribution &amp; Owner Occupied Interest"
 msgstr ""
@@ -856,12 +720,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ke_hr_payroll.selection__l10n_ke_hr_payroll_nhif_report_wizard__reference_month__9
 #: model:ir.model.fields.selection,name:l10n_ke_hr_payroll.selection__l10n_ke_hr_payroll_nssf_report_wizard__reference_month__9
 msgid "September"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_statutory_deduction
-#: model:hr.salary.rule.category,name:l10n_ke_hr_payroll.STATUTORY_DED
-msgid "Statutory Deduction"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -897,17 +755,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ke_hr_payroll/models/l10n_ke_tax_deduction_card.py:0
 msgid "Tax Deduction Cards - Year %s"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_ke_hr_payroll.EXEMPTION
-msgid "Tax Exemption"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_taxed_allowance_total
-#: model:hr.salary.rule.category,name:l10n_ke_hr_payroll.KE_T_ALW
-msgid "Taxed Allowance"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -947,24 +794,8 @@ msgid "Total"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_ke_hr_payroll.TOTAL_DED
-msgid "Total Deduction"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_total_deductions
-msgid "Total Deductions"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.report_tax_deduction_card
 msgid "Total Gross Pay"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_salary_untaxed_allowance_total
-#: model:hr.salary.rule.category,name:l10n_ke_hr_payroll.KE_UT_ALW
-msgid "Untaxed Allowance"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll
@@ -975,11 +806,6 @@ msgstr ""
 #. module: l10n_ke_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ke_hr_payroll.report_tax_deduction_card
 msgid "Value Of Quarter"
-msgstr ""
-
-#. module: l10n_ke_hr_payroll
-#: model:hr.salary.rule,name:l10n_ke_hr_payroll.l10n_ke_employees_volontary_medical_insurance
-msgid "Voluntary Medical Insurance"
 msgstr ""
 
 #. module: l10n_ke_hr_payroll

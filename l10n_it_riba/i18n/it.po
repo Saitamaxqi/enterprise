@@ -38,11 +38,6 @@ msgid "Bank Accounts"
 msgstr "Conti bancari"
 
 #. module: l10n_it_riba
-#: model:account.payment.method,name:l10n_it_riba.payment_method_riba
-msgid "Bank Receipt (IT)"
-msgstr "Ricevuta Bancaria (IT)"
-
-#. module: l10n_it_riba
 #: model:ir.model,name:l10n_it_riba.model_account_batch_payment
 msgid "Batch Payment"
 msgstr "Gruppo di Pagamenti"
@@ -86,8 +81,9 @@ msgstr "Ci sono messaggi"
 msgid ""
 "Identifier used in Italy for interbank transactions by the Società "
 "Interbancaria per l'Automazione"
-msgstr "Identificatore usato in Italia per transazioni interbancarie"
-"dalla Società Interbancaria per l'Automazione"
+msgstr ""
+"Identificatore usato in Italia per transazioni interbancariedalla Società "
+"Interbancaria per l'Automazione"
 
 #. module: l10n_it_riba
 #: model:ir.model.fields,help:l10n_it_riba.field_res_company__message_needaction

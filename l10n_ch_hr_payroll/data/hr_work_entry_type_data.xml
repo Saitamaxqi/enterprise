@@ -2,6 +2,7 @@
 <odoo>
     <record id="work_entry_type_bank_holiday" model="hr.work.entry.type">
         <field name="name">Public Holiday</field>
+        <field name="name@fr">Jour férié</field>
         <field name="code">CHPUBHOL</field>
         <field name="is_leave">True</field>
         <field name="color">3</field>

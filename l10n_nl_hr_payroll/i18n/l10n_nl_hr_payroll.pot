@@ -26,23 +26,8 @@ msgid "30% Exemption"
 msgstr ""
 
 #. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule,name:l10n_nl_hr_payroll.l10n_nl_disability_insurance
-msgid "Disability Insurance (WAO/WIA)"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
 #: model:ir.model,name:l10n_nl_hr_payroll.model_hr_contract
 msgid "Employee Contract"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_nl_hr_payroll.hr_salary_rule_category_social_security_employee
-msgid "Employee Social Security Deductions"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_nl_hr_payroll.hr_salary_rule_category_social_security_employer
-msgid "Employer Social Security Deductions"
 msgstr ""
 
 #. module: l10n_nl_hr_payroll
@@ -51,33 +36,8 @@ msgid "Experienced Developer NL"
 msgstr ""
 
 #. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule,name:l10n_nl_hr_payroll.l10n_nl_health_insurance
-msgid "Health Insurance (Zvw)"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_nl_hr_payroll.hr_salary_rule_category_income_tax
-msgid "Income Tax"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule,name:l10n_nl_hr_payroll.l10n_nl_income_tax
-msgid "Income Tax Due"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule,name:l10n_nl_hr_payroll.l10n_nl_long_medical_care_insurance
-msgid "Long Medical Care Insurance (Wlz)"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
 #: model:ir.actions.report,name:l10n_nl_hr_payroll.action_report_payslip_nl
 msgid "NL: Payslip"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule,name:l10n_nl_hr_payroll.l10n_nl_old_age_insurance
-msgid "Old Age Insurance (AOW)"
 msgstr ""
 
 #. module: l10n_nl_hr_payroll
@@ -91,22 +51,6 @@ msgid "RD NL"
 msgstr ""
 
 #. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule,name:l10n_nl_hr_payroll.l10n_nl_return_to_work_fund
-msgid "Return to Work Fund - Average (Whk)"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule,name:l10n_nl_hr_payroll.l10n_nl_survivor_dependant_insurance
-msgid "Survivor Dependant Insurance (Anw)"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule,name:l10n_nl_hr_payroll.l10n_nl_taxable_income
-#: model:hr.salary.rule.category,name:l10n_nl_hr_payroll.hr_salary_rule_category_taxable_income
-msgid "Taxable Income"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
 #: model:ir.model.fields,help:l10n_nl_hr_payroll.field_hr_contract__l10n_nl_30_percent
 msgid ""
 "The 30% reimbursement ruling (also known as the 30% facility) is a tax "
@@ -116,14 +60,4 @@ msgid ""
 "salary subject to Dutch payroll tax. This reimbursement is intended as "
 "compensation for the extra costs that international employees can incur when"
 " moving to a new country for their work. "
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule,name:l10n_nl_hr_payroll.l10n_nl_unemployment_insurance
-msgid "Unemployment Insurance (WW)"
-msgstr ""
-
-#. module: l10n_nl_hr_payroll
-#: model:hr.salary.rule,name:l10n_nl_hr_payroll.l10n_nl_ww_sector_fund
-msgid "Unemployment Insurance Sector Fund (WW)"
 msgstr ""

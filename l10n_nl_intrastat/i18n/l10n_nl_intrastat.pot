@@ -16,16 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_nl_intrastat
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_amount_product
-msgid "Amount Product"
-msgstr ""
-
-#. module: l10n_nl_intrastat
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_amount_service
-msgid "Amount Service"
-msgstr ""
-
-#. module: l10n_nl_intrastat
 #: model:ir.model.fields,help:l10n_nl_intrastat.field_l10n_nl_reports_sbr_icp_icp_wizard__contact_type
 msgid ""
 "BPL: if the taxpayer files a turnover tax return as an individual "
@@ -104,11 +94,6 @@ msgid "Contact Type"
 msgstr ""
 
 #. module: l10n_nl_intrastat
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_country_code
-msgid "Country Code"
-msgstr ""
-
-#. module: l10n_nl_intrastat
 #. odoo-python
 #: code:addons/l10n_nl_intrastat/wizard/l10n_nl_sbr_icp_wizard.py:0
 msgid "Create Closing Entry"
@@ -142,11 +127,6 @@ msgstr ""
 #. module: l10n_nl_intrastat
 #: model:ir.model,name:l10n_nl_intrastat.model_l10n_nl_ec_sales_report_handler
 msgid "Dutch EC Sales Report Custom Handler"
-msgstr ""
-
-#. module: l10n_nl_intrastat
-#: model:account.report,name:l10n_nl_intrastat.dutch_icp_report
-msgid "Dutch EC sales Report (ICP)"
 msgstr ""
 
 #. module: l10n_nl_intrastat
@@ -213,11 +193,6 @@ msgstr ""
 msgid ""
 "No Closing Entry was found for the selected period. Please create one and "
 "post it before sending your report."
-msgstr ""
-
-#. module: l10n_nl_intrastat
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_partner
-msgid "Partner"
 msgstr ""
 
 #. module: l10n_nl_intrastat
@@ -318,13 +293,7 @@ msgstr ""
 #. module: l10n_nl_intrastat
 #. odoo-python
 #: code:addons/l10n_nl_intrastat/models/account_sales_report.py:0
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_total
 msgid "Total"
-msgstr ""
-
-#. module: l10n_nl_intrastat
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_vat
-msgid "VAT"
 msgstr ""
 
 #. module: l10n_nl_intrastat

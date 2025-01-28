@@ -2,6 +2,8 @@
 <odoo>
     <record id="account_financial_report_cy_profit_and_loss" model="account.report">
         <field name="name">Profit and Loss</field>
+        <field name="name@tr">Kar ve zarar</field>
+        <field name="name@gr">Κέρδος και ζημία</field>
         <field name="root_report_id" ref="account_reports.profit_and_loss"/>
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_journals" eval="True"/>
@@ -10,12 +12,16 @@
         <field name="column_ids">
             <record id="account_financial_report_cy_profit_and_loss_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@tr">Denge</field>
+                <field name="name@gr">Ισορροπία</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="account_financial_report_cy_income_statement" model="account.report.line">
                 <field name="name">Income Statement</field>
+                <field name="name@tr">Gelir Tablosu</field>
+                <field name="name@gr">Κατάσταση Αποτελεσμάτων</field>
                 <field name="code">cy_income_statement</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -28,6 +34,8 @@
                 <field name="children_ids">
                     <record id="account_financial_report_cy_income_period" model="account.report.line">
                         <field name="name">Net Income for the period</field>
+                        <field name="name@tr">Net Dönem Karı</field>
+                        <field name="name@gr">Καθαρό εισόδημα για την περίοδο</field>
                         <field name="code">cy_income_period</field>
                         <field name="foldable" eval="True"/>
                         <field name="expression_ids">
@@ -40,6 +48,8 @@
                         <field name="children_ids">
                             <record id="account_financial_report_cy_revenue" model="account.report.line">
                                 <field name="name">Revenue</field>
+                                <field name="name@tr">Hasılat</field>
+                                <field name="name@gr">Εσοδα</field>
                                 <field name="code">cy_revenue</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -52,6 +62,8 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_cy_turnover" model="account.report.line">
                                         <field name="name">Turnover</field>
+                                        <field name="name@tr">Devir</field>
+                                        <field name="name@gr">Τζίρος</field>
                                         <field name="code">cy_turnover</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -65,6 +77,8 @@
                                     </record>
                                     <record id="account_financial_report_cy_other_operating_income" model="account.report.line">
                                         <field name="name">Other Operating Income</field>
+                                        <field name="name@tr">Diğer faaliyet gelirleri</field>
+                                        <field name="name@gr">Αλλα έσοδα εκμετάλλευσης</field>
                                         <field name="code">cy_other_operating_income</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -80,6 +94,8 @@
                             </record>
                             <record id="account_financial_report_cy_other_income" model="account.report.line">
                                 <field name="name">Other Income</field>
+                                <field name="name@tr">Diğer gelir</field>
+                                <field name="name@gr">Αλλο εισόδημα</field>
                                 <field name="code">cy_other_income</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -92,6 +108,8 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_cy_interest_payable_and_similar_expenses_interest_receivable_and_similar_income" model="account.report.line">
                                         <field name="name">Interest Payable and Similar Expenses/Interest Receivable and Similar Income</field>
+                                        <field name="name@tr">Ödenecek Faiz ve Benzeri Giderler/Alınacak Faiz ve Benzeri Gelirler</field>
+                                        <field name="name@gr">Τόκοι πληρωτέοι και παρόμοια έξοδα / εισπρακτέοι τόκοι και παρόμοια έσοδα</field>
                                         <field name="code">cy_interest_payable_and_similar_expenses_interest_receivable_and_similar_income</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -105,6 +123,8 @@
                                     </record>
                                     <record id="account_financial_report_cy_cash_difference_gain" model="account.report.line">
                                         <field name="name">Cash Difference Gain</field>
+                                        <field name="name@tr">Nakit Farkı Kazancı</field>
+                                        <field name="name@gr">Κέρδος διαφοράς μετρητών</field>
                                         <field name="code">cy_cash_difference_gain</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -118,6 +138,8 @@
                                     </record>
                                     <record id="account_financial_report_cy_cash_discount_gain" model="account.report.line">
                                         <field name="name">Cash Discount Gain</field>
+                                        <field name="name@tr">Nakit İndirim Kazancı</field>
+                                        <field name="name@gr">Κέρδος έκπτωσης σε μετρητά</field>
                                         <field name="code">cy_cash_discount_gain</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -135,6 +157,8 @@
                     </record>
                     <record id="account_financial_report_cy_expense_period" model="account.report.line">
                         <field name="name">Expenses for period</field>
+                        <field name="name@tr">Dönem giderleri</field>
+                        <field name="name@gr">Έξοδα περιόδου</field>
                         <field name="code">cy_expense_period</field>
                         <field name="foldable" eval="True"/>
                         <field name="expression_ids">
@@ -147,6 +171,8 @@
                         <field name="children_ids">
                             <record id="account_financial_report_cy_cost_of_sales" model="account.report.line">
                                 <field name="name">Cost of Sales</field>
+                                <field name="name@tr">Satışların maliyeti</field>
+                                <field name="name@gr">Κόστος πωλήσεων</field>
                                 <field name="code">cy_cost_of_sales</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -160,6 +186,8 @@
                             </record>
                             <record id="account_financial_report_cy_operating_expenses" model="account.report.line">
                                 <field name="name">Operating Expenses</field>
+                                <field name="name@tr">İşletim giderleri</field>
+                                <field name="name@gr">Εξοδα λειτουργίας</field>
                                 <field name="code">cy_operating_expenses</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -172,6 +200,8 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_cy_sales_and_marketing_expenses" model="account.report.line">
                                         <field name="name">Sales and Marketing Expenses</field>
+                                        <field name="name@tr">Satış ve Pazarlama Giderleri</field>
+                                        <field name="name@gr">Έξοδα πωλήσεων και μάρκετινγκ</field>
                                         <field name="code">cy_sales_and_marketing_expenses</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -185,6 +215,8 @@
                                     </record>
                                     <record id="account_financial_report_cy_administrative_expenses" model="account.report.line">
                                         <field name="name">Administrative Expenses</field>
+                                        <field name="name@tr">Yönetim giderleri</field>
+                                        <field name="name@gr">Εξοδα διοικητικής λειτουργίας</field>
                                         <field name="code">cy_administrative_expenses</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -198,6 +230,8 @@
                                     </record>
                                     <record id="account_financial_report_cy_other_operating_expenses" model="account.report.line">
                                         <field name="name">Other Operating Expenses</field>
+                                        <field name="name@tr">Diğer Faaliyet Giderleri</field>
+                                        <field name="name@gr">Λοιπά Λειτουργικά Έξοδα</field>
                                         <field name="code">cy_other_operating_expenses</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -213,6 +247,8 @@
                             </record>
                             <record id="account_financial_report_cy_other_expenses" model="account.report.line">
                                 <field name="name">Other Expenses</field>
+                                <field name="name@tr">Diğer giderler</field>
+                                <field name="name@gr">Αλλα έξοδα</field>
                                 <field name="code">cy_other_expenses</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -225,6 +261,8 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_cy_other_non_operating_expenses" model="account.report.line">
                                         <field name="name">Other Non-operating Expenses</field>
+                                        <field name="name@tr">Diğer Faaliyet Dışı Giderler</field>
+                                        <field name="name@gr">Άλλα μη λειτουργικά έξοδα</field>
                                         <field name="code">cy_other_non_operating_expenses</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -238,6 +276,8 @@
                                     </record>
                                     <record id="account_financial_report_cy_other_non_operating_expenses_other_non_operating_income" model="account.report.line">
                                         <field name="name">Other Non-operating Expenses/Other Non-operating Income</field>
+                                        <field name="name@tr">Diğer Faaliyet Dışı Giderler/Diğer Faaliyet Dışı Gelirler</field>
+                                        <field name="name@gr">Άλλα μη λειτουργικά έξοδα/Λοιπά μη λειτουργικά έσοδα</field>
                                         <field name="code">cy_other_non_operating_expenses_other_non_operating_income</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -251,6 +291,8 @@
                                     </record>
                                     <record id="account_financial_report_cy_tax_on_profit_on_ordinary_activities" model="account.report.line">
                                         <field name="name">Tax on profit on ordinary activities</field>
+                                        <field name="name@tr">Olağan faaliyetlerden elde edilen kar vergisi</field>
+                                        <field name="name@gr">Φόρος επί των κερδών από συνήθεις δραστηριότητες</field>
                                         <field name="code">cy_tax_on_profit_on_ordinary_activities</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -264,6 +306,8 @@
                                     </record>
                                     <record id="account_financial_report_cy_cash_difference_loss" model="account.report.line">
                                         <field name="name">Cash Difference Loss</field>
+                                        <field name="name@tr">Nakit Fark Kaybı</field>
+                                        <field name="name@gr">Απώλεια διαφοράς μετρητών</field>
                                         <field name="code">cy_cash_difference_loss</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -277,6 +321,8 @@
                                     </record>
                                     <record id="account_financial_report_cy_cash_discount_loss" model="account.report.line">
                                         <field name="name">Cash Discount Loss</field>
+                                        <field name="name@tr">Nakit İskontosu Kaybı</field>
+                                        <field name="name@gr">Απώλεια έκπτωσης μετρητών</field>
                                         <field name="code">cy_cash_discount_loss</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -294,6 +340,8 @@
                     </record>
                     <record id="account_financial_report_retained_earnings" model="account.report.line">
                         <field name="name">Retained Earnings</field>
+                        <field name="name@tr">Dağıtılmamış kârlar</field>
+                        <field name="name@gr">Παρακρατημένα κέρδη</field>
                         <field name="code">cy_retained_earnings</field>
                         <field name="expression_ids">
                             <record id="account_financial_report_retained_earnings_expr" model="account.report.expression">

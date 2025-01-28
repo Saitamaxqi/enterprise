@@ -3,6 +3,7 @@
     <data>
         <record id="account_financial_report_pnl_by_cost" model="account.report">
             <field name="name">Profit and Loss</field>
+            <field name="name@sv_SE">Resultaträkning</field>
             <field name="root_report_id" ref="account_reports.profit_and_loss"/>
             <field name="filter_analytic_groupby" eval="True"/>
             <field name="filter_unfold_all" eval="True"/>
@@ -18,6 +19,7 @@
             <field name="line_ids">
                 <record id="account_financial_report_pnl_by_cost_I_TOTAL" model="account.report.line">
                     <field name="name">Operating income, stock changes, etc.</field>
+                    <field name="name@sv_SE">Rörelsen intäkter, lagerförändringar m.m.</field>
                     <field name="code">SE_PNL_I_TOTAL</field>
                     <field name="hierarchy_level" eval="0"/>
                     <field name="expression_ids">
@@ -30,6 +32,7 @@
                     <field name="children_ids">
                         <record id="account_financial_report_pnl_by_cost_C_1" model="account.report.line">
                             <field name="name">Net sales</field>
+                            <field name="name@sv_SE">Nettoomsättning</field>
                             <field name="code">SE_PNL_C_1</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -43,6 +46,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_2" model="account.report.line">
                             <field name="name">Changes in inventory</field>
+                            <field name="name@sv_SE">Förändring av varulager</field>
                             <field name="code">SE_PNL_C_2</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -56,6 +60,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_3" model="account.report.line">
                             <field name="name">Work for own account</field>
+                            <field name="name@sv_SE">Aktiverat arbete för egen räkning</field>
                             <field name="code">SE_PNL_C_3</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -69,6 +74,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_4" model="account.report.line">
                             <field name="name">Other operating income</field>
+                            <field name="name@sv_SE">Övriga rörelseintäkter</field>
                             <field name="code">SE_PNL_C_4</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -84,6 +90,7 @@
                 </record>
                 <record id="account_financial_report_pnl_by_cost_K_TOTAL" model="account.report.line">
                     <field name="name">Operating costs</field>
+                    <field name="name@sv_SE">Rörelsen kostnader</field>
                     <field name="code">SE_PNL_K_TOTAL</field>
                     <field name="hierarchy_level" eval="0"/>
                     <field name="expression_ids">
@@ -96,6 +103,7 @@
                     <field name="children_ids">
                         <record id="account_financial_report_pnl_by_cost_C_5" model="account.report.line">
                             <field name="name">Raw materials and consumables</field>
+                            <field name="name@sv_SE">Råvaror och förnödenheter</field>
                             <field name="code">SE_PNL_C_5</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -109,6 +117,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_6" model="account.report.line">
                             <field name="name">Other external expenses</field>
+                            <field name="name@sv_SE">Övriga externa kostnader</field>
                             <field name="code">SE_PNL_C_6</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -122,6 +131,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_7" model="account.report.line">
                             <field name="name">Personnel costs</field>
+                            <field name="name@sv_SE">Personalkostnader</field>
                             <field name="code">SE_PNL_C_7</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -135,6 +145,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_8" model="account.report.line">
                             <field name="name">Depreciation and write-downs of tangible and intangible non-current assets</field>
+                            <field name="name@sv_SE">Avskrivningar och nedskrivningar av materiella och immateriella anläggningstillgångar</field>
                             <field name="code">SE_PNL_C_8</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -148,6 +159,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_9" model="account.report.line">
                             <field name="name">Depreciation of current assets in addition to normal depreciation</field>
+                            <field name="name@sv_SE">Nedskrivningar av omsättningstillgångar utöver normala nedskrivningar</field>
                             <field name="code">SE_PNL_C_9</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -161,6 +173,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_10" model="account.report.line">
                             <field name="name">Other operating expenses</field>
+                            <field name="name@sv_SE">Övriga rörelsekostnader</field>
                             <field name="code">SE_PNL_C_10</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -176,6 +189,7 @@
                 </record>
                 <record id="account_financial_report_pnl_by_cost_RR_TOTAL" model="account.report.line">
                     <field name="name">Operating results</field>
+                    <field name="name@sv_SE">Rörelseresultat</field>
                     <field name="code">SE_PNL_RR_TOTAL</field>
                     <field name="expression_ids">
                         <record id="account_financial_report_pnl_by_cost_RR_TOTAL_balance" model="account.report.expression">
@@ -187,6 +201,7 @@
                 </record>
                 <record id="account_financial_report_pnl_by_cost_FP_TOTAL" model="account.report.line">
                     <field name="name">Financial items</field>
+                    <field name="name@sv_SE">Finansiella poster</field>
                     <field name="code">SE_PNL_FP_TOTAL</field>
                     <field name="hierarchy_level" eval="0"/>
                     <field name="expression_ids">
@@ -199,6 +214,7 @@
                     <field name="children_ids">
                         <record id="account_financial_report_pnl_by_cost_C_11" model="account.report.line">
                             <field name="name">Income from shares in group companies</field>
+                            <field name="name@sv_SE">Intäkter från andelar i koncernföretag</field>
                             <field name="code">SE_PNL_C_11</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -212,6 +228,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_12" model="account.report.line">
                             <field name="name">Income from shares in associated companies and jointly controlled companies</field>
+                            <field name="name@sv_SE">Intäkter från andelar i intresseföretag och gemensamt styrda företag</field>
                             <field name="code">SE_PNL_C_12</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -226,6 +243,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_13" model="account.report.line">
                             <field name="name">Income from other companies in which there is an ownership interest</field>
+                            <field name="name@sv_SE">Intäkter från övriga företag som det finns ett ägarintresse i</field>
                             <field name="code">SE_PNL_C_13</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -240,6 +258,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_14" model="account.report.line">
                             <field name="name">Income from other securities and receivables that are non-current assets</field>
+                            <field name="name@sv_SE">Intäkter från övriga värdepapper och fordringar som är anläggningstillgångar</field>
                             <field name="code">SE_PNL_C_14</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -253,6 +272,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_15" model="account.report.line">
                             <field name="name">Other interest income and similar income</field>
+                            <field name="name@sv_SE">Övriga ränteintäkter och liknande intäkter</field>
                             <field name="code">SE_PNL_C_15</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -266,6 +286,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_16" model="account.report.line">
                             <field name="name">Depreciation of financial non-current assets and short-term investments</field>
+                            <field name="name@sv_SE">Nedskrivningar av finansiella anläggningstillgångar och kortfristiga placeringar</field>
                             <field name="code">SE_PNL_C_16</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -279,6 +300,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_17" model="account.report.line">
                             <field name="name">Interest expenses and similar expenses</field>
+                            <field name="name@sv_SE">Räntekostnader och liknande kostnader</field>
                             <field name="code">SE_PNL_C_17</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -294,6 +316,7 @@
                 </record>
                 <record id="account_financial_report_pnl_by_cost_C_18" model="account.report.line">
                     <field name="name">Year-end appropriations</field>
+                    <field name="name@sv_SE">Bokslutsdispositioner</field>
                     <field name="code">SE_PNL_C_18</field>
                     <field name="groupby">account_id</field>
                     <field name="foldable" eval="True"/>
@@ -307,6 +330,7 @@
                 </record>
                 <record id="account_financial_report_pnl_by_cost_RS_TOTAL" model="account.report.line">
                     <field name="name">Taxes</field>
+                    <field name="name@sv_SE">Skatter</field>
                     <field name="code">SE_PNL_RS_TOTAL</field>
                     <field name="hierarchy_level" eval="0"/>
                     <field name="expression_ids">
@@ -319,6 +343,7 @@
                     <field name="children_ids">
                         <record id="account_financial_report_pnl_by_cost_C_19" model="account.report.line">
                             <field name="name">Tax on this year's profit</field>
+                            <field name="name@sv_SE">Skatt på årets resultat</field>
                             <field name="code">SE_PNL_C_19</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -332,6 +357,7 @@
                         </record>
                         <record id="account_financial_report_pnl_by_cost_C_20" model="account.report.line">
                             <field name="name">Other taxes</field>
+                            <field name="name@sv_SE">Övriga skatter</field>
                             <field name="code">SE_PNL_C_20</field>
                             <field name="groupby">account_id</field>
                             <field name="foldable" eval="True"/>
@@ -347,6 +373,7 @@
                 </record>
                 <record id="account_financial_report_pnl_by_cost_TOTAL" model="account.report.line">
                     <field name="name">Year-end results</field>
+                    <field name="name@sv_SE">Årets resultat</field>
                     <field name="code">SE_PNL_TOTAL</field>
                     <field name="expression_ids">
                         <record id="account_financial_report_pnl_by_cost_TOTAL_balance" model="account.report.expression">

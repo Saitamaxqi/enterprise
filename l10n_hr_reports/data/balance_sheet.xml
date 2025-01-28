@@ -2,6 +2,7 @@
 <odoo>
     <record id="l10n_hr_balance_sheet" model="account.report">
         <field name="name">Balance sheet</field>
+        <field name="name@hr">Bilanca stanja</field>
         <field name="root_report_id" ref="account_reports.balance_sheet"/>
         <field name="filter_period_comparison" eval="True"/>
         <field name="filter_unfold_all" eval="True"/>
@@ -10,6 +11,7 @@
         <field name="column_ids">
             <record id="l10n_hr_balance_sheet_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@hr">Ravnoteža</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
@@ -17,6 +19,7 @@
             <!-- Actif -->
             <record id="account_financial_report_hr_active_title0" model="account.report.line">
                 <field name="name">ACTIVE</field>
+                <field name="name@hr">AKTIVAN</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_hr_active0_balance" model="account.report.expression">
@@ -28,6 +31,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_hr_active_sectionA0" model="account.report.line">
                         <field name="name">A. Receivables for recorded but not paid in capital and non-current financial assets</field>
+                        <field name="name@hr">A. Potraživanja za evidentiranu, a neuplaćenu kapitalnu i dugotrajnu financijsku imovinu</field>
                         <field name="code">HR_00</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -41,6 +45,7 @@
                     </record>
                     <record id="account_financial_report_hr_active_sectionB0" model="account.report.line">
                         <field name="name">B. Fixed asset</field>
+                        <field name="name@hr">B. Dugotrajna imovina</field>
                         <field name="code">HR_fixed</field>
                         <field name="expression_ids">
                             <record id="account_financial_report_hr_active_sectionB0_balance" model="account.report.expression">
@@ -52,6 +57,7 @@
                         <field name="children_ids">
                             <record id="account_financial_report_hr_intangible_asset0" model="account.report.line">
                                 <field name="name">I. Intangible assets</field>
+                                <field name="name@hr">I. Nematerijalna imovina</field>
                                 <field name="code">HR_intan</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -64,6 +70,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_hr_rd0" model="account.report.line">
                                         <field name="name">Research and development</field>
+                                        <field name="name@hr">Istraživanje i razvoj</field>
                                         <field name="code">HR_rd</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -77,6 +84,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_concession0" model="account.report.line">
                                         <field name="name">Concession rights, patents, commodity, service brands, software and other similar rights and assets</field>
+                                        <field name="name@hr">Koncesijska prava, patenti, robne marke, uslužne marke, softver i druga slična prava i imovina</field>
                                         <field name="code">HR_concession</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -90,6 +98,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_goodwill0" model="account.report.line">
                                         <field name="name">Goodwill</field>
+                                        <field name="name@hr">Dobre volje</field>
                                         <field name="code">HR_goodwill</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -103,6 +112,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_advance0" model="account.report.line">
                                         <field name="name">Advance payments for purchase of intangible assets</field>
+                                        <field name="name@hr">Predujmovi za kupnju nematerijalne imovine</field>
                                         <field name="code">HR_advance</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -116,6 +126,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_prep_intang0" model="account.report.line">
                                         <field name="name">Intangible assets in preparation</field>
+                                        <field name="name@hr">Nematerijalna imovina u pripremi</field>
                                         <field name="code">HR_prep_intang</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -129,6 +140,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_other_intag0" model="account.report.line">
                                         <field name="name">Other intangible assets</field>
+                                        <field name="name@hr">Ostala nematerijalna imovina</field>
                                         <field name="code">HR_other_intag</field>
                                         <field name="groupby">account_id</field>
                                          <field name="foldable" eval="True"/>
@@ -144,6 +156,7 @@
                             </record>
                             <record id="account_financial_report_hr_mater0" model="account.report.line">
                                 <field name="name">II. Material property</field>
+                                <field name="name@hr">II. Materijalno svojstvo</field>
                                 <field name="code">HR_mater</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -156,6 +169,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_hr_land0" model="account.report.line">
                                         <field name="name">Land</field>
+                                        <field name="name@hr">Zemljište</field>
                                         <field name="code">HR_land</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -169,6 +183,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_building0" model="account.report.line">
                                         <field name="name">Building</field>
+                                        <field name="name@hr">zgrada</field>
                                         <field name="code">HR_building</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -182,6 +197,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_plant_equi0" model="account.report.line">
                                         <field name="name">Plant and equipment</field>
+                                        <field name="name@hr">Postrojenja i oprema</field>
                                         <field name="code">HR_plant_equi</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -195,6 +211,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_tools0" model="account.report.line">
                                         <field name="name">Tools, transportation equipment and vehicle</field>
+                                        <field name="name@hr">Alat, transportna oprema i vozilo</field>
                                         <field name="code">HR_tools</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -208,6 +225,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_bio_asset0" model="account.report.line">
                                         <field name="name">Biological asset</field>
+                                        <field name="name@hr">Biološka imovina</field>
                                         <field name="code">HR_bio_asset</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -221,6 +239,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_advance_asset0" model="account.report.line">
                                         <field name="name">Advance for tangible asset</field>
+                                        <field name="name@hr">Predujam za materijalnu imovinu</field>
                                         <field name="code">HR_advance_asset</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -234,6 +253,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_under_prep_asset0" model="account.report.line">
                                         <field name="name">Tangible assets under preparation</field>
+                                        <field name="name@hr">Materijalna imovina u pripremi</field>
                                         <field name="code">HR_under_prep_asset</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -247,6 +267,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_other_property0" model="account.report.line">
                                         <field name="name">Other property, plant and equipment</field>
+                                        <field name="name@hr">Ostale nekretnine, postrojenja i oprema</field>
                                         <field name="code">HR_other_property</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -260,6 +281,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_invest_real0" model="account.report.line">
                                         <field name="name">Investments in real estate</field>
+                                        <field name="name@hr">Ulaganja u nekretnine</field>
                                         <field name="code">HR_invest_real</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -275,6 +297,7 @@
                             </record>
                             <record id="account_financial_report_hr_long_term0" model="account.report.line">
                                 <field name="name">III. Long-term financial assets</field>
+                                <field name="name@hr">III. Dugotrajna financijska imovina</field>
                                 <field name="code">HR_Long_term</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -287,6 +310,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_hr_invest_share0" model="account.report.line">
                                             <field name="name">Investments in shares (shares) of entrepreneurs within the group</field>
+                                            <field name="name@hr">Ulaganja u udjele (udjele) poduzetnika unutar grupe</field>
                                             <field name="code">HR_invest_share0</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -300,6 +324,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_invest_secu0" model="account.report.line">
                                             <field name="name">Investments in other securities of entrepreneurs within the group</field>
+                                            <field name="name@hr">Ulaganja u ostale vrijednosne papire poduzetnika unutar grupe</field>
                                             <field name="code">HR_invest_secu0</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -313,6 +338,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_loans_deposit0" model="account.report.line">
                                             <field name="name">Loans, deposit, etc given to a Group</field>
+                                            <field name="name@hr">Zajmovi, depoziti itd. dani grupi</field>
                                             <field name="code">HR_loans_deposit0</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -326,6 +352,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_invest_share1" model="account.report.line">
                                             <field name="name">Investments in shares (shares) of companies connected by participating interests</field>
+                                            <field name="name@hr">Ulaganja u dionice (udjele) društava povezanih udjelima</field>
                                             <field name="code">HR_invest_share1</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -339,6 +366,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_invest_secu1" model="account.report.line">
                                             <field name="name">Investments in other securities of companies connected by participating interests</field>
+                                            <field name="name@hr">Ulaganja u ostale vrijednosne papire društava povezanih sudjelujućim interesima</field>
                                             <field name="code">HR_invest_secu1</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -352,6 +380,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_loans_deposit1" model="account.report.line">
                                             <field name="name">Loans, deposit, etc given to companies in associated undertakings</field>
+                                            <field name="name@hr">Zajmovi, depoziti itd. dani tvrtkama u povezanim poduzećima</field>
                                             <field name="code">HR_loans_deposit1</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -365,6 +394,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_invest_secu2" model="account.report.line">
                                             <field name="name">Investments in a securities</field>
+                                            <field name="name@hr">Ulaganja u vrijednosne papire</field>
                                             <field name="code">HR_invest_secu2</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -378,6 +408,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_HR_loans_third0" model="account.report.line">
                                             <field name="name">Loans given to third party</field>
+                                            <field name="name@hr">Zajmovi dani trećoj strani</field>
                                             <field name="code">HR_loans_third</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -391,6 +422,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_HR_invest_associates0" model="account.report.line">
                                             <field name="name">Investments in associates accounted for using the equity method</field>
+                                            <field name="name@hr">Ulaganja u pridružena društva obračunavaju se metodom udjela</field>
                                             <field name="code">HR_invest_associates</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -404,6 +436,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_HR_other_loans0" model="account.report.line">
                                             <field name="name">Other loans</field>
+                                            <field name="name@hr">Ostali krediti</field>
                                             <field name="code">HR_other_loans</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -419,6 +452,7 @@
                             </record>
                             <record id="account_financial_report_hr_claims0" model="account.report.line">
                                 <field name="name">IV. Claims</field>
+                                <field name="name@hr">IV. Zahtjevi</field>
                                 <field name="code">HR_claims</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -431,6 +465,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_hr_receiv_group0" model="account.report.line">
                                             <field name="name">Receivables in a Group</field>
+                                            <field name="name@hr">Potraživanja u grupi</field>
                                             <field name="code">HR_receiv_group0</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -444,6 +479,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_receiv_assio0" model="account.report.line">
                                             <field name="name">Receivable from associated undertakings</field>
+                                            <field name="name@hr">Potraživanja od povezanih poduzetnika</field>
                                             <field name="code">HR_receiv_assio0</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -457,6 +493,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_long_term_receiv0" model="account.report.line">
                                             <field name="name">Long term trade receivables</field>
+                                            <field name="name@hr">Dugoročna potraživanja od kupaca</field>
                                             <field name="code">HR_long_term_receiv0</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -470,6 +507,7 @@
                                      </record>
                                     <record id="account_financial_report_hr_other_claims0" model="account.report.line">
                                             <field name="name">Other claims</field>
+                                            <field name="name@hr">Ostala potraživanja</field>
                                             <field name="code">HR_other_claims0</field>
                                             <field name="groupby">account_id</field>
                                             <field name="foldable" eval="True"/>
@@ -485,6 +523,7 @@
                             </record>
                             <record id="account_financial_report_hr_deferred0" model="account.report.line">
                                 <field name="name">V. Deferred Tax assets</field>
+                                <field name="name@hr">V. Odgođena porezna imovina</field>
                                 <field name="code">HR_deferred</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -500,6 +539,7 @@
                     </record>
                     <record id="account_financial_report_hr_active_sectionC0" model="account.report.line">
                         <field name="name">C. Current asset</field>
+                        <field name="name@hr">C. Tekuća imovina</field>
                         <field name="code">HR_current</field>
                         <field name="expression_ids">
                             <record id="account_financial_report_hr_active_sectionC0_balance" model="account.report.expression">
@@ -511,6 +551,7 @@
                         <field name="children_ids">
                             <record id="account_financial_report_hr_supplies0" model="account.report.line">
                                 <field name="name">I. Supplies</field>
+                                <field name="name@hr">I. Zalihe</field>
                                 <field name="code">HR_supplies</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -523,6 +564,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_hr_raw_mat0" model="account.report.line">
                                         <field name="name">Raw materials and material</field>
+                                        <field name="name@hr">Sirovine i materijal</field>
                                         <field name="code">HR_raw_mat0</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -536,6 +578,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_prod_in_progress0" model="account.report.line">
                                         <field name="name">Production in progress</field>
+                                        <field name="name@hr">Proizvodnja u tijeku</field>
                                         <field name="code">HR_prod_in_progress0</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -549,6 +592,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_final_prod0" model="account.report.line">
                                         <field name="name">Final product</field>
+                                        <field name="name@hr">Finalni proizvod</field>
                                         <field name="code">HR_final_prod</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -562,6 +606,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_trade_goods0" model="account.report.line">
                                         <field name="name">Trade goods</field>
+                                        <field name="name@hr">Trgovačka roba</field>
                                         <field name="code">HR_trade_goods</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -575,6 +620,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_bio_asset1" model="account.report.line">
                                         <field name="name">Biological asset</field>
+                                        <field name="name@hr">Biološka imovina</field>
                                         <field name="code">HR_bio_asset1</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -588,6 +634,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_advance_supp0" model="account.report.line">
                                         <field name="name">Advance for supplies</field>
+                                        <field name="name@hr">Predujam za zalihe</field>
                                         <field name="code">HR_advance_supp0</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -601,6 +648,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_non_current_assets0" model="account.report.line">
                                         <field name="name">Non current assets intended for sale</field>
+                                        <field name="name@hr">Dugotrajna imovina namijenjena prodaji</field>
                                         <field name="code">HR_non_current_assets0</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -616,6 +664,7 @@
                             </record>
                             <record id="account_financial_report_hr_claims1" model="account.report.line">
                                 <field name="name">II. Claims</field>
+                                <field name="name@hr">II. Zahtjevi</field>
                                 <field name="code">HR_claims_1</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -628,6 +677,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_hr_receiv_entre0" model="account.report.line">
                                         <field name="name">Receivables from entrepreneurs within the group</field>
+                                        <field name="name@hr">Potraživanja od poduzetnika unutar grupe</field>
                                         <field name="code">HR_receiv_entre0</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -641,6 +691,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_receiv_comp0" model="account.report.line">
                                         <field name="name">Receivables from companies connected by a participating interest</field>
+                                        <field name="name@hr">Potraživanja od društava povezanih sudjelujućim interesom</field>
                                         <field name="code">HR_receiv_comp0</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -654,6 +705,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_trade_receiv0" model="account.report.line">
                                         <field name="name">Trade receivables</field>
+                                        <field name="name@hr">Potraživanja od kupaca</field>
                                         <field name="code">HR_trade_receiv0</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -667,6 +719,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_receiv_emp0" model="account.report.line">
                                         <field name="name">Receivables from employees and members of entrepreneurs</field>
+                                        <field name="name@hr">Potraživanja od radnika i članova poduzetnika</field>
                                         <field name="code">HR_receiv_emp0</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -680,6 +733,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_receiv_gov0" model="account.report.line">
                                         <field name="name">Receivables from government and other institutions</field>
+                                        <field name="name@hr">Potraživanja od državnih i drugih institucija</field>
                                         <field name="code">HR_receiv_gov0</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -693,6 +747,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_other_claims2" model="account.report.line">
                                         <field name="name">Other claims</field>
+                                        <field name="name@hr">Ostala potraživanja</field>
                                         <field name="code">HR_other_claims2</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -708,6 +763,7 @@
                             </record>
                             <record id="account_financial_report_hr_short_term0" model="account.report.line">
                                 <field name="name">III. Short term financial assets </field>
+                                <field name="name@hr">III. Kratkoročna financijska imovina</field>
                                 <field name="code">HR_short_term</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -720,6 +776,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_hr_invest_shares2" model="account.report.line">
                                         <field name="name">Investments in shares (shares) of entrepreneurs within the group</field>
+                                        <field name="name@hr">Ulaganja u udjele (udjele) poduzetnika unutar grupe</field>
                                         <field name="code">HR_invest_shares2</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -733,6 +790,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_invest_secu3" model="account.report.line">
                                         <field name="name">Investments in other securities of entrepreneurs within the group</field>
+                                        <field name="name@hr">Ulaganja u ostale vrijednosne papire poduzetnika unutar grupe</field>
                                         <field name="code">HR_invest_secu3</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -746,6 +804,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_loan_deposits3" model="account.report.line">
                                         <field name="name">Loans, deposits, etc. given to entrepreneurs within the group</field>
+                                        <field name="name@hr">Krediti, depoziti i sl. dani poduzetnicima unutar grupe</field>
                                         <field name="code">HR_loan_deposits3</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -759,6 +818,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_invest_share4" model="account.report.line">
                                         <field name="name">Investments in shares (shares) of companies connected by participating interests</field>
+                                        <field name="name@hr">Ulaganja u dionice (udjele) društava povezanih udjelima</field>
                                         <field name="code">HR_invest_share4</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -772,6 +832,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_invest_secu4" model="account.report.line">
                                         <field name="name">Investments in other securities of companies connected by participating interests</field>
+                                        <field name="name@hr">Ulaganja u ostale vrijednosne papire društava povezanih sudjelujućim interesima</field>
                                         <field name="code">HR_invest_secu4</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -785,6 +846,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_loan_deposits4" model="account.report.line">
                                         <field name="name">Loans, deposits, etc to companies in associated undertakings</field>
+                                        <field name="name@hr">Krediti, depoziti itd. tvrtkama u povezanim poduzećima</field>
                                         <field name="code">HR_loan_deposits4</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -798,6 +860,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_invest_secu5" model="account.report.line">
                                         <field name="name">Investments in securities</field>
+                                        <field name="name@hr">Ulaganja u vrijednosne papire</field>
                                         <field name="code">HR_invest_secu5</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -811,6 +874,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_loan_deposit5" model="account.report.line">
                                         <field name="name">Loans, deposits and the like</field>
+                                        <field name="name@hr">Krediti, depoziti i slično</field>
                                         <field name="code">HR_loan_deposit5</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -824,6 +888,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_other_financial0" model="account.report.line">
                                         <field name="name">Other financial assets</field>
+                                        <field name="name@hr">Ostala financijska imovina</field>
                                         <field name="code">HR_other_financial</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -839,6 +904,7 @@
                             </record>
                             <record id="account_financial_report_hr_money0" model="account.report.line">
                                 <field name="name">IV. Money in the bank and the cash register </field>
+                                <field name="name@hr">IV. Novac u banci i blagajni</field>
                                 <field name="code">HR_money</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -854,6 +920,7 @@
                     </record>
                     <record id="account_financial_report_hr_paid_expenses0" model="account.report.line">
                         <field name="name">D. Paid expenses of the future periods and calculated income</field>
+                        <field name="name@hr">D. Plaćeni troškovi budućih razdoblja i obračunati prihodi</field>
                         <field name="code">HR_paid_expenses</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -870,6 +937,7 @@
            <!-- PASSIF -->
             <record id="account_financial_report_hr_passif_title0" model="account.report.line">
                 <field name="name">PASSIF</field>
+                <field name="name@hr">PASIVNO</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_hr_passif0_balance" model="account.report.expression">
@@ -882,6 +950,7 @@
                      <!-- Section A -->
                      <record id="account_financial_report_hr_passive_sectionA0" model="account.report.line">
                          <field name="name">A. Capital and reserve</field>
+                         <field name="name@hr">A. Kapital i rezerve</field>
                          <field name="code">HR_capital</field>
                          <field name="expression_ids">
                             <record id="account_financial_report_hr_passive_sectionA0_balance" model="account.report.expression">
@@ -893,6 +962,7 @@
                          <field name="children_ids">
                              <record id="account_financial_report_hr_based_capital0" model="account.report.line">
                                  <field name="name">I. Based (registered) capital</field>
+                                 <field name="name@hr">I. Temeljni (upisani) kapital</field>
                                  <field name="code">HR_based_capital</field>
                                  <field name="groupby">account_id</field>
                                  <field name="foldable" eval="True"/>
@@ -906,6 +976,7 @@
                              </record>
                              <record id="account_financial_report_hr_capital_reserves0" model="account.report.line">
                                  <field name="name">II. Capital reserves</field>
+                                 <field name="name@hr">II. Kapitalne rezerve</field>
                                  <field name="code">HR_capital_reserves</field>
                                  <field name="groupby">account_id</field>
                                  <field name="foldable" eval="True"/>
@@ -919,6 +990,7 @@
                              </record>
                              <record id="account_financial_report_hr_profit_reserves0" model="account.report.line">
                                  <field name="name">III. Profit reserves</field>
+                                 <field name="name@hr">III. Rezerve dobiti</field>
                                  <field name="code">HR_profit_reserves</field>
                                  <field name="foldable" eval="True"/>
                                  <field name="expression_ids">
@@ -931,6 +1003,7 @@
                                  <field name="children_ids">
                                     <record id="account_financial_report_hr_legal_reserves0" model="account.report.line">
                                         <field name="name">Legal reserves</field>
+                                        <field name="name@hr">Zakonske rezerve</field>
                                         <field name="code">HR_legal_reserves0</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -944,6 +1017,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_shares_reserves0" model="account.report.line">
                                         <field name="name">Reserves for own shares</field>
+                                        <field name="name@hr">Reserves for own shares</field>
                                         <field name="code">HR_shares_reserves0</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -957,6 +1031,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_shares_own_and_deduc0" model="account.report.line">
                                         <field name="name">Own shares and shares (deductible item)</field>
+                                        <field name="name@hr">Vlastiti udjeli i udjeli (odbitna stavka)</field>
                                         <field name="code">HR_shares_own_and_deduc</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -970,6 +1045,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_stat_reserv0" model="account.report.line">
                                         <field name="name">Statutory reserves</field>
+                                        <field name="name@hr">Zakonske rezerve</field>
                                         <field name="code">HR_stat_reserv</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -983,6 +1059,7 @@
                                     </record>
                                     <record id="account_financial_report_hr_other_reserv0" model="account.report.line">
                                         <field name="name">Other reserves</field>
+                                        <field name="name@hr">Ostale rezerve</field>
                                         <field name="code">HR_other_reserv</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -998,6 +1075,7 @@
                             </record>
                              <record id="account_financial_report_hr_reval_reserves0" model="account.report.line">
                                  <field name="name">IV. Revaluation reserves</field>
+                                 <field name="name@hr">IV. Revalorizacijske rezerve</field>
                                  <field name="code">HR_reval_reserves</field>
                                  <field name="expression_ids">
                                      <record id="account_financial_report_hr_based_reval_reserves_balance" model="account.report.expression">
@@ -1009,6 +1087,7 @@
                              </record>
                              <record id="account_financial_report_hr_fair_reserves0" model="account.report.line">
                                  <field name="name">V. Fair value reserves</field>
+                                 <field name="name@hr">V. Rezerve fer vrijednosti</field>
                                  <field name="code">HR_fair_reserves</field>
                                  <field name="foldable" eval="True"/>
                                  <field name="expression_ids">
@@ -1021,6 +1100,7 @@
                                  <field name="children_ids">
                                      <record id="account_financial_report_hr_fair_value0" model="account.report.line">
                                          <field name="name">Fair value of available-for-sale financial assets</field>
+                                         <field name="name@hr">Fer vrijednost financijske imovine raspoložive za prodaju</field>
                                          <field name="code">HR_fair_value</field>
                                          <field name="groupby">account_id</field>
                                          <field name="foldable" eval="True"/>
@@ -1034,6 +1114,7 @@
                                      </record>
                                      <record id="account_financial_report_hr_cash_flow_prot0" model="account.report.line">
                                          <field name="name">An effective part of cash flow protection</field>
+                                         <field name="name@hr">Učinkovit dio zaštite novčanog toka</field>
                                          <field name="code">HR_cash_flow_prot</field>
                                          <field name="groupby">account_id</field>
                                          <field name="foldable" eval="True"/>
@@ -1047,6 +1128,7 @@
                                      </record>
                                      <record id="account_financial_report_hr_effect0" model="account.report.line">
                                          <field name="name">An effective part of the protection of net investment abroad</field>
+                                         <field name="name@hr">Učinkovit dio zaštite neto ulaganja u inozemstvu</field>
                                          <field name="code">HR_effect</field>
                                          <field name="groupby">account_id</field>
                                          <field name="foldable" eval="True"/>
@@ -1062,6 +1144,7 @@
                             </record>
                              <record id="account_financial_report_hr_retained0" model="account.report.line">
                                  <field name="name">VI. Retained earnings or carried over loss</field>
+                                 <field name="name@hr">VI. Zadržana dobit ili preneseni gubitak</field>
                                  <field name="code">HR_retained</field>
                                  <field name="foldable" eval="True"/>
                                  <field name="expression_ids">
@@ -1074,6 +1157,7 @@
                                  <field name="children_ids">
                                      <record id="account_financial_report_hr_ret_earn0" model="account.report.line">
                                          <field name="name">Retained earnings</field>
+                                         <field name="name@hr">Zadržana dobit</field>
                                          <field name="code">HR_ret_earn</field>
                                          <field name="groupby">account_id</field>
                                          <field name="foldable" eval="True"/>
@@ -1087,6 +1171,7 @@
                                      </record>
                                      <record id="account_financial_report_hr_trans_loss0" model="account.report.line">
                                          <field name="name">Transferred loss</field>
+                                         <field name="name@hr">Preneseni gubitak</field>
                                          <field name="code">HR_trans_loss</field>
                                          <field name="groupby">account_id</field>
                                          <field name="foldable" eval="True"/>
@@ -1102,6 +1187,7 @@
                              </record>
                              <record id="account_financial_report_hr_profit_loss0" model="account.report.line">
                                  <field name="name">VII. Profit or loss for the year</field>
+                                 <field name="name@hr">VII. Dobit ili gubitak za godinu</field>
                                  <field name="code">HR_profit_loss</field>
                                  <field name="foldable" eval="True"/>
                                  <field name="expression_ids">
@@ -1115,6 +1201,7 @@
                              </record>
                              <record id="account_financial_report_hr_controlling0" model="account.report.line">
                                  <field name="name">VIII. Non-controlling interests</field>
+                                 <field name="name@hr">VIII. Nekontrolirajući interesi</field>
                                  <field name="code">HR_controlling</field>
                                  <field name="groupby">account_id</field>
                                  <field name="foldable" eval="True"/>
@@ -1131,6 +1218,7 @@
                     <!-- Section B -->
                     <record id="account_financial_report_hr_passive_sectionB0" model="account.report.line">
                         <field name="name">B. Reservation</field>
+                        <field name="name@hr">B. Rezervacija</field>
                         <field name="code">HR_reservation</field>
                         <field name="expression_ids">
                             <record id="account_financial_report_hr_passive_sectionB0_balance" model="account.report.expression">
@@ -1142,6 +1230,7 @@
                         <field name="children_ids">
                             <record id="account_financial_report_hr_provision_emp_benef0" model="account.report.line">
                                 <field name="name">Provision for employee benefits</field>
+                                <field name="name@hr">Odredbe za primanja zaposlenika</field>
                                 <field name="code">HR_provision_emp_benef</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1155,6 +1244,7 @@
                             </record>
                             <record id="account_financial_report_hr_provision_tax_lia0" model="account.report.line">
                                 <field name="name">Provision for tax liabilities</field>
+                                <field name="name@hr">Rezerviranja za porezne obveze</field>
                                 <field name="code">HR_provision_tax_lia</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1168,6 +1258,7 @@
                             </record>
                             <record id="account_financial_report_hr_provision_legal0" model="account.report.line">
                                 <field name="name">Provisions for legal</field>
+                                <field name="name@hr">Odredbe za pravne</field>
                                 <field name="code">HR_provision_legal</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1181,6 +1272,7 @@
                             </record>
                             <record id="account_financial_report_hr_provision_renew0" model="account.report.line">
                                 <field name="name">Provisions for renewal of natural resources</field>
+                                <field name="name@hr">Odredbe za obnovu prirodnih resursa</field>
                                 <field name="code">HR_provision_renew</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1194,6 +1286,7 @@
                             </record>
                             <record id="account_financial_report_hr_provision_risk0" model="account.report.line">
                                 <field name="name">Provision for risks within warranty period</field>
+                                <field name="name@hr">Rezervacije za rizike unutar jamstvenog roka</field>
                                 <field name="code">HR_provision_risk</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1207,6 +1300,7 @@
                             </record>
                             <record id="account_financial_report_hr_provision_other0" model="account.report.line">
                                 <field name="name">Other provisions</field>
+                                <field name="name@hr">Ostale odredbe</field>
                                 <field name="code">HR_provision_other</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1223,6 +1317,7 @@
                     <!-- Section C -->
                     <record id="account_financial_report_hr_passive_sectionC0" model="account.report.line">
                         <field name="name">C. Long term liabilities</field>
+                        <field name="name@hr">C. Dugoročne obveze</field>
                         <field name="code">HR_long_term1</field>
                         <field name="expression_ids">
                             <record id="account_financial_report_hr_passive_sectionC0_balance" model="account.report.expression">
@@ -1234,6 +1329,7 @@
                         <field name="children_ids">
                             <record id="account_financial_report_hr_obli_entre0" model="account.report.line">
                                 <field name="name">Obligations towards Entrepreneurs within the Group</field>
+                                <field name="name@hr">Obveze prema poduzetnicima unutar Grupe</field>
                                 <field name="code">HR_obli_entre</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1247,6 +1343,7 @@
                             </record>
                             <record id="account_financial_report_hr_obli_loan0" model="account.report.line">
                                 <field name="name">Obligations for loans, deposits and the like of entrepreneurs within the group</field>
+                                <field name="name@hr">Obveze za kredite, depozite i sl. poduzetnika unutar grupe</field>
                                 <field name="code">HR_obli_loan</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1260,6 +1357,7 @@
                             </record>
                             <record id="account_financial_report_hr_obli_comp0" model="account.report.line">
                                 <field name="name">Obligations towards companies connected by participating interests</field>
+                                <field name="name@hr">Obveze prema društvima povezanim udjelima</field>
                                 <field name="code">HR_obli_comp</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1273,6 +1371,7 @@
                             </record>
                             <record id="account_financial_report_hr_obli_loan1" model="account.report.line">
                                 <field name="name">Obligations for loans, deposits and the like of companies connected by a participating interest</field>
+                                <field name="name@hr">Obveze za zajmove, depozite i sl. društava povezanih udjelom</field>
                                 <field name="code">HR_obli_loan1</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1286,6 +1385,7 @@
                             </record>
                             <record id="account_financial_report_hr_obli_loan2" model="account.report.line">
                                 <field name="name">Obligations for loans, deposits and the like interest</field>
+                                <field name="name@hr">Obveze za kredite, depozite i sl. kamate</field>
                                 <field name="code">HR_obli_loan2</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1299,6 +1399,7 @@
                             </record>
                             <record id="account_financial_report_hr_lia_bank0" model="account.report.line">
                                 <field name="name">Liabilities to banks and other financial institutions</field>
+                                <field name="name@hr">Obveze prema bankama i drugim financijskim institucijama</field>
                                 <field name="code">HR_lia_bank</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1312,6 +1413,7 @@
                             </record>
                             <record id="account_financial_report_hr_obli_adv0" model="account.report.line">
                                 <field name="name">Obligations for advances</field>
+                                <field name="name@hr">Obveze za predujmove</field>
                                 <field name="code">HR_obli_adv</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1325,6 +1427,7 @@
                             </record>
                             <record id="account_financial_report_hr_commi_supp0" model="account.report.line">
                                 <field name="name">Commitments towards suppliers</field>
+                                <field name="name@hr">Obveze prema dobavljačima</field>
                                 <field name="code">HR_commi_supp</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1338,6 +1441,7 @@
                             </record>
                             <record id="account_financial_report_hr_obli_secu0" model="account.report.line">
                                 <field name="name">Obligations for securities</field>
+                                <field name="name@hr">Obveze za vrijednosne papire</field>
                                 <field name="code">HR_obli_secu</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1351,6 +1455,7 @@
                             </record>
                             <record id="account_financial_report_hr_other_long_lia0" model="account.report.line">
                                 <field name="name">Other long-term liabilities</field>
+                                <field name="name@hr">Ostale dugoročne obveze</field>
                                 <field name="code">HR_other_long_lia</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1364,6 +1469,7 @@
                             </record>
                             <record id="account_financial_report_hr_deferred_tax0" model="account.report.line">
                                 <field name="name">Deferred tax liability</field>
+                                <field name="name@hr">Odgođena porezna obveza</field>
                                 <field name="code">HR_deferred_tax</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1380,6 +1486,7 @@
                     <!-- Section D -->
                     <record id="account_financial_report_hr_passive_sectionD0" model="account.report.line">
                         <field name="name">D. Short term liabilities</field>
+                        <field name="name@hr">D. kratkoročne obveze</field>
                         <field name="code">HR_short_term1</field>
                         <field name="expression_ids">
                             <record id="account_financial_report_hr_passive_sectionD0_balance" model="account.report.expression">
@@ -1391,6 +1498,7 @@
                         <field name="children_ids">
                             <record id="account_financial_report_hr_lia_entre0" model="account.report.line">
                                 <field name="name">Liabilities to entrepreneurs within the group</field>
+                                <field name="name@hr">Obveze prema poduzetnicima unutar grupe</field>
                                 <field name="code">HR_lia_entre</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1404,6 +1512,7 @@
                             </record>
                             <record id="account_financial_report_hr_obli_loans0" model="account.report.line">
                                 <field name="name">Obligations for loans, deposits and the like of entrepreneurs within the group</field>
+                                <field name="name@hr">Obveze za kredite, depozite i sl. poduzetnika unutar grupe</field>
                                 <field name="code">HR_obli_loans</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1417,6 +1526,7 @@
                             </record>
                             <record id="account_financial_report_hr_obli_comp_part_int0" model="account.report.line">
                                 <field name="name">Obligations towards companies connected by participating interests</field>
+                                <field name="name@hr">Obveze prema društvima povezanim udjelima</field>
                                 <field name="code">HR_obli_comp_part_int</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1430,6 +1540,7 @@
                             </record>
                             <record id="account_financial_report_hr_obli_loans_part_int0" model="account.report.line">
                                 <field name="name">Obligations for loans, deposits and the like of companies connected by a participating interest</field>
+                                <field name="name@hr">Obveze za zajmove, depozite i sl. društava povezanih udjelom</field>
                                 <field name="code">HR_obli_loans_part_int</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1443,6 +1554,7 @@
                             </record>
                             <record id="account_financial_report_hr_lease_lia0" model="account.report.line">
                                 <field name="name">Lease liabilities and deposits received</field>
+                                <field name="name@hr">Obveze za najam i primljeni depoziti</field>
                                 <field name="code">HR_lease_lia</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1456,6 +1568,7 @@
                             </record>
                             <record id="account_financial_report_hr_lia_bank_other0" model="account.report.line">
                                 <field name="name">Liabilities towards banks and other financial institutions</field>
+                                <field name="name@hr">Obveze prema bankama i drugim financijskim institucijama</field>
                                 <field name="code">HR_lia_bank_other</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1469,6 +1582,7 @@
                             </record>
                             <record id="account_financial_report_hr_lia_adv0" model="account.report.line">
                                 <field name="name">Liabilities for advances received</field>
+                                <field name="name@hr">Obveze za primljene predujmove</field>
                                 <field name="code">HR_lia_adv</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1482,6 +1596,7 @@
                             </record>
                             <record id="account_financial_report_hr_commit_supp0" model="account.report.line">
                                 <field name="name">Commitments towards suppliers</field>
+                                <field name="name@hr">Obveze prema dobavljačima</field>
                                 <field name="code">HR_commit_supp</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1495,6 +1610,7 @@
                             </record>
                             <record id="account_financial_report_hr_lia_secu0" model="account.report.line">
                                 <field name="name">Liabilities for securities</field>
+                                <field name="name@hr">Obveze za vrijednosne papire</field>
                                 <field name="code">HR_lia_secu</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1508,6 +1624,7 @@
                             </record>
                             <record id="account_financial_report_hr_lia_emp0" model="account.report.line">
                                 <field name="name">Liabilities towards employees</field>
+                                <field name="name@hr">Obveze prema radnicima</field>
                                 <field name="code">HR_lia_emp</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1521,6 +1638,7 @@
                             </record>
                             <record id="account_financial_report_hr_lia_tax_contri" model="account.report.line">
                                 <field name="name">Liabilities for taxes, contributions and similar benefits</field>
+                                <field name="name@hr">Obveze za poreze, doprinose i slična davanja</field>
                                 <field name="code">HR_lia_tax_contri</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1534,6 +1652,7 @@
                             </record>
                             <record id="account_financial_report_hr_lia_share_res" model="account.report.line">
                                 <field name="name">Liabilities based on the share in the result</field>
+                                <field name="name@hr">Obveze po osnovi udjela u rezultatu</field>
                                 <field name="code">HR_lia_share_res</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1547,6 +1666,7 @@
                             </record>
                             <record id="account_financial_report_hr_lia_non_current" model="account.report.line">
                                 <field name="name">Liabilities based on non-current assets intended for sale</field>
+                                <field name="name@hr">Obveze po osnovi dugotrajne imovine namijenjene prodaji</field>
                                 <field name="code">HR_lia_non_current</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1560,6 +1680,7 @@
                             </record>
                             <record id="account_financial_report_hr_other_liab" model="account.report.line">
                                 <field name="name">Other short-term liabilities</field>
+                                <field name="name@hr">Ostale kratkoročne obveze</field>
                                 <field name="code">HR_other_liab</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -1576,6 +1697,7 @@
                     <!-- Section E -->
                     <record id="account_financial_report_hr_passive_sectionE0" model="account.report.line">
                         <field name="name">E. Deferred payment of costs and the income of the future period</field>
+                        <field name="name@hr">E. Odgođeno plaćanje troškova i prihoda budućeg razdoblja</field>
                         <field name="code">HR_deferred1</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>

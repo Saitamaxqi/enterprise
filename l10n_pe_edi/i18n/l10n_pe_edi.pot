@@ -205,16 +205,6 @@ msgid "Arroz"
 msgstr ""
 
 #. module: l10n_pe_edi
-#: model:product.template,name:l10n_pe_edi.product_product_IVAP_1_product_template
-msgid "Arroz descascarillado (arroz cargo o arroz pardo)"
-msgstr ""
-
-#. module: l10n_pe_edi
-#: model:product.template,name:l10n_pe_edi.product_product_IVAP_2_product_template
-msgid "Arroz semiblanqueado o blanqueado , incluso pulido o glaseado"
-msgstr ""
-
-#. module: l10n_pe_edi
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 msgid ""
@@ -1092,14 +1082,6 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_pe_edi.field_res_config_settings__l10n_pe_edi_provider_password
 #: model:ir.model.fields,help:l10n_pe_edi.field_res_config_settings__l10n_pe_edi_provider_username
 msgid "SUNAT Operaciones en Línea"
-msgstr ""
-
-#. module: l10n_pe_edi
-#: model:product.template,name:l10n_pe_edi.product_product_IVAP_3_product_template
-msgid ""
-"Salvados, moyuelos y demás residuos del cernido, de la molienda o de otros "
-"tratamientos de los cereales o de las leguminosas, incluso en \"pellets\" de"
-" arroz"
 msgstr ""
 
 #. module: l10n_pe_edi

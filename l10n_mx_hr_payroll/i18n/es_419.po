@@ -58,8 +58,8 @@ msgid ""
 "Below text serves as a suggestion and doesn’t engage Odoo S.A. "
 "responsibility."
 msgstr ""
-"El siguiente texto sirve como sugerencia y deslinda a Odoo S.A. de cualquier "
-"responsabilidad."
+"El siguiente texto sirve como sugerencia y deslinda a Odoo S.A. de cualquier"
+" responsabilidad."
 
 #. module: l10n_mx_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll.selection__hr_contract__l10n_mx_schedule_pay__bi_weekly
@@ -72,10 +72,10 @@ msgid ""
 "Certain countries apply withholding at source on the amount of invoices, in "
 "accordance with their internal legislation. Any withholding at source will "
 "be paid by the client to the tax authorities. Under no circumstances can My "
-"Mexican Company become involved in costs related to a country's legislation. "
-"The amount of the invoice will therefore be due to My Mexican Company in its "
-"entirety and does not include any costs relating to the legislation of the "
-"country in which the client is located."
+"Mexican Company become involved in costs related to a country's legislation."
+" The amount of the invoice will therefore be due to My Mexican Company in "
+"its entirety and does not include any costs relating to the legislation of "
+"the country in which the client is located."
 msgstr ""
 "Ciertos países aplican retenciones en origen sobre el importe de las "
 "facturas, de acuerdo con su legislación interna. El cliente debe pagar "
@@ -94,51 +94,6 @@ msgstr "Aguinaldo"
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll.selection__hr_contract__l10n_mx_schedule_pay__daily
 msgid "Daily"
 msgstr "Diario"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disability_life_employee
-msgid "Disability and Life IMSS (Employee)"
-msgstr "Invalidez y vida IMSS (empleado)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disability_life
-msgid "Disability and Life IMSS (Employer)"
-msgstr "Invalidez y vida IMSS (empleador)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_additional_employee
-msgid "Disease and Maternity IMSS - Additional Quota (Employee)"
-msgstr "Enfermedades y maternidad IMSS - Cuota adicional (empleado)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_additional
-msgid "Disease and Maternity IMSS - Additional Quota (Employer)"
-msgstr "Enfermedades y maternidad IMSS - Cuota adicional (empleador)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_fixed
-msgid "Disease and Maternity IMSS - Fixed Quota (Employer)"
-msgstr "Enfermedades y maternidad IMSS - Cuota fija (empleador)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_money_employee
-msgid "Disease and Maternity IMSS - In Money (Employee)"
-msgstr "Enfermedades y maternidad IMSS - En dinero (empleado)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_money
-msgid "Disease and Maternity IMSS - In Money (Employer)"
-msgstr "Enfermedades y maternidad IMSS - En dinero (empleador)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_medical_employee
-msgid "Disease and Maternity IMSS - Medical Expenses (Employee)"
-msgstr "Enfermedades y maternidad IMSS - Gastos médicos (empleado)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_medical
-msgid "Disease and Maternity IMSS - Medical Expenses (Employer)"
-msgstr "Enfermedades y maternidad IMSS - Gastos médicos (empleador)"
 
 #. module: l10n_mx_hr_payroll
 #: model:ir.model,name:l10n_mx_hr_payroll.model_hr_contract
@@ -168,44 +123,12 @@ msgid "Holidays Count"
 msgstr "Número de días festivos"
 
 #. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employee
-msgid "IMSS (Employee)"
-msgstr "IMSS (empleado)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employer
-msgid "IMSS (Employer)"
-msgstr "IMSS (empleador)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_social_security_total_employee
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_social_security_total_employer
-#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employee_total
-msgid "IMSS Total (Employee)"
-msgstr "Total IMSS (empleado)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employer_total
-msgid "IMSS Total (Employer)"
-msgstr "Total IMSS (empleador)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_infonavit
-msgid "INFONAVIT IMSS (Employer)"
-msgstr "INFONAVIT IMSS (empleador)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_christmas_bonus_isr
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_isr
-msgid "ISR (Income Tax)"
-msgstr "ISR (impuesto sobre la renta)"
-
-#. module: l10n_mx_hr_payroll
 #: model_terms:res.company,invoice_terms_html:l10n_mx_hr_payroll.res_company_mx
 msgid ""
 "If a payment is still outstanding more than sixty (60) days after the due "
 "payment date, My Mexican Company reserves the right to call on the services "
-"of a debt recovery company. All legal expenses will be payable by the client."
+"of a debt recovery company. All legal expenses will be payable by the "
+"client."
 msgstr ""
 "Si un pago sigue pendiente durante más de sesenta (60) días después de la "
 "fecha de vencimiento, Mi Empresa Mexicana se reserva el derecho de recurrir "
@@ -215,8 +138,8 @@ msgstr ""
 #. module: l10n_mx_hr_payroll
 #: model_terms:res.company,invoice_terms_html:l10n_mx_hr_payroll.res_company_mx
 msgid ""
-"In order for it to be admissible, My Mexican Company must be notified of any "
-"claim by means of a letter sent by recorded delivery to its registered "
+"In order for it to be admissible, My Mexican Company must be notified of any"
+" claim by means of a letter sent by recorded delivery to its registered "
 "office within 8 days of the delivery of the goods or the provision of the "
 "services."
 msgstr ""
@@ -232,27 +155,17 @@ msgid ""
 "https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf\n"
 "\n"
 "ISR tables\n"
-"https://www.dof.gob.mx/nota_detalle.php?codigo=5640505&amp;"
-"fecha=12/01/2022#gsc.tab=0\n"
+"https://www.dof.gob.mx/nota_detalle.php?codigo=5640505&amp;fecha=12/01/2022#gsc.tab=0\n"
 "\n"
-"[(Gross monthly salary - Lower limit) x Percentage to be applied over the "
-"excess of the lower limit] + Fixed rate"
+"[(Gross monthly salary - Lower limit) x Percentage to be applied over the excess of the lower limit] + Fixed rate"
 msgstr ""
 "Ley de Impuesto sobre la Renta \n"
 "https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf \n"
 "\n"
 "Tablas correspondientes al ISR \n"
-"https://www.dof.gob.mx/nota_detalle.php?codigo=5640505&amp;"
-"fecha=12/01/2022#gsc.tab=0\n"
+"https://www.dof.gob.mx/nota_detalle.php?codigo=5640505&amp;fecha=12/01/2022#gsc.tab=0\n"
 "\n"
-"[(Salario mensual bruto - Límite inferior) x Porcentaje a aplicar sobre el "
-"exceso del límite inferior] + Tasa fija"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_integrated_daily_wage
-#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_integrated_daily_wage
-msgid "Integrated Daily Wage"
-msgstr "Salario diario integrado"
+"[(Salario mensual bruto - Límite inferior) x Porcentaje a aplicar sobre el exceso del límite inferior] + Tasa fija"
 
 #. module: l10n_mx_hr_payroll
 #: model:ir.actions.report,name:l10n_mx_hr_payroll.action_report_payslip_mx
@@ -281,8 +194,8 @@ msgid ""
 "My Mexican Company undertakes to do its best to supply performant services "
 "in due time in accordance with the agreed timeframes. However, none of its "
 "obligations can be considered as being an obligation to achieve results. My "
-"Mexican Company cannot under any circumstances, be required by the client to "
-"appear as a third party in the context of any claim for damages filed "
+"Mexican Company cannot under any circumstances, be required by the client to"
+" appear as a third party in the context of any claim for damages filed "
 "against the client by an end consumer."
 msgstr ""
 "Mi Empresa Mexicana se compromete a hacer todo lo posible para suministrar "
@@ -292,11 +205,6 @@ msgstr ""
 "puede, bajo ninguna circunstancia, hacer que Mi Empresa Mexicana comparezca "
 "como externo en el contexto de cualquier demanda por daños y perjuicios "
 "presentada contra el cliente por parte de un consumidor final."
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_nursery
-msgid "Nursery and Social Benefits IMSS (Employer)"
-msgstr "Guarderías y prestaciones sociales IMSS (empleador)"
 
 #. module: l10n_mx_hr_payroll
 #: model_terms:res.company,invoice_terms_html:l10n_mx_hr_payroll.res_company_mx
@@ -310,8 +218,8 @@ msgid ""
 msgstr ""
 "Nuestras facturas se pagan en un plazo de 21 días hábiles, a menos que se "
 "indique algún otro plazo de pago en la factura o en la orden. En caso de "
-"impago en la fecha de vencimiento, Mi Empresa Mexicana se reserva el derecho "
-"de solicitar un pago de interés fijo por un importe correspondiente al 10% "
+"impago en la fecha de vencimiento, Mi Empresa Mexicana se reserva el derecho"
+" de solicitar un pago de interés fijo por un importe correspondiente al 10% "
 "del importe restante. Mi Empresa Mexicana estará autorizada a suspender "
 "cualquier prestación de servicios sin previo aviso en caso de retraso en el "
 "pago."
@@ -325,21 +233,6 @@ msgstr "Recibo de nómina"
 #: model:hr.department,name:l10n_mx_hr_payroll.hr_department_rdlt
 msgid "RD MX"
 msgstr "RD MX"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_ceav_employee
-msgid "Retirement, assault in elderly and old age (CEAV) IMSS (Employee)"
-msgstr "Jubilación, cesantía en edad avanzada o vejez (CEAV) IMSS (empleado)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_ceav
-msgid "Retirement, assault in elderly and old age (CEAV) IMSS (Employer)"
-msgstr "Jubilación, cesantía en edad avanzada o vejez (CEAV) IMSS (empleador)"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_retirement
-msgid "Retirement, assault in elderly and old age IMSS (Employer)"
-msgstr "Jubilación, cesantía en edad avanzada o vejez IMSS (empleador)"
 
 #. module: l10n_mx_hr_payroll
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll.field_hr_contract__l10n_mx_risk_bonus_rate
@@ -370,19 +263,9 @@ msgstr ""
 "válida."
 
 #. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_subsidy
-msgid "Used Subsidy"
-msgstr "Subsidio utilizado"
-
-#. module: l10n_mx_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll.selection__hr_contract__l10n_mx_schedule_pay__weekly
 msgid "Weekly"
 msgstr "Semanal"
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_work_risk
-msgid "Work Risks IMSS (Employer)"
-msgstr "Riesgos de trabajo IMSS (empleador)"
 
 #. module: l10n_mx_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll.selection__hr_contract__l10n_mx_schedule_pay__yearly

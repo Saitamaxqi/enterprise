@@ -3,6 +3,7 @@
 <data auto_sequence="1">
     <record id="mod_349" model="account.report">
         <field name="name">Tax Report (Mod 349)</field>
+        <field name="name@es">Informe de impuestos (Mod 349)</field>
         <field name="sequence">349</field>
         <field name="filter_analytic" eval="False"/>
         <field name="filter_date_range" eval="True"/>
@@ -16,17 +17,20 @@
         <field name="column_ids">
             <record id="mod_349_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@es">Saldo</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="mod_349_summary_title" model="account.report.line">
                 <field name="name">Summary</field>
+                <field name="name@es">Resumen</field>
                 <field name="code">aeat_mod_349_summary_title</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="mod_349_statistics_invoices_partners_count" model="account.report.line">
                         <field name="name">Total number of intra-community operations</field>
+                        <field name="name@es">Número total de operadores intracomunitarios</field>
                         <field name="code">aeat_mod_349_statistics_invoices_partners_count</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -42,6 +46,7 @@
                     </record>
                     <record id="mod_349_statistics_invoices_total_amount" model="account.report.line">
                         <field name="name">Total amount of intra-community operations</field>
+                        <field name="name@es">Importe de las operaciones intracomunitarias</field>
                         <field name="code">aeat_mod_349_statistics_invoices_total_amount</field>
                         <field name="expression_ids">
                             <record id="mod_349_statistics_invoices_total_amount_balance" model="account.report.expression">
@@ -65,6 +70,7 @@
                     </record>
                     <record id="mod_349_statistics_refunds_partners_count" model="account.report.line">
                         <field name="name">Total number of intra-community refund operations</field>
+                        <field name="name@es">Número total de operadores intracomunitarios con rectificaciones</field>
                         <field name="code">aeat_mod_349_statistics_refunds_partners_count</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -80,6 +86,7 @@
                     </record>
                     <record id="mod_349_statistics_refunds_total_amount" model="account.report.line">
                         <field name="name">Amount of intra-community refund operations</field>
+                        <field name="name@es">Importe de las operaciones intracomunitarias con rectificaciones</field>
                         <field name="code">aeat_mod_349_statistics_refunds_total_amount</field>
                         <field name="expression_ids">
                             <record id="mod_349_statistics_refunds_total_amount_balance" model="account.report.expression">
@@ -105,11 +112,13 @@
             </record>
             <record id="mod_349_invoices_title" model="account.report.line">
                 <field name="name">Invoices</field>
+                <field name="name@es">Facturas</field>
                 <field name="code">aeat_mod_349_invoices_title</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="mod_349_supplies" model="account.report.line">
                         <field name="name">E. Intra-community sales</field>
+                        <field name="name@es">E. Entregas intracomunitarias</field>
                         <field name="code">aeat_mod_349_supplies</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -124,6 +133,7 @@
                     </record>
                     <record id="mod_349_acquisitions" model="account.report.line">
                         <field name="name">A. Intra-community purchases subject to taxes</field>
+                        <field name="name@es">A. Adquisiciones intracomunitarias sujetas</field>
                         <field name="code">aeat_mod_349_acquisitions</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -138,6 +148,7 @@
                     </record>
                     <record id="mod_349_triangular" model="account.report.line">
                         <field name="name">T. Sales to other member states exempted of intra-community taxes in case of triangular operations</field>
+                        <field name="name@es">T. Entregas a otros estados miembros subsiguientes a adquisiciones intracomunitarias exentas en el marco de operaciones triangulares</field>
                         <field name="code">aeat_mod_349_triangular</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -152,6 +163,7 @@
                     </record>
                     <record id="mod_349_services_sold" model="account.report.line">
                         <field name="name">S. Intra-community sales of services carried out by the declarant</field>
+                        <field name="name@es">S. Prestaciones intracomunitarias de servicios realizadas por el declarante</field>
                         <field name="code">aeat_mod_349_services_sold</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -166,6 +178,7 @@
                     </record>
                     <record id="mod_349_services_acquired" model="account.report.line">
                         <field name="name">I. Intra-community purchases of services</field>
+                        <field name="name@es">I. Adquisiciones intracomunitarias de servicios</field>
                         <field name="code">aeat_mod_349_services_acquired</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -180,6 +193,7 @@
                     </record>
                     <record id="mod_349_supplies_without_taxes" model="account.report.line">
                         <field name="name">M. Intra-community sales of goods after an importation exempted of taxes</field>
+                        <field name="name@es">M. Entregas intracomunitarias de bienes posteriores a una importación exenta</field>
                         <field name="code">aeat_mod_349_supplies_without_taxes</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -194,6 +208,7 @@
                     </record>
                     <record id="mod_349_supplies_without_taxes_legal_representative" model="account.report.line">
                         <field name="name">H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative</field>
+                        <field name="name@es">H. Entregas intracomunitarias de bienes posteriores a una importación exenta efectuadas por el representante fiscal</field>
                         <field name="code">aeat_mod_349_supplies_without_taxes_legal_representative</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -208,6 +223,7 @@
                     </record>
                     <record id="mod_349_consignment_sales_agreements" model="account.report.line">
                         <field name="name">R. Transfers of goods made under consignment sales contracts.</field>
+                        <field name="name@es">R. Transferencias de bienes realizadas en virtud de contratos de venta en consignación</field>
                         <field name="code">aeat_mod_349_consignment_sales_agreements</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -222,6 +238,7 @@
                     </record>
                     <record id="mod_349_returns_goods_consignment" model="account.report.line">
                         <field name="name">D. Returns of goods previously sent from the TAI</field>
+                        <field name="name@es">D. Devoluciones de mercancías previamente enviadas desde el TAI</field>
                         <field name="code">aeat_mod_349_returns_goods_consignment</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -236,6 +253,7 @@
                     </record>
                     <record id="mod_349_substitutions" model="account.report.line">
                         <field name="name">C. Replacements of goods</field>
+                        <field name="name@es">C. Sustitución de bienes</field>
                         <field name="code">aeat_mod_349_substitutions</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -252,11 +270,13 @@
             </record>
             <record id="mod_349_refunds_title" model="account.report.line">
                 <field name="name">Refunds</field>
+                <field name="name@es">Reembolsos</field>
                 <field name="code">aeat_mod_349_refunds_title</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="mod_349_supplies_refunds" model="account.report.line">
                         <field name="name">E. Intra-community sales refunds</field>
+                        <field name="name@es">E. Entregas intracomunitarias exentas</field>
                         <field name="code">aeat_mod_349_supplies_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -271,6 +291,7 @@
                     </record>
                     <record id="mod_349_acquisitions_refunds" model="account.report.line">
                         <field name="name">A. Intra-community purchases subject to taxes</field>
+                        <field name="name@es">A. Adquisiciones intracomunitarias sujetas</field>
                         <field name="code">aeat_mod_349_acquisitions_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -285,6 +306,7 @@
                     </record>
                     <record id="mod_349_triangular_refunds" model="account.report.line">
                         <field name="name">T. Sales to other member states exempted of intra-community taxes in case of triangular operations</field>
+                        <field name="name@es">T. Entregas a otros estados miembros subsiguientes a adquisiciones intracomunitarias exentas en el marco de operaciones triangulares</field>
                         <field name="code">aeat_mod_349_triangular_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -299,6 +321,7 @@
                     </record>
                     <record id="mod_349_services_sold_refunds" model="account.report.line">
                         <field name="name">S. Intra-community sales of services carried out by the declarant</field>
+                        <field name="name@es">S. Prestaciones intracomunitarias de servicios realizadas por el declarante</field>
                         <field name="code">aeat_mod_349_services_sold_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -313,6 +336,7 @@
                     </record>
                     <record id="mod_349_services_acquired_refunds" model="account.report.line">
                         <field name="name">I. Intra-community purchases of services</field>
+                        <field name="name@es">I. Adquisiciones intracomunitarias de servicios</field>
                         <field name="code">aeat_mod_349_services_acquired_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -327,6 +351,7 @@
                     </record>
                     <record id="mod_349_supplies_without_taxes_refunds" model="account.report.line">
                         <field name="name">M. Intra-community sales of goods after an importation exempted of taxes</field>
+                        <field name="name@es">M. Entregas intracomunitarias de bienes posteriores a una importación exenta</field>
                         <field name="code">aeat_mod_349_supplies_without_taxes_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -341,6 +366,7 @@
                     </record>
                     <record id="mod_349_supplies_without_taxes_legal_representative_refunds" model="account.report.line">
                         <field name="name">H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative</field>
+                        <field name="name@es">H. Entregas intracomunitarias de bienes posteriores a una importación exenta efectuadas por el representante fiscal</field>
                         <field name="code">aeat_mod_349_supplies_without_taxes_legal_representative_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -355,6 +381,7 @@
                     </record>
                     <record id="mod_349_consignment_sales_agreements_refunds" model="account.report.line">
                         <field name="name">R. Rectifications of transfers of goods made under consignment sale contracts.</field>
+                        <field name="name@es">R. Rectificaciones de las transferencias de bienes realizadas en virtud de contratos de venta en consignación</field>
                         <field name="code">aeat_mod_349_consignment_sales_agreements_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -369,6 +396,7 @@
                     </record>
                     <record id="mod_349_returns_goods_consignment_refunds" model="account.report.line">
                         <field name="name">D. Rectifications of returned goods previously sent from the TAI</field>
+                        <field name="name@es">D. Rectificaciones de devoluciones de mercancías previamente enviadas desde el TAI</field>
                         <field name="code">aeat_mod_349_returns_goods_consignment_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -383,6 +411,7 @@
                     </record>
                     <record id="mod_349_substitutions_refunds" model="account.report.line">
                         <field name="name">C. Rectifications for replacement of goods</field>
+                        <field name="name@es">C. Rectificaciones por sustitución de bienes</field>
                         <field name="code">aeat_mod_349_substitutions_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>

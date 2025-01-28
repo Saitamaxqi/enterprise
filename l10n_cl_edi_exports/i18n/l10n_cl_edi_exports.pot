@@ -148,8 +148,7 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_cl_edi_exports.field_account_move__l10n_cl_port_origin_id
 #: model:ir.model.fields,help:l10n_cl_edi_exports.field_account_payment__l10n_cl_port_destination_id
 #: model:ir.model.fields,help:l10n_cl_edi_exports.field_account_payment__l10n_cl_port_origin_id
-msgid ""
-"More info on aduana.cl"
+msgid "More info on aduana.cl"
 msgstr ""
 
 #. module: l10n_cl_edi_exports
@@ -267,11 +266,6 @@ msgstr ""
 #. module: l10n_cl_edi_exports
 #: model:ir.model.fields.selection,name:l10n_cl_edi_exports.selection__account_move__l10n_cl_customs_sale_mode__3
 msgid "Under free consignment"
-msgstr ""
-
-#. module: l10n_cl_edi_exports
-#: model:account.incoterms,name:l10n_cl_edi_exports.incoterm_SCL
-msgid "WITHOUT SALE/PURCHASE CLAUSE"
 msgstr ""
 
 #. module: l10n_cl_edi_exports

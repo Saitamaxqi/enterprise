@@ -2,6 +2,7 @@
 <odoo>
     <record id="account_financial_report_tz_pnl" model="account.report">
         <field name="name">Profit and loss</field>
+        <field name="name@sw">Faida na hasara</field>
         <field name="root_report_id" ref="account_reports.profit_and_loss"/>
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_journals" eval="True"/>
@@ -10,12 +11,14 @@
         <field name="column_ids">
             <record id="account_financial_report_tz_pnl0_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@sw">Mizani</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="account_financial_report_tz_operating_profit" model="account.report.line">
                 <field name="name">Operating profit</field>
+                <field name="name@sw">Faida ya uendeshaji</field>
                 <field name="code">tz_operating_profit</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -29,6 +32,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_tz_revenue" model="account.report.line">
                         <field name="name">Revenue</field>
+                        <field name="name@sw">Mapato</field>
                         <field name="code">tz_revenue</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -42,6 +46,7 @@
                     </record>
                     <record id="account_financial_report_tz_other_income" model="account.report.line">
                         <field name="name">Other income</field>
+                        <field name="name@sw">Kipato kingine</field>
                         <field name="code">tz_other_income</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -55,6 +60,7 @@
                     </record>
                     <record id="account_financial_report_tz_change_inventories" model="account.report.line">
                         <field name="name">Change in inventories</field>
+                        <field name="name@sw">Badilisha katika orodha</field>
                         <field name="code">tz_change_inventories</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -68,6 +74,7 @@
                     </record>
                     <record id="account_financial_report_tz_cost_material" model="account.report.line">
                         <field name="name">Costs of material</field>
+                        <field name="name@sw">Gharama za nyenzo</field>
                         <field name="code">tz_costs_material</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -81,6 +88,7 @@
                     </record>
                     <record id="account_financial_report_tz_employee_expense" model="account.report.line">
                         <field name="name">Employee benefits expense</field>
+                        <field name="name@sw">Gharama ya faida ya mfanyakazi</field>
                         <field name="code">tz_employee_expense</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -94,6 +102,7 @@
                     </record>
                     <record id="account_financial_report_tz_change_fair_value_investment" model="account.report.line">
                         <field name="name">Change in fair value of investment property</field>
+                        <field name="name@sw">Mabadiliko ya thamani ya haki ya mali ya uwekezaji</field>
                         <field name="code">tz_change_fair_value_investment</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -107,6 +116,7 @@
                     </record>
                     <record id="account_financial_report_tz_depreciation" model="account.report.line">
                         <field name="name">Depreciation, amortisation and impairment of non-financial assets</field>
+                        <field name="name@sw">Kushuka kwa thamani, upunguzaji wa madeni na uharibifu wa mali zisizo za kifedha</field>
                         <field name="code">tz_depreciation</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -120,6 +130,7 @@
                     </record>
                     <record id="account_financial_report_tz_impairment_losses" model="account.report.line">
                         <field name="name">Impairment losses of financial assets</field>
+                        <field name="name@sw">Uharibifu wa hasara za mali za kifedha</field>
                         <field name="code">tz_impairment_losses</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -133,6 +144,7 @@
                     </record>
                     <record id="account_financial_report_tz_other_expenses" model="account.report.line">
                         <field name="name">Other expenses</field>
+                        <field name="name@sw">Gharama zingine</field>
                         <field name="code">tz_other_expenses</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -148,6 +160,7 @@
             </record>
             <record id="account_financial_report_tz_profit_before_tax" model="account.report.line">
                 <field name="name">Profit before tax</field>
+                <field name="name@sw">Faida kabla ya ushuru</field>
                 <field name="code">tz_profit_before_tax</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -160,6 +173,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_tz_share_profit_equity" model="account.report.line">
                         <field name="name">Share of profit from equity accounted investments</field>
+                        <field name="name@sw">Sehemu ya faida kutoka kwa uwekezaji uliohesabiwa kwa hisa</field>
                         <field name="code">tz_share_profit_equity</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -173,6 +187,7 @@
                     </record>
                     <record id="account_financial_report_tz_finance_costs" model="account.report.line">
                         <field name="name">Finance costs</field>
+                        <field name="name@sw">Gharama za fedha</field>
                         <field name="code">tz_finance_costs</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -186,6 +201,7 @@
                     </record>
                     <record id="account_financial_report_tz_finance_income" model="account.report.line">
                         <field name="name">Finance income</field>
+                        <field name="name@sw">Mapato ya fedha</field>
                         <field name="code">tz_finance_income</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -199,6 +215,7 @@
                     </record>
                     <record id="account_financial_report_tz_other_financial_items" model="account.report.line">
                         <field name="name">Other financial items</field>
+                        <field name="name@sw">Vitu vingine vya kifedha</field>
                         <field name="code">tz_other_finance</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -214,6 +231,7 @@
             </record>
             <record id="account_financial_report_tz_tax_expense" model="account.report.line">
                 <field name="name">Tax expense</field>
+                <field name="name@sw">Gharama ya ushuru</field>
                 <field name="code">tz_tax_expenses</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_tz_tax_expense_expr" model="account.report.expression">
@@ -225,6 +243,7 @@
             </record>
             <record id="account_financial_report_tz_profit_continuing_operation" model="account.report.line">
                 <field name="name">Profit for the year from continuing operations</field>
+                <field name="name@sw">Faida kwa mwaka kutokana na shughuli zinazoendelea</field>
                 <field name="code">tz_profit_continuing_operation</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -237,6 +256,7 @@
             </record>
             <record id="account_financial_report_tz_loss_discontinued_operations" model="account.report.line">
                 <field name="name">Loss for the year from discontinued operations</field>
+                <field name="name@sw">Hasara kwa mwaka kutokana na shughuli zilizositishwa</field>
                 <field name="code">tz_loss_discontinued_operations</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_tz_loss_discontinued_operations_expr" model="account.report.expression">
@@ -248,6 +268,7 @@
             </record>
             <record id="account_financial_report_tz_profit-loss_year" model="account.report.line">
                 <field name="name">Profit/Loss for the year</field>
+                <field name="name@sw">Faida/Hasara kwa mwaka</field>
                 <field name="code">tz_profit_loss_year</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">

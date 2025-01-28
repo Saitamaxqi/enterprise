@@ -16,54 +16,9 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_partner_id
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_partner_id
-msgid "Customer"
-msgstr ""
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_ref
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_ref
-msgid "Description"
-msgstr ""
-
-#. module: l10n_vn_reports
 #. odoo-python
 #: code:addons/l10n_vn_reports/models/tax_report.py:0
 msgid "Grand Total"
-msgstr ""
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_invoice_date
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_invoice_date
-msgid "Invoice Date"
-msgstr ""
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_invoice_number
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_invoice_number
-msgid "Invoice Number"
-msgstr ""
-
-#. module: l10n_vn_reports
-#: model:account.report,name:l10n_vn_reports.purchase_tax_report
-msgid "Purchase"
-msgstr ""
-
-#. module: l10n_vn_reports
-#: model:account.report,name:l10n_vn_reports.sales_tax_report
-msgid "Sales"
-msgstr ""
-
-#. module: l10n_vn_reports
-#: model:account.report,name:l10n_vn_reports.tax_report
-msgid "Sales/Purchase Tax Report"
-msgstr ""
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_tax_id
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_tax_id
-msgid "Tax ID"
 msgstr ""
 
 #. module: l10n_vn_reports
@@ -71,22 +26,6 @@ msgstr ""
 #: model:ir.model,name:l10n_vn_reports.model_l10n_vn_sales_tax_report_handler
 #: model:ir.model,name:l10n_vn_reports.model_l10n_vn_tax_report_handler
 msgid "Taxes Custom Handler"
-msgstr ""
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_untaxed_amount
-msgid "Untaxed purchase of goods and services"
-msgstr ""
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_untaxed_amount
-msgid "Untaxed sales of goods and services"
-msgstr ""
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_amount_tax
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_amount_tax
-msgid "VAT Amount"
 msgstr ""
 
 #. module: l10n_vn_reports

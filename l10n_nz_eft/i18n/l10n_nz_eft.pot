@@ -136,12 +136,6 @@ msgid "L10N Nz Available Dd Bank"
 msgstr ""
 
 #. module: l10n_nz_eft
-#: model:account.payment.method,name:l10n_nz_eft.account_payment_method_eft_inbound
-#: model:account.payment.method,name:l10n_nz_eft.account_payment_method_eft_outbound
-msgid "New Zealand EFT"
-msgstr ""
-
-#. module: l10n_nz_eft
 #: model_terms:ir.ui.view,arch_db:l10n_nz_eft.view_payment_form_inherit_l10n_nz
 msgid "Particulars"
 msgstr ""

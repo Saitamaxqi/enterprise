@@ -437,11 +437,6 @@ msgid "Unknown deposit type: %(type)s"
 msgstr ""
 
 #. module: l10n_jp_zengin
-#: model:account.payment.method,name:l10n_jp_zengin.account_payment_method_zengin_outbound
-msgid "Zengin"
-msgstr ""
-
-#. module: l10n_jp_zengin
 #. odoo-python
 #: code:addons/l10n_jp_zengin/models/account_journal.py:0
 #, python-format

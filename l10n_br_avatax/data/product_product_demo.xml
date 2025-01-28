@@ -34,6 +34,7 @@
 
     <record id="fusca_repair_product" model="product.template">
         <field name="name">Fusca Repair</field>
+        <field name="name@pt_BR">Reparo do fusca</field>
         <field name="type">service</field>
         <field name="taxes_id" eval="False"/>
         <field name="l10n_br_ncm_code_id" ref="l10n_br_avatax.service_1_02"/>

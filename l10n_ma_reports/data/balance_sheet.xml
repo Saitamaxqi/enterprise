@@ -2,6 +2,7 @@
 <odoo>
     <record id="account_financial_report_bs" model="account.report">
         <field name="name">Balance Sheet</field>
+        <field name="name@fr">Bilan</field>
         <field name="root_report_id" ref="account_reports.balance_sheet"/>
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_date_range" eval="False"/>
@@ -12,30 +13,36 @@
         <field name="column_ids">
             <record id="account_financial_report_bs_column_gross" model="account.report.column">
                 <field name="name">Gross</field>
+                <field name="name@fr">Brut</field>
                 <field name="expression_label">gross</field>
             </record>
             <record id="account_financial_report_bs_column_depr_prov" model="account.report.column">
                 <field name="name">Depr - Prov</field>
+                <field name="name@fr">Amort - Prov</field>
                 <field name="expression_label">depr_prov</field>
             </record>
             <record id="account_financial_report_bs_column_net" model="account.report.column">
                 <field name="name">Net</field>
+                <field name="name@fr">Net</field>
                 <field name="expression_label">net</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="account_financial_report_bs_a" model="account.report.line">
                 <field name="name">ACTIVE</field>
+                <field name="name@fr">ACTIF</field>
                 <field name="code">MA_BS_A</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_bs_a_i" model="account.report.line">
                         <field name="name">NON-CURRENT ASSETS</field>
+                        <field name="name@fr">ACTIF IMMOBILISÉ</field>
                         <field name="code">MA_BS_A_I</field>
                         <field name="hierarchy_level">1</field>
                         <field name="children_ids">
                             <record id="account_financial_report_bs_a_i_a" model="account.report.line">
                                 <field name="name">Non-Value Non-Current Assets (A)</field>
+                                <field name="name@fr">Immobilisations en non valeur (A)</field>
                                 <field name="code">MA_BS_A_I_A</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -58,6 +65,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_a_i_a_suc" model="account.report.line">
                                         <field name="name">Start-Up Costs</field>
+                                        <field name="name@fr">Frais préliminaires</field>
                                         <field name="code">MA_BS_A_I_A_SUC</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -82,6 +90,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_a_desy" model="account.report.line">
                                         <field name="name">Deferred Expenses over Several Years</field>
+                                        <field name="name@fr">Charges à répartir sur plusieurs exercices</field>
                                         <field name="code">MA_BS_A_I_A_DESY</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -106,6 +115,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_a_brp" model="account.report.line">
                                         <field name="name">Bond Redemption Premiums</field>
+                                        <field name="name@fr">Primes de remboursement des obligations</field>
                                         <field name="code">MA_BS_A_I_A_BRP</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -132,6 +142,7 @@
                             </record>
                             <record id="account_financial_report_bs_a_i_b" model="account.report.line">
                                 <field name="name">Intangible Non-Current Assets (B)</field>
+                                <field name="name@fr">Immobilisations incorporelles (B)</field>
                                 <field name="code">MA_BS_A_I_B</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -154,6 +165,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_a_i_b_ncard" model="account.report.line">
                                         <field name="name">Non-Current Assets in Research and Development</field>
+                                        <field name="name@fr">Immobilisation en recherche et développement</field>
                                         <field name="code">MA_BS_A_I_B_NCARD</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -178,6 +190,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_b_ptrsa" model="account.report.line">
                                         <field name="name">Patents, Trademarks, Rights and Similar Assets</field>
+                                        <field name="name@fr">Brevets, marques, droits et valeurs similaires</field>
                                         <field name="code">MA_BS_A_I_B_PTRSA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -202,6 +215,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_b_cf" model="account.report.line">
                                         <field name="name">Commercial Funds</field>
+                                        <field name="name@fr">Fonds commercial</field>
                                         <field name="code">MA_BS_A_I_B_CF</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -226,6 +240,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_b_oinca" model="account.report.line">
                                         <field name="name">Other Intangible Non-Current Assets</field>
+                                        <field name="name@fr">Autres immobilisations incorporelles</field>
                                         <field name="code">MA_BS_A_I_B_OINCA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -252,6 +267,7 @@
                             </record>
                             <record id="account_financial_report_bs_a_i_c" model="account.report.line">
                                 <field name="name">Tangible Non-Current Assets (C)</field>
+                                <field name="name@fr">Immobilisations corporelles (C)</field>
                                 <field name="code">MA_BS_A_I_C</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -274,6 +290,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_a_i_c_l" model="account.report.line">
                                         <field name="name">Land</field>
+                                        <field name="name@fr">Terrains</field>
                                         <field name="code">MA_BS_A_I_C_L</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -298,6 +315,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_c_c" model="account.report.line">
                                         <field name="name">Constructions</field>
+                                        <field name="name@fr">Constructions</field>
                                         <field name="code">MA_BS_A_I_C_C</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -322,6 +340,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_c_tiet" model="account.report.line">
                                         <field name="name">Technical Installations, Equipment and Tools</field>
+                                        <field name="name@fr">Installations techniques, matériel et outillage</field>
                                         <field name="code">MA_BS_A_I_C_TIET</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -346,6 +365,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_c_te" model="account.report.line">
                                         <field name="name">Transport Equipment</field>
+                                        <field name="name@fr">Matériel de transport</field>
                                         <field name="code">MA_BS_A_I_C_TE</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -370,6 +390,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_c_foema" model="account.report.line">
                                         <field name="name">Furniture, Office Equipment, Miscellaneous Amenities</field>
+                                        <field name="name@fr">Mobilier, matériel de bureau, aménagements divers</field>
                                         <field name="code">MA_BS_A_I_C_FOEMA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -394,6 +415,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_c_otnca" model="account.report.line">
                                         <field name="name">Other Tangible Non-Current Assets</field>
+                                        <field name="name@fr">Autres immobilisations corporelles</field>
                                         <field name="code">MA_BS_A_I_C_OTNCA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -418,6 +440,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_c_tncap" model="account.report.line">
                                         <field name="name">Tangible Non-Current Assets in Progress</field>
+                                        <field name="name@fr">Immobilisations corporelles en cours</field>
                                         <field name="code">MA_BS_A_I_C_TNCAP</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -439,6 +462,7 @@
                             </record>
                             <record id="account_financial_report_bs_a_i_d" model="account.report.line">
                                 <field name="name">Financial Non-Current Assets (D)</field>
+                                <field name="name@fr">Immobilisations corporelles (D)</field>
                                 <field name="code">MA_BS_A_I_D</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -461,6 +485,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_a_i_d_ncl" model="account.report.line">
                                         <field name="name">Non-Current Loans</field>
+                                        <field name="name@fr">Prêts immobilisés</field>
                                         <field name="code">MA_BS_A_I_D_NCL</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -485,6 +510,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_d_ofr" model="account.report.line">
                                         <field name="name">Other Financial Receivables</field>
+                                        <field name="name@fr">Autres créances financières</field>
                                         <field name="code">MA_BS_A_I_D_OFR</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -509,6 +535,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_d_es" model="account.report.line">
                                         <field name="name">Equity Securities</field>
+                                        <field name="name@fr">Titres de participation</field>
                                         <field name="code">MA_BS_A_I_D_ES</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -533,6 +560,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_d_olts" model="account.report.line">
                                         <field name="name">Other Long-Term Securities</field>
+                                        <field name="name@fr">Autres titres immobilisés</field>
                                         <field name="code">MA_BS_A_I_D_OLTS</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -559,6 +587,7 @@
                             </record>
                             <record id="account_financial_report_bs_a_i_e" model="account.report.line">
                                 <field name="name">Foreign Exchange Assets (E)</field>
+                                <field name="name@fr">Écarts de conversion - Actif (E)</field>
                                 <field name="code">MA_BS_A_I_E</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -576,6 +605,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_a_i_e_dnca" model="account.report.line">
                                         <field name="name">Decrease in Non-Current Assets</field>
+                                        <field name="name@fr">Diminution des créances immobilisées</field>
                                         <field name="code">MA_BS_A_I_E_DNCA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -595,6 +625,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_i_e_ifl" model="account.report.line">
                                         <field name="name">Increase in Financing Liabilities</field>
+                                        <field name="name@fr">Augmentation des dettes de financement</field>
                                         <field name="code">MA_BS_A_I_E_IFL</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -616,6 +647,7 @@
                             </record>
                             <record id="account_financial_report_bs_a_i_total" model="account.report.line">
                                 <field name="name">Total I (A+B+C+D+E)</field>
+                                <field name="name@fr">Total I (A+B+C+D+E)</field>
                                 <field name="code">MA_BS_A_I_TOTAL</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -640,11 +672,13 @@
                     </record>
                     <record id="account_financial_report_bs_a_ii" model="account.report.line">
                         <field name="name">CURRENT ASSETS</field>
+                        <field name="name@fr">ACTIF CIRCULANT</field>
                         <field name="code">MA_BS_A_II</field>
                         <field name="hierarchy_level">1</field>
                         <field name="children_ids">
                             <record id="account_financial_report_bs_a_ii_f" model="account.report.line">
                                 <field name="name">Inventories (F)</field>
+                                <field name="name@fr">Stocks (F)</field>
                                 <field name="code">MA_BS_A_II_F</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -667,6 +701,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_a_ii_f_g" model="account.report.line">
                                         <field name="name">Goods</field>
+                                        <field name="name@fr">Marchandises</field>
                                         <field name="code">MA_BS_A_II_F_G</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -691,6 +726,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_ii_f_cms" model="account.report.line">
                                         <field name="name">Consumable Materials and Supplies</field>
+                                        <field name="name@fr">Matières et fournitures consommables</field>
                                         <field name="code">MA_BS_A_II_F_CMS</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -715,6 +751,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_ii_f_pp" model="account.report.line">
                                         <field name="name">Products in Progress</field>
+                                        <field name="name@fr">Produits en cours</field>
                                         <field name="code">MA_BS_A_II_F_PP</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -739,6 +776,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_ii_f_irp" model="account.report.line">
                                         <field name="name">Intermediary and Residual Products</field>
+                                        <field name="name@fr">Produits intermédiaires et produits résiduels</field>
                                         <field name="code">MA_BS_A_II_F_IRP</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -763,6 +801,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_ii_f_fp" model="account.report.line">
                                         <field name="name">Finished Products</field>
+                                        <field name="name@fr">Produits finis</field>
                                         <field name="code">MA_BS_A_II_F_FP</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -789,6 +828,7 @@
                             </record>
                             <record id="account_financial_report_bs_a_ii_g" model="account.report.line">
                                 <field name="name">Receivables From Current Assets (G)</field>
+                                <field name="name@fr">Créances de l’actif circulant (G)</field>
                                 <field name="code">MA_BS_A_II_G</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -811,6 +851,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_a_ii_g_sradp" model="account.report.line">
                                         <field name="name">Supplier Receivables, Advances and Down Payments</field>
+                                        <field name="name@fr">Fournisseurs débiteurs, avances et acomptes</field>
                                         <field name="code">MA_BS_A_II_G_SRADP</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -835,6 +876,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_ii_g_cra" model="account.report.line">
                                         <field name="name">Customers and Related Accounts</field>
+                                        <field name="name@fr">Clients et comptes rattachés</field>
                                         <field name="code">MA_BS_A_II_G_CRA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -859,6 +901,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_ii_g_p" model="account.report.line">
                                         <field name="name">Personnel</field>
+                                        <field name="name@fr">Personnel</field>
                                         <field name="code">MA_BS_A_II_G_P</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -883,6 +926,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_ii_g_g" model="account.report.line">
                                         <field name="name">Government</field>
+                                        <field name="name@fr">État</field>
                                         <field name="code">MA_BS_A_II_G_G</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -902,6 +946,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_ii_g_pa" model="account.report.line">
                                         <field name="name">Partner Accounts</field>
+                                        <field name="name@fr">Comptes d'associés</field>
                                         <field name="code">MA_BS_A_II_G_PA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -926,6 +971,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_ii_g_or" model="account.report.line">
                                         <field name="name">Other Receivables</field>
+                                        <field name="name@fr">Autres débiteurs</field>
                                         <field name="code">MA_BS_A_II_G_OR</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -950,6 +996,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_ii_g_ada" model="account.report.line">
                                         <field name="name">Accruals and Deferrals - Assets</field>
+                                        <field name="name@fr">Comptes de régularisation - Actif</field>
                                         <field name="code">MA_BS_A_II_G_ADA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -969,6 +1016,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_ii_g_sla" model="account.report.line">
                                         <field name="name">Subsidiaries' Liaison Accounts</field>
+                                        <field name="name@fr">Comptes de liaison des établissements</field>
                                         <field name="code">MA_BS_A_II_G_SLA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -991,6 +1039,7 @@
                             </record>
                             <record id="account_financial_report_bs_a_ii_h" model="account.report.line">
                                 <field name="name">Securities and Investment Assets (H)</field>
+                                <field name="name@fr">Titres et valeurs de placement (H)</field>
                                 <field name="code">MA_BS_A_II_H</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="groupby">account_id</field>
@@ -1015,6 +1064,7 @@
                             </record>
                             <record id="account_financial_report_bs_a_ii_i" model="account.report.line">
                                 <field name="name">Foreign Exchange Assets (I)</field>
+                                <field name="name@fr">Écarts de conversion - Actif (I)</field>
                                 <field name="code">MA_BS_A_II_I</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="groupby">account_id</field>
@@ -1034,6 +1084,7 @@
                             </record>
                             <record id="account_financial_report_bs_a_ii_total" model="account.report.line">
                                 <field name="name">Total II (F+G+H+I)</field>
+                                <field name="name@fr">Total II (F+G+H+I)</field>
                                 <field name="code">MA_BS_A_II_TOTAL</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1058,11 +1109,13 @@
                     </record>
                     <record id="account_financial_report_bs_a_iii" model="account.report.line">
                         <field name="name">CASH</field>
+                        <field name="name@fr">TRÉSORERIE</field>
                         <field name="code">MA_BS_A_III</field>
                         <field name="hierarchy_level">1</field>
                         <field name="children_ids">
                             <record id="account_financial_report_bs_a_iii_j" model="account.report.line">
                                 <field name="name">Cash - Assets</field>
+                                <field name="name@fr">Trésorerie - Actif</field>
                                 <field name="code">MA_BS_A_III_J</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1085,6 +1138,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_a_iii_j_csc" model="account.report.line">
                                         <field name="name">Cheques and Securities to be Cashed</field>
+                                        <field name="name@fr">Chèques et valeurs à encaisser</field>
                                         <field name="code">MA_BS_A_III_J_CSC</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1104,6 +1158,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_iii_j_bgtpca" model="account.report.line">
                                         <field name="name">Bank, General Treasury and Postal Current Account</field>
+                                        <field name="name@fr">Banque, trésorerie générale et compte courant postal</field>
                                         <field name="code">MA_BS_A_III_J_BGTPCA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1123,6 +1178,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_a_iii_j_cialc" model="account.report.line">
                                         <field name="name">Cash, Imprest Accounts and Letters of Credit</field>
+                                        <field name="name@fr">Caisse, régies d'avances et accréditifs</field>
                                         <field name="code">MA_BS_A_III_J_CIALC</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1144,6 +1200,7 @@
                             </record>
                             <record id="account_financial_report_bs_a_iii_total" model="account.report.line">
                                 <field name="name">Total III</field>
+                                <field name="name@fr">Total III</field>
                                 <field name="code">MA_BS_A_III_TOTAL</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1168,6 +1225,7 @@
                     </record>
                     <record id="account_financial_report_bs_a_total" model="account.report.line">
                         <field name="name">TOTAL ACTIVE (I + II + III)</field>
+                        <field name="name@fr">TOTAL ACTIF (I + II + III)</field>
                         <field name="code">MA_BS_A_TOTAL</field>
                         <field name="hierarchy_level">1</field>
                         <field name="expression_ids">
@@ -1192,16 +1250,19 @@
             </record>
             <record id="account_financial_report_bs_p" model="account.report.line">
                 <field name="name">PASSIVE</field>
+                <field name="name@fr">PASSIF</field>
                 <field name="code">MA_BS_P</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_financial_report_bs_p_i" model="account.report.line">
                         <field name="name">PERMANENT FUNDING</field>
+                        <field name="name@fr">FINANCEMENT PERMANENT</field>
                         <field name="code">MA_BS_P_I</field>
                         <field name="hierarchy_level">1</field>
                         <field name="children_ids">
                             <record id="account_financial_report_bs_p_i_a" model="account.report.line">
                                 <field name="name">Shareholders' Equity (A)</field>
+                                <field name="name@fr">Capitaux propres (A)</field>
                                 <field name="code">MA_BS_P_I_A</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1214,6 +1275,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_p_i_a_cpc" model="account.report.line">
                                         <field name="name">Corporate or Personal Capital</field>
+                                        <field name="name@fr">Capital social ou personnel</field>
                                         <field name="code">MA_BS_P_I_A_CPC</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1228,6 +1290,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_a_cpc_lsusc" model="account.report.line">
                                         <field name="name">Less: Shareholders, Uncalled Subscribed Capital</field>
+                                        <field name="name@fr">Moins : actionnaires, capital souscrit non appelé</field>
                                         <field name="code">MA_BS_P_I_A_CPC_LSUSC</field>
                                         <field name="hierarchy_level">4</field>
                                         <field name="groupby">account_id</field>
@@ -1242,6 +1305,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_a_cpc_pic" model="account.report.line">
                                         <field name="name">Paid-In Capital</field>
+                                        <field name="name@fr">Capital appelé dont versé</field>
                                         <field name="code">MA_BS_P_I_A_CPC_PIC</field>
                                         <field name="hierarchy_level">4</field>
                                         <field name="groupby">account_id</field>
@@ -1256,6 +1320,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_a_smcp" model="account.report.line">
                                         <field name="name">Share, Merger and Contribution Premiums</field>
+                                        <field name="name@fr">Primes d'émission, de fusion, d'apport</field>
                                         <field name="code">MA_BS_P_I_A_SMCP</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1270,6 +1335,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_a_rd" model="account.report.line">
                                         <field name="name">Revaluation Differences</field>
+                                        <field name="name@fr">Écarts de réévaluation</field>
                                         <field name="code">MA_BS_P_I_A_RD</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1284,6 +1350,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_a_lr" model="account.report.line">
                                         <field name="name">Legal Reserve</field>
+                                        <field name="name@fr">Réserve légale</field>
                                         <field name="code">MA_BS_P_I_A_LR</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1298,6 +1365,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_a_or" model="account.report.line">
                                         <field name="name">Other Reserves</field>
+                                        <field name="name@fr">Autres réserves</field>
                                         <field name="code">MA_BS_P_I_A_OR</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1312,6 +1380,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_a_rr" model="account.report.line">
                                         <field name="name">Retained Result</field>
+                                        <field name="name@fr">Report à nouveau</field>
                                         <field name="code">MA_BS_P_I_A_RR</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1326,6 +1395,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_a_rpa" model="account.report.line">
                                         <field name="name">Result Pending Allocation</field>
+                                        <field name="name@fr">Résultat en instance d'affectation</field>
                                         <field name="code">MA_BS_P_I_A_RPA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="expression_ids">
@@ -1356,6 +1426,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_a_nrfy" model="account.report.line">
                                         <field name="name">Net Result for the Fiscal Year</field>
+                                        <field name="name@fr">Résultat net de l'exercice</field>
                                         <field name="code">MA_BS_P_I_A_NRFY</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="expression_ids">
@@ -1382,6 +1453,7 @@
                             </record>
                             <record id="account_financial_report_bs_p_i_b" model="account.report.line">
                                 <field name="name">Related Shareholders' Equity (B)</field>
+                                <field name="name@fr">Capitaux propres assimilés (B)</field>
                                 <field name="code">MA_BS_P_I_B</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1394,6 +1466,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_p_i_b_ig" model="account.report.line">
                                         <field name="name">Investment Grants</field>
+                                        <field name="name@fr">Subventions d'investissements</field>
                                         <field name="code">MA_BS_P_I_B_IG</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1408,6 +1481,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_b_rp" model="account.report.line">
                                         <field name="name">Regulated Provisions</field>
+                                        <field name="name@fr">Provisions réglementées</field>
                                         <field name="code">MA_BS_P_I_B_RP</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1424,6 +1498,7 @@
                             </record>
                             <record id="account_financial_report_bs_p_i_c" model="account.report.line">
                                 <field name="name">Financial Debts (C)</field>
+                                <field name="name@fr">Dettes de financement (C)</field>
                                 <field name="code">MA_BS_P_I_C</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1436,6 +1511,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_p_i_c_bl" model="account.report.line">
                                         <field name="name">Bond Loans</field>
+                                        <field name="name@fr">Emprunts obligataires</field>
                                         <field name="code">MA_BS_P_I_C_BL</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1450,6 +1526,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_c_ofl" model="account.report.line">
                                         <field name="name">Other Financial Liabilities</field>
+                                        <field name="name@fr">Autres dettes de financement</field>
                                         <field name="code">MA_BS_P_I_C_OFL</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1466,6 +1543,7 @@
                             </record>
                             <record id="account_financial_report_bs_p_i_d" model="account.report.line">
                                 <field name="name">Long-Term Provisions for Risks and Expenses (D)</field>
+                                <field name="name@fr">Provisions durables pour risques et charges (D)</field>
                                 <field name="code">MA_BS_P_I_D</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1478,6 +1556,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_p_i_d_pr" model="account.report.line">
                                         <field name="name">Provisions for Risks</field>
+                                        <field name="name@fr">Provisions pour risques</field>
                                         <field name="code">MA_BS_P_I_D_PR</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1492,6 +1571,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_d_pe" model="account.report.line">
                                         <field name="name">Provisions for Expenses</field>
+                                        <field name="name@fr">Provisions pour charges</field>
                                         <field name="code">MA_BS_P_I_D_PE</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1508,6 +1588,7 @@
                             </record>
                             <record id="account_financial_report_bs_p_i_e" model="account.report.line">
                                 <field name="name">Foreign Exchange Liabilities (E)</field>
+                                <field name="name@fr">Écarts de conversion - Passif (E)</field>
                                 <field name="code">MA_BS_P_I_E</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1520,6 +1601,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_p_i_e_incr" model="account.report.line">
                                         <field name="name">Increase in Non-Current Receivables</field>
+                                        <field name="name@fr">Augmentation des créances immobilisées</field>
                                         <field name="code">MA_BS_P_I_E_INCR</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1534,6 +1616,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_i_e_dfl" model="account.report.line">
                                         <field name="name">Decrease in Financing Liabilities</field>
+                                        <field name="name@fr">Diminution des dettes de financement</field>
                                         <field name="code">MA_BS_P_I_E_DFL</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1550,6 +1633,7 @@
                             </record>
                             <record id="account_financial_report_bs_p_i_total" model="account.report.line">
                                 <field name="name">Total I (A+B+C+D+E)</field>
+                                <field name="name@fr">Total I (A+B+C+D+E)</field>
                                 <field name="code">MA_BS_P_I_TOTAL</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1564,11 +1648,13 @@
                     </record>
                     <record id="account_financial_report_bs_p_ii" model="account.report.line">
                         <field name="name">CURRENT LIABILITIES</field>
+                        <field name="name@fr">PASSIF CIRCULANT</field>
                         <field name="code">MA_BS_P_II</field>
                         <field name="hierarchy_level">1</field>
                         <field name="children_ids">
                             <record id="account_financial_report_bs_p_ii_f" model="account.report.line">
                                 <field name="name">Debts of Currents Liabilities (F)</field>
+                                <field name="name@fr">Dettes du passif circulant (F)</field>
                                 <field name="code">MA_BS_P_II_F</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1581,6 +1667,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_p_ii_f_sra" model="account.report.line">
                                         <field name="name">Suppliers and Related Accounts</field>
+                                        <field name="name@fr">Fournisseurs et comptes rattachés</field>
                                         <field name="code">MA_BS_P_II_F_SRA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1595,6 +1682,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_ii_f_cpadp" model="account.report.line">
                                         <field name="name">Customer Payables, Advances and Down Payments</field>
+                                        <field name="name@fr">Clients créditeurs, avances et acomptes</field>
                                         <field name="code">MA_BS_P_II_F_CPADP</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1609,6 +1697,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_ii_f_p" model="account.report.line">
                                         <field name="name">Personnel</field>
+                                        <field name="name@fr">Personnel</field>
                                         <field name="code">MA_BS_P_II_F_P</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1623,6 +1712,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_ii_f_so" model="account.report.line">
                                         <field name="name">Social Organizations</field>
+                                        <field name="name@fr">Organismes sociaux</field>
                                         <field name="code">MA_BS_P_II_F_SO</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1637,6 +1727,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_ii_f_g" model="account.report.line">
                                         <field name="name">Government</field>
+                                        <field name="name@fr">État</field>
                                         <field name="code">MA_BS_P_II_F_G</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1651,6 +1742,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_ii_f_pa" model="account.report.line">
                                         <field name="name">Partner Accounts</field>
+                                        <field name="name@fr">Comptes d'associés</field>
                                         <field name="code">MA_BS_P_II_F_PA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1665,6 +1757,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_ii_f_oc" model="account.report.line">
                                         <field name="name">Other Creditors</field>
+                                        <field name="name@fr">Autres créanciers</field>
                                         <field name="code">MA_BS_P_II_F_OC</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1679,6 +1772,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_ii_f_adl" model="account.report.line">
                                         <field name="name">Accruals and Deferrals - Liabilities</field>
+                                        <field name="name@fr">Comptes de régularisation - Passif</field>
                                         <field name="code">MA_BS_P_II_F_ADL</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1693,6 +1787,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_ii_f_hla" model="account.report.line">
                                         <field name="name">Headquarters Liaison Accounts</field>
+                                        <field name="name@fr">Comptes de liaison du siège</field>
                                         <field name="code">MA_BS_P_II_F_HLA</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1710,6 +1805,7 @@
                             </record>
                             <record id="account_financial_report_bs_p_ii_g" model="account.report.line">
                                 <field name="name">Other Provisions for Risks and Expenses (G)</field>
+                                <field name="name@fr">Autres provisions pour risques et charges (G)</field>
                                 <field name="code">MA_BS_P_II_G</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="groupby">account_id</field>
@@ -1724,6 +1820,7 @@
                             </record>
                             <record id="account_financial_report_bs_p_ii_h" model="account.report.line">
                                 <field name="name">Foreign Exchange Liabilities (Current Part) (H)</field>
+                                <field name="name@fr">Écarts de conversion - Passif (Éléments circulants) (H)</field>
                                 <field name="code">MA_BS_P_II_H</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="groupby">account_id</field>
@@ -1738,6 +1835,7 @@
                             </record>
                             <record id="account_financial_report_bs_p_ii_total" model="account.report.line">
                                 <field name="name">Total II (F+G+H)</field>
+                                <field name="name@fr">Total II (F+G+H)</field>
                                 <field name="code">MA_BS_P_II_TOTAL</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1752,11 +1850,13 @@
                     </record>
                     <record id="account_financial_report_bs_p_iii" model="account.report.line">
                         <field name="name">CASH</field>
+                        <field name="name@fr">TRÉSORERIE</field>
                         <field name="code">MA_BS_P_III</field>
                         <field name="hierarchy_level">1</field>
                         <field name="children_ids">
                             <record id="account_financial_report_bs_p_iii_i" model="account.report.line">
                                 <field name="name">Cash - Liabilities</field>
+                                <field name="name@fr">Trésorerie - Passif</field>
                                 <field name="code">MA_BS_P_III_I</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1769,6 +1869,7 @@
                                 <field name="children_ids">
                                     <record id="account_financial_report_bs_p_iii_i_dc" model="account.report.line">
                                         <field name="name">Discount Credits</field>
+                                        <field name="name@fr">Crédits d'escompte</field>
                                         <field name="code">MA_BS_P_III_I_DC</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1783,6 +1884,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_iii_i_cc" model="account.report.line">
                                         <field name="name">Cash Credits</field>
+                                        <field name="name@fr">Crédits de trésorerie</field>
                                         <field name="code">MA_BS_P_III_I_CC</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1797,6 +1899,7 @@
                                     </record>
                                     <record id="account_financial_report_bs_p_iii_i_bcb" model="account.report.line">
                                         <field name="name">Banks (Credit Balances)</field>
+                                        <field name="name@fr">Banques (soldes créditeurs)</field>
                                         <field name="code">MA_BS_P_III_I_BCB</field>
                                         <field name="hierarchy_level">3</field>
                                         <field name="groupby">account_id</field>
@@ -1813,6 +1916,7 @@
                             </record>
                             <record id="account_financial_report_bs_p_iii_total" model="account.report.line">
                                 <field name="name">Total III</field>
+                                <field name="name@fr">Total III</field>
                                 <field name="code">MA_BS_P_III_TOTAL</field>
                                 <field name="hierarchy_level">2</field>
                                 <field name="expression_ids">
@@ -1827,6 +1931,7 @@
                     </record>
                     <record id="account_financial_report_bs_p_total" model="account.report.line">
                         <field name="name">TOTAL PASSIVE (I + II + III)</field>
+                        <field name="name@fr">TOTAL PASSIF (I + II + III)</field>
                         <field name="hierarchy_level">1</field>
                         <field name="code">MA_BS_P_TOTAL</field>
                         <field name="expression_ids">

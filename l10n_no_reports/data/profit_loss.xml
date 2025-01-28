@@ -2,6 +2,7 @@
 <odoo auto_sequence="1">
     <record id="account_financial_report_NO_profitandloss" model="account.report">
         <field name="name">Profit and Loss</field>
+        <field name="name@nb_NO">Profitt og tap</field>
         <field name="root_report_id" ref="account_reports.profit_and_loss"/>
         <field name="filter_analytic_groupby" eval="True"/>
         <field name="filter_unfold_all" eval="True"/>
@@ -11,12 +12,14 @@
         <field name="column_ids">
             <record id="account_financial_report_NO_profitandloss_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@nb_NO">Balansere</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="account_financial_report_NO_operating_revenue" model="account.report.line">
                 <field name="name">Operating revenues</field>
+                <field name="name@nb_NO">Driftsinntekter</field>
                 <field name="code">NO_Operating_Revenues</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -29,6 +32,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_NO_sales_revenue" model="account.report.line">
                         <field name="name">Sales Revenue</field>
+                        <field name="name@nb_NO">Salgsinntekter</field>
                         <field name="code">NO_30_32</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -42,6 +46,7 @@
                     </record>
                     <record id="account_financial_report_NO_other_operating_income" model="account.report.line">
                         <field name="name">Other Operating Income</field>
+                        <field name="name@nb_NO">Andre driftsinntekter</field>
                         <field name="code">NO_33_39</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -57,6 +62,7 @@
             </record>
             <record id="account_financial_report_NO_operating_costs" model="account.report.line">
                 <field name="name">Operating Costs</field>
+                <field name="name@nb_NO">Driftskostnader</field>
                 <field name="code">NO_Operating_Costs</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -69,6 +75,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_NO_cost_of_materials" model="account.report.line">
                         <field name="name">Cost of Materials</field>
+                        <field name="name@nb_NO">Materialkostnader</field>
                         <field name="code">NO_4</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -82,6 +89,7 @@
                     </record>
                     <record id="account_financial_report_NO_personal_expense" model="account.report.line">
                         <field name="name">Personal Expense</field>
+                        <field name="name@nb_NO">Personlig utgift</field>
                         <field name="code">NO_5</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -95,6 +103,7 @@
                     </record>
                     <record id="account_financial_report_NO_depreciation" model="account.report.line">
                         <field name="name">Depreciation</field>
+                        <field name="name@nb_NO">Avskrivninger</field>
                         <field name="code">NO_600_603</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -108,6 +117,7 @@
                     </record>
                     <record id="account_financial_report_NO_write-downs" model="account.report.line">
                         <field name="name">Write-Downs</field>
+                        <field name="name@nb_NO">Nedskrivninger</field>
                         <field name="code">NO_605_606</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -121,6 +131,7 @@
                     </record>
                     <record id="account_financial_report_NO_other_operating_expense" model="account.report.line">
                         <field name="name">Other Operating Expense</field>
+                        <field name="name@nb_NO">Andre driftskostnader</field>
                         <field name="code">NO_61_7</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -136,6 +147,7 @@
             </record>
             <record id="account_financial_report_NO_operating_profit" model="account.report.line">
                 <field name="name">Operating Profit</field>
+                <field name="name@nb_NO">Driftsresultat</field>
                 <field name="code">NO_Operating_Profit</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -148,6 +160,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_NO_share_of_profit_of_subsidiaries_and_associated_companies" model="account.report.line">
                         <field name="name">Share of Profit of Subsidiaries and Associated Companies</field>
+                        <field name="name@nb_NO">Andel av resultat fra datterselskaper og tilknyttede selskaper</field>
                         <field name="code">NO_800_802</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -161,6 +174,7 @@
                     </record>
                     <record id="account_financial_report_NO_interest_income_from_group_companies" model="account.report.line">
                         <field name="name">Interest Income from Group Companies</field>
+                        <field name="name@nb_NO">Renteinntekter fra konsernselskaper</field>
                         <field name="code">NO_803</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -174,6 +188,7 @@
                     </record>
                     <record id="account_financial_report_NO_other_financial_income" model="account.report.line">
                         <field name="name">Other Financial Income</field>
+                        <field name="name@nb_NO">Andre finansinntekter</field>
                         <field name="code">NO_804_807</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -187,6 +202,7 @@
                     </record>
                     <record id="account_financial_report_NO_change_in_value_of_marketable_investments" model="account.report.line">
                         <field name="name">Change in Value of Marketable Investments</field>
+                        <field name="name@nb_NO">Endring i verdi av omsettelige investeringer</field>
                         <field name="code">NO_808_809_810</field>
                         <field name="expression_ids">
                             <record id="account_financial_report_NO_change_in_value_of_marketable_investments_balance" model="account.report.expression">
@@ -198,6 +214,7 @@
                         <field name="children_ids">
                             <record id="account_financial_report_NO_increase_in_value_of_marketable_investments" model="account.report.line">
                                 <field name="name">Increase in Value of Marketable Investments</field>
+                                <field name="name@nb_NO">Økning i verdi av omsettelige investeringer</field>
                                 <field name="code">NO_808</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -211,6 +228,7 @@
                             </record>
                             <record id="account_financial_report_NO_income_from_other_investments" model="account.report.line">
                                 <field name="name">Income from Other Investments</field>
+                                <field name="name@nb_NO">Inntekter fra andre investeringer</field>
                                 <field name="code">NO_809</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -224,6 +242,7 @@
                             </record>
                             <record id="account_financial_report_NO_reduction_in_value_of_marketable_investments" model="account.report.line">
                                 <field name="name">Reduction in Value of Marketable Investments</field>
+                                <field name="name@nb_NO">Reduksjon i verdi av omsettelige investeringer</field>
                                 <field name="code">NO_810</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -239,6 +258,7 @@
                     </record>
                     <record id="account_financial_report_NO_write_downs_of_short_terms_investments" model="account.report.line">
                         <field name="name">Write-Downs of Short-Terms Investments</field>
+                        <field name="name@nb_NO">Nedskrivninger av kortsiktige investeringer</field>
                         <field name="code">NO_811_812</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -252,6 +272,7 @@
                     </record>
                     <record id="account_financial_report_NO_interest_to_group_companies" model="account.report.line">
                         <field name="name">Interest to Group Companies</field>
+                        <field name="name@nb_NO">Interesse for konsernselskaper</field>
                         <field name="code">NO_813</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -265,6 +286,7 @@
                     </record>
                     <record id="account_financial_report_NO_other_financial_expense" model="account.report.line">
                         <field name="name">Other Financial Expense</field>
+                        <field name="name@nb_NO">Andre økonomiske utgifter</field>
                         <field name="code">NO_814_817</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -280,6 +302,7 @@
             </record>
             <record id="account_financial_report_NO_ordinary_result_before_taxes" model="account.report.line">
                 <field name="name">Ordinary Result Before Taxes</field>
+                <field name="name@nb_NO">Ordinært resultat før skatt</field>
                 <field name="code">NO_Ordinary_Result</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -292,6 +315,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_NO_tax_on_ordinary_result" model="account.report.line">
                         <field name="name">Tax on Ordinary Result</field>
+                        <field name="name@nb_NO">Skatt på ordinært resultat</field>
                         <field name="code">NO_83</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -307,6 +331,7 @@
             </record>
             <record id="account_financial_report_NO_ordinary_result" model="account.report.line">
                 <field name="name">Ordinary Result</field>
+                <field name="name@nb_NO">Ordinært resultat</field>
                 <field name="hierarchy_level">0</field>
                 <field name="code">NO_Ordinary_Result_After_Tax</field>
                 <field name="expression_ids">
@@ -319,6 +344,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_NO_net_profit_loss_for_the_year" model="account.report.line">
                         <field name="name">Net profit/Loss for the Year</field>
+                        <field name="name@nb_NO">Årets resultat/underskudd</field>
                         <field name="code">NO_profit_loss</field>
                         <field name="groupby" eval="False"/>
                         <field name="foldable" eval="False"/>

@@ -26,11 +26,6 @@ msgid "ABA"
 msgstr ""
 
 #. module: l10n_au_aba
-#: model:account.payment.method,name:l10n_au_aba.account_payment_method_aba_ct
-msgid "ABA Credit Transfer"
-msgstr ""
-
-#. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_journal_dashboard.py:0
 #, python-format

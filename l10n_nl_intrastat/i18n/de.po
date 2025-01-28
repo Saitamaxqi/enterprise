@@ -16,16 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_nl_intrastat
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_amount_product
-msgid "Amount Product"
-msgstr "Menge Produkt"
-
-#. module: l10n_nl_intrastat
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_amount_service
-msgid "Amount Service"
-msgstr "Betrag Service"
-
-#. module: l10n_nl_intrastat
 #: model:ir.model.fields,help:l10n_nl_intrastat.field_l10n_nl_reports_sbr_icp_icp_wizard__contact_type
 msgid ""
 "BPL: if the taxpayer files a turnover tax return as an individual "
@@ -109,11 +99,6 @@ msgid "Contact Type"
 msgstr "kontaktart"
 
 #. module: l10n_nl_intrastat
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_country_code
-msgid "Country Code"
-msgstr "Landesvorwahl"
-
-#. module: l10n_nl_intrastat
 #. odoo-python
 #: code:addons/l10n_nl_intrastat/wizard/l10n_nl_sbr_icp_wizard.py:0
 msgid "Create Closing Entry"
@@ -148,11 +133,6 @@ msgstr "Herunterladen"
 #: model:ir.model,name:l10n_nl_intrastat.model_l10n_nl_ec_sales_report_handler
 msgid "Dutch EC Sales Report Custom Handler"
 msgstr "Niederländischer EC-Verkaufsbericht-Zoll-Handler"
-
-#. module: l10n_nl_intrastat
-#: model:account.report,name:l10n_nl_intrastat.dutch_icp_report
-msgid "Dutch EC sales Report (ICP)"
-msgstr "Niederländischer EG-Verkaufsbericht (ICP)"
 
 #. module: l10n_nl_intrastat
 #. odoo-python
@@ -221,11 +201,6 @@ msgid ""
 msgstr ""
 "Für den ausgewählten Zeitraum wurde kein Abschlusseintrag gefunden. Bitte "
 "erstellen Sie einen und buchen Sie ihn, bevor Sie Ihren Bericht senden."
-
-#. module: l10n_nl_intrastat
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_partner
-msgid "Partner"
-msgstr ""
 
 #. module: l10n_nl_intrastat
 #: model:ir.model.fields,field_description:l10n_nl_intrastat.field_l10n_nl_reports_sbr_icp_icp_wizard__date_to
@@ -346,14 +321,8 @@ msgstr ""
 #. module: l10n_nl_intrastat
 #. odoo-python
 #: code:addons/l10n_nl_intrastat/models/account_sales_report.py:0
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_total
 msgid "Total"
 msgstr "Gesamt"
-
-#. module: l10n_nl_intrastat
-#: model:account.report.column,name:l10n_nl_intrastat.account_financial_report_ec_sales_vat
-msgid "VAT"
-msgstr "Mehrwertsteuer"
 
 #. module: l10n_nl_intrastat
 #. odoo-python

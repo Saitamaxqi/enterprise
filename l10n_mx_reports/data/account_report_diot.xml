@@ -7,6 +7,7 @@
     <!-- EXTRA COLUMNS  -->
     <record id="diot_third_party" model="account.report.column">
         <field name="name">Type of Third</field>
+        <field name="name@es_419">Tipo de Tercero</field>
         <field name="expression_label">third_party_code</field>
         <field name="figure_type">string</field>
         <field name="sequence">1</field>
@@ -14,6 +15,7 @@
     </record>
     <record id="diot_operation_type" model="account.report.column">
         <field name="name">Type of Operation</field>
+        <field name="name@es_419">Tipo de Operación</field>
         <field name="expression_label">operation_type_code</field>
         <field name="figure_type">string</field>
         <field name="sequence">2</field>
@@ -21,6 +23,7 @@
     </record>
     <record id="diot_report_partner_vat_number" model="account.report.column">
         <field name="name">VAT</field>
+        <field name="name@es_419">RFC</field>
         <field name="expression_label">partner_vat_number</field>
         <field name="figure_type">string</field>
         <field name="sequence">3</field>
@@ -28,6 +31,7 @@
     </record>
     <record id="diot_report_country" model="account.report.column">
         <field name="name">Country</field>
+        <field name="name@es_419">País</field>
         <field name="expression_label">country_code</field>
         <field name="figure_type">string</field>
         <field name="sequence">4</field>
@@ -35,6 +39,7 @@
     </record>
     <record id="diot_report_partner_nationality" model="account.report.column">
         <field name="name">Nationality</field>
+        <field name="name@es_419">Nacionalidad</field>
         <field name="expression_label">partner_nationality</field>
         <field name="figure_type">string</field>
         <field name="sequence">5</field>

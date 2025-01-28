@@ -3,6 +3,7 @@
 <data auto_sequence="1">
     <record id="mod_347" model="account.report">
         <field name="name">Tax Report (Mod 347)</field>
+        <field name="name@es">Informe de impuestos (Mod 347)</field>
         <field name="sequence">347</field>
         <field name="filter_analytic" eval="False"/>
         <field name="filter_date_range" eval="True"/>
@@ -16,6 +17,7 @@
         <field name="column_ids">
             <record id="mod_347_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@es">Saldo</field>
                 <field name="expression_label">balance</field>
                 <field name="sequence" eval="1"/>
             </record>
@@ -23,12 +25,14 @@
         <field name="line_ids">
             <record id="mod_347_summary_title" model="account.report.line">
                 <field name="name">Summary</field>
+                <field name="name@es">Resumen</field>
                 <field name="code">aeat_mod_347_summary_title</field>
                 <field name="sequence" eval="1"/>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="mod_347_statistics_operations_count" model="account.report.line">
                         <field name="name">Total number of persons and entities</field>
+                        <field name="name@es">Número total de personas y entitades</field>
                         <field name="code">aeat_mod_347_statistics_operations_count</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
@@ -48,6 +52,7 @@
             </record>
             <record id="mod_347_operations_title" model="account.report.line">
                 <field name="name">Declared basis</field>
+                <field name="name@es">Relación de declarados</field>
                 <field name="code">aeat_mod_347_operations_title</field>
                 <field name="sequence" eval="5"/>
                 <field name="hierarchy_level">0</field>
@@ -61,11 +66,13 @@
                 <field name="children_ids">
                     <record id="mod_347_operations_insurance_title" model="account.report.line">
                         <field name="name">Insurance operations</field>
+                        <field name="name@es">Operaciones de seguros</field>
                         <field name="code">aeat_mod_347_operations_insurance_title</field>
                         <field name="sequence" eval="9"/>
                         <field name="children_ids">
                             <record id="mod_347_operations_insurance_bought" model="account.report.line">
                                 <field name="name">B - Sales of goods and services greater than 3.005,06 €</field>
+                                <field name="name@es">B - Entregas de bienes y prestaciones de servicios superiores a 3 005,06 €</field>
                                 <field name="code">aeat_mod_347_operations_insurance_bought</field>
                                 <field name="groupby">partner_id</field>
                                 <field name="sequence" eval="10"/>
@@ -84,11 +91,13 @@
                     </record>
                     <record id="mod_347_operations_regular_title" model="account.report.line">
                         <field name="name">Other operations</field>
+                        <field name="name@es">Otras operaciones</field>
                         <field name="code">aeat_mod_347_operations_regular_title</field>
                         <field name="sequence" eval="11"/>
                         <field name="children_ids">
                             <record id="mod_347_operations_regular_bought" model="account.report.line">
                                 <field name="name">A - Purchases of goods and services greater than 3.005,06 €</field>
+                                <field name="name@es">A - Adquisiciones de bienes y servicios superiores a 3 005,06 €</field>
                                 <field name="code">aeat_mod_347_operations_regular_bought</field>
                                 <field name="groupby">partner_id</field>
                                 <field name="sequence" eval="12"/>
@@ -105,6 +114,7 @@
                             </record>
                             <record id="mod_347_operations_regular_sold" model="account.report.line">
                                 <field name="name">B - Sales of goods and services greater than 3.005,06 €</field>
+                                <field name="name@es">B - Entregas de bienes y prestaciones de servicios superiores a 3 005,06 €</field>
                                 <field name="code">aeat_mod_347_operations_regular_sold</field>
                                 <field name="groupby">partner_id</field>
                                 <field name="sequence" eval="13"/>

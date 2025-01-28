@@ -271,11 +271,6 @@ msgid "Under free consignment"
 msgstr "Bajo consignación libre"
 
 #. module: l10n_cl_edi_exports
-#: model:account.incoterms,name:l10n_cl_edi_exports.incoterm_SCL
-msgid "WITHOUT SALE/PURCHASE CLAUSE"
-msgstr "Sin cláusula de compraventa"
-
-#. module: l10n_cl_edi_exports
 #: model:ir.model.fields.selection,name:l10n_cl_edi_exports.selection__account_move__l10n_cl_customs_transport_type__07
 msgid "Wagoner / Land"
 msgstr "Carretero/Terrestre"

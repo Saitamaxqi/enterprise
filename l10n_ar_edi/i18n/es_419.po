@@ -517,25 +517,10 @@ msgid "Domestic market -without detail- RG2485 (WSFEv1)"
 msgstr "Mercado interno -sin detalle- RG2485 (WSFEv1)"
 
 #. module: l10n_ar_edi
-#: model:account.journal,name:l10n_ar_edi.ws_fex_journal_ri
-msgid "Electronic Exportation Invoice (FEX)"
-msgstr "Factura Electrónica de Exportación (FEX)"
-
-#. module: l10n_ar_edi
-#: model:account.journal,name:l10n_ar_edi.ws_bfe_journal_ri
-msgid "Electronic Fiscal Bond (BFE)"
-msgstr "Bono Fiscal Electrónico"
-
-#. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_journal.py:0
 msgid "Electronic Fiscal Bond - Web Service"
 msgstr "Bono Fiscal Electrónico - Web Service"
-
-#. module: l10n_ar_edi
-#: model:account.journal,name:l10n_ar_edi.ws_fe_journal_ri
-msgid "Electronic Invoice (FE)"
-msgstr "Factura Electrónica (FE)"
 
 #. module: l10n_ar_edi
 #. odoo-python

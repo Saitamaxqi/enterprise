@@ -38,11 +38,6 @@ msgid "Bank Accounts"
 msgstr ""
 
 #. module: l10n_it_riba
-#: model:account.payment.method,name:l10n_it_riba.payment_method_riba
-msgid "Bank Receipt (IT)"
-msgstr ""
-
-#. module: l10n_it_riba
 #: model:ir.model,name:l10n_it_riba.model_account_batch_payment
 msgid "Batch Payment"
 msgstr ""

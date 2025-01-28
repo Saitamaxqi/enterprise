@@ -2,6 +2,7 @@
 <odoo>
     <record id="account_financial_report_lv_pnl" model="account.report">
         <field name="name">Profit and loss</field>
+        <field name="name@lv">Peļņa un zaudējumi</field>
         <field name="root_report_id" ref="account_reports.profit_and_loss"/>
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_journals" eval="True"/>
@@ -10,12 +11,14 @@
         <field name="column_ids">
             <record id="account_financial_report_lv_pnl_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@lv">Bilance</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="account_financial_report_lv_net_turnover" model="account.report.line">
                 <field name="name">Net Turnover</field>
+                <field name="name@lv">Neto apgrozījums</field>
                 <field name="code">LV_net_turnover</field>
                 <field name="foldable" eval="True"/>
                 <field name="expression_ids">
@@ -28,6 +31,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_lv_revenue_sales_general_tax" model="account.report.line">
                         <field name="name">Business income subject to general taxation</field>
+                        <field name="name@lv">Uzņēmējdarbības ienākumi, uz kuriem attiecas vispārējie nodokļi</field>
                         <field name="code">LV_revenue_sales_general_tax</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -41,6 +45,7 @@
                     </record>
                     <record id="account_financial_report_lv_revenue_sales_special_tax" model="account.report.line">
                         <field name="name">Revenue from sales subject to reduced taxation</field>
+                        <field name="name@lv">Ieņēmumi no pārdošanas, uz kuriem attiecas samazināti nodokļi</field>
                         <field name="code">LV_revenue_sales_special_tax</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -54,6 +59,7 @@
                     </record>
                     <record id="account_financial_report_lv_revenue_commission_brokerage" model="account.report.line">
                         <field name="name">Commissions, brokerage and other income</field>
+                        <field name="name@lv">Komisijas, starpniecības un citi ienākumi</field>
                         <field name="code">LV_revenue_commission_brokerage</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -67,6 +73,7 @@
                     </record>
                     <record id="account_financial_report_lv_discounts" model="account.report.line">
                         <field name="name">Revenue-reducing discounts</field>
+                        <field name="name@lv">Ieņēmumus samazinošas atlaides</field>
                         <field name="code">LV_discounts</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -80,6 +87,7 @@
                     </record>
                     <record id="account_financial_report_lv_changes_inventory" model="account.report.line">
                         <field name="name">Changes in stocks and value of finished goods and work in progress</field>
+                        <field name="name@lv">Izmaiņas krājumos un gatavās produkcijas un nepabeigtās produkcijas vērtībā</field>
                         <field name="code">LV_changes_inventory</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -95,6 +103,7 @@
             </record>
             <record id="account_financial_report_lv_cost_goods_sold" model="account.report.line">
                 <field name="name">Cost of economic activity</field>
+                <field name="name@lv">Saimnieciskās darbības izmaksas</field>
                 <field name="code">LV_cost_goods_sold</field>
                 <field name="foldable" eval="True"/>
                 <field name="expression_ids">
@@ -107,6 +116,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_lv_purchase_materials" model="account.report.line">
                         <field name="name">Expenses for the purchase of raw materials, materials and goods</field>
+                        <field name="name@lv">Izejvielu, materiālu un preču iegādes izdevumi</field>
                         <field name="code">LV_purchase_materials</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -120,6 +130,7 @@
                     </record>
                     <record id="account_financial_report_lv_personnel_costs" model="account.report.line">
                         <field name="name">Personnel costs</field>
+                        <field name="name@lv">Personāla izmaksas</field>
                         <field name="code">LV_personnel_costs</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -133,6 +144,7 @@
                     </record>
                     <record id="account_financial_report_lv_social_charges" model="account.report.line">
                         <field name="name">Social charges and costs</field>
+                        <field name="name@lv">Sociālās izmaksas un izmaksas</field>
                         <field name="code">LV_social_charges</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -146,6 +158,7 @@
                     </record>
                     <record id="account_financial_report_lv_depreciation_fixed_assets" model="account.report.line">
                         <field name="name">Depreciation of fixed assets and write-offs of the value of other investments</field>
+                        <field name="name@lv">Pamatlīdzekļu nolietojums un citu ieguldījumu vērtības norakstīšana</field>
                         <field name="code">LV_depreciation_fixed_assets</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -159,6 +172,7 @@
                     </record>
                     <record id="account_financial_report_lv_other_costs" model="account.report.line">
                         <field name="name">Other economic activity costs</field>
+                        <field name="name@lv">Citas saimnieciskās darbības izmaksas</field>
                         <field name="code">LV_other_costs</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -174,6 +188,7 @@
             </record>
             <record id="account_financial_report_lv_gross_profit_loss" model="account.report.line">
                 <field name="name">Gross profit or loss</field>
+                <field name="name@lv">Bruto peļņa vai zaudējumi</field>
                 <field name="code">LV_gross_profit_loss</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -186,6 +201,7 @@
             </record>
             <record id="account_financial_report_lv_cost_sale" model="account.report.line">
                 <field name="name">Cost of selling goods</field>
+                <field name="name@lv">Preču pārdošanas izmaksas</field>
                 <field name="code">LV_cost_sale</field>
                 <field name="foldable" eval="True"/>
                 <field name="groupby">account_id</field>
@@ -199,6 +215,7 @@
             </record>
             <record id="account_financial_report_lv_administration_costs" model="account.report.line">
                 <field name="name">Administration costs</field>
+                <field name="name@lv">Administrācijas izmaksas</field>
                 <field name="code">LV_administration_costs</field>
                 <field name="foldable" eval="True"/>
                 <field name="groupby">account_id</field>
@@ -212,6 +229,7 @@
             </record>
             <record id="account_financial_report_lv_other_operating_income" model="account.report.line">
                 <field name="name">Other operating income</field>
+                <field name="name@lv">Citi saimnieciskās darbības ieņēmumi</field>
                 <field name="code">LV_other_operating_income</field>
                 <field name="foldable" eval="True"/>
                 <field name="expression_ids">
@@ -224,6 +242,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_lv_other_income" model="account.report.line">
                         <field name="name">Other company income</field>
+                        <field name="name@lv">Citi uzņēmuma ienākumi</field>
                         <field name="code">LV_other_income</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -237,6 +256,7 @@
                     </record>
                     <record id="account_financial_report_lv_revenue_other_periods" model="account.report.line">
                         <field name="name">Revenues of other periods relating to the reporting period</field>
+                        <field name="name@lv">Citu periodu ieņēmumi, kas attiecas uz pārskata periodu</field>
                         <field name="code">LV_revenue_other_periods</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -250,6 +270,7 @@
                     </record>
                     <record id="account_financial_report_lv_revenue_social_infrastructure" model="account.report.line">
                         <field name="name">Revenues from social infrastructure</field>
+                        <field name="name@lv">Ieņēmumi no sociālās infrastruktūras</field>
                         <field name="code">LV_revenue_social_infrastructure</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -263,6 +284,7 @@
                     </record>
                     <record id="account_financial_report_lv_misc_revenues" model="account.report.line">
                         <field name="name">Miscellaneous revenues</field>
+                        <field name="name@lv">Dažādi ieņēmumi</field>
                         <field name="code">LV_misc_revenues</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -276,6 +298,7 @@
                     </record>
                     <record id="account_financial_report_lv_extraordinary_income" model="account.report.line">
                         <field name="name">Extraordinary income</field>
+                        <field name="name@lv">Ārkārtas ienākumi</field>
                         <field name="code">LV_extraordinary_income</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -291,6 +314,7 @@
             </record>
             <record id="account_financial_report_other_operating_costs" model="account.report.line">
                 <field name="name">Other costs of economic activity</field>
+                <field name="name@lv">Citas saimnieciskās darbības izmaksas</field>
                 <field name="code">LV_other_operating_costs</field>
                 <field name="foldable" eval="True"/>
                 <field name="expression_ids">
@@ -303,6 +327,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_lv_expense_other_periods" model="account.report.line">
                         <field name="name">Expenses of previous periods to be included in the reporting period</field>
+                        <field name="name@lv">Pārskata periodā iekļaujami iepriekšējo periodu izdevumi</field>
                         <field name="code">LV_expense_other_periods</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -316,6 +341,7 @@
                     </record>
                     <record id="account_financial_report_lv_expense_social_infrastructure" model="account.report.line">
                         <field name="name">Social infrastructure maintenance costs</field>
+                        <field name="name@lv">Sociālās infrastruktūras uzturēšanas izmaksas</field>
                         <field name="code">LV_expense_social_infrastructure</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -329,6 +355,7 @@
                     </record>
                     <record id="account_financial_report_lv_misc_expenses" model="account.report.line">
                         <field name="name">Miscellaneous expenses</field>
+                        <field name="name@lv">Dažādi izdevumi</field>
                         <field name="code">LV_misc_expenses</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -344,6 +371,7 @@
             </record>
             <record id="account_financial_report_lv_other_interest_income" model="account.report.line">
                 <field name="name">Other interest income and similar income</field>
+                <field name="name@lv">Citi procentu ienākumi un līdzīgi ienākumi</field>
                 <field name="code">LV_other_interest_income</field>
                 <field name="foldable" eval="True"/>
                 <field name="groupby">account_id</field>
@@ -358,6 +386,7 @@
             </record>
             <record id="account_financial_report_lv_interest_payments" model="account.report.line">
                 <field name="name">Interest paid and related expenses</field>
+                <field name="name@lv">Apmaksātie procenti un saistītie izdevumi</field>
                 <field name="code">LV_interest_payments</field>
                 <field name="foldable" eval="True"/>
                 <field name="groupby">account_id</field>
@@ -371,6 +400,7 @@
             </record>
             <record id="account_financial_report_lv_profit_loss_before_tax" model="account.report.line">
                 <field name="name">Profit or loss before tax</field>
+                <field name="name@lv">Peļņa vai zaudējumi pirms nodokļu nomaksas</field>
                 <field name="code">LV_profit_loss_before_tax</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -383,6 +413,7 @@
             </record>
             <record id="account_financial_report_lv_corporate_income_tax" model="account.report.line">
                 <field name="name">Corporate income tax for reporting year</field>
+                <field name="name@lv">Uzņēmumu ienākuma nodoklis par pārskata gadu</field>
                 <field name="code">LV_corporate_income_tax</field>
                 <field name="foldable" eval="True"/>
                 <field name="groupby">account_id</field>
@@ -396,6 +427,7 @@
             </record>
             <record id="account_financial_report_lv_net_profit_loss" model="account.report.line">
                 <field name="name">Net profit or loss after tax</field>
+                <field name="name@lv">Neto peļņa vai zaudējumi pēc nodokļu nomaksas</field>
                 <field name="code">LV_net_profit_loss</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -408,6 +440,7 @@
             </record>
             <record id="account_financial_report_lv_extraordinary_dividends" model="account.report.line">
                 <field name="name">Extraordinary dividends</field>
+                <field name="name@lv">Ārkārtas dividendes</field>
                 <field name="code">LV_extraordinary_dividends</field>
                 <field name="foldable" eval="True"/>
                 <field name="groupby">account_id</field>
@@ -421,6 +454,7 @@
             </record>
             <record id="account_financial_report_lv_annual_profit_loss" model="account.report.line">
                 <field name="name">Annual Profit or Loss</field>
+                <field name="name@lv">Gada peļņa vai zaudējumi</field>
                 <field name="hierarchy_level">0</field>
                 <field name="code">LV_annual_profit_loss</field>
                 <field name="expression_ids">

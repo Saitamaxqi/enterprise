@@ -105,26 +105,6 @@ msgid "Display Name"
 msgstr ""
 
 #. module: l10n_in_enet_batch_payment
-#: model:account.payment.method,name:l10n_in_enet_batch_payment.account_payment_method_enet_demand_draft
-msgid "ENet Demand Draft"
-msgstr ""
-
-#. module: l10n_in_enet_batch_payment
-#: model:account.payment.method,name:l10n_in_enet_batch_payment.account_payment_method_enet_fund_transfer
-msgid "ENet Fund Transfer"
-msgstr ""
-
-#. module: l10n_in_enet_batch_payment
-#: model:account.payment.method,name:l10n_in_enet_batch_payment.account_payment_method_enet_neft
-msgid "ENet NEFT"
-msgstr ""
-
-#. module: l10n_in_enet_batch_payment
-#: model:account.payment.method,name:l10n_in_enet_batch_payment.account_payment_method_enet_rtgs
-msgid "ENet RTGS"
-msgstr ""
-
-#. module: l10n_in_enet_batch_payment
 #: model:ir.model,name:l10n_in_enet_batch_payment.model_enet_template
 msgid "ENet Template"
 msgstr ""

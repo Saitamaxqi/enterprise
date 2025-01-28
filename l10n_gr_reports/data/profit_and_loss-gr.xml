@@ -2,6 +2,7 @@
 <odoo>
     <record id="l10n_gr_pl_accounting_report" model="account.report">
         <field name="name">Profit and Loss (Model B.2.1)</field>
+        <field name="name@el_GR">Κέρδη και ζημίες (Υπόδειγμα Β.2.1)</field>
         <field name="root_report_id" ref="account_reports.profit_and_loss"/>
         <field name="filter_analytic_groupby" eval="True"/>
         <field name="filter_unfold_all" eval="True"/>
@@ -12,12 +13,14 @@
         <field name="column_ids">
             <record id="l10n_gr_pl_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@el_GR">Υπόλοιπο</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="l10n_gr_pl_net_turnover" model="account.report.line">
                 <field name="name">Net turnover</field>
+                <field name="name@el_GR">Καθαρός κύκλος εργασιών</field>
                 <field name="code">l10n_gr_net_turnover</field>
                 <field name="hierarchy_level">1</field>
                 <field name="groupby">account_id</field>
@@ -32,6 +35,7 @@
             </record>
             <record id="l10n_gr_pl_cost_of_sales" model="account.report.line">
                 <field name="name">Cost of sales</field>
+                <field name="name@el_GR">Κόστος πωλήσεων</field>
                 <field name="code">l10n_gr_cost_of_sales</field>
                 <field name="hierarchy_level">1</field>
                 <field name="groupby">account_id</field>
@@ -53,6 +57,7 @@
             </record>
             <record id="l10n_gr_pl_gross_margin" model="account.report.line">
                 <field name="name">Gross margin</field>
+                <field name="name@el_GR">Μικτό περιθώριο κέρδους</field>
                 <field name="code">l10n_gr_gross_margin</field>
                 <field name="hierarchy_level">3</field>
                 <field name="expression_ids">
@@ -65,6 +70,7 @@
             </record>
             <record id="l10n_gr_pl_other_ordinary_revenue" model="account.report.line">
                 <field name="name">Other ordinary revenue</field>
+                <field name="name@el_GR">Άλλα συνήθη έσοδα</field>
                 <field name="code">l10n_gr_other_ordinary_revenue</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -79,6 +85,7 @@
             </record>
             <record id="l10n_gr_pl_temporary_result" model="account.report.line">
                 <field name="name">Gross margin - Other ordinary revenue</field>
+                <field name="name@el_GR">Μικτό περιθώριο κέρδους - Άλλα συνήθη έσοδα</field>
                 <field name="code">l10n_gr_temporary_result</field>
                 <field name="hierarchy_level">3</field>
                 <field name="expression_ids">
@@ -91,6 +98,7 @@
             </record>
             <record id="l10n_gr_pl_admin_exp" model="account.report.line">
                 <field name="name">Administrative expenses</field>
+                <field name="name@el_GR">Έξοδα διοίκησης</field>
                 <field name="code">l10n_gr_admin_exp</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -110,6 +118,7 @@
             </record>
             <record id="l10n_gr_pl_selling_distri_exp" model="account.report.line">
                 <field name="name">Selling and distribution expenses</field>
+                <field name="name@el_GR">Έξοδα πώλησης και διανομής</field>
                 <field name="code">l10n_gr_selling_distri_exp</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -129,6 +138,7 @@
             </record>
             <record id="l10n_gr_pl_other_exp_and_loss" model="account.report.line">
                 <field name="name">Other expenses and losses</field>
+                <field name="name@el_GR">Λοιπά έξοδα και ζημίες</field>
                 <field name="code">l10n_gr_other_exp_and_loss</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -144,6 +154,7 @@
             </record>
             <record id="l10n_gr_pl_impairments_expenses" model="account.report.line">
                 <field name="name">Impairments of assets (net amount)</field>
+                <field name="name@el_GR">Απομειώσεις περιουσιακών στοιχείων (καθαρό ποσό)</field>
                 <field name="code">l10n_gr_impairments_assets</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -159,6 +170,7 @@
             </record>
             <record id="l10n_gr_pl_loss_disposal_assets" model="account.report.line">
                 <field name="name">Gains/Losses on disposal of non-current assets</field>
+                <field name="name@el_GR">Κέρδη/ζημίες από τη διάθεση μη κυκλοφορούντων περιουσιακών στοιχείων</field>
                 <field name="code">l10n_gr_gain_loss_disposal_assets</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -173,6 +185,7 @@
             </record>
             <record id="l10n_gr_pl_loss_measurement_fair_value" model="account.report.line">
                 <field name="name">Gains/Losses from measurement at fair value</field>
+                <field name="name@el_GR">Κέρδη/ζημίες από την αποτίμηση στην εύλογη αξία</field>
                 <field name="code">l10n_gr_gain_loss_measurement_fair_value</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -187,6 +200,7 @@
             </record>
             <record id="l10n_gr_pl_revenue_investment" model="account.report.line">
                 <field name="name">Revenue from Investments</field>
+                <field name="name@el_GR">Έσοδα από επενδύσεις</field>
                 <field name="code">l10n_gr_revenue_investment</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -201,6 +215,7 @@
             </record>
             <record id="l10n_gr_pl_gain_bargain_business" model="account.report.line">
                 <field name="name">Gain from Bargain Purchase of a Business</field>
+                <field name="name@el_GR">Κέρδος από αγοραπωλησία επιχείρησης</field>
                 <field name="code">l10n_gr_gain_bargain_business</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -215,6 +230,7 @@
             </record>
             <record id="l10n_gr_pl_other_gains" model="account.report.line">
                 <field name="name">Other Revenue and Gains</field>
+                <field name="name@el_GR">Άλλα έσοδα και κέρδη</field>
                 <field name="code">l10n_gr_other_gains</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -229,6 +245,7 @@
             </record>
             <record id="l10n_gr_pl_income_before_interest_and_tax" model="account.report.line">
                 <field name="name">Income before interest and tax</field>
+                <field name="name@el_GR">Εισόδημα προ τόκων και φόρων</field>
                 <field name="code">l10n_gr_income_before_interest_and_tax</field>
                 <field name="hierarchy_level">3</field>
                 <field name="expression_ids">
@@ -252,6 +269,7 @@
             </record>
             <record id="l10n_gr_pl_interest_income" model="account.report.line">
                 <field name="name">Interest income</field>
+                <field name="name@el_GR">Έσοδα από τόκους</field>
                 <field name="code">l10n_gr_interest_income</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -266,6 +284,7 @@
             </record>
             <record id="l10n_gr_pl_interest_expense" model="account.report.line">
                 <field name="name">Interest expense</field>
+                <field name="name@el_GR">Έξοδα τόκων</field>
                 <field name="code">l10n_gr_interest_expense</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -281,6 +300,7 @@
             </record>
             <record id="l10n_gr_pl_income_before_tax" model="account.report.line">
                 <field name="name">Income before tax</field>
+                <field name="name@el_GR">Εισόδημα προ φόρων</field>
                 <field name="code">l10n_gr_income_before_tax</field>
                 <field name="hierarchy_level">3</field>
                 <field name="expression_ids">
@@ -297,6 +317,7 @@
             </record>
             <record id="l10n_gr_pl_income_tax" model="account.report.line">
                 <field name="name">Income tax</field>
+                <field name="name@el_GR">Φόρος εισοδήματος</field>
                 <field name="code">l10n_gr_income_tax</field>
                 <field name="hierarchy_level">3</field>
                 <field name="groupby">account_id</field>
@@ -311,6 +332,7 @@
             </record>
             <record id="l10n_gr_pl_net_income_for_the_period" model="account.report.line">
                 <field name="name">Net income for the period</field>
+                <field name="name@el_GR">Καθαρά κέρδη για την περίοδο</field>
                 <field name="code">l10n_gr_net_income_for_the_period</field>
                 <field name="hierarchy_level">3</field>
                 <field name="expression_ids">

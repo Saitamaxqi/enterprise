@@ -176,11 +176,6 @@ msgid "BACS"
 msgstr ""
 
 #. module: l10n_uk_bacs
-#: model:account.payment.method,name:l10n_uk_bacs.payment_method_bacs_dc
-msgid "BACS Direct Credit"
-msgstr ""
-
-#. module: l10n_uk_bacs
 #: model:ir.actions.act_window,name:l10n_uk_bacs.account_bacs_direct_debit_instruction_tree_act
 #: model:ir.model,name:l10n_uk_bacs.model_bacs_ddi
 msgid "BACS Direct Debit Instruction"
@@ -255,11 +250,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_uk_bacs.field_account_move__bacs_ddi_id
 #: model:ir.model.fields,field_description:l10n_uk_bacs.field_account_payment__bacs_ddi_id
 msgid "Bacs Ddi"
-msgstr ""
-
-#. module: l10n_uk_bacs
-#: model:account.payment.method,name:l10n_uk_bacs.payment_method_bacs_dd
-msgid "Bacs Direct Debit"
 msgstr ""
 
 #. module: l10n_uk_bacs
@@ -814,18 +804,10 @@ msgid "Service user number"
 msgstr ""
 
 #. module: l10n_uk_bacs
-msgid "Service user number of your company within BACS"
-msgstr ""
-
-#. module: l10n_uk_bacs
 #: model:ir.model.fields,help:l10n_uk_bacs.field_res_config_settings__bacs_sun
 msgid ""
 "Service user number of your company within BACS. Write 'HSBC' here if you "
 "bank does not provide one."
-msgstr ""
-
-#. module: l10n_uk_bacs
-msgid "Service user number of your company within BACS, given by the bank."
 msgstr ""
 
 #. module: l10n_uk_bacs

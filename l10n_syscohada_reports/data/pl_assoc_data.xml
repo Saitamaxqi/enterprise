@@ -2,6 +2,7 @@
 <odoo>
     <record id="account_financial_report_syscebnl_pnl_assoc" model="account.report">
         <field name="name">Profit and Loss - SYSCEBNL</field>
+        <field name="name@fr">Compte de résultat - SYSCEBNL</field>
         <field name="root_report_id" ref="account_reports.profit_and_loss"/>
         <field name="availability_condition">coa_children</field>
         <field name="chart_template">syscebnl</field>
@@ -9,6 +10,7 @@
         <field name="column_ids">
             <record id="account_financial_report_syscebnl_pnl_assoc_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@fr">Balance</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
@@ -16,6 +18,7 @@
 
             <record id="account_financial_report_syscebnl_pnl_assoc_xa" model="account.report.line">
                 <field name="name">XA | Income from ordinary activities</field>
+                <field name="name@fr">XA | Revenus des activités ordinaires</field>
                 <field name="code">SYSCEBNL_ASSOC_XA</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_line_syscebnl_assoc_xa_balance" model="account.report.expression">
@@ -27,6 +30,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_syscebnl_pnl_assoc_ra" model="account.report.line">
                         <field name="name">RA | Contributions</field>
+                        <field name="name@fr">RA | Cotisations</field>
                         <field name="code">SYSCEBNL_ASSOC_RA</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -40,6 +44,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_rb" model="account.report.line">
                         <field name="name">RB | Expenditure transferred to income statement</field>
+                        <field name="name@fr">RB | Dotations consomptibles transférées au compte de résultat</field>
                         <field name="code">SYSCEBNL_ASSOC_RB</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -53,6 +58,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_rc" model="account.report.line">
                         <field name="name">RC | Income from generosity</field>
+                        <field name="name@fr">RC | Revenus liés à la générosité</field>
                         <field name="code">SYSCEBNL_ASSOC_RC</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -66,6 +72,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_rd" model="account.report.line">
                         <field name="name">RD | Sales of goods</field>
+                        <field name="name@fr">RD | Ventes de marchandises</field>
                         <field name="code">SYSCEBNL_ASSOC_RD</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -79,6 +86,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_re" model="account.report.line">
                         <field name="name">RE | Sales of services and finished goods</field>
+                        <field name="name@fr">RE | Ventes de services et produits finis</field>
                         <field name="code">SYSCEBNL_ASSOC_RE</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -92,6 +100,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_rf" model="account.report.line">
                         <field name="name">RF | Operating subsidies</field>
+                        <field name="name@fr">RF | Subventions d'exploitations</field>
                         <field name="code">SYSCEBNL_ASSOC_RF</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -105,6 +114,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_rg" model="account.report.line">
                         <field name="name">RG | Other income and expense transfers</field>
+                        <field name="name@fr">RG | Autres produits et transferts de charges</field>
                         <field name="code">SYSCEBNL_ASSOC_RG</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -118,6 +128,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_rh" model="account.report.line">
                         <field name="name">RH | Reversals of provisions, impairment, grants and other reversals</field>
+                        <field name="name@fr">RH | Reprises de provisions, dépréciations, subventions et autres reprises</field>
                         <field name="code">SYSCEBNL_ASSOC_RH</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -134,6 +145,7 @@
 
             <record id="account_financial_report_syscebnl_pnl_assoc_xb" model="account.report.line">
                 <field name="name">XB | Cost of ordinary activities</field>
+                <field name="name@fr">XB | Charges des activités ordinaires</field>
                 <field name="code">SYSCEBNL_ASSOC_XB</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_line_syscebnl_assoc_xb_balance" model="account.report.expression">
@@ -145,6 +157,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_syscebnl_pnl_assoc_ta" model="account.report.line">
                         <field name="name">TA | Purchases of goods and services related to operations</field>
+                        <field name="name@fr">TA | Achats de biens et services liés à l'activité</field>
                         <field name="code">SYSCEBNL_ASSOC_TA</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -158,6 +171,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_tb" model="account.report.line">
                         <field name="name">TB | Change in inventories of purchased goods and services related to operations</field>
+                        <field name="name@fr">TB | Variation de stocks des achats de biens et services liés à l'activité</field>
                         <field name="code">SYSCEBNL_ASSOC_TB</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -171,6 +185,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_tc" model="account.report.line">
                         <field name="name">TC | Purchases of goods and raw materials</field>
+                        <field name="name@fr">TC | Achats de marchandises et matières premières</field>
                         <field name="code">SYSCEBNL_ASSOC_TC</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -184,6 +199,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_td" model="account.report.line">
                         <field name="name">TD | Other purchases</field>
+                        <field name="name@fr">TD | Autres achats</field>
                         <field name="code">SYSCEBNL_ASSOC_TD</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -197,6 +213,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_te" model="account.report.line">
                         <field name="name">TE | Change in merchandise, raw materials and other inventories</field>
+                        <field name="name@fr">TE | Variation de stocks de marchandises, de matières premières et autres</field>
                         <field name="code">SYSCEBNL_ASSOC_TE</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -210,6 +227,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_tf" model="account.report.line">
                         <field name="name">TF | Transports</field>
+                        <field name="name@fr">TF | Transports</field>
                         <field name="code">SYSCEBNL_ASSOC_TF</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -223,6 +241,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_tg" model="account.report.line">
                         <field name="name">TG | External services</field>
+                        <field name="name@fr">TG | Services extérieurs</field>
                         <field name="code">SYSCEBNL_ASSOC_TG</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -236,6 +255,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_th" model="account.report.line">
                         <field name="name">TH | Taxes and duties</field>
+                        <field name="name@fr">TH | Impôts et taxes</field>
                         <field name="code">SYSCEBNL_ASSOC_TH</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -249,6 +269,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_ti" model="account.report.line">
                         <field name="name">TI | Other expenses</field>
+                        <field name="name@fr">TI | Autres charges</field>
                         <field name="code">SYSCEBNL_ASSOC_TI</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -262,6 +283,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_tj" model="account.report.line">
                         <field name="name">TJ | Staff costs</field>
+                        <field name="name@fr">TJ | Charges de personnel</field>
                         <field name="code">SYSCEBNL_ASSOC_TJ</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -275,6 +297,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_tk" model="account.report.line">
                         <field name="name">TK | Financial expenses and similar charges</field>
+                        <field name="name@fr">TK | Frais financiers et charges assimilées</field>
                         <field name="code">SYSCEBNL_ASSOC_TK</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -288,6 +311,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_tl" model="account.report.line">
                         <field name="name">TL | Depreciation, provisions, impairment and other allowances</field>
+                        <field name="name@fr">TL | Dotations aux amortissements, aux provisions, aux dépréciations et autres</field>
                         <field name="code">SYSCEBNL_ASSOC_TL</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -303,6 +327,7 @@
             </record>
             <record id="account_financial_report_syscebnl_pnl_assoc_xc" model="account.report.line">
                 <field name="name">XC | Profit from ordinary activities (XA - XB)</field>
+                <field name="name@fr">XC | Résultat des activités ordinaires (XA - XB)</field>
                 <field name="code">SYSCEBNL_ASSOC_XC</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_line_syscebnl_assoc_xc_balance" model="account.report.expression">
@@ -314,6 +339,7 @@
             </record>
             <record id="account_financial_report_syscebnl_pnl_assoc_xd" model="account.report.line">
                 <field name="name">XD | H.A.O. result (TM - TN)</field>
+                <field name="name@fr">XD | Résultat H.A.O. (TM - TN)</field>
                 <field name="code">SYSCEBNL_ASSOC_XD</field>
                 <field name="expression_ids">
                     <record id="account_financial_report_line_syscebnl_assoc_xd_balance" model="account.report.expression">
@@ -325,6 +351,7 @@
                 <field name="children_ids">
                     <record id="account_financial_report_syscebnl_pnl_assoc_tm" model="account.report.line">
                         <field name="name">TM | H.A.O. Products</field>
+                        <field name="name@fr">TM | Produits H.A.O.</field>
                         <field name="code">SYSCEBNL_ASSOC_TM</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -338,6 +365,7 @@
                     </record>
                     <record id="account_financial_report_syscebnl_pnl_assoc_tn" model="account.report.line">
                         <field name="name">TN | H.A.O. Charges</field>
+                        <field name="name@fr">TN | Charges H.A.O.</field>
                         <field name="code">SYSCEBNL_ASSOC_TN</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -353,6 +381,7 @@
             </record>
             <record id="account_financial_report_syscebnl_pnl_assoc_xe" model="account.report.line">
                 <field name="name">XE | Net profit for the year (+surplus, -deficit) (XC - XD)</field>
+                <field name="name@fr">XE | Résultat net de l'exercice (+excédent, -déficit) (XC - XD)</field>
                 <field name="code">SYSCEBNL_ASSOC_XE</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">

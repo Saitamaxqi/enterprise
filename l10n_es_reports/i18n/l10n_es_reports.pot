@@ -24,509 +24,14 @@ msgid ""
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31210
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32310
-msgid "1. Bonds and other marketable securities"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12710
-msgid "1. Cash"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_31210
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32310
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_31220
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32320
-msgid "1. Debt with financial institutions"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11110
-msgid "1. Development"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11410
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11510
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12410
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12510
-msgid "1. Equity instruments"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_21110
-msgid "1. Foundation endowment/Social fund"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12210
-msgid "1. Goods for resale"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11210
-msgid "1. Land and buildings"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11310
-msgid "1. Lands"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21310
-msgid "1. Legal and statutory reserves"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31110
-msgid "1. Long-term employee benefits"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21110
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21110
-msgid "1. Registered capital"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_1
-msgid "1. Revenue"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32510
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32510
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32510
-msgid "1. Suppliers"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12310
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_12310
-msgid "1. Trade receivables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_10
-msgid "10. Provision surpluses"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_11
-msgid "11. Impairment and gains/losses on disposal of fixed assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_12
-msgid "12. Other gains/losses"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_13
-msgid "13. Finance income"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_14
-msgid "14. Finance expenses"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_15
-msgid "15. Variation of fair value of financial instruments"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_16
-msgid "16. Exchange gains/losses"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_17
-msgid "17. Impairment and gains/losses on disposal of financial instruments"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_18
-msgid "18. Income tax expense"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21120
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21120
-msgid "2. (Uncalled capital)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_21120
-msgid "2. (Uncalled foundation endowment/social fund)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11320
-msgid "2. Buildings"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12720
-msgid "2. Cash equivalents"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_2
-msgid "2. Changes in inventories of finished goods and work in progress"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11120
-msgid "2. Concessions"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31220
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32320
-msgid "2. Debt with financial institutions"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31120
-msgid "2. Environmental actions"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_31220
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32220
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_31230
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32330
-msgid "2. Finance lease payables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11420
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12420
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12520
-msgid "2. Loans to companies"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11520
-msgid "2. Loans to third parties"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32580
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32580
-msgid "2. Other payables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21320
-msgid "2. Other reserves"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12220
-msgid "2. Raw materials and other supplies"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_12370
-msgid "2. Receivable on called-up share capital"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32520
-msgid "2. Suppliers, group companies and associates"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11220
-msgid "2. Technical installations and other items"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12320
-msgid "2. Trade receivables from group companies and associates"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11430
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11530
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12430
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12530
-msgid "3. Debt securities"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31230
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32330
-msgid "3. Finance lease payables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32230
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32390
-msgid "3. Other current payables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_31230
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_31290
-msgid "3. Other non-current payables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32530
-msgid "3. Other payables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12330
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_12390
-msgid "3. Other receivables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11130
-msgid "3. Patents, licences, trademarks and similar rights"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31130
-msgid "3. Restructuring costs"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11230
-msgid "3. Under construction and advances"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_3
-msgid "3. Work carried out by the company for assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12230
-msgid "3. Work in progress"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11440
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11540
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12440
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12540
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31240
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32340
-msgid "4. Derivatives"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12240
-msgid "4. Finished goods"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11140
-msgid "4. Goodwill"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31140
-msgid "4. Other provisions"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12340
-msgid "4. Personnel"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32540
-msgid "4. Personnel (salaries payables)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_4
-msgid "4. Supplies"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12250
-msgid "5. By-products, waste and recovered materials"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11150
-msgid "5. Computer software"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12350
-msgid "5. Current tax assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32550
-msgid "5. Current tax liabilities"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11450
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11550
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12450
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12550
-msgid "5. Other financial assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31250
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32350
-msgid "5. Other financial liabilities"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_5
-msgid "5. Other operating income"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12260
-msgid "6. Advances to suppliers"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11460
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11560
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12460
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12560
-msgid "6. Other investments"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_6
-msgid "6. Personnel expenses"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12360
-msgid "6. Public entities, other"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32560
-msgid "6. Public entities, other current liabilities"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11160
-msgid "6. Research"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32570
-msgid "7. Advances from customers"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11170
-msgid "7. Other intangible assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_7
-msgid "7. Other operating expenses"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12370
-msgid "7. Receivable on called-up capital"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_8
-msgid "8. Amortisation and depreciation"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_9
-msgid "9. Non-financial and other capital grants"
-msgstr ""
-
-#. module: l10n_es_reports
 #. odoo-python
 #: code:addons/l10n_es_reports/models/account_move.py:0
 msgid "A - Acquisition"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_347_operations_regular_bought
-msgid "A - Purchases of goods and services greater than 3.005,06 €"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_20000
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_20000
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_20000
-msgid "A) EQUITY"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_11000
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11000
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_11000
-msgid "A) NON-CURRENT ASSETS"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_sum_a
-msgid ""
-"A) RESULTS FROM OPERATING ACTIVITIES (1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10"
-" + 11 + 12)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_21000
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21000
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21000
-msgid "A-1) Capital and reserves without valuation adjustments"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_21500
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_22000
-msgid "A-2) Adjustments in equity"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_22000
-msgid "A-2) Valuation adjustments"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_22000
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_23000
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_23000
-msgid "A-3) Grants, donations and bequests received"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_acquisitions
-#: model:account.report.line,name:l10n_es_reports.mod_349_acquisitions_refunds
-msgid "A. Intra-community purchases subject to taxes"
-msgstr ""
-
-#. module: l10n_es_reports
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.invoice_form_inherit
 msgid "AEAT data"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report,name:l10n_es_reports.financial_report_balance_sheet_assoc
-msgid "Abbreviated Balance Sheet for Associations"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -547,18 +52,8 @@ msgid "Accounting Report"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.account.tag,name:l10n_es_reports.balance_sheet_31600_account
-msgid "Acreedores comerciales no corrientes"
-msgstr ""
-
-#. module: l10n_es_reports
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_key__a
 msgid "Adquisiciones de bienes y servicios"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_statistics_refunds_total_amount
-msgid "Amount of intra-community refund operations"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -576,31 +71,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_bank_statement_line__l10n_es_reports_mod349_available
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_move__l10n_es_reports_mod349_available
 msgid "Available for Mod349"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_347_operations_insurance_bought
-#: model:account.report.line,name:l10n_es_reports.mod_347_operations_regular_sold
-msgid "B - Sales of goods and services greater than 3.005,06 €"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_12000
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12000
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_12000
-msgid "B) CURRENT ASSETS"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_sum_b
-msgid "B) FINANCIAL RESULTS (13 + 14 + 15 + 16 + 17)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_31000
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31000
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_31000
-msgid "B) NON-CURRENT LIABILITIES"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -660,21 +130,6 @@ msgid "BOE Export Wizard for (mod390)"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.column,name:l10n_es_reports.financial_report_balance_sheet_assoc_column
-#: model:account.report.column,name:l10n_es_reports.financial_report_balance_sheet_full_column
-#: model:account.report.column,name:l10n_es_reports.financial_report_balance_sheet_pymes_column
-#: model:account.report.column,name:l10n_es_reports.financial_report_es_profit_and_loss_column
-#: model:account.report.column,name:l10n_es_reports.mod_347_column
-#: model:account.report.column,name:l10n_es_reports.mod_349_column
-msgid "Balance"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report,name:l10n_es_reports.financial_report_balance_sheet_pymes
-msgid "Balance Sheet - SMEs"
-msgstr ""
-
-#. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod390_export_wizard__special_cash_basis_beneficiary
 msgid "Beneficiary of the special cash regime"
 msgstr ""
@@ -690,28 +145,6 @@ msgstr ""
 #: code:addons/l10n_es_reports/models/account_move.py:0
 #, python-format
 msgid "C - Replacements of goods"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32000
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32000
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32000
-msgid "C) CURRENT LIABILITIES"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_sum_c
-msgid "C) PROFIT/LOSS BEFORE INCOME TAX (A + B)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_substitutions_refunds
-msgid "C. Rectifications for replacement of goods"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_substitutions
-msgid "C. Replacements of goods"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -775,11 +208,6 @@ msgid "Complementary Declaration"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report,name:l10n_es_reports.financial_report_balance_sheet_full
-msgid "Complete Balance Sheet"
-msgstr ""
-
-#. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__contact_person_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__contact_person_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod349_export_wizard__contact_person_name
@@ -830,7 +258,6 @@ msgstr ""
 
 #. module: l10n_es_reports
 #: code:addons/l10n_es_reports/models/libro_diario_export.py:0
-#: model:account.report.column,name:l10n_es_reports.l10n_es_reports_trial_balance_credit
 msgid "Credit"
 msgstr ""
 
@@ -870,24 +297,8 @@ msgid "D - Returns of goods previously sent from the TAI"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_sum_d
-msgid "D) PROFIT/LOSS FOR THE PERIOD (C + 18)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.column,name:l10n_es_reports.l10n_es_reports_trial_balance_debit
 #: code:addons/l10n_es_reports/models/libro_diario_export.py:0
 msgid "Debit"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_returns_goods_consignment_refunds
-msgid "D. Rectifications of returned goods previously sent from the TAI"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_returns_goods_consignment
-msgid "D. Returns of goods previously sent from the TAI"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -906,11 +317,6 @@ msgid "Declaration Type"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_347_operations_title
-msgid "Declared basis"
-msgstr ""
-
-#. module: l10n_es_reports
 #: model:ir.model.fields,help:l10n_es_reports.field_account_bank_statement_line__l10n_es_reports_mod347_invoice_type
 #: model:ir.model.fields,help:l10n_es_reports.field_account_move__l10n_es_reports_mod347_invoice_type
 msgid "Defines the category into which this invoice falls for mod 347 report."
@@ -926,11 +332,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_es_reports/models/libro_diario_export.py:0
 msgid "Description"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.account.tag,name:l10n_es_reports.balance_sheet_11700_account
-msgid "Deudores comerciales no corrientes"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -967,16 +368,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_es_reports/models/account_move.py:0
 msgid "E - Supply"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_supplies
-msgid "E. Intra-community sales"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_supplies_refunds
-msgid "E. Intra-community sales refunds"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1062,14 +453,6 @@ msgid "H - Supply without taxes delivered by a legal representative"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_supplies_without_taxes_legal_representative
-#: model:account.report.line,name:l10n_es_reports.mod_349_supplies_without_taxes_legal_representative_refunds
-msgid ""
-"H. Intra-community sales of goods after an import exempted of taxes made for"
-" the fiscal representative"
-msgstr ""
-
-#. module: l10n_es_reports
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod111_export_wizard__declaration_type__i
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__declaration_type__i
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod115_export_wizard__declaration_type__i
@@ -1082,64 +465,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_es_reports/models/account_move.py:0
 msgid "I - Services acquisition"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_22100
-msgid "I. Available-for-sale financial assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21100
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21100
-msgid "I. Capital"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32100
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32200
-msgid "I. Current provisions"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_21100
-msgid "I. Foundation endowment/Social fund"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_11100
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11100
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_11100
-msgid "I. Intangible assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_services_acquired
-#: model:account.report.line,name:l10n_es_reports.mod_349_services_acquired_refunds
-msgid "I. Intra-community purchases of services"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_12100
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_12200
-msgid "I. Inventories"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32100
-msgid "I. Liabilities associated with non-current assets held for sale"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12100
-msgid "I. Non-current assets held for sale"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_31100
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31100
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_31100
-msgid "I. Non-current provisions"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1163,183 +488,6 @@ msgid "ID"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32200
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32300
-msgid "II. Current payables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_31200
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31200
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32200
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_31200
-msgid "II. Current provisions"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_22200
-msgid "II. Hedging transactions"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_11200
-msgid "II. Historical heritage assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12200
-msgid "II. Inventories"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11200
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_11200
-msgid "II. Property, plant and equipment"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_21200
-msgid "II. Reserves"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21200
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21200
-msgid "II. Share premium"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_12300
-msgid "II. Trade and other receivables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_12200
-msgid "II. Usables and other receivables of the own activity"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_21250
-msgid "III. (Own shares and equity interests)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_12400
-msgid "III. Current investments in group companies and associates"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32300
-msgid "III. Current payables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31300
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_31300
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32400
-msgid "III. Group companies and associates, non-current liabilities"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11300
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_11300
-msgid "III. Investment property"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_22300
-msgid "III. Non-current assets and related liabilities held for sale"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_31300
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32300
-msgid "III. Non-current debts with group companies and associates"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_11300
-msgid "III. Property, plant and equipment"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21300
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21300
-msgid "III. Reserves"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_12300
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12300
-msgid "III. Trade and other receivables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21400
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21400
-msgid "IV. (Own shares and equity holdings)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32400
-msgid "IV. Beneficiaries-Creditors"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_22400
-msgid "IV. Conversion difference"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_12500
-msgid "IV. Current financial investments"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_12400
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12400
-msgid "IV. Current investments in group companies and associates"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_31400
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31400
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_31400
-msgid "IV. Deferred tax liabilities"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32400
-msgid "IV. Group companies and associates, current liabilities"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_11400
-msgid "IV. Investment property"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11400
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_11400
-msgid "IV. Non-current investments in group companies and associates"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_21300
-msgid "IV. Surplus from previous period"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32500
-msgid "IV. Trade and other payables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21900
-msgid "IX. Other equity instruments"
-msgstr ""
-
-#. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__monthly_return
 msgid "In Monthly Return Register"
 msgstr ""
@@ -1347,54 +495,6 @@ msgstr ""
 #. module: l10n_es_reports
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__account_move__l10n_es_reports_mod347_invoice_type__insurance
 msgid "Insurance operation"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_347_operations_insurance_title
-msgid "Insurance operations"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.account.tag,name:l10n_es_reports.balance_sheet_12440_account
-msgid ""
-"Inversiones en empresas del grupo y asociadas a corto plazo - Derivados"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.account.tag,name:l10n_es_reports.balance_sheet_12460_account
-msgid ""
-"Inversiones en empresas del grupo y asociadas a corto plazo - Otras "
-"inversiones"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.account.tag,name:l10n_es_reports.balance_sheet_11440_account
-msgid ""
-"Inversiones en empresas del grupo y asociadas a largo plazo - Derivados"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.account.tag,name:l10n_es_reports.balance_sheet_11460_account
-msgid ""
-"Inversiones en empresas del grupo y asociadas a largo plazo - Otras "
-"inversiones"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.account.tag,name:l10n_es_reports.balance_sheet_11450_account
-msgid ""
-"Inversiones en empresas del grupo y asociadas a largo plazo - Otros activos "
-"financieros"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.account.tag,name:l10n_es_reports.balance_sheet_12560_account
-msgid "Inversiones financieras a corto plazo - Otras inversiones"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_invoices_title
-msgid "Invoices"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1463,13 +563,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_es_reports/models/account_move.py:0
 msgid "M - Supply without taxes"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_supplies_without_taxes
-#: model:account.report.line,name:l10n_es_reports.mod_349_supplies_without_taxes_refunds
-msgid ""
-"M. Intra-community sales of goods after an importation exempted of taxes"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1570,11 +663,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_347_operations_regular_title
-msgid "Other operations"
-msgstr ""
-
-#. module: l10n_es_reports
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_class__otras
 msgid "Otras operaciones"
 msgstr ""
@@ -1613,11 +701,6 @@ msgstr ""
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_mod347_manual_partner_data__perceived_amount
 msgid "Perceived Amount"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.column,name:l10n_es_reports.l10n_es_reports_trial_balance_balance
-msgid "Period Total"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1691,28 +774,11 @@ msgid "Print BOE"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report,name:l10n_es_reports.financial_report_es_profit_and_loss
-msgid "Profit and Loss"
-msgstr ""
-
-#. module: l10n_es_reports
 #. odoo-python
 #: code:addons/l10n_es_reports/models/account_move.py:0
 #: code:addons/l10n_es_reports/models/account_move.py:0
 #, python-format
 msgid "R - Transfers of goods made under consignment sales agreements"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_consignment_sales_agreements_refunds
-msgid ""
-"R. Rectifications of transfers of goods made under consignment sale "
-"contracts."
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_consignment_sales_agreements
-msgid "R. Transfers of goods made under consignment sales contracts."
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1727,11 +793,6 @@ msgstr ""
 msgid ""
 "Refund Invoice %s was created without a link to the original invoice that "
 "was credited, while we need that information for this report. "
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_refunds_title
-msgid "Refunds"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1777,12 +838,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_es_reports/models/account_move.py:0
 msgid "S - Services sale"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_services_sold
-#: model:account.report.line,name:l10n_es_reports.mod_349_services_sold_refunds
-msgid "S. Intra-community sales of services carried out by the declarant"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1868,47 +923,9 @@ msgid "Substitutive declaration?"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_347_summary_title
-#: model:account.report.line,name:l10n_es_reports.mod_349_summary_title
-msgid "Summary"
-msgstr ""
-
-#. module: l10n_es_reports
 #. odoo-python
 #: code:addons/l10n_es_reports/models/account_move.py:0
 msgid "T - Triangular Operation"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_triangular
-#: model:account.report.line,name:l10n_es_reports.mod_349_triangular_refunds
-msgid ""
-"T. Sales to other member states exempted of intra-community taxes in case of"
-" triangular operations"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_10000
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_10000
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_10000
-msgid "TOTAL ASSETS (A + B)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_30000
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_30000
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_30000
-msgid "TOTAL EQUITY AND LIABILITIES (A + B + C)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report,name:l10n_es_reports.mod_347
-msgid "Tax Report (Mod 347)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report,name:l10n_es_reports.mod_349
-msgid "Tax Report (Mod 349)"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1948,36 +965,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_es_reports/models/libro_diario_export.py:0
 msgid "This report export is only available for ES companies."
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_statistics_invoices_total_amount
-msgid "Total amount of intra-community operations"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_statistics_invoices_partners_count
-msgid "Total number of intra-community operations"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_statistics_refunds_partners_count
-msgid "Total number of intra-community refund operations"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_347_statistics_operations_count
-msgid "Total number of persons and entities"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.l10n_es_reports_trial_balance_all
-msgid "Trial Balance"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report,name:l10n_es_reports.l10n_es_reports_trial_balance
-msgid "Trial Balance with Period Balance"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -2043,144 +1030,9 @@ msgid "V - Tributaria Current Account - Return"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_12500
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12500
-msgid "V. Current financial investments"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_31500
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31500
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_31500
-msgid "V. Non-current accruals"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11500
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_11500
-msgid "V. Non-current investments"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_11500
-msgid "V. Non-current investments in group companies and associates"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_22500
-msgid "V. Other"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_12600
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32600
-msgid "V. Prepayments for current assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21500
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21500
-msgid "V. Prior periods' profit and loss"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_21400
-msgid "V. Surplus of the year"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32500
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32500
-msgid "V. Trade and other payables"
-msgstr ""
-
-#. module: l10n_es_reports
 #. odoo-python
 #: code:addons/l10n_es_reports/models/libros_export.py:0
 msgid "VAT Record Books (XLSX)"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_12700
-msgid "VI. Cash and cash equivalents"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32700
-msgid "VI. Current debt with special characteristics"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11600
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_11600
-msgid "VI. Deferred tax assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_11600
-msgid "VI. Non-current investments"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31600
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_31600
-msgid "VI. Non-current trade payables"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21600
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21600
-msgid "VI. Other equity holder contributions"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_12600
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32600
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12600
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32600
-msgid "VI. Prepayments for current assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_12700
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_12700
-msgid "VII. Cash and cash equivalents"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32700
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_32700
-msgid "VII. Current debts with special characteristics"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_assoc_line_11700
-msgid "VII. Deferred tax assets"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_11700
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_11700
-msgid "VII. Non-current commercial debt"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_31700
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_31700
-#: model:account.report.line,name:l10n_es_reports.l10n_es_assoc_line_31600
-msgid "VII. Non-current debt with special characteristics"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21700
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21700
-msgid "VII. Profit/loss for the period"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21800
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21800
-msgid "VIII. (Interim dividend)"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -2258,14 +1110,4 @@ msgstr ""
 msgid ""
 "Your date range does not cover entire months, please use a start and end "
 "date matching respectively the first and last day of a month."
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_13a
-msgid "a) Allocation of subsidies, donations and legacies of financial nature"
-msgstr ""
-
-#. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_13b
-msgid "b) Other finance expenses"
 msgstr ""

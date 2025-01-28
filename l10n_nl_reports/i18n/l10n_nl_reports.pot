@@ -55,18 +55,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_assets
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_assets
-msgid "ACTIVE"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_idep
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_idep
-msgid "Amortisation of intangible assets"
-msgstr ""
-
-#. module: l10n_nl_reports
 #. odoo-python
 #: code:addons/l10n_nl_reports/wizard/l10n_nl_reports_sbr_tax_report_wizard.py:0
 msgid ""
@@ -104,44 +92,8 @@ msgid ""
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report.column,name:l10n_nl_reports.account_financial_report_bs_column
-#: model:account.report.column,name:l10n_nl_reports.account_financial_report_bs_tags_column
-#: model:account.report.column,name:l10n_nl_reports.account_financial_report_pnl_column
-#: model:account.report.column,name:l10n_nl_reports.account_financial_report_pnl_tags_column
-msgid "Balance"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report,name:l10n_nl_reports.account_financial_report_bs
-msgid "Balance sheet"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report,name:l10n_nl_reports.account_financial_report_bs_tags
-msgid "Balance sheet (tags)"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_l
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_l
-msgid "CLAIMS"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_current
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_current
-msgid "CURRENT ASSETS"
-msgstr ""
-
-#. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_tax_report_wizard__can_report_be_sent
 msgid "Can Report Be Sent"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_cash
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_cash
-msgid "Cash at bank and in hand"
 msgstr ""
 
 #. module: l10n_nl_reports
@@ -234,24 +186,6 @@ msgid "Continue and skip country fields"
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_pcost
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_pcost
-msgid "Cost"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_sale
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_sale
-msgid "Cost of goods sold"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_cogs
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_cogs
-msgid "Cost of sales"
-msgstr ""
-
-#. module: l10n_nl_reports
 #. odoo-python
 #: code:addons/l10n_nl_reports/wizard/l10n_nl_reports_sbr_tax_report_wizard.py:0
 #: model:ir.actions.server,name:l10n_nl_reports.action_open_closing_entry
@@ -276,45 +210,9 @@ msgid "Created on"
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_cred
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_cred
-msgid "Creditors"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_sh_debt
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_sh_debt
-msgid "Current Liabilities"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_curr_year_earnings
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_curr_year_earnings
-msgid "Current Year Profit"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_depr
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_depr
-msgid "Depreciation"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_mdep
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_mdep
-msgid "Depreciation of property, plant and equipment"
-msgstr ""
-
-#. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_status_service__display_name
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_tax_report_wizard__display_name
 msgid "Display Name"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_distr
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_distr
-msgid "Distribution costs"
 msgstr ""
 
 #. module: l10n_nl_reports
@@ -328,44 +226,8 @@ msgid "Dutch Report Custom Handler"
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_eq
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_eq
-msgid "EQUITY"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_err
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_err
-msgid "Error account"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_fixed
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_fixed
-msgid "FIXED ASSETS"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_fin
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_fin
-msgid "Financial Fixed Active"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_fres
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_fres
-msgid "Financial result"
-msgstr ""
-
-#. module: l10n_nl_reports
 #: model:ir.model,name:l10n_nl_reports.model_account_general_ledger_report_handler
 msgid "General Ledger Custom Handler"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_gen
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_gen
-msgid "General expenses"
 msgstr ""
 
 #. module: l10n_nl_reports
@@ -381,39 +243,9 @@ msgid "Go to the Accounting Settings"
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_profit
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_profit
-msgid "Gross sales result"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_hous
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_hous
-msgid "Housing costs"
-msgstr ""
-
-#. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_status_service__id
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_tax_report_wizard__id
 msgid "ID"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_immat
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_immat
-msgid "Intangible Fixed Asset"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_intl
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_intl
-msgid "Interest and other financial charges"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_2_1_1_1
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_2_1_1_1
-msgid "Interest income"
 msgstr ""
 
 #. module: l10n_nl_reports
@@ -470,18 +302,6 @@ msgid "Last write"
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_legal_res
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_legal_res
-msgid "Legal and Statutory Reserves"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_long_debt
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_long_debt
-msgid "Long-term liabilities"
-msgstr ""
-
-#. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_status_service__kenmerk
 msgid "Message Exchange ID"
 msgstr ""
@@ -495,18 +315,6 @@ msgstr ""
 #. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_status_service__report_name
 msgid "Name of the submitted report"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_net
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_net
-msgid "Net sales"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_ebitda
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_ebitda
-msgid "Net sales result"
 msgstr ""
 
 #. module: l10n_nl_reports
@@ -528,44 +336,8 @@ msgid "Odoo"
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_off
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_off
-msgid "Office costs"
-msgstr ""
-
-#. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_res_company__l10n_nl_reports_sbr_ob_nummer
 msgid "Omzetbelastingnummer"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_otcb
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_otcb
-msgid "Other Expenses And Revenues"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_other_res
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_other_res
-msgid "Other Reserves"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_oth
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_oth
-msgid "Other operating income"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_opc
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_opc
-msgid "Other personnel costs"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_leq
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_leq
-msgid "PASSIVE"
 msgstr ""
 
 #. module: l10n_nl_reports
@@ -578,18 +350,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_res_company__l10n_nl_reports_sbr_key
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_res_config_settings__l10n_nl_reports_sbr_key
 msgid "PKI Private Key"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_cap
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_cap
-msgid "Paid-up and Called-up Capital"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_pens
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_pens
-msgid "Pension charges"
 msgstr ""
 
 #. module: l10n_nl_reports
@@ -611,18 +371,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_premium
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_premium
-msgid "Premium"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_prev_years_earnings
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_prev_years_earnings
-msgid "Previous Years Profit"
-msgstr ""
-
-#. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_res_company__l10n_nl_reports_sbr_key_filename
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_res_config_settings__l10n_nl_reports_sbr_key_filename
 msgid "Private Key File Name"
@@ -634,60 +382,8 @@ msgid "Process statusses of the unfinished submitted SBR reports"
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report,name:l10n_nl_reports.account_financial_report_pnl
-msgid "Profit and loss report"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report,name:l10n_nl_reports.account_financial_report_pnl_tags
-msgid "Profit and loss report (tags)"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_mat
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_mat
-msgid "Property, plant and equipment"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_provisions
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_provisions
-msgid "Provisions"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_claims
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_claims
-msgid "Receivables"
-msgstr ""
-
-#. module: l10n_nl_reports
 #: model:ir.model.fields,field_description:l10n_nl_reports.field_l10n_nl_reports_sbr_status_service__closing_entry_id
 msgid "Related closing entry"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_resnb
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_resnb
-msgid "Result After Taxes"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_resvb
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_resvb
-msgid "Result Before tax"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_reso
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_reso
-msgid "Result other assets"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_revaluation_res
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_revaluation_res
-msgid "Revaluation reserve"
 msgstr ""
 
 #. module: l10n_nl_reports
@@ -709,18 +405,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_nl_reports/wizard/l10n_nl_reports_sbr_tax_report_wizard.py:0
 msgid "Sending your report"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_short_debt
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_short_debt
-msgid "Short-term Liabilities"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_soc
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_soc
-msgid "Social charges"
 msgstr ""
 
 #. module: l10n_nl_reports
@@ -748,12 +432,6 @@ msgid "Status checking service for Digipoort submission"
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_stock
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_stock
-msgid "Stocks"
-msgstr ""
-
-#. module: l10n_nl_reports
 #: model:ir.model.fields,help:l10n_nl_reports.field_res_company__l10n_nl_reports_sbr_last_sent_date_to
 msgid ""
 "Stores the date of the end of the last period submitted to the Tax Services"
@@ -774,12 +452,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_nl_reports/wizard/l10n_nl_reports_sbr_tax_report_wizard.py:0
 msgid "Tax report sent"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_taxes
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_taxes
-msgid "Taxes"
 msgstr ""
 
 #. module: l10n_nl_reports
@@ -908,18 +580,6 @@ msgid "This number is used for contacts with the Tax Administration."
 msgstr ""
 
 #. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_trans
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_trans
-msgid "Transport costs"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_tags_undist_profit
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_bs_undist_profit
-msgid "Undistributed Profit"
-msgstr ""
-
-#. module: l10n_nl_reports
 #: model_terms:ir.ui.view,arch_db:l10n_nl_reports.res_config_settings_view_form
 msgid ""
 "Upload here the PKI-certificate that identifies you to the Digipoort "
@@ -945,12 +605,6 @@ msgstr ""
 #. module: l10n_nl_reports
 #: model:ir.model,name:l10n_nl_reports.model_res_users
 msgid "User"
-msgstr ""
-
-#. module: l10n_nl_reports
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_sala
-#: model:account.report.line,name:l10n_nl_reports.account_financial_report_pnl_tags_sala
-msgid "Wages and salaries"
 msgstr ""
 
 #. module: l10n_nl_reports

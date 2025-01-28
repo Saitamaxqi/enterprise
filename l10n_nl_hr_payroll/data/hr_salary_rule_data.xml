@@ -33,6 +33,7 @@ result = categories['BASIC'] + categories['ALW']
     <record id="l10n_nl_old_age_insurance" model="hr.salary.rule">
         <field name="category_id" ref="l10n_nl_hr_payroll.hr_salary_rule_category_social_security_employee"/>
         <field name="name">Old Age Insurance (AOW)</field>
+        <field name="name@nl">Ouderdomsverzekering (AOW)</field>
         <field name="code">AOW</field>
         <field name="sequence">105</field>
         <field name="condition_select">none</field>
@@ -52,6 +53,7 @@ result = min(gross, cap)
     <record id="l10n_nl_survivor_dependant_insurance" model="hr.salary.rule">
         <field name="category_id" ref="l10n_nl_hr_payroll.hr_salary_rule_category_social_security_employee"/>
         <field name="name">Survivor Dependant Insurance (Anw)</field>
+        <field name="name@nl">Nabestaandenverzekering (Anw)</field>
         <field name="code">Anw</field>
         <field name="sequence">110</field>
         <field name="condition_select">none</field>
@@ -71,6 +73,7 @@ result = min(gross, cap)
     <record id="l10n_nl_long_medical_care_insurance" model="hr.salary.rule">
         <field name="category_id" ref="l10n_nl_hr_payroll.hr_salary_rule_category_social_security_employee"/>
         <field name="name">Long Medical Care Insurance (Wlz)</field>
+        <field name="name@nl">Langdurige zorgverzekering (Wlz)</field>
         <field name="code">Wlz</field>
         <field name="sequence">115</field>
         <field name="condition_select">none</field>
@@ -90,6 +93,7 @@ result = min(gross, cap)
     <record id="l10n_nl_taxable_income" model="hr.salary.rule">
         <field name="category_id" ref="l10n_nl_hr_payroll.hr_salary_rule_category_taxable_income"/>
         <field name="name">Taxable Income</field>
+        <field name="name@nl">Belastbaar inkomen</field>
         <field name="code">TAXABLE</field>
         <field name="sequence">150</field>
         <field name="condition_select">none</field>
@@ -106,6 +110,7 @@ result = gross + categories['DED']
     <record id="l10n_nl_income_tax" model="hr.salary.rule">
         <field name="category_id" ref="l10n_nl_hr_payroll.hr_salary_rule_category_income_tax"/>
         <field name="name">Income Tax Due</field>
+        <field name="name@nl">Verschuldigde inkomstenbelasting</field>
         <field name="code">INCOMETAX</field>
         <field name="sequence">160</field>
         <field name="condition_select">none</field>
@@ -132,6 +137,7 @@ for low, high, rate in rates:
     <record id="l10n_nl_health_insurance" model="hr.salary.rule">
         <field name="category_id" ref="l10n_nl_hr_payroll.hr_salary_rule_category_social_security_employer"/>
         <field name="name">Health Insurance (Zvw)</field>
+        <field name="name@nl">Zorgverzekering (Zvw)</field>
         <field name="code">Zvw</field>
         <field name="sequence">165</field>
         <field name="condition_select">none</field>
@@ -152,6 +158,7 @@ result = min(gross, - cap * 100 / result_rate)
     <record id="l10n_nl_unemployment_insurance" model="hr.salary.rule">
         <field name="category_id" ref="l10n_nl_hr_payroll.hr_salary_rule_category_social_security_employer"/>
         <field name="name">Unemployment Insurance (WW)</field>
+        <field name="name@nl">Werkloosheidsverzekering (WW)</field>
         <field name="code">WW</field>
         <field name="sequence">166</field>
         <field name="condition_select">none</field>
@@ -172,6 +179,7 @@ result = min(gross, - cap * 100 / result_rate)
     <record id="l10n_nl_ww_sector_fund" model="hr.salary.rule">
         <field name="category_id" ref="l10n_nl_hr_payroll.hr_salary_rule_category_social_security_employer"/>
         <field name="name">Unemployment Insurance Sector Fund (WW)</field>
+        <field name="name@nl">Sectorfonds voor Werkloosheidsverzekering (WW)</field>
         <field name="code">WWFund</field>
         <field name="sequence">167</field>
         <field name="condition_select">none</field>
@@ -192,6 +200,7 @@ result = min(gross, - cap * 100 / result_rate)
     <record id="l10n_nl_disability_insurance" model="hr.salary.rule">
         <field name="category_id" ref="l10n_nl_hr_payroll.hr_salary_rule_category_social_security_employer"/>
         <field name="name">Disability Insurance (WAO/WIA)</field>
+        <field name="name@nl">Invaliditeitsverzekering (WAO/WIA)</field>
         <field name="code">WAO/WIA</field>
         <field name="sequence">168</field>
         <field name="condition_select">none</field>
@@ -212,6 +221,7 @@ result = min(gross, - cap * 100 / result_rate)
     <record id="l10n_nl_return_to_work_fund" model="hr.salary.rule">
         <field name="category_id" ref="l10n_nl_hr_payroll.hr_salary_rule_category_social_security_employer"/>
         <field name="name">Return to Work Fund - Average (Whk)</field>
+        <field name="name@nl">Werkhervattingskas - Gemiddeld (Whk)</field>
         <field name="code">Whk</field>
         <field name="sequence">169</field>
         <field name="condition_select">none</field>

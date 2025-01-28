@@ -93,24 +93,9 @@ msgid "British Tax Report Custom Handler"
 msgstr ""
 
 #. module: l10n_uk_reports_cis
-#: model:account.report,name:l10n_uk_reports_cis.tax_report_cis
-msgid "CIS Deduction"
-msgstr ""
-
-#. module: l10n_uk_reports_cis
-#: model:account.report.line,name:l10n_uk_reports_cis.account_uk_cis_report_line_purchase
-msgid "CIS Deduction Purchase"
-msgstr ""
-
-#. module: l10n_uk_reports_cis
 #: model:mail.template,name:l10n_uk_reports_cis.email_template_cis_notification
 #: model:mail.template,subject:l10n_uk_reports_cis.email_template_cis_notification
 msgid "CIS Deduction Report Submission Due"
-msgstr ""
-
-#. module: l10n_uk_reports_cis
-#: model:account.report.line,name:l10n_uk_reports_cis.account_uk_cis_report_line_sales
-msgid "CIS Deduction Sales"
 msgstr ""
 
 #. module: l10n_uk_reports_cis
@@ -200,11 +185,6 @@ msgstr ""
 #. module: l10n_uk_reports_cis
 #: model_terms:ir.ui.view,arch_db:l10n_uk_reports_cis.cis_monthly_return_wizard_form
 msgid "Declaration"
-msgstr ""
-
-#. module: l10n_uk_reports_cis
-#: model:account.report.column,name:l10n_uk_reports_cis.cis_report_deduction
-msgid "Deduction"
 msgstr ""
 
 #. module: l10n_uk_reports_cis
@@ -304,11 +284,6 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: l10n_uk_reports_cis
-#: model:account.report.column,name:l10n_uk_reports_cis.cis_report_materials
-msgid "Materials"
-msgstr ""
-
-#. module: l10n_uk_reports_cis
 #: model:ir.model.fields.selection,name:l10n_uk_reports_cis.selection__res_partner__l10n_uk_reports_cis_deduction_rate__net
 msgid "Net (20%)"
 msgstr ""
@@ -327,11 +302,6 @@ msgstr ""
 #. module: l10n_uk_reports_cis
 #: model_terms:ir.ui.view,arch_db:l10n_uk_reports_cis.cis_monthly_return_wizard_form
 msgid "Password"
-msgstr ""
-
-#. module: l10n_uk_reports_cis
-#: model:account.report.column,name:l10n_uk_reports_cis.cis_report_payment
-msgid "Payment"
 msgstr ""
 
 #. module: l10n_uk_reports_cis

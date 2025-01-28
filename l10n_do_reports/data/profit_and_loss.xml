@@ -17,12 +17,14 @@
         <field name="line_ids">
             <record id="l10n_do_pl_gross_income" model="account.report.line">
                 <field name="name">Gross Profit</field>
+                <field name="name@es_419">Resultado Bruto</field>
                 <field name="code">l10n_do_pl_gross_income</field>
                 <field name="aggregation_formula">l10n_do_pl_income.balance - l10n_do_pl_cogs.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_do_pl_income" model="account.report.line">
                         <field name="name">Net Income</field>
+                        <field name="name@es_419">Ingresos Netos</field>
                         <field name="code">l10n_do_pl_income</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -30,6 +32,7 @@
                     </record>
                     <record id="l10n_do_pl_cogs" model="account.report.line">
                         <field name="name">Operating Costs</field>
+                        <field name="name@es_419">Costos de Operación</field>
                         <field name="code">l10n_do_pl_cogs</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -47,12 +50,14 @@
             </record>
             <record id="l10n_do_pl_op_profit" model="account.report.line">
                 <field name="name">Operating Income</field>
+                <field name="name@es_419">Resultado Operativo</field>
                 <field name="code">l10n_do_pl_op_profit</field>
                 <field name="aggregation_formula">l10n_do_pl_gross_income.balance - l10n_do_pl_expenses_commercial.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_do_pl_expenses_commercial" model="account.report.line">
                         <field name="name">Operating Expenses</field>
+                        <field name="name@es_419">Gastos de Operación</field>
                         <field name="code">l10n_do_pl_expenses_commercial</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -70,12 +75,14 @@
             </record>
             <record id="l10n_do_pl_ebt" model="account.report.line">
                 <field name="name">Income Before Taxes</field>
+                <field name="name@es_419">Resultado Antes de Impuestos</field>
                 <field name="code">l10n_do_pl_ebt</field>
                 <field name="aggregation_formula">l10n_do_pl_op_profit.balance + l10n_do_pl_income_other.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_do_pl_income_other" model="account.report.line">
                         <field name="name">Other Income</field>
+                        <field name="name@es_419">Otros Ingresos</field>
                         <field name="code">l10n_do_pl_income_other</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -85,6 +92,7 @@
             </record>
             <record id="l10n_do_pl_corporate_tax" model="account.report.line">
                 <field name="name">Corporate Income Tax</field>
+                <field name="name@es_419">Impuesto sobre las Utilidades de las Empresas</field>
                 <field name="code">l10n_do_pl_corporate_tax</field>
                 <field name="groupby">account_id</field>
                 <field name="foldable" eval="True"/>
@@ -101,6 +109,7 @@
             </record>
             <record id="l10n_do_pl_net_profit" model="account.report.line">
                 <field name="name">Income for the year</field>
+                <field name="name@es_419">Resultado del Ejercicio</field>
                 <field name="code">l10n_do_pl_net_profit</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="aggregation_formula">l10n_do_pl_ebt.balance - l10n_do_pl_corporate_tax.balance</field>

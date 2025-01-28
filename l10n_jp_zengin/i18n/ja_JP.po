@@ -352,8 +352,7 @@ msgstr "%(partner)s 用の銀行口座 %(account)s に顧客コードを設定�
 msgid ""
 "Please set an account holder name in Kana on the %(account)s bank account "
 "for %(partner)s."
-msgstr ""
-"%(partner)s 用の銀行口座: %(account)s に口座名義カナ表記を設定して下さい。"
+msgstr "%(partner)s 用の銀行口座: %(account)s に口座名義カナ表記を設定して下さい。"
 
 #. module: l10n_jp_zengin
 #. odoo-python
@@ -385,11 +384,9 @@ msgstr "貯蓄"
 #: code:addons/l10n_jp_zengin/models/account_batch_payment.py:0
 #, python-format
 msgid ""
-"Savings account type is not supported for Zengin on %(account)s bank "
-"account for %(partner)s."
-msgstr ""
-"%(partner)s 用の銀行口座 %(account)s では全銀用に普通預金種別は使用できませ"
-"ん。"
+"Savings account type is not supported for Zengin on %(account)s bank account"
+" for %(partner)s."
+msgstr "%(partner)s 用の銀行口座 %(account)s では全銀用に普通預金種別は使用できません。"
 
 #. module: l10n_jp_zengin
 #. odoo-python
@@ -436,11 +433,6 @@ msgstr "振替"
 #, python-format
 msgid "Unknown deposit type: %(type)s"
 msgstr "不明な預金種目: %(type)s"
-
-#. module: l10n_jp_zengin
-#: model:account.payment.method,name:l10n_jp_zengin.account_payment_method_zengin_outbound
-msgid "Zengin"
-msgstr "全銀"
 
 #. module: l10n_jp_zengin
 #. odoo-python

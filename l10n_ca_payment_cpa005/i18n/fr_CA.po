@@ -19,8 +19,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ca_payment_cpa005/models/account_batch_payment.py:0
 msgid "- Please set a destination data center on the %(journal)s journal."
-msgstr "- Veuillez définir un centre de données de destination sur le "
-"journal %(journal)s."
+msgstr ""
+"- Veuillez définir un centre de données de destination sur le journal "
+"%(journal)s."
 
 #. module: l10n_ca_payment_cpa005
 #. odoo-python
@@ -50,8 +51,8 @@ msgid ""
 "name in Canadian EFT files. It will typically be used for bank statements. "
 "Most banks require this value to be all uppercase."
 msgstr ""
-"Champ de 15 caractères utilisé pour représenter une version courte du nom "
-"de l'expéditeur dans les fichiers EFT canadiens. Il sera généralement utilisé "
+"Champ de 15 caractères utilisé pour représenter une version courte du nom de"
+" l'expéditeur dans les fichiers EFT canadiens. Il sera généralement utilisé "
 "pour les relevés bancaires. La plupart des banques exigent que cette valeur "
 "soit entièrement en majuscules."
 
@@ -73,11 +74,11 @@ msgid ""
 "institution number or ID, and a 5-digit branch routing number. This is a "
 "mandatory field for Canadian EFT file generation."
 msgstr ""
-"Numéro à 9 chiffres identifiant l'institution financière auprès de "
-"laquelle le vendeur détient un compte. Il commence généralement par "
-"un 0, suivi d'un numéro d'établissement ou d'un identifiant à 3 chiffres "
-"et d'un numéro d'acheminement de succursale à 5 chiffres. Il s'agit d'un "
-"champ obligatoire pour la génération de fichiers EFT canadiens."
+"Numéro à 9 chiffres identifiant l'institution financière auprès de laquelle "
+"le vendeur détient un compte. Il commence généralement par un 0, suivi d'un "
+"numéro d'établissement ou d'un identifiant à 3 chiffres et d'un numéro "
+"d'acheminement de succursale à 5 chiffres. Il s'agit d'un champ obligatoire "
+"pour la génération de fichiers EFT canadiens."
 
 #. module: l10n_ca_payment_cpa005
 #. odoo-python
@@ -124,15 +125,12 @@ msgid "Canada"
 msgstr ""
 
 #. module: l10n_ca_payment_cpa005
-#: model:account.payment.method,name:l10n_ca_payment_cpa005.account_payment_method_cpa005
-msgid "Canadian EFT"
-msgstr ""
-
-#. module: l10n_ca_payment_cpa005
 #: model:ir.model,name:l10n_ca_payment_cpa005.model_l10n_ca_cpa005_transaction_code
 msgid ""
 "Canadian EFT transaction codes as defined in Payments Canada Standard 007"
-msgstr "Codes de transaction TEF canadiens tels que définis dans la norme 007 de Paiements Canada."
+msgstr ""
+"Codes de transaction TEF canadiens tels que définis dans la norme 007 de "
+"Paiements Canada."
 
 #. module: l10n_ca_payment_cpa005
 #: model_terms:ir.ui.view,arch_db:l10n_ca_payment_cpa005.view_account_journal_form_inherit_l10n_us_payment_cpa005
@@ -247,10 +245,11 @@ msgid ""
 "identify the file. You can set a value here to override the FCN sequence "
 "just for this payment."
 msgstr ""
-"Laissez vide pour remplir automatiquement le numéro suivant dans la séquence. "
-"Le FCN est une séquence de 4 chiffres allant de 0001 à 9999. Celui-ci sera "
-"utilisé par votre banque pour identifier le fichier. Vous pouvez définir ici "
-"une valeur pour remplacer la séquence FCN uniquement pour ce paiement."
+"Laissez vide pour remplir automatiquement le numéro suivant dans la "
+"séquence. Le FCN est une séquence de 4 chiffres allant de 0001 à 9999. "
+"Celui-ci sera utilisé par votre banque pour identifier le fichier. Vous "
+"pouvez définir ici une valeur pour remplacer la séquence FCN uniquement pour"
+" ce paiement."
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_l10n_ca_cpa005_transaction_code__name
@@ -271,9 +270,9 @@ msgid ""
 "to adjust them."
 msgstr ""
 "Numéro de création de fichier suivant (FCN) qui sera utilisé lors de la "
-"validation d'un paiement groupé TEF canadien. Le FCN est une séquence à "
-"4 chiffres de 0001 à 9999. Si vous devez ajuster des détails du FCN, "
-"accédez à Séquences dans le menu Technique pour les ajuster."
+"validation d'un paiement groupé TEF canadien. Le FCN est une séquence à 4 "
+"chiffres de 0001 à 9999. Si vous devez ajuster des détails du FCN, accédez à"
+" Séquences dans le menu Technique pour les ajuster."
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_account_journal__l10n_ca_cpa005_originator_id
@@ -302,21 +301,26 @@ msgstr "Paiements manquant de codes de transaction EFT/CPA"
 msgid ""
 "Please fix the following issue(s) on the %s journal:\n"
 "%s"
-msgstr "Veuillez résoudre le(s) problème(s) suivant(s) dans le journal %s:\n"
+msgstr ""
+"Veuillez résoudre le(s) problème(s) suivant(s) dans le journal %s:\n"
 "%s"
 
 #. module: l10n_ca_payment_cpa005
 #. odoo-python
 #: code:addons/l10n_ca_payment_cpa005/models/account_batch_payment.py:0
 msgid "Please set a Canadian EFT short company name on the %s company."
-msgstr "Veuillez définir un nom abrégé de société canadienne de TEF pour la société %s."
+msgstr ""
+"Veuillez définir un nom abrégé de société canadienne de TEF pour la société "
+"%s."
 
 #. module: l10n_ca_payment_cpa005
 #. odoo-python
 #: code:addons/l10n_ca_payment_cpa005/models/account_batch_payment.py:0
 msgid ""
 "Please set a Financial Institution ID Number on the %s bank account of %s."
-msgstr "Veuillez définir un numéro d'institution financière sur le compte bancaire %s de %s."
+msgstr ""
+"Veuillez définir un numéro d'institution financière sur le compte bancaire "
+"%s de %s."
 
 #. module: l10n_ca_payment_cpa005
 #. odoo-python
@@ -324,7 +328,8 @@ msgstr "Veuillez définir un numéro d'institution financière sur le compte ban
 msgid ""
 "Please set an EFT/CPA transaction code on the following payment(s):\n"
 "%s"
-msgstr "Veuillez définir un code de transaction EFT/CPA sur le(s) paiement(s) suivant(s):\n"
+msgstr ""
+"Veuillez définir un code de transaction EFT/CPA sur le(s) paiement(s) suivant(s):\n"
 "%s"
 
 #. module: l10n_ca_payment_cpa005
@@ -335,8 +340,8 @@ msgid ""
 "CPA code."
 msgstr ""
 "Sélectionnez l'option qui représente le mieux le type/l'objet du paiement. "
-"Chaque paiement initié à l'aide du service TEF canadien doit inclure un "
-"code CPA valide."
+"Chaque paiement initié à l'aide du service TEF canadien doit inclure un code"
+" CPA valide."
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_res_company__l10n_ca_cpa005_short_name
@@ -351,10 +356,10 @@ msgid ""
 "digit number. The format is a 0, followed by a 3-digit institution number, "
 "and a 5-digit branch routing number."
 msgstr ""
-"L'identification de l'institution financière du compte bancaire \"%s\" "
-"doit être un numéro à 9 chiffres. Le format est un 0, suivi d'un numéro "
-"d'établissement à 3 chiffres et d'un numéro d'acheminement de succursale "
-"à 5 chiffres."
+"L'identification de l'institution financière du compte bancaire \"%s\" doit "
+"être un numéro à 9 chiffres. Le format est un 0, suivi d'un numéro "
+"d'établissement à 3 chiffres et d'un numéro d'acheminement de succursale à 5"
+" chiffres."
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,help:l10n_ca_payment_cpa005.field_account_journal__l10n_ca_cpa005_fcn_sequence_id
@@ -363,6 +368,6 @@ msgid ""
 "files. The referenced sequence can be customized to suit the banks "
 "requirements."
 msgstr ""
-"Ceci est utilisé lors de la génération du numéro de création de fichier "
-"pour les fichiers EFT canadiens. La séquence référencée peut être "
-"personnalisée pour répondre aux exigences de la banque."
+"Ceci est utilisé lors de la génération du numéro de création de fichier pour"
+" les fichiers EFT canadiens. La séquence référencée peut être personnalisée "
+"pour répondre aux exigences de la banque."

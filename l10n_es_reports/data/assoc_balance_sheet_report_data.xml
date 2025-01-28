@@ -2,6 +2,7 @@
 <odoo auto_sequence="1">
     <record id="financial_report_balance_sheet_assoc" model="account.report">
         <field name="name">Abbreviated Balance Sheet for Associations</field>
+        <field name="name@es">Balance abreviado para asociaciones</field>
         <field name="root_report_id" ref="account_reports.balance_sheet"/>
         <field name="availability_condition">coa</field>
         <field name="chart_template">es_assec</field>
@@ -13,23 +14,27 @@
         <field name="column_ids">
             <record id="financial_report_balance_sheet_assoc_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@es">Saldo</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="balance_assoc_line_10000" model="account.report.line">
                 <field name="name">TOTAL ASSETS (A + B)</field>
+                <field name="name@es">TOTAL ACTIVO (A + B)</field>
                 <field name="code">l10n_es_assoc_line_10000</field>
                 <field name="aggregation_formula">l10n_es_assoc_line_11000.balance + l10n_es_assoc_line_12000.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="balance_assoc_line_11000" model="account.report.line">
                         <field name="name">A) NON-CURRENT ASSETS</field>
+                        <field name="name@es">A) ACTIVO NO CORRIENTE</field>
                         <field name="code">l10n_es_assoc_line_11000</field>
                         <field name="aggregation_formula">l10n_es_assoc_line_11100.balance + l10n_es_assoc_line_11200.balance + l10n_es_assoc_line_11300.balance + l10n_es_assoc_line_11400.balance + l10n_es_assoc_line_11500.balance + l10n_es_assoc_line_11600.balance + l10n_es_assoc_line_11700.balance</field>
                         <field name="children_ids">
                             <record id="balance_assoc_line_11100" model="account.report.line">
                                 <field name="name">I. Intangible assets</field>
+                                <field name="name@es">I. Inmovilizado intangible</field>
                                 <field name="code">l10n_es_assoc_line_11100</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -37,6 +42,7 @@
                             </record>
                             <record id="balance_assoc_line_11200" model="account.report.line">
                                 <field name="name">II. Historical heritage assets</field>
+                                <field name="name@es">II. Bienes del Patrimonio Histórico</field>
                                 <field name="code">l10n_es_assoc_line_11200</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -44,6 +50,7 @@
                             </record>
                             <record id="balance_assoc_line_11300" model="account.report.line">
                                 <field name="name">III. Property, plant and equipment</field>
+                                <field name="name@es">III. Inmovilizado material</field>
                                 <field name="code">l10n_es_assoc_line_11300</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -51,6 +58,7 @@
                             </record>
                             <record id="balance_assoc_line_11400" model="account.report.line">
                                 <field name="name">IV. Investment property</field>
+                                <field name="name@es">IV. Inversiones inmobiliarias</field>
                                 <field name="code">l10n_es_assoc_line_11400</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -58,6 +66,7 @@
                             </record>
                             <record id="balance_assoc_line_11500" model="account.report.line">
                                 <field name="name">V. Non-current investments in group companies and associates</field>
+                                <field name="name@es">V. Inversiones en entidades del grupo y asociadas a largo plazo</field>
                                 <field name="code">l10n_es_assoc_line_11500</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -65,6 +74,7 @@
                             </record>
                             <record id="balance_assoc_line_11600" model="account.report.line">
                                 <field name="name">VI. Non-current investments</field>
+                                <field name="name@es">VI. Inversiones financieras a largo plazo</field>
                                 <field name="code">l10n_es_assoc_line_11600</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -72,6 +82,7 @@
                             </record>
                             <record id="balance_assoc_line_11700" model="account.report.line">
                                 <field name="name">VII. Deferred tax assets</field>
+                                <field name="name@es">VII. Activos por impuesto diferido</field>
                                 <field name="code">l10n_es_assoc_line_11700</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -81,11 +92,13 @@
                     </record>
                     <record id="balance_assoc_line_12000" model="account.report.line">
                         <field name="name">B) CURRENT ASSETS</field>
+                        <field name="name@es">B) ACTIVO CORRIENTE</field>
                         <field name="code">l10n_es_assoc_line_12000</field>
                         <field name="aggregation_formula">l10n_es_assoc_line_12100.balance + l10n_es_assoc_line_12200.balance + l10n_es_assoc_line_12300.balance + l10n_es_assoc_line_12400.balance + l10n_es_assoc_line_12500.balance + l10n_es_assoc_line_12600.balance + l10n_es_assoc_line_12700.balance</field>
                         <field name="children_ids">
                             <record id="balance_assoc_line_12100" model="account.report.line">
                                 <field name="name">I. Inventories</field>
+                                <field name="name@es">I. Existencias</field>
                                 <field name="code">l10n_es_assoc_line_12100</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -93,6 +106,7 @@
                             </record>
                             <record id="balance_assoc_line_12200" model="account.report.line">
                                 <field name="name">II. Usables and other receivables of the own activity</field>
+                                <field name="name@es">II. Usuarios y otros deudores de la actividad propia</field>
                                 <field name="code">l10n_es_assoc_line_12200</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -100,6 +114,7 @@
                             </record>
                             <record id="balance_assoc_line_12300" model="account.report.line">
                                 <field name="name">III. Trade and other receivables</field>
+                                <field name="name@es">III. Deudores comerciales y otras cuentas a cobrar</field>
                                 <field name="code">l10n_es_assoc_line_12300</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -107,6 +122,7 @@
                             </record>
                             <record id="balance_assoc_line_12400" model="account.report.line">
                                 <field name="name">IV. Current investments in group companies and associates</field>
+                                <field name="name@es">IV. Inversiones en entidades del grupo y asociadas a corto plazo</field>
                                 <field name="code">l10n_es_assoc_line_12400</field>
                                 <field name="expression_ids">
                                     <record id="balance_assoc_line_12400_sub_balances" model="account.report.expression">
@@ -129,6 +145,7 @@
                             </record>
                             <record id="balance_assoc_line_12500" model="account.report.line">
                                 <field name="name">V. Current financial investments</field>
+                                <field name="name@es">V. Inversiones financieras a corto plazo</field>
                                 <field name="code">l10n_es_assoc_line_12500</field>
                                 <field name="expression_ids">
                                     <record id="balance_assoc_line_12500_sub_balances" model="account.report.expression">
@@ -151,6 +168,7 @@
                             </record>
                             <record id="balance_assoc_line_12600" model="account.report.line">
                                 <field name="name">VI. Prepayments for current assets</field>
+                                <field name="name@es">VI. Periodificaciones a corto plazo</field>
                                 <field name="code">l10n_es_assoc_line_12600</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -158,6 +176,7 @@
                             </record>
                             <record id="balance_assoc_line_12700" model="account.report.line">
                                 <field name="name">VII. Cash and cash equivalents</field>
+                                <field name="name@es">VII. Efectivo y otros activos líquidos equivalentes</field>
                                 <field name="code">l10n_es_assoc_line_12700</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -169,27 +188,32 @@
             </record>
             <record id="balance_assoc_line_30000" model="account.report.line">
                 <field name="name">TOTAL EQUITY AND LIABILITIES (A + B + C)</field>
+                <field name="name@es">TOTAL PATRIMONIO NETO Y PASIVO (A + B + C)</field>
                 <field name="code">l10n_es_assoc_line_30000</field>
                 <field name="aggregation_formula">l10n_es_assoc_line_20000.balance + l10n_es_assoc_line_31000.balance + l10n_es_assoc_line_32000.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="balance_assoc_line_20000" model="account.report.line">
                         <field name="name">A) EQUITY</field>
+                        <field name="name@es">A) PATRIMONIO NETO</field>
                         <field name="code">l10n_es_assoc_line_20000</field>
                         <field name="aggregation_formula">l10n_es_assoc_line_21000.balance + l10n_es_assoc_line_21500.balance + l10n_es_assoc_line_22000.balance</field>
                         <field name="children_ids">
                             <record id="balance_assoc_line_21000" model="account.report.line">
                                 <field name="name">A-1) Capital and reserves without valuation adjustments</field>
+                                <field name="name@es">A-1) Fondos propios</field>
                                 <field name="code">l10n_es_assoc_line_21000</field>
                                 <field name="aggregation_formula">l10n_es_assoc_line_21100.balance + l10n_es_assoc_line_21200.balance + l10n_es_assoc_line_21250.balance + l10n_es_assoc_line_21300.balance + l10n_es_assoc_line_21400.balance</field>
                                 <field name="children_ids">
                                     <record id="balance_assoc_line_21100" model="account.report.line">
                                         <field name="name">I. Foundation endowment/Social fund</field>
+                                        <field name="name@es">I. Dotación fundacional/Fondo social</field>
                                         <field name="code">l10n_es_assoc_line_21100</field>
                                         <field name="aggregation_formula">l10n_es_assoc_line_21110.balance + l10n_es_assoc_line_21120.balance</field>
                                         <field name="children_ids">
                                             <record id="balance_assoc_line_21110" model="account.report.line">
                                                 <field name="name">1. Foundation endowment/Social fund</field>
+                                                <field name="name@es">1. Dotacón fundacional/Fondo social</field>
                                                 <field name="code">l10n_es_assoc_line_21110</field>
                                                 <field name="groupby">account_id</field>
                                                 <field name="foldable" eval="True"/>
@@ -197,6 +221,7 @@
                                             </record>
                                             <record id="balance_assoc_line_21120" model="account.report.line">
                                                 <field name="name">2. (Uncalled foundation endowment/social fund)</field>
+                                                <field name="name@es">2. (Dotación fundacional no exigida/Fondo social no exigido)</field>
                                                 <field name="code">l10n_es_assoc_line_21120</field>
                                                 <field name="groupby">account_id</field>
                                                 <field name="foldable" eval="True"/>
@@ -206,6 +231,7 @@
                                     </record>
                                     <record id="balance_assoc_line_21200" model="account.report.line">
                                         <field name="name">II. Reserves</field>
+                                        <field name="name@es">II. Reservas</field>
                                         <field name="code">l10n_es_assoc_line_21200</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -213,6 +239,7 @@
                                     </record>
                                     <record id="balance_assoc_line_21250" model="account.report.line">
                                         <field name="name">III. (Own shares and equity interests)</field>
+                                        <field name="name@es">III. (Acciones y participaciones en patrimonio propias)</field>
                                         <field name="code">l10n_es_assoc_line_21250</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -220,6 +247,7 @@
                                     </record>
                                     <record id="balance_assoc_line_21300" model="account.report.line">
                                         <field name="name">IV. Surplus from previous period</field>
+                                        <field name="name@es">IV. Excedentes de ejercicios anteriores</field>
                                         <field name="code">l10n_es_assoc_line_21300</field>
                                         <field name="expression_ids">
                                             <record id="balance_assoc_line_21300_sub_normal" model="account.report.expression">
@@ -243,6 +271,7 @@
                                     </record>
                                     <record id="balance_assoc_line_21400" model="account.report.line">
                                         <field name="name">V. Surplus of the year</field>
+                                        <field name="name@es">V. Excedente del ejercicio</field>
                                         <field name="code">l10n_es_assoc_line_21400</field>
                                         <field name="action_id" ref="account_reports.action_account_report_pl"/>
                                         <field name="expression_ids">
@@ -259,6 +288,7 @@
                             </record>
                             <record id="balance_assoc_line_21500" model="account.report.line">
                                 <field name="name">A-2) Adjustments in equity</field>
+                                <field name="name@es">A-2) Ajustes en patrimonio neto</field>
                                 <field name="code">l10n_es_assoc_line_21500</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -266,6 +296,7 @@
                             </record>
                             <record id="balance_assoc_line_22000" model="account.report.line">
                                 <field name="name">A-3) Grants, donations and bequests received</field>
+                                <field name="name@es">A-3) Subvenciones, donaciones y legados recibidos</field>
                                 <field name="code">l10n_es_assoc_line_22000</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -275,11 +306,13 @@
                     </record>
                     <record id="balance_assoc_line_31000" model="account.report.line">
                         <field name="name">B) NON-CURRENT LIABILITIES</field>
+                        <field name="name@es">B) PASIVO NO CORRIENTE</field>
                         <field name="code">l10n_es_assoc_line_31000</field>
                         <field name="aggregation_formula">l10n_es_assoc_line_31100.balance + l10n_es_assoc_line_31200.balance + l10n_es_assoc_line_31300.balance + l10n_es_assoc_line_31400.balance + l10n_es_assoc_line_31500.balance + l10n_es_assoc_line_31600.balance</field>
                         <field name="children_ids">
                             <record id="balance_assoc_line_31100" model="account.report.line">
                                 <field name="name">I. Non-current provisions</field>
+                                <field name="name@es">I. Provisiones a largo plazo</field>
                                 <field name="code">l10n_es_assoc_line_31100</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -287,11 +320,13 @@
                             </record>
                             <record id="balance_assoc_line_31200" model="account.report.line">
                                 <field name="name">II. Current provisions</field>
+                                <field name="name@es">II. Deudas a largo plazo</field>
                                 <field name="code">l10n_es_assoc_line_31200</field>
                                 <field name="aggregation_formula">l10n_es_assoc_line_31210.balance + l10n_es_assoc_line_31220.balance + l10n_es_assoc_line_31230.balance</field>
                                 <field name="children_ids">
                                     <record id="balance_assoc_line_31210" model="account.report.line">
                                         <field name="name">1. Debt with financial institutions</field>
+                                        <field name="name@es">1. Deudas con entidades de crédito</field>
                                         <field name="code">l10n_es_assoc_line_31210</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -299,6 +334,7 @@
                                     </record>
                                     <record id="balance_assoc_line_31220" model="account.report.line">
                                         <field name="name">2. Finance lease payables</field>
+                                        <field name="name@es">2. Acreedores por arrendamiento financiero</field>
                                         <field name="code">l10n_es_assoc_line_31220</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -306,6 +342,7 @@
                                     </record>
                                     <record id="balance_assoc_line_31230" model="account.report.line">
                                         <field name="name">3. Other non-current payables</field>
+                                        <field name="name@es">3. Otras deudas a largo plazo</field>
                                         <field name="code">l10n_es_assoc_line_31230</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -315,6 +352,7 @@
                             </record>
                             <record id="balance_assoc_line_31300" model="account.report.line">
                                 <field name="name">III. Non-current debts with group companies and associates</field>
+                                <field name="name@es">III. Deudas con entidades del grupo y asociadas a largo plazo</field>
                                 <field name="code">l10n_es_assoc_line_31300</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -322,6 +360,7 @@
                             </record>
                             <record id="balance_assoc_line_31400" model="account.report.line">
                                 <field name="name">IV. Deferred tax liabilities</field>
+                                <field name="name@es">IV. Pasivos por impuesto diferido</field>
                                 <field name="code">l10n_es_assoc_line_31400</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -329,6 +368,7 @@
                             </record>
                             <record id="balance_assoc_line_31500" model="account.report.line">
                                 <field name="name">V. Non-current accruals</field>
+                                <field name="name@es">V. Periodificaciones a largo plazo</field>
                                 <field name="code">l10n_es_assoc_line_31500</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -336,6 +376,7 @@
                             </record>
                             <record id="l10n_es_assoc_line_31600" model="account.report.line">
                                 <field name="name">VII. Non-current debt with special characteristics</field>
+                                <field name="name@es">VII. Deuda con características especiales a largo plazo</field>
                                 <field name="code">l10n_es_assoc_line_31600</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -345,11 +386,13 @@
                     </record>
                     <record id="balance_assoc_line_32000" model="account.report.line">
                         <field name="name">C) CURRENT LIABILITIES</field>
+                        <field name="name@es">C) PASIVO CORRIENTE</field>
                         <field name="code">l10n_es_assoc_line_32000</field>
                         <field name="aggregation_formula">l10n_es_assoc_line_32100.balance + l10n_es_assoc_line_32200.balance + l10n_es_assoc_line_32300.balance + l10n_es_assoc_line_32400.balance + l10n_es_assoc_line_32500.balance + l10n_es_assoc_line_32600.balance + l10n_es_assoc_line_32700.balance</field>
                         <field name="children_ids">
                             <record id="balance_assoc_line_32100" model="account.report.line">
                                 <field name="name">I. Current provisions</field>
+                                <field name="name@es">I. Provisiones a corto plazo</field>
                                 <field name="code">l10n_es_assoc_line_32100</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -357,11 +400,13 @@
                             </record>
                             <record id="balance_assoc_line_32200" model="account.report.line">
                                 <field name="name">II. Current payables</field>
+                                <field name="name@es">II. Deudas a corto plazo</field>
                                 <field name="code">l10n_es_assoc_line_32200</field>
                                 <field name="aggregation_formula">l10n_es_assoc_line_32210.balance + l10n_es_assoc_line_32220.balance + l10n_es_assoc_line_32230.balance</field>
                                 <field name="children_ids">
                                     <record id="balance_assoc_line_32310" model="account.report.line">
                                         <field name="name">1. Debt with financial institutions</field>
+                                        <field name="name@es">1. Deudas con entidades de crédito</field>
                                         <field name="code">l10n_es_assoc_line_32210</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -369,6 +414,7 @@
                                     </record>
                                     <record id="balance_assoc_line_32220" model="account.report.line">
                                         <field name="name">2. Finance lease payables</field>
+                                        <field name="name@es">2. Acreedores por arrendamiento financiero</field>
                                         <field name="code">l10n_es_assoc_line_32220</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -376,6 +422,7 @@
                                     </record>
                                     <record id="balance_assoc_line_32230" model="account.report.line">
                                         <field name="name">3. Other current payables</field>
+                                        <field name="name@es">3. Otras deudas a corto plazo</field>
                                         <field name="code">l10n_es_assoc_line_32230</field>
                                         <field name="expression_ids">
                                           <record id="balance_assoc_line_32230_sub_balances" model="account.report.expression">
@@ -400,6 +447,7 @@
                             </record>
                             <record id="balance_assoc_line_32300" model="account.report.line">
                                 <field name="name">III. Non-current debts with group companies and associates</field>
+                                <field name="name@es">III. Deudas con entidades del grupo y asociadas a largo plazo</field>
                                 <field name="code">l10n_es_assoc_line_32300</field>
                                 <field name="expression_ids">
                                   <record id="balance_assoc_line_32300_sub_balances" model="account.report.expression">
@@ -422,6 +470,7 @@
                             </record>
                             <record id="balance_assoc_line_32400" model="account.report.line">
                                 <field name="name">IV. Beneficiaries-Creditors</field>
+                                <field name="name@es">IV. Beneficiarios-Acreedores</field>
                                 <field name="code">l10n_es_assoc_line_32400</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -429,11 +478,13 @@
                             </record>
                             <record id="balance_assoc_line_32500" model="account.report.line">
                                 <field name="name">V. Trade and other payables</field>
+                                <field name="name@es">V. Acreedores comerciales y otras cuentas a pagar</field>
                                 <field name="code">l10n_es_assoc_line_32500</field>
                                 <field name="aggregation_formula">l10n_es_assoc_line_32510.balance + l10n_es_assoc_line_32580.balance</field>
                                 <field name="children_ids">
                                     <record id="balance_assoc_line_32510" model="account.report.line">
                                         <field name="name">1. Suppliers</field>
+                                        <field name="name@es">1. Proveedores</field>
                                         <field name="code">l10n_es_assoc_line_32510</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -441,6 +492,7 @@
                                     </record>
                                     <record id="balance_assoc_line_32580" model="account.report.line">
                                         <field name="name">2. Other payables</field>
+                                        <field name="name@es">2. Otros acreedores</field>
                                         <field name="code">l10n_es_assoc_line_32580</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -450,6 +502,7 @@
                             </record>
                             <record id="balance_assoc_line_32600" model="account.report.line">
                                 <field name="name">VI. Prepayments for current assets</field>
+                                <field name="name@es">VI. Periodificaciones a corto plazo</field>
                                 <field name="code">l10n_es_assoc_line_32600</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -457,6 +510,7 @@
                             </record>
                             <record id="balance_assoc_line_32700" model="account.report.line">
                                 <field name="name">VII. Current debts with special characteristics</field>
+                                <field name="name@es">VII. Deuda con características especiales a corto plazo</field>
                                 <field name="code">l10n_es_assoc_line_32700</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>

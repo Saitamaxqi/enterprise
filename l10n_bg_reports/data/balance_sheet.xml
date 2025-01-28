@@ -2,6 +2,7 @@
 <odoo auto_sequence="1">
     <record id="l10n_bg_bs" model="account.report">
         <field name="name">Balance sheet</field>
+        <field name="name@bg">Счетоводен баланс</field>
         <field name="root_report_id" ref="account_reports.balance_sheet"/>
         <field name="filter_date_range" eval="False"/>
         <field name="filter_analytic_groupby" eval="True"/>
@@ -17,6 +18,7 @@
         <field name="line_ids">
             <record id="l10n_bg_bs_assets" model="account.report.line">
                 <field name="name">Assets</field>
+                <field name="name@bg">Актив</field>
                 <field name="code">bg_assets</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="expression_ids">
@@ -29,6 +31,7 @@
                 <field name="children_ids">
                     <record id="l10n_bg_bs_assets_a" model="account.report.line">
                         <field name="name">A. Subscribed but unpaid capital</field>
+                        <field name="name@bg">A. Записан, но невнесен капитал</field>
                         <field name="code">bg_assets_a</field>
                         <field name="hierarchy_level" eval="1"/>
                         <field name="groupby">account_id</field>
@@ -37,6 +40,7 @@
                     </record>
                     <record id="l10n_bg_bs_assets_b" model="account.report.line">
                         <field name="name">B. Non-current (fixed) assets</field>
+                        <field name="name@bg">Б. Нетекущи (дълготрайни) активи</field>
                         <field name="code">bg_assets_b</field>
                         <field name="hierarchy_level" eval="1"/>
                         <field name="expression_ids">
@@ -49,6 +53,7 @@
                         <field name="children_ids">
                             <record id="l10n_bg_bs_assets_b_1" model="account.report.line">
                                 <field name="name">I. Intangible assets</field>
+                                <field name="name@bg">I. Нематериални активи</field>
                                 <field name="code">bg_assets_b_1</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="expression_ids">
@@ -61,6 +66,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_bg_bs_assets_b_1_1" model="account.report.line">
                                         <field name="name">Development products</field>
+                                        <field name="name@bg">Продукти от развойна дейност</field>
                                         <field name="code">bg_assets_b_1_1</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -69,6 +75,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_b_1_2" model="account.report.line">
                                         <field name="name">Concessions, patents, licenses, trademarks, software products and other similar rights and assets</field>
+                                        <field name="name@bg">Концесии, патенти, лицензии, търговски марки, програмни продукти и други подобни права и активи</field>
                                         <field name="code">bg_assets_b_1_2</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -77,6 +84,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_b_1_3" model="account.report.line">
                                         <field name="name">Goodwill</field>
+                                        <field name="name@bg">добра воля</field>
                                         <field name="code">bg_assets_b_1_3</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -87,6 +95,7 @@
                             </record>
                             <record id="l10n_bg_bs_assets_b_2" model="account.report.line">
                                 <field name="name">II. Fixed assets</field>
+                                <field name="name@bg">II. Дълготрайни активи</field>
                                 <field name="code">bg_assets_b_2</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="expression_ids">
@@ -99,6 +108,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_bg_bs_assets_b_2_1" model="account.report.line">
                                         <field name="name">Lands and buildings</field>
+                                        <field name="name@bg">Земи и сгради</field>
                                         <field name="code">bg_assets_b_2_1</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="expression_ids">
@@ -111,6 +121,7 @@
                                         <field name="children_ids">
                                             <record id="l10n_bg_bs_assets_b_2_1_1" model="account.report.line">
                                                 <field name="name">Lands</field>
+                                                <field name="name@bg">Земи</field>
                                                 <field name="code">bg_assets_b_2_1_1</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -119,6 +130,7 @@
                                             </record>
                                             <record id="l10n_bg_bs_assets_b_2_1_2" model="account.report.line">
                                                 <field name="name">Buildings</field>
+                                                <field name="name@bg">сгради</field>
                                                 <field name="code">bg_assets_b_2_1_2</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -129,6 +141,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_b_2_2" model="account.report.line">
                                         <field name="name">Machinery, production equipment and apparatus</field>
+                                        <field name="name@bg">Машини, производствено оборудване и апарати</field>
                                         <field name="code">bg_assets_b_2_2</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -137,6 +150,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_b_2_3" model="account.report.line">
                                         <field name="name">Equipment and other</field>
+                                        <field name="name@bg">Съоръжения и други</field>
                                         <field name="code">bg_assets_b_2_3</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -145,6 +159,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_b_2_4" model="account.report.line">
                                         <field name="name">Long-term biological assets</field>
+                                        <field name="name@bg">Дългосрочни биологични активи</field>
                                         <field name="code">bg_assets_b_2_4</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -155,6 +170,7 @@
                             </record>
                             <record id="l10n_bg_bs_assets_b_3" model="account.report.line">
                                 <field name="name">III. Long-term financial assets</field>
+                                <field name="name@bg">III. Дългосрочни финансови активи</field>
                                 <field name="code">bg_assets_b_3</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="expression_ids">
@@ -167,6 +183,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_bg_bs_assets_b_3_1" model="account.report.line">
                                         <field name="name">Long-term financial assets</field>
+                                        <field name="name@bg">Дългосрочни финансови активи</field>
                                         <field name="code">bg_assets_b_3_1</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -175,6 +192,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_b_3_2" model="account.report.line">
                                         <field name="name">Other loans</field>
+                                        <field name="name@bg">Други заеми</field>
                                         <field name="code">bg_assets_b_3_2</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -185,6 +203,7 @@
                             </record>
                             <record id="l10n_bg_bs_assets_b_4" model="account.report.line">
                                 <field name="name">IV. Postponed taxes</field>
+                                <field name="name@bg">IV. Отложени данъци</field>
                                 <field name="code">bg_assets_b_4</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="account_codes_formula">496D</field>
@@ -193,6 +212,7 @@
                     </record>
                     <record id="l10n_bg_bs_assets_c" model="account.report.line">
                         <field name="name">C. Current assets</field>
+                        <field name="name@bg">В. Текущи активи</field>
                         <field name="code">bg_assets_c</field>
                         <field name="hierarchy_level" eval="1"/>
                         <field name="expression_ids">
@@ -205,6 +225,7 @@
                         <field name="children_ids">
                             <record id="l10n_bg_bs_assets_c_1" model="account.report.line">
                                 <field name="name">I. Inventories</field>
+                                <field name="name@bg">I. Инвентарни описи</field>
                                 <field name="code">bg_assets_c_1</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="expression_ids">
@@ -217,6 +238,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_bg_bs_assets_c_1_1" model="account.report.line">
                                         <field name="name">Raw materials</field>
+                                        <field name="name@bg">Сурови материали</field>
                                         <field name="code">bg_assets_c_1_1</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -225,6 +247,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_1_2" model="account.report.line">
                                         <field name="name">Work in progress</field>
+                                        <field name="name@bg">Работа в процес на осъществяване</field>
                                         <field name="code">bg_assets_c_1_2</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -233,6 +256,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_1_3" model="account.report.line">
                                         <field name="name">Products and goods</field>
+                                        <field name="name@bg">Продукти и стоки</field>
                                         <field name="code">bg_assets_c_1_3</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="expression_ids">
@@ -245,6 +269,7 @@
                                         <field name="children_ids">
                                             <record id="l10n_bg_bs_assets_c_1_3_1" model="account.report.line">
                                                 <field name="name">Products</field>
+                                                <field name="name@bg">продукти</field>
                                                 <field name="code">bg_assets_c_1_3_1</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -253,6 +278,7 @@
                                             </record>
                                             <record id="l10n_bg_bs_assets_c_1_3_2" model="account.report.line">
                                                 <field name="name">Goods</field>
+                                                <field name="name@bg">Стоки</field>
                                                 <field name="code">bg_assets_c_1_3_2</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -261,6 +287,7 @@
                                             </record>
                                             <record id="l10n_bg_bs_assets_c_1_3_3" model="account.report.line">
                                                 <field name="name">Short-term biological assets</field>
+                                                <field name="name@bg">Краткотрайни биологични активи</field>
                                                 <field name="code">bg_assets_c_1_3_3</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -271,6 +298,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_1_4" model="account.report.line">
                                         <field name="name">Advances provided</field>
+                                        <field name="name@bg">Предоставени аванси</field>
                                         <field name="code">bg_assets_c_1_4</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -281,6 +309,7 @@
                             </record>
                             <record id="l10n_bg_bs_assets_c_2" model="account.report.line">
                                 <field name="name">II. Receivables</field>
+                                <field name="name@bg">II. Вземания</field>
                                 <field name="code">bg_assets_c_2</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="expression_ids">
@@ -293,6 +322,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_bg_bs_assets_c_2_1" model="account.report.line">
                                         <field name="name">Receivables from suppliers</field>
+                                        <field name="name@bg">Вземания от доставчици</field>
                                         <field name="code">bg_assets_c_2_1</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -301,6 +331,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_2_2" model="account.report.line">
                                         <field name="name">Receivables from customers</field>
+                                        <field name="name@bg">Вземания от клиенти</field>
                                         <field name="code">bg_assets_c_2_2</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -309,6 +340,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_2_3" model="account.report.line">
                                         <field name="name">Receivables from group companies</field>
+                                        <field name="name@bg">Вземания от дружества от групата</field>
                                         <field name="code">bg_assets_c_2_3</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -317,6 +349,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_2_4" model="account.report.line">
                                         <field name="name">Receivables related to associates and joint ventures</field>
+                                        <field name="name@bg">Вземания, свързани със съдружници и съвместни предприятия</field>
                                         <field name="code">bg_assets_c_2_4</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -325,6 +358,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_2_5" model="account.report.line">
                                         <field name="name">Other receivables</field>
+                                        <field name="name@bg">Други вземания</field>
                                         <field name="code">bg_assets_c_2_5</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="expression_ids">
@@ -337,6 +371,7 @@
                                         <field name="children_ids">
                                             <record id="l10n_bg_bs_assets_c_2_5_1" model="account.report.line">
                                                 <field name="name">Accountable persons</field>
+                                                <field name="name@bg">Отговорни лица</field>
                                                 <field name="code">bg_assets_c_2_5_1</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -345,6 +380,7 @@
                                             </record>
                                             <record id="l10n_bg_bs_assets_c_2_5_2" model="account.report.line">
                                                 <field name="name">Translation estimates and internal estimates</field>
+                                                <field name="name@bg">Преводни оценки и вътрешни оценки</field>
                                                 <field name="code">bg_assets_c_2_5_2</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -353,6 +389,7 @@
                                             </record>
                                             <record id="l10n_bg_bs_assets_c_2_5_3" model="account.report.line">
                                                 <field name="name">Receivables from absences, deductions and litigation</field>
+                                                <field name="name@bg">Вземания от отсъствия, удръжки и съдебни спорове</field>
                                                 <field name="code">bg_assets_c_2_5_3</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -361,6 +398,7 @@
                                             </record>
                                             <record id="l10n_bg_bs_assets_c_2_5_4" model="account.report.line">
                                                 <field name="name">Estimates from the budget and departments</field>
+                                                <field name="name@bg">Разчети от бюджета и отделите</field>
                                                 <field name="code">bg_assets_c_2_5_4</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -369,6 +407,7 @@
                                             </record>
                                             <record id="l10n_bg_bs_assets_c_2_5_5" model="account.report.line">
                                                 <field name="name">Settlements with insurers</field>
+                                                <field name="name@bg">Разплащания със застрахователи</field>
                                                 <field name="code">bg_assets_c_2_5_5</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -377,6 +416,7 @@
                                             </record>
                                             <record id="l10n_bg_bs_assets_c_2_5_6" model="account.report.line">
                                                 <field name="name">Settlements with international financial institutions</field>
+                                                <field name="name@bg">Разплащания с международни финансови институции</field>
                                                 <field name="code">bg_assets_c_2_5_6</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -385,6 +425,7 @@
                                             </record>
                                             <record id="l10n_bg_bs_assets_c_2_5_7" model="account.report.line">
                                                 <field name="name">Insurance and co-insurance estimates</field>
+                                                <field name="name@bg">Застраховки и оценки за съзастраховане</field>
                                                 <field name="code">bg_assets_c_2_5_7</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -393,6 +434,7 @@
                                             </record>
                                             <record id="l10n_bg_bs_assets_c_2_5_8" model="account.report.line">
                                                 <field name="name">Other creditors</field>
+                                                <field name="name@bg">Други кредитори</field>
                                                 <field name="code">bg_assets_c_2_5_8</field>
                                                 <field name="hierarchy_level" eval="4"/>
                                                 <field name="groupby">account_id</field>
@@ -405,6 +447,7 @@
                             </record>
                             <record id="l10n_bg_bs_assets_c_3" model="account.report.line">
                                 <field name="name">III. Investments</field>
+                                <field name="name@bg">III. Инвестиции</field>
                                 <field name="code">bg_assets_c_3</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="expression_ids">
@@ -417,6 +460,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_bg_bs_assets_c_3_1" model="account.report.line">
                                         <field name="name">Shares and interests in group companies</field>
+                                        <field name="name@bg">Акции и участия в дружества от групата</field>
                                         <field name="code">bg_assets_c_3_1</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -425,6 +469,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_3_2" model="account.report.line">
                                         <field name="name">Repurchased treasury shares nominal value</field>
+                                        <field name="name@bg">Изкупени собствени акции с номинална стойност</field>
                                         <field name="code">bg_assets_c_3_2</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -433,6 +478,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_3_3" model="account.report.line">
                                         <field name="name">Other investments</field>
+                                        <field name="name@bg">Други инвестиции</field>
                                         <field name="code">bg_assets_c_3_3</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -443,6 +489,7 @@
                             </record>
                             <record id="l10n_bg_bs_assets_c_4" model="account.report.line">
                                 <field name="name">IV. Financial assets</field>
+                                <field name="name@bg">IV. Финансови активи</field>
                                 <field name="code">bg_assets_c_4</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="expression_ids">
@@ -455,6 +502,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_bg_bs_assets_c_4_1" model="account.report.line">
                                         <field name="name">Cash</field>
+                                        <field name="name@bg">в брой</field>
                                         <field name="code">bg_assets_c_4_1</field>
                                         <field name="hierarchy_level" eval="4"/>
                                         <field name="groupby">account_id</field>
@@ -463,6 +511,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_4_2" model="account.report.line">
                                         <field name="name">In perpetual accounts (deposits)</field>
+                                        <field name="name@bg">В постоянни сметки (депозити)</field>
                                         <field name="code">bg_assets_c_4_2</field>
                                         <field name="hierarchy_level" eval="4"/>
                                         <field name="groupby">account_id</field>
@@ -471,6 +520,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_4_3" model="account.report.line">
                                         <field name="name">Other cash</field>
+                                        <field name="name@bg">Други пари в брой</field>
                                         <field name="code">bg_assets_c_4_3</field>
                                         <field name="hierarchy_level" eval="4"/>
                                         <field name="groupby">account_id</field>
@@ -479,6 +529,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_assets_c_4_4" model="account.report.line">
                                         <field name="name">Current receivables and loans</field>
+                                        <field name="name@bg">Текущи вземания и заеми</field>
                                         <field name="code">bg_assets_c_4_4</field>
                                         <field name="hierarchy_level" eval="4"/>
                                         <field name="groupby">account_id</field>
@@ -491,6 +542,7 @@
                     </record>
                     <record id="l10n_bg_bs_assets_d" model="account.report.line">
                         <field name="name">D. Deferred expenses</field>
+                        <field name="name@bg">Г. Разходи за бъдещи периоди</field>
                         <field name="code">bg_assets_d</field>
                         <field name="hierarchy_level" eval="1"/>
                         <field name="groupby">account_id</field>
@@ -501,6 +553,7 @@
             </record>
             <record id="l10n_bg_bs_liabilities" model="account.report.line">
                 <field name="name">Liabilities</field>
+                <field name="name@bg">Пасив</field>
                 <field name="code">bg_liabilities</field>
                 <field name="hierarchy_level" eval="0"/>
                 <field name="expression_ids">
@@ -513,6 +566,7 @@
                 <field name="children_ids">
                     <record id="l10n_bg_bs_liabilities_a" model="account.report.line">
                         <field name="name">A. Equity</field>
+                        <field name="name@bg">А. Собствен капитал</field>
                         <field name="code">bg_liabilities_a</field>
                         <field name="hierarchy_level" eval="1"/>
                         <field name="expression_ids">
@@ -525,6 +579,7 @@
                         <field name="children_ids">
                             <record id="l10n_bg_bs_liabilities_a_1" model="account.report.line">
                                 <field name="name">I. Subscribed capital</field>
+                                <field name="name@bg">I. Записан капитал</field>
                                 <field name="code">bg_liabilities_a_1</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="groupby">account_id</field>
@@ -533,6 +588,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_a_2" model="account.report.line">
                                 <field name="name">ІІ. Emission premiums</field>
+                                <field name="name@bg">ІІ. Емисионни премии</field>
                                 <field name="code">bg_liabilities_a_2</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="groupby">account_id</field>
@@ -541,6 +597,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_a_3" model="account.report.line">
                                 <field name="name">III. Reserve of ex-post evaluations</field>
+                                <field name="name@bg">III. Резерв от последващи оценки</field>
                                 <field name="code">bg_liabilities_a_3</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="groupby">account_id</field>
@@ -549,6 +606,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_a_4" model="account.report.line">
                                 <field name="name">IV. Reserves</field>
+                                <field name="name@bg">IV. Резерви</field>
                                 <field name="code">bg_liabilities_a_4</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="expression_ids">
@@ -561,6 +619,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_bg_bs_liabilities_a_4_1" model="account.report.line">
                                         <field name="name">Legal reserves</field>
+                                        <field name="name@bg">Законови резерви</field>
                                         <field name="code">bg_liabilities_a_4_1</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -569,6 +628,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_liabilities_a_4_2" model="account.report.line">
                                         <field name="name">Reserve related to repurchased own shares</field>
+                                        <field name="name@bg">Резерв, свързан с обратно изкупени собствени акции</field>
                                         <field name="code">bg_liabilities_a_4_2</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -577,6 +637,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_liabilities_a_4_3" model="account.report.line">
                                         <field name="name">Reserve according to constitutive act</field>
+                                        <field name="name@bg">Резерв по учредителен акт</field>
                                         <field name="code">bg_liabilities_a_4_3</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -585,6 +646,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_liabilities_a_4_4" model="account.report.line">
                                         <field name="name">Specific non-capital reserves</field>
+                                        <field name="name@bg">Специфични некапиталови резерви</field>
                                         <field name="code">bg_liabilities_a_4_4</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -593,6 +655,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_liabilities_a_4_5" model="account.report.line">
                                         <field name="name">Other reserves</field>
+                                        <field name="name@bg">Други резерви</field>
                                         <field name="code">bg_liabilities_a_4_5</field>
                                         <field name="hierarchy_level" eval="3"/>
                                         <field name="groupby">account_id</field>
@@ -603,6 +666,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_a_5" model="account.report.line">
                                 <field name="name">V. Accumulated profit (loss) from previous years</field>
+                                <field name="name@bg">V. Accumulated profit (loss) from previous years</field>
                                 <field name="code">bg_liabilities_a_5</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="groupby">account_id</field>
@@ -611,6 +675,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_a_6" model="account.report.line">
                                 <field name="name">VI. Current profit (loss)</field>
+                                <field name="name@bg">VI. Текуща печалба (загуба)</field>
                                 <field name="code">bg_liabilities_a_6</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="expression_ids">
@@ -635,6 +700,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_a_7" model="account.report.line">
                                 <field name="name">VII. Unallocated earnings</field>
+                                <field name="name@bg">VII. Неразпределени печалби</field>
                                 <field name="code">bg_liabilities_a_7</field>
                                 <field name="hierarchy_level" eval="2"/>
                                 <field name="expression_ids">
@@ -657,6 +723,7 @@
                     </record>
                     <record id="l10n_bg_bs_liabilities_b" model="account.report.line">
                         <field name="name">B. Provisions and similar obligations</field>
+                        <field name="name@bg">Б. Провизии и сходни задължения</field>
                         <field name="code">bg_liabilities_b</field>
                         <field name="hierarchy_level" eval="1"/>
                         <field name="expression_ids">
@@ -669,6 +736,7 @@
                         <field name="children_ids">
                             <record id="l10n_bg_bs_liabilities_b_1" model="account.report.line">
                                 <field name="name">Provisions for pensions and other similar obligations</field>
+                                <field name="name@bg">Провизии за пенсии и други подобни задължения</field>
                                 <field name="code">bg_liabilities_b_1</field>
                                 <field name="hierarchy_level" eval="3"/>
                                 <field name="groupby">account_id</field>
@@ -677,6 +745,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_b_2" model="account.report.line">
                                 <field name="name">Provisions for taxes</field>
+                                <field name="name@bg">Провизии за данъци</field>
                                 <field name="code">bg_liabilities_b_2</field>
                                 <field name="hierarchy_level" eval="3"/>
                                 <field name="groupby">account_id</field>
@@ -685,6 +754,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_b_3" model="account.report.line">
                                 <field name="name">Other provisions and similar obligations</field>
+                                <field name="name@bg">Други разпоредби и подобни задължения</field>
                                 <field name="code">bg_liabilities_b_3</field>
                                 <field name="hierarchy_level" eval="3"/>
                                 <field name="groupby">account_id</field>
@@ -695,6 +765,7 @@
                     </record>
                     <record id="l10n_bg_bs_liabilities_c" model="account.report.line">
                         <field name="name">C. Obligations</field>
+                        <field name="name@bg">В. Задължения</field>
                         <field name="code">bg_liabilities_c</field>
                         <field name="hierarchy_level" eval="1"/>
                         <field name="expression_ids">
@@ -707,6 +778,7 @@
                         <field name="children_ids">
                             <record id="l10n_bg_bs_liabilities_c_1" model="account.report.line">
                                 <field name="name">Mandatory loans with a separate indication of convertibles</field>
+                                <field name="name@bg">Задължителни заеми с отделно посочване на конвертируеми</field>
                                 <field name="code">bg_liabilities_c_1</field>
                                 <field name="hierarchy_level" eval="3"/>
                                 <field name="groupby">account_id</field>
@@ -715,6 +787,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_c_2" model="account.report.line">
                                 <field name="name">Liabilities to financial institutions</field>
+                                <field name="name@bg">Задължения към финансови предприятия</field>
                                 <field name="code">bg_liabilities_c_2</field>
                                 <field name="hierarchy_level" eval="3"/>
                                 <field name="groupby">account_id</field>
@@ -723,6 +796,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_c_3" model="account.report.line">
                                 <field name="name">Advances received</field>
+                                <field name="name@bg">Получени аванси</field>
                                 <field name="code">bg_liabilities_c_3</field>
                                 <field name="hierarchy_level" eval="3"/>
                                 <field name="groupby">account_id</field>
@@ -731,6 +805,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_c_4" model="account.report.line">
                                 <field name="name">Liabilities to suppliers</field>
+                                <field name="name@bg">Задължения към доставчици</field>
                                 <field name="code">bg_liabilities_c_4</field>
                                 <field name="hierarchy_level" eval="3"/>
                                 <field name="expression_ids">
@@ -743,6 +818,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_bg_bs_liabilities_c_4_1" model="account.report.line">
                                         <field name="name">Liabilities to suppliers</field>
+                                        <field name="name@bg">Задължения към доставчици</field>
                                         <field name="code">bg_liabilities_c_4_1</field>
                                         <field name="hierarchy_level" eval="4"/>
                                         <field name="groupby">account_id</field>
@@ -751,6 +827,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_liabilities_c_4_2" model="account.report.line">
                                         <field name="name">Other loans and debts</field>
+                                        <field name="name@bg">Други заеми и дългове</field>
                                         <field name="code">bg_liabilities_c_4_2</field>
                                         <field name="hierarchy_level" eval="4"/>
                                         <field name="groupby">account_id</field>
@@ -761,6 +838,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_c_5" model="account.report.line">
                                 <field name="name">Liabilities under policies</field>
+                                <field name="name@bg">Задължения по полици</field>
                                 <field name="code">bg_liabilities_c_5</field>
                                 <field name="hierarchy_level" eval="3"/>
                                 <field name="groupby">account_id</field>
@@ -769,6 +847,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_c_6" model="account.report.line">
                                 <field name="name">Liabilities to group enterprises</field>
+                                <field name="name@bg">Задължения към предприятия от група</field>
                                 <field name="code">bg_liabilities_c_6</field>
                                 <field name="hierarchy_level" eval="3"/>
                                 <field name="groupby">account_id</field>
@@ -777,6 +856,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_c_7" model="account.report.line">
                                 <field name="name">Liabilities related to associates and joint ventures</field>
+                                <field name="name@bg">Задължения, свързани с асоциирани и смесени предприятия</field>
                                 <field name="code">bg_liabilities_c_7</field>
                                 <field name="hierarchy_level" eval="3"/>
                                 <field name="groupby">account_id</field>
@@ -785,6 +865,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_c_8" model="account.report.line">
                                 <field name="name">Other obligations</field>
+                                <field name="name@bg">Други задължения</field>
                                 <field name="code">bg_liabilities_c_8</field>
                                 <field name="hierarchy_level" eval="3"/>
                                 <field name="expression_ids">
@@ -797,6 +878,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_bg_bs_liabilities_c_8_1" model="account.report.line">
                                         <field name="name">To the staff</field>
+                                        <field name="name@bg">Към персонала</field>
                                         <field name="code">bg_liabilities_c_8_1</field>
                                         <field name="hierarchy_level" eval="4"/>
                                         <field name="groupby">account_id</field>
@@ -805,6 +887,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_liabilities_c_8_2" model="account.report.line">
                                         <field name="name">Insurance liabilities</field>
+                                        <field name="name@bg">Осигурителни задължения</field>
                                         <field name="code">bg_liabilities_c_8_2</field>
                                         <field name="hierarchy_level" eval="4"/>
                                         <field name="groupby">account_id</field>
@@ -813,6 +896,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_liabilities_c_8_3" model="account.report.line">
                                         <field name="name">Tax obligations</field>
+                                        <field name="name@bg">Данъчни задължения</field>
                                         <field name="code">bg_liabilities_c_8_3</field>
                                         <field name="hierarchy_level" eval="4"/>
                                         <field name="groupby">account_id</field>
@@ -821,6 +905,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_liabilities_c_8_4" model="account.report.line">
                                         <field name="name">Settlements with international financial institutions</field>
+                                        <field name="name@bg">Разплащания с международни финансови институции</field>
                                         <field name="code">bg_liabilities_c_8_4</field>
                                         <field name="hierarchy_level" eval="4"/>
                                         <field name="groupby">account_id</field>
@@ -829,6 +914,7 @@
                                     </record>
                                     <record id="l10n_bg_bs_liabilities_c_8_5" model="account.report.line">
                                         <field name="name">Miscellaneous debtors and creditors</field>
+                                        <field name="name@bg">Разни длъжници и кредитори</field>
                                         <field name="code">bg_liabilities_c_8_5</field>
                                         <field name="hierarchy_level" eval="4"/>
                                         <field name="groupby">account_id</field>
@@ -841,6 +927,7 @@
                     </record>
                     <record id="l10n_bg_bs_liabilities_d" model="account.report.line">
                         <field name="name">D. Financing and deferred income</field>
+                        <field name="name@bg">Г. Финансирания и приходи за бъдещи периоди</field>
                         <field name="code">bg_liabilities_d</field>
                         <field name="hierarchy_level" eval="1"/>
                         <field name="expression_ids">
@@ -853,6 +940,7 @@
                         <field name="children_ids">
                             <record id="l10n_bg_bs_liabilities_d_1" model="account.report.line">
                                 <field name="name">Funding</field>
+                                <field name="name@bg">финансирания</field>
                                 <field name="code">bg_liabilities_d_1</field>
                                 <field name="hierarchy_level" eval="4"/>
                                 <field name="groupby">account_id</field>
@@ -861,6 +949,7 @@
                             </record>
                             <record id="l10n_bg_bs_liabilities_d_2" model="account.report.line">
                                 <field name="name">Income for future periods</field>
+                                <field name="name@bg">Приходи за бъдещи периоди</field>
                                 <field name="code">bg_liabilities_d_2</field>
                                 <field name="hierarchy_level" eval="4"/>
                                 <field name="groupby">account_id</field>

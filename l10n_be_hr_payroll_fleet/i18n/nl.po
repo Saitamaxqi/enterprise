@@ -49,16 +49,11 @@ msgstr "<span>/ maand</span>"
 #. module: l10n_be_hr_payroll_fleet
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_fleet.res_config_settings_view_form
 msgid ""
-"<span>Display a warning in the salary configurator if we have more than</"
-"span>"
+"<span>Display a warning in the salary configurator if we have more "
+"than</span>"
 msgstr ""
-"<span>Een waarschuwing weergeven in de salarisconfigurator bij meer dan</"
-"span>"
-
-#. module: l10n_be_hr_payroll_fleet
-#: model:hr.salary.rule,name:l10n_be_hr_payroll_fleet.cp200_employees_salary_co2_fee
-msgid "Accounting: CO2 Fee (Employer)"
-msgstr "Boekhouding: CO2-vergoeding (Werkgever)"
+"<span>Een waarschuwing weergeven in de salarisconfigurator bij meer "
+"dan</span>"
 
 #. module: l10n_be_hr_payroll_fleet
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_fleet.field_fleet_vehicle__atn
@@ -78,7 +73,6 @@ msgid "CO2 Emissions"
 msgstr "CO2-uitstoot"
 
 #. module: l10n_be_hr_payroll_fleet
-#: model:hr.salary.rule.category,name:l10n_be_hr_payroll_fleet.hr_salary_rule_category_co2_fee
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_fleet.field_fleet_vehicle__co2_fee
 msgid "CO2 Fee"
 msgstr "CO2-vergoeding"
@@ -282,11 +276,6 @@ msgstr "Nieuwe auto besteld"
 #: model:ir.model,name:l10n_be_hr_payroll_fleet.model_hr_payslip
 msgid "Pay Slip"
 msgstr "Loonstrook"
-
-#. module: l10n_be_hr_payroll_fleet
-#: model:hr.payroll.dashboard.warning,name:l10n_be_hr_payroll_fleet.hr_payroll_dashboard_warning_car_mismatch
-msgid "Payslips with car different than on employee's contract"
-msgstr "Loonstroken met andere auto's dan op de werknemersovereenkomst"
 
 #. module: l10n_be_hr_payroll_fleet
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_fleet.field_fleet_vehicle_log_contract__cost_generated

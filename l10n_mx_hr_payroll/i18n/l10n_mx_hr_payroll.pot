@@ -82,51 +82,6 @@ msgid "Daily"
 msgstr ""
 
 #. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disability_life_employee
-msgid "Disability and Life IMSS (Employee)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disability_life
-msgid "Disability and Life IMSS (Employer)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_additional_employee
-msgid "Disease and Maternity IMSS - Additional Quota (Employee)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_additional
-msgid "Disease and Maternity IMSS - Additional Quota (Employer)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_fixed
-msgid "Disease and Maternity IMSS - Fixed Quota (Employer)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_money_employee
-msgid "Disease and Maternity IMSS - In Money (Employee)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_money
-msgid "Disease and Maternity IMSS - In Money (Employer)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_medical_employee
-msgid "Disease and Maternity IMSS - Medical Expenses (Employee)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_medical
-msgid "Disease and Maternity IMSS - Medical Expenses (Employer)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
 #: model:ir.model,name:l10n_mx_hr_payroll.model_hr_contract
 msgid "Employee Contract"
 msgstr ""
@@ -149,39 +104,6 @@ msgstr ""
 #. module: l10n_mx_hr_payroll
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll.field_hr_contract__l10n_mx_holidays_count
 msgid "Holidays Count"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employee
-msgid "IMSS (Employee)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employer
-msgid "IMSS (Employer)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_social_security_total_employee
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_social_security_total_employer
-#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employee_total
-msgid "IMSS Total (Employee)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_social_security_employer_total
-msgid "IMSS Total (Employer)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_infonavit
-msgid "INFONAVIT IMSS (Employer)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_christmas_bonus_isr
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_isr
-msgid "ISR (Income Tax)"
 msgstr ""
 
 #. module: l10n_mx_hr_payroll
@@ -212,12 +134,6 @@ msgid ""
 "https://www.dof.gob.mx/nota_detalle.php?codigo=5640505&amp;fecha=12/01/2022#gsc.tab=0\n"
 "\n"
 "[(Gross monthly salary - Lower limit) x Percentage to be applied over the excess of the lower limit] + Fixed rate"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_integrated_daily_wage
-#: model:hr.salary.rule.category,name:l10n_mx_hr_payroll.hr_payroll_integrated_daily_wage
-msgid "Integrated Daily Wage"
 msgstr ""
 
 #. module: l10n_mx_hr_payroll
@@ -253,11 +169,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_nursery
-msgid "Nursery and Social Benefits IMSS (Employer)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
 #: model_terms:res.company,invoice_terms_html:l10n_mx_hr_payroll.res_company_mx
 msgid ""
 "Our invoices are payable within 21 working days, unless another payment "
@@ -276,21 +187,6 @@ msgstr ""
 #. module: l10n_mx_hr_payroll
 #: model:hr.department,name:l10n_mx_hr_payroll.hr_department_rdlt
 msgid "RD MX"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_ceav_employee
-msgid "Retirement, assault in elderly and old age (CEAV) IMSS (Employee)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_ceav
-msgid "Retirement, assault in elderly and old age (CEAV) IMSS (Employer)"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_retirement
-msgid "Retirement, assault in elderly and old age IMSS (Employer)"
 msgstr ""
 
 #. module: l10n_mx_hr_payroll
@@ -318,18 +214,8 @@ msgid ""
 msgstr ""
 
 #. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_subsidy
-msgid "Used Subsidy"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll.selection__hr_contract__l10n_mx_schedule_pay__weekly
 msgid "Weekly"
-msgstr ""
-
-#. module: l10n_mx_hr_payroll
-#: model:hr.salary.rule,name:l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_work_risk
-msgid "Work Risks IMSS (Employer)"
 msgstr ""
 
 #. module: l10n_mx_hr_payroll

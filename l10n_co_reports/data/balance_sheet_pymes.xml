@@ -2,6 +2,7 @@
 <odoo>
     <record id="l10n_co_bs_report" model="account.report">
         <field name="name">Balance Sheet</field>
+        <field name="name@es_419">Saldo general</field>
         <field name="root_report_id" ref="account_reports.balance_sheet"/>
         <field name="country_id" ref="base.co" />
         <field name="filter_unfold_all" eval="True"/>
@@ -11,6 +12,7 @@
         <field name="column_ids">
             <record id="l10n_co_bs_report_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@es_419">Saldo</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
@@ -18,6 +20,7 @@
             <!-- Assets -->
             <record id="l10n_co_bs_report_assets" model="account.report.line">
                 <field name="name">ASSETS</field>
+                <field name="name@es_419">ACTIVOS</field>
                 <field name="aggregation_formula">L10N_CO_BS_AC.balance + L10N_CO_BS_ANC.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
@@ -25,11 +28,13 @@
                     <record id="l10n_co_bs_report_assets_current" model="account.report.line">
                         <field name="code">L10N_CO_BS_AC</field>
                         <field name="name">Current Assets</field>
+                        <field name="name@es_419">Activos corrientes</field>
                         <field name="aggregation_formula">L10N_CO_BS_CASH.balance + L10N_CO_BS_INV.balance + L10N_CO_BS_AC_DEBTORS.balance + L10N_CO_BS_AC_INVENTORY.balance + L10N_CO_BS_AC_DEFERRED.balance</field>
                         <field name="children_ids">
                             <record id="l10n_co_bs_report_cash" model="account.report.line">
                                 <field name="code">L10N_CO_BS_CASH</field>
                                 <field name="name">Bank and Cash</field>
+                                <field name="name@es_419">Disponible</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">11</field>
                                 <field name="groupby">account_id</field>
@@ -37,6 +42,7 @@
                             <record id="l10n_co_bs_report_investments" model="account.report.line">
                                 <field name="code">L10N_CO_BS_INV</field>
                                 <field name="name">Investments</field>
+                                <field name="name@es_419">Inversiones</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">12</field>
                                 <field name="groupby">account_id</field>
@@ -44,6 +50,7 @@
                             <record id="l10n_co_bs_report_ac_debt" model="account.report.line">
                                 <field name="code">L10N_CO_BS_AC_DEBTORS</field>
                                 <field name="name">Debtors</field>
+                                <field name="name@es_419">Deudores</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">13</field>
                                 <field name="groupby">account_id</field>
@@ -51,6 +58,7 @@
                             <record id="l10n_co_bs_report_ac_inventory" model="account.report.line">
                                 <field name="code">L10N_CO_BS_AC_INVENTORY</field>
                                 <field name="name">Inventory</field>
+                                <field name="name@es_419">Inventario</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">14</field>
                                 <field name="groupby">account_id</field>
@@ -58,6 +66,7 @@
                             <record id="l10n_co_bs_report_ac_deferred" model="account.report.line">
                                 <field name="code">L10N_CO_BS_AC_DEFERRED</field>
                                 <field name="name">Deferred</field>
+                                <field name="name@es_419">Diferidos</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">1705 + 1710</field>
                                 <field name="groupby">account_id</field>
@@ -68,11 +77,13 @@
                     <record id="l10n_co_bs_report_assets_non_current" model="account.report.line">
                         <field name="code">L10N_CO_BS_ANC</field>
                         <field name="name">Non-current Assets</field>
+                        <field name="name@es_419">Activos no corrientes</field>
                         <field name="aggregation_formula">L10N_CO_BS_PROP.balance + L10N_CO_BS_INT.balance + L10N_CO_BS_ANC_DEFERRED.balance + L10N_CO_BS_VAL.balance + L10N_CO_BS_ASSETS_OTHER.balance</field>
                         <field name="children_ids">
                             <record id="l10n_co_bs_report_property" model="account.report.line">
                                 <field name="code">L10N_CO_BS_PROP</field>
                                 <field name="name">Property, Plant and Equipment</field>
+                                <field name="name@es_419">Propiedades, planta y equipo</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">15</field>
                                 <field name="groupby">account_id</field>
@@ -80,6 +91,7 @@
                             <record id="l10n_co_bs_report_intangibles" model="account.report.line">
                                 <field name="code">L10N_CO_BS_INT</field>
                                 <field name="name">Intangibles</field>
+                                <field name="name@es_419">Intangibles</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">16</field>
                                 <field name="groupby">account_id</field>
@@ -87,6 +99,7 @@
                             <record id="l10n_co_bs_report_anc_deferred" model="account.report.line">
                                 <field name="code">L10N_CO_BS_ANC_DEFERRED</field>
                                 <field name="name">Deferred</field>
+                                <field name="name@es_419">Diferidos</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">1715 + 1720 + 1798</field>
                                 <field name="groupby">account_id</field>
@@ -94,6 +107,7 @@
                             <record id="l10n_co_bs_report_valuations" model="account.report.line">
                                 <field name="code">L10N_CO_BS_VAL</field>
                                 <field name="name">Valuations</field>
+                                <field name="name@es_419">Valorizaciones</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">19</field>
                                 <field name="groupby">account_id</field>
@@ -101,6 +115,7 @@
                             <record id="l10n_co_bs_report_assets_other" model="account.report.line">
                                 <field name="code">L10N_CO_BS_ASSETS_OTHER</field>
                                 <field name="name">Other Assets</field>
+                                <field name="name@es_419">Otros activos</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">18</field>
                                 <field name="groupby">account_id</field>
@@ -112,6 +127,7 @@
             <!-- Liabilities -->
             <record id="l10n_co_bs_report_liabilities" model="account.report.line">
                 <field name="name">LIABILITIES</field>
+                <field name="name@es_419">PASIVO</field>
                 <field name="code">L10N_CO_BS_LIABILITIES</field>
                 <field name="aggregation_formula">L10N_CO_BS_LC.balance + L10N_CO_BS_LNC.balance</field>
                 <field name="hierarchy_level">0</field>
@@ -120,11 +136,13 @@
                     <record id="l10n_co_bs_report_liabilities_current" model="account.report.line">
                         <field name="code">L10N_CO_BS_LC</field>
                         <field name="name">Current Liabilities</field>
+                        <field name="name@es_419">Pasivos corrientes</field>
                         <field name="aggregation_formula">L10N_CO_BS_FIN.balance + L10N_CO_BS_SUPPLIERS.balance + L10N_CO_BS_PAYABLE.balance + L10N_CO_BS_TAXES.balance + L10N_CO_BS_LABOR.balance + L10N_CO_BS_LC_OTHER.balance</field>
                         <field name="children_ids">
                             <record id="l10n_co_bs_report_fin_obligations" model="account.report.line">
                                 <field name="code">L10N_CO_BS_FIN</field>
                                 <field name="name">Financial Obligations</field>
+                                <field name="name@es_419">Obligaciones financieras</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">-21</field>
                                 <field name="groupby">account_id</field>
@@ -132,6 +150,7 @@
                             <record id="l10n_co_bs_report_suppliers" model="account.report.line">
                                 <field name="code">L10N_CO_BS_SUPPLIERS</field>
                                 <field name="name">Suppliers</field>
+                                <field name="name@es_419">Proveedores</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">-22</field>
                                 <field name="groupby">account_id</field>
@@ -139,6 +158,7 @@
                             <record id="l10n_co_bs_report_payable" model="account.report.line">
                                 <field name="code">L10N_CO_BS_PAYABLE</field>
                                 <field name="name">Accounts Payable</field>
+                                <field name="name@es_419">Cuentas por pagar</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">-23</field>
                                 <field name="groupby">account_id</field>
@@ -146,6 +166,7 @@
                             <record id="l10n_co_bs_report_taxes" model="account.report.line">
                                 <field name="code">L10N_CO_BS_TAXES</field>
                                 <field name="name">Taxes, Levies and Fees</field>
+                                <field name="name@es_419">Impuestos, gravámenes y tasas</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">-24</field>
                                 <field name="groupby">account_id</field>
@@ -153,6 +174,7 @@
                             <record id="l10n_co_bs_report_labor" model="account.report.line">
                                 <field name="code">L10N_CO_BS_LABOR</field>
                                 <field name="name">Labor Obligations</field>
+                                <field name="name@es_419">Obligaciones laborales</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">-25</field>
                                 <field name="groupby">account_id</field>
@@ -160,6 +182,7 @@
                             <record id="l10n_co_bs_report_liabilities_current_other" model="account.report.line">
                                 <field name="code">L10N_CO_BS_LC_OTHER</field>
                                 <field name="name">Other Current Liabilities</field>
+                                <field name="name@es_419">Otros pasivos corrientes</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">-2805 - 2810 - 2815 - 2820 - 2825</field>
                                 <field name="groupby">account_id</field>
@@ -170,11 +193,13 @@
                     <record id="l10n_co_bs_report_liabilities_non_current" model="account.report.line">
                         <field name="code">L10N_CO_BS_LNC</field>
                         <field name="name">Non-current Liabilities</field>
+                        <field name="name@es_419">Pasivos no corrientes</field>
                         <field name="aggregation_formula">L10N_CO_BS_PROVISIONS.balance + L10N_CO_BS_LNC_DEFERRED.balance + L10N_CO_BS_BONDS.balance + L10N_CO_BS_LNC_OTHER.balance</field>
                         <field name="children_ids">
                             <record id="l10n_co_bs_report_provisions" model="account.report.line">
                                 <field name="code">L10N_CO_BS_PROVISIONS</field>
                                 <field name="name">Estimated Liabilities and Provisions</field>
+                                <field name="name@es_419">Pasivos estimados y provisiones</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">-26</field>
                                 <field name="groupby">account_id</field>
@@ -182,6 +207,7 @@
                             <record id="l10n_co_bs_report_deferred_liabilities" model="account.report.line">
                                 <field name="code">L10N_CO_BS_LNC_DEFERRED</field>
                                 <field name="name">Deferred</field>
+                                <field name="name@es_419">Diferidos</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">-27</field>
                                 <field name="groupby">account_id</field>
@@ -189,6 +215,7 @@
                             <record id="l10n_co_bs_report_bonds" model="account.report.line">
                                 <field name="code">L10N_CO_BS_BONDS</field>
                                 <field name="name">Bonds and Commercial Paper</field>
+                                <field name="name@es_419">Bonos y papeles comerciales</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">-29</field>
                                 <field name="groupby">account_id</field>
@@ -196,6 +223,7 @@
                             <record id="l10n_co_bs_report_liabilities_non_current_other" model="account.report.line">
                                 <field name="code">L10N_CO_BS_LNC_OTHER</field>
                                 <field name="name">Other Non-current Liabilities</field>
+                                <field name="name@es_419">Otros pasivos no corrientes</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="account_codes_formula">-2830 - 2835 - 2840 - 2895</field>
                                 <field name="groupby">account_id</field>
@@ -208,12 +236,14 @@
             <record id="l10n_co_bs_report_equity" model="account.report.line">
                 <field name="code">L10N_CO_BS_EQUITY</field>
                 <field name="name">EQUITY</field>
+                <field name="name@es_419">PATRIMONIO</field>
                 <field name="aggregation_formula">L10N_CO_BS_CAPITAL.balance + L10N_CO_BS_SURPLUS.balance + L10N_CO_BS_RESERVES.balance + L10N_CO_BS_REVALUATION.balance + L10N_CO_BS_DIVIDENDS.balance + L10N_CO_BS_YEAR_RESULTS.balance + L10N_CO_BS_YEAR_EARNINGS.balance + L10N_CO_BS_PREV_RESULTS.balance + L10N_CO_BS_VAL_SURPLUS.balance + L10N_CO_BS_PREV_YEAR_EARNINGS.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_co_bs_report_social_capital" model="account.report.line">
                         <field name="code">L10N_CO_BS_CAPITAL</field>
                         <field name="name">Social Capital</field>
+                        <field name="name@es_419">Capital social</field>
                         <field name="foldable" eval="True"/>
                         <field name="account_codes_formula">-31</field>
                         <field name="groupby">account_id</field>
@@ -221,6 +251,7 @@
                     <record id="l10n_co_bs_report_capital_surplus" model="account.report.line">
                         <field name="code">L10N_CO_BS_SURPLUS</field>
                         <field name="name">Capital Surplus</field>
+                        <field name="name@es_419">Superávit de capital</field>
                         <field name="foldable" eval="True"/>
                         <field name="account_codes_formula">-32</field>
                         <field name="groupby">account_id</field>
@@ -228,6 +259,7 @@
                     <record id="l10n_co_bs_report_reserves" model="account.report.line">
                         <field name="code">L10N_CO_BS_RESERVES</field>
                         <field name="name">Reserves</field>
+                        <field name="name@es_419">Reservas</field>
                         <field name="foldable" eval="True"/>
                         <field name="account_codes_formula">-33</field>
                         <field name="groupby">account_id</field>
@@ -235,6 +267,7 @@
                     <record id="l10n_co_bs_report_revaluation" model="account.report.line">
                         <field name="code">L10N_CO_BS_REVALUATION</field>
                         <field name="name">Revaluation of Equity</field>
+                        <field name="name@es_419">Revalorización del patrimonio</field>
                         <field name="foldable" eval="True"/>
                         <field name="account_codes_formula">-34</field>
                         <field name="groupby">account_id</field>
@@ -242,6 +275,7 @@
                     <record id="l10n_co_bs_report_dividends" model="account.report.line">
                         <field name="code">L10N_CO_BS_DIVIDENDS</field>
                         <field name="name">Dividends or Participations Declared in Shares, Quotas or Parts of Social Interest</field>
+                        <field name="name@es_419">Dividendos o participaciones decretados en acciones, cuotas o partes de interés social</field>
                         <field name="foldable" eval="True"/>
                         <field name="account_codes_formula">-35</field>
                         <field name="groupby">account_id</field>
@@ -249,6 +283,7 @@
                     <record id="l10n_co_bs_report_year_results" model="account.report.line">
                         <field name="code">L10N_CO_BS_YEAR_RESULTS</field>
                         <field name="name">Results for the Year</field>
+                        <field name="name@es_419">Resultados del ejercicio</field>
                         <field name="foldable" eval="True"/>
                         <field name="account_codes_formula">-36</field>
                         <field name="groupby">account_id</field>
@@ -256,6 +291,7 @@
                     <record id="l10n_co_bs_report_year_earnings" model="account.report.line">
                         <field name="code">L10N_CO_BS_YEAR_EARNINGS</field>
                         <field name="name">Current Year Unallocated Earnings</field>
+                        <field name="name@es_419">Ingresos no asignados del ejercicio en curso</field>
                         <field name="foldable" eval="True"/>
                         <field name="action_id" ref="action_l10n_co_pl_report"/>
                         <field name="expression_ids">
@@ -271,12 +307,14 @@
                     <record id="l10n_co_bs_report_previous_year_results" model="account.report.line">
                         <field name="code">L10N_CO_BS_PREV_RESULTS</field>
                         <field name="name">Previous Year Earnings</field>
+                        <field name="name@es_419">Resultados de ejercicios anteriores</field>
                         <field name="foldable" eval="True"/>
                         <field name="account_codes_formula">-37</field>
                         <field name="groupby">account_id</field>
                     </record>
                     <record id="l10n_co_account_financial_previous_year_earnings0" model="account.report.line">
                         <field name="name">Previous Years Unallocated Earnings</field>
+                        <field name="name@es_419">Resultados no asignados de ejercicios anteriores</field>
                         <field name="code">L10N_CO_BS_PREV_YEAR_EARNINGS</field>
                         <field name="expression_ids">
                             <record id="l10n_co_account_financial_previous_year_earnings0_allocated_earnings" model="account.report.expression">
@@ -303,6 +341,7 @@
                     <record id="l10n_co_bs_report_valuations_surplus" model="account.report.line">
                         <field name="code">L10N_CO_BS_VAL_SURPLUS</field>
                         <field name="name">Surplus from Valuations</field>
+                        <field name="name@es_419">Superávit por valorizaciones</field>
                         <field name="foldable" eval="True"/>
                         <field name="account_codes_formula">-38</field>
                         <field name="groupby">account_id</field>
@@ -311,6 +350,7 @@
             </record>
             <record id="l10n_co_bs_report_liabilities_equity" model="account.report.line">
                 <field name="name">LIABILITIES AND EQUITY</field>
+                <field name="name@es_419">PASIVO Y PATRIMONIO</field>
                 <field name="code">L10N_CO_BS_LIABILITIES_EQUITY</field>
                 <field name="aggregation_formula">L10N_CO_BS_LIABILITIES.balance + L10N_CO_BS_EQUITY.balance</field>
                 <field name="hierarchy_level">0</field>

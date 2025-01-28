@@ -18,55 +18,10 @@ msgstr ""
 "X-Generator: Poedit 3.3.2\n"
 
 #. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_partner_id
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_partner_id
-msgid "Customer"
-msgstr "Tên người mua/bán"
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_ref
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_ref
-msgid "Description"
-msgstr "Diễn giải"
-
-#. module: l10n_vn_reports
 #. odoo-python
 #: code:addons/l10n_vn_reports/models/tax_report.py:0
 msgid "Grand Total"
 msgstr "Tổng"
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_invoice_date
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_invoice_date
-msgid "Invoice Date"
-msgstr "Ngày/tháng/năm lập hoá đơn"
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_invoice_number
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_invoice_number
-msgid "Invoice Number"
-msgstr "Số hoá đơn"
-
-#. module: l10n_vn_reports
-#: model:account.report,name:l10n_vn_reports.purchase_tax_report
-msgid "Purchase"
-msgstr "Mua vào"
-
-#. module: l10n_vn_reports
-#: model:account.report,name:l10n_vn_reports.sales_tax_report
-msgid "Sales"
-msgstr "Bán ra"
-
-#. module: l10n_vn_reports
-#: model:account.report,name:l10n_vn_reports.tax_report
-msgid "Sales/Purchase Tax Report"
-msgstr "Bảng kê hoá đơn mua vào/bán ra"
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_tax_id
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_tax_id
-msgid "Tax ID"
-msgstr "MST"
 
 #. module: l10n_vn_reports
 #: model:ir.model,name:l10n_vn_reports.model_l10n_vn_purchase_tax_report_handler
@@ -74,22 +29,6 @@ msgstr "MST"
 #: model:ir.model,name:l10n_vn_reports.model_l10n_vn_tax_report_handler
 msgid "Taxes Custom Handler"
 msgstr "Người xử lý tuỳ chỉnh thuế"
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_untaxed_amount
-msgid "Untaxed purchase of goods and services"
-msgstr "Doanh số mua chưa có thuế"
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_untaxed_amount
-msgid "Untaxed sales of goods and services"
-msgstr "Doanh thu chưa có thuế GTGT"
-
-#. module: l10n_vn_reports
-#: model:account.report.column,name:l10n_vn_reports.purchase_tax_report_amount_tax
-#: model:account.report.column,name:l10n_vn_reports.sales_tax_report_amount_tax
-msgid "VAT Amount"
-msgstr "Thuế GTGT"
 
 #. module: l10n_vn_reports
 #. odoo-python

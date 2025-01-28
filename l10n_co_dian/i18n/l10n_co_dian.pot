@@ -387,16 +387,6 @@ msgid "DIAN 2.1: Support Documents"
 msgstr ""
 
 #. module: l10n_co_dian
-#: model:account.journal,name:l10n_co_dian.invoice_journal
-msgid "DIAN Customer Invoices"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model:account.journal,name:l10n_co_dian.debit_note_journal
-msgid "DIAN Debit Notes"
-msgstr ""
-
-#. module: l10n_co_dian
 #. odoo-python
 #: code:addons/l10n_co_dian/models/l10n_co_dian_operation_mode.py:0
 msgid "DIAN Operation Mode"
@@ -406,11 +396,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_co_dian.field_res_company__l10n_co_dian_operation_mode_ids
 #: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__l10n_co_dian_operation_mode_ids
 msgid "DIAN Operation Modes"
-msgstr ""
-
-#. module: l10n_co_dian
-#: model:account.journal,name:l10n_co_dian.support_document_journal
-msgid "DIAN Support Documents"
 msgstr ""
 
 #. module: l10n_co_dian

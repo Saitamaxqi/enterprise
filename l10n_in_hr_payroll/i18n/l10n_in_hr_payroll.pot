@@ -330,11 +330,6 @@ msgid "April"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_arrears
-msgid "Arrears"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model_terms:hr.salary.rule,note:l10n_in_hr_payroll.hr_payslip_rule_tds
 msgid ""
 "As per income tax rules, all payment which are taxable in nature should be "
@@ -343,16 +338,6 @@ msgid ""
 " employee’s saving/investment declaration at the start of year. If "
 "investments for tax saving is not done, large amount may be deducted in last"
 " few months."
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_assig_salary
-msgid "Assignment of Salary"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_attach_salary
-msgid "Attachment of Salary"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -377,16 +362,6 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_salary_statement
 msgid "Basic Salary"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_bonus
-msgid "Bonus"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_journals
-msgid "Book and Periodicals Allowance (BNP)"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -423,11 +398,6 @@ msgid "Cancel"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_car
-msgid "Car Expenses Reimbursement"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,help:l10n_in_hr_payroll.field_hr_contract__l10n_in_provident_fund
 msgid "Check this box if you contribute for PF"
 msgstr ""
@@ -449,33 +419,8 @@ msgid "Cheque Number"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_child1
-msgid "Child Education Allowance"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_child2
-msgid "Child Hostel Allowance"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_employee__l10n_in_residing_child_hostel
 msgid "Child Residing in hostel"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_metrocity
-msgid "City Allowance for Metro city"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_nonmetrocity
-msgid "City Allowance for Non Metro city"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_city1
-msgid "City Compensatory Allowance"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -631,31 +576,6 @@ msgid "Deduction"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_cgti
-msgid "Deduction Towards Company Provided Group Term Insurance"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_cmt
-msgid "Deduction Towards Company Provided Medical Insurance"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_food_coupon_ded
-msgid "Deduction Towards Food Coupons"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_dla
-msgid "Deduction Towards Leave Availed"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_cpt
-msgid "Deduction for Company Provided Transport"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,help:l10n_in_hr_payroll.field_hr_contract__l10n_in_esic_amount
 msgid "Deduction towards company provided ESIC Amount"
 msgstr ""
@@ -714,7 +634,6 @@ msgid "Download the XLSX details file:<br/>"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_driver
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_driver_salay
 msgid "Driver Salary"
 msgstr ""
@@ -847,46 +766,11 @@ msgid "Employee can claim deduction even of employer's contribution to NPS."
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_lwf_employee
-msgid "Employee's Deduction Towards State Labour Welfare Fund"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_enps
-msgid "Employee's NPS Contribution"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_epf
-msgid "Employee's PF Contribution"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__employee_ids
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__employee_ids
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
 msgid "Employees"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.payroll.dashboard.warning,name:l10n_in_hr_payroll.hr_payroll_dashboard_warning_incoming_probation
-msgid "Employees Probation ends within a week"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.payroll.dashboard.warning,name:l10n_in_hr_payroll.hr_payroll_dashboard_warning_missing_esic
-msgid "Employees Without ESIC Number"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.payroll.dashboard.warning,name:l10n_in_hr_payroll.hr_payroll_dashboard_warning_missing_pan
-msgid "Employees Without PAN Number"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.payroll.dashboard.warning,name:l10n_in_hr_payroll.hr_payroll_dashboard_warning_missing_uan
-msgid "Employees Without UAN Number"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -904,28 +788,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_lwf_employer
-msgid "Employer's Deduction Towards State Labour Welfare Fund "
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_ernps
-msgid "Employer's NPS Contribution"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_alw_erpf
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_erpf
-msgid "Employer's PF Contribution"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_employer_alw_esic
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_employer_esics
-msgid "Employer's State Insurance Corporation"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__date_to
 msgid "End Date"
 msgstr ""
@@ -934,11 +796,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_in_hr_payroll/models/hr_contract.py:0
 msgid "End date of %(name)s's contract is today."
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_expenses_reimbursement
-msgid "Expenses Reimbursement"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -982,11 +839,6 @@ msgid "February"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_food_coupon
-msgid "Food Allowance"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice
 msgid "For"
 msgstr ""
@@ -1017,12 +869,6 @@ msgid "Generation Complete"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_special
-msgid "Grade/Special/Management/Supplementary Allowance"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_gratuity
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_gratuity
 msgid "Gratuity"
 msgstr ""
@@ -1067,12 +913,6 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 msgid "Hours"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_houserentallowancemetro_nonmetro
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_hra
-msgid "House Rent Allowance"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1262,15 +1102,8 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_leave
-#: model:hr.salary.rule.category,name:l10n_in_hr_payroll.LEAVE
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_leave_allowance
 msgid "Leave Allowance"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_lta
-msgid "Leave Travel Allowance"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1311,16 +1144,6 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_medical_insurance
 msgid "Medical Insurance"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_medical
-msgid "Medical Reimbursement"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_internet
-msgid "Mobile and Internet Expense"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1399,11 +1222,6 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 msgid "Only)"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_ode
-msgid "Other Deduction from Employer"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1487,12 +1305,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_p_bonus
-#: model:hr.salary.rule.category,name:l10n_in_hr_payroll.PBS
-msgid "Performance Bonus"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__period_has_payslips
 msgid "Period Has Payslips"
 msgstr ""
@@ -1518,34 +1330,8 @@ msgid "Probation"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_prof_develope
-msgid "Professional Development Allowance"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_line_worker_professional_tax
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_pt
-msgid "Professional Tax"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_provident_fund
 msgid "Provident Fund"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_pf
-msgid "Provident fund"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_pf_with_pf
-msgid "Provident fund - Employee"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_pfe_with_pf
-msgid "Provident fund - Employer"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1558,11 +1344,6 @@ msgstr ""
 msgid ""
 "Reduces tax liability for resident individuals with income up to ₹7 lakh "
 "(New Regime)"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_expense
-msgid "Refund Expenses"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1681,21 +1462,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_worker_special
-msgid "Special"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule.category,name:l10n_in_hr_payroll.SPA
-msgid "Special Allowance"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_std
-msgid "Standard Allowance"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__standard_deduction
 msgid "Standard Deduction"
 msgstr ""
@@ -1712,12 +1478,6 @@ msgid "Statutory Compliance"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.payroll.structure,payslip_name:l10n_in_hr_payroll.hr_payroll_structure_in_stipend
-msgid "Stipend"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_spl
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_supplementary_allowance
 msgid "Supplementary Allowance"
 msgstr ""
@@ -1756,11 +1516,6 @@ msgid "TOTAL REMITTED"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_tds
-msgid "Tax Deducted at Source"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__tax_on_taxable_income
 msgid "Tax on Taxable Income"
 msgstr ""
@@ -1778,11 +1533,6 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:hr.job,name:l10n_in_hr_payroll.l10n_in_job_intern
 msgid "Technical Support & Investigation Intern"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_telephone
-msgid "Telephone Reimbursement"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1911,18 +1661,8 @@ msgid "Total net payable"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_worker_trans_allownce
-msgid "Transport/Conveyance Allownace"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_employee__l10n_in_uan
 msgid "UAN"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_uniform_senior
-msgid "Uniform/Dress Allowance for Senior Executive"
 msgstr ""
 
 #. module: l10n_in_hr_payroll
@@ -1957,11 +1697,6 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_contract__l10n_in_voluntary_provident_fund
 msgid "Voluntary Provident Fund (%)"
-msgstr ""
-
-#. module: l10n_in_hr_payroll
-#: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payslip_rule_vpf
-msgid "Voluntary Provident Fund Contribution"
 msgstr ""
 
 #. module: l10n_in_hr_payroll

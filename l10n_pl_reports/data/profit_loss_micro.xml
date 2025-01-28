@@ -2,6 +2,7 @@
 <odoo>
     <record id="l10n_pl_micro_pl" model="account.report">
         <field name="name">Profit and loss - Micro</field>
+        <field name="name@pl">Rachunek zysków i strat - Mikro</field>
         <field name="root_report_id" ref="account_reports.profit_and_loss"/>
         <field name="country_id" ref="base.pl"/>
         <field name="filter_analytic_groupby" eval="True"/>
@@ -12,12 +13,14 @@
         <field name="column_ids">
             <record id="l10n_pl_micro_pl_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@pl">Saldo</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="l10n_pl_micro_pl_a" model="account.report.line">
                 <field name="name">A. Income from basic operating activities and associated, including variation in products</field>
+                <field name="name@pl">A. Przychody podstawowej działalności operacyjnej i zrównane z nimi, w tym zmiana stanu produktów</field>
                 <field name="code">pl_micro_pl_a</field>
                 <field name="groupby">account_id</field>
                 <field name="foldable" eval="True"/>
@@ -26,6 +29,7 @@
             </record>
             <record id="l10n_pl_micro_pl_b" model="account.report.line">
                 <field name="name">B. Main operating expenses</field>
+                <field name="name@pl">B. Koszty podstawowej działalności operacyjnej</field>
                 <field name="code">pl_micro_pl_b</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -39,6 +43,7 @@
                 <field name="children_ids">
                     <record id="l10n_pl_micro_pl_b_1" model="account.report.line">
                         <field name="name">I. Depreciation</field>
+                        <field name="name@pl">I. Amortyzacja</field>
                         <field name="code">pl_micro_pl_b_1</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -54,6 +59,7 @@
                     </record>
                     <record id="l10n_pl_micro_pl_b_2" model="account.report.line">
                         <field name="name">II. Consumption of materials and energy</field>
+                        <field name="name@pl">II. Zużycie materiałów i energii</field>
                         <field name="code">pl_micro_pl_b_2</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -69,6 +75,7 @@
                     </record>
                     <record id="l10n_pl_micro_pl_b_3" model="account.report.line">
                         <field name="name">III. Wages, social security and other benefits</field>
+                        <field name="name@pl">III. Wynagrodzenia, ubezpieczenia społeczne i inne świadczenia</field>
                         <field name="code">pl_micro_pl_b_3</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -84,6 +91,7 @@
                     </record>
                     <record id="l10n_pl_micro_pl_b_4" model="account.report.line">
                         <field name="name">IV. Other costs</field>
+                        <field name="name@pl">IV. Pozostałe koszty</field>
                         <field name="code">pl_micro_pl_b_4</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -101,6 +109,7 @@
             </record>
             <record id="l10n_pl_micro_pl_c" model="account.report.line">
                 <field name="name">C. Other income and gains, including revaluation of assets</field>
+                <field name="name@pl">C. Pozostałe przychody i zyski, w tym aktualizacja wartości aktywów</field>
                 <field name="code">pl_micro_pl_c</field>
                 <field name="groupby">account_id</field>
                 <field name="foldable" eval="True"/>
@@ -109,6 +118,7 @@
             </record>
             <record id="l10n_pl_micro_pl_d" model="account.report.line">
                 <field name="name">D. Other costs and losses, including revaluation of assets</field>
+                <field name="name@pl">D. Pozostałe koszty i straty, w tym aktualizacja wartości aktywów</field>
                 <field name="code">pl_micro_pl_d</field>
                 <field name="groupby">account_id</field>
                 <field name="foldable" eval="True"/>
@@ -125,6 +135,7 @@
             </record>
             <record id="l10n_pl_micro_pl_e" model="account.report.line">
                 <field name="name">E. Income tax</field>
+                <field name="name@pl">E. Podatek dochodowy</field>
                 <field name="code">pl_micro_pl_e</field>
                 <field name="groupby">account_id</field>
                 <field name="foldable" eval="True"/>
@@ -141,6 +152,7 @@
             </record>
             <record id="l10n_pl_micro_pl_f" model="account.report.line">
                 <field name="name">F. Net profit/loss (A-B+C-D-E) (for micro-entities referred to in Article 3(1a)(1), (3) and (4) and (1b) of the Act)</field>
+                <field name="name@pl">F. Zysk/strata netto (A−B+C−D−E) (dla jednostek mikro, o których mowa w art. 3 ust. 1a pkt 1, 3 i 4 oraz ust. 1b ustawy)</field>
                 <field name="code">pl_micro_pl_f</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -153,6 +165,7 @@
             </record>
             <record id="l10n_pl_micro_pl_g" model="account.report.line">
                 <field name="name">G. Total net financial result (A-B+C-D-E), including: (for micro entities referred to in Article 3, paragraph 1a, item 2 of the Act).</field>
+                <field name="name@pl">G. Wynik finansowy netto ogółem (A−B+C−D−E) (dla jednostek mikro, o których mowa w art. 3 ust. 1a pkt 2 ustawy).</field>
                 <field name="code">pl_micro_pl_g</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -165,6 +178,7 @@
                 <field name="children_ids">
                     <record id="l10n_pl_micro_pl_g_1" model="account.report.line">
                         <field name="name">I. Excess of revenue over costs (positive value)</field>
+                        <field name="name@pl">I. Nadwyżka przychodów nad kosztami (wartość dodatnia)</field>
                         <field name="code">pl_micro_pl_g_1</field>
                         <field name="expression_ids">
                             <record id="l10n_pl_micro_pl_g_1_balance" model="account.report.expression">
@@ -177,6 +191,7 @@
                     </record>
                     <record id="l10n_pl_micro_pl_g_2" model="account.report.line">
                         <field name="name">II. Excess of costs over revenue (negative value)</field>
+                        <field name="name@pl">II. Nadwyżka kosztów nad przychodami (wartość ujemna)</field>
                         <field name="code">pl_micro_pl_g_2</field>
                         <field name="expression_ids">
                             <record id="l10n_pl_micro_pl_g_2_balance" model="account.report.expression">

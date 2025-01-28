@@ -53,11 +53,6 @@ msgstr ""
 "relacionados a comprobantes que tienen IVA"
 
 #. module: l10n_ar_reports
-#: model:account.report,name:l10n_ar_reports.l10n_ar_vat_book_report
-msgid "Argentinean VAT book"
-msgstr "Libro de IVA argentino"
-
-#. module: l10n_ar_reports
 #: model:ir.model,name:l10n_ar_reports.model_l10n_ar_tax_report_handler
 msgid "Argentinian Report Custom Handler"
 msgstr "Gestor personalizado de reportes argentinos"
@@ -73,7 +68,6 @@ msgstr ""
 "Incluir asientos no registrados e intente de nuevo"
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_city_tax
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__city_tax
 msgid "City Tax"
 msgstr "Municipales"
@@ -127,7 +121,6 @@ msgid "Customer Invoice"
 msgstr "Factura de cliente"
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_invoice_date
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__date
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Date"
@@ -239,20 +232,10 @@ msgid "Move Type"
 msgstr "Tipo de movimiento"
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_partner_name
-msgid "Name"
-msgstr "Nombre"
-
-#. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 msgid "Natural Person VAT"
 msgstr "CUIT de persona física"
-
-#. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_not_taxed
-msgid "Not Taxed"
-msgstr "No gravado"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,help:l10n_ar_reports.field_account_ar_vat_line__not_taxed
@@ -285,7 +268,6 @@ msgid "Open journal entry"
 msgstr "Abrir asiento"
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_other_taxes
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__other_taxes
 msgid "Other Taxes"
 msgstr "Otros impuestos"
@@ -304,13 +286,11 @@ msgid "Partner Name"
 msgstr "Nombre de la empresa"
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_perc_earnings
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__perc_earnings
 msgid "Perc. Earnings"
 msgstr "Gcia. perc."
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_perc_iibb
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__perc_iibb
 msgid "Perc. IIBB"
 msgstr "Perc. IIBB"
@@ -370,11 +350,6 @@ msgid "Tax Type:"
 msgstr "Tipo de impuesto:"
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_taxed
-msgid "Taxed"
-msgstr "Gravado"
-
-#. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 msgid "The country '%(country)s' does not have a '%(vat_type)s' configured."
@@ -399,7 +374,6 @@ msgstr ""
 #. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_total
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__total
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_tree
 msgid "Total"
@@ -421,36 +395,26 @@ msgid "Used when generating the VAT Book Voucher TXT files."
 msgstr "Se utiliza para generar los archivos TXT del libro de IVA."
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_cuit
-msgid "VAT"
-msgstr "CUIT"
-
-#. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_vat_10
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__vat_10
 msgid "VAT 10,5%"
 msgstr "IVA 10,5%"
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_vat_25
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__vat_25
 msgid "VAT 2,5%"
 msgstr "IVA 2,5%"
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_vat_21
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__vat_21
 msgid "VAT 21%"
 msgstr "IVA 21%"
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_vat_27
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__vat_27
 msgid "VAT 27%"
 msgstr "IVA 27%"
 
 #. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_vat_5
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__vat_5
 msgid "VAT 5%"
 msgstr "IVA 5%"
@@ -460,11 +424,6 @@ msgstr "IVA 5%"
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 msgid "VAT Book (ZIP)"
 msgstr "Libro de IVA (ZIP)"
-
-#. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_vat_per
-msgid "VAT Perc"
-msgstr "Perc. IVA"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__vat_per
@@ -482,11 +441,6 @@ msgstr "Percepción de IVA"
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_form
 msgid "VAT Summary"
 msgstr "Resumen IVA"
-
-#. module: l10n_ar_reports
-#: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_afip_responsibility_type_name
-msgid "VAT cond."
-msgstr "Cond. IVA."
 
 #. module: l10n_ar_reports
 #: model:ir.model,name:l10n_ar_reports.model_account_ar_vat_line

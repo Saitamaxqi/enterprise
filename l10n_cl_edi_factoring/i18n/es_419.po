@@ -235,8 +235,8 @@ msgstr ""
 #: code:addons/l10n_cl_edi_factoring/wizard/l10n_cl_aec_gen.py:0
 msgid "Selected documents are in payment state or already paid: %s."
 msgstr ""
-"Algunode los documentos seleccionados se encuentran estado pagado o ya están "
-"pagados: %s."
+"Algunode los documentos seleccionados se encuentran estado pagado o ya están"
+" pagados: %s."
 
 #. module: l10n_cl_edi_factoring
 #. odoo-python
@@ -308,8 +308,9 @@ msgid ""
 "There is no counterpart account configured for factoring. Please go to the "
 "company settings and set a counterpart account"
 msgstr ""
-"No se ha definido una cuenta de contrapartida para factoring. Por favor vaya "
-"a las configuraciones de su compañía y establezca una cuenta de contrapartida"
+"No se ha definido una cuenta de contrapartida para factoring. Por favor vaya"
+" a las configuraciones de su compañía y establezca una cuenta de "
+"contrapartida"
 
 #. module: l10n_cl_edi_factoring
 #. odoo-python
@@ -438,22 +439,3 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_cl_edi_factoring.view_invoice_form
 msgid "⇒ Create AEC"
 msgstr "⇒ Crear AEC"
-
-#, fuzzy
-#~ msgid "AEC File"
-#~ msgstr "Archivo de Cesión (AEC)"
-
-#~ msgid "Factoring company"
-#~ msgstr "Empresa de Factoring"
-
-#, fuzzy
-#~ msgid "Latam Document Type"
-#~ msgstr "Tipo Documento (LA)"
-
-#~ msgid "No response trying to get a token"
-#~ msgstr "No hay respuesta tratando de obtener un token"
-
-#~ msgid ""
-#~ "Sending DTE to SII failed due to: \n"
-#~ " %s"
-#~ msgstr "El envío del DTE al SII falló debido a: %s"

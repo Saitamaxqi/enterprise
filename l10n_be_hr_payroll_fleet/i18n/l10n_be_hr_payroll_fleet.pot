@@ -49,11 +49,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_be_hr_payroll_fleet
-#: model:hr.salary.rule,name:l10n_be_hr_payroll_fleet.cp200_employees_salary_co2_fee
-msgid "Accounting: CO2 Fee (Employer)"
-msgstr ""
-
-#. module: l10n_be_hr_payroll_fleet
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_fleet.field_fleet_vehicle__atn
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_fleet.field_fleet_vehicle_model__default_atn
 msgid "BIK"
@@ -71,7 +66,6 @@ msgid "CO2 Emissions"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_fleet
-#: model:hr.salary.rule.category,name:l10n_be_hr_payroll_fleet.hr_salary_rule_category_co2_fee
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_fleet.field_fleet_vehicle__co2_fee
 msgid "CO2 Fee"
 msgstr ""
@@ -294,11 +288,6 @@ msgstr ""
 #. module: l10n_be_hr_payroll_fleet
 #: model:ir.model,name:l10n_be_hr_payroll_fleet.model_hr_payslip
 msgid "Pay Slip"
-msgstr ""
-
-#. module: l10n_be_hr_payroll_fleet
-#: model:hr.payroll.dashboard.warning,name:l10n_be_hr_payroll_fleet.hr_payroll_dashboard_warning_car_mismatch
-msgid "Payslips with car different than on employee's contract"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_fleet

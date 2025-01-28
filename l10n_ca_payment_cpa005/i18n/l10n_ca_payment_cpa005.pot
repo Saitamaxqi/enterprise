@@ -107,11 +107,6 @@ msgid "Canada"
 msgstr ""
 
 #. module: l10n_ca_payment_cpa005
-#: model:account.payment.method,name:l10n_ca_payment_cpa005.account_payment_method_cpa005
-msgid "Canadian EFT"
-msgstr ""
-
-#. module: l10n_ca_payment_cpa005
 #: model:ir.model,name:l10n_ca_payment_cpa005.model_l10n_ca_cpa005_transaction_code
 msgid ""
 "Canadian EFT transaction codes as defined in Payments Canada Standard 007"

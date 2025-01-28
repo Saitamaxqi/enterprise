@@ -2,6 +2,7 @@
 <odoo>
     <record id="l10n_gr_bs_accounting_report" model="account.report">
         <field name="name">Balance sheet (Model B.1.1)</field>
+        <field name="name@el_GR">Ισολογισμός (Υπόδειγμα Β.1.1)</field>
         <field name="root_report_id" ref="account_reports.balance_sheet"/>
         <field name="filter_period_comparison" eval="True"/>
         <field name="filter_unfold_all" eval="True"/>
@@ -10,17 +11,20 @@
         <field name="column_ids">
             <record id="l10n_gr_bs_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@el_GR">Υπόλοιπο</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="l10n_gr_bs_assets" model="account.report.line">
                 <field name="name">Assets</field>
+                <field name="name@el_GR">Περιουσιακά στοιχεία</field>
                 <field name="aggregation_formula">l10n_gr_non_current_assets.balance + l10n_gr_current_assets.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_gr_bs_non_current_assets" model="account.report.line">
                         <field name="name">Non-current Assets</field>
+                        <field name="name@el_GR">Μη κυκλοφορούντα περιουσιακά στοιχεία</field>
                         <field name="code">l10n_gr_non_current_assets</field>
                         <field name="aggregation_formula">
                             l10n_gr_tang_fixed.balance +
@@ -31,6 +35,7 @@
                         <field name="children_ids">
                             <record id="l10n_gr_bs_tangible_fixed_assets" model="account.report.line">
                                 <field name="name">Tangible Fixed Assets</field>
+                                <field name="name@el_GR">Ενσώματα πάγια περιουσιακά στοιχεία</field>
                                 <field name="code">l10n_gr_tang_fixed</field>
                                 <field name="aggregation_formula">
                                     l10n_gr_property.balance +
@@ -41,6 +46,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_gr_bs_tangible_fixed_assets_property" model="account.report.line">
                                         <field name="name">Property</field>
+                                        <field name="name@el_GR">Ακίνητα</field>
                                         <field name="code">l10n_gr_property</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -48,6 +54,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_tangible_fixed_assets_machinery" model="account.report.line">
                                         <field name="name">Machinery</field>
+                                        <field name="name@el_GR">Μηχανήματα</field>
                                         <field name="code">l10n_gr_machinery</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -55,6 +62,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_tangible_fixed_assets_other_equipment" model="account.report.line">
                                         <field name="name">Other equipment</field>
+                                        <field name="name@el_GR">Άλλος εξοπλισμός</field>
                                         <field name="code">l10n_gr_other_equipment</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -62,6 +70,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_tangible_fixed_assets_investment_property" model="account.report.line">
                                         <field name="name">Investment property</field>
+                                        <field name="name@el_GR">Επενδύσεις σε ακίνητα</field>
                                         <field name="code">l10n_gr_investment_property</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -69,6 +78,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_tangible_fixed_assets_biological_fixed" model="account.report.line">
                                         <field name="name">Biological fixed assets</field>
+                                        <field name="name@el_GR">Βιολογικά πάγια περιουσιακά στοιχεία</field>
                                         <field name="code">l10n_gr_biological_fixed</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -78,6 +88,7 @@
                             </record>
                             <record id="l10n_gr_bs_intangible_fixed_assets" model="account.report.line">
                                 <field name="name">Intangible fixed assets</field>
+                                <field name="name@el_GR">Άυλα πάγια περιουσιακά στοιχεία</field>
                                 <field name="code">l10n_gr_intang_fixed</field>
                                 <field name="aggregation_formula">
                                     l10n_gr_dev_exp.balance +
@@ -86,6 +97,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_gr_bs_intangible_fixed_assets_development" model="account.report.line">
                                         <field name="name">Development expenditure</field>
+                                        <field name="name@el_GR">Δαπάνες ανάπτυξης</field>
                                         <field name="code">l10n_gr_dev_exp</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -93,6 +105,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_intangible_fixed_assets_goodwill" model="account.report.line">
                                         <field name="name">Goodwill</field>
+                                        <field name="name@el_GR">Καλή θέληση</field>
                                         <field name="code">l10n_gr_goodwill</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -100,6 +113,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_intangible_fixed_assets_other_intangibles" model="account.report.line">
                                         <field name="name">Other intangibles</field>
+                                        <field name="name@el_GR">Άλλα άυλα περιουσιακά στοιχεία</field>
                                         <field name="code">l10n_gr_other_intangibles</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -109,6 +123,7 @@
                             </record>
                             <record id="l10n_gr_bs_assets_advances" model="account.report.line">
                                 <field name="name">Advances - non-current assets under development</field>
+                                <field name="name@el_GR">Προκαταβολές - μη κυκλοφορούντα περιουσιακά στοιχεία υπό ανάπτυξη</field>
                                 <field name="code">l10n_gr_assets_advances</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -116,6 +131,7 @@
                             </record>
                             <record id="l10n_gr_bs_financial_assets" model="account.report.line">
                                 <field name="name">Financial assets</field>
+                                <field name="name@el_GR">Χρηματοοικονομικά περιουσιακά στοιχεία</field>
                                 <field name="code">l10n_gr_financial</field>
                                 <field name="aggregation_formula">
                                     l10n_gr_loans.balance +
@@ -126,6 +142,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_gr_bs_financial_assets_assets_loans" model="account.report.line">
                                         <field name="name">Loans and receivables</field>
+                                        <field name="name@el_GR">Δάνεια και απαιτήσεις</field>
                                         <field name="code">l10n_gr_loans</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -137,6 +154,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_financial_assets_assets_debt" model="account.report.line">
                                         <field name="name">Debt instruments</field>
+                                        <field name="name@el_GR">Χρεωστικοί τίτλοι</field>
                                         <field name="code">l10n_gr_debt</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -144,6 +162,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_financial_assets_assets_investments" model="account.report.line">
                                         <field name="name">Investments in subsidiaries, associates and joint ventures</field>
+                                        <field name="name@el_GR">Επενδύσεις σε θυγατρικές, συγγενείς και κοινοπραξίες</field>
                                         <field name="code">l10n_gr_investments</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -151,6 +170,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_financial_assets_assets_other_equity_instruments" model="account.report.line">
                                         <field name="name">Other equity Instruments</field>
+                                        <field name="name@el_GR">Άλλα συμμετοχικά μέσα</field>
                                         <field name="code">l10n_gr_other_equity_instruments</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -158,6 +178,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_financial_assets_assets_other_financial" model="account.report.line">
                                         <field name="name">Other non-current financial assets</field>
+                                        <field name="name@el_GR">Άλλα μακροπρόθεσμα χρηματοοικονομικά περιουσιακά στοιχεία</field>
                                         <field name="code">l10n_gr_other_financial_non_current</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -167,6 +188,7 @@
                             </record>
                             <record id="l10n_gr_bs_financial_assets_assets_deferred_tax" model="account.report.line">
                                 <field name="name">Deferred tax asset</field>
+                                <field name="name@el_GR">Αναβαλλόμενη φορολογική απαίτηση</field>
                                 <field name="code">l10n_gr_deferred_tax_asset</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
@@ -187,11 +209,13 @@
                     </record>
                     <record id="l10n_gr_bs_current_assets" model="account.report.line">
                         <field name="name">Current assets</field>
+                        <field name="name@el_GR">Κυκλοφορούντα περιουσιακά στοιχεία</field>
                         <field name="code">l10n_gr_current_assets</field>
                         <field name="aggregation_formula">l10n_gr_inv.balance + l10n_gr_prepayments.balance</field>
                         <field name="children_ids">
                             <record id="l10n_gr_bs_current_assets_inventories" model="account.report.line">
                                 <field name="name">Inventories</field>
+                                <field name="name@el_GR">Αποθέματα</field>
                                 <field name="code">l10n_gr_inv</field>
                                 <field name="aggregation_formula">
                                     l10n_gr_work.balance +
@@ -203,6 +227,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_gr_bs_inventories_work" model="account.report.line">
                                         <field name="name">Finished products and work in progress</field>
+                                        <field name="name@el_GR">Τελειωμένα προϊόντα και εργασίες σε εξέλιξη</field>
                                         <field name="code">l10n_gr_work</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -210,6 +235,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_inventories_merch" model="account.report.line">
                                         <field name="name">Merchandise</field>
+                                        <field name="name@el_GR">Εμπορεύματα</field>
                                         <field name="code">l10n_gr_merch</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -217,6 +243,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_inventories_raw" model="account.report.line">
                                         <field name="name">Raw materials</field>
+                                        <field name="name@el_GR">Πρώτες ύλες</field>
                                         <field name="code">l10n_gr_raw</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -224,6 +251,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_inventories_biological_current" model="account.report.line">
                                         <field name="name">Biological current assets</field>
+                                        <field name="name@el_GR">Βιολογικά κυκλοφορούντα περιουσιακά στοιχεία</field>
                                         <field name="code">l10n_gr_biological_current</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -231,6 +259,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_inventories_advances_current" model="account.report.line">
                                         <field name="name">Advances for inventory</field>
+                                        <field name="name@el_GR">Προκαταβολές για απογραφή</field>
                                         <field name="code">l10n_gr_advances_current</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -238,6 +267,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_inventories_other_inv" model="account.report.line">
                                         <field name="name">Other inventory</field>
+                                        <field name="name@el_GR">Λοιπά αποθέματα</field>
                                         <field name="code">l10n_gr_other_inv</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -247,6 +277,7 @@
                             </record>
                             <record id="l10n_gr_bs_current_assets_prepayments" model="account.report.line">
                                 <field name="name">Financial assets and prepayments</field>
+                                <field name="name@el_GR">Χρηματοοικονομικά στοιχεία ενεργητικού και προκαταβολές</field>
                                 <field name="code">l10n_gr_prepayments</field>
                                 <field name="aggregation_formula">
                                     l10n_gr_trade_receivables.balance +
@@ -258,6 +289,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_gr_bs_prepayments_trade_receivables" model="account.report.line">
                                         <field name="name">Trade receivables</field>
+                                        <field name="name@el_GR">Εμπορικές απαιτήσεις</field>
                                         <field name="code">l10n_gr_trade_receivables</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -267,6 +299,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_prepayments_accrued_revenue" model="account.report.line">
                                         <field name="name">Accrued revenue</field>
+                                        <field name="name@el_GR">Δεδουλευμένα έσοδα</field>
                                         <field name="code">l10n_gr_accrued_revenue</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -274,6 +307,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_prepayments_other_receivables" model="account.report.line">
                                         <field name="name">Other receivables</field>
+                                        <field name="name@el_GR">Λοιπές απαιτήσεις</field>
                                         <field name="code">l10n_gr_other_receivables</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -283,6 +317,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_prepayments_other_financial_current" model="account.report.line">
                                         <field name="name">Other current financial assets</field>
+                                        <field name="name@el_GR">Λοιπά κυκλοφορούντα χρηματοοικονομικά περιουσιακά στοιχεία</field>
                                         <field name="code">l10n_gr_other_financial_current</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -290,6 +325,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_prepayments_prepaid" model="account.report.line">
                                         <field name="name">Prepaid expenses</field>
+                                        <field name="name@el_GR">Προπληρωμένα έξοδα</field>
                                         <field name="code">l10n_gr_prepaid</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -297,6 +333,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_prepayments_cash" model="account.report.line">
                                         <field name="name">Cash and cash equivalents</field>
+                                        <field name="name@el_GR">Ταμειακά διαθέσιμα και ισοδύναμα</field>
                                         <field name="code">l10n_gr_cash</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -310,11 +347,13 @@
             </record>
             <record id="l10n_gr_bs_equity_provisions_liabilities" model="account.report.line">
                 <field name="name">Equity, provisions, and liabilities</field>
+                <field name="name@el_GR">Ίδια κεφάλαια, προβλέψεις και υποχρεώσεις</field>
                 <field name="aggregation_formula"> l10n_gr_equity.balance + l10n_gr_provisions.balance + l10n_gr_liabilities.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="l10n_gr_bs_equity" model="account.report.line">
                         <field name="name">Equity</field>
+                        <field name="name@el_GR">Μετοχικό κεφάλαιο</field>
                         <field name="code">l10n_gr_equity</field>
                         <field name="aggregation_formula">
                             l10n_gr_capital.balance +
@@ -324,6 +363,7 @@
                         <field name="children_ids">
                             <record id="l10n_gr_bs_equity_capital" model="account.report.line">
                                 <field name="name">Capital paid-up</field>
+                                <field name="name@el_GR">Καταβεβλημένο κεφάλαιο</field>
                                 <field name="code">l10n_gr_capital</field>
                                 <field name="aggregation_formula">l10n_gr_share_capital.balance +
                                     l10n_gr_share_premium.balance +
@@ -332,6 +372,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_gr_bs_capital_share" model="account.report.line">
                                         <field name="name">Share capital</field>
+                                        <field name="name@el_GR">Μετοχικό κεφάλαιο</field>
                                         <field name="code">l10n_gr_share_capital</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -339,6 +380,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_capital_share_premium" model="account.report.line">
                                         <field name="name">Share premium</field>
+                                        <field name="name@el_GR">Αποθεματικό υπέρ το άρτιο</field>
                                         <field name="code">l10n_gr_share_premium</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -346,6 +388,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_capital_owners" model="account.report.line">
                                         <field name="name">Owners' deposits</field>
+                                        <field name="name@el_GR">Καταθέσεις ιδιοκτητών</field>
                                         <field name="code">l10n_gr_owners</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -353,6 +396,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_capital_treasury" model="account.report.line">
                                         <field name="name">Treasury shares</field>
+                                        <field name="name@el_GR">Ίδιες μετοχές</field>
                                         <field name="code">l10n_gr_treasury</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -362,6 +406,7 @@
                             </record>
                             <record id="l10n_gr_bs_equity_differences" model="account.report.line">
                                 <field name="name">Differences in fair value</field>
+                                <field name="name@el_GR">Διαφορές στην εύλογη αξία</field>
                                 <field name="code">l10n_gr_differences_fair_value</field>
                                 <field name="aggregation_formula">
                                     l10n_gr_diff_tang_fixed.balance +
@@ -370,6 +415,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_gr_bs_differences_tang_fixed" model="account.report.line">
                                         <field name="name">Differences arising from tangible fixed assets</field>
+                                        <field name="name@el_GR">Διαφορές που προκύπτουν από ενσώματα πάγια περιουσιακά στοιχεία</field>
                                         <field name="code">l10n_gr_diff_tang_fixed</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -377,6 +423,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_differences_for_sale" model="account.report.line">
                                         <field name="name">Differences arising from available for sale</field>
+                                        <field name="name@el_GR">Διαφορές που προκύπτουν από διαθέσιμα προς πώληση</field>
                                         <field name="code">l10n_gr_diff_for_sale</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -384,6 +431,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_differences_cash_flow" model="account.report.line">
                                         <field name="name">Differences arising from cash flow hedging items</field>
+                                        <field name="name@el_GR">Διαφορές που προκύπτουν από στοιχεία αντιστάθμισης ταμειακών ροών</field>
                                         <field name="code">l10n_gr_diff_cash_flow</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -393,6 +441,7 @@
                             </record>
                             <record id="l10n_gr_bs_equity_reserves" model="account.report.line">
                                 <field name="name">Reserves and retained earnings</field>
+                                <field name="name@el_GR">Αποθεματικά και κέρδη εις νέον</field>
                                 <field name="code">l10n_gr_reserves</field>
                                 <field name="aggregation_formula">
                                     l10n_gr_statutory_res.balance +
@@ -402,6 +451,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_gr_bs_reserves_statutory" model="account.report.line">
                                         <field name="name">Statutory reserves</field>
+                                        <field name="name@el_GR">Υποχρεωτικά αποθεματικά</field>
                                         <field name="code">l10n_gr_statutory_res</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -409,6 +459,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_reserves_non_taxed" model="account.report.line">
                                         <field name="name">Non-taxed reserves</field>
+                                        <field name="name@el_GR">Μη φορολογημένα αποθεματικά</field>
                                         <field name="code">l10n_gr_non_taxed_res</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -416,6 +467,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_unallocated_curr_year" model="account.report.line">
                                         <field name="name">Current year unallocated earnings</field>
+                                        <field name="name@el_GR">Μη κατανεμημένα κέρδη του τρέχοντος έτους</field>
                                         <field name="code">l10n_gr_unallocated_curr_year</field>
                                         <field name="expression_ids">
                                             <record id="l10n_gr_bs_curr_year_earnings_balance" model="account.report.expression">
@@ -429,6 +481,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_retained_earnings" model="account.report.line">
                                         <field name="name">Retained earnings</field>
+                                        <field name="name@el_GR">Κέρδη εις νέον</field>
                                         <field name="code">l10n_gr_retained_earnings</field>
                                         <field name="expression_ids">
                                             <record id="l10n_gr_bs_retained_earnings_affected_earnings" model="account.report.expression">
@@ -457,6 +510,7 @@
                             </record>
                             <record id="l10n_gr_bs_reserves_exchange_diff" model="account.report.line">
                                 <field name="name">Exchange differences</field>
+                                <field name="name@el_GR">Διαφορές ανταλλαγής</field>
                                 <field name="code">l10n_gr_exchange_diff</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -466,11 +520,13 @@
                     </record>
                     <record id="l10n_gr_bs_provisions" model="account.report.line">
                         <field name="name">Provisions</field>
+                        <field name="name@el_GR">Διατάξεις</field>
                         <field name="code">l10n_gr_provisions</field>
                         <field name="aggregation_formula">l10n_gr_employee_prov.balance + l10n_gr_other_prov.balance</field>
                         <field name="children_ids">
                             <record id="l10n_gr_bs_provisions_employee" model="account.report.line">
                                 <field name="name">Provisions for employee benefits</field>
+                                <field name="name@el_GR">Προβλέψεις για παροχές σε εργαζομένους</field>
                                 <field name="code">l10n_gr_employee_prov</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -478,6 +534,7 @@
                             </record>
                             <record id="l10n_gr_bs_provisions_other" model="account.report.line">
                                 <field name="name">Other provisions</field>
+                                <field name="name@el_GR">Άλλες διατάξεις</field>
                                 <field name="code">l10n_gr_other_prov</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -487,11 +544,13 @@
                     </record>
                     <record id="l10n_gr_bs_liabilities" model="account.report.line">
                         <field name="name">Liabilities</field>
+                        <field name="name@el_GR">Υποχρεώσεις</field>
                         <field name="code">l10n_gr_liabilities</field>
                         <field name="aggregation_formula">l10n_gr_long_term_liabilities.balance + l10n_gr_short_term_liabilities.balance</field>
                         <field name="children_ids">
                             <record id="l10n_gr_bs_equity_long_term_liabilities" model="account.report.line">
                                 <field name="name">Long-term liabilities</field>
+                                <field name="name@el_GR">Μακροπρόθεσμες υποχρεώσεις</field>
                                 <field name="code">l10n_gr_long_term_liabilities</field>
                                 <field name="aggregation_formula">
                                     l10n_gr_long_term_bank_loans.balance +
@@ -501,6 +560,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_gr_bs_long_term_liabilities_loans" model="account.report.line">
                                         <field name="name">Long-term bank loans</field>
+                                        <field name="name@el_GR">Μακροπρόθεσμα τραπεζικά δάνεια</field>
                                         <field name="code">l10n_gr_long_term_bank_loans</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -508,6 +568,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_long_term_liabilities_other" model="account.report.line">
                                         <field name="name">Other long-term liabilities</field>
+                                        <field name="name@el_GR">Λοιπές μακροπρόθεσμες υποχρεώσεις</field>
                                         <field name="code">l10n_gr_other_long_term_liabilities</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -516,6 +577,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_long_term_liabilities_grants" model="account.report.line">
                                         <field name="name">Government grants</field>
+                                        <field name="name@el_GR">Κρατικές επιχορηγήσεις</field>
                                         <field name="code">l10n_gr_grants</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -523,6 +585,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_long_term_liabilities_deferred_tax" model="account.report.line">
                                         <field name="name">Deferred taxes liabilities</field>
+                                        <field name="name@el_GR">Υποχρεώσεις από αναβαλλόμενους φόρους</field>
                                         <field name="code">l10n_gr_deferred_tax_liab</field>
                                         <field name="foldable" eval="True"/>
                                         <field name="expression_ids">
@@ -543,6 +606,7 @@
                             </record>
                             <record id="l10n_gr_bs_equity_short_term_liabilities" model="account.report.line">
                                 <field name="name">Short-term liabilities</field>
+                                <field name="name@el_GR">Βραχυπρόθεσμες υποχρεώσεις</field>
                                 <field name="code">l10n_gr_short_term_liabilities</field>
                                 <field name="aggregation_formula">
                                     l10n_gr_bank_loans.balance +
@@ -557,6 +621,7 @@
                                 <field name="children_ids">
                                     <record id="l10n_gr_bs_short_term_liabilities_bank_loans" model="account.report.line">
                                         <field name="name">Short-term bank loans</field>
+                                        <field name="name@el_GR">Βραχυπρόθεσμα τραπεζικά δάνεια</field>
                                         <field name="code">l10n_gr_bank_loans</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -564,6 +629,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_short_term_liabilities_" model="account.report.line">
                                         <field name="name">Short-term part of long-term debts</field>
+                                        <field name="name@el_GR">Βραχυπρόθεσμο μέρος των μακροπρόθεσμων χρεών</field>
                                         <field name="code">l10n_gr_short_term_part_long_debt</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -571,6 +637,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_short_term_liabilities_trade_payable" model="account.report.line">
                                         <field name="name">Trade payable</field>
+                                        <field name="name@el_GR">Εμπορικές υποχρεώσεις</field>
                                         <field name="code">l10n_gr_trade_payable</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -578,6 +645,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_short_term_liabilities_income_tax" model="account.report.line">
                                         <field name="name">Income taxes</field>
+                                        <field name="name@el_GR">Φόροι εισοδήματος</field>
                                         <field name="code">l10n_gr_short_term_liabilities_income_tax</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -585,6 +653,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_short_term_liabilities_other_tax" model="account.report.line">
                                         <field name="name">Other taxes and levies</field>
+                                        <field name="name@el_GR">Άλλοι φόροι και εισφορές</field>
                                         <field name="code">l10n_gr_other_tax</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -592,6 +661,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_short_term_liabilities_social_security" model="account.report.line">
                                         <field name="name">Social security organizations</field>
+                                        <field name="name@el_GR">Οργανισμοί κοινωνικής ασφάλισης</field>
                                         <field name="code">l10n_gr_social_security</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -599,6 +669,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_short_term_liabilities_other" model="account.report.line">
                                         <field name="name">Other short-term liabilities</field>
+                                        <field name="name@el_GR">Λοιπές βραχυπρόθεσμες υποχρεώσεις</field>
                                         <field name="code">l10n_gr_other_short_term_liabilities</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -607,6 +678,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_short_term_liabilities_accrued_expenses" model="account.report.line">
                                         <field name="name">Accrued expenses</field>
+                                        <field name="name@el_GR">Δουλευμένα έξοδα</field>
                                         <field name="code">l10n_gr_accrued_expenses</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -614,6 +686,7 @@
                                     </record>
                                     <record id="l10n_gr_bs_short_term_liabilities_deferred_income" model="account.report.line">
                                         <field name="name">Deferred income</field>
+                                        <field name="name@el_GR">Έσοδα επόμενων χρήσεων</field>
                                         <field name="code">l10n_gr_deferred_income</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>

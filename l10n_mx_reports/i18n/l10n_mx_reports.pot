@@ -65,7 +65,6 @@ msgid "Contact"
 msgstr ""
 
 #. module: l10n_mx_reports
-#: model:account.report.column,name:l10n_mx_reports.diot_report_country
 #: model:ir.model,name:l10n_mx_reports.model_res_country
 msgid "Country"
 msgstr ""
@@ -152,7 +151,6 @@ msgid "Missing Debit or Credit balance account tag in database."
 msgstr ""
 
 #. module: l10n_mx_reports
-#: model:account.report.column,name:l10n_mx_reports.diot_report_partner_nationality
 #: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner__l10n_mx_nationality
 #: model:ir.model.fields,field_description:l10n_mx_reports.field_res_users__l10n_mx_nationality
 msgid "Nationality"
@@ -221,20 +219,9 @@ msgid "Trial Balance Custom Handler"
 msgstr ""
 
 #. module: l10n_mx_reports
-#: model:account.report.column,name:l10n_mx_reports.diot_operation_type
 #: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner__l10n_mx_type_of_operation
 #: model:ir.model.fields,field_description:l10n_mx_reports.field_res_users__l10n_mx_type_of_operation
 msgid "Type of Operation"
-msgstr ""
-
-#. module: l10n_mx_reports
-#: model:account.report.column,name:l10n_mx_reports.diot_third_party
-msgid "Type of Third"
-msgstr ""
-
-#. module: l10n_mx_reports
-#: model:account.report.column,name:l10n_mx_reports.diot_report_partner_vat_number
-msgid "VAT"
 msgstr ""
 
 #. module: l10n_mx_reports

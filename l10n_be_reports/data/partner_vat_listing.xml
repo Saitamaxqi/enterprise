@@ -2,6 +2,9 @@
 <odoo>
     <record id="l10n_be_partner_vat_listing" model="account.report">
         <field name="name">Partner VAT Listing</field>
+        <field name="name@nl">Jaarlijkse lijst van de btw-belastingplichtige afnemers</field>
+        <field name="name@fr">Liste annuelle des clients assujettis à la TVA</field>
+        <field name="name@de">Jährliche Kundenliste</field>
         <field name="filter_show_draft" eval="False"/>
         <field name="filter_period_comparison" eval="False"/>
         <field name="default_opening_date_filter">previous_year</field>
@@ -10,16 +13,25 @@
         <field name="column_ids">
             <record id="l10n_be_partner_vat_listing_vat_number" model="account.report.column">
                 <field name="name">VAT Number</field>
+                <field name="name@nl">Btw-nummer</field>
+                <field name="name@fr">Numéro de TVA intracommunautaire</field>
+                <field name="name@de">VAT Nummer</field>
                 <field name="expression_label">vat_number</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="l10n_be_partner_vat_listing_turnover" model="account.report.column">
                 <field name="name">Turnover</field>
+                <field name="name@nl">Omzet</field>
+                <field name="name@fr">Chiffre d'affaires</field>
+                <field name="name@de">Umsatz</field>
                 <field name="expression_label">turnover</field>
                 <field name="blank_if_zero" eval="False"/>
             </record>
             <record id="l10n_be_partner_vat_listing_vat_amount" model="account.report.column">
                 <field name="name">VAT Amount</field>
+                <field name="name@nl">Btw-bedrag</field>
+                <field name="name@fr">Montant de la TVA</field>
+                <field name="name@de">Mehrwertsteuerbetrag</field>
                 <field name="expression_label">vat_amount</field>
                 <field name="blank_if_zero" eval="False"/>
             </record>
@@ -27,6 +39,9 @@
         <field name="line_ids">
             <record id="l10n_be_partner_vat_listing_line" model="account.report.line">
                 <field name="name">Partner VAT Listing</field>
+                <field name="name@nl">Jaarlijkse lijst van de btw-belastingplichtige afnemers</field>
+                <field name="name@fr">Liste annuelle des clients assujettis à la TVA</field>
+                <field name="name@de">Jährliche Kundenliste</field>
                 <field name="groupby">partner_id</field>
                 <field name="expression_ids">
                     <record id="l10n_be_partner_vat_listing_line_vat_number" model="account.report.expression">

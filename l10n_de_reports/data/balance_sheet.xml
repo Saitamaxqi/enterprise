@@ -2,6 +2,7 @@
 <odoo auto_sequence="1">
     <record id="balance_sheet_l10n_de" model="account.report">
         <field name="name">Balance Sheet</field>
+        <field name="name@de">Bilanz</field>
         <field name="root_report_id" ref="account_reports.balance_sheet"/>
         <field name="filter_analytic_groupby" eval="True"/>
         <field name="filter_unfold_all" eval="True"/>
@@ -11,12 +12,14 @@
         <field name="column_ids">
             <record id="balance_sheet_l10n_de_column" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@de">Saldo</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="skr_asset_total" model="account.report.line">
                 <field name="name">Assets</field>
+                <field name="name@de">Aktivseite</field>
                 <field name="code">SKR_BS_ASSET_TOTAL</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -29,6 +32,7 @@
                 <field name="children_ids">
                     <record id="skr_bs_asset_a" model="account.report.line">
                         <field name="name">A. Fixed assets</field>
+                        <field name="name@de">A. Anlagevermögen</field>
                         <field name="code">SKR_BS_ASSET_A</field>
                         <field name="expression_ids">
                             <record id="skr_bs_asset_a_balance" model="account.report.expression">
@@ -40,6 +44,7 @@
                         <field name="children_ids">
                             <record id="skr_bs_asset_a_i" model="account.report.line">
                                 <field name="name">I. Intangible assets</field>
+                                <field name="name@de">I. Immaterielle Vermögensgegenstände</field>
                                 <field name="code">SKR_BS_ASSET_A1</field>
                                 <field name="expression_ids">
                                     <record id="skr_bs_asset_a_i_balance" model="account.report.expression">
@@ -51,6 +56,7 @@
                                 <field name="children_ids">
                                     <record id="skr_bs_asset_a_i_1" model="account.report.line">
                                         <field name="name">1. Self-generated industrial property rights and similar rights and assets</field>
+                                        <field name="name@de">1. Selbst geschaffene gewerbliche Schutzrechte und ähnliche Rechte und Werte</field>
                                         <field name="code">SKR_BS_ASSET_A11</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -65,6 +71,7 @@
                                     </record>
                                     <record id="skr_bs_asset_a_i_2" model="account.report.line">
                                         <field name="name">2. Concessions, licenses and similar rights and assets</field>
+                                        <field name="name@de">2. Konzessionen, Lizenzen und ähnliche Rechte und Werte</field>
                                         <field name="code">SKR_BS_ASSET_A12</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -79,6 +86,7 @@
                                     </record>
                                     <record id="skr_bs_asset_a_i_3" model="account.report.line">
                                         <field name="name">3. Goodwill</field>
+                                        <field name="name@de">3. Geschäfts- oder Firmenwert</field>
                                         <field name="code">SKR_BS_ASSET_A13</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -93,6 +101,7 @@
                                     </record>
                                     <record id="skr_bs_asset_a_i_4" model="account.report.line">
                                         <field name="name">4. Prepayments on intangible assets</field>
+                                        <field name="name@de">4. geleistete Anzahlungen</field>
                                         <field name="code">SKR_BS_ASSET_A14</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -109,6 +118,7 @@
                             </record>
                             <record id="skr_bs_asset_a_ii" model="account.report.line">
                                 <field name="name">II. Tangible assets</field>
+                                <field name="name@de">II. Sachanlagen</field>
                                 <field name="code">SKR_BS_ASSET_A2</field>
                                 <field name="expression_ids">
                                     <record id="skr_bs_asset_a_ii_balance" model="account.report.expression">
@@ -120,6 +130,7 @@
                                 <field name="children_ids">
                                     <record id="skr_bs_asset_a_ii_1" model="account.report.line">
                                         <field name="name">1. Land, land rights and buildings</field>
+                                        <field name="name@de">1. Grundstücke. grundstücksgleiche Rechte und Bauten</field>
                                         <field name="code">SKR_BS_ASSET_A21</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -134,6 +145,7 @@
                                     </record>
                                     <record id="skr_bs_asset_a_ii_2" model="account.report.line">
                                         <field name="name">2. Technical equipment and machines</field>
+                                        <field name="name@de">2. Technische  Anlagen und Maschinen</field>
                                         <field name="code">SKR_BS_ASSET_A22</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -148,6 +160,7 @@
                                     </record>
                                     <record id="skr_bs_asset_a_ii_3" model="account.report.line">
                                         <field name="name">3. Other equipment, factory and office equipment</field>
+                                        <field name="name@de">3. Andere Anlagen. Betriebs- und Geschäftsausstattung</field>
                                         <field name="code">SKR_BS_ASSET_A23</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -162,6 +175,7 @@
                                     </record>
                                     <record id="skr_bs_asset_a_ii_4" model="account.report.line">
                                         <field name="name">4. Prepayments on intangible assets and construction in progress</field>
+                                        <field name="name@de">4. Geleistete Anzahlungen und Anlagen im Bau</field>
                                         <field name="code">SKR_BS_ASSET_A24</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -178,6 +192,7 @@
                             </record>
                             <record id="skr_bs_asset_a_iii" model="account.report.line">
                                 <field name="name">III. Financial assets</field>
+                                <field name="name@de">III. Finanzanlagen</field>
                                 <field name="code">SKR_BS_ASSET_A3</field>
                                 <field name="expression_ids">
                                     <record id="skr_bs_asset_a_iii_balance" model="account.report.expression">
@@ -189,6 +204,7 @@
                                 <field name="children_ids">
                                     <record id="skr_bs_asset_a_iii_1" model="account.report.line">
                                         <field name="name">1. Shares in affiliated companies</field>
+                                        <field name="name@de">1. Anteile an verbundenen Unternehmen</field>
                                         <field name="code">SKR_BS_ASSET_A31</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -203,6 +219,7 @@
                                     </record>
                                     <record id="skr_bs_asset_a_iii_2" model="account.report.line">
                                         <field name="name">2. Loans to affiliated companies</field>
+                                        <field name="name@de">2. Ausleihungen an verbundene Unternehmen</field>
                                         <field name="code">SKR_BS_ASSET_A32</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -217,6 +234,7 @@
                                     </record>
                                     <record id="skr_bs_asset_a_iii_3" model="account.report.line">
                                         <field name="name">3. Participations</field>
+                                        <field name="name@de">3. Beteiligungen</field>
                                         <field name="code">SKR_BS_ASSET_A33</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -231,6 +249,7 @@
                                     </record>
                                     <record id="skr_bs_asset_a_iii_4" model="account.report.line">
                                         <field name="name">4. Loans to companies in which participations are held</field>
+                                        <field name="name@de">4. Ausleihungen an Unternehmen, mit denen ein Beteiligungsverhältnis besteht</field>
                                         <field name="code">SKR_BS_ASSET_A34</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -245,6 +264,7 @@
                                     </record>
                                     <record id="skr_bs_asset_a_iii_5" model="account.report.line">
                                         <field name="name">5. Long-term investments</field>
+                                        <field name="name@de">5. Wertpapiere des Anlagevermögens</field>
                                         <field name="code">SKR_BS_ASSET_A35</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -259,6 +279,7 @@
                                     </record>
                                     <record id="skr_bs_asset_a_iii_6" model="account.report.line">
                                         <field name="name">6. Other loans</field>
+                                        <field name="name@de">6. sonstige Ausleihungen</field>
                                         <field name="code">SKR_BS_ASSET_A36</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -277,6 +298,7 @@
                     </record>
                     <record id="skr_bs_asset_b" model="account.report.line">
                         <field name="name">B. Current assets</field>
+                        <field name="name@de">B. Umlaufvermögen</field>
                         <field name="code">SKR_BS_ASSET_B</field>
                         <field name="expression_ids">
                             <record id="skr_bs_asset_b_balance" model="account.report.expression">
@@ -288,6 +310,7 @@
                         <field name="children_ids">
                             <record id="skr_bs_asset_b_i" model="account.report.line">
                                 <field name="name">I. Inventories</field>
+                                <field name="name@de">I. Vorräte</field>
                                 <field name="code">SKR_BS_ASSET_B1</field>
                                 <field name="expression_ids">
                                     <record id="skr_bs_asset_b_i_balance" model="account.report.expression">
@@ -299,6 +322,7 @@
                                 <field name="children_ids">
                                     <record id="skr_bs_asset_b_i_1" model="account.report.line">
                                         <field name="name">1. Raw materials and supplies</field>
+                                        <field name="name@de">1. Roh-, Hilfs- und Betriebsstoffe</field>
                                         <field name="code">SKR_BS_ASSET_B11</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -313,6 +337,7 @@
                                     </record>
                                     <record id="skr_bs_asset_b_i_2" model="account.report.line">
                                         <field name="name">2. Work in progress</field>
+                                        <field name="name@de">2. Unfertige Erzeugnisse, unfertige Leistungen</field>
                                         <field name="code">SKR_BS_ASSET_B12</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -327,6 +352,7 @@
                                     </record>
                                     <record id="skr_bs_asset_b_i_3" model="account.report.line">
                                         <field name="name">3. Finished goods and merchandise</field>
+                                        <field name="name@de">3. Fertige Erzeugnisse und Waren</field>
                                         <field name="code">SKR_BS_ASSET_B13</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -341,6 +367,7 @@
                                     </record>
                                     <record id="skr_bs_asset_b_i_4" model="account.report.line">
                                         <field name="name">4. Prepayments on inventories</field>
+                                        <field name="name@de">4. Geleistete Anzahlungen</field>
                                         <field name="code">SKR_BS_ASSET_B14</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -357,6 +384,7 @@
                             </record>
                             <record id="skr_bs_asset_b_ii" model="account.report.line">
                                 <field name="name">II. Receivables and other assets</field>
+                                <field name="name@de">II. Forderungen und sonstige Vermögensgegenstände</field>
                                 <field name="code">SKR_BS_ASSET_B2</field>
                                 <field name="expression_ids">
                                     <record id="skr_bs_asset_b_ii_balance" model="account.report.expression">
@@ -368,6 +396,7 @@
                                 <field name="children_ids">
                                     <record id="skr_bs_asset_b_ii_1" model="account.report.line">
                                         <field name="name">1. Trade receivables</field>
+                                        <field name="name@de">1. Forderungen aus Lieferungen und Leistungen</field>
                                         <field name="code">SKR_BS_ASSET_B21</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -382,6 +411,7 @@
                                     </record>
                                     <record id="skr_bs_asset_b_ii_2" model="account.report.line">
                                         <field name="name">2. Receivables from affiliated companies</field>
+                                        <field name="name@de">2. Forderungen gegen verbundene Unternehmen</field>
                                         <field name="code">SKR_BS_ASSET_B22</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -396,6 +426,7 @@
                                     </record>
                                     <record id="skr_bs_asset_b_ii_3" model="account.report.line">
                                         <field name="name">3. Receivables from companies in which participations are held</field>
+                                        <field name="name@de">3. Forderungen gegen Unternehmen, mit denen ein Beteiligungsverhältnis besteht</field>
                                         <field name="code">SKR_BS_ASSET_B23</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -410,6 +441,7 @@
                                     </record>
                                     <record id="skr_bs_asset_b_ii_4" model="account.report.line">
                                         <field name="name">4. Other assets</field>
+                                        <field name="name@de">4. Sonstige Vermögensgegenstände</field>
                                         <field name="code">SKR_BS_ASSET_B24</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -426,6 +458,7 @@
                             </record>
                             <record id="skr_bs_asset_b_iii" model="account.report.line">
                                 <field name="name">III. Securities</field>
+                                <field name="name@de">III. Wertpapiere</field>
                                 <field name="code">SKR_BS_ASSET_B3</field>
                                 <field name="expression_ids">
                                     <record id="skr_bs_asset_b_iii_balance" model="account.report.expression">
@@ -437,6 +470,7 @@
                                 <field name="children_ids">
                                     <record id="skr_bs_asset_b_iii_1" model="account.report.line">
                                         <field name="name">1. Shares in affiliated companies</field>
+                                        <field name="name@de">1. Anteile an verbundenen Unternehmen</field>
                                         <field name="code">SKR_BS_ASSET_B31</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -451,6 +485,7 @@
                                     </record>
                                     <record id="skr_bs_asset_b_iii_2" model="account.report.line">
                                         <field name="name">2. other short term investments</field>
+                                        <field name="name@de">2. sonstige Wertpapiere</field>
                                         <field name="code">SKR_BS_ASSET_B32</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -467,6 +502,7 @@
                             </record>
                             <record id="skr_bs_asset_b_iv" model="account.report.line">
                                 <field name="name">IV. Cash on hand, Bundesbank balances, bank balances and checks</field>
+                                <field name="name@de">IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks</field>
                                 <field name="code">SKR_BS_ASSET_B4</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -483,6 +519,7 @@
                     </record>
                     <record id="skr_bs_asset_c" model="account.report.line">
                         <field name="name">C. Prepaid expenses</field>
+                        <field name="name@de">C. Rechnungsabgrenzungsposten</field>
                         <field name="code">SKR_BS_ASSET_C</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -497,6 +534,7 @@
                     </record>
                     <record id="skr_bs_asset_d" model="account.report.line">
                         <field name="name">D. Deferred tax assets</field>
+                        <field name="name@de">D. Aktive latente Steuern</field>
                         <field name="code">SKR_BS_ASSET_D</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -511,6 +549,7 @@
                     </record>
                     <record id="skr_bs_asset_e" model="account.report.line">
                         <field name="name">E. Difference on the assets side from the offsetting of assets</field>
+                        <field name="name@de">E. Aktiver Unterschiedsbetrag aus der Vermögensverrechnung</field>
                         <field name="code">SKR_BS_ASSET_E</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -527,6 +566,7 @@
             </record>
             <record id="skr_liabilities_total" model="account.report.line">
                 <field name="name">Equity and liabilities</field>
+                <field name="name@de">Passivseite</field>
                 <field name="code">SKR_BS_LIABILITIES_TOTAL</field>
                 <field name="hierarchy_level">0</field>
                 <field name="expression_ids">
@@ -539,6 +579,7 @@
                 <field name="children_ids">
                     <record id="skr_bs_liabilities_a" model="account.report.line">
                         <field name="name">A. Equity</field>
+                        <field name="name@de">A. Eigenkapital</field>
                         <field name="code">SKR_BS_LIABILITIES_A</field>
                         <field name="expression_ids">
                             <record id="skr_bs_liabilities_a_balance" model="account.report.expression">
@@ -550,6 +591,7 @@
                         <field name="children_ids">
                             <record id="skr_bs_liabilities_a_i" model="account.report.line">
                                 <field name="name">I. Subscribed capital</field>
+                                <field name="name@de">I. Gezeichnetes Kapital</field>
                                 <field name="code">SKR_BS_LIABILITIES_A1</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -564,6 +606,7 @@
                             </record>
                             <record id="skr_bs_liabilities_a_ii" model="account.report.line">
                                 <field name="name">II. Subscribed capital</field>
+                                <field name="name@de">II. Kapitalrücklage</field>
                                 <field name="code">SKR_BS_LIABILITIES_A2</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -578,6 +621,7 @@
                             </record>
                             <record id="skr_bs_liabilities_a_iii" model="account.report.line">
                                 <field name="name">III. Revenue reserves</field>
+                                <field name="name@de">III. Gewinnrücklagen</field>
                                 <field name="code">SKR_BS_LIABILITIES_A3</field>
                                 <field name="expression_ids">
                                     <record id="skr_bs_liabilities_a_iii_balance" model="account.report.expression">
@@ -589,6 +633,7 @@
                                 <field name="children_ids">
                                     <record id="skr_bs_liabilities_a_iii_1" model="account.report.line">
                                         <field name="name">1. Legal reserve</field>
+                                        <field name="name@de">1. Gesetzliche Rücklage</field>
                                         <field name="code">SKR_BS_LIABILITIES_A31</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -603,6 +648,7 @@
                                     </record>
                                     <record id="skr_bs_liabilities_a_iii_2" model="account.report.line">
                                         <field name="name">2. Reserve for own shares</field>
+                                        <field name="name@de">2. Rücklage für Anteile an einem herrschenden oder mehrheitlich beteiligten Unternehmen</field>
                                         <field name="code">SKR_BS_LIABILITIES_A32</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -617,6 +663,7 @@
                                     </record>
                                     <record id="skr_bs_liabilities_a_iii_3" model="account.report.line">
                                         <field name="name">3. Statutory reserves</field>
+                                        <field name="name@de">3. Satzungsmäßige Rücklagen</field>
                                         <field name="code">SKR_BS_LIABILITIES_A33</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -631,6 +678,7 @@
                                     </record>
                                     <record id="skr_bs_liabilities_a_iii_4" model="account.report.line">
                                         <field name="name">4. Other retained earnings</field>
+                                        <field name="name@de">4. Andere Gewinnrücklagen</field>
                                         <field name="code">SKR_BS_LIABILITIES_A34</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -647,6 +695,7 @@
                             </record>
                             <record id="skr_bs_liabilities_a_iv" model="account.report.line">
                                 <field name="name">IV. Retained earnings/accumulated losses brought forward</field>
+                                <field name="name@de">IV. Gewinnvortrag/Verlustvortrag</field>
                                 <field name="code">SKR_BS_LIABILITIES_A4</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -661,6 +710,7 @@
                             </record>
                             <record id="skr_bs_liabilities_a_v" model="account.report.line">
                                 <field name="name">V. Net income/loss for the year</field>
+                                <field name="name@de">V. Jahresüberschuß/Jahresfehlbetrag</field>
                                 <field name="code">SKR_BS_LIABILITIES_A5</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -677,6 +727,7 @@
                     </record>
                     <record id="skr_bs_liabilities_2023_b" model="account.report.line">
                         <field name="name">B. Liabilities</field>
+                        <field name="name@de">B. Rückstellungen</field>
                         <field name="code">SKR_BS_LIABILITIES_2023_B</field>
                         <field name="expression_ids">
                             <record id="skr_bs_liabilities_2023_b_balance" model="account.report.expression">
@@ -688,6 +739,7 @@
                         <field name="children_ids">
                             <record id="skr_bs_liabilities_2023_b_1" model="account.report.line">
                                 <field name="name">1. Accrued pension and similar obligations</field>
+                                <field name="name@de">1. Rückstellungen für Pensionen und ähnliche Verpflichtungen</field>
                                 <field name="code">SKR_BS_LIABILITIES_2023_B1</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -702,6 +754,7 @@
                             </record>
                             <record id="skr_bs_liabilities_2023_b_2" model="account.report.line">
                                 <field name="name">2. Tax accruals</field>
+                                <field name="name@de">2. Steuerrückstellungen</field>
                                 <field name="code">SKR_BS_LIABILITIES_2023_B2</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -716,6 +769,7 @@
                             </record>
                             <record id="skr_bs_liabilities_2023_b_3" model="account.report.line">
                                 <field name="name">3. Other accruals</field>
+                                <field name="name@de">3. Sonstige Rückstellungen</field>
                                 <field name="code">SKR_BS_LIABILITIES_2023_B3</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -732,6 +786,7 @@
                     </record>
                     <record id="skr_bs_liabilities_2023_c" model="account.report.line">
                         <field name="name">C. Liabilities</field>
+                        <field name="name@de">C. Verbindlichkeiten</field>
                         <field name="code">SKR_BS_LIABILITIES_2023_C</field>
                         <field name="expression_ids">
                             <record id="skr_bs_liabilities_2023_c_balance" model="account.report.expression">
@@ -743,6 +798,7 @@
                         <field name="children_ids">
                             <record id="skr_bs_liabilities_2023_c_1" model="account.report.line">
                                 <field name="name">1. Loans, of which convertible</field>
+                                <field name="name@de">1. Anleihen, davon konvertibeln</field>
                                 <field name="code">SKR_BS_LIABILITIES_2023_C1</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -757,6 +813,7 @@
                             </record>
                             <record id="skr_bs_liabilities_2023_c_2" model="account.report.line">
                                 <field name="name">2. Liabilities to banks</field>
+                                <field name="name@de">2. Verbindlichkeiten gegenüber Kreditinstituten</field>
                                 <field name="code">SKR_BS_LIABILITIES_2023_C2</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -771,6 +828,7 @@
                             </record>
                             <record id="skr_bs_liabilities_2023_c_3" model="account.report.line">
                                 <field name="name">3. Payments received on account of orders</field>
+                                <field name="name@de">3. Erhaltene Anzahlungen auf Bestellungen</field>
                                 <field name="code">SKR_BS_LIABILITIES_2023_C3</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -785,6 +843,7 @@
                             </record>
                             <record id="skr_bs_liabilities_2023_c_4" model="account.report.line">
                                 <field name="name">4. Trade payable</field>
+                                <field name="name@de">4. Verbindlichkeiten aus Lieferungen und Leistungen</field>
                                 <field name="code">SKR_BS_LIABILITIES_2023_C4</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -799,6 +858,7 @@
                             </record>
                             <record id="skr_bs_liabilities_2023_c_5" model="account.report.line">
                                 <field name="name">5. Liabilities on bills accepted and drawn</field>
+                                <field name="name@de">5. Verbindlichkeiten aus der Annahme gezogener Wechsel und der Ausstellung eigener Wechsel</field>
                                 <field name="code">SKR_BS_LIABILITIES_2023_C5</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -813,6 +873,7 @@
                             </record>
                             <record id="skr_bs_liabilities_2023_c_6" model="account.report.line">
                                 <field name="name">6. Payables to affiliated companies</field>
+                                <field name="name@de">6. Verbindlichkeiten gegenüber verbundenen Unternehmen</field>
                                 <field name="code">SKR_BS_LIABILITIES_2023_C6</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -827,6 +888,7 @@
                             </record>
                             <record id="skr_bs_liabilities_2023_c_7" model="account.report.line">
                                 <field name="name">7. Payables to companies in which participations are held</field>
+                                <field name="name@de">7. Verbindlichkeiten gegenüber Unternehmen, mit denen ein Beteiligungsverhältnis besteht</field>
                                 <field name="code">SKR_BS_LIABILITIES_2023_C7</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -841,6 +903,7 @@
                             </record>
                             <record id="skr_bs_liabilities_2023_c_8" model="account.report.line">
                                 <field name="name">8. Other liabilities, of which taxes, of which relating to social security and similar obligations</field>
+                                <field name="name@de">8. Sonstige Verbindlichkeiten, davon aus Steuern, davon im Rahmen der sozialen Sicherheit</field>
                                 <field name="code">SKR_BS_LIABILITIES_2023_C8</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -857,6 +920,7 @@
                     </record>
                     <record id="skr_bs_liabilities_2023_d" model="account.report.line">
                         <field name="name">D. Deferred income</field>
+                        <field name="name@de">D. Rechnungsabgrenzungsposten</field>
                         <field name="code">SKR_BS_LIABILITIES_2023_D</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -871,6 +935,7 @@
                     </record>
                     <record id="skr_bs_liabilities_2023_e" model="account.report.line">
                         <field name="name">E. Deferred tax liabilities</field>
+                        <field name="name@de">E. Passive latente Steuern</field>
                         <field name="code">SKR_BS_LIABILITIES_2023_E</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>
@@ -887,6 +952,7 @@
             </record>
             <record id="account_financial_report_de_off_sheet" model="account.report.line">
                 <field name="name">OFF BALANCE SHEET ACCOUNTS</field>
+                <field name="name@de">AUSSERBILANZIELLE KONTEN</field>
                 <field name="code">DE_OS</field>
                 <field name="groupby">account_id</field>
                 <field name="hide_if_zero" eval="1"/>
