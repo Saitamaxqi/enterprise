@@ -1,36 +1,29 @@
-import publicWidget from "@web/legacy/js/public/public_widget";
+import { Interaction } from "@web/public/interaction";
+import { registry } from "@web/core/registry";
+
 import { CreateTicketDialog } from "../components/create_ticket_dialog/create_ticket_dialog";
 
-publicWidget.registry.CreateTicket = publicWidget.Widget.extend({
-    selector: '.create_ticket_forum',
-    events: {
-        'click': '_onCreateTicket',
-    },
+export class CreateTicket extends Interaction {
+    static selector = ".create_ticket_forum";
+    dynamicContent = {
+        _root: {
+            "t-on-click": this.onCreateTicketClick,
+        },
+    };
 
-    /**
-     * @override
-    */
-    init() {
-        this._super(...arguments);
-        this.dialog = this.bindService("dialog");
-    },
+    setup() {
+        this.forumId = parseInt(this.el.dataset.forumId);
+        this.postId = parseInt(this.el.dataset.postId);
+    }
 
-    /**
-     * @override
-    */
-    start() {
-        this.forumId = this.$el.data('forumId');
-        this.postId = this.$el.data('postId');
-    },
-
-    //--------------------------------------------------------------------------
-    // Private
-    //--------------------------------------------------------------------------
-
-    _onCreateTicket() {
-        this.dialog.add(CreateTicketDialog, {
+    onCreateTicketClick() {
+        this.services.dialog.add(CreateTicketDialog, {
             forumId: this.forumId,
             postId: this.postId,
         });
-    },
-});
+    }
+}
+
+registry
+    .category("public.interactions")
+    .add("website_helpdesk_forum.create_ticket", CreateTicket);
