@@ -1,11 +1,15 @@
-from odoo import models, fields, _
-from odoo.addons.l10n_nl_reports.wizard.l10n_nl_reports_sbr_tax_report_wizard import SoapClientWrapper
-from datetime import timedelta
-from markupsafe import Markup
-from tempfile import NamedTemporaryFile
-from odoo.tools.zeep.exceptions import Fault
-from requests.exceptions import ConnectionError
 import base64
+from datetime import timedelta
+from tempfile import NamedTemporaryFile
+
+from markupsafe import Markup
+from requests.exceptions import ConnectionError
+
+from odoo import _, fields, models
+from odoo.addons.l10n_nl_reports.wizard.l10n_nl_reports_sbr_tax_report_wizard import (
+    SoapClientWrapper,
+)
+from odoo.tools.zeep.exceptions import Fault
 
 
 class L10n_Nl_ReportsSbrStatusService(models.Model):
@@ -29,13 +33,14 @@ class L10n_Nl_ReportsSbrStatusService(models.Model):
             f.flush()
 
             for process in ongoing_processes:
-                certificate = base64.b64decode(process.company_id.sudo().l10n_nl_reports_sbr_cert_id.pem_certificate)
-                private_key = base64.b64decode(process.company_id.sudo().l10n_nl_reports_sbr_cert_id.private_key_id.pem_key)
+                cert_sudo = process.company_id.l10n_nl_reports_sbr_cert_id.sudo()
+                cer_pem = base64.b64decode(cert_sudo.pem_certificate)
+                key_pem = base64.b64decode(cert_sudo.private_key_id.pem_key)
                 ongoing_processes_responses = {}
                 wsdl = 'https://' + ('preprod-' if process.is_test else '') + 'dgp2.procesinfrastructuur.nl/wus/2.0/statusinformatieservice/1.2?wsdl'
 
                 try:
-                    delivery_client = SoapClientWrapper().create_soap_client(wsdl, f, certificate, private_key)
+                    delivery_client = SoapClientWrapper().create_soap_client(wsdl, f, cer_pem, key_pem)
                     ongoing_processes_responses[process] = delivery_client.service.getStatussenProces(
                         kenmerk=process.kenmerk,
                         autorisatieAdres='http://geenausp.nl',
