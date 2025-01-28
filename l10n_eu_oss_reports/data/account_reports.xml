@@ -8,11 +8,11 @@
         <field name="availability_condition">oss</field>
         <field name="column_ids">
             <record id="oss_sales_report_net" model="account.report.column">
-                <field name="name">NET</field>
+                <field name="name">Amount excl. VAT</field>
                 <field name="expression_label">net</field>
             </record>
             <record id="oss_sales_report_tax" model="account.report.column">
-                <field name="name">TAX</field>
+                <field name="name">VAT</field>
                 <field name="expression_label">tax</field>
             </record>
         </field>
@@ -25,11 +25,11 @@
         <field name="availability_condition">oss</field>
         <field name="column_ids">
             <record id="oss_imports_report_net" model="account.report.column">
-                <field name="name">NET</field>
+                <field name="name">Amount excl. VAT</field>
                 <field name="expression_label">net</field>
             </record>
             <record id="oss_imports_report_tax" model="account.report.column">
-                <field name="name">TAX</field>
+                <field name="name">VAT</field>
                 <field name="expression_label">tax</field>
             </record>
         </field>

@@ -656,7 +656,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
                 sorting_map_list.append(sorting_map)
             else:
                 # src_tax_type_tax_use.
-                selection = self.env['account.tax']._fields['type_tax_use'].selection
+                selection = self.env['account.tax']._fields['type_tax_use']._description_selection(self.env)
                 sorting_map_list.append({v[0]: (v, j) for j, v in enumerate(selection) if v[0] in record_ids_gb[i]})
 
         # Compute report lines.
