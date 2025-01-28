@@ -252,7 +252,9 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
 
         report_lines_code_per_id = {line['id']: line['code'] for line in self.report_id.line_ids.read(['id', 'code'])}
         for line in lines:
-            report_line_id = self.report_id._get_model_info_from_id(line['id'])[-1]
+            model, report_line_id = self.report_id._get_model_info_from_id(line['id'])
+            if model != 'account.report.line':
+                continue
             report_line_code = report_lines_code_per_id[report_line_id]
             if edi_id := CODE_TO_EDI_ID.get(report_line_code):
                 column = next(col for col in line['columns'] if col['expression_label'] == 'balance')
