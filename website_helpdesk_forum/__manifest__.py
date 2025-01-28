@@ -32,7 +32,8 @@ Website Forum integration for the helpdesk module
     ],
     'assets': {
         'web.assets_frontend': [
-            'website_helpdesk_forum/static/src/**/*',
+            'website_helpdesk_forum/static/src/interactions/**/*',
+            'website_helpdesk_forum/static/src/components/**/*',
         ],
         'web.assets_tests': [
             'website_helpdesk_forum/static/tests/tours/**/*',
