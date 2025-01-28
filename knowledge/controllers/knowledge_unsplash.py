@@ -36,7 +36,7 @@ class KnowledgeUnsplash(main.Web_Unsplash):
             except requests.exceptions.RequestException:
                 return {'error': 'request_failed'}
         # If no image matched the query term, do a generic search
-        if not has_query or not fetch_random_image_request.ok:
+        if not has_query or not fetch_random_image_request.ok: #pylint: disable=E0601
             kwargs.pop('query', None)
             kwargs['collections'] = UNSPLASH_COLLECTION_ID
             try:

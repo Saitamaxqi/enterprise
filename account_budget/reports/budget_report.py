@@ -160,7 +160,7 @@ class BudgetReport(models.Model):
             """,
             analytic_fields=SQL(', ').join(self.env['account.analytic.line']._field_to_sql('a', fname) for fname in plan_fnames),
             qty_invoiced_table=qty_invoiced_table,
-            field_cast=SQL(', ').join(SQL(f'{fname} FLOAT') for fname in plan_fnames),
+            field_cast=SQL(', ').join(SQL('%s FLOAT', SQL.identifier(fname)) for fname in plan_fnames),
             condition=SQL(' AND ').join(SQL(
                 "(%(bl)s IS NULL OR %(a)s = %(bl)s)",
                 bl=self.env['budget.line']._field_to_sql('bl', fname),
