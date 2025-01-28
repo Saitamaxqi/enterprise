@@ -1,107 +1,96 @@
-import { KeepLast } from "@web/core/utils/concurrency";
-import publicWidget from '@web/legacy/js/public/public_widget';
+import { Interaction } from "@web/public/interaction";
+import { registry } from "@web/core/registry";
 
 import { rpc } from "@web/core/network/rpc";
-import { renderToElement } from "@web/core/utils/render";
-import { debounce } from "@web/core/utils/timing";
+import { KeepLast } from "@web/core/utils/concurrency";
 
-publicWidget.registry.knowledgeBaseAutocomplete = publicWidget.Widget.extend({
-    selector: '.o_helpdesk_knowledge_search',
-    events: {
-        'input .search-query': '_onInput',
-        'focusout': '_onFocusOut',
-        'keydown .search-query': '_onKeydown',
-    },
+export class KnowledgeBaseAutocomplete extends Interaction {
+    static selector = ".o_helpdesk_knowledge_search";
+    dynamicContent = {
+        _root: {
+            "t-on-focusout": this.debounced(this.onFocusout, 100),
+            "t-att-class": () => ({
+                "dropdown": this.hasResults,
+                "show": this.hasResults,
+            })
+        },
+        ".search-query": {
+            "t-on-input": this.debounced(this.onInput, 400),
+            "t-on-keydown": this.onKeydown,
+        },
+    };
 
-    init: function () {
-        this._super.apply(this, arguments);
-
-        this.keepLast = new KeepLast();
-
-        this._onInput = debounce(this._onInput, 400);
-        this._onFocusOut = debounce(this._onFocusOut, 100);
-    },
-
-
-    start: function () {
+    setup() {
         this.inputEl = this.el.querySelector(".search-query");
-        this.url = this.el.dataset.acUrl;
         this.enabled = parseInt(this.el.dataset.autocomplete);
+        this.hasResults = false;
+        this.keepLast = new KeepLast();
+        this.url = this.el.dataset.acUrl;
+    }
 
-        return this._super.apply(this, arguments);
-    },
-
-    /**
-     * @private
-     */
-    async _fetch() {
+    fetch() {
         const search = this.inputEl.value;
-        if (!search || search.length < 3)
+        if (!search || search.length < 3) {
             return;
-
-        return rpc(this.url, { 'term': search });
-    },
+        }
+        return rpc(this.url, { "term": search });
+    }
 
     /**
-     * @private
+     * @param {Object} result 
      */
-    _render: function (res) {
+    render(result) {
+        this.hasResults = !!result;
         const prevMenuEl = this.menuEl;
-        const search = this.inputEl.value;
-        this.el.classList.toggle("dropdown", !!res);
-        this.el.classList.toggle("show", !!res);
-        if (!!res) {
-            this.menuEl = renderToElement("website_helpdesk.knowledge_base_autocomplete", {
-                results: res.results,
-                showMore: res.showMore,
-                term: search,
+        if (this.hasResults) {
+            this.menuEl = this.renderAt("website_helpdesk.knowledge_base_autocomplete", {
+                results: result.results,
+                showMore: result.showMore,
+                term: this.inputEl.value,
             });
-            this.el.append(this.menuEl);
         }
         if (prevMenuEl) {
             prevMenuEl.remove();
         }
-    },
+    }
 
-    //--------------------------------------------------------------------------
-    // Handlers
-    //--------------------------------------------------------------------------
-
-    /**
-     * @private
-     */
-    _onInput: function () {
-        if (!this.enabled)
-            return;
-        this.keepLast.add(this._fetch()).then(this._render.bind(this));
-    },
-    /**
-     * @private
-     */
-    _onFocusOut: function () {
+    onFocusout() {
         if (!this.el.contains(document.activeElement)) {
-            this._render();
+            this.render();
         }
-    },
+    }
+
+    async onInput() {
+        if (!this.enabled) {
+            return;
+        }
+        const result = await this.keepLast.add(this.waitFor(this.fetch()));
+        this.render(result);
+    }
+
     /**
-     * @private
+     * @param {KeyboardEvent} ev 
      */
-    _onKeydown: function (ev) {
+    onKeydown(ev) {
         switch (ev.key) {
             case "Escape":
-                this._render();
+                this.render();
                 break;
             case "ArrowUp":
             case "ArrowDown":
                 ev.preventDefault();
                 if (this.menuEl) {
-                    const element =
+                    const newFocusEl =
                         ev.key === "ArrowUp"
                             ? this.menuEl.lastElementChild
                             : this.menuEl.firstElementChild;
-                    element.focus();
+                    newFocusEl.focus();
                 }
                 break;
         }
-    },
-});
+    }
+}
+
+registry
+    .category("public.interactions")
+    .add("website_helpdesk.knowledge_base_autocomplete", KnowledgeBaseAutocomplete);
