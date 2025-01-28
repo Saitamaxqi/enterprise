@@ -358,8 +358,8 @@ test("open a dialog to add a new task", async () => {
 
     // check that the dialog is opened with prefilled fields
     expect(".modal").toHaveCount(1);
-    expect(".o_field_widget[name=start] input").toHaveValue("12/01/2018 00:00:00");
-    expect(".o_field_widget[name=stop] input").toHaveValue("01/01/2019 00:00:00");
+    expect(".o_field_widget[name=start] input").toHaveValue("12/01/2018 00:00");
+    expect(".o_field_widget[name=stop] input").toHaveValue("01/01/2019 00:00");
 });
 
 test("open a dialog to create/edit a task", async () => {
@@ -397,8 +397,8 @@ test("open a dialog to create/edit a task", async () => {
     expect(".modal").toHaveCount(1);
     expect(".modal-title").toHaveText("Create");
     await contains(".o_field_widget[name=name] input").edit("Task 8");
-    expect(".o_field_widget[name=start] input").toHaveValue("12/10/2018 00:00:00");
-    expect(".o_field_widget[name=stop] input").toHaveValue("12/11/2018 00:00:00");
+    expect(".o_field_widget[name=start] input").toHaveValue("12/10/2018 00:00");
+    expect(".o_field_widget[name=stop] input").toHaveValue("12/11/2018 00:00");
     expect(".o_field_widget[name=project_id] input").toHaveValue("Project 1");
     expect(".o_field_widget[name=user_id] input").toHaveValue("User 1");
     expect(".o_field_widget[name=stage] select").toHaveValue('"in_progress"');
@@ -412,8 +412,8 @@ test("open a dialog to create/edit a task", async () => {
     expect(".modal").toHaveCount(1);
     expect(".modal-title").toHaveText("Open");
     expect(".o_field_widget[name=name] input").toHaveValue("Task 8");
-    expect(".o_field_widget[name=start] input").toHaveValue("12/10/2018 00:00:00");
-    expect(".o_field_widget[name=stop] input").toHaveValue("12/11/2018 00:00:00");
+    expect(".o_field_widget[name=start] input").toHaveValue("12/10/2018 00:00");
+    expect(".o_field_widget[name=stop] input").toHaveValue("12/11/2018 00:00");
     expect(".o_field_widget[name=project_id] input").toHaveValue("Project 1");
     expect(".o_field_widget[name=user_id] input").toHaveValue("User 1");
     expect(".o_field_widget[name=stage] select").toHaveValue('"in_progress"');
@@ -679,8 +679,8 @@ test("create dialog with timezone", async () => {
 
     await hoverGridCell("10", "December 2018");
     await clickCell("10", "December 2018");
-    expect(".o_field_widget[name=start] input").toHaveValue("12/10/2018 00:00:00");
-    expect(".o_field_widget[name=stop] input").toHaveValue("12/11/2018 00:00:00");
+    expect(".o_field_widget[name=start] input").toHaveValue("12/10/2018 00:00");
+    expect(".o_field_widget[name=stop] input").toHaveValue("12/11/2018 00:00");
     await contains(".o_form_button_save").click();
 });
 

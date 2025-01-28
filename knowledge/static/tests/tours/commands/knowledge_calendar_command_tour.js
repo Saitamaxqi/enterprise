@@ -96,7 +96,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: '.o_knowledge_properties_field .o_property_field:contains("Start Date")',
     run: function () {
         const input = this.anchor.querySelector("input");
-        if (!input.value.includes("08:00:00")) {
+        if (!input.value.includes("08:00")) {
             throw new Error('Item was not created with the correct property value');
         }
     },
@@ -195,7 +195,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: '.o_knowledge_properties_field .o_property_field:contains("Start Property")',
     run: function () {
         const input = this.anchor.querySelector("input");
-        if (!input.value.includes("08:00:00")) {
+        if (!input.value.includes("08:00")) {
             throw new Error('Item was not created with the correct property value');
         }
     },
@@ -409,7 +409,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: '.o_knowledge_properties_field .o_property_field:contains("Start Property")',
     run: function () {
         const input = this.anchor.querySelector("input");
-        if (!input.value.includes("09:00:00")) {
+        if (!input.value.includes("09:00")) {
             console.error('Item start date property has not been updated');
         }
     },
@@ -418,7 +418,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     run: function () {
         const input = this.anchor.querySelector("input");
         // When resizing an event, the event spans the hovered row, so we need to add 15 minutes
-        if (!input.value.includes("11:15:00")) {
+        if (!input.value.includes("11:15")) {
             console.error('Item stop date property has not been updated');
         }
     },

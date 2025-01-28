@@ -34,7 +34,7 @@ registry.category("web_tour.tours").add('planning_test_tour', {
     content: "Set start datetime",
     run: function (actions) {
         const input = this.anchor;
-        input.value = input.value.replace(/(\d{2}:){2}\d{2}/g, '08:00:00');
+        input.value = input.value.replace(/\d{2}:\d{2}/g, '08:00');
         input.dispatchEvent(new InputEvent('input', {
             bubbles: true,
         }));
@@ -45,7 +45,7 @@ registry.category("web_tour.tours").add('planning_test_tour', {
     content: "Set end datetime",
     run: function (actions) {
         const input = this.anchor;
-        input.value = input.value.replace(/(\d{2}:){2}\d{2}/g, '11:59:59');
+        input.value = input.value.replace(/\d{2}:\d{2}/g, '11:59');
         input.dispatchEvent(new InputEvent('input', {
             bubbles: true,
         }));

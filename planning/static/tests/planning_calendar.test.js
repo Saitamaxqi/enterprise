@@ -168,7 +168,7 @@ test("Resize or Drag-Drop should open recurrence update wizard", async () => {
         queryText(
             ".o_cw_popover .o_cw_popover_fields_secondary .list-group-item .o_field_datetime"
         ).split(" ")[1]
-    ).toBe("14:30:00", {
+    ).toBe("14:30", {
         message: "should have correct start date",
     });
 
@@ -179,7 +179,7 @@ test("Resize or Drag-Drop should open recurrence update wizard", async () => {
         queryText(
             ".o_cw_popover .o_cw_popover_fields_secondary .list-group-item .o_field_datetime"
         ).split(" ")[1]
-    ).toBe("14:30:00", {
+    ).toBe("14:30", {
         message: "should have correct start date",
     });
 });

@@ -274,10 +274,10 @@ test("open a dialog to add a new shift", async function () {
 
     expect(".modal").toHaveCount(1);
     expect(".o_field_widget[name=start_datetime] .o_input").toHaveValue(
-        now.toFormat("MM/dd/yyyy 00:00:00")
+        now.toFormat("MM/dd/yyyy 00:00")
     );
     expect(".o_field_widget[name=end_datetime] .o_input").toHaveValue(
-        now.plus({ day: 1 }).toFormat("MM/dd/yyyy 00:00:00")
+        now.plus({ day: 1 }).toFormat("MM/dd/yyyy 00:00")
     );
 });
 
