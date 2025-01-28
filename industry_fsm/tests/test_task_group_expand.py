@@ -17,6 +17,7 @@ class TestTaskGroupExpand(TestIndustryFsmCommon):
             'gantt_start_date': datetime.today(),
             'fsm_mode': True,
             'gantt_scale': 'week',
+            'read_group_expand': True,
         })
 
         # Create two tasks for two users: one is planned (has planned_date_begin and date_deadline fields) and the other is not
@@ -34,7 +35,7 @@ class TestTaskGroupExpand(TestIndustryFsmCommon):
             'user_ids': [self.marcel_user.id],
         }])
 
-        groups = Task.read_group(gantt_domain, ['name'], ['user_ids'])
+        groups = Task.formatted_read_group(gantt_domain, ['user_ids'])
         user_ids_in_group = [group['user_ids'][0] for group in groups if group['user_ids']]
 
         self.assertIn(self.george_user.id, user_ids_in_group,

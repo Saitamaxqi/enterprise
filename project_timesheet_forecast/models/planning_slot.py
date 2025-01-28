@@ -63,7 +63,7 @@ class PlanningSlot(models.Model):
                     forecast.timesheet_ids = Timesheet.search(domain)
 
     def _read_group_fields_nullify(self):
-        return super()._read_group_fields_nullify() + ['effective_hours', 'effective_hours_cost', 'percentage_hours']
+        return super()._read_group_fields_nullify() + ['effective_hours:sum', 'effective_hours_cost:sum', 'percentage_hours:sum']
 
     @api.depends_context('uid')
     @api.depends('user_id', 'timesheet_ids')

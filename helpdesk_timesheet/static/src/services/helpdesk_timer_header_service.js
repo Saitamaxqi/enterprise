@@ -14,11 +14,11 @@ export const timerHelpdeskService = {
                 if (!isHelpdeskUser) {
                     return [];
                 }
-                const result = await orm.readGroup(
+                const result = await orm.formattedReadGroup(
                     "helpdesk.ticket",
                     [["project_id", "!=", false]],
                     ["project_id"],
-                    ["project_id"],
+                    [],
                 );
                 if (result?.length) {
                     helpdeskProjects = result.map((r) => r.project_id[0]);

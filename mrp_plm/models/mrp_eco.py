@@ -28,7 +28,7 @@ class MrpEcoType(models.Model):
     stage_ids = fields.Many2many('mrp.eco.stage', 'mrp_eco_stage_type_rel', 'type_id', 'stage_id', string='Stages')
 
     def _compute_nb(self):
-        # TDE FIXME: this seems not good for performances, to check (replace by read_group later on)
+        # TDE FIXME: this seems not good for performances, to check (replace by _read_group later on)
         MrpEco = self.env['mrp.eco']
         for eco_type in self:
             eco_type.nb_ecos = MrpEco.search_count([

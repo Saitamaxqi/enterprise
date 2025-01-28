@@ -23,16 +23,16 @@ class TestTaskGroupExpand(TestProjectCommon):
         Task = self.env['project.task'].with_user(self.user_projectuser).with_context({
             'gantt_start_date': datetime.today(),
             'gantt_scale': 'week',
+            'read_group_expand': True,
         })
-        args = ['name'], ['user_ids']
 
         # 1. Search with no filter on user_ids: Current user should have a group (even if empty)
-        groups = Task.read_group(gantt_domain + [('id', '=', self.task_2.id)], *args)
+        groups = Task.formatted_read_group(gantt_domain + [('id', '=', self.task_2.id)], ['user_ids'])
         self.assertTrue(user_in_groups(self.user_projectuser.id),
                         "A group should exist for the current user if no filter is applied on user_ids.")
 
         # 2. Search with filter on user_ids: Current user should not have a group if empty
-        groups = Task.read_group(gantt_domain + [('user_ids', 'in', self.user_projectmanager.id)], *args)
+        groups = Task.formatted_read_group(gantt_domain + [('user_ids', 'in', self.user_projectmanager.id)], ['user_ids'])
         self.assertFalse(user_in_groups(self.user_projectuser.id),
                         "No empty group should be added for the current user if a filter is applied on user_ids.")
 
@@ -41,7 +41,7 @@ class TestTaskGroupExpand(TestProjectCommon):
             'name': 'Shared task test group expand',
             'user_ids': [Command.set([self.user_projectuser.id, self.user_projectmanager.id])],
         }])
-        groups = Task.read_group(gantt_domain + [('user_ids', 'in', self.user_projectmanager.id)], *args)
+        groups = Task.formatted_read_group(gantt_domain + [('user_ids', 'in', self.user_projectmanager.id)], ['user_ids'])
         self.assertFalse(user_in_groups(self.user_projectuser.id),
                         "No empty group should be added for the current user if a filter is applied on user_ids, even if a record not visible in the gantt view match the domain.")
 
@@ -50,7 +50,7 @@ class TestTaskGroupExpand(TestProjectCommon):
             'planned_date_begin': datetime.now(),
             'date_deadline': datetime.now() + timedelta(days=2),
         })
-        groups = Task.read_group(
-            gantt_domain + [('user_ids', 'in', self.user_projectmanager.id)], *args)
+        groups = Task.formatted_read_group(
+            gantt_domain + [('user_ids', 'in', self.user_projectmanager.id)], ['user_ids'])
         self.assertTrue(user_in_groups(self.user_projectuser.id),
                         "Even if a filter is applied on user_ids, all user row containing visible tasks in the gantt view should be displayed")

@@ -39,7 +39,7 @@ class ProductProduct(models.Model):
         whs = self.env['stock.warehouse'].search([('company_id', '=', self.env.company.id)])
 
         # We must manually add these domains as this method may be called in a cron, with self.env.company set,
-        # but as superuser, which causes issues when using product.read_group()
+        # but as superuser, which causes issues when using product._read_group()
         _domain_quant_loc, domain_move_in_loc, domain_move_out_loc = (
             self.env['product.product'].with_context(warehouse=whs.ids)._get_domain_locations()
         )

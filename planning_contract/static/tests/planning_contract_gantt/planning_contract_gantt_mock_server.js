@@ -25,7 +25,7 @@ function _mockGetGanttResourceWorkIntervaL({ model, args, kwargs }) {
         const employee_ids = Object.keys(rows).map((a) => {
             return parseInt(a, 10);
         });
-        const hr_contract_read_group = this.env["hr.contract"].read_group(
+        const hr_contract_read_group = this.env["hr.contract"].formatted_read_group(
             new Domain([
                 "&",
                 ["employee_id", "in", employee_ids],
@@ -35,17 +35,16 @@ function _mockGetGanttResourceWorkIntervaL({ model, args, kwargs }) {
                 ["kanban_state", "=", "done"],
                 ["state", "=", "draft"],
             ]).toList(),
+            ["employee_id", "date_start:day", "date_end:day"],
+            [],
             "",
-            ["id", "employee_id", "date_start:day", "date_end:day"],
             "",
             "",
-            "",
-            false
         );
         hr_contract_read_group.forEach((contract) => {
             rows[contract.employee_id[0]]["working_periods"].push({
-                start: contract["date_start:day"],
-                end: contract["date_end:day"],
+                start: contract["date_start:day"][1],
+                end: contract["date_end:day"][1],
             });
         });
         new Set(employee_ids)

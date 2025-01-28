@@ -51,14 +51,14 @@ class Base(models.AbstractModel):
     @api.model
     def get_gantt_data(self, domain, groupby, read_specification, limit=None, offset=0, unavailability_fields=None, progress_bar_fields=None, start_date=None, stop_date=None, scale=None):
         """
-        Returns the result of a read_group (and optionally search for and read records inside each
+        Returns the result of a web_read_group (and optionally search for and read records inside each
         group), and the total number of groups matching the search domain.
 
         :param domain: search domain
-        :param groupby: list of field to group on (see ``groupby``` param of ``read_group``)
+        :param groupby: list of field to group on (see ``groupby``` param of ``_read_group``)
         :param read_specification: web_read specification to read records within the groups
-        :param limit: see ``limit`` param of ``read_group``
-        :param offset: see ``offset`` param of ``read_group``
+        :param limit: see ``limit`` param of ``_read_group``
+        :param offset: see ``offset`` param of ``_read_group``
         :param boolean unavailability_fields
         :param string start_date: start datetime in utc, e.g. "2024-06-22 23:00:00"
         :param string stop_date: stop datetime in utc
@@ -83,18 +83,16 @@ class Base(models.AbstractModel):
             }
         }
         """
-        # TODO: group_expand doesn't currently respect the limit/offset
-        lazy = not limit and not offset and len(groupby) == 1
         # Because there is no limit by group, we can fetch record_ids as aggregate
-        final_result = self.web_read_group(
-            domain, ['__record_ids:array_agg(id)'], groupby,
-            limit=limit, offset=offset, lazy=lazy,
+        final_result = self.with_context(read_group_expand=True).web_read_group(
+            domain, groupby, ['id:array_agg'],
+            limit=limit, offset=offset,
         )
 
         all_record_ids = tuple(unique(
             record_id
             for one_group in final_result['groups']
-            for record_id in one_group['__record_ids']
+            for record_id in one_group['id:array_agg']
         ))
 
         # Do search_fetch to order records (model order can be no-trivial)
@@ -119,10 +117,9 @@ class Base(models.AbstractModel):
                 if res_id:
                     res_ids_for_progress_bars[field].add(res_id)
             # Reorder __record_ids
-            group['__record_ids'] = list(ordered_set_ids & OrderedSet(group['__record_ids']))
+            group['__record_ids'] = list(ordered_set_ids & OrderedSet(group.pop('id:array_agg')))
             # We don't need these in the gantt view
-            del group['__domain']
-            del group[f'{groupby[0]}_count' if lazy else '__count']
+            del group['__extra_domain']
             group.pop('__fold', None)
 
         if unavailability_fields or progress_bar_fields:

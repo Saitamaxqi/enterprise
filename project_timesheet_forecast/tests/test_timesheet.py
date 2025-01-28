@@ -79,12 +79,12 @@ class TestPlanningTimesheet(TestCommonForecast):
             'state': 'draft',
         })
         self.env['planning.slot'].flush_model()
-        result = self.env['project.timesheet.forecast.report.analysis'].read_group(
+        result = self.env['project.timesheet.forecast.report.analysis'].formatted_read_group(
             domain=[["project_id", "=", self.project_opera.id]],
-            fields=["planned_hours:sum", 'effective_hours:sum', 'difference:sum'],
-            groupby=["entry_date:month"], lazy=False
+            groupby=["entry_date:month"],
+            aggregates=["planned_hours:sum"],
         )
-        self.assertEqual((result[0]['planned_hours']), 40)
+        self.assertEqual((result[0]['planned_hours:sum']), 40)
 
     def test_compute_slot_effective_hours(self):
         slot = self.env["planning.slot"].create({

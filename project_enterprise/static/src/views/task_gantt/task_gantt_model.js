@@ -161,7 +161,7 @@ export class TaskGanttModel extends GanttModel {
                 // We make sure that a row with resId = false for "user_id"
                 // ('Unassigned Tasks') and same "parent" will be added by adding
                 // a suitable fake group to groups (a subset of the groups returned
-                // by read_group).
+                // by formatted_read_group).
                 const fakeGroup = Object.assign({}, ...parentGroup);
                 groups.push(fakeGroup);
             }

@@ -1,6 +1,7 @@
 import { makeKwArgs } from "@web/../tests/web_test_helpers";
-import { parseDate } from "@web/core/l10n/dates";
+import { deserializeDate, parseDate } from "@web/core/l10n/dates";
 import { registry } from "@web/core/registry";
+import { Domain } from "@web/core/domain";
 
 /**
  * @private
@@ -21,37 +22,17 @@ function _mockGetCohortData({ args, kwargs, model }) {
     let totalValue = 0;
     let initialChurnValue = 0;
     const columnsAvg = {};
-
+    const domain = kwargs.domain;
     const { groups } = this.env[model].web_read_group({
         ...kwargs,
         groupby: [kwargs.date_start + ":" + kwargs.interval],
-        fields: [kwargs.date_start],
+        aggregates: ['__count'],
     });
     const totalCount = groups.length;
     for (const group of groups) {
-        let format;
-        switch (kwargs.interval) {
-            case "day":
-                format = "yyyy-MM-dd";
-                break;
-            case "week":
-                format = "WW kkkk";
-                break;
-            case "month":
-                format = "MMMM yyyy";
-                break;
-            case "quarter":
-                format = "Qq yyyy";
-                break;
-            case "year":
-                format = "y";
-                break;
-        }
-        const cohortStartDate = parseDate(group[kwargs.date_start + ":" + kwargs.interval], {
-            format,
-        });
-
-        const records = this.env[model].search_read(group.__domain);
+        const cohortStartDate = deserializeDate(group[kwargs.date_start + ":" + kwargs.interval][0]);
+        const group_domain = Domain.and([domain, group.__extra_domain]).toList();
+        const records = this.env[model].search_read(group_domain);
         let value = 0;
         if (kwargs.measure === "__count") {
             value = records.length;
@@ -156,7 +137,7 @@ function _mockGetCohortData({ args, kwargs, model }) {
         rows.push({
             date: cohortStartDate.toFormat(displayFormats[kwargs.interval]),
             value: value,
-            domain: group.__domain,
+            domain: group_domain,
             columns: columns,
         });
     }

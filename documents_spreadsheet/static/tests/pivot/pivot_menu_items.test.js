@@ -414,6 +414,7 @@ test("Can rebuild the Odoo domain of records based on the according merged pivot
     expect.verifySteps([
         "partner",
         [
+            "&",
             ["foo", "=", 2],
             ["bar", "=", false],
         ],
@@ -472,6 +473,7 @@ test("'See records' loads a specific action if set in the pivot definition", asy
     expect.verifySteps([
         "partner",
         [
+            "&",
             ["foo", "=", 2],
             ["bar", "=", false],
         ],

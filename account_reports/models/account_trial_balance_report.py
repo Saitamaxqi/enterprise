@@ -356,17 +356,17 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
 
     def _get_unaffected_earnings_accounts_per_company(self, options):
         """ Return the unaffected earnings accounts for the report's companies. """
-        unaffected_earnings_accounts = self.env['account.account'].read_group(
+        unaffected_earnings_accounts = self.env['account.account']._read_group(
             domain=[
                 *self.env['account.account']._check_company_domain(self.env['account.report'].get_report_company_ids(options)),
                 ('account_type', '=', 'equity_unaffected'),
             ],
-            fields=['id:recordset'],
             groupby=['company_ids'],
+            aggregates=['id:min'],
         )
         return {
-            account['company_ids'][0]: account['id'].id
-            for account in unaffected_earnings_accounts
+            company.id: account_id
+            for company, account_id in unaffected_earnings_accounts
         }
 
     def _get_custom_groupby_map(self):

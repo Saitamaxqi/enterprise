@@ -286,11 +286,11 @@ class AppointmentGanttTest(AppointmentGanttTestCommon):
     def test_gantt_read_group_resource_events_privacy(self):
         """ Check that every resource events are correctly displayed in the gantt view.
 
-        Due to the events read_group privacy domain, resource events booked from the front-end
+        Due to the events formatted_read_group privacy domain, resource events booked from the front-end
         (meaning having OdooBot as user_id) weren't displayed in the gantt view.
         Making sure every resource events are now visible and accessible no matter their privacy and user_id.
 
-        Using apt_manager to be sure the privacy part of the read_group domain is correctly added
+        Using apt_manager to be sure the privacy part of the formatted_read_group domain is correctly added
         as it is only included when we're not in super user.
         """
         meeting = self._create_meetings(

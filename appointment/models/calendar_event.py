@@ -490,7 +490,7 @@ class CalendarEvent(models.Model):
         The privacy of an event is related to the user settings but resource events aren't typically linked to any user
         meaning their visiblity shouldn't depend on the privacy field.
         Returns:
-            The read_group privacy domain adapted to include every events related to a resource appointment type.
+            The formatted_read_group privacy domain adapted to include every events related to a resource appointment type.
         """
         domain = super()._get_default_privacy_domain()
         return expression.OR([domain, [

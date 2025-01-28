@@ -202,11 +202,3 @@ class SaleOrderLogReport(models.Model):
             'views': [[False, "form"]],
             'res_id': self.id,
         }
-
-    def _convert_range_to_datetime(self, group_res):
-        if group_res.get('__range'):
-            date_strs = re.findall(r'\b[0-9]{4}-[0-9]{2}-[0-9]{2}', str(group_res['__range']))
-            min_date = date_strs and min(date_strs)
-            max_date = date_strs and max(date_strs)
-            return fields.Datetime.from_string(min_date), fields.Datetime.from_string(max_date)
-        return None, None

@@ -131,9 +131,8 @@ export class TimesheetGridDataPoint extends GridDataPoint {
             .webReadGroup(
                 this.resModel,
                 Domain.and([this.searchParams.domain, previouslyTimesheetedDomain]).toList({}),
-                this.fields,
                 this.groupByFields,
-                { lazy: false }
+                this.aggregates,
             )
             .then((readGroupResults) => {
                 const additionalData = {};

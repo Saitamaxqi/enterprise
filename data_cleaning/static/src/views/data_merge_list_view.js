@@ -92,17 +92,17 @@ export class DataMergeListController extends DataCleaningCommonListController {
         const records = this.model.root.selection;
         let group_ids = {};
         if (this.model.root.isDomainSelected) {
-            const { groups } = await this.orm.webReadGroup(
+            const groups = await this.orm.formattedReadGroup(
                 this.props.resModel,
                 this.props.domain,
-                ["record_ids:array_agg(id)"],
                 this.props.groupBy,
+                ["id:array_agg"],
                 {
                     limit: session.active_ids_limit,
                     context: this.props.context,
                 },
             );
-            group_ids = Object.fromEntries(groups.map(g => [g.group_id[0], g.record_ids]));
+            group_ids = Object.fromEntries(groups.map((g) => [g.group_id[0], g["id:array_agg"]]));
         } else {
             records.forEach(function (record) {
                 const group_id = parseInt(record.data.group_id[0]);

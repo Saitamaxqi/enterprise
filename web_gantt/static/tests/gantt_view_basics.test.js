@@ -255,11 +255,11 @@ test("display the field's falsy_value_label for false group, if defined", async 
 
 test("single-level grouped gantt rendering with group_expand", async () => {
     const groups = [
-        { project_id: [20, "Unused Project 1"], __record_ids: [] },
-        { project_id: [50, "Unused Project 2"], __record_ids: [] },
-        { project_id: [2, "Project 2"], __record_ids: [5, 7] },
-        { project_id: [30, "Unused Project 3"], __record_ids: [] },
-        { project_id: [1, "Project 1"], __record_ids: [1, 2, 3, 4] },
+        { project_id: [20, "Unused Project 1"], "id:array_agg": [] },
+        { project_id: [50, "Unused Project 2"], "id:array_agg": [] },
+        { project_id: [2, "Project 2"], "id:array_agg": [5, 7] },
+        { project_id: [30, "Unused Project 3"], "id:array_agg": [] },
+        { project_id: [1, "Project 1"], "id:array_agg": [1, 2, 3, 4] },
     ];
     patchWithCleanup(Tasks.prototype, {
         web_read_group: () => ({ groups, length: groups.length }),

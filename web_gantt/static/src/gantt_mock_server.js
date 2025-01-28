@@ -1,16 +1,14 @@
 import { registry } from "@web/core/registry";
 
 function _mockGetGanttData(_, { model, kwargs }) {
-    const lazy = !kwargs.limit && !kwargs.offset && kwargs.groupby.length === 1;
     const { groups, length } = this.mockWebReadGroup(model, {
         ...kwargs,
-        lazy,
-        fields: ["__record_ids:array_agg(id)"],
+        aggregates: ["id:array_agg"],
     });
 
     const recordIds = [];
     for (const group of groups) {
-        recordIds.push(...(group.__record_ids || []));
+        recordIds.push(...(group["id:array_agg"] || []));
     }
 
     const { records } = this.mockWebSearchReadUnity(model, [], {

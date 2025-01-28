@@ -19,17 +19,17 @@ function _mockGetCohortData(params) {
     const rows = [];
     let initialChurnValue = 0;
 
-    const groups = this._mockReadGroup({
+    const groups = this._mockFormattedReadGroup({
         model,
-        fields: [date_start],
         groupBy: [date_start + ":" + interval],
+        aggregates: ["__count"],
     });
     const totalCount = groups.length;
     let totalValue = 0;
     for (const group of groups) {
         const format = SampleServer.FORMATS[interval];
         const displayFormat = SampleServer.DISPLAY_FORMATS[interval];
-        const date = parseDate(group[date_start + ":" + interval], { format });
+        const date = parseDate(group[date_start + ":" + interval][0], { format });
         const now = luxon.DateTime.local();
         let colStartDate = date;
         if (timeline === "backward") {

@@ -146,9 +146,9 @@ class ProjectTimesheetForecastReportAnalysis(models.Model):
         self.env.cr.execute(SQL("""CREATE or REPLACE VIEW %s as (%s)""", SQL.identifier(self._table), SQL(query)))
 
     @api.model
-    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
-        if not orderby and groupby:
-            orderby_list = [groupby] if isinstance(groupby, str) else groupby
-            orderby_list = [field.split(':')[0] for field in orderby_list]
-            orderby = ','.join([f"{field} desc" if field == 'entry_date' else field for field in orderby_list])
-        return super().read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby, lazy=lazy)
+    def formatted_read_group(self, domain, groupby=(), aggregates=(), having=(), offset=0, limit=None, order=None) -> list[dict]:
+        if not order:  # For pivot and graph view
+            order = ", ".join([
+                (f"{group} DESC" if group.startswith('entry_date') else group) for group in groupby
+            ])
+        return super().formatted_read_group(domain, groupby, aggregates, having, offset, limit, order)

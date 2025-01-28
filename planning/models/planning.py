@@ -707,17 +707,14 @@ class PlanningSlot(models.Model):
         return []
 
     @api.model
-    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
-        res = super().read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby, lazy=lazy)
-        if lazy:
-            return res
-
-        null_fields = [f for f in self._read_group_fields_nullify() if any(f2.startswith(f) for f2 in fields)]
-        if null_fields:
-            for r in res:
-                for f in null_fields:
-                    if r.get(f) == 0:
-                        r[f] = False
+    def formatted_read_group(self, domain, groupby=(), aggregates=(), having=(), offset=0, limit=None, order=None) -> list[dict]:
+        res = super().formatted_read_group(domain, groupby, aggregates, having, offset, limit, order)
+        for aggregate_nullify in self._read_group_fields_nullify():
+            if aggregate_nullify not in aggregates:
+                continue
+            for row in res:
+                if row[aggregate_nullify] == 0:
+                    row[aggregate_nullify] = False
         return res
 
     @api.model

@@ -32,7 +32,7 @@ class Base(models.AbstractModel):
             :param date_stop: the date field which mark the change of state
             :param measure: the field to aggregate
             :param interval: the interval of time between two cells ('day', 'week', 'month', 'quarter', 'year')
-            :param domain: a domain to limit the read_group
+            :param domain: a domain to limit the _read_group
             :param mode: the mode of aggregation ('retention', 'churn') [default='retention']
             :param timeline: the direction to display data ('forward', 'backward') [default='forward']
             :return: dictionary containing a total amount of records considered and a

@@ -268,7 +268,7 @@ export class PlanningGanttModel extends GanttModel {
                 // Here, we are generating top level rows.
                 if (this._allowCreateEmptyGroups(groupedBy)) {
                     // The group with false values for every groupby can be absent from
-                    // groups (= groups returned by read_group basically).
+                    // groups (= groups returned by formatted_read_group basically).
                     // Here we add the fake group {} in groups in any case (this simulates the group
                     // with false values mentionned above).
                     // This will force the creation of some rows with resId = false
@@ -285,7 +285,7 @@ export class PlanningGanttModel extends GanttModel {
                 // We make sure that a row with resId = false for
                 // the unique groupby in groupedBy and same "parent" will be
                 // added by adding a suitable fake group to the groups (a subset
-                // of the groups returned by read_group).
+                // of the groups returned by formatted_read_group).
                 const fakeGroup = Object.assign({}, ...parentGroup);
                 groups.push(fakeGroup);
             }

@@ -63,17 +63,18 @@ export class WorkingEmployeePopup extends Component {
     }
 
     async _getState() {
-        const productivityLines = await this.orm.call("mrp.workcenter.productivity", "read_group", [
+        const productivityLines = await this.orm.formattedReadGroup(
+            "mrp.workcenter.productivity",
             [
                 ["workorder_id", "=", this.workorderId],
                 ["employee_id", "!=", false],
             ],
-            ["duration", "date_start:array_agg", "date_end:array_agg"],
-            ["employee_id"],
-        ]);
+            ["duration:sum", "date_start:array_agg", "date_end:array_agg"],
+            ["employee_id"]
+        );
         const now = DateTime.now();
         this.lines = productivityLines.map((pl) => {
-            let duration = pl.duration;
+            let duration = pl["duration:sum"];
             const ongoingTimerIndex = pl.date_end.indexOf(null);
             if (ongoingTimerIndex !== -1) {
                 const additionalDuration =

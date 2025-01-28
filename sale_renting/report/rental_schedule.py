@@ -38,7 +38,7 @@ class SaleRentalSchedule(models.Model):
             )
         ):
             # If there are less rental products in the database than the given limit, drop the limit
-            # so that the read_group is lazy and the `group_expand` is called
+            # so that the `group_expand` is called
             limit = None
         return super().get_gantt_data(domain, groupby, read_specification, limit=limit, offset=offset, unavailability_fields=unavailability_fields, progress_bar_fields=progress_bar_fields, start_date=start_date, stop_date=stop_date, scale=scale)
 

@@ -1101,7 +1101,7 @@ test("Inserting a grouped list ignore groups", async function () {
     onRpc("partner", "web_read_group", async ({ kwargs, parent }) => {
         if (kwargs.groupby) {
             // The mock server cannot handle orderby count
-            kwargs.orderby = "";
+            kwargs.order = "";
         }
         return parent();
     });

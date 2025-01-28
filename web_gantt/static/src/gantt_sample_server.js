@@ -1,11 +1,9 @@
 import { registry } from "@web/core/registry";
 
 function _mockGetGanttData(params) {
-    const lazy = !params.limit && !params.offset && params.groupby.length === 1;
     let { groups, length } = this._mockWebReadGroup({
         ...params,
-        lazy,
-        fields: ["__record_ids:array_agg(id)"],
+        aggregates: ["id:array_agg"],
     });
     if (params.limit) {
         // we don't care about pager feature in sample mode
@@ -13,11 +11,11 @@ function _mockGetGanttData(params) {
         groups = groups.slice(0, params.limit);
         length = groups.length;
     }
-    groups.forEach((g) => (g.__record_ids = g.id)); // the sample server does not use the key __record_ids
+    groups.forEach((g) => (g["id:array_agg"] = g.id)); // the sample server does not use the key id:array_agg
 
     const recordIds = [];
     for (const group of groups) {
-        recordIds.push(...(group.__record_ids || []));
+        recordIds.push(...(group["id:array_agg"] || []));
     }
 
     const { records } = this._mockWebSearchReadUnity({

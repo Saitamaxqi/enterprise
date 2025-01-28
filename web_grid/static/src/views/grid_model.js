@@ -413,12 +413,20 @@ export class GridDataPoint {
         return this.model.resModel;
     }
 
-    get fields() {
-        return this._getFields();
+    get aggregates() {
+        const aggregates = [this.model.measureGroupByFieldName, "id:array_agg"];
+        if (this.readonlyField) {
+            aggregates.push(`${this.readonlyField.name}:${this.readonlyField.aggregator}`);
+        }
+        return aggregates;
     }
 
     get groupByFields() {
-        return this._getFields(true);
+        const groupBy = [this.columnGroupByFieldName, ...this.rowFields.map((r) => r.name)];
+        if (this.sectionField) {
+            groupBy.push(this.sectionField.name);
+        }
+        return groupBy;
     }
 
     get navigationInfo() {
@@ -455,34 +463,6 @@ export class GridDataPoint {
 
     get columnsArray() {
         return Object.values(this.data.columns);
-    }
-
-    /**
-     * Get fields to use in the group by or in fields of the read_group
-     * @private
-     * @param grouped true to return the fields for the group by.
-     * @return {string[]} list of fields name.
-     */
-    _getFields(grouped = false) {
-        const fields = [];
-        if (!grouped) {
-            fields.push(
-                this.columnFieldName,
-                this.model.measureGroupByFieldName,
-                "ids:array_agg(id)"
-            );
-            if (this.readonlyField) {
-                const aggReadonlyField = `${this.readonlyField.name}:${this.readonlyField.aggregator}`;
-                fields.push(aggReadonlyField);
-            }
-        } else {
-            fields.push(this.columnGroupByFieldName);
-        }
-        fields.push(...this.rowFields.map((r) => r.name));
-        if (this.sectionField) {
-            fields.push(this.sectionField.name);
-        }
-        return fields;
     }
 
     _getDateColumnTitle(date) {
@@ -602,15 +582,12 @@ export class GridDataPoint {
             Domain.and([this.searchParams.domain, this.model.generateNavigationDomain()]).toList(
                 {}
             ),
-            this.fields,
             this.groupByFields,
-            {
-                lazy: false,
-            }
+            this.aggregates
         );
         if (this.orm.isSample) {
             data.groups = data.groups.filter((group) => {
-                const date = DateTime.fromISO(group["__range"][this.columnGroupByFieldName].from);
+                const date = DateTime.fromISO(group[this.columnGroupByFieldName][0]);
                 return (
                     date >= this.navigationInfo.periodStart && date <= this.navigationInfo.periodEnd
                 );
@@ -768,7 +745,7 @@ export class GridDataPoint {
         let section;
         for (const readGroupResult of readGroupResults.groups) {
             if (!this.orm.isSample) {
-                this.record.resIds.push(...readGroupResult.ids);
+                this.record.resIds.push(...readGroupResult['id:array_agg']);
             }
             const rowKey = this._generateRowKey(readGroupResult);
             if (this.sectionField) {
@@ -799,25 +776,21 @@ export class GridDataPoint {
                 row = this.data.rows[this.data.rowsKeyToIdMapping[rowKey]];
             }
             let columnKey;
-            if (this.columnFieldIsDate) {
-                columnKey = readGroupResult["__range"][this.columnGroupByFieldName].from;
+            const columnField = this.fieldsInfo[this.columnFieldName];
+            if (this.columnFieldIsDate || columnField.type === "many2one" ) {
+                columnKey = readGroupResult[this.columnGroupByFieldName][0];
+            } else if (columnField.type === "selection") {
+                columnKey = readGroupResult[this.columnGroupByFieldName];
             } else {
-                const columnField = this.fieldsInfo[this.columnFieldName];
-                if (columnField.type === "selection") {
-                    columnKey = readGroupResult[this.columnFieldName];
-                } else if (columnField.type === "many2one") {
-                    columnKey = readGroupResult[this.columnFieldName][0];
-                } else {
-                    throw new Error(
-                        "Unmanaged column type. Supported types are date, selection and many2one."
-                    );
-                }
+                throw new Error(
+                    "Unmanaged column type. Supported types are date, selection and many2one."
+                );
             }
             if (this.data.columnsKeyToIdMapping[columnKey] in this.data.columns) {
                 const column = this.data.columns[this.data.columnsKeyToIdMapping[columnKey]];
-                row.updateCell(column, readGroupResult[this.model.measureFieldName]);
-                if (this.readonlyField && this.readonlyField.name in readGroupResult) {
-                    row.setReadonlyCell(column, readGroupResult[this.readonlyField.name]);
+                row.updateCell(column, readGroupResult[this.model.measureGroupByFieldName]);
+                if (this.readonlyField && `${this.readonlyField.name}:${this.readonlyField.aggregator}` in readGroupResult) {
+                    row.setReadonlyCell(column, readGroupResult[`${this.readonlyField.name}:${this.readonlyField.aggregator}`]);
                 }
             }
         }

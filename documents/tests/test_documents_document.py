@@ -576,36 +576,36 @@ class TestCaseDocuments(TransactionCaseDocuments):
             'partner_id': self.env.user.partner_id.id,
         }])
 
-        result = Doc. web_read_group(
+        result = Doc.formatted_read_group(
             [('id', 'in', documents.ids)],
-            ['id', 'name'],
             groupby=['last_access_date_group'],
-            orderby='last_access_date_group DESC')['groups']
+            aggregates=['__count'],
+            order='last_access_date_group DESC')
 
         self.assertEqual(len(result), 4)
 
         self.assertEqual(result[0]['last_access_date_group'], '3_day')
-        self.assertEqual(result[0]['last_access_date_group_count'], 2)
-        result_day = Doc.search(result[0]['__domain'])
+        self.assertEqual(result[0]['__count'], 2)
+        result_day = Doc.search(result[0]['__extra_domain'])
         self.assertEqual(result_day[0], documents[4])
         self.assertEqual(result_day[1], documents[0])
         self.assertEqual(result_day.mapped('last_access_date_group'), ['3_day'] * 2)
 
         self.assertEqual(result[1]['last_access_date_group'], '2_week')
-        self.assertEqual(result[1]['last_access_date_group_count'], 2)
-        result_week = Doc.search(result[1]['__domain'])
+        self.assertEqual(result[1]['__count'], 2)
+        result_week = Doc.search(result[1]['__extra_domain'])
         self.assertEqual(result_week[0], documents[5])
         self.assertEqual(result_week[1], documents[1])
         self.assertEqual(result_week.mapped('last_access_date_group'), ['2_week'] * 2)
 
         self.assertEqual(result[2]['last_access_date_group'], '1_month')
-        self.assertEqual(result[2]['last_access_date_group_count'], 1)
-        self.assertEqual(Doc.search(result[2]['__domain']), documents[2])
+        self.assertEqual(result[2]['__count'], 1)
+        self.assertEqual(Doc.search(result[2]['__extra_domain']), documents[2])
         self.assertEqual(documents[2].last_access_date_group, '1_month')
 
         self.assertEqual(result[3]['last_access_date_group'], '0_older')
-        self.assertEqual(result[3]['last_access_date_group_count'], 1)
-        self.assertEqual(Doc.search(result[3]['__domain']), documents[3])
+        self.assertEqual(result[3]['__count'], 1)
+        self.assertEqual(Doc.search(result[3]['__extra_domain']), documents[3])
         self.assertEqual(documents[3].last_access_date_group, '0_older')
 
     def test_link_constrains(self):

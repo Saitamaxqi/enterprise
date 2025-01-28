@@ -28,7 +28,7 @@ class TestUnityWebReadGroupGantt(TransactionCase):
 
     def test_get_gantt_data_without_limit(self):
         self.env.invalidate_all()
-        with self.assertQueryCount(2):  # One for read_group + One for reading name to compute display_name
+        with self.assertQueryCount(2):  # One for _read_group + One for reading name to compute display_name
             result = self.env['test.web.gantt.pill'].get_gantt_data(
                 [('id', 'in', self.pills.ids)], [], {'display_name': {}},
             )
@@ -48,7 +48,7 @@ class TestUnityWebReadGroupGantt(TransactionCase):
             })
 
         self.env.invalidate_all()
-        # 1 SQL for read_group + 1 SQL for reading name of groups + 1 SQL reading records
+        # 1 SQL for _read_group + 1 SQL for reading name of groups + 1 SQL reading records
         with self.assertQueryCount(3):
             result = self.env['test.web.gantt.pill'].get_gantt_data(
                 [('id', 'in', self.pills.ids)], ['dependency_field'], {'display_name': {}},
@@ -101,9 +101,9 @@ class TestUnityWebReadGroupGantt(TransactionCase):
 
     def test_get_gantt_data_with_limit(self):
         self.env.invalidate_all()
-        # 1 SQL for read_group + 1 SQL to count the number of group (because limit isn't reached)
+        # 1 SQL for _read_group + 1 SQL to count the number of group (because limit isn't reached)
         # + 1 SQL for reading name of parent_id + 1 SQL reading records
-        with self.assertQueryCount(4):  # One for read_group + One for reading name (+order)
+        with self.assertQueryCount(4):  # One for _read_group + One for reading name (+order)
             result = self.env['test.web.gantt.pill'].get_gantt_data(
                 [('id', 'in', self.pills.ids)], ['parent_id', 'name'], {'display_name': {}}, limit=2
             )
@@ -130,7 +130,7 @@ class TestUnityWebReadGroupGantt(TransactionCase):
             })
 
         self.env.invalidate_all()
-        # 1 SQL for read_group + 1 SQL to count the number of group (because limit isn't reached)
+        # 1 SQL for _read_group + 1 SQL to count the number of group (because limit isn't reached)
         # + 1 SQL for reading name of parent_id + 1 SQL reading records
         with self.assertQueryCount(4):
             result = self.env['test.web.gantt.pill'].get_gantt_data(
@@ -162,7 +162,7 @@ class TestUnityWebReadGroupGantt(TransactionCase):
     def test_get_gantt_data_with_inactive(self):
         self.env.invalidate_all()
         self.pills[0:2].active = False
-        # 1 SQL for read_group + 1 SQL for reading name of groups + 1 SQL reading records
+        # 1 SQL for _read_group + 1 SQL for reading name of groups + 1 SQL reading records
         with self.assertQueryCount(3):
             result = self.env['test.web.gantt.pill'].get_gantt_data(
                 [('id', 'in', self.pills.ids), ('active', '=', False)], ['dependency_field'], {'display_name': {}},

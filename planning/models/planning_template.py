@@ -61,13 +61,11 @@ class PlanningSlotTemplate(models.Model):
             shift_template.display_name = name
 
     @api.model
-    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
-        res = []
-        for data in super().read_group(domain, fields, groupby, offset, limit, orderby, lazy):
+    def formatted_read_group(self, domain, groupby=(), aggregates=(), having=(), offset=0, limit=None, order=None) -> list[dict]:
+        res = super().formatted_read_group(domain, groupby, aggregates, having, limit, offset, order)
+        for data in res:
             if 'start_time' in data:
                 data['start_time'] = float_to_time(data['start_time']).strftime('%H:%M')
             if 'end_time' in data:
                 data['end_time'] = float_to_time(data['end_time']).strftime('%H:%M')
-            res.append(data)
-
         return res

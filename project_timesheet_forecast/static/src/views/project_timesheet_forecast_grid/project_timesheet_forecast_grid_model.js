@@ -61,8 +61,7 @@ patch(TimesheetGridDataPoint.prototype, {
             "planning.slot",
             Domain.and([additionalDomain, domain]).toList({}),
             validRowFields,
-            validRowFields,
-            { lazy: false }
+            [],
         );
 
         /*

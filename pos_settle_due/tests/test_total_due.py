@@ -170,7 +170,7 @@ class TestPointOfSaleFlow(TestPointOfSaleCommon):
         self.assertEqual(original_customer_payment_entry.account_id, receivable_account)
         self.assertEqual(original_customer_payment_entry.account_id.id, reverser_customer_payment_entry.account_id.id)
         self.assertEqual(reverser_customer_payment_entry.partner_id, original_customer_payment_entry.partner_id)
-        aml_receivable = self.env['account.move.line'].read_group([('account_type', '=', 'asset_receivable')], fields=['account_id'], groupby='matching_number')
+        aml_receivable = self.env['account.move.line'].formatted_read_group([('account_type', '=', 'asset_receivable')], groupby=['matching_number'], aggregates=['__count'])
         self.assertEqual(len(aml_receivable), 3)
         for aml_g in aml_receivable:
-            self.assertEqual(aml_g['matching_number_count'], 2)
+            self.assertEqual(aml_g['__count'], 2)

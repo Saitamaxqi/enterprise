@@ -110,8 +110,10 @@ test("No preview on small devices", async () => {
     await waitForSteps([
         `/web/dataset/call_kw/account.move.line/web_read_group - ${JSON.stringify({
             kwargs: {
-                orderby: "",
-                lazy: true,
+                domain: [],
+                groupby: ["move_id"],
+                aggregates: ["__count"],
+                order: "",
                 offset: 0,
                 limit: 80,
                 context: {
@@ -119,11 +121,9 @@ test("No preview on small devices", async () => {
                     tz: "taht",
                     uid: serverState.userId,
                     allowed_company_ids: [1],
+                    read_group_expand: true,
                     group_by: ["move_id"],
                 },
-                groupby: ["move_id"],
-                domain: [],
-                fields: ["id:sum"],
             },
         })}`,
     ]);
@@ -202,8 +202,10 @@ test("Fetch and preview of attachments on big devices", async () => {
     await waitForSteps([
         `/web/dataset/call_kw/account.move.line/web_read_group - ${JSON.stringify({
             kwargs: {
-                orderby: "",
-                lazy: true,
+                domain: [],
+                groupby: ["move_id"],
+                aggregates: ["__count"],
+                order: "",
                 offset: 0,
                 limit: 80,
                 context: {
@@ -211,11 +213,9 @@ test("Fetch and preview of attachments on big devices", async () => {
                     tz: "taht",
                     uid: serverState.userId,
                     allowed_company_ids: [1],
+                    read_group_expand: true,
                     group_by: ["move_id"],
                 },
-                groupby: ["move_id"],
-                domain: [],
-                fields: ["id:sum"],
             },
         })}`,
     ]);

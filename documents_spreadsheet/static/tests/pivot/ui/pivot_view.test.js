@@ -671,11 +671,11 @@ test("pivot with a contextual domain", async () => {
         serverData,
         additionalContext: { search_default_filter: 1 },
         mockRPC: function (route, args) {
-            if (args.method === "read_group") {
+            if (args.method === "formatted_read_group") {
                 expect(args.kwargs.domain).toEqual([["foo", "=", uid]], {
                     message: "data should be fetched with the evaluated the domain",
                 });
-                expect.step("read_group");
+                expect.step("formatted_read_group");
             }
         },
     });
@@ -686,7 +686,7 @@ test("pivot with a contextual domain", async () => {
     expect(model.exportData().pivots[pivotId].domain).toBe('[("foo", "=", uid)]', {
         message: "domain is exported with the dynamic value",
     });
-    expect.verifySteps(["read_group", "read_group"]);
+    expect.verifySteps(["formatted_read_group", "formatted_read_group"]);
 });
 
 test("pivot with a quote in name", async function () {
@@ -819,27 +819,27 @@ test("pivot related context is not saved in the spreadsheet", async function () 
             await toggleMenuItem("Count");
         },
         mockRPC: function (route, args) {
-            if (args.method === "read_group") {
-                expect.step(args.kwargs.fields.join(","));
+            if (args.method === "formatted_read_group") {
+                expect.step(args.kwargs.aggregates.join(","));
             }
         },
     });
     expect.verifySteps([
         // initial view
-        "probability:avg",
-        "probability:avg",
-        "probability:avg",
-        "probability:avg",
+        "probability:avg,__count",
+        "probability:avg,__count",
+        "probability:avg,__count",
+        "probability:avg,__count",
         // adding count in the view
         "probability:avg,__count",
         "probability:avg,__count",
         "probability:avg,__count",
         "probability:avg,__count",
         // loaded in the spreadsheet
-        "probability_avg_id:avg(probability),__count",
-        "probability_avg_id:avg(probability),__count",
-        "probability_avg_id:avg(probability),__count",
-        "probability_avg_id:avg(probability),__count",
+        "probability:avg,__count",
+        "probability:avg,__count",
+        "probability:avg,__count",
+        "probability:avg,__count",
     ]);
     expect(model.exportData().pivots[pivotId].context).toEqual(
         {
