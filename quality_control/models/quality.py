@@ -452,7 +452,9 @@ class QualityCheck(models.Model):
                         return
                     check._move_to_failure_location_product(failure_location_id)
                 case 'move_line':
-                    failed_qty = failed_qty or check.move_line_id.quantity
+                    if not failed_qty:
+                        check.do_pass()
+                        return
                     move_line = check.move_line_id
                     move = move_line.move_id
                     dest_location = failure_location_id or move_line.location_dest_id.id

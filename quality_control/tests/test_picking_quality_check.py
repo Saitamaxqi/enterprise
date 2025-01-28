@@ -1223,3 +1223,34 @@ class TestQualityCheck(TestQualityCommon):
         delivery.check_ids.do_pass()
         delivery.button_validate()
         self.assertEqual(len(delivery.check_ids), 1)
+
+    def test_zero_qty_failed_quantity_check(self):
+        """ Quality point per quantity, a picking with 2 products / moves,
+            fail one move with zero qty, and it pass all the qty.
+        """
+        self.env['quality.point'].create({
+            'picking_type_ids': [Command.link(self.picking_type_id)],
+            'product_ids': [Command.link(self.product.id)],
+            'measure_on': 'move_line',
+            'test_type_id': self.env.ref('quality_control.test_type_passfail').id,
+        })
+
+        self.receipt.action_confirm()
+        self.assertEqual(len(self.receipt.check_ids), 1)
+        # open the wizard to do the checks
+        action = self.receipt.check_ids.action_open_quality_check_wizard()
+        wizard = self.env[action['res_model']].with_context(action['context']).create({})
+        self.assertEqual(wizard.current_check_id.move_line_id, self.product_move.move_line_ids)
+        action = wizard.do_fail()
+        wizard = self.env[action['res_model']].with_context(action['context']).browse(action['res_id'])
+
+        self.assertEqual(wizard.qty_failed, 2)
+        # zero qty fail
+        wizard.qty_failed = 0
+        wizard.confirm_fail()
+        # there should be 2 moves and 1 checks
+        self.assertEqual(len(self.receipt.check_ids), 1)
+        self.assertEqual(len(self.receipt.move_ids), 2)
+        self.assertRecordValues(self.receipt.check_ids, [
+            {'quality_state': 'pass', 'product_id': self.product.id, 'qty_line': 2},
+        ])
