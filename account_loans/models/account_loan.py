@@ -33,11 +33,7 @@ class AccountLoan(models.Model):
 
     name = fields.Char("Name", required=True, index="trigram", tracking=True)
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
-    currency_id = fields.Many2one(
-        related='company_id.currency_id',
-        default=lambda self: self.env.company.currency_id,  # to show the currency symbol when creating a new record (before saving it)
-        readonly=False,  # to avoid a warning because the field is readonly=True (related) and has a default value (not displayed in the view)
-    )
+    currency_id = fields.Many2one(related='company_id.currency_id')
     active = fields.Boolean(default=True)
     state = fields.Selection(
         string="Status",

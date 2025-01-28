@@ -59,6 +59,7 @@
                                 <field string="Related Asset(s)" name="count_linked_assets" widget="statinfo"/>
                             </button>
                         </div>
+                        <field name="company_id" invisible="1"/> <!-- Needed so the company_id is fetched when creating a new record -->
                         <field name="currency_id" invisible="1"/>  <!-- Needed for monetary widget -->
                         <div class="oe_title">
                             <label for="name"/>
