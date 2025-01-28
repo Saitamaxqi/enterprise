@@ -6,9 +6,9 @@ from odoo import api, fields, models, tools
 from odoo.addons.hr_appraisal.models.hr_appraisal import HrAppraisal
 
 COLORS_BY_STATE = {
-    'new': 0,
-    'pending': 2,
-    'done': 3,
+    '1_new': 0,
+    '2_pending': 2,
+    '3_done': 3,
 }
 
 
