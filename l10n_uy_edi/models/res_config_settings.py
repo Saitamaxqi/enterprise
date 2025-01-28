@@ -1,7 +1,8 @@
 import logging
 
-from odoo import models, fields, _
+from datetime import datetime, timedelta, timezone
 
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError, AccessError
 from odoo.addons.iap.tools import iap_tools
 from odoo.addons.iap import InsufficientCreditError
@@ -39,17 +40,21 @@ class ResConfigSettings(models.TransientModel):
     def l10n_uy_edi_action_create_uruware_account(self):
         self.ensure_one()
         error = False
+        in_test_mode = self.l10n_uy_edi_ucfe_env == "testing"
+        notification_email = "your email"
 
         if not self.company_id.vat:
             raise UserError(_('Please configure your company RUT first'))
+
         try:
             res = iap_tools.iap_jsonrpc(
-                (TEST_ENDPOINT if self.l10n_uy_edi_ucfe_env == "testing" else PROD_ENDPOINT) + "api/l10n_uy_reg_proxy/1/create_account",
+                (TEST_ENDPOINT if in_test_mode else PROD_ENDPOINT) + "api/l10n_uy_reg_proxy/1/create_account",
                 params={
                     "db_uuid": self.env["ir.config_parameter"].sudo().get_param("database.uuid", "FAKETESTID"),
                     "company": self.company_id.id,
                     "company_name": self.company_id.name,
                     "company_vat": self.company_id.vat,
+                    "user_email": self.env.user.email,  # to be used as the email contact in test mode
                 })
             if res.get("success") is not True:
                 error = _("Error connection to Odoo IAP to create Uruware account")
@@ -59,8 +64,20 @@ class ResConfigSettings(models.TransientModel):
                               'If it is new, it might take some time for the system to recognize your contract. ')
                 elif error_code == 'error_sending_mail':
                     error = _('Your database is valid, but an error happened on our side. ')
+                elif error_code == 'error_cooldown':
+                    hours = res['hours']
+                    minutes = res['minutes']
+                    seconds = res['seconds']
+                    error = _("You can't send another request within 24 hours. "
+                              "You will be able to send again in %(hours)s hours, %(minutes)s minutes, and %(seconds)s seconds.",
+                              hours=hours, minutes=minutes, seconds=seconds)
+                elif error_code == 'error_too_many_registrations':
+                    error = _("More than 5 registrations have been made within 24 hours in this database. "
+                              "Please try again later.")
                 elif error_code:
                     error += ":" + error_code
+            else:  # res == {'success': True, 'email': <email_str>}
+                notification_email = res["email"]
 
         except (UserError, InsufficientCreditError, AccessError) as exp:
             error = str(exp)
@@ -76,7 +93,9 @@ class ResConfigSettings(models.TransientModel):
                 "message":
                     _("Error creating the Uruware account. Please contact support: ") + error if error else
                     _("The account creating request has been successfully sent. "
-                      "Please check your email for more instructions"),
+                      "The credentials will be sent to %s. "
+                      "Please check your email for more instructions",
+                      notification_email),
                 "next": {"type": "ir.actions.act_window_close"},
                 "sticky": True,
             }

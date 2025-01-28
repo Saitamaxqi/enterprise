@@ -23,7 +23,20 @@
                             </div>
 
                         <div class="mt16" invisible="l10n_uy_edi_ucfe_password">
-                            <button name="l10n_uy_edi_action_create_uruware_account" icon="oi-arrow-right" type="object" class="oe_link oe_inline" string="Create Uruware Account" invisible="l10n_uy_edi_ucfe_env not in ['production', 'testing']" confirm="Do you want to create an account? Please check first if you already have one. This step is irreversible. Your login credentials will be sent to the email associated with your Odoo subscription account."/>
+                            <button name="l10n_uy_edi_action_create_uruware_account"
+                                    icon="oi-arrow-right"
+                                    type="object"
+                                    class="oe_link oe_inline"
+                                    string="Create Uruware Test Account"
+                                    invisible="l10n_uy_edi_ucfe_env != 'testing'"
+                                    confirm="Your login email will be used as the contact that Uruware will send the credentials to. Make sure it is correct. This process will take around 24 to 48 hours."/>
+                            <button name="l10n_uy_edi_action_create_uruware_account"
+                                    icon="oi-arrow-right"
+                                    type="object"
+                                    class="oe_link oe_inline"
+                                    string="Create Uruware Account"
+                                    invisible="l10n_uy_edi_ucfe_env != 'production'"
+                                    confirm="Do you want to create an account? Please check first if you already have one. This step is irreversible. Your login credentials will be sent to the email associated with your Odoo subscription account. This process will take around 24 to 48 hours."/>
                         </div>
 
                         <div class="row mt16">
