@@ -270,7 +270,7 @@ class AccountDeferredReportHandler(models.AbstractModel):
             'name': _('Deferred Entries'),
             'res_model': 'account.move.line',
             'domain': [('id', 'in', line_ids)],
-            'views': [(self.env.ref('account_accountant.view_deferred_entries_tree').id, 'list')],
+            'views': [(self.env.ref('account_accountant.view_deferred_entries_tree').id, 'list'), (False, 'pivot'), (False, 'graph'), (False, 'kanban')],
             # Most filters are set here to allow auditing flexibility to the user
             'context': {
                 'search_default_pl_accounts': True,
