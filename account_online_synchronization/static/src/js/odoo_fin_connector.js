@@ -61,15 +61,13 @@ function OdooFinConnector(parent, action) {
                             return;
                     }
                 },
-                onAddBank: async function (journalType) {
-                    // If the user doesn't find his bank
-                     actionResult = await orm.call(
+                onAddBank: async function (data) {
+                    actionResult = await orm.call(
                         "account.online.link",
                         "create_new_bank_account_action",
-                        [journalType],
-                        {context: action.context}
+                        [[id], data],
+                        { context: action.context }
                     );
-                    actionResult.help = markup(actionResult.help)
                     return actionService.doAction(actionResult);
                 }
             };

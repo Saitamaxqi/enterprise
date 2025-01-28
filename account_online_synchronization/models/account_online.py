@@ -414,9 +414,10 @@ class AccountOnlineLink(models.Model):
     ##########################
     # Wizard opening actions #
     ##########################
-
     @api.model
-    def create_new_bank_account_action(self, journal_type):
+    def create_new_bank_account_action(self, data):
+        self.ensure_one()
+        journal_type = data.get('journal_type') or 'bank'
         assert journal_type in ('bank', 'credit')
         if journal_type == 'bank':
             view_xml_id = 'account.setup_bank_account_wizard'
@@ -425,19 +426,42 @@ class AccountOnlineLink(models.Model):
             view_xml_id = 'account.setup_credit_card_account_wizard'
             name = _('Setup Credit Card Account')
 
-        ctx = {**self.env.context, 'journal_type': journal_type}
-        # if this was called from kanban box, active_model is in context
-        if self.env.context.get('active_model') == 'account.journal':
-            ctx = {**ctx, 'default_linked_journal_id': ctx.get('active_id', False), 'dialog_size': 'medium'}
-        return {
-            'type': 'ir.actions.act_window',
-            'name': name,
-            'res_model': 'account.setup.bank.manual.config',
-            'target': 'new',
-            'view_mode': 'form',
-            'context': ctx,
-            'views': [[self.env.ref(view_xml_id).id, 'form']],
-        }
+        # We do return the bank account setup wizard if we don't have minimum info
+        if not data or not data.get('account_number'):
+            ctx = {**self.env.context, 'journal_type': journal_type}
+            # if this was called from kanban box, active_model is in context
+            if self.env.context.get('active_model') == 'account.journal':
+                ctx = {**ctx, 'default_linked_journal_id': ctx.get('active_id', False), 'dialog_size': 'medium'}
+            return {
+                'type': 'ir.actions.act_window',
+                'name': name,
+                'res_model': 'account.setup.bank.manual.config',
+                'target': 'new',
+                'view_mode': 'form',
+                'context': ctx,
+                'views': [[self.env.ref(view_xml_id).id, 'form']],
+            }
+
+        bank = self.env['res.bank']
+        if data.get('name'):
+            bank = self.env['res.bank'].sudo().create({
+                'name': data['name'],
+                'bic': data.get('swift_code'),
+            })
+
+        bank_account = self.env['res.partner.bank'].sudo().create({
+            'acc_number': data.get('account_number'),
+            'bank_id': bank.id,
+            'partner_id': self.company_id.partner_id.id,
+        })
+
+        self.env['account.journal'].sudo().create({
+            'name': data.get('account_number'),
+            'type': journal_type,
+            'bank_account_id': bank_account.id,
+        })
+
+        return {'type': 'ir.actions.client', 'tag': 'soft_reload'}
 
     def _link_accounts_to_journals_action(self, swift_code, journal_type):
         """
