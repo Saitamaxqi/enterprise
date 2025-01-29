@@ -38,5 +38,5 @@
         <field name="target">new</field>
     </record>
 
-    <menuitem action="view_l10n_us_1099_wizard_act_window" id="menu_action_view_l10n_us_1099_wizard" name="1099 Report" sequence="20" parent="account.account_reports_management_menu" groups="account.group_account_readonly"/>
+    <menuitem action="view_l10n_us_1099_wizard_act_window" id="menu_action_view_l10n_us_1099_wizard" name="1099 Report…" sequence="20" parent="account.account_reports_management_menu" groups="account.group_account_readonly"/>
 </odoo>
