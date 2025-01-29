@@ -3,6 +3,7 @@
 
 import itertools
 from odoo import api, fields, models, _
+from odoo.tools import groupby
 
 
 class HelpdeskTicket(models.Model):
@@ -26,41 +27,56 @@ class HelpdeskTicket(models.Model):
 
     @api.depends('partner_id')
     def _compute_suitable_product_ids(self):
-        suitable_partner_ids = self.env['res.partner'].search([('commercial_partner_id', 'in', self.commercial_partner_id.ids)]).ids
+        """
+        Computes the suitable products for the given tickets based on the associated
+        partner's sales orders and outgoing deliveries.
+        """
+        suitable_partners_ids_by_commercial_partner_id = {
+            commercial_partner_id.id: ids
+            for commercial_partner_id, ids in self.env['res.partner']._read_group(
+                domain=[('commercial_partner_id', 'in', self.commercial_partner_id.ids)],
+                groupby=['commercial_partner_id'],
+                aggregates=['id:array_agg'],
+            )
+        }
+        for commercial_partner, tickets_list in groupby(self, lambda t: t.commercial_partner_id):
+            tickets = self.env['helpdesk.ticket'].browse(ticket.id for ticket in tickets_list)
+            suitable_partner_ids = suitable_partners_ids_by_commercial_partner_id.get(commercial_partner.id)
+            if not suitable_partner_ids:
+                tickets.suitable_product_ids = False
+                tickets.has_partner_picking = False
+                continue
+            sale_data = self.env['sale.order.line']._read_group([
+                ('product_id', '!=', False),
+                ('state', '=', 'sale'),
+                ('order_partner_id', 'in', suitable_partner_ids),
+            ], ['order_partner_id'], ['product_id:array_agg'])
+            order_data = {order_partner.id: product_ids for order_partner, product_ids in sale_data}
 
-        sale_data = self.env['sale.order.line']._read_group([
-            ('product_id', '!=', False),
-            ('order_id.state', '=', 'sale'),
-            ('order_partner_id', 'in', suitable_partner_ids)
-        ], ['order_partner_id'], ['product_id:array_agg'])
-        order_data = {order_partner.id: product_ids for order_partner, product_ids in sale_data}
-
-        picking_data = self.env['stock.picking']._read_group([
-            ('state', '=', 'done'),
-            ('partner_id', 'in', suitable_partner_ids),
-            ('picking_type_code', '=', 'outgoing'),
-        ], ['partner_id'], ['id:array_agg'])
-
-        # it was not correct, it took only products of stock_move_line from the first partner_id of self
-        picking_ids = [id_ for __, ids in picking_data for id_ in ids]
-        outgoing_product = {}
-        if picking_ids:
-            move_line_data = self.env['stock.move.line']._read_group([
+            picking_data = self.env['stock.picking']._read_group([
                 ('state', '=', 'done'),
-                ('picking_id', 'in', picking_ids),
-                ('picking_code', '=', 'outgoing'),
-            ], ['picking_id'], ['product_id:array_agg'])
-            move_lines = {picking.id: product_ids for picking, product_ids in move_line_data}
-            if move_lines:
-                for partner, picking_ids in picking_data:
-                    product_lists = [move_lines[pick] for pick in picking_ids if pick in move_lines]
-                    outgoing_product[partner.id] = list(itertools.chain(*product_lists))
-        partners_in_sale = dict(zip(order_data.keys(), self.env['res.partner'].browse(order_data.keys())))
+                ('partner_id', 'in', suitable_partner_ids),
+                ('picking_type_code', '=', 'outgoing'),
+            ], ['partner_id'], ['id:array_agg'])
 
-        for ticket in self:
+            # it was not correct, it took only products of stock_move_line from the first partner_id of self
+            picking_ids = [id_ for __, ids in picking_data for id_ in ids]
+            outgoing_product = {}
+            if picking_ids:
+                move_line_data = self.env['stock.move.line']._read_group([
+                    ('state', '=', 'done'),
+                    ('picking_id', 'in', picking_ids),
+                    ('picking_code', '=', 'outgoing'),
+                ], ['picking_id'], ['product_id:array_agg'])
+                move_lines = {picking.id: product_ids for picking, product_ids in move_line_data}
+                if move_lines:
+                    for partner, picking_ids in picking_data:
+                        product_lists = [move_lines[pick] for pick in picking_ids if pick in move_lines]
+                        outgoing_product[partner.id] = list(itertools.chain(*product_lists))
+            partners_in_sale = dict(zip(order_data.keys(), self.env['res.partner'].browse(order_data.keys())))
             product_ids = {item for partner_id in suitable_partner_ids for item in order_data.get(partner_id, []) + outgoing_product.get(partner_id, [])}
-            ticket.suitable_product_ids = [fields.Command.set(product_ids)]
-            ticket.has_partner_picking = any(partner_id in outgoing_product for partner_id in suitable_partner_ids) or any(partner_id in partners_in_sale for partner_id in suitable_partner_ids)
+            tickets.suitable_product_ids = [fields.Command.set(product_ids)]
+            tickets.has_partner_picking = any((partner_id in outgoing_product) or (partner_id in partners_in_sale) for partner_id in suitable_partner_ids)
 
     @api.onchange('suitable_product_ids')
     def onchange_product_id(self):
