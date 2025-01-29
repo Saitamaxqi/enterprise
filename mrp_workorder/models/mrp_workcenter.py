@@ -3,6 +3,7 @@
 
 from ast import literal_eval
 from odoo import models, fields, api
+from odoo.tools import float_is_zero
 from odoo.http import request
 
 
@@ -61,7 +62,13 @@ class MrpWorkcenterProductivity(models.Model):
     @api.depends('employee_id.hourly_cost')
     def _compute_employee_cost(self):
         for time in self:
-            time.employee_cost = time.employee_id.hourly_cost if time.employee_id else time.workcenter_id.employee_costs_hour
+            if time.workorder_id.state == 'done' and not float_is_zero(time.employee_cost, 2):
+                continue
+
+            if time.employee_id and not float_is_zero(time.employee_id.hourly_cost, 2):
+                time.employee_cost = time.employee_id.hourly_cost
+            else:
+                time.employee_cost = time.workcenter_id.employee_costs_hour
 
     @api.depends('duration', 'employee_cost')
     def _compute_total_cost(self):
