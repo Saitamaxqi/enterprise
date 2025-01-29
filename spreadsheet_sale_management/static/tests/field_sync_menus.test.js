@@ -24,7 +24,7 @@ before(() => {
 
 describe("field sync menus", () => {
     test("add a field sync at the selected cell", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         const env = {
             ...model.config.custom.env,
             model,
@@ -44,7 +44,7 @@ describe("field sync menus", () => {
     });
 
     test("delete a field sync at the selected cell", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "B2", "product_uom_qty", 0);
         const env = {
             ...model.config.custom.env,
@@ -56,7 +56,7 @@ describe("field sync menus", () => {
     });
 
     test("delete is not visible if there's nothing to delete", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         const env = {
             ...model.config.custom.env,
             model,

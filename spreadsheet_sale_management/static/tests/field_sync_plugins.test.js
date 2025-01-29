@@ -39,7 +39,7 @@ before(() => {
 
 describe("field sync plugins", () => {
     test("add a field sync", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         const fieldSync = getFieldSync(model, "A1");
         expect(fieldSync).toEqual({
@@ -54,7 +54,7 @@ describe("field sync plugins", () => {
     });
 
     test("delete a field sync", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         const fieldSync = getFieldSync(model, "A1");
         deleteFieldSyncs(model, "A1");
@@ -66,7 +66,7 @@ describe("field sync plugins", () => {
     });
 
     test("export/import a field sync", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         const data = model.exportData();
         expect(data.sheets[0].fieldSyncs["A1"]).toEqual({
@@ -79,19 +79,19 @@ describe("field sync plugins", () => {
     });
 
     test("can't add same field sync twice", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         const result = addFieldSync(model, "A1", "product_uom_qty", 0);
         expect(result.isSuccessful).toBe(false);
     });
 
     test("can't delete field sync that doesn't exist", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         expect(deleteFieldSyncs(model, "A1").isSuccessful).toBe(false);
     });
 
     test("field sync is moved when column is added before", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         addColumns(model, "before", "A", 1);
         expect(getFieldSync(model, "A1")).toBe(undefined);
@@ -103,7 +103,7 @@ describe("field sync plugins", () => {
     });
 
     test("field sync is deleted when column is removed", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         deleteColumns(model, ["A"]);
         expect(getFieldSync(model, "A1")).toBe(undefined);
@@ -111,7 +111,7 @@ describe("field sync plugins", () => {
     });
 
     test("x2many commands when the cell is empty", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         expect(getCellContent(model, "A1")).toBe("");
         expect(await model.getters.getFieldSyncX2ManyCommands()).toEqual({
@@ -122,7 +122,7 @@ describe("field sync plugins", () => {
 
     test("x2many commands when the cell is a number", async () => {
         SaleOrderLine._records = [{ id: 42 }];
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         setCellContent(model, "A1", "111");
         expect(await model.getters.getFieldSyncX2ManyCommands()).toEqual({
@@ -137,7 +137,7 @@ describe("field sync plugins", () => {
 
     test("x2many commands with field sync position bigger than formula", async () => {
         SaleOrderLine._records = [{ id: 42 }, { id: 43 }];
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         addFieldSync(model, "A2", "product_uom_qty", 1); // has a matching record but not loaded
         addFieldSync(model, "A3", "product_uom_qty", 2); // doesn't have a matching record
@@ -163,7 +163,7 @@ describe("field sync plugins", () => {
             expect.step("web_search_read");
         });
         SaleOrderLine._records = [{ id: 42 }, { id: 43 }];
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         addFieldSync(model, "A2", "product_uom_qty", 1);
         setCellContent(model, "A1", "111");
@@ -183,7 +183,7 @@ describe("field sync plugins", () => {
 
     test("x2many commands on 2 fields", async () => {
         SaleOrderLine._records = [{ id: 42 }];
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         addFieldSync(model, "A2", "qty_delivered", 0);
         setCellContent(model, "A1", "111");
@@ -201,7 +201,7 @@ describe("field sync plugins", () => {
 
     test("x2many commands when the cell is an error", async () => {
         SaleOrderLine._records = [{ id: 42 }];
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         setCellContent(model, "A1", "=1/0");
         expect((await model.getters.getFieldSyncX2ManyCommands()).errors).toEqual([
@@ -211,7 +211,7 @@ describe("field sync plugins", () => {
 
     test("x2many commands text value on a numeric field", async () => {
         SaleOrderLine._records = [{ id: 42 }];
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         setCellContent(model, "A1", "Hello");
         expect((await model.getters.getFieldSyncX2ManyCommands()).errors).toEqual([
@@ -221,7 +221,7 @@ describe("field sync plugins", () => {
 
     test("x2many commands numeric value on a text field", async () => {
         SaleOrderLine._records = [{ id: 42 }];
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "name", 0);
         setCellContent(model, "A1", "30%");
         expect(await model.getters.getFieldSyncX2ManyCommands()).toEqual({
@@ -237,7 +237,7 @@ describe("field sync plugins", () => {
     test("x2many commands with not enough records in the list", async () => {
         // only one record
         SaleOrderLine._records = [{ id: 42 }];
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         setCellContent(model, "A1", "111");
 
@@ -256,7 +256,7 @@ describe("field sync plugins", () => {
     });
 
     test("auto fill down increments position", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         autofill(model, "A1", "A3");
         expect(getFieldSync(model, "A2")).toEqual({
@@ -272,7 +272,7 @@ describe("field sync plugins", () => {
     });
 
     test("auto fill up decrements position", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A3", "product_uom_qty", 2);
         autofill(model, "A3", "A1");
         expect(getFieldSync(model, "A2")).toEqual({
@@ -288,7 +288,7 @@ describe("field sync plugins", () => {
     });
 
     test("auto fill up stops at 0", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A3", "product_uom_qty", 1);
         autofill(model, "A3", "A1");
         expect(getFieldSync(model, "A2")).toEqual({
@@ -300,7 +300,7 @@ describe("field sync plugins", () => {
     });
 
     test("auto fill right copies", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         autofill(model, "A1", "B1");
         expect(getFieldSync(model, "B1")).toEqual({
@@ -311,7 +311,7 @@ describe("field sync plugins", () => {
     });
 
     test("auto fill left copies", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "B1", "product_uom_qty", 0);
         autofill(model, "B1", "A1");
         expect(getFieldSync(model, "A1")).toEqual({
@@ -322,7 +322,7 @@ describe("field sync plugins", () => {
     });
 
     test("copy-paste below", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "B1", "product_uom_qty", 0);
         copy(model, "B1");
         paste(model, "B2");
@@ -334,7 +334,7 @@ describe("field sync plugins", () => {
     });
 
     test("copy-paste up", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "B3", "product_uom_qty", 1);
         copy(model, "B3");
         paste(model, "B2");
@@ -348,7 +348,7 @@ describe("field sync plugins", () => {
     });
 
     test("copy-paste horizontally", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "B1", "product_uom_qty", 0);
         copy(model, "B1");
         paste(model, "A1");
@@ -359,7 +359,7 @@ describe("field sync plugins", () => {
     });
 
     test("copy-paste horizontally and vertically", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "B1", "product_uom_qty", 0);
         copy(model, "B1");
         paste(model, "C2");
@@ -371,7 +371,7 @@ describe("field sync plugins", () => {
     });
 
     test("copy-paste zone", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "B1", "product_uom_qty", 0);
         addFieldSync(model, "B2", "product_uom_qty", 1);
         copy(model, "B1:B2");
@@ -389,7 +389,7 @@ describe("field sync plugins", () => {
     });
 
     test("cut-paste", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "B1", "product_uom_qty", 0);
         const originalFieldSync = getFieldSync(model, "B1");
         cut(model, "B1");
@@ -399,7 +399,7 @@ describe("field sync plugins", () => {
     });
 
     test("can't delete main sale order line list", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         const result = model.dispatch("REMOVE_ODOO_LIST", {
             listId: model.getters.getMainSaleOrderLineList().id,
         });
@@ -407,14 +407,14 @@ describe("field sync plugins", () => {
     });
 
     test("can't delete main sale order global filter", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         const [filter] = model.getters.getGlobalFilters();
         const result = model.dispatch("REMOVE_GLOBAL_FILTER", { id: filter.id });
         expect(result.isSuccessful).toBe(false);
     });
 
     test("duplicated field sync error", async () => {
-        const model = await createSaleOrderSpreadsheetModel();
+        const { model } = await createSaleOrderSpreadsheetModel();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         addFieldSync(model, "A2", "product_uom_qty", 0);
         expect((await model.getters.getFieldSyncX2ManyCommands()).errors).toEqual([]);

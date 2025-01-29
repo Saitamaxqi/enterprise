@@ -47,7 +47,7 @@ test("ODOO.LIST id exact match", async function () {
 });
 
 test("ODOO.LIST field name", async function () {
-    const model = await createModelWithDataSource();
+    const { model } = await createModelWithDataSource();
     const { store: composer } = await makeStoreWithModel(model, CellComposerStore);
     insertListInSpreadsheet(model, {
         model: "partner",
@@ -74,7 +74,7 @@ test("ODOO.LIST field name", async function () {
 });
 
 test("ODOO.LIST.HEADER field name", async function () {
-    const model = await createModelWithDataSource();
+    const { model } = await createModelWithDataSource();
     const { store: composer } = await makeStoreWithModel(model, CellComposerStore);
     insertListInSpreadsheet(model, {
         model: "partner",
