@@ -580,19 +580,24 @@ class DocumentsDocument(models.Model):
 
     def _get_folder_embedded_actions(self, folder_ids):
         """Return the enabled actions for the given folder."""
-        embedded_actions = self.env['ir.embedded.actions'].sudo().search(
+        all_embedded_actions_sudo = self.env['ir.embedded.actions'].sudo().search(
             domain=[
                 ('parent_action_id', '=', self.env.ref("documents.document_action").id),
-                ('action_id', '!=', False),
                 ('action_id.type', '=', 'ir.actions.server'),
                 ('parent_res_model', '=', 'documents.document'),
                 ('parent_res_id', 'in', folder_ids),
-                '|',
-                    ('groups_ids', 'any', [('id', 'in', self.env.user.all_group_ids.ids)]),
-                    ('groups_ids', '=', False),
             ],
             order='sequence',
         )
+        # Filtering on action_id.groups_id above is not possible because the orm "considers" action_id
+        # to be of the ir.actions.action model, that does not have a groups_id field.
+        accessible_server_actions_ids = self.env['ir.actions.server'].sudo().search([
+            ('id', 'in', all_embedded_actions_sudo.action_id.ids),
+            '|', ('group_ids', 'any', [('id', 'in', self.env.user.all_group_ids.ids)]),
+                 ('group_ids', '=', False),
+        ]).ids
+        embedded_actions = all_embedded_actions_sudo.filtered(
+            lambda e: e.action_id.id in accessible_server_actions_ids).sudo(False)
         # group after ordering by `ir.embedded.actions` sequence
         return embedded_actions.grouped('parent_res_id')
 
@@ -1070,6 +1075,8 @@ class DocumentsDocument(models.Model):
         actions = self.env['ir.actions.server'].sudo().search([
             ('model_id', '=', self.env['ir.model']._get_id('documents.document')),
             ('usage', '=', 'ir_actions_server'),
+            '|', ('group_ids', 'any', [('id', 'in', self.env.user.all_group_ids.ids)]),
+                 ('group_ids', '=', False),
         ])
         # Do not show an action if it's a child of a different action
         actions -= actions.child_ids
@@ -1085,33 +1092,40 @@ class DocumentsDocument(models.Model):
 
         :param int folder_id: The folder on which we pin the actions
         :param int action_id: The id of the action to enable
-        :param list[int] groups_ids: ids of the groups the action is available to
+        :param list[int] groups_ids: deprecated: ids of the groups the action is available to
+          Groups cannot be implemented at this level, they must be set on the server action instead.
         """
         if not self.env.user.has_group('documents.group_documents_user'):
             raise AccessError(_("You are not allowed to pin/unpin embedded Actions."))
-
-        if not groups_ids:
-            groups_ids = self.env.ref('base.group_user').ids
-
-        action = self.env['ir.actions.server'].browse(action_id).sudo().exists()
+        server_actions_groups_domain = [
+            '|', ('group_ids', 'any', [('id', 'in', self.env.user.all_group_ids.ids)]),
+                 ('group_ids', '=', False),
+        ]
+        action = self.env['ir.actions.server'].sudo().search([('id', '=', action_id), *server_actions_groups_domain])
         if not action:
             raise UserError(_('This action does not exist.'))
         if action.type != 'ir.actions.server':
             raise UserError(_('You can not ping that type of action.'))
         folder = self.env['documents.document'].browse(folder_id).sudo().exists()
-        if not folder or folder.type != 'folder':
+        if not folder or folder.type != 'folder' or folder.shortcut_document_id:
             raise UserError(_('You can not ping an action on that document.'))
 
-        embedded = self.env['ir.embedded.actions'].sudo().search([
+        all_embedded_actions_sudo = self.env['ir.embedded.actions'].sudo().search([
             ('parent_action_id', '=', self.env.ref("documents.document_action").id),
             ('action_id', '=', action_id),
             ('action_id.type', '=', 'ir.actions.server'),
             ('parent_res_model', '=', 'documents.document'),
             ('parent_res_id', '=', folder_id),
-            ('groups_ids', 'in', groups_ids),
-        ]).sudo(False)
-        if embedded:
-            embedded.unlink()
+        ])
+        # See _get_folder_embedded_actions
+        accessible_server_action_ids = self.env['ir.actions.server'].sudo().search([
+            ('id', 'in', all_embedded_actions_sudo.action_id.ids),
+            *server_actions_groups_domain
+        ]).ids
+        embedded_actions_sudo = all_embedded_actions_sudo.filtered(
+            lambda e: e.action_id.id in accessible_server_action_ids)
+        if embedded_actions_sudo:
+            embedded_actions_sudo.unlink()
         else:
             # first pinned action should be displayed first
             last_action = self.env['ir.embedded.actions'].search(
@@ -1122,7 +1136,7 @@ class DocumentsDocument(models.Model):
                 'action_id': action.id,
                 'parent_res_model': 'documents.document',
                 'parent_res_id': folder_id,
-                'groups_ids': groups_ids,
+                'groups_ids': self.env.ref('base.group_user').ids,
                 'sequence': last_action.sequence + 1 if last_action else 1,
             })
             action_name_translations = action._fields['name']._get_stored_translations(action)
