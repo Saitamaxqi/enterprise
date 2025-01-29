@@ -1286,10 +1286,21 @@ registry.category("web_tour.tours").add("web_studio_approval_tour", {
             run: "click",
         },
         {
+            trigger: ".o_searchview_input",
+            run: "edit web_studio",
+        },
+        {
+            trigger: ".dropdown-item:contains(Search Module for)",
+            run: "click",
+        },
+        {
+            trigger: ".o_kanban_record:not(.o_kanban_ghost):only",
+        },
+        {
             content:
                 "open first record (should be the one that was used, so the button should be there)",
             trigger:
-                ".o_kanban_view .o_kanban_record:not(:has(button[name='button_immediate_install'])) .o_dropdown_kanban .dropdown-toggle",
+                ".o_kanban_view .o_kanban_record:not(.o_kanban_ghost):not(:has(button[name='button_immediate_install'])) .o_dropdown_kanban .dropdown-toggle",
             run: "click",
         },
         {
