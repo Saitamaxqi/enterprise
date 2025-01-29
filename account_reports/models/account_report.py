@@ -7011,7 +7011,15 @@ class AccountReportLine(models.Model):
                 if custom_groupby_name_builder:
                     keys_and_names_in_sequence[non_relational_key] = custom_groupby_name_builder(non_relational_key)
                 else:
-                    keys_and_names_in_sequence[non_relational_key] = str(non_relational_key) if non_relational_key is not None else _("Unknown")
+                    if non_relational_key is None:
+                        keys_and_names_in_sequence[non_relational_key] = _("Undefined")
+                    else:
+                        groupby_field = self.env['account.move.line']._fields[groupby_data['current_groupby']]
+                        if groupby_field.type == 'selection':
+                            selection_options = dict(groupby_field._description_selection(self.env))
+                            keys_and_names_in_sequence[non_relational_key] = selection_options.get(non_relational_key) or _("Undefined")
+                        else:
+                            keys_and_names_in_sequence[non_relational_key] = str(non_relational_key)
 
         # Build result: add a name to the groupby lines and handle totals below section for multi-level groupby
         group_lines = []
@@ -7028,6 +7036,7 @@ class AccountReportLine(models.Model):
         return group_lines
 
     def _get_groupby_line_name(self, groupby_field_name, groupby_model, grouping_key):
+        # TODO master: remove this method as it is dead code
         if groupby_model is None:
             return grouping_key
 

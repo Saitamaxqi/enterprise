@@ -228,7 +228,7 @@ class TestReportEngines(TestAccountReportsCommon):
         )
         test_line_2 = self._prepare_test_report_line(
             self._prepare_test_expression_tax_tags('222T'),
-            groupby='account_id',
+            groupby='parent_state,account_id',
         )
         test_line_3 = self._prepare_test_report_line(
             self._prepare_test_expression_tax_tags('3333'),
@@ -260,6 +260,7 @@ class TestReportEngines(TestAccountReportsCommon):
                 ('101001 101001',      3000.0),
                 ('101002 101002',      2400.0),
                 ('test_line_2',           0.0),
+                ('Posted',                0.0),
                 ('101001 101001',         0.0),
                 ('test_line_3',         600.0),
                 ('101001 101001',       600.0),
@@ -289,7 +290,7 @@ class TestReportEngines(TestAccountReportsCommon):
         )
         test_line_2 = self._prepare_test_report_line(
             self._prepare_test_expression_domain(domain, '-sum'),
-            groupby='account_id',
+            groupby='parent_state,account_id',
         )
         test_line_3 = self._prepare_test_report_line(
             self._prepare_test_expression_domain(domain, 'sum_if_neg'),
@@ -334,6 +335,7 @@ class TestReportEngines(TestAccountReportsCommon):
                 ('101003 101003',      -600.0),
                 ('101004 101004',      -900.0),
                 ('test_line_2',        1800.0),
+                ('Posted',             1800.0),
                 ('101002 101002',       300.0),
                 ('101003 101003',       600.0),
                 ('101004 101004',       900.0),
@@ -392,7 +394,7 @@ class TestReportEngines(TestAccountReportsCommon):
         )
         test_line_2 = self._prepare_test_report_line(
             self._prepare_test_expression_account_codes('1C'),
-            groupby='account_id',
+            groupby='parent_state,account_id',
         )
         test_line_3 = self._prepare_test_report_line(
             self._prepare_test_expression_account_codes('1D'),
@@ -486,6 +488,7 @@ class TestReportEngines(TestAccountReportsCommon):
                 ('101002 101002',      -300.0),
                 ('101003 101003',      -600.0),
                 ('test_line_2',        -900.0),
+                ('Posted',             -900.0),
                 ('101002 101002',      -300.0),
                 ('101003 101003',      -600.0),
                 ('test_line_3',       13000.0),
