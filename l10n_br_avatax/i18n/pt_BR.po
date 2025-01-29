@@ -46,6 +46,15 @@ msgstr "%s deve selecionar uma cidade brasileira da lista."
 #. odoo-python
 #: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
 msgid ""
+"- The following label exceeds the %(max_characters)s character limit for %(doc_type)s: %(line)s"
+msgstr ""
+"- O seguinte rótulo excede o limite de caracteres de %(max_characters)s em "
+"%(doc_type)s: %(line)s"
+
+#. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+msgid ""
 "The barcode of %s must have either 8, or 12 to 14 digits when using Avatax."
 msgstr ""
 "Ao utilizar a Avalara, o código de barras para %s pode ter 8 dígitos, ou de "

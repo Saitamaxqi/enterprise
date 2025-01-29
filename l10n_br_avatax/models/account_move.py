@@ -132,3 +132,11 @@ class AccountMove(models.Model):
                 for index, payment in enumerate(payments.sorted("date_maturity"))
             ],
         }
+
+    def _l10n_br_build_avatax_line(self, product, qty, unit_price, total, discount, line_id):
+        """ Override of account.external.tax.mixin. Swap out the product name for line description on invoices.
+        TODO: remove this in master and provide a description directly in _get_line_data_for_external_taxes so we avoid
+              having to browse (and do something similar on sale orders). """
+        res = super()._l10n_br_build_avatax_line(product, qty, unit_price, total, discount, line_id)
+        res["itemDescriptor"]["description"] = self.env["account.move.line"].browse(line_id).name
+        return res

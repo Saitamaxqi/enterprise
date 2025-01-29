@@ -42,6 +42,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
 msgid ""
+"- The following label exceeds the %(max_characters)s character limit for %(doc_type)s: %(line)s"
+msgstr ""
+
+#. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+msgid ""
 "The barcode of %s must have either 8, or 12 to 14 digits when using Avatax."
 msgstr ""
 
