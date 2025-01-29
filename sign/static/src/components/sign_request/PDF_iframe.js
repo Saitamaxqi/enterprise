@@ -100,6 +100,18 @@ export class PDFIframe {
         layer.width = viewer.offsetWidth / scale;
         layer.height = viewer.offsetHeight / scale;
         viewer.appendChild(layer);
+
+        // Add ResizeObserver to update canvas dimensions when the viewer is resized
+        const resizeObserver = new ResizeObserver(() => {
+            const newScale = this.getCanvasScale();
+            layer.style.width = viewer.offsetWidth + "px";
+            layer.style.height = viewer.offsetHeight + "px";
+            layer.width = viewer.offsetWidth / newScale;
+            layer.height = viewer.offsetHeight / newScale;
+            this.renderAllConnectingLines();
+        });
+        resizeObserver.observe(viewer);
+        this.cleanupFns.push(() => resizeObserver.disconnect());
     }
 
     renderSignItems() {
@@ -149,6 +161,7 @@ export class PDFIframe {
         target.insertAdjacentHTML("beforeend", signItemElement);
         const signItem = target.lastChild;
         signItem.classList.add("d-none");
+        signItem.setAttribute("tabindex", "0");
         this.enableCustom({ el: signItem, data: signItemData });
         return signItem;
     }

@@ -149,6 +149,14 @@
     display: inline-block;
 }
 
+.o_sign_sign_item:focus {
+    outline: none !important;
+}
+
+.o_sign_sign_item.multi_selected {
+    outline: 2px solid rgb(0, 0, 0) !important;
+}
+
 .o_sign_sign_item img {
     width: 100%;
     height: 100%;

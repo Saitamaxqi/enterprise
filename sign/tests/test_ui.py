@@ -78,7 +78,7 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
         self.start_tour("/odoo", "sign_template_creation_tour", login="admin")
 
         self.assertEqual(blank_template.name, 'filled_template.pdf', 'The tour should have changed the template name')
-        self.assertEqual(len(blank_template.sign_item_ids), 3)
+        self.assertEqual(len(blank_template.sign_item_ids), 5)
         self.assertEqual(blank_template.responsible_count, 1)
         self.assertEqual(set(blank_template.sign_item_ids.mapped("type_id.item_type")), {"text", "signature"})
         self.assertEqual(set(blank_template.sign_item_ids.mapped("name")), set(["Text", "Name", "Signature"]))

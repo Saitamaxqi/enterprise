@@ -133,6 +133,7 @@ export class SignTemplateBody extends Component {
                 orm: this.orm,
                 popover: this.popover,
                 dialog: this.dialog,
+                notification: this.notification,
             },
             {
                 signItemTypes: this.props.signItemTypes,
