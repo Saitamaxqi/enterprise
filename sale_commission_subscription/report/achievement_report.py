@@ -83,6 +83,7 @@ subscription_rules AS (
       AND log.team_id = rules.team_id
     {'AND log.team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
       AND log.event_date BETWEEN rules.date_from AND rules.date_to
+      AND log.effective_date IS NOT NULL
     GROUP BY
         log.id,
         rules.plan_id,
