@@ -595,7 +595,7 @@ class ProjectTask(models.Model):
         # Check on filtered domain is necessary in case we are in the 'All tasks' menu
         # Indeed, the project_id != False default search would lead in a wrong result when
         # no other search have been made
-        filtered_domain = filter_domain_leaf(domain, lambda field: field == "project_id")
+        filtered_domain = list(filter_domain_leaf(domain, lambda field: field == "project_id"))
         search_on_comodel = self._search_on_comodel(domain, "project_id", "project.project")
         if search_on_comodel and (default_project_id or is_my_task or len(filtered_domain) > 1):
             return search_on_comodel
