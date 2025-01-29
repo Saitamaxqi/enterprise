@@ -46,6 +46,7 @@ msgid "Created on"
 msgstr ""
 
 #. module: l10n_nl_reports_vat_pay_wizard
+#: model:ir.model.fields,field_description:l10n_nl_reports_vat_pay_wizard.field_account_move__display_name
 #: model:ir.model.fields,field_description:l10n_nl_reports_vat_pay_wizard.field_l10n_nl_vat_pay_wizard__display_name
 msgid "Display Name"
 msgstr ""
@@ -56,6 +57,7 @@ msgid "IBAN"
 msgstr ""
 
 #. module: l10n_nl_reports_vat_pay_wizard
+#: model:ir.model.fields,field_description:l10n_nl_reports_vat_pay_wizard.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_nl_reports_vat_pay_wizard.field_l10n_nl_vat_pay_wizard__id
 msgid "ID"
 msgstr ""

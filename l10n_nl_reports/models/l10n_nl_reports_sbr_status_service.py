@@ -50,14 +50,18 @@ class L10n_Nl_ReportsSbrStatusService(models.Model):
                     error_description = detail_fault.find("fault:foutbeschrijving", namespaces={**fault.detail.nsmap, **detail_fault.nsmap}).text
                     process.is_done = True
                     if not process.is_test:
-                        subject = _("%(report_name)s status retrieval failed") % {'report_name': process.report_name}
-                        body = Markup(_(
-                            "The status retrieval for the %(report_name)s with discussion id '%(id)s' failed with the error:<br/><br/><i>%(error)s</i><br/><br/>Try submitting your report again."
-                            )) % {
-                                'report_name': process.report_name,
-                                'id': process.kenmerk,
-                                'error': error_description,
-                            }
+                        subject = _("%(report_name)s status retrieval failed", report_name=process.report_nam)
+                        body = _(
+                            "The status retrieval for the %(report_name)s with discussion ID '%(id)s' failed with the error:%(newline)s%(newline)s"
+                            "%(italic_start)s%(error)s%(italic_end)s%(newline)s%(newline)s"
+                            "Try submitting your report again.",
+                            report_name=process.report_name,
+                            id=process.kenmerk,
+                            error=error_description,
+                            newline=Markup("<br>"),
+                            italic_start=Markup("<i>"),
+                            italic_end=Markup("</i>"),
+                        )
                         process.closing_entry_id.with_context(no_new_invoice=True).message_post(subject=subject, body=body, author_id=self.env.ref('base.partner_root').id, subtype_id=self.env.ref('mail.mt_comment').id)
                 except ConnectionError:
                     # In case the server or the connection is not accessible at the moment,
@@ -70,15 +74,20 @@ class L10n_Nl_ReportsSbrStatusService(models.Model):
                     process.is_done = True
                     ongoing_processes -= process
                     if not process.is_test:
-                        subject = _("%(report_name)s submission failed") % {'report_name': process.report_name}
-                        body = Markup(_(
-                            "The submission for the %(report_name)s with discussion id '%(id)s' failed with the error:<br/><br/><i>%(error)s</i><br/><i>%(detailed_error)s</i><br/><br/>Try submitting your report again."
-                            )) % {
-                                'report_name': process.report_name,
-                                'id': process.kenmerk,
-                                'error': status.statusomschrijving,
-                                'detailed_error': status.statusFoutcode.foutbeschrijving,
-                            }
+                        subject = _("%(report_name)s submission failed", report_name=process.report_name)
+                        body = _(
+                            "The submission for the %(report_name)s with discussion ID '%(id)s' failed with the error:%(newline)s%(newline)s"
+                            "%(italic_start)s%(error)s%(italic_end)s%(newline)s"
+                            "%(italic_start)s%(detailed_error)s%(italic_end)s%(newline)s%(newline)s"
+                            "Try submitting your report again.",
+                            report_name=process.report_name,
+                            id=process.kenmerk,
+                            error=error_description,
+                            detailed_error=status.statusFoutcode.foutbeschrijving,
+                            newline=Markup("<br>"),
+                            italic_start=Markup("<i>"),
+                            italic_end=Markup("</i>"),
+                        )
                         process.closing_entry_id.with_context(no_new_invoice=True).message_post(subject=subject, body=body, author_id=self.env.ref('base.partner_root').id, subtype_id=self.env.ref('mail.mt_comment').id)
                     break
                 if status.statuscode == '500':
@@ -86,13 +95,12 @@ class L10n_Nl_ReportsSbrStatusService(models.Model):
                     process.is_done = True
                     ongoing_processes -= process
                     if not process.is_test:
-                        subject = _("%(report_name)s submission succeeded") % {'report_name': process.report_name}
-                        body = Markup(_(
-                            "The submission for the %(report_name)s with discussion id '%(id)s' was successfully received by Digipoort.",
-                            )) % {
-                                'report_name': process.report_name,
-                                'id': process.kenmerk,
-                            }
+                        subject = _("%(report_name)s submission succeeded", report_name=process.report_name)
+                        body = _(
+                            "The submission for the %(report_name)s with discussion ID '%(id)s' was successfully received by Digipoort.",
+                            report_name=process.report_name,
+                            id=process.kenmerk,
+                        )
                         process.closing_entry_id.with_context(no_new_invoice=True).message_post(subject=subject, body=body, author_id=self.env.ref('base.partner_root').id, subtype_id=self.env.ref('mail.mt_comment').id)
                     break
 

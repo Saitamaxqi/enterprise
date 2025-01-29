@@ -19,4 +19,14 @@ msgstr ""
 #. module: l10n_nl_hr_payroll_account
 #: model:ir.model,name:l10n_nl_hr_payroll_account.model_account_chart_template
 msgid "Account Chart Template"
-msgstr "Grootboekschema sjabloon"
+msgstr "Sjabloon grootboekschema"
+
+#. module: l10n_nl_hr_payroll_account
+#: model:ir.model.fields,field_description:l10n_nl_hr_payroll_account.field_account_chart_template__display_name
+msgid "Display Name"
+msgstr "Schermnaam"
+
+#. module: l10n_nl_hr_payroll_account
+#: model:ir.model.fields,field_description:l10n_nl_hr_payroll_account.field_account_chart_template__id
+msgid "ID"
+msgstr "ID"

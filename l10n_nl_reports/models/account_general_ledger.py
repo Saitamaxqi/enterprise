@@ -25,11 +25,11 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             return
 
         xaf_export_button = {
-            'name': _('XAF'),
+            'name': "XAF",
             'sequence': 30,
             'action': 'export_file',
             'action_param': 'l10n_nl_reports_get_xaf',
-            'file_export_type': _('XAF'),
+            'file_export_type': 'XAF',
         }
         options['buttons'].append(xaf_export_button)
 
@@ -229,7 +229,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                     for country_id in forbidden_country_ids
                 ])
                 raise RedirectWarning(
-                    _('Some partners are located in countries forbidden in dutch audit reports.\n'
+                    _('Some partners are located in countries forbidden in Dutch audit reports.\n'
                       'Those countries are:\n\n'
                       '%s\n'
                       'If you continue, please note that the fields <country> and <taxRegistrationCountry> '

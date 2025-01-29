@@ -56,16 +56,16 @@ class L10n_Nl_ReportsSbrIcpWizard(models.TransientModel):
         if not self.is_test:
             if not closing_move:
                 raise RedirectWarning(
-                    _('No Closing Entry was found for the selected period. Please create one and post it before sending your report.'),
+                    _("No closing entry was found for the selected period. Please create one and post it before sending your report."),
                     self.env.ref('l10n_nl_reports.action_open_closing_entry').id,
-                    _('Create Closing Entry'),
+                    _("Create Closing Entry"),
                     {'options': options},
                 )
             if closing_move.state == 'draft':
                 raise RedirectWarning(
-                    _('The Closing Entry for the selected period is still in draft. Please post it before sending your report.'),
+                    _("The closing entry for the selected period is still in draft. Please post it before sending your report."),
                     self.env.ref('l10n_nl_reports.action_open_closing_entry').id,
-                    _('Closing Entry'),
+                    _("Closing Entry"),
                     {'options': options},
                 )
         options['codes_values'] = self._generate_general_codes_values(options)
@@ -94,7 +94,7 @@ class L10n_Nl_ReportsSbrIcpWizard(models.TransientModel):
         except Fault as fault:
             detail_fault = fault.detail.getchildren()[0]
             raise RedirectWarning(
-                message=_("The Tax Services returned the error hereunder. Please upgrade your module and try again before submitting a ticket.") + "\n\n" + detail_fault.find("fault:foutbeschrijving", namespaces={**fault.detail.nsmap, **detail_fault.nsmap}).text,
+                message=_("The Tax Service returned the following error. Please upgrade your module and try again before submitting a support ticket.") + "\n\n" + detail_fault.find("fault:foutbeschrijving", namespaces={**fault.detail.nsmap, **detail_fault.nsmap}).text,
                 action=self.env.ref('base.open_module_tree').id,
                 button_text=_("Go to Apps"),
                 additional_context={
@@ -108,13 +108,15 @@ class L10n_Nl_ReportsSbrIcpWizard(models.TransientModel):
         if not self.is_test:
             self.env.company.sudo().l10n_nl_reports_sbr_icp_last_sent_date_to = self.date_to
             subject = _("ICP report sent")
-            body = Markup(_(
-                "The ICP report from %(date_from)s to %(date_to)s was sent to Digipoort.<br/>We will post its processing status in this chatter once received.<br/>Discussion id: %(id)s"
-                )) % {
-                    'date_from': format_date(self.env, self.date_from),
-                    'date_to': format_date(self.env, self.date_to),
-                    'id': kenmerk,
-                }
+            body = _(
+                "The ICP report from %(date_from)s to %(date_to)s was sent to Digipoort.%(newline)s"
+                "We will post its processing status in this chatter once received.%(newline)s"
+                "Discussion ID: %(id)s",
+                date_from=format_date(self.env, self.date_from),
+                date_to=format_date(self.env, self.date_to),
+                id=kenmerk,
+                newline=Markup("<br>"),
+            )
             filename = f'icp_report_{self.date_to.year}_{self.date_to.month}.xbrl'
             closing_move.with_context(no_new_invoice=True).message_post(subject=subject, body=body, attachments=[(filename, report_file)])
             closing_move.message_subscribe(partner_ids=[self.env.user.id])
@@ -125,7 +127,7 @@ class L10n_Nl_ReportsSbrIcpWizard(models.TransientModel):
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': _('Sending your report'),
+                'title': _("Sending your report"),
                 'type': 'success',
                 'message': _("Your ICP report is being sent to Digipoort. Check its status in the closing entry's chatter."),
                 'next': {'type': 'ir.actions.act_window_close'},
