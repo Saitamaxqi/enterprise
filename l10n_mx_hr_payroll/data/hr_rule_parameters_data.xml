@@ -559,9 +559,9 @@
         <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
     </record>
 
-    <record id="l10n_mx_rule_parameter_subsidy_table" model="hr.rule.parameter">
-        <field name="name">Mexico: Subsidy Table</field>
-        <field name="code">l10n_mx_subsidy_tables</field>
+    <record id="rule_parameter_uma_percentage_for_subsidy" model="hr.rule.parameter">
+        <field name="name">Mexico: UMA Percentage for Subsidy</field>
+        <field name="code">l10n_mx_uma_percentage_for_subsidy</field>
         <field name="country_id" ref="base.mx"/>
         <field name="description" type="html">
 <p></p>
@@ -570,104 +570,23 @@
 <a href="#" target="_blank">#</a>
 
 <h3 class="mt-5">Data Format</h3>
-<pre><em>Value</em> -> <strong>Dict</strong>{
-    <em>Period</em> -> <strong>String</strong>: <strong>List</strong>[(
-        <em>Lower Limit</em> -> <strong>Float</strong>,
-        <em>Upper Limit</em> -> <strong>Float</strong>,
-        <em>Amount Subsidy</em> -> <strong>Float</strong>,
-    )]
-}</pre>
+<pre><em>Value</em> -> <strong>Percentage</strong> [0: 1]</pre>
         </field>
     </record>
-    <record id="l10n_mx_rule_parameter_subsidy_table_2024" model="hr.rule.parameter.value">
-        <field name="parameter_value">{
-            'daily': [
-                (0.01, 58.19, 13.39),
-                (58.20, 87.28, 13.38),
-                (87.29, 114.24, 13.38),
-                (114.25, 116.38, 12.92),
-                (116.39, 146.25, 12.58),
-                (146.26, 155.17, 11.65),
-                (155.18, 175.51, 10.69),
-                (175.52, 204.76, 9.69),
-                (204.77, 234.01, 8.34),
-                (234.02, 242.84, 7.16),
-                (242.85, 999999999, 0.00)],
-            'weekly': [
-                (0.01, 407.33 , 93.73),
-                (407.34, 610.96 , 93.66),
-                (610.97, 799.68 , 93.66),
-                (799.69, 814.66 , 90.44),
-                (814.67, 1023.75, 88.06),
-                (1023.76, 1086.19, 81.55),
-                (1086.20, 1228.57, 74.83),
-                (1228.58, 1433.32, 67.83),
-                (1433.33, 1638.07, 58.38),
-                (1638.08, 1699.88, 50.12),
-                (1699.89, 999999999, 0.00)],
-            '10_days': [
-                (0.01, 581.90, 133.90),
-                (581.91, 872.80, 133.80),
-                (872.81, 1142.40, 133.80),
-                (1142.41, 1163.80, 129.20),
-                (1163.81, 1462.50, 125.80),
-                (1462.51, 1551.70, 116.50),
-                (1551.71, 1755.10, 106.90),
-                (1755.11, 2047.60, 96.90),
-                (2047.61, 2340.10, 83.40),
-                (2340.11, 2428.40, 71.60),
-                (2428.41, 999999999, 0.00)],
-            '14_days': [
-                (0.01, 872.85, 200.85),
-                (872.86, 1309.20, 200.70),
-                (1309.21, 1713.60, 200.70),
-                (1713.61, 1745.70, 193.80),
-                (1745.71, 2193.75, 188.70),
-                (2193.76, 2327.55, 174.75),
-                (2327.56, 2632.65, 160.35),
-                (2632.66, 3071.40, 145.35),
-                (3071.41, 3510.15, 125.10),
-                (3510.16, 3642.60, 107.40),
-                (3642.61, 999999999, 0.00)],
-            'bi_weekly': [
-                (0.01, 872.85, 200.85),
-                (872.86, 1309.20, 200.70),
-                (1309.21, 1713.60, 200.70),
-                (1713.61, 1745.70, 193.80),
-                (1745.71, 2193.75, 188.70),
-                (2193.76, 2327.55, 174.75),
-                (2327.56, 2632.65, 160.35),
-                (2632.66, 3071.40, 145.35),
-                (3071.41, 3510.15, 125.10),
-                (3510.16, 3642.60, 107.40),
-                (3642.61, 999999999, 0.00)],
-            'monthly': [
-                (0.01, 1768.96, 407.02),
-                (1768.97, 2653.38, 406.83),
-                (2653.39, 3472.84, 406.62),
-                (3472.85, 3537.87, 392.77),
-                (3537.88, 4446.15, 382.46),
-                (4446.16, 4717.18, 354.23),
-                (4717.19, 5335.42, 324.87),
-                (5335.43, 6224.67, 294.63),
-                (6224.68, 7113.90, 253.54),
-                (7113.91, 7382.33, 217.61),
-                (7382.34, 999999999, 0.00)],
-            'bi_monthly': [
-                (0.01, 1768.96, 407.02),
-                (1768.97, 2653.38, 406.83),
-                (2653.39, 3472.84, 406.62),
-                (3472.85, 3537.87, 392.77),
-                (3537.88, 4446.15, 382.46),
-                (4446.16, 4717.18, 354.23),
-                (4717.19, 5335.42, 324.87),
-                (5335.43, 6224.67, 294.63),
-                (6224.68, 7113.90, 253.54),
-                (7113.91, 7382.33, 217.61),
-                (7382.34, 999999999, 0.00)],
-        }</field>
-        <field name="rule_parameter_id" ref="l10n_mx_rule_parameter_subsidy_table"/>
-        <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
+    <record id="rule_parameter_uma_percentage_for_subsidy_2024" model="hr.rule.parameter.value">
+        <field name="parameter_value">0.1182</field>
+        <field name="rule_parameter_id" ref="rule_parameter_uma_percentage_for_subsidy"/>
+        <field name="date_from" eval="datetime(2024, 5, 1).date()"/>
+    </record>
+    <record id="rule_parameter_uma_percentage_for_subsidy_2025_january" model="hr.rule.parameter.value">
+        <field name="parameter_value">0.1439</field>
+        <field name="rule_parameter_id" ref="rule_parameter_uma_percentage_for_subsidy"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+    </record>
+    <record id="rule_parameter_uma_percentage_for_subsidy_2025_february" model="hr.rule.parameter.value">
+        <field name="parameter_value">0.1380</field>
+        <field name="rule_parameter_id" ref="rule_parameter_uma_percentage_for_subsidy"/>
+        <field name="date_from" eval="datetime(2025, 2, 1).date()"/>
     </record>
 
     <record id="l10n_mx_rule_parameter_holiday_table" model="hr.rule.parameter">

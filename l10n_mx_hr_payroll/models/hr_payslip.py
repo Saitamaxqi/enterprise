@@ -77,9 +77,9 @@ class HrPayslip(models.Model):
             if self.struct_id.code == "MX_REGULAR":
                 schedule = self.contract_id.l10n_mx_schedule_pay
                 if schedule == '10_days':
-                    return relativedelta(days=10)
+                    return relativedelta(days=9)
                 elif schedule == '14_days':
-                    return relativedelta(days=14)
+                    return relativedelta(days=13)
                 elif schedule == 'bi_weekly':
                     days_in_month = calendar.monthrange(self.date_from.year, self.date_from.month)[1]
                     return relativedelta(day=15 if self.date_from.day <= 15 else days_in_month)
