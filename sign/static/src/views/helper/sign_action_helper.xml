@@ -9,8 +9,12 @@
                         Upload
                     </span>
                 </p>
-                <p t-esc="this.props.resModel === 'sign.template' ? 'Upload PDF file to create a template for frequent use' : 'Document to send for signature or sign yourself'" t-if="this.props.resModel === 'sign.template' || this.props.resModel !== 'sign.template'"/>
-                <button t-attf-class="btn btn-primary text-white o_sign_sample" t-on-click="onClicksampleSign" t-esc="this.props.resModel === 'sign.request' ? 'Try a sample contract' : 'Try our sample document !'"/>
+                <p t-if="this.props.resModel === 'sign.template'">Upload a PDF file to create a reusable template.</p>
+                <p t-else="">Document to send for signature or to sign yourself.</p>
+                <button class="btn btn-primary text-white o_sign_sample" t-on-click="onClicksampleSign">
+                    <t t-if="this.props.resModel === 'sign.request'">Try a sample contract</t>
+                    <t t-else="">Try our sample document</t>
+                </button>
             </div>
             <input type="file" multiple="true" t-ref="uploadFileInput" accept="application/pdf, application/x-pdf, application/vnd.cups-pdf" class="o_sign_template_file_input o_input_file o_hidden" t-on-change.stop="onFileInputChange"/>
         </div>
