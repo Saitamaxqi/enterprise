@@ -5247,7 +5247,7 @@ msgstr "Teléfonos análogos"
 #. module: product_unspsc
 #: model:product.unspsc.code,name:product_unspsc.unspsc_code_41111517
 msgid "Analytical balances"
-msgstr "Balanzas analíticas"
+msgstr "Balances analíticas"
 
 #. module: product_unspsc
 #: model:product.unspsc.code,name:product_unspsc.unspsc_code_43232605
@@ -254175,7 +254175,7 @@ msgstr "Relé trip free"
 #. module: product_unspsc
 #: model:product.unspsc.code,name:product_unspsc.unspsc_code_41111512
 msgid "Triple beam balances"
-msgstr "Balanzas de triple haz"
+msgstr "Balanza de triple haz"
 
 #. module: product_unspsc
 #: model:product.unspsc.code,name:product_unspsc.unspsc_code_50406324

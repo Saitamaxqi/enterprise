@@ -49,7 +49,7 @@ msgstr "Los asientos de cierre del mes 13 deben realizarse el 31 de diciembre."
 #. module: l10n_mx_reports_closing
 #: model:ir.model,name:l10n_mx_reports_closing.model_account_trial_balance_report_handler
 msgid "Trial Balance Custom Handler"
-msgstr "Administrador personalizado de la balanza de comprobación del mes 13"
+msgstr "Administrador personalizado de la balance de comprobación del mes 13"
 
 #. module: l10n_mx_reports_closing
 #: model:ir.model.fields,help:l10n_mx_reports_closing.field_account_bank_statement_line__l10n_mx_closing_move
@@ -60,4 +60,4 @@ msgid ""
 "the Month 13 Trial Balance"
 msgstr ""
 "Si esta es una entrada de cierre para el año fiscal que debe aparecer en la "
-"balanza de comprobación del mes 13"
+"balance de comprobación del mes 13"
