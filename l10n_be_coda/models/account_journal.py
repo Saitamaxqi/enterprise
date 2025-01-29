@@ -733,7 +733,6 @@ class AccountJournal(models.Model):
 
         ret_statements = []
         for statement in statements:
-            statement['coda_note'] = ''
             statement_line = []
             statement_data = {
                 'name': int(statement['paperSeqNumber']),
@@ -753,8 +752,6 @@ class AccountJournal(models.Model):
                     )
                     to_add.setdefault('transaction_details', {})
                     to_add['transaction_details']['communication'] = to_add['transaction_details'].get('communication', '') + communication
-                elif line['type'] == 'communication':
-                    statement['coda_note'] = "%s[%s] %s\n" % (statement['coda_note'], str(line['ref']), line['communication'])
                 elif line['type'] == 'normal'\
                         or (line['type'] == 'globalisation' and line['ref_move'] in statement['globalisation_stack'] and line['transaction_type'] in [1, 2]):
                     if line.get('counterpartyName'):
@@ -801,8 +798,6 @@ class AccountJournal(models.Model):
                             'unique_import_id': str(statement['codaSeqNumber']) + '-' + str(statement['date']) + '-' + str(line['ref']),
                         }
                         statement_line.append(line_data)
-            if statement['coda_note'] != '':
-                statement_data.update({'coda_note': _('Communication:\n%s', statement['coda_note'])})
             statement_data.update({'transactions': statement_line})
             ret_statements.append(statement_data)
         return ret_statements
