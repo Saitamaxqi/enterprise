@@ -4,7 +4,7 @@
 import pytz
 
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from dateutil.rrule import rrule, DAILY
 
@@ -328,7 +328,7 @@ class HrContract(models.Model):
         # reimbursement for 7 km of train-based transportation (34.00 EUR)
         # Source: http://www.cnt-nar.be/CCT-COORD/cct-019-09.pdf (Art. 4)
         public_transport_max_amount = self.env['hr.rule.parameter'].sudo()._get_parameter_from_code(
-            'public_transport_max_amount', date=self.env.context.get('payslip_date'), raise_if_not_found=False)
+            'public_transport_max_amount', date=self.env.context.get('payslip_date') or date.today(), raise_if_not_found=False)
         if not public_transport_max_amount:
             public_transport_max_amount = 43
         return min(amount * 0.718, public_transport_max_amount)
