@@ -13,6 +13,12 @@ class ResUsers(models.Model):
     def SELF_READABLE_FIELDS(self):
         return super().SELF_READABLE_FIELDS + ['timesheet_manager_id']
 
+    @property
+    def SELF_WRITEABLE_FIELDS(self):
+        return super().SELF_WRITEABLE_FIELDS + [
+            'timesheet_manager_id',
+        ]
+
     def get_last_validated_timesheet_date(self):
         if self.env.user.has_group('hr_timesheet.group_timesheet_manager'):
             return False
