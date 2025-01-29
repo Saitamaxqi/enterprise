@@ -29,11 +29,10 @@
         'web.assets_backend_lazy': [
             'room/static/src/room_booking_gantt_view/**/*',
         ],
-        'web.qunit_suite_tests': [
-            'room/static/tests/*.js',
-            'room/static/src/room_booking/**/*.js',
-            'room/static/src/room_booking/**/*.xml',
-            'room/static/tests/room_booking_view_patch.xml',
+        "web.assets_unit_tests": [
+            "room/static/src/room_booking/**/*.js",
+            "room/static/src/room_booking/**/*.xml",
+            "room/static/tests/**/*",
         ],
         'room.assets_room_booking': [
             # 1 Define room variables (takes priority)

@@ -23,7 +23,8 @@ import {
 
 // Time (in ms, so 2 minutes) after which the user is considered inactive
 // and the app goes back to the main screen
-const INACTIVITY_TIMEOUT = 120000;
+export const INACTIVITY_TIMEOUT = 120000;
+export const REFRESH_INTERVAL = 1000;
 
 /**
  * Format a booking received from the server to the format used in the room booking view
@@ -92,7 +93,7 @@ export class RoomBookingView extends Component {
         onWillStart(this.loadBookings);
 
         // Every second, check if a booking started/ended
-        useInterval(this.refreshBookingView.bind(this), 1000);
+        useInterval(this.refreshBookingView.bind(this), REFRESH_INTERVAL);
 
         // If the user is inactive for more than the  INACTIVITY_TIMEOUT, reset the view
         ["pointerdown", "keydown"].forEach((event) =>
