@@ -360,11 +360,17 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
     def test_fiscal_position(self):
         # Test that the fiscal postion FP is applied on recurring invoice.
         # FP must mapped an included tax of 21% to an excluded one of 0%
+        fp = self.env['account.fiscal.position'].create({'name': "fiscal position",
+                                                         'sequence': 1,
+                                                         'auto_apply': True,
+                                                        })
         tax_include_id = self.env['account.tax'].create({'name': "Include tax",
                                                          'amount': 21.0,
                                                          'price_include_override': 'tax_included',
                                                          'type_tax_use': 'sale'})
         tax_exclude_id = self.env['account.tax'].create({'name': "Exclude tax",
+                                                         'fiscal_position_ids': fp.ids,
+                                                         'original_tax_ids': tax_include_id,
                                                          'amount': 0.0,
                                                          'type_tax_use': 'sale'})
 
@@ -372,11 +378,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                                                                 list_price=121,
                                                                 taxes_id=[(6, 0, [tax_include_id.id])]))
 
-        fp = self.env['account.fiscal.position'].create({'name': "fiscal position",
-                                                         'sequence': 1,
-                                                         'auto_apply': True,
-                                                         'tax_ids': [(0, 0, {'tax_src_id': tax_include_id.id,
-                                                                             'tax_dest_id': tax_exclude_id.id})]})
         self.subscription.fiscal_position_id = fp.id
         self.subscription.partner_id.property_account_position_id = fp
         sale_order = self.env['sale.order'].create({

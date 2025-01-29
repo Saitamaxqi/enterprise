@@ -166,6 +166,10 @@ class PosConfig(models.Model):
             fiscal_position = self.env['account.fiscal.position'].create({
                 'name': 'UrbanPiper'
             })
+            self.env['account.tax'].create({
+                'name': 'UrbanPiper',
+                'fiscal_position_ids': [Command.link(fiscal_position.id)],
+            })
         if self.module_pos_urban_piper:
             if not self.urbanpiper_fiscal_position_id:
                 self.urbanpiper_fiscal_position_id = fiscal_position
@@ -188,14 +192,9 @@ class PosConfig(models.Model):
         self._add_line_to_fiscal_position(fiscal_position)
 
     def _add_line_to_fiscal_position(self, fiscal_position):
-        source_taxes = self.env['account.tax'].search([('type_tax_use', '=', 'sale'), ('company_id', '=', self.company_id.id)])
-        if fiscal_position and fiscal_position.tax_ids.tax_src_id.ids != source_taxes.ids:
-            lines = []
-            for tax in source_taxes - fiscal_position.tax_ids.tax_src_id:
-                lines.append((0, 0, {
-                    'tax_src_id': tax.id,
-                }))
-            fiscal_position.tax_ids = lines
+        source_taxes = self.env['account.tax'].search([('type_tax_use', '=', 'sale'), ('company_id', '=', self.company_id.id), ('is_domestic', '=', True)])
+        if fiscal_position and fiscal_position.tax_ids.original_tax_ids != source_taxes:
+            fiscal_position.tax_ids.original_tax_ids = source_taxes
 
     def prepare_taxes_data(self, pos_products):
         """

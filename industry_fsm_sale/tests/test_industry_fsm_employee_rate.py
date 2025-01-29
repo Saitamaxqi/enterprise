@@ -214,6 +214,10 @@ class TestIndustryFsmEmployeeRate(TestFsmFlowSaleCommon):
     def test_fsm_employee_rate_fpos(self):
         """ Test fiscal position applied correctly on employee mappings unit price """
 
+        fpos_incl_excl = self.env['account.fiscal.position'].create({
+            'name': "incl -> excl",
+            'sequence': 3,
+        })
         tax_include_src, tax_exclude_dst = self.env['account.tax'].create([{
             'name': "Include 10%",
             'amount': 10.00,
@@ -224,17 +228,10 @@ class TestIndustryFsmEmployeeRate(TestFsmFlowSaleCommon):
             'amount': 10.00,
             'amount_type': 'percent',
             'price_include_override': 'tax_excluded',
+            'fiscal_position_ids': fpos_incl_excl,
         }])
+        tax_exclude_dst.original_tax_ids = tax_include_src
 
-        fpos_incl_excl = self.env['account.fiscal.position'].create({
-            'name': "incl -> excl",
-            'sequence': 3,
-        })
-        self.env['account.fiscal.position.tax'].create({
-            'position_id': fpos_incl_excl.id,
-            'tax_src_id': tax_include_src.id,
-            'tax_dest_id': tax_exclude_dst.id
-        })
         partner = self.env['res.partner'].create({
             'name': "George",
             'property_account_position_id': fpos_incl_excl.id,

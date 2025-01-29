@@ -79,7 +79,7 @@ class AccountTaxUnit(models.Model):
     def _get_tax_unit_fiscal_positions(self, companies, create_or_refresh=False):
         """
         Retrieves or creates fiscal positions for all companies specified.
-        Each Fiscal Position contains all the taxes of the company mapped to no tax
+        These fiscal positions have no taxes, so this could probably be simplified (as refresh makes no sense anymore)
 
         @param {recordset} companies: companies for which to find/create fiscal positions
         @param {boolean} create_or_refresh: a boolean indicating whether the fiscal positions should be created if not found
@@ -91,15 +91,11 @@ class AccountTaxUnit(models.Model):
                 fp_identifier = 'account.tax_unit_%s_fp_%s' % (unit.id, company.id)
                 existing_fp = self.env.ref(fp_identifier, raise_if_not_found=False)
                 if create_or_refresh:
-                    taxes_to_map = self.env['account.tax'].with_context(
-                        allowed_company_ids=self.env.user.company_ids.ids,
-                    ).search(self.env['account.tax']._check_company_domain(company))
                     data = {
                         'xml_id': fp_identifier,
                         'values': {
                             'name': unit.name,
                             'company_id': company.id,
-                            'tax_ids': [Command.clear()] + [Command.create({'tax_src_id': tax.id}) for tax in taxes_to_map]
                         }
                     }
                     existing_fp = fiscal_positions._load_records([data])

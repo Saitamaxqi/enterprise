@@ -253,10 +253,17 @@ class TestTaxReportOSSNoMapping(TestAccountReportsCommon):
             'tax_receivable_account_id': cls.company_data['default_account_revenue'].id,
         })
         oss_tag = cls.env.ref('l10n_eu_oss.tag_oss')
+        oss_fp = cls.env['account.fiscal.position'].create({
+            'name': 'OSS B2C Denmark',
+            'country_id': cls.env.ref('base.dk').id,
+            'company_id': cls.company_data['company'].id,
+            'auto_apply': True,
+        })
         cls.oss_tax = cls.env['account.tax'].create({
             'name': 'OSS tax for DK',
             'amount': 25,
             'country_id': cls.company_data['company'].account_fiscal_country_id.id,
+            'fiscal_position_ids': [Command.link(oss_fp.id)],
             'invoice_repartition_line_ids': [
                 Command.create({
                     'repartition_type': 'base',
@@ -277,14 +284,6 @@ class TestTaxReportOSSNoMapping(TestAccountReportsCommon):
                     'tag_ids': [Command.set(oss_tag.ids)],
                 }),
             ],
-        })
-
-        cls.env['account.fiscal.position'].create({
-            'name': 'OSS B2C Denmark',
-            'country_id': cls.env.ref('base.dk').id,
-            'company_id': cls.company_data['company'].id,
-            'auto_apply': True,
-            'tax_ids': [Command.create({'tax_src_id': cls.tax_sale_a.id, 'tax_dest_id': cls.oss_tax.id})],
         })
 
 

@@ -40,5 +40,6 @@ class PosConfig(models.Model):
     def _add_line_to_fiscal_position(self, fiscal_position):
         super()._add_line_to_fiscal_position(fiscal_position)
         if self.company_id.country_code == 'IN':
-            tax_line_to_remove = fiscal_position.tax_ids.filtered(lambda l: l.tax_src_id.amount != 5 or l.tax_src_id.tax_group_id.name != 'GST')
-            fiscal_position.tax_ids -= tax_line_to_remove
+            taxes_to_remove = fiscal_position.tax_ids.original_tax_ids.filtered(lambda a: a.amount != 5 or a.tax_group_id.name != 'GST')
+            for dest_tax in fiscal_position.tax_ids:
+                dest_tax.original_tax_ids -= taxes_to_remove

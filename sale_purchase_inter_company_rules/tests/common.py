@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.addons.account_inter_company_rules.tests.common import TestInterCompanyRulesCommon
+from odoo import Command
 
 
 class TestInterCompanyRulesCommonSOPO(TestInterCompanyRulesCommon):
@@ -44,3 +45,7 @@ class TestInterCompanyRulesCommonSOPO(TestInterCompanyRulesCommon):
             'country_id': cls.env.ref('base.us').id,
             'company_id': cls.company_b.id,
         })
+
+        # fiscal positions need some taxes to enable mapping - normally default taxes should belong to a domestic fiscal position
+        (cls.company_a.account_sale_tax_id | cls.company_a.account_purchase_tax_id).fiscal_position_ids = [Command.link(cls.fp_a.id)]
+        (cls.company_b.account_sale_tax_id | cls.company_b.account_purchase_tax_id).fiscal_position_ids = [Command.link(cls.fp_b.id)]

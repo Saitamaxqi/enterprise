@@ -218,6 +218,7 @@ class TestTaxReport(TestAccountReportsCommon):
         )
 
         # Create a fiscal_position to automatically map the default tax for partner "Mare Cel" to our test tax
+        cls.env['account.tax'].search([]).original_tax_ids = False
         cls.foreign_vat_fpos = cls.env['account.fiscal.position'].create({
             'name': "Test fpos",
             'auto_apply': True,
@@ -1726,8 +1727,7 @@ class TestTaxReport(TestAccountReportsCommon):
                 (unit_companies - current_company).partner_id.with_company(current_company).property_account_position_id,
                 created_fp
             )
-            self.assertTrue(created_fp.tax_ids.tax_src_id)
-            self.assertFalse(created_fp.tax_ids.tax_dest_id)
+            self.assertFalse(created_fp.map_tax(self.env['account.tax'].search([('company_id', '=', current_company.id)])))
             self.assertFalse(current_company.partner_id.with_company(current_company).property_account_position_id)
         tax_unit._compute_fiscal_position_completion()
         self.assertTrue(tax_unit.fpos_synced)
