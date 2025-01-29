@@ -716,7 +716,7 @@ class PlanningSlot(models.Model):
         if null_fields:
             for r in res:
                 for f in null_fields:
-                    if r[f] == 0:
+                    if r.get(f) == 0:
                         r[f] = False
         return res
 
