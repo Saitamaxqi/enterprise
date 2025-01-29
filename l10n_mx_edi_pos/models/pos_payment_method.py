@@ -19,11 +19,17 @@ class PosPaymentMethod(models.Model):
 
     @api.depends('journal_id')
     def _compute_l10n_mx_edi_payment_method_id(self):
+        l10n_mx_edi_debit_pm = self.env.ref('l10n_mx_edi.payment_method_tarjeta_debito', raise_if_not_found=False)
+        l10n_mx_edi_cash_pm = self.env.ref('l10n_mx_edi.payment_method_efectivo', raise_if_not_found=False)
+        l10n_mx_edi_digital_acc_pm = self.env.ref('l10n_mx_edi.payment_method_monedero_electronico', raise_if_not_found=False)
         por_definir_payment_method = self.env.ref('l10n_mx_edi.payment_method_otros', raise_if_not_found=False)
+
         for move in self:
             if move.l10n_mx_edi_payment_method_id:
                 move.l10n_mx_edi_payment_method_id = move.l10n_mx_edi_payment_method_id
             elif move.journal_id.l10n_mx_edi_payment_method_id:
                 move.l10n_mx_edi_payment_method_id = move.journal_id.l10n_mx_edi_payment_method_id
+            elif move.journal_id.type in ('cash', 'bank'):
+                move.l10n_mx_edi_payment_method_id = l10n_mx_edi_debit_pm if move.journal_id.type == 'bank' else l10n_mx_edi_cash_pm
             else:
-                move.l10n_mx_edi_payment_method_id = por_definir_payment_method
+                move.l10n_mx_edi_payment_method_id = l10n_mx_edi_digital_acc_pm if not move.journal_id else por_definir_payment_method

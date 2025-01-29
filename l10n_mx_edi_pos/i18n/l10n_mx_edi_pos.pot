@@ -450,3 +450,17 @@ msgstr ""
 msgid ""
 "You cannot invoice this refund since the related order is not invoiced yet."
 msgstr ""
+
+#. module: l10n_mx_edi_pos
+#. odoo-python
+#: code:addons/l10n_mx_edi_pos/models/pos_config.py:0
+msgid "Credit Card"
+msgstr ""
+
+#. module: l10n_mx_edi_pos
+#. odoo-python
+#: code:addons/l10n_mx_edi_pos/models/pos_config.py:0
+msgid ""
+"Ensure that there is an existing bank journal. Check if chart of accounts is"
+" installed in your company."
+msgstr ""

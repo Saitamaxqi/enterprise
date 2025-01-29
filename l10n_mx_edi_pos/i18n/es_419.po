@@ -466,3 +466,19 @@ msgstr "Solo puede procesar órdenes que comparten la misma empresa."
 msgid ""
 "You cannot invoice this refund since the related order is not invoiced yet."
 msgstr ""
+
+#. module: l10n_mx_edi_pos
+#. odoo-python
+#: code:addons/l10n_mx_edi_pos/models/pos_config.py:0
+msgid "Credit Card"
+msgstr "Tarjeta de Crédito"
+
+#. module: l10n_mx_edi_pos
+#. odoo-python
+#: code:addons/l10n_mx_edi_pos/models/pos_config.py:0
+msgid ""
+"Ensure that there is an existing bank journal. Check if chart of accounts is"
+" installed in your company."
+msgstr ""
+"Asegúrese de que haya un diario bancario existente. Verifique si el plan de "
+"cuentas está instalado en su empresa."
