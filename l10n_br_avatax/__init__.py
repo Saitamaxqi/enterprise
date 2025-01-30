@@ -12,3 +12,9 @@ def post_init(env):
                 tax.l10n_br_avatax_code = tax_data['l10n_br_avatax_code']
 
         Template._load_data({'account.fiscal.position': Template._get_br_avatax_fiscal_position()})
+
+    # NCM codes are loaded from CSV, but the user should be able to update them.
+    env['ir.model.data'].search([
+        ('model', '=', 'l10n_br.ncm.code'),
+        ('module', '=', 'l10n_br_avatax')
+    ]).write({'noupdate': True})
