@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from unittest.mock import patch
 from freezegun import freeze_time
+from json import dumps
 
 from odoo import Command
 from odoo.exceptions import AccessError, ValidationError
@@ -176,21 +177,25 @@ class TestSignController(TestSignControllerCommon):
         sign_request = self.create_sign_request_1_role(self.partner_1, self.env['res.partner'])
         sign_request_item = sign_request.request_item_ids[0]
 
-        url = '/sign/sign_confirm_cancel/%(item_id)s' % {
-            'item_id': sign_request_item.id,
+        data = {
+            'params': {
+                'refusal_reason': 'No.',
+            },
         }
+        headers = {
+            'Content-Type': 'application/json'
+        }
+        url = '/sign/refuse/%(item_id)s/%(token)s?refusal_reason="test"' % {
+             'item_id': sign_request.id,
+             'token': sign_request_item.access_token
+         }
 
         # Set the environment user as the public user
         self.env.user = self.public_user
 
         # Send a request to cancel the sign request item
         self.authenticate(None, None)
-        post_data = {
-            'access_token': sign_request_item.access_token,
-            'csrf_token': Request.csrf_token(self),
-        }
-        response = self.url_open(url, data=post_data)
-
+        response = self.url_open(url, data=dumps(data), headers=headers)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(sign_request.state, 'canceled', "Sign request state should be 'canceled'")
         self.assertEqual(sign_request_item.state, 'canceled', "Sign request item state should be 'canceled'")

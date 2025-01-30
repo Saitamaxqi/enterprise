@@ -38,8 +38,9 @@
         </div>
         <br/>
         <div style="opacity: 0.7;"><small>If you do not wish to receive future reminders about this document,
-            <a t-att-href="'%s/sign/sign_cancel/%s/%s' % (record.get_base_url(), record.id, record.access_token)"
-            style="color: #000000; text-decoration:none; opacity:0.7;"> click here to cancel it.</a></small></div>
+            <a t-att-href="link_cancel"
+            style="color: #000000; text-decoration:none; opacity:0.7;"> click here to cancel it.</a></small>
+        </div>
     </td></tr>
     <t t-set="company" t-value="record.create_uid.company_id"/>
     <tr t-if="use_sign_terms">

@@ -140,6 +140,9 @@ class Sign(http.Controller):
             return request.render('sign.sign_request_expired', {'resend_expired_link': '/sign/resend_expired_link/%s/%s' % (request_id, token)}, status=403)
 
         current_request_item.access_via_link = True
+
+        if http.request.params.get('refuseDocument'):
+            return request.redirect('/sign/document/%s/%s?refuse_document=1' % (request_id, token))
         return request.redirect('/sign/document/%s/%s' % (request_id, token))
 
     @http.route(["/sign/document/<int:sign_request_id>/<token>"], type='http', auth='public', website=True)
@@ -415,7 +418,10 @@ class Sign(http.Controller):
         if refuse_user:
             # refuse as a known user
             request_item = request_item.with_user(refuse_user).sudo()
+            refuse_log = _("The signature has been canceled by %(partner)s (%(role)s)", partner=refuse_user.name, role=request_item.role_id.name)
+            request_item.sign_request_id.message_post(body=refuse_log)
         request_item._refuse(refusal_reason)
+        request_item.sign_request_id.with_context(default_sign_request_item_id=request_item.id).cancel()
         return True
 
     @http.route(['/sign/password/<int:sign_request_id>'], type='jsonrpc', auth='public')
@@ -537,30 +543,8 @@ class Sign(http.Controller):
             'date': item['create_date'].date(),
         } for item in items]
 
-    @http.route(['/sign/sign_confirm_cancel/<int:item_id>'], type='http', auth='public')
-    def confirm_cancel_sign_request_item(self, item_id, access_token=None):
-        sign_request_item = request.env['sign.request.item'].sudo().browse(item_id)
-        if sign_request_item and consteq(sign_request_item.access_token, access_token):
-            sign_request_item.sign_request_id.with_context(default_sign_request_item_id=sign_request_item.id).cancel()
-            message_post = _("The signature has been canceled by %(partner)s(%(role)s)", partner=sign_request_item.partner_id.name, role=sign_request_item.role_id.name)
-            sign_request_item.sign_request_id.message_post(body=message_post)
-            return http.request.render('sign.canceled_sign_request_item')
-        else:
-            return http.request.not_found()
-
     @http.route(['/sign/sign_cancel/<int:item_id>/<token>'], type='http', auth='public')
     def cancel_sign_request_item_from_mail(self, item_id, token):
+        # TODO remove this route in 18.3, only here to support already sent emails
         sign_request_item = request.env['sign.request.item'].sudo().browse(item_id)
-        if sign_request_item and consteq(sign_request_item.access_token, token):
-            if request.env.ref('sign.cancel_sign_request_item_with_confirmation', raise_if_not_found=False):
-                return http.request.render('sign.cancel_sign_request_item_with_confirmation', {
-                    'record': sign_request_item,
-                })
-            if request.httprequest.method == 'HEAD':
-                return http.request.render('sign.canceled_sign_request_item')
-            sign_request_item.sign_request_id.with_context(default_sign_request_item_id=sign_request_item.id).cancel()
-            message_post = _("The signature has been canceled by %(partner)s(%(role)s)", partner=sign_request_item.partner_id.name, role=sign_request_item.role_id.name)
-            sign_request_item.sign_request_id.message_post(body=message_post)
-            return http.request.render('sign.canceled_sign_request_item')
-        else:
-            return http.request.not_found()
+        return request.redirect('sign/document/mail/%s/%s?refuseDocument=1' % (sign_request_item.sign_request_id.id, token))

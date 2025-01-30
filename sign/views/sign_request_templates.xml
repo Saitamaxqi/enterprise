@@ -219,56 +219,6 @@
         </t>
     </template>
 
-    <template id="cancel_sign_request_item_with_confirmation" name="Signature Request Canceled">
-        <t t-call="web.basic_layout">
-            <t t-set="title" t-value="'Odoo Sign'"/>
-            <div class="oe_structure oe_empty">
-                <section class="s_text_image pt104 pb104" data-snippet="s_image_text" data-name="Image - Text">
-                    <form method="post" t-attf-action="/sign/sign_confirm_cancel/#{record.id}/">
-                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                        <input type="hidden" name="access_token" t-att-value="record.access_token"/>
-                        <div class="text-center">
-                            <h1 class="visually-hidden">Cancel Sign Request</h1>
-                            <h2>Are you sure you want to cancel the sign request?</h2>
-                            <span>You won't receive any notification for this signature request anymore.</span>
-                        </div>
-                        <div class="text-center mt-5">
-                            <input class="btn btn-primary" type="submit" value="Cancel Sign Request" />
-                        </div>
-                    </form>
-                </section>
-            </div>
-        </t>
-    </template>
-
-    <template id="canceled_sign_request_item" name="Signature Request Canceled">
-        <t t-call="web.basic_layout">
-            <t t-set="title" t-value="'Odoo Sign'"/>
-            <div class="oe_structure oe_empty">
-                <section class="s_text_image pt104 pb104" data-snippet="s_image_text" data-name="Image - Text">
-                    <div class="container">
-                        <div class="text-center">
-                            <h1 class="visually-hidden">Operation successful</h1>
-                            <h2>The signature request has been cancelled</h2>
-                            You won't receive any notification for this signature request anymore.
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="s_hr pt32 pb48" data-snippet="s_hr" data-name="Separator">
-                                <hr class="w-100 mx-auto" style="border-top-width: 1px; border-top-style: solid; border-top-color: var(--400);"/>
-                            </div>
-                        </div>
-                            <div class="col-lg-12">
-                                <p class="text-center">Sign up for Odoo Sign to manage your own documents and signature requests!</p>
-                                <ul class="list-inline text-center">
-                                    <li class="list-inline-item mb-2"><a href="https://www.odoo.com/trial?selected_app=sign&amp;utm_source=db&amp;utm_medium=sign_ignored" target="blank" class="btn btn-secondary">Try Odoo Sign</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                </section>
-            </div>
-        </t>
-    </template>
-
     <template id="sign_request_expired" name="sign.sign_request_expired">
         <t t-call="web.frontend_layout">
             <div class="h-100 w-100 w-md-75 m-auto py-3 px-5 d-flex flex-column align-items-center justify-content-start text-center gap-3">

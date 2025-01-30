@@ -155,6 +155,9 @@ function usePublicRefuseButton() {
                         component.dialog.add(SignRefusalDialog);
                     })
                 );
+                if (new URLSearchParams(window.location.search).get("refuse_document") === "1") {
+                    refuseButtons[0].click();
+                }
             }
         },
         () => []
