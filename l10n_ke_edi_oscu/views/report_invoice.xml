@@ -14,11 +14,11 @@
                 <div class="row mt-2 mb-4">
                     <div class="col-auto col-6 mw-100 mb-2">
                         <p class="small mt-1 mb-1">
-                            <b>Date: </b><span t-out="o.l10n_ke_oscu_datetime.strftime('%Y-%m-%d')"/>
-                            <b>Time: </b><span t-out="o.l10n_ke_oscu_datetime.strftime('%H:%M:%S')"/>
+                            <b>Date: </b><span t-out="o.l10n_ke_oscu_datetime and o.l10n_ke_oscu_datetime.strftime('%Y-%m-%d') or ''"/>
+                            <b>Time: </b><span t-out="o.l10n_ke_oscu_datetime and o.l10n_ke_oscu_datetime.strftime('%H:%M:%S') or ''"/>
                         </p>
                         <p class="small mt-1 mb-1">
-                            <b>SCU ID: </b> <span t-field="o.l10n_ke_control_unit"/>
+                            <b>SCU ID: </b> <span t-out="o.l10n_ke_control_unit or ''"/>
                         </p>
                         <t t-if="o.reversed_entry_id.l10n_ke_oscu_invoice_number">
                             <p class="small mt-1 mb-1">
@@ -26,21 +26,21 @@
                             </p>
                         </t>
                         <p class="small mt-1 mb-1">
-                            <b>Receipt Number: </b> <span t-field="o.l10n_ke_oscu_receipt_number"/>
+                            <b>Receipt Number: </b> <span t-out="o.l10n_ke_oscu_receipt_number or ''"/>
                         </p>
                         <p t-if="o.l10n_ke_payment_method_id" class="small mt-1 mb-1">
                             <b>Payment Method: </b> <span t-field="o.l10n_ke_payment_method_id.name"/>
                         </p>
                         <p class="small mt-1 mb-1">
-                            <b>Item Count: </b> <span t-out="move_json['totItemCnt']"/>
+                            <b>Item Count: </b> <span t-out="move_json['totItemCnt'] or ''"/>
                         </p>
                         <p class="small mt-1 mb-1">
                             <b>Internal Data: </b><br></br>
-                            <span t-out="o._l10n_ke_hyphenate_invoice_field(o.l10n_ke_oscu_internal_data)"/>
+                            <span t-out="o._l10n_ke_hyphenate_invoice_field(o.l10n_ke_oscu_internal_data or '')"/>
                         </p>
                         <p class="small mt-1 mb-1">
                             <b>Receipt Signature: </b>
-                            <span t-out="o._l10n_ke_hyphenate_invoice_field(o.l10n_ke_oscu_signature)"/>
+                            <span t-out="o._l10n_ke_hyphenate_invoice_field(o.l10n_ke_oscu_signature or '')"/>
                         </p>
                     </div>
                     <div class="col-auto col-1 mw-100 mb-2">
