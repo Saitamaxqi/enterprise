@@ -191,7 +191,7 @@ class CalendarEvent(models.Model):
             if not event.appointment_type_id or event.videocall_location and not self.DISCUSS_ROUTE in event.videocall_location:
                 events_no_appointment |= event
                 continue
-            event.videocall_source = event.appointment_type_id.event_videocall_source
+            event.videocall_source = event.sudo().appointment_type_id.event_videocall_source
         super(CalendarEvent, events_no_appointment)._compute_videocall_source()
 
     def _compute_is_highlighted(self):
