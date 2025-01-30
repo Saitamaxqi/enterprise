@@ -8,7 +8,6 @@ import { DocumentsDropZone } from "../helper/documents_drop_zone";
 import { DocumentsActionHelper } from "../helper/documents_action_helper";
 import { DocumentsFileViewer } from "../helper/documents_file_viewer";
 import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
-import { DocumentsListRendererCheckBox } from "./documents_list_renderer_checkbox";
 import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
 import { useCommand } from "@web/core/commands/command_hook";
 import { useRef } from "@odoo/owl";
@@ -20,7 +19,6 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
     static template = "documents.DocumentsListRenderer";
     static recordRowTemplate = "documents.DocumentsListRenderer.RecordRow";
     static components = Object.assign({}, ListRenderer.components, {
-        DocumentsListRendererCheckBox,
         FileUploadProgressContainer,
         FileUploadProgressDataRow,
         DocumentsDropZone,
@@ -68,15 +66,12 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
         if (!record) {
             return;
         }
-        const options = {};
         if (ev.key === "Enter" && record.data.type !== "folder") {
             record.onClickPreview(ev);
-        } else if (ev.key === " ") {
-            options.isKeepSelection = true;
         }
         ev.stopPropagation();
         ev.preventDefault();
-        record.onRecordClick(ev, options);
+        this.toggleRecordSelection(record);
     }
 
     /**
@@ -88,13 +83,17 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
     onCellClicked(record, column, ev) {
         ev.stopPropagation();
         const isSelectionKeyPressed = ev.ctrlKey || ev.metaKey || ev.shiftKey;
-        if (record.selected && !isSelectionKeyPressed && this.editableColumns.includes(column.name)) {
+        if (isSelectionKeyPressed) {
+            this.toggleRecordSelection(record);
+        } else if (record.selected && this.editableColumns.includes(column.name)) {
             return super.onCellClicked(...arguments);
-        } else if (record.data.type !== "folder" && !isSelectionKeyPressed) {
+        } else if (record.data.type !== "folder") {
             return record.onClickPreview(ev);
+        } else {
+            record.openFolder();
         }
-        record.onRecordClick(ev);
     }
+
     get editableColumns() {
         return ["name", "tag_ids", "partner_id", "owner_id", "company_id"];
     }

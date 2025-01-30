@@ -47,29 +47,6 @@
             <attribute name="t-on-dragleave.stop">onDragLeave</attribute>
             <attribute name="t-on-dragover.stop.prevent">onDragOver</attribute>
             <attribute name="t-on-drop.stop">onDrop</attribute>
-            <attribute name="t-on-click.stop.prevent.synthetic">(ev) => record.onRecordClick(ev)</attribute>
         </xpath>
-        <xpath expr="//td[hasclass('o_list_record_selector')]" position="attributes">
-            <attribute name="t-on-click.stop">(ev) => record.onRecordClick(ev)</attribute>
-        </xpath>
-        <CheckBox position="replace">
-            <DocumentsListRendererCheckBox disabled="!!editedRecord or props.list.model.useSampleModel" value="record.selected" onChange.bind="(ev) => record.onRecordClick(ev, {isKeepSelection: true})"/>
-        </CheckBox>
-    </t>
-
-    <t t-name="documents.DocumentsListRendererCheckBox">
-        <div class="form-check" t-att-class="props.className" t-ref="root">
-            <input
-                t-att-id="props.id or id"
-                type="checkbox"
-                class="form-check-input"
-                t-att-disabled="props.disabled"
-                t-att-checked="props.value"
-                t-att-name="props.name"
-            />
-            <label t-att-for="props.id or id" class="form-check-label">
-                <t t-slot="default"/>
-            </label>
-        </div>
     </t>
 </templates>

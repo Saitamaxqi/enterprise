@@ -261,23 +261,23 @@ export const DocumentsRecordMixin = (component) => class extends component {
             root._documentsAnchor = this;
         }
 
-        // Make sure to keep the record if we were in a multi select
-        const isMultiSelect = root.selection.length > 1;
-        let thisSelected = !this.selected;
         if (isRangeSelection && anchor) {
-            const indexFrom = root.records.indexOf(root.records.find((rec) => rec.resId === anchor.resId));
-            const indexTo = root.records.indexOf(this);
+            const selectionDocumentIds = root.selection.map((r) => r.resId);
+            const documentIds = Array.from(
+                document.querySelectorAll(".o_kanban_record:not(.o_kanban_ghost)"),
+            ).map((el) => parseInt(el.querySelector("div").dataset.id));
+            const indexFrom = documentIds.indexOf(anchor.resId);
+            const indexTo = documentIds.indexOf(this.resId);
             const lowerIdx = Math.min(indexFrom, indexTo);
             const upperIdx = Math.max(indexFrom, indexTo) + 1;
-            root.selection.forEach((rec) => (rec.selected = false));
-            // We don't modify the current one as it will be by the toggleSelection below. TODO: improve the method
-            for (let idx = lowerIdx; idx < upperIdx; idx++) {
-                const record = root.records[idx];
-                if (record != this) {
-                    record.selected = true;
-                }
-            }
-        } else if (!isKeepSelection && (isMultiSelect || thisSelected)) {
+
+            const toSelectDocumentIds = [
+                ...new Set([...selectionDocumentIds, ...documentIds.slice(lowerIdx, upperIdx)]),
+            ];
+            root.records.forEach((r) => {
+                r.selected = r != this && toSelectDocumentIds.includes(r.resId);
+            });
+        } else if (!isKeepSelection) {
             root.selection.forEach((rec) => {
                 rec.selected = false;
             });

@@ -107,11 +107,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
                 return;
             }
         }
-        const options = {};
-        if (ev.target.classList.contains("o_record_selector")) {
-            options.isKeepSelection = true;
-        }
-        this.props.record.onRecordClick(ev, options);
+        this.props.record.onRecordClick(ev);
     }
 
     onKeydown(ev) {
