@@ -1,40 +1,26 @@
 
 from odoo import Command
 from odoo.addons.project.tests.test_project_base import TestProjectCommon
+from odoo.addons.appointment.tests.common import AppointmentCommon
 from odoo.addons.mail.tests.common import mail_new_test_user
-from odoo.tests import tagged
+from odoo.tests import users, tagged
 
 from datetime import datetime
 from freezegun import freeze_time
 import re
 
-
 @tagged('post_install', '-at_install')
-class TestProjectAppointmentTask(TestProjectCommon):
+class TestProjectAppointmentTask(TestProjectCommon, AppointmentCommon):
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-
-        # reference dates to have reproducible tests
-        cls.reference_monday = datetime(2022, 2, 14, 7, 0)
 
         cls.project = cls.env['project.project'].create({
             'name': 'Project Test APT',
             'company_id': cls.env.company.id,
         })
 
-        # cls.project_pigs
-        cls.staff_user_apt_bxls = mail_new_test_user(
-            cls.env,
-            company_id=cls.env.company.id,
-            email='brussels@test.example.com',
-            groups='base.group_user',
-            name='Employee Brussels',
-            notification_type='email',
-            login='staff_user_apt_bxls',
-            tz='Europe/Brussels'  # UTC + 1
-        )
         # create additional users to invite as guests in the appointment
         cls.test_user_1 = mail_new_test_user(
             cls.env, login='test1',
@@ -77,7 +63,7 @@ class TestProjectAppointmentTask(TestProjectCommon):
         cls.appointment_users, cls.appointment_resources = cls.env['appointment.type'].create([{
             'name': 'Test Paid Appointment Type - Users',
             'schedule_based_on': 'users',
-            'staff_user_ids': [(4, cls.staff_user_apt_bxls.id)],
+            'staff_user_ids': [(4, cls.staff_user_bxls.id)],
             **paid_apt_common_values,
         }, {
             'name': 'Test Paid Appointment Type - Resource',
@@ -135,6 +121,7 @@ class TestProjectAppointmentTask(TestProjectCommon):
         ])
 
     @freeze_time('2022-2-13 20:00:00')
+    @users('apt_manager')
     def test_project_user_appointment_type_task_population_on_confirmed_so(self):
         """
         Verify that when the SO of a appointment booking of USER type is confirmed,
@@ -177,17 +164,18 @@ class TestProjectAppointmentTask(TestProjectCommon):
                 Command.create(appointment_answer_single_line_text_input_values),
                 Command.create(appointment_answer_dropdown_input_values),
             ] + [Command.create(values) for values in appointment_answer_checkbox_input_values],
+            'partner_id': self.apt_manager.partner_id.id,   
             'product_id': self.product.id,
-            'staff_user_id': self.staff_user_apt_bxls.id,
+            'staff_user_id': self.staff_user_bxls.id,
             'start': self.start_slot,
             'stop': self.stop_slot,
-            'guest_ids': [(4, self.test_user_1.id), (4, self.test_user_2.id)],
+            'guest_ids': [self.test_user_1.partner_id.id, self.test_user_2.partner_id.id],
         }
         calendar_booking = self.env['calendar.booking'].create(booking_values)
 
         # Create SO (quotation) and SOL linked to booking
         sale_order = self.env['sale.order'].sudo().create({
-            'partner_id': self.partner_1.id,
+            'partner_id': calendar_booking.partner_id.id,
             'company_id': self.env.company.id,
         })
         self.assertFalse(calendar_booking._filter_unavailable_bookings(), "No unavailable booking should be found")
@@ -215,9 +203,10 @@ class TestProjectAppointmentTask(TestProjectCommon):
         self.assertEqual(task.planned_date_begin, event.start, "Planned date begin of the task should be equal to the start of the event")
         self.assertEqual(task.date_deadline, event.stop, "Date deadline of the task should be equal to the stop of the event")
 
+        # Assert that the invited guests are followers of the task (remove the staff user and apt manager)
         followers_ids = set(task.message_partner_ids.ids)
-        followers_ids.remove(self.staff_user_apt_bxls.partner_id.id)
-        self.assertEqual(followers_ids, set(calendar_booking.guest_ids.ids), "Invited guests (except the staff user) should be followers of the task")
+        followers_ids.difference_update({self.staff_user_bxls.partner_id.id, self.apt_manager.partner_id.id})
+        self.assertEqual(followers_ids, set(calendar_booking.guest_ids.ids), "Invited guests should be followers of the task")
 
         # Assert the desctiption of the task, which should contain the questions of the appointment form.
         questions = calendar_booking.appointment_type_id.question_ids
