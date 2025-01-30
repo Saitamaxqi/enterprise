@@ -53,16 +53,24 @@ class HrAttendance(models.Model):
         # final result is rounded to the hour (e.g. 177.5 hours -> 178 hours)
         return round(employee.resource_id.calendar_id.full_time_required_hours * (num_days / 7))
 
+    def _get_gantt_progress_bar_domain(self, res_ids, start, stop):
+        domain = [
+            ('employee_id', 'in', res_ids),
+            ('check_in', '>=', start),
+            ('check_out', '<=', stop)
+        ]
+        return domain
+
     def _gantt_progress_bar_employee_ids(self, res_ids, start, stop):
         """
         Resulting display is worked hours / expected worked hours
         """
         values = {}
-        worked_hours_group = self._read_group([('employee_id', 'in', res_ids),
-                                               ('check_in', '>=', start),
-                                               ('check_out', '<=', stop)],
-                                              groupby=['employee_id'],
-                                              aggregates=['worked_hours:sum'])
+        worked_hours_group = self._read_group(
+            self._get_gantt_progress_bar_domain(res_ids, start, stop),
+            groupby=['employee_id'],
+            aggregates=['worked_hours:sum']
+        )
         employee_data = {emp.id: worked_hours for emp, worked_hours in worked_hours_group}
         employees = self.env['hr.employee'].browse(res_ids)
         for employee in employees:
