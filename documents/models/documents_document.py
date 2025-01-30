@@ -2157,14 +2157,8 @@ class DocumentsDocument(models.Model):
 
     def _raise_if_used_folder(self):
         if folder_ids := self.filtered(lambda d: d.type == 'folder').ids:
-            company_field_names = [
-                company_field_name
-                for company_field_name, field in self.env['res.company']._fields.items()
-                if field.comodel_name == "documents.document"
-            ]
-            if self.env['res.company'].sudo().search_count(expression.OR([
-                [(field_name, 'in', folder_ids)] for field_name in company_field_names
-            ]), limit=1):
+            company_used_folders_domain = self.env['res.company']._get_used_folder_ids_domain(folder_ids)
+            if self.env['res.company'].sudo().search_count(company_used_folders_domain, limit=1):
                 raise ValidationError(_("Impossible to delete folders used by other applications."))
 
     def _raise_if_unauthorized_archive(self):

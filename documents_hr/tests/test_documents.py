@@ -123,14 +123,20 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
         folder_hr_company2 = self.env['documents.document'].create({
             'name': 'hr company 2', 'type': 'folder', 'folder_id': folder_parent.id})
         company_b.documents_hr_folder = folder_hr_company2
+        company_b.documents_hr_settings = False
 
         self.assertEqual(folder_parent.with_user(self.doc_user).user_permission, 'edit')
         self.assertEqual(folder_hr_company2.with_user(self.doc_user).user_permission, 'edit')
+        # It should be possible to archive an unused 'HR' folder"
+        folder_hr_company2.with_user(self.doc_user).action_archive()
+        folder_hr_company2.with_user(self.doc_user).action_unarchive()
+        company_b.documents_hr_settings = True
+
         with self.assertRaises(UserError,
-                               msg="It should not be possible to archive a 'HR' folder"):
+                               msg="It should not be possible to archive an used 'HR' folder"):
             folder_hr_company2.with_user(self.doc_user).action_archive()
         with self.assertRaises(UserError,
-                               msg="It should not be possible to archive an ancestor of the 'HR' folder"):
+                               msg="It should not be possible to archive an ancestor of the used 'HR' folder"):
             folder_parent.with_user(self.doc_user).action_archive()
         with self.assertRaises(UserError,
                                msg="It should not be possible to unlink a 'HR' folder"):

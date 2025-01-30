@@ -2,7 +2,7 @@
 
 import base64
 
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, UserError
 from odoo.tests import new_test_user
 from odoo.tests.common import tagged, TransactionCase
 
@@ -101,3 +101,47 @@ class TestCaseDocumentsBridgeFleet(TransactionCase):
         })
         document = self.env['documents.document'].search([('attachment_id', '=', attachment_txt_test.id)])
         self.assertFalse(document.exists(), 'the document should not exist')
+
+    def test_company_reset_documents_folder_id(self):
+        """Check the update of folder_id when the bridge is enabled/disabled on a company
+
+        Note that this test is named after the method implemented in the document module
+        because there is no company field pointing to a folder in documents itself."""
+        new_company = self.env['res.company'].create({'name': 'New Company'})
+        self.assertEqual(new_company.documents_fleet_folder, self.fleet_folder)
+        test_companies = self.env.company + new_company
+        # Only our two test companies should use this folder
+        self.env['res.company'].sudo().search([('id', 'not in', test_companies.ids)]).documents_fleet_folder = False
+
+        fleet_folder_2 = self.env['documents.document'].create({'name': 'Fleet Folder 2', 'type': 'folder'})
+
+        self.env.company.documents_fleet_settings = False
+        self.assertEqual(test_companies.with_context(allowed_company_ids=test_companies.ids).documents_fleet_folder,
+                         self.fleet_folder,
+                         "Both companies should still be linked to Fleet Folder")
+
+        with self.assertRaises(UserError):
+            self.fleet_folder.action_archive()
+        with self.assertRaises(UserError):
+            self.fleet_folder.unlink()
+
+        new_company.documents_fleet_folder = fleet_folder_2
+        self.fleet_folder.action_archive()
+
+        new_company.documents_fleet_settings = False
+        self.assertEqual(new_company.documents_fleet_folder,
+                         fleet_folder_2,
+                         "The folder should still be linked with disabled bridge")
+
+        new_company.documents_fleet_settings = True
+        self.assertEqual(new_company.documents_fleet_folder, fleet_folder_2)
+        new_company.documents_fleet_settings = False
+        fleet_folder_2.unlink()
+        new_company.documents_fleet_settings = True
+        self.assertFalse(new_company.documents_fleet_folder, 'There should be no value as the default is archived')
+        new_company.documents_fleet_settings = False
+        self.fleet_folder.action_unarchive()
+        new_company.documents_fleet_settings = True
+        self.assertEqual(new_company.documents_fleet_folder,
+                         self.fleet_folder,
+                         "The default folder should have been re-used")

@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
+from odoo.osv import expression
 
 
 class ResCompany(models.Model):
@@ -43,3 +44,9 @@ class ResCompany(models.Model):
             folder.action_update_access_rights(
                 access_internal='view', access_via_link='none', is_access_via_link_hidden=True,
                 partners={partner.id: ('edit', False) for partner in payroll_users.partner_id})
+
+    def _get_used_folder_ids_domain(self, folder_ids):
+        return expression.OR([
+            super()._get_used_folder_ids_domain(folder_ids),
+            [('documents_payroll_folder_id', 'in', folder_ids), ('documents_hr_settings', '=', True)]
+        ])
