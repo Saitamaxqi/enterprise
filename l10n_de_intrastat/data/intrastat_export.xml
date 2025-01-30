@@ -123,7 +123,7 @@
     <template id="CN8">
         <CN8>
             <CN8Code t-out="item['commodity_code']"/>
-            <SUCode t-if="item.get('supplementary_unit_code')" t-out="item['supplementary_unit_code']"/>
+            <SUCode t-if="item.get('supplementary_units_code')" t-out="item['supplementary_units_code']"/>
         </CN8>
     </template>
 
