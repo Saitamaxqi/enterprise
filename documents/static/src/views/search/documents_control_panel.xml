@@ -2,6 +2,16 @@
 <templates xml:space="preserve">
 
     <t t-name="documents.ControlPanel" t-inherit="web.ControlPanel" t-inherit-mode="primary">
+        <xpath expr="//t[@t-elif='env.isSmall']/section[hasclass('o_control_panel_breadcrumbs_actions')]" position="replace">
+             <t t-set="_embeddedActions" t-value="embeddedActions"/>
+            <div t-if="this.env.model.root.selection.length" class="dropdown">
+                <button class="d-print-none btn btn-secondary" data-bs-toggle="dropdown" data-hotkey="u" data-tooltip="Actions">
+                    <i class="fa fa-fw fa-cog"/>
+                </button>
+                <DocumentsAction folderId="currentFolderId" targetRecords="this.env.model.root.selection"/>
+            </div>
+        </xpath>
+
         <xpath expr="//t[@t-else='']/Breadcrumbs" position="replace">
             <DocumentsBreadcrumbs breadcrumbs="pathBreadcrumbs"/>
         </xpath>
@@ -9,24 +19,26 @@
         <xpath expr="//div[hasclass('o_control_panel_actions')]" position="inside">
             <t t-if="!this.documentService.previewedDocument">
                 <SearchBar t-if="!this.env.model.root.selection.length" toggler="env.searchBarToggler" autofocus="firstLoad"/>
-                <t t-call="web.ListView.Selection" t-if="this.env.model.root.selection.length">
-                    <t t-set="isDomainSelected" t-value="false"/>
-                        <t t-set="isPageSelected" t-value="false"/>
+                <div class="o_documents_view_selection_container d-flex gap-1 w-100 w-md-auto">
+                    <t t-call="web.ListView.Selection" t-if="this.env.model.root.selection.length">
                         <t t-set="model" t-value="this.env.model"/>
-                        <t t-set="nbSelected" t-value="this.env.model.root.selection.length"/>
-                </t>
-                <DocumentsAction folderId="currentFolderId" targetRecords="this.env.model.root.selection"/>
+                        <t t-set="isDomainSelected" t-value="model.root.isDomainSelected"/>
+                        <t t-set="isPageSelected" t-value="model.root.selection.length === model.root.records.length"/>
+                        <t t-set="nbSelected" t-value="model.root.selection.length"/>
+                        <t t-set="nbTotal" t-value="model.root.count"/>
+                    </t>
+                    <DocumentsAction folderId="currentFolderId" targetRecords="this.env.model.root.selection"/>
+                </div>
             </t>
         </xpath>
 
         <xpath expr="//*[hasclass('o_cp_switch_buttons')]" position="before">
             <button t-if="documentService.userIsInternal"
                 t-on-click="() => this.documentService.toggleChatterState()"
-                class="btn btn-secondary o_switch_view o_kanban"
+                class="btn btn-secondary o_switch_view o_kanban d-none d-md-inline"
                 t-att-class="{'active': this.chatterState.visible}">
                 <i class="fa fa-fw fa-info-circle mt-1"/>
             </button>
         </xpath>
     </t>
-
 </templates>

@@ -20,4 +20,29 @@
             min-height: 5.6vh;
         }
     }
+
+    @include media-breakpoint-down(lg) {
+        .o_documents_view_selection_container {
+            .btn-group {
+                .o_documents_action_dropdown.btn-group {
+                    .o_dropdown_title {
+                        border-top-right-radius: $border-radius !important;
+                        border-bottom-right-radius: $border-radius !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@include media-breakpoint-down(md) {
+    .o_web_client:has(.o_documents_view_selection_container) .o_navbar {
+        opacity: 0.15;
+    }
+    .o_documents_view_selection_container {
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
 }

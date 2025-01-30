@@ -8,8 +8,9 @@
         <t t-set="isInTrash" t-value="props.folderId === 'TRASH'"/>
         <t t-set="userIsInternal" t-value="documentService.userIsInternal"/>
         <t t-set="editMode" t-value="props.targetRecords.every((r) => r.data.user_permission === 'edit')"/>
+        <t t-set="_embeddedActions" t-value="embeddedActions"/>
 
-        <div class="btn-group">
+        <div t-if="!env.isSmall" class="btn-group flex-wrap">
             <div t-if="selectionCount" class="ms-1 o_documents_action_dropdown btn-group">
                 <div class="dropdown" t-att-class="{'btn-group': singleSelection || props.targetRecords.some((r) => r.data.attachment_id and r.data?.handler !== 'spreadsheet')}">
                     <button class="btn btn-secondary o_dropdown_title" type="button"
@@ -18,100 +19,23 @@
                         <i class="fa fa-gear"/>
                         Action
                     </button>
-                    <ul class="dropdown-menu">
-                        <button class="dropdown-item w-100 o_documents_export"
-                            t-if="this.canExport and this.documentsState.viewType === 'list'"
-                            t-on-click="() => this.onExport()">
-                            <i class="fa fa-fw fa-upload me-1"/>
-                            <span class="d-inline-block">Export</span>
-                        </button>
-                        <button class="dropdown-item w-100"
-                            t-on-click="() => this.onDuplicate()"
-                            t-if="canDuplicateSelection">
-                            <i class="fa fa-fw fa-copy me-1"/>
-                            <span class="d-inline-block">Duplicate</span>
-                        </button>
-                        <button class="dropdown-item w-100"
-                            t-on-click="() => this.onArchive()"
-                            t-if="userIsInternal and editMode and someActive">
-                            <i class="fa fa-fw fa-trash me-1"/>
-                            <span class="d-inline-block">Move to Trash</span>
-                        </button>
-                        <button class="dropdown-item w-100"
-                            t-on-click="() => this.onRestore()"
-                            t-if="someArchived">
-                            <i class="fa fa-fw fa-history me-1"/>
-                            <span class="d-inline-block">Restore</span>
-                        </button>
-                        <button class="dropdown-item w-100"
-                            t-on-click="() => this.onDelete()"
-                            t-if="areTargetRecordsDeletable">
-                            <i class="fa fa-fw fa-trash me-1"/>
-                            <span class="d-inline-block">Delete</span>
-                        </button>
-                        <div role="separator" class="dropdown-divider"/>
-                        <button class="dropdown-item w-100"
-                            t-on-click="() => this.onRename()"
-                            t-if="(userIsInternal or editMode) and singleSelection and !isInTrash">
-                            <i class="fa fa-fw fa-edit me-1"/>
-                            <span class="d-inline-block">Rename</span>
-                        </button>
-                        <button class="dropdown-item w-100"
-                            t-on-click="() => this.documentService.toggleChatterState()"
-                            t-if="userIsInternal and singleSelection">
-                            <i class="fa fa-fw fa-info-circle me-1"/>
-                            <span class="d-inline-block">Info &amp; tags </span>
-                        </button>
-                        <button class="dropdown-item w-100"
-                            t-on-click="() => this.onCreateShortcut()"
-                            t-if="userIsInternal and singleSelection and !isInTrash">
-                            <i class="fa fa-fw fa-external-link-square me-1"/>
-                            <span class="d-inline-block">Create Shortcut</span>
-                        </button>
-                        <button class="o_documents_manage_versions dropdown-item w-100"
-                            t-on-click="() => this.onManageVersions()"
-                            t-if="canManageVersions">
-                            <i class="fa fa-fw fa-history me-1"/>
-                            <span class="d-inline-block">Manage Versions</span>
-                        </button>
-                        <button class="dropdown-item w-100"
-                            t-on-click="() => this.onToggleLock()"
-                            t-if="userIsInternal and singleSelection and !isInTrash">
-                            <i class="fa fa-fw fa-lock me-1"/>
-                            <span class="d-inline-block" t-if="singleSelection?.data.lock_uid">Unlock</span>
-                            <span class="d-inline-block" t-else="">Lock</span>
-                        </button>
-                        <button class="dropdown-item w-100"
-                            t-on-click="() => this.onCopyLinks()"
-                            t-if="selectionCount and !isInTrash">
-                            <i class="fa fa-fw fa-link me-1"/>
-                            <span class="d-inline-block">Copy Links</span>
-                        </button>
-                        <button class="dropdown-item w-100"
-                            t-on-click="() => this.onSplitPDF()"
-                            t-if="userIsInternal and selectionCount and this.props.targetRecords.every((record) => record.isPdf()) and !isInTrash">
-                            <i class="fa fa-fw fa-scissors me-1"/>
-                            <span class="d-inline-block" t-if="singleSelection">Split PDF</span>
-                            <span class="d-inline-block" t-else="">Merge PDFs</span>
-                        </button>
-                    </ul>
+                    <t t-call="documents.ControlPanelActionItems"/>
                 </div>
             </div>
 
-            <button type="button" class="btn btn-secondary o_documents_share_button"
+            <button type="button" class="btn btn-secondary o_documents_share_button d-none d-lg-inline"
                 t-if="documentService.userIsInternal and selectionCount === 1"
                 t-on-click="() => this.onShare()">
                 Share
             </button>
 
-            <button type="button" class="btn btn-secondary o_documents_download_button"
+            <button type="button" class="btn btn-secondary o_documents_download_button d-none d-lg-inline"
                 t-if="this.props.targetRecords.some((r) => this.hasDocumentAttachment(r))"
                 t-on-click="() => this.onDownload()">
                 Download
             </button>
 
-            <t t-set="_embeddedActions" t-value="embeddedActions"/>
-            <div t-if="_embeddedActions.length" class="d-flex flex-row flex-wrap btn-group">
+            <div t-if="_embeddedActions.length" class="d-flex flex-row flex-wrap btn-group d-none d-lg-inline">
                 <t t-set="firstEmbeddedActions" t-value="_embeddedActions.slice(0, env.isSmall ? 0 : 2)"/>
                 <t t-set="lastEmbeddedActions" t-value="_embeddedActions.slice(env.isSmall ? 0 : 2)"/>
 
@@ -135,5 +59,104 @@
                 </div>
             </div>
         </div>
+        <t t-else="" t-call="documents.ControlPanelActionItems"/>
+    </t>
+
+    <t t-name="documents.ControlPanelActionItems">
+        <ul class="dropdown-menu">
+            <div t-if="_embeddedActions.length" class="d-lg-none">
+                <button t-foreach="_embeddedActions" t-as="action" t-key="action.id"
+                    type="button" class="dropdown-item w-100" t-out="action.name"
+                    t-if="!!selectionCount" t-on-click="() => this.onDoAction(action.id)"/>
+                <hr/>
+            </div>
+            <button class="dropdown-item w-100 o_documents_download_item d-lg-none"
+                t-if="props.targetRecords.some((r) => r.data.attachment_id)"
+                t-on-click="() => this.onDownload()">
+                <i class="fa fa-fw fa-share-alt me-1"/>
+                <span class="d-inline-block">Download</span>
+            </button>
+            <button class="dropdown-item w-100 o_documents_share_item d-lg-none"
+                t-on-click="() => this.onShare()"
+                t-if="selectionCount === 1">
+                <i class="fa fa-fw fa-share-alt me-1"/>
+                <span class="d-inline-block">Share</span>
+            </button>
+            <button class="dropdown-item w-100 o_documents_export"
+                t-if="this.canExport and this.documentsState.viewType === 'list'"
+                t-on-click="() => this.onExport()">
+                <i class="fa fa-fw fa-upload me-1"/>
+                <span class="d-inline-block">Export</span>
+            </button>
+            <button class="dropdown-item w-100"
+                t-on-click="() => this.onDuplicate()"
+                t-if="canDuplicateSelection">
+                <i class="fa fa-fw fa-copy me-1"/>
+                <span class="d-inline-block">Duplicate</span>
+            </button>
+            <button class="dropdown-item w-100"
+                t-on-click="() => this.onArchive()"
+                t-if="userIsInternal and editMode and someActive">
+                <i class="fa fa-fw fa-trash me-1"/>
+                <span class="d-inline-block">Move to Trash</span>
+            </button>
+            <button class="dropdown-item w-100"
+                t-on-click="() => this.onRestore()"
+                t-if="someArchived">
+                <i class="fa fa-fw fa-history me-1"/>
+                <span class="d-inline-block">Restore</span>
+            </button>
+            <button class="dropdown-item w-100"
+                t-on-click="() => this.onDelete()"
+                t-if="areTargetRecordsDeletable">
+                <i class="fa fa-fw fa-trash me-1"/>
+                <span class="d-inline-block">Delete</span>
+            </button>
+            <div role="separator" class="dropdown-divider"/>
+            <button class="dropdown-item w-100"
+                t-on-click="() => this.onRename()"
+                t-if="(userIsInternal or editMode) and singleSelection and !isInTrash">
+                <i class="fa fa-fw fa-edit me-1"/>
+                <span class="d-inline-block">Rename</span>
+            </button>
+            <button class="dropdown-item w-100"
+                t-on-click="() => this.documentService.toggleChatterState()"
+                t-if="userIsInternal and singleSelection">
+                <i class="fa fa-fw fa-info-circle me-1"/>
+                <span class="d-inline-block">Info &amp; tags </span>
+            </button>
+            <button class="dropdown-item w-100"
+                t-on-click="() => this.onCreateShortcut()"
+                t-if="userIsInternal and singleSelection and !isInTrash">
+                <i class="fa fa-fw fa-external-link-square me-1"/>
+                <span class="d-inline-block">Create Shortcut</span>
+            </button>
+            <button class="o_documents_manage_versions dropdown-item w-100"
+                t-on-click="() => this.onManageVersions()"
+                t-if="canManageVersions">
+                <i class="fa fa-fw fa-history me-1"/>
+                <span class="d-inline-block">Manage Versions</span>
+            </button>
+            <button class="dropdown-item w-100"
+                t-on-click="() => this.onToggleLock()"
+                t-if="userIsInternal and singleSelection and !isInTrash">
+                <i class="fa fa-fw fa-lock me-1"/>
+                <span class="d-inline-block" t-if="singleSelection?.data.lock_uid">Unlock</span>
+                <span class="d-inline-block" t-else="">Lock</span>
+            </button>
+            <button class="dropdown-item w-100"
+                t-on-click="() => this.onCopyLinks()"
+                t-if="selectionCount and !isInTrash">
+                <i class="fa fa-fw fa-link me-1"/>
+                <span class="d-inline-block">Copy Links</span>
+            </button>
+            <button class="dropdown-item w-100"
+                t-on-click="() => this.onSplitPDF()"
+                t-if="userIsInternal and selectionCount and this.props.targetRecords.every((record) => record.isPdf()) and !isInTrash">
+                <i class="fa fa-fw fa-scissors me-1"/>
+                <span class="d-inline-block" t-if="singleSelection">Split PDF</span>
+                <span class="d-inline-block" t-else="">Merge PDFs</span>
+            </button>
+        </ul>
     </t>
 </templates>
