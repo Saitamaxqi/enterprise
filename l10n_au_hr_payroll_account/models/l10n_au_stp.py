@@ -25,6 +25,13 @@ COMPANY_REQUIRED_FIELDS = [
 ]
 
 
+def split_name(name):
+    names = name.split()
+    if len(names) == 1:
+        return names[0], ""
+    return " ".join(names[:-1]), names[-1]
+
+
 def strip_phonenumber(phone: str):
     return ''.join(re.findall(r'(\d+)', phone))
 
@@ -89,7 +96,7 @@ class L10n_AuStp(models.Model):
         ("normal", "N/A"),
         ("done", "Valid"),
         ("invalid", "Invalid"),
-    ], default="normal")
+    ], default="normal", readonly=True)
     error_message = fields.Text("Error Message", readonly=True)
     warning_message = fields.Char(compute="_compute_warning_message")
     l10n_au_stp_emp = fields.One2many("l10n_au.stp.emp", "stp_id", string="Employees")
@@ -99,6 +106,7 @@ class L10n_AuStp(models.Model):
     end_date = fields.Date("End Date", compute="_compute_end_date", store=True, readonly=False)
     is_zeroing = fields.Boolean("Zero Out YTD")
     is_not_paid = fields.Boolean(compute="_compute_is_not_paid")
+    is_opening_balances = fields.Boolean()
 
     # constraints ffr, cannot be true if type is update
     _ffr = models.Constraint(
@@ -125,6 +133,11 @@ class L10n_AuStp(models.Model):
         if vals.get("payevent_type") == "submit":
             vals['is_zeroing'] = False
         return super().write(vals)
+
+    @api.ondelete(at_uninstall=False)
+    def _on_stp_delete(self):
+        if self.filtered(lambda r: r.state == 'sent'):
+            raise ValidationError(_("The STP report you are trying to delete has already been submitted. You cannot delete a submitted report."))
 
     def _fiscal_start_date(self):
         for rec in self:
@@ -161,6 +174,8 @@ class L10n_AuStp(models.Model):
                 report.name = report.name
             elif report.is_zeroing:
                 report.name = _("Zeroing YTD - %s", report.company_id.name)
+            elif report.is_opening_balances:
+                report.name = _("Opening Balances (Transfer from Previous Software)")
             elif report.payevent_type == "update":
                 report.name = _("Update Event - %s", report.start_date)
             elif report.payslip_batch_id:
@@ -191,14 +206,14 @@ class L10n_AuStp(models.Model):
         for report in self:
             company_warnings, user_warnings = [], []
             company = self.company_id
-            user = self.company_id.l10n_au_stp_responsible_id
+            user_sudo = self.company_id.l10n_au_stp_responsible_id.sudo()
             for field in COMPANY_REQUIRED_FIELDS:
                 if not company[field]:
                     company_warnings.append(company._fields[field].string)
-            if user:
+            if user_sudo:
                 for field in EMPLOYEE_REQUIRED_FIELDS:
-                    if not user[field]:
-                        user_warnings.append(user._fields[field].string)
+                    if not user_sudo[field]:
+                        user_warnings.append(user_sudo._fields[field].string)
             message = ""
             if company_warnings:
                 message += "\n  ・ ".join(["Missing required company information:"] + company_warnings) + '\n'
@@ -295,7 +310,7 @@ class L10n_AuStp(models.Model):
 
     def _get_complex_rendering_data(self):
         payslips_ids = self.payslip_ids if self.payevent_type == 'submit' else self.l10n_au_stp_emp.payslip_ids
-        employees = payslips_ids.employee_id
+        employees = self.payslip_ids.employee_id if self.payevent_type == 'submit' else self.l10n_au_stp_emp.employee_id
         rounding = self.currency_id.rounding
 
         # == Date and Run Date ==
@@ -322,7 +337,7 @@ class L10n_AuStp(models.Model):
             extra_data.update({
                 "PayAsYouGoWithholdingTaxWithheldA": abs(all_line_values["WITHHOLD.TOTAL"]['sum']['total']),
                 "TotalGrossPaymentsWithholdingA": float_round(reportable_gross, precision_rounding=rounding),
-                "ChildSupportGarnisheeA": abs(float_round(all_line_values["CHILD.SUPPORT.GARNISHEE"]['sum']['total'], precision_rounding=rounding)),  # TODO
+                "ChildSupportGarnisheeA": abs(float_round(all_line_values["CHILD.SUPPORT.GARNISHEE"]['sum']['total'], precision_rounding=rounding)),
                 "ChildSupportWithholdingA": abs(float_round(all_line_values["CHILD.SUPPORT"]['sum']['total'] - all_line_values["CHILD.SUPPORT.GARNISHEE"]['sum']['total'], precision_rounding=rounding)),
             })
         # Employees extra data reported year to date for the current financial year
@@ -342,12 +357,12 @@ class L10n_AuStp(models.Model):
                 "l10n_au_extra_negotiated_super",
                 "l10n_au_extra_compulsory_super",
             ]
-            employee_ytd_totals = payslips.with_context(group_income_stream_types=True)._l10n_au_get_year_to_date_totals(fields_to_compute=fields_to_compute, zero_amount=self.is_zeroing, include_ytd_balances=True, l10n_au_include_current_slip=True)
-            employee_ytd_ungrouped = payslips._l10n_au_get_year_to_date_totals(fields_to_compute=fields_to_compute, zero_amount=self.is_zeroing, include_ytd_balances=True, l10n_au_include_current_slip=True)
-            employee_input_totals = payslips.with_context(group_income_stream_types=True)._l10n_au_get_ytd_inputs(zero_amount=self.is_zeroing, l10n_au_include_current_slip=True, include_ytd_balances=True)
-            employee_input_totals_ungrouped = payslips._l10n_au_get_ytd_inputs(zero_amount=self.is_zeroing, l10n_au_include_current_slip=True, include_ytd_balances=True)
+            employee_ytd_totals = payslips.with_context(group_income_stream_types=True)._l10n_au_get_year_to_date_totals(fields_to_compute=fields_to_compute, zero_amount=self.is_zeroing, include_ytd_balances=True, l10n_au_include_current_slip=True, employee_id=employee.id, start_date=self.start_date)
+            employee_ytd_ungrouped = payslips._l10n_au_get_year_to_date_totals(fields_to_compute=fields_to_compute, zero_amount=self.is_zeroing, include_ytd_balances=True, l10n_au_include_current_slip=True, employee_id=employee.id, start_date=self.start_date)
+            employee_input_totals = payslips.with_context(group_income_stream_types=True)._l10n_au_get_ytd_inputs(zero_amount=self.is_zeroing, l10n_au_include_current_slip=True, include_ytd_balances=True, employee_id=employee.id, start_date=self.start_date)
+            employee_input_totals_ungrouped = payslips._l10n_au_get_ytd_inputs(zero_amount=self.is_zeroing, l10n_au_include_current_slip=True, include_ytd_balances=True, employee_id=employee.id, start_date=self.start_date)
 
-            start_date = max(min_date, employee._get_first_version_date()) or unknown_date
+            employment_start_date = max(min_date, employee._get_first_version_date()) or unknown_date
             remunerations = []
             deductions = []
             for income_stream_type, employee_ytd in employee_ytd_totals.items():
@@ -376,16 +391,18 @@ class L10n_AuStp(models.Model):
                 # == Paid Leave ==
                 leave_lines = filter(lambda item: item[1]['is_leave'], employee_ytd["worked_days"].items())
                 Remuneration["PaidLeaveCollection"] = []
+                leave_values = defaultdict(float)
                 for work_type, leave in leave_lines:
-                    Remuneration["PaidLeaveCollection"].append({
-                        "TypeC": leave['payroll_code'],
-                        "PaymentA": float_round(leave['amount'], precision_rounding=rounding),
-                    })
+                    leave_values[leave['payroll_code']] += float_round(leave['amount'], precision_rounding=rounding)
+
                 leave_inputs = filter(lambda item: item[1]["payment_type"] == 'leave', employee_input_totals[income_stream_type].items())
                 for input_type, leave in leave_inputs:
+                    leave_values[leave['payroll_code']] += float_round(leave['amount'], precision_rounding=rounding)
+
+                for code, amount in leave_values.items():
                     Remuneration["PaidLeaveCollection"].append({
-                        "TypeC": leave['payroll_code'],
-                        "PaymentA": float_round(leave['amount'], precision_rounding=rounding),
+                        "TypeC": code,
+                        "PaymentA": amount,
                     })
                 # == Allowance ==
                 allowance_lines = filter(
@@ -558,7 +575,7 @@ class L10n_AuStp(models.Model):
                 })
 
             employee_data = {
-                "EmploymentStartD": start_date,
+                "EmploymentStartD": employment_start_date,
                 "Remuneration": remunerations,
                 "Deduction": deductions,
                 "contributions": contributions,
@@ -574,7 +591,7 @@ class L10n_AuStp(models.Model):
         return extra_data
 
     def _get_rendering_data(self):
-        payees = self.payslip_ids.employee_id if self.payevent_type == 'submit' else self.l10n_au_stp_emp.payslip_ids.employee_id
+        payees = self.payslip_ids.employee_id if self.payevent_type == 'submit' else self.l10n_au_stp_emp.employee_id
         is_current_fiscal_year = self._is_for_current_fiscal_year()
         extra_data = self._get_complex_rendering_data()
         company = self.company_id
@@ -584,7 +601,7 @@ class L10n_AuStp(models.Model):
             "AustralianBusinessNumberId": company.vat.replace(" ", "") or False,
             "WithholdingPayerNumberId": company.l10n_au_wpn_number if not company.vat else "",
             "OrganisationDetailsOrganisationBranchC": company.l10n_au_branch_code,
-            "PreviousSoftwareInformationBusinessManagementSystemId": company.l10n_au_previous_bms_id,
+            "PreviousSoftwareInformationBusinessManagementSystemId": self.is_opening_balances and company.l10n_au_previous_bms_id,
             "DetailsOrganisationalNameT": company.name,
             "PersonUnstructuredNameFullNameT": sender.name,
             "ElectronicMailAddressT": sender.private_email,
@@ -641,13 +658,14 @@ class L10n_AuStp(models.Model):
                     and s.l10n_au_termination_type
                 ).exists()
             )
+            given_name, last_name = split_name(employee.name)
             values = defaultdict(str, {
                 "TaxFileNumberId": employee.l10n_au_tfn,
                 "AustralianBusinessNumberId": employee.l10n_au_abn.replace(" ", "") if employee.l10n_au_abn else "",
-                "EmploymentPayrollNumberId": employee.l10n_au_payroll_id or str(employee.id),
-                "PreviousPayrollIDEmploymentPayrollNumberId": employee.l10n_au_previous_payroll_id,
-                "FamilyNameT": ' '.join(employee.name.split(' ')[1:]),
-                "GivenNameT": employee.name.split(' ')[0],
+                "EmploymentPayrollNumberId": employee.l10n_au_payroll_id,
+                "PreviousPayrollIDEmploymentPayrollNumberId": self.is_opening_balances and employee.l10n_au_previous_payroll_id,
+                "FamilyNameT": last_name,
+                "GivenNameT": given_name,
                 "OtherGivenNameT": employee.l10n_au_other_names,
                 "Dm": employee.birthday.day,
                 "M": employee.birthday.month,
@@ -683,7 +701,7 @@ class L10n_AuStp(models.Model):
         # sequence at the end to avoid generating if there was an error
         if self.ffr:
             self.submission_id = self.previous_report_id.submission_id
-        else:
+        elif not self.submission_id:
             self.submission_id = self.env['ir.sequence'].next_by_code("stp.transaction")
         employer["InteractionTransactionId"] = self.submission_id
         return employer, employees, intermediary

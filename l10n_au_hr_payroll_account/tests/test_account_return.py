@@ -3,6 +3,7 @@
 from freezegun import freeze_time
 
 from .common import L10nPayrollAccountCommon
+from .tools import mock_skip_stp_api_calls
 
 from odoo.tests import tagged
 
@@ -10,6 +11,7 @@ from odoo.tests import tagged
 @tagged("post_install", "post_install_l10n")
 class TestAccountReturn(L10nPayrollAccountCommon):
 
+    @mock_skip_stp_api_calls()
     def test_closing_entry_includes_salary_withholding_taxes(self):
         # We need to add some datas to the company to pass account return checks (required fields)
         self.company.write({

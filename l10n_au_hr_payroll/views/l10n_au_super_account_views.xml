@@ -25,7 +25,7 @@
                             <field name="proportion" widget="percentage"/>
                         </group>
                         <group>
-                            <field name="fund_id"/>
+                            <field name="fund_id" options="{'no_create': True, 'no_edit':True}"/>
                             <field name="fund_abn"/>
                             <field name="fund_type" invisible="1"/>
                             <field name="member_nbr"

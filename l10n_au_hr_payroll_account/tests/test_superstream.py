@@ -8,6 +8,7 @@ from freezegun import freeze_time
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.tests import Form, tagged, new_test_user
+from .tools import mock_skip_stp_api_calls
 
 
 @tagged("post_install_l10n", "post_install", "-at_install", "superstream")
@@ -31,10 +32,16 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
         })
         clearing_house = cls.env.ref('l10n_au_hr_payroll_account.res_partner_clearing_house')
         clearing_house.with_company(cls.australian_company).property_account_payable_id = cls.account_21400
+        cls.bank_cba = cls.env["res.bank"].create({
+            "name": "Commonwealth Bank of Australia",
+            "bic": "CTBAAU2S",
+            "country": cls.env.ref("base.au").id,
+        })
         bank_account = cls.env['res.partner.bank'].create({
+            "bank_id": cls.bank_cba.id,
             "acc_number": '12344321',
             "acc_type": 'aba',
-            "aba_bsb": '123-456',
+            "aba_bsb": '123456',
             "company_id": cls.australian_company.id,
             "partner_id": cls.australian_company.partner_id.id,
         })
@@ -55,6 +62,7 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
             'resource_calendar_id': cls.australian_company.resource_calendar_id.id,
             'name': 'Roger Federer',
             'work_phone': '123456789',
+            'work_email': 'roger@gmail.com',
             'private_street': 'Australian Street',
             'private_city': 'Sydney',
             "private_state_id": cls.env.ref("base.state_au_2").id,
@@ -87,6 +95,7 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
             'name': 'Fund A',
             'abn': '2345678912',
             'address_id': cls.env['res.partner'].create({'name': "Fund A Partner"}).id,
+            'usi': "2345678912"
         })
         smsf_partner = cls.env['res.partner'].create({'name': "Fund B"})
         cls.super_fund_smsf = cls.env['l10n_au.super.fund'].create({
@@ -101,28 +110,31 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
                 "partner_id": smsf_partner.id,
             }).id,
             'address_id': smsf_partner.id,
+            'esa': '12344322',
         })
         cls.super_account_a = cls.env['l10n_au.super.account'].create({
             "date_from": date(2023, 6, 1),
             "employee_id": cls.employee.id,
-            "fund_id": cls.super_fund.id
+            "fund_id": cls.super_fund.id,
+            # "member_nbr": 1231234123,
         })
-        cls.payslips = cls.env['hr.payslip'].create([{
-            'company_id': cls.australian_company.id,
-            'employee_id': cls.employee.id,
-            'name': 'Roger Payslip August',
-            'date_from': date(2023, 8, 1),
-            'date_to': date(2023, 8, 31),
-            'input_line_ids': [(5, 0, 0), (0, 0, {'input_type_id': cls.env.ref('hr_payroll.input_child_support').id, 'amount': 200})],
-        },
-        {
-            'company_id': cls.australian_company.id,
-            'employee_id': cls.employee.id,
-            'name': 'Roger Payslip September',
-            'date_from': date(2023, 9, 1),
-            'date_to': date(2023, 9, 30),
-            'input_line_ids': [(5, 0, 0), (0, 0, {'input_type_id': cls.env.ref('hr_payroll.input_child_support').id, 'amount': 200})],
-        }])
+        cls.payslips = cls.env['hr.payslip'].create([
+            {
+                'company_id': cls.australian_company.id,
+                'employee_id': cls.employee.id,
+                'name': 'Roger Payslip August',
+                'date_from': date(2023, 8, 1),
+                'date_to': date(2023, 8, 31),
+                'input_line_ids': [(5, 0, 0), (0, 0, {'input_type_id': cls.env.ref('hr_payroll.input_child_support').id, 'amount': 200})],
+            }, {
+                'company_id': cls.australian_company.id,
+                'employee_id': cls.employee.id,
+                'name': 'Roger Payslip September',
+                'date_from': date(2023, 9, 1),
+                'date_to': date(2023, 9, 30),
+                'input_line_ids': [(5, 0, 0), (0, 0, {'input_type_id': cls.env.ref('hr_payroll.input_child_support').id, 'amount': 200})],
+            }
+        ])
         cls.employee_user = new_test_user(cls.env, login='mel', groups='hr.group_hr_manager')
         cls.australian_company.l10n_au_hr_super_responsible_id = cls.env["hr.employee"].create({
             "name": "Mel Gibson",
@@ -196,15 +208,16 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
         for idx, value in enumerate(super_values):
             total = value.get('super_concessional') + value.get('super_guarantee')
             fund = self.super_fund_smsf if value.get('smsf_fund', False) else self.super_fund
-            lines.append([idx, "83914571673", "abn", "", "", "", "My Superstream Australian Company", "Gibson", "Mel", "", "mel@test.com", "123456789", "83914571673", "My Superstream Australian Company", "123-456", "12344321",
-            "My Superstream Australian Company", fund.abn, "", fund.display_name, "", "DirectDebit", "2023-09-01", "", "", total, fund.bank_account_id.aba_bsb or "", fund.bank_account_id.acc_number or "",
-            fund.bank_account_id.partner_id.name or "", "83914571673", "", "My Superstream Australian Company", "", "999999661", "", "",
-            "Federer", "Roger", "", "1", "1970-03-21", "RES", "Australian Street", "", "", "", "Sydney", "2000", "NSW", "AU", "roger@gmail.com", "123456789", "123456789", "", "odoo_f47ac10b_001",
+            lines.append([idx, "85658499097", "abn", "", "", "", "My Superstream Australian Company", "Gibson", "Mel", "", "mel@test.com", "123456789", "85658499097", "My Superstream Australian Company", "123456", "12344321",
+            "My Superstream Australian Company", fund.abn, fund.usi or "", fund.display_name, fund.esa or "", "DirectDebit", "2023-09-01", "", "", total, fund.bank_account_id.aba_bsb or "", fund.bank_account_id.acc_number or "",
+            fund.bank_account_id.partner_id.name or "", "85658499097", "", "My Superstream Australian Company", "", "999999661", "", "",
+            "Federer", "Roger", "", "1", "1970-03-21", "RES", "Australian Street", "", "", "", "Sydney", "2000", "NSW", "AU", "roger@gmail.com", "123456789", "123456789", "", self.employee.l10n_au_payroll_id,
             "", "", value.get('start_date'), value.get('end_date'), value.get('super_guarantee'), "", "", value.get('super_concessional'), "", "", "", "", "1975-01-01", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
             "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
             "", "", "", "", "", "", "", "", ""])
         return lines
 
+    @mock_skip_stp_api_calls()
     def test_00_saff_file_headers(self):
         self.payslips.compute_sheet()
         self.payslips.action_payslip_done()
@@ -252,6 +265,7 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
         self.assertListEqual(values[1], categories)
         self.assertListEqual(values[2], details)
 
+    @mock_skip_stp_api_calls()
     def test_01_autogenerated_super_stream(self):
         self.payslips.compute_sheet()
         self.payslips.action_payslip_done()
@@ -270,6 +284,7 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
 
         self._test_super_stream(superstream, expected_lines, 1140)
 
+    @mock_skip_stp_api_calls()
     def test_02_super_stream_manually(self):
         self.payslips.compute_sheet()
         self.payslips.action_payslip_done()
@@ -302,6 +317,7 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
 
         self._test_super_stream(superstream, expected_lines, 1140)
 
+    @mock_skip_stp_api_calls()
     def test_03_super_stream_multi_account(self):
         # Set proportion for account A
         self.super_account_a.proportion = 0.4
@@ -340,6 +356,7 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
 
         self._test_super_stream(superstream, expected_lines, 1140)
 
+    @mock_skip_stp_api_calls()
     def test_04_super_account_dates(self):
         """ Tests second superaccount with 100% proportion """
         # deactivate account A

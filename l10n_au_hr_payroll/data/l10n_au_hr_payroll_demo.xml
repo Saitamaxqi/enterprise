@@ -426,6 +426,8 @@
         <field name="name">Fund A</field>
         <field name="abn">2345678912</field>
         <field name="address_id" eval="ref('l10n_au_hr_payroll.hr_payroll_super_fund_partner')"/>
+        <field name="fund_type">APRA</field>
+        <field name="usi">usi123123123123</field>
     </record>
 
     <record id="hr_payroll_super_account" model="l10n_au.super.account">

@@ -1,6 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from . import account_chart_template
+from . import account_journal
+from . import account_payment_method
 from . import hr_version
 from . import l10n_au_super_stream
 from . import l10n_au_super_fund
@@ -15,3 +17,4 @@ from . import account_batch_payment
 from . import l10n_au_payslip_ytd
 from . import hr_employee
 from . import account_return
+from . import account_payment

@@ -61,6 +61,8 @@
             <list string="SuperStream">
                 <field name="display_name" />
                 <field name="company_id"/>
+                <field name="activity_ids" widget="list_activity"/>
+                <field name="activity_date_deadline" string="Deadline" widget="remaining_days" />
             </list>
         </field>
     </record>
@@ -124,10 +126,8 @@
             <list string="SuperStream Lines" default_order="payslip_id asc, proportion desc">
                 <field name="payslip_id" column_invisible="True"/>
                 <field name="name"/>
-                <field name="employer_id"/>
+                <field name="employer_id" column_invisible="True"/>
                 <field name="payee_id"/>
-                <field name="employee_id"/>
-                <field name="currency_id" invisible="1"/>
                 <field name="amount_total" sum="Total Contribution"/>
                 <field name="proportion" widget="percentage" optional="hide"/>
             </list>

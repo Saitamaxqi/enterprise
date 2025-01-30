@@ -22,6 +22,11 @@ class L10n_AuPreviousPayrollTransfer(models.TransientModel):
         default=_default_fiscal_year_start_date
     )
 
+    def write(self, vals):
+        if "fiscal_year_start_date" in vals:
+            vals["fiscal_year_start_date"] = self.env["l10n_au.payslip.ytd"]._get_start_date(vals["fiscal_year_start_date"])
+        return super().write(vals)
+
     @api.depends("company_id")
     def _compute_all_employees(self):
         for rec in self:
@@ -50,14 +55,29 @@ class L10n_AuPreviousPayrollTransfer(models.TransientModel):
 
     def action_transfer(self):
         self.ensure_one()
+        is_current_year = self._default_fiscal_year_start_date() == self.fiscal_year_start_date
         self.company_id.write({"l10n_au_previous_bms_id": self.previous_bms_id})
         for rec in self.l10n_au_previous_payroll_transfer_employee_ids:
             rec.employee_id.l10n_au_previous_payroll_id = rec.previous_payroll_id
-        prev_pay_transfer_employees = self.l10n_au_previous_payroll_transfer_employee_ids.filtered(lambda x: x.import_ytd)
 
-        created_ytd = self.company_id._create_ytd_values(prev_pay_transfer_employees, self.fiscal_year_start_date)
+        created_ytd = self.company_id._create_ytd_values(
+            self.l10n_au_previous_payroll_transfer_employee_ids.employee_id, self.fiscal_year_start_date)
 
-        if created_ytd:
+        if created_ytd and is_current_year:
+            # Create update event with previous_payroll_id and bms_id for the current fiscal year
+            self.env["l10n_au.stp"].create(
+                {
+                    "company_id": self.company_id.id,
+                    "payevent_type": "update",
+                    "start_date": self.fiscal_year_start_date,
+                    "is_opening_balances": True,
+                    "l10n_au_stp_emp": [
+                        Command.create({
+                            "employee_id": emp.id,
+                        }) for emp in self.l10n_au_previous_payroll_transfer_employee_ids.employee_id
+                    ]
+                }
+            )
             return created_ytd.with_context(search_default_filter_group_employee_id=1, search_default_filter_group_income_stream=1)\
                 ._get_records_action(name=_("Opening Balances"))
         return {"type": "ir.actions.act_window_close"}
@@ -81,7 +101,6 @@ class L10n_AuPreviousPayrollTransferEmployee(models.TransientModel):
         compute="_compute_income_stream_type",
         required=True, store=True, readonly=False
     )
-    import_ytd = fields.Boolean("Import YTD Balances", default=True)
 
     _unique_employee_transfer = models.Constraint(
         'unique(employee_id, l10n_au_previous_payroll_transfer_id, l10n_au_income_stream_type)',

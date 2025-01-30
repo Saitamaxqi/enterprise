@@ -16,5 +16,5 @@ class L10n_AuSuperFund(models.Model):
         ("APRA", "APRA"),
         ("SMSF", "SMSF"),
     ], default="APRA", string="Type", required=True)
-    usi = fields.Char(string="USI", help="Unique Superannuation Identifier")
-    esa = fields.Char(string="ESA", help="Electronic Service Address")
+    usi = fields.Char(string="USI", help="Unique Superannuation Identifier", tracking=True)
+    esa = fields.Char(string="ESA", help="Electronic Service Address", tracking=True)

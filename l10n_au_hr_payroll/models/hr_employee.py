@@ -1,7 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import hashlib
 
 from odoo import api, fields, models, _
 from odoo.tools.float_utils import float_compare
+from odoo.exceptions import ValidationError
 
 
 class HrEmployee(models.Model):
@@ -19,7 +21,9 @@ class HrEmployee(models.Model):
         groups="hr_payroll.group_hr_payroll_user")
     l10n_au_payroll_id = fields.Char(
         string="Payroll ID",
-        groups="hr_payroll.group_hr_payroll_user")
+        groups="hr_payroll.group_hr_payroll_user",
+        compute="_compute_payroll_id",
+        store=True, readonly=True, tracking=True)
     l10n_au_medicare_variation_form = fields.Binary(string="Medicare Variation Form", attachment=True, groups="hr_payroll.group_hr_payroll_user")
     l10n_au_medicare_variation_form_filename = fields.Char(groups="hr_payroll.group_hr_payroll_user")
     l10n_au_super_account_ids = fields.One2many(
@@ -113,3 +117,30 @@ class HrEmployee(models.Model):
                     "active super accounts! Currently, it is at %d%%!",
                     proportions[emp.id] * 100,
                 )
+
+    @api.model
+    def _l10n_au_generate_payroll_id(self, employee_name, employee_tfn, company_abn):
+        """
+        Generates a unique payroll ID based on employee and company details.
+        """
+        input_string = f"{employee_name}-{employee_tfn}-{company_abn}"
+        encoded_string = input_string.encode('utf-8')
+        hashed_string = hashlib.shake_256(encoded_string, usedforsecurity=False).hexdigest(20)
+        return hashed_string
+
+    @api.depends("country_code", "name", "l10n_au_tfn", "company_id.vat")
+    def _compute_payroll_id(self):
+        for employee in self:
+            if employee.country_code == "AU" and not employee.l10n_au_payroll_id:
+                employee.l10n_au_payroll_id = self._l10n_au_generate_payroll_id(
+                    employee.name,
+                    employee.l10n_au_tfn,
+                    employee.company_id.vat
+                )
+
+    def write(self, vals):
+        if "l10n_au_payroll_id" in vals and any(self.mapped("l10n_au_payroll_id")):
+            raise ValidationError(
+                _("You cannot change the Payroll ID for an employee once it has been set.")
+            )
+        return super().write(vals)

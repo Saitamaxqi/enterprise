@@ -25,6 +25,7 @@ class TestPayrollCommon(TransactionCase):
             "currency_id": cls.env.ref("base.AUD").id,
             "l10n_au_registered_for_whm": True,
             "l10n_au_registered_for_palm": True,
+            "vat": "85658499097",
         })
         cls.env.user.company_ids |= cls.australian_company
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.australian_company.ids))

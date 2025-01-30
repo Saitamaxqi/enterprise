@@ -36,8 +36,7 @@
   <tns:Payee>
     <tns:Identifiers>
       <tns:TaxFileNumberId>800000008</tns:TaxFileNumberId>
-      <tns:EmploymentPayrollNumberId>481</tns:EmploymentPayrollNumberId>
-      <tns:PreviousPayrollIDEmploymentPayrollNumberId>___ignore___</tns:PreviousPayrollIDEmploymentPayrollNumberId>
+      <tns:EmploymentPayrollNumberId>___ignore___</tns:EmploymentPayrollNumberId>
     </tns:Identifiers>
     <tns:PersonNameDetails>
       <tns:FamilyNameT>Potter</tns:FamilyNameT>

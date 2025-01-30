@@ -12,6 +12,7 @@ from odoo.tests import tagged, Form
 from odoo.tools import file_path
 from odoo.exceptions import ValidationError, MissingError, UserError
 from .common import L10nPayrollAccountCommon
+from .tools import mock_skip_stp_api_calls
 from odoo.addons.l10n_au_hr_payroll.tests.test_unused_leaves import TestPayrollUnusedLeaves
 
 
@@ -77,53 +78,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             # 'number_of_hours': duration,
         }).with_context(leave_fast_create=True).action_validate()
 
-    def _prepare_payslip_run(self, employee_ids, extra_input_xml_ids=None, start_date=None, end_date=None):
-        input_xml_ids = extra_input_xml_ids
-        if not input_xml_ids:
-            input_xml_ids = {
-                "l10n_au_hr_payroll.input_laundry_1": 100,
-                "l10n_au_hr_payroll.input_laundry_2": 100,
-                "l10n_au_hr_payroll.input_gross_director_fee": 100,
-                "l10n_au_hr_payroll.input_bonus_commissions_overtime_prior": 100,
-                "l10n_au_hr_payroll.input_fringe_benefits_amount": 2000,
-            }
-
-        payslip_run = self.env["hr.payslip.run"].create(
-            {
-                "date_start": start_date or "2024-01-01",
-                "date_end": end_date or "2024-01-31",
-                "name": "January Batch",
-                "company_id": self.company.id,
-            }
-        )
-
-        payslip_run.generate_payslips(employee_ids=employee_ids.ids)
-        payslip_run.slip_ids.write({"input_line_ids": [(0, 0, {
-            "input_type_id": self.env.ref(input_id).id,
-            "amount": amount,
-            }) for input_id, amount in input_xml_ids.items()
-        ]})
-        payslip_run.slip_ids.compute_sheet()
-        payslip_run.action_validate()
-        return payslip_run
-
-    def _submit_stp(self, stp):
-        self.assertTrue(stp, "The STP record should have been created when the payslip was created")
-        self.assertEqual(stp.state, "draft", "The STP record should be in draft state")
-        stp.submit_date = stp.submit_date or date.today()
-        # TODO: Check the data being generated in the XML file
-        action = self.env['l10n_au.stp.submit'].create(
-            {'l10n_au_stp_id': stp.id}
-        )
-        with self.assertRaises(ValidationError):
-            action.action_submit()
-        action.stp_terms = True
-        action.action_submit()
-
-        self.assertTrue(stp.xml_file, "The XML file should have been generated")
-        self.assertEqual(stp.state, "sent", "The STP record should be in sent state")
-
-    def create_ytd_opening_balances(self, employee, values: list):
+    def create_ytd_opening_balances(self, employee, values: list, without_stp=False):
         """
         Args:
             employee (hr.employee)
@@ -150,6 +105,13 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
                         input_line.ytd_amount = val
                     else:
                         raise MissingError(f"Input line {key} not found in YTD rule {rule.name}")
+        self.cr.savepoint()
+        if without_stp:
+            return
+        stp_update = self.env["l10n_au.stp"].search([("company_id", "=", self.company.id)])
+        self.assertEqual(len(stp_update), 1, "There should be one STP update event created")
+        self.assertTrue(stp_update.is_opening_balances, "The STP update event should be an opening balances event")
+        self._submit_stp(stp_update)
 
     def create_payslips(self, employee, num_slips, start_date):
         slip_vals = []
@@ -199,7 +161,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             self.fail("The record values do not match the expected values\n\t" + "\n\t".join(error_msg))
 
     # ==================== TESTS ====================
-
+    @mock_skip_stp_api_calls()
     def test_stp(self):
         self.employee_1.l10n_au_child_support_garnishee_amount = 0.15
         self.employee_1.l10n_au_child_support_deduction = 120
@@ -232,6 +194,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         )
         self._submit_stp(stp)
 
+    @mock_skip_stp_api_calls()
     def test_stp_bonuses(self):
         self.employee_1.l10n_au_child_support_garnishee_amount = 0.15
         self.employee_1.l10n_au_child_support_deduction = 120
@@ -264,6 +227,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         )
         self._submit_stp(stp)
 
+    @mock_skip_stp_api_calls()
     @freeze_time("2024-03-31")
     def test_update_event(self):
         batch = self._prepare_payslip_run(employee_ids=self.employee_1 + self.employee_2)
@@ -304,6 +268,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         )
         self._submit_stp(stp_update)
 
+    @mock_skip_stp_api_calls()
     def test_out_of_cycle_termination(self):
         self.contract_1.write({"l10n_au_salary_sacrifice_superannuation": 100})
         self.allocate_leaves(
@@ -357,6 +322,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         self.assertEqual(rendering_data[1][0]["EmploymentEndD"], fields.Date.from_string("2024-05-31"))
         self._submit_stp(stp)
 
+    @mock_skip_stp_api_calls()
     def test_out_of_cycle_termination_genuine(self):
         self.contract_1.write({
             "wage": 2000,
@@ -412,7 +378,9 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         self._submit_stp(stp)
 
     @freeze_time("2024-10-31")
+    @mock_skip_stp_api_calls()
     def test_payslip_ytd_with_opening_balances(self):
+        self.cr._now = datetime(2024, 10, 31, 0, 0, 0)
         self.employee_2.write({
             "l10n_au_child_support_garnishee_amount": 0.0,
             "l10n_au_child_support_deduction": 60.2,
@@ -630,6 +598,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             ]
         )
 
+    @mock_skip_stp_api_calls()
     def test_ytd_orm_cache(self):
         with closing(self.env.registry.cursor()) as test_cr:
             self.env = self.env(context=dict(self.env.context, cr=test_cr))
@@ -671,6 +640,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             for key, value in inputs.items():
                 self.assertTrue(value["payroll_code"])
 
+    @mock_skip_stp_api_calls()
     def test_stp_zeroing(self):
         self.create_payslips(self.employee_2, 2, date(2024, 7, 1))
         # Changing the company details
@@ -693,7 +663,6 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         )
         self.employee_2.write(
             {
-                "l10n_au_payroll_id": "481",  # Changed
                 "l10n_au_tfn": "800000008",  # Changed
             }
         )
@@ -726,6 +695,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         for actual_payeventemp_root, expected_payeventemp_root in zip(actual_payeventemp_roots, expected_payeventemp_roots):
             self.assertXmlTreeEqual(actual_payeventemp_root, expected_payeventemp_root)
 
+    @mock_skip_stp_api_calls()
     def test_full_file_replacement(self):
 
         def _get_payment_amount(move):
@@ -774,6 +744,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         self.assertEqual(new_payments.amount, new_payment_amount - original_payment_amount, "The payment amount should account for the difference in payslip amounts!")
         self.assertTrue(all(p.is_reconciled for p in payments | new_payments), "All payments should be reconciled!")
 
+    @mock_skip_stp_api_calls()
     def test_stp_multiple_income_stream(self):
         self.employee_1.l10n_au_child_support_garnishee_amount = 0.15
         self.employee_1.l10n_au_child_support_deduction = 120
@@ -832,6 +803,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         self.assertStpTupleEqual(remuneration_collection[0], data[self.employee_1.id]["Remuneration"][0])
         self._submit_stp(stp_2)
 
+    @mock_skip_stp_api_calls()
     def test_finalisation(self):
         action_finalise = self.env.ref("l10n_au_hr_payroll_account.action_l10n_au_payroll_finalisation")
         # Nothing to Finalise
@@ -889,6 +861,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             self._submit_stp(stp)
         self.assertFalse(all(payslip.l10n_au_finalised for payslip in batch.slip_ids), "All payslips must be Unfinalised!")
 
+    @mock_skip_stp_api_calls()
     def test_finalisation_without_payslips(self):
         with freeze_time("2024-12-29"):
             self.create_ytd_opening_balances(
@@ -946,7 +919,6 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
                         "employee_id": self.employee_1.id,
                         "previous_payroll_id": "123",
                         "l10n_au_income_stream_type": "SAW",
-                        "import_ytd": True
                     }),
                 ]
             })
@@ -957,7 +929,6 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
                 "employee_id": self.employee_1.id,
                 "previous_payroll_id": "123",
                 "l10n_au_income_stream_type": "SAW",
-                "import_ytd": True,
                 "l10n_au_previous_payroll_transfer_id": ytd_wizard.id
             })
 
@@ -980,3 +951,39 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         self.company.l10n_au_previous_bms_id = False
         with tools.mute_logger('odoo.sql_db'), self.assertRaises(UniqueViolation):
             ytd_wizard.action_transfer()
+
+    @freeze_time("2023-10-31")
+    @mock_skip_stp_api_calls()
+    def test_payslip_after_opening_balances(self):
+        opening_values = [
+            ("BASIC", {"Attendance": 50000,
+                        }),
+            ("WITHHOLD.TOTAL", -5753.8),
+            ("SUPER", 3355.55),
+            ("RFBA", {"Fringe Benefits Amount": 501,
+                        "Fringe Benefits Amount - Exempt": 502})
+        ]
+        with self.assertRaises(UserError):
+            self.create_ytd_opening_balances(
+                self.employee_2,
+                opening_values,
+                without_stp=True
+            )
+            self.create_payslips(self.employee_2, 1, date(2024, 2, 1))
+
+        self.create_ytd_opening_balances(
+            self.employee_2,
+            opening_values,
+            without_stp=False
+        )
+        self.create_payslips(self.employee_2, 1, date(2024, 2, 1))
+
+    @mock_skip_stp_api_calls()
+    def test_stp_sequence(self):
+        stp_sequence = self.env["ir.sequence"].search([('code', '=', "stp.transaction"), ('company_id', 'in', [self.company.id, False])], limit=1)
+        with self.assertRaises(ValidationError):
+            seq_1 = stp_sequence.next_by_id()
+            raise ValidationError("Rolling back all")
+
+        seq_2 = stp_sequence.next_by_id()
+        self.assertNotEqual(seq_2, seq_1, "The sequence should be unique")

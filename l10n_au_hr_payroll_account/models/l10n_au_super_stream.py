@@ -11,8 +11,8 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tools.float_utils import float_compare
 
 
-class L10n_AuSuperStream(models.Model):
-    _name = 'l10n_au.super.stream'
+class L10n_auSuperStream(models.Model):
+    _name = "l10n_au.super.stream"
     _description = "Super Contributions"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
@@ -38,9 +38,9 @@ class L10n_AuSuperStream(models.Model):
     source_entity_id_type = fields.Selection([("abn", "ABN")], required=True, default="abn")
     super_stream_file = fields.Many2one("ir.attachment", readonly=True, copy=False)
     journal_id = fields.Many2one(string="Bank Journal", comodel_name="account.journal")
-    paid_date = fields.Datetime(readonly=True)
+    paid_date = fields.Datetime(readonly=True, copy=False)
     amount_total = fields.Monetary(compute="_compute_amount_total")
-    payment_id = fields.Many2one("account.payment", ondelete="restrict")
+    payment_id = fields.Many2one("account.payment", ondelete="restrict", copy=False)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -50,7 +50,13 @@ class L10n_AuSuperStream(models.Model):
                 "file_id": seq,
                 "name": seq,
             })
-        return super().create(vals_list)
+        super_streams = super().create(vals_list)
+        for super_stream in super_streams:
+            super_stream.activity_schedule(
+                "l10n_au_hr_payroll_account.l10n_au_activity_submit_super",
+                user_id=super_stream.company_id.l10n_au_hr_super_responsible_id.user_id.id
+            )
+        return super_streams
 
     @api.depends("source_entity_id_type")
     def _compute_sid(self):
@@ -93,6 +99,15 @@ class L10n_AuSuperStream(models.Model):
         data_lines = self._get_data_lines()
         return [header_line, categories_line, details_line, *data_lines]
 
+    @api.model
+    def _get_default_payment_account(self, payment_method_line):
+        if payment_method_line.payment_type == "outbound":
+            default_credit_account = self.env.ref(f"account.{payment_method_line.company_id.id}_account_journal_payment_credit_account_id", raise_if_not_found=False)
+            return payment_method_line.payment_account_id or default_credit_account
+        elif payment_method_line.payment_type == "inbound":
+            default_debit_account = self.env.ref(f"account.{payment_method_line.company_id.id}_account_journal_payment_debit_account_id", raise_if_not_found=False)
+            return payment_method_line.payment_account_id or default_debit_account
+
     def action_register_super_payment(self):
         self.ensure_one()
 
@@ -106,14 +121,20 @@ class L10n_AuSuperStream(models.Model):
 
         # Create file
         self.state = 'done'
+        self.activity_feedback(
+            ["l10n_au_hr_payroll_account.l10n_au_activity_submit_super"],
+            feedback=f"Submitted by {self.env.user.name}")
         self._create_super_stream_file()
 
         # To be changed to direct debit once the api is implimented
-        pay_method_line = self.journal_id._get_available_payment_method_lines('outbound').filtered(
-            lambda x: x.code == 'manual')
-        if not pay_method_line.payment_account_id:
+        pay_method_line = self.journal_id.with_context(l10n_au_super_payment=True)\
+            ._get_available_payment_method_lines('outbound')\
+            .filtered(lambda x: x.code == 'ss_dd')
+
+        if not self._get_default_payment_account(pay_method_line):
             raise UserError(_(
                 "An Outstanding Payments Account for the payment method '%(payment_method)s' is required to allow reconciliation.\n"
+                "Unable to find a default 'Outstanding Payments Account'. \n"
                 "Please select one under Accounting > Configuration > Journals > '%(journal)s' > Outgoing Payments",
                 payment_method=pay_method_line.name, journal=self.journal_id.name))
         clearing_house_partner = self.env.ref('l10n_au_hr_payroll_account.res_partner_clearing_house', raise_if_not_found=False)
@@ -168,8 +189,6 @@ class L10n_AuSuperStream(models.Model):
                 "res_id": self.id,
             }
         )
-
-        self.message_post(body="SuperStream file created on %s" % fields.Date.today(), attachment_ids=[self.super_stream_file.id])
 
     def _get_header_line(self):
         return ["", self.file_version, "Negatives Supported", "False", "File ID", self.file_id]
@@ -511,7 +530,7 @@ class L10n_AuSuperStreamLine(models.Model):
     def _get_employee_mandatory_fields(self):
         for rec in self:
             employee_fields = ["private_city", "private_zip", "private_state_id", "private_country_id", "private_email",
-                "private_phone", "birthday"]
+                "private_phone", "birthday", "sex"]
             # Payslip Employee
             message = self.env['l10n_au.super.stream']._get_error_message(employee_fields, rec.employee_id, f"Employee ({rec.employee_id.display_name})")
             if len(rec.employee_id.name.split(' ')) <= 1:

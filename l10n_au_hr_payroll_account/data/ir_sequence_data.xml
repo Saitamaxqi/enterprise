@@ -5,8 +5,8 @@
             <field name="name">SuperStream Sequence</field>
             <field name="code">super.stream</field>
             <field name="implementation">standard</field>
-            <field name="prefix">SAFF</field>
-            <field name="padding">10</field>
+            <field name="prefix">SUPER/%(year)s/</field>
+            <field name="padding">3</field>
             <field name="number_increment">1</field>
             <field name="number_next_actual">1</field>
             <field name="company_id" eval="False"/>

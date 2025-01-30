@@ -51,7 +51,7 @@ class L10n_AuStpSubmit(models.TransientModel):
     def action_submit(self):
         if not self.stp_terms:
             raise ValidationError(_("You need to accept the terms and conditions to submit the STP report."))
-        self.l10n_au_stp_id.submit()
 
         self.l10n_au_stp_id.message_post(body=self._fields['stp_terms'].string + "\n" + self.terms)
+        self.l10n_au_stp_id.submit()
         return {'type': 'ir.actions.act_window_close'}

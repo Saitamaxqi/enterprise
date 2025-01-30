@@ -3,6 +3,7 @@
 from datetime import date
 
 from odoo.tests import tagged, new_test_user
+from odoo.exceptions import ValidationError
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
@@ -28,6 +29,7 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             "country": cls.env.ref("base.au").id,
         })
         cls.company_bank_account = cls.env['res.partner.bank'].create({
+            "bank_id": cls.bank_cba.id,
             "acc_number": '12344321',
             "acc_type": 'aba',
             "aba_bsb": '123-456',
@@ -81,6 +83,7 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             'work_contact_id': cls.employee_contact_1.id,
             'bank_account_id': cls.bank_accounts_emp_1[1].id,
             "work_phone": "123456789",
+            "work_email": "mel@gmail.com",
             "private_phone": "123456789",
             "private_email": "mel@odoo.com",
             "private_street": "1 Test Street",
@@ -92,7 +95,7 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             "l10n_au_tfn_declaration": "provided",
             "l10n_au_tfn": "999999661",
             "l10n_au_tax_free_threshold": True,
-            "l10n_au_previous_payroll_id": "12312321",
+            "sex": "male",
             "date_version": date(2023, 1, 1),
             "contract_date_start": date(2023, 1, 1),
             "contract_date_end": date(2024, 5, 31),
@@ -119,7 +122,7 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             "l10n_au_tfn_declaration": "provided",
             "l10n_au_tfn": "999999661",
             "l10n_au_tax_free_threshold": True,
-            "l10n_au_previous_payroll_id": "12312321",
+            "sex": "female",
             "date_version": date(2023, 1, 1),
             "contract_date_start": date(2023, 1, 1),
             "contract_date_end": False,
@@ -132,17 +135,20 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             'name': 'Fund A',
             'abn': '2345678912',
             'address_id': cls.env['res.partner'].create({'name': "Fund A Partner"}).id,
+            'usi': "112312312312"
         })
         cls.env['l10n_au.super.account'].create([
             {
                 "date_from": date(2023, 6, 1),
                 "employee_id": cls.employee_1.id,
-                "fund_id": super_fund.id
+                "fund_id": super_fund.id,
+                "member_nbr": 1231234123,
             },
             {
                 "date_from": date(2023, 6, 1),
                 "employee_id": cls.employee_2.id,
-                "fund_id": super_fund.id
+                "fund_id": super_fund.id,
+                "member_nbr": 1231234123,
             }
         ])
 
@@ -166,3 +172,48 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
                 )
 
         return payment_register._create_payments()
+
+    def _submit_stp(self, stp):
+        self.assertTrue(stp, "The STP record should have been created when the payslip was created")
+        self.assertEqual(stp.state, "draft", "The STP record should be in draft state")
+        stp.submit_date = stp.submit_date or date.today()
+        action = self.env['l10n_au.stp.submit'].create(
+            {'l10n_au_stp_id': stp.id}
+        )
+        with self.assertRaises(ValidationError):
+            action.action_submit()
+        action.stp_terms = True
+        action.action_submit()
+
+        self.assertTrue(stp.xml_file, "The XML file should have been generated")
+        self.assertEqual(stp.state, "sent", "The STP record should be in sent state")
+
+    def _prepare_payslip_run(self, employee_ids, extra_input_xml_ids=None, start_date=None, end_date=None):
+        input_xml_ids = extra_input_xml_ids
+        if not input_xml_ids:
+            input_xml_ids = {
+                "l10n_au_hr_payroll.input_laundry_1": 100,
+                "l10n_au_hr_payroll.input_laundry_2": 100,
+                "l10n_au_hr_payroll.input_gross_director_fee": 100,
+                "l10n_au_hr_payroll.input_bonus_commissions_overtime_prior": 100,
+                "l10n_au_hr_payroll.input_fringe_benefits_amount": 2000,
+            }
+
+        payslip_run = self.env["hr.payslip.run"].create(
+            {
+                "date_start": start_date or "2024-01-01",
+                "date_end": end_date or "2024-01-31",
+                "name": "January Batch",
+                "company_id": self.company.id,
+            }
+        )
+
+        payslip_run.generate_payslips(employee_ids=employee_ids.ids)
+        payslip_run.slip_ids.write({"input_line_ids": [(0, 0, {
+            "input_type_id": self.env.ref(input_id).id,
+            "amount": amount,
+            }) for input_id, amount in input_xml_ids.items()
+        ]})
+        payslip_run.slip_ids.compute_sheet()
+        payslip_run.action_validate()
+        return payslip_run

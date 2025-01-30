@@ -4,7 +4,7 @@ from collections import defaultdict
 
 from odoo import api, Command, fields, models, _
 from odoo.exceptions import UserError
-from odoo.tools import groupby
+from odoo.tools import groupby, format_list
 
 
 class HrPayslip(models.Model):
@@ -220,9 +220,11 @@ class HrPayslip(models.Model):
                               "You can set one in Payroll > Configuration > Settings."))
 
         # Get latest draft superstream, if any, else create new
-        superstream = self.env['l10n_au.super.stream'].search([('state', '=', 'draft')], order='create_date desc', limit=1)
+        superstream = self.env['l10n_au.super.stream'].search([("company_id", "=", self.company_id.id), ('state', '=', 'draft')], order='create_date desc', limit=1)
         if not superstream:
-            superstream = self.env['l10n_au.super.stream'].create({})
+            superstream = self.env['l10n_au.super.stream'].create({
+                "company_id": self.company_id.id
+            })
 
         super_line_vals = []
         for payslip in self:
@@ -317,6 +319,33 @@ class HrPayslip(models.Model):
             stp = self.env['l10n_au.stp'].create({'company_id': self.company_id.id, 'payevent_type': payevnt_type})
 
         if payevnt_type == "submit":
+            # Employees require an update event for importing opening balances
+            employees_transfered = (
+                self.env["l10n_au.stp"].search(
+                    [
+                        ("payevent_type", "=", "update"),
+                        ("is_zeroing", "=", False),
+                        ("is_finalisation", "=", False),
+                        ("is_unfinalisation", "=", False),
+                        ("l10n_au_stp_emp.employee_id", "in", self.employee_id.ids),
+                        ("state", "=", "sent"),
+                    ]
+                )
+                .filtered(lambda x: x.is_opening_balances)
+                .l10n_au_stp_emp.employee_id
+            )
+            employees_to_transfer = self.env["hr.employee"]
+            for slip in self:
+                fiscal_start = self.env["l10n_au.payslip.ytd"]._get_start_date(slip.date_from)
+                if (slip.employee_id.ytd_balance_ids.filtered(lambda ytd: ytd.start_date == fiscal_start)
+                    and slip.employee_id not in employees_transfered):
+                    employees_to_transfer |= slip.employee_id
+            if employees_to_transfer:
+                raise UserError(_("Following employees have opening balances for the fiscal year starting on %(fiscal_start)s. "
+                                  "Please submit the update event 'Opening Balances (Transfer from Previous Software)' "
+                                  "before proceeding with new payslips.\n%(employees)s",
+                                  fiscal_start=fiscal_start, employees=format_list(self.env, employees_to_transfer.mapped('name'))))
+
             stp.write({
                 'payslip_batch_id': self.payslip_run_id.id,
                 'payslip_ids': [Command.link(rec) for rec in self.ids],
@@ -360,7 +389,23 @@ class HrPayslip(models.Model):
             },
         }
 
+    def _l10n_au_get_leaves_for_withhold(self):
+        if self:
+            return super()._l10n_au_get_leaves_for_withhold()
+        gross_totals = {
+            "annual": self.input_line_ids.filtered(lambda x: x.code == 'AL').amount,
+            "long_service": self.input_line_ids.filtered(lambda x: x.code == 'LSL').amount
+        }
+        leave_amounts = defaultdict(lambda: {
+            "pre_1978": 0.0,
+            "pre_1993": 0.0,
+            "post_1993": 0.0,
+        })
+        unused_leaves_total = sum(gross_totals.values())
+        return leave_amounts, unused_leaves_total
+
     def _l10n_au_get_year_to_date_totals(self, fields_to_compute=None, l10n_au_include_current_slip=False, include_ytd_balances=True, zero_amount=False, employee_id=None, start_date=None):
+        """ Return the year to date totals for a payslip or employee. One of the two are required. """
         fields_to_compute = fields_to_compute or []
         # Change to a parameter in master
         group_income_stream_types = self.env.context.get("group_income_stream_types", False)
@@ -387,8 +432,8 @@ class HrPayslip(models.Model):
         else:
             # Allow to compute YTD totals for an employee without a payslip.
             #  A dummy slip is initialized in such a case.
-            if not employee_id:
-                raise UserError(_("Payslip or Employee is required to compute YTD totals."))
+            if not employee_id or not start_date:
+                raise UserError(_("Payslip or Employee is required to compute YTD totals. Start date is also required if payslip is not provided."))
 
             with self.env.cr.savepoint(flush=False) as sp:
                 dummy_slip = self.new({"employee_id": employee_id, "date_from": start_date})

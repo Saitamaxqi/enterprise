@@ -6,11 +6,13 @@ from odoo import Command
 from odoo.tests import tagged, Form
 
 from .common import L10nPayrollAccountCommon
+from .tools import mock_skip_stp_api_calls
 
 
 @tagged("post_install_l10n", "post_install", "-at_install", "aba_file")
 class TestPayslipRun(L10nPayrollAccountCommon):
 
+    @mock_skip_stp_api_calls()
     def _prepare_payslip_run(self):
         payslip_run = self.env["hr.payslip.run"].create(
             {

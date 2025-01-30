@@ -9,6 +9,8 @@ from dateutil.relativedelta import relativedelta
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.tests.common import users, warmup, tagged, new_test_user
+from .tools import mock_skip_stp_api_calls
+
 
 _logger = logging.getLogger(__name__)
 
@@ -33,10 +35,11 @@ class TestPerformance(AccountTestInvoicingCommon):
             'l10n_au_branch_code': '100'
         })
 
-        cls.company = cls.env.company
+        cls.company = cls.company_data['company']
 
         admin = cls.env['res.users'].search([('login', '=', 'admin')])
         admin.company_ids |= cls.company
+        admin.email = "admin@odoo.com"
 
         cls.env.user.tz = 'Australia/Sydney'
 
@@ -118,6 +121,7 @@ class TestPerformance(AccountTestInvoicingCommon):
             'name': 'Fund A',
             'abn': '2345678912',
             'address_id': cls.env['res.partner'].create({'name': "Fund A Partner"}).id,
+            'usi': 'USI123456789',
         })
 
         cls.env['l10n_au.super.account'].create([{
@@ -157,25 +161,19 @@ class TestPerformance(AccountTestInvoicingCommon):
             'work_entry_type_id': legal_leave.id,
         } for i in range(cls.EMPLOYEES_COUNT)])
 
-        # todo this most likely shouldn't be required, superstream should be optional.
-        super_fund = cls.env['l10n_au.super.fund'].create({
-            'display_name': 'Fund A',
-            'abn': '2345678912',
-            'address_id': cls.env['res.partner'].create({'name': "Fund A Partner"}).id,
-        })
         cls.env['l10n_au.super.account'].create([{
             "date_from": date(2023, 6, 1),
             "employee_id": employee.id,
-            "fund_id": super_fund.id
+            "fund_id": cls.super_fund.id
         } for employee in cls.employees])
 
     @users('admin')
     @warmup
+    @mock_skip_stp_api_calls()
     def test_performance_l10n_au_payroll_whole_flow(self):
         # Create Opening Balances
-        self.env["l10n_au.previous.payroll.transfer"].create(
+        self.env["l10n_au.previous.payroll.transfer"].with_company(self.company).create(
             {
-                "company_id": self.company.id,
                 "l10n_au_previous_payroll_transfer_employee_ids": [
                     (0, 0, {
                         "employee_id": employee.id,
@@ -185,7 +183,14 @@ class TestPerformance(AccountTestInvoicingCommon):
                 ]
             }
         ).action_transfer()
-        # self.company._create_ytd_values(self.employees, self.date_from)
+        stp_update = self.env["l10n_au.stp"].search([("company_id", "=", self.company.id)])
+        self.assertEqual(len(stp_update), 1, "There should be one STP update event created")
+        self.assertTrue(stp_update.is_opening_balances, "The STP update event should be an opening balances event")
+        action = self.env['l10n_au.stp.submit'].create(
+            {'l10n_au_stp_id': stp_update.id}
+        )
+        action.stp_terms = True
+        action.action_submit()
 
         # Work entry generation
         self.employees.generate_work_entries(self.date_from, self.date_to)
