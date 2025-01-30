@@ -56,7 +56,7 @@ class PosOrder(models.Model):
         :return: a list of lines difference
         """
         new_line_dict = {} if not ui_order else self._merge_order_lines(
-            [line[2] for line in ui_order['lines'] if line[2]['qty'] != 0]
+            [line[2] for line in ui_order['lines'] if line[0] in [0, 1] and line[2]['qty'] != 0]
         )
         old_lines = []
         if existing_order:
