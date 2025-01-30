@@ -149,7 +149,7 @@
                 <NroLinRef t-out="reference_number"/>
                 <TpoDocRef t-out="reference_id.l10n_cl_reference_doc_type_id.code"/>
                 <FolioRef t-out="reference_id.origin_doc_number[:18]"/>
-                <FchRef t-out="reference_id.date"/>
+                <FchRef t-if="not move.l10n_latam_document_type_id._is_doc_type_voucher()" t-out="reference_id.date"/>
                 <CodRef t-out="reference_id.reference_doc_code"/>
                 <RazonRef t-if="reference_id.reason" t-out="reference_id.reason[:90]"/>
             </Referencia>
