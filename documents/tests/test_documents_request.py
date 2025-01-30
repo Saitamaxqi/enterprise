@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 import base64
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -8,6 +5,8 @@ from freezegun import freeze_time
 
 from odoo import Command, fields
 from odoo.addons.mail.tests.common import MailCommon
+from odoo.tests import Form, RecordCapturer
+from odoo.tools import mute_logger
 
 
 class TestDocumentRequest(MailCommon):
@@ -135,3 +134,40 @@ class TestDocumentRequest(MailCommon):
         self.assertFalse(document.request_activity_id)
         self.assertFalse(document.requestee_partner_id)
         self.assertEqual(document.access_via_link, 'view')
+
+    @mute_logger('odoo.addons.mail.models.mail_mail')
+    def test_send_message_with_attachment_on_doc_request(self):
+        wizard = self.env['documents.request_wizard'].create({
+            'name': 'Wizard Request 3',
+            'requestee_id': self.doc_partner_2.id,
+            'activity_type_id': self.activity_type.id,
+            'folder_id': self.folder_a.id,
+        })
+        with self.mock_mail_gateway():
+            document = wizard.request_document()
+        self.assertFalse(document.attachment_id)
+
+        form = Form(self.env['mail.compose.message'].with_context({
+            'default_partner_ids': self.doc_partner_1.ids,
+            'default_model': document._name,
+            'default_res_ids': document.ids,
+        }))
+        form.body = '<p>Hello</p>'
+        form.subject = 'Example of document required'
+        # Simulate file upload on the composed message
+        form.attachment_ids = self.env['ir.attachment'].create({
+            'datas': base64.b64encode(b'My attachment'),
+            'name': 'doc.txt',
+            'res_model': 'mail.compose.message',
+            'res_id': form._record.id,
+        })
+        saved_form = form.save()
+        with self.mock_mail_gateway(), RecordCapturer(self.env['mail.message'], []) as capture:
+            saved_form._action_send_mail()
+            message = capture.records
+
+        self.assertEqual(len(message), 1)
+        self.assertFalse(document.attachment_id, 'The document remains a request')
+        self.assertEqual(message.body, '<p>Hello</p>')
+        self.assertEqual(message.partner_ids, self.doc_partner_1)
+        self.assertEqual(message.subject, 'Example of document required')
