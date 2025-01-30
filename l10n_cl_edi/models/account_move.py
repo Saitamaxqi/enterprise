@@ -570,7 +570,7 @@ services reception has been received as well.
         except InvalidToken:
             digital_signature_sudo = self.company_id.sudo()._get_digital_signature(user_id=self.env.user.id)
             digital_signature_sudo.last_token = None
-            return self.l10n_cl_accept_document()
+            return self._l10n_cl_action_response(status_type)
         if not response:
             return None
         try:
