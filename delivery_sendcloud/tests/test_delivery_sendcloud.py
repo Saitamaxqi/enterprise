@@ -5,10 +5,34 @@ import requests
 
 from odoo.exceptions import UserError
 from odoo.tests import TransactionCase, tagged
-from odoo import Command
+from odoo import Command, _
+
+BALEARES_RANGE = {str(i) for i in range(7025, 7035)}
+CARRIER_CODE_BY_METHOD_ID = {
+    4: 'spain_express:baleares',
+}  # as shipping-price has method_id only
 
 @contextmanager
 def _mock_sendcloud_call(warehouse_id):
+    def is_baleares_carrier_applicable(params, code=None, method_id=None, for_listing=False):
+        """
+        Returns True if 'spain_express:baleares' is applicable for the given shipping params.
+        """
+        carrier_code = code or CARRIER_CODE_BY_METHOD_ID.get(method_id)
+        from_pc = params.get('from_postal_code')
+        to_pc = params.get('to_postal_code')
+        to_country = params.get('to_country')
+
+        if carrier_code != 'spain_express:baleares':
+            return True
+        if not to_country:
+            return for_listing  # for listing shipping methods
+        if to_country != 'ES':
+            return False
+        if from_pc and to_pc:
+            return from_pc in BALEARES_RANGE and to_pc in BALEARES_RANGE
+        return for_listing
+
     def _mock_request(*args, **kwargs):
         method = kwargs.get('method') or args[0]
         url = kwargs.get('url') or args[1]
@@ -94,7 +118,31 @@ def _mock_sendcloud_call(warehouse_id):
                             "min_weight": 1,
                             "max_weight": 20001,
                         },
-                    }
+                    },
+                    {
+                        "name": "Spain Baleares Express",
+                        "carrier": "baleares_express",
+                        "service_points_carrier": "baleares_express",
+                        "available_functionalities": {
+                            "service_area": ["domestic"],
+                        },
+                        "code": "spain_express:baleares",
+                        "weight_range": {
+                            "min_weight": 1,
+                            "max_weight": 10001,
+                        },
+                        "methods": [
+                            {
+                                "id": 4,
+                                "name": "Spain Baleares Express 0-10 kg",
+                                "shipping_product_code": "spain_express:baleares",
+                                "properties": {
+                                    "min_weight": 1,
+                                    "max_weight": 10001,
+                                },
+                            }
+                        ],
+                    },
                 ],
                 'shipping-price': {
                     1: [{
@@ -108,6 +156,10 @@ def _mock_sendcloud_call(warehouse_id):
                     3: [{
                         'price': '3.3',
                         'currency': 'USD'
+                    }],
+                    4: [{
+                        'price': '6.6',
+                        'currency': 'EUR'
                     }],
                 },
                 'addresses': {'sender_addresses': [{'contact_name': warehouse_id.name, 'id': 1}]},
@@ -130,13 +182,22 @@ def _mock_sendcloud_call(warehouse_id):
         for endpoint, content in responses[method].items():
             if endpoint in url:
                 response = requests.Response()
-                if endpoint == 'shipping-products' and 'weight' in kwargs.get('params', {}):
-                    weight = kwargs['params']['weight']
+                if endpoint == 'shipping-products':
+                    filtered_products = []
                     for product in content:
-                        product['methods'] = list(filter(lambda m: m['properties']['min_weight'] <= weight <= m['properties']['max_weight'], product['methods']))
+                        if not is_baleares_carrier_applicable(kwargs.get('params', {}), code=product.get('code'), for_listing=True):
+                            continue  # do not include the product
+                        if 'weight' in kwargs.get('params', {}):
+                            weight = kwargs['params']['weight']
+                            product['methods'] = [m for m in product.get('methods', []) if m['properties']['min_weight'] <= weight <= m['properties']['max_weight']]
+                        filtered_products.append(product)
+                    content = filtered_products
                 elif endpoint == 'shipping-price':
                     method_id = (kwargs.get('params') or args[3]).get('shipping_method_id')
-                    content = content[method_id]
+                    if not is_baleares_carrier_applicable(kwargs.get('params', {}), method_id=method_id):
+                        content = [{'price': None, 'currency': None, 'to_country': 'ES', 'breakdown': []}]
+                    else:
+                        content = content[method_id]
 
                 response._content = json.dumps(content).encode()
                 response.status_code = 200
@@ -547,3 +608,54 @@ class TestDeliverySendCloud(TransactionCase):
         # both pickings should be validated but and activity should have been created for the invalid picking
         self.assertEqual(pickings.mapped('state'), ['done', 'done'])
         self.assertTrue(self.env['mail.activity'].search([('res_model', '=', 'stock.picking'), ('res_id', '=', pickings[1].id), ('user_id', '=', alien.id)], limit=1))
+
+    def test_sendcloud_zonal_pricing_and_product(self):
+        """
+        Test zonal shipping:
+        - Case 1: When the company is outside Baleares and the customer is in Baleares,
+        the carrier is rejected during price fetch due to zone mismatch with a clear UserError.
+        - Case 2: When both company and customer are in Baleares, the correct zonal
+        product is used and a valid shipping price is returned.
+
+        Ensures invalid carriers are blocked early and valid carriers return correct zonal pricing.
+        """
+        self.your_company.write({
+            'country_id': self.env.ref('base.es').id,
+            'zip': '8013',
+            'city': 'Barcelona',
+        })  # Non-Balearic Company
+
+        with _mock_sendcloud_call(self.warehouse_id):
+            api_res = self.sendcloud._get_sendcloud()._get_shipping_products('ES')
+            user_chosen_product = self._set_product_local_cache(api_res[1])
+            self.sendcloud._set_sendcloud_products(user_chosen_product, False)
+
+        spain_partner = self.env['res.partner'].create({
+            'name': 'Spanish Customer',
+            'country_id': self.env.ref('base.es').id,
+            'zip': '7034',
+        })
+        sale_order_spain = self.env['sale.order'].create({
+            'partner_id': spain_partner.id,
+            'company_id': self.your_company.id,
+            'partner_shipping_id': spain_partner.id,
+            'order_line': [Command.create({'product_id': self.product_to_ship1.id})],
+        })
+        # Case 1: Ensure Correct Shipping Method
+        with _mock_sendcloud_call(self.warehouse_id):
+            res_spain = self.sendcloud.sendcloud_rate_shipment(sale_order_spain)
+            self.assertFalse(res_spain['success'], "The shipment request should fail when no shipping methods are available.")
+            self.assertEqual(
+                res_spain.get('error_message'),
+                _('There is no shipping method available for this order with the selected carrier'),
+                "It should raise a UserError if the selected carrier doesn't meet Baleares postal requirements."
+            )
+
+        self.your_company.write({
+            'zip': '7026',
+        })  # Baleares Company
+
+        # Case 2: Ensure Correct Shipping Price
+        with _mock_sendcloud_call(self.warehouse_id):
+            res_baleares = self.sendcloud.sendcloud_rate_shipment(sale_order_spain)
+            self.assertEqual(res_baleares['price'], 6.6)

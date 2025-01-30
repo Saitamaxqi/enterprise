@@ -24,7 +24,7 @@ class SendCloud:
     def _get_shipping_functionalities(self):
         return self._send_request('shipping-functionalities')
 
-    def _get_shipping_products(self, from_country, is_return=False, carrier=None, weight=None, to_country=None, sizes=None, size_unit='centimeter'):
+    def _get_shipping_products(self, from_country, is_return=False, carrier=None, weight=None, to_country=None, sizes=None, size_unit='centimeter', from_postal_code=None, to_postal_code=None):
         params = {'from_country': from_country, 'returns': is_return}
         if carrier:
             params.update({'carrier': carrier})
@@ -41,6 +41,11 @@ class SendCloud:
                 'height_unit': size_unit,
                 'width_unit': size_unit,
             })
+        if from_postal_code or to_postal_code:
+            params.update({
+                'from_postal_code': from_postal_code,
+                'to_postal_code': to_postal_code,
+            })
         return self._send_request('shipping-products', params=params)
 
     def _get_shipping_rate(self, carrier, order=None, picking=None, parcel=None, order_weight=None):
@@ -48,6 +53,8 @@ class SendCloud:
         if order:
             to_country = order.partner_shipping_id.country_id.code
             from_country = order.warehouse_id.partner_id.country_id.code
+            to_postal_code = order.partner_shipping_id.zip
+            from_postal_code = order.warehouse_id.partner_id.zip
             error_lines = order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and line.product_id.type != 'service' and not line.display_type)
             if error_lines:
                 raise UserError(_("The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n %s", ", ".join(error_lines.product_id.mapped('name'))))
@@ -56,6 +63,8 @@ class SendCloud:
         elif picking:
             to_country = picking.destination_country_code
             from_country = picking.location_id.warehouse_id.partner_id.country_id.code
+            to_postal_code = picking.partner_id.zip
+            from_postal_code = picking.location_id.warehouse_id.partner_id.zip
             total_weight = float(parcel['weight'])
         else:
             raise UserError(_('No picking or order provided'))
@@ -70,7 +79,7 @@ class SendCloud:
                 'weight': int(float(parcel.get('weight', 0))*1000),  # parcel weight is defined in kg
             }]
         else:
-            shipping_methods = self._get_shipping_methods(carrier, from_country, to_country, total_weight=total_weight)
+            shipping_methods = self._get_shipping_methods(carrier, from_country, to_country, total_weight=total_weight, from_postal_code=from_postal_code, to_postal_code=to_postal_code)
 
         if not shipping_methods or (len(shipping_methods) == 1 and not shipping_methods[0]):
             raise UserError(_('There is no shipping method available for this order with the selected carrier'))
@@ -84,7 +93,7 @@ class SendCloud:
         if packages_no > 1:
             # We're forcefully calling this method from a sale order, as we only want an estimation of the rating, take the 'heaviest' methods
             shipping_methods = [m for m in shipping_methods if m['properties']['max_weight'] == carrier.sendcloud_shipping_id.max_weight]  # We're sure here there's at least one matching method as max_weight was updated in _get_shipping_methods
-        shipping_prices = self._get_shipping_prices(shipping_methods, to_country, from_country, total_weight)
+        shipping_prices = self._get_shipping_prices(shipping_methods, to_country, from_country, total_weight, from_postal_code, to_postal_code)
 
         if not shipping_prices:
             return False
@@ -162,7 +171,7 @@ class SendCloud:
             shipping_weight = max_weight
         return shipping_count, shipping_weight
 
-    def _get_shipping_prices(self, shipping_methods, to_country, from_country, weight=None):
+    def _get_shipping_prices(self, shipping_methods, to_country, from_country, weight=None, from_postal_code=None, to_postal_code=None):
         shipping_prices = dict()
         params = {
             'shipping_method_id': None,
@@ -170,6 +179,8 @@ class SendCloud:
             'from_country': from_country,
             'weight': weight,
             'weight_unit': 'gram',
+            'from_postal_code': from_postal_code,
+            'to_postal_code': to_postal_code,
         }
 
         for shipping_method in shipping_methods:
@@ -186,7 +197,7 @@ class SendCloud:
                 shipping_prices = {8: {'price': 0.0, 'currency': 'EUR'}}
         return shipping_prices
 
-    def _get_shipping_methods(self, carrier_id, from_country, to_country, total_weight=None, is_return=False, sizes=None):
+    def _get_shipping_methods(self, carrier_id, from_country, to_country, total_weight=None, is_return=False, sizes=None, from_postal_code=None, to_postal_code=None):
         """
         We're now working with a sendcloud's PRODUCT
         We must fetch the differents METHODS in that product, in order to find the most appropriate !
@@ -203,16 +214,16 @@ class SendCloud:
         #  returns no result.
         single_shipping = total_weight and total_weight < sendcloud_product_id.max_weight
         if single_shipping:
-            shipping_products = self._get_shipping_products(from_country, is_return=is_return, carrier=shipping_carrier, to_country=to_country, weight=total_weight, sizes=sizes)
+            shipping_products = self._get_shipping_products(from_country, is_return=is_return, carrier=shipping_carrier, to_country=to_country, weight=total_weight, sizes=sizes, from_postal_code=from_postal_code, to_postal_code=to_postal_code)
         else:
-            shipping_products = self._get_shipping_products(from_country, is_return=is_return, carrier=shipping_carrier, to_country=to_country, sizes=sizes)
+            shipping_products = self._get_shipping_products(from_country, is_return=is_return, carrier=shipping_carrier, to_country=to_country, sizes=sizes, from_postal_code=from_postal_code, to_postal_code=to_postal_code)
 
         shipping_product = next(filter(lambda p: p['code'] == shipping_code, shipping_products), None)
         if not shipping_product:
             if single_shipping:
                 # single_shipping may be false-positive due to the local value 'sendcloud_product_id.max_weight'
                 # we call back this method without filtering the call by weight to reach the update of local cache
-                return self._get_shipping_methods(carrier_id, from_country, to_country, is_return=is_return, sizes=sizes)
+                return self._get_shipping_methods(carrier_id, from_country, to_country, is_return=is_return, sizes=sizes, from_postal_code=from_postal_code, to_postal_code=to_postal_code)
             else:
                 return None
 
@@ -369,6 +380,7 @@ class SendCloud:
         if is_return:
             to_partner_id, from_partner_id = from_partner_id, to_partner_id
         from_country, to_country = from_partner_id.country_id.code, to_partner_id.country_id.code
+        from_postal_code, to_postal_code = from_partner_id.zip, to_partner_id.zip
         self._validate_partner_details(to_partner_id)
         shipping_weight = int(carrier_id.sendcloud_convert_weight(picking.shipping_weight, grams=True))
         to_europe = to_partner_id.country_id and 'EU' in to_partner_id.country_id.country_group_codes
@@ -378,7 +390,7 @@ class SendCloud:
         api_weight = shipping_weight/len(delivery_packages) if single_shipping else None
 
         # Fetch shipping methods compatible with current picking
-        shipping_methods = self._get_shipping_methods(picking.carrier_id, from_country, to_country, api_weight, is_return)
+        shipping_methods = self._get_shipping_methods(picking.carrier_id, from_country, to_country, api_weight, is_return, from_postal_code=from_postal_code, to_postal_code=to_postal_code)
         sendcloud_product_id = carrier_id.sendcloud_return_id if is_return else carrier_id.sendcloud_shipping_id
         user_uom_max_weight = carrier_id.sendcloud_convert_weight(sendcloud_product_id.max_weight - 1, grams=True, reverse=True)  # grams to user uom
         user_weight_uom = carrier_id.env['product.template'].sudo()._get_weight_uom_id_from_ir_config_parameter()
@@ -398,7 +410,7 @@ class SendCloud:
                              \nDivide the quantity of the following product(s) across your packages if possible or choose another carrier:\n\t%s""", product_moves)
             raise UserError(message)
 
-        shipping_prices = self._get_shipping_prices(shipping_methods, to_country, from_country)
+        shipping_prices = self._get_shipping_prices(shipping_methods, to_country, from_country, from_postal_code=from_postal_code, to_postal_code=to_postal_code)
         # Assign consequent price to each method, delete the method if no price is available
         for shipping_method in reversed(shipping_methods):
             price = shipping_prices.get(shipping_method['id'], {}).get('price')
