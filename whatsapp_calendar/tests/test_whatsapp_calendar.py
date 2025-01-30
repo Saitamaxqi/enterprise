@@ -38,6 +38,8 @@ class WhatsAppCalendar(WhatsAppCommon, MockOutgoingWhatsApp, CronMixinCase):
     def test_whatsapp_alarm(self):
         """ Test that whatsapp alarm sends message(s) to suitable partner(s) based on the notify_responsible configuration. """
         now = fields.Datetime.now()
+        # Ensure consistent phone number when demo data is missing
+        self.env.ref('base.partner_admin').phone = '+1 555-555-5555'
         for calendar_event, last_call_minutes, expected_phone_numbers in [
             (
                 # Calendar event with notify_responsible and with organizer
