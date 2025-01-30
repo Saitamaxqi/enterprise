@@ -1,3 +1,4 @@
+from odoo import Command
 from odoo.tests.common import tagged
 from odoo.addons.account_avatax.tests.common import TestAccountAvataxCommon
 
@@ -143,3 +144,39 @@ class TestAccountAvalaraStock(TestAccountAvataxCommon):
         # Line 3
         line_addresses = capture.val['json']['createTransactionModel']['lines'][2].get('addresses', False)
         self.assertFalse(line_addresses, "Line level addresses should not be created for a warehouse with the same address as the company.")
+
+    def test_line_level_address_with_backorders(self):
+        """Send line-level addresses even if a sale order line has multiple stock moves. As long as they're linked to a
+        single warehouse address, it's ok to send.
+        """
+        with self._capture_request(return_value={'lines': [], 'summary': []}) as capture:
+            sale_order = self.env['sale.order'].create({
+                'partner_id': self.partner.id,
+                'partner_shipping_id': self.shipping_partner.id,
+                'fiscal_position_id': self.fp_avatax.id,
+                'date_order': '2021-01-01',
+                'warehouse_id': self.warehouse_with_different_address.id,
+                'order_line': [
+                    Command.create({
+                        'product_id': self.product.id,
+                        'tax_ids': None,
+                        'price_unit': self.product.list_price,
+                        'product_uom_qty': 2,
+                    }),
+                ]
+            })
+            sale_order.action_confirm()
+            sale_order.picking_ids.move_ids.quantity = 1  # do half
+
+            # validate and create backorder
+            res_dict = sale_order.picking_ids.button_validate()
+            self.env['stock.backorder.confirmation'].with_context(res_dict['context']).process()
+
+            self.assertEqual(len(sale_order.picking_ids), 2, "There should be two pickings: the original one for qty 1 and the backorder for the remaining qty 1.")
+            self.assertEqual(len(sale_order.order_line.move_ids), 2, "There should be two moves associated to this single order line, one for the original picking, the other for the backorder.")
+
+            invoice = sale_order._create_invoices()
+            invoice.button_external_tax_calculation()
+
+        line_address = capture.val['json']['createTransactionModel']['lines'][0].get('addresses')
+        self.assertTrue(line_address, "Send a line level address, even though two moves are associated to the line, they both refer to the same address.")
