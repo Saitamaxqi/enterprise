@@ -626,10 +626,14 @@ class AmazonAccount(models.Model):
                     " %(id)s.", {'ref': amazon_order_ref, 'id': self.id}
                 )
             elif amazon_status == 'Shipped' and fulfillment_channel == 'MFN' and unsynced_pickings:
-                # The processing of the feed of a batch of pickings can fail on Amazon side in a way
-                # that we cannot tell which picking is faulty. In that case, all pickings of the
-                # batch are flagged as in error. The order status update allows correcting the
-                # status of non-faulty pickings while leaving the faulty one in error.
+                # This can happen in 3 cases:
+                # 1. The processing of the feed of a batch of pickings failed on Amazon side in a
+                # way that we couldn't tell which picking are faulty. In that case, all pickings of
+                # the batch were flagged as in error. The order status update allows correcting the
+                # status of non-faulty pickings while leaving the faulty ones in error.
+                # 2. The shipping was arranged directly from Amazon's backend.
+                # 3. The user uses a delivery method that contacted Amazon to send the picking
+                # information before we did.
                 unsynced_pickings.amazon_sync_status = 'done'
                 _logger.info(
                     "Forced the picking synchronization status to 'done' for sales order with"

@@ -3,6 +3,7 @@
 from datetime import datetime
 from unittest.mock import Mock, patch
 
+from odoo import Command
 from odoo.exceptions import UserError
 from odoo.tests.common import tagged
 from odoo.tools import mute_logger
@@ -90,7 +91,7 @@ class TestAmazon(common.TestAmazonCommon):
                 'purchase_ok': False,
                 'default_code': product_code_,
             })
-            product_.product_tmpl_id.taxes_id = False
+            product_.product_tmpl_id.taxes_id = [Command.clear()]
             return product_
 
         # Create a warehouse that is prioritized when creating a normal order
@@ -279,7 +280,7 @@ class TestAmazon(common.TestAmazonCommon):
                 'purchase_ok': False,
                 'default_code': product_code_,
             })
-            product_.product_tmpl_id.taxes_id = False
+            product_.product_tmpl_id.taxes_id = [Command.clear()]
             return product_
 
         # Create a warehouse that is prioritized when creating a normal order
@@ -347,7 +348,7 @@ class TestAmazon(common.TestAmazonCommon):
                 'purchase_ok': False,
                 'default_code': product_code_,
             })
-            product_.product_tmpl_id.taxes_id = False
+            product_.product_tmpl_id.taxes_id = [Command.clear()]
             return product_
 
         with patch(

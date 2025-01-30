@@ -45,13 +45,13 @@ class StockPicking(models.Model):
             amazon_pickings._check_sales_order_line_completion()
             # Flag the pickings linked to Amazon that are the last step of a (multi-step) delivery
             # route as pending synchronization.
-            last_step_amazon_pickings = amazon_pickings.filtered(
-                lambda p: p.location_dest_id.usage == 'customer'
+            pickings_requiring_amazon_sync = amazon_pickings.filtered(
+                lambda p: p.location_dest_id.usage == 'customer' and p.amazon_sync_status != 'done'
             )
-            super(StockPicking, last_step_amazon_pickings).write(
+            super(StockPicking, pickings_requiring_amazon_sync).write(
                 dict(amazon_sync_status='pending', **vals)
             )
-            pickings -= last_step_amazon_pickings
+            pickings -= pickings_requiring_amazon_sync
         return super(StockPicking, pickings).write(vals)
 
     def _check_sales_order_line_completion(self):
@@ -100,6 +100,7 @@ class StockPicking(models.Model):
             lambda p: p.sale_id
             and p.sale_id.amazon_order_ref
             and p.location_dest_id.usage == 'customer'
+            and p.amazon_sync_status != 'done'
         )  # In sudo mode to read the field on sale.order
         for picking_sudo in amazon_pickings_sudo:
             if not picking_sudo.carrier_id.name:
