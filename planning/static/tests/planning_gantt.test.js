@@ -744,7 +744,7 @@ test("Test highlight shifts added by executed action", async function () {
     expect(".o_notification button .fa-undo").toHaveCount(1, {
         message: "The notification should have an undo button.",
     });
-    expect(getFacetTexts()).toEqual(["Shifts Planned", "Resource"], {
+    expect(getFacetTexts()).toEqual(["Resource", "Shifts Planned"], {
         message: "Shifts Planned facet should be active along with default_group_by.",
     });
     expect(".o_gantt_pill").toHaveCount(2, { message: "2 pills should be in the gantt view." });
@@ -762,7 +762,7 @@ test("Test highlight shifts added by executed action", async function () {
     expect(".o_notification button .fa-undo").toHaveCount(2, {
         message: "Both notifications should have an undo button.",
     });
-    expect(getFacetTexts()).toEqual(["Shifts Planned", "Resource"], {
+    expect(getFacetTexts()).toEqual(["Resource", "Shifts Planned"], {
         message: "Shifts Planned facet should be still active.",
     });
     expect(".o_gantt_pill").toHaveCount(2, { message: "2 pills should be in the gantt view." });
