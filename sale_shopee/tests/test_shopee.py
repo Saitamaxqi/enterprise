@@ -327,12 +327,12 @@ class TestShopee(common.TestShopeeCommon):
             self.assertEqual(self.item.last_inventory_sync_date, self.initial_sync_date)
 
             # setup inventory level of the product to 10
-            inventory_wizard = self.env['stock.change.product.qty'].create({
+            warehouse_id = self.env['stock.warehouse'].search([('company_id', '=', self.shop.company_id.id)], limit=1)
+            self.env['stock.quant'].with_context(inventory_mode=True).create({
                 'product_id': self.item.product_id.id,
-                'product_tmpl_id': self.item.product_id.product_tmpl_id.id,
-                'new_quantity': 10,
-            })
-            inventory_wizard.change_product_qty()
+                'location_id': warehouse_id.lot_stock_id.id,
+                'inventory_quantity': 10,
+            })._apply_inventory()
             self.shop._sync_inventory(auto_commit=False)
 
             self.assertEqual(self.body['item_id'], int(self.item.shopee_item_identifier))

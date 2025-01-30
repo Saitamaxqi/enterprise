@@ -367,12 +367,10 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             'product_uom_id': self.uom_unit.id,
         })
 
-        self.inventory_wizard = self.env['stock.change.product.qty'].create({
-            'product_id': self.additional_kit_product.id,
-            'product_tmpl_id': self.additional_kit_product.product_tmpl_id.id,
-            'new_quantity': 100.0,
-        })
-        self.inventory_wizard.change_product_qty()
+        warehouse = self.env['stock.warehouse'].search(
+            [('company_id', '=', self.env.company.id)], limit=1
+        )
+        self.env['stock.quant']._update_available_quantity(self.additional_kit_product, warehouse.lot_stock_id, 100)
 
         self.subscription_order_with_bom = self.env['sale.order'].create({
             'name': 'Order',
@@ -877,12 +875,10 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             'uom_id': self.uom_unit.id,
             'recurring_invoice': True,
         })
-        self.inventory_wizard = self.env['stock.change.product.qty'].create({
-            'product_id': self.storable_product.id,
-            'product_tmpl_id': self.storable_product.product_tmpl_id.id,
-            'new_quantity': 100.0,
-        })
-        self.inventory_wizard.change_product_qty()
+        warehouse = self.env['stock.warehouse'].search(
+            [('company_id', '=', self.env.company.id)], limit=1
+        )
+        self.env['stock.quant']._update_available_quantity(self.storable_product, warehouse.lot_stock_id, 100.0)
 
         sub = self.env['sale.order'].create({
             'name': "Order",
