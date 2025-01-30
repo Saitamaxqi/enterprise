@@ -1434,8 +1434,11 @@ class BankRecWidget(models.Model):
             exchange_diff_moves = AccountMoveLine._create_exchange_difference_moves(exchange_diff_vals_list)
 
         # Perform the reconciliation.
-        self.env['account.move.line'].with_context(no_exchange_difference=True)._reconcile_plan(
-            [(line + counterpart).with_prefetch(all_line_ids) for line, counterpart in lines])
+        self.env['account.move.line']\
+            .with_context(no_exchange_difference_no_recursive=True)._reconcile_plan([
+                (line + counterpart).with_prefetch(all_line_ids)
+                for line, counterpart in lines
+            ])
 
         # Assign exchange move to partials.
         for index, line in enumerate(lines_with_exch_diff):

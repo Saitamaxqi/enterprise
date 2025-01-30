@@ -3614,3 +3614,105 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
             {'flag': 'aml',            'account_id': other_line.account_id.id,       'amount_currency': -100.0},
             {'flag': 'auto_balance',   'account_id': suspense_line.account_id.id,    'amount_currency': -900.0},
         ])
+
+    def test_caba_reconcile_account_multi_currency(self):
+        self.env.company.tax_exigibility = True
+        cash_basis_transfer_account = self.env['account.account'].create({
+            'code': 'cash.basis.transfer.account',
+            'name': 'cash_basis_transfer_account',
+            'account_type': 'income',
+            'reconcile': True,
+        })
+        tax_account = self.env['account.account'].create({
+            'code': 'cash.basis.tax.account',
+            'name': 'cash_basis_tax_account',
+            'account_type': 'income',
+        })
+        caba_tax = self.env['account.tax'].create({
+            'name': 'tax_caba',
+            'amount': 15.0,
+            'cash_basis_transition_account_id': cash_basis_transfer_account.id,
+            'tax_exigibility': 'on_payment',
+            'invoice_repartition_line_ids': [
+                Command.create({'repartition_type': 'base'}),
+                Command.create({
+                    'repartition_type': 'tax',
+                    'account_id': tax_account.id,
+                }),
+            ],
+            'refund_repartition_line_ids': [
+                Command.create({'repartition_type': 'base'}),
+                Command.create({
+                    'repartition_type': 'tax',
+                    'account_id': tax_account.id,
+                }),
+            ],
+        })
+
+        currency = self.other_currency
+        inv_line = self._create_invoice_line(
+            'out_invoice',
+            currency_id=currency.id,
+            invoice_date='2016-01-01',
+            invoice_line_ids=[{'price_unit': 1200.0, 'tax_ids': [Command.set(caba_tax.ids)]}],
+        )
+        inv = inv_line.move_id
+        st_line = self._create_st_line(
+            690.0,
+            date='2017-01-01',
+            foreign_currency_id=currency.id,
+            amount_currency=1380.0,
+        )
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+        wizard._action_add_new_amls(inv_line)
+
+        self.assertRecordValues(wizard.line_ids, [
+            {'flag': 'liquidity',       'balance': 690.0,   'amount_currency': 690.0,   'currency_id': self.env.company.currency_id.id},
+            {'flag': 'new_aml',         'balance': -460.0,  'amount_currency': -1380.0, 'currency_id': currency.id},
+            {'flag': 'exchange_diff',   'balance': -230.0,  'amount_currency': 0.0,     'currency_id': currency.id},
+        ])
+
+        line = wizard.line_ids.filtered(lambda x: x.flag == 'exchange_diff')
+        wizard._js_action_mount_line_in_edit(line.index)
+        line.balance = -240.0
+        wizard._line_value_changed_balance(line)
+
+        self.assertRecordValues(wizard.line_ids, [
+            {'flag': 'liquidity',       'balance': 690.0,   'amount_currency': 690.0,   'currency_id': self.env.company.currency_id.id},
+            {'flag': 'new_aml',         'balance': -460.0,  'amount_currency': -1380.0, 'currency_id': currency.id},
+            {'flag': 'exchange_diff',   'balance': -240.0,  'amount_currency': 0.0,     'currency_id': currency.id},
+            {'flag': 'auto_balance',    'balance': 10.0,    'amount_currency': 0.0,     'currency_id': currency.id},
+        ])
+
+        wizard._action_validate()
+
+        self.assertRecordValues(st_line.line_ids, [
+            {'balance': 690.0,  'amount_currency': 690.0,   'currency_id': self.env.company.currency_id.id},
+            {'balance': -700.0, 'amount_currency': -1380.0, 'currency_id': currency.id},
+            {'balance': 10.0,   'amount_currency': 0.0,     'currency_id': currency.id},
+        ])
+
+        caba_move = inv.tax_cash_basis_created_move_ids
+        product_account = self.company_data['default_account_revenue']
+        self.assertRecordValues(caba_move.line_ids, [
+            {'balance': 608.7,      'amount_currency': 1200.0,  'currency_id': currency.id,     'account_id': product_account.id},
+            {'balance': -608.7,     'amount_currency': -1200.0, 'currency_id': currency.id,     'account_id': product_account.id},
+            {'balance': 91.3,       'amount_currency': 180.0,   'currency_id': currency.id,     'account_id': cash_basis_transfer_account.id},
+            {'balance': -91.3,      'amount_currency': -180.0,  'currency_id': currency.id,     'account_id': tax_account.id},
+        ])
+
+        tax_line = inv.line_ids.filtered('tax_repartition_line_id')
+        _liquidity_line, _suspense_line, other_line = st_line._seek_for_lines()
+        self.assertRecordValues(caba_move.line_ids + inv_line + tax_line + other_line, [
+            {'amount_residual': 0.0,  'amount_residual_currency': 0.0},
+        ] * 7)
+
+        exchange_diff_moves = self.env['account.move'].search([('journal_id', '=', self.env.company.currency_exchange_journal_id.id)])
+        self.assertRecordValues(exchange_diff_moves.line_ids, [
+            # Exchange diff CABA entry with invoice for the tax line ((180 / 2) - (180 / 3) = 90 - 60 = 30):
+            {'balance': -31.3,  'amount_currency': 0.0, 'currency_id': currency.id},
+            {'balance': 31.3,   'amount_currency': 0.0, 'currency_id': currency.id},
+            # Exchange diff st_line with invoice ((1380 / 2) - (1380 / 3) = 690 - 430 = 230):
+            {'balance': 240.0,  'amount_currency': 0.0, 'currency_id': currency.id},
+            {'balance': -240.0, 'amount_currency': 0.0, 'currency_id': currency.id},
+        ])
