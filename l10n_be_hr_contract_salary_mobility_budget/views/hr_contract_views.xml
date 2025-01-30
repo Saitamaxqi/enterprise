@@ -15,14 +15,14 @@
             </label>
 
             <group name="yearly_benefits" position="inside">
-                    <label for="l10n_be_mobility_budget"/>
-                    <div class="o_row">
+                    <label for="l10n_be_mobility_budget" invisible="country_code != 'BE'"/>
+                    <div class="o_row" invisible="country_code != 'BE'">
                         <field name="l10n_be_mobility_budget" nolabel="1"/>
                         <field name="l10n_be_mobility_budget_amount" class="o_hr_narrow_field" nolabel="1"/>
                         <span class="ms-3">/ Year</span>
                     </div>
-                    <label for="l10n_be_mobility_budget_amount_monthly"/>
-                    <div class="o_row">
+                    <label for="l10n_be_mobility_budget_amount_monthly" invisible="country_code != 'BE'"/>
+                    <div class="o_row" invisible="country_code != 'BE'">
                         <field name="l10n_be_mobility_budget_amount_monthly" class="o_hr_narrow_field" nolabel="1"/>
                         <span class="ms-3">/ Month</span>
                     </div>
