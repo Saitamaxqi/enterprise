@@ -13,14 +13,14 @@ export async function prepareWebClientForSpreadsheet() {
     mockService("spreadsheet_collaborative", makeFakeSpreadsheetService());
 
     registry.category("favoriteMenu").add(
-        "insert-list-spreadsheet-menu",
+        "insert-in-spreadsheet-menu",
         {
             Component: InsertListSpreadsheetMenu,
             groupNumber: 4,
             isDisplayed: ({ config, isSmall }) =>
                 !isSmall &&
                 config.actionType === "ir.actions.act_window" &&
-                config.viewType === "list",
+                ["kanban", "list"].includes(config.viewType),
         },
         { sequence: 5 }
     );

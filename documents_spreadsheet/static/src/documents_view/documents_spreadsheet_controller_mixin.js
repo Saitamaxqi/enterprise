@@ -159,6 +159,7 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
 
     getStaticActionMenuItems() {
         const menuItems = super.getStaticActionMenuItems(...arguments);
+        menuItems.insert.isAvailable = () => this.documentService.userIsInternal;
         return menuItems;
     },
 });

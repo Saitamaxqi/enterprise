@@ -11,6 +11,6 @@ export class InsertListSpreadsheetMenu extends Component {
      * @private
      */
     _onClick() {
-        this.env.bus.trigger("insert-list-spreadsheet");
+        this.env.bus.trigger("insert-in-spreadsheet");
     }
 }

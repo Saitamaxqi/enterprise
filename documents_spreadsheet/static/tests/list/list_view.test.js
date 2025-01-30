@@ -33,6 +33,7 @@ import { doMenuAction, getActionMenu } from "@spreadsheet/../tests/helpers/ui";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
 import { getSpreadsheetActionModel } from "@spreadsheet_edition/../tests/helpers/webclient_helpers";
 import { InsertListSpreadsheetMenu } from "@spreadsheet_edition/assets/list_view/insert_list_spreadsheet_menu_owl";
+import { SpreadsheetSelectorDialog } from "@spreadsheet_edition/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog";
 import { insertList } from "@spreadsheet_edition/bundle/list/list_init_callback";
 import * as dsHelpers from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
 import {
@@ -49,7 +50,6 @@ import {
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { Deferred } from "@web/core/utils/concurrency";
-import { ListRenderer } from "@web/views/list/list_renderer";
 import { mockActionService } from "../helpers/spreadsheet_test_utils";
 
 defineDocumentSpreadsheetModels();
@@ -402,7 +402,7 @@ test("Re-insert a list also applies a table", async function () {
 
 test("user related context is not saved in the spreadsheet", async function () {
     registry.category("favoriteMenu").add(
-        "insert-list-spreadsheet-menu",
+        "insert-in-spreadsheet-menu",
         {
             Component: InsertListSpreadsheetMenu,
             groupNumber: 4,
@@ -410,16 +410,15 @@ test("user related context is not saved in the spreadsheet", async function () {
         { sequence: 5 }
     );
 
-    patchWithCleanup(ListRenderer.prototype, {
-        async getListForSpreadsheet() {
-            const result = await super.getListForSpreadsheet(...arguments);
-            expect(result.list.context).toEqual(
+    patchWithCleanup(SpreadsheetSelectorDialog.prototype, {
+        setup() {
+            super.setup();
+            expect(this.props.actionOptions.preProcessingAsyncActionData.list.context).toEqual(
                 {
                     default_stage_id: 5,
                 },
                 { message: "user related context is not stored in context" }
             );
-            return result;
         },
     });
     serverState.companies = [{ id: 15, name: "Hermit" }];

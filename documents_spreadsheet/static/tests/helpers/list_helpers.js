@@ -150,6 +150,6 @@ export async function toggleCogMenuSpreadsheet() {
  * This helper takes a shortcut by relying on the implementation
  */
 export async function invokeInsertListInSpreadsheetDialog(env) {
-    env.bus.trigger("insert-list-spreadsheet");
+    env.bus.trigger("insert-in-spreadsheet");
     await animationFrame();
 }
