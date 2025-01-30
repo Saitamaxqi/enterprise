@@ -59,6 +59,11 @@ class TestDashboardDocumentsAccesss(TransactionCase):
                 "spreadsheet_data": r"{}",
                 "handler": "spreadsheet",
                 "mimetype": "application/o-spreadsheet",
+                "folder_id": self.env['documents.document'].create({
+                    'name': 'Folder',
+                    'type': 'folder',
+                    'access_internal': 'edit',
+                }).id,
             }
         )
         comments_thread = self.env["spreadsheet.cell.thread"].create({

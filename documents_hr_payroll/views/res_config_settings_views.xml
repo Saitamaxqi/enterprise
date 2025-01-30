@@ -10,7 +10,7 @@
                 <xpath expr="//div[@name='documents_hr_folder']" position="after">
                     <div class="content-group" invisible="not documents_hr_settings">
                         <div class="row mt16">
-                            <label class="o_form_label col-lg-3" for="documents_payroll_folder_id" string="Payroll Workspace"/>
+                            <label class="o_form_label col-lg-3" for="documents_payroll_folder_id" string="Payroll Folder"/>
                             <field name="documents_payroll_folder_id" widget="documents_folder_many2one"/>
                         </div>
                     </div>

@@ -1,5 +1,4 @@
 import {
-    DocumentsDocument,
     defineDocumentSpreadsheetModels,
     defineDocumentSpreadsheetTestAction,
 } from "@documents_spreadsheet/../tests/helpers/data";
@@ -559,11 +558,10 @@ test("Add pivot sheet at the end of existing sheets", async () => {
     model.dispatch("CREATE_SHEET", { sheetId: "42", position: 1, name: "My Sheet" });
     const models = getBasicData();
     models["documents.document"].records = [
-        DocumentsDocument._records[0], // res_company.document_spreadsheet_folder_id
         {
             spreadsheet_data: JSON.stringify(model.exportData()),
             name: "a spreadsheet",
-            folder_id: 1,
+            folder_id: false,
             handler: "spreadsheet",
             id: 456,
             is_favorited: false,
@@ -603,11 +601,10 @@ test("Add pivot in spreadsheet with already the same sheet name", async () => {
     });
     const models = getBasicData();
     models["documents.document"].records = [
-        DocumentsDocument._records[0], // res_company.document_spreadsheet_folder_id
         {
             spreadsheet_data: JSON.stringify(model.exportData()),
             name: "a spreadsheet",
-            folder_id: 1,
+            folder_id: false,
             handler: "spreadsheet",
             id: 456,
             is_favorited: false,

@@ -9,7 +9,7 @@ class ResCompany(models.Model):
     documents_fleet_settings = fields.Boolean(default=True)
     documents_fleet_folder = fields.Many2one(
         'documents.document',
-        string="Fleet Workspace",
+        string="Fleet Folder",
         default=lambda self: self.env.ref('documents_fleet.document_fleet_folder', raise_if_not_found=False),
         domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False), '|', ('company_id', '=', False), ('company_id', '=', id)]",
     )

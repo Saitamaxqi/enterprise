@@ -1,5 +1,5 @@
 import { SpreadsheetModels, defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
-import { defineActions, fields, models, onRpc, webModels } from "@web/../tests/web_test_helpers";
+import { defineActions, fields, models, onRpc } from "@web/../tests/web_test_helpers";
 import { Domain } from "@web/core/domain";
 
 export class DocumentsDocument extends models.Model {
@@ -261,13 +261,6 @@ export class MailAliasDomain extends models.Model {
     name = fields.Char({ string: "Alias Domain Name" });
 }
 
-export class ResCompany extends webModels.ResCompany {
-    document_spreadsheet_folder_id = fields.Many2one({
-        relation: "documents.document",
-        default: 1,
-    });
-}
-
 export class ResCountries extends models.Model {
     _name = "res.country";
     name = fields.Char({ string: "Name" });
@@ -322,7 +315,6 @@ export function defineDocumentSpreadsheetModels() {
         SpreadsheetTemplate,
         IrModel,
         IrUIMenu,
-        ResCompany,
         ResCountries,
         ResCountryState,
     };

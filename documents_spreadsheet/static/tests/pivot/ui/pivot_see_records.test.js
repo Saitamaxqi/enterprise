@@ -1,6 +1,5 @@
 import {
     defineDocumentSpreadsheetModels,
-    DocumentsDocument,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { expect, test } from "@odoo/hoot";
@@ -18,11 +17,10 @@ test("Can see records and go back after a pivot insertion", async function () {
     const m = new Model();
     const models = getBasicData();
     models["documents.document"].records = [
-        DocumentsDocument._records[0], // res_company.document_spreadsheet_folder_id
         {
             spreadsheet_data: JSON.stringify(m.exportData()),
             name: "a spreadsheet",
-            folder_id: 1,
+            folder_id: false,
             handler: "spreadsheet",
             id: 456,
             is_favorited: false,

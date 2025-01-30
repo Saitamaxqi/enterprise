@@ -19,4 +19,5 @@ Adds approvals data to documents
     'installable': True,
     'auto_install': True,
     'license': 'OEEL-1',
+    'post_init_hook': '_documents_approval_post_init',
 }

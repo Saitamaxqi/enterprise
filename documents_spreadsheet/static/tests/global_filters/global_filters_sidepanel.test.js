@@ -1,6 +1,5 @@
 import {
     defineDocumentSpreadsheetModels,
-    DocumentsDocument,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheetFromListView } from "@documents_spreadsheet/../tests/helpers/list_helpers";
 import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
@@ -520,7 +519,6 @@ test("open relational global filter panel then go to pivot on sheet 2", async fu
     };
     const serverData = getBasicServerData();
     serverData.models["documents.document"].records = [
-        DocumentsDocument._records[0], // res_company.document_spreadsheet_folder_id
         {
             id: 45,
             spreadsheet_data: JSON.stringify(spreadsheetData),
@@ -748,7 +746,6 @@ test("Create a new relational global filter with a pivot", async function () {
     };
     const serverData = getBasicServerData();
     serverData.models["documents.document"].records = [
-        DocumentsDocument._records[0], // res_company.document_spreadsheet_folder_id
         {
             id: 45,
             spreadsheet_data: JSON.stringify(spreadsheetData),
@@ -924,7 +921,6 @@ test("Create a new relational global filter with a list snapshot", async functio
     };
     const serverData = getBasicServerData();
     serverData.models["documents.document"].records = [
-        DocumentsDocument._records[0], // res_company.document_spreadsheet_folder_id
         {
             id: 45,
             spreadsheet_data: JSON.stringify(spreadsheetData),

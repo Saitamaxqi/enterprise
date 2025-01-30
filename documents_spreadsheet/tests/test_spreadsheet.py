@@ -4,7 +4,7 @@ import json
 import base64
 
 from .common import SpreadsheetTestCommon, TEST_CONTENT, GIF
-from odoo.exceptions import AccessError, ValidationError
+from odoo.exceptions import AccessError
 from odoo.tests import Form
 from odoo.tests.common import new_test_user
 
@@ -129,43 +129,20 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         """Existing spreadsheet in the database can influence some test results"""
         self.env["documents.document"].search([("handler", "=", "spreadsheet")]).active = False
 
-    def test_spreadsheet_default_folder(self):
+    def test_spreadsheet_my_drive_folder(self):
         user1 = new_test_user(self.env, login="Alice", groups="base.group_user")
-        user2 = new_test_user(self.env, login="Bob", groups="base.group_user")
 
         document = self.env["documents.document"].with_user(user1).create({
             "spreadsheet_data": "{}",
             "handler": "spreadsheet",
             "mimetype": "application/o-spreadsheet",
         })
-        self.assertEqual(
-            document.folder_id,
-            self.env.company.document_spreadsheet_folder_id,
-            "It should have been assigned the default Spreadsheet Folder"
-        )
-        self.assertEqual(document.access_internal, 'edit')
+        self.assertFalse(document.folder_id, "The spreadsheet is created in My Drive")
+        # And only user1 have access to it
+        self.assertEqual(document.owner_id, user1)
+        self.assertEqual(document.access_internal, 'none')
         self.assertEqual(document.access_via_link, 'none')
-
-        # Bob can read the documents of Alice
-        result = self.env['documents.document'].with_user(user2).search(
-            [('folder_id', '=', document.folder_id.id)])
-        self.assertIn(document, result)
-
-        self.env.company.document_spreadsheet_folder_id = self.env['documents.document'].create({
-            'name': 'Spreadsheet - Test Folder',
-            'type': 'folder',
-            'access_internal': 'edit',
-        })
-        document = self.env["documents.document"].with_user(user1).create({
-            "spreadsheet_data": "{}",
-            "handler": "spreadsheet",
-            "mimetype": "application/o-spreadsheet",
-        })
-        self.assertEqual(
-            document.folder_id,
-            self.env.company.document_spreadsheet_folder_id,
-            "It should have been assigned the default Spreadsheet Folder"
-        )
+        self.assertFalse(document.access_ids.filtered(lambda a: a.partner_id != user1.partner_id))
 
     def test_spreadsheet_no_default_folder(self):
         """Folder is not overwritten by the default spreadsheet folder"""
@@ -204,13 +181,9 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             'mimetype': 'application/o-spreadsheet',
         })
 
-        # inherit access from default parent folder (Spreadsheet)
-        self.assertEqual(
-            document_1.folder_id,
-            self.env.company.document_spreadsheet_folder_id,
-            'It should have been assigned the default Spreadsheet Folder'
-        )
-        self.assertEqual(document_1.access_internal, 'edit')
+        # inherit access from parent folder (My Drive)
+        self.assertFalse(document_1.folder_id, False)
+        self.assertEqual(document_1.access_internal, 'none')
         self.assertEqual(document_1.access_via_link, 'none')
 
         # inherit access from parent folder (My Drive)
@@ -970,45 +943,3 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             }],
             "total": 1,
         })
-
-    def test_company_consistency(self):
-        """
-        A folder can be company-specific. A company can have one spreadsheet
-        folder. Several companies can share the same one. A default folder
-        exists and is used on company creation. This test checks several
-        scenarios to ensure that there isn't any inconsistency between the
-        company of the folders and the companies
-        """
-        folder01 = self.env.ref('documents_spreadsheet.document_spreadsheet_folder')
-        company01 = self.env.company
-
-        # Make sure the setup is as expected
-        folder01.company_id = False
-        company01.document_spreadsheet_folder_id = folder01
-
-        company02 = self.env['res.company'].create({
-            'name': 'Comp02',
-        })
-        self.assertEqual(company02.document_spreadsheet_folder_id, folder01)
-
-        with self.assertRaises(ValidationError):
-            # folder01 is used by both company01 and company02
-            folder01.company_id = company01
-
-        folder02 = folder01.copy()
-        company02.document_spreadsheet_folder_id = folder02
-        folder01.company_id = company01
-
-        company03 = self.env['res.company'].create({
-            'name': 'Comp03',
-        })
-        self.assertTrue(company03)
-        self.assertFalse(company03.document_spreadsheet_folder_id)
-
-        with self.assertRaises(ValidationError):
-            # folder01 belongs to company01
-            company03.document_spreadsheet_folder_id = folder01
-
-        with self.assertRaises(ValidationError):
-            # folder01 is used by company01
-            folder01.company_id = company03

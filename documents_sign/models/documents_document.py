@@ -1,9 +1,35 @@
-from odoo import models, _
+from odoo import api, models, _
 from odoo.exceptions import UserError
 
 
 class DocumentsDocument(models.Model):
     _inherit = 'documents.document'
+
+    @api.ondelete(at_uninstall=False)
+    def unlink_except_sign_folder(self):
+        sign_folder = self.env.ref('documents_sign.document_sign_folder', raise_if_not_found=False)
+        if not sign_folder:
+            return
+        sign_folder_ancestors = set(map(int, sign_folder.sudo().parent_path.split('/')[:-1]))
+        if sign_folder_ancestors & set(self.ids):
+            raise UserError(_('The "%s" workspace is required by the Sign application and cannot be deleted.',
+                              sign_folder.name))
+
+    @api.constrains('company_id')
+    def _check_no_company_on_sign_folder(self):
+        if not self.company_id:
+            return
+        if (sign_folder := self.env.ref('documents_sign.document_sign_folder', raise_if_not_found=False
+                                        )) and sign_folder in self and sign_folder.company_id:
+            raise UserError(_("You cannot set a company on the %s folder.", sign_folder.name))
+
+    @api.constrains('active')
+    def _archive_except_sign_folder(self):
+        if all(d.active for d in self):
+            return
+        sign_folder = self.env.ref('documents_sign.document_sign_folder', raise_if_not_found=False)
+        if sign_folder and sign_folder in self and not sign_folder.active:
+            raise UserError(_("You cannot archive the Sign folder (%s).", sign_folder.name))
 
     def document_sign_create_sign_template_x(self, create_model, folder_id=False):
         if create_model not in ('sign.template.new', 'sign.template.direct'):
