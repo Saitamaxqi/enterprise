@@ -595,6 +595,15 @@ resource_name          = delivery_easypost
 replace_edited_strings = false
 keep_translations      = false
 
+[o:odoo:p:odoo-s18-1:r:delivery_envia]
+file_filter            = delivery_envia/i18n/<lang>.po
+source_file            = delivery_envia/i18n/delivery_envia.pot
+type                   = PO
+minimum_perc           = 0
+resource_name          = delivery_envia
+replace_edited_strings = false
+keep_translations      = false
+
 [o:odoo:p:odoo-s18-1:r:delivery_fedex]
 file_filter            = delivery_fedex/i18n/<lang>.po
 source_file            = delivery_fedex/i18n/delivery_fedex.pot
