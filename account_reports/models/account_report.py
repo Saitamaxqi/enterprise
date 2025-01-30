@@ -2463,6 +2463,7 @@ class AccountReport(models.Model):
 
         if on_sections_source:
             report_to_call = self.env['account.report'].browse(options['sections_source_id'])
+            options["report_id"] = report_to_call.id
             return report_to_call.dispatch_report_action(options, action, action_param=action_param, on_sections_source=False)
 
         if self.id not in (options['report_id'], options.get('sections_source_id')):
