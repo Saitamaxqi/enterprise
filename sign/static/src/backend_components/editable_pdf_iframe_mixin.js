@@ -188,7 +188,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                     el: this.renderSignItem(newItemData, this.getPageContainer(page)),
                 };
             });
-            this.saveChanges();
+            this.setTemplateChanged();
             this.refreshSignItems();
             this.mousePosition.x += 10;
             this.mousePosition.y += 10;
