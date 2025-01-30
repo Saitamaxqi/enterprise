@@ -26,8 +26,7 @@
                     <attribute name="domain">[('employee_ids.company_id', 'in', allowed_company_ids)]</attribute>
                 </field>
                 <field name="partner_id" position="after">
-                    <div/> <!-- to fill label column -->
-                    <div
+                    <div colspan="2"
                         class="alert alert-warning my-2"
                         role="alert"
                         invisible="not partner_id or not has_alt_bank_account">
