@@ -34,7 +34,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_mx_edi_landing/models/account_move.py:0
 #, python-format
-msgid "Customs number: %s"
+msgid "Customs Number Date: %s"
 msgstr ""
 
 #. module: l10n_mx_edi_landing

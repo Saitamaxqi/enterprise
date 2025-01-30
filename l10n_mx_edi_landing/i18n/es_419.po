@@ -35,8 +35,8 @@ msgstr "Número de pedimento"
 #. module: l10n_mx_edi_landing
 #. odoo-python
 #: code:addons/l10n_mx_edi_landing/models/account_move.py:0
-msgid "Customs number: %s"
-msgstr "Número de Pedimiento: %s"
+msgid "Customs Number Date: %s"
+msgstr "Fecha de Pedimiento: %s"
 
 #. module: l10n_mx_edi_landing
 #. odoo-python

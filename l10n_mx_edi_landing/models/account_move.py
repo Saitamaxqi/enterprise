@@ -31,6 +31,6 @@ class AccountMove(models.Model):
                 line.l10n_mx_edi_customs_number = ','.join(customs_numbers)
                 formatted_dates = ','.join(customs_dates)
                 if formatted_dates:
-                    line.name += '\n' + _('Customs number: %s', formatted_dates)
+                    line.name += '\n' + _('Customs Number Date: %s', formatted_dates)
 
         return super()._post(soft)
