@@ -24,10 +24,10 @@ class TestDocumentsShare(TransactionCase):
         cls.default_domain = cls.company_without_website.get_base_url()  # Company without website -> default domain
 
     def test_share_url_domain(self):
-        """ Test the default share domain URL and website in various setup.
+        """ Test the default document access_url domain and website in various setup.
 
         It also tests that the website can be changed manually and that the
-        share domain is adjusted accordingly.
+        access_url domain is adjusted accordingly.
         """
         # Test URL domain when sharing documents without a company.
         self.assertEqual(self.folder.website_id, self.website_main_company)
