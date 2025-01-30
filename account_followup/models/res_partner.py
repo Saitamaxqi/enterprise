@@ -112,15 +112,16 @@ class ResPartner(models.Model):
             partner.followup_line_id = partner_data['followup_line_id']
 
     def _compute_unpaid_invoices(self):
+        partners_unpaid_receivable_lines = self.env['account.move.line'].search([
+            ('company_id', 'child_of', self.env.company.id),
+            ('move_id.commercial_partner_id', 'in', self.ids),
+            ('parent_state', '=', 'posted'),
+            ('move_id.payment_state', 'in', ('not_paid', 'partial')),
+            ('move_id.move_type', 'in', self.env['account.move'].get_sale_types()),
+            ('account_id.account_type', '=', 'asset_receivable'),
+        ]).grouped(lambda line: line.move_id.commercial_partner_id.id)
         for partner in self:
-            unpaid_receivable_lines = self.env['account.move.line'].search([
-                ('company_id', 'child_of', self.env.company.id),
-                ('move_id.commercial_partner_id', '=', partner.id),
-                ('parent_state', '=', 'posted'),
-                ('move_id.payment_state', 'in', ('not_paid', 'partial')),
-                ('move_id.move_type', 'in', self.env['account.move'].get_sale_types()),
-                ('account_id.account_type', '=', 'asset_receivable'),
-            ])
+            unpaid_receivable_lines = partners_unpaid_receivable_lines.get(partner.id, self.env['account.move.line'])
             unpaid_invoices = unpaid_receivable_lines.move_id
             partner.unpaid_invoice_ids = unpaid_invoices
             partner.unpaid_invoices_count = len(unpaid_invoices)
