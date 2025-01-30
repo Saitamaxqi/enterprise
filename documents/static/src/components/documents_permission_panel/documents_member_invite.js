@@ -155,6 +155,7 @@ export class DocumentsMemberInvite extends Component {
                 [
                     ...this.props.accessPartners.flatMap((a) => (a.role ? [a.partner_id.id] : [])),
                     ...selectedPartners.map((s) => s.id),
+                    this.props.access.owner_id.partner_id?.id,
                 ],
             ],
             "|",

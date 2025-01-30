@@ -43,7 +43,7 @@
                     updateAccessRights.bind="updateAccessRights"/>
             </section>
             <t t-if="state.mainPage">
-                <section t-if="state.access.access_ids.length" class="o_documents_permission_panel_access_partners mb-3">
+                <section class="o_documents_permission_panel_access_partners mb-3">
                     <DocumentsPartnerAccess
                         access="state.access"
                         accessPartners="state.access.access_ids"

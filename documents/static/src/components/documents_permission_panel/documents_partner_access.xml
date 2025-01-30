@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <t t-name="documents.PartnerAccess">
-        <h4>People with access</h4>
+        <h4 t-if="props.ownerUser or props.accessPartners.length">People with access</h4>
         <!-- Owner line if not OdooBot-->
         <div t-if="props.ownerUser" class="row m-0 px-3 py-1 pt-2">
             <t t-call="documents.PartnerAccess.info">
@@ -60,8 +60,9 @@
             </div>
             <div t-if="partner.expiration_date" class="text-truncate text-muted">
                 <span t-att-class="{'text-primary': partner.expiration_date !== props.basePartnersAccessExpDate[partner.id]}">Exp: <t t-out="getFormattedLocalExpirationDate(partner)"/></span>
-                <span t-on-click="() => this.props.setExpirationDate(partner, false)" class="o_documents_unset_expiration_date fa fa-times pe-2 ps-3"/>
+                <span t-if="!props.disabled" t-on-click="() => this.props.setExpirationDate(partner, false)" class="o_documents_unset_expiration_date fa fa-times pe-2 ps-3"/>
                 <DocumentsAccessExpirationDateBtn
+                    t-if="!props.disabled"
                     accessPartner="accessPartner"
                     disabled="props.disabled"
                     setExpirationDate.bind="props.setExpirationDate"/>
