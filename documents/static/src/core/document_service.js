@@ -160,31 +160,6 @@ export class DocumentService {
         return folder && typeof folder.id === "number" && !folder.shortcut_document_id;
     }
 
-    async openDialogDetails(documentId, editable) {
-        return new Promise((resolve) => {
-            this.action.doAction(
-                {
-                    type: "ir.actions.act_window",
-                    res_model: "documents.document",
-                    res_id: documentId,
-                    views: [[false, "form"]],
-                    target: "new",
-                    context: {
-                        active_id: documentId,
-                        form_view_ref: "documents.document_view_form_details",
-                        editable: Boolean(editable),
-                        dialog_size: "medium",
-                    },
-                },
-                {
-                    onClose: async () => {
-                        resolve();
-                    },
-                }
-            );
-        });
-    }
-
     async openDialogRename(documentId) {
         return new Promise((resolve) => {
             this.action.doAction(
