@@ -15,6 +15,14 @@
                     <field name="online_sync_fetching_status"/>
                 </field>
 
+                <xpath expr="//t[@t-set='bank_unconfigured']" position="attributes">
+                    <attribute name="t-value" add="!record.account_online_account_id.raw_value" separator=" and "/>
+                </xpath>
+
+                <xpath expr="//t[@name='empty_journal_helper']/span[@t-if=&quot;journal_type == &apos;bank&apos;&quot;]" position="attributes">
+                    <attribute name="t-if" add="!record.account_online_account_id.raw_value" separator=" and "/>
+                </xpath>
+
                 <xpath expr="//button[@name='action_configure_bank_journal']" position="attributes">
                     <attribute name="invisible">account_online_account_id</attribute>
                 </xpath>
