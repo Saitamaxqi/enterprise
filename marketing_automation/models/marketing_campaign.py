@@ -35,7 +35,7 @@ class MarketingCampaign(models.Model):
     unique_field_id = fields.Many2one(
         'ir.model.fields', string='Unique Field',
         compute='_compute_unique_field_id', readonly=False, store=True,
-        domain="[('model_id', '=', model_id), ('ttype', 'in', ['char', 'int', 'many2one', 'text', 'selection'])]",
+        domain="[('model_id', '=', model_id), ('ttype', 'in', ['char', 'integer', 'many2one', 'text', 'selection'])]",
         help="""Used to avoid duplicates based on model field.\ne.g.
                 For model 'Customers', select email field here if you don't
                 want to process records which have the same email address""")
