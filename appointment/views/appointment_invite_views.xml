@@ -49,11 +49,11 @@
                 <field name="has_identical_config" invisible="1"/>
                 <field name="schedule_based_on" invisible="1"/>
                 <div class="alert alert-warning" role="alert"
-                    invisible="not short_code_format_warning">
+                    invisible="not appointment_type_count or not short_code_format_warning">
                     Only letters, numbers, underscores and dashes are allowed in your links.
                 </div>
                 <div class="alert alert-warning" role="alert"
-                    invisible="not short_code_unique_warning">
+                    invisible="not appointment_type_count or not short_code_unique_warning">
                     The URL is already taken, please pick another code.
                 </div>
                 <div class="alert alert-warning" role="alert"
