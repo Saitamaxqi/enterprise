@@ -34,7 +34,7 @@ export class FieldSyncHighlightStore extends SpreadsheetStore {
         for (const cellId in cells) {
             const cell = cells[cellId];
             const cellPosition = this.getters.getCellPosition(cellId);
-            if (cell.isFormula && this.getters.isPositionVisible(cellPosition)) {
+            if (cell.isFormula && this.getters.isPixelPositionVisible(cellPosition)) {
                 const listFunction = getFirstListFunction(cell.compiledFormula.tokens);
                 if (!listFunction) {
                     continue;
