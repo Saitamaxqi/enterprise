@@ -9,8 +9,8 @@ class AccountDeferredReportHandler(models.AbstractModel):
     _inherit = 'account.deferred.report.handler'
 
     @api.model
-    def _get_select(self):
-        return super()._get_select() + [SQL("account_move_line.vehicle_id AS vehicle_id")]
+    def _get_select(self, options):
+        return super()._get_select(options) + [SQL("account_move_line.vehicle_id AS vehicle_id")]
 
     @api.model
     def _get_grouping_fields_deferred_lines(self, filter_already_generated=False, grouping_field='account_id'):
