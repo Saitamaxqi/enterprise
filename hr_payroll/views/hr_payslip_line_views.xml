@@ -137,7 +137,7 @@
         <field name="name">Payslip Lines</field>
         <field name="res_model">hr.payslip.line</field>
         <field name="domain">[('partner_id', '=', active_id)]</field>
-        <field name="context">{'default_partner_id': active_id, 'search_default_partner_id': 1}</field>
+        <field name="context">{'default_partner_id': active_id}</field>
         <field name="binding_model_id" ref="base.model_res_partner"/>
         <field name="binding_view_types">form</field>
     </record>
