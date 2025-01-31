@@ -178,6 +178,79 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         purchase_order.invoice_ids.action_post()
         self.assertBudgetLine(plan_a_line, committed=100, achieved=100)
 
+    def test_budget_analytic_discount_and_included_tax_amounts(self):
+        """ Test that the committed and achieved amounts do not include discounts and included taxes """
+        # Draft the test purchase order.
+        self.purchase_order.button_draft()
+        # Adapt a tax for price_include testing
+        self.tax_purchase_a.price_include = True
+        self.tax_purchase_a.amount_type = 'division'
+        # Create a new purchase order
+        purchase_order = self.env['purchase.order'].create({
+            'partner_id': self.partner_a.id,
+            'date_order': '2019-01-10',
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'product_qty': 2,
+                    'discount': 10,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                    'tax_ids': self.tax_purchase_a.ids,
+                }),
+            ]
+        })
+        purchase_order.button_confirm()
+        purchase_order.order_line.qty_received = 2
+
+        # The confirmed purchase order should impact the analytic line committed amount.
+        plan_a_line = self.budget_analytic_expense.budget_line_ids[0]
+        # One PO line with an amount of 153 should be committed.
+        self.assertBudgetLine(plan_a_line, committed=153, achieved=0)
+
+        # Create the bill for the PO but do not post it. Committed amount should still be 153.
+        bill = self.env['account.move'].browse(purchase_order.action_create_invoice()['res_id'])
+        bill.invoice_date = '2019-01-10'
+        self.assertBudgetLine(plan_a_line, committed=153, achieved=0)
+
+        # Finally we post the bill. Committed amount AND achieved amount should be 153.
+        purchase_order.invoice_ids.action_post()
+        self.assertBudgetLine(plan_a_line, committed=153, achieved=153)
+
+    def test_budget_multi_currency(self):
+        currency = self.setup_other_currency('EUR')
+        self.purchase_order.button_draft()
+        purchase_order = self.env['purchase.order'].create({
+            'partner_id': self.partner_a.id,
+            'date_order': '2019-01-10',
+            'currency_id': currency.id,
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'product_qty': 10,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                }),
+            ]
+        })
+        purchase_order.button_confirm()
+        self.assertRecordValues(purchase_order, [{
+            'currency_rate': 2,
+            'amount_total': 2000,  # 10 * 100 * 2
+        }])
+
+        plan_a_line = self.budget_analytic_expense.budget_line_ids[0]
+        self.assertBudgetLine(plan_a_line, committed=1000, achieved=0)
+
+        purchase_order.order_line.qty_received = 2
+        bill = self.env['account.move'].browse(purchase_order.action_create_invoice()['res_id'])
+        self.assertRecordValues(bill, [{
+            'currency_id': currency.id,
+            'amount_total': 400,  # 2/10 of 2000, or 2 * 100 * 2
+            'amount_total_signed': -200
+        }])
+        bill.invoice_date = '2019-01-10'
+        bill.action_post()
+        self.assertBudgetLine(plan_a_line, committed=1000, achieved=200)
+
     def test_budget_analytic_multiple_bills_from_po(self):
         """ Test with multiple bills linked to a PO. """
         # Draft the test purchase order.
