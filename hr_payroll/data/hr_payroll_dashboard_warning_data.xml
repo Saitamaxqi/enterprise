@@ -276,5 +276,24 @@ if untrusted_bank_accounts:
     warning_records = untrusted_bank_accounts
             </field>
         </record>
+
+        <record id="hr_payroll_dashboard_warning_payslip_overdue" model="hr.payroll.dashboard.warning">
+            <field name="name">Payslips are overdue for payments</field>
+            <field name="country_id" eval="False"/>
+            <field name="evaluation_code">
+today = date.today()
+done_payslips = self.env['hr.payslip'].search([
+    ('state', '=', 'done'),
+    ('company_id', 'in', self.env.companies.ids),
+])
+overdue_payslips = self.env['hr.payslip']
+for payslip in done_payslips:
+    if (today - payslip.create_date.date()).days &gt;= 30:
+        overdue_payslips += payslip
+if overdue_payslips:
+    warning_count = len(overdue_payslips)
+    warning_records = overdue_payslips
+            </field>
+        </record>
     </data>
 </odoo>
