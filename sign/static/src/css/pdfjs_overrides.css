@@ -9,7 +9,6 @@ aim to deliver a cleaner and more intuitive user interface.
 
 :root {
     --sidebar-width: 200px;
-    --toolbarButton-secondaryToolbarToggle-icon:url(images/toolbarButton-secondaryToolbarToggle.svg);
 }
 
 #sidebarContainer {
@@ -70,9 +69,18 @@ aim to deliver a cleaner and more intuitive user interface.
     flex-direction: row-reverse;
 }
 
-#secondaryToolbarToggleButton::before{
-    -webkit-mask-image:var(--toolbarButton-secondaryToolbarToggle-icon);
-            mask-image:var(--toolbarButton-secondaryToolbarToggle-icon);
+#secondaryToolbarToggleButton::before {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    transform: none !important;
+    content: "\2807";
+    font-size: 20px;
+    display: inline-block;
+    color: black;
+}
+
+#secondaryToolbarToggleButton.toolbarButton::before {
+    background-color: transparent !important;
 }
 
 #secondaryToolbar {

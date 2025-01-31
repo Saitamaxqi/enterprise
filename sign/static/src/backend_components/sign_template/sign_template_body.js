@@ -84,9 +84,10 @@ export class SignTemplateBody extends Component {
             }
         });
     }
-    
-    // Apply custom styles for templates PDF viewers as early as possible to minimize the visibility of default PDF.js styles during rendering.
+
     injectPDFCustomStyles() {
+        /* Apply custom styles for documents's PDF viewers as early as possible
+        to minimize the visibility of default PDF.js styles during rendering. */
         const iframeDoc = this.PDFIframe.el.contentDocument;
         const link = iframeDoc.createElement('link');
         link.rel = 'stylesheet';

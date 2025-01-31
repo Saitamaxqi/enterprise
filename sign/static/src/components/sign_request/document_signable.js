@@ -102,8 +102,10 @@ export class Document extends Component {
             setTimeout(() => this.initializeIframe(), 1);
         });
     }
-    // Apply custom styles for documents's PDF viewers as early as possible to minimize the visibility of default PDF.js styles during rendering.
+
     injectPDFCustomStyles() {
+        /* Apply custom styles for documents's PDF viewers as early as possible
+        to minimize the visibility of default PDF.js styles during rendering. */
         const iframeDoc = this.PDFIframe.contentDocument;
         const link = iframeDoc.createElement('link');
         link.rel = 'stylesheet';
@@ -111,6 +113,7 @@ export class Document extends Component {
         link.href = '/sign/static/src/css/pdfjs_overrides.css';
         iframeDoc.head.appendChild(link);
     }
+
     initializeIframe() {
         if (!this.PDFIframe.contentDocument.querySelector('link[href*="pdfjs_overrides.css"]')) {
             this.injectPDFCustomStyles();
