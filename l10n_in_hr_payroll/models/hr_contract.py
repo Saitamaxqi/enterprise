@@ -13,7 +13,7 @@ class HrContract(models.Model):
     _inherit = 'hr.contract'
 
     l10n_in_tds = fields.Float(string='TDS', digits='Payroll',
-        help='Amount for Tax Deduction at Source')
+        help='The TDS calculator can calculate the TDS amount when at least one payslip is available. Alternatively, you can enter the amount manually')
     l10n_in_driver_salay = fields.Boolean(string='Driver Salary', help='Check this box if you provide allowance for driver')
     l10n_in_medical_insurance = fields.Float(string='Medical Insurance', digits='Payroll',
         help='Deduction towards company provided medical insurance')
