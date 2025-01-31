@@ -26,20 +26,6 @@
                     </button>
                 </div>
                 <Stages stages="this.preparationDisplay.stages" />
-                <div class="d-flex d-inline-block m-auto w-25 align-items-center gap-2 o_pdis_zoom me-1">
-                    <button class="btn btn-secondary rounded" t-on-click="() => this.changeZoom(-0.25)">
-                        <i class="fa fa-search-minus" aria-hidden="true" />
-                    </button>
-                    <input
-                        type="range"
-                        class="form-range flex-grow-1 w-0"
-                        t-att-min="0.5" t-att-max="2" step="0.01"
-                        t-model="state.zoom"
-                    />
-                    <button class="btn btn-secondary rounded" t-on-click="() => this.changeZoom(0.25)">
-                        <i class="fa fa-search-plus" aria-hidden="true" />
-                    </button>
-                </div>
                 <div class="d-inline-block d-sm-inline-block d-xs-inline-block d-md-inline-block d-lg-none">
                     <button t-if="isBurgerMenuClosed()" class="btn position-relative h-100 px-4 rounded-0 border-start shadow-none burger-menu" t-on-click="openMenu">
                         <div class="d-flex px-1">
@@ -118,8 +104,20 @@
                             <Category category="category_value" />
                         </t>
                     </div>
-                    <div class="o_pdis_logo d-flex justify-content-center py-1 border-top">
-                        <img src="/web/static/img/logo.png" />
+                    <div class="w-100">
+                        <div class="border-top w-100">
+                            <button class="btn px-4 rounded-0 border-end w-50" t-on-click="() => this.changeZoom(-0.25)"
+                                t-att-class="state.zoom &lt;= 0.5 ? 'disabled' : ''">
+                                <i class="fa fa-search-minus" aria-hidden="true" />
+                            </button>
+                            <button class="btn px-4 rounded-0 w-50" t-on-click="() => this.changeZoom(0.25)"
+                                t-att-class="state.zoom &gt;= 2  ? 'disabled' : ''">
+                                <i class="fa fa-search-plus" aria-hidden="true" />
+                            </button>
+                        </div>
+                        <div class="o_pdis_logo d-flex align-items-center justify-content-center border-top">
+                            <img src="/web/static/img/logo.png" />
+                        </div>
                     </div>
                 </div>
 
