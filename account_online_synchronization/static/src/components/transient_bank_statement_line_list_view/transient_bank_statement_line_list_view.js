@@ -41,6 +41,19 @@ export class TransientBankStatementLineListRenderer extends ListRenderer {
         }
     }
 
+    async openCancelledEntries() {
+        if (
+            this.env.searchModel.context.active_model === "account.missing.transaction.wizard" &&
+            this.env.searchModel.context.active_ids
+        ) {
+            return await this.action.doActionButton({
+                name: "action_open_cancelled_bank_statement_lines",
+                type: "object",
+                resModel: "account.missing.transaction.wizard",
+                resIds: this.env.searchModel.context.active_ids,
+            });
+        }
+    }
 }
 
 export const TransientBankStatementLineListView = {

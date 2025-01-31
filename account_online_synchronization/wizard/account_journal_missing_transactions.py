@@ -29,6 +29,16 @@ class AccountMissingTransactionWizard(models.TransientModel):
             ],
         )
 
+    def _get_cancelled_bank_statement_lines(self):
+        self.ensure_one()
+        return self.env['account.bank.statement.line'].search(
+            domain=[
+                ('date', '>=', self.date),
+                ('journal_id', '=', self.journal_id.id),
+                ('state', '=', 'cancel'),
+            ],
+        )
+
     def action_fetch_missing_transaction(self):
         self.ensure_one()
 
@@ -58,6 +68,7 @@ class AccountMissingTransactionWizard(models.TransientModel):
             'domain': [('id', 'in', transient_transactions_ids.ids)],
             'context': {
                 'has_manual_entries': bool(self._get_manual_bank_statement_lines()),
+                'has_cancelled_entries': bool(self._get_cancelled_bank_statement_lines()),
                 'is_fetch_before_creation': self.date < self.journal_id.account_online_link_id.create_date.date(),
                 'account_online_link_create_date': format_date(self.env, self.journal_id.account_online_link_id.create_date),
                 'search_default_filter_posted': bool([transaction for transaction in filtered_transactions if transaction.get('state') != 'pending']),  # Activate this default filter only if we have posted transactions
@@ -75,3 +86,8 @@ class AccountMissingTransactionWizard(models.TransientModel):
             'views': [(False, 'list'), (False, 'form')],
             'domain': [('id', 'in', bank_statement_lines.ids)],
         }
+
+    def action_open_cancelled_bank_statement_lines(self):
+        self.ensure_one()
+        bank_statement_lines = self._get_cancelled_bank_statement_lines()
+        return bank_statement_lines._get_records_action()

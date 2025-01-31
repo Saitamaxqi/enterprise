@@ -77,6 +77,10 @@ class AccountBankStatementLine(models.Model):
         action['context'] = {'default_journal_id': self.env.context['default_journal_id']}
         return action
 
+    def action_button_draft(self):
+        """ This function will allow to reset to draft the move linked to the statement line"""
+        return self.move_id.button_draft()
+
     ####################################################
     # COMPUTE METHODS
     ####################################################

@@ -425,6 +425,7 @@ class AccountJournal(models.Model):
             'domain': [('id', 'in', pending_transactions.ids)],
             'context': {
                 'has_manual_entries': False,
+                'has_cancelled_entries': False,
                 'is_fetch_before_creation': False,
                 'search_default_filter_posted': False,
                 'disable_import': True,

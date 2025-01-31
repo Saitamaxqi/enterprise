@@ -244,6 +244,9 @@
             <field name="model">account.bank.statement.line</field>
             <field name="arch" type="xml">
                 <form string="New Transaction">
+                    <header>
+                        <button name="action_button_draft" type="object" class="btn btn-primary" string="Reset to Draft" invisible="state == 'draft'"/>
+                    </header>
                     <field name="state" invisible="1"/>
                     <field name="statement_complete" invisible="1"/>
                     <field name="statement_valid" invisible="1"/>
@@ -251,41 +254,43 @@
                     <field name="suitable_journal_ids" invisible="1"/>
                     <field name="currency_id" invisible="1"/>
                     <field name="company_id" invisible="1"/>
-                    <group>
+                    <sheet>
                         <group>
-                            <field name="date" readonly="is_reconciled and amount != 0"/>
-                            <field name="payment_ref"
-                                   required="1"
-                                   readonly="is_reconciled and amount != 0"/>
-                            <field name="partner_id"
-                                   readonly="is_reconciled and amount != 0"/>
+                            <group>
+                                <field name="date" readonly="is_reconciled and amount != 0"/>
+                                <field name="payment_ref"
+                                       required="1"
+                                       readonly="is_reconciled and amount != 0"/>
+                                <field name="partner_id"
+                                       readonly="is_reconciled and amount != 0"/>
+                            </group>
+                            <group>
+                                <field name="amount" readonly="is_reconciled and amount != 0"/>
+                                <field name="foreign_currency_id"
+                                       groups="base.group_multi_currency"
+                                       domain="[('id', '!=', currency_id)]"
+                                       options="{'no_open': True, 'no_create': True}"
+                                       readonly="is_reconciled and amount != 0"/>
+                                <field name="amount_currency"
+                                       groups="base.group_multi_currency"
+                                       invisible="not foreign_currency_id"
+                                       readonly="is_reconciled and amount != 0"/>
+                                <field name="journal_id"
+                                       domain="[('type', 'in', ['bank', 'cash'])]"
+                                       readonly="context.get('default_journal_id') or (is_reconciled and amount != 0)"/>
+                            </group>
                         </group>
-                        <group>
-                            <field name="amount" readonly="is_reconciled and amount != 0"/>
-                            <field name="foreign_currency_id"
-                                   groups="base.group_multi_currency"
-                                   domain="[('id', '!=', currency_id)]"
-                                   options="{'no_open': True, 'no_create': True}"
-                                   readonly="is_reconciled and amount != 0"/>
-                            <field name="amount_currency"
-                                   groups="base.group_multi_currency"
-                                   invisible="not foreign_currency_id"
-                                   readonly="is_reconciled and amount != 0"/>
-                            <field name="journal_id"
-                                   domain="[('type', 'in', ['bank', 'cash'])]"
-                                   readonly="context.get('default_journal_id') or (is_reconciled and amount != 0)"/>
-                        </group>
-                    </group>
-                    <footer>
-                        <button string="Save &amp; Close" type="object"
-                                name="action_save_close" class="btn btn-primary"
-                                data-hotkey="q"/>
-                        <button string="Save &amp; New" type="object"
-                                name="action_save_new" class="btn btn-primary"
-                                data-hotkey="n"/>
-                        <button string="Cancel" class="btn-secondary"
-                                special="cancel" data-hotkey="x"/>
-                    </footer>
+                        <footer>
+                            <button string="Save &amp; Close" type="object"
+                                    name="action_save_close" class="btn btn-primary"
+                                    data-hotkey="q"/>
+                            <button string="Save &amp; New" type="object"
+                                    name="action_save_new" class="btn btn-primary"
+                                    data-hotkey="n"/>
+                            <button string="Cancel" class="btn-secondary"
+                                    special="cancel" data-hotkey="x"/>
+                        </footer>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -440,6 +445,18 @@
             <field name="code">
 if records:
     action = records.action_generate_attachment()
+            </field>
+        </record>
+
+        <record id="model_account_statement_line_button_draft" model="ir.actions.server">
+            <field name="name">Reset to draft</field>
+            <field name="model_id" ref="model_account_bank_statement_line"/>
+            <field name="binding_model_id" ref="model_account_bank_statement_line" />
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.action_button_draft()
             </field>
         </record>
     </data>
