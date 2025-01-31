@@ -9,7 +9,6 @@ class SaleCommissionReport(models.Model):
     _inherit = 'sale.commission.report'
 
     # overrides, erase sale_commission in master
-
     @property
     def _table_query(self):
         return self._query()
@@ -30,7 +29,7 @@ achievement AS (
         era.id AS target_id,
         era.plan_id AS plan_id,
         u.user_id AS user_id,
-        MIN(cl.team_id) AS team_id,
+        NULL AS team_id,
         COALESCE(cl.company_id, MAX(scp.company_id)) AS company_id,
         SUM(achieved) AS achieved,
         CASE
@@ -77,7 +76,7 @@ achievement AS (
         min(a.target_id) as target_id,
         a.plan_id,
         a.user_id,
-        a.team_id,
+        NULL AS team_id,
         a.company_id,
         {self.env.company.currency_id.id} AS currency_id,
         MIN(a.forecast_id) as forecast_id,
@@ -91,7 +90,7 @@ achievement AS (
     LEFT JOIN currency_rate cr
         ON cr.company_id = a.company_id
     GROUP BY
-        a.plan_id, a.user_id, a.team_id, a.company_id, a.currency_id, cr.rate, {self._get_date_range()}
+        a.plan_id, a.user_id, a.company_id, a.currency_id, cr.rate, {self._get_date_range()}
 )
 SELECT
     a.*,
