@@ -154,8 +154,6 @@ class ProjectTask(models.Model):
            to do so as there would be a risk that all the existing SOL (possibly added in a (pre)sale phase)
            would get that user's default warehouse when the SO gets confirmed and the picking generated."""
         sale_order = super()._fsm_ensure_sale_order()
-        if self.env.user.has_group('project.group_project_user'):
-            sale_order = self.sale_order_id.sudo()
         if sale_order.state == 'draft':
             sale_order.action_confirm()
         return sale_order

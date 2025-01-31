@@ -462,8 +462,11 @@ class ProjectTask(models.Model):
         self.ensure_one()
         if not self.sale_order_id:
             self._fsm_create_sale_order()
-        if not self.sale_order_id.project_id:
-            self.sale_order_id.project_id = self.project_id
+        sale_order = self.sale_order_id
+        if self.env.user.has_group('project.group_project_user'):
+            sale_order = self.sale_order_id.sudo()
+        if not sale_order.project_id:
+            sale_order.project_id = self.project_id
         return self.sale_order_id
 
     def _prepare_sale_order_values(self, team):
