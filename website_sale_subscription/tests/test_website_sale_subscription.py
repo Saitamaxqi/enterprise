@@ -3,6 +3,7 @@
 from odoo.exceptions import UserError
 from odoo.tests import tagged
 
+from odoo.addons.website_sale.controllers.cart import Cart
 from odoo.addons.website_sale.tests.common import MockRequest
 
 from .common import TestWebsiteSaleSubscriptionCommon
@@ -25,17 +26,32 @@ class TestWebsiteSaleSubscription(TestWebsiteSaleSubscriptionCommon):
         with MockRequest(self.env, website=self.current_website) as request:
             so = request.website._create_cart()
             self.assertFalse(so.plan_id)
-            so._cart_update(product_id=product.product_variant_ids.id, add_qty=1)
+            so._cart_add(product_id=product.product_variant_ids.id, quantity=1)
             self.assertFalse(so.plan_id)
-            so._cart_update(product_id=self.sub_product.product_variant_ids.id, add_qty=1)
+            so._cart_add(product_id=self.sub_product.product_variant_ids.id, quantity=1)
             self.assertEqual(so.plan_id, self.plan_week)
             with self.assertRaises(UserError, msg="You can't add a subscription product to a sale order with another recurrence."):
-                so._cart_update(product_id=self.sub_product_2.product_variant_ids.id, add_qty=1)
-            so._cart_update(product_id=self.sub_product.product_variant_ids.id, add_qty=None, set_qty=0)
+                # Must go through controller since _is_add_to_cart_allowed is checked there
+                Cart().add_to_cart(
+                    product_template_id=self.sub_product_2.id,
+                    product_id=self.sub_product_2.product_variant_id.id,
+                    quantity=1.0,
+                )
+            so._cart_update_line_quantity(
+                line_id=so.order_line.filtered(
+                    lambda sol: sol.product_id == self.sub_product.product_variant_id
+                ).id,
+                quantity=0,
+            )
             self.assertFalse(so.plan_id)
-            so._cart_update(product_id=self.sub_product_2.product_variant_ids.id, add_qty=1)
+            so._cart_add(product_id=self.sub_product_2.product_variant_ids.id, quantity=1)
             self.assertEqual(so.plan_id, self.plan_month)
-            so._cart_update(product_id=self.sub_product_2.product_variant_ids.id, add_qty=None, set_qty=0)
+            so._cart_update_line_quantity(
+                line_id=so.order_line.filtered(
+                    lambda sol: sol.product_id == self.sub_product_2.product_variant_id
+                ).id,
+                quantity=0,
+            )
             self.assertFalse(so.plan_id)
 
     def test_combination_info_product(self):

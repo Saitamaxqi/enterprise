@@ -47,9 +47,9 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         calendar_booking_line_values['calendar_booking_id'] = calendar_booking_1.id
         self.env['calendar.booking.line'].create(calendar_booking_line_values)
         sale_order_1 = self.env['sale.order'].sudo().create({'partner_id': calendar_booking_1.partner_id.id})
-        cart_values = sale_order_1._cart_update(
+        cart_values = sale_order_1._cart_add(
             product_id=appointment_type.product_id.id,
-            set_qty=1,
+            quantity=1,
             calendar_booking_id=calendar_booking_1.id,
         )
         self.assertEqual(cart_values['quantity'], 1)
@@ -68,9 +68,9 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         # In sale_order_1, resource is already booked for max capacity. Line is not added.
         self.assertTrue((sale_order_1.order_line.calendar_booking_ids | calendar_booking_2)._filter_unavailable_bookings())
         self.assertFalse((sale_order_2.order_line.calendar_booking_ids | calendar_booking_2)._filter_unavailable_bookings())
-        cart_values = sale_order_2._cart_update(
+        cart_values = sale_order_2._cart_add(
             product_id=appointment_type.product_id.id,
-            set_qty=1,
+            quantity=1,
             calendar_booking_id=calendar_booking_2.id,
         )
         self.assertEqual(cart_values['quantity'], 1)
@@ -115,9 +115,9 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         }
         calendar_booking_1 = self.env['calendar.booking'].create(booking_values)
         sale_order_1 = self.env['sale.order'].sudo().create({'partner_id': calendar_booking_1.partner_id.id})
-        cart_values = sale_order_1._cart_update(
+        cart_values = sale_order_1._cart_add(
             product_id=appointment_type.product_id.id,
-            set_qty=1,
+            quantity=1,
             calendar_booking_id=calendar_booking_1.id,
         )
         self.assertEqual(cart_values['quantity'], 1)
@@ -135,9 +135,9 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         # In sale_order_1, apt_manager is already booked for that slot. Line would not be added.
         self.assertTrue((sale_order_1.order_line.calendar_booking_ids | calendar_booking_2)._filter_unavailable_bookings())
         self.assertFalse((sale_order_2.order_line.calendar_booking_ids | calendar_booking_2)._filter_unavailable_bookings())
-        cart_values = sale_order_2._cart_update(
+        cart_values = sale_order_2._cart_add(
             product_id=appointment_type.product_id.id,
-            set_qty=1,
+            quantity=1,
             calendar_booking_id=calendar_booking_2.id,
         )
         self.assertEqual(cart_values['quantity'], 1)
@@ -196,9 +196,9 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         # Create SO and SOL linked to booking
         sale_order = self.env['sale.order'].sudo().create({'partner_id': calendar_booking.partner_id.id})
         self.assertFalse(calendar_booking._filter_unavailable_bookings())
-        cart_values = sale_order._cart_update(
+        cart_values = sale_order._cart_add(
             product_id=appointment_type.product_id.id,
-            set_qty=1,
+            quantity=1,
             calendar_booking_id=calendar_booking.id,
         )
         self.assertEqual(cart_values['quantity'], 1)
@@ -269,9 +269,9 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         # Create SO and SOL linked to booking
         sale_order = self.env['sale.order'].sudo().create({'partner_id': calendar_booking.partner_id.id})
         self.assertFalse(calendar_booking._filter_unavailable_bookings())
-        cart_values = sale_order._cart_update(
+        cart_values = sale_order._cart_add(
             product_id=appointment_type.product_id.id,
-            set_qty=1,
+            quantity=1,
             calendar_booking_id=calendar_booking.id,
         )
         self.assertEqual(cart_values['quantity'], 1)

@@ -20,9 +20,9 @@ class WebsiteAppointmentSale(AppointmentAccountPayment):
               request.env.context.get('tz') or
               calendar_booking.appointment_type_id.appointment_tz)
 
-        cart_values = order_sudo._cart_update(
+        cart_values = order_sudo._cart_add(
             product_id=calendar_booking.appointment_type_id.product_id.id,
-            set_qty=calendar_booking.asked_capacity,
+            quantity=calendar_booking.asked_capacity,
             calendar_booking_id=calendar_booking.id,
             calendar_booking_tz=tz
         )

@@ -5,7 +5,7 @@ from datetime import timedelta
 import pytz
 
 from odoo import _, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 
 class SaleOrder(models.Model):
@@ -73,26 +73,36 @@ class SaleOrder(models.Model):
             and self._get_renting_duration() >= self.company_id.renting_minimal_time_duration
         )
 
-    def _cart_update_order_line(self, *args, start_date=None, end_date=None, **kwargs):
-        """Override to update rental order fields on the cart after line update."""
-        has_rental_dates = self.rental_start_date and self.rental_return_date
-        if not has_rental_dates and (start_date and end_date):
-            self.write({
-                'rental_start_date': start_date,
-                'rental_return_date': end_date,
-            })
-            has_rental_dates = True
-        # `in_rental_app` context makes sure rentable products added in cart becomes `is_rental`
-        # cart lines
-        self_ctx = self.with_context(in_rental_app=True)
-        res = super(SaleOrder, self_ctx)._cart_update_order_line(*args, **kwargs)
+    def _cart_add(self, product_id, quantity=1.0, start_date=None, end_date=None, **kwargs):
+        product = self.env['product.product'].browse(product_id)
+        if product.rent_ok and start_date and end_date:
+            if self.rental_start_date and self.rental_return_date:
+                if self.rental_start_date != start_date or self.rental_return_date != end_date:
+                    raise UserError(_("You cannot mix different rental periods in the same order."))
+            else:
+                self.update({
+                    'rental_start_date': start_date,
+                    'rental_return_date': end_date,
+                })
+
+        return super()._cart_add(
+            product_id, quantity, start_date=start_date, end_date=end_date, **kwargs
+        )
+
+    def _create_new_cart_line(self, *args, **kwargs):
+        # Make sure that if the product is rentable, the line created is a rental line.
+        return super(SaleOrder, self.with_context(in_rental_app=True))._create_new_cart_line(
+            *args, **kwargs
+        )
+
+    def _verify_cart_after_update(self, *args, **kwargs):
+        super()._verify_cart_after_update(*args, **kwargs)
         if self.is_rental_order and not self.has_rented_products:
             self.write({
                 'is_rental_order': False,
                 'rental_start_date': False,
                 'rental_return_date': False,
             })
-        return res
 
     def _build_warning_renting(self, product):
         """ Build the renting warning on SO to warn user a product cannot be rented on that period.

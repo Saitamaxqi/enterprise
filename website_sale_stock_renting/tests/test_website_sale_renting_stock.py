@@ -250,9 +250,7 @@ class TestWebsiteSaleStockRenting(TestWebsiteSaleRentingCommon):
         self._assert_cart_and_free_qty(so2, expected_cart_qty=2, expected_free_qty=2)
 
     def test_add_max_quantity_to_cart(self):
-        values = self.so._cart_update(
-            product_id=self.computer.id, line_id=self.sol.id, add_qty=3,
-        )
+        values = self.so._cart_update_line_quantity(line_id=self.sol.id, quantity=8)
         self.assertEqual(values['quantity'], 5)
         self.assertTrue(values['warning'])
 
@@ -270,8 +268,8 @@ class TestWebsiteSaleStockRenting(TestWebsiteSaleRentingCommon):
 
         website_so.update({'rental_start_date': from_date, 'rental_return_date': to_date})
         self._assert_cart_and_free_qty(website_so, expected_cart_qty=0, expected_free_qty=2)
-        values = website_so._cart_update(
-            product_id=self.computer.id, add_qty=5, start_date=from_date, end_date=to_date,
+        values = website_so._cart_add(
+            product_id=self.computer.id, quantity=5, start_date=from_date, end_date=to_date,
         )
         self.assertEqual(values['quantity'], 2)
         self.assertTrue(values['warning'])
@@ -290,8 +288,8 @@ class TestWebsiteSaleStockRenting(TestWebsiteSaleRentingCommon):
 
         website_so.update({'rental_start_date': from_date, 'rental_return_date': to_date})
         self._assert_cart_and_free_qty(website_so, expected_cart_qty=0, expected_free_qty=5)
-        values = website_so._cart_update(
-            product_id=self.computer.id, add_qty=5, start_date=from_date, end_date=to_date,
+        values = website_so._cart_add(
+            product_id=self.computer.id, quantity=5, start_date=from_date, end_date=to_date,
         )
         self.assertEqual(values['quantity'], 5)
         self.assertFalse(values['warning'])

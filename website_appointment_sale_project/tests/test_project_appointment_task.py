@@ -180,9 +180,9 @@ class TestProjectAppointmentTask(TestProjectCommon, AppointmentCommon):
         })
         self.assertFalse(calendar_booking._filter_unavailable_bookings(), "No unavailable booking should be found")
 
-        cart_values = sale_order._cart_update(
+        cart_values = sale_order._cart_add(
             product_id=appointment_type.product_id.id,
-            set_qty=1,
+            quantity=1,
             calendar_booking_id=calendar_booking.id,
         )
         self.assertEqual(cart_values['quantity'], 1, "Cart should successfully add 1 product (the appointment)")
@@ -261,9 +261,9 @@ class TestProjectAppointmentTask(TestProjectCommon, AppointmentCommon):
         })
         self.assertFalse(calendar_booking._filter_unavailable_bookings(), "No unavailable booking should be found")
 
-        cart_values = sale_order._cart_update(
+        cart_values = sale_order._cart_add(
             product_id=appointment_type.product_id.id,
-            set_qty=1,
+            quantity=1,
             calendar_booking_id=calendar_booking.id,
         )
         self.assertEqual(cart_values['quantity'], 1, "Cart should successfully add 1 product (the appointment)")
