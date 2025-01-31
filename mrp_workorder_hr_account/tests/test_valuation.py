@@ -59,3 +59,7 @@ class TestMrpWorkorderHrValuation(TestMrpValuationCommon):
         mo.button_mark_done()
 
         self.assertEqual(self.product1.stock_valuation_layer_ids.remaining_value, 110, 'Workcenter cost (10) + Employee cost (100)')
+        # Test that mrp_cost_structure report is correctly calculated with employee cost
+        self.env.flush_all()  # Need to flush for mrp report
+        report = self.env['report.mrp_account_enterprise.mrp_cost_structure']._get_report_values(docids=mo.id)['lines'][0]
+        self.assertEqual(report['total_cost_operations'], 110)

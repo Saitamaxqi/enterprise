@@ -19,7 +19,7 @@ class ReportMrp_Account_EnterpriseMrp_Cost_Structure(models.AbstractModel):
         ])
         if employee_times:
             query = SQL("""SELECT
-                                wo.product_id,
+                                mp.product_id,
                                 emp.name,
                                 t.employee_cost,
                                 op.id,
@@ -28,11 +28,12 @@ class ReportMrp_Account_EnterpriseMrp_Cost_Structure(models.AbstractModel):
                                 account_currency_table.rate
                             FROM mrp_workcenter_productivity t
                             LEFT JOIN mrp_workorder wo ON (wo.id = t.workorder_id)
+                            LEFT JOIN mrp_production mp ON (wo.production_id = mp.id)
                             LEFT JOIN mrp_routing_workcenter op ON (wo.operation_id = op.id)
                             LEFT JOIN %(currency_table)s ON account_currency_table.company_id = t.company_id
                             LEFT JOIN hr_employee emp ON t.employee_id = emp.id
                             WHERE t.workorder_id IS NOT NULL AND t.employee_id IS NOT NULL AND wo.production_id IN %(production_ids)s
-                            GROUP BY product_id, emp.id, op.id, wo.name, t.employee_cost, account_currency_table.rate
+                            GROUP BY mp.product_id, emp.id, op.id, wo.name, t.employee_cost, account_currency_table.rate
                             ORDER BY emp.name
                         """,
                         currency_table=currency_table,
