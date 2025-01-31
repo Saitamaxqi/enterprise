@@ -23,6 +23,7 @@
         <field name="name">Gross Pay</field>
         <field name="code">GROSS_PAY</field>
         <field name="parent_id" ref="hr_payroll.GROSS"/>
+        <field name="country_id" ref="base.us"/>
     </record>
 
     <record id="hr_payroll_taxes" model="hr.salary.rule.category">
