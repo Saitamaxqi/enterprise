@@ -26,10 +26,13 @@ class HrPayslipWorkedDays(models.Model):
         work_time_rate = self.contract_id.resource_calendar_id.work_time_rate
         if not float_compare(work_time_rate, 100, precision_digits=2):
             amount *= 1.2
-        worked_day_line_values = self.payslip_id._get_worked_days_line_values(
-            ['LEAVE500'], ['number_of_days'], compute_sum=True
-        )
-        number_of_days = worked_day_line_values['LEAVE500']['sum']['number_of_days']
+        if self.payslip_id.id:
+            worked_day_line_values = self.payslip_id._get_worked_days_line_values(
+                ['LEAVE500'], ['number_of_days'], compute_sum=True
+            )
+            number_of_days = worked_day_line_values['LEAVE500']['sum']['number_of_days']
+        else:
+            number_of_days = self.payslip_id._get_worked_days_line_values_orm('LEAVE500', 'number_of_days')
         return amount * number_of_days
 
     def _l10n_be_get_LEAVE260_amount(self, wage):

@@ -1262,6 +1262,20 @@ class HrPayslip(models.Model):
                 result[code][payslip_id][vals] += row[vals] or 0.0
         return result
 
+    def _get_worked_days_line_values_orm(self, code, field_name=None):
+        """
+        Use this method only if self is not yet created.
+        Otherwise, use '_get_worked_days_line_values' that leads to better performances.
+        """
+        if field_name is None:
+            field_name = 'amount'
+        valid_values = {'number_of_hours', 'number_of_days', 'amount', 'ytd'}
+        if field_name not in valid_values:
+            raise UserError(_('The field is not valid:%s', field_name))
+
+        wds = self.worked_days_line_ids.filtered(lambda wd: wd.code == code)
+        return sum(wd[field_name] for wd in wds)
+
     def _get_worked_days_line_values(self, code_list, vals_list=None, compute_sum=False, exclude_codes=False):
         if vals_list is None:
             vals_list = ['amount']
