@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
+import json
 from unittest.mock import Mock, patch
 
 from odoo import Command
@@ -593,21 +594,17 @@ class TestAmazon(common.TestAmazonCommon):
 
     def test_offer_get_feed_data(self):
         self.offer.amazon_feed_ref = 'incorrect json'  # force fetch of feed data
+        self.offer.amazon_channel = False
 
         with patch(
             'odoo.addons.sale_amazon.utils.make_sp_api_request',
-            return_value={
-                'items': [{
-                    'sku': self.offer.sku,
-                    'productTypes': [{'productType': 'PRODUCT'}],
-                    'attributes': {'merchant_shipping_group': {}},
-                }],
-            },
+            return_value=common.SEARCH_LISTINGS_ITEMS_MOCK,
         ):
             feed_info = self.offer._get_feed_data()
 
         self.assertIn(self.offer, feed_info)
-        self.assertEqual(self.offer.amazon_feed_ref, '{"productType":"PRODUCT","is_fbm":true}')
+        self.assertEqual(self.offer.amazon_feed_ref, '{"productType":"PRODUCT"}')
+        self.assertEqual(self.offer.amazon_channel, 'fbm')
 
     def test_offer_get_feed_data_fallback_when_missing_data(self):
         self.offer.amazon_feed_ref = 'incorrect json'  # force fetch of feed data
@@ -616,7 +613,8 @@ class TestAmazon(common.TestAmazonCommon):
             feed_info = self.offer._get_feed_data()
 
         self.assertIn(self.offer, feed_info)
-        self.assertEqual(self.offer.amazon_feed_ref, '{"productType":false,"is_fbm":false}')
+        self.assertEqual(self.offer.amazon_feed_ref, '{"productType":false}')
+        self.assertEqual(self.offer.amazon_channel, 'fba')
 
     @mute_logger('odoo.addons.sale_amazon.models.amazon_offer')
     def test_offer_get_feed_data_fails_gracefully(self):
@@ -633,13 +631,96 @@ class TestAmazon(common.TestAmazonCommon):
 
     def test_offer_get_feed_info_calls_sp_api_only_if_needed(self):
         # Every necessary feed data is already stored
-        self.offer.amazon_feed_ref = '{"productType":"PRODUCT","is_fbm":true}'
+        self.offer.amazon_feed_ref = '{"productType":"PRODUCT"}'
+        self.offer.amazon_channel = 'fba'
 
         with patch('odoo.addons.sale_amazon.utils.make_sp_api_request') as make_sp_api_request_mock:
             feed_info = self.offer._get_feed_data()
 
         make_sp_api_request_mock.assert_not_called()  # does not need to be called anymore
         self.assertIn(self.offer, feed_info)
+
+    def test_schedule_inventory_reset_if_order_channel_is_fba_but_offer_is_fbm(self):
+        self.offer.sku = 'TEST'
+        self.offer.amazon_channel = 'fbm'
+        self.account.last_orders_sync = datetime(1, 1, 1)  # Incomming order should be newer ^^
+        operation_responses_map = {
+            **common.OPERATIONS_RESPONSES_MAP,
+            'getOrders': {
+                'payload': {
+                    'LastUpdatedBefore': '2020-01-01T00:00:00Z',
+                    'Orders': [{
+                        **common.ORDER_MOCK,
+                        'FulfillmentChannel': 'AFN',
+                        'OrderStatus': 'Shipped',
+                    }],
+                }
+            },
+        }
+
+        with patch(
+            'odoo.addons.sale_amazon.utils.make_sp_api_request',
+            new=lambda _account, operation_, **_kwargs: operation_responses_map[operation_],
+        ):
+            self.account._sync_orders(auto_commit=False)
+
+        self.assertEqual(self.offer.amazon_sync_status, 'reset')
+        self.assertFalse(self.offer.amazon_channel)
+
+    def test_no_inventory_reset_if_order_channel_is_fbm_but_offer_is_fba(self):
+        self.offer.sku = 'TEST'
+        self.offer.amazon_channel = 'fba'
+        old_sync_status = self.offer.amazon_sync_status
+        self.account.last_orders_sync = datetime(1, 1, 1)  # Incomming order should be newer ^^
+
+        with patch(
+            'odoo.addons.sale_amazon.utils.make_sp_api_request',
+            new=lambda _account, operation_, **_kwargs: common.OPERATIONS_RESPONSES_MAP[operation_],
+        ):
+            self.account._sync_orders(auto_commit=False)
+
+        self.assertEqual(self.offer.amazon_sync_status, old_sync_status)  # No inventory reset
+        self.assertFalse(self.offer.amazon_channel)  # Will be re-updated with next call to _sync_inventory
+
+    def test_inventory_reset(self):
+        self.env['stock.quant']._update_available_quantity(self.product, self.stock_location, 100)
+        self.offer.amazon_channel = False
+        self.offer.amazon_sync_status = 'reset'
+
+        def submit_feed_mock_(_account, feed_, *_args, **_kwargs):
+            decoded_feed_ = json.loads(feed_)
+            message_ = decoded_feed_['messages'][0]
+            self.assertEqual(message_['sku'], self.offer.sku)
+            self.assertEqual(message_['attributes']['fulfillment_availability'][0]['quantity'], 0)
+            return 'An_amazing_id'
+
+        with patch(
+            'odoo.addons.sale_amazon.utils.make_sp_api_request',
+            return_value={'items': [common.FBA_LISTINGS_ITEM_MOCK]},
+        ), patch(
+            'odoo.addons.sale_amazon.utils.submit_feed', new=submit_feed_mock_,
+        ):
+            self.account._sync_inventory()
+
+    def test_no_stock_reset_if_offer_is_fbm(self):
+        self.env['stock.quant']._update_available_quantity(self.product, self.stock_location, 100)
+        self.offer.amazon_channel = False
+        self.offer.amazon_sync_status = 'reset'
+
+        def submit_feed_mock_(_account, feed_, *_args, **_kwargs):
+            decoded_feed_ = json.loads(feed_)
+            message_ = decoded_feed_['messages'][0]
+            self.assertEqual(message_['sku'], self.offer.sku)
+            self.assertEqual(message_['attributes']['fulfillment_availability'][0]['quantity'], 100)
+            return 'An_amazing_id'
+
+        with patch(
+            'odoo.addons.sale_amazon.utils.make_sp_api_request',
+            return_value={'items': [common.FBM_LISTINGS_ITEM_MOCK]},
+        ), patch(
+            'odoo.addons.sale_amazon.utils.submit_feed', new=submit_feed_mock_,
+        ):
+            self.account._sync_inventory()
 
     @mute_logger('odoo.addons.sale_amazon.models.amazon_account')
     @mute_logger('odoo.addons.sale_amazon.models.stock_picking')

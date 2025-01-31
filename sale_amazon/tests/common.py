@@ -72,12 +72,29 @@ GET_ORDER_ITEMS_MOCK = {
     },
 }
 
+FBM_LISTINGS_ITEM_MOCK = {
+    'sku': 'TESTING_SKU',
+    'productTypes': [{'productType': 'PRODUCT'}],
+    'attributes': {'merchant_shipping_group': {}},
+}
+
+FBA_LISTINGS_ITEM_MOCK = {
+    'sku': 'TESTING_SKU',
+    'productTypes': [{'productType': 'PRODUCT'}],
+    'attributes': {},
+}
+
+SEARCH_LISTINGS_ITEMS_MOCK = {
+    'items': [FBM_LISTINGS_ITEM_MOCK],
+}
+
 OPERATIONS_RESPONSES_MAP = {
     'getOrder': {'payload': ORDER_MOCK},
     'getOrders': GET_ORDERS_RESPONSE_MOCK,
     'getOrderItems': GET_ORDER_ITEMS_MOCK,
     'createFeedDocument': {'feedDocumentId': '123123', 'url': 'my_amazing_feed_url.test'},
     'createFeed': None,
+    'searchListingsItems': SEARCH_LISTINGS_ITEMS_MOCK,
 }
 
 
@@ -101,6 +118,7 @@ class TestAmazonCommon(TransactionCase):
         })
 
         # Create an offer linked to the product
+        self.stock_location = self.env.ref('stock.stock_location_stock')
         self.product = self.env['product.product'].create(
             {'name': "This is a storable product", 'is_storable': True}
         )
@@ -109,7 +127,8 @@ class TestAmazonCommon(TransactionCase):
             'marketplace_id': self.marketplace.id,
             'product_id': self.product.id,
             'sku': 'TESTING_SKU',
-            'amazon_feed_ref': '{"productType":"PRODUCT","is_fbm":true}',
+            'amazon_channel': 'fbm',
+            'amazon_feed_ref': '{"productType":"PRODUCT"}',
         })
 
         # Create a delivery carrier

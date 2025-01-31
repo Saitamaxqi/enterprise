@@ -862,8 +862,9 @@ class AmazonAccount(models.Model):
         self.ensure_one()
 
         amazon_order_ref = order_data['AmazonOrderId']
-        order_fulfillment_channel = order_data['FulfillmentChannel']
         marketplace_api_ref = order_data['MarketplaceId']
+        order_fulfillment_channel = order_data['FulfillmentChannel'] == 'MFN' and 'fbm' or 'fba'
+        order_last_update = dateutil.parser.parse(order_data['LastUpdateDate'], ignoretz=True)
 
         items_data = pull_items_data(amazon_order_ref)
 
@@ -875,20 +876,26 @@ class AmazonAccount(models.Model):
                 lambda m: m.api_ref == marketplace_api_ref
             )
             offer = self._find_or_create_offer(sku, marketplace)
-            if offer.amazon_feed_ref and offer.amazon_feed_ref != '{}':
-                try:
-                    feed_data = json.loads(offer.amazon_feed_ref)
-                except json.JSONDecodeError:  # Field is an incorrect JSON
-                    feed_data = None
-                offer_fulfill_channel = None
-                if isinstance(feed_data, dict):  # Filtered out old `amazon_feed_ref` still stored
-                    offer_fulfill_channel = 'MFN' if feed_data.get('is_fbm') else 'AFN'
-                if order_fulfillment_channel != offer_fulfill_channel:  # old feed_ref included
-                    # This discrepancy might happen if the fulfillment channel was changed for an
-                    # offer in Amazon backend. But due to a known problem of ghost listings from
-                    # Amazon side, we can't trust the order either.
-                    offer.update({'amazon_feed_ref': '{}', 'amazon_sync_status': False})
-
+            if (
+                offer.amazon_channel != order_fulfillment_channel
+                and self.last_orders_sync <= order_last_update
+            ):
+                # When an offer goes from FBM to FBA, we need to reset the FBM stock to avoid a
+                # known problem of ghost listings on Amazon side.
+                if (
+                    offer.amazon_channel == 'fbm' and offer.sync_stock
+                    and order_fulfillment_channel == 'fba'
+                ):
+                    offer.amazon_sync_status = 'reset'
+                    _logger.info(
+                        "Amazon fulfillment channel switch detected (FBM -> FBA). Scheduled an"
+                        " inventory reset for offer: %s.",
+                        offer.sku,
+                    )
+                # Resetting the offer channel will force the inventory feed to update the channel
+                # using a trustworthy source `searchListingsItems` as even the order cannot be
+                # trusted.
+                offer.amazon_channel = False
             product_taxes = offer.product_id.taxes_id.filtered_domain(
                 [*self.env['account.tax']._check_company_domain(self.company_id)]
             )
@@ -1201,12 +1208,15 @@ class AmazonAccount(models.Model):
         if not accounts:
             return
 
+        def to_sync(offer_):
+            return offer_.sync_stock or offer_.amazon_sync_status == 'reset'
+
         # Cache `free_qty` of all products to avoid recomputing it for each offer.
-        accounts.offer_ids.product_id.filtered(lambda p: p.is_storable)._compute_quantities()
+        accounts.offer_ids.filtered(to_sync).product_id._compute_quantities()
 
         for account in accounts:
             amazon_utils.ensure_account_is_set_up(account)
-            offers = account.offer_ids.filtered(lambda o: o.product_id.is_storable)
+            offers = account.offer_ids.filtered(to_sync)
             offers._update_inventory_availability(account)
 
         # As Amazon needs some time to process the feed, we trigger the cron to check the status of
