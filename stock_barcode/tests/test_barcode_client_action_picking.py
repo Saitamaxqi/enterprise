@@ -3324,6 +3324,41 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'state': 'done'
         }])
 
+    def test_fetch_archived_records_in_lazy_barcode_cache(self):
+        """
+        Check that a picking related to archived records can be processed in barcode
+        in the same way as it can be in backend.
+        """
+        self.clean_access_rights()
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id)]})
+        warehouse = self.shelf2.warehouse_id
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 10)
+        floor_location = self.env['stock.location'].create({
+            'name': 'floor1',
+            'usage': 'internal',
+            'location_id': self.shelf2.id,
+        })
+        transfer = self.env['stock.picking'].create({
+            'name': 'Lovely Transfer',
+            'location_id': self.shelf1.id,
+            'location_dest_id': self.shelf2.id,
+            'picking_type_id': warehouse.int_type_id.id,
+            'move_ids': [Command.create({
+                'name': 'Lovely move',
+                'location_id': self.shelf1.id,
+                'location_dest_id': floor_location.id,
+                'product_id': self.product1.id,
+                'product_uom_qty': 3,
+            })],
+        })
+        transfer.action_confirm()
+        self.shelf2.action_archive()
+        self.assertFalse(self.shelf2.active)
+        url = self._get_client_action_url(transfer.id)
+        self.start_tour(url, 'test_fetch_archived_records_in_lazy_barcode_cache', login='admin')
+        self.assertEqual(transfer.state, 'done')
+
     # === GS1 TESTS ===#
     def test_gs1_delivery_ambiguous_lot_number(self):
         """

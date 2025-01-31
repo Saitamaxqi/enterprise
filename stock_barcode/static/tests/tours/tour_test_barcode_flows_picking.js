@@ -5860,6 +5860,23 @@ registry.category("web_tour.tours").add("test_scan_location_destination_for_inte
     ],
 });
 
+registry.category("web_tour.tours").add("test_fetch_archived_records_in_lazy_barcode_cache", {
+    steps: () => [
+        {
+            trigger: "button.o_add_remaining_quantity",
+            run: "click",
+        },
+        {
+            trigger: ".o_validate_page",
+            run: "click",
+        },
+        {
+            trigger: ".o_notification_bar.bg-success",
+            run() {},
+        },
+    ]
+});
+
 registry.category("web_tour.tours").add("test_select_with_same_product_and_lot", {
     steps: () => [
         {

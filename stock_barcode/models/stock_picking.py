@@ -102,7 +102,7 @@ class StockPicking(models.Model):
         source_locations = self.env['stock.location'].search([('id', 'child_of', self.location_id.ids)])
         destination_locations = self.env['stock.location'].search([('id', 'child_of', self.location_dest_id.ids)])
         package_locations = self.env['stock.location'].search([('id', 'child_of', self.location_dest_id.ids), ('usage', '!=', 'customer')])
-        locations = move_lines.location_id | move_lines.location_dest_id | source_locations | destination_locations
+        locations = self.location_id | self.location_dest_id |  move_lines.location_id | move_lines.location_dest_id | source_locations | destination_locations
 
         # Fetch `stock.quant.package` and `stock.package.type` if group_tracking_lot.
         packages = self.env['stock.quant.package']
