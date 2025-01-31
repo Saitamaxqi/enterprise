@@ -776,6 +776,148 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         ]
         self.assert_invoice_lines(deferred_move_february, expected_values_february)
 
+    def _test_deferred_expense_partially_generate_grouped_entries_method_common(self):
+        """
+        Test that if we generate the deferrals for a period, we don't re-generate them if they already exist.
+        and we regenerate them if necessary (e.g. a new invoice has been created for the same period).
+        """
+        self.company.generate_deferred_expense_entries_method = 'manual'
+
+        options = self.get_options('2023-01-01', '2023-01-31')
+
+        # Create 2 different invoices (instead of one with 2 lines)
+        self.create_invoice([self.expense_lines[0]])
+        self.create_invoice([self.expense_lines[1]])
+
+        # Generate the grouped deferred entries
+        generated_entries_january = self.handler._generate_deferral_entry(options)
+
+        deferred_move_january, deferred_inverse_january = generated_entries_january
+        self.assertRecordValues(deferred_move_january, [{
+            'move_type': 'entry',
+            'date': fields.Date.to_date('2023-01-31'),
+        }])
+        expected_values_january = [
+            #        Account                    Debit               Credit
+            [self.expense_accounts[0],                        0,  1000 + 1050],
+            [self.expense_accounts[0],                250 + 150,            0],
+            [self.deferral_account,     1000 + 1050 - 250 - 150,            0]
+        ]
+        self.assert_invoice_lines(deferred_move_january, expected_values_january)
+
+        self.assertRecordValues(deferred_inverse_january, [{
+            'move_type': 'entry',
+            'date': fields.Date.to_date('2023-02-01'),
+        }])
+
+        # Don't re-generate entries for the same period if they already exist for all move lines
+        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
+            self.handler._generate_deferral_entry(options)
+
+        # Let's create a new invoice that should be shown in the January period
+        self.create_invoice([self.expense_lines[2]])
+
+        # Now, even though we have already generated the grouped deferral for January,
+        # we must re-generate it because we have a new invoice that should be included in the January period.
+        # We only generate the missing part
+        generated_entries_january2 = self.handler._generate_deferral_entry(options)
+        deferred_move_january2 = generated_entries_january2[0]
+        self.assertRecordValues(deferred_move_january2, [{
+            'move_type': 'entry',
+            'date': fields.Date.to_date('2023-01-31'),
+        }])
+        expected_values_january2 = [
+            #        Account              Debit          Credit
+            [self.expense_accounts[1],           0,        1225],
+            [self.expense_accounts[1],         350,           0],
+            [self.deferral_account,     1225 - 350,           0]
+        ]
+        self.assert_invoice_lines(deferred_move_january2, expected_values_january2)
+        return deferred_move_january, deferred_inverse_january
+
+    def test_deferred_expense_partially_generate_grouped_entries_method_past_period(self):
+        """
+        Test that if we generate the deferrals for a period, we don't re-generate them if they already exist.
+        and we regenerate them if necessary (e.g. a new invoice has been created for the same period).
+        """
+        deferred_move_january, deferred_inverse_january = self._test_deferred_expense_partially_generate_grouped_entries_method_common()
+        self.assertEqual(deferred_move_january.state, 'posted')  # January is in the past so the move is posted
+        self.assertEqual(deferred_inverse_january.state, 'posted')
+
+    @freeze_time('2023-01-01')
+    def test_deferred_expense_partially_generate_grouped_entries_method_current_period(self):
+        """
+        Same as previous test but for an ongoing month. This test has been added after discovering
+        that if you generate the deferrals for the current month, you could generate them again
+        and again. This is because the generated deferral is only posted at then end of the month
+        (date_to of the report period). So the `filter_generated_entries` wasn't working as expected
+        The test is exactly the same as the previous one, we with a freeze_time simulating Jan 2023
+        """
+        deferred_move_january, deferred_inverse_january = self._test_deferred_expense_partially_generate_grouped_entries_method_common()
+        self.assertEqual(deferred_move_january.state, 'draft')  # January is still current so the move is not posted yet
+        self.assertEqual(deferred_inverse_january.state, 'draft')
+
+    @freeze_time('2023-01-01')
+    def test_deferred_expense_partially_generate_grouped_entries_method_later_period(self):
+        """
+        Same as previous test but for a later month (February 2023 while we simulate we are in Jan 2023)
+        """
+        self.company.generate_deferred_expense_entries_method = 'manual'
+
+        options = self.get_options('2023-02-01', '2023-02-28')
+
+        # Create 2 different invoices (instead of one with 2 lines)
+        self.create_invoice([self.expense_lines[0]])
+        self.create_invoice([self.expense_lines[1]])
+
+        # Generate the grouped deferred entries
+        generated_entries_february = self.handler._generate_deferral_entry(options)
+
+        deferred_move_february, deferred_inverse_february = generated_entries_february
+        self.assertRecordValues(deferred_move_february, [{
+            'state': 'draft',  # Not posted yet since it's in the future
+            'move_type': 'entry',
+            'date': fields.Date.to_date('2023-02-28'),
+        }])
+        expected_values_february = [
+            #        Account                    Debit               Credit
+            [self.expense_accounts[0],                        0,  1000 + 1050],
+            [self.expense_accounts[0],                500 + 450,            0],
+            [self.deferral_account,     1000 + 1050 - 500 - 450,            0]
+        ]
+        self.assert_invoice_lines(deferred_move_february, expected_values_february)
+
+        self.assertRecordValues(deferred_inverse_february, [{
+            'state': 'draft',  # Not posted yet since it's in the future
+            'move_type': 'entry',
+            'date': fields.Date.to_date('2023-03-01'),
+        }])
+
+        # Don't re-generate entries for the same period if they already exist for all move lines
+        with self.assertRaisesRegex(UserError, 'No entry to generate.'):
+            self.handler._generate_deferral_entry(options)
+
+        # Let's create a new invoice that should be shown in the february period
+        self.create_invoice([self.expense_lines[2]])
+
+        # Now, even though we have already generated the grouped deferral for february,
+        # we must re-generate it because we have a new invoice that should be included in the february period.
+        # We only generate the missing part
+        generated_entries_february2 = self.handler._generate_deferral_entry(options)
+        deferred_move_february2 = generated_entries_february2[0]
+        self.assertRecordValues(deferred_move_february2, [{
+            'state': 'draft',  # Not posted yet since it's in the future
+            'move_type': 'entry',
+            'date': fields.Date.to_date('2023-02-28'),
+        }])
+        expected_values_february2 = [
+            #        Account              Debit          Credit
+            [self.expense_accounts[1],           0,        1225],
+            [self.expense_accounts[1],         700,           0],
+            [self.deferral_account,     1225 - 700,           0]
+        ]
+        self.assert_invoice_lines(deferred_move_february2, expected_values_february2)
+
     def test_deferred_expense_generate_future_deferrals_grouped(self):
         """
         Test the Generate entries button when we have a deferral starting after the invoice period.

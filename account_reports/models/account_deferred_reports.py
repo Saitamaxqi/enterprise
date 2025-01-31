@@ -41,13 +41,19 @@ class AccountDeferredReportHandler(models.AbstractModel):
             ('move_id.date', '<=', options['date']['date_to']),
         ]
         if filter_already_generated:
+            # Avoid regenerating already generated deferrals
             domain += [
-                ('deferred_end_date', '>=', options['date']['date_from']),
-                '!',
-                    '&',
-                    ('move_id.deferred_move_ids.date', '=', options['date']['date_to']),
-                    ('move_id.deferred_move_ids.state', '=', 'posted'),
-            ]
+            ('deferred_end_date', '>=', options['date']['date_from']),
+            '!',
+                ('move_id.deferred_move_ids', 'any', [
+                    ('date', '=', options['date']['date_to']),
+                    '|',
+                        ('state', '=', 'posted'),  # Either posted
+                        '&',  # Or autoposted in the future
+                            ('auto_post', '=', 'at_date'),
+                            ('date', '>=', fields.Date.context_today(self)),
+                ])
+        ]
         if filter_not_started:
             domain += [('deferred_start_date', '>', options['date']['date_to'])]
         return domain
