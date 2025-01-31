@@ -74,7 +74,7 @@ class TestPointOfSaleFlow(TestPointOfSaleHttpCommon):
         partner_test_a = self.env["res.partner"].create({"name": "APartner"})
         partner_test_b = self.env["res.partner"].create({"name": "BPartner"})
 
-        def mocked_get_limited_partners_loading(self):
+        def mocked_get_limited_partners_loading(self, offset=0):
             return [(partner_test_a.id,)]
 
         payment_methods = self.main_pos_config.payment_method_ids | self.customer_account_payment_method
