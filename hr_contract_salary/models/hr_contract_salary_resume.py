@@ -34,9 +34,8 @@ class HrContractSalaryResume(models.Model):
         help='Pick how the value of the information is computed:\n'
              'Fixed value: Set a determined value static for all links\n'
              'Contract value: Get the value from a field on the contract record\n'
-             'Payslip value: Get the value from a field on the payslip record\n'
              'Sum of Benefits value: You can pick in all benefits and compute a sum of them\n'
-             'Monthly Total: The information will be a total of all the informations in the category Monthly Benefits')
+             'Monthly Total: The information will be a total of all the information in the category Monthly Benefits')
     benefit_ids = fields.Many2many('hr.contract.salary.benefit')
     code = fields.Selection(_get_available_fields)
     fixed_value = fields.Float()

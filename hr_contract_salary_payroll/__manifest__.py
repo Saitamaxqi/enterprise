@@ -12,6 +12,7 @@
     'data': [
         'data/hr_contract_salary_resume_data.xml',
         'views/menuitems.xml',
+        'views/hr_contract_salary_resume_views.xml',
         'views/hr_contract_views.xml',
         'views/hr_contract_salary_template.xml',
         'views/hr_payroll_headcount.xml',

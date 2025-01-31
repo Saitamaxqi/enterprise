@@ -14,5 +14,11 @@ class HrContractSalaryResume(models.Model):
     code = fields.Selection(_get_available_fields)
     value_type = fields.Selection(selection_add=[
         ('payslip', 'Payslip Value'),
-        ('sum', )
-    ], ondelete={'payslip': 'set default'})
+        ('sum', )],
+        ondelete={'payslip': 'set default'},
+        help='Pick how the value of the information is computed:\n'
+             'Fixed value: Set a determined value static for all links\n'
+             'Contract value: Get the value from a field on the contract record\n'
+             'Payslip value: Get the value from a field on the payslip record\n'
+             'Sum of Benefits value: You can pick in all benefits and compute a sum of them\n'
+             'Monthly Total: The information will be a total of all the information in the category Monthly Benefits')
