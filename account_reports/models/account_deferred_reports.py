@@ -299,30 +299,49 @@ class AccountDeferredReportHandler(models.AbstractModel):
             # We're auditing a specific account, so we only want moves containing this account
             original_move_lines_domain.append((options['deferred_grouping_field'], '=', grouping_record_id))
         # We're getting all lines from the concerned moves. They are filtered later for flexibility.
-        original_move = self.env['account.move.line'].search(original_move_lines_domain).move_id
+        original_moves = self.env['account.move.line'].search(original_move_lines_domain).move_id
 
-        # For the Total period only show the original move lines
-        line_ids = original_move.line_ids.ids
+        domain = [
+            # For the Total period only show the original move lines
+            '&',
+                ('move_id', 'in', original_moves.ids),
+                ('deferred_end_date', '>=', report_date_from),
+        ]
 
         # Show both the original move lines and deferral move lines for all other periods
-        if not column_values['expression_label'] == 'total':
-            line_ids += original_move.deferred_move_ids.line_ids.ids
+        if column_values['expression_label'] != 'total' and original_moves.deferred_move_ids:
+            domain = ['|'] + [('move_id', 'in', original_moves.deferred_move_ids.ids)] + domain
+
+        if column_values['expression_label'] == 'not_started':
+            domain += [('deferred_start_date', '>=', column_date_from)]
+        else:
+            # If in manually & grouped mode, and deferrals have not yet been generated
+            # so no move with `date` set => instead show the candidates original deferred moves that
+            # will be deferred upon clicking the button. If totally/partially generated, we'll just
+            # use the `date` filter which will include both the originals and deferrals.
+            if not original_moves.deferred_move_ids:
+                domain += [
+                    ('deferred_start_date', '<=', column_date_to),
+                    ('deferred_end_date', '>=', column_date_from),
+                ]
+            else:
+                domain += [
+                    ('date', '>=', column_date_from),
+                    ('date', '<=', column_date_to),
+                ]
 
         return {
             'type': 'ir.actions.act_window',
             'name': _('Deferred Entries'),
             'res_model': 'account.move.line',
-            'domain': [('id', 'in', line_ids)],
+            'domain': domain,
             'views': [(self.env.ref('account_accountant.view_deferred_entries_tree').id, 'list'), (False, 'pivot'), (False, 'graph'), (False, 'kanban')],
             # Most filters are set here to allow auditing flexibility to the user
             'context': {
                 'search_default_pl_accounts': True,
                 f'search_default_{options["deferred_grouping_field"]}': grouping_record_id,
-                'date_from': column_date_from,
-                'date_to': column_date_to,
-                'search_default_date_between': True,
                 'expand': True,
-            }
+            },
         }
 
     def _caret_options_initializer(self):
@@ -509,7 +528,8 @@ class AccountDeferredReportHandler(models.AbstractModel):
             for original_move_id in original_move_ids
             for deferral_move in new_deferred_moves
         ])
-        (deferred_move + reverse_move)._post(soft=True)
+        new_deferred_moves.invalidate_recordset()
+        new_deferred_moves._post(soft=True)
         return new_deferred_moves
 
     @api.model

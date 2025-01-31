@@ -1691,3 +1691,288 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
 
         with self.assertRaisesRegex(UserError, 'You cannot generate entries for a period that does not end at the end of the month.'):
             self.generate_deferral_entries(options)
+
+    def audit_cell(self, options, line, column_name):
+        audit_cell_res = self.handler.action_audit_cell(options, {
+            'report_line_id': line['id'],
+            'calling_line_dict_id': line['id'],
+            'expression_label': column_name,
+            'column_group_key': next(iter(options['column_groups'])),
+        })
+        __, account_id = self.deferred_expense_report._get_model_info_from_id(line['id'])
+        return self.env['account.move.line']\
+                   .search(audit_cell_res['domain'])\
+                   .filtered(lambda l: l.account_id.id == account_id)\
+                   .sorted(lambda l: (not l.deferred_start_date, l.id))  # Original lines first (False comes before True, so we negate it)
+
+    def get_audited_line_to_assert(self, date, balance):
+        return {'date': fields.Date.to_date(date), 'balance': balance}
+
+    def test_deferred_expense_report_audit_cell_on_validation_mode(self):
+        """
+        Test that the audit correctly works (when clicking on a cell) in the on_validation mode
+        Amounts should always correspond between the report and the list view of the audited cell
+        """
+        self.company.generate_deferred_expense_entries_method = 'on_validation'
+
+        inv1 = self.create_invoice([[self.expense_accounts[0],  1000, '2023-01-01', '2023-04-30']])  # Basic example, 4 full months, in period
+        inv2 = self.create_invoice([[self.expense_accounts[0],  100, '2023-04-01', '2023-05-31']])  # 2 full months, Not Started yet
+        inv3 = self.create_invoice([
+            [self.expense_accounts[0],  10, '2023-01-01', '2023-02-28'],  # 2 full months, fully deferred so shouldn't appear at all
+            [self.expense_accounts[0],  1, '2023-01-01', '2023-05-31'],  # 5 full months
+        ])
+        options = self.get_options('2023-03-01', '2023-03-31')
+        lines = self.get_lines(options)
+
+        # Total column
+        audit_lines = self.audit_cell(options, lines[0], 'total')
+        self.assertEqual(audit_lines, inv1.invoice_line_ids + inv2.invoice_line_ids + inv3.invoice_line_ids.sorted('id')[1])
+
+        # Not Started column
+        audit_lines = self.audit_cell(options, lines[0], 'not_started')
+        self.assertEqual(audit_lines, inv2.invoice_line_ids)
+
+        # Before March 2023
+        audit_lines = self.audit_cell(options, lines[0], 'before').sorted('id')
+        self.assertRecordValues(audit_lines, [
+        # INV 1
+            self.get_audited_line_to_assert('2023-01-01',  1000),    # Original line
+            self.get_audited_line_to_assert('2023-01-01', -1000),    # # Cancel out original line
+            self.get_audited_line_to_assert('2023-01-31',   250),    # Jan 23
+            self.get_audited_line_to_assert('2023-02-28',   250),    # Feb 23
+
+        # INV 2: although not started, the original and cancel out should still appear in the "before" column
+            self.get_audited_line_to_assert('2023-01-01',   100),    # Original line
+            self.get_audited_line_to_assert('2023-01-01',  -100),    # Cancel out original line
+
+        # INV 3, lines are ordred by id, so first the original lines, then the generated lines
+        #   self.get_audited_line_to_assert('2023-01-01',    10),   # Original line 1: shouldn't appear because the original line is fully in the past in March
+            self.get_audited_line_to_assert('2023-01-01',     1),   # Original line 2
+        # However the reversal of line 1 should appear so that it can cancel out with the deferrals created for Jan & Feb 23
+            self.get_audited_line_to_assert('2023-01-01',   -10),   # Reversal Original line 1
+            self.get_audited_line_to_assert('2023-01-31',     5),   # Jan 23 for line 1
+            self.get_audited_line_to_assert('2023-02-28',     5),   # Feb 23 for line 1
+            self.get_audited_line_to_assert('2023-01-01',    -1),   # Cancel out original line 2
+            self.get_audited_line_to_assert('2023-01-31',     0.2),  # Jan 23 for line 2
+            self.get_audited_line_to_assert('2023-02-28',     0.2),  # Feb 23 for line 2
+        ])
+        # Total = 1000 - 1000 + 250 + 250 + 100 - 100 + 1 - 10 + 5 + 5 - 1 + 0.2 + 0.2 = 500.4 = (2 * 250) + (2 * 0.2) for Jan+Feb 23
+
+        # March 2023
+        audit_lines = self.audit_cell(options, lines[0], 'current')
+        self.assertRecordValues(audit_lines, [
+            self.get_audited_line_to_assert('2023-03-31', 250),    # Amount for line 1
+            self.get_audited_line_to_assert('2023-03-31',   0.2),  # Amount for line 2
+        ])
+        # Total = 250 + 0.2 = 250.2 for March 23
+
+        # Later than March 2023
+        audit_lines = self.audit_cell(options, lines[0], 'later')
+        self.assertRecordValues(audit_lines, [
+            self.get_audited_line_to_assert('2023-04-30', 250),     # Amount for April 23 of Inv 1
+            self.get_audited_line_to_assert('2023-04-30',  50),     # Amount for April 23 of Inv 2
+            self.get_audited_line_to_assert('2023-05-31',  50),     # Amount for May 23 of Inv 2
+            self.get_audited_line_to_assert('2023-04-30',   0.2),   # Amount for April 23 of Inv 3 line 2
+            self.get_audited_line_to_assert('2023-05-31',   0.2),   # Amount for May 23 of Inv 3 line 2
+        ])
+        # Total = 250 + 50 + 50 + 0.2 + 0.2 = 350.4 = (1 * 250) + (2 * 50) + (2 * 0.2) for April+May 23
+
+    def test_deferred_expense_report_audit_cell_grouped_mode(self):
+        """
+        Test that the audit correctly works (when clicking on a cell) in the grouped mode
+        If the deferrals haven't been generated yet, the report shows the expected amounts
+        which will probably differ from the list view of the audited cell which shows the
+        "candidates" lines that are going to be different upon Generating the Entries.
+        """
+
+        self.company.generate_deferred_expense_entries_method = 'manual'
+
+        inv1 = self.create_invoice([[self.expense_accounts[0],  1000, '2023-01-01', '2023-04-30']])  # Basic example, 4 full months, in period
+        inv2 = self.create_invoice([[self.expense_accounts[0],  100, '2023-04-01', '2023-05-31']])  # 2 full months, Not Started yet
+        inv3 = self.create_invoice([
+            [self.expense_accounts[0],  10, '2023-01-01', '2023-02-28'],  # 2 full months, fully deferred so shouldn't appear at all
+            [self.expense_accounts[0],  1, '2023-01-01', '2023-05-31'],  # 5 full months
+        ])
+        options = self.get_options('2023-03-01', '2023-03-31')
+        lines = self.get_lines(options)
+
+        # At this point, we haven't generated the entries yet, so we show the candidates lines
+        # that will be deferred upon generating the entries (i.e. amounts shown on the reports
+        # will be different from the total amounts shown in the list view of the audited cell)
+
+        # Total column
+        audit_lines = self.audit_cell(options, lines[0], 'total')
+        self.assertEqual(audit_lines, inv1.invoice_line_ids + inv2.invoice_line_ids + inv3.invoice_line_ids.sorted('id')[1])
+
+        # Not Started column
+        audit_lines = self.audit_cell(options, lines[0], 'not_started')
+        self.assertEqual(audit_lines, inv2.invoice_line_ids)
+
+        # Before March 2023 (Jan + Feb)
+        audit_lines = self.audit_cell(options, lines[0], 'before')
+        self.assertRecordValues(audit_lines, [
+            {'id': inv1.invoice_line_ids[0].id},
+            {'id': inv3.invoice_line_ids[1].id},
+        ])
+
+        # March 2023
+        audit_lines = self.audit_cell(options, lines[0], 'current')
+        self.assertRecordValues(audit_lines, [
+            {'id': inv1.invoice_line_ids[0].id},
+            {'id': inv3.invoice_line_ids[1].id},
+        ])
+
+        # Later than March 2023 (April + May)
+        audit_lines = self.audit_cell(options, lines[0], 'later')
+        self.assertRecordValues(audit_lines, [
+            {'id': inv1.invoice_line_ids.id},
+            {'id': inv2.invoice_line_ids.id},
+            {'id': inv3.invoice_line_ids.sorted('id')[1].id},
+        ])
+
+        # Now, let's generate the entries so that the amounts shown in the report match the
+        # totals of the list view of the audited cell. We should generate the entries for the
+        # previous periods too to have the correct amounts in the "Before" column.
+        for report_date_from, report_date_to in (('2023-01-01', '2023-01-31'), ('2023-02-01', '2023-02-28'), ('2023-03-01', '2023-03-31')):
+            self.generate_deferral_entries(self.get_options(report_date_from, report_date_to))
+        lines = self.get_lines(options)
+
+        # Total column
+        audit_lines = self.audit_cell(options, lines[0], 'total')
+        self.assertEqual(audit_lines, inv1.invoice_line_ids + inv2.invoice_line_ids + inv3.invoice_line_ids.sorted('id')[1])
+
+        # Not Started column
+        audit_lines = self.audit_cell(options, lines[0], 'not_started')
+        self.assertEqual(audit_lines, inv2.invoice_line_ids)
+
+        # Before March 2023 (Jan + Feb)
+        audit_lines = self.audit_cell(options, lines[0], 'before')
+        self.assertRecordValues(audit_lines[:3], [  # Original lines
+            {'id': inv1.invoice_line_ids.id},
+            {'id': inv2.invoice_line_ids.id},
+            {'id': inv3.invoice_line_ids[1].id},
+        ])
+        self.assertRecordValues(audit_lines[3:], [  # Generated grouping lines
+        # Grouped of Jan 23
+            self.get_audited_line_to_assert('2023-01-31',  -1111),      # = 1000 + 100 + 10 + 1 for Jan 23  (deferral of 10 is used to compute the grouped deferral of Jan 23)
+            self.get_audited_line_to_assert('2023-01-31',    255.2),    # = (1 * 250) + (1 * 5) + (1 * 0.2) for Jan 23
+        # Reversal of Jan 23 (on the next day)
+            self.get_audited_line_to_assert('2023-02-01',   1111),
+            self.get_audited_line_to_assert('2023-02-01',  - 255.2),
+        # Grouped of Feb 23
+            self.get_audited_line_to_assert('2023-02-28',  -1111),      # same as above
+            self.get_audited_line_to_assert('2023-02-28',    510.4),    # = (2 * 250) + (2 * 5) + (2 * 0.2) for Jan + Feb 23
+        # Reversal of Feb 23 does not exist in the before period as it is only created on the 1st March
+        ])
+        # Total = 1000 + 100 + 1 - 1111 + 255.2 + 1111 - 255.2 - 1111 + 510.4 = 500.4 for Jan + Feb 23 = (2 * 250) + (2 * 0.2)
+
+        # March 2023
+        audit_lines = self.audit_cell(options, lines[0], 'current')
+        self.assertRecordValues(audit_lines, [
+        # Reversal of grouped of February
+            self.get_audited_line_to_assert('2023-03-01',  1111),   # = 1000 + 100 + 10 + 1 for Feb 23  (deferral of 10 is used to compute the grouped deferral of Feb 23)
+            self.get_audited_line_to_assert('2023-03-01', - 510.4),  # = - (2 * 250) - (2 * 5) - (2 * 0.2) for Jan + Feb 23
+        # Grouped of current month (March 23)
+            self.get_audited_line_to_assert('2023-03-31', -1101),  # Deferral of 10 not included anymore in March
+            self.get_audited_line_to_assert('2023-03-31',   750.6),  # = (3 * 250) + (3 * 0.2) for Jan + Feb + March 23
+        ])
+        # Total = 1111 - 510.4 - 1101 + 750.6 = 250.2 for March 23 = 250 + 0.2 OK
+
+        # Later than March 2023 (April + May)
+        audit_lines = self.audit_cell(options, lines[0], 'later')
+        self.assertRecordValues(audit_lines, [
+        # Only the Reversal of previous period exist as we've only generated entries up to March and not after
+            self.get_audited_line_to_assert('2023-04-01',  1101),
+            self.get_audited_line_to_assert('2023-04-01', - 750.6),  # = - (3 * 250) - (3 * 0.2) for Jan + Feb + March 23
+        ])
+        # Total = 1101 - 750.6 = 250.2 for March 23 = 250 + 0.2 OK
+
+        # Let's generate for April too (not May as everything is totally deferred in May)
+        # Now we'll have to include inv2 too
+        self.generate_deferral_entries(self.get_options('2023-04-01', '2023-04-30'))
+        audit_lines = self.audit_cell(options, lines[0], 'later')
+        self.assertRecordValues(audit_lines, [
+        # Reversal of grouped of March
+            self.get_audited_line_to_assert('2023-04-01',  1101),
+            self.get_audited_line_to_assert('2023-04-01', - 750.6),
+        # Grouped of April
+            self.get_audited_line_to_assert('2023-04-30', -1101),
+            self.get_audited_line_to_assert('2023-04-30',  1050.8),  # = (4 * 250) + (4 * 0.2) + (1 * 50) for Jan -> April 23
+        # Reversal of April
+            self.get_audited_line_to_assert('2023-05-01',  1101),
+            self.get_audited_line_to_assert('2023-05-01', -1050.8),
+        ])
+        # Total = 1101 - 750.6 = 250.2 for March 23 = 250 + 0.2 OK
+
+        # Now, let's create a new bill such that we have a mix of generated deferrals and candidates
+        inv4 = self.create_invoice([[self.expense_accounts[0],  10000, '2023-01-01', '2023-05-31']])
+
+        # Generate deferrals for previous months, but not Match 23 yet.
+        for report_date_from, report_date_to in (('2023-01-01', '2023-01-31'), ('2023-02-01', '2023-02-28')):
+            self.generate_deferral_entries(self.get_options(report_date_from, report_date_to))
+
+        options = self.get_options('2023-03-01', '2023-03-31')
+        lines = self.get_lines(options)
+
+        # Total column
+        audit_lines = self.audit_cell(options, lines[0], 'total')
+        self.assertEqual(audit_lines, inv1.invoice_line_ids + inv2.invoice_line_ids
+                         + inv3.invoice_line_ids.sorted('id')[1] + inv4.invoice_line_ids)
+
+        # Not Started column
+        audit_lines = self.audit_cell(options, lines[0], 'not_started')
+        self.assertEqual(audit_lines, inv2.invoice_line_ids)
+
+        # Before March 2023 (Jan + Feb)
+        audit_lines = self.audit_cell(options, lines[0], 'before')
+        self.assertRecordValues(audit_lines[:4], [  # Original lines
+            {'id': inv1.invoice_line_ids.id},
+            {'id': inv2.invoice_line_ids.id},
+            {'id': inv3.invoice_line_ids[1].id},
+            {'id': inv4.invoice_line_ids.id},  # new
+        ])
+        self.assertRecordValues(audit_lines[4:], [  # Generated grouping lines
+        # First the deferrals of inv1,2,3 (should be the same as before)
+            # Grouped of Jan 23
+            self.get_audited_line_to_assert('2023-01-31',  -1111),      # = 1000 + 100 + 10 + 1 for Jan 23  (deferral of 10 is used to compute the grouped deferral of Jan 23)
+            self.get_audited_line_to_assert('2023-01-31',    255.2),    # = (1 * 250) + (1 * 5) + (1 * 0.2) for Jan 23
+            # Reversal of Jan 23 (on the next day)
+            self.get_audited_line_to_assert('2023-02-01',   1111),
+            self.get_audited_line_to_assert('2023-02-01',  - 255.2),
+            # Grouped of Feb 23
+            self.get_audited_line_to_assert('2023-02-28',  -1111),      # same as above
+            self.get_audited_line_to_assert('2023-02-28',    510.4),    # = (2 * 250) + (2 * 5) + (2 * 0.2) for Jan + Feb 23
+            # Reversal of Feb 23 does not exist in the before period as it is only created on the 1st March
+        # Then the deferrals of the new inv4
+            # Grouped of Jan 23
+            self.get_audited_line_to_assert('2023-01-31',  -10000),
+            self.get_audited_line_to_assert('2023-01-31',    2000),  # just inv4
+            # Reversal of Jan 23 (on the next day)
+            self.get_audited_line_to_assert('2023-02-01',   10000),
+            self.get_audited_line_to_assert('2023-02-01',  - 2000),
+            # Grouped of Feb 23
+            self.get_audited_line_to_assert('2023-02-28',  -10000),
+            self.get_audited_line_to_assert('2023-02-28',    4000),  # 2 * 2000 for Jan + Feb 23
+            # Reversal of Feb 23 does not exist in the before period as it is only created on the 1st March
+        ])
+        # Subtotal inv1,2,3 = 1000 + 100 + 1 (originals) - 1111 + 255.2 + 1111 - 255.2 - 1111 + 510.4 = 500.4 for Jan + Feb 23 = (2 * 250) + (2 * 0.2)
+        # Subtotal inv4 = 10000 (original) -10000 + 2000 + 10000 - 2000 - 10000 + 4000 = 4000
+        # Total = 4000 + 500.4 = 4500.4
+
+        # March 2023
+        audit_lines = self.audit_cell(options, lines[0], 'current')
+        self.assertRecordValues(audit_lines, [
+        # Reversal of grouped of February of inv1,2,3
+            self.get_audited_line_to_assert('2023-03-01',  1111),
+            self.get_audited_line_to_assert('2023-03-01', - 510.4),
+        # Grouped of current month (March 23) of inv1,2,3
+            self.get_audited_line_to_assert('2023-03-31', -1101),
+            self.get_audited_line_to_assert('2023-03-31',   750.6),
+        # Reversal of grouped of February of inv4
+            self.get_audited_line_to_assert('2023-03-01',  10000),
+            self.get_audited_line_to_assert('2023-03-01', - 4000),
+        # NO Grouped of March for inv3 as we haven't generated the deferrals yet
+        ])
+        # Total = 1111 - 510.4 + 10000 - 4000 - 1101 + 750.6 = 6250.2
+        # The total of the list view is different from the cell (2250.2) so we directly see that
+        # there is a problem and the deferrals are not completely generated
