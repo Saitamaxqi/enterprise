@@ -493,9 +493,9 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
             })],
         })
         batch = self.env['stock.picking.batch'].create({
-            'name': "delivery batch",
             'picking_ids': [Command.link(delivery.id)],
         })
+        batch.name = "delivery batch"
         batch.action_confirm()
         self.start_tour('/odoo/barcode', 'test_barcode_batch_scan_other_reserved_lost', login='admin', timeout=180)
 

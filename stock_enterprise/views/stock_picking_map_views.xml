@@ -5,7 +5,7 @@
         <field name="model">stock.picking</field>
         <field name="priority" eval="3"/>
         <field name="arch" type="xml">
-            <map res_partner="partner_id" hide_address="1" js_class="stock_map">
+            <map res_partner="partner_id" default_order="batch_sequence" allow_resequence="true" routing="1" hide_address="1" js_class="stock_map">
                 <field name="name" string="Reference"/>
                 <field name="scheduled_date" string="Scheduled Date"/>
             </map>
