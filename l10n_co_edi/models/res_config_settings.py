@@ -5,10 +5,8 @@ from odoo import fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
-    l10n_co_edi_username = fields.Char(related='company_id.l10n_co_edi_username', readonly=False,
-                                       string='Username')
-    l10n_co_edi_password = fields.Char(related='company_id.l10n_co_edi_password', readonly=False,
-                                       string='Password')
+    l10n_co_edi_username = fields.Char(related='company_id.l10n_co_edi_username', readonly=False)
+    l10n_co_edi_password = fields.Char(related='company_id.l10n_co_edi_password', readonly=False)
     l10n_co_edi_company = fields.Char(related='company_id.l10n_co_edi_company', readonly=False,
                                       string='Company Registry')
     l10n_co_edi_account = fields.Char(related='company_id.l10n_co_edi_account', readonly=False,

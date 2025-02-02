@@ -11,8 +11,8 @@ TEMPLATE_CODE = [
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    l10n_co_edi_username = fields.Char(string='Username', groups='base.group_system')
-    l10n_co_edi_password = fields.Char(string='Password', groups='base.group_system')
+    l10n_co_edi_username = fields.Char(string="Carvajal Username", groups='base.group_system')
+    l10n_co_edi_password = fields.Char(string="Carvajal Password", groups='base.group_system')
     l10n_co_edi_company = fields.Char(string='Company Registry')
     l10n_co_edi_account = fields.Char(string='Account ID', groups='base.group_system')
     l10n_co_edi_test_mode = fields.Boolean(string='Test mode', default=True)

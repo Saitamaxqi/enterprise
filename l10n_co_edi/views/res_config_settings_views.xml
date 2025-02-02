@@ -12,11 +12,19 @@
                             <setting string="Carvajal Configuration" help="Configure your Carvajal credentials here" title="Configure your Carvajal credentials here.">
                                 <div class="content-group">
                                     <div class="row mt16">
-                                        <label for="l10n_co_edi_username" class="col-lg-3 o_light_label"/>
+                                        <label
+                                            string="Username"
+                                            for="l10n_co_edi_username"
+                                            class="col-lg-3 o_light_label"
+                                        />
                                         <field name="l10n_co_edi_username"/>
                                     </div>
                                     <div class="row">
-                                        <label for="l10n_co_edi_password" class="col-lg-3 o_light_label"/>
+                                        <label
+                                            string="Password"
+                                            for="l10n_co_edi_password"
+                                            class="col-lg-3 o_light_label"
+                                        />
                                         <field name="l10n_co_edi_password" password="True"/>
                                     </div>
                                     <div class="row">
