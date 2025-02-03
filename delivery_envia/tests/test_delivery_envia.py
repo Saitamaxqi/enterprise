@@ -100,8 +100,8 @@ class TestDeliveryEnvia(TransactionCase):
             'zip': '20081-240',
             'phone': '+55 11 96123-4567',
         })
-        cls.br_partner = cls.env.ref('base.res_partner_2')
-        cls.br_partner.write({
+        cls.br_partner = cls.env['res.partner'].create({
+            'name': 'Odoo BR Partner',
             'country_id': cls.env.ref('base.br').id,
             'street': 'Av. Presidente Vargas 592',
             'street2': 'Curitaba',
@@ -111,7 +111,18 @@ class TestDeliveryEnvia(TransactionCase):
             'phone': '+55 11 96123-4567',
         })
         # partner in us (azure)
-        cls.us_partner = cls.env.ref('base.res_partner_12')
+        cls.us_partner = cls.env['res.partner'].create({
+            'name': 'Azure Interior',
+            'is_company': True,
+            'street': '4557 De Silva St',
+            'city': 'Fremont',
+            'country_id': cls.env.ref('base.us').id,
+            'zip': '94538',
+            'state_id': cls.env.ref('base.state_us_5').id,
+            'email': 'azure.Interior24@example.com',
+            'phone': '(870)-931-0505',
+        })
+
 
         cls.product_to_ship1 = cls.env["product.product"].create({
             'name': 'Door with Legs',
