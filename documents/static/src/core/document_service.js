@@ -31,9 +31,11 @@ export class DocumentService {
         this.fileUpload = services["file_upload"];
         this.logAccess = debounce(this._logAccess, 1000, false);
         this.currentFolderAccessToken = null;
-        this.userIsInternal = false;
         this.bus = new EventBus();
         this.userIsDocumentManager = false;
+        this.userIsDocumentUser = false;
+        this.userIsErpManager = false;
+        this.userIsInternal = false;
         // Init data
         const urlSearch = parseSearchQuery(browser.location.search);
         const { documents_init } = session;
@@ -63,10 +65,17 @@ export class DocumentService {
     }
 
     async start() {
-        this.userIsInternal = await user.hasGroup("base.group_user");
-        this.userIsDocumentManager = await user.hasGroup("documents.group_documents_manager");
-        this.userIsDocumentUser = await user.hasGroup("documents.group_documents_user");
-
+        [
+            this.userIsDocumentManager,
+            this.userIsDocumentUser,
+            this.userIsErpManager,
+            this.userIsInternal,
+        ] = await Promise.all([
+            user.hasGroup("documents.group_documents_manager"),
+            user.hasGroup("documents.group_documents_user"),
+            user.hasGroup("base.group_erp_manager"),
+            user.hasGroup("base.group_user"),
+        ]);
         const initialState = this.userIsInternal && JSON.parse(localStorage.getItem("documentsChatterVisible"));
         this.chatterState = reactive({ visible: initialState }, () => {
             localStorage.setItem("documentsChatterVisible", this.chatterState.visible);

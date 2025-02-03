@@ -1913,7 +1913,6 @@ class DocumentsDocument(models.Model):
                 values = self.env['documents.document'].search_read(
                     expression.AND([domain, [('folder_id', 'child_of', unique_folder_id)]]),
                     search_panel_fields,
-                    load=False,
                 )
                 accessible_folder_ids = {rec['id'] for rec in values}
                 for record in values:
