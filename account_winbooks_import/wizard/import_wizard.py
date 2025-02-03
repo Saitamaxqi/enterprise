@@ -98,7 +98,6 @@ class AccountWinbooksImportWizard(models.TransientModel):
                     'zip': rec.get('ZIPCODE') and ''.join([n for n in rec.get('ZIPCODE') if n.isdigit()]),
                     'email': rec.get('EMAIL'),
                     'active': not rec.get('ISLOCKED'),
-                    'title': civility_data.get(rec.get('CIVNAME1'), False),
                     'category_id': [(6, 0, [category_data.get(rec.get('CATEGORY'))])] if category_data.get(rec.get('CATEGORY')) else False
                 }
                 if partner_data_dict.get(rec.get('NUMBER')):
