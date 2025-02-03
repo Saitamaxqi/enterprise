@@ -19,16 +19,7 @@
         <xpath expr="//div[hasclass('o_control_panel_actions')]" position="inside">
             <t t-if="!this.documentService.previewedDocument">
                 <SearchBar t-if="!this.env.model.root.selection.length" toggler="env.searchBarToggler" autofocus="firstLoad"/>
-                <div class="o_documents_view_selection_container d-flex gap-1 w-100 w-md-auto">
-                    <t t-call="web.ListView.Selection" t-if="this.env.model.root.selection.length">
-                        <t t-set="model" t-value="this.env.model"/>
-                        <t t-set="isDomainSelected" t-value="model.root.isDomainSelected"/>
-                        <t t-set="isPageSelected" t-value="model.root.selection.length === model.root.records.length"/>
-                        <t t-set="nbSelected" t-value="model.root.selection.length"/>
-                        <t t-set="nbTotal" t-value="model.root.count"/>
-                    </t>
-                    <DocumentsAction folderId="currentFolderId" targetRecords="this.env.model.root.selection"/>
-                </div>
+                <DocumentsAction folderId="currentFolderId" targetRecords="this.env.model.root.selection"/>
             </t>
         </xpath>
 

@@ -32,24 +32,6 @@ export class DocumentsControlPanel extends ControlPanel {
             this.firstLoad = false;
         });
     }
-
-    /**
-     * Unselect the records in the kanban / list view.
-     */
-    onUnselectAll() {
-        this.env.model.root.selection.forEach((record) => {
-            record.toggleSelection(false);
-        });
-        this.env.model.root.selectDomain(false);
-    }
-
-    /**
-     * Select all the records for a selected domain
-     */
-    async onSelectDomain() {
-        await this.env.model.root.selectDomain(true);
-    }
-
     /**
      * Return the current folder ID.
      */

@@ -11,7 +11,12 @@
 
             <!-- Remove the search bar and let the control panel handle it -->
             <t t-set-slot="layout-actions"/>
-            <t t-set-slot="control-panel-selection-actions"/>
+            <t t-set-slot="control-panel-selection-actions">
+                <!-- ListView's default -->
+                <div t-if="hasSelectedRecords" class="o_list_selection_container m-1 m-md-0 d-flex gap-1">
+                    <t t-call="web.ListView.Selection"/>
+                </div>
+            </t>
 
         </xpath>
         <xpath expr="//Layout/t[@t-component='props.Renderer']" position="attributes">
