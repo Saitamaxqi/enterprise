@@ -219,6 +219,7 @@
                     <filter name="groupby_state" context="{'group_by': 'state'}"/>
                     <filter string="Creation Date" name="groupby_create_date" context="{'group_by': 'create_date'}"/>
                     <filter name="groupby_date_close" context="{'group_by': 'date_close'}"/>
+                    <filter string="Properties" name="group_by_appraisal_properties" context="{'group_by': 'appraisal_properties'}"/>
                </group>
            </search>
         </field>

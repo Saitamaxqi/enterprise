@@ -194,6 +194,7 @@
                     <filter string="Date" name="group_by_date" context="{'group_by': 'check_in'}"/>
                     <filter string="Host" name="group_by_host" context="{'group_by': 'host_ids'}"/>
                     <filter string="Status" name="group_by_status" context="{'group_by': 'state'}"/>
+                    <filter string="Properties" name="group_by_visitor_properties" context="{'group_by': 'visitor_properties'}"/>
                 </group>
             </search>
         </field>
