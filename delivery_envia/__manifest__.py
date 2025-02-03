@@ -18,6 +18,7 @@ reduce handling time and improve customer experience.
         'security/ir.model.access.csv',
         'data/delivery_envia.xml',
         'views/delivery_carrier_views.xml',
+        'views/res_config_settings_views.xml',
         'wizard/envia_shipping_wizard.xml',
 
     ],
