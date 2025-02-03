@@ -5,9 +5,9 @@
         <xpath expr="//div[@id='out_of_stock_message']" position="attributes">
             <attribute name="t-if">!is_rental</attribute>
         </xpath>
-        <xpath expr="//div[@id='threshold_message']" position="attributes">
-            <attribute name="t-elif">show_availability and free_qty lte available_threshold and !is_rental</attribute>
-        </xpath>
+        <div id="threshold_message" position="attributes">
+            <attribute name="t-elif" add="!is_rental" separator=" and "/>
+        </div>
         <xpath expr="//div[@id='threshold_message']" position="after">
             <div id="threshold_message_renting"
                  t-if="!(free_qty lte 0 and !cart_qty) and show_availability and free_qty lte available_threshold and is_rental"
