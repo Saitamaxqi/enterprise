@@ -21,9 +21,19 @@
     }
 }
 
+.o_documents_kanban_view .o_control_panel {
+    @include media-breakpoint-down(md) {
+        padding-bottom: 0 !important;
+    }
+}
+
 .o_documents_kanban_view .o_control_panel_actions,
 .o_documents_list_view .o_control_panel_actions {
     justify-content: center !important;
+
+    @include media-breakpoint-down(md) {
+        padding-top: 8px;
+    }
 }
 
 .o_documents_action_dropdown button {

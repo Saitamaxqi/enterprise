@@ -30,6 +30,10 @@
             margin: .5rem;
             border: none;
 
+            @include media-breakpoint-down(lg) {
+                width: 160px;
+                flex-basis: auto;
+            }
             .o_kanban_progress_card {
                 height: 100%;
             }

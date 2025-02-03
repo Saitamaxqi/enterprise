@@ -335,6 +335,17 @@ export class DocumentService {
 
     toggleChatterState() {
         this.chatterState.visible = !this.chatterState.visible;
+
+        if (this.env.isSmall && this.chatterState.visible) {
+            this.observer = new MutationObserver(() => {
+                const chatterContainer = document.querySelector('.o-mail-Thread');
+                if (chatterContainer) {
+                    chatterContainer.scrollIntoView({ behavior: "smooth"});
+                    this.observer.disconnect();
+                }
+            });
+            this.observer.observe(document.querySelector('.o_documents_content'), { childList: true, subtree: true });
+        }
     }
 
     /**
