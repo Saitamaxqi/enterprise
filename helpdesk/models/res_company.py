@@ -8,8 +8,8 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     @api.model_create_multi
-    def create(self, values):
-        company = super().create(values)
+    def create(self, vals_list):
+        company = super().create(vals_list)
         company._create_helpdesk_team()
         return company
 

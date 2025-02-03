@@ -22,11 +22,11 @@ class AccountReportBudget(models.Model):
                 raise ValidationError(_("Please enter a valid budget name."))
 
     @api.model_create_multi
-    def create(self, create_values):
-        for values in create_values:
+    def create(self, vals_list):
+        for values in vals_list:
             if name := values.get('name'):
                 values['name'] = name.strip()
-        return super().create(create_values)
+        return super().create(vals_list)
 
     def _create_or_update_budget_items(self, value_to_set, account_id, rounding, date_from, date_to):
         """ This method will create / update several budget items following the number

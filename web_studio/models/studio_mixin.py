@@ -15,8 +15,8 @@ class StudioMixin(models.AbstractModel):
     _description = 'Studio Mixin'
 
     @api.model_create_multi
-    def create(self, vals):
-        res = super(StudioMixin, self).create(vals)
+    def create(self, vals_list):
+        res = super().create(vals_list)
         if self._context.get('studio') and not self._context.get('install_mode'):
             for ob in res:
                 ob.create_studio_model_data(ob.display_name)

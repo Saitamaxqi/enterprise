@@ -2,7 +2,7 @@
 
 from markupsafe import Markup
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 from odoo.exceptions import RedirectWarning
 
 
@@ -177,8 +177,9 @@ class HrJobPost(models.Model):
         })
         self._stop_finished_campaign()
 
-    def create(self, values):
-        posts = super().create(values)
+    @api.model_create_multi
+    def create(self, vals_list):
+        posts = super().create(vals_list)
         posts._log_post_modifications()
         return posts
 

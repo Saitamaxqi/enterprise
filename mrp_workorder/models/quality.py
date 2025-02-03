@@ -241,20 +241,20 @@ class QualityCheck(models.Model):
     employee_id = fields.Many2one('hr.employee', string="Employee")
 
     @api.model_create_multi
-    def create(self, values):
-        quality_points = {value['point_id'] for value in values if value.get('point_id')}
+    def create(self, vals_list):
+        quality_points = {value['point_id'] for value in vals_list if value.get('point_id')}
         quality_points_component_mapping = {
             point.id: point.component_id.id
             for point in self.env['quality.point'].browse(list(quality_points))
             if point.component_id
         }
-        for value in values:
+        for value in vals_list:
             if value.get('component_id') or not value.get('point_id'):
                 continue
             component = quality_points_component_mapping.get(value['point_id'])
             if component:
                 value['component_id'] = component
-        return super(QualityCheck, self).create(values)
+        return super().create(vals_list)
 
     @api.depends('test_type_id', 'component_id', 'component_id.name', 'workorder_id', 'workorder_id.name')
     def _compute_title(self):

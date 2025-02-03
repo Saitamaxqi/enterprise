@@ -16,6 +16,7 @@ class AccountTaxUnit(models.Model):
     main_company_id = fields.Many2one(string="Main Company", comodel_name='res.company', required=True, help="Main company of this unit; the one actually reporting and paying the taxes.")
     fpos_synced = fields.Boolean(string="Fiscal Positions Synchronised", compute='_compute_fiscal_position_completion', help="Technical field indicating whether Fiscal Positions exist for all companies in the unit")
 
+    @api.model_create_multi
     def create(self, vals_list):
         res = super().create(vals_list)
 

@@ -15,6 +15,7 @@ class ResPartnerBank(models.Model):
             else:
                 bank_partner.has_alt_bank_account = False
 
+    @api.model_create_multi
     def create(self, vals_list):
         res = super().create(vals_list)
         if self.env.context.get('from_employee_bank_account'):

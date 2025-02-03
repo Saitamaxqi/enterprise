@@ -64,8 +64,8 @@ class L10n_AuPayslipYtd(models.Model):
             rec.struct_id = rec.employee_id.contract_id.structure_type_id.default_struct_id
 
     @api.model_create_multi
-    def create(self, vals):
-        records = super().create(vals)
+    def create(self, vals_list):
+        records = super().create(vals_list)
         employees = self.env["hr.payslip"].search([("employee_id", "=", records.employee_id.ids), ("state", "in", ("done", "paid"))]).mapped("employee_id.name")
         if employees:
             raise UserError(_("You can't create or update YTD opening balances for %(employees)s, because there are "

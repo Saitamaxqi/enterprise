@@ -12,8 +12,8 @@ class SaleOrder(models.Model):
     task_id = fields.Many2one('project.task', string="Source Task", help="Task from which this quotation have been created")
 
     @api.model_create_multi
-    def create(self, vals):
-        orders = super().create(vals)
+    def create(self, vals_list):
+        orders = super().create(vals_list)
         for sale_order in orders:
             if sale_order.task_id:
                 message = _("Extra Quotation Created: %s", sale_order._get_html_link())

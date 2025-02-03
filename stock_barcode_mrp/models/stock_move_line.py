@@ -39,8 +39,8 @@ class StockMoveLine(models.Model):
             rec.move_id.manual_consumption = rec.manual_consumption
 
     @api.model_create_multi
-    def create(self, vals):
-        move_line_ids = super().create(vals)
+    def create(self, vals_list):
+        move_line_ids = super().create(vals_list)
         for ml in move_line_ids:
             if not ml.move_id and ml.production_id:
                 # Try to find a move this move line belongs to

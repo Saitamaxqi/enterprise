@@ -1278,8 +1278,9 @@ class StudioApprovalRuleDelegate(models.TransientModel):
         string="Notify to")
     date_to = fields.Date(string="Until")
 
-    def create(self, vals):
-        records = super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
         for rec in records:
             rule = rec.approval_rule_id.sudo()
             rule._delegate_to(rec.approver_ids, rec.date_to)

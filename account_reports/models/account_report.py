@@ -62,9 +62,9 @@ class AccountReportAnnotation(models.Model):
     fiscal_position_id = fields.Many2one('account.fiscal.position', help="The fiscal position used while annotating.")
 
     @api.model_create_multi
-    def create(self, values):
+    def create(self, vals_list):
         fiscal_positions_with_foreign_vat = self.env['account.fiscal.position'].search([('foreign_vat', '!=', False)], limit=1)
-        for annotation in values:
+        for annotation in vals_list:
             if 'line_id' in annotation:
                 annotation['line_id'] = self._remove_tax_grouping_from_line_id(annotation['line_id'])
             if 'fiscal_position_id' in annotation:
@@ -75,7 +75,7 @@ class AccountReportAnnotation(models.Model):
                 else:
                     annotation['fiscal_position_id'] = int(annotation['fiscal_position_id'])
 
-        return super().create(values)
+        return super().create(vals_list)
 
     def _remove_tax_grouping_from_line_id(self, line_id):
         """

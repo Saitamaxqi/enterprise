@@ -491,14 +491,14 @@ class HelpdeskTicket(models.Model):
                         break
 
     @api.model_create_multi
-    def create(self, list_value):
+    def create(self, vals_list):
         now = fields.Datetime.now()
 
         # Determine user_id if not given for teams with automatic assignment. We have two cases:
         #   - If the assignment method is 'randomly' or 'balanced', we determine the next users to assign for each team.
         #   - If the assignment method is 'tags', it's a bit more complex as it depends on the added tags for each individual ticket.
         #       In that case, we directly modify the vals, as it's simpler than computing the user ids then map them to the vals they originate from.
-        team_ids = { vals['team_id'] for vals in list_value if vals.get('team_id') }
+        team_ids = { vals['team_id'] for vals in vals_list if vals.get('team_id') }
         tickets_to_assign_by_tags = []
         teams = self.env['helpdesk.team'].browse(team_ids)
 
@@ -509,7 +509,7 @@ class HelpdeskTicket(models.Model):
         # In case of assignment by tags, we add the user_ids to the values below. For the other methods, they are added later
         team_per_team_id = dict(zip(team_ids, teams))
         ticket_amount_per_team = defaultdict(int)
-        for vals in list_value:
+        for vals in vals_list:
             if not (team_id := vals.get('team_id')):
                 continue
             stage = self.env['helpdesk.stage'].browse(vals['stage_id']) if 'stage_id' in vals else default_stage_per_team_id[team_id]
@@ -528,7 +528,7 @@ class HelpdeskTicket(models.Model):
         # Manually create a partner now since '_generate_template_recipients' doesn't keep the name. This is
         # to avoid intrusive changes in the 'mail' module
         # TDE TODO: to extract and clean in mail thread
-        for vals in list_value:
+        for vals in vals_list:
             partner_id = vals.get('partner_id', False)
             partner_name = vals.get('partner_name', False)
             partner_email = vals.get('partner_email', False)
@@ -540,11 +540,11 @@ class HelpdeskTicket(models.Model):
                 ).id
 
         # determine partner email for ticket with partner but no email given
-        partners = self.env['res.partner'].browse([vals['partner_id'] for vals in list_value if 'partner_id' in vals and vals.get('partner_id') and 'partner_email' not in vals])
+        partners = self.env['res.partner'].browse([vals['partner_id'] for vals in vals_list if 'partner_id' in vals and vals.get('partner_id') and 'partner_email' not in vals])
         partner_email_map = {partner.id: partner.email for partner in partners}
         partner_name_map = {partner.id: partner.name for partner in partners}
         company_per_team_id = {t.id: t.company_id for t in teams}
-        for vals in list_value:
+        for vals in vals_list:
             company = company_per_team_id.get(vals.get('team_id', False))
             vals['ticket_ref'] = self.env['ir.sequence'].with_company(company).sudo().next_by_code('helpdesk.ticket')
             if team_id := vals.get('team_id'):
@@ -568,7 +568,7 @@ class HelpdeskTicket(models.Model):
             vals['oldest_unanswered_customer_message_date'] = now
 
         # context: no_log, because subtype already handle this
-        tickets = super().create(list_value)
+        tickets = super().create(vals_list)
 
         all_partner_emails = []
         for ticket in tickets:

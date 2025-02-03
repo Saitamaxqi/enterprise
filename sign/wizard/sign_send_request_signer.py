@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
@@ -13,6 +13,7 @@ class SignSendRequestSigner(models.TransientModel):
     mail_sent_order = fields.Integer(string='Sign Order', default=1)
     sign_send_request_id = fields.Many2one('sign.send.request')
 
+    @api.model_create_multi
     def create(self, vals_list):
         missing_roles = []
         for vals in vals_list:

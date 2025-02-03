@@ -103,9 +103,9 @@ class WhatsappMessage(models.Model):
     # ------------------------------------------------------------
 
     @api.model_create_multi
-    def create(self, vals):
+    def create(self, vals_list):
         """Override to check blacklist number and also add to blacklist if user has send stop message."""
-        messages = super().create(vals)
+        messages = super().create(vals_list)
         for message in messages:
             body = html2plaintext(message.body)
             if message.message_type == 'inbound' and message.mobile_number_formatted:

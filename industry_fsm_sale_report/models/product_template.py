@@ -21,8 +21,8 @@ class ProductTemplate(models.Model):
                 template.worksheet_template_id = old_template or template.project_id.worksheet_template_id
 
     @api.model_create_multi
-    def create(self, create_vals):
-        res = super().create(create_vals)
+    def create(self, vals_list):
+        res = super().create(vals_list)
         res.filtered(lambda t: not t.worksheet_template_id)._compute_worksheet_template_id()
         return res
 

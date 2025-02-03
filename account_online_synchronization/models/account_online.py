@@ -78,9 +78,9 @@ class AccountOnlineAccount(models.Model):
                 raise ValidationError(_('You cannot have two journals associated with the same Online Account.'))
 
     @api.model_create_multi
-    def create(self, vals):
-        result = super().create(vals)
-        if any(data.get('fetching_status') in {'waiting', 'processing', 'planned'} for data in vals):
+    def create(self, vals_list):
+        result = super().create(vals_list)
+        if any(data.get('fetching_status') in {'waiting', 'processing', 'planned'} for data in vals_list):
             self.env['account.journal']._toggle_asynchronous_fetching_cron()
         return result
 

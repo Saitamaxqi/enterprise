@@ -54,11 +54,11 @@ class AccountBankStatementLineTransient(models.TransientModel):
     )
 
     @api.model_create_multi
-    def create(self, vals_data):
-        for vals in vals_data:
+    def create(self, vals_list):
+        for vals in vals_list:
             if isinstance(vals.get('transaction_details'), dict):
                 vals['transaction_details'] = json.dumps(vals['transaction_details'])
-        return super().create(vals_data)
+        return super().create(vals_list)
 
     def action_import_transactions(self):
         # This action could be call on multiple lines.

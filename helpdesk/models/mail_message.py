@@ -8,8 +8,8 @@ class MailMessage(models.Model):
     _inherit = 'mail.message'
 
     @api.model_create_multi
-    def create(self, values_list):
-        messages = super().create(values_list)
+    def create(self, vals_list):
+        messages = super().create(vals_list)
         # We measure the time between the customer's message
         # or ticket's create date, and the helpdesk response of subtype comment (not note).
         # If several messages are sent before any response,
@@ -25,7 +25,7 @@ class MailMessage(models.Model):
         # msg    |     x     |           |     ↑
         # msg    |           |     x     |     ↓
         # ...
-        if not any(values.get('model') == 'helpdesk.ticket' for values in values_list):
+        if not any(values.get('model') == 'helpdesk.ticket' for values in vals_list):
             return messages
 
         comment_subtype = self.env.ref('mail.mt_comment')
