@@ -9,7 +9,7 @@ class ResCompany(models.Model):
     # Rental Inventory
 
     rental_loc_id = fields.Many2one(
-        "stock.location", string="In rent",
+        "stock.location", string="Rental Location",
         domain=[('usage', '=', 'internal')],
         help="This technical location serves as stock for products currently in rental"
         "This location is internal because products in rental"

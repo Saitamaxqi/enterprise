@@ -25,6 +25,7 @@
         'views/res_config_settings_views.xml',
         'views/sale_order_views.xml',
         'views/product_template_views.xml',
+        'views/res_company_views.xml',
     ],
     'demo': [
         'data/rental_stock_demo.xml',
