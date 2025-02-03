@@ -33,12 +33,12 @@ class AccountMove(models.Model):
     def _l10n_br_avatax_check_missing_fields_product(self, lines):
         """account.external.tax.mixin override."""
         res = super()._l10n_br_avatax_check_missing_fields_product(lines)
-        warning_fields = ["l10n_br_source_origin", "l10n_br_use_type"]
+        warning_fields = ["l10n_br_use_type"]
 
         if self.l10n_br_is_service_transaction:
             warning_fields += ["l10n_br_property_service_code_origin_id", "l10n_br_service_code_ids"]
         else:
-            warning_fields += ["l10n_br_ncm_code_id", "l10n_br_sped_type"]
+            warning_fields += ["l10n_br_ncm_code_id", "l10n_br_sped_type", "l10n_br_source_origin"]
 
         incomplete_products = self.env['product.product']
         fields = set()
