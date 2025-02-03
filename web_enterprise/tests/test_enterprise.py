@@ -1,4 +1,4 @@
-from odoo import Command
+from odoo import api, Command
 from odoo.tests.common import HttpCase, tagged
 
 
@@ -27,6 +27,8 @@ class LoadMenusTests(HttpCase):
 
         # Patch search to only return these menus
         origin_search_fetch = self.env.registry["ir.ui.menu"].search_fetch
+
+        @api.model
         def search_fetch(self, domain, *args, **kwargs):
             return origin_search_fetch(self, domain + [('id', 'in', menus.ids)], *args, **kwargs)
 

@@ -70,6 +70,7 @@ class HrApplicant(models.Model):
         for applicant in self:
             applicant.source_id = applicant.ref_user_id.utm_source_id
 
+    @api.model
     def check_field_access_rights(self, operation, field_names):
         referral_fields = REFERRAL_FIELDS
 
