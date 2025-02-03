@@ -140,28 +140,6 @@ registry.category("web_tour.tours").add("PreparationDisplayCancelOrderTour", {
         ].flat(),
 });
 
-registry.category("web_tour.tours").add("PreparationDisplayTourSkipChange", {
-    steps: () =>
-        [
-            Chrome.startPoS(),
-            Dialog.confirm("Open Register"),
-
-            // Create first order
-            FloorScreen.clickTable("5"),
-            ProductScreen.clickDisplayedProduct("Coca-Cola"),
-            ProductScreen.doubleClickLine("Coca-Cola"),
-            ProductScreen.clickDisplayedProduct("Coca-Cola"),
-            ProductScreen.clickDisplayedProduct("Water"),
-            ProductScreen.clickOrderButton(),
-            FloorScreen.clickTable("5"),
-            ProductScreen.orderlinesHaveNoChange(),
-            ProductScreen.clickDisplayedProduct("Minute Maid"),
-            ProductScreen.clickOrderButton(),
-            FloorScreen.clickTable("5"),
-            ProductScreen.orderlinesHaveNoChange(),
-        ].flat(),
-});
-
 registry.category("web_tour.tours").add("PreparationDisplayPaymentNotCancelDisplayTour", {
     steps: () =>
         [

@@ -83,7 +83,7 @@ class PosOrder(models.Model):
             else:
                 quantity_data[key]['display'] += line_qty
 
-        for line in self.lines.filtered(lambda li: not li.skip_change):
+        for line in self.lines:
             line_note = line.note or ""
             key = (line.product_id.id, line_note, json.dumps(line.attribute_value_ids.ids), line.uuid)
 

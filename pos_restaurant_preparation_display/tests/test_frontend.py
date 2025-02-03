@@ -90,19 +90,6 @@ class TestUi(test_frontend.TestFrontendCommon):
         self.assertEqual(pdis_order1.preparation_display_order_line_ids[0].product_quantity, 1)
         self.assertEqual(pdis_order1.preparation_display_order_line_ids[0].internal_note, "Test Internal Notes")
 
-    def test_03_preparation_display_skip_change(self):
-        self.env['pos_preparation_display.display'].create({
-            'name': 'Preparation Display',
-            'pos_config_ids': [(4, self.pos_config.id)],
-        })
-        self.pos_config.printer_ids.unlink()
-        self.pos_config.with_user(self.pos_user).open_ui()
-        self.start_pos_tour('PreparationDisplayTourSkipChange')
-        order1 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-00001')], limit=1)
-        pdis_order1 = self.env['pos_preparation_display.order'].search([('pos_order_id', '=', order1.id)])
-        # We only have 3 lines because one of the 4 lines in the order has the skip change option
-        self.assertEqual(len(pdis_order1.preparation_display_order_line_ids), 3, "Should have 3 preparation orderlines")
-
     def test_cancel_order_notifies_display(self):
         category = self.env['pos.category'].create({'name': 'Food'})
         self.env['product.product'].create({
