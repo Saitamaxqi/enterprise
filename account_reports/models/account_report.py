@@ -689,6 +689,9 @@ class AccountReport(models.Model):
                 period_type = 'quarter'
             elif 'year' in options_filter:
                 company_fiscalyear_dates = self.env.company.compute_fiscalyear_dates(fields.Date.context_today(self))
+                curr_year = fields.Date.context_today(self).year
+                if company_fiscalyear_dates['date_from'].year < curr_year:
+                    company_fiscalyear_dates = self.env.company.compute_fiscalyear_dates(company_fiscalyear_dates['date_to'] + relativedelta(days=1))
                 date_from = company_fiscalyear_dates['date_from']
                 date_to = company_fiscalyear_dates['date_to']
             elif 'tax_period' in options_filter:
