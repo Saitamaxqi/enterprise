@@ -1,5 +1,3 @@
-import { serverState, startServer } from "@bus/../tests/helpers/mock_python_environment";
-
 import { fileUploadService } from "@web/core/file_upload/file_upload_service";
 import { DocumentsKanbanRenderer } from "@documents/views/kanban/documents_kanban_renderer";
 import {
@@ -41,18 +39,21 @@ import {
     inputFiles,
     insertText,
 } from "@web/../tests/utils";
+import { makeMockServer } from "@web/../tests/helpers/mock_server";
 
 const { DateTime } = luxon;
 
 function createDocumentsView(params) {
     return originalCreateDocumentsView({
-        serverData: { models: pyEnv.getData(), views: {} },
+        serverData: { models: mockServer.models, views: {} },
         ...params,
     });
 }
 
 let target;
 let pyEnv;
+let mockServer;
+const serverState = {};
 
 QUnit.module("documents", {}, function () {
     QUnit.module(
@@ -83,15 +84,98 @@ QUnit.module("documents", {}, function () {
                         return xhr;
                     };
                 };
-                pyEnv = await startServer();
-                const resPartnerIds = pyEnv["res.partner"].create([
+                mockServer = await makeMockServer({
+                    models: {
+                        "documents.document": {
+                            fields: {
+                                id: { type: "integer" },
+                                activity_state: { string: "Activity State", type: "selection" },
+                                attachment_id: { relation: "ir.attachment", type: "many2one" },
+                                is_editable_attachment: { type: "boolean" },
+                                file_size: { type: "integer" },
+                                mimetype: { type: "char" },
+                                res_model: { type: "char" },
+                                res_id: {
+                                    type: "many2one_reference",
+                                    model_name_ref_fname: "res_model",
+                                },
+                                res_name: { type: "char" },
+                                active: { default: true, type: "boolean" },
+                                res_model_name: { type: "char" },
+                                type: {
+                                    selection: [
+                                        ["url", "URL"],
+                                        ["binary", "File"],
+                                        ["folder", "Folder"],
+                                    ],
+                                    type: "selection",
+                                },
+
+                                tag_ids: { relation: "documents.tag", type: "many2many" },
+                                partner_id: { relation: "res.partner", type: "many2one" },
+                                owner_id: { relation: "res.users", type: "many2one" },
+                                lock_uid: { relation: "res.users", type: "many2one" },
+                                access_internal: {
+                                    name: "access_internal",
+                                    selection: [
+                                        ["view", "Viewer"],
+                                        ["edit", "Editor"],
+                                        ["none", "None"],
+                                    ],
+                                    type: "selection",
+                                },
+                                user_permission: {
+                                    name: "user_permission",
+                                    selection: [
+                                        ["edit", "Editor"],
+                                        ["view", "Viewer"],
+                                        ["none", "None"],
+                                    ],
+                                    type: "selection",
+                                },
+
+                                folder_id: { relation: "documents.document", type: "many2one" },
+                                children_ids: { relation: "documents.document", type: "one2many" },
+                                is_company_root_folder: { type: "boolean" },
+                                available_embedded_actions_ids: {
+                                    relation: "ir.embedded.actions",
+                                    type: "many2many",
+                                },
+                                alias_tag_ids: { relation: "documents.tag", type: "many2many" },
+                                last_access_date_group: {
+                                    selection: [
+                                        ["0_older", "Older"],
+                                        ["1_month", "This Month"],
+                                        ["2_week", "This Week"],
+                                        ["3_day", "Today"],
+                                    ],
+                                    type: "selection",
+                                },
+                            },
+                            records: [],
+                        },
+                        "documents.tag": { fields: { sequence: { type: "integer" } }, records: [] },
+                        "ir.attachment": { fields: {}, records: [] },
+                        "res.partner": { fields: { email: { type: "char" } }, records: [] },
+                        "res.users": {
+                            fields: {
+                                partner_id: { type: "many2one", relation: "res.partner" },
+                                login: { type: "char" },
+                                password: { type: "char" },
+                            },
+                            records: [],
+                        },
+                        "res.fake": { fields: {}, records: [] },
+                    },
+                });
+                const resPartnerIds = mockServer.mockCreate("res.partner", [
                     { display_name: "Hazard" },
                     { display_name: "Lukaku" },
                     { display_name: "De Bruyne" },
                     { email: "raoul@grosbedon.fr", name: "Raoul Grosbedon" },
                     { email: "raoulette@grosbedon.fr", name: "Raoulette Grosbedon" },
                 ]);
-                const resUsersIds = pyEnv["res.users"].create([
+                const resUsersIds = mockServer.mockCreate("res.users", [
                     {
                         display_name: "Hazard",
                         partner_id: resPartnerIds[0],
@@ -101,12 +185,28 @@ QUnit.module("documents", {}, function () {
                     { display_name: "Lukaku", partner_id: resPartnerIds[1] },
                     { display_name: "De Bruyne", partner_id: resPartnerIds[2] },
                 ]);
-                const documentsFolderIds = pyEnv["documents.document"].create([
-                    { name: "Workspace1", type: "folder", access_internal: "edit", user_permission: "edit", is_company_root_folder: true, folder_id: false, owner_id: false },
-                    { name: "Workspace2", type: "folder", access_internal: "edit", user_permission: "edit", is_company_root_folder: true, folder_id: false, owner_id: false },
+                const documentsFolderIds = mockServer.mockCreate("documents.document", [
+                    {
+                        name: "Workspace1",
+                        type: "folder",
+                        access_internal: "edit",
+                        user_permission: "edit",
+                        is_company_root_folder: true,
+                        folder_id: false,
+                        owner_id: false,
+                    },
+                    {
+                        name: "Workspace2",
+                        type: "folder",
+                        access_internal: "edit",
+                        user_permission: "edit",
+                        is_company_root_folder: true,
+                        folder_id: false,
+                        owner_id: false,
+                    },
                 ]);
                 documentsFolderIds.push(
-                    pyEnv["documents.document"].create([
+                    mockServer.mockCreate("documents.document", [
                         {
                             name: "Workspace3",
                             folder_id: documentsFolderIds[0],
@@ -114,51 +214,55 @@ QUnit.module("documents", {}, function () {
                             access_internal: "edit",
                             user_permission: "edit",
                         },
-                    ])
+                    ])[0]
                 );
-                const documentsTagIds = pyEnv["documents.tag"].create([
+                const documentsTagIds = mockServer.mockCreate("documents.tag", [
                     { display_name: "New", sequence: 11 },
                     { display_name: "Draft", sequence: 10 },
                     { display_name: "No stress", sequence: 10 },
                 ]);
                 const documentsEmbeddedActions = [];
-                const resFakeIds = pyEnv["res.fake"].create([{ name: "fake1" }, { name: "fake2" }]);
-                const irAttachmentId1 = pyEnv["ir.attachment"].create({});
-                const [documentsDocumentId1, documentsDocumentId2] = pyEnv[
-                    "documents.document"
-                ].create([
-                    {
-                        activity_state: "today",
-                        available_embedded_actions_ids: documentsEmbeddedActions,
-                        file_size: 30000,
-                        folder_id: documentsFolderIds[0],
-                        is_editable_attachment: true,
-                        name: "yop",
-                        owner_id: resUsersIds[0],
-                        partner_id: resPartnerIds[1],
-                        res_id: resFakeIds[0],
-                        res_model: "res.fake",
-                        res_model_name: "Task",
-                        res_name: "Write specs",
-                        tag_ids: [documentsTagIds[0], documentsTagIds[1]],
-                    },
-                    {
-                        attachment_id: pyEnv["ir.attachment"].create({}),
-                        available_embedded_actions_ids: documentsEmbeddedActions,
-                        file_size: 20000,
-                        folder_id: documentsFolderIds[0],
-                        mimetype: "application/pdf",
-                        name: "blip",
-                        owner_id: resUsersIds[1],
-                        partner_id: resPartnerIds[1],
-                        res_id: resFakeIds[1],
-                        res_model: "res.fake",
-                        res_model_name: "Task",
-                        res_name: "Write tests",
-                        tag_ids: [documentsTagIds[1]],
-                    },
+                const resFakeIds = mockServer.mockCreate("res.fake", [
+                    { name: "fake1" },
+                    { name: "fake2" },
                 ]);
-                pyEnv["documents.document"].create([
+                const irAttachmentId1 = mockServer.mockCreate("ir.attachment", {})[0];
+                const [documentsDocumentId1, documentsDocumentId2] = mockServer.mockCreate(
+                    "documents.document",
+                    [
+                        {
+                            activity_state: "today",
+                            available_embedded_actions_ids: documentsEmbeddedActions,
+                            file_size: 30000,
+                            folder_id: documentsFolderIds[0],
+                            is_editable_attachment: true,
+                            name: "yop",
+                            owner_id: resUsersIds[0],
+                            partner_id: resPartnerIds[1],
+                            res_id: resFakeIds[0],
+                            res_model: "res.fake",
+                            res_model_name: "Task",
+                            res_name: "Write specs",
+                            tag_ids: [documentsTagIds[0], documentsTagIds[1]],
+                        },
+                        {
+                            attachment_id: mockServer.mockCreate("ir.attachment", {})[0],
+                            available_embedded_actions_ids: documentsEmbeddedActions,
+                            file_size: 20000,
+                            folder_id: documentsFolderIds[0],
+                            mimetype: "application/pdf",
+                            name: "blip",
+                            owner_id: resUsersIds[1],
+                            partner_id: resPartnerIds[1],
+                            res_id: resFakeIds[1],
+                            res_model: "res.fake",
+                            res_model_name: "Task",
+                            res_name: "Write tests",
+                            tag_ids: [documentsTagIds[1]],
+                        },
+                    ]
+                );
+                mockServer.mockCreate("documents.document", [
                     {
                         available_embedded_actions_ids: documentsEmbeddedActions,
                         file_size: 15000,
@@ -199,7 +303,7 @@ QUnit.module("documents", {}, function () {
                         file_size: 70000,
                         folder_id: documentsFolderIds[1],
                         name: "pom",
-                        owner_id:  resUsersIds[0],
+                        owner_id: resUsersIds[0],
                         partner_id: resPartnerIds[2],
                         res_id: documentsDocumentId1,
                         res_model: "documents.document",
@@ -346,10 +450,7 @@ QUnit.module("documents", {}, function () {
                 );
 
                 // check control panel buttons
-                assert.containsOnce(
-                    target,
-                    ".o_cp_buttons .btn-primary.dropdown-toggle:visible"
-                );
+                assert.containsOnce(target, ".o_cp_buttons .btn-primary.dropdown-toggle:visible");
                 assert.strictEqual(
                     $(".o_cp_buttons .btn-primary.dropdown-toggle:visible")
                         .get(0)
@@ -381,15 +482,10 @@ QUnit.module("documents", {}, function () {
                     target.querySelector(".o_documents_kanban_request").disabled === false,
                     "the request button should be enabled when a folder is selected"
                 );
-                assert.containsOnce(
-                    target,
-                    ".o_cp_buttons .btn-secondary:visible"
-                );
+                assert.containsOnce(target, ".o_cp_buttons .btn-secondary:visible");
                 assert.strictEqual(
                     target
-                        .querySelector(
-                            ".o_cp_buttons .o_documents_kanban_share_domain"
-                        )
+                        .querySelector(".o_cp_buttons .o_documents_kanban_share_domain")
                         .textContent.trim(),
                     "Share",
                     "should have a secondary 'Share' button"
@@ -1025,13 +1121,15 @@ QUnit.module("documents", {}, function () {
                 await createDocumentsView({
                     type: "kanban",
                     resModel: "documents.document",
-                    domain: [["user_id", "!=", 299792458]],  // Add some filter to the domain
+                    domain: [["user_id", "!=", 299792458]], // Add some filter to the domain
                     arch: `<kanban js_class="documents_kanban"><templates>
                         <t t-name="card">
                             <field name="name"/>
                         </t></templates></kanban>`,
                     mockRPC: function (route, args) {
-                        if (route === "/web/dataset/call_kw/documents.document/web_search_read" && args.model === "documents.document"
+                        if (
+                            route === "/web/dataset/call_kw/documents.document/web_search_read" &&
+                            args.model === "documents.document"
                         ) {
                             assert.step(JSON.stringify(args.kwargs.domain || []));
                         }
@@ -1039,12 +1137,17 @@ QUnit.module("documents", {}, function () {
                 });
                 await legacyClick($(target).find(".o_kanban_record:nth-child(1)")[0]);
                 assert.containsN(target, ".o_inspector_tag", 2, "should display two tags");
-                await legacyClick(target.querySelector(".o_inspector_tag:nth-of-type(2) .o_inspector_tag_remove"));
+                await legacyClick(
+                    target.querySelector(".o_inspector_tag:nth-of-type(2) .o_inspector_tag_remove")
+                );
                 assert.containsN(target, ".o_inspector_tag", 1, "One tag got should get removed");
-                assert.verifySteps([
-                    '["&",["user_id","!=",299792458],["folder_id","child_of",1]]',
-                    '["&",["user_id","!=",299792458],["folder_id","child_of",1]]'
-                ], "Search domain should be preserved when removing tags");
+                assert.verifySteps(
+                    [
+                        '["&",["user_id","!=",299792458],["folder_id","child_of",1]]',
+                        '["&",["user_id","!=",299792458],["folder_id","child_of",1]]',
+                    ],
+                    "Search domain should be preserved when removing tags"
+                );
             });
 
             QUnit.module("DocumentsInspector");
@@ -4411,7 +4514,10 @@ QUnit.module("documents", {}, function () {
                         default_res_id: 1,
                     },
                 });
-                await legacyClick(target, ".o_search_panel_category_value[title='Workspace1'] header");
+                await legacyClick(
+                    target,
+                    ".o_search_panel_category_value[title='Workspace1'] header"
+                );
                 await nextTick();
                 await dragoverFiles(".o_kanban_renderer", [file]);
                 await dropFiles(".o_documents_drop_over_zone", [file]);
@@ -4432,7 +4538,10 @@ QUnit.module("documents", {}, function () {
                 <field name="name"/>
             </t></templates></kanban>`,
                 });
-                await legacyClick(target, ".o_search_panel_category_value[title='Workspace1'] header");
+                await legacyClick(
+                    target,
+                    ".o_search_panel_category_value[title='Workspace1'] header"
+                );
                 await nextTick();
                 await dragoverFiles(".o_kanban_renderer", [file]);
                 await dropFiles(".o_documents_drop_over_zone", [file]);
@@ -4492,7 +4601,10 @@ QUnit.module("documents", {}, function () {
                     67000001,
                     "Upload file size is greater than upload limit"
                 );
-                await legacyClick(target, ".o_search_panel_category_value[title='Workspace1'] header");
+                await legacyClick(
+                    target,
+                    ".o_search_panel_category_value[title='Workspace1'] header"
+                );
                 await nextTick();
                 await dragoverFiles(".o_kanban_renderer", [file]);
                 await dropFiles(".o_documents_drop_over_zone", [file]);
@@ -4514,7 +4626,10 @@ QUnit.module("documents", {}, function () {
                 <field name="name"/>
             </t></templates></kanban>`,
                 });
-                await legacyClick(target, ".o_search_panel_category_value[title='Workspace1'] header");
+                await legacyClick(
+                    target,
+                    ".o_search_panel_category_value[title='Workspace1'] header"
+                );
                 await nextTick();
 
                 await dragoverFiles(".o_kanban_renderer", [file1]);

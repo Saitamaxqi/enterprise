@@ -1,6 +1,8 @@
-import { startServer } from "@bus/../tests/helpers/mock_python_environment";
-
-import { createDocumentsViewWithMessaging, loadServices } from "./documents_test_utils";
+import {
+    createDocumentsViewWithMessaging,
+    loadServices,
+    makeDocumentsMockServer,
+} from "./documents_test_utils";
 
 import { click, getFixture, nextTick, patchWithCleanup } from "@web/../tests/helpers/utils";
 import { setupViewRegistries } from "@web/../tests/views/helpers";
@@ -30,15 +32,14 @@ QUnit.module("documents", {}, function () {
             QUnit.module("DocumentsKanbanViewMobile", function () {
                 QUnit.skip("basic rendering on mobile", async function (assert) {
                     assert.expect(15);
-
-                    const pyEnv = await startServer();
-                    const documentsFolderId1 = pyEnv["documents.document"].create({
+                    const mockServer = await makeDocumentsMockServer();
+                    const documentsFolderId1 = mockServer.mockCreate("documents.document", {
                         type: "folder",
                         access_internal: "edit",
                         name: "Workspace1",
                         description: "_F1-test-description_",
                     });
-                    pyEnv["documents.document"].create([
+                    mockServer.mockCreate("documents.document", [
                         {
                             folder_id: documentsFolderId1,
                             name: "gnap",
@@ -152,14 +153,14 @@ QUnit.module("documents", {}, function () {
                 QUnit.skip("toggle inspector based on selection", async function (assert) {
                     assert.expect(13);
 
-                    const pyEnv = await startServer();
-                    const documentsFolderId1 = pyEnv["documents.document"].create({
+                    const mockServer = await makeDocumentsMockServer();
+                    const documentsFolderId1 = mockServer.mockCreate("documents.document", {
                         name: "Workspace1",
                         description: "_F1-test-description_",
                         type: "folder",
                         access_internal: "view",
                     });
-                    pyEnv["documents.document"].create([
+                    mockServer.mockCreate("documents.document", [
                         { folder_id: documentsFolderId1 },
                         { folder_id: documentsFolderId1 },
                     ]);
@@ -277,14 +278,14 @@ QUnit.module("documents", {}, function () {
                 QUnit.skip("basic rendering on mobile", async function (assert) {
                     assert.expect(15);
 
-                    const pyEnv = await startServer();
-                    const documentsFolderId1 = pyEnv["documents.document"].create({
+                    const mockServer = await makeDocumentsMockServer();
+                    const documentsFolderId1 = mockServer.mockCreate("documents.document", {
                         name: "Workspace1",
                         description: "_F1-test-description_",
                         type: "folder",
                         access_internal: "edit",
                     });
-                    pyEnv["documents.document"].create([
+                    mockServer.mockCreate("documents.document", [
                         {
                             folder_id: documentsFolderId1,
                             name: "gnap",
@@ -392,14 +393,14 @@ QUnit.module("documents", {}, function () {
                 QUnit.skip("toggle inspector based on selection", async function (assert) {
                     assert.expect(15);
 
-                    const pyEnv = await startServer();
-                    const documentsFolderId1 = pyEnv["documents.document"].create({
+                    const mockServer = await makeDocumentsMockServer();
+                    const documentsFolderId1 = mockServer.mockCreate("documents.document", {
                         name: "Workspace1",
                         description: "_F1-test-description_",
                         type: "folder",
                         access_internal: "view",
                     });
-                    pyEnv["documents.document"].create([
+                    mockServer.mockCreate("documents.document", [
                         { folder_id: documentsFolderId1 },
                         { folder_id: documentsFolderId1 },
                     ]);

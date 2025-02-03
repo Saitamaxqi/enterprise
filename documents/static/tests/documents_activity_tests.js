@@ -1,15 +1,15 @@
-import { startServer } from "@bus/../tests/helpers/mock_python_environment";
 import { getFixture, nextTick } from "@web/../tests/helpers/utils";
 import { setupViewRegistries } from "@web/../tests/views/helpers";
 import { click, contains, insertText } from "@web/../tests/utils";
 import {
     createDocumentsView as originalCreateDocumentsView,
     loadServices,
+    makeDocumentsMockServer,
 } from "./documents_test_utils";
 
 async function createDocumentsActivityView(records, onRouteCalled, params) {
     await originalCreateDocumentsView({
-        serverData: { models: pyEnv.getData(), views: {} },
+        serverData: { models: mockServer.models, views: {} },
         mockRPC: function (route, args) {
             if (args.method === "web_search_read" && args.model === "documents.document") {
                 // the domain is [["activity_ids.active", "in", [true, false]]]
@@ -46,7 +46,7 @@ async function createDocumentsActivityView(records, onRouteCalled, params) {
 
 let target;
 let records;
-let pyEnv;
+let mockServer;
 
 QUnit.module("documents", {}, function () {
     QUnit.module(
@@ -54,34 +54,33 @@ QUnit.module("documents", {}, function () {
         {
             async beforeEach() {
                 loadServices();
-
-                pyEnv = await startServer();
-                const recordIds = pyEnv["documents.document"].create([
+                mockServer = await makeDocumentsMockServer();
+                const recordIds = mockServer.mockCreate("documents.document", [
                     {
-                        activity_ids: [pyEnv["mail.activity"].create({})],
+                        activity_ids: [mockServer.mockCreate("mail.activity", {})],
                         activity_state: "today",
                         name: "Document 1",
                         res_model_name: "Task",
                         res_name: "Task 1",
                     },
                     {
-                        attachment_id: pyEnv["ir.attachment"].create({}),
+                        attachment_id: mockServer.mockCreate("ir.attachment", {}),
                         mimetype: "application/pdf",
                         name: "Document 2",
                         res_model_name: "Task",
                         res_name: "Task 2",
                     },
                     {
-                        activity_ids: [pyEnv["mail.activity"].create({})],
-                        attachment_id: pyEnv["ir.attachment"].create({}),
+                        activity_ids: [mockServer.mockCreate("mail.activity", {})],
+                        attachment_id: mockServer.mockCreate("ir.attachment", {}),
                         mimetype: "application/pdf",
                         name: "Document 3",
                         res_model_name: "Task",
                         res_name: "Task 3",
                     },
                     {
-                        activity_ids: [pyEnv["mail.activity"].create({})],
-                        attachment_id: pyEnv["ir.attachment"].create({}),
+                        activity_ids: [mockServer.mockCreate("mail.activity", {})],
+                        attachment_id: mockServer.mockCreate("ir.attachment", {}),
                         mimetype: "application/pdf",
                         name: "Document 4",
                         res_model_name: "Task",
@@ -89,8 +88,8 @@ QUnit.module("documents", {}, function () {
                         active: false,
                     },
                     {
-                        activity_ids: [pyEnv["mail.activity"].create({})],
-                        attachment_id: pyEnv["ir.attachment"].create({}),
+                        activity_ids: [mockServer.mockCreate("mail.activity", {})],
+                        attachment_id: mockServer.mockCreate("ir.attachment", {}),
                         mimetype: "application/pdf",
                         name: "Document 5",
                         res_model_name: "Task",
@@ -98,10 +97,14 @@ QUnit.module("documents", {}, function () {
                         active: false,
                     },
                 ]);
-                records = pyEnv["documents.document"].search_read([
-                    ["id", "in", recordIds],
-                    ["active", "in", [true, false]],
-                ]);
+                records = mockServer.mockSearchRead(
+                    "documents.document",
+                    [
+                        ["id", "in", recordIds],
+                        ["active", "in", [true, false]],
+                    ],
+                    {}
+                );
                 setupViewRegistries();
                 target = getFixture();
             },
