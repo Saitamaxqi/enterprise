@@ -646,7 +646,7 @@ class ResCompany(models.Model):
             - The exchange rate (float).
             - The timestamp of the rate, formatted as a string in `DEFAULT_SERVER_DATE_FORMAT`.
         :rtype: dict
-            
+
         Example:
             If the XE.com API returns the following data:
                 {
@@ -1201,9 +1201,12 @@ class ResCompany(models.Model):
         If a currency has no rate, it will be skipped.
         """
         request_url = "https://www.bi.go.id/biwebservice/wskursbi.asmx/getSubKursLokal4"
+        headers = {
+            'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36',
+        }
 
         def _fetched_bi_currency_tables(start_date):
-            response = requests.get(request_url, params={
+            response = requests.get(request_url, headers=headers, params={
                 'startdate': start_date,
             }, timeout=10)
             response.raise_for_status()
