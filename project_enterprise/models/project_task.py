@@ -1062,7 +1062,7 @@ class ProjectTask(models.Model):
         company_calendar_id = company_id.resource_calendar_id
         company_work_intervals = calendar_work_intervals.get(company_calendar_id.id)
         if not company_work_intervals:
-            new_valid_intervals_per_user[False] = company_calendar_id._work_intervals_batch(start_date, end_date)[False]
+            new_valid_intervals_per_user[False] = company_calendar_id.sudo()._work_intervals_batch(start_date, end_date)[False]
         else:
             new_valid_intervals_per_user[False] = company_work_intervals
 

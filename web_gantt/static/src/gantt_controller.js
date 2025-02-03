@@ -128,13 +128,7 @@ export class GanttController extends Component {
         }
     }
 
-    /**
-     * Opens dialog to add/edit/view a record
-     *
-     * @param {Record<string, any>} props FormViewDialog props
-     * @param {Record<string, any>} [options={}]
-     */
-    openDialog(props, options = {}) {
+    _getDialogProps(props) {
         const { canDelete, canEdit, resModel, formViewId: viewId } = this.model.metaData;
 
         const title = props.title || (props.resId ? _t("Open") : _t("Create"));
@@ -157,27 +151,33 @@ export class GanttController extends Component {
                 });
         }
 
-        this.closeDialog = this.dialogService.add(
-            FormViewDialog,
-            {
-                title,
-                resModel,
-                viewId,
-                resId: props.resId,
-                size: props.size,
-                canExpand: props.canExpand,
-                readonly: !canEdit,
-                context: props.context,
-                removeRecord,
+        return {
+            title,
+            resModel,
+            viewId,
+            resId: props.resId,
+            size: props.size,
+            canExpand: props.canExpand,
+            readonly: !canEdit,
+            context: props.context,
+            removeRecord,
+        };
+    }
+
+    /**
+     * Opens dialog to add/edit/view a record
+     *
+     * @param {Record<string, any>} props FormViewDialog props
+     * @param {Record<string, any>} [options={}]
+     */
+    openDialog(props, options = {}) {
+        this.closeDialog = this.dialogService.add(FormViewDialog, this._getDialogProps(props), {
+            ...options,
+            onClose: () => {
+                this.closeDialog = null;
+                this.model.fetchData();
             },
-            {
-                ...options,
-                onClose: () => {
-                    this.closeDialog = null;
-                    this.model.fetchData();
-                },
-            }
-        );
+        });
     }
 
     //--------------------------------------------------------------------------

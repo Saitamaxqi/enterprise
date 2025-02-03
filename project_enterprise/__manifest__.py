@@ -40,11 +40,19 @@ Bridge module for project and enterprise
             'project_enterprise/static/src/views/project_task_graph/**',
             'project_enterprise/static/src/views/project_task_pivot/**',
             'project_enterprise/static/src/views/project_task_activity/**',
+            'project_enterprise/static/src/views/project_task_common/**',
             'project_enterprise/static/src/views/task_gantt/**',
             'project_enterprise/static/src/views/project_gantt/**',
         ],
         'web.assets_unit_tests': [
             'project_enterprise/static/tests/*',
+            ('remove', 'project_enterprise/static/tests/task_sharing_gantt.test.js'),
+        ],
+        'project_enterprise.project_sharing_unit_tests': [
+            'project/static/src/project_sharing/views/**',
+            'project/static/src/project_sharing/project_sharing.js',
+            'project/static/src/project_sharing/project_sharing.xml',
+            'project_enterprise/static/src/views/task_sharing_gantt/**',
         ],
         'project.webclient': [
             'web_enterprise/static/src/webclient/**/*.scss',
@@ -59,7 +67,11 @@ Bridge module for project and enterprise
 
             ('remove', 'project/static/src/project_sharing/main.js'),
             ('remove', 'web_enterprise/static/src/views/list/list_controller.dark.scss'),
+            'web_gantt/static/src/**/*',
             'project_enterprise/static/src/project_sharing/**/*',
+            'project_enterprise/static/src/views/view_dialogs/**',
+            'project_enterprise/static/src/views/project_task_common/**',
+            'project_enterprise/static/src/views/task_sharing_gantt/**',
         ],
         'web.assets_tests': [
             'project_enterprise/static/tests/tours/**/*',
