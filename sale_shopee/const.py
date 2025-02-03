@@ -2,9 +2,9 @@
 
 # API Paths
 API_PATHS = {
-    'singapore': 'https://partner.shopeemobile.com',
-    'china': 'https://openplatform.shopee.cn',
-    'brazil': 'https://openplatform.shopee.com.br',
+    'production_singapore': 'https://partner.shopeemobile.com',
+    'production_china': 'https://openplatform.shopee.cn',
+    'production_brazil': 'https://openplatform.shopee.com.br',
     'test': 'https://partner.test-stable.shopeemobile.com',
     'test_china': 'https://openplatform.test-stable.shopee.cn',
 }
