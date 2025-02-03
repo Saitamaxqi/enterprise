@@ -5,8 +5,21 @@ import {
     openCommandBar,
 } from "../knowledge_tour_utils.js";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { patch } from "@web/core/utils/patch";
 
 const embeddedViewPatchUtil = embeddedViewPatchFunctions();
+
+function mockDate() {
+    const now = "2025-02-15T08:00:00";
+    class MockDate extends Date {
+        static now() {
+            return new Date(now);
+        }
+    }
+    return patch(window, { Date: MockDate });
+}
+
+let unpatchDate;
 
 function clickDate(el) {
     const rect = el.getBoundingClientRect();
@@ -50,6 +63,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: "body",
     run: () => {
         embeddedViewPatchUtil.before();
+        unpatchDate = mockDate();
     },
 }, {
     //-----------------------------------------------
@@ -166,15 +180,15 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger:
         "[data-embedded='view'] .o_knowledge_article_view_calendar_embedded_view",
 }, { // Check that the display options are applied
-    trigger: ".fc-timegrid-slot:not(.fc-timegrid-slot-lane[data-time='07:00:00'])",
+    trigger: ".fc-timegrid-slots:not(:has(.fc-timegrid-slot-lane[data-time='07:00:00']))",
 }, {
     trigger: ".fc-timegrid-slot.fc-timegrid-slot-lane[data-time='08:00:00']",
 }, {
-    trigger: ".fc-timegrid-slot:not(.fc-timegrid-slot-lane[data-time='16:30:00'])",
+    trigger: ".fc-timegrid-slots:not(:has(.fc-timegrid-slot-lane[data-time='16:30:00']))",
 }, {
     trigger: ".fc-timegrid-slot.fc-timegrid-slot-lane[data-time='16:00:00']",
 }, {
-    trigger: ":not(.fc-day-sat), :not(.fc-day-sun)",
+    trigger: ".o_calendar_widget:not(:has(.fc-day-sat, .fc-day-sun))",
 },
 {
     //---------------------------------------------------
@@ -453,6 +467,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
 }, {
     trigger: 'body',
     run: () => {
+        unpatchDate();
         embeddedViewPatchUtil.after();
     },
 }, ...endKnowledgeTour()
