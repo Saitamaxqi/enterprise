@@ -6,6 +6,7 @@
     Bridge module for stock_fleet and enterprise""",
     'depends': ['stock_fleet', 'web_gantt', 'web_map'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'data': [
         "views/batch_gantt.xml",

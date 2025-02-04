@@ -15,5 +15,6 @@ Accounting reports for Rwanda
     'installable': True,
     'auto_install': True,
     'website': 'https://www.odoo.com/app/accounting',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -12,5 +12,6 @@
     ],
     'installable': True,
     'auto_install': ['crm_enterprise'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

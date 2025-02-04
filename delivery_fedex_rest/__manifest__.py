@@ -10,5 +10,6 @@
         'data/delivery_fedex.xml',
         'views/delivery_fedex.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -14,6 +14,7 @@ https://erhvervsstyrelsen.dk/sites/default/files/2023-01/Technical-description-S
     """,
     "category": "Accounting/Localizations",
     "depends": ["account_saft_import", "l10n_dk"],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

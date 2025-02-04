@@ -8,6 +8,7 @@ Brazilian Accounting EDI for eCommerce
 Allows tax calculation and EDI for eCommerce users.
 """,
     "category": "Accounting/Localizations/EDI",
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     "depends": ["l10n_br_edi_sale", "website_sale_external_tax"],
     "data": [

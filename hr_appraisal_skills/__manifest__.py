@@ -31,5 +31,6 @@ This module makes it possible to manage employee skills during an appraisal proc
             'hr_appraisal_skills/static/src/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -18,6 +18,7 @@ Egypt Payroll and End of Service rules.
         "data/hr_salary_rule_data.xml",
         "views/hr_contract_views.xml",
     ],
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     'demo': [
         'data/l10n_eg_hr_payroll_demo.xml',

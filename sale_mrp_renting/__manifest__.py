@@ -10,5 +10,6 @@ This module serves as a bridge between Rental and Manufacturing, specifically in
     'summary': "Kits rental",
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': "OEEL-1",
 }

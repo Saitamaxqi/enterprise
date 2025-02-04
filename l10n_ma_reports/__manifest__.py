@@ -30,5 +30,6 @@ This module has been built with the help of Caudigef.
         'account_reports',
     ],
     'website': 'https://www.odoo.com/app/accounting',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

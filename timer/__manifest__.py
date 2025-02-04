@@ -28,5 +28,6 @@ It adds a timer to a view for time recording purpose
             'timer/static/tests/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

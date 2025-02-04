@@ -19,5 +19,6 @@ Accounting reports for Portugal
     ],
     'auto_install': ['l10n_pt', 'account_reports'],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

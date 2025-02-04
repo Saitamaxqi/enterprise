@@ -17,5 +17,6 @@ Employees' individual account forms are automatically integrated to the Document
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

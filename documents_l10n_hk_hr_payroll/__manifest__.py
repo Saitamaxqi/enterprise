@@ -19,5 +19,6 @@ Employee ir56 forms will be automatically integrated to the Document app.
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

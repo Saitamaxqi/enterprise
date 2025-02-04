@@ -15,5 +15,6 @@ split per delivery.
     'category': 'Accounting/Accounting',
     'depends': ['account_avatax_sale', 'stock'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

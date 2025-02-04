@@ -7,5 +7,6 @@
     'depends': ['sale_renting', 'sale_project'],
     'data': ['views/sale_order_views.xml'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'LGPL-3',
 }

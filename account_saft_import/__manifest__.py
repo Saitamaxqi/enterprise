@@ -22,5 +22,6 @@ This module allows the import of accounts, journals, partners, taxes and moves f
             'account_saft_import/static/src/xml/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

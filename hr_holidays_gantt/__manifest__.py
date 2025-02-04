@@ -16,5 +16,6 @@
             'hr_holidays_gantt/static/src/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

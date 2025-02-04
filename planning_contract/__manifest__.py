@@ -18,6 +18,7 @@ slots planification and allocated hours.
         'data/hr_contract_demo.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend_lazy': [

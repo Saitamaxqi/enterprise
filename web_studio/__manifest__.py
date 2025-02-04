@@ -50,6 +50,7 @@ Note: Only the admin user is allowed to make those customizations.
         'security/studio_security.xml',
     ],
     'application': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

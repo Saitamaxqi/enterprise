@@ -10,5 +10,6 @@
     'version': '1.0',
     'depends': ['project_enterprise', 'project_hr_skills'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

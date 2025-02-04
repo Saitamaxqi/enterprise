@@ -17,6 +17,7 @@ Necessary master data is also included.
     'data': [
         'data/saft_report.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

@@ -14,5 +14,6 @@ Search planning slots by skill
     'data': [
         'views/planning_slot_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -7,6 +7,7 @@
     'version': '1.0',
     'depends': ['stock_barcode', 'product_expiry'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'data': [
         'views/stock_move_line_views.xml',

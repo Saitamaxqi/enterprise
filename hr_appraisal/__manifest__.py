@@ -50,6 +50,7 @@ Key Features
     ],
     'installable': True,
     'application': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_generate_assessment_note_ids',
     'assets': {

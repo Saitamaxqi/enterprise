@@ -35,5 +35,6 @@
             'data_cleaning/static/src/views/*.xml',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

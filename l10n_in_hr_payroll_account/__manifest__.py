@@ -16,5 +16,6 @@ Accounting Data for Indian Payroll Rules.
         'data/l10n_in_hr_payroll_account_demo.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

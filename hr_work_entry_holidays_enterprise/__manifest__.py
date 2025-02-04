@@ -20,5 +20,6 @@ This application allows you to integrate time off in payslips.
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

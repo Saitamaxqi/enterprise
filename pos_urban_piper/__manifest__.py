@@ -30,5 +30,6 @@ This module integrates with UrbanPiper to receive and manage orders from various
             'pos_urban_piper/static/tests/tours/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

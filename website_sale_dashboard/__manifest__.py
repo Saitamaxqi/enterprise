@@ -14,5 +14,6 @@ It also provides new tools to analyse your data.
         'views/dashboard_view.xml',
     ],
     'auto_install': ['website_sale'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

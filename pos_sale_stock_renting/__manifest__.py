@@ -11,6 +11,7 @@
     'depends': ['pos_sale', 'sale_stock_renting'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_tests': [

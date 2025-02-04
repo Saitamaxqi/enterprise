@@ -12,6 +12,7 @@ This bridge module is auto-installed when the modules stock_barcode and mrp_subc
     'depends': ['stock_barcode', 'mrp_subcontracting'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

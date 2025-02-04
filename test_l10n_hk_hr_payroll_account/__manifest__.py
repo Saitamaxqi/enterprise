@@ -9,5 +9,6 @@
         'l10n_hk_hr_payroll_account',
         'documents_l10n_hk_hr_payroll',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

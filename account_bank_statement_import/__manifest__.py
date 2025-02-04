@@ -22,5 +22,6 @@ OFX and QIF imports are available in Enterprise version.""",
             'account_bank_statement_import/static/src/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

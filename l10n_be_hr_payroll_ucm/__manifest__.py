@@ -19,5 +19,6 @@
         'data/l10n_be_hr_payroll_ucm_demo.xml',
         'data/hr_work_entry_type_data.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -20,5 +20,6 @@ option to send products' attachments to the documents app.
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

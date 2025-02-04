@@ -16,6 +16,7 @@ Accounting reports for US
     'installable': True,
     'post_init_hook': '_l10n_us_reports_post_init',
     'auto_install': ['l10n_us', 'account_reports'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

@@ -20,6 +20,7 @@ This module allows ecommerce users to enter their UPS account number and deliver
     ],
     'auto_install': True,
     'uninstall_hook': 'uninstall_hook',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_frontend': [

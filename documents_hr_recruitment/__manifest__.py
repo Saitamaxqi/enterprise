@@ -23,6 +23,7 @@ Add the ability to manage resumés and letters from the Documents app.
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_documents_hr_recruitment_post_init',
 }

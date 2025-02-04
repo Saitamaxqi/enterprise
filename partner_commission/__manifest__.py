@@ -27,5 +27,6 @@ This module allows to configure commissions for resellers.
         'report/sale_subscription_report_view.xml',
         'report/sale_report_view.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

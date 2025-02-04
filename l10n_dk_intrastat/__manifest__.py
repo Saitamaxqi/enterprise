@@ -14,5 +14,6 @@ Intrastat for Denmark
         'account_intrastat',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

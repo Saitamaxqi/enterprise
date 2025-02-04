@@ -21,5 +21,6 @@ RFQ from an approval purchase request.
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

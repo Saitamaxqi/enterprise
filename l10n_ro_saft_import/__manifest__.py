@@ -11,6 +11,7 @@ Adds specificities for the Romanian SAF-T
     """,
     "category": "Accounting/Localizations",
     "depends": ["account_saft_import", "l10n_ro_saft"],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

@@ -38,6 +38,7 @@ procure.
     'demo': [
         'data/mps_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

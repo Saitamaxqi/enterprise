@@ -14,5 +14,6 @@
         'views/delivery_carrier_views.xml',
         'views/stock_picking.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -39,5 +39,6 @@
             'social_twitter/static/tests/tours/tour_social_twitter_spam.js',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

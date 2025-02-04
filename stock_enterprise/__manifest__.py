@@ -24,5 +24,6 @@ Contains the enterprise views for Stock management
     },
     'installable': True,
     'auto_install': ['stock'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

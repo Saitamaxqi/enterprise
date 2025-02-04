@@ -36,6 +36,7 @@ Allow clients to Schedule Appointments through your Website
     ],
     'installable': True,
     'auto_install': ['appointment', 'website_enterprise'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_tests': [

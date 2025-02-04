@@ -16,5 +16,6 @@
         'security/marketing_automation_whatsapp_security.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -18,5 +18,6 @@ Expense documents will be automatically integrated to the Document app.
         'demo/documents_document_demo.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

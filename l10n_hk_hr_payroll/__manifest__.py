@@ -72,5 +72,6 @@ Hong Kong Payroll Rules.
             'l10n_hk_hr_payroll/static/src/scss/report_ird.scss',
         ]
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

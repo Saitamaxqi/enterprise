@@ -19,5 +19,6 @@ Take into account the working schedule (sick leaves, part time, ...) of employee
         'microsoft_calendar',
         'website_appointment',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

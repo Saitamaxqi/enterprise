@@ -25,5 +25,6 @@ Base module for Malaysian reports
     },
     'auto_install': True,
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

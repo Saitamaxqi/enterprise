@@ -36,6 +36,7 @@
         'data/mrp_workorder_demo.xml',
         'data/mrp_workorder_demo_stool.xml'
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

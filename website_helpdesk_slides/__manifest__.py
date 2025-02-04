@@ -23,5 +23,6 @@ Website Slides integration for the helpdesk module
         'views/slide_channel_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

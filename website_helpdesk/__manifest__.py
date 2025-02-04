@@ -19,6 +19,7 @@
         'views/snippets.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_configure_teams',
     'assets': {

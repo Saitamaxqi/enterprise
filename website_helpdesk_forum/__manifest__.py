@@ -39,5 +39,6 @@ Website Forum integration for the helpdesk module
         ],
     },
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

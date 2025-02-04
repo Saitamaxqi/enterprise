@@ -18,5 +18,6 @@
     'demo': [
         'data/hr_work_entry_contract_planning_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

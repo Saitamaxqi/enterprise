@@ -34,5 +34,6 @@ The extra tab only appears if:
     },
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

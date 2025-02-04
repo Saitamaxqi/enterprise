@@ -35,6 +35,7 @@
     'website': ' https://www.odoo.com/app/timesheet',
     'auto_install': ['web_grid', 'hr_timesheet'],
     'application': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'pre_init_hook': 'pre_init_hook',
     'post_init_hook': 'post_init_hook',

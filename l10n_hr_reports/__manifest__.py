@@ -18,5 +18,6 @@ Accounting reports for Croatia
     'installable': True,
     'auto_install': ['l10n_hr', 'account_reports'],
     'website': 'https://www.odoo.com/app/accounting',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

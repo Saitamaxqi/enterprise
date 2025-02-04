@@ -18,5 +18,6 @@ descriptions that will attract potential candidates.
     'data': [
         'wizard/hr_recruitment_post_views.xml'
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

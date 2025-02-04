@@ -19,5 +19,6 @@ Adds workcenters to Quality Control
         'wizard/on_demand_quality_check_wizard_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

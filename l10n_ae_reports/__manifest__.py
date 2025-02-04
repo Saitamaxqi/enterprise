@@ -12,5 +12,6 @@
     'post_init_hook': '_l10n_ae_reports_post_init',
     'auto_install': ['l10n_ae', 'account_reports'],
     'website': 'https://www.odoo.com/app/accounting',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

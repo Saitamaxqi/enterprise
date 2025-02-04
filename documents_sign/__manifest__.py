@@ -26,5 +26,6 @@ The first element of the selection (in DRM) will be used as the signature attach
 
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

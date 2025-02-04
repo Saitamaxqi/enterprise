@@ -8,6 +8,7 @@
     'category': 'Sales/Subscriptions',
     'demo': ['data/sale_subscription_demo.xml'],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_tests': [

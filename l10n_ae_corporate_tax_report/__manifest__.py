@@ -24,6 +24,7 @@ United Arab Emirates Corporate Tax Report
             'l10n_ae_corporate_tax_report/static/src/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': "OEEL-1",
     'post_init_hook': '_post_init_hook_configure_corporate_tax_report_data',
 }

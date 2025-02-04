@@ -9,5 +9,6 @@ Bridge module between purchase and intrastat.
     """,
     'depends': ['purchase', 'account_intrastat'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

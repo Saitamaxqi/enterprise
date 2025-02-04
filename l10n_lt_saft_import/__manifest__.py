@@ -11,6 +11,7 @@ Adds specificities for the Lithuanian SAF-T
     """,
     "category": "Accounting/Localizations",
     "depends": ["account_saft_import", "l10n_lt"],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

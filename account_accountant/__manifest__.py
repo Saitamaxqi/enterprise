@@ -48,6 +48,7 @@ It gives the Administrator user access to important invoicing features such as b
     'auto_install': True,
     'post_init_hook': '_account_accountant_post_init',
     'uninstall_hook': "uninstall_hook",
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

@@ -16,6 +16,7 @@ Pakistan Payroll and End of Service rules
         'data/hr_salary_rule_data.xml',
         'data/hr_rule_parameter_data.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'demo':[
         'data/l10n_pk_hr_payroll_demo.xml'

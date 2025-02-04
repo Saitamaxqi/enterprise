@@ -37,6 +37,7 @@ linked to an SO, or only the validated timesheets
         'data/project_task_demo.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

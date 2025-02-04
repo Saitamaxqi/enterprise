@@ -9,6 +9,7 @@
     'description': """ """,
     'depends': ['hr', 'web_gantt'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend_lazy': [

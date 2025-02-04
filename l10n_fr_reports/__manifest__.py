@@ -30,5 +30,6 @@ in the "Statement Reports" section).
     ],
     'auto_install': ['l10n_fr_account', 'account_reports'],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -22,5 +22,6 @@ Whenever possible, you should use a more appropriate file format like OFX.
         'views/account_journal_views.xml',
     ],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

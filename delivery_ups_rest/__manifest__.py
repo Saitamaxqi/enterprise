@@ -12,5 +12,6 @@
         'views/sale_views.xml',
         'views/res_partner.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

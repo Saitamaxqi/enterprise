@@ -19,5 +19,6 @@ Module to import SODA files.
     'auto_install': True,
     'website': 'https://www.odoo.com/app/accounting',
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

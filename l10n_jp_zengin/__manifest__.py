@@ -15,6 +15,7 @@ push a set of payments.
         'views/res_bank_views.xml',
         'views/res_partner_bank_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

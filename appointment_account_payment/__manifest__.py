@@ -6,6 +6,7 @@
     'category': 'Marketing/Online Appointment',
     'summary': 'Up-front payment on bookings',
     'description': """Add a payment step at the end of appointment and resource bookings""",
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
     'depends': ['appointment', 'account_payment'],

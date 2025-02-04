@@ -11,5 +11,6 @@
     ],
     'installable': True,
     'auto_install': ['marketing_automation'],
+    'author': 'Odoo S.A.',
     'license': 'LGPL-3',
 }

@@ -20,5 +20,6 @@ Forecast shifts and keep an eye on the hours consumed on your plannable products
         'views/product_template_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

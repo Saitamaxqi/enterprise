@@ -25,6 +25,7 @@ It assigns manager and user access rights to the Administrator for the accountin
     'application': True,
     'post_init_hook': '_accounting_post_init',
     'uninstall_hook': "uninstall_hook",
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

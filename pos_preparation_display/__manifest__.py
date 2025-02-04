@@ -42,5 +42,6 @@
             'pos_preparation_display/static/tests/tours/point_of_sale/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

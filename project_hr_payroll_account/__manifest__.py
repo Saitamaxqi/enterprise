@@ -9,5 +9,6 @@
     'depends': ['project', 'hr_payroll_account'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

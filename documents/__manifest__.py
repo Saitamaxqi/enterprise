@@ -51,6 +51,7 @@ App to upload and manage your documents.
     'demo': [
         'demo/documents_document_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

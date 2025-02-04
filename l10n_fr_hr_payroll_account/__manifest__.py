@@ -11,5 +11,6 @@ Accounting Data for French Payroll Rules.
 This module is based on an unsupported France module. Please consider that we won't support this module.
 --------------------------------------------------------------------------------------------------------
     """,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

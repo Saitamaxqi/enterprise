@@ -18,5 +18,6 @@ Convert helpdesk tickets to field service tasks.
     ],
     'demo': ['data/helpdesk_fsm_demo.xml'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

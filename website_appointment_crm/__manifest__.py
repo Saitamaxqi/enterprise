@@ -14,5 +14,6 @@ country and detailed information like pages browsed by the lead (through a link 
 """,
     'depends': ['appointment_crm', 'website_crm'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

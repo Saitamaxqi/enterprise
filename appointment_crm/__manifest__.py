@@ -19,6 +19,7 @@ Allow to generate lead from Scheduled Appointments through your Website
         'views/appointment_type_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

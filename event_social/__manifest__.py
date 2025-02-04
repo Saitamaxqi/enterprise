@@ -18,5 +18,6 @@ This module allows you to schedule social posts from the event communication."""
             'event_social/static/src/template_reference_field/field_event_mail_template_reference.xml',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

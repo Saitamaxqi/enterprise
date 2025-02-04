@@ -8,6 +8,7 @@
     'description': """Enable choosing a Google Calendar videoconference link to give to your clients for an appointment.""",
     'depends': ['google_calendar', 'appointment'],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'data': [
         'views/appointment_templates_validation.xml',

@@ -18,5 +18,6 @@ Adds the possibility to specify the origin country of goods and the partner VAT 
         'data/intrastat_report_services_f01dgs.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

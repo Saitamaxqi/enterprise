@@ -14,6 +14,7 @@ This module provides the link between quality steps and IoT devices.
         'views/iot_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

@@ -10,6 +10,7 @@
         'hr_work_entry_contract_planning',
         'hr_work_entry_contract_attendance',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

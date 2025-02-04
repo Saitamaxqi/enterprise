@@ -13,5 +13,6 @@
 
     'depends': ['sale_timesheet_enterprise', 'project_timesheet_holidays'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

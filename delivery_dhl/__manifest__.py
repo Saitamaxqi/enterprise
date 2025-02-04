@@ -16,5 +16,6 @@
     'demo': [
         'demo/demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

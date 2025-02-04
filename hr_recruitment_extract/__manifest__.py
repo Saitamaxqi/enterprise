@@ -17,6 +17,7 @@
         'data/hr_recruitment_demo.xml'
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

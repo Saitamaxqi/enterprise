@@ -12,6 +12,7 @@
     hence the need for this test module.
     """,
     'depends': ['spreadsheet_edition', 'test_spreadsheet'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'spreadsheet.o_spreadsheet': [

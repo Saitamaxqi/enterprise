@@ -8,6 +8,7 @@ Brazilian Accounting EDI for Sale
 Adds some fields to sale orders that will be carried over the invoice.
 """,
     "category": "Accounting/Localizations/EDI",
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     "depends": ["sale_external_tax", "l10n_br_edi"],
     "data": [

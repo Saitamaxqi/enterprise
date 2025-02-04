@@ -15,6 +15,7 @@ Import Data From Winbooks
         'wizard/account_import_summary_views.xml',
         'wizard/import_wizard_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

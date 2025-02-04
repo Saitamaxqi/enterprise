@@ -66,6 +66,7 @@ Features:
     ],
     'demo': ['data/helpdesk_demo.xml'],
     'application': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_create_helpdesk_team',
     'assets': {

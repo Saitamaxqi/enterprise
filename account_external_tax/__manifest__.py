@@ -14,5 +14,6 @@ Provides a common interface to be used when implementing apps to outsource tax c
     'data': [
         'views/account_move_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

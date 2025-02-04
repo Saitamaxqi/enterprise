@@ -16,5 +16,6 @@ Adds an action to sign documents attached to tasks.
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

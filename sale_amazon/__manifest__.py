@@ -41,5 +41,6 @@ Key Features
 
         'wizards/recover_order_wizard_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -42,5 +42,6 @@ Create Sales order with timesheets and products from tasks
             'industry_fsm_sale/static/tests/industry_fsm_sale_mock_model.js',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

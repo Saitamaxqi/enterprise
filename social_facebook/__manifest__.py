@@ -36,5 +36,6 @@
             'social_facebook/static/src/js/tests/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

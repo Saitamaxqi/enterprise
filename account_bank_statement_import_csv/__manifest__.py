@@ -20,6 +20,7 @@ Whenever possible, you should use a more appropriate file format like OFX.
     'depends': ['account_bank_statement_import', 'base_import'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

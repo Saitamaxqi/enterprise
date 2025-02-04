@@ -17,5 +17,6 @@ Add Subcontracting information in Cost Analysis Report and The Production Analys
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

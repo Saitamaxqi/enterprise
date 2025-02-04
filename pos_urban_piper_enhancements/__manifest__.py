@@ -25,5 +25,6 @@ Enhancements for the Point of Sale UrbanPiper module. Includes features such as 
         ]
     },
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

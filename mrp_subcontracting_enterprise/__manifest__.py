@@ -9,5 +9,6 @@
     'version': '1.0',
     'depends': ['mrp_subcontracting'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

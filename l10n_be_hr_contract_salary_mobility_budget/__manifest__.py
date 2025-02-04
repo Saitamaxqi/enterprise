@@ -13,6 +13,7 @@
         "report/report_payslip_templates.xml",
         "views/hr_contract_views.xml",
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
     'assets': {

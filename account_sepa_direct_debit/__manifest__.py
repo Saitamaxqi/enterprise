@@ -52,5 +52,6 @@ available for generating a payment on the selected invoice.
         'wizard/account_payment_register_view.xml',
         'wizard/sdd_mandate_send_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

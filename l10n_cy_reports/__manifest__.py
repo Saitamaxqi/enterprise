@@ -21,5 +21,6 @@ Cyprus accounting reports
         "l10n_cy",
         "account_reports",
     ],
+    "author": "Odoo S.A.",
     "license": "OEEL-1"
 }

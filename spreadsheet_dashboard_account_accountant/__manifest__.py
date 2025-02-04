@@ -12,5 +12,6 @@
     ],
     'installable': True,
     'auto_install': ['accountant'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -14,6 +14,7 @@
         'views/res_config_settings_views.xml',
         'data/hr_holidays_data.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

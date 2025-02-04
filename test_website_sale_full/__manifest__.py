@@ -14,5 +14,6 @@
             'test_website_sale_full/static/tests/tours/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

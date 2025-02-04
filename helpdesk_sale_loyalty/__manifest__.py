@@ -17,5 +17,6 @@ Generate Coupons from Helpdesks tickets
     'demo': [
         'data/helpdesk_sale_coupon_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

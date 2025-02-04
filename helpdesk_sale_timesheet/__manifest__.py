@@ -28,6 +28,7 @@
             'helpdesk_sale_timesheet/static/tests/tours/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_helpdesk_sale_timesheet_post_init'
 }

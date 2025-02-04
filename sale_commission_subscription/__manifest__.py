@@ -12,5 +12,6 @@
         'views/sale_commission_plan_view.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

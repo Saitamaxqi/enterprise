@@ -21,5 +21,6 @@ This is meant to be used with localization specific modules.
             'account_saft/static/src/components/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

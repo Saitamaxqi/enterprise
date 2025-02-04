@@ -56,5 +56,6 @@
             'social/static/src/xml/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

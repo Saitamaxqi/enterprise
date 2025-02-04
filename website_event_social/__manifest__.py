@@ -24,5 +24,6 @@
             'website_event_social/static/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

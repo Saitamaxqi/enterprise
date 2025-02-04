@@ -30,6 +30,7 @@
             'l10n_se_sie_import/static/src/xml/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'installable': True,
 }

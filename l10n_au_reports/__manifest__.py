@@ -41,5 +41,6 @@ The report uses tax tags ``Service`` and ``Tax Withheld`` in order to find adequ
     'installable': True,
     'post_init_hook': '_l10n_au_reports_post_init',
     'auto_install': ['l10n_au', 'account_reports'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

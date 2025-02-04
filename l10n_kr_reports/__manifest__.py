@@ -16,5 +16,6 @@ Base module for the Republic of Korea reports
     ],
     'auto_install': True,
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

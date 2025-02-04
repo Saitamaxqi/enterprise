@@ -10,6 +10,7 @@
         'l10n_us_hr_payroll',
         'l10n_us_hr_payroll_account',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_generate_payslips',
 }

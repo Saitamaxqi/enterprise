@@ -9,5 +9,6 @@
     'depends': ['l10n_es_reports'],
     'data': ['wizard/aeat_boe_export_wizards.xml'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

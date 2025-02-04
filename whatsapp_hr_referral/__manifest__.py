@@ -14,5 +14,6 @@
         'data/whatsapp_template_data.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -18,5 +18,6 @@ For that purposes it adds
         'views/event_registration_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

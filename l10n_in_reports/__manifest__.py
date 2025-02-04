@@ -42,6 +42,7 @@ Accounting reports for India
     'auto_install': ['l10n_in', 'account_reports'],
     'installable': True,
     'post_init_hook': '_l10n_in_reports_post_init',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

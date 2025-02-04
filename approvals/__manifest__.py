@@ -56,5 +56,6 @@ creates next activities for the related approvers.
             ('remove', 'approvals/static/tests/tours/**/*'),
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

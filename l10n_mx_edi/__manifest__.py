@@ -58,6 +58,7 @@ This module allows the creation of the EDI documents and the communication with 
     'post_init_hook': 'post_init_hook',
     'installable': True,
     'auto_install': ['l10n_mx'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

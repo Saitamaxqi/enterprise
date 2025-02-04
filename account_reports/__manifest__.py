@@ -52,6 +52,7 @@ Accounting Reports
     ],
     'auto_install': True,
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'account_reports.assets_pdf_export': [

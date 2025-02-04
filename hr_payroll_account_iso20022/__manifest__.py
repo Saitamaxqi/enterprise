@@ -12,6 +12,7 @@
         'data/hr_payroll_dashboard_warning_data.xml',
         'wizard/hr_payroll_payment_report_wizard.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

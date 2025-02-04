@@ -10,5 +10,6 @@
     ],
     'installable': True,
     'auto_install': ['l10n_de', 'account_intrastat'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

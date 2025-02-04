@@ -35,6 +35,7 @@ You can choose between:
     ],
     'installable': True,
     'auto_install': ['l10n_us'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.report_assets_common': [

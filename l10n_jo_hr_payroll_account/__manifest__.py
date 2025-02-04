@@ -16,6 +16,7 @@ Accounting Data for Jordan Payroll Rules
     'demo': [
         'data/l10n_jo_hr_payroll_account_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

@@ -27,5 +27,6 @@
             'social_demo/static/src/js/stream_post_comments_reply.js',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -8,5 +8,6 @@
     'depends': ['pos_preparation_display', 'pos_hr'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

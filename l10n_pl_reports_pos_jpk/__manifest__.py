@@ -12,5 +12,6 @@ This module provides the information from PoS for the JPK of Poland
     ],
     'auto_install': True,
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

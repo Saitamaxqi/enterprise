@@ -19,5 +19,6 @@ or generate a ticket from a business inquiry
     ],
     'depends': ['crm', 'helpdesk'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

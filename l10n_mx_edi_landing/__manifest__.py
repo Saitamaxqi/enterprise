@@ -17,5 +17,6 @@
         'views/stock_landed_cost.xml',
     ],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

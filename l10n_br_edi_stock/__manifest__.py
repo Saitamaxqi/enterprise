@@ -8,6 +8,7 @@ Brazilian Accounting EDI for stock
 Adds delivery-related information to the NF-e.
 """,
     "category": "Accounting/Localizations/EDI",
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     "depends": [
         "l10n_br_edi",

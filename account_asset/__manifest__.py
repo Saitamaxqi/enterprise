@@ -28,6 +28,7 @@ Keeps track of depreciations, and creates corresponding journal entries.
     'demo': [
         'demo/account_asset_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
     'assets': {

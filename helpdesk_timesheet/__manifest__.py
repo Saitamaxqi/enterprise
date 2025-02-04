@@ -40,6 +40,7 @@
         'data/helpdesk_ticket_demo.xml',
         'data/account_analytic_line_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_helpdesk_timesheet_post_init',
     'uninstall_hook': '_helpdesk_timesheet_uninstall',

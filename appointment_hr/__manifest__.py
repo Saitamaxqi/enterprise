@@ -17,5 +17,6 @@ Take into account the working schedule (sick leaves, part time, ...) of employee
         'views/appointment_type_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

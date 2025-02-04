@@ -17,6 +17,7 @@
         'views/hr_contract_salary_template.xml',
         'views/hr_payroll_headcount.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
     'assets': {

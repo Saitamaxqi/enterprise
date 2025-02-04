@@ -23,5 +23,6 @@ This application allows you to reimburse expenses in payslips.
     'demo': ['data/hr_payroll_expense_demo.xml'],
     'auto_install': True,
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -11,6 +11,7 @@ Keeps track of all appointments related to applicants.
 """,
     'depends': ['appointment', 'hr_recruitment'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_tests': [

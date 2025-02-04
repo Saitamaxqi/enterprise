@@ -24,5 +24,6 @@ api from Monster.
         'views/hr_contract_type_views.xml',
         'views/res_config_settings.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

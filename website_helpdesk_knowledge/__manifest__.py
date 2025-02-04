@@ -19,6 +19,7 @@ Helpdesk integration with knowledge
         'data/knowledge_data.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_tests': [

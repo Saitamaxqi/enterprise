@@ -16,5 +16,6 @@ When sharing documents/folder, the domain of the shared URL can be chosen by sel
         'views/documents_document_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

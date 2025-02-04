@@ -8,6 +8,7 @@
     'summary': 'Visitor management system',
     'installable': True,
     'application': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'version': '1.0',
     'depends': [

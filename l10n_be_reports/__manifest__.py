@@ -44,6 +44,7 @@ Accounting reports for Belgium
     'post_init_hook': '_l10n_be_reports_post_init',
     'auto_install': ['l10n_be', 'account_reports'],
     'website': 'https://www.odoo.com/app/accounting',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

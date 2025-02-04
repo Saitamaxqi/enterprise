@@ -14,5 +14,6 @@
         'views/delivery_usps_template.xml',
         'views/res_config_settings_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

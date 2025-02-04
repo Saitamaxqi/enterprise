@@ -59,5 +59,6 @@ Indian Payroll Salary Rules.
     'demo': [
         'data/l10n_in_hr_payroll_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

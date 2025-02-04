@@ -11,5 +11,6 @@ Bridge module for project_enterprise and hr_contract
     'version': '1.0',
     'depends': ['project_enterprise_hr', 'hr_contract'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

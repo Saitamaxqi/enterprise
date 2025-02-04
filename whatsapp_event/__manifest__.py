@@ -16,6 +16,7 @@
             'whatsapp_event/static/src/template_reference_field/field_event_mail_template_reference.xml',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

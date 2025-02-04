@@ -83,6 +83,7 @@
             'hr_payroll/static/tests/**/*.js',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_post_init_hook',
 }

@@ -19,5 +19,6 @@
         'views/l10n_us_adp_export_views.xml',
         'security/ir.model.access.csv',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

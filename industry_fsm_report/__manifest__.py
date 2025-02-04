@@ -41,5 +41,6 @@ Create Reports for Field Service
             'industry_fsm_report/static/tests/tours/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

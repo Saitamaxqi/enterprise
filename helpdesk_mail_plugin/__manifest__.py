@@ -13,5 +13,6 @@
     'data': [
         'views/helpdesk_ticket_views.xml'
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

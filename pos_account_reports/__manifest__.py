@@ -8,5 +8,6 @@
     'version': '0.1',
     'depends': ['point_of_sale', 'account_reports'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

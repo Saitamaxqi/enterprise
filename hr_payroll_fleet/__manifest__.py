@@ -10,5 +10,6 @@
     'data': [
         'data/hr_payroll_dashboard_warning_data.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

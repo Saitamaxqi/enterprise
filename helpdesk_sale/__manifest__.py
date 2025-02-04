@@ -16,5 +16,6 @@ Manage the after sale of the products from helpdesk tickets.
         'views/helpdesk_sla_views.xml',
     ],
     'demo': ['data/helpdesk_sale_demo.xml'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

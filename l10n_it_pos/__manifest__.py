@@ -29,5 +29,6 @@
             'l10n_it_pos/static/tests/unit/**/*',
         ]
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

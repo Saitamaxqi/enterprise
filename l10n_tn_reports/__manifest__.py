@@ -20,5 +20,6 @@ Accounting reports for Tunisia
     ],
     'auto_install': ['l10n_tn', 'account_reports'],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -16,5 +16,6 @@ Malta accounting reports.
     ],
     'installable': True,
     'auto_install': ['l10n_mt', 'account_reports'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

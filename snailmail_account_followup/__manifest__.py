@@ -18,6 +18,7 @@ Extension to send follow-up documents by post
     ],
     'demo': ['data/account_followup_demo.xml'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'snailmail_account_followup.followup_report_assets_snailmail': [

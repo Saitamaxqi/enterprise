@@ -10,6 +10,7 @@
     'data': [
         'views/calendar_alarm_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

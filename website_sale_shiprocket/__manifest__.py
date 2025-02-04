@@ -15,5 +15,6 @@ This module allows ecommerce users to book an order with the shiprocket using ca
         'data/demo.xml',
     ],
     'auto_install': ['delivery_shiprocket', 'website_sale'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -4,5 +4,6 @@
     'version': '1.0',
     'category': 'Accounting/Accounting',
     'depends': ['l10n_br_avatax', 'sale_external_tax', 'sale'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

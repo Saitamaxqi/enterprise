@@ -90,5 +90,6 @@ This module modifies the web addon to provide Enterprise design and responsivene
             ('remove', 'web_enterprise/static/tests/**/*.test.js'),
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -13,5 +13,6 @@ and submit your Intracommunity Services to the Dutch tax authorities.
         'views/res_company_view.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

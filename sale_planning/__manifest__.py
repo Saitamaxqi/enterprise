@@ -46,6 +46,7 @@ Plan shifts and keep an eye on the hours consumed on your plannable products.
             'sale_planning/static/tests/*',
         ]
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'uninstall_hook': 'uninstall_hook',
 }

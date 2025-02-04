@@ -18,6 +18,7 @@
             'whatsapp_pos/static/src/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True
 }

@@ -23,6 +23,7 @@ model. Furthermore, you can create a new website form or edit an existing one.
         'views/snippets/s_website_form.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web_studio.studio_assets_minimal': [

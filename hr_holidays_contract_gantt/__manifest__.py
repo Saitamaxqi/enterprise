@@ -9,5 +9,6 @@ Gantt view for Time Off Dashboard with Contracts
     'version': '1.0',
     'depends': ['hr_holidays_gantt', 'hr_contract'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

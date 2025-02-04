@@ -15,6 +15,7 @@ Contains advanced features for CRM such as new views
     ],
     'installable': True,
     'auto_install': ['crm'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

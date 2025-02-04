@@ -6,6 +6,7 @@ Accounting reports for the Vietnam
     """,
     "version": "1.0",
     "category": "Accounting/Localizations/Reporting",
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     "depends": [
         "l10n_vn",

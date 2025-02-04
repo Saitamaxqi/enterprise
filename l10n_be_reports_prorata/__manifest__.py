@@ -15,5 +15,6 @@
     'installable': True,
     'auto_install': True,
     'website': 'https://www.odoo.com/page/accounting',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

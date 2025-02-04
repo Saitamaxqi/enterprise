@@ -10,5 +10,6 @@
     """,
     'depends': ['website_generator', 'website_sale'],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

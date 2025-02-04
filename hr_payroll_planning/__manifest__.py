@@ -15,5 +15,6 @@
     'data': [
         'views/hr_payslip_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

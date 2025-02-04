@@ -29,5 +29,6 @@
     },
     'post_init_hook': 'set_update_stock_real_time',
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

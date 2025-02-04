@@ -17,5 +17,6 @@ This module allows the user to add real estate related data to the Spanish local
         'wizard/aeat_boe_export_wizards.xml',
         'data/mod347.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

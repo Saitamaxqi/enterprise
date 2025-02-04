@@ -22,5 +22,6 @@
             'payment_sepa_direct_debit/static/src/js/payment_form.js',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

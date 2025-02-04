@@ -7,6 +7,7 @@
     'description': """Allow to sync your Outlook Calendar from the Appointment App""",
     'depends': ['microsoft_calendar', 'appointment'],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'data': [
         'views/appointment_type_views.xml',

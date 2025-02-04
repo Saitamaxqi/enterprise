@@ -20,5 +20,6 @@ Provides a common interface to be used when implementing apps to outsource tax c
             'sale_external_tax/static/tests/tours/sale_external_optional_products.js',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

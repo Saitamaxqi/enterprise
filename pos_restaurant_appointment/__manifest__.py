@@ -17,6 +17,7 @@
     'demo': [
         'demo/pos_restaurant_appointment_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_pos_restaurant_appointment_after_init',
     'assets': {

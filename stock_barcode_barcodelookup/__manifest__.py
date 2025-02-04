@@ -18,5 +18,6 @@
             'stock_barcode_barcodelookup/static/tests/tours/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

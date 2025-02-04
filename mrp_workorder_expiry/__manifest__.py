@@ -20,5 +20,6 @@ Technical module.
             'mrp_workorder_expiry/static/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

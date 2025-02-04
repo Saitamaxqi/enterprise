@@ -26,5 +26,6 @@ reduce handling time and improve customer experience.
             'delivery_starshipit/static/src/components/**/*.xml',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

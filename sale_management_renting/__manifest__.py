@@ -15,5 +15,6 @@
         'data/rental_management_demo.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

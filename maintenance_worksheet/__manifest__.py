@@ -23,5 +23,6 @@ Create customizable worksheet templates for Maintenance
     "demo": [
         'data/maintenance_worksheet_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

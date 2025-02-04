@@ -19,5 +19,6 @@ Cash Basis for Accounting Reports
         ],
     },
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

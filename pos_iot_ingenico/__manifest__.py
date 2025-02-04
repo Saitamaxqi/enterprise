@@ -8,6 +8,7 @@
     ],
     'depends': ['pos_iot'],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'point_of_sale._assets_pos': [

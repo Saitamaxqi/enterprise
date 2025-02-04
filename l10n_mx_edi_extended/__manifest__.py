@@ -34,5 +34,6 @@
         'demo/demo_cfdi.xml',
     ],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

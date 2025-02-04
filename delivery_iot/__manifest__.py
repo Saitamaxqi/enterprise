@@ -15,6 +15,7 @@ Allows using IoT devices, such as scales and printers, for delivery operations.
         'views/iot_views.xml',
         'views/stock_picking_views.xml',
         ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
     'assets': {

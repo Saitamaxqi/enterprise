@@ -29,5 +29,6 @@ for IoT Box config.
         ],
     },
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

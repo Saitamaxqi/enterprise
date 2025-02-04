@@ -10,5 +10,6 @@
     Adds Quality Control to workorders with IoT.
 """,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

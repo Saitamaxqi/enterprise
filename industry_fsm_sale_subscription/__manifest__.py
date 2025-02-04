@@ -7,5 +7,6 @@
     'version': '1.0',
     'depends': ['industry_fsm_sale', 'project_sale_subscription'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

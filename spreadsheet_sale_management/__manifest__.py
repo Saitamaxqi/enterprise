@@ -6,6 +6,7 @@
     'description': 'Link a spreadsheet to a quotation templates and access your calculator from a Sale Order.',
     'depends': ['spreadsheet_edition', 'sale_management'],
     'auto_install': ['sale_management'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'data': [
         'security/ir.model.access.csv',

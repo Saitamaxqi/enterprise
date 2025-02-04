@@ -15,5 +15,6 @@ Adds repair orders to Quality Control
         'views/repair_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -9,6 +9,7 @@
         'data/whatsapp_template_data.xml',
         'wizard/payment_link_wizard.xml'
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True
 }

@@ -18,5 +18,6 @@ Employee 281.10 and 281.45 forms will be automatically integrated to the Documen
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

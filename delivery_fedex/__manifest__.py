@@ -14,5 +14,6 @@
         'views/delivery_fedex.xml',
         'views/res_config_settings_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

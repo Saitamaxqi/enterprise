@@ -35,5 +35,6 @@ Key Features
         'views/stock_picking_views.xml',
         'views/menus.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -16,6 +16,7 @@ This module allows to print your payments on pre-printed checks.
         'views/account_menuitem.xml',
     ],
     'auto_install': ['l10n_ph'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.report_assets_common': [

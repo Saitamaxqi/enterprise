@@ -21,5 +21,6 @@
         'web_studio',
         'whatsapp',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

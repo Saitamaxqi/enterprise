@@ -10,5 +10,6 @@
     'depends': ['pos_online_payment_self_order', 'pos_preparation_display'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

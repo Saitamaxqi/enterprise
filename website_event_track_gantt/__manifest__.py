@@ -19,5 +19,6 @@ For that purpose it adds a gantt view on event tracks.""",
             'website_event_track_gantt/static/src/**/*.js',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -9,5 +9,6 @@
     'description': """Warn user in case of products merging""",
     'depends': ['data_cleaning', 'stock_account'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

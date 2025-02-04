@@ -33,5 +33,6 @@ Odoo Web Gantt chart view.
         ],
     },
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

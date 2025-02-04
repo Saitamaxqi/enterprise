@@ -10,6 +10,7 @@
     'depends': ['pos_hr', 'web_mobile'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'point_of_sale._assets_pos': [

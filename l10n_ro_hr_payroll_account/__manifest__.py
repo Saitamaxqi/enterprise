@@ -16,6 +16,7 @@ Accounting Data for Romania Payroll Rules
     'demo': [
         'data/l10n_ro_hr_payroll_account_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

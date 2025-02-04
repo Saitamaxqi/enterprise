@@ -13,5 +13,6 @@ Use devices connected to an IoT Box to control the quality of your products.
         'wizard/quality_check_wizard_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

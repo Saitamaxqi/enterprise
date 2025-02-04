@@ -45,6 +45,7 @@
     'demo': [
         'data/hr_contract_salary_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_frontend': [

@@ -23,6 +23,7 @@ This module provides management of your IoT Boxes inside Odoo.
     ],
     'installable': True,
     'application': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

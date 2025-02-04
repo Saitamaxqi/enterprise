@@ -25,6 +25,7 @@ Quality Base
         'data/quality_data.xml',
         'views/quality_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

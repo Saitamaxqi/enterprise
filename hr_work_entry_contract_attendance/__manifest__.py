@@ -17,6 +17,7 @@
     'demo': [
         'data/hr_work_entry_contract_attendance_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'installable': True,
     'auto_install': True,

@@ -16,5 +16,6 @@ to the Monster job posts.
         'hr_recruitment_integration_monster',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

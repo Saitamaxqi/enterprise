@@ -15,5 +15,6 @@ Bridge to add contract calendar on automation rules
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

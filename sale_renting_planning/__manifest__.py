@@ -5,6 +5,7 @@
     'category': 'Hidden',
     'depends': ['sale_planning', 'sale_renting'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'uninstall_hook': 'uninstall_hook',
 }

@@ -45,6 +45,7 @@ Allow clients to Schedule Appointments through the Portal
     ],
     'installable': True,
     'application': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_frontend': [

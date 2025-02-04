@@ -21,6 +21,7 @@ Create customizable worksheet for Quality Control.
     "demo": [
         'data/quality_worksheet_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

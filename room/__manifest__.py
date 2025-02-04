@@ -58,5 +58,6 @@
             'room/static/src/room_booking/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

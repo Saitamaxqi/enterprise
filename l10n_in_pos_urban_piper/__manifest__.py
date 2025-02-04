@@ -9,5 +9,6 @@ This module integrates with UrbanPiper to receive and manage orders from Swiggy 
         'data/pos_delivery_provider_data.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

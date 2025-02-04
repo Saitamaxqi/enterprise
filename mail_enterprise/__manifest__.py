@@ -13,6 +13,7 @@ Display a preview of the last chatter attachment in the form view for large
 screen devices.
 """,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

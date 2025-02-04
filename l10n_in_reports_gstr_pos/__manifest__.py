@@ -15,5 +15,6 @@ GSTR-1 return data set as per point of sale orders
     ],
     "auto_install": True,
     "installable": True,
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
 }

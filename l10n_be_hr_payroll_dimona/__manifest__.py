@@ -52,5 +52,6 @@ Prerequisites:
         'views/hr_contract_views.xml',
         'wizard/l10n_be_dimona_wizard_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -21,6 +21,7 @@ Bridge module for project and enterprise
     ],
     'demo': ['data/project_demo.xml'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

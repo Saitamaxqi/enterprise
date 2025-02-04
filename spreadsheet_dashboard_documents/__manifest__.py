@@ -14,6 +14,7 @@
     ],
     "installable": True,
     "auto_install": True,
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     "assets": {
         "spreadsheet.o_spreadsheet": [

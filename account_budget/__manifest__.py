@@ -20,6 +20,7 @@ Use budgets to compare actual with expected revenues and costs
         'reports/budget_report_view.xml',
     ],
     'demo': ['data/account_budget_demo.xml'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': 'post_init_hook',
 }

@@ -19,6 +19,7 @@ Export payments as CPA 005 files for use in Canada.
         "views/res_company_views.xml",
         "views/res_partner_bank_views.xml",
     ],
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     "auto_install": True,
 }

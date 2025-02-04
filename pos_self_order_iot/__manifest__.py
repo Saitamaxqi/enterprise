@@ -29,5 +29,6 @@
             'pos_self_order_iot/static/src/views/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

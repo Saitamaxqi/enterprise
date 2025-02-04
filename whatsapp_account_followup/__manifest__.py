@@ -10,6 +10,7 @@
         'views/account_followup_line_views.xml',
         'wizard/followup_manual_reminder_views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
 }

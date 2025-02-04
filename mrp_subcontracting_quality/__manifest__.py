@@ -13,5 +13,6 @@ Bridge module between MRP subcontracting and Quality
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -12,5 +12,6 @@ Display the worksheet template when planning an Intervention from a ticket
         'wizard/create_task_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

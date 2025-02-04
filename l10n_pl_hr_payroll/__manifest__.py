@@ -32,5 +32,6 @@ Polish Payroll Rules.
     'demo': [
         'data/l10n_pl_hr_payroll_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

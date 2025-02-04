@@ -33,6 +33,7 @@ Product Life Management
         'data/mrp_demo.xml',
     ],
     'application': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

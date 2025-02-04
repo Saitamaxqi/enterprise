@@ -18,6 +18,7 @@
         "views/res_config_settings_views.xml",
     ],
     "application": True,
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     "assets": {
         "voip.assets_sip": [

@@ -17,5 +17,6 @@ Create Credit Notes from Helpdesk tickets
     'demo': [
        'data/helpdesk_account_demo.xml'
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -31,6 +31,7 @@
         'data/res_partner_demo.xml',
         'data/product_product_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': 'post_init',
 }

@@ -12,6 +12,7 @@
     'demo': [
         'data/demo.xml'
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True
 }

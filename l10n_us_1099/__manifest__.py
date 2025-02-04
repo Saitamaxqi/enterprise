@@ -22,6 +22,7 @@ Allows users to easily export accounting data that can be imported to a 3rd part
     "demo": [
         "demo/res_partner_demo.xml",
     ],
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     "auto_install": True,
 }

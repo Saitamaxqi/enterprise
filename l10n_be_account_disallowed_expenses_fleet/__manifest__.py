@@ -12,5 +12,6 @@ Disallowed Expenses Fleet Data for Belgium
     'data': ['views/fleet_vehicle_views.xml'],
     'installable': True,
     'website': 'https://www.odoo.com/app/accounting',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

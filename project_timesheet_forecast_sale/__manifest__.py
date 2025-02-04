@@ -25,5 +25,6 @@ In your project plan, you can compare your timesheets and your forecast to bette
         'data/sale_order_line_demo.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

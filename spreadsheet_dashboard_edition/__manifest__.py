@@ -9,6 +9,7 @@
     'depends': ['spreadsheet_dashboard', 'spreadsheet_edition'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'data': [
         "views/spreadsheet_dashboard_views.xml",

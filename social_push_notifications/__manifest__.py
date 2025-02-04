@@ -34,5 +34,6 @@
             'social_push_notifications/static/src/scss/social_push_notifications.scss',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

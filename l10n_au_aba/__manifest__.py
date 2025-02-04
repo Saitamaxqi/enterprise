@@ -113,5 +113,6 @@ Use
     ],
     'installable': True,
     'auto_install': ['l10n_au'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

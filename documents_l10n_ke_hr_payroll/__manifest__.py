@@ -16,5 +16,6 @@ Employee Tax Deduction Card forms will be automatically integrated to the Docume
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

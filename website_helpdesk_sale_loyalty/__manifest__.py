@@ -14,5 +14,6 @@ This module installs when we want to share coupon from helpdesk.
     'version': '1.0',
 
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

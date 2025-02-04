@@ -12,5 +12,6 @@ This bridge module allows to manage Indian GSTR with E-invoice module.
         'views/gst_return_period.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -17,6 +17,7 @@
         'views/res_config_settings_views.xml',
         'security/ir.model.access.csv',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': ['l10n_at', 'account_saft'],
 }

@@ -14,5 +14,6 @@ Adds the ability to set workspace templates on products.
         'data/project_sale_demo.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

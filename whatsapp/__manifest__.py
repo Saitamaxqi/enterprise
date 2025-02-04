@@ -54,6 +54,7 @@
             'whatsapp/static/tests/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'application': True,
     'installable': True,

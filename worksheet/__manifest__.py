@@ -27,5 +27,6 @@ Create customizable worksheet
             'worksheet/static/tests/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

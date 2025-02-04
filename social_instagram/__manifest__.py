@@ -29,5 +29,6 @@
             'social_instagram/static/src/xml/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

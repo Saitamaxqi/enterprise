@@ -24,6 +24,7 @@ Analytic Accounting in MRP
     'demo': ['demo/mrp_account_demo.xml'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.report_assets_common': [

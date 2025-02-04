@@ -33,5 +33,6 @@ Accounting reports for Poland
     'auto_install': True,
     'installable': True,
     'website': 'https://www.odoo.com/app/accounting',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

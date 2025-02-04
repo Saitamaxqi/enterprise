@@ -18,5 +18,6 @@ Accounting reports for Finland
     ],
     'auto_install': ['l10n_fi', 'account_reports'],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

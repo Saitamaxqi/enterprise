@@ -26,6 +26,7 @@ This module modifies the mail addon to provide:
     ],
     'installable': True,
     'auto_install': ['web_mobile', 'mail_enterprise'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

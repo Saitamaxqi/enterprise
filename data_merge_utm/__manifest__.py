@@ -13,5 +13,6 @@
         'data/ir_model_data.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

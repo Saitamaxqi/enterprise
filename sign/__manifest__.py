@@ -46,6 +46,7 @@ Let your customers follow the signature process easily.
     'post_init_hook': '_sign_post_init',
     'uninstall_hook': 'uninstall_hook',
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'sign.assets_pdf_iframe': [

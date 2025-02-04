@@ -15,5 +15,6 @@ Full Traceability Report Demo Data
 """,
     'demo': ['data/purchase_mrp_workorder_quality_demo.xml'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

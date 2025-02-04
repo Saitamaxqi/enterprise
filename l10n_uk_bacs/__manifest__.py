@@ -28,5 +28,6 @@ This module follows the implementation guidelines issued by the Bacs Payment Sch
         ],
     },
     'auto_install': ['l10n_uk'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

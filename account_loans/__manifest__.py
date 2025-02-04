@@ -23,6 +23,7 @@ Keeps track of loans, and creates corresponding journal entries.
     'demo': [
         'demo/account_loans_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
     'post_init_hook': '_account_loans_post_init',

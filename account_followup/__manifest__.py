@@ -42,6 +42,7 @@ of recall defined. You can define different policies for different companies.
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'account_followup.assets_followup_report': [

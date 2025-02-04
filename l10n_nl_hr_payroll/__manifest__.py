@@ -33,5 +33,6 @@ Dutch Payroll Rules.
     'demo': [
         'data/l10n_nl_hr_payroll_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

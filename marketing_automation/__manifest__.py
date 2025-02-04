@@ -26,6 +26,7 @@
         'data/marketing_activity_data_templates.xml',
     ],
     'application': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'uninstall_hook': 'uninstall_hook',
     'assets': {

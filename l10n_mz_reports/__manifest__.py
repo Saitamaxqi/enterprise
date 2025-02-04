@@ -17,5 +17,6 @@ Base module for Mozambican reports
     ],
     'auto_install': True,
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

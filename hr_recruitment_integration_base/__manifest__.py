@@ -28,5 +28,6 @@ api from different job boards like indeed, monster, linkedin, etc.
             'hr_recruitment_integration_base/static/src/**/*.scss',
         ]
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

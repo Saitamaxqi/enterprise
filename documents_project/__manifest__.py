@@ -22,6 +22,7 @@ Add the ability to create invoices from the document module.
         'data/documents_project_demo.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_documents_project_post_init',
 }

@@ -29,5 +29,6 @@
             'test_l10n_be_hr_payroll_account/static/tests/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

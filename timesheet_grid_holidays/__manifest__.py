@@ -13,6 +13,7 @@ This module prevents taking time offs into account when computing employee overt
 
     'depends': ['project_timesheet_holidays', 'timesheet_grid'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend_lazy': [

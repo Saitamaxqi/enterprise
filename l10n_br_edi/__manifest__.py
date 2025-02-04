@@ -8,6 +8,7 @@ Brazilian Accounting EDI
 Provides electronic invoicing for Brazil through Avatax.
 """,
     "category": "Accounting/Localizations/EDI",
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     "depends": ["l10n_br_avatax"],
     "data": [

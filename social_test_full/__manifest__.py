@@ -18,6 +18,7 @@ and social-related sub modules. It will test interactions between all those modu
         'social_crm',
     ],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.qunit_suite_tests': [

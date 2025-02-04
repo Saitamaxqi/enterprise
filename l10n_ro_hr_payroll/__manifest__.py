@@ -25,5 +25,6 @@
     'demo': [
         'data/l10n_ro_hr_payroll_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -41,5 +41,6 @@ in order to test the whole mail codebase. """,
         ],
     },
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

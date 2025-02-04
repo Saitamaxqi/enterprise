@@ -14,5 +14,6 @@
         'data/industry_fsm_sms_demo.xml'
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

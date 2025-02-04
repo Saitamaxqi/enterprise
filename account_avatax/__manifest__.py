@@ -22,6 +22,7 @@
         'wizard/avatax_connection_test_result_views.xml',
         'reports/account_invoice.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_post_init_hook',
 }

@@ -11,5 +11,6 @@
     ],
     'installable': True,
     'auto_install': ['hr_referral', 'hr_contract_salary'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

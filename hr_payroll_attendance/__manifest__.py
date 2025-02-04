@@ -20,5 +20,6 @@
     'demo': [
         'data/hr_payroll_attendance_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

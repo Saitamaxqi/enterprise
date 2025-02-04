@@ -17,6 +17,7 @@ Jordan Payroll and Tax Rules
         'data/hr_salary_rule_data.xml',
         'views/hr_contract_view.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'demo': [
         'data/l10n_jo_hr_payroll_demo.xml',

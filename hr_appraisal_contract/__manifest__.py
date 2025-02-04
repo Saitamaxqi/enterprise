@@ -10,5 +10,6 @@
     'depends': ['hr_appraisal', 'hr_contract'],
     'auto_install': True,
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

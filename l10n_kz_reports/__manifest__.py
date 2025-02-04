@@ -16,5 +16,6 @@ Contains Balance sheet, Profit and Loss reports
     ],
     'auto_install': True,
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

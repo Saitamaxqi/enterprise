@@ -73,5 +73,6 @@ The Module is not retro-compatible with Previous Swiss Payroll versions, install
             'l10n_ch_hr_payroll_elm_transmission/static/src/scss/*',
         ]
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

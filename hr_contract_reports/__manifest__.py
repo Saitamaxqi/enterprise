@@ -25,5 +25,6 @@ Add a dynamic report about contracts and employees.
     },
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

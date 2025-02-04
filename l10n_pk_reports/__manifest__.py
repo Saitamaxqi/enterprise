@@ -17,5 +17,6 @@ Accounting reports for Pakistan
     ],
     'auto_install': ['l10n_pk', 'account_reports'],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

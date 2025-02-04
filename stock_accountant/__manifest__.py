@@ -15,5 +15,6 @@ Filters the stock lines out of the reconciliation widget
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

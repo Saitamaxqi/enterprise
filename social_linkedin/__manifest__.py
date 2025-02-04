@@ -29,5 +29,6 @@
             'social_linkedin/static/src/scss/social_linkedin.dark.scss',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

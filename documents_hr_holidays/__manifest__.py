@@ -12,5 +12,6 @@ Time off documents will be automatically integrated to the Document app.
     'depends': ['documents_hr', 'hr_holidays'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

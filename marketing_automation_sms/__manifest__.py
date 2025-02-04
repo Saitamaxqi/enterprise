@@ -22,5 +22,6 @@
     ],
     'uninstall_hook': '_uninstall_hook',
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

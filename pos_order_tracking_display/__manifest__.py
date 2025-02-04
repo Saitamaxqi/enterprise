@@ -21,5 +21,6 @@
             'pos_order_tracking_display/static/src/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

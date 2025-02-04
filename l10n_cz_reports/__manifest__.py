@@ -32,5 +32,6 @@ This module includes accounting reports for Czech Republic, including:
     'post_init_hook': '_l10n_cz_reports_post_init',
     'auto_install': True,
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -22,6 +22,7 @@
 
     'installable': True,
     'auto_install': ['documents'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'spreadsheet.o_spreadsheet': [

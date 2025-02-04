@@ -20,5 +20,6 @@
             'hr_attendance_gantt/static/tests/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

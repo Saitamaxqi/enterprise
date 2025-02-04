@@ -34,5 +34,6 @@
             'social_youtube/static/src/xml/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -8,6 +8,7 @@
     'version': '1.0',
     'depends': ['stock_barcode', 'mrp'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'data': [
         'data/data.xml',

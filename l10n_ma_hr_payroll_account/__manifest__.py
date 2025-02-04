@@ -14,5 +14,6 @@ Accounting Data for Moroccan Payroll Rules.
     'demo': [
         'data/l10n_ma_hr_payroll_account_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

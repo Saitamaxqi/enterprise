@@ -11,5 +11,6 @@ Accounting reports for NZ
     ],
     'installable': True,
     'auto_install': ['l10n_nz', 'account_reports'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

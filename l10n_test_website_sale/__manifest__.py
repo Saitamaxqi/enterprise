@@ -13,6 +13,7 @@
         'website_sale',
     ],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'LGPL-3',
     'assets': {
         'web.assets_tests': [

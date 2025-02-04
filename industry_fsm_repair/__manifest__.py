@@ -12,5 +12,6 @@
         'views/stock_picking_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

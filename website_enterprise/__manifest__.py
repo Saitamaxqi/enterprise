@@ -15,6 +15,7 @@ This module overrides community website features and introduces enterprise look 
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

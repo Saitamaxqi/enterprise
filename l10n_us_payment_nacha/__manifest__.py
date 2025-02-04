@@ -13,5 +13,6 @@ Export payments as NACHA files for use in the United States.
         "views/account_journal_views.xml",
     ],
     "auto_install": ["l10n_us"],
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
 }

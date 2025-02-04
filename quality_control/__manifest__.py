@@ -36,6 +36,7 @@ Quality Control
         'data/quality_control_demo.xml',
     ],
     'application': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

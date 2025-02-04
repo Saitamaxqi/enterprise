@@ -15,5 +15,6 @@ European Union.""",
         'views/stock_warehouse_view.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

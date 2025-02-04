@@ -53,5 +53,6 @@ United States Payroll Rules.
     'demo': [
         'data/l10n_us_hr_payroll_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

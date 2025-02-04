@@ -12,5 +12,6 @@ automatic lead generation, full Online support, sms and whatsapp support, ...
         'test_event_full',
         'whatsapp_event',
     ],
+    'author': 'Odoo S.A.',
     'license': 'LGPL-3',
 }

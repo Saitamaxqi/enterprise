@@ -19,5 +19,6 @@ Create customizable quality worksheet for workorder.
         ],
     },
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

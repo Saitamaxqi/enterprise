@@ -5,5 +5,6 @@
     'depends': ['sale_external_tax', 'website_sale'],
     'data': ['views/templates.xml'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -7,6 +7,7 @@
     "depends": ["base", "crm", "voip"],
     "auto_install": True,
     "data": ["views/crm_lead_views.xml"],
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     "assets": {
         "web.assets_unit_tests": [

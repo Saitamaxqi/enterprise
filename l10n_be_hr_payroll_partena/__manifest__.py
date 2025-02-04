@@ -18,5 +18,6 @@
     'demo': [
         'data/l10n_be_hr_payroll_partena_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

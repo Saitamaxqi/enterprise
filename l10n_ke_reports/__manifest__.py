@@ -18,5 +18,6 @@ Accounting reports for Kenya
     'auto_install': True,
     'installable': True,
     'post_init_hook': '_l10n_ke_reports_post_init',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -21,5 +21,6 @@
             'hr_work_entry_contract_enterprise/static/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

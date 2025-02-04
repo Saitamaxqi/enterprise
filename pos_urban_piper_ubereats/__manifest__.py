@@ -14,5 +14,6 @@ This module integrates with UrbanPiper to receive and manage orders from Uber Ea
         ],
     },
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

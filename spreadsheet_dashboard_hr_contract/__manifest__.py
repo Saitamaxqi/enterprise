@@ -12,5 +12,6 @@
     ],
     'installable': True,
     'auto_install': ['hr_contract_reports'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

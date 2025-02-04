@@ -18,5 +18,6 @@ Accounting reports for Dominican Republic
     ],
     'auto_install': True,
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

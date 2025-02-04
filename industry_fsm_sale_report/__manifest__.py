@@ -27,5 +27,6 @@
             'industry_fsm_sale_report/static/src/js/tours/industry_fsm_sale_report_tour.js',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

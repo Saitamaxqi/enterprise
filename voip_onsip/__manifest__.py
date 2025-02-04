@@ -8,6 +8,7 @@
         "views/res_users_views.xml",
         "views/voip_provider_views.xml",
     ],
+    "author": "Odoo S.A.",
     "license": "OEEL-1",
     "assets": {
         "web.assets_backend": [

@@ -36,5 +36,6 @@
             'sale_stock_renting/static/src/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

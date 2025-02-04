@@ -6,6 +6,7 @@
     'category': 'Hidden',
     'summary': "eCommerce on appointments",
     'description': """Enable a payment step to your bookings, using the e-commerce features of the website.""",
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
     'depends': ['website_appointment_account_payment', 'website_sale'],

@@ -27,5 +27,6 @@
             'stock_barcode_picking_batch/static/tests/tours/**/*.js',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -13,5 +13,6 @@
     'demo': [
         'data/l10n_ch_hr_payroll_account_demo.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

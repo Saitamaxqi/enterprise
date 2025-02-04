@@ -27,6 +27,7 @@ Better plan your future schedules by considering time effectively spent on old p
         'data/account_analytic_line_demo.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'uninstall_hook': '_uninstall_hook',
     'assets': {

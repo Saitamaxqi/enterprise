@@ -18,5 +18,6 @@ Generate XML payment orders as recommended by the SEPA and ISO20022 norms.
         'views/res_partner_views.xml',
     ],
     'post_init_hook': 'init_initiating_party_names',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -11,5 +11,6 @@
     ],
     'installable': True,
     'auto_install': ['stock_enterprise'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -17,5 +17,6 @@ Generates Intrastat XML report (DEBWEB2) for declaration based on invoices for F
         'wizard/export_wizard.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

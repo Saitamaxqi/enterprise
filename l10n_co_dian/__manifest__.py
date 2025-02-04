@@ -23,6 +23,7 @@
     ],
     'installable': True,
     'auto_install': ['l10n_co_edi'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.report_assets_common': [

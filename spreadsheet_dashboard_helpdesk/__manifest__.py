@@ -11,5 +11,6 @@
     ],
     'installable': True,
     'auto_install': ['helpdesk'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

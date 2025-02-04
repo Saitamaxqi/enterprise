@@ -7,5 +7,6 @@
     'category': 'Services/Project',
     'depends': ['mrp_workorder_hr_account', 'project_mrp_account'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'LGPL-3',
 }

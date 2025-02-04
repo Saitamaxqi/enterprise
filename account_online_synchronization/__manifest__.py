@@ -33,6 +33,7 @@ a periodic and automatic synchronization of their bank statements.
         'wizard/account_journal_duplicate_transactions.xml',
         'wizard/account_bank_statement_line.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
     'assets': {

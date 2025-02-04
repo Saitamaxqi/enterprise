@@ -31,6 +31,7 @@ Features:
         'views/helpdesk_ticket_attachment_template.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'post_init_hook': '_create_livechat_channel',
     'assets': {

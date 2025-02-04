@@ -31,5 +31,6 @@
             'hr_payroll_holidays/static/src/js/hr_work_entries_gantt.*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

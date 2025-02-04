@@ -31,6 +31,7 @@ This module enables the barcode scanning feature for the warehouse management sy
     'installable': True,
     'auto_install': True,
     'application': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

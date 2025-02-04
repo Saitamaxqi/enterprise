@@ -29,5 +29,6 @@ Adds Quality Control to workorders.
         ],
     },
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

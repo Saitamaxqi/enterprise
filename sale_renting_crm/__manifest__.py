@@ -18,5 +18,6 @@ This shortcut allows you to generate a rental order based on the selected case.
         'wizard/crm_lead_rental_views.xml',
     ],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

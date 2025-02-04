@@ -9,5 +9,6 @@
     """,
     'depends': ['sale_commission', 'sale_margin'],
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -16,5 +16,6 @@ Bridge module between belgian accounting and SMS
     ],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

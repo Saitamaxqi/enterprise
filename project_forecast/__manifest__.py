@@ -22,6 +22,7 @@ Schedule your teams across projects and estimate deadlines more accurately.
         'views/planning_menus.xml',
         'report/planning_analysis_report_templates.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'uninstall_hook': '_uninstall_hook',
     'assets': {

@@ -22,5 +22,6 @@
             'delivery_easypost/static/tests/tours/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

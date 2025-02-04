@@ -34,6 +34,7 @@ https://github.com/DGFiP/Test-Compta-Demat
         'security/ir.model.access.csv',
         'views/views.xml',
     ],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

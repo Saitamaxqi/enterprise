@@ -16,5 +16,6 @@ Accounting reports for Algeria
     ],
     'auto_install': ['l10n_dz', 'account_reports'],
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

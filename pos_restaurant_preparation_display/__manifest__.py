@@ -24,5 +24,6 @@
         ],
     },
     'post_init_hook': '_pos_restaurant_preparation_display_post_init',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -36,5 +36,6 @@ Features:
             'sale_subscription_stock/static/src/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

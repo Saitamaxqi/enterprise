@@ -13,5 +13,6 @@
             'pos_self_order_preparation_display/static/src/override/pos_preparation_display/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

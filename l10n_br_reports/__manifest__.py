@@ -12,5 +12,6 @@
     ],
     'installable': True,
     'auto_install': ['l10n_br', 'account_reports'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

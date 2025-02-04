@@ -67,5 +67,6 @@ Adds the following options:
             'industry_fsm/static/tests/tours/**/*',
         ],
     },
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

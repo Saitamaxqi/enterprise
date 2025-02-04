@@ -14,5 +14,6 @@ Manage Product returns from helpdesk tickets
         'views/helpdesk_ticket_views.xml',
     ],
     'demo': ['data/helpdesk_stock_demo.xml'],
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

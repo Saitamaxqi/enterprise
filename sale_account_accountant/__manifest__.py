@@ -11,6 +11,7 @@ Notify that a matching sale order exists in the reconciliation widget.
     'depends': ['sale', 'account_accountant'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [

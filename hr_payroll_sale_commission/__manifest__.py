@@ -19,5 +19,6 @@ This application allows you to pay commission in payslips.
     ],
     'auto_install': True,
     'installable': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

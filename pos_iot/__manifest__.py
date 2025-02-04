@@ -19,6 +19,7 @@ Supported devices include payment terminals, receipt printers, scales and custom
     'installable': True,
     'auto_install': True,
     'uninstall_hook': 'uninstall_hook',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'point_of_sale._assets_pos': [

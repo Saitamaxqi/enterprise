@@ -11,6 +11,7 @@
     'depends': ['point_of_sale', 'account_followup'],
     'installable': True,
     'auto_install': True,
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'data': [
         'views/pos_order_views.xml',

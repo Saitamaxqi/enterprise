@@ -17,5 +17,6 @@ Accounting reports for Switzerland
     'installable': True,
     'auto_install': ['l10n_ch', 'account_reports'],
     'website': 'https://www.odoo.com/app/accounting',
+    'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }
