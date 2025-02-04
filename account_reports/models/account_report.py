@@ -6838,6 +6838,9 @@ class AccountReport(models.Model):
             }
         }
 
+    def show_error_branch_allowed(self, *args, **kwargs):
+        raise UserError(_("Please select the main company and its branches in the company selector to proceed."))
+
 
 class AccountReportLine(models.Model):
     _inherit = 'account.report.line'
