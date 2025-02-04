@@ -5,7 +5,7 @@ import { getTemplate } from "@web/core/templates";
 import { makeEnv, startServices } from "@web/env";
 import { SignRefusalDialog } from "@sign/dialogs/dialogs";
 import { SignablePDFIframe } from "./signable_PDF_iframe";
-import { buildPDFViewerURL } from "@sign/components/sign_request/utils";
+import { buildPDFViewerURL, injectPDFCustomStyles } from "@sign/components/sign_request/utils";
 import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
 import { hidePDFJSButtons } from "@web/core/utils/pdfjs";
@@ -102,21 +102,9 @@ export class Document extends Component {
             setTimeout(() => this.initializeIframe(), 1);
         });
     }
-
-    injectPDFCustomStyles() {
-        /* Apply custom styles for documents's PDF viewers as early as possible
-        to minimize the visibility of default PDF.js styles during rendering. */
-        const iframeDoc = this.PDFIframe.contentDocument;
-        const link = iframeDoc.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = '/sign/static/src/css/pdfjs_overrides.css';
-        iframeDoc.head.appendChild(link);
-    }
-
     initializeIframe() {
         if (!this.PDFIframe.contentDocument.querySelector('link[href*="pdfjs_overrides.css"]')) {
-            this.injectPDFCustomStyles();
+            injectPDFCustomStyles(this.PDFIframe.contentDocument);
         }
         this.iframe = new this.props.PDFIframeClass(
             this.PDFIframe.contentDocument,

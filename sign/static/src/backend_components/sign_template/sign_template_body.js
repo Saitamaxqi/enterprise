@@ -3,7 +3,7 @@ import { useService } from "@web/core/utils/hooks";
 import { SignTemplateIframe } from "./sign_template_iframe";
 import { SignTemplateTopBar } from "./sign_template_top_bar";
 import { Component, useRef, useEffect, onWillUnmount, useState, useExternalListener } from "@odoo/owl";
-import { buildPDFViewerURL } from "@sign/components/sign_request/utils";
+import { buildPDFViewerURL , injectPDFCustomStyles } from "@sign/components/sign_request/utils";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { hidePDFJSButtons } from "@web/core/utils/pdfjs";
 import { useSetupAction } from "@web/search/action_hook";
@@ -85,20 +85,9 @@ export class SignTemplateBody extends Component {
         });
     }
 
-    injectPDFCustomStyles() {
-        /* Apply custom styles for documents's PDF viewers as early as possible
-        to minimize the visibility of default PDF.js styles during rendering. */
-        const iframeDoc = this.PDFIframe.el.contentDocument;
-        const link = iframeDoc.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = '/sign/static/src/css/pdfjs_overrides.css';
-        iframeDoc.head.appendChild(link);
-    }
-
     waitForPDF() {
         this.PDFIframe.el.onload = () => {
-            this.injectPDFCustomStyles();
+            injectPDFCustomStyles(this.PDFIframe.el.contentDocument);
             setTimeout(() => this.doPDFPostLoad(), 1);
         };
     }
