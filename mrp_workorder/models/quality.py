@@ -21,7 +21,7 @@ class QualityPointTest_Type(models.Model):
         if value:
             return []
         else:
-            return [('technical_name', 'not in', ['register_byproducts', 'register_consumed_materials', 'print_label'])]
+            return [('technical_name', 'not in', ['register_production', 'register_byproducts', 'register_consumed_materials', 'print_label'])]
 
 
 class MrpRoutingWorkcenter(models.Model):
