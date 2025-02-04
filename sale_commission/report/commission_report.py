@@ -3,6 +3,9 @@
 from datetime import datetime
 
 from odoo import api, models, fields, _
+from odoo.osv.expression import expression
+from odoo.tools import SQL
+
 from odoo.addons.resource.models.utils import filter_domain_leaf
 
 class SaleCommissionReport(models.Model):
@@ -18,7 +21,7 @@ class SaleCommissionReport(models.Model):
     # TODO master: remove
     team_id = fields.Many2one('crm.team', "Sales Team", readonly=True)
     achieved = fields.Monetary("Achieved", readonly=True, currency_field='currency_id')
-    achieved_rate = fields.Float("Achieved Rate", readonly=True)
+    achieved_rate = fields.Float("Achieved Rate", readonly=True, aggregator='avg')
     commission = fields.Monetary("Commission", readonly=True, currency_field='currency_id')
     currency_id = fields.Many2one('res.currency', "Currency", readonly=True)
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
@@ -26,6 +29,17 @@ class SaleCommissionReport(models.Model):
     payment_date = fields.Date("Payment Date", readonly=True)
     forecast = fields.Monetary("Forecast", readonly=True, currency_field='currency_id')
     date_to = fields.Date(related='target_id.date_to')
+
+    def _where_calc(self, domain, active_test=True):
+        if self.env.context.get('period_domain'):
+            # make sure the period_domain is only given by this method and not in another way
+            self = self.with_context(period_domain=None)
+        if domain:
+            period_domain = filter_domain_leaf(domain, lambda field_name: field_name == 'date_to')
+            if period_domain:
+                domain = filter_domain_leaf(domain, lambda field_name: field_name != 'date_to')
+                self = self.with_context(period_domain=period_domain)
+        return super()._where_calc(domain, active_test)
 
     @api.model
     def _search(self, domain, offset=0, limit=None, order=None):
@@ -84,7 +98,20 @@ class SaleCommissionReport(models.Model):
 
     @property
     def _table_query(self):
-        return self._query()
+        where_invoices = where_sales = SQL()
+        if period_domain := self.env.context.get('period_domain'):
+            # to be sure the domain is still the one extracted in where_calc.
+            period_domain = filter_domain_leaf(period_domain, lambda field_name: True, field_name_mapping={'date_to': 'date'})
+            if period_domain:
+                result = expression(period_domain, self.env['account.move'], 'am')
+                where_invoices = SQL(" AND %s", result.query.where_clause)
+            period_domain = filter_domain_leaf(period_domain, lambda field_name: True, field_name_mapping={'date': 'date_order'})
+            if period_domain:
+                result = expression(period_domain, self.env['sale.order'], 'so')
+                where_sales = SQL(" AND %s", result.query.where_clause)
+        query = self.with_context(where_invoices=where_invoices,where_sales=where_sales)._query()
+        table_query = SQL(query)
+        return table_query
 
     def _query(self):
         users = self.env.context.get('commission_user_ids', [])

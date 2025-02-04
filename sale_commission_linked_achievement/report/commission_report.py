@@ -8,12 +8,7 @@ from odoo.addons.resource.models.utils import filter_domain_leaf
 class SaleCommissionReport(models.Model):
     _inherit = 'sale.commission.report'
 
-    # overrides, erase sale_commission in master
-    @property
-    def _table_query(self):
-        return self._query()
-
-    def _query(self):
+    def _query(self, where_sales=None, where_invoices=None):
         users = self.env.context.get('commission_user_ids', [])
         if users:
             users = self.env['res.users'].browse(users).exists()
@@ -22,7 +17,7 @@ class SaleCommissionReport(models.Model):
             teams = self.env['crm.team'].browse(teams).exists()
 
         res = f"""
-WITH {self.env['sale.commission.achievement.report']._commission_lines_query(users=users, teams=teams)},
+WITH {self.env['sale.commission.achievement.report']._commission_lines_query(users=users, teams=teams,)},
 achievement AS (
     SELECT
         ROW_NUMBER() OVER (ORDER BY MAX(era.date_to) DESC, u.user_id) AS id,

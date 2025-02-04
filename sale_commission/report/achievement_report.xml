@@ -52,6 +52,7 @@
                 <field name="plan_id" groups="sales_team.group_sale_manager"/>
                 <field name="target_id"/>
                 <field name="company_id"/>
+                <filter name="filter_date" date="date" string="Date"/>
                 <filter string="My Achievements" name="my"
                             domain="[('user_id', '=', uid)]"/>
                 <filter string="Current Period" name="current"

@@ -6,7 +6,7 @@ from odoo import models, api, fields
 from odoo.tools import SQL
 
 from odoo.addons.resource.models.utils import filter_domain_leaf
-
+from odoo.osv.expression import expression
 
 class SaleCommissionAchievementReport(models.Model):
     _name = 'sale.commission.achievement.report'
@@ -25,6 +25,18 @@ class SaleCommissionAchievementReport(models.Model):
 
     related_res_model = fields.Char(readonly=True)
     related_res_id = fields.Many2oneReference("Related", model_field='related_res_model', readonly=True)
+
+    def _where_calc(self, domain, active_test = True):
+        if self.env.context.get('period_domain'):
+            # make sure the period_domain is only given by this method and not in another way
+            self = self.with_context(period_domain=None)
+        if domain:
+            period_domain = filter_domain_leaf(domain, lambda field_name: field_name == 'date')
+            if period_domain:
+                domain = filter_domain_leaf(domain, lambda field_name: field_name != 'date')
+                self = self.with_context(period_domain=period_domain)
+        return super()._where_calc(domain, active_test)
+
 
     @api.model
     def _search(self, domain, offset=0, limit=None, order=None):
@@ -70,7 +82,22 @@ class SaleCommissionAchievementReport(models.Model):
         teams = self.env.context.get('commission_team_ids', [])
         if teams:
             teams = self.env['crm.team'].browse(teams).exists()
-        return self.with_context(achievement_report=True)._query(users=users, teams=teams)
+        where_invoices = where_sales = SQL()
+        if period_domain := self.env.context.get('period_domain'):
+            # to be sure the domain is still the one extracted in where_calc.
+            period_domain = filter_domain_leaf(period_domain, lambda field_name: field_name == 'date')
+            if period_domain:
+                result = expression(period_domain, self.env['account.move'], 'am')
+                where_invoices = SQL(" AND %s", result.query.where_clause)
+            period_domain = filter_domain_leaf(period_domain, lambda field_name: True, field_name_mapping={'date': 'date_order'})
+            if period_domain:
+                result = expression(period_domain, self.env['sale.order'], 'so')
+                where_sales = SQL(" AND %s", result.query.where_clause)
+        query = self.with_context(achievement_report=True, where_sales=where_sales, where_invoices=where_invoices)._query(users=users, teams=teams)
+        table_query = SQL(
+            query
+        )
+        return table_query
 
     def _query(self,users=None, teams=None):
         return f"""
@@ -164,12 +191,17 @@ JOIN sale_commission_plan_target era
 
     @api.model
     def _where_invoices(self):
-        return f"""
+        where_invoices = self.env.context.get('where_invoices', SQL(""))
+        _where =  f"""
           aml.display_type = 'product'
           AND am.move_type in ('out_invoice', 'out_refund')
           AND am.state = 'posted'
           {self._get_company_condition('am')}
+          %(where_invoices)s
         """
+        res = SQL(_where, where_invoices=where_invoices)
+        params = [f"'{p}'" for p in res.params]
+        return res.code % tuple(params)
 
     @api.model
     def _select_rules(self):
@@ -193,7 +225,8 @@ JOIN sale_commission_plan_target era
 
     @api.model
     def _where_sales(self):
-        return f"""
+        where_sales = self.env.context.get('where_sales', SQL(""))
+        _where = f"""
           AND sol.display_type IS NULL
           AND (so.date_order BETWEEN rules.date_from AND rules.date_to)
           AND so.state = 'sale'
@@ -202,7 +235,11 @@ JOIN sale_commission_plan_target era
           AND COALESCE(is_expense, false) = false
           AND COALESCE(is_downpayment, false) = false
           {self._get_company_condition('so')}
+          %(where_sales)s
         """
+        res = SQL(_where, where_sales=where_sales)
+        params = [f"'{p}'" for p in res.params]
+        return res.code % tuple(params)
 
     def _achievement_lines(self, users=None, teams=None):
         return f"""
@@ -369,7 +406,9 @@ sale_rules AS (
 )""", 'sale_commission_lines'
 
     def _commission_lines_cte(self, users=None, teams=None):
-        return [self._achievement_lines(users, teams), self._sale_lines(users, teams), self._invoices_lines(users, teams)]
+        return [self._achievement_lines(users, teams),
+                self._sale_lines(users, teams),
+                self._invoices_lines(users, teams)]
 
     def _commission_lines_query(self, users=None, teams=None):
         ctes = self._commission_lines_cte(users, teams)

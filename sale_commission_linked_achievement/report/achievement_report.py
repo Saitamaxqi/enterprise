@@ -60,4 +60,7 @@ achievement_commission_lines_rem AS (
 """, "achievement_commission_lines_rem"
 
     def _commission_lines_cte(self, users=None, teams=None):
-        return [self._achievement_lines_add(), self._achievement_lines_rem(), self._sale_lines(users, teams), self._invoices_lines(users, teams)]
+        return [self._achievement_lines_add(),
+                self._achievement_lines_rem(),
+                self._sale_lines(users, teams),
+                self._invoices_lines(users, teams)]
