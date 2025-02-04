@@ -1216,7 +1216,7 @@ class L10n_InGstReturnPeriod(models.Model):
         """
         Retrieve the mail activity type for GSTR-1 exceptions and identify the responsible user.
         """
-        act_type_xmlid = 'l10n_in_reports_gstr.mail_activity_type_gstr1_exception_to_be_sent'
+        act_type_xmlid = 'l10n_in_reports.mail_activity_type_gstr1_exception_to_be_sent'
         act_type = self.env.ref(act_type_xmlid, raise_if_not_found=False)
         # Determine the responsible user
         advisor_user = self.env['res.users']
