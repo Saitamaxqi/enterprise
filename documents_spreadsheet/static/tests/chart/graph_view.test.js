@@ -10,6 +10,7 @@ import { getSpreadsheetActionModel } from "@spreadsheet_edition/../tests/helpers
 import { patchGraphSpreadsheet } from "@spreadsheet_edition/assets/graph_view/graph_view";
 import {
     contains,
+    defineActions,
     patchWithCleanup,
     toggleMenu,
     toggleMenuItem,
@@ -123,6 +124,28 @@ test("graph measure is not saved in spreadsheet context", async () => {
         },
         { message: "graph measure is not stored in context" }
     );
+});
+
+test("can insert chart from action with evaluated context", async function () {
+    const actionXmlId = "spreadsheet.partner_action";
+    defineActions([
+        {
+            id: 1,
+            name: "partner Action",
+            res_model: "partner",
+            xml_id: actionXmlId,
+            views: [[false, "graph"]],
+            context: "{'my_evaluated_context_key': active_id}",
+        },
+    ]);
+
+    const { model } = await createSpreadsheetFromGraphView({
+        actionXmlId,
+        additionalContext: { active_id: 1 },
+    });
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    expect(model.getters.getChart(chartId).actionXmlId).toBe(actionXmlId);
 });
 
 test("Chart name can be changed from the dialog", async () => {

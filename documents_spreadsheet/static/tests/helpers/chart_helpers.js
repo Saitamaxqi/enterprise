@@ -30,6 +30,7 @@ import { WebClient } from "@web/webclient/webclient";
  * @param {function} [params.mockRPC] Mock rpc function
  * @param {any[]} [params.domain] Domain of the graph
  * @param {object} [params.additionalContext] additional context for the action
+ * @param {string} [params.actionXmlId] If set, the graph view is loaded from this action - will ignore model and domain
  * @returns {Promise<object>} Webclient
  */
 export async function spawnGraphViewForSpreadsheet(params = {}) {
@@ -38,7 +39,7 @@ export async function spawnGraphViewForSpreadsheet(params = {}) {
     const webClient = await mountWithCleanup(WebClient);
 
     await getService("action").doAction(
-        {
+        params.actionXmlId || {
             name: "graph view",
             res_model: params.model || "partner",
             type: "ir.actions.act_window",
@@ -46,6 +47,7 @@ export async function spawnGraphViewForSpreadsheet(params = {}) {
             domain: params.domain,
         },
         {
+            viewType: "graph",
             additionalContext: params.additionalContext || {},
         }
     );
@@ -88,6 +90,7 @@ export async function createSpreadsheetFromGraphView(params = {}) {
         mockRPC: params.mockRPC,
         domain: params.domain,
         additionalContext: params.additionalContext || {},
+        actionXmlId: params.actionXmlId,
     });
     const target = getFixture();
     if (params.actions) {
