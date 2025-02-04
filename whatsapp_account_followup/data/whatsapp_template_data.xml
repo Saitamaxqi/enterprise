@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
     <data noupdate="1">
-        <record id="whatsapp_template_payment_reminder" model="whatsapp.template">
+        <record id="whatsapp_template_payment_reminder" model="whatsapp.template" forcecreate="0">
             <field name="name">Payment Reminder</field>
             <field name="template_name">payment_reminder</field>
             <field name="lang_code">en</field>

@@ -7,7 +7,7 @@
         <field name="res_model">whatsapp.template</field>
     </record>
 
-    <record id="whatsapp_template_pos" model="whatsapp.template">
+    <record id="whatsapp_template_pos" model="whatsapp.template" forcecreate="0">
         <field name="name">POS Receipt</field>
         <field name="template_name">pos_receipt</field>
         <field name="lang_code">en</field>
@@ -49,7 +49,7 @@ Thank you for shopping with us.
         ]" />
     </record>
 
-    <record id="whatsapp_marketing_template_pos" model="whatsapp.template">
+    <record id="whatsapp_marketing_template_pos" model="whatsapp.template" forcecreate="0">
         <field name="name">Point of Sale: Marketing</field>
         <field name="template_name">pos_marketing</field>
         <field name="lang_code">en</field>

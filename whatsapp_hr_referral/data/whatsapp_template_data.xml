@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo noupdate="1">
-    <record id="whatsapp_template_referral_sharing" model="whatsapp.template">
+    <record id="whatsapp_template_referral_sharing" model="whatsapp.template" forcecreate="0">
         <field name="name">Referral Sharing</field>
         <field name="template_name">referral_sharing</field>
         <field name="status">draft</field>
