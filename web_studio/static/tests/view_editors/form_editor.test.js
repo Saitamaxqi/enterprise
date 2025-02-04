@@ -896,7 +896,7 @@ test("always invisible fields are flagged as not present in arch", async () => {
     expect(".o_web_studio_view_renderer .o_field_widget").toHaveCount(1);
     await contains(".o_web_studio_sidebar .o_web_studio_existing_fields_header").click();
     expect(".o_web_studio_sidebar .o_web_studio_existing_fields").toHaveText(
-        "Product\nChar field\nId\nLast Modified on\nCreated on\nProducts"
+        "Char field\nCreated on\nId\nLast Modified on\nProduct\nProducts"
     );
 });
 

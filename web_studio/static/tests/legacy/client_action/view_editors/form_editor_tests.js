@@ -2807,7 +2807,7 @@ QUnit.module("View Editors", (hooks) => {
         await click(target, ".o_web_studio_existing_fields_header");
         assert.strictEqual(
             target.querySelector(".o_web_studio_existing_fields").textContent,
-            "Some FieldIDLast Modified onName"
+            "IDLast Modified onNameSome Field"
         );
     });
 

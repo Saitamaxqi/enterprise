@@ -332,6 +332,7 @@ QUnit.module(
                 "keep the existing fields section visible when adding the new field"
             );
             // fold the existing fields section
+            await click(target.querySelector(".o_web_studio_new"));
             await click(target.querySelector(".o_web_studio_existing_fields_header"));
             assert.containsN(
                 target,

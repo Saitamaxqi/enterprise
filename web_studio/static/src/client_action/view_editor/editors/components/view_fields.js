@@ -59,14 +59,18 @@ export class ExistingFields extends Component {
             return true;
         });
 
-        return filtered.map(([fName, field]) => {
-            return {
+        return filtered
+            .map(([fName, field]) => ({
                 ...field,
                 name: fName,
                 classType: field.type,
                 dropData: JSON.stringify({ fieldName: fName }),
-            };
-        });
+            }))
+            .sort((fieldA, fieldB) =>
+                (fieldA.string || fieldA.name)
+                    .toLowerCase()
+                    .localeCompare((fieldB.string || fieldB.name).toLowerCase())
+            );
     }
 
     getDropInfo(field) {
