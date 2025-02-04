@@ -68,12 +68,19 @@ class QualityPoint(models.Model):
     test_type = fields.Char(related='test_type_id.technical_name', readonly=True)
     note = fields.Html('Note')
     reason = fields.Html('Cause')
+    failure_location_ids = fields.Many2many('stock.location', string="Failure Locations", domain="[('usage', '=', 'internal')]",
+                            help="If a quality check fails, a location is chosen from this list for each failed quantity.")
+    show_failure_location = fields.Boolean(compute='_compute_show_failure_location')
 
     def _compute_check_count(self):
         check_data = self.env['quality.check']._read_group([('point_id', 'in', self.ids)], ['point_id'], ['__count'])
         result = {point.id: count for point, count in check_data}
         for point in self:
             point.check_count = result.get(point.id, 0)
+
+    def _compute_show_failure_location(self):
+        for point in self:
+            point.show_failure_location = point.test_type not in ["instruction", "picture"]
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -207,6 +214,7 @@ class QualityCheck(models.Model):
     picture = fields.Binary('Picture', attachment=True)
     additional_note = fields.Text(
         'Additional Note', help="Additional remarks concerning this check.")
+    failure_location_id = fields.Many2one('stock.location', string="Failure Location")
 
     def _compute_alert_count(self):
         alert_data = self.env['quality.alert']._read_group([('check_id', 'in', self.ids)], ['check_id'], ['__count'])

@@ -15,8 +15,6 @@ class QualityPoint(models.Model):
     _inherit = "quality.point"
 
     failure_message = fields.Html('Failure Message')
-    failure_location_ids = fields.Many2many('stock.location', string="Failure Locations", domain="[('usage', '=', 'internal')]",
-                            help="If a quality check fails, a location is chosen from this list for each failed quantity.")
     measure_on = fields.Selection([
         ('operation', 'Operation'),
         ('product', 'Product'),
@@ -67,6 +65,11 @@ class QualityPoint(models.Model):
     def _compute_is_lot_tested_fractionally(self):
         for point in self:
             point.is_lot_tested_fractionally = point.testing_percentage_within_lot < 100
+
+    def _compute_show_failure_location(self):
+        super()._compute_show_failure_location()
+        for point in self:
+            point.show_failure_location = point.show_failure_location and point.measure_on == 'move_line'
 
     def _compute_standard_deviation_and_average(self):
         # The variance and mean are computed by the Welford’s method and used the Bessel's
@@ -238,7 +241,6 @@ class QualityCheck(models.Model):
         help="In case of Quality Check by Quantity, Move Line on which the Quality Check applies",
         index="btree_not_null",
     )
-    failure_location_id = fields.Many2one('stock.location', string="Failure Location")
     lot_name = fields.Char('Lot/Serial Number Name', related='move_line_id.lot_name')
     lot_line_id = fields.Many2one('stock.lot', store=True, compute='_compute_lot_line_id')
     qty_line = fields.Float(compute='_compute_qty_line', string="Quantity")

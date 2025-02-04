@@ -41,6 +41,7 @@
                             <field name="test_type" invisible="1"/>
                             <field string="Type" name="test_type_id" options="{'no_open': True, 'no_create': True}"/>
                             <field name="team_id" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="failure_location_ids" invisible="not show_failure_location" groups="stock.group_stock_multi_locations" widget="many2many_tags"/>
                         </group>
                     </group>
                     <notebook>

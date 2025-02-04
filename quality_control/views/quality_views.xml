@@ -841,9 +841,6 @@
                 />
                 <field name="spreadsheet_check_cell" invisible="test_type != 'spreadsheet'" />
             </xpath>
-            <field name="team_id" position="after">
-                <field name="failure_location_ids" invisible="measure_on != 'move_line'" groups="stock.group_stock_multi_locations" widget="many2many_tags"/>
-            </field>
         </field>
     </record>
 
