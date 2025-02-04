@@ -19,7 +19,7 @@ patch(ReceiptScreen.prototype, {
     },
 
     async printReceipt() {
-        if (this.pos.config.company_id.country_id.code !== "IT") {
+        if (!isFiscalPrinterActive(this.pos.config)) {
             return super.printReceipt(...arguments);
         }
 
