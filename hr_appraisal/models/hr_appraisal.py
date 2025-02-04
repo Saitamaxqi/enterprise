@@ -525,7 +525,7 @@ class HrAppraisal(models.Model):
             'res_model': 'hr.appraisal.goal',
             'type': 'ir.actions.act_window',
             'target': 'current',
-            'domain': [('employee_id', '=', self.employee_id.id)],
+            'domain': [('employee_ids', '=', self.employee_id.id)],
             'context': {'default_employee_id': self.employee_id.id},
         }
 

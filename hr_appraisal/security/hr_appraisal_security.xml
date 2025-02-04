@@ -117,14 +117,14 @@
             '|',
             '|',
             ('is_manager', '=', True),
-            ('employee_id.user_id', '=', user.id),
-            ('manager_id.user_id', '=', user.id),
+            ('employee_ids.user_id', '=', user.id),
+            ('manager_ids.user_id', '=', user.id),
             '&amp;',
-                ('employee_id.parent_id', '!=', False),
-                ('employee_id.parent_id.user_id', '=', user.id),
+                ('employee_ids.parent_id', '!=', False),
+                ('employee_ids.parent_id.user_id', '=', user.id),
             '&amp;',
-                ('employee_id.last_appraisal_id.manager_ids.user_id', '=', user.id),
-                ('employee_id.last_appraisal_id.state', 'in', ['1_new', '2_pending'])
+                ('employee_ids.last_appraisal_id.manager_ids.user_id', '=', user.id),
+                ('employee_ids.last_appraisal_id.state', 'in', ['1_new', '2_pending'])
         ]</field>
         <field name="perm_create" eval="True"/>
         <field name="perm_write" eval="True"/>
@@ -138,9 +138,9 @@
         <field name="model_id" ref="model_hr_appraisal_goal"/>
         <field name="domain_force">[
             '|',
-            ('employee_id.user_id', '!=', user.id),
+            ('employee_ids.user_id', '!=', user.id),
             '&amp;',
-                ('employee_id.user_id', '=', user.id),
+                ('employee_ids.user_id', '=', user.id),
                 ('create_uid', '=', user.id)]</field>
             <field name="perm_create" eval="False"/>
             <field name="perm_read" eval="False"/>

@@ -448,58 +448,66 @@
 
         <record id="hr_appraisal_goal_1" model="hr.appraisal.goal">
             <field name="name">Follow online courses "Responsible &amp; Reliable"</field>
-            <field name="employee_id" ref="hr.employee_qdp"/>
-            <field name="manager_id" ref="hr.employee_admin"/>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
+            <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_admin')])]"/>
             <field name="progression">025</field>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=8)).strftime('%Y-%m-%d')"/>
         </record>
 
         <record id="hr_appraisal_goal_2" model="hr.appraisal.goal">
             <field name="name">Computer Skill</field>
-            <field name="employee_id" ref="hr.employee_qdp"/>
-            <field name="manager_id" ref="hr.employee_admin"/>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
+            <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_admin')])]"/>
             <field name="progression">000</field>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=-1)).strftime('%Y-%m-%d')"/>
         </record>
 
         <record id="hr_appraisal_goal_3" model="hr.appraisal.goal">
             <field name="name">Identify quick-wins amongst similar tasks</field>
-            <field name="employee_id" ref="hr.employee_al"/>
-            <field name="manager_id" ref="hr.employee_admin"/>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_al')])]"/>
+            <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
             <field name="progression">000</field>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=2)).strftime('%Y-%m-%d')"/>
         </record>
 
         <record id="hr_appraisal_goal_4" model="hr.appraisal.goal">
             <field name="name">Exercices to imporove typing speed</field>
-            <field name="employee_id" ref="hr.employee_al"/>
-            <field name="manager_id" ref="hr.employee_admin"/>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_al')])]"/>
+            <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
             <field name="progression">050</field>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=12)).strftime('%Y-%m-%d')"/>
         </record>
 
         <record id="hr_appraisal_goal_6" model="hr.appraisal.goal">
             <field name="name">Read the Best Translation Method book</field>
-            <field name="employee_id" ref="hr.employee_al"/>
-            <field name="manager_id" ref="hr.employee_admin"/>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_al')])]"/>
+            <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
             <field name="progression">100</field>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=-1)).strftime('%Y-%m-%d')"/>
         </record>
 
         <record id="hr_appraisal_goal_7" model="hr.appraisal.goal">
             <field name="name">Manage deadlines</field>
-            <field name="employee_id" ref="hr.employee_qdp"/>
-            <field name="manager_id" ref="hr.employee_admin"/>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
+            <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_admin')])]"/>
             <field name="progression">050</field>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=-1)).strftime('%Y-%m-%d')"/>
         </record>
 
         <record id="hr_appraisal_goal_9" model="hr.appraisal.goal">
             <field name="name">Apply Confidentiality Guidelines</field>
-            <field name="employee_id" ref="hr.employee_qdp"/>
-            <field name="manager_id" ref="hr.employee_admin"/>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_qdp')])]"/>
+            <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_admin')])]"/>
             <field name="progression">075</field>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <record id="hr_appraisal_goal_10" model="hr.appraisal.goal">
+            <field name="name">Peer validation discussion</field>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_qdp'), ref('hr.employee_al')])]"/>
+            <field name="manager_ids" eval="[(6, 0, [ref('hr.employee_admin'), ref('hr.employee_qdp')])]"/>
+            <field name="progression">025</field>
+            <field name="deadline" eval="(DateTime.now() + relativedelta(months=3)).strftime('%Y-%m-%d')"/>
         </record>
 
         <record id="hr_appraisal_activity_1" model="mail.activity">

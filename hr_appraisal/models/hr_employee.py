@@ -49,13 +49,13 @@ class HrEmployee(models.Model):
             employee.ongoing_appraisal_count = result.get(employee.id, 0)
 
     def _compute_uncomplete_goals_count(self):
-        read_group_result = self.env['hr.appraisal.goal']._read_group([('employee_id', 'in', self.ids), ('progression', '!=', '100')], ['employee_id'], ['__count'])
+        read_group_result = self.env['hr.appraisal.goal']._read_group([('employee_ids', 'in', self.ids), ('progression', '!=', '100')], ['employee_ids'], ['__count'])
         result = {employee.id: count for employee, count in read_group_result}
         for employee in self:
             employee.uncomplete_goals_count = result.get(employee.id, 0)
 
     def _compute_goals_count(self):
-        read_group_result = self.env['hr.appraisal.goal']._read_group([('employee_id', 'in', self.ids)], ['employee_id'], ['__count'])
+        read_group_result = self.env['hr.appraisal.goal']._read_group([('employee_ids', 'in', self.ids)], ['employee_ids'], ['__count'])
         result = {employee.id: count for employee, count in read_group_result}
         for employee in self:
             employee.goals_count = result.get(employee.id, 0)
@@ -96,13 +96,13 @@ class HrEmployee(models.Model):
         self.ensure_one()
         action = self.env["ir.actions.actions"]._for_xml_id('hr_appraisal.action_hr_appraisal_goal')
         action.update({
-            'domain': [('employee_id', '=', self.id)],
+            'domain': [('employee_ids', '=', self.id)],
             'context': {'default_employee_id': self.id},
         })
         return action
 
     @api.ondelete(at_uninstall=False)
     def _unlink_expect_goal_manager(self):
-        is_goal_manager = self.env['hr.appraisal.goal'].search_count([('manager_id', 'in', self.ids)])
+        is_goal_manager = self.env['hr.appraisal.goal'].search_count([('manager_ids', 'in', self.ids)])
         if is_goal_manager:
             raise UserError(_("You cannot delete an employee who is a goal's manager, archive it instead."))

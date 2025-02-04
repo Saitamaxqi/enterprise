@@ -12,15 +12,14 @@ class HrAppraisalGoal(models.Model):
     _description = "Appraisal Goal"
 
     name = fields.Char(required=True)
-    employee_id = fields.Many2one(
-        'hr.employee', string="Employee", tracking=True,
-        default=lambda self: self.env.user.employee_id, required=True, ondelete='cascade')
+    employee_ids = fields.Many2many(
+        'hr.employee', 'hr_appraisal_goal_hr_employee_rel', 'hr_appraisal_goal_id',
+        string="Employee", default=lambda self: self.env.user.employee_id, required=True, ondelete='cascade', tracking=True)
     employee_autocomplete_ids = fields.Many2many('hr.employee', compute='_compute_is_manager')
-    company_id = fields.Many2one(related='employee_id.company_id')
-    manager_id = fields.Many2one(
-        'hr.employee', string="Manager", compute="_compute_manager_id",
-        readonly=False, tracking=True, store=True, required=True)
-    manager_user_id = fields.Many2one('res.users', related='manager_id.user_id')
+    company_id = fields.Many2one(related='employee_ids.company_id')
+    manager_ids = fields.Many2many(
+        'hr.employee', 'hr_appraisal_goal_hr_employee_manager_rel', 'hr_appraisal_goal_id',
+        string="Manager", compute="_compute_manager_ids", readonly=False, store=True, required=True, tracking=True)
     progression = fields.Selection(selection=[
         ('000', '0%'),
         ('025', '25%'),
@@ -34,7 +33,7 @@ class HrAppraisalGoal(models.Model):
     tag_ids = fields.Many2many('hr.appraisal.goal.tag', string="Tags")
 
     @api.depends_context('uid')
-    @api.depends('employee_id')
+    @api.depends('employee_ids')
     def _compute_is_manager(self):
         self.employee_autocomplete_ids = self.env.user.get_employee_autocomplete_ids()
         self.is_manager =\
@@ -48,15 +47,15 @@ class HrAppraisalGoal(models.Model):
             return [(1, '=', 1)]
         domain_operator = 'not in' if (operator == '=') ^ value else 'in'
         return [(
-            'employee_id',
+            'employee_ids',
             domain_operator,
             self.env.user.get_employee_autocomplete_ids().ids
         )]
 
-    @api.depends('employee_id')
-    def _compute_manager_id(self):
+    @api.depends('employee_ids')
+    def _compute_manager_ids(self):
         for goal in self:
-            goal.manager_id = goal.employee_id.parent_id or self.env.user.employee_id
+            goal.manager_ids = self.employee_ids.parent_id
 
     def _notify_by_email_prepare_rendering_context(self, message, msg_vals=False, model_description=False,
                                                    force_email_company=False, force_email_lang=False):
