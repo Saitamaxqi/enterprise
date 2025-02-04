@@ -208,7 +208,7 @@
                 <field name="legend_normal" column_invisible="True"/>
                 <field name="legend_blocked" column_invisible="True"/>
                 <field name="legend_done" column_invisible="True"/>
-                <field name="ticket_ref" string="ID" readonly="1" optional="show" width="30px"/>
+                <field name="ticket_ref" string="ID" readonly="1" optional="show"/>
                 <field name="priority" optional="show" widget="priority"/>
                 <field name="name" string="Name"/>
                 <field name="team_id" optional="show" readonly="1" column_invisible="context.get('default_team_id', False)"/>
