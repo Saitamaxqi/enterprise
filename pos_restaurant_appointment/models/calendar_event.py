@@ -9,6 +9,12 @@ class CalendarEvent(models.Model):
     _name = 'calendar.event'
     _inherit = ["calendar.event", "pos.load.mixin"]
 
+    answers = fields.Char('Q&A answers', compute='_get_answers')
+
+    def _get_answers(self):
+        for record in self:
+            record.answers = (', ').join([answer.value_text_box or answer.value_answer_id.name for answer in record.appointment_answer_input_ids.sorted('id')])
+
     @api.model
     def _load_pos_data_domain(self, data):
         now = fields.Datetime.now()

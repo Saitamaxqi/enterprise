@@ -9,6 +9,9 @@
             <xpath expr="//field[@name='description']" position="after">
                 <field name="appointment_answer_input_ids"/>
             </xpath>
+            <xpath expr='//field[@name="description"]' position="after">
+                <field name="answers"/>
+            </xpath>
         </field>
     </record>
     <record id="calendar_event_view_gantt_booking_resource_inherited_restaurant_appointment" model="ir.ui.view">
