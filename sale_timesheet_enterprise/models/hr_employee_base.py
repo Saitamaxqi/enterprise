@@ -10,12 +10,6 @@ class HrEmployeeBase(models.AbstractModel):
     show_billable_time_target = fields.Boolean(related="company_id.timesheet_show_rates")
 
     @api.model
-    def get_billable_time_target(self, user_ids):
-        if self.env.user.has_group("hr_timesheet.group_hr_timesheet_user"):
-            return self.sudo().search_read([("user_id", 'in', user_ids), ("company_id", "=", self.env.company.id)], ["billable_time_target"])
-        return []
-
-    @api.model
     def get_all_billable_time_targets(self):
         if self.env.user.has_group("hr_timesheet.group_hr_timesheet_user") and self.env.company.timesheet_show_rates:
             return self.sudo().search_read([("company_id", "=", self.env.company.id)], ["billable_time_target"])

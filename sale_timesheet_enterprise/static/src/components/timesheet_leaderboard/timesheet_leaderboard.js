@@ -15,11 +15,6 @@ export class TimesheetLeaderboard extends Component {
     static props = {
         model: { type: Object, optional: true },
         date: { type: Object, optional: true },
-        showIndicators: { type: Boolean },
-        showLeaderboard: { type: Boolean },
-        leaderboard: { type: Object },
-        type: { type: String },
-        changeType: { type: Function },
     };
     static defaultProps = {
         date: DateTime.local().startOf("month"),
@@ -28,6 +23,7 @@ export class TimesheetLeaderboard extends Component {
     setup() {
         this.orm = useService("orm");
         this.dialog = useService("dialog");
+        this.timesheetLeaderboardService = useService("timesheet_leaderboard");
         this.timesheetUOMService = useService("timesheet_uom");
     }
 
@@ -35,13 +31,7 @@ export class TimesheetLeaderboard extends Component {
         this.dialog.add(TimesheetLeaderboardDialog, {
             date: this.props.date,
             model: this.props.model,
-            changeType: this.changeType.bind(this),
-            type: this.props.type,
         });
-    }
-
-    changeType(newType) {
-        this.props.changeType(newType);
     }
 
     get isMobile() {
@@ -49,16 +39,16 @@ export class TimesheetLeaderboard extends Component {
     }
 
     get avatarDisplayLimit() {
-        return (this.props.leaderboard.current_employee?.index || 0) < 3 - this.isMobile ? 3 - this.isMobile : 2 - this.isMobile;
+        return (this.timesheetLeaderboardService.data.currentEmployee?.index || 0) < 3 - this.isMobile ? 3 - this.isMobile : 2 - this.isMobile;
     }
 
     get currentBillingRateText() {
-        const percentage = Math.round(this.props.leaderboard.current_employee.billing_rate);
+        const percentage = Math.round(this.timesheetLeaderboardService.data.currentEmployee.billing_rate);
         return this.isMobile ? _t("%(percentage)s%", {percentage}) : _t("(%(percentage)s%)", {percentage});
     }
 
     get currentBillableTimeText() {
-        return this.format(this.props.leaderboard.current_employee.billable_time);
+        return this.format(this.timesheetLeaderboardService.data.currentEmployee.billable_time);
     }
 
     get currentBillingText() {
@@ -69,11 +59,11 @@ export class TimesheetLeaderboard extends Component {
     }
 
     get currentTotalTimeText() {
-       return this.timesheetUOMService.formatter(this.props.leaderboard.current_employee.total_time);
+       return this.timesheetUOMService.formatter(this.timesheetLeaderboardService.data.currentEmployee.total_time);
     }
 
     get currentTargetTotalTimeText() {
-        return this.format(this.props.leaderboard.current_employee.billable_time_target);
+        return this.format(this.timesheetLeaderboardService.data.currentEmployee.billable_time_target);
     }
 
     format(value) {

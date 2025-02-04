@@ -50,21 +50,19 @@ class ResCompany(models.Model):
             self.env.company.timesheet_show_rates
             and self.env.user.has_group("hr_timesheet.group_hr_timesheet_user")
         ):
-            return {
-                "leaderboard": [],
-                "employee_id": False,
-                "billing_rate_target": 0,
-                "total_time_target": 0,
-            }
+            return {}
         period_start, period_end, today = (fields.Date.from_string(d) for d in [period_start, period_end, today])
 
         employee = self.env.user.employee_id
+        show_leaderboard = self.env.company.timesheet_show_leaderboard
         data = {
             "leaderboard": self.env.company._get_leaderboard_data(period_start, period_end, today),
             "employee_id": employee.id,
-            "total_time_target": sum(self.env.user.employee_id.get_daily_working_hours(period_start, period_end)[self.env.user.employee_id.id].values()),
+            "billable_time_target": employee.billable_time_target,
+            "total_time_target": sum(employee.get_daily_working_hours(period_start, period_end)[employee.id].values()),
+            "show_leaderboard": show_leaderboard,
         }
-        if not self.env.company.timesheet_show_leaderboard:
+        if not show_leaderboard:
             data['leaderboard'] = [employee_data for employee_data in data['leaderboard'] if employee_data['id'] == employee.id]
 
         if fetch_tip:

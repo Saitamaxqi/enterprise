@@ -1,19 +1,18 @@
 import { onWillStart } from "@odoo/owl";
-import { TimesheetLeaderboard } from "@sale_timesheet_enterprise/components/timesheet_leaderboard/timesheet_leaderboard";
-import { timesheetLeaderboardTimerHook } from "@sale_timesheet_enterprise/hooks/timesheet_leaderboard_timer_hook";
+
+import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
+
+import { TimesheetLeaderboard } from "@sale_timesheet_enterprise/components/timesheet_leaderboard/timesheet_leaderboard";
 
 export function patchRenderer(Renderer) {
     patch(Renderer.components, { TimesheetLeaderboard });
     patch(Renderer.prototype, {
         setup() {
             super.setup();
-            const { getLeaderboardRendering } = timesheetLeaderboardTimerHook();
+            this.timesheetLeaderboardService = useService("timesheet_leaderboard");
             onWillStart(async () => {
-                const { showIndicators, showLeaderboard, showLeaderboardComponent } = await getLeaderboardRendering();
-                this.showIndicators = showIndicators;
-                this.showLeaderboard = showLeaderboard;
-                this.showLeaderboardComponent = showLeaderboardComponent;
+                await this.timesheetLeaderboardService.getLeaderboardData();
             });
         },
     });

@@ -15,19 +15,16 @@ export class TimesheetLeaderboardDialog extends Component {
         model: { type: Object, optional: true },
         date: { type: Object },
         close: { type: Function },
-        type: { type: String },
-        changeType: { type: Function },
     };
 
     setup() {
         this.orm = useService("orm");
         this.timesheetUOMService = useService("timesheet_uom");
+        this.timesheetLeaderboardService = useService("timesheet_leaderboard");
         this.state = useState({
             date: this.props.date.startOf("month"),
-            type: this.props.type,
-            showAll: false,
+            type: this.timesheetLeaderboardService.leaderboardType,
             leaderboard: [],
-            stored_leaderboard: [],
             current_employee: {},
         });
 
@@ -39,41 +36,20 @@ export class TimesheetLeaderboardDialog extends Component {
     }
 
     async getLeaderboardData(fetchTip=false) {
-        const periodEnd = this.state.date.endOf("month");
-        const data = await this.orm.call(
-            "res.company",
-            "get_timesheet_ranking_data",
-            [this.state.date, periodEnd, periodEnd, fetchTip],
-            { context: user.context }
-        );
-        if (fetchTip) {
-            this.tip = data.tip;
-        }
-        this.state.stored_leaderboard = data.leaderboard;
-        this.state.leaderboard = this.sortAndFilterLeaderboard(this.state.stored_leaderboard, this.state.type);
-        this.state.current_employee = this.setCurrentEmployeeIndexFromLeaderboard(this.state.leaderboard, data.employee_id);
-        this.state.current_employee_id = data.employee_id;
-    }
-
-    sortAndFilterLeaderboard(array, order_by) {
-        const min = order_by === "billing_rate" ? 0.5 : 0;
-        array.sort((a, b) => b[order_by] - a[order_by]);
-        return array.filter((line) => line[order_by] > min);
-    }
-
-    setCurrentEmployeeIndexFromLeaderboard(array, employee_id) {
-        const index = array.findIndex(object => object.id === employee_id);
-        if (index >= 0) {
-            array[index].index = index;
-        }
-        return array[index] || {};
+        await this.timesheetLeaderboardService.getLeaderboardData({
+            periodStart: this.state.date,
+            periodEnd: this.state.date.endOf("month"),
+            fetchTip,
+        });
+        this.state.leaderboard = this.timesheetLeaderboardService.data.leaderboard;
+        this.state.current_employee = this.timesheetLeaderboardService.data.currentEmployee;
     }
 
     changeType(type) {
-        this.props.changeType(type);
+        this.timesheetLeaderboardService.changeLeaderboardType(type);
         this.state.type = type;
-        this.state.leaderboard = this.sortAndFilterLeaderboard(this.state.stored_leaderboard, type);
-        this.state.current_employee = this.setCurrentEmployeeIndexFromLeaderboard(this.state.leaderboard, this.state.current_employee_id)
+        this.state.leaderboard = this.timesheetLeaderboardService.data.leaderboard;
+        this.state.current_employee = this.timesheetLeaderboardService.data.currentEmployee;
     }
 
     async goNextMonth() {

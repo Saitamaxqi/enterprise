@@ -14,7 +14,17 @@ defineTimesheetModels();
 
 async function initAndOpenView(showIndicator = true, showLeaderboard = true) {
     onRpc("get_timesheet_ranking_data", async (request) => {
-        return rankingData[request.args[0]];
+        if (!showIndicator) {
+            return {};
+        }
+        const leaderboardData = rankingData[request.args[0]];
+        leaderboardData.show_leaderboard = showLeaderboard;
+        if (!showLeaderboard) {
+            leaderboardData.leaderboard = [
+                leaderboardData.leaderboard.find((d) => d.id === leaderboardData.employee_id),
+            ];
+        }
+        return leaderboardData;
     });
     onRpc("read", async (request) => {
         if (
@@ -50,22 +60,21 @@ beforeEach(() => {
     patchSession();
     mockDate("2017-04-25 00:00:00", +1);
     rankingData = {
-        "2017-02-01T00:00:00.000+01:00": {
-            leaderboard: [...Array(11).keys()].map((id) => {
-                return {
-                    id: id,
-                    name: `Test ${id}`,
-                    billable_time_target: 100.0,
-                    billable_time: 150.0,
-                    total_time: 150.0,
-                    total_valid_time: 150.0,
-                    billing_rate: 150.0,
-                };
-            }),
+        "2017-02-01": {
+            leaderboard: [...Array(11).keys()].map((id) => ({
+                id: id,
+                name: `Test ${id}`,
+                billable_time_target: 100.0,
+                billable_time: 150.0,
+                total_time: 150.0,
+                total_valid_time: 150.0,
+                billing_rate: 150.0,
+            })),
             employee_id: 1,
+            billable_time_target: 100.0,
             total_time_target: 144.0,
         },
-        "2017-03-01T00:00:00.000+01:00": {
+        "2017-03-01": {
             leaderboard: [
                 {
                     id: 6,
@@ -77,15 +86,16 @@ beforeEach(() => {
                     billing_rate: 148.0,
                 },
             ],
+            billable_time_target: 100.0,
             employee_id: 1,
             total_time_target: 144.0,
         },
-        "2017-04-01T00:00:00.000+01:00": {
+        "2017-04-01": {
             leaderboard: [
                 {
                     id: 1,
                     name: "Administrator",
-                    billable_time_target: 25.0,
+                    billable_time_target: 100.0,
                     billable_time: 20.0,
                     total_time: 20.0,
                     total_valid_time: 20.0,
@@ -129,9 +139,10 @@ beforeEach(() => {
                 },
             ],
             employee_id: 1,
+            billable_time_target: 100.0,
             total_time_target: 144.0,
         },
-        "2017-05-01T00:00:00.000+01:00": {
+        "2017-05-01": {
             leaderboard: [
                 {
                     id: 7,
@@ -144,6 +155,7 @@ beforeEach(() => {
                 },
             ],
             employee_id: 1,
+            billable_time_target: 100.0,
             total_time_target: 120.0,
         },
     };
@@ -170,7 +182,7 @@ test("Check that billing and total time indicators are displayed if user's compa
 });
 
 test("Check that confetties are not displayed if current employee is not first in the leaderboard", async () => {
-    const rankingDataApril = rankingData["2017-04-01T00:00:00.000+01:00"];
+    const rankingDataApril = rankingData["2017-04-01"];
     const employee = rankingDataApril["leaderboard"][0];
     employee["billing_rate"] = 20.0;
     await initAndOpenView();
@@ -182,7 +194,7 @@ test("Check that confetties are not displayed if current employee is not first i
 });
 
 test("Check that the billing rate is displayed in red if < than 100.", async () => {
-    const rankingDataApril = rankingData["2017-04-01T00:00:00.000+01:00"];
+    const rankingDataApril = rankingData["2017-04-01"];
     const employee = rankingDataApril["leaderboard"][0];
     employee["billing_rate"] = 70.0;
     await initAndOpenView();
@@ -190,7 +202,7 @@ test("Check that the billing rate is displayed in red if < than 100.", async () 
 });
 
 test("Check that the total time is displayed without styling if the total valid time >= total time target.", async () => {
-    const rankingDataApril = rankingData["2017-04-01T00:00:00.000+01:00"];
+    const rankingDataApril = rankingData["2017-04-01"];
     const employee = rankingDataApril["leaderboard"][0];
     employee["total_valid_time"] = 145.0;
     await initAndOpenView();
@@ -198,7 +210,7 @@ test("Check that the total time is displayed without styling if the total valid 
 });
 
 test("Check that the indicators are replaced by text if current employee's billing rate <= 0 [Leaderboard feature only].", async () => {
-    const rankingDataApril = rankingData["2017-04-01T00:00:00.000+01:00"];
+    const rankingDataApril = rankingData["2017-04-01"];
     const employee = rankingDataApril["leaderboard"][0];
     employee["billing_rate"] = 0.0;
     await initAndOpenView();
@@ -206,7 +218,7 @@ test("Check that the indicators are replaced by text if current employee's billi
 });
 
 test("Check that the indicators are replaced by text if current employee's billing rate <= 0 [Billing Rate feature only].", async () => {
-    const rankingDataApril = rankingData["2017-04-01T00:00:00.000+01:00"];
+    const rankingDataApril = rankingData["2017-04-01"];
     const employee = rankingDataApril["leaderboard"][0];
     employee["billing_rate"] = 0.0;
     await initAndOpenView(true, false);
@@ -216,7 +228,7 @@ test("Check that the indicators are replaced by text if current employee's billi
 });
 
 test("Check that '···' is displayed when current emplyee's ranking > 3", async () => {
-    const rankingDataApril = rankingData["2017-04-01T00:00:00.000+01:00"];
+    const rankingDataApril = rankingData["2017-04-01"];
     const employee = rankingDataApril["leaderboard"][0];
     employee["billing_rate"] = 5.0;
     await initAndOpenView();
@@ -259,7 +271,7 @@ test("Check that employees are sorted accordingly to the ranking criteria.", asy
 });
 
 test("Check that employee's name is displayed in bold if rank > 3.", async () => {
-    const rankingDataApril = rankingData["2017-04-01T00:00:00.000+01:00"];
+    const rankingDataApril = rankingData["2017-04-01"];
     const employee = rankingDataApril["leaderboard"][0];
     employee["billing_rate"] = 5.0;
     await initAndOpenView();
