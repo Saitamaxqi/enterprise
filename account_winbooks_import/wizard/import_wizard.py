@@ -324,9 +324,9 @@ class AccountWinbooksImportWizard(models.TransientModel):
                     'type': journal_type,
                 }
                 if data['type'] == 'sale':
-                    data['default_account_id'] = self.env.company.income_account_id
+                    data['default_account_id'] = self.env.company.income_account_id.id
                 if data['type'] == 'purchase':
-                    data['default_account_id'] = self.env.company.expense_account_id
+                    data['default_account_id'] = self.env.company.expense_account_id.id
                 journal = AccountJournal.create(data)
             journal_data[rec.get('DBKID')] = journal.id
             journals += journal
