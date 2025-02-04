@@ -102,17 +102,15 @@ export const SELECTORS = {
     startDatePicker: ".o_gantt_picker:nth-child(2)",
     stopDatePicker: ".o_gantt_picker:nth-child(4)",
     thumbnail: ".o_gantt_row_thumbnail",
-    rangeMenu: ".o_gantt_range_menu",
-    rangeMenuToggler: ".o_gantt_renderer_controls .dropdown-toggle",
+    scaleSelectorMenu: ".o_gantt_scale_selector_menu",
+    scaleSelectorToggler: ".o_gantt_scale_selector .dropdown-toggle",
     todayButton: ".o_gantt_button_today",
     toolbar: ".o_gantt_renderer_controls div[name='ganttToolbar']",
     undraggable: ".o_undraggable",
     view: ".o_gantt_view",
     viewContent: ".o_gantt_view .o_content",
-    previousButton: ".o_gantt_renderer_controls button:has(> .fa-arrow-left)",
-    nextButton: ".o_gantt_renderer_controls button:has(> .fa-arrow-right)",
-    minusButton: ".o_gantt_renderer_controls button:has(> .fa-search-minus)",
-    plusButton: ".o_gantt_renderer_controls button:has(> .fa-search-plus)",
+    previousButton: ".o_gantt_renderer_controls button:has(> .oi-arrow-left)",
+    nextButton: ".o_gantt_renderer_controls button:has(> .oi-arrow-right)",
 
     // Connectors
     connector: ".o_gantt_connector",
@@ -162,9 +160,9 @@ export async function selectCustomRange({ startDate, stopDate }) {
     const {
         startDatePicker: START_SELECTOR,
         stopDatePicker: STOP_SELECTOR,
-        rangeMenuToggler,
+        scaleSelectorToggler,
     } = SELECTORS;
-    await click(rangeMenuToggler);
+    await click(scaleSelectorToggler);
     await animationFrame();
     if (startDate) {
         await selectDateInDatePicker(START_SELECTOR, luxon.DateTime.fromISO(startDate));
@@ -177,9 +175,9 @@ export async function selectCustomRange({ startDate, stopDate }) {
 }
 
 export async function selectRange(label) {
-    await click(SELECTORS.rangeMenuToggler);
+    await click(SELECTORS.scaleSelectorToggler);
     await animationFrame();
-    await click(`${SELECTORS.rangeMenu} .dropdown-item:contains(/^${label}$/)`);
+    await click(`${SELECTORS.scaleSelectorMenu} .dropdown-item:contains(/^${label}$/)`);
     await ganttControlsChanges();
 }
 
@@ -328,7 +326,7 @@ function getHeaders(selector) {
 export function getGridContent() {
     const columnHeaders = getHeaders(SELECTORS.columnHeader);
     const groupHeaders = getHeaders(SELECTORS.groupHeader);
-    const range = queryAllTexts(SELECTORS.rangeMenuToggler)[0] || null;
+    const range = queryAllTexts(SELECTORS.scaleSelectorToggler)[0] || null;
     const viewTitle = queryAllTexts(".o_gantt_title")[0] || null;
     const colsRange = queryFirst(SELECTORS.columnHeader)
         .style.getPropertyValue("grid-column")

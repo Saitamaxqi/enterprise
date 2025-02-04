@@ -217,11 +217,11 @@ test("Controls: rendering is mobile friendly", async () => {
     });
 
     // check toolbar's dropdown
-    await contains("button.dropdown-toggle").click();
+    await contains("button.dropdown-toggle:eq(2)").click();
     expect(queryAllTexts`.o-dropdown-item`).toEqual(["Activate sparse mode"]);
 
     // check that pickers open in dialog
-    await contains(SELECTORS.rangeMenuToggler).click();
+    await contains(SELECTORS.scaleSelectorToggler).click();
     expect(".modal").toHaveCount(0);
     await contains(SELECTORS.startDatePicker).click();
     expect(".modal").toHaveCount(1);

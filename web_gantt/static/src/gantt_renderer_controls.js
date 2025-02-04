@@ -1,13 +1,12 @@
 import { Component, useState } from "@odoo/owl";
-import { useDateTimePicker } from "@web/core/datetime/datetime_hook";
 import { Dropdown } from "@web/core/dropdown/dropdown";
-import { useDropdownState } from "@web/core/dropdown/dropdown_hooks";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { formatDate } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
 import { pick } from "@web/core/utils/objects";
 import { debounce } from "@web/core/utils/timing";
-import { diffColumn, localStartOf, useGanttResponsivePopover } from "./gantt_helpers";
+import { diffColumn } from "./gantt_helpers";
+import { GanttScaleSelector } from "./gantt_scale_selector";
 
 const { DateTime } = luxon;
 
@@ -18,6 +17,7 @@ export class GanttRendererControls extends Component {
     static components = {
         Dropdown,
         DropdownItem,
+        GanttScaleSelector,
     };
     static props = ["model", "displayExpandCollapseButtons", "focusToday", "getCurrentFocusDate"];
     static toolbarContentTemplate = "web_gantt.GanttRendererControls.ToolbarContent";
@@ -26,92 +26,26 @@ export class GanttRendererControls extends Component {
     setup() {
         this.model = this.props.model;
         this.updateMetaData = debounce(() => this.model.fetchData(this.makeParams()), 500);
-
-        const { metaData } = this.model;
-        this.state = useState(pick(metaData, ...KEYS));
-        this.pickerValues = useState({
-            startDate: metaData.startDate,
-            stopDate: metaData.stopDate,
-        });
-
-        const getPickerProps = (key) => ({ type: "date", value: this.pickerValues[key] });
-        this.startPicker = useDateTimePicker({
-            target: "start-picker",
-            onApply: (date) => {
-                this.pickerValues.startDate = date;
-                if (this.pickerValues.stopDate < date) {
-                    this.pickerValues.stopDate = date;
-                } else if (date.plus({ year: 10, day: -1 }) < this.pickerValues.stopDate) {
-                    this.pickerValues.stopDate = date.plus({ year: 10, day: -1 });
-                }
-            },
-            get pickerProps() {
-                return getPickerProps("startDate");
-            },
-            createPopover: (...args) => useGanttResponsivePopover(_t("Gantt start date"), ...args),
-            ensureVisibility: () => false,
-        });
-        this.stopPicker = useDateTimePicker({
-            target: "stop-picker",
-            onApply: (date) => {
-                this.pickerValues.stopDate = date;
-                if (date < this.pickerValues.startDate) {
-                    this.pickerValues.startDate = date;
-                } else if (this.pickerValues.startDate.plus({ year: 10, day: -1 }) < date) {
-                    this.pickerValues.startDate = date.minus({ year: 10, day: -1 });
-                }
-            },
-            get pickerProps() {
-                return getPickerProps("stopDate");
-            },
-            createPopover: (...args) => useGanttResponsivePopover(_t("Gantt stop date"), ...args),
-            ensureVisibility: () => false,
-        });
-
-        this.dropdownState = useDropdownState();
+        this.state = useState(pick(this.model.metaData, ...KEYS));
     }
 
-    get dateDescription() {
-        const { focusDate, rangeId } = this.state;
-        switch (rangeId) {
-            case "quarter":
-                return focusDate.toFormat(`Qq yyyy`);
-            case "day":
-                return formatDate(focusDate);
-            default:
-                return this.model.metaData.scales[rangeId].groupHeaderFormatter(
-                    focusDate,
-                    this.env
-                );
-        }
-    }
-
-    get formattedDateRange() {
-        return _t("From: %(from_date)s to: %(to_date)s", {
-            from_date: formatDate(this.state.startDate),
-            to_date: formatDate(this.state.stopDate),
-        });
-    }
-
-    getFormattedDate(date) {
-        return formatDate(date);
-    }
-
-    isSelected(rangeId) {
-        if (rangeId === "custom") {
-            return (
-                this.state.rangeId === rangeId ||
-                !localStartOf(this.state.focusDate, this.state.rangeId).equals(
-                    localStartOf(DateTime.now(), this.state.rangeId)
-                )
-            );
-        }
-        return (
-            this.state.rangeId === rangeId &&
-            localStartOf(this.state.focusDate, rangeId).equals(
-                localStartOf(DateTime.now(), rangeId)
-            )
-        );
+    getGanttScaleSelectorProps() {
+        return {
+            scales: {
+                ...this.model.metaData.ranges,
+                custom: {
+                    description: _t("From: %(from_date)s to: %(to_date)s", {
+                        from_date: formatDate(this.state.startDate),
+                        to_date: formatDate(this.state.stopDate),
+                    }),
+                },
+            },
+            currentScale: this.state.rangeId,
+            setScale: this.selectRangeId.bind(this),
+            selectCustomRange: this.selectCustomRange.bind(this),
+            startDate: this.state.startDate,
+            stopDate: this.state.stopDate,
+        };
     }
 
     makeParams() {
@@ -120,15 +54,6 @@ export class GanttRendererControls extends Component {
             params.currentFocusDate = this.props.getCurrentFocusDate();
         }
         return params;
-    }
-
-    onApply() {
-        this.state.startDate = this.pickerValues.startDate;
-        this.state.stopDate = this.pickerValues.stopDate;
-        this.state.rangeId = "custom";
-        this.state.keepCurrentFocusDate = true;
-        this.updateMetaData();
-        this.dropdownState.close();
     }
 
     onTodayClicked() {
@@ -150,7 +75,6 @@ export class GanttRendererControls extends Component {
             );
         }
         delete this.state.keepCurrentFocusDate;
-        this.updatePickerValues();
         this.updateMetaData();
     }
 
@@ -169,7 +93,6 @@ export class GanttRendererControls extends Component {
             );
         }
         delete this.state.keepCurrentFocusDate;
-        this.updatePickerValues();
         this.updateMetaData();
     }
 
@@ -179,12 +102,14 @@ export class GanttRendererControls extends Component {
             this.model.getRangeFromDate(rangeId, DateTime.now().startOf("day"))
         );
         delete this.state.keepCurrentFocusDate;
-        this.updatePickerValues();
         this.updateMetaData();
     }
 
-    updatePickerValues() {
-        this.pickerValues.startDate = this.state.startDate;
-        this.pickerValues.stopDate = this.state.stopDate;
+    selectCustomRange(startDate, stopdDate) {
+        this.state.rangeId = "custom";
+        this.state.startDate = startDate;
+        this.state.stopDate = stopdDate;
+        this.state.keepCurrentFocusDate = true;
+        this.updateMetaData();
     }
 }

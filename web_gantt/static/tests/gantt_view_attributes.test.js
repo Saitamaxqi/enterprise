@@ -206,10 +206,10 @@ test("default_range omitted, scales provided", async () => {
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
     expect(columnHeaders).toHaveLength(10);
 
-    await contains(SELECTORS.rangeMenuToggler).click();
+    await contains(SELECTORS.scaleSelectorToggler).click();
     await animationFrame();
-    expect(".o_gantt_range_menu .dropdown-item").toHaveCount(3);
-    expect(queryAllTexts(".o_gantt_range_menu .dropdown-item")).toEqual([
+    expect(`${SELECTORS.scaleSelectorMenu} .dropdown-item`).toHaveCount(3);
+    expect(queryAllTexts(`${SELECTORS.scaleSelectorMenu} .dropdown-item`)).toEqual([
         "Day",
         "Week",
         "From\n12/01/2018\nto\n02/28/2019\nApply",
@@ -225,9 +225,9 @@ test("scales attribute", async () => {
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
     expect(columnHeaders).toHaveLength(34);
 
-    await contains(SELECTORS.rangeMenuToggler).click();
+    await contains(SELECTORS.scaleSelectorToggler).click();
     await animationFrame();
-    expect(queryAllTexts(".o_gantt_range_menu .dropdown-item")).toEqual([
+    expect(queryAllTexts(`${SELECTORS.scaleSelectorMenu} .dropdown-item`)).toEqual([
         "Day",
         "Month",
         "From\n12/01/2018\nto\n02/28/2019\nApply",
@@ -950,10 +950,10 @@ test("default_range attribute", async () => {
     const { columnHeaders, range } = getGridContent();
     expect(range).toBe("Day");
     expect(columnHeaders).toHaveLength(42);
-    await click(SELECTORS.rangeMenuToggler);
+    await click(SELECTORS.scaleSelectorToggler);
     await animationFrame();
-    const firstRangeMenuItem = queryFirst(`${SELECTORS.rangeMenu} .dropdown-item`);
-    expect(firstRangeMenuItem).toHaveClass("selected");
+    const firstRangeMenuItem = queryFirst(`${SELECTORS.scaleSelectorMenu} .dropdown-item`);
+    expect(firstRangeMenuItem).toHaveClass("active");
     expect(firstRangeMenuItem).toHaveText("Day");
 });
 
@@ -1013,10 +1013,10 @@ test("default_range not in scales", async () => {
     const { range } = getGridContent();
     expect(range).toBe("Year");
 
-    await contains(SELECTORS.rangeMenuToggler).click();
+    await contains(SELECTORS.scaleSelectorToggler).click();
     await animationFrame();
-    expect(".o_gantt_range_menu .dropdown-item").toHaveCount(3);
-    expect(queryAllTexts(".o_gantt_range_menu .dropdown-item")).toEqual([
+    expect(`${SELECTORS.scaleSelectorMenu} .dropdown-item`).toHaveCount(3);
+    expect(queryAllTexts(`${SELECTORS.scaleSelectorMenu} .dropdown-item`)).toEqual([
         "Month",
         "Year",
         "From\n01/01/2017\nto\n12/31/2019\nApply",

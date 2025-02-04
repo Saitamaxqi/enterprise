@@ -23,13 +23,13 @@ patch(registry.category("web_tour.tours").get("project_test_tour"), {
         });
 
         originalSteps.splice(originalSteps.length, 0, {
-            trigger: ".o_gantt_renderer_controls .dropdown:nth-child(2)",
+            trigger: ".o_gantt_scale_selector .dropdown-toggle",
             content: "Open range menu",
             run: "click",
         },
         {
-            trigger: '.o_gantt_range_menu .dropdown-item:nth-child(3)',
-            content: 'Select "This Month"',
+            trigger: '.o_gantt_scale_selector_menu .dropdown-item:nth-child(3)',
+            content: 'Select "Month"',
             run: "click",
         },
         {

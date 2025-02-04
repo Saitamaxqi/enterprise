@@ -91,7 +91,7 @@ registry.category("web_tour.tours").add('planning_tour', {
         tooltipPosition: "bottom",
         run: "click",
     }, {
-        trigger: ".o_gantt_renderer_controls button i.fa-arrow-right",
+        trigger: ".o_gantt_renderer_controls button i.oi-arrow-right",
         content: markup(_t("Now that this week is ready, let's get started on <b>next week's schedule</b>.")),
         tooltipPosition: "bottom",
         run: "click",
