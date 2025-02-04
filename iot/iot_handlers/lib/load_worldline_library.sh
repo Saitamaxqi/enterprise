@@ -15,3 +15,10 @@ if [ -f "${PATH_ZIP_LIB}worldline-ctepv21_07.zip" ]; then
 	ldconfig
 	sudo cp /etc/ld.so.cache /root_bypass_ramdisks/etc/ld.so.cache
 fi
+
+# For iot box images >= 25_01 there is a user "odoo" running Odoo service
+# If the user "odoo" exists since this script is ran under "root" user
+# we need to make sure that Worldline files are owned by the "odoo" user
+if id odoo > /dev/null 2>&1; then
+	sudo chown -R odoo:odoo "${PATH_LIB}"
+fi
