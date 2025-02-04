@@ -1,12 +1,15 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.tests import Form
-from .sign_request_common import SignRequestCommon
 from odoo import Command, fields
 from odoo.exceptions import UserError, ValidationError
+from odoo.tests import Form, users
+from odoo.tools import formataddr
+
+from odoo.addons.mail.tests.common import MockEmail
+from .sign_request_common import SignRequestCommon
 
 
-class TestSignRequest(SignRequestCommon):
+class TestSignRequest(SignRequestCommon, MockEmail):
     def test_sign_request_create(self):
         sign_request_no_item = self.create_sign_request_no_item(signer=self.partner_1, cc_partners=self.partner_4)
 
@@ -503,3 +506,60 @@ class TestSignRequest(SignRequestCommon):
         self.template_1_role.write({'user_id': self.user_1.id})
         wizard = Form(self.env['sign.send.request'].with_context(default_activity_id=activity.id))
         self.assertEqual(self.template_1_role, wizard.template_id)
+
+    @users('admin')
+    def test_sign_request_notification(self):
+        """
+        Test the sign request notification by creating a user with notification settings
+        and checking if the notification type is set to 'inbox' in the created sign request.
+        """
+        self.env.user.write({
+            'notification_type': 'inbox',
+        })
+
+        with self.mock_mail_gateway():
+            # Create a sign request
+            sign_request = self.env['sign.request'].create({
+                'template_id': self.template_1_role.id,
+                'reference': self.template_1_role.display_name,
+                'request_item_ids': [Command.create({
+                    'partner_id': self.partner_1.id,
+                    'role_id': self.env.ref('sign.sign_item_role_customer').id,
+                    'mail_sent_order': 1,
+                })],
+                'subject': 'Test Sign Request',
+                'message': 'Please sign this document',
+            })
+
+            # Map the sign request items by role
+            sign_request_items_by_role = {item.role_id: item for item in sign_request.request_item_ids}
+            sign_request_item_customer = sign_request_items_by_role[self.env.ref('sign.sign_item_role_customer')]
+
+            # Ensure the sign request is created with the correct state
+            self.assertEqual(sign_request.state, 'sent', 'The sign request should be in "sent" state initially')
+
+            # Verify that an email was sent to the customer
+            mail = self.env['mail.mail'].search([
+                ('email_to', '=', formataddr((self.partner_1.name, self.partner_1.email)))
+            ], limit=1)
+
+            self.assertTrue(mail, 'The initial sign request email should have been sent to the customer')
+            self.assertSentEmail('"Mitchell Admin" <admin@example.com>', self.partner_1)
+            self.assertTrue(sign_request_item_customer.is_mail_sent, 'An email should be marked as sent for the customer')
+
+            # Simulate signing the document
+            sign_request_item_customer.sudo()._edit_and_sign(self.single_role_customer_sign_values)
+            self.assertEqual(sign_request.state, 'signed', 'The sign request should be signed')
+
+            completion_mail_to_user = self.env['mail.mail'].search([
+                ('email_to', '=', formataddr((self.env.user.partner_id.name, self.env.user.partner_id.email)))
+            ])
+            self.assertEqual(0, len(completion_mail_to_user), 'No completion email should be sent to the admin user')
+
+            completion_mail_to_partner = self.env['mail.mail'].search([
+                ('email_to', '=', formataddr((self.partner_1.name, self.partner_1.email)))
+            ])
+            self.assertEqual(
+                2, len(completion_mail_to_partner),
+                'Two emails should have been sent to the partner: the initial sign request and the completion email'
+            )

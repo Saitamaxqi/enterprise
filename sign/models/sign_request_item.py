@@ -190,7 +190,9 @@ class SignRequestItem(models.Model):
             self.env['sign.request']._message_send_mail(
                 body, 'sign.sign_mail_notification_light',
                 {'record_name': signer.sign_request_id.reference},
-                {'model_description': _('Signature'), 'company': signer.communication_company_id or signer.sign_request_id.create_uid.company_id},
+                {'model_description': _('Signature'),
+                 'company': signer.communication_company_id or signer.sign_request_id.create_uid.company_id,
+                 'partner': signer.partner_id},
                 {'email_from': signer.create_uid.email_formatted,
                  'author_id': signer.create_uid.partner_id.id,
                  'email_to': formataddr((signer.partner_id.name, signer_email_normalized)),
@@ -290,7 +292,9 @@ class SignRequestItem(models.Model):
         self.env['sign.request']._message_send_mail(
             body, 'sign.sign_mail_notification_light',
             {'record_name': self.reference},
-            {'model_description': 'signature', 'company': self.communication_company_id or self.create_uid.company_id},
+            {'model_description': 'signature',
+             'company': self.communication_company_id or self.create_uid.company_id,
+             'partner': self.create_uid.partner_id},
             {
                 'email_from': self.create_uid.email_formatted,
                 'author_id': self.create_uid.partner_id.id,

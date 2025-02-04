@@ -370,7 +370,9 @@ class SignRequest(models.Model):
         self._message_send_mail(
             body, 'sign.sign_mail_notification_light',
             {'record_name': self.reference},
-            {'model_description': 'signature', 'company': self.communication_company_id or self.create_uid.company_id},
+            {'model_description': 'signature',
+             'company': self.communication_company_id or self.create_uid.company_id,
+             'partner': partner},
             {'email_from': self.create_uid.email_formatted,
              'author_id': self.create_uid.partner_id.id,
              'email_to': partner.email_formatted,
@@ -510,7 +512,9 @@ class SignRequest(models.Model):
         self.env['sign.request']._message_send_mail(
             body, 'sign.sign_mail_notification_light',
             {'record_name': self.reference},
-            {'model_description': 'signature', 'company': self.communication_company_id or self.create_uid.company_id},
+            {'model_description': 'signature',
+             'company': self.communication_company_id or self.create_uid.company_id,
+             'partner': partner},
             {'email_from': self.create_uid.email_formatted,
              'author_id': self.create_uid.partner_id.id,
              'email_to': partner.email_formatted,
@@ -600,6 +604,20 @@ class SignRequest(models.Model):
         default_lang = get_lang(self.env, lang_code=kwargs.get('lang')).code
         lang = kwargs.get('lang', default_lang)
         sign_request = self.with_context(lang=lang)
+        partner_id = notif_values.get("partner")
+        if partner_id and len(partner_id.user_ids) == 1 and partner_id.user_ids.notification_type == "inbox":
+            return sign_request.message_notify(
+                body=body,
+                subject=mail_values.get("subject"),
+                author_id=self.create_uid.partner_id.id,
+                email_from=mail_values.get("email_from"),
+                attachment_ids=mail_values.get("attachment_ids"),
+                partner_ids=notif_values.get("partner").ids,
+                record_name=message_values.get("record_name"),
+                model_description=notif_values.get("model_description"),
+                mail_auto_delete=False,
+                force_send=force_send,
+            )
 
         # the notif layout wrapping expects a mail.message record, but we don't want
         # to actually create the record
