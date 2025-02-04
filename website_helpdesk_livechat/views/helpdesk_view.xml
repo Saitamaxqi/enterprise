@@ -18,6 +18,21 @@
         </field>
     </record>
 
+    <record id="helpdesk_tiket_view_form_inherit_website_helpdesk_livechat" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.view.form.inherit.website.helpdesk.livechat</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/div" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_open_livechat" type="object" class="oe_stat_button" icon="fa-comments" groups="helpdesk.group_helpdesk_user" invisible="not from_livechat">
+                        <div class="o_stat_info"><span class="o_stat_text">View chat</span></div>
+                    </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
     <menuitem
         id="chatbot_config"
         name="Chatbots"

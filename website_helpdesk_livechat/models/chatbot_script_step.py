@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import _, models, fields
+from odoo.tools import html2plaintext
 
 
 class ChatbotScriptStep(models.Model):
@@ -14,12 +15,15 @@ class ChatbotScriptStep(models.Model):
     def _prepare_ticket_values(self, discuss_channel, description):
         name = _("%(name)s's Ticket",
             name=discuss_channel.livechat_visitor_id.display_name or self.chatbot_script_id.title)
-
+        if msg := self._find_first_user_free_input(discuss_channel):
+            name = html2plaintext(msg.body)[:100]
         return {
-            'description': description + discuss_channel._get_channel_history(),
-            'name': name,
-            'source_id': self.chatbot_script_id.source_id.id,
-            'team_id': self.helpdesk_team_id.id,
+            "channel_id": discuss_channel.id,
+            # sudo - discuss.channel: can access messages to build the description
+            "description": description + discuss_channel.sudo()._get_channel_history(),
+            "name": name,
+            "source_id": self.chatbot_script_id.source_id.id,
+            "team_id": self.helpdesk_team_id.id,
         }
 
     def _process_step(self, discuss_channel):

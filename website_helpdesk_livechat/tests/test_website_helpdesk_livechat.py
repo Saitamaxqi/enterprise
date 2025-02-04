@@ -61,6 +61,7 @@ class TestWebsiteHelpdeskLivechat(HttpCase, HelpdeskCommon):
         # Create the ticket with the /ticket command
         ticket_name = 'Test website helpdesk livechat'
         discuss_channel.execute_command_helpdesk(body=f"/ticket {ticket_name}")
+        self.assertTrue(discuss_channel.sudo().ticket_ids)
 
         self.env.cr.precommit.run()  # trigger the creation of bus.bus records
         bus = self.env['bus.bus'].search([('channel', 'like', f'"res.partner",{self.helpdesk_manager.partner_id.id}')], order='id desc', limit=1)

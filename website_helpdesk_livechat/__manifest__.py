@@ -26,6 +26,7 @@ Features:
 
         'views/chatbot_script_views.xml',
         'views/chatbot_script_step_views.xml',
+        'views/discuss_channel_views.xml',
         'views/helpdesk_view.xml',
         'views/helpdesk_ticket_attachment_template.xml',
     ],
@@ -41,6 +42,11 @@ Features:
         ],
         'web.assets_unit_tests': [
             'website_helpdesk_livechat/static/tests/**/*',
+            ("remove", "website_helpdesk_livechat/static/tests/tours/**/*"),
         ],
+        "im_livechat.assets_livechat_support_tours": [
+            "website_helpdesk_livechat/static/tests/tours/support/*",
+        ],
+
     },
 }

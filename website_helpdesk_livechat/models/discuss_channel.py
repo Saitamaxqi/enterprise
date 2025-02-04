@@ -2,7 +2,7 @@ import json
 import re
 from markupsafe import Markup
 
-from odoo import models, _
+from odoo import api, fields, models, _
 from odoo.tools import is_html_empty, plaintext2html
 from odoo.osv.expression import OR
 from odoo.tools.mimetypes import get_extension
@@ -10,6 +10,23 @@ from odoo.tools.mimetypes import get_extension
 
 class DiscussChannel(models.Model):
     _inherit = 'discuss.channel'
+
+    ticket_ids = fields.One2many(
+        "helpdesk.ticket",
+        "channel_id",
+        string="Tickets",
+        groups="base.group_erp_manager",
+        help="The channel becomes accessible to helpdesk users when tickets are set.",
+    )
+    has_helpdesk_ticket = fields.Boolean(
+        compute="_compute_has_helpdesk_ticket", compute_sudo=True, store=True
+    )
+    _has_helpdesk_ticket_index = models.Index("(has_helpdesk_ticket) WHERE has_helpdesk_ticket IS TRUE")
+
+    @api.depends("ticket_ids")
+    def _compute_has_helpdesk_ticket(self):
+        for channel in self:
+            channel.has_helpdesk_ticket = bool(channel.ticket_ids)
 
     # ------------------------------------------------------
     #  Commands
@@ -56,6 +73,7 @@ class DiscussChannel(models.Model):
                 team = self.env['helpdesk.team'].search([('use_website_helpdesk_livechat', '=', True)], order='sequence', limit=1)
                 team_id = team.id if team else False
                 helpdesk_ticket = self.env['helpdesk.ticket'].with_context(with_partner=True).create({
+                    "channel_id": self.id,
                     'name': ' '.join(list_value),
                     'description': plaintext2html(description),
                     'partner_id': customer.id if customer else False,
