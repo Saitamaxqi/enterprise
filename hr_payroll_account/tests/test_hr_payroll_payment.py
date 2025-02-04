@@ -57,9 +57,14 @@ class TestHrPayrollPayment(TestHrPayrollAccountCommon):
         self.hr_payslip_john.move_id.action_post()
         self.assertEqual(self.hr_payslip_john.move_id.state, 'posted', 'Accounting entry has not been posted!')
         action_register_payment = self.hr_payslip_john.action_register_payment()
-        wizard = self.env[action_register_payment['res_model']].with_context(
-            action_register_payment['context'], hr_payroll_payment_register=True).create({})
-        action_create_payment = wizard.action_create_payments()
+        action_register_payment["context"]["hr_payroll_payment_register"] = True
+
+        # Use Form to ensure the computes and defaults are computed pre-create
+        wizard = Form.from_action(self.env, action_register_payment)
+        self.assertEqual(wizard.partner_id, self.hr_employee_john.work_contact_id, 'Partner is not correct!')
+        self.assertEqual(wizard.amount, self.hr_payslip_john.move_id.amount_total, 'Amount is not correct!')
+        self.assertEqual(wizard.partner_bank_id, self.hr_employee_john.bank_account_id, 'Bank account is not correct!')
+        action_create_payment = wizard.save().action_create_payments()
         payment = self.env[action_create_payment['res_model']].browse(action_create_payment['res_id'])
         self.assertAlmostEqual(payment.amount, self.hr_payslip_john.move_id.amount_total, 'Payment amount is not correct!')
         self.assertEqual(payment.partner_bank_id, self.hr_employee_john.bank_account_id)
