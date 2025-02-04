@@ -284,7 +284,7 @@ class AccountMove(models.Model):
                 invoice_ind = 5
 
             item_description = self._l10n_uy_edi_get_line_desc(line)
-            nom_item = (line.product_id.display_name or "-")[:80]
+            nom_item = (line.product_id.display_name or item_description or "-")[:80]
             temp = {
                 "NroLinDet": k,  # B1
                 "IndFact": invoice_ind,  # B4
