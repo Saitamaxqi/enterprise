@@ -309,11 +309,12 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
             return '%s\n%s\n%s' % (title, response['error']['message'], '\n'.join(inner_errors))
 
-    def _l10n_br_build_avatax_line(self, product, qty, unit_price, total, discount, line_id):
+    def _l10n_br_build_avatax_line(self, product, description, qty, unit_price, total, discount, line_id):
         """ Prepares the line data for the /calculations API call. temp* values are here to help with post-processing
         and will be removed before sending by _remove_temp_values_lines.
 
         :param product.product product: product on the line
+        :param str description: the description of the line
         :param float qty: the number of items on the line
         :param float unit_price: the unit_price on the line
         :param float total: the amount on the line without taxes or discount
@@ -332,7 +333,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
             'lineUnitPrice': unit_price,
             'numberOfItems': qty,
             'itemDescriptor': {
-                'description': product.display_name or '',
+                'description': description or product.display_name or '',
                 'cean': product.barcode or '',
             },
             'tempTransportCostType': product.l10n_br_transport_cost_type,
@@ -454,6 +455,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
         lines = [
             self._l10n_br_build_avatax_line(
                 line['product_id'],
+                line['description'],
                 line['qty'],
                 line['price_unit'],
                 line['qty'] * line['price_unit'],

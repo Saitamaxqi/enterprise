@@ -32,6 +32,7 @@ class PosOrder(models.Model):
                 "id": line.id,
                 "model_name": line._name,
                 "product_id": line.product_id,
+                "description": None,  # no line description on pos.order.line
                 "qty": line.qty,
                 "price_subtotal": line.price_subtotal,
                 "price_unit": line.price_unit,
