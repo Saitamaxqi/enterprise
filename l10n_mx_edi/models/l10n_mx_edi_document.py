@@ -2181,8 +2181,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         try:
             client = Client(wsdl=url, transport=transport)
             response = client.service.Consulta(params)
-            fetched_status = response['Estado'] if hasattr(response, 'Estado') else ''
-            fetched_state = fetched_status[0].text if fetched_status else None
+            fetched_state = response['Estado'] if hasattr(response, 'Estado') else ''
             # pylint: disable=broad-except
         except Exception as e:
             return {
