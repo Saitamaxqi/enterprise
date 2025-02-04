@@ -46,13 +46,26 @@ class ResCompany(models.Model):
 
     @api.model
     def get_timesheet_ranking_data(self, period_start, period_end, today, fetch_tip=False):
+        if not (
+            self.env.company.timesheet_show_rates
+            and self.env.user.has_group("hr_timesheet.group_hr_timesheet_user")
+        ):
+            return {
+                "leaderboard": [],
+                "employee_id": False,
+                "billing_rate_target": 0,
+                "total_time_target": 0,
+            }
         period_start, period_end, today = (fields.Date.from_string(d) for d in [period_start, period_end, today])
 
+        employee = self.env.user.employee_id
         data = {
             "leaderboard": self.env.company._get_leaderboard_data(period_start, period_end, today),
-            "employee_id": self.env.user.employee_id.id,
+            "employee_id": employee.id,
             "total_time_target": sum(self.env.user.employee_id.get_daily_working_hours(period_start, period_end)[self.env.user.employee_id.id].values()),
         }
+        if not self.env.company.timesheet_show_leaderboard:
+            data['leaderboard'] = [employee_data for employee_data in data['leaderboard'] if employee_data['id'] == employee.id]
 
         if fetch_tip:
             data["tip"] = self.env["hr.timesheet.tip"]._get_random_tip() or _("Make it a habit to record timesheets every day.")

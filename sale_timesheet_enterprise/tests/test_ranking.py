@@ -37,6 +37,7 @@ class TestSaleTimesheetEnterpriseRanking(TestCommonSaleTimesheet):
             'project_id': cls.project_billable.id,
         })
         cls.employee_user.billable_time_target = 160
+        cls.env['res.config.settings'].create({'timesheet_show_rates': True, 'timesheet_show_leaderboard': True})
 
     def test_fetch_tip(self):
         """ This test will check that a tip is actually returned when calling get_timesheet_ranking_data() with fetch_tip parameter set to true. """
