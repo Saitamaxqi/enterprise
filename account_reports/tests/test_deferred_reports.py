@@ -618,33 +618,43 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
         Test the full_months method on the deferred expense report.
         """
         self.company.deferred_expense_amount_computation_method = 'full_months'
-        self.create_invoice([[self.expense_accounts[0], 1200, '2023-02-01', '2023-03-31']])
-        self.create_invoice([[self.expense_accounts[1], 1200, '2023-02-01', '2023-03-16']])
-        self.create_invoice([[self.expense_accounts[2], 1200, '2023-02-05', '2023-03-16']])
-        self.create_invoice([[self.expense_accounts[3], 1200, '2023-02-05', '2023-03-31']])
-        self.create_invoice([[self.expense_accounts[4], 1200, '2023-02-13', '2023-04-30']])
-        self.create_invoice([[self.expense_accounts[5], 1200, '2023-03-01', '2023-06-18']])
-        self.create_invoice([[self.expense_accounts[6], 1200, '2023-03-05', '2023-06-30']])
-        self.create_invoice([[self.expense_accounts[7], 1200, '2023-03-13', '2024-03-12']])
-        self.create_invoice([[self.expense_accounts[8], 1200, '2023-03-14', '2023-03-18']])
+        self.create_invoice([[self.expense_accounts[0], 1200, '2023-01-31', '2024-01-30']])
+        self.create_invoice([[self.expense_accounts[1], 1200, '2023-02-01', '2023-03-31']])
+        self.create_invoice([[self.expense_accounts[2], 1200, '2023-02-01', '2023-03-16']])
+        self.create_invoice([[self.expense_accounts[3], 1200, '2023-02-05', '2023-03-16']])
+        self.create_invoice([[self.expense_accounts[4], 1200, '2023-02-05', '2023-03-31']])
+        self.create_invoice([[self.expense_accounts[5], 1200, '2023-02-13', '2023-04-30']])
+        self.create_invoice([[self.expense_accounts[6], 1200, '2023-03-01', '2023-06-18']])
+        self.create_invoice([[self.expense_accounts[7], 1200, '2023-03-05', '2023-06-30']])
+        self.create_invoice([[self.expense_accounts[8], 1200, '2023-03-13', '2024-03-12']])
+        self.create_invoice([[self.expense_accounts[9], 1200, '2023-03-14', '2023-03-18']])
 
         options = self.get_options('2023-03-01', '2023-03-31')
         lines = self.get_lines(options)
+
+        for line in lines:
+            total = line['columns'][0]['no_format']
+            before = line['columns'][2]['no_format']  # 1 is "Not Started"
+            current = line['columns'][3]['no_format']
+            later = line['columns'][4]['no_format']
+            self.assertAlmostEqual(total, before + current + later, 3)
+
         self.assertLinesValues(
             lines,
             #         Name          Total   Not Started   Before     Current   Later
             [0,                         1,            2,       3,         4,      5],
             [
-                ('EXP0 Expense 0',   1200,            0,     600,       600,      0),
-                ('EXP1 Expense 1',   1200,            0,    1200,         0,      0),
+                ('EXP0 Expense 0',   1200,            0,     200,       100,    900),
+                ('EXP1 Expense 1',   1200,            0,     600,       600,      0),
                 ('EXP2 Expense 2',   1200,            0,    1200,         0,      0),
-                ('EXP3 Expense 3',   1200,            0,     600,       600,      0),
-                ('EXP4 Expense 4',   1200,            0,     400,       400,    400),
-                ('EXP5 Expense 5',   1200,            0,       0,       400,    800),
-                ('EXP6 Expense 6',   1200,            0,       0,       300,    900),
-                ('EXP7 Expense 7',   1200,            0,       0,       100,   1100),
-                ('EXP8 Expense 8',   1200,            0,       0,      1200,      0),
-                ('Total',           10800,            0,    4000,      3600,   3200),
+                ('EXP3 Expense 3',   1200,            0,    1200,         0,      0),
+                ('EXP4 Expense 4',   1200,            0,     600,       600,      0),
+                ('EXP5 Expense 5',   1200,            0,     400,       400,    400),
+                ('EXP6 Expense 6',   1200,            0,       0,       400,    800),
+                ('EXP7 Expense 7',   1200,            0,       0,       300,    900),
+                ('EXP8 Expense 8',   1200,            0,       0,       100,   1100),
+                ('EXP9 Expense 9',   1200,            0,       0,      1200,      0),
+                ('Total',           12000,            0,    4200,      3700,   4100),
             ],
             options,
         )

@@ -2,7 +2,6 @@ import calendar
 from contextlib import contextmanager
 from dateutil.relativedelta import relativedelta
 import logging
-import math
 import re
 
 from odoo import fields, models, api, _, Command
@@ -180,31 +179,19 @@ class AccountMove(models.Model):
         """
         Returns the amount to defer for the given period taking into account the deferred method (day/month/full_months).
         """
-        is_valid_period = period_end > line_start and period_end > period_start
+        if period_end <= line_start or period_end <= period_start:
+            return 0  # invalid period
         if method == 'day':
             amount_per_day = balance / (line_end - line_start).days
-            return (period_end - period_start).days * amount_per_day if is_valid_period else 0
-        elif method == "month":
-            amount_per_month = balance / self._get_deferred_diff_dates(line_end, line_start)
-            nb_months_period = self._get_deferred_diff_dates(period_end, period_start)
-            return nb_months_period * amount_per_month if is_valid_period else 0
-        elif method == "full_months":
+            return (period_end - period_start).days * amount_per_day
+        elif method in ('month', 'full_months'):
+            if method == 'full_months':
+                reset_day_1 = relativedelta(day=1)
+                line_start, line_end = line_start + reset_day_1, line_end + reset_day_1
+                period_start, period_end = period_start + reset_day_1, period_end + reset_day_1
             line_diff = self._get_deferred_diff_dates(line_end, line_start)
             period_diff = self._get_deferred_diff_dates(period_end, period_start)
-            if line_diff < 1:
-                amount = balance
-            else:
-                if line_end.day == calendar.monthrange(line_end.year, line_end.month)[1]:
-                    line_diff = math.ceil(line_diff)
-                else:
-                    line_diff = math.floor(line_diff)
-                if period_end.day == calendar.monthrange(period_end.year, period_end.month)[1] or line_end != period_end:
-                    period_diff = math.ceil(period_diff)
-                else:
-                    period_diff = math.floor(period_diff)
-                amount_per_month = balance / line_diff
-                amount = period_diff * amount_per_month
-            return amount if is_valid_period else 0
+            return period_diff / line_diff * balance if line_diff >= 1 else balance
 
     @api.model
     def _get_deferred_amounts_by_line(self, lines, periods, deferred_type):
@@ -236,21 +223,12 @@ class AccountMove(models.Model):
                 # periods = [Total, Not Started, Before, ..., Current, ..., Later]
                 # The dates to calculate the amount for the current period
                 period_start = max(period[0], line_start)
-                period_end = min(period[1], line_end)
-                if (
-                    period[2] in ('not_started', 'later') and period[0] < line_start
-                    or len(periods) <= 1
-                    or period[2] not in ('not_started', 'before', 'later')
-                ):
-                    # We are subtracting 1 day from `period_start` because the start date should be included when:
-                    # - in the 'Not Started' or 'Later' period if the deferral has not started yet (line_start, line_end)
-                    # - we only have one period
-                    # - not in the 'Not Started', 'Before' or 'Later' period
-                    period_start -= relativedelta(days=1)
+                period_end = min(period[1], line_end) + relativedelta(days=1)  # +1 to include  end date of report
+
                 columns[period] = self._get_deferred_period_amount(
                     self.env.company.deferred_expense_amount_computation_method if deferred_type == "expense" else self.env.company.deferred_revenue_amount_computation_method,
                     period_start, period_end,
-                    line_start - relativedelta(days=1), line_end,  # -1 because we want to include the start date
+                    line_start, line_end + relativedelta(days=1),  # +1 to include the end date of the line
                     line['balance']
                 )
 
