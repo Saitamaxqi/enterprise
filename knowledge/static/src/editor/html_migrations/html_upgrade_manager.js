@@ -4,8 +4,6 @@ import {
     htmlEditorVersions,
 } from "@knowledge/editor/html_migrations/manifest";
 import { registry } from "@web/core/registry";
-import { markup } from "@odoo/owl";
-import { fixInvalidHTML } from "@html_editor/utils/sanitize";
 
 export class HtmlUpgradeManager {
     constructor(env = {}) {
@@ -18,9 +16,6 @@ export class HtmlUpgradeManager {
     }
 
     get value() {
-        if (this.originalValue?.constructor?.name === "Markup") {
-            return markup(this.upgradedValue);
-        }
         return this.upgradedValue;
     }
 
@@ -34,7 +29,7 @@ export class HtmlUpgradeManager {
         }
         this.originalValue = value;
         this.upgradedValue = value;
-        this.body = this.parser.parseFromString(fixInvalidHTML(value.toString()), "text/html").body;
+        this.body = this.parser.parseFromString(value.toString(), "text/html").body;
         const versionNode = this.body.querySelector(VERSION_SELECTOR);
         const version = versionNode?.dataset.oeVersion || "0.0";
         const VERSIONS = htmlEditorVersions();
