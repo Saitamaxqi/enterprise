@@ -23,7 +23,7 @@ patch(PaymentScreen.prototype, {
                 this.currentOrder.setToInvoice(!this.currentOrder.isToInvoice());
             }
         }
-        super.toggleIsToInvoice(...arguments);
+        await super.toggleIsToInvoice(...arguments);
     },
     areMxFieldsVisible() {
         return this.pos.company.country_id?.code === "MX" && this.currentOrder.isToInvoice();

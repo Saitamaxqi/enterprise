@@ -6,7 +6,7 @@ import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
 
 patch(PaymentScreen.prototype, {
-    toggleIsToInvoice() {
+    async toggleIsToInvoice() {
         if (this.pos.isChileanCompany()) {
             if (this.currentOrder.invoice_type == "boleta") {
                 this.currentOrder.invoice_type = "factura";
@@ -15,7 +15,7 @@ patch(PaymentScreen.prototype, {
             }
             this.render(true);
         } else {
-            super.toggleIsToInvoice(...arguments);
+            await super.toggleIsToInvoice(...arguments);
         }
     },
     highlightInvoiceButton() {
