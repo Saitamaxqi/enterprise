@@ -3,7 +3,7 @@
 
 from odoo.addons.hr.tests.common import TestHrCommon
 from odoo.addons.iap_extract.tests.test_extract_mixin import TestExtractMixin
-from odoo.tests import tagged
+from odoo.tests import tagged, Form
 
 from ..models.hr_candidate import OCR_VERSION
 
@@ -172,23 +172,21 @@ class TestRecruitmentExtractProcess(TestHrCommon, TestExtractMixin):
         extract_response = self.get_result_success_response()
         extract_response['results'][0]['full_text_annotation'] = 'UIUX designer and graphist'
 
-        levels = self.env['hr.skill.level'].create([{
-            'name': f'Level {x}',
-            'level_progress': x * 10,
-        } for x in range(10)])
+        with Form(self.env['hr.skill.type']) as skill_type:
+            skill_type.name = 'Technical'
 
-        skill_type = self.env['hr.skill.type'].create({
-            'name': 'Technical',
-            'skill_level_ids': levels.ids,
-        })
-        skills = self.env['hr.skill'].create([{
-            'name': 'UIUX',
-            'skill_type_id': skill_type.id,
-        }, {
-            'name': 'graphist',
-            'skill_type_id': skill_type.id,
-        }])
+            with skill_type.skill_ids.new() as skill:
+                skill.name = f'UIUX'
+            with skill_type.skill_ids.new() as skill:
+                skill.name = f'graphist'
 
+            for x in range(10):
+                with skill_type.skill_level_ids.new() as level:
+                    level.name = f"level {x}"
+                    level.level_progress = x * 10
+                    level.default_level = x % 2
+
+        skill_type = skill_type.save()
         with self._mock_iap_extract(extract_response=extract_response):
             self.candidate._check_ocr_status()
 
@@ -196,4 +194,4 @@ class TestRecruitmentExtractProcess(TestHrCommon, TestExtractMixin):
             [('candidate_id', '=', self.candidate.id)],
         ).mapped('skill_id.id')
 
-        self.assertCountEqual(created_candidate_skills, skills.mapped('id'))
+        self.assertCountEqual(created_candidate_skills, skill_type.skill_ids.mapped('id'))

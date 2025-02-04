@@ -6,6 +6,8 @@ from odoo.osv import expression
 from odoo.addons.project.models.project_task import CLOSED_STATES
 from odoo.addons.project_enterprise.tests.test_task_gantt_view import TestTaskGanttView
 
+from odoo.tests import Form
+
 
 class TestTaskGanttViewWithSkills(TestTaskGanttView):
     @classmethod
@@ -18,19 +20,26 @@ class TestTaskGanttViewWithSkills(TestTaskGanttView):
                 'user_id': user.id,
             })
         cls.employee_1, cls.employee_2, cls.employee_3 = cls.env['hr.employee'].create(employee_vals_list)
-        levels = cls.env['hr.skill.level'].create([{
-            'name': f'Level {x}',
-            'level_progress': x * 10,
-        } for x in range(10)])
-        skill_type = cls.env['hr.skill.type'].create({
-            'name': 'Languages',
-            'skill_level_ids': levels.ids,
-        })
-        cls.fr_skill, cls.en_skill, cls.es_skill = cls.env['hr.skill'].create([
-            {'name': 'French', 'skill_type_id': skill_type.id},
-            {'name': 'English', 'skill_type_id': skill_type.id},
-            {'name': 'Spanish', 'skill_type_id': skill_type.id},
-        ])
+
+        with Form(cls.env['hr.skill.type']) as skill_type:
+            skill_type.name = 'languages'
+
+            with skill_type.skill_ids.new() as skill:
+                skill.name = f'French'
+            with skill_type.skill_ids.new() as skill:
+                skill.name = f'English'
+            with skill_type.skill_ids.new() as skill:
+                skill.name = f'Spanish'
+
+            for x in range(10):
+                with skill_type.skill_level_ids.new() as level:
+                    level.name = f"level {x}"
+                    level.level_progress = x * 10
+                    level.default_level = x % 2
+
+        skill_type = skill_type.save()
+        cls.fr_skill, cls.en_skill, cls.es_skill = skill_type.skill_ids
+        levels = skill_type.skill_level_ids
         cls.env['hr.employee.skill'].create([
             {
                 'employee_id': cls.employee_1.id,
