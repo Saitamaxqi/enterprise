@@ -80,6 +80,7 @@ class AccountMove(models.Model):
                 "product_id": line.product_id,
                 "description": line.name,
                 "qty": line.quantity,
+                "uom_id": line.product_uom_id,
                 "price_subtotal": line.price_subtotal,
                 "price_unit": line.price_unit,
                 "discount": line.discount,

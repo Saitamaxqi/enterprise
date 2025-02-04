@@ -309,13 +309,14 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
             return '%s\n%s\n%s' % (title, response['error']['message'], '\n'.join(inner_errors))
 
-    def _l10n_br_build_avatax_line(self, product, description, qty, unit_price, total, discount, line_id):
+    def _l10n_br_build_avatax_line(self, product, description, qty, uom, unit_price, total, discount, line_id):
         """ Prepares the line data for the /calculations API call. temp* values are here to help with post-processing
         and will be removed before sending by _remove_temp_values_lines.
 
         :param product.product product: product on the line
         :param str description: the description of the line
         :param float qty: the number of items on the line
+        :param uom.uom uom: the uom on the line
         :param float unit_price: the unit_price on the line
         :param float total: the amount on the line without taxes or discount
         :param float discount: the discount amount on the line
@@ -363,6 +364,8 @@ class AccountExternalTaxMixin(models.AbstractModel):
             descriptor['source'] = product.l10n_br_source_origin or ''
             descriptor['productType'] = product.l10n_br_sped_type or ''
             descriptor['hsCode'] = (product.l10n_br_ncm_code_id.code or '').replace('.', '')
+            descriptor['unitTaxable'] = uom.name[:6] if uom else ''  # the maximum length allowed by the API is 6
+            descriptor['unit'] = uom.name[:6] if uom else ''
 
         return line
 
@@ -457,6 +460,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                 line['product_id'],
                 line['description'],
                 line['qty'],
+                line['uom_id'],
                 line['price_unit'],
                 line['qty'] * line['price_unit'],
                 line['qty'] * line['price_unit'] * (line['discount'] / 100.0),

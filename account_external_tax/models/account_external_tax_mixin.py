@@ -82,7 +82,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
         This method returns model-agnostic line data to be used when doing an external tax request. It filters
         lines that should be sent to the external tax service already (via _get_lines_eligible_for_external_taxes).
         The returned dict always includes at least the following keys: id, model_name, product_id, description, qty,
-        price_subtotal, price_unit, discount, is_refund.
+        uom_id, price_subtotal, price_unit, discount, is_refund.
         """
         return []
 
