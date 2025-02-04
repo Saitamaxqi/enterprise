@@ -2,11 +2,15 @@
 <odoo>
     <data>
         <template id="icp_report_sbr">
-			<!-- XBRL instance based on taxonomy report namespace https://www.nltaxonomie.nl/nt18/bd/20231213/entrypoints/bd-rpt-icp-opgaaf-2024.xsd -->
-			<!-- Intellectual Property State of the Netherlands -->
-			<!-- Created on: 19-10-2021 16:00:00 -->
-			<xbrli:xbrl t-att="{'xml:lang': 'nl'}" xmlns:bd-i="http://www.nltaxonomie.nl/nt18/bd/20231213/dictionary/bd-data" xmlns:bd-t="http://www.nltaxonomie.nl/nt18/bd/20231213/dictionary/bd-tuples" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:xbrli="http://www.xbrl.org/2003/instance">
-				<link:schemaRef xlink:type="simple" xlink:href="http://www.nltaxonomie.nl/nt18/bd/20231213/entrypoints/bd-rpt-icp-opgaaf-2024.xsd"/>
+			<!--
+			XBRL instance based on taxonomy report namespace http://www.nltaxonomie.nl/nt19/bd/20241211/entrypoints/bd-rpt-icp-opgaaf-2025.xsd
+			Intellectual Property of the State of the Netherlands
+			Architecture: nt19
+			Version: 20241211
+			Release date: Fri, 06 Sep 2024 10:00:52 GMT
+			-->
+			<xbrli:xbrl t-att="{'xml:lang': 'nl'}" xmlns:bd-i="http://www.nltaxonomie.nl/nt19/bd/20241211/dictionary/bd-data" xmlns:bd-t="http://www.nltaxonomie.nl/nt19/bd/20241211/dictionary/bd-tuples" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:xbrli="http://www.xbrl.org/2003/instance">
+				<link:schemaRef xlink:type="simple" xlink:href="http://www.nltaxonomie.nl/nt19/bd/20241211/entrypoints/bd-rpt-icp-opgaaf-2025.xsd"/>
 				<xbrli:context id="CD_Opgaaf">
 					<xbrli:entity>
 						<xbrli:identifier scheme="www.belastingdienst.nl/omzetbelastingnummer"><t t-esc="identifier"/></xbrli:identifier>
