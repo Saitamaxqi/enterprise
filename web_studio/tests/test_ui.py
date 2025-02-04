@@ -1692,15 +1692,6 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         </form>
         """)
 
-    def test_res_users_fake_fields(self):
-        user_fields = self.env["res.users"].fields_get()
-        assertable = [field["string"] for field in user_fields.values() if field["string"] in ("Administration", "Multi Companies")]
-        self.assertEqual(len(assertable), 2)
-
-        action = self.env.ref("base.action_res_users")
-        url = f"/odoo/action-{action.id}/studio?mode=editor&_tab=views&_view_type=list&debug=1"
-        self.start_tour(url, 'web_studio.test_res_users_fake_fields', login="admin")
-
     def test_add_button_xml_id(self):
         base_view = self.env["ir.ui.view"].create({
             "name": "test_partner_simple",
@@ -1762,34 +1753,6 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
     def test_reload_after_restoring_default_view(self):
         self.start_tour("/odoo?debug=tests", 'web_studio_test_reload_after_restoring_default_view', login="admin")
-
-    def test_edit_reified_field(self):
-        # find some reified field name
-        reified_fname = next(
-            fname
-            for fname in self.env["res.users"].fields_get()
-            if fname.startswith(('in_group_', 'sel_groups_'))
-        )
-
-        self.testView.write({
-            "name": "simple user",
-            "model": "res.users",
-            "arch": '''
-                <form>
-                    <field name="%s"/>
-                </form>
-            ''' % reified_fname
-        })
-        self.testAction.res_model = "res.users"
-        self.start_tour("/odoo?debug=tests", 'web_studio_test_edit_reified_field', login="admin")
-        studioView = _get_studio_view(self.testView)
-        assertViewArchEqual(self, studioView.arch, """
-            <data>
-              <xpath expr="//field[@name='%s']" position="attributes">
-                <attribute name="string">new name</attribute>
-              </xpath>
-            </data>
-        """ % reified_fname)
 
     def test_add_all_types_fields_related(self):
         self.create_user_view()

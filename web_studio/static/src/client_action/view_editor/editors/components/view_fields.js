@@ -39,17 +39,7 @@ export class ExistingFields extends Component {
 
     get existingFields() {
         const fieldsInArch = this.props.fieldsInArch;
-        const resModel = this.props.resModel;
         const filtered = Object.entries(this.props.fields).filter(([fName, field]) => {
-            if (
-                resModel === "res.users" &&
-                (fName.startsWith("in_group_") || fName.startsWith("sel_groups_"))
-            ) {
-                // These fields are virtual and represent res.groups hierarchy.
-                // If the hierarchy changes, the field is replaced by another one and the view will be
-                // broken, so, here we prevent adding them.
-                return false;
-            }
             if (
                 !this.isMatchingSearch(field) ||
                 (this.props.filterFields && fieldsInArch.includes(fName))

@@ -1522,24 +1522,6 @@ registry.category("web_tour.tours").add("web_studio.test_button_rainbow_effect",
     ],
 });
 
-registry.category("web_tour.tours").add("web_studio.test_res_users_fake_fields", {
-    steps: () => [
-        {
-            trigger: ".o_web_studio_existing_fields_header",
-            run: "click",
-        },
-        {
-            trigger: ".o_web_studio_existing_fields",
-            run() {
-                const elements = [...document.querySelectorAll(".o_web_studio_component")];
-                const fieldStrings = elements.map((el) => el.innerText.split("\n")[0]);
-                assertEqual(fieldStrings.includes("Administration"), false);
-                assertEqual(fieldStrings.includes("Multi Companies"), false);
-            },
-        },
-    ],
-});
-
 registry.category("web_tour.tours").add("web_studio_test_reload_after_restoring_default_view", {
     steps: () => [
         {
@@ -1579,34 +1561,6 @@ registry.category("web_tour.tours").add("web_studio_test_reload_after_restoring_
         {
             trigger:
                 ".o_web_studio_form_view_editor .o_field_widget[name='name'] span:contains('Name')",
-        },
-    ],
-});
-
-registry.category("web_tour.tours").add("web_studio_test_edit_reified_field", {
-    steps: () => [
-        {
-            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
-            run: "click",
-        },
-        {
-            trigger: ".o_form_view",
-        },
-        {
-            trigger: ".o_web_studio_navbar_item button:enabled",
-            run: "click",
-        },
-        {
-            trigger:
-                ".o_web_studio_form_view_editor .o_field_widget[name^='sel_groups_'],.o_web_studio_form_view_editor .o_field_widget[name^='in_groups_']",
-            run: "click",
-        },
-        {
-            trigger: ".o_web_studio_sidebar input[name='string']",
-            run: "edit new name && click body",
-        },
-        {
-            trigger: ".o_web_studio_leave",
         },
     ],
 });

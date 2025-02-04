@@ -129,7 +129,6 @@ class IrUiView(models.Model):
                     # while still displaying the field in the view.
                     # The form view of `res.users` has fake fields, not existing in the model,
                     # so use `_fields.get(...)` instead of `_fields[...]`
-                    # e.g. `in_group_12`
                     node.set('studio_no_fetch', '1')
 
             def is_in_list(node):

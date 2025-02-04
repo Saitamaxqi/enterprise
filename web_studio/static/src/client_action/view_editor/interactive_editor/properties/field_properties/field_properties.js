@@ -188,9 +188,6 @@ export class FieldProperties extends Component {
     }
 
     _canShowDefaultValue(node) {
-        if (/^(in_group_|sel_groups_)/.test(node.attrs.name)) {
-            return false;
-        }
         return !["image", "many2many", "one2many", "many2one", "binary"].includes(node.field.type);
     }
 
