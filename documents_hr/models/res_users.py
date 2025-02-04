@@ -28,13 +28,9 @@ class ResUsers(models.Model):
 
     def action_see_documents(self):
         self.ensure_one()
-        return {
-            'name': _('Documents'),
+        action = self.env['ir.actions.actions']._for_xml_id('documents.document_action_preference')
+        return action | {
             'domain': [('partner_id', '=', self.partner_id.id)],
-            'res_model': 'documents.document',
-            'type': 'ir.actions.act_window',
-            'views': [(False, 'kanban'), (False, 'list')],
-            'view_mode': 'kanban,list',
             'context': {
                 "default_partner_id": self.partner_id.id,
                 "searchpanel_default_folder_id": False
