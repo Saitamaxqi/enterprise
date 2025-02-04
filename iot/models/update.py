@@ -11,5 +11,5 @@ class Publisher_WarrantyContract(models.AbstractModel):
     @api.model
     def _get_message(self):
         msg = super()._get_message()
-        msg['IoTBox'] = self.env['iot.box'].search_count([])
+        msg['IoTBox'] = self.env['iot.box'].search_count([('version', '=like', 'L%')])
         return msg
