@@ -88,6 +88,12 @@ export class DocumentsSearchPanel extends SearchPanel {
         useBus(this.env.documentsView.bus, "documents-expand-folder", (ev) => {
             this._expandFolder(ev.detail);
         });
+
+        useBus(this.env.searchModel, "update-search-panel", async () => {
+            this.updateActiveValues();
+            this.render();
+        });
+
         // todo: remove in master
         useBus(this.env.documentsView.bus, "documents-open-edit-selected-folder", () => {
             const selectedFolderId = this.env.searchModel.getSelectedFolderId();

@@ -31,7 +31,8 @@ export class DocumentsDetailsPanel extends Component {
         onWillRender(() => {
             this.record = reactive(this.props.record || {}, async () => {
                 if (this.props.record?.data?.type === "folder") {
-                    return this.env.searchModel._reloadSearchModel(true);
+                    await this.env.searchModel._reloadSearchPanel();
+                    this.render();
                 }
             });
         });

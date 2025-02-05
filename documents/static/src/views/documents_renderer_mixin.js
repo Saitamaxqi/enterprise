@@ -54,7 +54,7 @@ export const DocumentsRendererMixin = (component) =>
                     Object.entries(record._getChanges()).filter(([k, _v]) => fieldsToSave.has(k))
                 );
                 await this.env.model.orm.write('documents.document', [record.data.id], changesToSave);
-                await this.env.searchModel._reloadSearchModel(true);
+                await this.env.searchModel._reloadSearchPanel();
             };
             return record;
         }

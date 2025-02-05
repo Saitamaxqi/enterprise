@@ -225,14 +225,21 @@ export class DocumentsSearchModel extends SearchModel {
     //---------------------------------------------------------------------
 
     async _reloadSearchModel(reloadCategories) {
-        // By default the categories are not reloaded.
+        // By default, categories are not reloaded.
         if (reloadCategories) {
-            await this._fetchSections(
-                this.getSections((s) => s.type === "category"),
-                []
-            );
+            await this._reloadSearchPanel(true);
         }
         await this._notify();
+    }
+
+    async _reloadSearchPanel(skipUpdate = false) {
+        await this._fetchSections(
+            this.getSections((s) => s.type === "category"),
+            []
+        );
+        if (!skipUpdate) {
+            this.trigger("update-search-panel");
+        }
     }
 
     /**
