@@ -117,7 +117,7 @@ class MaintenanceRequest(models.Model):
     @api.depends('workcenter_id')
     def _compute_maintenance_team_id(self):
         for request in self:
-            if request.maintenance_for == 'workcenter':
+            if request.workcenter_id and request.workcenter_id.maintenance_team_id:
                 request.maintenance_team_id = request.workcenter_id.maintenance_team_id
         return super()._compute_maintenance_team_id()
 

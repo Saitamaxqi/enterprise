@@ -335,3 +335,26 @@ class TestMrpMaintenance(common.TransactionCase):
                 (datetime(2017, 5, 3, 8, microsecond=500), datetime(2017, 5, 3, 10, microsecond=500))
             ]
         )
+
+    def test_maintenance_team_id_compute(self):
+        """ Ensure that the maintenance request does not update its maintenance_team_id
+        when changing to a workcenter that does not have a maintenance_team_id.
+        """
+
+        workcenter_without_team = self.env['mrp.workcenter'].create({
+            'name': 'Workcenter No Team',
+        })
+
+        request = self._create_workcenter_request(
+            name='Unexpected shutdowns',
+            request_date=datetime(2018, 4, 5).date(),
+            workcenter_id=workcenter_without_team,
+            maintenance_type="corrective"
+        )
+        request.write({'workcenter_id': self.workcenter_id.id})
+
+        self.assertEqual(
+            request.maintenance_team_id.id,
+            self.maintenance_team_id.id,
+            "Maintenance team should remain unchanged when workcenter has no maintenance_team_id."
+        )
