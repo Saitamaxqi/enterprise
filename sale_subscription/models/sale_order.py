@@ -386,7 +386,7 @@ class SaleOrder(models.Model):
 
         self.env.cr.execute(query, [tuple(self.env.companies.ids), tuple(all_subscription_ids)])
         orders_vals = self.env.cr.fetchall()
-        for origin_order_id, invoices_ids in orders_vals:
+        for origin_order_id, invoices_ids in orders_vals + list(move_by_origin.items()):
             other_move_ids = move_by_origin[origin_order_id]
             all_move_ids = set(invoices_ids + other_move_ids)
             so_by_origin[origin_order_id].update({
