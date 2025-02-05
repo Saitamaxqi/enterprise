@@ -1,3 +1,5 @@
+import json
+
 from io import BytesIO
 from zipfile import ZipFile
 
@@ -42,6 +44,43 @@ class TestShareController(SpreadsheetTestCommon, HttpCase):
         self.create_spreadsheet()
         response = self.url_open("/odoo/documents/a-random-token")
         self.assertFalse(response.ok)
+
+    def test_contains_live_data_with_odoo_chart(self):
+        spreadsheet_data = {
+            "sheets": [
+                {
+                    "figures": [
+                        {
+                            "id": "1",
+                            "x": 10,
+                            "y": 10,
+                            "width": 500,
+                            "height": 300,
+                            "tag": "chart",
+                            "data": {
+                                "title": {"text": "Documents"},
+                                "metaData": {
+                                    "groupBy": ["partner_id"],
+                                    "measure": "id",
+                                    "resModel": "documents.document",
+                                },
+                                "searchParams": {
+                                    "context": {},
+                                    "domain": '[]',
+                                    "groupBy": [],
+                                },
+                                "type": "odoo_bar",
+                            },
+                        },
+                    ],
+                },
+            ],
+        }
+        spreadsheet = self.create_spreadsheet({
+            "spreadsheet_data": json.dumps(spreadsheet_data)
+        })
+        contains_live_data = spreadsheet._contains_live_data()
+        self.assertTrue(contains_live_data)
 
     def test_public_spreadsheet_data(self):
         spreadsheet = self.create_spreadsheet()

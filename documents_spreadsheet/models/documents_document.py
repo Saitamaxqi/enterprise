@@ -550,9 +550,16 @@ class DocumentsDocument(models.Model):
         if snapshot.get("lists") or snapshot.get("pivots") or snapshot.get("chartOdooMenusReferences"):
             return True
 
-        return any(  # modification not yet committed in snapshot
-            command.get("type")
-            in ("INSERT_ODOO_LIST", "ADD_PIVOT", "LINK_ODOO_MENU_TO_CHART")
+        for sheet in snapshot.get("sheets", []):
+            for figure in sheet.get("figures", []):
+                if figure.get("data", {}).get("type", "").startswith("odoo_"):
+                    return True
+
+        return any(
+            command.get("type") in ("INSERT_ODOO_LIST", "ADD_PIVOT", "LINK_ODOO_MENU_TO_CHART") or (
+                command.get("type") == "CREATE_CHART" and
+                command.get("definition", {}).get("type", "").startswith("odoo_")
+            )
             for revision in self.spreadsheet_revision_ids
             for command in json.loads(revision.commands).get("commands", [])
         )
