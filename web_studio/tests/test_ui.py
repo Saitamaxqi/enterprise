@@ -137,7 +137,7 @@ def setup_view_editor_data(cls):
         "type": "form",
         "arch": '''
             <form>
-                <field name="name" />
+                <field name="name" required="True" />
             </form>
         '''
     })
@@ -610,7 +610,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.testView.arch = '''
         <form>
             <group>
-                <field name="name" />
+                <field name="name" required="True" />
             </group>
         </form>
         '''
@@ -662,7 +662,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.testView.arch = '''
              <form>
                  <group>
-                     <field name="name" />
+                     <field name="name" required="True" />
                  </group>
              </form>
         '''
@@ -959,7 +959,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         # that are part of the inheritance
         self.testView.arch = '''
             <form><sheet>
-                <group><field name="name" /></group>
+                <group><field name="name" required="True" /></group>
             </sheet></form>
         '''
 
@@ -1062,7 +1062,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             "arch": '''
                 <form>
                     <field name="function" />
-                    <field name="name" />
+                    <field name="name" required="True" />
                 </form>
             '''
         })
@@ -1073,7 +1073,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             "arch": '''
                 <list>
                     <field name="function" />
-                    <field name="name" />
+                    <field name="name" required="True" />
                 </list>
             '''
         })
@@ -1085,7 +1085,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
                 <kanban>
                     <t t-name="card">
                         <field name="function" />
-                        <field name="name" />
+                        <field name="name" required="True" />
                     </t>
                 </kanban>
             '''
@@ -1526,7 +1526,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.testView.arch = '''
         <form>
             <group>
-                <field name="name" />
+                <field name="name" required="True" />
             </group>
         </form>
         '''
@@ -1548,7 +1548,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.testView.arch = '''
              <form>
                  <group>
-                    <field name="name" />
+                    <field name="name" required="True" />
                  </group>
              </form>
         '''
@@ -1570,7 +1570,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.testView.arch = '''
              <form>
                  <group>
-                    <field name="name" />
+                    <field name="name" required="True" />
                  </group>
              </form>
         '''
