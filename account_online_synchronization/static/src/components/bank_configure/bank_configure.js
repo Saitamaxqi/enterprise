@@ -65,7 +65,10 @@ class BankConfigureWidget extends Component {
     }
 
     async fallbackConnectBank() {
-        const action = await this.orm.call('account.online.link', 'create_new_bank_account_action', [], {
+        const action = await this.orm.call(
+            'account.online.link',
+            'create_new_bank_account_action',
+            [this.props.record.data.type], {
             context: {
                 active_model: 'account.journal',
                 active_id: this.props.record.resId,
