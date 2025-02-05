@@ -19,6 +19,7 @@
         <field name="arch" type="xml">
             <xpath expr="//gantt" position="attributes">
                 <attribute name="form_view_id">%(pos_restaurant_appointment.calendar_event_view_form_gantt_booking_inherited_restaurant_appointment)d</attribute>
+                <attribute name="fold">1</attribute>
             </xpath>
         </field>
     </record>
