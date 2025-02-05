@@ -1165,7 +1165,7 @@ class TestReportEditorUIUnit(HttpCase):
         arch, studio_arch = get_combined_and_studio_arch(self.main_view_document)
         self.assertXMLEqual(arch, """
          <t t-name="web_studio.test_report_document">
-           <div class="added"/>
+           <div class="added"><br/></div>
            <div class="outside-t-call">outside</div>
            <t t-call="web_studio.t_call_0">
              <t t-set="somevar" t-value="'someValue'"/>
@@ -1177,7 +1177,7 @@ class TestReportEditorUIUnit(HttpCase):
         <data>
             <data>
                 <xpath position="before" expr="/t[@t-name='web_studio.test_report_document']/div" meta-class="outside-t-call">
-                <div class="added"/>
+                <div class="added"><br/></div>
                 </xpath>
             </data>
          </data>
@@ -1211,7 +1211,7 @@ class TestReportEditorUIUnit(HttpCase):
            <div class="outside-t-call">outside</div>
            <t t-call="web_studio.t_call_0">
              <t t-set="somevar" t-value="'someValue'"/>
-             <div class="added"/>
+             <div class="added"><br/></div>
              <div class="in-t-call">inside</div>
            </t>
          </t>
@@ -1220,7 +1220,7 @@ class TestReportEditorUIUnit(HttpCase):
         <data>
             <data>
                 <xpath position="after" expr="/t[@t-name='web_studio.test_report_document']//t[@t-call='web_studio.t_call_0']/t[@t-set='somevar']" meta-t-set="somevar" meta-t-value="'someValue'">
-                <div class="added"/>
+                <div class="added"><br/></div>
                 </xpath>
             </data>
         </data>
@@ -1251,11 +1251,11 @@ class TestReportEditorUIUnit(HttpCase):
         arch, studio_arch = get_combined_and_studio_arch(self.main_view_document)
         self.assertXMLEqual(arch, """
          <t t-name="web_studio.test_report_document">
-           <div class="added0"/>
+           <div class="added0"><br/></div>
            <div class="outside-t-call">outside</div>
            <t t-call="web_studio.t_call_0">
              <t t-set="somevar" t-value="'someValue'"/>
-             <div class="added1"/>
+             <div class="added1"><br/></div>
              <div class="in-t-call">inside</div>
            </t>
          </t>
@@ -1264,12 +1264,12 @@ class TestReportEditorUIUnit(HttpCase):
             <data>
                 <data>
                     <xpath position="before" expr="/t[@t-name='web_studio.test_report_document']/div" meta-class="outside-t-call">
-                    <div class="added0"/>
+                    <div class="added0"><br/></div>
                     </xpath>
                 </data>
                 <data>
                     <xpath position="after" expr="/t[@t-name='web_studio.test_report_document']//t[@t-call='web_studio.t_call_0']/t[@t-set='somevar']" meta-t-set="somevar" meta-t-value="'someValue'">
-                    <div class="added1"/>
+                    <div class="added1"><br/></div>
                     </xpath>
                 </data>
             </data>

@@ -117,7 +117,9 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
 
     get note() {
         const note = this.recordData.note;
-        return note && note !== "<p><br></p>" && note !== "false" ? note : undefined;
+        return note && !["<p><br></p>", `<div><br></div>`].includes(note) && note !== "false"
+            ? note
+            : undefined;
     }
 
     get htmlInfo() {

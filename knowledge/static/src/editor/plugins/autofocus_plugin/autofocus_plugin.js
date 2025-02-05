@@ -1,5 +1,5 @@
 import { Plugin } from "@html_editor/plugin";
-import { paragraphRelatedElements } from "@html_editor/utils/dom_info";
+import { paragraphRelatedElementsSelector } from "@html_editor/utils/dom_info";
 
 export class AutofocusPlugin extends Plugin {
     static id = "autofocus";
@@ -9,9 +9,7 @@ export class AutofocusPlugin extends Plugin {
     };
 
     focusFirstElement() {
-        for (const paragraph of this.editable.querySelectorAll(
-            paragraphRelatedElements.join(", ")
-        )) {
+        for (const paragraph of this.editable.querySelectorAll(paragraphRelatedElementsSelector)) {
             if (paragraph.isContentEditable) {
                 const { anchorNode, anchorOffset, focusNode, focusOffset } =
                     this.dependencies.selection.setSelection({

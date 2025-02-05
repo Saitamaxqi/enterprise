@@ -3,7 +3,7 @@ import { isPhrasingContent } from "@html_editor/utils/dom_info";
 
 export class InsertPendingElementPlugin extends Plugin {
     static id = "insertPendingElement";
-    static dependencies = ["history", "dom", "selection"];
+    static dependencies = ["baseContainer", "history", "dom", "selection"];
     resources = {
         start_edition_handlers: this.insertEmbeddedBluePrint.bind(this),
     };
@@ -21,7 +21,7 @@ export class InsertPendingElementPlugin extends Plugin {
             if (isPhrasingContent(embeddedBlueprint)) {
                 insert = () => {
                     // insert phrasing content
-                    const paragraph = document.createElement("p");
+                    const paragraph = this.dependencies.baseContainer.createBaseContainer();
                     paragraph.appendChild(embeddedBlueprint);
                     this.dependencies.selection.setCursorEnd(this.editable);
                     this.dependencies.dom.insert(paragraph);
@@ -32,7 +32,7 @@ export class InsertPendingElementPlugin extends Plugin {
                     // insert block content
                     this.dependencies.selection.setCursorEnd(this.editable);
                     this.dependencies.dom.insert(embeddedBlueprint);
-                    const paragraph = document.createElement("p");
+                    const paragraph = this.dependencies.baseContainer.createBaseContainer();
                     paragraph.appendChild(document.createElement("br"));
                     this.dependencies.selection.setCursorEnd(this.editable);
                     this.dependencies.dom.insert(paragraph);

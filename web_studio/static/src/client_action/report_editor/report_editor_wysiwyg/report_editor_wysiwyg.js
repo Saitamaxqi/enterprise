@@ -186,7 +186,7 @@ const CUSTOM_BRANDING_ATTR = [
 ];
 
 class _TablePlugin extends TablePlugin {
-    static name = TablePlugin.name;
+    static id = TablePlugin.id;
     _insertTable() {
         const table = super._insertTable(...arguments);
         if (closestElement(table, "[t-call='web.external_layout']")) {
@@ -197,11 +197,11 @@ class _TablePlugin extends TablePlugin {
     }
 }
 
-const REPORT_EDITOR_PLUGINS_MAP = Object.fromEntries(MAIN_PLUGINS.map((cls) => [cls.name, cls]));
+const REPORT_EDITOR_PLUGINS_MAP = Object.fromEntries(MAIN_PLUGINS.map((cls) => [cls.id, cls]));
 Object.assign(REPORT_EDITOR_PLUGINS_MAP, {
-    [QWebPlugin.name]: QWebPlugin,
-    [QWebTablePlugin.name]: QWebTablePlugin,
-    [TablePlugin.name]: _TablePlugin,
+    [QWebPlugin.id]: QWebPlugin,
+    [QWebTablePlugin.id]: QWebTablePlugin,
+    [TablePlugin.id]: _TablePlugin,
 });
 
 export class ReportEditorWysiwyg extends Component {
@@ -297,6 +297,9 @@ export class ReportEditorWysiwyg extends Component {
                         return {};
                     }
                     const lastViewParent = closestElement(anchorNode, "[ws-view-id]");
+                    if (!lastViewParent) {
+                        return {};
+                    }
                     return {
                         resModel: "ir.ui.view",
                         resId: parseInt(lastViewParent.getAttribute("ws-view-id")),
@@ -311,6 +314,9 @@ export class ReportEditorWysiwyg extends Component {
                     }),
                     user_commands: this.getUserCommands(),
                     powerbox_items: this.getPowerboxCommands(),
+                    unsplittable_node_predicates: (node) =>
+                        node.nodeType === Node.ELEMENT_NODE &&
+                        node.matches(".page, .header, .footer"),
                 },
                 disableVideo: true,
             },

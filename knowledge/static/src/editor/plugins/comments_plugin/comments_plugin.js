@@ -9,22 +9,20 @@ import { closestElement, childNodes } from "@html_editor/utils/dom_traversal";
 import { callbacksForCursorUpdate } from "@html_editor/utils/selection";
 import { fillEmpty } from "@html_editor/utils/dom";
 import {
-    paragraphRelatedElements,
-    phrasingContent,
+    isParagraphRelatedElement,
+    isPhrasingContent,
     isContentEditable,
     isZwnbsp,
-    listItem,
+    isListItemElement,
 } from "@html_editor/utils/dom_info";
 import { uniqueId } from "@web/core/utils/functions";
 import { effect } from "@web/core/utils/reactive";
 import { batched } from "@web/core/utils/timing";
 import { withSequence } from "@html_editor/utils/resource";
 
-const ALLOWED_BEACON_POSITION = new Set([
-    ...paragraphRelatedElements,
-    ...phrasingContent,
-    ...listItem,
-]);
+function isAllowedBeaconPosition(node) {
+    return isPhrasingContent(node) || isParagraphRelatedElement(node) || isListItemElement(node);
+}
 
 export class KnowledgeCommentsPlugin extends Plugin {
     static id = "knowledgeComments";
@@ -317,8 +315,8 @@ export class KnowledgeCommentsPlugin extends Plugin {
         const isCollapsed = startContainer === endContainer && startOffset === endOffset;
         if (
             isCollapsed ||
-            !ALLOWED_BEACON_POSITION.has(startContainer.nodeName) ||
-            !ALLOWED_BEACON_POSITION.has(endContainer.nodeName) ||
+            !isAllowedBeaconPosition(startContainer) ||
+            !isAllowedBeaconPosition(endContainer) ||
             !isContentEditable(startContainer) ||
             !isContentEditable(endContainer)
         ) {
@@ -383,7 +381,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
         // for different users, is this an issue ?
         this.commentBeaconManager.removeBogusBeacons();
         for (const beacon of elem.querySelectorAll(".oe_thread_beacon")) {
-            if (beacon.isConnected && !ALLOWED_BEACON_POSITION.has(beacon.parentElement.nodeName)) {
+            if (beacon.isConnected && !isAllowedBeaconPosition(beacon.parentElement)) {
                 // TODO ABD: evaluate cleanupThread ?
                 this.commentBeaconManager.cleanupBeaconPair(beacon.dataset.id);
                 this.removeBeacon(beacon);

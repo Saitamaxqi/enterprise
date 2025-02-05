@@ -137,7 +137,7 @@ const CSS_COL_COUNT_PROP = "--q-table-col-count";
 const CSS_COL_SIZE_PROP = "--q-cell-col-size";
 export class QWebTablePlugin extends Plugin {
     static id = "qweb_table_plugin";
-    static dependencies = ["overlay", "selection", "history"];
+    static dependencies = ["baseContainer", "overlay", "selection", "history"];
     resources = {
         clean_for_save_handlers: ({ root }) => this.clean(root),
         normalize_handlers: this.normalize.bind(this),
@@ -360,9 +360,9 @@ export class QWebTablePlugin extends Plugin {
     createElementFrom(fromElement) {
         const tagName = fromElement.tagName.toLowerCase();
         const newElement = this.document.createElement(tagName);
-        const pNode = this.document.createElement("p");
-        pNode.append(this.document.createElement("br"));
-        newElement.append(pNode);
+        const baseContainer = this.dependencies.baseContainer.createBaseContainer();
+        baseContainer.append(this.document.createElement("br"));
+        newElement.append(baseContainer);
         newElement.classList.add("oe_unbreakable");
         return newElement;
     }

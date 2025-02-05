@@ -163,6 +163,7 @@ export class WysiwygArticleHelper extends Component {
     onGenerateArticleClick() {
         this.dialogService.add(ChatGPTPromptDialog, {
             initialPrompt: _t("Write an article about"),
+            baseContainer: "P",
             insert: (fragment) => {
                 const generatedContentTitle = fragment.querySelector("h1,h2");
                 const articleTitle = this.props.editor.document.createElement("h1");
