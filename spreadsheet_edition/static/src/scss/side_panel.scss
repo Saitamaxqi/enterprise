@@ -8,13 +8,6 @@
         .o_model_field_selector,
         .o_field_many2one {
             width: 100%;
-
-            &,
-            *,
-            *:before,
-            *:after {
-                box-sizing: border-box;
-            }
         }
     }
 
@@ -24,7 +17,6 @@
 }
 
 .o-section .o_draggable_item {
-    box-sizing: border-box;
     cursor: grab;
     margin-bottom: 0.6rem;
 }
