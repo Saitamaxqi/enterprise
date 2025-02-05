@@ -27,16 +27,16 @@ class HrContract(models.Model):
     l10n_ch_lpp_insurance_id = fields.Many2one(
         'l10n.ch.lpp.insurance', string="LPP Insurance")
     l10n_ch_accident_insurance_line_id = fields.Many2one(
-        'l10n.ch.accident.insurance.line', string="AAP/AANP Insurance")
+        'l10n.ch.accident.insurance.line', string="LAA Insurance")
     l10n_ch_additional_accident_insurance_line_ids = fields.Many2many(
         'l10n.ch.additional.accident.insurance.line', string="LAAC Insurances")
     l10n_ch_sickness_insurance_line_ids = fields.Many2many(
         'l10n.ch.sickness.insurance.line', string="IJM Insurances")
     l10n_ch_compensation_fund_id = fields.Many2one(
-        'l10n.ch.compensation.fund', string="Family Allowance (CAF)")
+        'l10n.ch.compensation.fund', string="Family Compensation Fund")
     l10n_ch_lesson_wage = fields.Float('Lesson Wage', tracking=True, help="Employee's gross wage by lesson.")
-    l10n_ch_contractual_13th_month_rate = fields.Float("Contractual allowances for 13th month", default=8.33)
-    l10n_ch_location_unit_id = fields.Many2one("l10n.ch.location.unit", string="Location Unit")
+    l10n_ch_contractual_13th_month_rate = fields.Float("Contractual allowances for 13th/14th month", digits='Payroll Rate', default=8.33)
+    l10n_ch_location_unit_id = fields.Many2one("l10n.ch.location.unit", string="Workplace")
     l10n_ch_avs_status = fields.Selection([
         ('youth', 'Youth'),
         ('exempted', 'Exempted'),
@@ -47,7 +47,7 @@ class HrContract(models.Model):
     l10n_ch_lpp_not_insured = fields.Boolean(string="Not LPP Insured")
     l10n_ch_has_withholding_tax = fields.Boolean(related="employee_id.l10n_ch_has_withholding_tax")
     l10n_ch_other_employers = fields.Boolean(string="Other Employers")
-    l10n_ch_current_occupation_rate = fields.Float(string="Current Occupation rate", compute='_compute_l10n_ch_current_occupation_rate', store=True)
+    l10n_ch_current_occupation_rate = fields.Float(string="Current Occupation rate", compute='_compute_l10n_ch_current_occupation_rate', store=True, readonly=False)
     l10n_ch_other_employers_occupation_rate = fields.Float(string="Occupation rate other employers")
     l10n_ch_total_occupation_rate = fields.Float(string="Total occupation rate", compute="_compute_total_occupation_rate")
     l10n_ch_is_model = fields.Selection(string="IS Model", selection=[('monthly', 'Monthly'), ('yearly', 'Yearly')], default='monthly')

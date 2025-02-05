@@ -10,14 +10,14 @@
                 <field name="company_country_code" invisible="1"/>
                 <block title="Swiss Localization" id="l10n_ch_hr_payroll" invisible="company_country_code != 'CH'">
                     <setting id="ch_company_information" string="Company Information" help="Offical Company Information" company_dependent="1">
-                        <div class="mt16 content-group">
+                        <div name="ch_main_company_div" class="mt16 content-group">
                             <div class="row ms-2">
                                 <label for="l10n_ch_post_box" class="col-md-6 p-0 m-0"/>
                                 <field name="l10n_ch_post_box" class="col-md-6 p-0"/>
                             </div>
                             <div class="row ms-2">
                                 <label for="l10n_ch_uid" class="col-md-6 p-0 m-0"/>
-                                <field name="l10n_ch_uid" class="col-md-6 p-0"/>
+                                <field name="l10n_ch_uid" placeholder="Unknown" class="col-md-6 p-0"/>
                             </div>
                         </div>
                     </setting>

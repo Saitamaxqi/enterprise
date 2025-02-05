@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models, fields
+from dateutil.relativedelta import relativedelta
 
 
 class L10nChHrEmployeeChildren(models.Model):
@@ -20,4 +21,4 @@ class L10nChHrEmployeeChildren(models.Model):
         for child in self:
             if not child.birthdate or child.deduction_start:
                 continue
-            child.deduction_start = child.birthdate
+            child.deduction_start = child.birthdate.replace(day=1) + relativedelta(months=1)

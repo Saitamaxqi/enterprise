@@ -13,7 +13,7 @@ class L10nChLocationUnit(models.Model):
     _rec_name = 'partner_id'
 
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
-    partner_id = fields.Many2one('res.partner', string="Working Address", required=True)
+    partner_id = fields.Many2one('res.partner', string="Address", required=True)
     bur_ree_number = fields.Char(
         string="BUR-REE-Number",
         required=True,
@@ -48,7 +48,7 @@ class L10nChLocationUnit(models.Model):
     ], required=True)
     dpi_number = fields.Char('DPI Number', required=True)  # Equivalent to SSL nummer
     municipality = fields.Char(string="Municipality ID", required=True)
-    weekly_hours = fields.Float(string="Weekly Hours")
+    weekly_hours = fields.Float(string="Weekly Hours", default=40)
     weekly_lessons = fields.Float(string="Weekly Lessons")
 
     __unique = models.Constraint(

@@ -19,6 +19,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             structure_type=cls.env.ref('l10n_nl_hr_payroll.structure_type_employee_nl'),
             contract_fields={
                 'wage': 5000,
+                'structure_type_id': cls.env.ref('l10n_nl_hr_payroll.structure_type_employee_nl').id
             }
         )
 
@@ -35,7 +36,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_regular_payslip_non_resident(self):
         self.employee.is_non_resident = True
-
         payslip = self._generate_payslip(datetime.date(2023, 1, 1), datetime.date(2023, 1, 31))
 
         self.assertEqual(len(payslip.worked_days_line_ids), 1)
@@ -47,9 +47,9 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self._validate_payslip(payslip, payslip_results)
 
     def test_regular_payslip_30_percent(self):
+
         self.employee.is_non_resident = True
         self.contract.l10n_nl_30_percent = True
-
         payslip = self._generate_payslip(datetime.date(2023, 1, 1), datetime.date(2023, 1, 31))
 
         self.assertEqual(len(payslip.worked_days_line_ids), 1)
@@ -64,7 +64,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.employee.is_non_resident = True
         self.contract.l10n_nl_30_percent = True
         self.contract.wage = 1500
-
         payslip = self._generate_payslip(datetime.date(2023, 1, 1), datetime.date(2023, 1, 31))
 
         self.assertEqual(len(payslip.worked_days_line_ids), 1)

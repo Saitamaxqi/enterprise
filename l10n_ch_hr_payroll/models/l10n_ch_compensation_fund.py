@@ -19,7 +19,7 @@ class L10nChCompensationFund(models.Model):
 
     def _get_caf_rates(self, target, rate_type):
         if not self:
-            return 0, 0
+            return 0
         for line in self.caf_line_ids:
             if line.date_from <= target and (not line.date_to or target <= line.date_to):
                 return line[rate_type]
@@ -30,7 +30,7 @@ class L10nChCompensationFundLine(models.Model):
     _name = 'l10n.ch.compensation.fund.line'
     _description = 'Swiss: Family Allowance Rate (CAF)'
 
-    date_from = fields.Date(string="From", required=True)
+    date_from = fields.Date(string="From", required=True, default=lambda self: fields.Date.context_today(self).replace(month=1, day=1))
     date_to = fields.Date(string="To")
     insurance_id = fields.Many2one('l10n.ch.compensation.fund')
     employee_rate = fields.Float(string="Employee Rate (%)", digits='Payroll Rate', default=0.0)

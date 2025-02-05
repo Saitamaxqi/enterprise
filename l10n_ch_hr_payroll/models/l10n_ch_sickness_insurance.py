@@ -70,7 +70,7 @@ class L10nChSicknessInsuranceLineRate(models.Model):
     _description = 'Swiss: Sickness Insurances Line Rate (IJM)'
 
     line_id = fields.Many2one('l10n.ch.sickness.insurance.line')
-    date_from = fields.Date(string="From", required=True)
+    date_from = fields.Date(string="From", required=True, default=lambda self: fields.Date.context_today(self).replace(month=1, day=1))
     date_to = fields.Date(string="To")
     wage_from = fields.Float(string="Wage From")
     wage_to = fields.Float(string="Wage To")

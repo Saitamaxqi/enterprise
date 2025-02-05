@@ -58,7 +58,12 @@ class HrPayrollEmployeeDeclaration(models.Model):
                 _logger.warning('Sheet %s %s does not exist', res_model, res_id)
                 continue
             report_id = sheet._get_pdf_report().id
-            rendering_data = sheet._get_rendering_data(declarations.employee_id)
+            has_global = any(not d.employee_id for d in declarations)  # eg: Individual account at company level
+            if has_global:
+                employees = self.env[res_model].browse(res_id).line_ids.employee_id
+            else:
+                employees = declarations.employee_id
+            rendering_data = sheet._get_rendering_data(employees)
             if 'error' in rendering_data:
                 sheet.pdf_error = rendering_data['error']
                 continue
@@ -68,6 +73,8 @@ class HrPayrollEmployeeDeclaration(models.Model):
             sheet_count = len(rendering_data)
             counter = 1
             for employee, employee_data in rendering_data.items():
+                if (employee and employee not in declarations.employee_id) or (not employee and not has_global):
+                    continue
                 _logger.info('Printing %s (%s/%s)', sheet._description, counter, sheet_count)
                 counter += 1
                 sheet_filename = sheet._get_pdf_filename(employee)

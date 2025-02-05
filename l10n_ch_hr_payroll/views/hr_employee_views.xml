@@ -17,10 +17,10 @@
             <field name="marital" position="after">
                 <field name="l10n_ch_marital_from" invisible="company_country_code != 'CH'"/>
                 <field name="l10n_ch_church_tax" invisible="company_country_code != 'CH'"/>
-                <field name="l10n_ch_religious_denomination" invisible="company_country_code != 'CH'" required="company_country_code == 'CH'"/>
+                <field name="l10n_ch_religious_denomination" invisible="company_country_code != 'CH'"/>
             </field>
             <field name="identification_id" position="after">
-                <field name="l10n_ch_sv_as_number" invisible="company_country_code != 'CH'" required="company_country_code == 'CH'"/>
+                <field name="l10n_ch_sv_as_number" invisible="company_country_code != 'CH'"/>
                 <field name="l10n_ch_has_withholding_tax" invisible="company_country_code != 'CH'"/>
                 <field name="l10n_ch_residence_category" invisible="not l10n_ch_has_withholding_tax or company_country_code != 'CH'"/>
             </field>
@@ -34,16 +34,6 @@
                 <div colspan="2">
                     <field name="l10n_ch_children" nolabel="1" invisible="company_country_code != 'CH' or not children"/>
                 </div>
-            </field>
-
-            <field name="gender" position="attributes">
-                <attribute name="required">company_country_code == 'CH'</attribute>
-            </field>
-            <field name="birthday" position="attributes">
-                <attribute name="required">company_country_code == 'CH'</attribute>
-            </field>
-            <field name="lang" position="attributes">
-                <attribute name="required">company_country_code == 'CH'</attribute>
             </field>
         </field>
     </record>

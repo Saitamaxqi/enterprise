@@ -2,29 +2,50 @@
 
 import logging
 
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.tests.common import tagged
-from odoo.addons.hr_payroll_account.tests.common import TestPayslipValidationCommon
+from odoo.tools import file_open
+import json
+from unittest.mock import patch
+
 
 _logger = logging.getLogger(__name__)
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install', 'swissdec')
-class TestSwissdecCommon(TestPayslipValidationCommon):
+class TestSwissdecCommon(AccountTestInvoicingCommon):
 
     @classmethod
-    @TestPayslipValidationCommon.setup_country('ch')
+    @AccountTestInvoicingCommon.setup_country('ch')
     def setUpClass(cls):
         super().setUpClass()
         cls.maxDiff = None
-        mapped_payslips = cls.env.company._l10n_ch_generate_swissdec_demo_data()
-        for indentifier, payslip in mapped_payslips.items():
+        with patch.object(cls.env.registry['l10n.ch.employee.yearly.values'], '_generate_certificate_uuid', lambda self: "#DOC-ID"):
+            mapped_declarations = cls.env.company._l10n_ch_generate_swissdec_demo_data()
+
+        for indentifier, declaration in mapped_declarations.items():
             assert isinstance(indentifier, str)
-            assert isinstance(payslip, cls.env['hr.payslip'].__class__)
-            setattr(cls, indentifier, payslip)
-        cls.company = cls.company_data['company']
-        cls.resource_calendar_40_hours_per_week = cls.env['resource.calendar'].search([('name', '=', 'Test Calendar : 40 Hours/Week'), ('company_id', '=', cls.company.id)])
-        cls.avs_1 = cls.env['l10n.ch.social.insurance'].search([('name', '=', 'AVS 2021')], limit=1)
-        cls.laa_1 = cls.env['l10n.ch.accident.insurance'].search([('name', '=', "Backwork-Versicherungen")], limit=1)
-        cls.laac_1 = cls.env['l10n.ch.additional.accident.insurance'].search([('name', '=', 'Backwork-Versicherungen')], limit=1)
-        cls.ijm_1 = cls.env['l10n.ch.sickness.insurance'].search([('name', '=', 'Backwork-Versicherungen')], limit=1)
-        cls.caf_lu_1 = cls.env['l10n.ch.compensation.fund'].search([("member_number", '=', '5676.3')], limit=1)
+            setattr(cls, indentifier, declaration)
+
+    def _normalize_data(self, data):
+        """
+        Recursively transform data so that the order of lists no longer matters.
+        """
+        if isinstance(data, dict):
+            return {k: self._normalize_data(v) for k, v in sorted(data.items(), key=lambda d: str(d))}
+        elif isinstance(data, list):
+            return sorted([self._normalize_data(item) for item in data], key=lambda d: str(d))
+        else:
+            return data
+
+    def _compare_with_truth_base(self, declaration_type, identifier, generated_dict):
+        truth_base = json.load(file_open(f'test_l10n_ch_hr_payroll_account/data/declaration_truth_base/{declaration_type}.json')),
+        truth_dict = truth_base[0].get(identifier)
+
+        json_formated = json.loads(json.dumps(generated_dict))
+
+        self.assertDictEqual(
+            self._normalize_data(json_formated),
+            self._normalize_data(truth_dict),
+            f"Mismatch in declaration '{identifier}'."
+        )

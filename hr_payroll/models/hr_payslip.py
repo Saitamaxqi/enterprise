@@ -731,9 +731,12 @@ class HrPayslip(models.Model):
         self.ensure_one()
         return self._is_outside_contract_dates()
 
-    def _rule_parameter(self, code):
+    def _rule_parameter(self, code, reference_date=False):
         self.ensure_one()
-        return self.env['hr.rule.parameter']._get_parameter_from_code(code, self.date_to)
+        if reference_date:
+            return self.env['hr.rule.parameter']._get_parameter_from_code(code, reference_date)
+        else:
+            return self.env['hr.rule.parameter']._get_parameter_from_code(code, self.date_to)
 
     def _sum(self, code, from_date, to_date=None):
         if to_date is None:
@@ -1134,7 +1137,7 @@ class HrPayslip(models.Model):
     def _compute_worked_days_line_ids(self):
         if not self or self.env.context.get('salary_simulation'):
             return
-        valid_slips = self.filtered(lambda p: p.employee_id and p.date_from and p.date_to and p.contract_id and p.struct_id)
+        valid_slips = self.filtered(lambda p: p.employee_id and p.date_from and p.date_to and p.contract_id and p.struct_id and p.struct_id.use_worked_day_lines)
         if not valid_slips:
             return
         # Make sure to reset invalid payslip's worked days line
@@ -1426,7 +1429,7 @@ class HrPayslip(models.Model):
             ('queued_for_pdf', '=', True),
         ])
         if payslips:
-            BATCH_SIZE = batch_size or 50
+            BATCH_SIZE = batch_size or 30
             payslips_batch = payslips[:BATCH_SIZE]
             payslips_batch._generate_pdf()
             payslips_batch.write({'queued_for_pdf': False})

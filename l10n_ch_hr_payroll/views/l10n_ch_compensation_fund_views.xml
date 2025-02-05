@@ -32,7 +32,7 @@
                         </group>
                     </group>
                     <group string="Employee Rates" colspan="2">
-                        <field name="caf_line_ids" nolabel="1">
+                        <field name="caf_line_ids" nolabel="1" colspan="2">
                             <list editable="top">
                                 <field name="date_from"/>
                                 <field name="date_to"/>

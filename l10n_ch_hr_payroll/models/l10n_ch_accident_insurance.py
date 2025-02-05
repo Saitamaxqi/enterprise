@@ -31,10 +31,10 @@ class L10nChAccidentInsuranceLine(models.Model):
         ('A', 'A'),
         ('B', 'B')], required=True)
     solution_number = fields.Selection(selection=[
-        ('0', '0'),
-        ('1', '1'),
-        ('2', '2'),
-        ('3', '3')], required=True, help="""
+        ('0', '0 - Not insured (e.g. member of the board of directors not working in the company)'),
+        ('1', '1 - Occupational and Non-Occupational Insured, with deductions'),
+        ('2', '2 - Occupational and Non-Occupational Insured, without deductions'),
+        ('3', '3 - Only Occupational Insured, without deductions (< 8 weekly hours)')], required=True, help="""
 0: Not UVG insured (e.g. member of the board of directors not working in the company)
 1: AAP and AANP insured, with AANP deduction
 2: Insured AAP and AANP, without AANP deduction
@@ -85,9 +85,9 @@ class L10nChAccidentInsuranceLineRate(models.Model):
     _description = 'Swiss: Accident Insurances Line Rate (AAP/AANP)'
 
     line_id = fields.Many2one('l10n.ch.accident.insurance.line')
-    date_from = fields.Date(string="From", required=True)
+    date_from = fields.Date(string="From", required=True, default=lambda self: fields.Date.context_today(self).replace(month=1, day=1))
     date_to = fields.Date(string="To")
-    threshold = fields.Float()
+    threshold = fields.Float(default=148200)
     occupational_male_rate = fields.Float("Occupational Male Rate (%)", digits='Payroll Rate')
     occupational_female_rate = fields.Float("Occupational Female Rate (%)", digits='Payroll Rate')
     non_occupational_male_rate = fields.Float("Non-occupational Male Rate (%)", digits='Payroll Rate')

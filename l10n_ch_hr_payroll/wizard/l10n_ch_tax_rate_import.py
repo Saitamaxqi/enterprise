@@ -122,14 +122,21 @@ class L10nChTaxRateImportWizard(models.TransientModel):
                         'code': f'l10n_ch_withholding_tax_rates_{canton}_{church_tax}_{tax_scale}_{child_count}',
                         'country_id': self.env.ref('base.ch').id,
                     })
-                    self.env['ir.model.data'].create({
-                        'name': parameter_xmlid,
-                        'module': 'l10n_ch_hr_payroll',
-                        'res_id': parameter.id,
-                        'model': 'hr.rule.parameter',
-                        # noupdate is set to true to avoid to delete record at module update
-                        'noupdate': True,
-                    })
+
+                    ir_model_data = self.env['ir.model.data'].search([('name', '=', parameter_xmlid), ('module', '=', 'l10n_ch_hr_payroll'), ('model', '=', 'hr.rule.parameter')])
+                    if ir_model_data:
+                        ir_model_data.write({
+                            'res_id': parameter.id
+                        })
+                    else:
+                        self.env['ir.model.data'].create({
+                            'name': parameter_xmlid,
+                            'module': 'l10n_ch_hr_payroll',
+                            'res_id': parameter.id,
+                            'model': 'hr.rule.parameter',
+                            # noupdate is set to true to avoid to delete record at module update
+                            'noupdate': True,
+                        })
                 parameter_value_data = (canton, date_from.year, date_from.month, date_from.day, church_tax, tax_scale, child_count)
                 parameter_value_xmlid = "rule_parameter_value_withholding_tax_%s_%s_%s_%s_%s_%s_%s" % parameter_value_data
                 parameter_value = parameter.parameter_version_ids.filtered(lambda p: p.date_from == date_from)
@@ -140,14 +147,20 @@ class L10nChTaxRateImportWizard(models.TransientModel):
                         'rule_parameter_id': parameter.id,
                         'date_from': date_from,
                     })
-                    self.env['ir.model.data'].create({
-                        'name': parameter_value_xmlid,
-                        'module': 'l10n_ch_hr_payroll',
-                        'res_id': parameter_value.id,
-                        'model': 'hr.rule.parameter.value',
-                        # noupdate is set to true to avoid to delete record at module update
-                        'noupdate': True,
-                    })
+                    ir_model_data = self.env['ir.model.data'].search([('name', '=', parameter_value_xmlid), ('module', '=', 'l10n_ch_hr_payroll'), ('model', '=', 'hr.rule.parameter.value')])
+                    if ir_model_data:
+                        ir_model_data.write({
+                            'res_id': parameter_value.id
+                        })
+                    else:
+                        self.env['ir.model.data'].create({
+                            'name': parameter_value_xmlid,
+                            'module': 'l10n_ch_hr_payroll',
+                            'res_id': parameter_value.id,
+                            'model': 'hr.rule.parameter.value',
+                            # noupdate is set to true to avoid to delete record at module update
+                            'noupdate': True,
+                        })
                 else:
                     parameter_value.write({'parameter_value': str(parameter_values)})
 
@@ -164,14 +177,21 @@ class L10nChTaxRateImportWizard(models.TransientModel):
                         'code': f'l10n_ch_withholding_tax_rates_{canton}_{tax_code}_{church_tax}',
                         'country_id': self.env.ref('base.ch').id,
                     })
-                    self.env['ir.model.data'].create({
-                        'name': parameter_xmlid,
-                        'module': 'l10n_ch_hr_payroll',
-                        'res_id': parameter.id,
-                        'model': 'hr.rule.parameter',
-                        # noupdate is set to true to avoid to delete record at module update
-                        'noupdate': True,
-                    })
+                    ir_model_data = self.env['ir.model.data'].search([('name', '=', parameter_xmlid), ('module', '=', 'l10n_ch_hr_payroll'), ('model', '=', 'hr.rule.parameter')])
+                    if ir_model_data:
+                        ir_model_data.write({
+                            'res_id': parameter.id
+                        })
+                    else:
+                        self.env['ir.model.data'].create({
+                            'name': parameter_xmlid,
+                            'module': 'l10n_ch_hr_payroll',
+                            'res_id': parameter.id,
+                            'model': 'hr.rule.parameter',
+                            # noupdate is set to true to avoid to delete record at module update
+                            'noupdate': True,
+                        })
+
                 parameter_value_data = (canton, date_from.year, date_from.month, date_from.day, tax_code, church_tax)
                 parameter_value_xmlid = "rule_parameter_value_withholding_tax_%s_%s_%s_%s_%s_%s" % parameter_value_data
                 parameter_value = parameter.parameter_version_ids.filtered(lambda p: p.date_from == date_from)
@@ -182,14 +202,20 @@ class L10nChTaxRateImportWizard(models.TransientModel):
                         'rule_parameter_id': parameter.id,
                         'date_from': date_from,
                     })
-                    self.env['ir.model.data'].create({
-                        'name': parameter_value_xmlid,
-                        'module': 'l10n_ch_hr_payroll',
-                        'res_id': parameter_value.id,
-                        'model': 'hr.rule.parameter.value',
-                        # noupdate is set to true to avoid to delete record at module update
-                        'noupdate': True,
-                    })
+                    ir_model_data = self.env['ir.model.data'].search([('name', '=', parameter_value_xmlid), ('module', '=', 'l10n_ch_hr_payroll'), ('model', '=', 'hr.rule.parameter.value')])
+                    if ir_model_data:
+                        ir_model_data.write({
+                            'res_id': parameter_value.id
+                        })
+                    else:
+                        self.env['ir.model.data'].create({
+                            'name': parameter_value_xmlid,
+                            'module': 'l10n_ch_hr_payroll',
+                            'res_id': parameter_value.id,
+                            'model': 'hr.rule.parameter.value',
+                            # noupdate is set to true to avoid to delete record at module update
+                            'noupdate': True,
+                        })
                 else:
                     parameter_value.write({'parameter_value': str(parameter_values)})
 
@@ -206,14 +232,20 @@ class L10nChTaxRateImportWizard(models.TransientModel):
                         'code': f'l10n_ch_withholding_tax_rates_{canton}_{tax_code}',
                         'country_id': self.env.ref('base.ch').id,
                     })
-                    self.env['ir.model.data'].create({
-                        'name': parameter_xmlid,
-                        'module': 'l10n_ch_hr_payroll',
-                        'res_id': parameter.id,
-                        'model': 'hr.rule.parameter',
-                        # noupdate is set to true to avoid to delete record at module update
-                        'noupdate': True,
-                    })
+                    ir_model_data = self.env['ir.model.data'].search([('name', '=', parameter_xmlid), ('module', '=', 'l10n_ch_hr_payroll'), ('model', '=', 'hr.rule.parameter')])
+                    if ir_model_data:
+                        ir_model_data.write({
+                            'res_id': parameter.id
+                        })
+                    else:
+                        self.env['ir.model.data'].create({
+                            'name': parameter_xmlid,
+                            'module': 'l10n_ch_hr_payroll',
+                            'res_id': parameter.id,
+                            'model': 'hr.rule.parameter',
+                            # noupdate is set to true to avoid to delete record at module update
+                            'noupdate': True,
+                        })
                 parameter_value_data = (canton, date_from.year, date_from.month, date_from.day, tax_code)
                 parameter_value_xmlid = "rule_parameter_value_withholding_tax_%s_%s_%s_%s_%s" % parameter_value_data
                 parameter_value = parameter.parameter_version_ids.filtered(lambda p: p.date_from == date_from)
@@ -224,14 +256,20 @@ class L10nChTaxRateImportWizard(models.TransientModel):
                         'rule_parameter_id': parameter.id,
                         'date_from': date_from,
                     })
-                    self.env['ir.model.data'].create({
-                        'name': parameter_value_xmlid,
-                        'module': 'l10n_ch_hr_payroll',
-                        'res_id': parameter_value.id,
-                        'model': 'hr.rule.parameter.value',
-                        # noupdate is set to true to avoid to delete record at module update
-                        'noupdate': True,
-                    })
+                    ir_model_data = self.env['ir.model.data'].search([('name', '=', parameter_value_xmlid), ('module', '=', 'l10n_ch_hr_payroll'), ('model', '=', 'hr.rule.parameter.value')])
+                    if ir_model_data:
+                        ir_model_data.write({
+                            'res_id': parameter_value.id
+                        })
+                    else:
+                        self.env['ir.model.data'].create({
+                            'name': parameter_value_xmlid,
+                            'module': 'l10n_ch_hr_payroll',
+                            'res_id': parameter_value.id,
+                            'model': 'hr.rule.parameter.value',
+                            # noupdate is set to true to avoid to delete record at module update
+                            'noupdate': True,
+                        })
                 else:
                     parameter_value.write({'parameter_value': str(parameter_values)})
 

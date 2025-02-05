@@ -68,7 +68,7 @@
 
         <menuitem
             id="menu_l10n_ch_accident_insurance"
-            name="AAP/AANP Insurances"
+            name="LAA Insurances"
             parent="l10n_ch_hr_payroll.menu_configuration_l10n_ch"
             action="action_l10n_ch_accident_insurance"
             sequence="7"

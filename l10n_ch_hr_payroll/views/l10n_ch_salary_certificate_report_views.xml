@@ -28,7 +28,7 @@
     </record>
 
     <record id="l10n_ch_salary_certificate_view_tree" model="ir.ui.view">
-        <field name="name">l10n.ch.salary.certificate.list</field>
+        <field name="name">l10n.ch.salary.certificate.tree</field>
         <field name="model">l10n.ch.salary.certificate</field>
         <field name="arch" type="xml">
             <list string="Salary Certificates">

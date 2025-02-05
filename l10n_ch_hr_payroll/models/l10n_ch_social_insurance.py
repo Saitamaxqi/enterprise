@@ -102,7 +102,7 @@ class L10nChSocialInsuranceAcLine(models.Model):
     insurance_id = fields.Many2one('l10n.ch.social.insurance')
     employee_rate = fields.Float(string="Employee Rate (%)", digits='Payroll Rate', default=1.1)
     employer_rate = fields.Float(string="Company Rate (%)", digits='Payroll Rate', default=1.1)
-    employee_additional_rate = fields.Float(string="Employee Additional Rate (%)", digits='Payroll Rate', default=0.5)
+    employee_additional_rate = fields.Float(string="Employee Additional Rate (%)", digits='Payroll Rate', default=0)
     employer_additional_rate = fields.Float(string="Company Additional Rate (%)", digits='Payroll Rate', default=0)
 
 

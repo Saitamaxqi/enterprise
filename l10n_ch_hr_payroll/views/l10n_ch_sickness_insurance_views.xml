@@ -33,7 +33,7 @@
                         </group>
                     </group>
                     <group string="IJM Solution" colspan="2">
-                        <field name="line_ids" nolabel="1">
+                        <field name="line_ids" nolabel="1" colspan="2">
                             <list>
                                 <field name="solution_name"/>
                                 <field name="solution_type"/>

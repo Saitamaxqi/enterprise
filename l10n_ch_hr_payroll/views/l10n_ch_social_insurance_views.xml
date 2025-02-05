@@ -41,7 +41,7 @@
                     <notebook>
                         <page string="Details">
                             <group string="Old-age and survivors' insurance (AVS)" colspan="2">
-                                <field name="avs_line_ids" nolabel="1">
+                                <field name="avs_line_ids" nolabel="1" colspan="2">
                                     <list editable="top">
                                         <field name="date_from"/>
                                         <field name="date_to"/>
@@ -51,7 +51,7 @@
                                 </field>
                             </group>
                             <group string="Unemployment insurance (AC)" colspan="2">
-                                <field name="ac_line_ids" nolabel="1">
+                                <field name="ac_line_ids" nolabel="1" colspan="2">
                                     <list editable="top">
                                         <field name="date_from"/>
                                         <field name="date_to"/>
@@ -63,7 +63,7 @@
                                 </field>
                             </group>
                             <group string="Retired Employees AVS/AC Exoneration" colspan="2">
-                                <field name="l10n_ch_avs_rente_ids" nolabel="1">
+                                <field name="l10n_ch_avs_rente_ids" nolabel="1" colspan="2">
                                     <list editable="top">
                                         <field name="date_from"/>
                                         <field name="date_to"/>
@@ -72,7 +72,7 @@
                                 </field>
                             </group>
                             <group string="AC Thresholds" colspan="2">
-                                <field name="l10n_ch_avs_ac_threshold_ids" nolabel="1">
+                                <field name="l10n_ch_avs_ac_threshold_ids" nolabel="1" colspan="2">
                                     <list editable="top">
                                         <field name="date_from"/>
                                         <field name="date_to"/>
@@ -81,7 +81,7 @@
                                 </field>
                             </group>
                             <group string="ACC Thresholds" colspan="2">
-                                <field name="l10n_ch_avs_acc_threshold_ids" nolabel="1">
+                                <field name="l10n_ch_avs_acc_threshold_ids" nolabel="1" colspan="2">
                                     <list editable="top">
                                         <field name="date_from"/>
                                         <field name="date_to"/>
