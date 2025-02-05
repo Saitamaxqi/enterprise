@@ -20,6 +20,7 @@ class SpreadsheetRevision(models.Model):
     commands = fields.Char(required=True)
     revision_uuid = fields.Char(required=True, index=True)
     parent_revision_id = fields.Many2one("spreadsheet.revision", copy=False)
+    author_id = fields.Many2one("res.users", required=True, default=lambda self: self.env.user)
 
     _initial_unique = models.UniqueIndex(
         '(res_model, res_id) WHERE parent_revision_id IS NULL',

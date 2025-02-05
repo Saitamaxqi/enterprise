@@ -422,7 +422,7 @@ class SpreadsheetMixin(models.AbstractModel):
                     json.loads(rev.commands),
                     id=rev.id,
                     name=rev.name,
-                    user=(rev.create_uid.id, rev.create_uid.name),
+                    user=(rev.author_id.id, rev.author_id.name),
                     serverRevisionId=rev.parent_revision_id.revision_uuid or self._get_initial_revision_uuid(),
                     nextRevisionId=rev.revision_uuid,
                     timestamp=rev.create_date,

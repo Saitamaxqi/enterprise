@@ -419,3 +419,19 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         action = self.env["spreadsheet.test"].action_open_new_spreadsheet()
         spreadsheet = self.env["spreadsheet.test"].browse(action["params"]["spreadsheet_id"])
         self.assertTrue(spreadsheet.exists())
+
+    def test_keep_original_spreadsheet_author_with_multiple_users(self):
+        test_user_1 = new_test_user(self.env, login="test_user_1")
+        test_user_2 = new_test_user(self.env, login="test_user_2")
+        test_user_3 = new_test_user(self.env, login="test_user_3")
+        spreadsheet = self.env["spreadsheet.test"].with_user(test_user_1).create({})
+        spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
+        spreadsheet.with_user(test_user_2).dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
+        spreadsheet.with_user(test_user_3).dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
+        copy = spreadsheet.with_user(self.env.ref("base.user_admin")).copy()
+        revisions = copy.spreadsheet_revision_ids
+        self.assertEqual(revisions[0].author_id, test_user_1)
+        self.assertEqual(revisions[1].author_id, test_user_2)
+        self.assertEqual(revisions[2].author_id, test_user_3)
+        spreadsheet.with_user(self.env.ref("base.user_admin")).dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
+        self.assertEqual(spreadsheet.spreadsheet_revision_ids[-1].author_id, self.env.ref("base.user_admin"))
