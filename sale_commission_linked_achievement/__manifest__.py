@@ -10,6 +10,7 @@ This module is only temporary for its purpose is to add new fields in a stable v
     'depends': ['sale_commission'],
     'data': [
         'views/sale_commission_achievement_view.xml',
+        'views/sale_commission_plan_view.xml',
     ],
     'license': 'OEEL-1',
 }

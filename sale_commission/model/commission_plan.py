@@ -6,7 +6,7 @@ import json
 from dateutil.relativedelta import relativedelta
 
 from odoo import models, fields, api, Command, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 
 class SaleCommissionPlan(models.Model):
@@ -204,6 +204,16 @@ CREATE INDEX IF NOT EXISTS account_move_invoice_user_id_date_idx ON account_move
 
     def action_cancel(self):
         self.state = 'cancel'
+
+    def action_export_targets(self):
+        self.ensure_one()
+        if self.type != 'target':
+            raise UserError(_("Exporting targets is only available for plans based on targets"))
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"/sale_commission/export/targets/{self.id}",
+            "target": "download",
+        }
 
     @api.model
     def _get_completion_value(self, sorted_amounts, sorted_rates):

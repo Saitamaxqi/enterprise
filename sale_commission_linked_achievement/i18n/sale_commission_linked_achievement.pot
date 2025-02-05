@@ -21,24 +21,38 @@ msgid "Achieved"
 msgstr ""
 
 #. module: sale_commission_linked_achievement
-#: model:ir.model.fields,field_description:sale_commission_linked_achievement.field_sale_commission_achievement__linked_achievement_id
-msgid "Achievement"
+#: model:ir.model.fields,field_description:sale_commission_linked_achievement.field_sale_commission_achievement__add_user_id
+msgid "Add to"
 msgstr ""
 
 #. module: sale_commission_linked_achievement
-#: model:ir.model.fields,field_description:sale_commission_linked_achievement.field_sale_commission_achievement__amount
-msgid "Amount"
+#. odoo-python
+#: code:addons/sale_commission_linked_achievement/controllers/main.py:0
+msgid "Commission"
+msgstr ""
+
+#. module: sale_commission_linked_achievement
+#: model_terms:ir.ui.view,arch_db:sale_commission_linked_achievement.sale_commission_plan_view_form
+msgid "Commission table"
+msgstr ""
+
+#. module: sale_commission_linked_achievement
+#. odoo-python
+#: code:addons/sale_commission_linked_achievement/controllers/main.py:0
+msgid "Currency"
 msgstr ""
 
 #. module: sale_commission_linked_achievement
 #: model:ir.model.fields,field_description:sale_commission_linked_achievement.field_sale_commission_achievement__display_name
 #: model:ir.model.fields,field_description:sale_commission_linked_achievement.field_sale_commission_achievement_report__display_name
+#: model:ir.model.fields,field_description:sale_commission_linked_achievement.field_sale_commission_report__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: sale_commission_linked_achievement
 #: model:ir.model.fields,field_description:sale_commission_linked_achievement.field_sale_commission_achievement__id
 #: model:ir.model.fields,field_description:sale_commission_linked_achievement.field_sale_commission_achievement_report__id
+#: model:ir.model.fields,field_description:sale_commission_linked_achievement.field_sale_commission_report__id
 msgid "ID"
 msgstr ""
 
@@ -48,8 +62,24 @@ msgid "Manual Commission Achievement"
 msgstr ""
 
 #. module: sale_commission_linked_achievement
+#. odoo-python
+#: code:addons/sale_commission_linked_achievement/controllers/main.py:0
+msgid "Performance"
+msgstr ""
+
+#. module: sale_commission_linked_achievement
+#: model:ir.model.fields,field_description:sale_commission_linked_achievement.field_sale_commission_achievement__reduce_user_id
+msgid "Reduce From"
+msgstr ""
+
+#. module: sale_commission_linked_achievement
 #: model:ir.model,name:sale_commission_linked_achievement.model_sale_commission_achievement_report
 msgid "Sales Achievement Report"
+msgstr ""
+
+#. module: sale_commission_linked_achievement
+#: model:ir.model,name:sale_commission_linked_achievement.model_sale_commission_report
+msgid "Sales Commission Report"
 msgstr ""
 
 #. module: sale_commission_linked_achievement
@@ -58,4 +88,14 @@ msgstr ""
 msgid ""
 "The adjustments must be unique by user, team, company, achievement and date "
 "(month)"
+msgstr ""
+
+#. module: sale_commission_linked_achievement
+#: model_terms:ir.ui.view,arch_db:sale_commission_linked_achievement.sale_commission_achievement_link_view_list
+msgid "Total Achieved"
+msgstr ""
+
+#. module: sale_commission_linked_achievement
+#: model:ir.model,name:sale_commission_linked_achievement.model_sale_commission_target_export_wizard
+msgid "Wizard for exporting target of plans"
 msgstr ""
