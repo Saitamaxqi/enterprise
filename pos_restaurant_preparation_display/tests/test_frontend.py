@@ -85,10 +85,10 @@ class TestUi(test_frontend.TestFrontendCommon):
         order1 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-00001')], limit=1)
         pdis_order1 = self.env['pos_preparation_display.order'].search([('pos_order_id', '=', order1.id)])
         self.assertEqual(len(pdis_order1.preparation_display_order_line_ids), 2, "Should have 2 preparation orderlines")
-        self.assertEqual(pdis_order1.preparation_display_order_line_ids[0].product_quantity, 1)
-        self.assertEqual(pdis_order1.preparation_display_order_line_ids[0].internal_note, "")
         self.assertEqual(pdis_order1.preparation_display_order_line_ids[1].product_quantity, 1)
-        self.assertEqual(pdis_order1.preparation_display_order_line_ids[1].internal_note, "Test Internal Notes")
+        self.assertEqual(pdis_order1.preparation_display_order_line_ids[1].internal_note, "")
+        self.assertEqual(pdis_order1.preparation_display_order_line_ids[0].product_quantity, 1)
+        self.assertEqual(pdis_order1.preparation_display_order_line_ids[0].internal_note, "Test Internal Notes")
 
     def test_03_preparation_display_skip_change(self):
         self.env['pos_preparation_display.display'].create({

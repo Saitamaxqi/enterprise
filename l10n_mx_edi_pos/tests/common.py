@@ -45,7 +45,7 @@ class TestMxEdiPosCommon(TestMxEdiCommon, TestPoSCommon):
     def _create_order(self, ui_data):
         order_data = self.create_ui_order_data(**ui_data)
         results = self.env['pos.order'].sync_from_ui([order_data])
-        return self.env['pos.order'].browse(results['pos.order'][0]['id'])
+        return self.env['pos.order'].browse([order['id'] for order in results['pos.order']])
 
     def _assert_order_cfdi(self, order, filename):
         document = order.l10n_mx_edi_document_ids.filtered(lambda x: x.state == 'invoice_sent')[:1]

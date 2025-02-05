@@ -22,27 +22,31 @@ class PosOrder(models.Model):
             config = self.browse(order_id).config_id
         return bool(config and config.company_id.l10n_de_is_germany_and_fiskaly() and config.floor_ids)
 
-    @api.model
-    def sync_from_ui(self, orders):
-        if len(orders) > 0 and self._check_config_germany_floor(session_id=orders[0]['session_id']):
-            order_differences = {}
-            for ui_order in orders:
-                if ui_order['state'] == 'draft':
-                    existing_order = None
-                    if ui_order.get('id'):
-                        existing_order = self.env['pos.order'].browse(ui_order['id']).exists()
-                    if not existing_order or existing_order.state == 'draft':
-                        differences = self._line_differences(existing_order, ui_order)
-                        if differences:
-                            order_differences[ui_order['name']] = differences
+    def read_pos_data(self, data, config_id):
+        result = super().read_pos_data(data, config_id)
+        if not len(self):
+            return result
 
-            res = super().sync_from_ui(orders)
-            for json_record in res['pos.order']:
-                if json_record['pos_reference'] in order_differences:
-                    json_record['differences'] = order_differences[json_record['pos_reference']]
-            return res
-        else:
-            return super().sync_from_ui(orders)
+        session_id = self[0].session_id.id
+        if not self._check_config_germany_floor(session_id=session_id):
+            return result
+
+        order_differences = {}
+        for ui_order in data:
+            if ui_order['state'] == 'draft':
+                existing_order = None
+                if ui_order.get('id'):
+                    existing_order = self.env['pos.order'].browse(ui_order['id']).exists()
+                if not existing_order or existing_order.state == 'draft':
+                    differences = self._line_differences(existing_order, ui_order)
+                    if differences:
+                        order_differences[ui_order['name']] = differences
+
+        for json_record in result['pos.order']:
+            if json_record['pos_reference'] in order_differences:
+                json_record['differences'] = order_differences[json_record['pos_reference']]
+
+        return result
 
     @api.model
     def _line_differences(self, existing_order, ui_order=None):

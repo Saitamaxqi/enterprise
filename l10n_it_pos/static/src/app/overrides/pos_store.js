@@ -20,8 +20,8 @@ patch(PosStore.prototype, {
             });
         }
     },
-    getSyncAllOrdersContext(orders) {
-        const context = super.getSyncAllOrdersContext(orders);
+    getSyncAllOrdersContext(orders, options = {}) {
+        const context = super.getSyncAllOrdersContext(orders, options);
         if (isFiscalPrinterActive(this.config)) {
             // No need to slow down the order syncing by generating the PDF in the server.
             // The invoice will be printed by the fiscal printer.

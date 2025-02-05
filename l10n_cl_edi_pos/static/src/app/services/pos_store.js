@@ -17,7 +17,7 @@ patch(PosStore.prototype, {
     doNotAllowRefundAndSales() {
         return this.isChileanCompany() || super.doNotAllowRefundAndSales(...arguments);
     },
-    getSyncAllOrdersContext(orders) {
+    getSyncAllOrdersContext(orders, options = {}) {
         let context = super.getSyncAllOrdersContext(...arguments);
         if (this.isChileanCompany() && orders) {
             // FIXME in master: when processing multiple orders, and at least one is an invoice of type Factura,

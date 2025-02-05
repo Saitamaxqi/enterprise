@@ -61,7 +61,7 @@ class TestInGstrPosBase(TestPoSCommon):
         """Helper to create a POS order from UI data."""
         order_data = self.create_ui_order_data(**ui_data)
         results = self.env['pos.order'].sync_from_ui([order_data])
-        return self.env['pos.order'].browse(results['pos.order'][0]['id'])
+        return self.env['pos.order'].browse([o['id'] for o in results['pos.order']])
 
     @classmethod
     def _create_categ_anglo(cls):

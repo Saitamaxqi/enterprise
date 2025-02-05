@@ -29,4 +29,5 @@ class TestEcEdiPosCommon(TestEcEdiCommon, TestPoSCommon):
     def _create_order(self, ui_data):
         order_data = self.create_ui_order_data(**ui_data)
         results = self.env['pos.order'].sync_from_ui([order_data])
-        return self.env['pos.order'].browse(results['pos.order'][0]['id'])
+        return self.env['pos.order'].browse([o['id'] for o in results['pos.order']])
+

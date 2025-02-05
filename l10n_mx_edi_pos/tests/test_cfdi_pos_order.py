@@ -104,7 +104,7 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
                     'payments': [(self.bank_pm1, -2320.0)],
                 })
 
-            orders = order + refund
+            orders = refund
             with self.with_mocked_pac_sign_success():
                 # Calling the global invoice on the order will include the refund automatically.
                 self.env['l10n_mx_edi.global_invoice.create']\
@@ -167,8 +167,8 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
             # Ask for a credit note.
             refund.partner_id = self.customer
             with self.with_pos_session(), self.with_mocked_pac_sign_success():
-                refund.action_pos_order_invoice()
-            self._assert_order_cfdi(refund, 'test_global_invoice_including_complex_partial_refund_chain_4')
+                refund[1].action_pos_order_invoice()
+            self._assert_order_cfdi(refund[1], 'test_global_invoice_including_complex_partial_refund_chain_4')
 
     def test_global_invoice_including_full_refund(self):
         with self.mx_external_setup(self.frozen_today):

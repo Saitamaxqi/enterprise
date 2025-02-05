@@ -44,6 +44,7 @@ patch(PosStore.prototype, {
             partner.id,
             this.config.id,
         ]);
+        this.deviceSync.dispatch({ "res.partner": [partner] });
         const updatePartner = res["res.partner"][0];
         if (partner.parent_name) {
             const parent = this.models["res.partner"].find((p) => p.name === partner.parent_name);

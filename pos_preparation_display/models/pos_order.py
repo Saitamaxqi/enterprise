@@ -17,6 +17,13 @@ class PosOrder(models.Model):
                 if order.state == 'paid' and not order.config_id.module_pos_restaurant:
                     self.env['pos_preparation_display.order'].process_order(order.id)
 
+        # When preparation context is defined only one order is available in data
+        if self.env.context.get('preparation'):
+            params = self.env.context.get('preparation').get('process_order')
+            order = self.browse(data["pos.order"][0]['id'])
+            self.env['pos_preparation_display.order'].process_order(order.id, *params)
+            order.config_id.notify_synchronisation(order.config_id.current_session_id.id, self.env.context.get('login_number', 0))
+
         return data
 
     def _process_preparation_changes(self, cancelled=False, general_customer_note=None, note_history=None, internal_note=None):
