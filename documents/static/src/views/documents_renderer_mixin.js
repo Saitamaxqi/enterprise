@@ -56,6 +56,18 @@ export const DocumentsRendererMixin = (component) =>
                 await this.env.model.orm.write('documents.document', [record.data.id], changesToSave);
                 await this.env.searchModel._reloadSearchPanel();
             };
+            /**
+             * @override to reload the document's data via the search panel update, required
+             * to avoid crashes as the record is not in the view.
+             */
+            record.load = async () => {
+                await this.env.searchModel._reloadSearchPanel();
+            };
+            /**
+             * @override skip to avoid raising validity error for fields that
+             * don't belong to the record container. Data saving is handled in our _update override.
+             */
+            record._save = async () => true;
             return record;
         }
 
