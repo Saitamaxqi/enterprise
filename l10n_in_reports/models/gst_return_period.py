@@ -1228,10 +1228,7 @@ class L10n_InGstReturnPeriod(models.Model):
         ):
             advisor_user = act_type.default_user_id
         else:
-            field_id = self.env['ir.model.fields'].search([
-                ('name', '=', 'gstr1_status'),
-                ('model_id.model', '=', self._name),
-            ])
+            field_id = self.env['ir.model.fields']._get('l10n_in.gst.return.period', 'gstr1_status')
             # Search for the last relevant mail message to find a responsible user
             last_message = self.env['mail.message'].search([
                 ('model', '=', self._name),
