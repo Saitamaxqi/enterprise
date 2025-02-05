@@ -101,7 +101,7 @@ class TestLTIntrastatReportCommon(TestAccountReportsCommon):
                     <currencyCode>EUR</currencyCode>
                     <totalInvoicedAmount>959328</totalInvoicedAmount>
                     <Item>
-                        <itemNumber>1</itemNumber>
+                        <itemNumber>2</itemNumber>
                         <CN8>
                             <CN8Code>25309050</CN8Code>
                         </CN8>
@@ -131,7 +131,7 @@ class TestLTIntrastatReportCommon(TestAccountReportsCommon):
                     <currencyCode>EUR</currencyCode>
                     <totalInvoicedAmount>959328</totalInvoicedAmount>
                     <Item>
-                        <itemNumber>2</itemNumber>
+                        <itemNumber>1</itemNumber>
                         <CN8>
                             <CN8Code>88023000</CN8Code>
                             <SUCode>4.0</SUCode>

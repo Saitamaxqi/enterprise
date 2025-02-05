@@ -17,7 +17,7 @@ class AccountIntrastatServicesBeReportHandler(models.AbstractModel):
         else:
             options['l10n_be_variant'] = 'F02CMS'
 
-    def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, warnings=None, order_by=True):
+    def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, offset=None, limit=None, warnings=None, order_by=True):
         """
         - Include non intrastat countries in F01DGS and F02CMS report
 
@@ -75,7 +75,7 @@ class AccountIntrastatServicesBeReportHandler(models.AbstractModel):
                             query_params['commodity_code'] = SQL("concat(code.code, 'CN')")
                         break
                 query = super()._get_intrastat_report_query(
-                    report, options, current_groupby, query_params,
+                    report, options, current_groupby, query_params, offset, limit,
                     warnings=warnings, order_by=order_by,
                 )
             else:
@@ -90,13 +90,15 @@ class AccountIntrastatServicesBeReportHandler(models.AbstractModel):
                 ])
                 query_params['commodity_code'] = SQL("concat(code.code, 'CN')")  # adds 'CN' to code
                 cn_lines_query = super()._get_intrastat_report_query(
-                    report, options, current_groupby, query_params,
+                    report, options, current_groupby, query_params, offset, limit,
                     warnings=warnings, order_by=order_by,
                 )
                 query = SQL('%s UNION %s', normal_lines_query, cn_lines_query)
         else:
-            query = super()._get_intrastat_report_query(report, options, current_groupby, query_params,
-                                                        warnings=warnings, order_by=order_by)
+            query = super()._get_intrastat_report_query(
+                report, options, current_groupby, query_params, offset, limit,
+                warnings=warnings, order_by=order_by
+            )
 
         if options.get('export_mode') == 'file':
             query = SQL(

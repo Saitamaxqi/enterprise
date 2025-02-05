@@ -217,6 +217,8 @@ class AccountIntrastatReportHandler(models.AbstractModel):
             report=report,
             options=options,
             current_groupby=current_groupby,
+            offset=offset,
+            limit=limit,
             warnings=warnings,
         )
         self._cr.execute(query)
@@ -251,7 +253,7 @@ class AccountIntrastatReportHandler(models.AbstractModel):
             ]
         return build_result_dict(query_res_lines)
 
-    def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, warnings=None, order_by=True):
+    def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, offset=None, limit=None, warnings=None, order_by=True):
         """ Generates query for intrastat report. """
 
         assert all(key in query_params for key in ('commodity_warning_suffix', 'product_type_condition')), (
@@ -380,7 +382,10 @@ class AccountIntrastatReportHandler(models.AbstractModel):
             groupby=SQL(', ').join(SQL(key) for key in _grouping_keys) if options['export_mode'] != 'file' and current_groupby == 'intrastat_grouping' else self._get_export_groupby_clause(),
         )
         if order_by:
-            query = SQL("\n").join([query, SQL("ORDER BY grouping_key")])
+            order_by_clause = SQL('grouping_key') if current_groupby != 'id' else SQL('account_move_line.date desc, account_move_line.move_name desc, account_move_line.id')
+            query = SQL("\n").join([query, SQL("ORDER BY %s", order_by_clause)])
+        # query tail
+        query = SQL("\n").join([query, report._get_engine_query_tail(offset, limit)])
         return query
 
     def _custom_line_postprocessor(self, report, options, lines):
@@ -642,13 +647,13 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
     _inherit = 'account.intrastat.report.handler'
     _description = 'Intrastat Goods Report Custom Handler'
 
-    def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, warnings=None, order_by=True):
+    def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, offset=None, limit=None, warnings=None, order_by=True):
         query_params = {
             **(query_params or {}),
             'product_type_condition': SQL("AND (account_move_line.product_id IS NULL OR prodt.type != 'service')"),
             'commodity_warning_suffix': SQL('goods'),
         }
-        return super()._get_intrastat_report_query(report, options, current_groupby, query_params, warnings, order_by)
+        return super()._get_intrastat_report_query(report, options, current_groupby, query_params, offset, limit, warnings, order_by)
 
 
 class AccountIntrastatServicesReportHandler(models.AbstractModel):
@@ -656,10 +661,10 @@ class AccountIntrastatServicesReportHandler(models.AbstractModel):
     _inherit = 'account.intrastat.report.handler'
     _description = 'Intrastat Services Report Custom Handler'
 
-    def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, warnings=None, order_by=True):
+    def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, offset=None, limit=None, warnings=None, order_by=True):
         query_params = {
             **(query_params or {}),
             'product_type_condition': SQL("AND prodt.type = 'service'"),
             'commodity_warning_suffix': SQL('services'),
         }
-        return super()._get_intrastat_report_query(report, options, current_groupby, query_params, warnings, order_by)
+        return super()._get_intrastat_report_query(report, options, current_groupby, query_params, offset, limit, warnings, order_by)

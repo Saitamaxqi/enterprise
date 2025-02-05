@@ -1147,3 +1147,147 @@ class TestIntrastatReport(TestAccountReportsCommon):
             options,
         )
         self.env.ref('account_intrastat.intrastat_line').user_groupby = 'intrastat_grouping, id'
+
+    def test_intrastat_report_load_more(self):
+        partner_be = self.env['res.partner'].create([
+            {
+                'name': 'BE Partner',
+                'country_id': self.env.ref('base.be').id,
+                'vat': 'BE0477472701',
+            },
+        ])
+
+        moves = self.env['account.move'].create([
+            {
+                'move_type': 'out_invoice',
+                'partner_id': partner_be.id,
+                'invoice_date': '2022-01-01',
+                'date': '2022-01-01',
+                'intrastat_country_id': self.env.ref('base.be').id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'line_1',
+                        'product_id': self.spanish_rioja.id,
+                        'intrastat_transaction_id': None,
+                        'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                        'quantity': 1.0,
+                        'account_id': self.company_data['default_account_revenue'].id,
+                        'price_unit': 80.0,
+                        'tax_ids': [],
+                    }),
+                ],
+            },
+            {
+                'move_type': 'out_invoice',
+                'partner_id': partner_be.id,
+                'invoice_date': '2022-01-02',
+                'date': '2022-01-02',
+                'intrastat_country_id': self.env.ref('base.be').id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'line_1',
+                        'product_id': self.spanish_rioja.id,
+                        'intrastat_transaction_id': None,
+                        'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                        'quantity': 1.0,
+                        'account_id': self.company_data['default_account_revenue'].id,
+                        'price_unit': 80.0,
+                        'tax_ids': [],
+                    }),
+                ],
+
+            },
+            {
+                'move_type': 'out_invoice',
+                'partner_id': partner_be.id,
+                'invoice_date': '2022-01-03',
+                'date': '2022-01-03',
+                'intrastat_country_id': self.env.ref('base.be').id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'line_1',
+                        'product_id': self.spanish_rioja.id,
+                        'intrastat_transaction_id': None,
+                        'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                        'quantity': 1.0,
+                        'account_id': self.company_data['default_account_revenue'].id,
+                        'price_unit': 50.0,
+                        'tax_ids': [],
+                    }),
+                ],
+
+            },
+        ])
+        moves.action_post()
+
+        options = self._generate_options(self.report, '2022-01-01', '2022-01-31', default_options={'unfold_all': True})
+        lines = self.report._get_lines(options)
+        self.assertLinesValues(
+            lines,
+            # 0/name,                                            12/value
+            [0,                                                  12],
+            [
+                ('Intrastat',                                 210.0),
+                ('Dispatch - BE0477472701 - 22042176 - BE',   210.0),
+                ('INV/2022/00003',                             50.0),
+                ('INV/2022/00002',                             80.0),
+                ('INV/2022/00001',                             80.0),
+            ],
+            options,
+        )
+
+        self.report.load_more_limit = 1
+        lines = self.report._get_lines(options)
+        self.assertLinesValues(
+            lines,
+            # 0/name,                                            12/value
+            [0,                                                  12],
+            [
+                ('Intrastat',                                 210.0),
+                ('Dispatch - BE0477472701 - 22042176 - BE',   210.0),
+                ('INV/2022/00003',                             50.0),
+                ('Load more...',                                 '')
+            ],
+            options,
+        )
+
+        load_more_1 = self.report.get_expanded_lines(
+            options,
+            lines[1]['id'],
+            lines[3]['groupby'],
+            lines[3]['expand_function'],
+            lines[3]['progress'],
+            lines[3]['offset'],
+            None,
+        )
+
+        self.assertLinesValues(
+            load_more_1,
+            # 0/name,                                            12/value
+            [0,                                                  12],
+            [
+                ('INV/2022/00002',                             80.0),
+                ('Load more...',                                 '')
+            ],
+            options,
+        )
+
+        load_more_2 = self.report.get_expanded_lines(
+            options,
+            lines[1]['id'],
+            load_more_1[1]['groupby'],
+            load_more_1[1]['expand_function'],
+            load_more_1[1]['progress'],
+            load_more_1[1]['offset'],
+            None,
+        )
+
+        self.assertLinesValues(
+            load_more_2,
+            # 0/name,                                            12/value
+            [0,                                                  12],
+            [
+                ('INV/2022/00001',                             80.0)
+            ],
+            options,
+        )

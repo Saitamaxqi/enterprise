@@ -110,7 +110,7 @@ class TestDEIntrastatReport(TestAccountReportsCommon):
                         <totalNetMass>798.0</totalNetMass>
                         <totalInvoicedAmount>23328.48</totalInvoicedAmount>
                         <Item>
-                            <itemNumber>1</itemNumber>
+                            <itemNumber>2</itemNumber>
                             <CN8>
                                 <CN8Code>25309050</CN8Code>
                             </CN8>
@@ -144,7 +144,7 @@ class TestDEIntrastatReport(TestAccountReportsCommon):
                         <totalNetMass>14956.0</totalNetMass>
                         <totalInvoicedAmount>936000.0</totalInvoicedAmount>
                         <Item>
-                            <itemNumber>2</itemNumber>
+                            <itemNumber>1</itemNumber>
                             <CN8>
                                 <CN8Code>88023000</CN8Code>
                             </CN8>
