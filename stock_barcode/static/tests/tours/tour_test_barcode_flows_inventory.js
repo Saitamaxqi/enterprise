@@ -1035,6 +1035,34 @@ registry.category("web_tour.tours").add("test_inventory_packaging_button", {
     ],
 });
 
+registry.category("web_tour.tours").add("test_inventory_packaging_location", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_tap_to_scan",
+            run: "click",
+        },
+        {
+            content: "Scan the packaging barcode.",
+            trigger: "input#manual_barcode",
+            run: "edit DOZENPACK001",
+        },
+        {
+            trigger: "input#manual_barcode+button",
+            run: "click",
+        },
+        {
+            content: "Check that the first location contains our product.",
+            trigger:
+                ".o_data_row > .o_data_cell[name='product_id']:contains('product1') ~ .o_data_cell[name='location_id']:contains('Section 1') ~ .o_data_cell[name='quantity']:contains('40')",
+        },
+        {
+            content: "Check that the second location contains our product.",
+            trigger:
+                ".o_data_row > .o_data_cell[name='product_id']:contains('product1') ~ .o_data_cell[name='location_id']:contains('Section 2') ~ .o_data_cell[name='quantity']:contains('80')",
+        },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_inventory_owner_scan_package", {
     steps: () => [
         {

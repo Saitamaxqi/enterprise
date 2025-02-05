@@ -281,16 +281,18 @@ class StockBarcodeController(http.Controller):
         return False
 
     def _try_open_product_location(self, barcode):
-        """ If barcode represent a product, open a list/kanban view to show all
-        the locations of this product.
+        """ If the barcode represents a product or its UoM, open a list/kanban view
+        to show all the locations of this product.
         """
         if result := request.env['product.product'].search_read(
                 [('barcode', '=', barcode)],
                 ['id', 'display_name'], limit=1):
             product_id, product_display_name = result[0]['id'], result[0]['display_name']
-        elif result := request.env['product.packaging'].search_read(
-                [('barcode', '=', barcode)],
-                ['product_id'], limit=1):
+        # Ignore UoM barcode if the UoM setting is toggled off.
+        elif result := self.env.user.has_group('uom.group_uom') and \
+             request.env['product.uom'].search_read(
+                 [('barcode', '=', barcode)],
+                 ['product_id'], limit=1):
             product_id, product_display_name = result[0]['product_id']
         if result:
             tree_view_id = request.env.ref('stock.view_stock_quant_tree').id

@@ -424,6 +424,25 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         quant = self.env['stock.quant'].search([("product_id", "=", self.product1.id)], limit=1)
         self.assertEqual(quant.inventory_quantity, 15.0)
 
+    def test_inventory_packaging_location(self):
+        """
+        Check that scanning a packaging on the barcode main screen shows the
+        location of the product contained in that packaging.
+        """
+        self.clean_access_rights()
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('uom.group_uom').id)]})
+
+        self.env['product.uom'].create({
+            'product_id': self.product1.id,
+            'uom_id': self.env.ref('uom.product_uom_dozen').id,
+            'barcode': 'DOZENPACK001',
+        })
+
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 40.0)
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf2, 80.0)
+
+        self.start_tour("/odoo/barcode", "test_inventory_packaging_location", login="admin")
+
     def test_inventory_owner_scan_package(self):
         group_owner = self.env.ref('stock.group_tracking_owner')
         group_pack = self.env.ref('stock.group_tracking_lot')
