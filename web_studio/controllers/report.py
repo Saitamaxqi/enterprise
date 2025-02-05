@@ -671,18 +671,15 @@ class WebStudioReportController(main.WebStudioController):
                 view = IrView.browse(int(view_id))
                 _copy_report_view(view)
                 self._handle_view_changes(view, changes)
-                xml_ids = xml_ids | view.model_data_id
 
         if xml_verbatim:
             for view_id, arch in xml_verbatim.items():
                 view = IrView.browse(int(view_id))
                 _copy_report_view(view)
                 view.write({"arch": arch, "active": True})
-                xml_ids = xml_ids | view.model_data_id
-
-        if report_changes or html_parts or xml_verbatim:
+        
+        if report_changes:
             xml_ids |= request.env['ir.model.data'].sudo().search(["&", ("model", "=", report._name), ("res_id", "=", report.id)])
-
 
         if xml_ids:
             xml_ids.write({"noupdate": True})

@@ -305,9 +305,6 @@ class TestReportEditorUIUnit(HttpCase):
         original_main_view_doc_arch = self.main_view_document.arch
         self.start_tour(self.tour_url, "web_studio.test_basic_report_edition", login="admin")
         self.assertEqual(self.report.name, "modified in test")
-        self.assertTrue(self.main_view_xml_id.noupdate)
-        self.assertTrue(self.main_view_document_xml_id.noupdate)
-        self.assertTrue(self.report_xml_id.noupdate)
 
         main_arch, studio_arch = get_combined_and_studio_arch(self.main_view)
 
@@ -379,7 +376,6 @@ class TestReportEditorUIUnit(HttpCase):
         self.start_tour(self.tour_url, "web_studio.test_basic_report_edition_xml", login="admin")
         self.assertTrue(self.main_view_xml_id.noupdate)
         self.assertTrue(self.main_view_document_xml_id.noupdate)
-        self.assertTrue(self.report_xml_id.noupdate)
 
         self.assertXMLEqual(self.main_view.arch, """
             <t t-name="web_studio.test_report">
