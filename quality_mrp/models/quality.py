@@ -34,15 +34,27 @@ class QualityCheck(models.Model):
                 record_without_production |= qc
         return super(QualityCheck, record_without_production)._compute_qty_line()
 
-    def _can_move_line_to_failure_location(self):
+    def _can_move_to_failure_location(self):
         self.ensure_one()
-        if self.production_id and self.quality_state == 'fail' and self.point_id.measure_on == 'move_line':
-            self.move_line_id = self.production_id.finished_move_line_ids.filtered(
-                lambda ml: ml.product_id == self.product_id
-            )
+        if self.production_id and self.quality_state == 'fail':
             return True
+        return super()._can_move_to_failure_location()
 
-        return super()._can_move_line_to_failure_location()
+    def _move_to_failure_location_operation(self, failure_location_id):
+        self.ensure_one()
+        if self.production_id and failure_location_id:
+            self.production_id.location_dest_id = failure_location_id
+            self.failure_location_id = failure_location_id
+        return super()._move_to_failure_location_operation(failure_location_id)
+
+    def _move_to_failure_location_product(self, failure_location_id):
+        self.ensure_one()
+        if self.production_id and failure_location_id:
+            self.production_id.move_finished_ids.filtered(
+                lambda m: m.product_id == self.product_id
+            ).location_dest_id = failure_location_id
+        self.failure_location_id = failure_location_id
+        return super()._move_to_failure_location_product(failure_location_id)
 
 
 class QualityAlert(models.Model):

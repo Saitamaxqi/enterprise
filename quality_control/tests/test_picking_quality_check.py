@@ -8,6 +8,34 @@ from odoo.tests import Form, tagged
 @tagged('-at_install', 'post_install')
 class TestQualityCheck(TestQualityCommon):
 
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.receipt = cls.env['stock.picking'].create({
+            'picking_type_id': cls.picking_type_id,
+            'location_id': cls.location_id,
+            'location_dest_id': cls.location_dest_id,
+        })
+
+        cls.product_move, cls.product2_move = cls.env['stock.move'].create([
+            {
+                'name': cls.product.name,
+                'product_id': cls.product.id,
+                'product_uom_qty': 2,
+                'picking_id': cls.receipt.id,
+                'location_id': cls.receipt.location_id.id,
+                'location_dest_id': cls.receipt.location_dest_id.id,
+            },
+            {
+                'name': cls.product_2.name,
+                'product_id': cls.product_2.id,
+                'product_uom_qty': 2,
+                'picking_id': cls.receipt.id,
+                'location_id': cls.receipt.location_id.id,
+                'location_dest_id': cls.receipt.location_dest_id.id,
+            }
+        ])
+
     def test_00_picking_quality_check(self):
 
         """Test quality check on incoming shipment."""
@@ -787,7 +815,7 @@ class TestQualityCheck(TestQualityCommon):
         backorder.with_user(user).button_validate()
         self.assertEqual(backorder.state, 'done')
 
-    def test_failure_location_move(self):
+    def test_failure_location_move_line(self):
         """ Quality point per quantity with failure locations list, a picking with 2 products / moves,
             fail one move with qty less than total move qty, a new move with the failing quantity is created,
             moving it to the failure location chosen
@@ -799,45 +827,17 @@ class TestQualityCheck(TestQualityCommon):
             'failure_location_ids': [Command.link(self.failure_location.id)],
         })
 
-        (self.product | self.product_2).write({
-            'is_storable': True,
-        })
-
-        receipt = self.env['stock.picking'].create({
-            'picking_type_id': self.picking_type_id,
-            'location_id': self.location_id,
-            'location_dest_id': self.location_dest_id,
-        })
-
-        product_move, product2_move = self.env['stock.move'].create([
-            {
-                'name': self.product.name,
-                'product_id': self.product.id,
-                'product_uom_qty': 2,
-                'picking_id': receipt.id,
-                'location_id': receipt.location_id.id,
-                'location_dest_id': receipt.location_dest_id.id,
-            },
-            {
-                'name': self.product_2.name,
-                'product_id': self.product_2.id,
-                'product_uom_qty': 2,
-                'picking_id': receipt.id,
-                'location_id': receipt.location_id.id,
-                'location_dest_id': receipt.location_dest_id.id,
-            }
-        ])
-        receipt.action_confirm()
-        self.assertEqual(len(receipt.check_ids), 2)
+        self.receipt.action_confirm()
+        self.assertEqual(len(self.receipt.check_ids), 2)
         # open the wizard to do the checks
-        action = receipt.check_ids.action_open_quality_check_wizard()
+        action = self.receipt.check_ids.action_open_quality_check_wizard()
         wizard = self.env[action['res_model']].with_context(action['context']).create({})
         self.assertEqual(len(wizard.check_ids), 2)
-        self.assertEqual(wizard.current_check_id.move_line_id, product_move.move_line_ids)
+        self.assertEqual(wizard.current_check_id.move_line_id, self.product_move.move_line_ids)
         # pass the first quantity
         action = wizard.do_pass()
         wizard = self.env[action['res_model']].with_context(action['context']).create({})
-        self.assertEqual(wizard.current_check_id.move_line_id, product2_move.move_line_ids)
+        self.assertEqual(wizard.current_check_id.move_line_id, self.product2_move.move_line_ids)
         action = wizard.do_fail()
         wizard = self.env[action['res_model']].with_context(action['context']).browse(action['res_id'])
 
@@ -846,12 +846,78 @@ class TestQualityCheck(TestQualityCommon):
         wizard.qty_failed = 1
         wizard.failure_location_id = self.failure_location.id
         wizard.confirm_fail()
+        self.assertEqual(len(self.receipt.check_ids), 3)
         # there should be 3 moves and 3 checks
-        self.assertEqual(len(receipt.move_ids), 3)
-        self.assertRecordValues(receipt.check_ids, [
+        self.assertEqual(len(self.receipt.move_ids), 3)
+        self.assertRecordValues(self.receipt.check_ids, [
             {'quality_state': 'pass', 'product_id': self.product.id, 'qty_line': 2, 'failure_location_id': False},
             {'quality_state': 'fail', 'product_id': self.product_2.id, 'qty_line': 1, 'failure_location_id': self.failure_location.id},
             {'quality_state': 'pass', 'product_id': self.product_2.id, 'qty_line': 1, 'failure_location_id': False},
+        ])
+
+    def test_failure_location_product(self):
+        """ Quality point per quantity with failure locations list, a picking with 2 products / moves,
+            fail one move with qty less than total move qty, a new move with the failing quantity is created,
+            moving it to the failure location chosen
+        """
+        self.env['quality.point'].create({
+            'picking_type_ids': [Command.link(self.picking_type_id)],
+            'measure_on': 'product',
+            'product_ids': [Command.link(self.product_2.id)],
+            'test_type_id': self.env.ref('quality_control.test_type_passfail').id,
+            'failure_location_ids': [Command.link(self.failure_location.id)],
+        })
+
+        self.receipt.action_confirm()
+        self.assertEqual(len(self.receipt.check_ids), 1)
+        # open the wizard to do the checks
+        action = self.receipt.check_ids.action_open_quality_check_wizard()
+        wizard = self.env[action['res_model']].with_context(action['context']).create({})
+        self.assertEqual(len(wizard.check_ids), 1)
+        self.assertEqual(wizard.check_ids.product_id, self.product_2)
+        action = wizard.do_fail()
+        wizard = self.env[action['res_model']].with_context(action['context']).browse(action['res_id'])
+
+        wizard.failure_location_id = self.failure_location.id
+        wizard.confirm_fail()
+        # there should be 3 moves and 3 checks
+        self.assertRecordValues(self.receipt.check_ids, [
+            {'quality_state': 'fail', 'product_id': self.product_2.id, 'failure_location_id': self.failure_location.id},
+        ])
+        self.assertRecordValues(self.receipt.move_ids, [
+            {'product_id': self.product.id, 'location_dest_id': self.receipt.location_dest_id.id},
+            {'product_id': self.product_2.id, 'location_dest_id': self.failure_location.id},
+        ])
+
+    def test_failure_location_operation(self):
+        """ Quality point per quantity with failure locations list, a picking with 2 products / moves,
+            fail one move with qty less than total move qty, a new move with the failing quantity is created,
+            moving it to the failure location chosen
+        """
+        self.env['quality.point'].create({
+            'picking_type_ids': [Command.link(self.picking_type_id)],
+            'measure_on': 'operation',
+            'test_type_id': self.env.ref('quality_control.test_type_passfail').id,
+            'failure_location_ids': [Command.link(self.failure_location.id)],
+        })
+
+        self.receipt.action_confirm()
+        self.assertEqual(len(self.receipt.check_ids), 1)
+        # open the wizard to do the checks
+        action = self.receipt.check_ids.action_open_quality_check_wizard()
+        wizard = self.env[action['res_model']].with_context(action['context']).create({})
+        self.assertEqual(len(wizard.check_ids), 1)
+        action = wizard.do_fail()
+        wizard = self.env[action['res_model']].with_context(action['context']).browse(action['res_id'])
+
+        # only fail one qty of the two
+        wizard.failure_location_id = self.failure_location.id
+        wizard.confirm_fail()
+        self.assertEqual(len(self.receipt.move_ids), 2)
+        self.assertEqual(self.receipt.location_dest_id, self.failure_location)
+        self.assertEqual(self.receipt.move_ids.location_dest_id, self.failure_location)
+        self.assertRecordValues(self.receipt.check_ids, [
+            {'quality_state': 'fail', 'product_id': False, 'picking_id': self.receipt.id, 'failure_location_id': self.failure_location.id},
         ])
 
     def test_qp_with_product_ctg(self):

@@ -66,11 +66,6 @@ class QualityPoint(models.Model):
         for point in self:
             point.is_lot_tested_fractionally = point.testing_percentage_within_lot < 100
 
-    def _compute_show_failure_location(self):
-        super()._compute_show_failure_location()
-        for point in self:
-            point.show_failure_location = point.show_failure_location and point.measure_on == 'move_line'
-
     def _compute_standard_deviation_and_average(self):
         # The variance and mean are computed by the Welford’s method and used the Bessel's
         # correction because are working on a sample.
@@ -433,11 +428,11 @@ class QualityCheck(models.Model):
             self.spreadsheet_id.unlink()
         return super().unlink()
 
-    def _can_move_line_to_failure_location(self):
+    def _can_move_to_failure_location(self):
         self.ensure_one()
-        return self.quality_state == 'fail' and self.point_id.measure_on == 'move_line' and self.move_line_id and self.picking_id
+        return self.quality_state == 'fail' and self.picking_id
 
-    def _move_line_to_failure_location(self, failure_location_id, failed_qty=None):
+    def _move_to_failure_location(self, failure_location_id, failed_qty=None):
         """ This function is used to fail move lines and can optionally:
              - split it into failed and passed qties (i.e. 2 moves w/1 check each)
              - send the failed qty to a failure location
@@ -445,40 +440,66 @@ class QualityCheck(models.Model):
         :param failed_qty: qty failed on check, defaults to None, if None all quantity of the move is failed
         """
         for check in self:
-            if not check._can_move_line_to_failure_location():
+            if not check._can_move_to_failure_location():
                 continue
-            failed_qty = failed_qty or check.move_line_id.quantity
-            move_line = check.move_line_id
-            move = move_line.move_id
-            move.picked = True
-            dest_location = failure_location_id or move_line.location_dest_id.id
-            if failed_qty == move_line.quantity:
-                move_line.location_dest_id = dest_location
-                if move_line.quantity == move.quantity:
-                    move.location_dest_id = dest_location
-                return
-            move_line.quantity -= min(failed_qty, move_line.quantity)
-            failed_move_line = move_line.with_context(default_check_ids=None, no_checks=True).copy({
-                'location_dest_id': dest_location,
-                'quantity': failed_qty,
-            })
-            move.copy({
-                'location_dest_id': dest_location,
-                'move_dest_ids': move.move_dest_ids,
-                'move_orig_ids': move.move_orig_ids,
-                'product_uom_qty': 0,
-                'state': 'assigned',
-                'move_line_ids': [Command.link(failed_move_line.id)],
-                'picked': True,
-            })
-            # switch the checks, check in self should always be the failed one,
-            # new check linked to original move line will be passed check
-            new_check = self.create(failed_move_line._get_check_values(check.point_id))
-            check.move_line_id = failed_move_line
-            check.failure_location_id = dest_location
-            new_check.move_line_id = move_line
-            new_check.qty_tested = 0
-            new_check.do_pass()
+            match check.measure_on:
+                case 'operation':
+                    if not failure_location_id:
+                        return
+                    check._move_to_failure_location_operation(failure_location_id)
+                case 'product':
+                    if not failure_location_id:
+                        return
+                    check._move_to_failure_location_product(failure_location_id)
+                case 'move_line':
+                    failed_qty = failed_qty or check.move_line_id.quantity
+                    move_line = check.move_line_id
+                    move = move_line.move_id
+                    move.picked = True
+                    dest_location = failure_location_id or move_line.location_dest_id.id
+                    if failed_qty == move_line.quantity:
+                        move_line.location_dest_id = dest_location
+                        if move_line.quantity == move.quantity:
+                            move.location_dest_id = dest_location
+                        return
+                    move_line.quantity -= min(failed_qty, move_line.quantity)
+                    failed_move_line = move_line.with_context(default_check_ids=None, no_checks=True).copy({
+                        'location_dest_id': dest_location,
+                        'quantity': failed_qty,
+                    })
+                    move.copy({
+                        'location_dest_id': dest_location,
+                        'move_dest_ids': move.move_dest_ids,
+                        'move_orig_ids': move.move_orig_ids,
+                        'product_uom_qty': 0,
+                        'state': 'assigned',
+                        'move_line_ids': [Command.link(failed_move_line.id)],
+                        'picked': True,
+                    })
+                    # switch the checks, check in self should always be the failed one,
+                    # new check linked to original move line will be passed check
+                    new_check = check.create(failed_move_line._get_check_values(check.point_id))
+                    check.move_line_id = failed_move_line
+                    new_check.move_line_id = move_line
+                    new_check.qty_tested = 0
+                    new_check.do_pass()
+                    check.failure_location_id = dest_location
+                case _:
+                    return
+
+    def _move_to_failure_location_operation(self, failure_location_id):
+        self.ensure_one()
+        if self.picking_id and failure_location_id:
+            self.picking_id.location_dest_id = failure_location_id
+            self.failure_location_id = failure_location_id
+
+    def _move_to_failure_location_product(self, failure_location_id):
+        self.ensure_one()
+        if self.picking_id and failure_location_id:
+            self.picking_id.move_ids.filtered(
+                lambda m: m.product_id == self.product_id
+            ).location_dest_id = failure_location_id
+        self.failure_location_id = failure_location_id
 
     def _get_check_action_name(self):
         self.ensure_one()

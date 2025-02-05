@@ -72,8 +72,7 @@ class QualityCheckWizard(models.TransientModel):
 
     def confirm_measure(self):
         self.current_check_id.do_measure()
-        if self.measure_on == 'move_line':
-            self.current_check_id._move_line_to_failure_location(self.failure_location_id.id, self.qty_failed)
+        self.current_check_id._move_to_failure_location(self.failure_location_id.id, self.qty_failed)
         return self.action_generate_next_window()
 
     def do_pass(self):
@@ -83,8 +82,9 @@ class QualityCheckWizard(models.TransientModel):
         return self.action_generate_next_window()
 
     def do_fail(self):
-        if self.measure_on == 'move_line' and \
-                not (self.product_tracking == 'serial' and not self.potential_failure_location_ids):
+        if self.potential_failure_location_ids:
+            return self.show_failure_message()
+        if self.measure_on == 'move_line' and self.product_tracking != 'serial':
             return self.show_failure_message()
         if self.failure_message or self.warning_message:
             self.current_check_id.do_fail()
@@ -93,8 +93,7 @@ class QualityCheckWizard(models.TransientModel):
 
     def confirm_fail(self):
         self.current_check_id.do_fail()
-        if self.measure_on == 'move_line':
-            self.current_check_id._move_line_to_failure_location(self.failure_location_id.id, self.qty_failed)
+        self.current_check_id._move_to_failure_location(self.failure_location_id.id, self.qty_failed)
         return self.action_generate_next_window()
 
     def action_generate_next_window(self):
@@ -138,8 +137,12 @@ class QualityCheckWizard(models.TransientModel):
 
     def show_failure_message(self):
         self.qty_failed = self.qty_line
+        if self.measure_on == 'operation':
+            name = _('Quality Check Failed'),
+        else:
+            name = _('Quality Check Failed for %(product_name)s', product_name=self.product_id.name),
         return {
-            'name': _('Quality Check Failed for %(product_name)s', product_name=self.product_id.name),
+            'name': name,
             'type': 'ir.actions.act_window',
             'res_model': 'quality.check.wizard',
             'views': [(self.env.ref('quality_control.quality_check_wizard_form_failure').id, 'form')],

@@ -69,7 +69,10 @@ class QualityPoint(models.Model):
     note = fields.Html('Note')
     reason = fields.Html('Cause')
     failure_location_ids = fields.Many2many('stock.location', string="Failure Locations", domain="[('usage', '=', 'internal')]",
-                            help="If a quality check fails, a location is chosen from this list for each failed quantity.")
+                            help="If quality check fails, a destination location is chosen from this list for\n"
+                                "- each failed specific product quantity if control is per quantity\n /"
+                                "- all quantities of a product if control is per product\n /"
+                                "- all quantities of products in the operation if control is per operation")
     show_failure_location = fields.Boolean(compute='_compute_show_failure_location')
 
     def _compute_check_count(self):

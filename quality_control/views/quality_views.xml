@@ -229,8 +229,8 @@
                             <field name="move_line_id" invisible="1"/>
                             <field name="product_tracking" invisible="1"/>
                             <field name="is_lot_tested_fractionally" invisible="1"/>
-                            <field name="lot_name" invisible="product_tracking == 'none' or not show_lot_text or measure_on != 'move_line' or not move_line_id"/>
-                            <field name="lot_id" invisible="product_tracking == 'none' or show_lot_text or measure_on != 'move_line'"/>
+                            <field name="lot_name" invisible="product_tracking == 'none' or not show_lot_text or not move_line_id"/>
+                            <field name="lot_id" invisible="product_tracking == 'none' or show_lot_text"/>
                             <label for="qty_line" invisible="not move_line_id or quality_state == 'fail'"/>
                             <label for="qty_line" invisible="not move_line_id or quality_state != 'fail'" string="Failed Quantity"/>
                             <div class="o_row" invisible="not move_line_id">
