@@ -1,25 +1,25 @@
-import { Component, useSubEnv, xml } from "@odoo/owl";
 import { getFixture } from "@odoo/hoot";
 import { waitFor } from "@odoo/hoot-dom";
+import { Component, useSubEnv, xml } from "@odoo/owl";
 
-import { MainComponentsContainer } from "@web/core/main_components_container";
-import { registry } from "@web/core/registry";
 import { getMockEnv } from "@web/../tests/_framework/env_test_helpers";
+import { parseViewProps } from "@web/../tests/_framework/view_test_helpers";
 import {
     contains,
+    makeMockEnv,
     MockServer,
     mountWithCleanup,
-    makeMockEnv,
     onRpc,
 } from "@web/../tests/web_test_helpers";
-import { getDefaultConfig } from "@web/views/view";
-import { parseViewProps } from "@web/../tests/_framework/view_test_helpers";
-import { useService } from "@web/core/utils/hooks";
 import { useOwnDebugContext } from "@web/core/debug/debug_context";
+import { MainComponentsContainer } from "@web/core/main_components_container";
+import { registry } from "@web/core/registry";
+import { useService } from "@web/core/utils/hooks";
+import { getDefaultConfig } from "@web/views/view";
 
-import { useStudioServiceAsReactive } from "@web_studio/studio_service";
-import { ViewEditor } from "@web_studio/client_action/view_editor/view_editor";
 import { EditionFlow } from "@web_studio/client_action/editor/edition_flow";
+import { ViewEditor } from "@web_studio/client_action/view_editor/view_editor";
+import { useStudioServiceAsReactive } from "@web_studio/studio_service";
 
 const serviceRegistry = registry.category("services");
 

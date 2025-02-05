@@ -10,31 +10,24 @@ test("use stored menus, and update on load_menus return", async () => {
     onRpc("/web/webclient/load_menus", () => def);
     defineMenus([
         {
-            id: "root",
-            name: "root",
-            appID: "root",
-            children: [
-                {
-                    id: 1,
-                    appID: 1,
-                    actionID: 1,
-                    xmlid: "",
-                    name: "Partners",
-                    children: [],
-                    webIconData: "",
-                    webIcon: "bloop,bloop",
-                },
-                {
-                    id: 2,
-                    appID: 2,
-                    actionID: 2,
-                    xmlid: "",
-                    name: "CRM",
-                    children: [],
-                    webIconData: "",
-                    webIcon: "bloop,bloop",
-                },
-            ],
+            id: 1,
+            appID: 1,
+            actionID: 1,
+            xmlid: "",
+            name: "Partners",
+            children: [],
+            webIconData: "",
+            webIcon: "bloop,bloop",
+        },
+        {
+            id: 2,
+            appID: 2,
+            actionID: 2,
+            xmlid: "",
+            name: "CRM",
+            children: [],
+            webIconData: "",
+            webIcon: "bloop,bloop",
         },
     ]);
     // Initial Stored Values
@@ -51,7 +44,6 @@ test("use stored menus, and update on load_menus return", async () => {
             webIconData: "",
             webIcon: "bloop,bloop",
         },
-        99999: { id: 99999, appID: 1, children: [], name: "App0" },
         root: { id: "root", name: "root", appID: "root", children: [1] },
     });
     const webClient = await mountWebClient({ WebClient: WebClientEnterprise });
@@ -82,12 +74,6 @@ test("use stored menus, and update on load_menus return", async () => {
             webIcon: "bloop,bloop",
             webIconData: "",
             xmlid: "",
-        },
-        99999: {
-            appID: 1,
-            children: [],
-            id: 99999,
-            name: "App0",
         },
         root: {
             appID: "root",

@@ -1,11 +1,8 @@
-import { expect, test, describe } from "@odoo/hoot";
-import { animationFrame } from "@odoo/hoot-mock";
-import {
-    mountWithCleanup,
-    contains,
-} from "@web/../tests/web_test_helpers";
-import { IconCreator } from "@web_studio/client_action/icon_creator/icon_creator";
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { describe, expect, test } from "@odoo/hoot";
+import { animationFrame } from "@odoo/hoot-mock";
+import { contains, mountWithCleanup } from "@web/../tests/web_test_helpers";
+import { IconCreator } from "@web_studio/client_action/icon_creator/icon_creator";
 
 describe.current.tags("desktop");
 
@@ -30,7 +27,7 @@ test("icon creator: with initial web icon data", async () => {
                     type: "custom_icon",
                 });
             },
-        }
+        },
     });
     await animationFrame();
 
@@ -41,7 +38,7 @@ test("icon creator: with initial web icon data", async () => {
     await contains(".o_web_studio_upload a").click();
 
     expect.verifySteps(["icon-changed"]);
-    expect(".o_web_studio_upload input").toHaveAttribute("accept", "image/png")
+    expect(".o_web_studio_upload input").toHaveAttribute("accept", "image/png");
 });
 
 test("icon creator: without initial web icon data", async () => {
@@ -53,7 +50,7 @@ test("icon creator: without initial web icon data", async () => {
             iconClass: "fa fa-heart",
             type: "custom_icon",
             onIconChange: () => {},
-        }
+        },
     });
 
     expect(".o_app_icon").toHaveStyle({

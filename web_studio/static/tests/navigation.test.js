@@ -1,27 +1,27 @@
-import { expect, test, describe } from "@odoo/hoot";
-import { click, waitFor, press } from "@odoo/hoot-dom";
+import { describe, expect, test } from "@odoo/hoot";
+import { click, press, waitFor } from "@odoo/hoot-dom";
 import { animationFrame, Deferred } from "@odoo/hoot-mock";
+import { Component, xml } from "@odoo/owl";
 import {
-    getService,
-    defineMenus,
-    onRpc,
-    serverState,
-    patchWithCleanup,
-    mountWithCleanup,
-    defineActions,
-    stepAllNetworkCalls,
     contains,
+    defineActions,
+    defineMenus,
+    getService,
+    mountWithCleanup,
+    onRpc,
+    patchWithCleanup,
+    serverState,
+    stepAllNetworkCalls,
 } from "@web/../tests/web_test_helpers";
+import { browser } from "@web/core/browser/browser";
 import { user } from "@web/core/user";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 import { StudioClientAction } from "@web_studio/client_action/studio_client_action";
-import { ListEditorRenderer } from "@web_studio/client_action/view_editor/editors/list/list_editor_renderer";
-import { defineStudioEnvironment } from "./studio_tests_context";
-import { browser } from "@web/core/browser/browser";
-import { FormEditorRenderer } from "@web_studio/client_action/view_editor/editors/form/form_editor_renderer/form_editor_renderer";
-import { ViewEditor } from "@web_studio/client_action/view_editor/view_editor";
-import { Component, xml } from "@odoo/owl";
 import { FormEditorCompiler } from "@web_studio/client_action/view_editor/editors/form/form_editor_compiler";
+import { FormEditorRenderer } from "@web_studio/client_action/view_editor/editors/form/form_editor_renderer/form_editor_renderer";
+import { ListEditorRenderer } from "@web_studio/client_action/view_editor/editors/list/list_editor_renderer";
+import { ViewEditor } from "@web_studio/client_action/view_editor/view_editor";
+import { defineStudioEnvironment } from "./studio_tests_context";
 
 describe.current.tags("desktop");
 
@@ -120,26 +120,20 @@ test("navigation in Studio with act_window", async () => {
     await click(".o_app[data-menu-xmlid=app_1]");
     await waitFor(".o_kanban_view");
 
-    expect.verifySteps(
-    [
+    expect.verifySteps([
         "/web/webclient/translations",
         "/web/webclient/load_menus",
         "/mail/data",
         "/web/action/load",
         "get_views",
         "web_search_read",
-        "has_group"
+        "has_group",
     ]);
 
     await contains(".o_web_studio_navbar_item button").click();
     await waitFor(".o_web_studio_editor_manager .o_web_studio_kanban_view_editor");
 
-    expect.verifySteps(
-    [
-        "get_views",
-        "/web_studio/get_studio_view_arch",
-        "web_search_read",
-    ]);
+    expect.verifySteps(["get_views", "/web_studio/get_studio_view_arch", "web_search_read"]);
 
     expect(".o_kanban_record:contains(Yop)").toHaveCount(1);
 
@@ -148,8 +142,7 @@ test("navigation in Studio with act_window", async () => {
     await click(".o_app[data-menu-xmlid=app_2]");
     await waitFor(".o_list_view");
 
-    expect.verifySteps(
-    [
+    expect.verifySteps([
         "/web/action/load",
         "/web/action/load_breadcrumbs",
         "get_views",
@@ -160,12 +153,7 @@ test("navigation in Studio with act_window", async () => {
     await click(".o_web_studio_leave");
     await animationFrame();
 
-    expect.verifySteps(
-    [
-        "/web/action/load",
-        "get_views",
-        "web_search_read",
-    ]);
+    expect.verifySteps(["/web/action/load", "get_views", "web_search_read"]);
 
     expect(".o_web_studio_editor_manager").toHaveCount(0);
     expect(".o_list_view").toHaveCount(1);
@@ -177,7 +165,7 @@ test("keep action context when leaving Studio", async () => {
     onRpc("/web/action/load", async (request) => {
         nbLoadAction++;
         if (nbLoadAction === 3) {
-            const res = await request.json()
+            const res = await request.json();
             expect(res.params.context.active_id).toBe(1);
         }
     });
@@ -206,13 +194,15 @@ test("user context is unpolluted when entering studio in error", async () => {
     patchWithCleanup(StudioClientAction.prototype, {
         setup() {
             throw new Error("Boom");
-        }
+        },
     });
 
     onRpc("partner", "get_views", async ({ kwargs }) => {
         const context = kwargs.context;
         const options = kwargs.options;
-        expect.step(`get_views, context studio: "${context.studio}", option studio: "${options.studio}"`)
+        expect.step(
+            `get_views, context studio: "${context.studio}", option studio: "${options.studio}"`
+        );
     });
 
     await mountWithCleanup(WebClientEnterprise);
@@ -236,7 +226,9 @@ test("user context is not polluted when getting views", async () => {
     onRpc("partner", "get_views", async ({ kwargs }) => {
         const context = kwargs.context;
         const options = kwargs.options;
-        expect.step(`get_views, context studio: "${context.studio}", option studio: "${options.studio}"`)
+        expect.step(
+            `get_views, context studio: "${context.studio}", option studio: "${options.studio}"`
+        );
     });
 
     onRpc("/web_studio/get_studio_action", async () => {
@@ -249,8 +241,8 @@ test("user context is not polluted when getting views", async () => {
         };
     });
 
-    onRpc("web_search_read", async (params)  => {
-        expect.step(`web_search_read, context studio: "${params.kwargs.context.studio}"`)
+    onRpc("web_search_read", async (params) => {
+        expect.step(`web_search_read, context studio: "${params.kwargs.context.studio}"`);
     });
 
     await mountWithCleanup(WebClientEnterprise);
@@ -291,7 +283,7 @@ test("error bubbles up if first rendering", async () => {
     patchWithCleanup(ListEditorRenderer.prototype, {
         setup() {
             throw new Error("Boom");
-        }
+        },
     });
 
     await mountWithCleanup(WebClientEnterprise);
@@ -310,25 +302,29 @@ test("error bubbles up if first rendering", async () => {
 test("error when new app's view is invalid", async () => {
     expect.errors(1);
 
-    defineActions([{
-        xmlid: "testAction",
-        id: 99,
-        type: "ir.actions.act_window",
-        res_model: "partner",
-        views: [[false, "list"]],
-        help: "",
-        name: "test action",
-        group_ids: [],
-    }])
+    defineActions([
+        {
+            xmlid: "testAction",
+            id: 99,
+            type: "ir.actions.act_window",
+            res_model: "partner",
+            views: [[false, "list"]],
+            help: "",
+            name: "test action",
+            group_ids: [],
+        },
+    ]);
 
-    defineMenus([{
-        id: 99,
-        children: [],
-        actionID: 99,
-        xmlid: "testMenu",
-        name: "test",
-        appID: 99,
-    }])
+    defineMenus([
+        {
+            id: 99,
+            children: [],
+            actionID: 99,
+            xmlid: "testMenu",
+            name: "test",
+            appID: 99,
+        },
+    ]);
 
     onRpc("/web_studio/create_new_app", async () => {
         return { menu_id: 99, action_id: 99 };
@@ -368,7 +364,9 @@ test("open same record when leaving form", async () => {
     await contains(".o_web_studio_navbar_item button").click();
     await waitFor(".o_web_studio_editor_manager .o_web_studio_form_view_editor");
 
-    expect(".o_form_view .o_field_widget[data-studio-xpath='/form[1]/field[1]'] span").toHaveText("Applejack");
+    expect(".o_form_view .o_field_widget[data-studio-xpath='/form[1]/field[1]'] span").toHaveText(
+        "Applejack"
+    );
 
     await click(".o_web_studio_leave");
     await animationFrame();
@@ -419,13 +417,15 @@ test("kanban in studio should always ignore sample data", async () => {
     await contains(".o_web_studio_navbar_item button").click();
     await waitFor(".o_web_studio_editor_manager");
 
-    expect(".o_web_studio_kanban_view_editor .o_kanban_record:not(.o_kanban_ghost):not(.o_kanban_demo)").toHaveCount(1);
+    expect(
+        ".o_web_studio_kanban_view_editor .o_kanban_record:not(.o_kanban_ghost):not(.o_kanban_demo)"
+    ).toHaveCount(1);
     expect(".o_web_studio_kanban_view_editor .o_view_nocontent").toHaveCount(0);
 });
 
 test("entering a kanban keeps the user's domain", async () => {
     onRpc("web_search_read", async (params) => {
-        expect.step(`${params.method}: ${JSON.stringify(params.kwargs.domain)}`)
+        expect.step(`${params.method}: ${JSON.stringify(params.kwargs.domain)}`);
     });
 
     await mountWithCleanup(WebClientEnterprise);
@@ -438,23 +438,17 @@ test("entering a kanban keeps the user's domain", async () => {
 
     await click(".o_searchview_dropdown_toggler");
 
-    expect.verifySteps([
-        `web_search_read: []`,
-    ]);
+    expect.verifySteps([`web_search_read: []`]);
 
     await contains(".o_filter_menu .o_menu_item:contains(apple)").click();
     await animationFrame();
 
-    expect.verifySteps([
-        `web_search_read: [["name","ilike","Apple"]]`,
-    ]);
+    expect.verifySteps([`web_search_read: [["name","ilike","Apple"]]`]);
 
     await click(".o_web_studio_navbar_item button");
     await waitFor(".o_web_studio_editor_manager");
 
-    expect.verifySteps([
-        `web_search_read: [["name","ilike","Apple"]]`,
-    ]);
+    expect.verifySteps([`web_search_read: [["name","ilike","Apple"]]`]);
 
     expect(".o_list_table .o_data_row").toHaveCount(1);
 });
@@ -481,7 +475,9 @@ test("open Studio with editable form view and check context propagation", async 
     await click(".o_web_studio_form_view_editor .o_field_one2many");
     await animationFrame();
 
-    await click(`.o_web_studio_form_view_editor .o_field_one2many .o_web_studio_editX2Many[data-type="form"]`);
+    await click(
+        `.o_web_studio_form_view_editor .o_field_one2many .o_web_studio_editX2Many[data-type="form"]`
+    );
     await animationFrame();
 
     expect(".o_web_studio_editor_manager .o_web_studio_form_view_editor").toHaveCount(1);
@@ -532,7 +528,7 @@ test("command palette inside studio with error", async () => {
     await click(".o_web_studio_navbar_item button");
     await waitFor(".o_studio_home_menu");
 
-    await press(["S","e","t","t"]);
+    await press(["S", "e", "t", "t"]);
     await animationFrame();
     await press("Enter");
     await animationFrame();
@@ -545,23 +541,23 @@ test("leaving studio with a pending rendering in Studio", async () => {
 
     let dummyclass = "first-pass";
     class Dummy extends Component {
-        static template = xml`<div class="dummy" t-att-class="classes" />`
+        static template = xml`<div class="dummy" t-att-class="classes" />`;
         static props = {};
         get classes() {
             return dummyclass;
         }
-    };
+    }
 
     patchWithCleanup(FormEditorRenderer, {
-        components: {...FormEditorRenderer.components, Dummy}
+        components: { ...FormEditorRenderer.components, Dummy },
     });
 
     patchWithCleanup(FormEditorCompiler.prototype, {
         compile() {
             const el = super.compile(...arguments);
-            el.querySelector(".o_form_renderer").append(el.ownerDocument.createElement("Dummy"))
+            el.querySelector(".o_form_renderer").append(el.ownerDocument.createElement("Dummy"));
             return el;
-        }
+        },
     });
 
     let vem;
@@ -612,12 +608,7 @@ test("leaving studio with a pending rendering in Studio", async () => {
     expect(".o_web_studio_editor_manager").toHaveCount(0);
     expect(".dummy").toHaveCount(0);
 
-    expect.verifySteps([
-        "/web/action/load",
-        "web_read",
-        "get_views",
-        "web_read",
-    ]);
+    expect.verifySteps(["/web/action/load", "web_read", "get_views", "web_read"]);
 });
 
 test("auto-save feature works in studio (not editing a view)", async () => {
@@ -630,7 +621,7 @@ test("auto-save feature works in studio (not editing a view)", async () => {
                 [false, "list"],
                 [false, "form"],
             ],
-        }
+        };
     });
 
     onRpc("web_save", async (params) => {
@@ -654,9 +645,7 @@ test("auto-save feature works in studio (not editing a view)", async () => {
     await click(".o_web_studio_leave");
     await animationFrame();
 
-    expect.verifySteps([
-        'web_save: base.automation: [[],{"name":"created base automation"}]',
-    ]);
+    expect.verifySteps(['web_save: base.automation: [[],{"name":"created base automation"}]']);
     expect(".o_studio").toHaveCount(0);
     expect(".o_kanban_view").toHaveCount(1);
 });
@@ -682,7 +671,7 @@ test("load with active_id active_ids", async () => {
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
 
-    expect.verifySteps(["onchange"])
+    expect.verifySteps(["onchange"]);
 });
 
 test("can edit ir.actions.act_window without id", async () => {
@@ -714,7 +703,9 @@ test("can edit ir.actions.act_window without id", async () => {
 
     await click(".o_menu_sections a:contains(Views)");
     await animationFrame();
-    expect(".o_web_studio_thumbnail_item:not(.disabled.pe-none):has(img[data-alt='View Form'])").toHaveCount(1);
+    expect(
+        ".o_web_studio_thumbnail_item:not(.disabled.pe-none):has(img[data-alt='View Form'])"
+    ).toHaveCount(1);
     expect(".o_web_studio_thumbnail_item.pe-none").toHaveCount(10);
 
     await click(".o_web_studio_leave");

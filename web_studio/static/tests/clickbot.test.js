@@ -1,14 +1,10 @@
-import { expect, test, describe } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame, Deferred } from "@odoo/hoot-mock";
-import {
-    patchWithCleanup,
-    mountWithCleanup,
-    onRpc,
-} from "@web/../tests/web_test_helpers";
-import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
-import { defineStudioEnvironment } from "./studio_tests_context";
+import { mountWithCleanup, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
 import { SUCCESS_SIGNAL } from "@web/webclient/clickbot/clickbot";
+import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
+import { defineStudioEnvironment } from "./studio_tests_context";
 
 describe.current.tags("desktop").timeout(10000);
 

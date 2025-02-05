@@ -1,24 +1,25 @@
-import { expect, test, describe, globals } from "@odoo/hoot";
-import { press, edit, setInputFiles } from "@odoo/hoot-dom";
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { describe, expect, globals, test } from "@odoo/hoot";
+import { edit, press, setInputFiles } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import {
-    onRpc,
-    serverState,
-    mountWithCleanup,
     contains,
     mockService,
+    mountWithCleanup,
+    onRpc,
+    serverState,
 } from "@web/../tests/web_test_helpers";
 import { AppCreator } from "@web_studio/client_action/app_creator/app_creator";
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 
-const sampleIconUrl = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z9DwHwAGBQKA3H7sNwAAAABJRU5ErkJggg==";
+const sampleIconUrl =
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z9DwHwAGBQKA3H7sNwAAAABJRU5ErkJggg==";
 
 describe.current.tags("desktop");
 
 defineMailModels();
 
 test("app creator: standard flow with model creation", async () => {
-    expect.assertions(27)
+    expect.assertions(27);
 
     onRpc("/web_studio/create_new_app", async (request) => {
         const { params } = await request.json();
@@ -26,20 +27,29 @@ test("app creator: standard flow with model creation", async () => {
         expect(params.menu_name).toBe("Petite Perruche");
         expect(params.model_id).toBe(false);
         expect(params.model_choice).toBe("new");
-        expect(params.model_options).toEqual(["use_partner", "use_sequence", "use_mail", "use_active"]);
+        expect(params.model_options).toEqual([
+            "use_partner",
+            "use_sequence",
+            "use_mail",
+            "use_active",
+        ]);
         return true;
     });
 
     onRpc("ir.attachment", "read", async () => {
-        return [{datas: sampleIconUrl}];
+        return [{ datas: sampleIconUrl }];
     });
 
-    onRpc("/web/binary/upload_attachment", async (request) => {
-        expect.step("upload_attachment");
-        return [{ "id": 666 }];
-    }, {
-        pure: true,
-    });
+    onRpc(
+        "/web/binary/upload_attachment",
+        async (request) => {
+            expect.step("upload_attachment");
+            return [{ id: 666 }];
+        },
+        {
+            pure: true,
+        }
+    );
 
     mockService("ui", {
         block: () => expect.step("UI blocked"),
@@ -59,8 +69,8 @@ test("app creator: standard flow with model creation", async () => {
 
     expect(".o_web_studio_app_creator_name").toHaveCount(1);
     expect(".o_web_studio_icon_creator .o_web_studio_selectors").toHaveCount(1);
-    expect(".o_app_icon").toHaveStyle({backgroundColor: "rgb(255, 255, 255)"});
-    expect(".o_app_icon .fa-home").toHaveStyle({color: "rgb(0, 206, 179)"});
+    expect(".o_app_icon").toHaveStyle({ backgroundColor: "rgb(255, 255, 255)" });
+    expect(".o_app_icon .fa-home").toHaveStyle({ color: "rgb(0, 206, 179)" });
 
     await contains(".o_web_studio_selector_background > button").click();
 
@@ -84,7 +94,9 @@ test("app creator: standard flow with model creation", async () => {
     await setInputFiles(file);
     await animationFrame();
 
-    expect(".o_web_studio_uploaded_image").toHaveStyle({backgroundImage: `url("data:image/png;base64,${sampleIconUrl}")`});
+    expect(".o_web_studio_uploaded_image").toHaveStyle({
+        backgroundImage: `url("data:image/png;base64,${sampleIconUrl}")`,
+    });
     await contains(".o_web_studio_app_creator_next").click();
     expect(".o_web_studio_field_warning").toHaveCount(1);
 
@@ -120,12 +132,7 @@ test("app creator: standard flow with model creation", async () => {
     await contains("input[name='use_partner']").click();
 
     await contains(".o_web_studio_model_configurator_next").click();
-    expect.verifySteps([
-        "upload_attachment",
-        "UI blocked",
-        "new-app-created",
-        "UI unblocked",
-    ]);
+    expect.verifySteps(["upload_attachment", "UI blocked", "new-app-created", "UI unblocked"]);
 });
 
 test("app creator: has 'lines' options to auto-create a one2many", async () => {
@@ -142,13 +149,13 @@ test("app creator: has 'lines' options to auto-create a one2many", async () => {
     });
 
     await mountWithCleanup(AppCreator, {
-        props: { onNewAppCreated: () => true }
+        props: { onNewAppCreated: () => true },
     });
     await animationFrame();
 
     await contains(".o_web_studio_app_creator_next").click();
 
-    await contains("input[name='appName']").click()
+    await contains("input[name='appName']").click();
     await edit("testApp");
     await animationFrame();
 
@@ -160,10 +167,16 @@ test("app creator: has 'lines' options to auto-create a one2many", async () => {
 
     await contains(".o_web_studio_app_creator_next").click();
 
-    expect(".o_web_studio_model_configurator_option input[type='checkbox'][name='lines'][id='lines']").toHaveCount(1);
-    expect("label[for='lines']").toHaveText("Lines\nAdd details to your records with an embedded list view")
+    expect(
+        ".o_web_studio_model_configurator_option input[type='checkbox'][name='lines'][id='lines']"
+    ).toHaveCount(1);
+    expect("label[for='lines']").toHaveText(
+        "Lines\nAdd details to your records with an embedded list view"
+    );
 
-    await contains(".o_web_studio_model_configurator_option input[type='checkbox'][name='lines']").click();
+    await contains(
+        ".o_web_studio_model_configurator_option input[type='checkbox'][name='lines']"
+    ).click();
     await contains(".o_web_studio_model_configurator_next").click();
 });
 
@@ -215,7 +228,7 @@ test("app creator: debug flow with existing model", async () => {
 
     await contains(".o_web_studio_app_creator_next").click();
 
-    expect.verifySteps(["name_search","create-new-app"])
+    expect.verifySteps(["name_search", "create-new-app"]);
 });
 
 test("app creator: navigate through steps using 'ENTER'", async () => {

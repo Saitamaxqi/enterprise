@@ -1,16 +1,16 @@
-import { expect, test, describe } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { edit } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import {
-    onRpc,
-    mountWithCleanup,
     contains,
-    stepAllNetworkCalls,
-    sortableDrag,
     MockServer,
+    mountWithCleanup,
+    onRpc,
+    sortableDrag,
+    stepAllNetworkCalls,
 } from "@web/../tests/web_test_helpers";
-import { defineStudioEnvironment } from "./studio_tests_context";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
+import { defineStudioEnvironment } from "./studio_tests_context";
 
 describe.current.tags("desktop");
 
@@ -36,8 +36,12 @@ test("edit menu dialog rendering", async () => {
     await contains(".o_web_edit_menu").click();
 
     expect("ul.oe_menu_editor > li").toHaveAttribute("data-item-id", "1");
-    expect("ul.oe_menu_editor > li > div button.o-web-studio-interactive-list-edit-item").toHaveCount(1);
-    expect("ul.oe_menu_editor > li > div button.o-web-studio-interactive-list-remove-item").toHaveCount(1);
+    expect(
+        "ul.oe_menu_editor > li > div button.o-web-studio-interactive-list-edit-item"
+    ).toHaveCount(1);
+    expect(
+        "ul.oe_menu_editor > li > div button.o-web-studio-interactive-list-remove-item"
+    ).toHaveCount(1);
     expect("ul.oe_menu_editor > li > ul > li").toHaveCount(2);
     expect(".js_add_menu").toHaveCount(1);
     expect(".o-web-studio-interactive-list-remove-item.disabled").toHaveCount(1);
@@ -50,11 +54,7 @@ test("edit menu dialog: create menu", async () => {
         const { params } = await request.json();
         expect(params.menu_name).toBe("AA");
         expect(params.model_choice).toBe("new");
-        expect(params.model_options).toEqual([
-            "use_sequence",
-            "use_mail",
-            "use_active",
-        ]);
+        expect(params.model_options).toEqual(["use_sequence", "use_mail", "use_active"]);
         expect(params.parent_menu_id).toBe(1);
         return {};
     });
@@ -76,17 +76,23 @@ test("edit menu dialog: create menu", async () => {
     await contains(".o_web_studio_add_menu_modal .btn-primary").click();
     expect(".o_web_studio_model_configurator input[name='use_partner']").toHaveCount(1);
 
-    await contains(".o_web_studio_model_configurator .o_web_studio_model_configurator_previous").click();
+    await contains(
+        ".o_web_studio_model_configurator .o_web_studio_model_configurator_previous"
+    ).click();
     expect(".o_web_studio_model_configurator").toHaveCount(0);
 
-    await contains(".o_web_studio_add_menu_modal .o_web_studio_menu_creator_model_choice [value='existing']").click();
+    await contains(
+        ".o_web_studio_add_menu_modal .o_web_studio_menu_creator_model_choice [value='existing']"
+    ).click();
     expect(".o_web_studio_add_menu_modal .o_record_selector").toHaveCount(1);
 
     await contains(".o_web_studio_add_menu_modal input[name='menuName']").click();
     await edit("AA");
     await animationFrame();
 
-    await contains(".o_web_studio_add_menu_modal .o_web_studio_menu_creator_model_choice [value='new']").click();
+    await contains(
+        ".o_web_studio_add_menu_modal .o_web_studio_menu_creator_model_choice [value='new']"
+    ).click();
     await contains(".o_web_studio_add_menu_modal .btn-primary").click();
     await contains(".o_web_studio_model_configurator .btn-primary").click();
 
@@ -125,25 +131,22 @@ test("drag/drop to reorganize menus", async () => {
     await drop();
     await animationFrame();
     await contains(".o-web-studio-appmenu-editor footer .btn-primary").click();
-    expect.verifySteps([
-        "customize",
-        "/web/webclient/load_menus",
-    ]);
+    expect.verifySteps(["customize", "/web/webclient/load_menus"]);
 });
 
 test("edit/delete menus", async () => {
     expect.assertions(12);
 
-    onRpc("ir.ui.menu", "customize", async ({ kwargs }) => {
+    onRpc("ir.ui.menu", "customize", ({ kwargs }) => {
         expect(kwargs.to_delete).toEqual([12]);
         return true;
     });
 
-    onRpc("ir.ui.menu", "web_save", async ({ args }) => {
+    onRpc("ir.ui.menu", "web_save", ({ args }) => {
         expect(args[0]).toEqual([1]);
         expect(args[1]).toEqual({ name: "New Partner Menu 1" });
         const { menus } = MockServer.current;
-        menus.find(m => m.id === args[0][0]).name = args[1].name
+        menus.find((m) => m.id === args[0][0]).name = args[1].name;
     });
 
     await mountWithCleanup(WebClientEnterprise);
@@ -158,25 +161,16 @@ test("edit/delete menus", async () => {
     await contains(".o-web-studio-interactive-list-edit-item").click();
     expect(".o_dialog").toHaveCount(2);
     expect(".o_dialog .o_form_view").toHaveCount(1);
-    expect.verifySteps([
-        "get_views",
-        "web_read",
-    ]);
+    expect.verifySteps(["get_views", "web_read"]);
 
     await edit("New Partner Menu 1");
     await contains(".o_form_button_save").click();
     expect(".o_dialog").toHaveCount(1);
     expect(".o-web-studio-interactive-list-item-label:eq(0)").toHaveText("New Partner Menu 1");
-    expect.verifySteps([
-        "web_save",
-        "/web/webclient/load_menus",
-    ]);
+    expect.verifySteps(["web_save", "/web/webclient/load_menus"]);
 
     await contains(".o-web-studio-interactive-list-remove-item:eq(2)").click();
     expect(".o-web-studio-interactive-list-item-label").toHaveCount(2);
     await contains(".modal footer .btn-primary").click();
-    expect.verifySteps([
-        "customize",
-        "/web/webclient/load_menus",
-    ]);
+    expect.verifySteps(["customize", "/web/webclient/load_menus"]);
 });

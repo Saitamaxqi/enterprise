@@ -1,12 +1,7 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { click, queryAll } from "@odoo/hoot-dom";
 import { animationFrame, runAllTimers } from "@odoo/hoot-mock";
-import {
-    defineActions,
-    defineMenus,
-    makeMockServer,
-    mountWithCleanup,
-} from "@web/../tests/web_test_helpers";
+import { defineActions, defineMenus, mountWithCleanup } from "@web/../tests/web_test_helpers";
 
 import { Component, onMounted, xml } from "@odoo/owl";
 
@@ -31,7 +26,15 @@ class TestClientAction extends Component {
 describe.current.tags("mobile");
 
 beforeEach(() => {
-    defineMenus([{ id: 1, children: [], name: "App1", appID: 1, actionID: 1001, xmlid: "menu_1" }]);
+    defineMenus([
+        {
+            id: 1,
+            name: "App1",
+            appID: 1,
+            actionID: 1001,
+            xmlid: "menu_1",
+        },
+    ]);
 });
 
 test("Burger Menu on home menu", async () => {
@@ -53,23 +56,26 @@ test("Burger Menu on home menu", async () => {
 });
 
 test("Burger Menu on home menu over an App", async () => {
-    actionRegistry.add("__test__client__action__", TestClientAction);
-
     expect.assertions(5);
 
-    const server = await makeMockServer();
-    server.menus
-        .find((menu) => menu.id === 1)
-        .children.push({
-            id: 99,
-            children: [],
-            name: "SubMenu",
-            appID: 1,
-            actionID: 1002,
-            xmlid: "",
-            webIconData: undefined,
-            webIcon: false,
-        });
+    actionRegistry.add("__test__client__action__", TestClientAction);
+
+    defineMenus([
+        {
+            id: 1,
+            children: [
+                {
+                    id: 99,
+                    name: "SubMenu",
+                    appID: 1,
+                    actionID: 1002,
+                    webIconData: undefined,
+                    webIcon: false,
+                },
+            ],
+        },
+    ]);
+
     defineActions([
         {
             id: 1001,

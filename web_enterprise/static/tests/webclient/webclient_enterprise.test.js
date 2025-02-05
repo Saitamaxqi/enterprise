@@ -108,17 +108,9 @@ defineActions([
 ]);
 
 defineMenus([
-    {
-        id: "root",
-        name: "root",
-        appID: "root",
-        children: [
-            // id:0 is a hack to not load anything at webClient mount
-            { id: 0, children: [], name: "UglyHack", appID: 0, xmlid: "menu_0" },
-            { id: 1, children: [], name: "App1", appID: 1, actionID: 1001, xmlid: "menu_1" },
-            { id: 2, children: [], name: "App2", appID: 2, actionID: 1002, xmlid: "menu_2" },
-        ],
-    },
+    { id: 0 }, // prevents auto-loading the first action
+    { id: 1, name: "App1", appID: 1, actionID: 1001, xmlid: "menu_1" },
+    { id: 2, name: "App2", appID: 2, actionID: 1002, xmlid: "menu_2" },
 ]);
 class Partner extends models.Model {
     name = fields.Char();
@@ -194,16 +186,18 @@ describe("basic flow with home menu", () => {
         target: "current",
         res_id: 2,
     }));
-    defineMenus([
-        {
-            id: "root",
-            name: "root",
-            appID: "root",
-            children: [
-                { id: 1, children: [], name: "App1", appID: 1, actionID: 4, xmlid: "menu_1" },
-            ],
-        },
-    ]);
+    defineMenus(
+        [
+            {
+                id: 1,
+                name: "App1",
+                appID: 1,
+                actionID: 4,
+                xmlid: "menu_1",
+            },
+        ],
+        { mode: "replace" }
+    );
     test("1 -- start up", async () => {
         await mountWebClient({ WebClient: WebClientEnterprise });
         expect.verifySteps(["/web/webclient/translations", "/web/webclient/load_menus"]);
@@ -448,21 +442,13 @@ test("supports attachments of apps deleted", async () => {
     // LPE fixme: may not be necessary anymore since menus are not HomeMenu props anymore
     defineMenus([
         {
-            id: "root",
-            name: "root",
-            appID: "root",
-            children: [
-                {
-                    id: 1,
-                    appID: 1,
-                    actionID: 1,
-                    xmlid: "",
-                    name: "Partners",
-                    children: [],
-                    webIconData: "",
-                    webIcon: "bloop,bloop",
-                },
-            ],
+            id: 1,
+            appID: 1,
+            actionID: 1,
+            xmlid: "",
+            name: "Partners",
+            webIconData: "",
+            webIcon: "bloop,bloop",
         },
     ]);
     serverState.debug = true;
@@ -619,42 +605,20 @@ test("url state is well handled when going in and out of the HomeMenu", async ()
     expect(browser.location.href).toBe("http://example.com/odoo/action-1002");
 });
 
-// TODO: JUM
-test.skip("underlying action's menu items are invisible when HomeMenu is displayed", async () => {
+test("underlying action's menu items are invisible when HomeMenu is displayed", async () => {
     defineMenus([
         {
-            id: "root",
-            name: "root",
-            appID: "root",
+            id: 1,
             children: [
-                // id:0 is a hack to not load anything at webClient mount
                 {
-                    id: 0,
-                    children: [],
-                    name: "UglyHack",
-                    appID: 0,
-                    xmlid: "menu_0",
-                },
-                {
-                    id: 1,
-                    children: [
-                        {
-                            id: 99,
-                            children: [],
-                            name: "SubMenu",
-                            appID: 1,
-                            actionID: 1002,
-                            xmlid: "",
-                            webIconData: undefined,
-                            webIcon: false,
-                        },
-                    ],
-                    name: "App1",
+                    id: 99,
+                    name: "SubMenu",
                     appID: 1,
-                    actionID: 1001,
-                    xmlid: "menu_1",
+                    actionID: 1002,
+                    xmlid: "",
+                    webIconData: undefined,
+                    webIcon: false,
                 },
-                { id: 2, children: [], name: "App2", appID: 2, actionID: 1002, xmlid: "menu_2" },
             ],
         },
     ]);

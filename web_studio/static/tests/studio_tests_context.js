@@ -1,17 +1,16 @@
+import { mailModels } from "@mail/../tests/mail_test_helpers";
 import {
+    defineActions,
+    defineMenus,
     defineModels,
     fields,
-    defineMenus,
     models,
-    defineActions,
 } from "@web/../tests/web_test_helpers";
-import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { handleDefaultStudioRoutes } from "./view_editor_tests_utils";
 
 export function defineStudioEnvironment() {
-
     class IrMenu extends models.Model {
-        _name = "ir.ui.menu"
+        _name = "ir.ui.menu";
 
         name = fields.Char();
 
@@ -28,14 +27,14 @@ export function defineStudioEnvironment() {
                 id: 12,
                 name: "Partner 12",
             },
-        ]
+        ];
 
         _views = {
-            "form": `
+            form: `
                 <form>
                     <field name="name"/>
                 </form>`,
-        }
+        };
     }
 
     class Partner extends models.Model {
@@ -50,15 +49,17 @@ export function defineStudioEnvironment() {
             aggregator: "sum",
         });
 
-        _records = [{
-            name: "Yop",
-            date: "2024-12-12",
-            pony_id: 1,
-            unit_amount: 2,
-        }]
+        _records = [
+            {
+                name: "Yop",
+                date: "2024-12-12",
+                pony_id: 1,
+                unit_amount: 2,
+            },
+        ];
 
         _views = {
-            "form": `
+            form: `
                 <form>
                     <field name="name"/>
                     <field name="date"/>
@@ -101,7 +102,7 @@ export function defineStudioEnvironment() {
                     <field name="name"/>
                     <field name="date"/>
                 </search>`,
-        }
+        };
     }
 
     class Pony extends models.Model {
@@ -110,13 +111,13 @@ export function defineStudioEnvironment() {
         name = fields.Char();
         partner_ids = fields.One2many({ relation: "partner" });
         size = fields.Selection({
-            selection: [["little", "Little"]]
+            selection: [["little", "Little"]],
         });
 
         _records = [
             { name: "Rainbow Dash", size: "little" },
             { name: "Applejack", size: "little" },
-        ]
+        ];
 
         _views = {
             form: `
@@ -141,7 +142,7 @@ export function defineStudioEnvironment() {
                 <list>
                     <field name="name"/>
                 </list>`,
-        }
+        };
     }
 
     class Dog extends models.Model {
@@ -185,7 +186,7 @@ export function defineStudioEnvironment() {
                         </t>
                     </templates>
                 </kanban>`,
-        }
+        };
     }
 
     class Settings extends models.Model {
@@ -197,7 +198,7 @@ export function defineStudioEnvironment() {
                 <list sample="1">
                     <field name="display_name"/>
                 </list>`,
-        }
+        };
     }
 
     class BaseAutomation extends models.Model {
@@ -226,7 +227,7 @@ export function defineStudioEnvironment() {
                         </t>
                     </templates>
                 </kanban>`,
-        }
+        };
     }
 
     defineModels({ ...mailModels, Pony, Partner, Dog, Settings, BaseAutomation, IrMenu });
@@ -265,7 +266,7 @@ export function defineStudioEnvironment() {
             group_ids: [],
             context: {
                 active_id: 1,
-            }
+            },
         },
         {
             id: 2,
@@ -309,56 +310,56 @@ export function defineStudioEnvironment() {
         },
     ]);
 
-    defineMenus([
-        {
-            id: 1,
-            children: [{
-                id: 11,
-                children: [],
-                name: "Partners 11",
+    defineMenus(
+        [
+            {
+                id: 1,
+                children: [
+                    {
+                        id: 11,
+                        name: "Partners 11",
+                        appID: 1,
+                        actionID: 1,
+                        xmlid: "menu_11",
+                    },
+                    {
+                        id: 12,
+                        name: "Partners 12",
+                        appID: 1,
+                        actionID: 11,
+                        xmlid: "menu_12",
+                    },
+                ],
+                name: "Partners 1",
                 appID: 1,
                 actionID: 1,
-                xmlid: "menu_11",
-            },{
-                id: 12,
-                children: [],
-                name: "Partners 12",
-                appID: 1,
-                actionID: 11,
-                xmlid: "menu_12",
-            },],
-            name: "Partners 1",
-            appID: 1,
-            actionID: 1,
-            xmlid: "app_1",
-        },
-        {
-            id: 2,
-            children: [],
-            name: "Ponies",
-            appID: 2,
-            actionID: 2,
-            xmlid: "app_2",
-            webIcon: "fa fa-diamond,#FFFFFF,#C6572A",
-        },
-        {
-            id: 3,
-            children: [],
-            name: "Dogs",
-            appID: 3,
-            actionID: 3,
-            xmlid: "app_3",
-        },
-        {
-            id: 4,
-            children: [],
-            name: "Settings",
-            appID: 4,
-            actionID: 4,
-            xmlid: "app_4",
-        },
-    ]);
-
+                xmlid: "app_1",
+            },
+            {
+                id: 2,
+                name: "Ponies",
+                appID: 2,
+                actionID: 2,
+                xmlid: "app_2",
+                webIcon: "fa fa-diamond,#FFFFFF,#C6572A",
+            },
+            {
+                id: 3,
+                name: "Dogs",
+                appID: 3,
+                actionID: 3,
+                xmlid: "app_3",
+            },
+            {
+                id: 4,
+                name: "Settings",
+                appID: 4,
+                actionID: 4,
+                xmlid: "app_4",
+            },
+        ],
+        { mode: "replace" }
+    );
 
     handleDefaultStudioRoutes();
 }

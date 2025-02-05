@@ -1,13 +1,9 @@
-import { expect, test, describe } from "@odoo/hoot";
-import { press, edit } from "@odoo/hoot-dom";
+import { describe, expect, test } from "@odoo/hoot";
+import { edit, press } from "@odoo/hoot-dom";
 import { animationFrame, Deferred } from "@odoo/hoot-mock";
-import {
-    onRpc,
-    mountWithCleanup,
-    contains,
-} from "@web/../tests/web_test_helpers";
-import { defineStudioEnvironment } from "./studio_tests_context";
+import { contains, mountWithCleanup, onRpc } from "@web/../tests/web_test_helpers";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
+import { defineStudioEnvironment } from "./studio_tests_context";
 
 describe.current.tags("desktop");
 
@@ -22,7 +18,7 @@ test("add a gantt view", async () => {
     });
 
     onRpc("fields_get", async (params) => {
-        expect(params.model).toBe("partner")
+        expect(params.model).toBe("partner");
     });
 
     await mountWithCleanup(WebClientEnterprise);
@@ -81,9 +77,9 @@ test("disable the view from studio", async () => {
                     [false, "form"],
                 ],
                 group_ids: [],
-            }
+            };
         }
-    })
+    });
 
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
@@ -99,7 +95,9 @@ test("disable the view from studio", async () => {
     await contains(".o_web_studio_thumbnail_kanban .o_web_studio_more").click();
     await contains(".o-dropdown-item:contains('Disable View')").click();
 
-    expect(".o_technical_modal .modal-body").toHaveText("You cannot deactivate this view as it is the last one active.");
+    expect(".o_technical_modal .modal-body").toHaveText(
+        "You cannot deactivate this view as it is the last one active."
+    );
 });
 
 test("add groups on action", async () => {
@@ -146,7 +144,7 @@ test("concurrency: keep user's input when editing action", async () => {
                 [false, "form"],
             ],
             group_ids: [],
-        }
+        };
     });
 
     await mountWithCleanup(WebClientEnterprise);
@@ -186,7 +184,9 @@ test("active_id and active_ids present in context at reload", async () => {
 
     await contains(".o_app[data-menu-xmlid=app_1]").click();
     await animationFrame();
-    expect.verifySteps([`load_action: {"action_id":1,"context":{"lang":"en","tz":"taht","uid":7,"allowed_company_ids":[1]}}`]);
+    expect.verifySteps([
+        `load_action: {"action_id":1,"context":{"lang":"en","tz":"taht","uid":7,"allowed_company_ids":[1]}}`,
+    ]);
 
     await contains(".o_web_studio_navbar_item button").click();
     await contains(".o_menu_sections a:contains(Views)").click();
@@ -199,6 +199,6 @@ test("active_id and active_ids present in context at reload", async () => {
 
     expect.verifySteps([
         "edit_action",
-        `load_action: {"action_id":1,"context":{"lang":"en","tz":"taht","uid":7,"allowed_company_ids":[1]}}`
+        `load_action: {"action_id":1,"context":{"lang":"en","tz":"taht","uid":7,"allowed_company_ids":[1]}}`,
     ]);
 });
