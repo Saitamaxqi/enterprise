@@ -1349,9 +1349,13 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
                 result_dict['value'] = len([line for line in query_res_lines if (line['move_type'] in ('in_refund', 'out_refund') and move_type == 'refund') or (line['move_type'] in ('in_invoice', 'out_invoice') and move_type == 'invoice')])
             else:
                 # Manage the firsts lines (1 & 3) to display the total number of partners
+                partner_ids = set()
                 for res_line in query_res_lines:
                     if ((res_line['move_type'] in ('in_invoice', 'out_invoice') and move_type == 'invoice') or
                             (res_line['move_type'] in ('in_refund', 'out_refund') and move_type == 'refund')):
+                        if res_line['partner_id'] in partner_ids:
+                            continue
+                        partner_ids.add(res_line['partner_id'])
                         if move_type == 'refund':
                             reversed_move = reversed_moves_dict.get(res_line['reversed_entry_id'])
                             if reversed_move and reversed_move.invoice_date.strftime('%Y-%m-%d') <= options['date']['date_from']:
