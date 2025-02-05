@@ -70,7 +70,10 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
                     'payslip_n1_ids': [(5, 0, 0)],
                 })
             else:
-                current_year = record.employee_id.start_notice_period.replace(month=1, day=1)
+                if record.employee_id.end_notice_period:
+                    current_year = record.employee_id.end_notice_period.replace(month=1, day=1)
+                else:
+                    current_year = record.employee_id.start_notice_period.replace(month=1, day=1)
                 previous_year = current_year + relativedelta(years=-1)
                 next_year = current_year + relativedelta(years=+1)
 
