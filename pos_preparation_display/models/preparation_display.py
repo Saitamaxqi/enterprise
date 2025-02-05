@@ -24,6 +24,18 @@ class Pos_Preparation_DisplayDisplay(models.Model):
     access_token = fields.Char("Access Token", default=lambda self: self._ensure_access_token())
 
     @api.model
+    def get_displays_by_orders(self, orders):
+        category_ids = [category_id for o in orders for category_id in o.lines.product_id.pos_categ_ids.ids]
+        config_ids = [config_id for o in orders for config_id in o.config_id.ids]
+        return self.env['pos_preparation_display.display'].search([
+            '&',
+            '|', ('pos_config_ids', '=', False),
+            ('pos_config_ids', 'in', config_ids),
+            '|', ('category_ids', 'in', category_ids),
+            ('category_ids', '=', False)
+        ])
+
+    @api.model
     def _load_pos_data_domain(self, data):
         return ['|', ('pos_config_ids', '=', data['pos.config'][0]['id']), ('pos_config_ids', '=', False)]
 

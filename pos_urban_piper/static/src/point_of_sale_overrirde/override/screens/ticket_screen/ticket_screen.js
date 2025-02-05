@@ -146,7 +146,7 @@ patch(TicketScreen.prototype, {
                 if (status) {
                     this._updateScreenState(order, "ACTIVE_ORDERS");
                     if (last_order_status !== "placed") {
-                        await this.pos.sendOrderInPreparation(order, true);
+                        await this.pos.sendOrderInPreparation(order, { cancelled: true });
                     }
                     order.uiState.displayed = false;
                     if (order.id === this.pos.getOrder()?.id) {

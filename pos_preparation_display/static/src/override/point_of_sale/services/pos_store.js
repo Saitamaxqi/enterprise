@@ -8,9 +8,8 @@ patch(PosStore.prototype, {
         await super.setup(...arguments);
         this["pos_preparation_display.display"] = [];
     },
-
-    async sendOrderInPreparation(o, cancelled = false, orderDone = false) {
-        const result = await super.sendOrderInPreparation(o, cancelled);
+    async sendOrderInPreparation(o, opts = {}) {
+        const result = await super.sendOrderInPreparation(o, opts);
         if (this.models["pos_preparation_display.display"].length > 0) {
             for (const note of Object.values(o.uiState.noteHistory)) {
                 for (const n of note) {
@@ -24,7 +23,12 @@ patch(PosStore.prototype, {
                     orders: [o],
                     context: {
                         preparation: {
-                            process_order: [cancelled, o.general_note || "", o.uiState.noteHistory],
+                            process_order_options: {
+                                general_customer_note: o.general_note || "",
+                                note_history: o.uiState.noteHistory,
+                                cancelled: opts.cancelled,
+                                fired_course_id: opts.firedCourseId,
+                            },
                         },
                     },
                 });

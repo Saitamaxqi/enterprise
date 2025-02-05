@@ -19,22 +19,19 @@ class Pos_Preparation_DisplayOrder(models.Model):
     pdis_internal_note = fields.Text("General Note", help="Current general-note displayed on preparation display")
 
     @api.model
-    def process_order(self, order_id, cancelled=False, general_customer_note=None, note_history=None, internal_note=None):
-        if not order_id:
+    def process_order(self, order_id, options={}):
+        if not order_id or not self.env['pos.order'].browse(order_id).exists():
             return
-        order = self.env['pos.order'].browse(order_id)
-        if not order:
-            return
-        data = order._process_preparation_changes(cancelled, general_customer_note, note_history, internal_note)
-        self._send_order_to_preparation_displays(order, data)
-        return True
 
-    @api.model
-    def _send_order_to_preparation_displays(self, order, data):
-        preparation_displays = self._search_preparation_displays(data, order)
-        if data['change']:
-            for p_dis in preparation_displays:
-                p_dis._send_load_orders_message(data['sound'], data.get('notification'))
+        order = self.env['pos.order'].browse(order_id)
+        data = order._process_preparation_changes(options)
+        if not data['change']:
+            return
+
+        for p_dis in self.env['pos_preparation_display.display'].get_displays_by_orders(order):
+            p_dis._send_load_orders_message(data['sound'])
+
+        return True
 
     @api.model
     def _send_notification_to_preparation_displays(self, order, data):

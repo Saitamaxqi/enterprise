@@ -190,7 +190,7 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
                     'payments': [(self.bank_pm1, -11600.0)],
                 })
 
-            orders = order + refund
+            orders = refund
             with self.with_mocked_pac_sign_success():
                 self.env['l10n_mx_edi.global_invoice.create']\
                     .with_context(order.l10n_mx_edi_action_create_global_invoice()['context'])\
@@ -234,7 +234,7 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
                         },
                     ],
                     'payments': [(self.bank_pm1, -3480.0)],
-                })
+                })[1]
             self._assert_order_cfdi(refund, 'test_global_invoice_refund_after')
 
             self.assertRecordValues(refund.l10n_mx_edi_document_ids, [{
@@ -357,7 +357,7 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
                     }],
                     'payments': [(self.bank_pm1, -11600.0)],
                     'customer': self.partner_mx,
-                })
+                })[1]
                 refund_order.l10n_mx_edi_usage = "I01"
                 refund = self.env['account.move'].browse(refund_order.action_pos_order_invoice()['res_id'])
 
@@ -567,7 +567,7 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
                 'payments': [(self.bank_pm1, -11600.0)],
                 'customer': self.partner_mx,
                 'is_invoiced': True,
-            })
+            })[1]
         self.assertEqual(refund.account_move.l10n_mx_edi_cfdi_origin, '03|424242')
 
     def test_refund_order_mx(self):
