@@ -46,17 +46,21 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         return base64.encodebytes(output.getvalue().encode())
 
     def _write_file(self, payment_report, extension, filename=''):
-        filename = filename or self.payslip_run_id.name or self.payslip_ids[:1].name
         if self.payslip_run_id:
+            batch_filename = filename or _('Pay Report - %(batch_name)s', batch_name=self.payslip_run_id.name)
             self.payslip_run_id.write({
                 'payment_report': payment_report,
-                'payment_report_filename': filename + extension,
+                'payment_report_filename': batch_filename + extension,
                 'payment_report_date': fields.Date.today()})
 
-        self.payslip_ids.write({
-            'payment_report': payment_report,
-            'payment_report_filename': filename + extension,
-            'payment_report_date': fields.Date.today()})
+        for payslip in self.payslip_ids:
+            payslip_filename = filename or _('Pay Report - %(dates)s - %(employee_name)s',
+                                             dates=payslip._get_period_name({}),
+                                             employee_name=payslip.employee_id.legal_name)
+            payslip.write({
+                'payment_report': payment_report,
+                'payment_report_filename': payslip_filename + extension,
+                'payment_report_date': fields.Date.today()})
 
     def _perform_checks(self):
         """
