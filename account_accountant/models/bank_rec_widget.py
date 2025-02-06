@@ -1162,6 +1162,15 @@ class BankRecWidget(models.Model):
         self.ensure_one()
         self._lines_turn_auto_balance_into_manual_line(line)
 
+        if line.flag == 'liquidity':
+            st_line = self.st_line_id
+            liquidity_line, _suspense_lines, _write_off_lines = self.st_line_id._seek_for_lines()
+            liquidity_line.analytic_distribution = line.analytic_distribution
+            # We need to keep track of the statement line to avoid losing the data.
+            # Will be improved in master by turning _action_reload_liquidity_line into a context manager.
+            self.with_context(default_st_line_id=st_line.id)._action_reload_liquidity_line()
+            return
+
         # Recompute taxes.
         if line.flag not in ('tax_line', 'early_payment') and any(x.analytic for x in line.tax_ids):
             self._lines_recompute_taxes()
