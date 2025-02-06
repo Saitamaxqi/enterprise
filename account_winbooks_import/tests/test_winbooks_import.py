@@ -37,7 +37,7 @@ class TestWinbooksImport(common.TransactionCase):
             'zip_file': attachment.datas,
         })
         last = self.env['account.move'].search([('company_id', '=', test_company.id)], order='id desc', limit=1)
-        wizard.with_company(test_company).with_context(winbooks_import_hard_fail=False).import_winbooks_file()
+        wizard.with_company(test_company).import_winbooks_file()
         new_moves = self.env['account.move'].search([
             ('company_id', '=', test_company.id),
             ('id', '>', last.id),
@@ -45,4 +45,3 @@ class TestWinbooksImport(common.TransactionCase):
         self.assertTrue(new_moves)
         new_moves.action_post()
         self.assertTrue(new_moves.line_ids.full_reconcile_id, "There should be at least one full reconciliation after the import")
-        self.env.flush_all()  # be sure to trigger SQL constraints
