@@ -81,18 +81,18 @@ class AccountOnlineAccount(models.Model):
     def create(self, vals):
         result = super().create(vals)
         if any(data.get('fetching_status') in {'waiting', 'processing', 'planned'} for data in vals):
-            self.journal_ids._toggle_asynchronous_fetching_cron()
+            self.env['account.journal']._toggle_asynchronous_fetching_cron()
         return result
 
     def write(self, vals):
         result = super().write(vals)
         if vals.get('fetching_status') in {'waiting', 'processing', 'planned'}:
-            self.journal_ids._toggle_asynchronous_fetching_cron()
+            self.env['account.journal']._toggle_asynchronous_fetching_cron()
         return result
 
     def unlink(self):
         result = super().unlink()
-        self.journal_ids._toggle_asynchronous_fetching_cron()
+        self.env['account.journal']._toggle_asynchronous_fetching_cron()
         return result
 
     def _assign_journal(self, swift_code=False, journal_type='bank'):
