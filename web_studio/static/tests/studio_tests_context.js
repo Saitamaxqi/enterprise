@@ -171,6 +171,7 @@ export function defineStudioEnvironment() {
             list: `
                 <list sample="1">
                     <field name="name"/>
+                    <field name="partner_ids" optional="hide"/>
                 </list>`,
 
             kanban: `
@@ -214,6 +215,17 @@ export function defineStudioEnvironment() {
                 <form>
                     <field name="name"/>
                 </form>`,
+            kanban: `
+                <kanban>
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="card">
+                            <div>
+                                <field name="name"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>`,
         }
     }
 
