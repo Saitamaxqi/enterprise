@@ -6,9 +6,7 @@
             </div>
         </xpath>
         <xpath expr="//t[@t-call='account_reports.company_information']" position="after">
-            <div>Tax Code: <t t-out="report.env.company.vat[2:]"/></div>
-        </xpath>
-        <xpath expr="//t[@t-call='account_reports.company_information']" position="replace">
+            <div>Tax Code: <t t-out="report.env.company.l10n_it_codice_fiscale"/></div>
         </xpath>
         <xpath expr="//section/div[hasclass('o_section_title')]" position="replace">
         </xpath>
