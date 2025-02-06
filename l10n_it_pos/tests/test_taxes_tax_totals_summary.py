@@ -1,18 +1,16 @@
-from odoo import Command
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.addons.account.tests.test_taxes_tax_totals_summary import TestTaxesTaxTotalsSummary
-from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
+from odoo.addons.point_of_sale.tests.test_frontend import TestTaxCommonPOS
 from odoo.tests import tagged
 
 
 @tagged('post_install', '-at_install', 'post_install_l10n')
-class TestTaxesTaxTotalsSummaryL10nItPos(TestPointOfSaleHttpCommon, TestTaxesTaxTotalsSummary):
+class TestTaxesTaxTotalsSummaryL10nItPos(TestTaxCommonPOS, TestTaxesTaxTotalsSummary):
 
     @classmethod
     @AccountTestInvoicingCommon.setup_country('it')
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner_a.name = "AAAAAA"  # The POS only load the first 100 partners
         cls.main_pos_config.it_fiscal_printer_ip = "0.0.0.0"
 
     def _jsonify_document_line(self, document, index, line):
@@ -20,15 +18,6 @@ class TestTaxesTaxTotalsSummaryL10nItPos(TestPointOfSaleHttpCommon, TestTaxesTax
         values = super()._jsonify_document_line(document, index, line)
         values['l10n_it_epson_printer'] = line['l10n_it_epson_printer']
         return values
-
-    def create_base_line_product(self, base_line, **kwargs):
-        return self.env['product.product'].create({
-            **kwargs,
-            'available_in_pos': True,
-            'list_price': base_line['price_unit'],
-            'taxes_id': [Command.set(base_line['tax_ids'].ids)],
-            'pos_categ_ids': [Command.set(self.pos_desk_misc_test.ids)],
-        })
 
     def _test_taxes_l10n_it_epson_printer(self):
         tax = self.percent_tax(22.0, price_include_override='tax_excluded', tax_group_id=self.tax_groups[0].id)
@@ -158,14 +147,13 @@ class TestTaxesTaxTotalsSummaryL10nItPos(TestPointOfSaleHttpCommon, TestTaxesTax
     def test_taxes_l10n_it_epson_printer_pos(self):
         tests = self._test_taxes_l10n_it_epson_printer()
         test1 = next(tests)
-        self.create_base_line_product(test1[1]['lines'][0], name='product_1_1')
+        self.ensure_products_on_document(test1[1], 'product_1')
         test2 = next(tests)
-        self.create_base_line_product(test2[1]['lines'][0], name='product_2_1')
+        self.ensure_products_on_document(test2[1], 'product_2')
         test3 = next(tests)
-        self.create_base_line_product(test3[1]['lines'][0], name='product_3_1')
-        self.create_base_line_product(test3[1]['lines'][1], name='product_3_2')
+        self.ensure_products_on_document(test3[1], 'product_3')
         test4 = next(tests)
-        self.create_base_line_product(test4[1]['lines'][0], name='product_4_1')
+        self.ensure_products_on_document(test4[1], 'product_4')
         with self.with_new_session(user=self.pos_user) as session:
             self.start_pos_tour('test_taxes_l10n_it_epson_printer_pos')
             orders = self.env['pos.order'].search([('session_id', '=', session.id)])

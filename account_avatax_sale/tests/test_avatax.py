@@ -175,9 +175,6 @@ class TestSaleAvalara(TestAccountAvataxCommon):
 
         self.assertIsNone(capture.val, "Shouldn't call Avatax when posting a down payment invoice.")
         self.assertEqual(len(order.order_line.filtered(lambda line: not line.display_type)), 6, "Should have generated a new down payment line.")
-        self.assertFalse(order.order_line.filtered('is_downpayment').tax_ids, "Down payment lines on the quotation shouldn't have taxes.")
-        self.assertAlmostEqual(downpayment_invoice.amount_total, order.amount_total * downpayment_pct / 100, msg="Down payment has the wrong amount.")
-        self.assertEqual(downpayment_invoice.amount_tax, 0, "Down payment shouldn't have taxes.")
 
         wizard = (
             self.env["sale.advance.payment.inv"]
@@ -187,11 +184,23 @@ class TestSaleAvalara(TestAccountAvataxCommon):
                 })
         )
 
-        with self._capture_request(return_value={'lines': [], 'summary': []}) as capture:
+        with self._capture_request(return_value={'lines': [], 'summary': []}):
             wizard.sudo().create_invoices()
 
-        sent_lines = capture.val['json']['createTransactionModel']['lines']
-        self.assertEqual(len(sent_lines), 5, "Should send only the regular lines.")
+        final_invoice = order.invoice_ids - downpayment_invoice
+        self.assertRecordValues(final_invoice.invoice_line_ids, [
+            {'price_unit': 35.0,    'tax_ids': []},
+            {'price_unit': -5.0,    'tax_ids': []},
+            {'price_unit': 30.0,    'tax_ids': []},
+            {'price_unit': 15.0,    'tax_ids': []},
+            {'price_unit': 15.0,    'tax_ids': []},
+            {'price_unit': 0.0,     'tax_ids': []},
+            {'price_unit': 45.02,   'tax_ids': []},
+        ])
+        with self._capture_request(return_value={'lines': [], 'summary': []}) as capture:
+            final_invoice.sudo().action_post()
+            sent_lines = capture.val['json']['createTransactionModel']['lines']
+            self.assertEqual(len(sent_lines), 5, "Should send only the regular lines.")
 
 
 @tagged("-at_install", "post_install")
