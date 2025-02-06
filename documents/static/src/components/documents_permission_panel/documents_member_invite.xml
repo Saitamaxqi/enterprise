@@ -13,7 +13,7 @@
                 onInput.bind="onSearchPartners"
                 onOpen.bind="() => this.onSearchPartners('')"
                 required="true"
-                searchPlaceholder="'Search people'"
+                searchPlaceholder.translate="Search people"
                 togglerClass="props.invitePage ? 'o_documents_permission_panel_select_invite' : ''"
                 value="state.selectedPartners"
             >

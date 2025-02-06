@@ -2112,12 +2112,15 @@ class DocumentsDocument(models.Model):
         self.check_access('read')
         result = self.sudo().with_context(active_test=False).web_search_read([('id', '=', self.id)], specification)
         record = result['records'][0]
-        selections = {'access_via_link': self._fields.get('access_via_link').selection}
+        selections = {
+            'access_via_link': self._fields.get('access_via_link')._description_selection(self.env),
+            'access_via_link_options': [('1', _("Must have the link to access")), ('0', _("Discoverable"))],
+        }
         if self.env.user.has_group('base.group_user'):
             record['access_ids'] = [a for a in record['access_ids'] if a['role']]
             selections.update({
-                'access_internal': self._fields.get('access_internal').selection,
-                'doc_access_roles': self.env['documents.access']._fields.get('role').selection,
+                'access_internal': self._fields.get('access_internal')._description_selection(self.env),
+                'doc_access_roles': self.env['documents.access']._fields.get('role')._description_selection(self.env),
             })
         return {'record': record, 'selections': selections}
 

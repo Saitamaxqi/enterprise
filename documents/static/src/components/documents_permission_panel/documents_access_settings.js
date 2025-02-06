@@ -29,10 +29,11 @@ export class DocumentsAccessSettings extends Component {
      * Return additional label corresponding to internal access setting
      */
     get accessInternalHelper() {
-        if (this.props.access.access_internal !== "none") {
-            return _t("Internal users can  %(action)s", {
-                action: this.props.access.access_internal,
-            });
+        if (this.props.access.access_internal === "view") {
+            return _t("Internal users can view");
+        }
+        if (this.props.access.access_internal === "edit") {
+            return _t("Internal users can edit");
         }
         return _t("Only people with access can open with the link");
     }
@@ -41,10 +42,11 @@ export class DocumentsAccessSettings extends Component {
      * Return additional label corresponding to link access setting
      */
     get accessLinkHelper() {
-        if (this.props.access.access_via_link !== "none") {
-            return _t("Anyone on the internet with the link can %(action)s", {
-                action: this.props.access.access_via_link,
-            });
+        if (this.props.access.access_via_link === "view") {
+            return _t("Anyone on the internet with the link can view");
+        }
+        if (this.props.access.access_via_link === "edit") {
+            return _t("Anyone on the internet with the link can edit");
         }
         return _t("No one on the internet can access");
     }

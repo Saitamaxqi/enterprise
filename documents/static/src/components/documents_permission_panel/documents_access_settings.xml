@@ -34,7 +34,7 @@
                 ariaLabel.translate="Document Access Link"
                 disabled="props.disabled"
                 onChange.bind="props.onChangeIsAccessLinkHidden"
-                options="[['1', 'Must have the link to access'], ['0', 'Discoverable']]"
+                options="props.selections.access_via_link_options"
                 selectClass="'w-auto'"
                 showFeedbackChange="props.access.is_access_via_link_hidden !== props.baseAccess.is_access_via_link_hidden"
                 value="props.access.is_access_via_link_hidden ? '1' : '0'"/>

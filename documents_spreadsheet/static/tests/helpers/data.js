@@ -355,6 +355,10 @@ export function getBasicPermissionPanelData(recordExtra) {
             ["edit", "Editor"],
             ["none", "None"],
         ],
+        access_via_link_options: [
+            ["1", "Must have the link to access"],
+            ["0", "Discoverable"],
+        ],
         access_internal: [
             ["view", "Viewer"],
             ["edit", "Editor"],
