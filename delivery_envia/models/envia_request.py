@@ -629,8 +629,7 @@ class Envia:
         """ Envia requires all phone numbers to be in national format
         (Even for international shipments)
         """
-        phone = partner.phone or partner.mobile
-        phone: str = partner._phone_format(number=phone, force_format='NATIONAL') or phone
+        phone: str = partner._phone_format(number=partner.phone, force_format='NATIONAL') or partner.phone
         if phone:
             # Clean phonenumber of non numeric digits.
             phone = re.sub("[^+0-9]", "", phone)[:20]

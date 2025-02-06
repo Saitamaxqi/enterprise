@@ -502,8 +502,8 @@ class ShipRocket:
             error_msg['Customer'].append(_("Country is required!"))
         if not recipient.email:
             error_msg['Customer'].append(_("Email is required!"))
-        if not recipient.phone and not recipient.mobile:
-            error_msg['Customer'].append(_("Phone or Mobile is required!"))
+        if not recipient.phone:
+            error_msg['Customer'].append(_("Phone is required!"))
         if not shipper.street:
             error_msg['Shipper'].append(_("Street is required!"))
         if not shipper.zip:
@@ -512,8 +512,8 @@ class ShipRocket:
             error_msg['Shipper'].append(_("Country is required!"))
         if not shipper.email:
             error_msg['Shipper'].append(_("Email is required!"))
-        if not shipper.phone and not shipper.mobile:
-            error_msg['Shipper'].append(_("Phone or Mobile is required!"))
+        if not shipper.phone:
+            error_msg['Shipper'].append(_("Phone is required!"))
         for product in products:
             if not product.weight:
                 error_msg.setdefault(product.name, [])
