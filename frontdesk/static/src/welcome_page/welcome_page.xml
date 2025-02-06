@@ -4,7 +4,10 @@
     <t t-name="frontdesk.WelcomePage">
         <div class="position-relative d-flex flex-column flex-lg-row justify-content-center w-100 o_main_bg_img" t-att-style="'background-image: url(/frontdesk/' + props.stationInfo.id + '/background), url(/frontdesk/static/img/frontdesk.svg'">
             <div class="position-relative d-flex flex-column align-items-center justify-content-center h-lg-100 p-4 pb-5 pb-lg-4 text-center">
-                <div class="display-2 m-0 fw-bold">Welcome<div class="fs-1 fw-light">to <t t-out="props.companyName"/></div></div>
+                <div class="display-2 m-0 fw-bold">
+                    Welcome to
+                    <div class="fs-1 fw-light" t-out="props.companyName"/>
+                </div>
                 <div class="btn btn-lg btn-primary mt-4" t-on-click="() => props.showScreen('VisitorForm')">Check in</div>
             </div>
             <div class="position-lg-absolute start-0 end-0 top-0 bottom-0 d-flex gap-3 flex-column justify-content-between align-items-center align-items-lg-stretch p-4 pe-none">

@@ -931,7 +931,7 @@ msgstr ""
 #. module: frontdesk
 #. odoo-javascript
 #: code:addons/frontdesk/static/src/welcome_page/welcome_page.xml:0
-msgid "Welcome"
+msgid "Welcome to"
 msgstr ""
 
 #. module: frontdesk
@@ -1031,12 +1031,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/frontdesk/models/frontdesk_frontdesk.py:0
 msgid "station_id.id"
-msgstr ""
-
-#. module: frontdesk
-#. odoo-javascript
-#: code:addons/frontdesk/static/src/welcome_page/welcome_page.xml:0
-msgid "to"
 msgstr ""
 
 #. module: frontdesk
