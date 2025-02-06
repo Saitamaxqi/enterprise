@@ -2,7 +2,7 @@ import { formatFloatTime } from "@web/views/fields/formatters";
 import { user } from "@web/core/user";
 import { formatFloat } from "@web/core/utils/numbers";
 import { GanttRenderer } from "@web_gantt/gantt_renderer";
-import { getUnionOfIntersections } from "@web_gantt/gantt_helpers";
+import { getColumnStart, getUnionOfIntersections } from "@web_gantt/gantt_helpers";
 import { PlanningEmployeeAvatar } from "./planning_employee_avatar";
 import { PlanningMaterialRole } from "./planning_material_role";
 import { PlanningGanttRowProgressBar } from "./planning_gantt_row_progress_bar";
@@ -16,10 +16,13 @@ import { _t } from "@web/core/l10n/translation";
 import { usePlanningRecurringDeleteAction } from "../planning_hooks";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { AddressRecurrencyConfirmationDialog } from "@planning/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog";
+import { localization } from "@web/core/l10n/localization";
+import { PlanningSplitTool } from "./planning_split_tool";
 
 const { Duration, DateTime } = luxon;
 
 export class PlanningGanttRenderer extends GanttRenderer {
+    static template = "planning.PlanningGanttRenderer";
     static rowHeaderTemplate = "planning.PlanningGanttRenderer.RowHeader";
     static pillTemplate = "planning.PlanningGanttRenderer.Pill";
     static groupPillTemplate = "planning.PlanningGanttRenderer.GroupPill";
@@ -29,9 +32,11 @@ export class PlanningGanttRenderer extends GanttRenderer {
         GanttRendererControls: PlanningGanttRendererControls,
         GanttRowProgressBar: PlanningGanttRowProgressBar,
         Material: PlanningMaterialRole,
+        PlanningSplitTool,
     };
     setup() {
         this.duplicateToolHelperReactive = reactive({ shouldDisplay: false });
+        this.splitToolHelperReactive = reactive({});
         super.setup();
         useEffect(() => {
             this.gridRef.el.classList.add("o_planning_gantt");
@@ -73,24 +78,59 @@ export class PlanningGanttRenderer extends GanttRenderer {
         super.computeDerivedParams();
     }
 
-    computeVisiblePills() {
-        super.computeVisiblePills();
-        this.splitTools = {};
+    onPillClicked(ev, pill) {
+        if (this.env.isSmall || !this.isPlanningManager || this.model.useSampleModel) {
+            super.onPillClicked(...arguments);
+            return;
+        }
+        const splitToolEl = this.cellContainerRef.el.querySelector(".o_gantt_pill_split_tool");
+        if (splitToolEl) {
+            const { clientX, clientY } = ev;
+            const { x, y, width, height } = splitToolEl.getBoundingClientRect();
+            if (x <= clientX && clientX <= x + width && y <= clientY <= y + height) {
+                const splitCol = getColumnStart(getComputedStyle(splitToolEl));
+                this.onPillSplitToolClicked(pill, splitCol);
+                delete this.splitToolHelperReactive.position;
+                this.popover.close();
+                return;
+            }
+        }
+        super.onPillClicked(...arguments);
+    }
+
+    computeDerivedParamsFromHover() {
+        super.computeDerivedParamsFromHover(...arguments);
+        delete this.splitToolHelperReactive.position;
         if (this.env.isSmall || !this.isPlanningManager || this.model.useSampleModel) {
             return;
         }
-        const [firstVisibleCol, lastVisibleCol] = this.getVisibleCols();
-        for (const pill of this.pillsToRender) {
+        if (this.isDragging || this.connectorDragState.draging) {
+            return;
+        }
+        const { pill: pillEl } = this.hovered;
+        const { el: cellEl } = this.cellForDrag;
+        if (pillEl && cellEl) {
+            const rtl = localization.direction === "rtl"
+            const { x, width } = cellEl.getBoundingClientRect();
+            const coef = (rtl ? -1 : 1) * width;
+            const startBorder = (rtl ? x + width : x);
+            const endBorder = startBorder + coef;
+            let col = getColumnStart(getComputedStyle(cellEl));
+            if (Math.abs(endBorder - this.cursorPosition.x) <= 8) {
+                col += 1;
+            } else if (Math.abs(startBorder - this.cursorPosition.x) > 8) {
+                return;
+            }
+            const pillId = pillEl.dataset.pillId;
+            const pill = this.pills[pillId];
             const [first, last] = pill.grid.column;
-            if (last === first + 1) {
-                continue;
+            if ([first, last].includes(col)) {
+                return;
             }
-            this.splitTools[pill.id] = [];
-            for (let col = Math.max(first + 1, firstVisibleCol); col <= Math.min(last - 1, lastVisibleCol); col++) {
-                const splitTool = { grid: { column: [col, col + 1], row: pill.grid.row } };
-                this.splitTools[pill.id].push(splitTool);
-                this.addCoordinatesToCoarseGrid(splitTool);
-            }
+            this.splitToolHelperReactive.position = this.getGridPosition({
+                row: pill.grid.row,
+                column: [col, col + 1]
+            });
         }
     }
 
@@ -310,10 +350,6 @@ export class PlanningGanttRenderer extends GanttRenderer {
         return recordIntervals;
     }
 
-    getSplitToolGrids(pill) {
-        return this.splitTools[pill.id] || [];
-    }
-
     /**
      * @param {number} resource_id
      * @returns {boolean}
@@ -526,14 +562,11 @@ export class PlanningGanttRenderer extends GanttRenderer {
      * As an exception, if the shift spans on weekends (where the resource had no availabilities unavailable)
      * for a regular working schedule, we split the shift but set a 8-17 schedule for the shift in weekends. 
      * 
-     * @param {MouseEvent} ev
      * @param {Pill} pill
-     * @param {number} splitIndex - Index of the split tool used on the pill
+     * @param {number} startColumnId - column where to split the pill
      */
-    async onPillSplitToolClicked(ev, pill, splitIndex) {
-        const pillStart = pill.grid.column[0];
+    async onPillSplitToolClicked(pill, startColumnId) {
         const resourceId = pill.record.resource_id[0] || false;
-        const startColumnId = pillStart + 1 + splitIndex;
         const splitRightPill = super.getColumnStartStop(startColumnId, startColumnId, false);
         const splitLeftPill = super.getColumnStartStop(startColumnId - 1, startColumnId - 1, false);
         let copiedShiftId;

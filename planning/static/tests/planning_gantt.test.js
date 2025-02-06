@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, queryAll, queryAllTexts, queryFirst } from "@odoo/hoot-dom";
+import { click, hover, queryAll, queryAllTexts, queryFirst } from "@odoo/hoot-dom";
 import { animationFrame, mockDate, mockTimeZone } from "@odoo/hoot-mock";
 import {
     clickSave,
@@ -648,21 +648,35 @@ test("Test split tool in gantt view", async function () {
     ];
 
     onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
+    onRpc("split_pill", ({ args, kwargs }) => {
+        expect(args[0]).toEqual([2]);
+        expect(kwargs.values).toEqual({
+            start_datetime: "2022-10-11 00:00:00",
+            end_datetime: "2022-10-10 23:59:59",
+        })
+        return 3; // copiedShiftId
+    });
 
     await mountGanttView({
         resModel: "planning.slot",
         arch: `
-            <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_range="week" scales="week"/>
+            <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_range="week" scales="week" display_unavailability="1">
+                <field name="resource_id"/>
+            </gantt>
         `,
     });
     expect(".o_gantt_pill").toHaveCount(2);
+
+    const thirdCell = queryAll(SELECTORS.cell)[2];
+    const { x, y, height } = thirdCell.getBoundingClientRect();
+    await hover(thirdCell, { position: { x: x + 4,  y: y + height / 2 } });
+    await animationFrame();
     expect(".o_gantt_pill_split_tool").toHaveCount(1, {
         message: "The split tool should only be available on the second pill.",
     });
-    expect(queryFirst(".o_gantt_pill_split_tool").dataset.splitToolPillId).toBe("__pill__2_0", {
-        message:
-            "The split tool should be positioned on the pill 2 after the first column of the pill since the pill is on 2 columns.",
-    });
+
+    const secondPill = queryAll(SELECTORS.pill)[1];
+    await click(secondPill, { position: { x: x + 4,  y: y + height / 2 } });
 });
 
 test("Test highlight shifts added by executed action", async function () {

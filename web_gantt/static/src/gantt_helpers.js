@@ -288,11 +288,11 @@ function getCoordinate(style, name) {
     return +style.getPropertyValue(name).slice(1);
 }
 
-function getColumnStart(style) {
+export function getColumnStart(style) {
     return getCoordinate(style, "grid-column-start");
 }
 
-function getColumnEnd(style) {
+export function getColumnEnd(style) {
     return getCoordinate(style, "grid-column-end");
 }
 

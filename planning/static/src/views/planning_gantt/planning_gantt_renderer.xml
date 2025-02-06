@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
+    <t t-name="planning.PlanningGanttRenderer" t-inherit="web_gantt.GanttRenderer">
+        <xpath expr="//div[hasclass('o_gantt_cells')]">
+            <PlanningSplitTool reactive="splitToolHelperReactive"/>
+        </xpath>
+    </t>
+
     <t t-name="planning.PlanningGanttRenderer.RowHeader" t-inherit="web_gantt.GanttRenderer.RowHeader">
         <xpath expr="//t[@t-esc='row.name']" position="replace">
             <Avatar t-if="hasAvatar(row)" t-props="getAvatarProps(row)"/>
@@ -10,18 +16,6 @@
     </t>
 
     <t t-name="planning.PlanningGanttRenderer.Pill" t-inherit="web_gantt.GanttRenderer.Pill">
-        <xpath expr="//div[hasclass('o_gantt_pill_wrapper')]" position="after">
-            <t t-foreach="getSplitToolGrids(pill)" t-as="splitTool" t-key="splitTool_index">
-                <div class="o_gantt_pill_split_tool"
-                        t-att-style="getGridPosition(splitTool.grid)"
-                        t-att-data-split-tool-pill-id="pill.id + '_' + splitTool_index"
-                        t-on-click.synthetic="(ev) => this.onPillSplitToolClicked(ev, pill, splitTool_index)"
-                >
-                    <div class="o_slot_dashed_cut_line"/>
-                    <i class="fa fa-lg fa-scissors fa-rotate-270"/>
-                </div>
-            </t>
-        </xpath>
         <xpath expr="//span[hasclass('o_gantt_pill_title')]" position="after">
             <t t-if="pill.hasAvatar">
                 <div class="ms-auto o_gantt_pill_avatar" t-att-title="pill.record.employee_id[1]">
