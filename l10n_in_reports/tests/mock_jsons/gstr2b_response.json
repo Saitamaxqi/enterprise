@@ -207,6 +207,31 @@
                         "cess": 0
                         }
                     ]
+                    },
+                    {
+                    "inum": "INV/015",
+                    "typ": "R",
+                    "dt": "20-05-2023",
+                    "val": 944.0,
+                    "pos": "24",
+                    "rev": "N",
+                    "itcavl": "N",
+                    "rsn": "P",
+                    "diffprcnt": 1,
+                    "srctyp": "e-Invoice",
+                    "irn": "897ADG56RTY78956HYUG90BNHHIJK453GFTD99845672FDHHHSHGFH4567FG56KK",
+                    "irngendate": "20-05-2023",
+                    "items": [
+                        {
+                        "num": 1,
+                        "rt": 18,
+                        "txval": 800,
+                        "igst": 144,
+                        "cgst": 0,
+                        "sgst": 0,
+                        "cess": 0
+                        }
+                    ]
                     }
                 ]
                 },

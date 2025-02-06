@@ -1675,14 +1675,19 @@ class L10n_InGstReturnPeriod(models.Model):
                 bill_date = gstr2b_bill.get('bill_date')
                 bill_number = gstr2b_bill.get('bill_number')
                 bill_vat = gstr2b_bill.get('vat')
+                bill_irn  = gstr2b_bill.get('irn')
                 sanitized_ref = _remove_special_characters(bill_number)
-                matching_keys = _get_matching_keys(
-                    sanitized_ref, bill_vat, bill_date,
-                    bill_type, gstr2b_bill.get('bill_total') or gstr2b_bill.get('bill_taxable_value'))
                 matched_bills = False
-                for matching_key in matching_keys:
-                    if not matched_bills and matching_dict.get(matching_key):
-                        matched_bills = matching_dict.get(matching_key)
+                # check the bill with IRN number first to reduce the unnecessary key generation
+                matched_bills = matching_dict.get(bill_irn)
+                if not matched_bills:
+                    matching_keys = _get_matching_keys(
+                        sanitized_ref, bill_vat, bill_date,
+                        bill_type, gstr2b_bill.get('bill_total') or gstr2b_bill.get('bill_taxable_value'), bill_irn)
+                    for matching_key in matching_keys:
+                        if not matched_bills and matching_dict.get(matching_key):
+                            matched_bills = matching_dict.get(matching_key)
+                            break
                 if matched_bills:
                     created_from_reconciliation = matched_bills.filtered(lambda b:
                         b.l10n_in_gstr2b_reconciliation_status == 'gstr2_bills_not_in_odoo' and b.state == 'draft')
@@ -1691,7 +1696,7 @@ class L10n_InGstReturnPeriod(models.Model):
                     if len(matched_bills) == 1:
                         remove_matched_bill_value(matching_dict, matching_keys, matched_bills)
                         exception = []
-                        if matched_bills.ref == bill_number:
+                        if matched_bills.ref == bill_number or matched_bills.l10n_in_irn_number == bill_irn:
                             if 'bill_taxable_value' in gstr2b_bill and gstr2b_bill['bill_taxable_value'] != matched_bills.amount_untaxed:
                                 exception.append(_("Total Taxable amount as per GSTR-2B is %s", gstr2b_bill['bill_taxable_value']))
                             amount_total = matched_bills.amount_total
@@ -1780,6 +1785,7 @@ class L10n_InGstReturnPeriod(models.Model):
                         "l10n_in_gstr2b_reconciliation_status": "gstr2_bills_not_in_odoo",
                         "checked": False,
                         "l10n_in_gst_return_period_id": self.id,
+                        "l10n_in_irn_number": bill_irn,
                         "message_ids":[(0, 0, {
                             'model': 'account.move',
                             'body': _(
@@ -1798,31 +1804,38 @@ class L10n_InGstReturnPeriod(models.Model):
                 checked_bills += created_move
             return checked_bills
 
-        def _get_matching_keys(ref, vat, invoice_date, invoice_type, amount):
+        def _get_matching_keys(ref, vat, invoice_date, invoice_type, amount, irn):
             # remove space from ref
             ref = ref and ref.replace(" ", "")
-            return [
-                "%s-%s-%s-%s-%s"%(ref, vat, invoice_type, invoice_date, amount), # Best case
-                "%s-%s-%s-%s"%(ref, vat, invoice_type, invoice_date),
-                "%s-%s-%s-%s"%(ref, vat, invoice_type, amount),
-                "%s-%s-%s"%(ref, vat, invoice_type),
+            key_combinations = [
+                (irn,),
+                (ref, vat, invoice_type, invoice_date, amount), # Best case if no irn
+                (ref, vat, invoice_type, invoice_date),
+                (ref, vat, invoice_type, amount),
+                (ref, vat, invoice_type),
 
-                "%s-%s-%s-%s"%(ref, vat, invoice_date, amount),
-                "%s-%s-%s"%(ref, vat, invoice_date),
-                "%s-%s-%s"%(ref, vat, amount),
-                "%s-%s"%(ref, vat),
+                (ref, vat, invoice_date, amount),
+                (ref, vat, invoice_date),
+                (ref, vat, amount),
+                (ref, vat),
 
-                "%s-%s-%s-%s"%(ref, invoice_type, invoice_date, amount),
-                "%s-%s-%s"%(ref, invoice_type, invoice_date),
-                "%s-%s-%s"%(ref, invoice_type, amount),
-                "%s-%s"%(ref, invoice_type),
+                (ref, invoice_type, invoice_date, amount),
+                (ref, invoice_type, invoice_date),
+                (ref, invoice_type, amount),
+                (ref, invoice_type),
 
-                "%s-%s-%s"%(ref, invoice_date, amount),
-                "%s-%s"%(ref, invoice_date),
-                "%s-%s"%(ref, amount),
-                "%s"%(ref),
-                "%s-%s-%s-%s"%(vat, invoice_type, invoice_date, amount) # Worst case
+                (ref, invoice_date, amount),
+                (ref, invoice_date),
+                (ref, amount),
+                (ref,),
+                (vat, invoice_type, invoice_date, amount) # Worst case
             ]
+
+            # Filter out false keys from key combinations
+            filtered_keys = [key for key in key_combinations if any(key)]
+            # Convert tuple keys to string keys
+            formatted_keys = ["-".join(map(str,key)) for key in filtered_keys]
+            return formatted_keys
 
         def _get_all_bill_by_matching_key(gstr2b_late_streamline_bills):
             AccountMove = self.env["account.move"]
@@ -1860,7 +1873,7 @@ class L10n_InGstReturnPeriod(models.Model):
                 # Sanitize the reference to remove any special characters, ensuring it is suitable for matching
                 sanitized_ref = _remove_special_characters(bill.ref)
                 # Retrieve matching keys based on the sanitized reference, partner VAT, invoice date, bill type, and amount
-                matching_keys = _get_matching_keys(sanitized_ref, bill.partner_id.vat, bill.invoice_date, bill_type, amount)
+                matching_keys = _get_matching_keys(sanitized_ref, bill.partner_id.vat, bill.invoice_date, bill_type, amount, bill.l10n_in_irn_number)
                 for matching_key in matching_keys:
                     matching_dict.setdefault(matching_key, AccountMove)
                     matching_dict[matching_key] += bill
@@ -1885,6 +1898,7 @@ class L10n_InGstReturnPeriod(models.Model):
                                 'bill_type': section_code == 'cdnr' and doc_data.get('typ') == 'C' and 'credit_note' or 'bill',
                                 'section_code': section_code,
                                 "bill_pos": doc_data.get('pos'),
+                                'irn': doc_data.get('irn') and doc_data.get('irn').lower() or False,
                             }
                             vals_list.append(vals)
                             if bill_date < self.start_date:

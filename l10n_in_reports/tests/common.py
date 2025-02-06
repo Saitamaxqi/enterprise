@@ -24,9 +24,11 @@ class L10nInTestAccountReportsCommon(TestAccountReportsCommon, L10nInTestInvoici
         cls.comp_igst_18 = cls.env['account.chart.template'].ref('igst_sale_18')
 
     @classmethod
-    def _set_vals_and_post(cls, move, ref=None, line_vals=None, post=True):
+    def _set_vals_and_post(cls, move, ref=None, line_vals=None, post=True, irn=None):
         if ref:
             move.ref = ref
+        if irn:
+            move.l10n_in_irn_number = irn
 
         if line_vals:
             move.write({'invoice_line_ids': [Command.update(line.id, line_vals) for line in move.line_ids]})
@@ -36,7 +38,7 @@ class L10nInTestAccountReportsCommon(TestAccountReportsCommon, L10nInTestInvoici
         return move
 
     @classmethod
-    def _init_inv(cls, move_type='out_invoice', company=None, ref=None, partner=None, taxes=None, invoice_date=None, products=None, line_vals=None, post=True):
+    def _init_inv(cls, move_type='out_invoice', company=None, ref=None, partner=None, taxes=None, invoice_date=None, products=None, line_vals=None, post=True, irn=None):
         return cls._set_vals_and_post(
             move=cls.init_invoice(
                 move_type,
@@ -47,6 +49,7 @@ class L10nInTestAccountReportsCommon(TestAccountReportsCommon, L10nInTestInvoici
                 partner=partner,
             ),
             ref=ref,
+            irn=irn,
             line_vals=line_vals,
             post=post
         )

@@ -75,6 +75,10 @@ class AccountMove(models.Model):
     l10n_in_gstr_activate_einvoice_fetch = fields.Selection(related="company_id.l10n_in_gstr_activate_einvoice_fetch")
     l10n_in_gst_efiling_feature_enabled = fields.Boolean(related="company_id.l10n_in_gst_efiling_feature")
 
+    _uniq_l10n_in_irn_number = models.Constraint(
+        'unique(company_id, l10n_in_irn_number)',
+        'Irn number must be unique for bills per company.',
+    )
     @api.depends("country_code", "l10n_in_state_id", "company_id")
     def _compute_l10n_in_transaction_type(self):
         self.fetch(['country_code', 'l10n_in_state_id',"company_id"])
@@ -477,7 +481,7 @@ class AccountMove(models.Model):
             'context': {
                 'create': False, # If new button is clicked then below default values will be set again.
                 'default_ref': qr_json_data.get('DocNo'),
-                'default_l10n_in_irn_number': qr_json_data.get('Irn'),
+                'default_l10n_in_irn_number': qr_json_data.get('Irn') and qr_json_data['Irn'].lower() or False,
                 'default_journal_id': default_journal.id,
                 'default_invoice_date': datetime.strptime(qr_json_data.get('DocDt'), "%d/%m/%Y"),
                 'default_move_type': MOVE_TYPE_MAPPING.get(qr_json_data.get('DocTyp')),
