@@ -53,7 +53,10 @@ export class DocumentsDetailsPanel extends Component {
     }
 
     get userPermissionViewOnly() {
-        return this.record.data?.user_permission !== "edit";
+        return (
+            this.record.data?.user_permission !== "edit" ||
+            (!this.documentService.userIsDocumentManager && this.record.data?.is_company_root_folder)
+        );
     }
 
     get fileSize() {

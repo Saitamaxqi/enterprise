@@ -12,6 +12,7 @@ export class DocumentsDocument extends models.Model {
     favorited_ids = fields.Many2many({ string: "Name", relation: "res.users" });
     is_favorited = fields.Boolean({ string: "Name" });
     is_multipage = fields.Boolean({ string: "Is multipage" });
+    is_company_root_folder = fields.Boolean({ string: "Pinned to Company roots" });
     mimetype = fields.Char({ string: "Mimetype" });
     partner_id = fields.Many2one({ string: "Related partner", relation: "res.partner" });
     owner_id = fields.Many2one({ string: "Owner", relation: "res.users" });

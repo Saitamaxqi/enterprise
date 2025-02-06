@@ -62,6 +62,7 @@
                 <field name="res_model"/>
                 <field name="activity_state"/>
                 <field name="is_multipage"/>
+                <field name="is_company_root_folder" invisible="1"/>
                 <field name="thumbnail_status"/>
                 <field name="user_permission"/>
                 <field name="access_token"/>
@@ -355,6 +356,7 @@
                   decoration-info="shortcut_document_id"
                   sample="1" default_order="is_folder, create_date DESC, id DESC">
                 <field name="is_favorited" widget="boolean_favorite" nolabel="1"/>
+                <field name="is_company_root_folder" column_invisible="1"/>
                 <field name="type" width="25px" widget="documents_type_icon" nolabel="1" optional="show"/>
                 <field name="name" required="True" readonly="False"/>
                  <!-- before 18.2, assume only folder_id.id is available (column_invisible = True) -->
