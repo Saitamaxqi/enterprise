@@ -374,21 +374,20 @@ test("open same record when leaving form", async () => {
     expect(".o_form_view .o_field_widget[name=name] input").toHaveValue("Applejack");
 });
 
-// TODO JUM whitelist module for web and web_enterprise
-test.todo("open Studio with non editable view", async () => {
+test("open Studio with non editable view", async () => {
+    onRpc("grid_unavailability", () => ({}));
+
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
 
     await click(".o_app[data-menu-xmlid=app_1]");
     await waitFor(".o_kanban_view");
 
-    await contains(".o_switch_view.o_grid").click();
+    await click(".o_switch_view.o_grid");
     await waitFor(".o_grid_view");
 
-    await contains(".o_web_studio_navbar_item button").click();
-    await waitFor(".o_web_studio_editor_manager");
-
-    expect(".o_web_studio_action_editor").toHaveCount(1);
+    await click(".o_web_studio_navbar_item button");
+    await waitFor(".o_web_studio_action_editor");
 });
 
 test("open list view with sample data gives empty list view in studio", async () => {

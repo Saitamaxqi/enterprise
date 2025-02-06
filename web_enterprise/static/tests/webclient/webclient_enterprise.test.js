@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { click, queryAll, queryFirst } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
+import { animationFrame, mockMatchMedia } from "@odoo/hoot-mock";
 import { Component, onMounted, xml } from "@odoo/owl";
 import {
+    clearRegistry,
     contains,
     defineActions,
     defineMenus,
@@ -605,6 +606,7 @@ test("url state is well handled when going in and out of the HomeMenu", async ()
     expect(browser.location.href).toBe("http://example.com/odoo/action-1002");
 });
 
+test.tags("desktop");
 test("underlying action's menu items are invisible when HomeMenu is displayed", async () => {
     defineMenus([
         {
@@ -708,45 +710,33 @@ test("Apps are reordered at startup based on session's user settings", async () 
     expect(apps[1]).toHaveText("App1", { message: "second displayed app is App1" });
 });
 
-// TODO: JUM
-test.skip("Share URL item is present in the user menu when running as PWA", async () => {
-    patchWithCleanup(browser, {
-        matchMedia(media) {
-            if (media === "(display-mode: standalone)") {
-                return { matches: true };
-            } else {
-                super.matchMedia(...arguments);
-            }
-        },
-    });
-
+test.tags("desktop");
+test("Share URL item is present in the user menu when running as PWA", async () => {
+    mockMatchMedia({ ["display-mode"]: "standalone" });
+    clearRegistry(registry.category("user_menuitems"));
+    // This service adds a "Dark Mode" item to the user menu items on start
+    registry.category("services").remove("color_scheme");
     registry.category("user_menuitems").add("share_url", shareUrlMenuItem);
+
     await mountWithCleanup(UserMenu);
     await contains(".o_user_menu button").click();
+
     expect(".o-dropdown--menu .dropdown-item").toHaveCount(1);
-    expect(".o-dropdown--menu .dropdown-item span").toHaveText("Share", {
-        message: "share button is visible",
-    });
+    expect(".o-dropdown--menu .dropdown-item").toHaveText("Share");
 });
 
-// TODO: JUM
-test.skip("Share URL item is not present in the user menu when not running as PWA", async () => {
-    patchWithCleanup(browser, {
-        matchMedia(media) {
-            if (media === "(display-mode: standalone)") {
-                return { matches: false };
-            } else {
-                super.matchMedia(...arguments);
-            }
-        },
-    });
-
+test.tags("desktop");
+test("Share URL item is not present in the user menu when not running as PWA", async () => {
+    mockMatchMedia({ ["display-mode"]: "browser" });
+    clearRegistry(registry.category("user_menuitems"));
+    // This service adds a "Dark Mode" item to the user menu items on start
+    registry.category("services").remove("color_scheme");
     registry.category("user_menuitems").add("share_url", shareUrlMenuItem);
+
     await mountWithCleanup(UserMenu);
     await contains(".o_user_menu button").click();
-    expect(".o-dropdown--menu .dropdown-item").toHaveCount(0, {
-        message: "share button is not visible",
-    });
+
+    expect(".o-dropdown--menu .dropdown-item").not.toHaveCount();
 });
 
 test("Navigate to an application from the HomeMenu should generate only one pushState", async () => {

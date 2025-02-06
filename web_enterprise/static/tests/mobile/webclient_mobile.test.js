@@ -1,17 +1,15 @@
 import { describe, expect, test } from "@odoo/hoot";
 import { click, queryFirst } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
+import { animationFrame, mockMatchMedia } from "@odoo/hoot-mock";
 import {
     defineActions,
     defineModels,
-    getService,
     fields,
+    getService,
     models,
     mountWithCleanup,
-    patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
 
-import { browser } from "@web/core/browser/browser";
 import { UserMenu } from "@web/webclient/user_menu/user_menu";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 
@@ -110,20 +108,16 @@ test("scroll position is kept", async () => {
 });
 
 test("Share URL item is not present in the user menu when screen is small", async () => {
-    patchWithCleanup(browser, {
-        matchMedia: (media) => {
-            if (media === "(display-mode: standalone)") {
-                return { matches: true };
-            }
-            return this.super();
-        },
-    });
+    mockMatchMedia({ ["display-mode"]: "standalone" });
 
     await mountWithCleanup(UserMenu);
+
     expect(".o_user_menu").toHaveCount(1);
     queryFirst(".o_user_menu").classList.remove("d-none");
+
     await click(".o_user_menu button");
     await animationFrame();
+
     expect(".o_user_menu .dropdown-item").toHaveCount(0, {
         message: "share button is not visible",
     });
