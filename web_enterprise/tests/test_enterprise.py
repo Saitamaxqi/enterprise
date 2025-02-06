@@ -51,6 +51,7 @@ class LoadMenusTests(HttpCase):
                 "webIcon": False,
                 "webIconData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+BCQAHBQICJmhD1AAAAABJRU5ErkJggg==",
                 "webIconDataMimetype": "image/png",
+                "webInvisible": False,
                 "xmlid": "",
             },
             str(self.menu_child.id): {
@@ -64,6 +65,7 @@ class LoadMenusTests(HttpCase):
                 "webIcon": False,
                 "webIconData": False,
                 "webIconDataMimetype": False,
+                "webInvisible": False,
                 "xmlid": "",
             },
             "root": {
@@ -78,6 +80,7 @@ class LoadMenusTests(HttpCase):
                 "webIcon": None,
                 "webIconData": None,
                 "webIconDataMimetype": None,
+                "webInvisible": False,
                 "xmlid": "",
             },
         }
