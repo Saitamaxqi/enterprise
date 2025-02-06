@@ -3,7 +3,7 @@ import { useService } from "@web/core/utils/hooks";
 import { SignTemplateIframe } from "./sign_template_iframe";
 import { SignTemplateTopBar } from "./sign_template_top_bar";
 import { Component, useRef, useEffect, onWillUnmount, useState, useExternalListener } from "@odoo/owl";
-import { buildPDFViewerURL } from "@sign/components/sign_request/utils";
+import { buildPDFViewerURL , injectPDFCustomStyles } from "@sign/components/sign_request/utils";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { hidePDFJSButtons } from "@web/core/utils/pdfjs";
 import { useSetupAction } from "@web/search/action_hook";
@@ -86,7 +86,10 @@ export class SignTemplateBody extends Component {
     }
 
     waitForPDF() {
-        this.PDFIframe.el.onload = () => setTimeout(() => this.doPDFPostLoad(), 1);
+        this.PDFIframe.el.onload = () => {
+            injectPDFCustomStyles(this.PDFIframe.el.contentDocument);
+            setTimeout(() => this.doPDFPostLoad(), 1);
+        };
     }
 
     async discardChanges() {

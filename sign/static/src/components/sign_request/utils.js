@@ -266,5 +266,16 @@ export function buildPDFViewerURL(attachmentLocation, isSmall) {
         .replace(/'/g, "%27")
         .replace(/"/g, "%22");
     const zoom = isSmall ? "page-fit" : "page-width";
-    return `${baseURL}?unique=${date}&file=${attachmentLocation}#page=1&zoom=${zoom}`;
+    return `${baseURL}?unique=${date}&file=${attachmentLocation}#page=1&zoom=${zoom}&pagemode=thumbs`;
 }
+
+export function injectPDFCustomStyles(iframeDoc) {
+    /* Apply custom styles for documents's PDF viewers as early as possible
+    to minimize the visibility of default PDF.js styles during rendering. */
+    const link = iframeDoc.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = '/sign/static/src/css/pdfjs_overrides.css';
+    iframeDoc.head.appendChild(link);
+}
+
