@@ -349,6 +349,11 @@ class TestReportsCommon(TestMrpAccount):
         cost_analysis = self.env['report.mrp_account_enterprise.mrp_cost_structure'].get_lines(no_backorder_mo_done)
         self.assertEqual(cost_analysis[0]['mo_qty'], 1)
         self.assertEqual(cost_analysis[0]['total_cost'], 20)
+        # Test that cost analysis is correct when multiple MOs are grouped
+        cost_analysis = self.env['report.mrp_account_enterprise.mrp_cost_structure'].get_lines(no_backorder_mo_done | mo_done)
+        self.assertEqual(cost_analysis[0]['mo_qty'], 6)
+        self.assertEqual(cost_analysis[0]['total_cost'], 120)
+        self.assertEqual(cost_analysis[0]['total_cost_components'], 120)
 
     def test_scrap_is_in_report(self):
         """

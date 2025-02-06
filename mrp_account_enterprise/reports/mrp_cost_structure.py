@@ -100,7 +100,6 @@ class ReportMrp_Account_EnterpriseMrp_Cost_Structure(models.AbstractModel):
                 total_cost_by_product[product] += total_cost_by_mo[m.id] * cost_share
                 component_cost_by_product[product] += component_cost_by_mo[m.id] * cost_share
                 operation_cost_by_product[product] += operation_cost_by_mo[m.id] * cost_share
-                mo_qty = 0
                 for move in m.move_finished_ids:
                     if move.state != 'done' or move.product_id != product:
                         continue
