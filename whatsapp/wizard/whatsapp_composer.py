@@ -233,7 +233,7 @@ class WhatsappComposer(models.TransientModel):
                     _("User phone number required in template but no value set on user profile.")
                 )
         free_text_json = self._get_text_free_json()
-        message_vals = []
+        message_vals_all = []
         raise_exception = not (self.batch_mode or force_create)
         for rec in records:
             mobile_number = rec._find_value_from_field_path(self.wa_template_id.phone_field) if self.batch_mode else self.phone
@@ -242,9 +242,14 @@ class WhatsappComposer(models.TransientModel):
                 force_format="WHATSAPP",
                 raise_exception=raise_exception,
             )
-            # Continue to the next iteration if the formatted_number_wa is False and not forced to send by cron parameter.
-            if not (formatted_number_wa or force_create):
-                continue
+
+            message_vals = {}
+
+            if not formatted_number_wa:
+                message_vals.update({
+                    'failure_type': 'phone_invalid',
+                    'state': 'error',
+                })
 
             body = self._get_html_preview_whatsapp(rec=rec)
             post_values = {
@@ -260,7 +265,7 @@ class WhatsappComposer(models.TransientModel):
                     dict(post_values, res_id=rec.id, model=self.res_model,
                          subtype_id=self.env['ir.model.data']._xmlid_to_res_id("mail.mt_note"))
                 )
-            message_vals.append({
+            message_vals_all.append(message_vals | {
                 'mail_message_id': message.id,
                 'mobile_number': mobile_number,
                 'mobile_number_formatted': formatted_number_wa,
@@ -268,8 +273,8 @@ class WhatsappComposer(models.TransientModel):
                 'wa_template_id': self.wa_template_id.id,
                 'wa_account_id': self.wa_template_id.wa_account_id.id,
             })
-        if message_vals:
-            messages = self.env['whatsapp.message'].create(message_vals)
+        if message_vals_all:
+            messages = self.env['whatsapp.message'].create(message_vals_all)
             return messages
         return self.env["whatsapp.message"]
 

@@ -413,3 +413,94 @@ class WhatsAppComposerRendering(WhatsAppComposerCase, WhatsAppFullCase, CronMixi
                     attachment_values=exp_att_values,
                     fields_values=fields_values,
                 )
+
+
+@tagged('wa_composer')
+class WhatsAppComposerSending(WhatsAppFullCase, WhatsAppComposerCase):
+
+    def test_composer_send_duplicates(self):
+        """Check that duplicate messages are detected and cancelled properly.
+
+            A message is considered a duplicate if:
+            - They use the same template
+            - It does not contain a report
+            - All of the variables of the template are equal
+            - Regardless of static attachments (which should be the same for the same template)
+        """
+        self.template_dynamic.write({
+            'header_attachment_ids': [(6, 0, self.document_attachment.ids)],
+            'header_type': 'document',
+        })
+        composer = self.env['whatsapp.composer'].create({
+            'batch_mode': True,
+            'res_ids': self.test_base_records.ids,
+            'res_model': self.test_base_records._name,
+            'wa_template_id': self.template_basic.id,
+        })
+
+        def setup_and_send(init_state):
+            for idx, rec in enumerate(self.test_base_records):
+                rec.phone = init_state['phones'][idx]
+                rec.name = init_state['names'][idx]
+            with self.mockWhatsappGateway():
+                for template in init_state['templates']:
+                    composer.wa_template_id = template
+                    composer.action_send_whatsapp_template()
+                self._new_wa_msg._send_message()
+
+        static_template = self.template_basic
+        dynamic_template = self.template_dynamic
+        dynamic_template_copy = self.template_dynamic.copy(default={'status': 'approved'})
+        report_template = self.template_dynamic.copy(default={
+            'header_type': 'document',
+            'template_name': 'test_report_template',
+            'report_id': self.test_wa_base_report.id,
+            'status': 'approved',
+        })
+
+        diff_phone = ['+32499123456', '0485221100']
+        same_phone = ['+91 12345 67891', '911234567891']
+        diff_name = ["Some Name", "Some (Other) Name"]
+        same_name = ["Same Name", "Same Name"]
+        init_states = [
+            {'phones': diff_phone, 'names': diff_name, 'templates': [static_template]},
+            {'phones': same_phone, 'names': diff_name, 'templates': [static_template]},
+            {'phones': same_phone, 'names': diff_name, 'templates': [dynamic_template]},
+            {'phones': same_phone, 'names': same_name, 'templates': [dynamic_template]},
+        ]
+        expected_vals_all = [
+            {'statuses': ['sent', 'sent']},
+            {'statuses': ['sent', 'cancel']},
+            {'statuses': ['sent', 'sent']},
+            {'statuses': ['sent', 'cancel']},
+        ]
+        for init_state, expected_vals in zip(init_states, expected_vals_all):
+            with self.subTest():
+                setup_and_send(init_state)
+                for rec, status in zip(self.test_base_records, expected_vals['statuses']):
+                    self.assertWAMessageFromRecord(rec, status=status)
+
+        # same number, same dynamic body, different templates
+        # different templates are always considered different
+        with self.subTest():
+            setup_and_send({'phones': same_phone, 'names': same_name, 'templates': [
+                dynamic_template, dynamic_template_copy
+            ]})
+            # check manually as assertWAMessage methods can't differenciate duplicate messages...
+            state_by_res_id = {
+                res_id: messages.mapped('state')
+                for res_id, messages
+                in self._new_wa_msg.grouped(lambda wm: wm.mail_message_id.res_id).items()
+            }
+            self.assertListEqual(state_by_res_id[self.test_base_records[0].id], ['sent'] * 2)
+            self.assertListEqual(state_by_res_id[self.test_base_records[1].id], ['cancel'] * 2)
+
+        # same number same dynamic body with report
+        composer.wa_template_id = self.template_dynamic
+        with self.subTest():
+            setup_and_send({'phones': same_phone, 'names': same_name, 'templates': [report_template]})
+            self.assertWAMessageFromRecord(self.test_base_records[0])
+            self.assertWAMessageFromRecord(self.test_base_records[1])
+            mail_messages = self._new_wa_msg.mail_message_id
+            # both notified even though they have the same result
+            self.assertEqual(mail_messages[0].attachment_ids.checksum, mail_messages[1].attachment_ids.checksum)
