@@ -44,9 +44,6 @@ class MailingMailing(models.Model):
         return res
 
     def _get_link_tracker_values(self):
-        # We don't want to create link trackers for tests
-        if self.env.context.get('active_model') == 'marketing.campaign.test':
-            return {}
         res = super()._get_link_tracker_values()
         if self.env.context.get('default_marketing_activity_id'):
             activity = self.env['marketing.activity'].browse(self.env.context['default_marketing_activity_id'])

@@ -47,6 +47,15 @@ class MarketingCampaignTest(models.TransientModel):
 
     def action_launch_test(self):
         """ Create test participant based on user choice. """
+        previous_test_participants = self.env['marketing.participant'].search([
+            ('campaign_id', '=', self.campaign_id.id),
+            ('is_test', '=', True),
+            ('model_name', '=', self.model_name),
+            ('res_id', '=', self.res_id),
+            ('state', '=', 'running'),
+        ])
+        if previous_test_participants:
+            previous_test_participants._action_set_completed(trace_message=_('Another test has been launched for this participant'))
         participant = self.env['marketing.participant'].create({
             'campaign_id': self.campaign_id.id,
             'res_id': self.res_id,

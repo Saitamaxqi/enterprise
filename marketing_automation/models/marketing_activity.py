@@ -251,7 +251,7 @@ class MarketingActivity(models.Model):
         return super(MarketingActivity, self).copy_data(default=default)
 
     def write(self, values):
-        if any(field in values.keys() for field in ('interval_number', 'interval_type')):
+        if any(activity.campaign_id.state == 'running' for activity in self) and any(field in values for field in ('interval_number', 'interval_type')):
             values['require_sync'] = True
         return super(MarketingActivity, self).write(values)
 
