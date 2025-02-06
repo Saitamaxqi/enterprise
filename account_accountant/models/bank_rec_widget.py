@@ -248,7 +248,7 @@ class BankRecWidget(models.Model):
             return
 
         if isinstance(details, str):
-            details = json.loads(details)
+            details = json.loads(details, strict=False)
 
         def node_to_html(header, node):
             if not node:
