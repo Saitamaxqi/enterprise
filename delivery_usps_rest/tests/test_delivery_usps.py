@@ -24,21 +24,26 @@ class TestDeliveryUSPS(TransactionCase):
         })
 
         self.your_company = self.env.ref('base.main_partner')
-        self.agrolait = self.env.ref('base.res_partner_2')
-        self.agrolait.write({'street': "rue des Bourlottes, 9",
-                             'street2': "",
-                             'city': "Ramillies",
-                             'zip': 1367,
-                             'state_id': False,
-                             'country_id': self.env.ref('base.be').id})
-        self.think_big_system = self.env.ref('base.res_partner_18')
-        self.think_big_system.write({'phone': 3132223456,
-                                     'street': '1 Infinite Loop',
-                                     'street2': 'Tower 2',
-                                     'city': 'Cupertino',
-                                     'state_id': self.env.ref('base.state_us_13').id,
-                                     'country_id': self.env.ref('base.us').id,
-                                     'zip': '95014-2083'})
+        self.agrolait = self.env['res.partner'].create({
+            'name': 'Agrolait',
+            'phone': '(603)-996-3829',
+            'street': "rue des Bourlottes, 9",
+            'street2': "",
+            'city': "Ramillies",
+            'zip': 1367,
+            'state_id': False,
+            'country_id': self.env.ref('base.be').id,
+        })
+        self.think_big_system = self.env['res.partner'].create({
+            'name': 'Think Big Systems',
+            'phone': 3132223456,
+            'street': '1 Infinite Loop',
+            'street2': 'Tower 2',
+            'city': 'Cupertino',
+            'state_id': self.env.ref('base.state_us_13').id,
+            'country_id': self.env.ref('base.us').id,
+            'zip': '95014-2083'
+        })
 
         self.delivery_usps_domestic = self.env.ref('delivery_usps_rest.delivery_carrier_usps_domestic')
         self.delivery_usps_international = self.env.ref('delivery_usps_rest.delivery_carrier_usps_international')
@@ -400,7 +405,7 @@ JVBERi0xLjQKJaqrrK0KMSAwIG9iago8PAovUHJvZHVjZXIgKEFwYWNoZSBGT1AgVmVyc2lvbiBTVk46
         yield
 
 
-@tagged('standard', '-external')
+@tagged('-standard', 'external')
 class TestMockedDeliveryUSPS(TestDeliveryUSPS):
 
     def test_01_usps_basic_us_domestic_flow(self):

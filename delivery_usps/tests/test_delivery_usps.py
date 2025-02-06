@@ -29,21 +29,26 @@ class TestDeliveryUSPS(TransactionCase):
                                  'street': '51 Federal Street',
                                  'zip': '94107',
                                  'phone': 9874582356})
-        self.agrolait = self.env.ref('base.res_partner_2')
-        self.agrolait.write({'street': "rue des Bourlottes, 9",
-                             'street2': "",
-                             'city': "Ramillies",
-                             'zip': 1367,
-                             'state_id': False,
-                             'country_id': self.env.ref('base.be').id})
-        self.think_big_system = self.env.ref('base.res_partner_18')
-        self.think_big_system.write({'phone': 3132223456,
-                                     'street': '1 Infinite Loop',
-                                     'street2': 'Tower 2',
-                                     'city': 'Cupertino',
-                                     'state_id': self.env.ref('base.state_us_13').id,
-                                     'country_id': self.env.ref('base.us').id,
-                                     'zip': '95014-2083'})
+        self.agrolait = self.env['res.partner'].create({
+            'name': 'Agrolait',
+            'phone': '(603)-996-3829',
+            'street': "rue des Bourlottes, 9",
+            'street2': "",
+            'city': "Ramillies",
+            'zip': 1367,
+            'state_id': False,
+            'country_id': self.env.ref('base.be').id,
+        })
+        self.think_big_system = self.env['res.partner'].create({
+            'name': 'Think Big Systems',
+            'phone': 3132223456,
+            'street': '1 Infinite Loop',
+            'street2': 'Tower 2',
+            'city': 'Cupertino',
+            'state_id': self.env.ref('base.state_us_13').id,
+            'country_id': self.env.ref('base.us').id,
+            'zip': '95014-2083'
+        })
         # additional test address for Canada
         self.quebec = self.env.ref('base.state_ca_qc')
         self.montreal = self.env['res.partner'].create({'name': 'Vieux-Port de Montreal',
