@@ -209,12 +209,8 @@ class AccountWinbooksImportWizard(models.TransientModel):
             {'min': 160, 'max': 200, 'id': 'liability_non_current'},
             {'min': 200, 'max': 280, 'id': 'asset_non_current'},
             {'min': 280, 'max': 290, 'id': 'asset_fixed'},
-            {'min': 290, 'max': 400, 'id': 'asset_current'},
-            {'min': 400, 'max': 401, 'id': 'asset_receivable', 'reconcile': True},
-            {'min': 401, 'max': 420, 'id': 'asset_current'},
-            {'min': 420, 'max': 440, 'id': 'liability_current'},
-            {'min': 440, 'max': 441, 'id': 'liability_payable', 'reconcile': True},
-            {'min': 441, 'max': 490, 'id': 'liability_current'},
+            {'min': 290, 'max': 420, 'id': 'asset_current'},
+            {'min': 420, 'max': 490, 'id': 'liability_current'},
             {'min': 490, 'max': 492, 'id': 'asset_current'},
             {'min': 492, 'max': 500, 'id': 'liability_current'},
             {'min': 500, 'max': 600, 'id': 'asset_cash'},
@@ -255,10 +251,15 @@ class AccountWinbooksImportWizard(models.TransientModel):
                             account_code = 300  # set Current Asset by default for deprecated accounts
                         for account_type in account_types:
                             if account_code in range(account_type['min'], account_type['max']):
-                                data.update({
-                                    'account_type': account_type['id'],
-                                    'reconcile': account_type.get('reconcile', False)
-                                })
+                                if rec.get('CENTRALID', '').startswith('C'):
+                                    data['account_type'] = 'asset_receivable'
+                                    data['reconcile'] = True
+                                elif rec.get('CENTRALID', '').startswith('S'):
+                                    data['account_type'] = 'liability_payable'
+                                    data['reconcile'] = True
+                                else:
+                                    data['account_type'] = account_type['id']
+                                    data['reconcile'] = False
                                 break
                         # fallback for accounts not in range(100000,860000)
                         if not data.get('account_type'):
