@@ -377,7 +377,7 @@ class AccountReconcileWizard(models.TransientModel):
             amount_raw = sum(
                 (
                     residual_values[amls.company_currency_id]['residual']
-                    if aml in amls_where_amounts_at_correct_rate else
+                    if aml in amls_where_amounts_at_correct_rate and amls.company_currency_id in residual_values else
                     residual_values[wizard.reco_currency_id]['residual'] * rate
                 )
                 for aml, residual_values in residual_amounts.items()
