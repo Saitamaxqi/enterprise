@@ -6955,7 +6955,7 @@ class AccountReportLine(models.Model):
             line_id = self.report_id._get_generic_line_id(groupby_model, grouping_key, parent_line_id=line_dict_id, markup={'groupby': current_groupby})
             caret_option = None
             if not next_groupby:
-                caret_builder = custom_groupby_map.get('current_groupby', {}).get('caret_builder', {})
+                caret_builder = custom_groupby_map.get(current_groupby, {}).get('caret_builder', {})
                 if caret_builder:
                     caret_option = caret_builder(grouping_key)
                 else:
