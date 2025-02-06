@@ -51,7 +51,7 @@ class OnlineSynchronizationPortal(CustomerPortal):
         if not journal_sudo.account_online_link_id:
             raise request.not_found()
         try:
-            journal_sudo.account_online_link_id._get_consent_expiring_date()
+            journal_sudo.account_online_link_id._update_connection_status()
             journal_sudo.manual_sync()
         except UserError:
             pass

@@ -95,8 +95,8 @@ class TestSynchStatementCreation(AccountOnlineSynchronizationCommon):
         )
 
     @patch('odoo.addons.account_online_synchronization.models.account_online.AccountOnlineLink._fetch_transactions')
-    @patch('odoo.addons.account_online_synchronization.models.account_online.AccountOnlineLink._get_consent_expiring_date')
-    def test_automatic_journal_assignment(self, patched_get_consent, patched_fetch_transactions):
+    @patch('odoo.addons.account_online_synchronization.models.account_online.AccountOnlineLink._update_connection_status')
+    def test_automatic_journal_assignment(self, patched_update_connection_status, patched_fetch_transactions):
         def create_online_account(name, link_id, iban, currency_id):
             return self.env['account.online.account'].create({
                 'name': name,
@@ -131,7 +131,11 @@ class TestSynchStatementCreation(AccountOnlineSynchronizationCommon):
         online_account_3 = create_online_account('OnlineAccount3', self.account_online_link.id, 'BE23798242487495', self.other_currency.id)
 
         patched_fetch_transactions.return_value = True
-        patched_get_consent.return_value = True
+        patched_update_connection_status.return_value = {
+            'consent_expiring_date': None,
+            'is_payment_enabled': False,
+            'is_payment_activated': False,
+        }
 
         account_link_journal_wizard = self.env['account.bank.selection'].create({'account_online_link_id': self.account_online_link.id})
         account_link_journal_wizard.with_context(active_model='account.journal', active_id=bank_journal_with_account_gol.id).sync_now()

@@ -7,5 +7,5 @@ class OdoofinWebhooksController(Controller):
     def odoofin_write_authorization_expiring_date(self):
         data = request.get_json_data()
         if link := request.env['account.online.link'].sudo().search([('client_id', '=', data.get('client_id'))], limit=1):
-            link._get_consent_expiring_date()
+            link._update_connection_status()
         return True

@@ -16,7 +16,7 @@ class AccountBatchPayment(models.Model):
 
     payment_identifier = fields.Char(string='Batch ID', readonly=True)
     payment_online_status = fields.Selection(selection=STATUSES, string='PIS Status', default='uninitiated', readonly=True)
-    account_online_linked = fields.Boolean(compute='_compute_account_online_linked', search='_search_account_online_linked')
+    account_online_link_payments_enabled = fields.Boolean(compute='_compute_account_online_link_payments_enabled')
 
     def initiate_payment(self):
         """
@@ -46,7 +46,7 @@ class AccountBatchPayment(models.Model):
         return self.with_context(xml_export=False).validate_batch()
 
     def validate_batch(self):
-        if not self.payment_method_code == 'sepa_ct' or not self.account_online_linked or self._context.get('xml_export'):
+        if not self.payment_method_code == 'sepa_ct' or not self.account_online_link_payments_enabled or self._context.get('xml_export'):
             return super().validate_batch()
 
         action = self._check_batch_validity()
@@ -106,7 +106,7 @@ class AccountBatchPayment(models.Model):
         to_be_exported = self.env['account.batch.payment']
 
         for record in self:
-            if record.payment_method_code == 'sepa_ct' and record.account_online_linked and not self.env.context.get('xml_export'):
+            if record.payment_method_code == 'sepa_ct' and record.account_online_link_payments_enabled and not self.env.context.get('xml_export'):
                 continue
             to_be_exported += record
 
@@ -143,22 +143,14 @@ class AccountBatchPayment(models.Model):
         self.env['account.batch.payment'].search([
             ('state', '!=', 'reconciled'),
             ('payment_method_code', '=', 'sepa_ct'),
-            ('account_online_linked', '=', 'True'),
+            ('journal_id.account_online_link_id.is_payment_activated', '=', 'True'),
             ('payment_online_status', 'in', ('unsigned', 'pending')),
         ]).check_online_payment_status()
 
     @api.depends('journal_id.account_online_link_id')
-    def _compute_account_online_linked(self):
+    def _compute_account_online_link_payments_enabled(self):
         for batch in self:
-            batch.account_online_linked = bool(batch.journal_id.account_online_link_id)
-
-    def _search_account_online_linked(self, operator, value):
-        assert operator in ('=', '!=')
-
-        if (value and operator == '=') or (operator == '!=' and not value):
-            return [('journal_id.account_online_link_id', '!=', False)]
-        elif (not value and operator == '=') or (operator == '!=' and value):
-            return [('journal_id.account_online_link_id', '=', False)]
+            batch.account_online_link_payments_enabled = batch.journal_id.account_online_link_id.is_payment_enabled
 
     def _prepare_payment_data(self):
         self.ensure_one()

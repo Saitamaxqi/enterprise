@@ -161,8 +161,8 @@ class AccountOnlineAccount(models.Model):
         if self.account_number and not self.journal_ids.bank_acc_number:
             journal_vals['bank_acc_number'] = self.account_number
         self.journal_ids.write(journal_vals)
-        # Get consent expiration date and create an activity on related journal
-        self.account_online_link_id._get_consent_expiring_date()
+        # Update connection status and get consent expiration date and create an activity on related journal
+        self.account_online_link_id._update_connection_status()
 
         # Set last_sync date (date of latest statement or accounting lock date or False)
         lock_date = self.env.company._get_user_fiscal_lock_date(journal)
@@ -616,7 +616,7 @@ class AccountOnlineLink(models.Model):
                 # error would lose the new refresh_token hence blocking the account ad vitam eternam
                 self.env.cr.commit()
                 if self.journal_ids:  # We can't do it unless we already have a journal
-                    self._get_consent_expiring_date()
+                    self._update_connection_status()
                 return self._fetch_odoo_fin(url, data, ignore_status)
             elif error.get('code') == 300:  # redirect, not an error
                 raise OdooFinRedirectException(mode=error.get('data', {}).get('mode', 'link'))
@@ -888,12 +888,11 @@ class AccountOnlineLink(models.Model):
         except OdooFinRedirectException as e:
             return self._handle_odoofin_redirect_exception(mode=e.mode)
 
-    def _get_consent_expiring_date(self):
+    def _update_expiring_date(self, data):
         self.ensure_one()
-        resp_json = self._fetch_odoo_fin('/proxy/v1/consent_expiring_date', ignore_status=True)
 
-        if resp_json.get('consent_expiring_date'):
-            expiring_synchronization_date = fields.Date.to_date(resp_json['consent_expiring_date'])
+        if data.get('consent_expiring_date'):
+            expiring_synchronization_date = fields.Date.to_date(data['consent_expiring_date'])
             if expiring_synchronization_date != self.expiring_synchronization_date:
                 bank_sync_activity_type_id = self.env.ref('account_online_synchronization.bank_sync_activity_update_consent')
                 account_journal_model_id = self.env['ir.model']._get_id('account.journal')
@@ -916,7 +915,7 @@ class AccountOnlineLink(models.Model):
                         'res_model_id': account_journal_model_id,
                         'date_deadline': self.expiring_synchronization_date,
                         'summary': _("Bank Synchronization: Update your consent"),
-                        'note': resp_json.get('activity_message') or '',
+                        'note': data.get('activity_message') or '',
                         'activity_type_id': bank_sync_activity_type_id.id,
                     })
                 self.env['mail.activity'].create(new_activity_vals)
@@ -924,6 +923,15 @@ class AccountOnlineLink(models.Model):
             # Avoid an infinite "expired synchro" if the provider
             # doesn't send us a new consent expiring date
             self.expiring_synchronization_date = None
+
+    def _update_connection_status(self):
+        self.ensure_one()
+        resp_json = self._fetch_odoo_fin('/proxy/v2/connection_status', ignore_status=True)
+
+        self._update_expiring_date(resp_json)
+
+        # Returning what we receive from Odoo Fin to allow function extension
+        return resp_json
 
     def _authorize_access(self, data_access_token):
         """
@@ -978,7 +986,7 @@ class AccountOnlineLink(models.Model):
             if data.get('provider_data'):
                 self.env.cr.commit()
 
-            self._get_consent_expiring_date()
+            self._update_connection_status()
         # if for some reason we just have to update the record without doing anything else, the mode will be set to 'none'
         if mode == 'none':
             return {'type': 'ir.actions.client', 'tag': 'reload'}
