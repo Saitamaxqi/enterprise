@@ -13,11 +13,13 @@ from odoo.addons.hr_payroll_account.tests.test_hr_payroll_account import TestHrP
 
 
 @tagged('post_install', '-at_install')
-class TestPayrollExpense(TestExpenseCommon, TestHrPayrollAccountCommon):
+class TestPayrollExpense(TestHrPayrollAccountCommon, TestExpenseCommon):
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=[cls.company_data['company'].id]))
 
         cls.payslip_run.company_id = cls.company_data['company'].id
 
@@ -82,7 +84,10 @@ class TestPayrollExpense(TestExpenseCommon, TestHrPayrollAccountCommon):
                 'code': '654323',
                 'account_type': 'liability_payable',
             })
-        cls.expense_payslip_journal = cls.account_journal.copy({
+        cls.expense_payslip_journal = cls.env['account.journal'].create({
+            'name': 'EXPENSE',
+            'code': 'EXP',
+            'type': 'general',
             'company_id': cls.company_data['company'].id,
             'default_account_id': cls.expense_payable_account.id
         })

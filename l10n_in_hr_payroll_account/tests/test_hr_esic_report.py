@@ -16,15 +16,6 @@ from odoo.tests import tagged
 @tagged('post_install_l10n', 'post_install', '-at_install')
 class TestHrESICReport(TestPayrollAccountCommon):
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.company_india = cls.env['res.company'].create({
-            'name': "Indian Company",
-            'country_id': cls.env.ref('base.in').id,
-        })
-        cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company_india.ids))
-
     def test_hr_esic_report(self):
         """ Check reminder activity is set the for probation contract
         Test Case

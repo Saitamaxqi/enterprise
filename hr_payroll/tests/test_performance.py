@@ -14,6 +14,8 @@ class TestPayrollPerformance(TestPayslipBase):
         super().setUpClass()
         cls.jack = cls.env['hr.employee'].create({'name': 'Jack'})
         cls.employees = cls.richard_emp | cls.jack
+        cls.user_admin = cls.env.ref('base.user_admin')
+        cls.user_admin.company_ids |= cls.company_us
 
         cls.env['hr.contract'].create([{
             'date_start': date(2018, 1, 1),
@@ -48,7 +50,7 @@ class TestPayrollPerformance(TestPayslipBase):
         work_entry = self.create_work_entry(datetime(2018, 1, 1, 7, 0), datetime(2018, 1, 1, 12, 0))
         self.create_work_entry(datetime(2018, 1, 1, 11, 0), datetime(2018, 1, 1, 17, 0))
 
-        with self.assertQueryCount(__system__=11, admin=12):
+        with self.assertQueryCount(__system__=11, admin=13):
             work_entry.unlink()
 
     @users('__system__', 'admin')
@@ -57,7 +59,7 @@ class TestPayrollPerformance(TestPayslipBase):
         work_entry = self.create_work_entry(datetime(2018, 1, 1, 3, 0), datetime(2018, 1, 1, 4, 0))
         self.create_work_entry(datetime(2018, 1, 1, 11, 0), datetime(2018, 1, 1, 17, 0))
 
-        with self.assertQueryCount(__system__=6, admin=7):
+        with self.assertQueryCount(__system__=6, admin=8):
             work_entry.write({'date_stop': datetime(2018, 1, 1, 13, 0)})
 
     @users('__system__', 'admin')
@@ -67,7 +69,7 @@ class TestPayrollPerformance(TestPayslipBase):
         work_entry_2 = self.create_work_entry(datetime(2018, 1, 1, 7, 0), datetime(2018, 1, 1, 11, 0))
         self.create_work_entry(datetime(2018, 1, 1, 11, 0), datetime(2018, 1, 1, 17, 0))
 
-        with self.assertQueryCount(__system__=6, admin=7):
+        with self.assertQueryCount(__system__=6, admin=8):
             (work_entry_1 | work_entry_2).write({'date_stop': datetime(2018, 1, 1, 13, 0)})
 
     @users('__system__', 'admin')

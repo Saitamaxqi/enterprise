@@ -17,7 +17,9 @@ class TestHrPayrollAccountCommon(TestPayslipContractBase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestHrPayrollAccountCommon, cls).setUpClass()
+        super().setUpClass()
+
+        cls.env['account.chart.template'].try_loading('generic_coa', company=cls.company_us, install_demo=False)
 
         cls.work_contact = cls.env['res.partner'].create({'name': 'A work contact'})
         cls.work_address = cls.env['res.partner'].create({'name': 'A work address'})
@@ -27,8 +29,6 @@ class TestHrPayrollAccountCommon(TestPayslipContractBase):
             'address_id': cls.work_address.id,
             'birthday': '1984-05-01',
             'children': 0.0,
-            'country_id': cls.env.ref('base.in').id,
-            # 'department_id': cls.ref('hr.dep_rd'),
             'gender': 'male',
             'marital': 'single',
             'name': 'John',
@@ -39,8 +39,6 @@ class TestHrPayrollAccountCommon(TestPayslipContractBase):
             'address_id': cls.work_address.id,
             'birthday': '1984-05-01',
             'children': 0.0,
-            'country_id': cls.env.ref('base.in').id,
-            # 'department_id': cls.ref('hr.dep_rd'),
             'gender': 'male',
             'marital': 'single',
             'name': 'Mark',
@@ -53,7 +51,7 @@ class TestHrPayrollAccountCommon(TestPayslipContractBase):
         })
 
         cls.hr_structure_softwaredeveloper = cls.env['hr.payroll.structure'].create({
-            'name': 'Salary Structure for Software Developer',
+            'name': 'Salary Structure for Software Developer Two',
             'rule_ids': [
                 (0, 0, {
                     'name': 'Professional Tax',
@@ -154,7 +152,8 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
         # I create a payslip employee.
         payslip_employee = self.env['hr.payslip.employees'].create({
-            'employee_ids': [(4, self.hr_employee_john.id), (4, self.hr_employee_mark.id)]
+            'selection_mode': 'employee',
+            'select_employee_ids': [(4, self.hr_employee_john.id), (4, self.hr_employee_mark.id)]
         })
 
         # I generate the payslip by clicking on Generate button wizard.
@@ -182,10 +181,10 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
     def test_01_hr_payslip_run(self):
         """ Checking the process of payslip run when you create payslip in a payslip run and you validate the payslip(s). """
-
         # I create a payslip employee.
         payslip_employee = self.env['hr.payslip.employees'].create({
-            'employee_ids': [(4, self.hr_employee_john.id), (4, self.hr_employee_mark.id)]
+            'selection_mode': 'employee',
+            'select_employee_ids': [(4, self.hr_employee_john.id), (4, self.hr_employee_mark.id)]
         })
 
         # I generate the payslip by clicking on Generate button wizard.
@@ -213,10 +212,10 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
     def test_02_hr_payslip(self):
         """ Checking the process of payslip run when you create payslip in a payslip run and you cancel the payslip(s). """
-
         # I create a payslip employee.
         payslip_employee = self.env['hr.payslip.employees'].create({
-            'employee_ids': [(4, self.hr_employee_john.id), (4, self.hr_employee_mark.id)]
+            'selection_mode': 'employee',
+            'select_employee_ids': [(4, self.hr_employee_john.id), (4, self.hr_employee_mark.id)]
         })
 
         # I generate the payslip by clicking on Generate button wizard.
@@ -244,10 +243,10 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
     def test_03_hr_payslip(self):
         """ Checking the process of payslip run when you create payslip in a payslip run and you cancel a payslip and confirm another. """
-
         # I create a payslip employee.
         payslip_employee = self.env['hr.payslip.employees'].create({
-            'employee_ids': [(4, self.hr_employee_john.id), (4, self.hr_employee_mark.id)]
+            'selection_mode': 'employee',
+            'select_employee_ids': [(4, self.hr_employee_john.id), (4, self.hr_employee_mark.id)]
         })
 
         # I generate the payslip by clicking on Generate button wizard.
@@ -281,10 +280,10 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
     def test_04_hr_payslip(self):
         """ Checking the process of payslip run when you create payslip in a payslip run and you cancel a payslip and after you confirm the payslip run. """
-
         # I create a payslip employee.
         payslip_employee = self.env['hr.payslip.employees'].create({
-            'employee_ids': [(4, self.hr_employee_john.id), (4, self.hr_employee_mark.id)]
+            'selection_mode': 'employee',
+            'select_employee_ids': [(4, self.hr_employee_john.id), (4, self.hr_employee_mark.id)]
         })
 
         # I generate the payslip by clicking on Generate button wizard.
@@ -318,7 +317,6 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
     def test_05_hr_payslip(self):
         """ Checking the process of payslip run when you create payslip run from a payslip and you validate it. """
-
         # I verify if the payslip has not already a payslip run.
         self.assertFalse(self.hr_payslip_john.payslip_run_id, 'There is already a payslip run!')
 
@@ -326,7 +324,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         self.hr_payslip_john.payslip_run_id = self.env['hr.payslip.run'].create({
             'date_end': '2011-09-30',
             'date_start': '2011-09-01',
-            'name': 'Payslip for Employee'
+            'name': 'Payslip for Employee',
         })
 
         # I validate the payslip.
@@ -343,7 +341,6 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
     def test_06_hr_payslip(self):
         """ Checking the process of payslip run when you create payslip run from a payslip and you validate the payslip run.  """
-
         # I verify if the payslip has not already a payslip run.
         self.assertFalse(self.hr_payslip_john.payslip_run_id, 'There is already a payslip run!')
 
@@ -351,7 +348,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         self.hr_payslip_john.payslip_run_id = self.env['hr.payslip.run'].create({
             'date_end': '2011-09-30',
             'date_start': '2011-09-01',
-            'name': 'Payslip for Employee'
+            'name': 'Payslip for Employee',
         })
         self.hr_payslip_john.compute_sheet()
 
@@ -369,7 +366,6 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
     def test_07_hr_payslip(self):
         """ Checking the process of payslip run when you create payslip run from a payslip and you cancel it.  """
-
         # I verify if the payslip has not already a payslip run.
         self.assertFalse(self.hr_payslip_john.payslip_run_id, 'There is already a payslip run!')
 
@@ -394,7 +390,6 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
     def test_08_hr_payslip(self):
         """ Checking the process of a payslip when you validate it and it has not a payslip run.  """
-
         # I verify if the payslip has not already a payslip run.
         self.assertFalse(self.hr_payslip_john.payslip_run_id, 'There is already a payslip run!')
 
@@ -411,11 +406,13 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         """Checking if taxes are added on a payslip accounting entry when there is a default tax on the journal"""
 
         # Create a default tax for the account on the salary rule.
+
         tax_account = self.env['account.account'].create({
             'name': 'Rental Tax',
             'code': '777777',
             'account_type': 'asset_current',
         })
+
         hra_tax = self.env['account.tax'].create({
             'name': "hra_tax",
             'amount_type': 'percent',
@@ -432,7 +429,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         })
 
         # Create a account for the HRA salary rule.
-        self.hra_account = self.env['account.account'].create({
+        hra_account = self.env['account.account'].create({
             'name': 'House Rental',
             'code': '654321',
             'account_type': 'income',
@@ -440,8 +437,8 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         })
 
         # Assign the account to the salary rule and the rule to the hr structure.
-        self.hra_rule.account_credit = self.hra_account
-        self.hra_rule.account_debit = self.hra_account
+        self.hra_rule.account_credit = hra_account
+        self.hra_rule.account_debit = hra_account
         self.hr_structure_softwaredeveloper.rule_ids = [(4, self.hra_rule.id)]
 
         self.hr_payslip_john.compute_sheet()
@@ -451,24 +448,23 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
         # Verify that the taxes are applied on hra move lines.
         for line in self.hr_payslip_john.move_id.line_ids:
-            if line.account_id.id == self.hra_account.id:
+            if line.account_id.id == hra_account.id:
                 self.assertEqual(line.tax_ids, hra_tax, 'The account default tax is not added to move lines!')
 
     def test_payslip_refund(self):
         """ Checking if refunding a payslip creates the correct invoice lines """
 
         # Create an account for the HRA salary rule
-        self.test_account = self.env['account.account'].create({
+        test_account = self.env['account.account'].create({
             'name': 'House Rental',
             'code': '654321',
             'account_type': 'income',
         })
 
         # Assign the account to the salary rule and the rule to the hr structure
-        self.hra_rule.account_credit = self.test_account
-        self.hra_rule.account_debit = self.test_account
+        self.hra_rule.account_credit = test_account
+        self.hra_rule.account_debit = test_account
         self.hr_structure_softwaredeveloper.rule_ids = [(4, self.hra_rule.id)]
-
         # Validate the payslip
         self.hr_payslip_john.compute_sheet()
         self.hr_payslip_john.action_payslip_done()
@@ -481,7 +477,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         # Verify that there are 2 invoice lines
         # 1. amount = -2000, credit = 2000, debit = 0
         # 2. amount = 2000, credit = 0, debit = 2000
-        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john._get_contract_wage()
+        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john.contract_id.wage
 
         self.assertEqual(len(invoice_lines), 2, 'There should be 2 invoice lines')
 
@@ -514,7 +510,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         # Check that there are 2 invoice lines, and they are the inverse of the original payslip
         # 1. amount = -2000, credit = 2000, debit = 0
         # 2. amount = 2000, credit = 0, debit = 2000
-        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john._get_contract_wage()
+        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john.contract_id.wage
 
         self.assertEqual(len(invoice_lines), 2, 'There should be 2 invoice lines')
         self.assertEqual(invoice_lines[0].amount_currency, -line_amount)
@@ -529,15 +525,15 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         """ Checking if canceling a payslip unlinks the draft associated entry """
 
         # Create an account for the HRA salary rule
-        self.test_account = self.env['account.account'].create({
+        test_account = self.env['account.account'].create({
             'name': 'House Rental',
             'code': '654321',
             'account_type': 'income',
         })
 
         # Assign the account to the salary rule and the rule to the hr structure
-        self.hra_rule.account_credit = self.test_account
-        self.hra_rule.account_debit = self.test_account
+        self.hra_rule.account_credit = test_account
+        self.hra_rule.account_debit = test_account
         self.hr_structure_softwaredeveloper.rule_ids = [Command.link(self.hra_rule.id)]
 
         # Create accounting entry
@@ -559,15 +555,15 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
         self.hr_payslip_john.journal_id.restrict_mode_hash_table = True
         # Create an account for the HRA salary rule
-        self.test_account = self.env['account.account'].create({
+        test_account = self.env['account.account'].create({
             'name': 'House Rental',
             'code': '654321',
             'account_type': 'income',
         })
 
         # Assign the account to the salary rule and the rule to the hr structure
-        self.hra_rule.account_credit = self.test_account
-        self.hra_rule.account_debit = self.test_account
+        self.hra_rule.account_credit = test_account
+        self.hra_rule.account_debit = test_account
         self.hr_structure_softwaredeveloper.rule_ids = [Command.link(self.hra_rule.id)]
 
         # Create accounting entry
@@ -584,8 +580,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         self.hr_payslip_john.action_payslip_cancel()
         self.assertTrue(invoice.exists(), 'Invoice has been deleted')
 
-        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john._get_contract_wage()
-
+        line_amount = self.hra_rule.amount_percentage / 100 * self.hr_payslip_john.contract_id.wage
         reverse_invoice = self.env['account.move.line'].search([
             ('amount_currency', '=', line_amount),
             ('move_id', '!=', invoice.id),
@@ -594,7 +589,6 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
 
     def test_payslip_paid_create_journal_entry(self):
         """ Check that you cannot create a journal entry for a paid payslip """
-
         # I compute the payslip sheet.
         self.hr_payslip_john.compute_sheet()
 

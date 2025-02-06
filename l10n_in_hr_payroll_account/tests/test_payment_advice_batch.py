@@ -18,8 +18,9 @@ class TestPaymentAdviceBatch(TestPayrollAccountCommon):
             'company_id': self.company_in.id,
         })
 
-        payslip_employee = self.env['hr.payslip.employees'].with_company(self.company_in).create({
-            'employee_ids': [
+        payslip_employee = self.env['hr.payslip.employees'].create({
+            'selection_mode': 'employee',
+            'select_employee_ids': [
                 Command.set([self.rahul_emp.id, self.jethalal_emp.id])
             ]
         })

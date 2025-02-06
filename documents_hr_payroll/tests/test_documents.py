@@ -15,6 +15,10 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company_us.ids))
+        cls.env.user.company_id = cls.env.company.id
+
         cls.payroll_manager = cls.env['res.users'].create({
             'name': "Hr payroll manager test",
             'login': "hr_payroll_manager_test",

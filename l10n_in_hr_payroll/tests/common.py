@@ -26,8 +26,10 @@ class TestPayrollCommon(TransactionCase):
 
         self.company_in = self.Company.create({
             'name': 'Company IN',
-            'country_code': 'IN',
+            'country_id': self.env.ref('base.in').id,
         })
+
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.company_in.ids))
 
         self.in_bank = self.env['res.bank'].create({
             'name': 'Bank IN',
@@ -39,6 +41,7 @@ class TestPayrollCommon(TransactionCase):
             'name': 'Rahul',
             'country_id': self.in_country.id,
             'department_id': self.rd_dept.id,
+            'company_id': self.company_in.id,
             'l10n_in_esic_number': 93874944361284657,
         })
 
@@ -47,6 +50,7 @@ class TestPayrollCommon(TransactionCase):
             'name': 'Jethalal',
             'country_id': self.in_country.id,
             'department_id': self.rd_dept.id,
+            'company_id': self.company_in.id,
             'l10n_in_esic_number': 93487475100284657,
         })
 

@@ -35,7 +35,7 @@ class TestPayrollSEPACreditTransferCommon(TestHrPayrollAccountCommon):
         cls.bank_partner = cls.env['res.partner.bank'].create({
             'acc_number': 'BE84567968814145',
             'acc_type': 'iban',
-            'partner_id': cls.env.ref('base.main_company').partner_id.id,
+            'partner_id': cls.company_us.partner_id.id,
         })
 
         cls.hr_employee_john.bank_account_id = cls.res_partner_bank
@@ -80,15 +80,15 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
 
     def test_01_hr_payroll_account_iso20022(self):
         """ Checking the process of payslip run when you create a SEPA payment. """
-
         # I verify the payslip run is in draft state.
         self.assertEqual(self.payslip_run.state, 'draft', 'State not changed!')
 
         # I create a payslip employee.
         payslip_employee = self.env['hr.payslip.employees'].create({
-            'employee_ids': [(4, self.hr_employee_john.id)]
+            'selection_mode': 'employee',
+            'select_employee_ids': [(4, self.hr_employee_john.id)]
         })
-
+        payslip_employee._compute_employee_ids()
         # I generate the payslip by clicking on Generate button wizard.
         payslip_employee.with_context(active_id=self.payslip_run.id).compute_sheet()
 

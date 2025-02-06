@@ -16,25 +16,7 @@ class HrPayslipEmployees(models.TransientModel):
     _name = 'hr.payslip.employees'
     _description = 'Generate payslips for all selected employees'
 
-    def _get_available_contracts_domain(self):
-        payslip_run = self.env['hr.payslip.run'].browse(self.env.context.get('active_id'))
-        domain = ['|',
-            ('contract_ids.date_end', '=', False),
-            ('contract_ids.date_end', '>', payslip_run.date_start),
-            ('contract_ids.state', 'in', ('open', 'close')),
-            ('company_id', '=', self.env.company.id),
-        ]
-        return domain
-
-    def _get_employees(self):
-        active_employee_ids = self.env.context.get('active_employee_ids', False)
-        if active_employee_ids:
-            return self.env['hr.employee'].browse(active_employee_ids)
-        # YTI check dates too
-        return self.env['hr.employee'].search(self._get_available_contracts_domain())
-
-    employee_ids = fields.Many2many('hr.employee', 'hr_employee_group_rel', 'payslip_id', 'employee_id', 'Employees',
-                                    default=lambda self: self._get_employees(), required=True,
+    employee_ids = fields.Many2many('hr.employee', 'hr_employee_group_rel', 'payslip_id', 'employee_id', 'Employees', required=True,
                                     compute='_compute_employee_ids', store=True, readonly=False)
     selection_mode = fields.Selection([
         ('employee', 'By Employee'),
@@ -55,19 +37,42 @@ class HrPayslipEmployees(models.TransientModel):
     select_employee_ids = fields.Many2many('hr.employee', string='Select Employees', domain="[('company_id', 'in', allowed_company_ids)]")
     category_ids = fields.Many2many('hr.employee.category', string='Employee Tag')
 
+    def _get_available_contracts_domain(self):
+        contract_domain = [('state', 'in', ('open', 'close')), ('company_id', 'in', self.env.companies.ids)]
+        payslip_run = self.env['hr.payslip.run'].browse(self.env.context.get('active_id'))
+        if payslip_run:
+            add_domain = [
+                '&',
+                    ('date_start', '<=', payslip_run.date_end),
+                    '|',
+                        ('date_end', '=', False),
+                        ('date_end', '>=', payslip_run.date_start),
+            ]
+            contract_domain = expression.AND([contract_domain, add_domain])
+        if self.structure_id:
+            structure_domain = [
+                ('structure_type_id', 'in', self.structure_id.type_id.ids)
+            ]
+            contract_domain = expression.AND([contract_domain, structure_domain])
+        if self.selection_mode == 'structure' and self.structure_type_ids:
+            structure_domain = [('structure_type_id', 'in', self.structure_type_ids.ids)]
+            contract_domain = expression.AND([contract_domain, structure_domain])
+        return contract_domain
+
     @api.depends('structure_id', 'department_ids', 'structure_type_ids', 'job_ids', 'selection_mode', 'select_employee_ids', 'category_ids')
     def _compute_employee_ids(self):
         for wizard in self:
-            domain = wizard.get_employees_domain()
-            wizard.employee_ids = self.env['hr.employee'].search(domain)
+            wizard.employee_ids = self.env['hr.employee'].search(wizard.get_employees_domain())
 
     @api.depends('structure_type_ids')
     def _compute_structure_id(self):
         for wizard in self:
-            wizard.structure_id = wizard.structure_type_ids[0].default_struct_id if wizard.structure_type_ids else False
+            wizard.structure_id = wizard.structure_type_ids[0].default_struct_id if len(wizard.structure_type_ids) == 1 else False
 
     def get_employees_domain(self):
-        domain = self._get_available_contracts_domain()
+        contract_domain = self._get_available_contracts_domain()
+        contract_ids = self.env['hr.contract']._search(contract_domain)
+        domain = [('contract_ids', 'in', contract_ids)]
         if self.selection_mode == 'employee' and self.select_employee_ids:
             domain = expression.AND([
                 domain,
@@ -78,11 +83,6 @@ class HrPayslipEmployees(models.TransientModel):
                 domain,
                 [('department_id', 'child_of', self.department_ids.ids)]
             ])
-        elif self.selection_mode == 'structure' and self.structure_type_ids:
-            domain = expression.AND([
-                domain,
-                [('contract_ids.structure_type_id', 'in', self.structure_type_ids.ids)]
-            ])
         elif self.selection_mode == 'job' and self.job_ids:
             domain = expression.AND([
                 domain,
@@ -92,11 +92,6 @@ class HrPayslipEmployees(models.TransientModel):
             domain = expression.AND([
                 domain,
                 [('category_ids', 'in', self.category_ids.ids)]
-            ])
-        if self.structure_id:
-            domain = expression.AND([
-                domain,
-                [('contract_ids.structure_type_id', '=', self.structure_id.type_id.id)]
             ])
         return domain
 
@@ -128,25 +123,21 @@ class HrPayslipEmployees(models.TransientModel):
         if not employees:
             raise UserError(_("You must select employee(s) to generate payslip(s)."))
 
-        #Prevent a payslip_run from having multiple payslips for the same employee
-        employees -= payslip_run.slip_ids.employee_id
         success_result = {
             'type': 'ir.actions.act_window',
             'res_model': 'hr.payslip.run',
             'views': [[False, 'form']],
             'res_id': payslip_run.id,
         }
-        if not employees:
-            payslip_run.slip_ids.write({'state': 'verify'})
-            payslip_run.state = 'verify'
-            return success_result
-
         payslips = self.env['hr.payslip']
         Payslip = self.env['hr.payslip']
 
         contracts = employees._get_contracts(
             payslip_run.date_start, payslip_run.date_end, states=['open', 'close']
-        ).filtered(lambda c: c.active)
+        )
+        target_structure_types = self.structure_id.type_id + self.structure_type_ids
+        if target_structure_types:
+            contracts = contracts.filtered(lambda c: c.structure_type_id in target_structure_types)
         contracts.generate_work_entries(payslip_run.date_start, payslip_run.date_end)
         work_entries = self.env['hr.work.entry'].search([
             ('date_start', '<=', payslip_run.date_end + relativedelta(days=1)),

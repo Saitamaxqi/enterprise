@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
@@ -13,9 +12,15 @@ class TestPayslipBase(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestPayslipBase, cls).setUpClass()
-        cls.env.company.country_id = cls.env.ref('base.us')
+
+        cls.company_us = cls.env['res.company'].create({
+            'name': 'Company US',
+            'country_id': cls.env.ref('base.us').id,
+        })
+
+        cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company_us.ids))
+        cls.env.company.resource_calendar_id.tz = 'Europe/Brussels'
         cls.env.user.tz = 'Europe/Brussels'
-        cls.env.ref('resource.resource_calendar_std').tz = 'Europe/Brussels'
 
         cls.dep_rd = cls.env['hr.department'].create({
             'name': 'Research & Development - Test',
@@ -26,7 +31,7 @@ class TestPayslipBase(TransactionCase):
             'name': 'Richard',
             'gender': 'male',
             'birthday': '1984-05-01',
-            'country_id': cls.env.ref('base.be').id,
+            'country_id': cls.env.ref('base.us').id,
             'department_id': cls.dep_rd.id,
         })
 
@@ -35,7 +40,7 @@ class TestPayslipBase(TransactionCase):
             'name': 'Jules',
             'gender': 'male',
             'birthday': '1984-05-01',
-            'country_id': cls.env.ref('base.be').id,
+            'country_id': cls.env.ref('base.us').id,
             'department_id': cls.dep_rd.id,
         })
 
@@ -44,7 +49,7 @@ class TestPayslipBase(TransactionCase):
         })
 
         # I create a contract for "Richard"
-        cls.env['hr.contract'].create({
+        cls.richard_contract = cls.env['hr.contract'].create({
             'date_end': Date.today() + relativedelta(years=2),
             'date_start': Date.to_date('2018-01-01'),
             'name': 'Contract for Richard',
