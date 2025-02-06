@@ -349,12 +349,14 @@ function useDocumentsViewFilePreviewer({
                             return;
                         }
                         await component.model.load();
-                        component.model.root.selection.forEach((el) => el.toggleSelection(false));
                         for (const record of documents) {
                             if (!newDocumentIds.includes(record.resId)) {
-                                record.model.root.deleteRecords(record);
-                                continue;
+                                await record.model.root.deleteRecords(record);
                             }
+                        }
+                        for (const record of env.model.root.records.filter((r) =>
+                            newDocumentIds.includes(r.resId),
+                        )) {
                             record.toggleSelection(true);
                         }
                     },
