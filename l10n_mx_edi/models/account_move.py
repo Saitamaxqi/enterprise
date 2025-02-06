@@ -1157,6 +1157,19 @@ class AccountMove(models.Model):
                         if tax_values[tax_key] is not None:
                             tax_values[tax_key] = invoice.currency_id.round(tax_values[tax_key] * percentage_paid)
 
+                    # Handle the case where the rounding method was changed between Odoo versions.
+                    # This applies when an invoice's CFDI, generated in the previous version, is processed
+                    # after the upgrade in the new version, resulting in the use of a deprecated rounding method.
+                    if all(tax_values[key] is not None for key in ('base', 'importe', 'tasa_o_cuota')):
+                        post_amounts_map = self.env['l10n_mx_edi.document']._get_post_fix_tax_amounts_map(
+                            base_amount=tax_values['base'],
+                            tax_amount=tax_values['importe'],
+                            tax_rate=tax_values['tasa_o_cuota'],
+                            precision_digits=invoice.currency_id.decimal_places,
+                        )
+                        tax_values['importe'] = post_amounts_map['new_tax_amount']
+                        tax_values['base'] = post_amounts_map['new_base_amount']
+
             # 'equivalencia' (rate) is a conditional attribute used to express the exchange rate according to the currency
             # registered in the document related. It is required when the currency of the related document is different
             # from the payment currency.

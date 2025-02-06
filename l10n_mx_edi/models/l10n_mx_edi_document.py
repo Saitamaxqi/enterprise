@@ -1079,6 +1079,22 @@ class L10n_Mx_EdiDocument(models.Model):
             cfdi_values['total_impuestos_retenidos'] = None
 
     @api.model
+    def _get_post_fix_tax_amounts_map(self, base_amount, tax_amount, tax_rate, precision_digits):
+        if float_round(abs(base_amount * tax_rate - tax_amount), precision_digits, rounding_method='DOWN') == 0.0:
+            new_base_amount = float_round(base_amount, precision_digits=precision_digits)
+            new_tax_amount = float_round(tax_amount, precision_digits=precision_digits)
+        else:
+            total = base_amount + tax_amount
+            new_base_amount = float_round(total / (1 + tax_rate), precision_digits=precision_digits)
+            new_tax_amount = total - new_base_amount
+        return {
+            'new_base_amount': new_base_amount,
+            'new_tax_amount': new_tax_amount,
+            'delta_base_amount': new_base_amount - base_amount,
+            'delta_tax_amount': new_tax_amount - tax_amount,
+        }
+
+    @api.model
     def _clean_cfdi_values(self, cfdi_values):
         """ Clean values from 'cfdi_values' that could represent a security risk like sudoed records.
 
