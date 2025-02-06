@@ -40,8 +40,16 @@ registry.category("web_tour.tours").add("test_taxes_l10n_it_epson_printer_pos", 
             Chrome.startPoS(),
             Dialog.confirm("Open Register"),
 
-            // Order.
-            ...addDocument([{ product: "product_5_16_22", quantity: "3" }]),
+            ...addDocument([{ product: "product_1_1", quantity: "3" }]),
             ...assertTaxTotals("15.49", "3.41", "18.90"),
+
+            ...addDocument([{ product: "product_2_1", quantity: "3" }]),
+            ...assertTaxTotals("6.59", "1.45", "8.04"),
+
+            ...addDocument([
+                { product: "product_3_1", quantity: "3" },
+                { product: "product_3_2", quantity: "3" },
+            ]),
+            ...assertTaxTotals("22.08", "4.86", "26.94"),
         ].flat(),
 });

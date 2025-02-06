@@ -21,6 +21,15 @@ class TestTaxesTaxTotalsSummaryL10nItPos(TestPointOfSaleHttpCommon, TestTaxesTax
         values['l10n_it_epson_printer'] = line['l10n_it_epson_printer']
         return values
 
+    def create_base_line_product(self, base_line, **kwargs):
+        return self.env['product.product'].create({
+            **kwargs,
+            'available_in_pos': True,
+            'list_price': base_line['price_unit'],
+            'taxes_id': [Command.set(base_line['tax_ids'].ids)],
+            'pos_categ_ids': [Command.set(self.pos_desk_misc_test.ids)],
+        })
+
     def _test_taxes_l10n_it_epson_printer(self):
         tax = self.percent_tax(22.0, price_include_override='tax_excluded', tax_group_id=self.tax_groups[0].id)
         document_params = self.init_document(
@@ -118,24 +127,18 @@ class TestTaxesTaxTotalsSummaryL10nItPos(TestPointOfSaleHttpCommon, TestTaxesTax
         self._run_js_tests()
 
     def test_taxes_l10n_it_epson_printer_pos(self):
-        # Create the missing products.
-        products_map = {}
-        for test_index, document, expected_values in self._test_taxes_l10n_it_epson_printer():
-            for line in document['lines']:
-                line['_product_key'] = (line['price_unit'], line['tax_ids'])
-                if line['_product_key'] not in products_map:
-                    products_map[line['_product_key']] = self.env['product.product'].create({
-                        'name': f"product_{str(line['price_unit']).replace('.', '_')}_{line['tax_ids'].amount}",
-                        'available_in_pos': True,
-                        'list_price': line['price_unit'],
-                        'taxes_id': [Command.set(line['tax_ids'].ids)],
-                        'pos_categ_ids': [Command.set(self.pos_desk_misc_test.ids)],
-                    })
-
+        tests = self._test_taxes_l10n_it_epson_printer()
+        test1 = next(tests)
+        self.create_base_line_product(test1[1]['lines'][0], name='product_1_1')
+        test2 = next(tests)
+        self.create_base_line_product(test2[1]['lines'][0], name='product_2_1')
+        test3 = next(tests)
+        self.create_base_line_product(test3[1]['lines'][0], name='product_3_1')
+        self.create_base_line_product(test3[1]['lines'][1], name='product_3_2')
         with self.with_new_session(user=self.pos_user) as session:
             self.start_pos_tour('test_taxes_l10n_it_epson_printer_pos')
             orders = self.env['pos.order'].search([('session_id', '=', session.id)])
-            for order, (test_index, document, expected_values) in zip(orders, self._test_taxes_l10n_it_epson_printer()):
+            for order, (test_index, document, expected_values) in zip(orders, tests):
                 self.assertRecordValues(order, [{
                     'amount_tax': expected_values['tax_amount_currency'],
                     'amount_total': expected_values['total_amount_currency'],
