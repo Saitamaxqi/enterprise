@@ -593,7 +593,7 @@
         <!-- Appraisal Goal -->
         <record id="hr_appraisal_goal_1" model="hr.appraisal.goal" forcecreate="1">
             <field name="name">Team Management</field>
-            <field name="employee_id" ref="hr.employee_sj"/>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_sj')])]"/>
             <field name="manager_id" ref="hr.employee_mw"/>
             <field name="progression">075</field>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=8)).strftime('%Y-%m-%d')"/>
@@ -646,7 +646,7 @@
 
         <record id="hr_appraisal_goal_2" model="hr.appraisal.goal" forcecreate="1">
             <field name="name">Javascript</field>
-            <field name="employee_id" ref="hr.employee_sj"/>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_sj')])]"/>
             <field name="manager_id" ref="hr.employee_mw"/>
             <field name="progression">000</field>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=8)).strftime('%Y-%m-%d')"/>
@@ -698,7 +698,7 @@
 
         <record id="hr_appraisal_goal_3" model="hr.appraisal.goal" forcecreate="1">
             <field name="name">Deadlines</field>
-            <field name="employee_id" ref="hr.employee_eg"/>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_eg')])]"/>
             <field name="manager_id" ref="hr.employee_sj"/>
             <field name="progression">000</field>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=10)).strftime('%Y-%m-%d')"/>
@@ -719,7 +719,7 @@
 
         <record id="hr_appraisal_goal_4" model="hr.appraisal.goal" forcecreate="1">
             <field name="name">Python</field>
-            <field name="employee_id" ref="hr.employee_eg"/>
+            <field name="employee_ids" eval="[(6, 0, [ref('hr.employee_eg')])]"/>
             <field name="manager_id" ref="hr.employee_sj"/>
             <field name="progression">050</field>
             <field name="deadline" eval="(DateTime.now() + relativedelta(months=10)).strftime('%Y-%m-%d')"/>
