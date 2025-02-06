@@ -62,6 +62,8 @@ export class DocumentsDocument extends models.Model {
     alias_domain_id = fields.Many2one({ relation: "mail.alias.domain" });
     alias_name = fields.Char({ string: "Alias name" });
     alias_tag_ids = fields.Many2many({ relation: "documents.tag" });
+    create_activity_type_id = fields.Many2one({ relation: "mail.activity.type" });
+    create_activity_user_id = fields.Many2one({ relation: "res.users" });
     description = fields.Char({ string: "Attachment description" });
     last_access_date_group = fields.Selection({
         string: "Last Accessed On",
@@ -250,6 +252,12 @@ export class IrUIMenu extends SpreadsheetModels.IrUIMenu {
     };
 }
 
+export class MailActivityType extends models.Model {
+    _name = "mail.activity.type";
+
+    name = fields.Char({ string: "Activity Type" });
+}
+
 export class MailAlias extends models.Model {
     _name = "mail.alias";
 
@@ -307,6 +315,7 @@ onRpc(
 
 export function defineDocumentSpreadsheetModels() {
     const SpreadsheetDocumentModels = {
+        MailActivityType,
         MailAlias,
         MailAliasDomain,
         DocumentsDocument,

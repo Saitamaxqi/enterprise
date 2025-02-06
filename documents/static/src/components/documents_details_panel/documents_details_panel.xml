@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="documents.DocumentsDetailsPanel">
-        <div t-if="record?.data" class="o_documents_details_panel p-3 pb-2 border-bottom border-secondary w-100">
+        <div t-if="record?.data" class="o_documents_details_panel p-3 pb-2 border-bottom border-secondary w-100"
+            t-att-class="{'o_documents_details_panel_folder': record.data.type === 'folder'}">
             <!-- Breadcrumbs Section & File Size -->
             <div class="mt-1 mb-3 w-100 d-flex align-items-center">
                 <div class="d-flex align-items-center me-3 flex-grow-1">
@@ -100,7 +101,8 @@
             </div>
 
             <!-- Email Alias Section -->
-            <div t-if="record.data.type === 'folder'" class="text-dark d-flex mb-3 w-100">
+            <div t-if="record.data.type === 'folder' and !record.data.shortcut_document_id"
+                class="text-dark d-flex mb-3 w-100">
                 <span class="fw-bold me-2 text-nowrap">Email Alias</span>
                 <div t-if="!userPermissionViewOnly and !!documentService.userIsDocumentManager" class="d-flex">
                     <div class="o_field_widget o_field_char w-50">
@@ -118,7 +120,7 @@
                             canOpen="false"
                             canCreate="documentService.userIsErpManager"
                             canCreateEdit="documentService.userIsErpManager"
-                            canQuickCreate="false"
+                            canQuickCreate="documentService.userIsErpManager"
                             placeholder.translate="e.g. mycompany.com"
                         />
                     </div>
@@ -130,8 +132,38 @@
                     Not set
                 </div>
             </div>
+            <div t-if="record.data.type === 'folder' and !record.data.shortcut_document_id and record.data.alias_name and record.data.alias_domain_id"
+                class="basic-info mb-3 d-flex justify-content-between">
+                 <div class="d-flex me-2 align-items-center">
+                     <span class="fw-bold me-2 text-nowrap">Activity type</span>
+                    <div class="o_field_widget o_field_many2one">
+                        <Many2OneField
+                            name="'create_activity_type_id'"
+                            readonly="userPermissionViewOnly"
+                            record="record"
+                            canOpen="false"
+                            canCreate="false"
+                            canCreateEdit="documentService.userIsErpManager"
+                            canQuickCreate="false"
+                            placeholder.translate="No activity"
+                        />
+                    </div>
+                </div>
+                <div class="o_field_widget o_field_many2one">
+                    <Many2OneAvatarField
+                        name="'create_activity_user_id'"
+                        readonly="userPermissionViewOnly"
+                        record="record"
+                        canOpen="false"
+                        canCreate="false"
+                        canQuickCreate="false"
+                        canCreateEdit="false"
+                        placeholder.translate="Activity assigned to"
+                    />
+                </div>
+            </div>
             <div
-                t-if="record.data.type === 'folder' and record.data.alias_name and record.data.alias_domain_id"
+                t-if="record.data.type === 'folder' and !record.data.shortcut_document_id and record.data.alias_name and record.data.alias_domain_id"
                 class="o_field_widget o_field_many2many_tags d-flex mb-3 w-100"
             >
                 <span class="fw-bold me-2">Alias Tags</span>

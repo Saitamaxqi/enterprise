@@ -635,10 +635,6 @@ class ShareRoute(http.Controller):
                 lambda d: not d.folder_id and d.owner_id == request.env.ref('base.user_root')
             ).action_update_access_rights(partners={request.env.user.partner_id: ('edit', False)})
 
-            if folder_sudo.create_activity_option:
-                folder_sudo.browse(document_ids).documents_set_activity(
-                    settings_record=folder_sudo)
-
         return document_ids
 
     def _documents_upload_create_write(self, document_sudo, vals):

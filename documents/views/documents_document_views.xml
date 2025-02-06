@@ -75,6 +75,8 @@
                 <field name="file_size"/>
                 <field name="alias_name"/>
                 <field name="alias_domain_id"/>
+                <field name="create_activity_type_id"/>
+                <field name="create_activity_user_id"/>
                 <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/> <!-- fetch `color` too -->
                 <templates>
                     <t t-name="card">
@@ -389,6 +391,8 @@
                 <field name="alias_name" optional="hide"/>
                 <field name="alias_domain_id" optional="hide"/>
                 <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" column_invisible="1"/> <!-- fetch `color` too -->
+                <field name="create_activity_type_id" column_invisible="1"/>
+                <field name="create_activity_user_id" column_invisible="1"/>
             </list>
         </field>
     </record>

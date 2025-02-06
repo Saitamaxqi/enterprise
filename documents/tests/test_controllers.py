@@ -657,12 +657,7 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             "<p>Document uploaded by Marc Demo</p>",
             "<p>Document created</p>",
         ])
-        activity = capture_activity.records.ensure_one()
-        self.assertEqual(activity.activity_type_id, self.test_activity_type)
-        self.assertEqual(activity.summary, 'test summary')
-        self.assertEqual(activity.note, '<p>test note</p>')
-        self.assertEqual(activity.user_id, self.user_admin)
-        self.assertIn(activity.date_deadline, {fields.Date.today() + timedelta(days=5)})
+        self.assertFalse(capture_activity.records, 'Activities should only be created when using the mail gateway')
 
         # Upload a fake text file that actually is an image on the demo user
         self.internal_folder.create_activity_option = False

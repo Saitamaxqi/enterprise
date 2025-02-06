@@ -144,7 +144,8 @@ class DocumentsDocument(models.Model):
     document_count = fields.Integer('Document Count', compute='_compute_document_count')
 
     # Activity
-    create_activity_option = fields.Boolean(string='Create a new activity')
+    create_activity_option = fields.Boolean(string='Create a new activity', compute='_compute_create_activity_option',
+                                            store=True, readonly=False)
     create_activity_type_id = fields.Many2one('mail.activity.type', string="Activity type")
     create_activity_summary = fields.Char('Summary')
     create_activity_date_deadline_range = fields.Integer(string='Due Date In')
@@ -199,6 +200,12 @@ class DocumentsDocument(models.Model):
     def _compute_access_url(self):
         for document in self:
             document.access_url = f'{document.sudo().get_base_url()}/odoo/documents/{document.access_token}'
+
+    @api.depends('create_activity_type_id', 'create_activity_user_id')
+    def _compute_create_activity_option(self):
+        to_activate = self.filtered(lambda d: d.create_activity_type_id and d.create_activity_user_id)
+        to_activate.create_activity_option = True
+        (self - to_activate).create_activity_option = False
 
     @api.depends("folder_id", "company_id")
     @api.depends_context("uid", "allowed_company_ids")
@@ -1913,7 +1920,8 @@ class DocumentsDocument(models.Model):
                                    'is_favorited', 'is_company_root_folder', 'owner_id', 'shortcut_document_id',
                                    'user_permission', 'active']
             if not self.env.user.share:
-                search_panel_fields += ['alias_name', 'alias_domain_id', 'alias_tag_ids', 'partner_id']
+                search_panel_fields += ['alias_name', 'alias_domain_id', 'alias_tag_ids', 'partner_id',
+                                        'create_activity_type_id', 'create_activity_user_id']
             domain = [('type', '=', 'folder')]
 
             if unique_folder_id := self.env.context.get('documents_unique_folder_id'):
