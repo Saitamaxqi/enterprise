@@ -374,6 +374,7 @@
                 <field name="name"/>
                 <field name="account_asset_id" readonly="state == 'close'"/>
                 <field name="account_depreciation_id" readonly="state == 'close'"/>
+                <field name="account_depreciation_expense_id"/>
                 <field name="method" readonly="state not in ['draft', 'model']"/>
                 <field name="method_number" string="Number of Depreciations" readonly="state not in ['draft', 'model']"/>
                 <field name="method_period" string="Period length" readonly="state not in ['draft', 'model']"/>
