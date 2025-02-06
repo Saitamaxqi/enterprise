@@ -16,6 +16,8 @@ Accounting reports for Italy
         'data/account_balance_sheet_report_data.xml',
         'data/account_reduce_balance_sheet_report_data.xml',
         'data/account_report_ec_sales_list_report.xml',
+        'data/account_libro_giornale_list_report.xml',
+        'views/journal_report_templates.xml'
     ],
     'auto_install': ['l10n_it', 'account_reports'],
     'installable': True,

@@ -587,6 +587,7 @@ class AccountJournalReportHandler(models.AbstractModel):
                 account_move_line.amount_currency,
                 account_move_line.tax_base_amount,
                 account_move_line.currency_id AS move_line_currency,
+                account_move_line.display_type AS display_type,
                 am.id AS move_id,
                 am.name AS move_name,
                 am.journal_id,
