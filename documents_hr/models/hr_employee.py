@@ -23,8 +23,7 @@ class HrEmployee(models.Model):
 
     def _get_employee_document_domain(self):
         self.ensure_one()
-        user_domain = [('partner_id', '=', self.work_contact_id.id)]
-        return user_domain
+        return [('partner_id', '=', self.work_contact_id.id)]
 
     def _compute_document_count(self):
         # Method not optimized for batches since it is only used in the form view.

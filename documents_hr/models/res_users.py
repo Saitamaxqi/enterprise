@@ -27,12 +27,4 @@ class ResUsers(models.Model):
         return super().SELF_READABLE_FIELDS + ['document_count']
 
     def action_see_documents(self):
-        self.ensure_one()
-        action = self.env['ir.actions.actions']._for_xml_id('documents.document_action_preference')
-        return action | {
-            'domain': [('partner_id', '=', self.partner_id.id)],
-            'context': {
-                "default_partner_id": self.partner_id.id,
-                "searchpanel_default_folder_id": False
-            },
-        }
+        return self.partner_id.action_see_documents()

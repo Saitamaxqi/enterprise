@@ -985,21 +985,6 @@ class DocumentsDocument(models.Model):
     def _get_access_update_domain(self):
         return [] if self.env.su else [('user_permission', '=', 'edit')]
 
-    def action_see_documents(self):
-        if self.type != "folder":
-            raise UserError(_("Not a folder."))
-
-        domain = [('folder_id', '=', self.id)]
-        return {
-            'name': _('Documents'),
-            'domain': domain,
-            'res_model': 'documents.document',
-            'type': 'ir.actions.act_window',
-            'views': [(False, 'list'), (False, 'form')],
-            'view_mode': 'list,form',
-            'context': {'searchpanel_default_folder_id': self.id}
-        }
-
     @api.model
     def get_documents_actions(self, folder_id):
         """Return the available actions and a key to know if the action is embedded on the folder."""
