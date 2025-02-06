@@ -334,22 +334,14 @@ export class GanttRenderer extends Component {
 
         // Cells selection
         const selectState = useGanttSelectable({
-            enable: () => {
-                const { canCellCreate, canPlan } = this.model.metaData;
-                return Boolean(this.cellForDrag.el) && (canCellCreate || canPlan);
-            },
+            enable: () => Boolean(this.cellForDrag.el) && this.model.metaData.canCellCreate,
             ref: this.gridRef,
             hoveredCell: this.cellForDrag,
             elements: ".o_gantt_cell:not(.o_gantt_group)",
             edgeScrolling: { speed: 40, threshold: 150, direction: "horizontal" },
             rtl: () => localization.direction === "rtl",
             onDrop: ({ rowId, startCol, stopCol }) => {
-                const { canPlan } = this.model.metaData;
-                if (canPlan) {
-                    this.onPlan(rowId, startCol, stopCol);
-                } else {
-                    this.onCreate(rowId, startCol, stopCol);
-                }
+                this.onCreate(rowId, startCol, stopCol);
             },
         });
 

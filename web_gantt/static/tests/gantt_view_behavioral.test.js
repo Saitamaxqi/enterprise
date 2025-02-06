@@ -175,7 +175,7 @@ test("select cells to plan a task", async () => {
     });
     await contains(getCell("19 December 2018")).dragAndDrop(getCell("21 December 2018"));
 
-    expect.verifySteps(["[dialog] Plan"]);
+    expect.verifySteps(["[dialog] Create"]);
 });
 
 test("drag and drop on the same cell to plan a task", async () => {
@@ -201,7 +201,7 @@ test("drag and drop on the same cell to plan a task", async () => {
     });
     await contains(getCell("15 December 2018")).dragAndDrop(getCell("15 December 2018"));
 
-    expect.verifySteps(["[dialog] Plan"]);
+    expect.verifySteps(["[dialog] Create"]);
 });
 
 test("row id is properly escaped to avoid name issues in selection", async () => {
@@ -255,7 +255,7 @@ test("select cells to plan a task: 1-level grouped", async () => {
     await runAllTimers(); // Pointer move is subjected to throttleForAnimation in gantt
     drop();
 
-    expect.verifySteps(["[dialog] Plan"]);
+    expect.verifySteps(["[dialog] Create"]);
 });
 
 test("select cells to plan a task: 2-level grouped", async () => {
@@ -297,7 +297,7 @@ test("select cells to plan a task: 2-level grouped", async () => {
     await advanceTime(20);
     dragAndDrop2.drop();
 
-    expect.verifySteps(["[dialog] Plan"]);
+    expect.verifySteps(["[dialog] Create"]);
 });
 
 test("hovering a cell with special character", async () => {
