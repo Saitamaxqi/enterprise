@@ -143,7 +143,7 @@ class ResPartner(models.Model):
             'type': 'ir.actions.act_window',
             'name': _("Overdue Invoices"),
             'res_model': 'account.move',
-            'domain': [('partner_id', '=', self.id), ('move_type', 'in', ('out_invoice', 'out_refund'))],
+            'domain': [('commercial_partner_id', '=', self.id), ('move_type', 'in', ('out_invoice', 'out_refund'))],
             'view_mode': 'list,form',
             'context': {'search_default_late': True},
         }

@@ -25,11 +25,11 @@ class TestAccountFollowupReports(TestAccountFollowupCommon):
             'company_id': self.company_data['company'].id
         })
 
-    def create_invoice(self, date):
+    def create_invoice(self, date, partner = None):
         invoice = self.env['account.move'].create({
             'move_type': 'out_invoice',
             'invoice_date': date,
-            'partner_id': self.partner_a.id,
+            'partner_id': partner.id if partner else self.partner_a.id,
             'invoice_line_ids': [Command.create({
                 'quantity': 1,
                 'price_unit': 500,
@@ -422,3 +422,30 @@ class TestAccountFollowupReports(TestAccountFollowupCommon):
 
         self.assertTrue(mail_cc in reminder.email_recipient_ids, "John Carmac should be in the Email Recipients list.")
         self.assertTrue(mail_partner in reminder.email_recipient_ids, "Mai Lang should still be in the Email Recipients List")
+
+    def test_overdue_invoices_action_domain_includes_children_partners(self):
+        """
+        When checking overdue invoices for a company (partner), the action [action_open_overdue_entries] domain should also include
+        the overdue invoices of its children partners.
+        """
+
+        # Step 1: Create contacts
+        parent_contact = self.env['res.partner'].create({
+            'name': 'Parent Contact',
+            'is_company': True,
+        })
+        child_contact = self.env['res.partner'].create({
+            'name': 'Child Contact',
+            'parent_id': parent_contact.id,
+        })
+
+        # Step 2: Create an invoice for the child contact
+        invoice_date = fields.Date.today() - relativedelta(months=1)
+        invoice = self.create_invoice(invoice_date, child_contact)
+        invoice.invoice_date_due = invoice_date
+
+        # Step 3: Verify follow-up status and overdue invoices of the parent contact
+        action = parent_contact.action_open_overdue_entries()
+        overdue_invoices = self.env['account.move'].search(action['domain'])
+        self.assertIn(invoice.id, overdue_invoices.ids)
+        self.assertEqual(parent_contact.followup_status, 'with_overdue_invoices')
