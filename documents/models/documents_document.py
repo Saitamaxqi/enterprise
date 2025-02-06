@@ -1129,7 +1129,7 @@ class DocumentsDocument(models.Model):
 
         actions = self.env['ir.actions.server'].sudo().search([
             ('model_id', '=', self.env['ir.model']._get_id('documents.document')),
-            ('usage', '=', 'ir_actions_server'),
+            ('usage', 'in', ('ir_actions_server', 'documents_embedded')),
             '|', ('group_ids', 'any', [('id', 'in', self.env.user.all_group_ids.ids)]),
                  ('group_ids', '=', False),
         ])

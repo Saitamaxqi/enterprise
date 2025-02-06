@@ -128,6 +128,7 @@
             <field name="model_id" ref="documents.model_documents_document"/>
             <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
             <field name="state">code</field>
+            <field name="usage">documents_embedded</field>
             <field name="code">
 target = env.ref('documents.document_finance_folder', raise_if_not_found=False)
 if target:

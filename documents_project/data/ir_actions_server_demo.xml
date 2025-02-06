@@ -12,6 +12,7 @@
                 <record id="ir_actions_server_mark_as_draft_code" model="ir.actions.server">
                     <field name="name">Check conditions</field>
                     <field name="state">code</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="code">
 tag_draft = env.ref('documents.documents_tag_draft', raise_if_not_found=False)
 if tag_draft and tag_draft in records.tag_ids:
@@ -25,6 +26,7 @@ if tag_validated and tag_validated in records.tag_ids:
                 <record id="ir_actions_server_mark_as_draft_tag_remove_to_validate" model="ir.actions.server">
                     <field name="name">Remove tag "To Validate"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">remove</field>
                     <field name="resource_ref" ref="documents.documents_tag_to_validate"/>
@@ -32,6 +34,7 @@ if tag_validated and tag_validated in records.tag_ids:
                 <record id="ir_actions_server_mark_as_draft_tag_add_draft" model="ir.actions.server">
                     <field name="name">Add tag "Draft"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">add</field>
                     <field name="resource_ref" ref="documents.documents_tag_draft"/>
@@ -39,6 +42,7 @@ if tag_validated and tag_validated in records.tag_ids:
                 <record id="ir_actions_server_mark_as_draft_remove_activities" model="ir.actions.server">
                     <field name="name">Mark activities as completed</field>
                     <field name="state">code</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="code">
 for record in records:
     record.activity_ids.action_feedback(feedback='completed')
@@ -54,10 +58,12 @@ for record in records:
             <field name="model_id" ref="documents.model_documents_document"/>
             <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
             <field name="state">multi</field>
+            <field name="usage">documents_embedded</field>
             <field name="child_ids">
                 <record id="ir_actions_server_ask_for_validation_code" model="ir.actions.server">
                     <field name="name">Check conditions</field>
                     <field name="state">code</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="code">
 tag_to_validate = env.ref('documents.documents_tag_to_validate', raise_if_not_found=False)
 if tag_to_validate and tag_to_validate in records.tag_ids:
@@ -71,6 +77,7 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
                 <record id="ir_actions_server_ask_for_validation_tag_remove_validated" model="ir.actions.server">
                     <field name="name">Remove tag "Validated"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">remove</field>
                     <field name="resource_ref" ref="documents.documents_tag_validated"/>
@@ -78,6 +85,7 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
                 <record id="ir_actions_server_ask_for_validation_tag_remove_draft" model="ir.actions.server">
                     <field name="name">Remove tag "Draft"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">remove</field>
                     <field name="resource_ref" ref="documents.documents_tag_draft"/>
@@ -85,6 +93,7 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
                 <record id="ir_actions_server_ask_for_validation_tag_add_to_validate" model="ir.actions.server">
                     <field name="name">Add tag "To Validate"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">add</field>
                     <field name="resource_ref" ref="documents.documents_tag_to_validate"/>
@@ -92,6 +101,7 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
                 <record id="ir_actions_server_ask_for_validation_create_activity" model="ir.actions.server">
                     <field name="name">Add "To Validate" activity</field>
                     <field name="state">next_activity</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="activity_type_id" ref="documents.mail_documents_activity_data_tv"/>
                 </record>
             </field>
@@ -104,10 +114,12 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
             <field name="model_id" ref="documents.model_documents_document"/>
             <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
             <field name="state">multi</field>
+            <field name="usage">documents_embedded</field>
             <field name="child_ids">
                 <record id="ir_actions_server_validate_code" model="ir.actions.server">
                     <field name="name">Check conditions</field>
                     <field name="state">code</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="code">
 tag_validated = env.ref('documents.documents_tag_validated', raise_if_not_found=False)
 if tag_validated and tag_validated in records.tag_ids:
@@ -121,6 +133,7 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
                 <record id="ir_actions_server_validate_tag_remove_draft" model="ir.actions.server">
                     <field name="name">Remove tag "Draft"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">remove</field>
                     <field name="resource_ref" ref="documents.documents_tag_draft"/>
@@ -128,6 +141,7 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
                 <record id="ir_actions_server_validate_tag_remove_to_validate" model="ir.actions.server">
                     <field name="name">Remove tag "To Validate"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">remove</field>
                     <field name="resource_ref" ref="documents.documents_tag_to_validate"/>
@@ -135,6 +149,7 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
                 <record id="ir_actions_server_validate_tag_add_validated" model="ir.actions.server">
                     <field name="name">Add tag "Validated"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">add</field>
                     <field name="resource_ref" ref="documents.documents_tag_validated"/>
@@ -142,6 +157,7 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
                 <record id="ir_actions_server_validate_remove_activities" model="ir.actions.server">
                     <field name="name">Mark activities as completed</field>
                     <field name="state">code</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="code">
 for record in records:
     record.activity_ids.action_feedback(feedback='completed')
@@ -157,10 +173,12 @@ for record in records:
             <field name="model_id" ref="documents.model_documents_document"/>
             <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
             <field name="state">multi</field>
+            <field name="usage">documents_embedded</field>
             <field name="child_ids">
                 <record id="ir_actions_server_create_project_deprecate_tag_remove_to_validate" model="ir.actions.server">
                     <field name="name">Remove tag "To Validate"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">remove</field>
                     <field name="resource_ref" ref="documents.documents_tag_to_validate"/>
@@ -168,6 +186,7 @@ for record in records:
                 <record id="ir_actions_server_create_project_deprecate_tag_remove_validated" model="ir.actions.server">
                     <field name="name">Remove tag "Validated"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">remove</field>
                     <field name="resource_ref" ref="documents.documents_tag_validated"/>
@@ -175,6 +194,7 @@ for record in records:
                 <record id="ir_actions_server_create_project_deprecate_tag_remove_draft" model="ir.actions.server">
                     <field name="name">Remove tag "Draft"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">remove</field>
                     <field name="resource_ref" ref="documents.documents_tag_draft"/>
@@ -182,6 +202,7 @@ for record in records:
                 <record id="ir_actions_server_create_project_deprecate_tag_add_deprecated" model="ir.actions.server">
                     <field name="name">Add tag "Deprecated"</field>
                     <field name="state">object_write</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="update_path">tag_ids</field>
                     <field name="update_m2m_operation">add</field>
                     <field name="resource_ref" ref="documents.documents_tag_deprecated"/>
@@ -189,6 +210,7 @@ for record in records:
                 <record id="ir_actions_server_create_project_deprecate_remove_activities" model="ir.actions.server">
                     <field name="name">Mark activities as completed</field>
                     <field name="state">code</field>
+                    <field name="usage">documents_embedded</field>
                     <field name="code">
 for record in records:
     record.activity_ids.action_feedback(feedback='completed')

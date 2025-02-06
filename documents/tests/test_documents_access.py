@@ -5,6 +5,7 @@ from odoo.addons.documents.tests.test_documents_common import TransactionCaseDoc
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests import freeze_time, users
 from odoo.tools import mute_logger
+from odoo.tests.common import RecordCapturer
 
 
 class TestDocumentsAccess(TransactionCaseDocuments):
@@ -471,6 +472,60 @@ class TestDocumentsAccess(TransactionCaseDocuments):
 
         with self.assertRaises(AccessError):
             self.document_gif.with_user(self.internal_user).action_move_documents(self.folder_a.id)
+
+    def test_ir_actions_server(self):
+        """Check the behavior of the documents actions.
+
+        To be able to use those actions, they need to be embedded on the folder of
+        the documents on which we execute the action.
+        """
+        self.internal_user.group_ids |= self.env.ref('documents.group_documents_user')
+        document = self.document_gif.with_user(self.internal_user)
+        document.sudo().access_internal = 'edit'
+
+        # Sanity check
+        self.assertEqual(document.user_permission, 'edit')
+        self.assertEqual(document.folder_id.user_permission, 'view')
+        self.assertEqual(self.folder_a.user_permission, 'edit')
+        with self.assertRaises(AccessError):
+            document.folder_id = self.folder_a
+
+        action_base_values = {
+            'name': 'Test Action',
+            'model_id': self.env['ir.model']._get_id('documents.document'),
+            'update_path': 'folder_id',
+            'usage': 'documents_embedded',
+            'resource_ref': f'documents.document,{self.folder_a.id}',
+        }
+
+        action = self.env['ir.actions.server'].create({
+            **action_base_values,
+            'state': 'multi',
+            # Check that the child actions can be executed
+            'child_ids': [Command.create({
+                **action_base_values,
+                'state': 'multi',
+                'child_ids': [Command.create({
+                    **action_base_values,
+                    'state': 'object_write',
+                })],
+            })],
+        }).with_user(self.internal_user)
+
+        # We can not execute the action because it's not pinned on the folder
+        with self.assertRaises(UserError):
+            action.with_context(active_model='documents.document', active_id=document.id).run()
+
+        # Pin the action on the folder, so we can execute it
+        self.env['documents.document'].action_folder_embed_action(document.folder_id.id, action.id)
+
+        # We can move the documents even if we have no write access on the initial folder
+        action.with_context(active_model='documents.document', active_id=document.id).run()
+        self.assertEqual(document.folder_id, self.folder_a)
+
+        # Check that we can not execute the action if it's pinned on a different folder
+        with self.assertRaises(UserError):
+            action.with_context(active_model='documents.document', active_id=document.id).run()
 
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_create_document_access(self):
@@ -1245,6 +1300,41 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.assertTrue(self.folder_a._get_folder_embedded_actions([self.folder_a.id])[self.folder_a.id])
         self.assertEqual(self.folder_a._get_folder_embedded_actions([folder_a_shortcut.id])[folder_a_shortcut.id],
                          self.folder_a._get_folder_embedded_actions([self.folder_a.id])[self.folder_a.id])
+
+        self.folder_a.action_update_access_rights(access_internal="view")
+        self.internal_user.group_ids |= self.env.ref('documents.group_documents_user')
+        document = self.document_gif.with_user(self.internal_user)
+        document.sudo().access_internal = 'edit'
+
+        action = self.env['ir.actions.server'].create({
+            'name': 'Test Action',
+            'model_id': self.env['ir.model']._get_id('documents.document'),
+            'update_path': 'folder_id',
+            'usage': 'documents_embedded',
+            'state': 'object_write',
+            'resource_ref': f'documents.document,{self.folder_a.id}',
+        }).with_user(self.internal_user)
+
+        # Check that we need write access on the folder to pin it
+        self.assertEqual(document.folder_id.user_permission, 'view')
+        with self.assertRaises(AccessError):
+            document.env['documents.document'].action_folder_embed_action(document.folder_id.id, action.id)
+
+        document.folder_id.sudo().access_internal = 'edit'
+        with RecordCapturer(self.env['ir.embedded.actions'], []) as capturer:
+            document.env['documents.document'].action_folder_embed_action(document.folder_id.id, action.id)
+            embedded = capturer.records
+        self.assertEqual(len(embedded), 1)
+
+        # Try to move an existing embedded action
+        self.assertEqual(self.folder_a.with_user(self.internal_user).user_permission, 'view')
+        self.assertEqual(self.folder_b.with_user(self.internal_user).user_permission, 'edit')
+        with self.assertRaises(AccessError):
+            embedded.with_user(self.internal_user).parent_res_id = self.folder_a.id
+
+        embedded.parent_res_id = self.folder_a.id
+        with self.assertRaises(AccessError):
+            embedded.with_user(self.internal_user).parent_res_id = self.folder_b.id
 
     def test_groupless_embedded_action_availability(self):
         """ Ensure that an embedded action which should otherwise be visible to a given document
