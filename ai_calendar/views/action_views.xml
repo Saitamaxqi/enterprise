@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="calendar_action_create_calendar_event" model="ir.actions.server">
+        <field name="name">Create a Calendar Event</field>
+        <field name="model_id" ref="calendar.model_calendar_event"/>
+        <field name="state">code</field>
+        <field name="code">
+action = model.create_calendar_event()
+        </field>
+    </record>
+</odoo>

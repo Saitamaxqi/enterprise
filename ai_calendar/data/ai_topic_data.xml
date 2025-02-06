@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ai_topic_calendar" model="ai.topic">
+        <field name="name">Create Calendar Events</field>
+        <field name="description">Schedule events and add them to your Odoo calendar</field>
+        <field name="instructions">
+Be conversational, ask the user a single question at a time about a specific piece of information.For example, if user name, email and phone number are required,
+ask the user for their name first, and after the user enters their name, ask for email and so on.
+After gathering mutliple pieces of information from the user, confirm the information with the user beofre proceeding with the action. For example,
+"I have your name as ..., your email as ... and your phone number as ... ,  Is this correct?"
+        </field>
+        <field name="tool_ids" eval="[(6, 0, [ref('ai_tool_create_calendar_event')])]"/>
+    </record>
+</odoo>

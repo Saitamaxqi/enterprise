@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ai_agent_view_kanban" model="ir.ui.view">
+        <field name="name">ai.agent.kanban</field>
+        <field name="model">ai.agent</field>
+        <field name="arch" type="xml">
+            <kanban action="open_agent_chat"
+                    type="object"
+                    sample="1"
+                    class="o_ai_agent_kanban o_ai_agent_kanban_main"
+                    default_order="name desc">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="subtitle"/>
+                <field name="llm_model"/>
+                <field name="image_128"/>
+                <field name="topic_ids"/>
+
+                <templates>
+                    <t t-name="menu">
+                        <div class="container o_kanban_card_manage_pane">
+                            <div class="o_kanban_card_manage_section">
+                                <a type="open" class="dropdown-item" role="menuitem">Configuration</a>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-name="card" class="m-1 row g-0">
+                        <aside t-if="record.image_128.raw_value" class="oe_avatar col-auto">
+                            <field name="image_128" widget="image" options="{'img_class': 'object-fit-contain'}" alt="Agent"/>
+                        </aside>
+                        <main class="pe-4 py-2 ps-2 col">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="w-50">
+                                    <h4 class="o_kanban_title o_value mb-0 d-inline-block text-break">
+                                        <field name="name"/>
+                                    </h4>
+                                </div>
+                                <span class="badge bg-primary o_value ms-2 text-white">
+                                    <field name="llm_model"/>
+                                </span>
+                            </div>
+                            <p class="o_kanban_subtitle text-muted" t-if="record.subtitle.raw_value">
+                                <field name="subtitle"/>
+                            </p>
+                            <div class="o_kanban_tags mb-2">
+                                <field name="topic_ids" widget="many2many_tags" readonly="True"/>
+                            </div>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="ai_agent_view_tree" model="ir.ui.view">
+        <field name="name">ai.agent.list</field>
+        <field name="model">ai.agent</field>
+        <field name="arch" type="xml">
+            <list string="Properties">
+                <field name="name" string="Name"/>
+                <field name="subtitle"/>
+                <field name="llm_model"/>
+                <field name="topic_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ai_agent_view_form" model="ir.ui.view">
+        <field name="name">ai.agent.form</field>
+        <field name="model">ai.agent</field>
+        <field name="arch" type="xml">
+            <form>
+                <header class="d-flex flex-column gap-2">
+                    <button
+                        name="open_agent_chat"
+                        class="btn-primary"
+                        type="object"
+                        string="Test">
+                    </button>
+                    <field name="write_date"
+                           readonly="1"
+                           widget="ai_doc_processing_status"
+                           class="w-100"
+                           invisible="(not attachment_ids and not url_attachment_ids) or not write_date"/>
+                </header>
+                <sheet>
+                    <div class="oe_title mb-4 d-flex align-items-center">
+                        <field name="image_128" widget="image" class="oe_avatar me-3"
+                            options="{'preview_image': 'image_128', 'size': [128, 128]}"/>
+                        <div>
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. SDR Advisor"/>
+                            </h1>
+                            <h4 class="agent-subtitle">
+                                <field name="subtitle" placeholder="e.g. Get tips to close more sales"/>
+                            </h4>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="llm_model" widget="radio" options="{'horizontal': true}"/>
+                            <field name="response_style" widget="radio" options="{'horizontal': true}"/>
+                            <field name="system_prompt" placeholder="e.g. You are a support operator, you can answer questions related to ..."/>
+                            <field name="restrict_to_sources"/>
+                            <field name="topic_ids" widget="many2many_tags" options="{'horizontal': true}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Attachments" name="attachments">
+                            <group>
+                                <field
+                                    name="attachment_ids"
+                                    widget="many2many_binary"
+                                    string="Attach Sources"
+                                    colspan="2"
+                                    class="o_agent_attachments"
+                                    options="{'accepted_file_extensions': '.pdf,.docx,.pptx,.xlsx,.odt,.ods'}"
+                                />
+                            </group>
+                        </page>
+                        <page string="URLs" name="urls">
+                            <div class="o_field_widget o_field_text">
+                                <field name="urls" placeholder="Enter URLs, one per line..." rows="5"/>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ai_agent_view_search" model="ir.ui.view">
+        <field name="name">ai.agent.search</field>
+        <field name="model">ai.agent</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Agent" filter_domain="['|', ('name','ilike',self), ('subtitle','ilike',self)]"/>
+                <field name="system_prompt"/>
+                <field name="topic_ids"/>
+                <field name="attachment_ids"
+                       string="Sources"
+                       filter_domain="[
+                       '|', '|',
+                       ('attachment_ids.name','ilike',self),
+                       ('url_attachment_ids.name','ilike',self),
+                       ('url_attachment_ids.url','ilike',self)]"/>
+                <group string="Group By...">
+                    <filter string="Model" name="model" domain="[]" context="{'group_by':'llm_model'}"/>
+                    <filter string="Topics" name="topics" domain="[]" context="{'group_by':'topic_ids'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="ai_agent_action" model="ir.actions.act_window">
+        <field name="name">Agents</field>
+        <field name="res_model">ai.agent</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="ai_agent_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Agent!
+            </p>
+            <p>
+                Agents help you manage and organize your AI operations.
+            </p>
+        </field>
+    </record>
+</odoo>

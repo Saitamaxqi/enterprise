@@ -6,6 +6,7 @@
     'summary': 'Test Suite for Discuss Enterprise',
     'auto_install': ['test_discuss_full', 'web_enterprise'],
     'depends': [
+        'ai',
         'account_accountant',
         'account_invoice_extract',
         'approvals',

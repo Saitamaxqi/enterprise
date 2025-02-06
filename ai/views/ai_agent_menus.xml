@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="ai_menu_root"
+        name="AI"
+        web_icon="ai,static/description/icon.png"
+        sequence="50"/>
+
+    <menuitem
+        id="ai_menu"
+        name="Agents"
+        parent="ai.ai_menu_root"
+        sequence="45"/>
+
+    <menuitem
+        id="ai_agent_menu_action"
+        name="Agents"
+        parent="ai.ai_menu"
+        action="ai_agent_action"
+        sequence="30"/>
+
+    <menuitem
+        id="ai_topic_menu_action"
+        name="Topics"
+        parent="ai.ai_menu"
+        action="ai_topic_action"
+        sequence="35"/>
+
+    <menuitem 
+        id="ai_config_menu"
+        name="Configuration"
+        parent="ai.ai_menu_root"
+        sequence="50"/>
+
+    <menuitem 
+        id="ai_general_settings_menu"
+        name="Settings"
+        parent="ai.ai_config_menu"
+        action="ai_settings_action"
+        groups="base.group_system"
+        sequence="10"/>
+
+</odoo>

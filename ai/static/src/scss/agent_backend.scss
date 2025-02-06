@@ -1,0 +1,11 @@
+.o_agent_attachments {
+    .o_attachments {
+        display: flex;
+        flex-wrap: wrap;
+
+        .o_attachment {
+            width: auto;
+            min-width: 0;
+        }
+    }
+}

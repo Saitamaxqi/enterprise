@@ -1,0 +1,5 @@
+<odoo>
+    <record id="ai.ai_agent_1" model="ai.agent">
+        <field name="topic_ids" eval="[(4, ref('ai_topic_calendar'))]"/>
+    </record>
+</odoo>
