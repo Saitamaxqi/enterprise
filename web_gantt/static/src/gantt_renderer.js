@@ -1951,7 +1951,7 @@ export class GanttRenderer extends Component {
         return {
             t0: 24,
             t1: 36,
-            t2: 16,
+            t2: 10,
         }[type];
     }
 
