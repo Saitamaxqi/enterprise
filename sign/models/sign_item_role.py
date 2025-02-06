@@ -11,7 +11,6 @@ class SignItemRole(models.Model):
     _order = "sequence, id"
 
     name = fields.Char(required=True, translate=True)
-    color = fields.Integer()
     default = fields.Boolean(required=True, default=False)
     sequence = fields.Integer(string="Default order", default=10)
 
@@ -20,11 +19,6 @@ class SignItemRole(models.Model):
     ], default=False, help="Force the signatory to identify using a second authentication method")
 
     change_authorized = fields.Boolean('Change Authorized', help="If checked, recipient of a document with this role can be changed after having sent the request. Useful to replace a signatory who is out of office, etc.")
-
-    _name_uniq = models.Constraint(
-        'unique (name)',
-        "Name already exists!",
-    )
 
     def write(self, vals):
         vals.pop('default', None)

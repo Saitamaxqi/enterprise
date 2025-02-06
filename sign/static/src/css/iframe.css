@@ -79,6 +79,7 @@
     font-family: Helvetica;
     z-index: 100;
     cursor: pointer;
+    border-radius: 3px;
 }
 
 .o_sign_sign_item.o_sign_sign_item_default {
@@ -103,6 +104,7 @@
 
 .o_sign_field_alignment{
     margin-top: 0px;
+    padding-left: 2px;
 }
 
 .o_sign_sign_item.o_readonly_mode {
@@ -112,6 +114,12 @@
 .o_sign_sign_item .o_placeholder {
     vertical-align: unset;
     padding-left: 30px;
+    overflow: hidden;
+}
+
+.o_sign_sign_item .o_placeholder_text_item {
+    vertical-align: unset;
+    padding-left: 5px !important;
     overflow: hidden;
 }
 
@@ -143,10 +151,6 @@
 
 .o_custom_checkbox {
     display: inline-block;
-    margin-left: 1rem;
-    width: 1em;
-    height: 0.8em;
-    position: relative;
 }
 
 .o_custom_checkbox::after {
@@ -203,18 +207,9 @@
     display: block;
     float: left;
     height: calc(100% - 2px);
-    background-color: rgba(197, 166, 182, 0.9);
-    width: 25px;
-    border: 1px dashed black;
+    width: 100%;
     text-align: center;
     cursor: url(/web/static/img/openhand.cur), grab;
-}
-
-.o_sign_config_handle .fa-arrows {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 15px !important;
 }
 
 .o_sign_sign_item .o_sign_config_area .o_sign_item_display {
@@ -230,15 +225,14 @@
 
 .o_sign_select_options_display {
     height: 100%;
-    width: calc(100% - 25px);
     align-items: center;
     justify-content: left;
-    padding-left: 25px;
 }
 
 .o_sign_select_options_display_edit{
-    display: flex;
-    padding-left: 0;
+    align-items: center;
+    text-align: center;
+    align-content: center;
 }
 
 .o_sign_item_option {
@@ -247,6 +241,23 @@
 
 .o_sign_option_separator {
     padding: 5px;
+}
+
+select {
+    border: none;
+    background: transparent;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+}
+
+select:focus {
+    outline:none;
+}
+
+.o_select_empty {
+    display: none;
 }
 
 .o_sign_selected_option {
@@ -270,10 +281,33 @@
     z-index: 90;
 }
 
+.o_sign_edit_strikethrough {
+    opacity: 0.6;
+}
+
+.o_sign_sign_strikethrough {
+    border: none !important;
+    box-shadow: unset !important;
+}
+
+.o_sign_strikethrough_line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%; 
+    transform: translateY(-50%);
+    border-top: 1px solid;
+    opacity: 0;
+}
+
+.o_sign_strikethrough_line_striked {
+    opacity: 1 !important;
+}
+
 .resize_both {
     clip-path: polygon(100% 0, 0% 100%, 100% 100%);
     right: 0px;
-    bottom: 0px;
+    bottom: 2px;
     cursor: se-resize;
     height: 10px;
     width: 10px;
@@ -374,41 +408,8 @@
     }
 }
 
-.o_sign_field_type_toolbar {
-    width: 14rem;
-    z-index: 1030;
-    height: -webkit-fill-available;
-    position: absolute;
-    border: 1px solid rgb(var(--gray-300-rgb)) !important;
-}
-
-.o_sign_field_type_toolbar_title {
-    height: 12px;
-    font-size: 12px;
-}
-
-.o_sign_field_type_button:hover {
-    cursor: move;
-    transition: transform 200ms ease 0s;
-    box-shadow: 0 5px 15px -10px rgb(var(--bs-dark-rgb));
-    transform: translateX(1px) translateY(-1px) scale(1.05) rotate(1deg);
-}
-
-.o_sign_field_type_toolbar_items {
-    overflow: auto;
-}
-
-#outerContainer.o_sign_field_type_toolbar_visible {
-    margin-left: 14rem;
-    width: auto;
-}
-
 #outerContainer.o_sign_field_type_toolbar_visible #thumbnailView {
     width: auto;
-}
-
-.o_sign_sign_item_navigator.o_sign_field_type_toolbar_visible {
-    margin-left: 14rem;
 }
 
 .o_tooltip > .o_tooltip_content {

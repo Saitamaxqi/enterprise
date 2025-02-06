@@ -9,6 +9,7 @@
             <t t-if="type == 'radio'" t-call="sign.radioSignItem"/>
             <t t-if="type == 'selection'" t-call="sign.selectionSignItem"/>
             <t t-if="type == 'signature' || type == 'initial'" t-call="sign.signatureSignItem"/>
+            <t t-if="type == 'strikethrough'" t-call="sign.strikethroughSignItem"/>
         </t>
         <t t-if="!readonly">
             <!-- SIGN SESSION : filling the signature values  -->
@@ -29,28 +30,25 @@
             <textarea t-if="type == 'textarea'" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item" t-att-style="style" t-att-placeholder="placeholder" t-att-value="value" t-esc="value"/>
             <div t-if="type == 'selection'" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item" t-att-style="style" t-att-value="value">
                 <div class="o_sign_select_options_display o_sign_select_options_display_edit">
-                    <t t-foreach="options" t-key="option.value" t-as="option" t-index="index">
-                        <t t-if="option_index !== 0">
-                            <span class="o_sign_option_separator">/</span>
+                    <select name="selection" id="selection">
+                        <option class="o_select_empty"/>
+                        <t t-foreach="options" t-key="option.value" t-as="option" t-index="index">
+                            <option value="value" t-att-data-id="option.id">
+                                <t t-esc="option.value"/>
+                            </option>
                         </t>
-                        <span t-attf-class="o_sign_item_option {{ value ? (value == option.id ? 'o_sign_selected_option' : 'o_sign_not_selected_option') : ''}}" t-att-data-id="option.id" t-esc="option.value"/>
-                    </t>
+                    </select>
                 </div>
+            </div>
+            <div t-if="type == 'strikethrough'" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item o_sign_sign_strikethrough" t-att-style="style">
+                <div class="o_sign_strikethrough_line"/>
             </div>
         </t>
     </t>
 
     <div t-name="sign.signItemConfiguration" t-attf-class="o_sign_config_area {{ isSignItemEditable &amp;&amp; type == 'text' ? 'o_sign_editable_config_area' : '' }}">
-        <div class="o_sign_config_handle" aria-label="Signature configuration" title="Signature configuration">
-            <span class="fa fa-arrows" role="img"/>
-        </div>
         <span t-if="isSignItemEditable" class="fa fa-times" role="img" aria-label="Delete sign item" title="Delete sign"/>
-        <div class="o_sign_item_display">
-            <!-- Don't display role for checkbox. We don't have place -->
-            <t t-if="['checkbox','radio'].indexOf(type) == -1 || isSignItemEditable">
-                <span class="o_sign_responsible_display" t-att-title="responsibleName" t-esc="responsibleName"/>
-            </t>
-        </div>
+        <div class="o_sign_item_display o_sign_config_handle"/>
         <div class="o_resize_handler resize_height"></div>
         <div class="o_resize_handler resize_width"></div>
         <div class="o_resize_handler resize_both"></div>
@@ -59,18 +57,14 @@
     <div t-name="sign.selectionSignItem" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item" t-att-data-id="id" t-att-style="style + 'white-space: normal;text-align: center;'">
         <div class="sign_item_body">
             <t t-if="!value">
-                <span class="o_placeholder ps-0">
-                    <t t-esc="placeholder"/>
-                </span>
+                <div class="o_sign_selection_item_container">
+                    <select name="selection" id="selection" class="o_sign_selection_item_select" t-att-placeholder="placeholder">
+                        <option>
+                            <t t-esc="placeholder"/>
+                        </option>
+                    </select>
+                </div>
             </t>
-            <div class="o_sign_select_options_display">
-                <t t-foreach="options" t-key="option.value" t-as="option" t-index="index">
-                    <t t-if="option_index !== 0">
-                        <span class="o_sign_option_separator">/</span>
-                    </t>
-                    <span t-attf-class="o_sign_item_option {{ value ? (value == option.id ? 'o_sign_selected_option' : 'o_sign_not_selected_option') : ''}}" t-esc="option.value"/>
-                </t>
-            </div>
             <t t-if="editMode" t-call="sign.signItemConfiguration"/>
         </div>
     </div>
@@ -81,7 +75,7 @@
             <img t-if="frame_value" t-att-src="frame_value" alt="Frame" class="o_sign_frame"/>
             <img t-if="value" t-att-src="value" alt="Signature"/>
             <t t-if="!value">
-                <span class="o_placeholder ps-0">
+                <span class="o_sign_signature_item o_placeholder ps-0">
                     <t t-esc="placeholder"/>
                 </span>
             </t>
@@ -92,9 +86,9 @@
     <div t-name="sign.textareaSignItem" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item o_sign_sign_textarea" t-att-style="style" t-att-data-id="id">
         <div class="sign_item_body">
             <t t-if="!value">
-                <p class="o_placeholder o_sign_field_alignment">
-                    <t t-esc="placeholder"/>
-                </p>
+                <div class="o_sign_textarea_placeholder">
+                    <div class="w-100"><t t-esc="placeholder"/></div>
+                </div>
             </t>
             <t t-esc="value"/>
             <t t-if="editMode" t-call="sign.signItemConfiguration"/>
@@ -106,7 +100,7 @@
             <t t-if="value == 'on'">&#9745;</t>
             <t t-if="value == 'off'">&#9744;</t>
             <t t-if="!value">
-                <span class="o_placeholder ps-0">
+                <span class="o_sign_checkbox_item o_placeholder ps-0">
                     <t t-if="placeholder == '☑'"><span class="o_custom_checkbox"/></t>
                     <t t-else=""><span class="o_custom_checkbox unchecked"/></t>
                 </span>
@@ -120,7 +114,7 @@
             <t t-if="value == 'on'">&#9673;</t>
             <t t-if="value == 'off'">&#9711;</t>
             <t t-if="!value">
-                <span class="o_placeholder ps-0 o_sign_field_alignment" t-att-style="(editMode ? 'padding-left: 25px;' : '')">
+                <span class="o_placeholder ps-0 o_sign_field_alignment">
                     <t t-esc="placeholder"/>
                 </span>
             </t>
@@ -136,13 +130,19 @@
             </t>
             <t t-else="">
                 <t t-if="!value">
-                    <p class="o_placeholder ps-0 o_sign_field_alignment">
+                    <p class="o_placeholder_text_item ps-0 o_sign_field_alignment">
                         <t t-esc="placeholder"/>
                     </p>
                 </t>
                 <t t-esc="value"/>
                 <t t-if="editMode" t-call="sign.signItemConfiguration"/>
             </t>
+        </div>
+    </div>
+    <div t-name="sign.strikethroughSignItem" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item o_sign_edit_strikethrough" t-att-data-id="id" t-att-style="style">
+        <div class="sign_item_body">
+            <div class="o_sign_strikethrough_line o_sign_strikethrough_line_striked"/>
+            <t t-if="editMode" t-call="sign.signItemConfiguration"/>
         </div>
     </div>
 </templates>

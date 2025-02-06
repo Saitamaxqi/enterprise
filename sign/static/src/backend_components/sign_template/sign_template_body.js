@@ -1,17 +1,17 @@
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { SignTemplateIframe } from "./sign_template_iframe";
-import { SignTemplateTopBar } from "./sign_template_top_bar";
-import { Component, useRef, useEffect, onWillUnmount, useState, useExternalListener } from "@odoo/owl";
+import { Component, useRef, useEffect, onWillUnmount, onWillStart, useState, useExternalListener } from "@odoo/owl";
 import { buildPDFViewerURL , injectPDFCustomStyles } from "@sign/components/sign_request/utils";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { hidePDFJSButtons } from "@web/core/utils/pdfjs";
 import { useSetupAction } from "@web/search/action_hook";
+import { SignSaveTemplateDialog } from "./sign_save_template_dialog";
 
 export class SignTemplateBody extends Component {
     static template = "sign.SignTemplateBody";
     static components = {
-        SignTemplateTopBar,
+        SignSaveTemplateDialog,
     };
     static props = {
         signItemTypes: { type: Array },
@@ -23,10 +23,13 @@ export class SignTemplateBody extends Component {
         attachmentLocation: { type: String },
         signTemplate: { type: Object },
         goBackToKanban: { type: Function },
+        onTemplateSaveClick: { type: Function },
         manageTemplateAccess: { type: Boolean },
         isPDF: { type: Boolean },
         resModel: { type: String },
         signStatus: { type: Object },
+        iframe: { type: Object, optional: true },
+        setIframe: { type: Function },
     };
 
     setup() {
@@ -42,6 +45,9 @@ export class SignTemplateBody extends Component {
             isSelectionItemEdited: false,
             isSelectionItemRendered: false,
         });
+        this.state = useState({
+            documentUsedTimesCounter: 0,
+        })
         useEffect(
             (el) => {
                 if (el) {
@@ -78,10 +84,23 @@ export class SignTemplateBody extends Component {
         });
 
         onWillUnmount(() => {
-            if (this.iframe) {
-                this.iframe.unmount();
-                this.iframe = null;
+            if (this.props.iframe) {
+                this.props.iframe.unmount();
+                this.props.iframe = null;
             }
+        });
+
+        onWillStart(async () => {
+            if (!this.props.signTemplate.active) {
+                /* When uploading a PDF for signing, we check how many times a PDF with that
+                name was used and if it is bigger than two, then suggest the user saving it
+                as template with in a notification with a button. */
+                const documentUsedTimes = await this.orm.searchCount(
+                    "sign.request",
+                    [["reference", "ilike", this.props.signTemplate.display_name]]
+                );
+                this.state.documentUsedTimesCounter = documentUsedTimes;
+            };
         });
     }
 
@@ -111,7 +130,7 @@ export class SignTemplateBody extends Component {
 
     doPDFPostLoad() {
         this.preventDroppingImagesOnViewerContainer();
-        this.iframe = new SignTemplateIframe(
+        const iframe = new SignTemplateIframe(
             this.PDFIframe.el.contentDocument,
             this.env,
             {
@@ -134,7 +153,7 @@ export class SignTemplateBody extends Component {
                 setTemplateChangedState: (state) => this.props.signStatus.isTemplateChanged = state,
             }
         );
-        this.props.signStatus.save = this.iframe.saveChangesOnBackend.bind(this.iframe);
+        this.props.setIframe(iframe);
     }
 
     /**
@@ -160,7 +179,7 @@ export class SignTemplateBody extends Component {
         const newId2ItemIdMap = await this.orm.call("sign.template", "update_from_pdfviewer", [
             this.props.signTemplate.id,
             updatedSignItems,
-            this.iframe.deletedSignItemIds,
+            this.props.iframe.deletedSignItemIds,
             newTemplateName || "",
         ]);
 
@@ -186,7 +205,7 @@ export class SignTemplateBody extends Component {
     prepareTemplateData() {
         const updatedSignItems = {};
         const Id2UpdatedItem = {};
-        const items = this.iframe?.signItems ?? {};
+        const items = this.props.iframe?.signItems ?? {};
         for (const page in items) {
             for (const id in items[page]) {
                 const signItem = items[page][id].data;

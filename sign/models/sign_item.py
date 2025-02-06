@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class SignItem(models.Model):
@@ -16,7 +16,7 @@ class SignItem(models.Model):
     required = fields.Boolean(default=True)
     responsible_id = fields.Many2one("sign.item.role", string="Responsible", ondelete="restrict")
 
-    option_ids = fields.Many2many("sign.item.option", string="Selection options")
+    option_ids = fields.Many2many("sign.item.option", string="Selection options", relation='sign_item_option_rel')
 
     radio_set_id = fields.Many2one("sign.item.radio.set", string="Radio button options", ondelete='cascade')
     num_options = fields.Integer(related="radio_set_id.num_options")
@@ -27,20 +27,10 @@ class SignItem(models.Model):
     posY = fields.Float(digits=(4, 3), string="Position Y", required=True)
     width = fields.Float(digits=(4, 3), required=True)
     height = fields.Float(digits=(4, 3), required=True)
-    alignment = fields.Char(default="center", required=True)
+    alignment = fields.Char(default="left", required=True)
 
     transaction_id = fields.Integer(copy=False)
 
-    def create(self, vals_list):
-        res = super().create(vals_list)
-        # All new sign items of type "radio" that don't have a radio_set_id
-        # are grouped together in on radio set.
-        hanging_radio_items = res.filtered(lambda item: item.type_id.item_type == "radio" and not item.radio_set_id)
-        if hanging_radio_items:
-            self.env['sign.item.radio.set'].create([{
-                'radio_items': hanging_radio_items,
-            }])
-        return res
 
     def copy_data(self, default=None):
         vals_list = super().copy_data(default=default)
@@ -52,3 +42,23 @@ class SignItem(models.Model):
         for item in vals_list:
             item['radio_set_id'] = radio_set_map.get(item['radio_set_id'])
         return vals_list
+
+
+    @api.autovacuum
+    def _gc_radio_set_and_options(self):
+        # Unlink orphaned radio sets that has no sign items linked to it
+        self.env.cr.execute("""
+            WITH linked_radio AS (
+                SELECT s.id radio_id
+                FROM sign_item_radio_set s
+                LEFT JOIN sign_item si ON si.radio_set_id=s.id
+                WHERE si.id IS NULL
+            )
+            DELETE FROM sign_item_radio_set
+            WHERE id IN (SELECT * FROM linked_radio)
+        """)
+        # Unlink options that don't belong to any selection sign item
+        self.env.cr.execute("""
+            DELETE FROM sign_item_option
+            WHERE id NOT IN (SELECT sign_item_option_id FROM sign_item_option_rel)
+        """)

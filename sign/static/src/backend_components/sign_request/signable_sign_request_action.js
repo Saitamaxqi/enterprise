@@ -4,7 +4,7 @@ import { Document } from "@sign/components/sign_request/document_signable";
 import { SignRequest } from "@sign/backend_components/sign_request/sign_request_action";
 import { useSubEnv, EventBus } from "@odoo/owl";
 import { SignableRequestControlPanel } from "@sign/backend_components/sign_request/signable_sign_request_control_panel";
-import { EditWhileSigningSignablePDFIframe } from "@sign/backend_components/sign_request/edit_while_signing_signable_pdf_iframe";
+import { SignablePDFIframe } from "@sign/components/sign_request/signable_PDF_iframe";
 
 class EditWhileSigningDocument extends Document {
     setup() {
@@ -44,7 +44,7 @@ export class SignableSignRequest extends SignRequest {
     get documentProps() {
         return {
             ...super.documentProps,
-            PDFIframeClass: EditWhileSigningSignablePDFIframe,
+            PDFIframeClass: SignablePDFIframe,
         };
     }
 }

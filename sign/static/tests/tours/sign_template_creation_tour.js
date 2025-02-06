@@ -1,6 +1,7 @@
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
 import { queryFirst } from "@odoo/hoot-dom";
+import { _t } from "@web/core/l10n/translation";
 
 function triggerDragEvent(element, type, data = {}) {
     const event = new DragEvent(type, { bubbles: true });
@@ -91,92 +92,24 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
         },
         {
             content: "Drop Signature Item",
-            trigger: ":iframe .o_sign_field_type_button:contains(Signature)",
+            trigger: ".o_sign_field_type_button:contains(" + _t("Signature") +")",
             run() {
                 dragAndDropSignItemAtHeight(this.anchor, 0.5, 0.25);
             },
         },
         {
             content: "Drop Name Sign Item",
-            trigger: ":iframe .o_sign_field_type_button:contains(Name)",
+            trigger: ".o_sign_field_type_button:contains(" + _t("Name") +")",
             run() {
                 dragAndDropSignItemAtHeight(this.anchor, 0.25, 0.25);
             },
         },
         {
             content: "Drop Text Sign Item",
-            trigger: ":iframe .o_sign_field_type_button:contains(Text)",
+            trigger: ".o_sign_field_type_button:contains(" + _t("Text") +")",
             run() {
                 dragAndDropSignItemAtHeight(this.anchor, 0.15, 0.25);
             },
-        },
-        {
-            content: "Open popover on name sign item",
-            trigger: ':iframe .o_sign_sign_item:contains("Name") .o_sign_item_display',
-            run: "click",
-        },
-        {
-            content: "Change responsible",
-            trigger: ".o_popover .o_input_dropdown input",
-            run: "edit employee",
-        },
-        {
-            content: "select employee",
-            trigger: '.o_popover .o_input_dropdown .dropdown .dropdown-item:contains("Employee")',
-            run: "click",
-        },
-        {
-            content: "Validate changes",
-            trigger: ".o_popover .o_sign_validate_field_button",
-            run: "click",
-        },
-        {
-            content: "Drop Selection Sign Item",
-            trigger: ":iframe .o_sign_field_type_button:contains(Selection)",
-            run() {
-                dragAndDropSignItemAtHeight(this.anchor, 0.75, 0.25);
-            },
-        },
-        {
-            content: "Open popover on Selection sign item",
-            trigger: ':iframe .o_sign_sign_item:contains("Selection") .o_sign_item_display',
-            run: "click",
-        },
-        {
-            content: "Write new selection option name",
-            trigger: ".o_popover .o_input_dropdown input",
-            run: "edit option",
-        },
-        {
-            content: "Create new selection option",
-            trigger: '.o_popover .o_input_dropdown .dropdown a:contains("Create")',
-            run: "click",
-        },
-        {
-            content: "Check option is added",
-            trigger:
-                '.o_popover #o_sign_select_options_input .o_sign_list_item_label:contains("option")',
-            run: "click",
-        },
-        {
-            content: "Validate changes",
-            trigger: ".o_popover .o_sign_validate_field_button",
-            run: "click",
-        },
-        {
-            content: "Open popover on text sign item",
-            trigger: ":iframe .o_sign_sign_item:contains('Text') .o_sign_item_display",
-            run: "click",
-        },
-        {
-            content: "Change text placeholder",
-            trigger: ".o_popover .o_popover_placeholder input",
-            run: "edit placeholder && click .o_popover",
-        },
-        {
-            content: "Validate changes",
-            trigger: ".o_popover .o_sign_validate_field_button",
-            run: "click",
         },
         {
             content: "Change template name",

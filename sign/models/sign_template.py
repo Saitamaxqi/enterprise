@@ -521,6 +521,8 @@ CRM, eCommerce, accounting, inventory, point of sale,\n project management, etc.
             elif it.type_id.item_type == "radio":
                 radio_items = it.radio_set_id.radio_items
                 value = "on" if it == radio_items[:1] else ""  # we select always the first option
+            elif it.type_id.item_type == "strikethrough":
+                value = "striked"
             values_dict[it.id] = {
                 "value": value,
                 "frame": "",
@@ -612,15 +614,12 @@ CRM, eCommerce, accounting, inventory, point of sale,\n project management, etc.
                         can.drawCentredString(width * (item.posX + item.width / 2), height * (1 - item.posY - item.height * 0.9), value)
 
                 elif item.type_id.item_type == "selection":
-                    content = []
+                    text = ""
                     for option in item.option_ids:
-                        if option.id != int(value):
-                            content.append("<strike>%s</strike>" % (option.value))
-                        else:
-                            content.append(option.value)
+                        if option.id == int(value):
+                            text = option.value
                     font_size = height * normalFontSize * 0.8
-                    text = " / ".join(content)
-                    string_width = stringWidth(text.replace("<strike>", "").replace("</strike>", ""), font, font_size)
+                    string_width = stringWidth(text, font, font_size)
                     p = Paragraph(text, ParagraphStyle(name='Selection Paragraph', fontName=font, fontSize=font_size, leading=12))
                     posX = width * (item.posX + item.width * 0.5) - string_width // 2
                     posY = height * (1 - item.posY - item.height * 0.5) - p.wrap(width, height)[1] // 2
@@ -677,6 +676,12 @@ CRM, eCommerce, accounting, inventory, point of sale,\n project management, etc.
                         raise ValidationError(_("There was an issue downloading your document. Please contact an administrator."))
                     _fix_image_transparency(image_reader._image)
                     can.drawImage(image_reader, width * item.posX, height * (1 - item.posY - item.height), width * item.width, height * item.height, 'auto', True)
+                elif item.type_id.item_type == "strikethrough" and value == "striked":
+                    x = width * item.posX
+                    y = height * (1 - item.posY)
+                    w = item.width * width
+                    h = item.height * height
+                    can.line(x, y - 0.5 * h, x + w, y - 0.5 * h)
 
             can.showPage()
 
@@ -716,3 +721,15 @@ CRM, eCommerce, accounting, inventory, point of sale,\n project management, etc.
             'views': [[False, 'form']],
             'context': self.env.context,
         }
+
+    def get_template_items_roles_info(self):
+        """ Extract a unique list of role IDs and colors from self.sign_item_ids, adding an index. """
+        self.ensure_one()
+        roles_info = []
+        for idx, role in enumerate(self.sign_item_ids.responsible_id):
+            roles_info.append({
+                'id': idx,
+                'roleId': role.id,
+                'colorId': idx,
+            })
+        return roles_info

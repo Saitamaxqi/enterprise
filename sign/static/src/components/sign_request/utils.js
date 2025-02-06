@@ -125,7 +125,7 @@ export function generateRandomId() {
  * @param {HelperLines} helperLines instance of helper lines for guiding the user while dragging
  * @returns {Function} cleanup function to be executed when dragging is over
  */
-export function startSmoothScroll(container, element, dragImageElement = null, helperLines) {
+export function startSmoothScroll(container, element, dragImageElement = null, helperLines, offsetX = 0, offsetY = 0) {
     const boundary = 0.2;
     const directions = {
         up: -1,
@@ -139,9 +139,9 @@ export function startSmoothScroll(container, element, dragImageElement = null, h
     const el = dragImageElement || element;
     function updateMousePosition(e) {
         // calculates the event's position relative to the container
-        mouse.x = e.clientX - containerOffset.left;
-        mouse.y = e.clientY - containerOffset.top;
-        helperLines.show(el, { x: e.clientX, y: e.clientY });
+        mouse.x = e.clientX - containerOffset.left - offsetX;
+        mouse.y = e.clientY - containerOffset.top - offsetY;
+        helperLines.show(el, { x: e.clientX - offsetX, y: e.clientY - offsetY });
     }
     const debouncedOnMouseMove = debounce(updateMousePosition, "animationFrame", true);
     container.addEventListener("dragover", debouncedOnMouseMove);

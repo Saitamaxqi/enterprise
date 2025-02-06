@@ -76,24 +76,6 @@
             padding: 0;
             margin-bottom: 2px;
         }
-
-        .o_sign_template_header_wrapper {
-            .o_sign_template_tags_and_save .o_field_many2many_selection {
-                width: auto !important; //makes many2many field one line
-            }
-        }
-    }
-
-
-    .o_sign_create_partner {
-        .fa-exclamation-circle {
-            padding: 0 10px;
-            color: map-get($theme-colors, 'danger');
-        }
-        .fa-check-circle {
-            padding-left: 10px;
-            color: map-get($theme-colors, 'success');
-        }
     }
 
     #o_sign_select_options_input .o_field_tags {
@@ -120,11 +102,9 @@
     .o_sign_resend_access_button {
         padding: 0;
     }
-    
+
     .o_popover_offset {
         top: 29px !important;
-        left: -4px !important #{"/*rtl:ignore*/"};
-        left: 4px !important #{"/*rtl:remove*/"};
     }
 
     .o_sign_close_button {
@@ -135,6 +115,183 @@
         line-height: 1;
         text-shadow: 0 1px 0 #FFFFFF;
         opacity: .5;
+    }
+
+    .o_sign_sidebar {
+        width: 250px;
+        max-width: 250px;
+        z-index: 1030;
+        margin: 1em;
+        flex-shrink: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: thin;
+    }
+
+    .o_sign_sidebar_selector {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2px;
+        padding-top: 2px;
+        width: 175px;
+    }
+
+    .o_sign_sidebar_icon {
+        min-width: 20px;
+        border: none;
+    }
+
+    .o_sign_sidebar_add_button_container {
+        display: flex;
+        justify-content: center;
+        margin-top: 0.5em;
+    }
+
+    .o_sign_sidebar_add_button {
+        min-width: 150px;
+        font-size: 15px;
+    }
+
+    .o_sign_sidebar_delete_button {
+        min-width: 150px;
+        font-size: 15px;
+        margin-top: 10px;
+    }
+
+    .o_sign_sidebar_bottom {
+        height: 110px;
+    }
+
+    .o_sign_sidebar_signer {
+        position: relative;
+    }
+
+    .o_sign_sidebar_header {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .o_sign_sidebar_signer_options {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        justify-content: end;
+        position: absolute;
+        right: 0;
+        padding-right: 5px;
+    }
+
+    .o_sign_item_count {
+        display: flex;
+        align-items: center;
+        width: 25px;
+        height: 25px;
+        justify-content: center;
+        border-radius: 15px;
+        margin: auto;
+        padding: 4px;
+    }
+
+    .o_sign_sidebar_item_grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        gap: 4px; /* Small gap between buttons */
+    }
+
+    .o_sign_field_type_button {
+        width: 100%; /* Full width of the grid cell */
+        height: 100%; /* Full height of the grid cell */
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 8px;
+        white-space: nowrap; /* Prevent text from wrapping */
+        overflow: hidden; /* Hide overflow */
+        text-overflow: ellipsis; /* Add ellipsis for overflow text */
+        &:hover {
+            cursor: move;
+            transition: transform 200ms ease 0s;
+            transform: translateX(1px) translateY(-1px) scale(1.05) rotate(1deg);
+        }
+    }
+
+    .o_sign_field_type_button_content {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        overflow: hidden;
+        font-size: 11px;
+    }
+
+    .o_sign_field_type_button_content i {
+        flex-shrink: 0; /* Prevent icon from shrinking */
+    }
+
+    .o_sign_field_type_button_content span {
+        flex-grow: 1; /* Allow text to grow and take remaining space */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .o_sign_sidebar_role_input_container {
+        display: flex;
+        align-items: center;
+    }
+
+    .o_sign_sidebar_role_muted_input {
+        border-bottom-width: 0px;
+    }
+
+    .o_sign_sidebar_signer_content {
+        margin-bottom: 1em;
+    }
+
+    .o_sign_save_template_dialog_container {
+        display: flex;
+        align-items: center;
+        border-radius: 5px;
+        background-color: #ffeb9a;
+        min-width: 400px;
+        min-height: 60px;
+        position: fixed;
+        right: 30px;
+        padding-left: 10px;
+        margin-top: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        font-size: 15px;
+        overflow: hidden;
+    }
+
+    .o_sign_save_template_dialog_div {
+        display: flex;
+        align-items: center;
+    }
+
+    .o_sign_save_template_save_button {
+        font-weight: bold;
+        color: darkblue;
+    }
+
+    .o_sign_save_template_close_button_div {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .o_sign_save_template_close_button {
+        right: 5px;
+        top: 5px;
+    }
+
+    @for $size from 2 through length($o-colors) {
+        // Note: the first color is supposed to be invisible so it's ignored
+        .o_color_responsible_#{length($o-colors) - $size} { //assign colors in reverse order
+            background-color: rgba(adjust-color(nth($o-colors, $size), $lightness: 25%, $saturation: 5%), 0.9);
+        }
+    }
+    @for $size from 1 through length($o-colors-secondary) {
+        .o_color_responsible_#{length($o-colors) + $size - 2} {
+            background-color: rgba(adjust-color(nth($o-colors-secondary, $size), $lightness: 25%, $saturation: 5%), 0.9);
+        }
     }
 }
 
@@ -160,6 +317,8 @@
         }
     }
     &.o_kanban_ungrouped {
+        --Kanban-padding: 0px 0px;
+
         .o_sign_kanban_card_grouped {
             display:none !important;
         }
@@ -226,9 +385,41 @@
     z-index: 1055 !important;
 }
 
-.o_sign_tags_format {
-    width: 25%;
-    min-height: 72px;
+.o_sign_template_tags_and_save {
+    position: absolute;
+    width: 500px;
+    right: 50px;
+    top: 50px;
+
+    .o_field_widget.o_field_many2many_tags {
+        height: 50px;
+        overflow: auto;
+        display: flex;
+        align-items: start;
+    }
+
+    .o_field_tags {
+        flex-wrap: nowrap;
+    }
+
+    .o_tag {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_tag_badge_text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .o_sign_template_tags_and_save {
+        display: none !important;
+    }
 }
 
 .o_sign_template_tags_and_save .o_tags_input {

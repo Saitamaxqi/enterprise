@@ -34,7 +34,8 @@ class SignRequest(models.Model):
     reference_doc = fields.Reference(string="Linked To", selection='_selection_target_model', index='btree_not_null')
 
     access_token = fields.Char('Security Token', required=True, default=_default_access_token, readonly=True, copy=False)
-    share_link = fields.Char(string="Share Link", compute='_compute_share_link')
+    share_link = fields.Char(string="Share Link", compute='_compute_share_link', readonly=False)
+    is_shared = fields.Boolean(string="Share Request Button", compute='_compute_is_shared', inverse='_inverse_is_shared')
 
     request_item_ids = fields.One2many('sign.request.item', 'sign_request_id', string="Signers", copy=True)
     state = fields.Selection([
@@ -84,6 +85,18 @@ class SignRequest(models.Model):
         for request in self:
             if request.reminder_enabled and request.reminder <= 0:
                 raise UserError(_("We can only send reminders in the future - as soon as we find a way to send reminders in the past we'll notify you.\nIn the mean time, please make sure to input a positive number of days for the reminder interval."))
+
+    @api.depends('state')
+    def _compute_is_shared(self):
+        for sign_request in self:
+            sign_request.is_shared = sign_request.state == 'shared'
+
+    def _inverse_is_shared(self):
+        for sign_request in self:
+            if sign_request.is_shared:
+                sign_request.state = 'shared'
+            else:
+                sign_request.state = 'sent'
 
     @api.depends_context('uid')
     def _compute_need_my_signature(self):
@@ -174,6 +187,17 @@ class SignRequest(models.Model):
     def action_archive(self):
         self.filtered(lambda sr: sr.active and sr.state == 'sent').cancel()
         return super().action_archive()
+
+    def action_share_request(self):
+        self.ensure_one()
+        self.is_shared = True
+        return {'type': 'ir.actions.act_window_close'}
+
+    def action_close_request(self):
+        self.ensure_one()
+        if not self.is_shared:
+            self.unlink()
+        return {'type': 'ir.actions.act_window_close'}
 
     def _check_senders_validity(self):
         invalid_senders = self.create_uid.filtered(lambda u: not u.email_formatted)

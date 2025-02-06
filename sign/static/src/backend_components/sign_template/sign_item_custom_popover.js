@@ -10,7 +10,6 @@ import { Component, useState, useExternalListener } from "@odoo/owl";
 
 const actionFieldsGet = {
     option_ids: { type: "many2many", relation: "sign.item.option", string: "Selected Options" },
-    responsible_id: { type: "many2one", relation: "sign.item.role", string: "Responsible" },
 };
 
 function getActionActiveFields() {
@@ -47,15 +46,12 @@ export class SignItemCustomPopover extends Component {
         placeholder: { type: String },
         required: { type: Boolean },
         option_ids: { type: Array },
-        responsible: { type: Number },
         onValidate: { type: Function },
         updateSelectionOptions: { type: Function },
-        updateRoles: { type: Function },
         type: { type: String },
         onDelete: { type: Function },
         onClose: { type: Function },
         debug: { type: String },
-        roles: { type: Object },
         close: { type: Function },
         onCopyItem: { type: Function },
         num_options: {type: Number, optional: true},
@@ -74,7 +70,6 @@ export class SignItemCustomPopover extends Component {
             placeholder: this.props.placeholder,
             required: this.props.required,
             option_ids: this.props.option_ids,
-            responsible: this.props.responsible,
             num_options: this.props.num_options,
             radio_set_id: this.props.radio_set_id,
             isRerenderNeeded: false,
@@ -122,11 +117,6 @@ export class SignItemCustomPopover extends Component {
                     this.state.option_ids = ids;
                     this.props.updateSelectionOptions(ids);
                     this.state.isRerenderNeeded = !this.state.isRerenderNeeded; // Toggle state to force re-render
-                }
-                if (changes.responsible_id) {
-                    const id = changes.responsible_id;
-                    this.state.responsible = id;
-                    this.props.updateRoles(id);
                 }
             },
         };

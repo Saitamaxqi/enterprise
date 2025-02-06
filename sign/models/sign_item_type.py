@@ -16,8 +16,9 @@ class SignItemType(models.Model):
         ('text', "Text"),
         ('textarea', "Multiline Text"),
         ('checkbox', "Checkbox"),
-        ('radio', "Radio Buttons"),
+        ('radio', "Radio"),
         ('selection', "Selection"),
+        ('strikethrough', "Strikethrough"),
     ], required=True, string='Type', default='text')
 
     tip = fields.Char(required=True, default="fill in", help="Hint displayed in the signing hint", translate=True)

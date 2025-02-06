@@ -43,7 +43,7 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
 
     def test_sign_flow(self):
         flow_template = self.template_1_role.copy()
-        self.env['sign.item'].create({
+        self.env['sign.item'].create([{
             'type_id': self.env.ref('sign.sign_item_type_signature').id,
             'required': True,
             'responsible_id': self.env.ref('sign.sign_item_role_customer').id,
@@ -53,7 +53,7 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
             'template_id': flow_template.id,
             'width': 0.200,
             'height': 0.050,
-        })
+        }])
         with file_open('sign/static/demo/signature.png', "rb") as f:
             img_content = base64.b64encode(f.read())
 
@@ -72,22 +72,11 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
 
         self.start_tour("/odoo", "sign_template_creation_tour", login="admin")
 
-        self.assertEqual(blank_template.name, 'filled_template', 'The tour should have changed the template name')
-        self.assertEqual(len(blank_template.sign_item_ids), 4)
-        self.assertEqual(blank_template.responsible_count, 2)
-        self.assertEqual(set(blank_template.sign_item_ids.mapped("type_id.item_type")), {"text", "signature", "selection"})
-        selection_sign_item = blank_template.sign_item_ids.filtered(lambda item: item.type_id.item_type == 'selection')
-        self.assertEqual(len(selection_sign_item.option_ids), 1)
-        self.assertEqual(selection_sign_item.option_ids[0].value, "option")
-        self.assertEqual(set(blank_template.sign_item_ids.mapped("name")), set(["Name", "Signature", "placeholder", "Selection"]))
+        self.assertEqual(blank_template.name, 'filled_template.pdf', 'The tour should have changed the template name')
+        self.assertEqual(len(blank_template.sign_item_ids), 3)
+        self.assertEqual(blank_template.responsible_count, 1)
+        self.assertEqual(set(blank_template.sign_item_ids.mapped("type_id.item_type")), {"text", "signature"})
+        self.assertEqual(set(blank_template.sign_item_ids.mapped("name")), set(["Text", "Name", "Signature"]))
 
     def test_report_modal(self):
         self.start_tour("/odoo", "sign_report_modal_tour", login="admin")
-
-    def test_sign_indicator(self):
-        temp_template = self.env['sign.template'].create({
-            'name': 'temp_template',
-            'attachment_id': self.attachment.id,
-        })
-        self.start_tour("/odoo", "sign_indicator_tour", login="admin", step_delay=1000)
-        self.assertEqual(len(temp_template.sign_item_ids), 2)

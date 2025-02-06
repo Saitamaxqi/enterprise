@@ -49,7 +49,7 @@ QUnit.module("signable_document_backend_tests", ({ beforeEach }) => {
     });
 
     QUnit.test("simple rendering", async (assert) => {
-        assert.expect(5);
+        assert.expect(4);
         const getDataFromHTML = () => {
             assert.step("getDataFromHTML");
         };
@@ -67,17 +67,7 @@ QUnit.module("signable_document_backend_tests", ({ beforeEach }) => {
             "should display text from server"
         );
 
-        assert.containsNone(target, ".o_sign_edit_button", "should show edit while signing button");
         assert.containsNone(target, ".o_sign_refuse_document_button", "should show refuse button");
-    });
-
-    QUnit.test("rendering with allow edit to sign", async (assert) => {
-        config.actionContext = { template_editable: true };
-        const webClient = await createDocumentWebClient(config, serverData);
-
-        await doAction(webClient, actionId);
-
-        assert.containsOnce(target, ".o_sign_edit_button", "should show edit while signing button");
     });
 
     QUnit.test("rendering with allow refusal", async (assert) => {

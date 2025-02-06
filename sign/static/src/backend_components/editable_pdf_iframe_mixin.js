@@ -7,12 +7,13 @@ import {
     startSmoothScroll,
     startResize,
 } from "@sign/components/sign_request/utils";
-import { InitialsAllPagesDialog } from "@sign/dialogs/initials_all_pages_dialog";
 import { isMobileOS } from "@web/core/browser/feature_detection";
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { _t } from "@web/core/l10n/translation";
 
 /**
  * Mixin that adds edit features into PDF_iframe classes like drag/drop, resize, helper lines
- * Currently, it should be used only for EditWhileSigningSignablePDFIframe and SignTemplateIframe
+ * Currently, it should be used only for SignTemplateIframe
  * Parent class should implement allowEdit and saveChanges
  *
  * @param { class } pdfClass
@@ -23,10 +24,132 @@ export const EditablePDFIframeMixin = (pdfClass) =>
         /**
          * @override
          */
-        start() {
-            super.start();
+        async start() {
+            await super.start();
             this.root.addEventListener("mousemove", (e) => this.onMouseMove(e));
             this.root.addEventListener("keydown", (e) => this.handleKeyDown(e));
+            const validator = {
+                set: this.onSignItemsSet.bind(this),
+                deleteProperty: this.onSignItemsDelete.bind(this),
+            };
+            for (const page in this.signItems) {
+                this.signItems[page] = new Proxy(this.signItems[page], validator);
+                for (const signItem of Object.values(this.signItems[page])) {
+                    if (signItem.data.type === "signature") {
+                        this.setSignatureImage(signItem, signItem.data.roleName);
+                    } else if (signItem.data.type === "initial") {
+                        this.setSignatureImage(signItem, this.getInitialsText(signItem.data.roleName));
+                    }
+                }
+            }
+            this.updateSideBarSignItemsCount();
+        }
+
+        onSignItemsSet(target, key, value) {
+            target[key] = value;
+            const roleName = value.data.roleName;
+            if (value.data.type === "signature") {
+                this.setSignatureImage(value, roleName);
+            } else if (value.data.type === "initial") {
+                this.setSignatureImage(value, this.getInitialsText(roleName));
+            }
+            this.updateSideBarSignItemsCount();
+            return true;
+        }
+
+        onSignItemsDelete(target, key) {
+            delete target[key];
+            this.updateSideBarSignItemsCount();
+            return true;
+        }
+
+        /**
+         * Gets an SVG matching the given parameters, output compatible with the
+         * src attribute of <img/>.
+         *
+         * @param {string} text: the name to draw
+         * @param {number} width: the width of the resulting image in px
+         * @param {number} height: the height of the resulting image in px
+         * @returns {string} image = mimetype + image data
+         */
+        getSVGText(text="", width, height) {
+            const svg = renderToString("web.sign_svg_text", {
+                width: width,
+                height: height,
+                font: this.font,
+                text: text,
+                type: "signature",
+                color: "DarkBlue",
+            });
+            return "data:image/svg+xml," + encodeURI(svg);
+        }
+
+        setSignatureImage(signItem, text) {
+            const { data, el } = signItem;
+            const width = this.getPageContainer(data.page).getBoundingClientRect().width * data.width;
+            const height = this.getPageContainer(data.page).getBoundingClientRect().height * data.height;
+            const src = this.getSVGText(text, width, height);
+            this.fillItemWithSignature(el.firstChild.firstChild, src);
+        }
+
+        updateRoleName(roleId, roleName) {
+            for (const page in this.signItems) {
+                for (const id in this.signItems[page]) {
+                    const signItem = this.signItems[page][id];
+                    if (signItem.data.responsible === roleId) {
+                        signItem.data.roleName = roleName;
+                        if (signItem.data.type === "signature") {
+                            this.setSignatureImage(signItem, roleName);
+                        } else if (signItem.data.type === "initial") {
+                            this.setSignatureImage(signItem, this.getInitialsText(roleName));
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * Return the initials string format for a given text.
+         * @param {string} text: the name that will be turned into initials
+         * @param {string}: text in initials format, such as "G.F."
+         */
+        getInitialsText(text) {
+            const parts = text.split(' ');
+            const initials = parts.map(part => {
+                return part.length > 0 ? part[0] + '.' : '';
+            });
+            return initials.join('');
+        }
+
+        updateSideBarSignItemsCount() {
+            const signItemsCountByRole = {};
+            const countedRadioSets = {};
+            for (const page in this.signItems) {
+                for (const id in this.signItems[page]) {
+                    const { data } = this.signItems[page][id];
+                    if (data.type === "radio") {
+                        if (countedRadioSets[data.radio_set_id]) {
+                            continue;
+                        }
+                        countedRadioSets[data.radio_set_id] = true;
+                    }
+                    const role = this.signItems[page][id].data.responsible;
+                    if (!signItemsCountByRole[role]) {
+                        signItemsCountByRole[role] = 0;
+                    }
+                    signItemsCountByRole[role]++;
+                }
+            }
+            this.updateSignItemsCountCallback(signItemsCountByRole);
+        }
+
+        setFont(font) {
+            this.font = font;
+        }
+
+        setupDragAndDrop() {
+            this.startDragAndDrop();
+            this.helperLines = startHelperLines(this.root);
         }
 
         /**
@@ -203,21 +326,26 @@ export const EditablePDFIframeMixin = (pdfClass) =>
         renderSignItems() {
             super.renderSignItems();
             if (this.allowEdit) {
-                this.startDragAndDrop();
-                this.helperLines = startHelperLines(this.root);
+                this.setupDragAndDrop();
             }
         }
 
         startDragAndDrop() {
             this.root.querySelectorAll(".page").forEach((page) => {
-                page.addEventListener("dragover", (e) => this.onDragOver(e));
-                page.addEventListener("drop", (e) => this.onDrop(e));
+                if (!page.hasAttribute("updated")) {
+                    page.addEventListener("dragover", (e) => this.onDragOver(e));
+                    page.addEventListener("drop", (e) => this.onDrop(e));
+                    page.setAttribute("updated", true);
+                }
             });
 
-            this.root.querySelectorAll(".o_sign_field_type_button").forEach((sidebarItem) => {
-                sidebarItem.setAttribute("draggable", true);
-                sidebarItem.addEventListener("dragstart", (e) => this.onSidebarDragStart(e));
-                sidebarItem.addEventListener("dragend", (e) => this.onSidebarDragEnd(e));
+            document.querySelectorAll(".o_sign_field_type_button").forEach((sidebarItem) => {
+                if (!sidebarItem.hasAttribute("updated")) {
+                    sidebarItem.setAttribute("draggable", true);
+                    sidebarItem.addEventListener("dragstart", (e) => this.onSidebarDragStart(e));
+                    sidebarItem.addEventListener("dragend", (e) => this.onSidebarDragEnd(e));
+                    sidebarItem.setAttribute("updated", true);
+                }
             });
         }
 
@@ -228,7 +356,15 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             e.dataTransfer.effectAllowed = "move";
             e.dataTransfer.setData("page", page.dataset.pageNumber);
             e.dataTransfer.setData("id", signItem.dataset.id);
-            e.dataTransfer.setDragImage(signItem, 0, 0);
+
+            // Align drag image with cursor, save offsets for subtracting them on onDrop.
+            const rect = signItem.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            e.dataTransfer.setDragImage(signItem, offsetX, offsetY);
+            e.dataTransfer.setData("offsetX", offsetX);
+            e.dataTransfer.setData("offsetY", offsetY);
+
             // workaround to hide element while keeping the drag image visible
             requestAnimationFrame(() => {
                 if (signItem) {
@@ -239,7 +375,9 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                 this.root.querySelector("#viewerContainer"),
                 signItem,
                 null,
-                this.helperLines
+                this.helperLines,
+                offsetX,
+                offsetY,
             );
         }
 
@@ -261,13 +399,15 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                 "beforeend",
                 renderToString(
                     "sign.signItem",
-                    this.createSignItemDataFromType(signTypeElement.dataset.itemTypeId)
+                    this.createSignItemDataFromType(signTypeElement.dataset)
                 )
             );
             this.ghostSignItem = firstPage.lastChild;
             const itemData = this.signItemTypesById[signTypeElement.dataset.itemTypeId];
             this.updateSignItemFontSize({el: this.ghostSignItem, data: {type: itemData.item_type}});
-            e.dataTransfer.setData("typeId", signTypeElement.dataset.itemTypeId);
+            e.dataTransfer.setData("itemTypeId", signTypeElement.dataset.itemTypeId);
+            e.dataTransfer.setData("roleId", signTypeElement.dataset.roleId);
+            e.dataTransfer.setData("roleName", signTypeElement.dataset.roleName);
             e.dataTransfer.setDragImage(this.ghostSignItem, 0, 0);
             this.scrollCleanup = startSmoothScroll(
                 this.root.querySelector("#viewerContainer"),
@@ -303,13 +443,15 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             const targetPage = Number(page.dataset.pageNumber);
 
             const { top, left } = offset(textLayer);
-            const typeId = e.dataTransfer.getData("typeId");
+            const itemTypeId = e.dataTransfer.getData("itemTypeId");
+            const roleId = e.dataTransfer.getData("roleId");
+            const roleName = e.dataTransfer.getData("roleName");
             const box = textLayer.getBoundingClientRect();
             const height = box.bottom - box.top;
             const width = box.right - box.left;
-            if (typeId) {
+            if (itemTypeId) {
                 const id = generateRandomId();
-                const data = this.createSignItemDataFromType(typeId);
+                const data = this.createSignItemDataFromType({ itemTypeId, roleId, roleName });
                 const posX =
                     Math.round(normalizePosition((e.pageX - left) / width, data.width) * 1000) /
                     1000;
@@ -337,11 +479,11 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                 const signItemEl = signItem.el;
                 const posX =
                     Math.round(
-                        normalizePosition((e.pageX - left) / width, signItem.data.width) * 1000
+                        normalizePosition((e.pageX - left - e.dataTransfer.getData("offsetX")) / width, signItem.data.width) * 1000
                     ) / 1000;
                 const posY =
                     Math.round(
-                        normalizePosition((e.pageY - top) / height, signItem.data.height) * 1000
+                        normalizePosition((e.pageY - top - e.dataTransfer.getData("offsetY")) / height, signItem.data.height) * 1000
                     ) / 1000;
 
                 if (initialPage !== targetPage) {
@@ -368,6 +510,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             }
 
             this.setTemplateChanged();
+            this.refreshSignItems();
         }
 
         /**
@@ -383,15 +526,13 @@ export const EditablePDFIframeMixin = (pdfClass) =>
         }
 
         openDialogAfterInitialDrop(data) {
-            this.dialog.add(InitialsAllPagesDialog, {
-                addInitial: (role, targetAllPages) => {
-                    data.responsible = role;
-                    this.currentRole = role;
-                    this.addInitialSignItem(data, targetAllPages);
-                },
-                responsible: this.currentRole,
-                roles: this.signRolesById,
-                pageCount: this.pageCount
+            this.dialog.add(ConfirmationDialog, {
+                title: _t('Add Initials'),
+                body: _t('Do you want to add initials to all pages?'),
+                confirmLabel: _t("Yes"),
+                confirm: () => this.addInitialSignItem(data, true),
+                cancelLabel: _t("No, add only once"),
+                cancel: () => this.addInitialSignItem(data, false),
             });
         }
 
@@ -403,17 +544,12 @@ export const EditablePDFIframeMixin = (pdfClass) =>
         addInitialSignItem(data, targetAllPages = false) {
             if (targetAllPages) {
                 for (let page = 1; page <= this.pageCount; page++) {
-                    const hasSignatureItemsAtPage = Object.values(this.signItems[page]).some(
-                        ({ data }) => data.type === "signature"
-                    );
-                    if (!hasSignatureItemsAtPage) {
-                        const id = generateRandomId();
-                        const signItemData = { ...data, ...{ page, id } };
-                        this.signItems[page][id] = {
-                            data: signItemData,
-                            el: this.renderSignItem(signItemData, this.getPageContainer(page)),
-                        };
-                    }
+                    const id = generateRandomId();
+                    const signItemData = { ...data, page, id};
+                    this.signItems[page][id] = {
+                        data: signItemData,
+                        el: this.renderSignItem(signItemData, this.getPageContainer(page)),
+                    };
                 }
             } else {
                 this.signItems[data.page][data.id] = {
@@ -428,7 +564,9 @@ export const EditablePDFIframeMixin = (pdfClass) =>
          * Creates and renders the inital two sign items of the radio set.
          * @param: {Object} data: the first radio item data
          */
-        addRadioSet(data) {
+        async addRadioSet(data) {
+            const [rs_id] = await this.orm.create('sign.item.radio.set', [{}]);
+            data['radio_set_id'] = rs_id;
             const id2 = generateRandomId();
             const signItemData1 = { ...data };
             const signItemData2 = { ...data };
@@ -442,6 +580,10 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                 data: signItemData2,
                 el: this.renderSignItem(signItemData2, this.getPageContainer(data.page)),
             }
+            this.radioSets[data['radio_set_id']] = {
+                num_options: 2,
+                radio_item_ids: [signItemData1.id , signItemData2.id],
+            };
             this.refreshSignItems();
             this.setTemplateChanged();
         }

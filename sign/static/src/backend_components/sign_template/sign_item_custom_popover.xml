@@ -7,8 +7,8 @@
                 <button type="button" title="Close" class="btn btn-default oi oi-close" t-on-click="props.onClose"/>
             </div>
             <div class="d-flex p-2 flex-column">
-                <div class="mb-1 clearfix o_popover_placeholder" t-if="props.debug">
-                    <label for="o_sign_name" class="form-label fw-bold">Placeholder</label>
+                <div t-if="props.type !== 'strikethrough'" class="clearfix o_popover_placeholder">
+                    <label for="o_sign_name" class="fw-bold">Placeholder</label>
                     <input type="text" class="form-control o_input" id="o_sign_name" t-att-value="state.placeholder" t-on-change="(e) => this.onChange('placeholder', e.target.value)"/>
                 </div>
 
@@ -25,12 +25,6 @@
                             <label for="o_sign_select_radio_qty_input" class="fw-bold">Options</label>
                             <input type="number" inputmode="numeric" class="px-2 o_input" t-att-value="state.num_options" t-att-min="2"
                             t-on-change="(e) => this.handleNumOptionsChange(e.target.value)"/>
-                        </div>
-                    </div>
-                    <div class="mb-2">
-                        <label for="o_sign_responsible_select_input" class="fw-bold">Filled by</label>
-                        <div class="o_field_widget d-block" id="o_sign_responsible_select_input">
-                            <Many2OneField t-props="getMany2XProps(record, 'responsible_id')" update="(value) => record.update(value)" canOpen="false"/>
                         </div>
                     </div>
                 </Record>

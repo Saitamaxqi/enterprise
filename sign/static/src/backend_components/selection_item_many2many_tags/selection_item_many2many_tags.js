@@ -18,67 +18,91 @@ export class SelectionItemMany2ManyTagsField extends Many2ManyTagsField {
         super.setup();
         this.orm = useService("orm");
         this.state = useState({
-            editingTag: null,
-            newText: '',
-            originalValue: '',
-            tags: this.tags,
+            tags: this.tags.map(tag => ({
+                ...tag,
+                text: tag.text,
+                updated: false,
+            })),
         });
-
         onWillUpdateProps(() => {
             this.state.tags = this.getTags();
         });
-
-        this.onEditTag = this.onEditTag.bind(this);
         this.onSave = this.onSave.bind(this);
-        this.onUndo = this.onUndo.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+    }
+
+    getTagsToTextArea() {
+        if (this.state.tags.length > 0)
+            return this.state.tags.map(tag => tag.text).join("\n") + "\n";
+        return "";
+    }
+
+    async onKeyUpSelection(ev, value) {
+        if (ev.keyCode === 13)
+            this.onChangeSelection(ev, value);
+    }
+
+    async onChangeSelection(ev, value) {
+        // Process tags from input value.
+        const tags = value.split('\n').map(tag => tag.trim()).filter(tag => tag);
+        const newTags = tags.filter(tag => !this.state.tags.find(existingTag => existingTag.text === tag));
+
+        // Handle removed tags.
+        const removedTags = this.state.tags.filter(existingTag => !tags.includes(existingTag.text));
+        if (removedTags.length)
+            removedTags.forEach(tag => this.onDelete(tag.resId));
+
+        // Handle new tags.
+        if (newTags.length) {
+            for (const tag of newTags) {
+                const resId = await this.searchOrCreateOption(tag);
+                this.state.tags = [...this.state.tags, { resId, text: tag, updated: true }];
+                this.props.state_popover.option_ids.push(resId);
+                this.props.selectionTag.isSelectionItemRendered = true;
+                this.onSave();
+            }
+        }
+    }
+
+    async searchOrCreateOption(optionText) {
+        const res = await this.orm.searchRead('sign.item.option', [["value", "=", optionText]], ["id"]);
+        let resId = res && res.length > 0 ? res[0].id : null;
+
+        if (!resId) {
+            const created = await this.orm.create('sign.item.option', [{ value: optionText }]);
+            resId = created && created.length > 0 ? created[0] : null;
+        }
+
+        return resId;
     }
 
     getTags() {
         return this.props.record.data[this.props.name]?.records.map((record) =>
             this.getTagProps(record)
         );
-}
-
-    onEditTag(tag) {
-        this.state.editingTag = tag;
-        this.state.originalValue = tag.text; // Save the original value
-        this.state.newText = tag.text; // Set the current value for editing
     }
 
     onSave = async () => {
-        if (this.state.editingTag && this.state.newText) {
-            const updatedText = this.state.newText;
-
-            // Update the backend with the edited tag value, then fetch and update the frontend with the latest data.
-            this.orm.write("sign.item.option", [this.state.editingTag.resId], { value: updatedText })
-                .then(() => {
-                    this.props.selectionTag.isSelectionItemEdited = true;
-                    this.props.selectionTag.isSelectionItemRendered = true;
-                    return this.props.updateSelectionOptions(this.props.state_popover.option_ids);
-                })
-
-            // Update the matching tag in the state and reset editing state.
-            this.state.tags = this.state.tags.map((tag) =>
-                tag.id === this.state.editingTag.id ? { ...tag, text: updatedText, display_name: updatedText } : tag
-            );
-            this.state.editingTag = null;
-            this.state.newText = '';
-        } else {
-            // Revert to original value if no changes were made.
-            this.state.editingTag.text = this.state.originalValue;
-            this.state.editingTag = null;
+        for (const tag of this.state.tags.filter((tag) => tag.updated)) {
+            /* Before saving the tag text, we search if it is previously created in the DB.
+            If it is, we re-assign the resId value of the current, otherwise we create a new option.
+            This certifies that we'll respect the no duplicates constraint in the database. */
+            await this.searchOrCreateOption(tag.text).then((newResId) => {
+                const oldPos = this.props.state_popover.option_ids.indexOf(tag.resId);
+                this.props.state_popover.option_ids.splice(oldPos, 1, newResId);
+                this.props.selectionTag.isSelectionItemRendered = true;
+                tag.resId = newResId;
+                tag.updated = false;
+                this.props.updateSelectionOptions(this.props.state_popover.option_ids);
+            });
         }
     };
 
-    async deleteTag(id) {
-        super.deleteTag(id);
-        this.state.tags = this.state.tags.filter((tag) => tag.id !== id);
-    }
-
-    onUndo() {
-        if (this.state.editingTag) {
-            this.state.editingTag.text = this.state.originalValue;
-            this.state.editingTag = null;
-        }
+    onDelete(tagId) {
+        this.state.tags = this.state.tags.filter((tag) => tag.resId !== tagId);
+        const index = this.props.state_popover.option_ids.indexOf(tagId);
+        this.props.state_popover.option_ids.splice(index, 1);
+        this.props.selectionTag.isSelectionItemRendered = true;
+        this.props.updateSelectionOptions(this.props.state_popover.option_ids);
     }
 }

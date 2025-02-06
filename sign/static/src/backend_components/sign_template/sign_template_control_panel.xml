@@ -10,7 +10,6 @@
                         <t t-if="showShareButton">
                             <button type="button" class="btn btn-secondary o_sign_template_share" t-on-click="onShareClick">Share</button>
                         </t>
-                        <button type="button" class="btn btn-secondary o_sign_template_preview" t-on-click="onPreviewClick">Preview</button>
                     </t>
                     <t t-elif="props.actionType === 'sign_template_edit'">
                         <button type="button" class="btn btn-primary o_sign_template_save" t-on-click="props.goBackToKanban">Save</button>
@@ -19,6 +18,10 @@
                         </button>
                     </t>
                 </div>
+            </t>
+            <t t-set-slot="control-panel-additional-actions">
+                <SignTemplateCustomCogMenu t-props="customCogMenuProps"/>
+                <SignTemplateHeaderTags t-props="templateHeaderTagsProps"/>
             </t>
             <t t-set-slot="control-panel-status-indicator">
                 <SignStatusIndicator

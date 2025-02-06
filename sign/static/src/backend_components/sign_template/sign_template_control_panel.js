@@ -4,12 +4,16 @@ import { Component } from "@odoo/owl";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import { multiFileUpload } from "@sign/backend_components/multi_file_upload";
 import { SignStatusIndicator } from "@sign/backend_components/sign_status_indicator/sign_status_indicator";
+import { SignTemplateCustomCogMenu } from "../cog_menu/sign_template_custom_cog_menu";
+import { SignTemplateHeaderTags } from "./sign_template_header_tags";
 
 export class SignTemplateControlPanel extends Component {
     static template = "sign.SignTemplateControlPanel";
     static components = {
         ControlPanel,
-        SignStatusIndicator
+        SignStatusIndicator,
+        SignTemplateCustomCogMenu,
+        SignTemplateHeaderTags,
     };
     static props = {
         responsibleCount: { type: Number },
@@ -19,6 +23,8 @@ export class SignTemplateControlPanel extends Component {
         signTemplate: { type: Object },
         goBackToKanban: { type: Function },
         signStatus: { type: Object },
+        manageTemplateAccess: { type: Boolean },
+        onTemplateSaveClick: { type: Function },
     };
 
     setup() {
@@ -26,6 +32,23 @@ export class SignTemplateControlPanel extends Component {
         this.nextTemplate = multiFileUpload.getNext() ?? false;
         this.action = useService("action");
         this.orm = useService("orm");
+    }
+
+    get customCogMenuProps() {
+        return {
+            signTemplate: this.props.signTemplate,
+            hasSignRequests: this.props.hasSignRequests,
+            manageTemplateAccess: this.props.manageTemplateAccess,
+            isPDF: this.props.isPDF,
+            onTemplateSaveClick: this.props.onTemplateSaveClick,
+        };
+    }
+
+    get templateHeaderTagsProps() {
+        return {
+            signTemplate: this.props.signTemplate,
+            hasSignRequests: this.props.hasSignRequests,
+        }
     }
 
     get showShareButton() {
@@ -82,15 +105,6 @@ export class SignTemplateControlPanel extends Component {
                 sign_directly_without_mail: false,
             },
         });
-    }
-
-    onPreviewClick() {
-        this.action.doActionButton({
-            type: "object",
-            resModel: "sign.template",
-            name:"action_template_preview",
-            resIds: [this.props.signTemplate.id],
-        })
     }
 
 }

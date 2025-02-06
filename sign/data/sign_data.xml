@@ -49,6 +49,8 @@
         <field name="placeholder">Name</field>
         <field name="model_id" ref="model_res_partner"/>
         <field name="auto_field">name</field>
+        <field name="default_width" type="float">0.2</field>
+        <field name="default_height" type="float">0.02</field>
         <field name="icon">fa-user</field>
     </record>
 
@@ -57,6 +59,8 @@
         <field name="placeholder">Email</field>
         <field name="model_id" ref="model_res_partner"/>
         <field name="auto_field">email</field>
+        <field name="default_width" type="float">0.2</field>
+        <field name="default_height" type="float">0.02</field>
         <field name="icon">fa-envelope-o</field>
     </record>
 
@@ -65,26 +69,32 @@
         <field name="placeholder">Phone</field>
         <field name="model_id" ref="model_res_partner"/>
         <field name="auto_field">phone</field>
+        <field name="default_width" type="float">0.2</field>
+        <field name="default_height" type="float">0.02</field>
         <field name="icon">fa-phone</field>
     </record>
 
     <record model="sign.item.type" id="sign_item_type_company">
         <field name="name">Company</field>
         <field name="placeholder">Company</field>
+        <field name="default_width" type="float">0.2</field>
+        <field name="default_height" type="float">0.02</field>
         <field name="icon">fa-building-o</field>
     </record>
 
     <record model="sign.item.type" id="sign_item_type_text">
         <field name="name">Text</field> <!-- default: type 'text', tip 'fill in', empty placeholder, default_width and default_height, no auto_field -->
         <field name="placeholder">Text</field>
+        <field name="default_width" type="float">0.2</field>
+        <field name="default_height" type="float">0.02</field>
         <field name="icon">fa-font</field>
     </record>
 
     <record model="sign.item.type" id="sign_item_type_multiline_text">
-        <field name="name">Multiline Text</field>
-        <field name="placeholder">Multiline Text</field>
+        <field name="name">Multiline</field>
+        <field name="placeholder">Multiline</field>
         <field name="item_type">textarea</field>
-        <field name="default_width" type="float">0.300</field>
+        <field name="default_width" type="float">0.2</field>
         <field name="default_height" type="float">0.0500</field>
         <field name="icon">fa-bars</field>
     </record>
@@ -93,17 +103,17 @@
         <field name="name">Checkbox</field>
         <field name="placeholder">&#9745;</field>
         <field name="item_type">checkbox</field>
-        <field name="default_width" type="float">0.0525</field>
-        <field name="default_height" type="float">0.0353</field>
+        <field name="default_width" type="float">0.04</field>
+        <field name="default_height" type="float">0.03</field>
         <field name="icon">fa-check-square-o</field>
     </record>
 
     <record model="sign.item.type" id="sign_item_type_radio">
-        <field name="name">Radio Buttons</field>
+        <field name="name">Radio</field>
         <field name="placeholder">&#9673;</field>
         <field name="item_type">radio</field>
-        <field name="default_width" type="float">0.06</field>
-        <field name="default_height" type="float">0.020</field>
+        <field name="default_width" type="float">0.04</field>
+        <field name="default_height" type="float">0.03</field>
         <field name="icon">fa-dot-circle-o</field>
     </record>
 
@@ -112,32 +122,41 @@
         <field name="item_type">selection</field>
         <field name="placeholder">Selection</field>
         <field name="tip">Select an option</field>
-        <field name="default_width" type="float">0.300</field>
-        <field name="default_height" type="float">0.030</field>
-        <field name="icon">fa-dot-circle-o</field>
+        <field name="default_width" type="float">0.2</field>
+        <field name="default_height" type="float">0.03</field>
+        <field name="icon">fa-angle-down</field>
     </record>
 
     <record model="sign.item.type" id="sign_item_type_date">
         <field name="name">Date</field>
-        <field name="placeholder">Date</field>
+        <field name="placeholder">DD-MM-YYYY</field>
+        <field name="default_width" type="float">0.2</field>
+        <field name="default_height" type="float">0.02</field>
         <field name="icon">fa-calendar</field>
+    </record>
+
+    <record model="sign.item.type" id="sign_item_type_strikethrough">
+        <field name="name">Strikethrough</field>
+        <field name="item_type">strikethrough</field>
+        <field name="placeholder">Strikethrough</field>
+        <field name="tip">Strikethrough the highlighted area</field>
+        <field name="default_width" type="float">0.2</field>
+        <field name="default_height" type="float">0.02</field>
+        <field name="icon">fa-strikethrough</field>
     </record>
 
     <!-- Item responsibles -->
     <record model="sign.item.role" id="sign_item_role_customer">
         <field name="name">Customer</field>
-        <field name="color" eval="3"/>
     </record>
 
     <record model="sign.item.role" id="sign_item_role_user">
         <field name="name">User</field>
         <field name="change_authorized" eval="True"/>
-        <field name="color" eval="9"/>
     </record>
 
     <record model="sign.item.role" id="sign_item_role_employee">
         <field name="name">Employee</field>
-        <field name="color" eval="10"/>
     </record>
 
     <record model="sign.item.role" id="sign_item_role_default">

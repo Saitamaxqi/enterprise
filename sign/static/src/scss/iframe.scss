@@ -1,7 +1,52 @@
 @for $size from 2 through length($o-colors) {
     // Note: the first color is supposed to be invisible so it's ignored
-    .o_color_responsible_#{$size - 1} {
-        background-color: nth($o-colors, $size);
-        opacity: 0.9;
+    .o_color_responsible_#{12 - $size} { //assign colors in reverse order
+        background-color: rgba(adjust-color(nth($o-colors, $size), $lightness: 25%, $saturation: 5%), 0.9);
     }
+}
+@for $size from 1 through length($o-colors-secondary) {
+    .o_color_responsible_#{length($o-colors) + $size - 2} {
+        background-color: rgba(adjust-color(nth($o-colors-secondary, $size), $lightness: 25%, $saturation: 5%), 0.9);
+    }
+}
+
+.o_sign_signature_item {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.o_sign_textarea_placeholder {
+    padding-left: 2px;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+
+.o_sign_selection_item_container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.o_sign_selection_item_select {
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
+    padding: 0; /* Removes the padding. */
+}
+
+.o_sign_checkbox_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.o_sign_selection_input_option {
+    margin-bottom: 1px;
 }

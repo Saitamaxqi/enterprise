@@ -181,16 +181,18 @@
         <field name="name">sign.template.list</field>
         <field name="model">sign.template</field>
         <field name="arch" type="xml">
-            <list sample="1" js_class="sign_list">
+            <list sample="1" js_class="sign_list" action="go_to_custom_template" type="object">
                 <field name="attachment_id" string="Name"/>
-                <field name="create_date"/>
+                <field name="tag_ids" string="Tags" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="create_date" optional="hide"/>
                 <field name="sign_item_ids"/>
                 <field name="active" column_invisible="True"/>
                 <field name="responsible_count" column_invisible="True"/>
-                <field name="is_sharing" string="Shareable"/>
+                <field name="is_sharing" string="Link enabled?"/>
                 <button name="%(sign.action_sign_send_request)d" string="Send" type="action" context="{'sign_directly_without_mail': 0, 'show_email': 1}"/>
                 <button name="%(sign.action_sign_send_request)d" string="Sign Now" type="action" context="{'sign_directly_without_mail': 1}"/>
-                <button name="open_shared_sign_request" string="Share" type="object" invisible="not active or responsible_count &gt; 1"/>
+                <button name="open_shared_sign_request" string="Share" type="object" invisible="is_sharing or not active or responsible_count &gt; 1"/>
+                <button name="stop_sharing" string="Stop sharing" type="object" invisible="not is_sharing"/>
             </list>
         </field>
     </record>
@@ -459,7 +461,6 @@
                 <field name="name" string="Role Name"/>
                 <field name="auth_method"/>
                 <field name="change_authorized"/>
-                <field name="color" widget="color_picker"/>
             </list>
         </field>
     </record>
@@ -481,12 +482,6 @@
                 </sheet>
             </form>
         </field>
-    </record>
-
-    <record id="sign_item_role_action" model="ir.actions.act_window">
-        <field name="name">Signature Item Role</field>
-        <field name="res_model">sign.item.role</field>
-        <field name="view_mode">list,form</field>
     </record>
 
     <record id="sign_template_tag_action" model="ir.actions.act_window">
@@ -531,7 +526,6 @@
     <!-- Menus -->
     <menuitem id="sign.sign_item_settings_menu" name="Settings" parent="sign.menu_sign_configuration" action="sign_settings_action" groups="sign.group_sign_manager"/>
     <menuitem id="sign.sign_item_type_menu" name="Field Types" parent="sign.menu_sign_configuration" action="sign_item_type_action" groups="base.group_no_one"/>
-    <menuitem id="sign.sign_item_role_menu" name="Roles" parent="sign.menu_sign_configuration" action="sign_item_role_action" groups="sign.group_sign_manager"/>
     <menuitem id="sign.sign_template_tag_menu" name="Tags" parent="sign.menu_sign_configuration" action="sign_template_tag_action" groups="sign.group_sign_manager"/>
     <menuitem id="sign_report_green_savings" name="Green Savings" parent="sign_reports" action="sign.sign_report_green_savings_action"/>
     <menuitem id="sign_request_my_documents" name="My Documents" parent="sign_request_menu" action="sign_request_action" sequence="10"/>

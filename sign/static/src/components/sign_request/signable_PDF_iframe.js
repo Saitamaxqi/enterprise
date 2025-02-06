@@ -110,21 +110,42 @@ export class SignablePDFIframe extends PDFIframe {
                 this.handleInput();
             }
             const optionDiv = signItemElement.querySelector(".o_sign_select_options_display");
-            optionDiv.addEventListener("click", (e) => {
-                if (e.target.classList.contains("o_sign_item_option")) {
-                    const option = e.target;
-                    const selectedValue = option.dataset.id;
-                    signItemElement.value = selectedValue;
-                    option.classList.add("o_sign_selected_option");
-                    option.classList.remove("o_sign_not_selected_option");
-                    const notSelected = optionDiv.querySelectorAll(
-                        `.o_sign_item_option:not([data-id='${selectedValue}'])`
-                    );
-                    [...notSelected].forEach((el) => {
-                        el.classList.remove("o_sign_selected_option");
-                        el.classList.add("o_sign_not_selected_option");
-                    });
-                    this.handleInput();
+            const selectElement = optionDiv.querySelector("#selection");
+
+            // Add an event listener to handle the selection change.
+            selectElement.addEventListener("change", (e) => {
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+                // Extract the data-id from the selected option.
+                const selectedValue = selectedOption.dataset.id;
+                // Update the value in the signItemElement.
+                signItemElement.value = selectedValue;
+
+                // Iterate through all options to update their classes.
+                [...selectElement.options].forEach((option) => {
+                    if (option.dataset.id === selectedValue) {
+                        option.classList.add("o_sign_selected_option");
+                        option.classList.remove("o_sign_not_selected_option");
+                    } else {
+                        option.classList.add("o_sign_not_selected_option");
+                        option.classList.remove("o_sign_selected_option");
+                    }
+                });
+                // Call the input handler function.
+                this.handleInput();
+            });
+        }
+
+        if (type == "strikethrough") {
+            if (signItemElement.value) {
+                this.handleInput();
+            }
+            signItemElement.addEventListener("click", (e) => {
+                if (signItemElement.firstChild.classList.contains("o_sign_strikethrough_line_striked")) {
+                    signItemElement.firstChild.classList.remove("o_sign_strikethrough_line_striked");
+                    signItemElement.value = "non-striked";
+                } else {
+                    signItemElement.firstChild.classList.add("o_sign_strikethrough_line_striked");
+                    signItemElement.value = "striked";
                 }
             });
         }
@@ -171,80 +192,6 @@ export class SignablePDFIframe extends PDFIframe {
             signItemElement.value = value;
             this.handleInput();
         }
-    }
-
-    /**
-     * Adjusts signature/initial size to fill the dimensions of the sign item box
-     * @param { String } data base64 image
-     * @param { HTMLElement } signatureItem
-     * @returns { Promise }
-     */
-    adjustSignatureSize(data, signatureItem) {
-        if (!data) {
-            return Promise.resolve(false);
-        }
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.onload = () => {
-                const c = document.createElement("canvas");
-                if (
-                    !signatureItem.parentElement ||
-                    !signatureItem.parentElement.classList.contains("page")
-                ) {
-                    // checks if element is detached from pdf js
-                    this.refreshSignItems();
-                }
-                const { width: boxWidth, height: boxHeight } =
-                    signatureItem.getBoundingClientRect();
-                const imgHeight = img.height;
-                const imgWidth = img.width;
-                const ratioBoxWidthHeight = boxWidth / boxHeight;
-                const ratioImageWidthHeight = imgWidth / imgHeight;
-
-                const [canvasHeight, canvasWidth] =
-                    ratioBoxWidthHeight > ratioImageWidthHeight
-                        ? [imgHeight, imgHeight * ratioBoxWidthHeight]
-                        : [imgWidth / ratioBoxWidthHeight, imgWidth];
-
-                c.height = canvasHeight;
-                c.width = canvasWidth;
-
-                const ctx = c.getContext("2d");
-                const oldShadowColor = ctx.shadowColor;
-                ctx.shadowColor = "transparent";
-                ctx.drawImage(
-                    img,
-                    c.width / 2 - img.width / 2,
-                    c.height / 2 - img.height / 2,
-                    img.width,
-                    img.height
-                );
-                ctx.shadowColor = oldShadowColor;
-                resolve(c.toDataURL());
-            };
-            img.src = data;
-        });
-    }
-
-    fillItemWithSignature(signatureItem, image, frameData = false) {
-        signatureItem.dataset.signature = image;
-        signatureItem.replaceChildren();
-        const signHelperSpan = document.createElement("span");
-        signHelperSpan.classList.add("o_sign_helper");
-        signatureItem.append(signHelperSpan);
-        if (frameData && frameData.frame) {
-            signatureItem.dataset.frameHash = frameData.hash;
-            signatureItem.dataset.frame = frameData.frame;
-            const frameImage = document.createElement("img");
-            frameImage.src = frameData.frame;
-            frameImage.classList.add("o_sign_frame");
-            signatureItem.append(frameImage);
-        } else {
-            delete signatureItem.dataset.frame;
-        }
-        const signatureImage = document.createElement("img");
-        signatureImage.src = image;
-        signatureItem.append(signatureImage);
     }
 
     closeDialog() {
@@ -726,7 +673,10 @@ export class SignablePDFIframe extends PDFIframe {
                 } else {
                     return "off";
                 }
-            }
+            },
+            strikethrough: () => {
+                return item.el.value;
+            },
         };
         const type = item.data.type;
         return type in types ? types[type]() : types["text"]();

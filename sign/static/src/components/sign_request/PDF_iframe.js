@@ -48,14 +48,13 @@ export class PDFIframe {
         }
     }
 
-    start() {
+    async start() {
         this.signItems = this.getSignItems();
-        this.loadCustomCSS().then(() => {
+        await this.loadCustomCSS().then(() => {
             this.pageCount = this.root.querySelectorAll(".page").length;
             this.clearNativePDFViewerButtons();
             this.startPinchService();
             this.preRender();
-            this.renderSidebar();
             this.addCanvasLayer();
             this.renderSignItems();
             this.postRender();
@@ -102,11 +101,6 @@ export class PDFIframe {
         layer.height = viewer.offsetHeight / scale;
         viewer.appendChild(layer);
     }
-
-    /**
-     * Used when signing a sign request
-     */
-    renderSidebar() {}
 
     renderSignItems() {
         for (const page in this.signItems) {
@@ -291,29 +285,42 @@ export class PDFIframe {
 
     /**
      * Creates rendering context for the sign item based on the sign item type
-     * @param {number} typeId
+     * @param {number, number} {itemTypeId, roleId}
      * @returns {Object} context
      */
-    createSignItemDataFromType(typeId) {
-        const type = this.signItemTypesById[typeId];
+    createSignItemDataFromType({ itemTypeId, roleId, roleName }) {
+        const type = this.signItemTypesById[itemTypeId];
         return {
             required: true,
             editMode: true,
             readonly: true,
             updated: true,
-            responsible: this.currentRole,
+            responsible: Number(roleId),
+            roleName: roleName,
             option_ids: [],
             options: [],
             name: type.name,
             width: type.default_width,
             height: type.default_height,
-            alignment: "center",
+            alignment: this.getAlignmentByItemType(type.item_type),
             type: type.item_type,
             placeholder: type.placeholder,
-            classes: `o_color_responsible_${this.signRolesById[this.currentRole].color}`,
+            classes: `o_color_responsible_${this.roleColors[roleId]}`,
             style: `width: ${type.default_width * 100}%; height: ${type.default_height * 100}%;`,
             type_id: [type.id],
+            icon: type.icon || "",
         };
+    }
+
+    /**
+     * Returns specific alignment according to the sign item type.
+     * @param {String} type: sign item type.
+     * @returns {String}: alignment for the sign item.
+     */
+    getAlignmentByItemType(type) {
+        if (type == "radio")
+            return "center";
+        return "left";
     }
 
     /**
@@ -332,10 +339,12 @@ export class PDFIframe {
             signItems[currentPage] = {};
         }
         for (const signItem of this.props.signItems) {
-            signItems[signItem.page][signItem.id] = {
-                data: signItem,
-                el: null,
-            };
+            if (signItems[signItem.page]) {
+                signItems[signItem.page][signItem.id] = {
+                    data: signItem,
+                    el: null,
+                };
+            }
         }
         return signItems;
     }
@@ -365,5 +374,79 @@ export class PDFIframe {
         const MAX_CANVAS_HEIGHT = 16384;
         const viewer_height = this.root.querySelector("#viewer").offsetHeight;
         return Math.ceil(viewer_height / MAX_CANVAS_HEIGHT);
+    }
+
+    /**
+     * Adjusts signature/initial size to fill the dimensions of the sign item box
+     * @param { String } data base64 image
+     * @param { HTMLElement } signatureItem
+     * @returns { Promise }
+     */
+    adjustSignatureSize(data, signatureItem) {
+        if (!data) {
+            return Promise.resolve(false);
+        }
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+                const c = document.createElement("canvas");
+                if (
+                    !signatureItem.parentElement ||
+                    !signatureItem.parentElement.classList.contains("page")
+                ) {
+                    // checks if element is detached from pdf js
+                    this.refreshSignItems();
+                }
+                const { width: boxWidth, height: boxHeight } =
+                    signatureItem.getBoundingClientRect();
+                const imgHeight = img.height;
+                const imgWidth = img.width;
+                const ratioBoxWidthHeight = boxWidth / boxHeight;
+                const ratioImageWidthHeight = imgWidth / imgHeight;
+
+                const [canvasHeight, canvasWidth] =
+                    ratioBoxWidthHeight > ratioImageWidthHeight
+                        ? [imgHeight, imgHeight * ratioBoxWidthHeight]
+                        : [imgWidth / ratioBoxWidthHeight, imgWidth];
+
+                c.height = canvasHeight;
+                c.width = canvasWidth;
+
+                const ctx = c.getContext("2d");
+                const oldShadowColor = ctx.shadowColor;
+                ctx.shadowColor = "transparent";
+                ctx.drawImage(
+                    img,
+                    c.width / 2 - img.width / 2,
+                    c.height / 2 - img.height / 2,
+                    img.width,
+                    img.height
+                );
+                ctx.shadowColor = oldShadowColor;
+                resolve(c.toDataURL());
+            };
+            img.src = data;
+        });
+    }
+
+    fillItemWithSignature(signatureItem, image, frameData = false) {
+        signatureItem.dataset.signature = image;
+        signatureItem.replaceChildren();
+        const signHelperSpan = document.createElement("span");
+        signHelperSpan.classList.add("o_sign_helper");
+        signatureItem.append(signHelperSpan);
+        if (frameData && frameData.frame) {
+            signatureItem.dataset.frameHash = frameData.hash;
+            signatureItem.dataset.frame = frameData.frame;
+            const frameImage = document.createElement("img");
+            frameImage.src = frameData.frame;
+            frameImage.classList.add("o_sign_frame");
+            signatureItem.append(frameImage);
+        } else {
+            delete signatureItem.dataset.frame;
+        }
+        const signatureImage = document.createElement("img");
+        signatureImage.src = image;
+        signatureItem.append(signatureImage);
     }
 }

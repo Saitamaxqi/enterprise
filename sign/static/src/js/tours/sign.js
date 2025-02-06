@@ -1,8 +1,50 @@
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { queryFirst } from "@odoo/hoot-dom";
 
 import { markup } from "@odoo/owl";
+
+
+export function dragAndDropSignItemAtHeight(from, height = 0.5, width = 0.5) {
+    function triggerDragEvent(element, type, data = {}) {
+        const event = new DragEvent(type, { bubbles: true });
+        for (const key in data) {
+            Object.defineProperty(event, key, {
+                value: data[key],
+            });
+        }
+        element.dispatchEvent(event);
+    }
+
+    const iframe = document.querySelector("iframe");
+    const to = queryFirst(`:iframe .page[data-page-number="1"]`);
+    const toPosition = to.getBoundingClientRect();
+    toPosition.x += iframe.contentWindow.scrollX + to.clientWidth * width;
+    toPosition.y += iframe.contentWindow.scrollY + to.clientHeight * height;
+
+    const dataTransferObject = {};
+    const dataTransferMock = {
+        setData: (key, value) => {
+            dataTransferObject[key] = value;
+        },
+        getData: (key) => dataTransferObject[key],
+        setDragImage: () => {},
+        items: [],
+    };
+
+    triggerDragEvent(from, "dragstart", {
+        dataTransfer: dataTransferMock,
+    });
+
+    triggerDragEvent(to, "drop", {
+        pageX: toPosition.x,
+        pageY: toPosition.y,
+        dataTransfer: dataTransferMock,
+    });
+
+    triggerDragEvent(from, "dragend");
+}
 
 registry.category("web_tour.tours").add("sign_tour", {
     url: "/odoo",
@@ -21,10 +63,18 @@ registry.category("web_tour.tours").add("sign_tour", {
             run: "click",
         },
         {
-            trigger: ":iframe .o_sign_field_type_button:contains(" + _t("Signature") +")",
+            isActive: ["manual"],
+            trigger: ".o_sign_field_type_button:contains(" + _t("Signature") +")",
             content: markup(_t("<b>Drag & drop “Signature”</b> into the bottom of the document.")),
             tooltipPosition: "bottom",
             run: "drag_and_drop :iframe #viewer",
+        },
+        {
+            isActive: ["auto"],
+            trigger: ".o_sign_field_type_button:contains(" + _t("Signature") +")",
+            run() {
+                dragAndDropSignItemAtHeight(this.anchor, 0.5, 0.25);
+            }
         },
         {
             trigger: ".o_control_panel .o_sign_template_send",
@@ -76,12 +126,6 @@ registry.category("web_tour.tours").add("sign_tour", {
                     "Draw your most beautiful signature!<br>You can also create one automatically or load a signature from your computer."
                 )
             ),
-            tooltipPosition: "bottom",
-            run: "click",
-        },
-        {
-            trigger: "footer.modal-footer button.btn-primary:enabled",
-            content: _t("Nearly there, keep going!"),
             tooltipPosition: "bottom",
             run: "click",
         },
