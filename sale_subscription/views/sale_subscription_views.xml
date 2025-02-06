@@ -539,7 +539,7 @@
         <field name="name">Change customer</field>
         <field name="model_id" ref="sale.model_sale_order"/>
         <field name="binding_model_id" ref="sale.model_sale_order"/>
-        <field name="binding_view_types">form,list</field>
+        <field name="binding_view_types">form,list,kanban</field>
         <field name="state">code</field>
         <field name="code">action = env["ir.actions.actions"]._for_xml_id("sale_subscription.sale_subscription_change_customer_wizard_action")</field>
     </record>
@@ -548,7 +548,7 @@
         <field name="name">Pause Subscription</field>
         <field name="model_id" ref="sale.model_sale_order"/>
         <field name="binding_model_id" ref="sale.model_sale_order"/>
-        <field name="binding_view_types">form,list</field>
+        <field name="binding_view_types">form,list,kanban</field>
         <field name="state">code</field>
         <field name="code">
 if records:

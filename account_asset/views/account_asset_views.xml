@@ -487,7 +487,7 @@ if records:
         <field name="groups_id" eval="[(4, ref('account.group_account_user'))]"/>
         <field name="model_id" ref="account_asset.model_account_asset"/>
         <field name="binding_model_id" ref="account_asset.model_account_asset" />
-        <field name="binding_view_types">list</field>
+        <field name="binding_view_types">list,kanban</field>
         <field name="state">code</field>
         <field name="code">
 if records:
