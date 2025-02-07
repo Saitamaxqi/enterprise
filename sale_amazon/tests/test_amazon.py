@@ -572,6 +572,66 @@ class TestAmazon(common.TestAmazonCommon):
                 msg="An inventory availability feed should be sent to Amazon for all the offers.",
             )
 
+    @mute_logger('odoo.addons.sale_amazon.models.amazon_offer')
+    def test_inventory_sync_is_skipped_if_loading_feed_data_fails(self):
+        self.offer.amazon_feed_ref = 'incorrect json'  # force fetch of feed data
+        self.offer.amazon_sync_status = False
+
+        with (
+            patch(
+                'odoo.addons.sale_amazon.utils.submit_feed', return_value='An_amazing_id'
+            ) as submit_feed_mock,
+            patch(
+                'odoo.addons.sale_amazon.utils.make_sp_api_request',
+                side_effect=amazon_utils.AmazonRateLimitError(''),
+            ) as make_sp_api_request_mock,
+        ):
+            self.account._sync_inventory()
+
+        make_sp_api_request_mock.assert_called_once()
+        self.assertEqual(self.offer.amazon_sync_status, 'error')
+
+    def test_offer_get_feed_data(self):
+        self.offer.amazon_feed_ref = 'incorrect json'  # force fetch of feed data
+
+        with patch(
+            'odoo.addons.sale_amazon.utils.make_sp_api_request',
+            return_value={
+                'items': [{
+                    'sku': self.offer.sku,
+                    'productTypes': [{'productType': 'PRODUCT'}],
+                    'attributes': {'merchant_shipping_group': {}},
+                }],
+            },
+        ) as make_sp_api_request_mock:
+            feed_info = self.offer._get_feed_data()
+
+        self.assertIn(self.offer, feed_info)
+        self.assertEqual(self.offer.amazon_feed_ref, '{"productType":"PRODUCT","is_fbm":true}')
+
+    @mute_logger('odoo.addons.sale_amazon.models.amazon_offer')
+    def test_offer_get_feed_data_fails_gracefully(self):
+        self.offer.amazon_feed_ref = 'incorrect json'  # force fetch of feed data
+
+        with patch(
+            'odoo.addons.sale_amazon.utils.make_sp_api_request',
+            side_effect=amazon_utils.AmazonRateLimitError(''),
+        ) as make_sp_api_request_mock:
+            feed_info = self.offer._get_feed_data()
+
+        self.assertNotIn(self.offer, feed_info)
+        self.assertEqual(self.offer.amazon_sync_status, 'error')
+
+    def test_offer_get_feed_info_calls_sp_api_only_if_needed(self):
+        # Every necessary feed data is already stored
+        self.offer.amazon_feed_ref = '{"productType":"PRODUCT","is_fbm":true}'
+
+        with patch('odoo.addons.sale_amazon.utils.make_sp_api_request') as make_sp_api_request_mock:
+            feed_info = self.offer._get_feed_data()
+
+        make_sp_api_request_mock.assert_not_called()  # does not need to be called anymore
+        self.assertIn(self.offer, feed_info)
+
     @mute_logger('odoo.addons.sale_amazon.models.amazon_account')
     @mute_logger('odoo.addons.sale_amazon.models.stock_picking')
     def test_sync_pickings(self):

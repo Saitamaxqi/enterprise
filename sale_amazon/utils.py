@@ -1,14 +1,14 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import json
-import logging
 from contextlib import contextmanager
 from datetime import datetime, timedelta
+import gzip
+import json
+import logging
 from pprint import pformat
-from xml.etree import ElementTree
-
 import requests
 from werkzeug.urls import url_join, url_parse
+from xml.etree import ElementTree
 
 from odoo.exceptions import UserError, ValidationError
 
@@ -246,6 +246,36 @@ def refresh_restricted_data_token(account):
 
 #=== FEEDS MANAGEMENT ===#
 
+def build_json_feed(account, messages):
+    """ Build JSON feed data to be sent to the SP-API.
+
+    https://github.com/amzn/selling-partner-api-models/blob/main/schemas/feeds/listings-feed-schema-v2.json
+
+    :param recordset account: The Amazon account on behalf of which the feed should be built, as an
+                              `amazon.account` record.
+    :param list[dict] messages: The list of messages to include in the feed. See the reference for
+        message format.
+    :return: The JSON encoded feed.
+    :rtype: str
+    """
+    return json.dumps(
+        {
+            'header': {
+                'sellerId': account.seller_key,
+                'version': '2.0',
+                'issueLocale': account.env.lang,
+            },
+            'messages': [
+                {
+                    'messageId': int(datetime.utcnow().timestamp() + i) % 2147483647 + 1,
+                    **message  # Allow message to override `messageId`
+                }
+                for i, message in enumerate(messages)
+            ],
+        },
+        separators=(',', ':'),
+    )
+
 def build_feed(account, message_type, messages_builder, *args, **kwargs):
     """ Build XML feed data to be sent to the SP-API.
 
@@ -274,16 +304,22 @@ def build_feed(account, message_type, messages_builder, *args, **kwargs):
     return ElementTree.tostring(root, encoding='UTF-8', method='xml')
 
 
-def submit_feed(account, feed, feed_type):
+def submit_feed(account, feed, feed_type, feed_content_type=None, marketplace_api_refs=None):
     """ Submit the provided feed to the SP-API.
 
     :param recordset account: The Amazon account on behalf of which the feed should be submitted, as
                               an `amazon.account` record.
-    :param str feed: The XML feed to submit.
+    :param str feed: The feed to submit.
     :param str feed_type: The type of the feed to submit. E.g., 'POST_ORDER_ACKNOWLEDGEMENT_DATA'.
+    :param str feed_content_type: The mimetype of the content. E.g., 'application/json'.
+    :param list[str] marketplace_api_refs: The marketplace to which the feed must apply.
+        Defaults to the account active marketplaces.
     :return: The feed id returned by the SP-API.
     :rtype: str
     """
+    feed_content_type = feed_content_type or 'text/xml; charset=UTF-8'
+    marketplace_api_refs = marketplace_api_refs or account.active_marketplace_ids.mapped('api_ref')
+
     def _create_feed_document():
         """ Create a feed document.
 
@@ -297,7 +333,7 @@ def submit_feed(account, feed, feed_type):
         return _response_content['feedDocumentId'], _response_content['url']
 
     def _upload_feed_data():
-        """ Upload the XML feed to the URL returned by Amazon.
+        """ Upload the feed to the URL returned by Amazon.
 
         :return: None
         """
@@ -319,10 +355,9 @@ def submit_feed(account, feed, feed_type):
         :return: The feed id.
         :rtype: str
         """
-        _marketplace_api_refs = account.active_marketplace_ids.mapped('api_ref')
         _payload = {
             'feedType': feed_type,
-            'marketplaceIds': _marketplace_api_refs,
+            'marketplaceIds': marketplace_api_refs,
             'inputFeedDocumentId': feed_document_id,
         }
         _response_content = make_sp_api_request(
@@ -330,7 +365,6 @@ def submit_feed(account, feed, feed_type):
         )
         return _response_content['feedId']
 
-    feed_content_type = 'text/xml; charset=UTF-8'
     feed_document_id, upload_url = _create_feed_document()
     _upload_feed_data()
     feed_id = _create_feed()
@@ -345,15 +379,22 @@ def get_feed_document(account, document_ref):
 
     :param amazon.account account: The Amazon account on behalf of which the document is fetched.
     :param str document_ref: The reference of the document.
-    :return: The report content in an `ElementTree` element.
+    :return: The document content as a `dict` or `ElementTree.Element` depending on the feed type
+             this document originates from.
     :raise ValidationError: If an HTTP error occurs.
     """
-    response_content = make_sp_api_request(account, 'getFeedDocument', path_parameter=document_ref)
-    document_url = response_content['url']
+    document_infos = make_sp_api_request(account, 'getFeedDocument', path_parameter=document_ref)
+    document_url = document_infos['url']
     try:
         response = requests.get(document_url, timeout=60)
         response.raise_for_status()
-        report_content = ElementTree.fromstring(response.content).find('Message/ProcessingReport')
+        document = response.content
+        if document_infos.get('compressionAlgorithm') == 'GZIP':
+            document = gzip.decompress(document)
+        if 'application/json' in response.headers.get('Content-Type', ''):
+            document = json.loads(document)
+        else:
+            document = ElementTree.fromstring(document)
     except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
         _logger.exception(
             "Could not establish the connection to download the feed document at %s", document_url
@@ -364,11 +405,10 @@ def get_feed_document(account, document_ref):
             "Invalid API request while downloading the feed document at %s", document_url
         )
         raise ValidationError(account.env._("The communication with the API failed."))
-    except ElementTree.ParseError:
+    except (ElementTree.ParseError, json.JSONDecodeError):
         _logger.exception("Could not parse the feed document at %s", document_url)
         raise ValidationError(account.env._("Could not process the feed document send by Amazon."))
-    return report_content
-
+    return document
 
 #=== HELPERS ====#
 

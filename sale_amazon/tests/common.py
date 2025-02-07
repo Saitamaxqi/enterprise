@@ -107,6 +107,7 @@ class TestAmazonCommon(TransactionCase):
             'marketplace_id': self.marketplace.id,
             'product_id': self.product.id,
             'sku': 'TESTING_SKU',
+            'amazon_feed_ref': '{"productType":"PRODUCT","is_fbm":true}',
         })
 
         # Create a delivery carrier

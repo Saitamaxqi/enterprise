@@ -65,6 +65,10 @@ API_OPERATIONS_MAPPING = {
         'restricted_resource_path': '/orders/v0/orders/{orderId}/orderItems',
         'restricted_resource_data_elements': ['buyerInfo']
     },
+    'searchListingsItems': {
+        'url_path': '/listings/2021-08-01/items/{param}',
+        'restricted_resource_path': None,
+    },
 }
 
 

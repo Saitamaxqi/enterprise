@@ -1041,6 +1041,7 @@ class AmazonAccount(models.Model):
                     sku, 'default_product', 'Amazon Sales', 'consu'
                 ).id,
                 'sku': sku,
+                'amazon_feed_ref': '{}',
             })
         # If the offer has been linked with the default product, search if another product has now
         # been assigned the current SKU as internal reference and update the offer if so.
@@ -1254,28 +1255,61 @@ class AmazonAccount(models.Model):
         self.ensure_one()
 
         if flow == 'inventory_sync':
-            record_model = self.env['amazon.offer']
+            feed_data_by_offer = records._get_feed_data()
+            records_by_feed_ref = records.grouped(
+                lambda o: feed_data_by_offer.get(o, {}).get('amazon_feed_ref')
+            )
         elif flow == 'picking_sync':
-            record_model = self.env['stock.picking']
+            records_by_feed_ref = records.grouped('amazon_feed_ref')
         else:
             return
 
-        records_by_feed = {}
-        for record in records:
-            records_by_feed.setdefault(record.amazon_feed_ref, record_model)
-            records_by_feed[record.amazon_feed_ref] += record
+        def parse_json_report_document(report_):
+            errors_ = {}
+            for result in report_['issues']:
+                if result['severity'] == 'ERROR':
+                    errors_.setdefault(result.get('messageId'), []).append(
+                        build_error_message(result['code'], result['message'])
+                    )
+            return errors_
+
+        def parse_xml_report_document(report_):
+            errors_ = {}
+            for result_ in report_.find('Message/ProcessingReport').iter('Result'):
+                if result_.find('ResultCode').text != 'Error':
+                    continue
+                # We can identify failed pickings.
+                if (order_ := result_.find('AdditionalInfo/AmazonOrderID')) is not None:
+                    order_ref_ = order_.text
+                else:  # Amazon doesn't specify which order (and thus picking) failed.
+                    order_ref_ = None
+                errors_.setdefault(order_ref_, []).append(build_error_message(
+                    result_.find('ResultMessageCode').text, result_.find('ResultDescription').text,
+                ))
+            return errors_
+
+        def build_error_message(code, message):
+            return _("Error (%(code)s): %(message)s", code=code, message=message)
 
         errors_by_record = {}
-        for feed_ref, feed_records in records_by_feed.items():
+        for feed_ref, feed_records in records_by_feed_ref.items():
+            if not feed_ref:  # flow == 'inventory_sync'
+                _logger.warning(
+                    "Failed to load the feed reference for the records with IDs"
+                    " %(feed_record_ids)r. Skipping the synchronization attempt only for these IDs."
+                    " The next synchronization will be attempted later.",
+                    {'feed_record_ids': feed_records.ids},
+                )
+                continue
             # Pull the status and result document reference for the current feed.
             feed_data = amazon_utils.make_sp_api_request(self, 'getFeed', path_parameter=feed_ref)
             feed_status = feed_data['processingStatus']
-            result_document_ref = feed_data.get('resultFeedDocumentId')
+            report_document_ref = feed_data.get('resultFeedDocumentId')
 
             # Update the records according to their feed status.
             if feed_status == 'DONE':  # The feed was fully processed.
                 try:
-                    document = amazon_utils.get_feed_document(self, result_document_ref)
+                    report = amazon_utils.get_feed_document(self, report_document_ref)
                 except amazon_utils.AmazonRateLimitError:
                     raise  # Don't treat a rate limit error as a business error.
                 except ValidationError:
@@ -1285,7 +1319,14 @@ class AmazonAccount(models.Model):
                         " one.", {'feed_ref': feed_ref, 'account_id': self.id}
                     )
                 else:
-                    if document.find('ProcessingSummary/MessagesWithError').text == '0':
+                    if flow == 'inventory_sync':
+                        report_errors = parse_json_report_document(report)
+                        message_key = lambda o: feed_data_by_offer[o].get('messageId')
+                    else:
+                        report_errors = parse_xml_report_document(report)
+                        message_key = lambda p: p.sale_id.amazon_order_ref
+
+                    if not report_errors:
                         feed_records.amazon_sync_status = 'done'
                         _logger.info(
                             "Synchronized feed %(feed_ref)s for Amazon account with id"
@@ -1293,43 +1334,25 @@ class AmazonAccount(models.Model):
                         )
                         continue
 
-                    # Iterate over the processing results and flag failed records as in 'error'.
-                    consider_unprocessed_records_as_failed = False
-                    for result_message in document.iter('Result'):
-                        result_code = result_message.find('ResultCode').text
-                        if result_code != 'Error':
-                            continue
-                        if flow == 'inventory_sync':
-                            sku = result_message.find('AdditionalInfo/SKU').text
-                            failed_offer = feed_records.filtered(lambda o: o.sku == sku)
-                            # Using a set to combine duplicates created by Amazon with every retry.
-                            errors_by_record.setdefault(failed_offer, set())
-                            errors_by_record[failed_offer].add(
-                                result_message.find('ResultDescription').text
-                            )
-                        elif flow == 'picking_sync':
-                            order_info = result_message.find('AdditionalInfo/AmazonOrderID')
-                            order_id = order_info is not None and order_info.text
-                            if order_id:  # We can identify failed pickings.
-                                error_desc = result_message.find('ResultDescription').text
-                                failed_pickings = feed_records.filtered(
-                                    lambda p: p.sale_id.amazon_order_ref == order_id
-                                )
-                                for failed_picking in failed_pickings:
-                                    errors_by_record.setdefault(failed_picking, set())
-                                    errors_by_record[failed_picking].add(error_desc)
-                            else:  # Amazon doesn't specify which order (and thus picking) failed.
-                                consider_unprocessed_records_as_failed = True
-                    feed_records.filtered(
-                        lambda p: p in errors_by_record
-                    ).amazon_sync_status = 'error'
+                    # Iterate over the processing results and flag failed records.
+                    error_records = feed_records.filtered(
+                        lambda r: message_key(r) in report_errors
+                    )
+                    error_records.amazon_sync_status = 'error'
+                    for record in error_records:
+                        # Using a set to combine duplicates created by Amazon with every retry.
+                        errors_by_record.setdefault(record, set()).update(
+                            report_errors[message_key(record)]
+                        )
                     unprocessed_records = feed_records.filtered(
                         lambda p: p.amazon_sync_status == 'processing'
                     )  # The sync order might have run before, avoid changing back done records.
-                    if consider_unprocessed_records_as_failed:
-                        for record in unprocessed_records:
-                            errors_by_record.setdefault(record, set()).add(None)
+
+                    # Failed to link some messages, consider unprocessed records as failed
+                    if None in report_errors:
                         unprocessed_records.amazon_sync_status = 'error'
+                        for record in unprocessed_records:
+                            errors_by_record.setdefault(record, set()).update(report_errors[None])
                     else:  # All errors were identified, the remaining records succeeded.
                         unprocessed_records.amazon_sync_status = 'done'
                     _logger.info(

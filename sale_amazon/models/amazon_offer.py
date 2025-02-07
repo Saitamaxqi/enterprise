@@ -1,9 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import json
 import logging
-from xml.etree import ElementTree
 
 from odoo import api, fields, models
+from odoo.tools import split_every
 
 from odoo.addons.sale_amazon import utils as amazon_utils
 
@@ -91,42 +92,144 @@ class AmazonOffer(models.Model):
             'target': 'new',
         }
 
-    def _update_inventory_availability(self, account):
-        """
-        Update the stock quantity of Amazon products to Amazon.
+    def _get_feed_data(self):
+        """Load the necessary data for the inventory feed, and fetch the missing ones.
 
-        :param record account: The Amazon account of the delivery to confirm on Amazon, as an
-                               `amazon.account` record.
+        :return: A dictionary per offer in `self`.
+            Each dictionnary contains at least the `productType` and a flag `is_fbm`.
+            If any of these attributes is missing and fails to be fetch (rate limit), the data for
+            the offer are not returned.
+        :rtype: dict[amazon.offer, dict]
+        """
+        feed_data_by_offer = {}
+        for offer in self:
+            try:
+                feed_data = json.loads(offer.amazon_feed_ref)
+            except (json.JSONDecodeError, TypeError):  # field is either incorrect JSON, or False
+                feed_data = None
+            if isinstance(feed_data, dict):  # In case old `amazon_feed_ref` are still stored
+                feed_data_by_offer[offer] = feed_data
+
+        feed_data_by_offer.update(
+            self.filtered(lambda o:
+                o not in feed_data_by_offer
+                or 'productType' not in feed_data_by_offer[o]
+                or 'is_fbm' not in feed_data_by_offer[o]
+            )._fetch_and_save_feed_data()  # fetch missing data
+        )
+
+        return feed_data_by_offer
+
+    def _fetch_and_save_feed_data(self):
+        """Fetch data necessary for the inventory feed to work and save it in the record.
+
+        Necessary data are:
+            - productType: Amazon product type
+            - is_fbm: is fulfilled by merchant
+
+        :return: A mapping of offer to feed data
+        :rtype: dict['amazon.offer', dict]
+        """
+        feed_data_by_offer = {}
+        to_fetch = self.sorted(lambda o:
+            o.amazon_sync_status != 'error'  # previously failed fetch first (rate limit)
+        ).grouped(lambda o: (o.account_id, o.marketplace_id))
+        # searchListingsItems only supports up to 20 SKUs
+        to_fetch = (
+            (group, batch)
+            for group, offers in to_fetch.items()
+            for batch in split_every(20, offers.ids, self.env['amazon.offer'].browse)
+        )
+        for (account_id, marketplace_id), offers in to_fetch:
+            try:
+                response = amazon_utils.make_sp_api_request(
+                    account=account_id,
+                    operation='searchListingsItems',
+                    path_parameter=account_id.seller_key,
+                    payload={
+                        'marketplaceIds': marketplace_id.api_ref,
+                        'includedData': 'attributes,productTypes',
+                        'identifiersType': 'SKU',
+                        'identifiers': ','.join(offers.mapped('sku')),
+                        'pageSize': len(offers),
+                    },
+                )
+            except amazon_utils.AmazonRateLimitError:
+                _logger.warning("Could not fetch every offers infos due to rate limit from Amazon.")
+                # Mark failed offers, to be prioritized on next try
+                offers.amazon_sync_status = 'error'
+                continue
+
+            # Parse product data
+            offer_by_sku = offers.grouped('sku')
+            for item in response['items']:
+                feed_data_by_offer[offer_by_sku[item['sku']]] = {
+                    'productType':
+                        item['productTypes'] and item['productTypes'][0]['productType']
+                        or 'PRODUCT',
+                    'is_fbm': 'merchant_shipping_group' in item['attributes'],
+                }
+
+        # Save data to reduce api calls
+        AmazonOffer._save_feed_data(feed_data_by_offer)
+
+        return feed_data_by_offer
+
+    @classmethod
+    def _save_feed_data(cls, feed_data_by_offer):
+        """Save inventory feed data.
+
+        :param dict['amazon.offer', dict] feed_data_by_offer: A mapping from offer to data necessary
+            for the inventory feed.
+        """
+        for offer, feed_info in feed_data_by_offer.items():
+            offer.amazon_feed_ref = json.dumps(feed_info, separators=(',', ':'))
+
+    def _update_inventory_availability(self, account):
+        """Update the stock quantity of Amazon products to Amazon.
+
+        Note: only synchronizes the stock of FBM offers.
+
+        :param record account: The Amazon account on behalf of which the feed should be
+            built and submitted.
         :return: None
         """
 
-        def build_feed_messages(root_):
-            """ Build the 'Message' elements to add to the feed.
+        feed_data_by_offer = self._get_feed_data()
+        # Filter offers missing feed data and synchronize FBM offers only
+        self = self.filtered(lambda o: o in feed_data_by_offer and feed_data_by_offer[o]['is_fbm'])
 
-            :param Element root_: The root XML element to which messages should be added.
-            :return: None
-            """
-            location_ = self.account_id.location_id
-            quant_ids_ = location_.quant_ids.filtered(lambda q: q.product_id in self.product_id)
-            fba_offers_ = self.filtered(lambda o: o.product_id in quant_ids_.product_id)
-            for offer_ in self:
-                # Build the message base.
-                message_ = ElementTree.SubElement(root_, 'Message')
-                inventory_ = ElementTree.SubElement(message_, 'Inventory')
-                ElementTree.SubElement(inventory_, 'SKU').text = offer_.sku
-                available_qty = offer_._get_available_product_qty()
-                #  We consider products in the Amazon location to be FBA. Their quantity is set to 0
-                #  as we don't add any fulfillment channel to the feed. Amazon won't change their
-                #  quantity on hand, but by forcing the quantity here, we make sure Amazon will not
-                #  consider we are selling it through another channel.
-                is_fbm = offer_ not in fba_offers_
-                quantity_ = available_qty if is_fbm and available_qty > 0 else 0
-                ElementTree.SubElement(inventory_, 'Quantity').text = str(int(quantity_))
+        # Inventory feed can only apply to one marketplace
+        for marketplace_id, offers in self.grouped('marketplace_id').items():
+            offers._send_inventory_feed(
+                account,
+                {o: feed_data_by_offer[o] for o in offers},
+                marketplace_id,
+            )
 
-        xml_feed = amazon_utils.build_feed(account, 'Inventory', build_feed_messages)
+    def _send_inventory_feed(self, account, feed_data_by_offer, marketplace_id):
+        """Send the inventory feed for the given marketplace.
+
+        Note: A feed of type `JSON_LISTINGS_FEED` can be applied to only one marketplace.
+
+        :param 'amazon.account' account: The Amazon account on behalf of which the feed should be
+            built and submitted.
+        :param dict['amazon.offer', dict] feed_data_by_offer: A mapping of offer to their feed data,
+            i.e. at least the 'productType' of the offer.
+        :param 'amazon.marketplace' marketplace_id: The marketplace to which the feed should apply.
+        """
+        for i, feed_info in enumerate(feed_data_by_offer.values(), start=1):
+            # Assign and save the message id to later match error message(s)
+            feed_info['messageId'] = i
+        messages = self._build_feed_messages(feed_data_by_offer)
+        json_feed = amazon_utils.build_json_feed(account, messages)
         try:
             feed_ref = amazon_utils.submit_feed(
-                account, xml_feed, 'POST_INVENTORY_AVAILABILITY_DATA'
+                account,
+                json_feed,
+                'JSON_LISTINGS_FEED',
+                feed_content_type='application/json; charset=UTF-8',
+                marketplace_api_refs=[marketplace_id.api_ref],
             )
         except amazon_utils.AmazonRateLimitError:
             _logger.info(
@@ -140,7 +243,36 @@ class AmazonOffer(models.Model):
                 feed_ref,
                 ', '.join(self.mapped('sku')),
             )
-            self.write({'amazon_sync_status': 'processing', 'amazon_feed_ref': feed_ref})
+            self.amazon_sync_status = 'processing'
+            # Save feed reference to later sync any error that might have occurred
+            for feed_info in feed_data_by_offer.values():
+                feed_info['amazon_feed_ref'] = feed_ref
+            # Save message IDs
+            self._save_feed_data(feed_data_by_offer)
+
+    def _build_feed_messages(self, feed_data_by_offer):
+        """Constructs the inventory feed messages.
+
+        :param dict['amazon.offer', dict] feed_data_by_offer: A dict mapping offer with the
+            necessary feed data, i.e. productType and messageId.
+        :rtype: list[dict]
+        """
+        return [
+            {
+                'messageId': feed_data['messageId'],
+                'sku': offer.sku,
+                'operationType': 'PARTIAL_UPDATE',
+                'productType': feed_data['productType'],
+                'attributes': {
+                    'fulfillment_availability': [{
+                        'fulfillment_channel_code': 'DEFAULT',
+                        'quantity':
+                            (qty := int(offer._get_available_product_qty())) > 0 and qty or 0,
+                    }]
+                }
+            }
+            for offer, feed_data in feed_data_by_offer.items()
+        ]
 
     def _get_available_product_qty(self):
         """ Retrieve the current available and free product quantity.
