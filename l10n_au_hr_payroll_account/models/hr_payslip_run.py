@@ -95,7 +95,7 @@ class HrPayslipRun(models.Model):
             ._get_records_action(name=_("Single Touch Payroll"))
 
     def _are_payslips_ready(self):
-        ffr_stp_record = self.env['l10n_au.stp'].search_count([('payslip_batch_id', '=', self.id), ('ffr', '=', True)])
+        ffr_stp_record = self.env['l10n_au.stp'].search_count([('payslip_batch_id', 'in', self.ids), ('ffr', '=', True)])
         if ffr_stp_record:
             # Allow to close the payslip run if some payslips are already paid in case of Full file replacement STP
             return all(slip.state in ['done', 'paid', 'cancel'] for slip in self.mapped('slip_ids'))
