@@ -9,7 +9,8 @@
                 <label for="l10n_lu_indexed_wage" invisible="country_code != 'LU'"/>
                 <div class="o_row mw-50" name="wage" invisible="country_code != 'LU'">
                     <field name="l10n_lu_indexed_wage" string="Indexed Wage"/>
-                    <div>/ month</div>
+                    <div invisible="wage_type != 'monthly'">/ month</div>
+                    <div invisible="wage_type != 'hourly'">/ hour</div>
                 </div>
             </group>
             <group name="salary" position="after">

@@ -85,7 +85,7 @@ class HrPayslip(models.Model):
     @api.depends('date_from', 'date_to', 'employee_id', 'worked_days_line_ids')
     def _compute_prorated_wage(self):
         for payslip in self:
-            if payslip.company_id.country_id.code != "LU":
+            if payslip.company_id.country_id.code != "LU" and payslip.contract_id.wage_type == "hourly":
                 continue
             payslip.l10n_lu_presence_prorata = payslip._get_month_presence_prorata()
             payslip.l10n_lu_prorated_wage = payslip.contract_id.l10n_lu_indexed_wage * payslip.l10n_lu_presence_prorata
@@ -224,7 +224,7 @@ class HrPayslip(models.Model):
 
     def _get_paid_amount(self):
         self.ensure_one()
-        if self.struct_id.country_id.code == 'LU' and self.struct_id.code == 'LUX_MONTHLY':
+        if self.struct_id.country_id.code == 'LU' and self.struct_id.code == 'LUX_MONTHLY' and self.contract_id.wage_type == 'monthly':
             return self.l10n_lu_prorated_wage
         elif self.struct_id.country_id.code == 'LU' and self.struct_id.code == 'LUX_13TH_MONTH':
             return self._get_paid_amount_l10n_lu_13th_month()

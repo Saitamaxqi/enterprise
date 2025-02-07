@@ -40,7 +40,9 @@ class HrContract(models.Model):
             contract.l10n_lu_index_on_contract_signature = self.env['hr.rule.parameter']._get_parameter_from_code('l10n_lu_index', date=contract.date_start, raise_if_not_found=False)
             contract.l10n_lu_current_index = self.env['hr.rule.parameter']._get_parameter_from_code('l10n_lu_index', raise_if_not_found=False)
             if contract.l10n_lu_index_on_contract_signature and contract.l10n_lu_current_index:
-                contract.l10n_lu_indexed_wage = contract.wage / contract.l10n_lu_index_on_contract_signature * contract.l10n_lu_current_index
+                contract.l10n_lu_indexed_wage = (
+                    contract.wage if contract.wage_type == 'monthly' else contract.hourly_wage
+                ) / contract.l10n_lu_index_on_contract_signature * contract.l10n_lu_current_index
             else:
                 contract.l10n_lu_indexed_wage = contract.wage
 

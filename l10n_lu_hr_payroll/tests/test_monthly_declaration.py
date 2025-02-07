@@ -262,3 +262,40 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
 
         self.assertEqual(jade_entries[1][13], "21")
         self.assertEqual(jade_entries[1][14], "31")
+
+    def test_05_hourly_worker(self):
+        hourly_employee = self.env['hr.employee'].create({
+            'name': 'Alice Smith',
+            'company_id': self.lux_company.id,
+            'identification_id': '1234567890123',
+        })
+
+        structure_type = self.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux')
+        structure_type.wage_type = 'hourly'
+        hourly_contract = self.env['hr.contract'].create({
+            'name': 'Hourly Contract for Alice',
+            'employee_id': hourly_employee.id,
+            'structure_type_id': self.env.ref('l10n_lu_hr_payroll.structure_type_employee_lux').id,
+            'hourly_wage': 25.0,
+            'wage_type': 'hourly',
+            'wage': 4000.0,
+            'date_start': '2022-01-01',
+            'state': 'open',
+        })
+
+        hourly_contract.generate_work_entries(date(2022, 1, 1), date(2022, 1, 31))
+
+        payslip = self.env['hr.payslip'].create({
+            'name': 'Test Hourly Payslip',
+            'employee_id': hourly_employee.id,
+            'contract_id': hourly_contract.id,
+            'date_from': '2022-01-01',
+            'date_to': '2022-01-31',
+            'struct_id': self.env.ref('l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary').id,
+        })
+        payslip.compute_sheet()
+
+        index_ratio = hourly_contract.l10n_lu_current_index / hourly_contract.l10n_lu_index_on_contract_signature
+        indexed_hourly = round(25 * index_ratio, 2)
+        expected_salary = indexed_hourly * 168
+        self.assertAlmostEqual(payslip.line_ids.filtered(lambda l: l.code == 'BASIC').total, expected_salary, 2)
