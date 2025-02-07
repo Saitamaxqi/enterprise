@@ -51,6 +51,7 @@ class DeliveryCarrier(models.Model):
         ('0', "Check, Cashier's Check or MoneyOrder"),
         ('8', "Cashier's Check or MoneyOrder"),
         ], string='COD Funding Option', default='0')
+    ups_require_signature = fields.Boolean("Require Signature")
 
     def _compute_can_generate_return(self):
         super()._compute_can_generate_return()

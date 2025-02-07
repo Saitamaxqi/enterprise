@@ -258,6 +258,13 @@ class UPSRequest:
         service_type = carrier.ups_default_service_type
         saturday_delivery = carrier.ups_saturday_delivery
         url = f'/api/rating/{API_VERSION}/Rate'
+
+        shipment_service_options = {}
+        if saturday_delivery:
+            shipment_service_options['SaturdayDeliveryIndicator'] = saturday_delivery
+        if carrier.ups_require_signature:
+            shipment_service_options['DeliveryConfirmation'] = {'DCISType': '1'}
+
         data = {
             'RateRequest': {
                 'Request': {
@@ -272,7 +279,7 @@ class UPSRequest:
                         'Code': service_type,
                     },
                     'NumOfPieces': str(int(total_qty)) if service_type == '96' else None,
-                    'ShipmentServiceOptions': {'SaturdayDeliveryIndicator': saturday_delivery} if saturday_delivery else None,
+                    'ShipmentServiceOptions': shipment_service_options if shipment_service_options else None,
                     'ShipmentRatingOptions': {
                         'NegotiatedRatesIndicator': "1",
                     }
@@ -371,6 +378,8 @@ class UPSRequest:
             shipment_service_options['InternationalForms']['TermsOfShipment'] = shipment_info.get('terms_of_shipment')
         if saturday_delivery:
             shipment_service_options['SaturdayDeliveryIndicator'] = saturday_delivery
+        if carrier.ups_require_signature:
+            shipment_service_options['DeliveryConfirmation'] = {'DCISType': '1'}
 
         request = {
             'ShipmentRequest': {

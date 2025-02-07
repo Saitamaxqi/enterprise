@@ -23,20 +23,25 @@
                             <field name="ups_package_dimension_unit" required="'delivery_type' == 'ups_rest'"/>
                             <field name="ups_label_file_type" string="Label Format" required="delivery_type == 'ups_rest'"/>
                         </group>
-                        <group string="Options" name="ups_vas">
-                            <field name="ups_bill_my_account" invisible="delivery_type != 'ups_rest'"/>
-                            <field name="ups_saturday_delivery" string="Saturday Delivery" required="delivery_type == 'ups_rest'" invisible="ups_default_service_type in ['03','11','13','59','12','65','08']"/>
-                            <field
-                                name="allow_cash_on_delivery"
-                                required="delivery_type == 'ups_rest'"
-                                invisible="ups_default_service_type == '96'"
-                                help="This value added service enables UPS to collect the payment of the shipment from your customer."
-                            />
-                            <field name="ups_cod_funds_code" required="delivery_type == 'ups_rest'" invisible="not allow_cash_on_delivery" widget="radio"/>
-                            <field name="can_generate_return" invisible="1"/>
-                            <field name="return_label_on_delivery" invisible="not can_generate_return"/>
-                            <field name="get_return_label_from_portal" invisible="not return_label_on_delivery"/>
-                            <field name="ups_duty_payment" string="Duties paid by" required="delivery_type == 'ups_rest'"/>
+                        <group string="Options" name="ups_vas" colspan="2">
+                            <group>
+                                <field name="ups_bill_my_account" invisible="delivery_type != 'ups_rest'"/>
+                                <field name="ups_saturday_delivery" string="Saturday Delivery" required="delivery_type == 'ups_rest'" invisible="ups_default_service_type in ['03','11','13','59','12','65','08']"/>
+                                <field
+                                    name="allow_cash_on_delivery"
+                                    required="delivery_type == 'ups_rest'"
+                                    invisible="ups_default_service_type == '96'"
+                                    help="This value added service enables UPS to collect the payment of the shipment from your customer."
+                                />
+                                <field name="ups_cod_funds_code" required="delivery_type == 'ups_rest'" invisible="not allow_cash_on_delivery" widget="radio"/>
+                                <field name="can_generate_return" invisible="1"/>
+                                <field name="return_label_on_delivery" invisible="not can_generate_return"/>
+                                <field name="get_return_label_from_portal" invisible="not return_label_on_delivery"/>
+                            </group>
+                            <group>
+                                <field name="ups_require_signature"/>
+                                <field name="ups_duty_payment" string="Duties paid by" required="delivery_type == 'ups_rest'"/>
+                            </group>
                         </group>
                     </group>
                     <group string="How to setup UPS?" invisible="delivery_type != 'ups_rest'" colspan="2">
