@@ -103,6 +103,8 @@ class HrEmployee(models.Model):
         compute="_compute_l10n_au_medicare_reduction",
         store=True,
         readonly=False,
+        required=True,
+        default="X",
         groups="hr.group_hr_user",
         help="Medicare levy reduction, dependent on marital status and number of children")
     l10n_au_tax_free_threshold = fields.Boolean(
