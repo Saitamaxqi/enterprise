@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, Command, fields, models, _
-from odoo.exceptions import UserError
 from odoo.addons.l10n_au_hr_payroll.models.hr_employee import INCOME_STREAM_TYPES
 
 
@@ -13,7 +12,9 @@ class L10n_AuPreviousPayrollTransfer(models.TransientModel):
         return self.env["l10n_au.payslip.ytd"]._get_start_date(fields.Date.today())
 
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company, required=True, domain=[("country_code", "=", "AU")])
-    previous_bms_id = fields.Char(string="Previous BMS ID", required=True, help="Enter the ID of the employee in the previous payroll system.")
+    previous_bms_id = fields.Char(string="Previous BMS ID", required=False,
+                                  default=lambda self: self.env.company.l10n_au_previous_bms_id,
+                                  help="Enter the ID of the employee in the previous payroll system.")
     l10n_au_previous_payroll_transfer_employee_ids = fields.One2many("l10n_au.previous.payroll.transfer.employee", "l10n_au_previous_payroll_transfer_id", store=True, readonly=False, compute="_compute_all_employees")
     fiscal_year_start_date = fields.Date(
         string="Fiscal Year Start Date",
@@ -49,9 +50,6 @@ class L10n_AuPreviousPayrollTransfer(models.TransientModel):
 
     def action_transfer(self):
         self.ensure_one()
-        if self.company_id.l10n_au_previous_bms_id:
-            raise UserError(_("This company already has a previous BMS ID set."))
-
         self.company_id.write({"l10n_au_previous_bms_id": self.previous_bms_id})
         for rec in self.l10n_au_previous_payroll_transfer_employee_ids:
             rec.employee_id.l10n_au_previous_payroll_id = rec.previous_payroll_id

@@ -36,16 +36,12 @@ class L10n_AuPayslipYtd(models.Model):
     ytd_amount = fields.Float(string="YTD Amount", compute="_compute_total_ytd")
     finalised = fields.Boolean(string="Finalised")
 
-    _unique_employee = models.Constraint("unique(employee_id, rule_id, l10n_au_income_stream_type)",
+    _unique_employee = models.Constraint("unique(employee_id, rule_id, l10n_au_income_stream_type, start_date)",
         "Opening balances for an employee with the same income stream type can only be imported once.")
 
-    @api.depends("l10n_au_payslip_ytd_input_ids", "l10n_au_payslip_ytd_input_ids.ytd_amount", "start_value")
-    def _compute_total_ytd(self):
-        for rec in self:
-            if rec.requires_inputs:
-                rec.ytd_amount = sum(rec.l10n_au_payslip_ytd_input_ids.mapped("ytd_amount"))
-            else:
-                rec.ytd_amount = rec.start_value
+    ####################################################
+    # HELPER METHODS
+    ####################################################
 
     @api.model
     def _get_start_date(self, start_date: date):
@@ -75,6 +71,14 @@ class L10n_AuPayslipYtd(models.Model):
             if rec.start_date:
                 rec.start_date = rec._get_start_date(rec.start_date)
 
+    @api.depends("l10n_au_payslip_ytd_input_ids", "l10n_au_payslip_ytd_input_ids.ytd_amount", "start_value")
+    def _compute_total_ytd(self):
+        for rec in self:
+            if rec.requires_inputs:
+                rec.ytd_amount = sum(rec.l10n_au_payslip_ytd_input_ids.mapped("ytd_amount"))
+            else:
+                rec.ytd_amount = rec.start_value
+
     @api.depends("employee_id", "rule_id")
     def _compute_name(self):
         for rec in self:
@@ -96,10 +100,10 @@ class L10n_AuPayslipYtd(models.Model):
                 ("date_from", "<=", end_date),
                 ("date_from", ">=", start_date)]):
                 raise UserError(_("You can't create or update YTD opening balances for %s, because there are "
-                    "validated payslips for this employee.", (rec.employee_id.name)))
+                                  "validated payslips for this employee during the selected fiscal year.", (rec.employee_id.name)))
 
     def write(self, vals):
-        if any(finalised for finalised in self.mapped("finalised")):
+        if any(finalised for finalised in self.mapped("finalised")) and vals.get("finalised", True):
             raise UserError(_("YTD Balances cannot be updated once finalised."))
         is_negative = self.filtered(lambda x: x.rule_id.code in ["WORKPLACE.GIVING", "WITHHOLD.TOTAL"])
         if self in is_negative and "start_value" in vals:
@@ -113,6 +117,14 @@ class L10n_AuPayslipYtd(models.Model):
             view_id="l10n_au_hr_payroll_account.l10n_au_payslip_ytd_form",
             target="new",
         )
+
+    def button_finalise(self):
+        """ Mark previous fiscal year imported YTD records as finalised after updating
+            This allows the records to be marked as finalised without submitting to ATO.
+        """
+        self.write({
+            "finalised": True
+        })
 
     @api.model
     def _get_ote_total(self, employee_ids, start_date):

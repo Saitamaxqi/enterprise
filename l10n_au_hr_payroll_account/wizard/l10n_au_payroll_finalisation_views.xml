@@ -39,6 +39,7 @@
                                     <field name="contract_start_date" />
                                     <field name="contract_end_date" />
                                     <field name="payslip_ids" />
+                                    <field name="ytd_balance_ids" />
                                 </list>
                             </field>
                         </page>

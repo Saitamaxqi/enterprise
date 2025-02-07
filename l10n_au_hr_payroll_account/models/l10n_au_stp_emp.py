@@ -1,4 +1,4 @@
-from odoo import api, fields, models, _
+from odoo import api, Command, fields, models, _
 from odoo.exceptions import ValidationError
 
 
@@ -25,6 +25,7 @@ class L10n_AuStpEmp(models.Model):
     @api.depends("employee_id", "stp_id.start_date", "stp_id.end_date")
     def _compute_ytd(self):
         for emp in self:
+
             if not emp.employee_id:
                 emp.update(
                     {
@@ -38,13 +39,29 @@ class L10n_AuStpEmp(models.Model):
                     }
                 )
                 continue
-            emp.payslip_ids = emp.employee_id.slip_ids.filtered(lambda p: p.date_from >= emp.stp_id.start_date and p.date_from <= emp.stp_id.end_date)
-            if not emp.payslip_ids:
-                raise ValidationError(_("This employee has no payslips for the selected period."))
-            emp.ytd_balance_ids = self.env['l10n_au.payslip.ytd'].search([
-                ('employee_id', '=', emp.employee_id.id),
-                ('start_date', '=', emp.stp_id.start_date),
-            ])
+            # Reverse the finalisation flag if the STP is not draft
+            finalisation = False
+            if emp.stp_id.is_finalisation:
+                finalisation = emp.stp_id.state != "draft"
+            elif emp.stp_id.is_unfinalisation:
+                finalisation = emp.stp_id.state == "draft"
+
+            payslip_ids, ytd_balance_ids = emp.employee_id._get_fiscal_year_data(
+                emp.stp_id.start_date, emp.stp_id.end_date, finalised=finalisation)
+            emp.update({
+                "payslip_ids": [Command.set(payslip_ids)],
+                "ytd_balance_ids": [Command.set(ytd_balance_ids)],
+            })
+            # Check if the employee has already been finalised or unfinalised
+            if not emp.payslip_ids and not emp.ytd_balance_ids:
+                if emp.stp_id.is_finalisation:
+                    raise ValidationError(_("There is no data to finalise for employee %s for the selected Fiscal year. "
+                                            "Please unfinalise the employee to make any adjustments.", emp.employee_id.name))
+                elif emp.stp_id.is_unfinalisation:
+                    raise ValidationError(_("There is no data to unfinalise for employee %s for the selected Fiscal year.", emp.employee_id.name))
+                else:
+                    raise ValidationError(_("This employee has no payslips for the Current."))
+
             last_payslip = emp.payslip_ids.sorted("date_from", reverse=True)[:1]
             fields_to_compute = [
                 "l10n_au_foreign_tax_withheld",

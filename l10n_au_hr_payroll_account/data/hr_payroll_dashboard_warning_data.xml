@@ -19,7 +19,7 @@ if pending_stp:
             <field name="country_id" ref="base.au"/>
             <field name="color">3</field>
             <field name="evaluation_code">
-if self.env.company.country_code == "AU" and not self.env.company.l10n_au_previous_bms_id:
+if self.env.company.country_code == "AU" and not self.env.company.l10n_au_bms_id:
     warning_count = 1
     warning_action = "l10n_au_hr_payroll_account.action_open_transfer_previous_payroll"
             </field>

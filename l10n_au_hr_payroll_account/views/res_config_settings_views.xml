@@ -33,7 +33,7 @@
                                     class="col-md-6 p-0 m-0 o_light_label"/>
                                 <field name="l10n_au_stp_responsible_id" class="col-lg-6 p-0" domain="[('user_id', '!=', False)]"/>
                             </div>
-                            <div class="row mt16 ms-2" invisible="l10n_au_previous_bms_id">
+                            <div class="row mt16 ms-2">
                                 <button name="%(l10n_au_hr_payroll_account.action_open_transfer_previous_payroll)d"
                                     string="Import YTD Balances" type="action" class="btn-primary"/>
                             </div>

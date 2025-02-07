@@ -2,7 +2,7 @@
 
 import base64
 from lxml import etree
-from datetime import date, timedelta
+from datetime import date
 from collections import defaultdict
 import re
 import logging
@@ -129,20 +129,20 @@ class L10n_AuStp(models.Model):
     def _fiscal_start_date(self):
         for rec in self:
             if rec.start_date and rec.payevent_type == "update":
-                fiscal_year_last_month = int(rec.company_id.fiscalyear_last_month)
-                start_year = rec.start_date.year
-                # Start is previous year
-                if rec.start_date.month <= fiscal_year_last_month:
-                    start_year -= 1
-                if fiscal_year_last_month == 12:
-                    fiscal_year_last_month = 0
-                rec.start_date = rec.start_date.replace(day=1, month=fiscal_year_last_month + 1, year=start_year)
-                rec.end_date = rec.start_date + timedelta(days=364)
+                rec.start_date, rec.end_date = date_utils.get_fiscal_year(
+                    rec.start_date,
+                    rec.company_id.fiscalyear_last_day,
+                    int(rec.company_id.fiscalyear_last_month),
+                )
 
     @api.depends("start_date")
     def _compute_end_date(self):
         for rec in self:
-            rec.end_date = rec.start_date + timedelta(days=364)
+            _, rec.end_date = date_utils.get_fiscal_year(
+                    rec.start_date,
+                    rec.company_id.fiscalyear_last_day,
+                    int(rec.company_id.fiscalyear_last_month),
+                )
 
     @api.depends("payslip_ids", "payslip_batch_id")
     def _compute_currency_id(self):
@@ -157,7 +157,7 @@ class L10n_AuStp(models.Model):
     @api.depends("payslip_batch_id", "payslip_ids", "payevent_type", "is_zeroing", "is_finalisation")
     def _compute_name(self):
         for report in self:
-            if report.is_finalisation:
+            if report.is_finalisation or report.is_unfinalisation:
                 report.name = report.name
             elif report.is_zeroing:
                 report.name = _("Zeroing YTD - %s", report.company_id.name)
@@ -178,12 +178,14 @@ class L10n_AuStp(models.Model):
                 if report.payslip_ids:
                     report.submit_date = False
             elif report.payevent_type == "update":
-                if not report.l10n_au_stp_emp.payslip_ids:
-                    report.submit_date = date.today()
+                # For past fiscal years Pay/Update date should be the last day of the fiscal year
+                # else it should be the date of submission
+                if not report.l10n_au_stp_emp:
+                    report.submit_date = False
                 elif report._is_for_current_fiscal_year():
                     report.submit_date = fields.Date.today()
                 else:
-                    report.submit_date = report.l10n_au_stp_emp.payslip_ids.sorted("date_from")[-1].date_to
+                    report.submit_date = self._get_fiscal_year_start()[-1]
 
     def _compute_warning_message(self):
         for report in self:
@@ -226,13 +228,19 @@ class L10n_AuStp(models.Model):
 
     def _get_fiscal_year_start(self):
         self.ensure_one()
-        slips = self.payslip_ids if self.payevent_type == 'submit' else self.l10n_au_stp_emp.payslip_ids
-        if slips:
-            return date_utils.get_fiscal_year(
-                slips[0].date_from,
-                self.company_id.fiscalyear_last_day,
-                int(self.company_id.fiscalyear_last_month),
-            )
+        if self.payevent_type == 'submit':
+            start_date = self.payslip_ids.sorted("date_from")[0].date_from
+        else:
+            if self.l10n_au_stp_emp.payslip_ids:
+                start_date = self.l10n_au_stp_emp.payslip_ids.sorted("date_from")[0].date_from
+            else:
+                start_date = self.l10n_au_stp_emp.ytd_balance_ids[0].start_date
+
+        return date_utils.get_fiscal_year(
+            start_date,
+            self.company_id.fiscalyear_last_day,
+            int(self.company_id.fiscalyear_last_month),
+        )
 
     @api.constrains("submit_date", "payevent_type")
     def _check_submit_date(self):
@@ -766,6 +774,20 @@ class L10n_AuStp(models.Model):
             self.previous_report_id.message_post(
                 body=_("A replacement file has been submitted for this report. Please check the new report. %s", (self._get_html_link())
             ))
+        if self.is_finalisation:
+            self.l10n_au_stp_emp.ytd_balance_ids.write({
+                "finalised": True,
+                })
+            self.l10n_au_stp_emp.payslip_ids.write({
+                "l10n_au_finalised": True
+                })
+        elif self.is_unfinalisation:
+            self.l10n_au_stp_emp.ytd_balance_ids.write({
+                "finalised": False,
+                })
+            self.l10n_au_stp_emp.payslip_ids.write({
+                "l10n_au_finalised": False
+                })
 
     def action_replace_file(self):
         self.ensure_one()

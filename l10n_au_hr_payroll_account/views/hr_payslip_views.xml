@@ -55,7 +55,20 @@
                     decoration-success="l10n_au_stp_status == 'sent'"
                     decoration-info="l10n_au_stp_status == 'ready'"
                     decoration-warning="l10n_au_stp_status == 'error'" />
+                <field name="l10n_au_finalised" optional="hide" />
             </list>
+        </field>
+    </record>
+
+    <record id="view_hr_payslip_filter" model="ir.ui.view">
+        <field name="name">hr.payslip.view.search.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter"/>
+        <field name="arch" type="xml">
+            <filter name="final_pay" position="after">
+                <filter name="finalised" string="Finalised" domain="[('l10n_au_finalised', '=', True)]"/>
+                <filter name="not_finalised" string="Yet to be finalised" domain="[('l10n_au_finalised', '=', False)]"/>
+            </filter>
         </field>
     </record>
 

@@ -8,7 +8,7 @@ from freezegun import freeze_time
 from psycopg2.errors import UniqueViolation
 
 from odoo import fields, Command, tools
-from odoo.tests import tagged
+from odoo.tests import tagged, Form
 from odoo.tools import file_path
 from odoo.exceptions import ValidationError, MissingError, UserError
 from .common import L10nPayrollAccountCommon
@@ -142,6 +142,9 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         ytd_wizard = self.env["l10n_au.previous.payroll.transfer"].create(
             {
                 "previous_bms_id": "12321321",
+                "l10n_au_previous_payroll_transfer_employee_ids": [
+                    Command.create({"employee_id": employee.id, "previous_payroll_id": "test_123213"})
+                ]
             })
         ytd_wizard.action_transfer()
         for code, value in values:
@@ -831,6 +834,110 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         )
         self.assertStpTupleEqual(remuneration_collection[0], data[self.employee_1.id]["Remuneration"][0])
         self._submit_stp(stp_2)
+
+    def test_finalisation(self):
+        action_finalise = self.env.ref("l10n_au_hr_payroll_account.action_l10n_au_payroll_finalisation")
+        # Nothing to Finalise
+        with freeze_time("2024-12-30"), self.assertRaisesRegex(
+            ValidationError,
+            "Please select at least one employee to Finalise / Unfinalise."):
+            action = Form.from_action(self.env, action_finalise.read()[0])
+            action.is_eofy = True
+            action.save().submit_to_ato()
+
+        with freeze_time("2024-12-30"), self.assertRaisesRegex(
+            ValidationError,
+            f"There is no data to finalise for employee {self.employee_1.name} for the selected Fiscal year. "
+                "Please unfinalise the employee to make any adjustments."):
+            action = Form.from_action(self.env, action_finalise.read()[0])
+            with action.l10n_au_payroll_finalisation_emp_ids.new() as line:
+                line.employee_id = self.employee_1
+            action.save().submit_to_ato()
+        # Create data to finalise
+        self.contract_1.date_end = "2024-11-30"
+        with freeze_time("2024-11-30"):
+            batch = self._prepare_payslip_run(self.employee_1 + self.employee_2, start_date="2024-11-01", end_date="2024-11-30")
+            batch.action_validate()
+            stp = self.env["l10n_au.stp"].search([("payslip_batch_id", "=", batch.id)])
+            self._submit_stp(stp)
+
+        # Nothing to unfinalise
+        with freeze_time("2024-12-30"), self.assertRaisesRegex(
+                ValidationError,
+                f"There is no data to unfinalise for employee {self.employee_1.name} for the selected Fiscal year."):
+            action = Form.from_action(self.env, action_finalise.read()[0])
+            action.finalisation = False
+            with action.l10n_au_payroll_finalisation_emp_ids.new() as line:
+                line.employee_id = self.employee_1
+            action.save().submit_to_ato()
+
+        # Finalise Data
+        with freeze_time("2024-12-30"):
+            action = Form.from_action(self.env, action_finalise.read()[0])
+            action.is_eofy = True
+            record = action.save()
+            self.assertEqual(len(record.l10n_au_payroll_finalisation_emp_ids), 2)
+            stp = Form.from_action(self.env, record.submit_to_ato()).save()
+            self._submit_stp(stp)
+        self.assertTrue(all(payslip.l10n_au_finalised for payslip in batch.slip_ids), "All payslips must be marked finalised!")
+
+        # Unfinalise successfully
+        with freeze_time("2024-12-30"):
+            action = Form.from_action(self.env, action_finalise.read()[0])
+            action.finalisation = False
+            action.is_eofy = True
+            record = action.save()
+            self.assertEqual(len(record.l10n_au_payroll_finalisation_emp_ids), 2)
+            stp = Form.from_action(self.env, record.submit_to_ato()).save()
+            self._submit_stp(stp)
+        self.assertFalse(all(payslip.l10n_au_finalised for payslip in batch.slip_ids), "All payslips must be Unfinalised!")
+
+    def test_finalisation_without_payslips(self):
+        with freeze_time("2024-12-29"):
+            self.create_ytd_opening_balances(
+                self.employee_2,
+                [
+                    ("BASIC", {"Attendance": 50000,
+                                }),
+                    ("WITHHOLD.TOTAL", -5753.8),
+                    ("SUPER", 3355.55),
+                    ("RFBA", {"Fringe Benefits Amount": 501,
+                                "Fringe Benefits Amount - Exempt": 502})
+                ]
+            )
+        action_finalise = self.env.ref("l10n_au_hr_payroll_account.action_l10n_au_payroll_finalisation")
+        with freeze_time("2024-12-30"):
+            action = Form.from_action(self.env, action_finalise.read()[0])
+            action.is_eofy = True
+            record = action.save()
+            self.assertEqual(len(record.l10n_au_payroll_finalisation_emp_ids), 1)
+            stp = Form.from_action(self.env, record.submit_to_ato()).save()
+            employee_stp = stp.l10n_au_stp_emp
+            self.assertRecordValues(employee_stp, [{
+                "ytd_gross": 50000,
+                "ytd_tax": 5753.8,
+                "ytd_super": 3355.55,
+                "ytd_rfba": 501,
+                "ytd_rfbae": 502
+            }])
+            self._submit_stp(stp)
+
+        with freeze_time("2024-12-30"):
+            action = Form.from_action(self.env, action_finalise.read()[0])
+            action.finalisation = False
+            action.is_eofy = True
+            record = action.save()
+            self.assertEqual(len(record.l10n_au_payroll_finalisation_emp_ids), 1)
+            stp = Form.from_action(self.env, record.submit_to_ato()).save()
+            employee_stp = stp.l10n_au_stp_emp
+            self.assertRecordValues(employee_stp, [{
+                "ytd_gross": 50000,
+                "ytd_tax": 5753.8,
+                "ytd_super": 3355.55,
+                "ytd_rfba": 501,
+                "ytd_rfbae": 502
+            }])
+            self._submit_stp(stp)
 
     def test_transfer_opening_balances_wizard(self):
         ytd_wizard = self.env["l10n_au.previous.payroll.transfer"].create(
