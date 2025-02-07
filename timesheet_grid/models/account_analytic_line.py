@@ -6,10 +6,10 @@ from dateutil.rrule import SU
 from collections import defaultdict
 
 from odoo import models, fields, api, _
-from odoo.addons.resource.models.utils import make_aware
 from odoo.exceptions import RedirectWarning, UserError, AccessError
 from odoo.osv import expression
 from odoo.tools import format_date
+from odoo.tools.date_intervals import make_aware
 
 
 class AccountAnalyticLine(models.Model):

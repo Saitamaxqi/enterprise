@@ -7,7 +7,7 @@ import pytz
 from odoo import Command, fields, models, api, _
 from odoo.osv import expression
 from odoo.tools import get_lang
-from odoo.addons.resource.models.utils import Intervals, sum_intervals
+from odoo.tools.date_intervals import Intervals, sum_intervals
 
 
 class ProjectTask(models.Model):

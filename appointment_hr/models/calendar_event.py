@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, models
-from odoo.addons.appointment.utils import interval_from_events, intervals_overlap
-from odoo.addons.resource.models.utils import Intervals, timezone_datetime
+from odoo.addons.appointment.utils import interval_from_events
+from odoo.tools.date_intervals import Intervals, intervals_overlap, timezone_datetime
 
 
 class CalendarEvent(models.Model):

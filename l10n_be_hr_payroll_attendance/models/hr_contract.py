@@ -4,8 +4,8 @@
 from datetime import datetime
 
 from odoo import models
-from odoo.addons.resource.models.utils import HOURS_PER_DAY
 from odoo.tools import float_round
+from odoo.tools.date_intervals import HOURS_PER_DAY
 
 
 class HrContract(models.Model):

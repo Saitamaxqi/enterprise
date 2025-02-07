@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 import pytz
 
 from odoo.addons.mail.tests.common import mail_new_test_user
-from odoo.addons.resource.models.utils import Intervals
 from odoo.tests import users
+from odoo.tools.date_intervals import Intervals
 from .common import AppointmentCommon
 
 

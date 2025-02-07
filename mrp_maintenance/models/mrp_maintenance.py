@@ -7,7 +7,7 @@ from collections import defaultdict
 import pytz
 
 from odoo import api, fields, models, Command, _
-from odoo.addons.resource.models.utils import Intervals
+from odoo.tools.date_intervals import Intervals
 from odoo.exceptions import UserError
 
 
