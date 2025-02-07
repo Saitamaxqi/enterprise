@@ -36,6 +36,7 @@ class TestCrmSubscription(TestCrmCommon):
             'name': 'Monthly',
             'billing_period_value': 1,
             'billing_period_unit': 'month',
+            'sequence': 4,
         })
 
         crm_recurring_plan = self.env['crm.recurring.plan'].create({

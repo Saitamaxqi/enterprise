@@ -1,9 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from dateutil.relativedelta import relativedelta
 from collections import defaultdict
 
-from odoo import fields, models, api, _, Command
+from dateutil.relativedelta import relativedelta
+
+from odoo import Command, _, api, fields, models
 from odoo.tools import float_is_zero, format_date
 
 INTERVAL_FACTOR = {
@@ -79,7 +80,10 @@ class SaleOrderLine(models.Model):
                 elif last_invoiced_date and last_invoiced_date <= today and next_invoice_date:
                     line.invoice_status = 'invoiced'
 
-    @api.depends('order_id.subscription_state', 'order_id.start_date')
+    @api.depends(
+        'order_id.plan_id',  # Recompute price & discount on plan change
+        'order_id.start_date',  # Recompute prorata temporis discount (upsell orders)
+    )
     def _compute_discount(self):
         """ For upsells : this method compute the prorata ratio for upselling when the current and possibly future
                         period have already been invoiced.
@@ -99,8 +103,13 @@ class SaleOrderLine(models.Model):
             order_id = self.env['sale.order'].browse(so_id)
             parent_id = order_id.subscription_id
             if not parent_id.next_invoice_date or order_id.subscription_state != '7_upsell':
-                # We don't apply discount
+                # Apply standard discount coming from the pricelist
+                super(SaleOrderLine, lines)._compute_discount()
                 continue
+
+            # Apply a discount combining the base subscription discount and the upsell ratio
+            # E.g. if we add an item to an ongoing yearly subscription, customer should only pay for
+            # the remaining months, not the full year.
             ratio = order_id._get_ratio_value()
             line_to_discount, dummy = lines._get_renew_discount_info(upsell_ratio=ratio)
             for line in line_to_discount:
@@ -113,6 +122,10 @@ class SaleOrderLine(models.Model):
                 else:
                     line.discount = (1 - ratio) * 100
         return super(SaleOrderLine, other_lines)._compute_discount()
+
+    @api.depends('order_id.plan_id')
+    def _compute_pricelist_item_id(self):
+        super()._compute_pricelist_item_id()
 
     @api.depends('order_id.plan_id', 'parent_line_id')
     def _compute_price_unit(self):
@@ -129,15 +142,6 @@ class SaleOrderLine(models.Model):
                 # Recompute prices for subscription products or regular products when these are first inserted.
                 line_to_recompute |= line
         super(SaleOrderLine, line_to_recompute)._compute_price_unit()
-
-    def _lines_without_price_recomputation(self):
-        res = super()._lines_without_price_recomputation()
-        return res.filtered(lambda line: not line.recurring_invoice)
-
-    def _compute_pricelist_item_id(self):
-        recurring_lines = self.filtered('recurring_invoice')
-        super(SaleOrderLine, self - recurring_lines)._compute_pricelist_item_id()
-        recurring_lines.pricelist_item_id = False
 
     @api.depends('recurring_invoice', 'invoice_lines.deferred_start_date', 'invoice_lines.deferred_end_date',
                  'order_id.next_invoice_date', 'order_id.last_invoice_date')
@@ -620,14 +624,22 @@ class SaleOrderLine(models.Model):
     # === PRICE COMPUTING HOOKS === #
 
     def _get_pricelist_price(self):
-        if self.recurring_invoice and self.order_id.plan_id:
-            pricing = self.env['sale.subscription.pricing']._get_first_suitable_recurring_pricing(self.product_id, self.order_id.plan_id, self.order_id.pricelist_id)
-            if pricing:
-                return pricing.currency_id._convert(pricing.price, self.currency_id, self.company_id, fields.Date.today())
+        if self.recurring_invoice:
             return super()._get_pricelist_price() or self.price_unit
         return super()._get_pricelist_price()
 
+    def _get_pricelist_kwargs(self):
+        res = super()._get_pricelist_kwargs()
+        if self.recurring_invoice:
+            res['plan_id'] = self.order_id.plan_id.id
+        return res
+
+    def _lines_without_price_recomputation(self):
+        res = super()._lines_without_price_recomputation()
+        return res.filtered(lambda line: not line.recurring_invoice)
+
     # === UTILS === #
+
     def _is_postpaid_line(self):
         self.ensure_one()
         return self.product_id.invoice_policy == 'delivery'

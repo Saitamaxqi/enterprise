@@ -4,7 +4,7 @@ import datetime
 
 from odoo import Command
 
-from odoo.addons.sale.tests.common import TestSaleCommon
+from odoo.addons.sale.tests.common import SaleCommon, TestSaleCommon
 
 
 class UncatchableException(BaseException):
@@ -14,11 +14,35 @@ class UncatchableException(BaseException):
     """
 
 
+class SaleSubscriptionCommon(SaleCommon):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        (
+            cls.plan_week,
+            cls.plan_month,
+            cls.plan_2_month,
+            cls.plan_year,
+        ) = cls.env['sale.subscription.plan'].create([
+            {'name': 'Weekly', 'billing_period_value': 1, 'billing_period_unit': 'week', 'sequence': 1},
+            {'name': 'Monthly', 'billing_period_value': 1, 'billing_period_unit': 'month', 'sequence': 4},
+            {'name': '2 Months', 'billing_period_value': 2, 'billing_period_unit': 'month', 'sequence': 8},
+            {'name': 'Yearly', 'billing_period_value': 1, 'billing_period_unit': 'year', 'sequence': 52},
+        ])
+
+    @classmethod
+    def _create_product(cls, **kwargs):
+        if 'recurring_invoice' not in kwargs:
+            kwargs['recurring_invoice'] = True
+        return super()._create_product(**kwargs)
+
+
 class TestSubscriptionCommon(TestSaleCommon):
 
     def setUp(self):
-
-        super(TestSubscriptionCommon, self).setUp()
+        super().setUp()
 
         SO = type(self.env['sale.order'])
 
@@ -33,13 +57,15 @@ class TestSubscriptionCommon(TestSaleCommon):
 
         cls.env.ref('base.main_company').currency_id = cls.env.ref('base.USD')
 
+        cls.env['res.config.settings'].create({
+            'group_product_pricelist': True
+        }).execute()
+
         # disable most emails for speed
         cls.context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True}
         AnalyticPlan = cls.env['account.analytic.plan'].with_context(cls.context_no_mail)
         Analytic = cls.env['account.analytic.account'].with_context(cls.context_no_mail)
         cls.SaleOrder = cls.env['sale.order'].with_context(cls.context_no_mail)
-        cls.SubPlan = cls.env['sale.subscription.plan'].with_context(cls.context_no_mail)
-        SubPricing = cls.env['sale.subscription.pricing'].with_context(cls.context_no_mail)
         Tax = cls.env['account.tax'].with_context(cls.context_no_mail)
         cls.ProductTmpl = cls.env['product.template'].with_context(cls.context_no_mail)
         cls.country_belgium = cls.env.ref('base.be')
@@ -66,21 +92,27 @@ class TestSubscriptionCommon(TestSaleCommon):
         cls.journal = cls.company_data['default_journal_sale']
 
         # Test products
-        cls.plan_week = cls.SubPlan.create({'name': 'Weekly', 'billing_period_value': 1, 'billing_period_unit': 'week'})
-        cls.plan_month = cls.SubPlan.create({'name': 'Monthly', 'billing_period_value': 1, 'billing_period_unit': 'month'})
-        cls.plan_year = cls.SubPlan.create({'name': 'Yearly', 'billing_period_value': 1, 'billing_period_unit': 'year'})
-        cls.plan_2_month = cls.SubPlan.create({'name': '2 Months', 'billing_period_value': 2, 'billing_period_unit': 'month'})
+        (
+            cls.plan_week,
+            cls.plan_month,
+            cls.plan_2_month,
+            cls.plan_year,
+        ) = cls.env['sale.subscription.plan'].create([
+            {'name': 'Weekly', 'billing_period_value': 1, 'billing_period_unit': 'week', 'sequence': 1},
+            {'name': 'Monthly', 'billing_period_value': 1, 'billing_period_unit': 'month', 'sequence': 4},
+            {'name': '2 Months', 'billing_period_value': 2, 'billing_period_unit': 'month', 'sequence': 8},
+            {'name': 'Yearly', 'billing_period_value': 1, 'billing_period_unit': 'year', 'sequence': 52},
+        ])
 
-        cls.pricing_month = SubPricing.create({'plan_id': cls.plan_month.id, 'price': 1})
-        cls.pricing_year = SubPricing.create({'plan_id': cls.plan_year.id, 'price': 100})
-        cls.pricing_year_2 = SubPricing.create({'plan_id': cls.plan_year.id, 'price': 200})
-        cls.pricing_year_3 = SubPricing.create({'plan_id': cls.plan_year.id, 'price': 300})
         cls.sub_product_tmpl = cls.ProductTmpl.create({
             'name': 'BaseTestProduct',
             'type': 'service',
             'recurring_invoice': True,
-            'uom_id': cls.env.ref('uom.product_uom_unit').id,
-            'product_subscription_pricing_ids': [(6, 0, (cls.pricing_month | cls.pricing_year).ids)]
+            'uom_id': cls.uom_unit.id,
+            'product_subscription_pricing_ids': [
+                Command.create({'plan_id': cls.plan_month.id, 'fixed_price': 1}),
+                Command.create({'plan_id': cls.plan_year.id, 'fixed_price': 100}),
+            ],
         })
         cls.product = cls.sub_product_tmpl.product_variant_id
         cls.product.write({
@@ -93,7 +125,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'name': 'TestProduct2',
             'type': 'service',
             'recurring_invoice': True,
-            'uom_id': cls.env.ref('uom.product_uom_unit').id,
+            'uom_id': cls.uom_unit.id,
         })
         cls.product2 = cls.product_tmpl_2.product_variant_id
         cls.product2.write({
@@ -106,7 +138,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'name': 'TestProduct3',
             'type': 'service',
             'recurring_invoice': True,
-            'uom_id': cls.env.ref('uom.product_uom_unit').id,
+            'uom_id': cls.uom_unit.id,
         })
         cls.product3 = cls.product_tmpl_3.product_variant_id
         cls.product3.write({
@@ -119,7 +151,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'name': 'TestProduct4',
             'type': 'service',
             'recurring_invoice': True,
-            'uom_id': cls.env.ref('uom.product_uom_unit').id,
+            'uom_id': cls.uom_unit.id,
         })
         cls.product4 = cls.product_tmpl_4.product_variant_id
         cls.product4.write({
@@ -131,7 +163,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'name': 'One shot product',
             'type': 'service',
             'recurring_invoice': False,
-            'uom_id': cls.env.ref('uom.product_uom_unit').id,
+            'uom_id': cls.uom_unit.id,
         })
         cls.product5 = cls.product_tmpl_3.product_variant_id
         cls.product5.write({
@@ -146,12 +178,13 @@ class TestSubscriptionCommon(TestSaleCommon):
             'duration_unit': 'year',
             'note': "This is the template description",
             'plan_id': cls.plan_month.id,
-            'sale_order_template_line_ids': [Command.create({
-                'name': "Product 1",
-                'product_id': cls.product.id,
-                'product_uom_qty': 1,
-                'product_uom_id': cls.product.uom_id.id
-            }),
+            'sale_order_template_line_ids': [
+                Command.create({
+                    'name': "Product 1",
+                    'product_id': cls.product.id,
+                    'product_uom_qty': 1,
+                    'product_uom_id': cls.product.uom_id.id
+                }),
                 Command.create({
                     'name': "Product 2",
                     'product_id': cls.product2.id,
@@ -303,6 +336,12 @@ class TestSubscriptionCommon(TestSaleCommon):
             'parent_id': cls.partner_a.id,
             'type': 'delivery',
         })
+
+    @classmethod
+    def get_default_groups(cls):
+        # Needed for tests without demo data
+        groups = super().get_default_groups()
+        return groups | cls.env.ref('sales_team.group_sale_manager')
 
     # Mocking for 'test_auto_payment_with_token'
     # Necessary to have a valid and done transaction when the cron on subscription passes through

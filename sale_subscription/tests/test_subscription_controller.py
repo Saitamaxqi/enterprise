@@ -3,25 +3,72 @@
 import datetime
 import json
 from datetime import date
-from freezegun import freeze_time
 from unittest.mock import patch
+
 from dateutil.relativedelta import relativedelta
+from freezegun import freeze_time
 
 from odoo import Command, http
-from odoo.tests.common import new_test_user, tagged
+from odoo.tests import new_test_user, tagged
 from odoo.tools import mute_logger
 from odoo.tools.misc import get_lang
 
 from odoo.addons.http_routing.tests.common import MockRequest
+from odoo.addons.payment.tests.common import PaymentCommon
+from odoo.addons.payment.tests.http_common import PaymentHttpCommon
 from odoo.addons.sale.controllers.portal import CustomerPortal
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
-from odoo.addons.payment.tests.common import PaymentCommon
-from odoo.addons.payment.tests.http_common import PaymentHttpCommon
 
 
 @tagged("post_install", "-at_install", "subscription_controller")
 class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscriptionCommon):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.pricing_month = cls.sub_product_tmpl.product_subscription_pricing_ids.filtered(
+            lambda rule: rule.plan_id == cls.plan_month
+        )
+        cls.pricing_year = cls.sub_product_tmpl.product_subscription_pricing_ids.filtered(
+            lambda rule: rule.plan_id == cls.plan_year
+        )
+
+        # FIXME dunno why we need to recreate the test product here when it's 'nearly' identical to
+        # the one in the TestSubscriptionCommon, but some tests fail without it, so keeping it for
+        # now.
+        cls.sub_product_tmpl = cls.ProductTmpl.sudo().create({
+            'name': 'TestProduct',
+            'type': 'service',
+            'recurring_invoice': True,
+            'uom_id': cls.uom_unit.id,
+        })
+        cls.pricing_month = cls.pricing_month.copy({'product_tmpl_id': cls.sub_product_tmpl.id})
+        cls.pricing_year = cls.pricing_year.copy({'product_tmpl_id': cls.sub_product_tmpl.id})
+        cls.subscription_tmpl = cls.env['sale.order.template'].create({
+            'name': 'Subscription template without discount',
+            'duration_unit': 'year',
+            'is_unlimited': False,
+            'duration_value': 2,
+            'note': "This is the template description",
+            'plan_id': cls.plan_month.id,
+            'sale_order_template_line_ids': [
+                Command.create({
+                    'name': "monthly",
+                    'product_id': cls.sub_product_tmpl.product_variant_ids.id,
+                    'product_uom_qty': 1,
+                    'product_uom_id': cls.sub_product_tmpl.uom_id.id
+                }),
+                Command.create({
+                    'name': "yearly",
+                    'product_id': cls.sub_product_tmpl.product_variant_ids.id,
+                    'product_uom_qty': 1,
+                    'product_uom_id': cls.sub_product_tmpl.uom_id.id,
+                }),
+            ]
+        })
+
     def setUp(self):
         super().setUp()
 
@@ -29,36 +76,6 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
         self.other_user = new_test_user(self.env, "test_user_2", email="test_user_2@nowhere.com", password="P@ssw0rd!", tz="UTC")
 
         self.partner = self.user.partner_id
-        # Test products
-        self.sub_product_tmpl = self.ProductTmpl.sudo().create({
-            'name': 'TestProduct',
-            'type': 'service',
-            'recurring_invoice': True,
-            'uom_id': self.env.ref('uom.product_uom_unit').id,
-            'product_subscription_pricing_ids': [Command.set((self.pricing_month + self.pricing_year).ids)],
-        })
-        self.subscription_tmpl = self.env['sale.order.template'].create({
-            'name': 'Subscription template without discount',
-            'duration_unit': 'year',
-            'is_unlimited': False,
-            'duration_value': 2,
-            'note': "This is the template description",
-            'plan_id': self.plan_month.id,
-            'sale_order_template_line_ids': [Command.create({
-                'name': "monthly",
-                'product_id': self.sub_product_tmpl.product_variant_ids.id,
-                'product_uom_qty': 1,
-                'product_uom_id': self.sub_product_tmpl.uom_id.id
-            }),
-                Command.create({
-                    'name': "yearly",
-                    'product_id': self.sub_product_tmpl.product_variant_ids.id,
-                    'product_uom_qty': 1,
-                    'product_uom_id': self.sub_product_tmpl.uom_id.id,
-                })
-            ]
-
-        })
         # Test Subscription
         self.subscription = self.SaleOrder.create({
             'name': 'TestSubscription',
@@ -280,24 +297,26 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
 
     def test_controller_transaction_refund(self):
         self.original_prepare_invoice = self.subscription._prepare_invoice
-        self.pricing_month.price = 10
-        subscription = self.subscription.create({
+        self.pricing_month.fixed_price = 10
+        subscription = self.env['sale.order'].create({
             'partner_id': self.partner.id,
             'company_id': self.company.id,
             'payment_token_id': self.payment_token.id,
             'sale_order_template_id': self.subscription_tmpl.id,
-
         })
         subscription._onchange_sale_order_template_id()
         subscription.order_line.product_uom_qty = 2
+        self.assertEqual(subscription.order_line.pricelist_item_id, self.pricing_month)
         subscription.action_confirm()
+        subscription._recompute_prices()
         invoice = subscription._create_invoices()
         invoice._post()
         self.assertEqual(invoice.amount_total, 46)
         # partial refund
         refund_wizard = self.env['account.move.reversal'].with_context(
             active_model="account.move",
-            active_ids=invoice.ids).create({
+            active_ids=invoice.ids,
+        ).create({
             'reason': 'Test refund',
             'journal_id': invoice.journal_id.id,
         })

@@ -1,16 +1,19 @@
 import datetime
+
+from unittest.mock import patch
+
 from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
-from unittest.mock import patch
+
+from odoo import Command, fields
+from odoo.exceptions import AccessError, UserError, ValidationError
+from odoo.tests import Form, freeze_time, tagged
+from odoo.tools import mute_logger
 
 from odoo.addons.account_accountant.tests.test_signature import TestInvoiceSignature
 from odoo.addons.mail.tests.common import MockEmail
-from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 from odoo.addons.sale_subscription.models.sale_order import SaleOrder
-from odoo.tests import Form, tagged, freeze_time
-from odoo.tools import mute_logger
-from odoo import fields, Command
-from odoo.exceptions import AccessError, ValidationError, UserError
+from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 
 
 @tagged('post_install', '-at_install')
@@ -136,7 +139,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertAlmostEqual(self.subscription.amount_untaxed, 1400, msg="unexpected price after setup")
         self.assertAlmostEqual(self.subscription.recurring_monthly, 700, msg="Half because invoice every two months")
         # Change periodicity
-        self.subscription.order_line.product_id.product_subscription_pricing_ids = [(6, 0, 0)] # remove all pricings to fallaback on list price
+        self.subscription.order_line.product_id.product_subscription_pricing_ids = [(6, 0, 0)]  # remove all pricings to fallback on list price
         self.subscription.plan_id = self.plan_year
         self.assertAlmostEqual(self.subscription.amount_untaxed, 70, msg='Recompute price_unit : 50 (product) + 20 (product2)')
         # 1200 over 4 year = 25/year + 100 per month
@@ -300,8 +303,10 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
     def test_product_change(self):
         """Check behaviour of the product onchange (taxes mostly)."""
         # check default tax
-        self.sub_product_tmpl.product_subscription_pricing_ids = [(6, 0, self.pricing_month.ids)]
-        self.pricing_month.price = 50
+        self.sub_product_tmpl.product_subscription_pricing_ids = [
+            Command.clear(),
+            Command.create({'plan_id': self.plan_month.id, 'fixed_price': 50})
+        ]
 
         self.subscription.order_line.unlink()
         sub_form = Form(self.subscription)
@@ -328,7 +333,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
 
     def test_log_change_pricing(self):
         """ Test subscription log generation when template_id is changed """
-        self.sub_product_tmpl.product_subscription_pricing_ids.price = 120 # 120 for monthly and yearly
+        self.sub_product_tmpl.product_subscription_pricing_ids.fixed_price = 120  # 120 for monthly and yearly
         # Create a subscription and add a line, should have logs with MMR 120
         subscription = self.env['sale.order'].create({
             'name': 'TestSubscription',
@@ -337,13 +342,25 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'plan_id': self.plan_month.id,
             'partner_id': self.user_portal.partner_id.id,
             'sale_order_template_id': self.subscription_tmpl.id,
+            'order_line': [
+                Command.create({
+                    'name': 'TestRecurringLine',
+                    'product_id': self.product.id,
+                    'product_uom_qty': 1,
+                })
+            ]
         })
+        self.assertEqual(
+            subscription.order_line.pricelist_item_id,
+            self.product.product_subscription_pricing_ids.filtered(
+                lambda rule: rule.plan_id == self.plan_month,
+            )
+        )
+        self.assertEqual(
+            subscription.order_line.price_unit,
+            120
+        )
         self.cr.precommit.clear()
-        subscription.write({'order_line': [(0, 0, {
-            'name': 'TestRecurringLine',
-            'product_id': self.product.id,
-            'product_uom_qty': 1,
-        })]})
         subscription.action_confirm()
         self.flush_tracking()
         init_nb_log = len(subscription.order_log_ids)
@@ -489,21 +506,23 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                          "deliver product should not be included in the upsell")
 
     def test_option_template(self):
-        self.product.product_tmpl_id.product_subscription_pricing_ids = [(6, 0, 0)]
-        self.env['sale.subscription.pricing'].create({
-            'price': 10,
-            'plan_id': self.plan_year.id,
-            'product_template_id': self.product.product_tmpl_id.id
-        })
+        self.product.product_tmpl_id.product_subscription_pricing_ids = [
+            Command.clear(),
+            Command.create({
+                'fixed_price': 10,
+                'plan_id': self.plan_year.id,
+            }),
+        ]
         other_pricelist = self.env['product.pricelist'].create({
             'name': 'New pricelist',
             'currency_id': self.company.currency_id.id,
-        })
-        self.env['sale.subscription.pricing'].create({
-            'plan_id': self.plan_year.id,
-            'pricelist_id': other_pricelist.id,
-            'price': 15,
-            'product_template_id': self.product.product_tmpl_id.id
+            'item_ids': [
+                Command.create({
+                    'plan_id': self.plan_year.id,
+                    'fixed_price': 15,
+                    'product_tmpl_id': self.product.product_tmpl_id.id
+                }),
+            ],
         })
         template = self.env['sale.order.template'].create({
             'name': 'Subscription template without discount',
@@ -513,14 +532,10 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'sale_order_template_line_ids': [Command.create({
                 'name': "monthly",
                 'product_id': self.product.id,
-                'product_uom_qty': 1,
-                'product_uom_id': self.product.uom_id.id
             })],
             'sale_order_template_option_ids': [Command.create({
                 'name': "line 1",
                 'product_id': self.product.id,
-                'quantity': 1,
-                'uom_id': self.product.uom_id.id,
             })],
         })
         subscription = self.env['sale.order'].create({
@@ -602,36 +617,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         (simple_so | subscription).write({'company_id': other_company_data['company'].id})
         self.assertEqual(simple_so.order_line.tax_ids.id, sale_tax_percentage_incl_2.id, "Simple SO taxes must be recomputed on company change")
         self.assertEqual(subscription.order_line.tax_ids.id, sale_tax_percentage_incl_2.id, "Subscription taxes must be recomputed on company change")
-
-    def test_onchange_product_quantity_with_different_currencies(self):
-        # onchange_product_quantity compute price unit into the currency of the sale_order pricelist
-        # when currency of the product (Gold Coin) is different from subscription pricelist (USD)
-        self.subscription.order_line = False
-        self.subscription.plan_id = self.plan_month
-        self.pricing_month.pricelist_id = self.subscription.pricelist_id
-        self.pricing_month.price = 50
-        self.sub_product_tmpl.product_subscription_pricing_ids = [(6, 0, self.pricing_month.ids)]
-        self.subscription.write({
-            'order_line': [(0, 0, {
-                'name': 'TestRecurringLine',
-                'product_id': self.product.id,
-                'product_uom_qty': 1,
-            })],
-        })
-        self.assertEqual(self.subscription.currency_id.name, 'USD')
-        line = self.subscription.order_line
-        self.assertEqual(line.price_unit, 50, 'Price unit should not have changed')
-        currency = self.other_currency
-        self.product.currency_id = currency
-        self.pricing_month.currency_id = currency
-        line._compute_price_unit()
-        conversion_rate = self.env['res.currency']._get_conversion_rate(
-            self.product.currency_id,
-            self.subscription.currency_id,
-            self.product.company_id or self.env.company,
-            fields.Date.today())
-        self.assertEqual(line.price_unit, self.subscription.currency_id.round(50 * conversion_rate),
-                         'Price unit must be converted into the currency of the pricelist (USD)')
 
     def test_archive_partner_invoice_shipping(self):
         # archived a partner must not remain set on invoicing/shipping address in subscription
@@ -724,151 +709,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             subscription.invoice_ids.filtered(lambda am: am.state == 'draft')._post()
             self.assertEqual(subscription.next_invoice_date, datetime.date(2022, 8, 1),
                              'next_invoice_date should updated')
-
-    def test_product_pricing_respects_variants(self):
-        # create a product with 2 variants
-        ProductTemplate = self.env['product.template']
-        ProductAttributeVal = self.env['product.attribute.value']
-        SaleOrderTemplate = self.env['sale.order.template']
-        Pricing = self.env['sale.subscription.pricing']
-        product_attribute = self.env['product.attribute'].create({'name': 'Weight'})
-        product_attribute_val1 = ProductAttributeVal.create({
-            'name': '1kg',
-            'attribute_id': product_attribute.id
-        })
-        product_attribute_val2 = ProductAttributeVal.create({
-            'name': '2kg',
-            'attribute_id': product_attribute.id
-        })
-        product = ProductTemplate.create({
-            'recurring_invoice': True,
-            'type': 'service',
-            'name': 'Variant Products',
-            'list_price': 5,
-        })
-        product.attribute_line_ids = [(Command.create({
-            'attribute_id': product_attribute.id,
-            'value_ids': [Command.set([product_attribute_val1.id, product_attribute_val2.id])],
-        }))]
-
-        product_product_1 = product.product_variant_ids[0]
-        product_product_2 = product.product_variant_ids[-1]
-
-        # Define extra price for variant without temporal pricing
-        self.assertEqual(product_product_2.list_price, 5.0)
-        self.assertEqual(product_product_2.lst_price, 5.0)
-        product_product_2.product_template_attribute_value_ids.price_extra = 15.0
-        self.assertEqual(product_product_2.lst_price, 20.0)
-        template = SaleOrderTemplate.create({
-            'name': 'Variant Products Plan',
-            'plan_id': self.plan_week.id,
-            'sale_order_template_line_ids': [Command.create({
-                'product_id': product_product_2.id
-            })]
-        })
-
-        sale_order_form = Form(self.env['sale.order'])
-        sale_order_form.partner_id = self.user_portal.partner_id
-        sale_order_form.sale_order_template_id = template
-        sale_order = sale_order_form.save()
-        self.assertEqual(sale_order.order_line.price_unit, 20.0)
-
-        # set pricing for variants. make sure the cheaper one is not for the variant we're testing
-        cheaper_pricing = Pricing.create({
-            'plan_id': self.plan_week.id,
-            'price': 10,
-            'product_template_id': product.id,
-            'product_variant_ids': [Command.link(product_product_1.id)],
-        })
-
-        pricing2 = Pricing.create({
-            'plan_id': self.plan_week.id,
-            'price': 25,
-            'product_template_id': product.id,
-            'product_variant_ids': [Command.link(product_product_2.id)],
-        })
-
-        product.write({
-            'product_subscription_pricing_ids': [Command.set([cheaper_pricing.id, pricing2.id])]
-        })
-
-        # create SO with product variant having the most expensive pricing
-        sale_order = self.env['sale.order'].create({
-            'name': 'TestSubscription',
-            'is_subscription': True,
-            'partner_id': self.user_portal.partner_id.id,
-            'plan_id': self.plan_week.id,
-            'order_line': [
-                Command.create({
-                    'product_id': product_product_2.id,
-                    'product_uom_qty': 1
-                }),
-                Command.create({
-                    'product_id': product_product_1[0].id,
-                    'product_uom_qty': 1
-                })
-            ]
-        })
-        # check that correct pricings are being used
-        self.assertEqual(sale_order.order_line[0].price_unit, pricing2.price)
-        self.assertEqual(sale_order.order_line[1].price_unit, cheaper_pricing.price)
-
-        # test constraints
-        product2 = ProductTemplate.create({
-            'recurring_invoice': True,
-            'type': 'service',
-            'name': 'Variant Products',
-            'list_price': 5,
-        })
-
-        product2.attribute_line_ids = [(Command.create({
-            'attribute_id': product_attribute.id,
-            'value_ids': [Command.set([product_attribute_val1.id, product_attribute_val2.id])],
-        }))]
-        product2_product_2 = product2.product_variant_ids[-1]
-        Pricing.create({
-            'plan_id': self.plan_week.id,
-            'price': 25,
-            'product_template_id': product2.id,
-            'product_variant_ids': [Command.link(product2_product_2.id)],
-        })
-        product2_product_1 = product2.product_variant_ids[0]
-        product2_product_2 = product2.product_variant_ids[-1]
-        with self.assertRaises(UserError):
-            Pricing.create({
-                'plan_id': self.plan_week.id,
-                'price': 32,
-                'product_template_id': product2.id,
-                'product_variant_ids': [Command.set([product2_product_1.id, product2_product_2.id])],
-            })
-        with self.assertRaises(UserError):
-        # Check constraint without product variants
-            Pricing.create({
-                'plan_id': self.plan_month.id,
-                'price': 32,
-                'product_template_id': product2.id,
-                'product_variant_ids': [],
-            })
-            Pricing.create({
-                'plan_id': self.plan_month.id,
-                'price': 40,
-                'product_template_id': product2.id,
-                'product_variant_ids': [],
-            })
-
-        with self.assertRaises(UserError):
-            Pricing.create({
-                'plan_id': self.plan_month.id,
-                'price': 32,
-                'product_template_id': product2.id,
-                'product_variant_ids': [],
-            })
-            Pricing.create({
-                'plan_id': self.plan_month.id,
-                'price': 88,
-                'product_template_id': product2.id,
-                'product_variant_ids': [Command.set([product2_product_1.id])],
-            })
 
     def test_subscription_constraint(self):
         sub = self.subscription.copy()
@@ -1017,9 +857,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
 
     def test_free_subscription(self):
         with freeze_time("2023-01-01"):
-            pricelist = self.env['product.pricelist'].create({
-                'name': 'Pricelist A',
-            })
             # We don't want to create invoice when the sum of recurring line is 0
             nr_product = self.env['product.template'].create({
                 'name': 'Non recurring product',
@@ -1029,14 +866,14 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'invoice_policy': 'order',
             })
             # nr_product.taxes_id = False # we avoid using taxes in this example
-            self.pricing_year.unlink()
-            self.pricing_month.price = 25
+            self.sub_product_tmpl.product_subscription_pricing_ids.filtered(
+                lambda rule: rule.plan_id == self.plan_month
+            ).fixed_price = 25
             self.product2.list_price = -25.0
             # total = 0 & recurring amount = 0
             sub_0_0 = self.env['sale.order'].create({
                 'partner_id': self.partner.id,
                 'plan_id': self.plan_month.id,
-                'pricelist_id': pricelist.id,
                 'order_line': [
                     (0, 0, {
                         'name': self.product.name,
@@ -1055,15 +892,12 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             sub_0_1 = self.env['sale.order'].create({
                 'partner_id': self.partner.id,
                 'plan_id': self.plan_month.id,
-                'pricelist_id': pricelist.id,
                 'order_line': [
                     (0, 0, {
-                        'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 2.0,
                     }),
                     (0, 0, {
-                        'name': nr_product.name,
                         'product_id': nr_product.product_variant_id.id,
                         'product_uom_qty': 2.0,
                         'price_unit': -25,
@@ -1074,20 +908,16 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             sub_1_0 = self.env['sale.order'].create({
                 'partner_id': self.partner.id,
                 'plan_id': self.plan_month.id,
-                'pricelist_id': pricelist.id,
                 'order_line': [
                     (0, 0, {
-                        'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 2.0,
                     }),
                     (0, 0, {
-                        'name': self.product.name,
                         'product_id': self.product2.id,
                         'product_uom_qty': 2.0,
                     }),
                     (0, 0, {
-                        'name': nr_product.name,
                         'product_id': nr_product.product_variant_id.id,
                         'product_uom_qty': 2.0,
                     }),
@@ -1097,16 +927,13 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             sub_negative_recurring = self.env['sale.order'].create({
                 'partner_id': self.partner.id,
                 'plan_id': self.plan_month.id,
-                'pricelist_id': pricelist.id,
                 'order_line': [
                     (0, 0, {
-                        'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 2.0,
                         'price_unit': -30
                     }),
                     (0, 0, {
-                        'name': self.product.name,
                         'product_id': self.product2.id,
                         'product_uom_qty': 2.0,
                         'price_unit': -10
@@ -1118,7 +945,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             negative_nonrecurring_sub = self.env['sale.order'].create({
                 'partner_id': self.partner.id,
                 'plan_id': self.plan_month.id,
-                'pricelist_id': pricelist.id,
                 'order_line': [
                     (0, 0, {
                         'name': self.product.name,
@@ -1372,12 +1198,12 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertEqual(sub.close_reason_id.id, self.env.ref('sale_subscription.close_reason_auto_close_limit_reached').id)
 
     def test_subscription_pricelist_discount(self):
-        pricelist = self.pricelist
-        pricelist.item_ids.create({
-            'pricelist_id': pricelist.id,
-            'compute_price': 'percentage',
-            'percent_price': 50,
-        })
+        self.pricelist.item_ids = [
+            Command.create({
+                'compute_price': 'percentage',
+                'percent_price': 50,
+            })
+        ]
         sub = self.env["sale.order"].with_context(**self.context_no_mail).create({
             'name': 'TestSubscription',
             'is_subscription': True,
@@ -1385,19 +1211,42 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'note': "original subscription description",
             'partner_id': self.user_portal.partner_id.id,
             'sale_order_template_id': self.subscription_tmpl.id,
+            'pricelist_id': self.pricelist.id,
         })
         sub._onchange_sale_order_template_id()
-        sub.order_line.create({
-            'order_id': sub.id,
+        self.assertTrue(sub.order_line[0].pricelist_item_id.plan_id)
+        self.assertFalse(sub.order_line[1].pricelist_item_id.plan_id)
+        self.assertEqual(
+            sub.order_line.mapped('discount'),
+            [0, 0],
+            "Regular pricelist discounts should't affect temporal items."
+        )
+        sub.order_line = [Command.create({
             'product_id': self.product_a.id, # non-subscription product
-        })
-        self.assertEqual(sub.order_line.mapped('discount'), [0, 0, 50],
-            "Regular pricelist discounts should't affect temporal items.")
+        })]
+        self.assertEqual(
+            sub.order_line.mapped('discount'),
+            [0, 0, 50],
+            "Regular pricelist discounts should't affect temporal items.",
+        )
         sub.order_line.discount = 20
         self.assertEqual(sub.order_line.mapped('discount'), [20, 20, 20])
         sub.action_confirm()
         self.assertEqual(sub.order_line.mapped('discount'), [20, 20, 20],
              "Discounts should not be reset on confirmation.")
+        self.pricelist.item_ids = [
+            Command.create({
+                'compute_price': 'percentage',
+                'percent_price': 50,
+                'plan_id': self.plan_month.id,
+            })
+        ]
+        sub._recompute_prices()
+        self.assertEqual(
+            sub.order_line.mapped('discount'),
+            [0, 50, 50],
+            'Recurring pricing discounts should apply to recurring lines',
+        )
 
     def test_non_subscription_pricelist_discount(self):
         pricelist = self.pricelist
@@ -1464,40 +1313,34 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         prices will recompute automatically ONLY for subscription products.
         """
         self._enable_currency('EUR')
-        pricing_month_1_eur = self.env['sale.subscription.pricing'].create({
-            'plan_id': self.plan_month.id,
-            'price': 100,
-        })
-        pricing_year_1_eur = self.env['sale.subscription.pricing'].create({
-            'plan_id': self.plan_year.id,
-            'price': 1000,
-        })
+        self.env['product.pricelist.item'].create([
+            {
+                'plan_id': self.plan_month.id,
+                'fixed_price': 100,
+            }, {
+                'plan_id': self.plan_year.id,
+                'fixed_price': 1000,
+            },
+        ])
         simple_product = self.product.copy({'recurring_invoice': False})
-        simple_product_order_line = {
-            'name': self.product.name,
-            'product_id': simple_product.id,
-            'product_uom_qty': 2.0,
-        }
         sub_product_tmpl = self.env['product.template'].create({
             'name': 'BaseTestProduct',
             'type': 'service',
             'recurring_invoice': True,
-            'uom_id': self.env.ref('uom.product_uom_unit').id,
-            'product_subscription_pricing_ids': [Command.set((pricing_month_1_eur | pricing_year_1_eur).ids)]
+            'uom_id': self.uom_unit.id,
         })
-        sub_product_order_line = {
-            'name': "Product 1",
-            'product_id': sub_product_tmpl.product_variant_id.id,
-            'product_uom_qty': 1,
-        }
         sub = self.subscription.create({
             'name': 'Company1 - Currency1',
             'partner_id': self.user_portal.partner_id.id,
-            'currency_id': self.company.currency_id.id,
             'plan_id': self.plan_month.id,
             'order_line': [
-                Command.create(sub_product_order_line),
-                Command.create(simple_product_order_line)
+                Command.create({
+                    'product_id': sub_product_tmpl.product_variant_id.id,
+                }),
+                Command.create({
+                    'product_id': simple_product.id,
+                    'product_uom_qty': 2.0,
+                })
             ]
         })
         sub.action_confirm()
@@ -1533,17 +1376,17 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         for Optional Products with time-based pricing linked to the subscription template.
         """
         # Define a subscription template with a optional product having time-based pricing.
-        self.product.product_tmpl_id.product_subscription_pricing_ids.unlink()
-        self.env['sale.subscription.pricing'].create({
-            'price': 150,
-            'plan_id': self.plan_month.id,
-            'product_template_id': self.product.product_tmpl_id.id
-        })
-        self.env['sale.subscription.pricing'].create({
-            'price': 1000,
-            'plan_id': self.plan_year.id,
-            'product_template_id': self.product.product_tmpl_id.id
-        })
+        self.product.product_tmpl_id.product_subscription_pricing_ids = [
+            Command.clear(),
+            Command.create({
+                'fixed_price': 150,
+                'plan_id': self.plan_month.id,
+            }),
+            Command.create({
+                'fixed_price': 1000,
+                'plan_id': self.plan_year.id,
+            })
+        ]
         template = self.env['sale.order.template'].create({
             'name': 'Subscription template with time-based pricing on optional product',
             'note': "This is the template description",
@@ -1578,20 +1421,16 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
 
     def test_negative_subscription(self):
         nr_product = self.env['product.template'].create({
-                'name': 'Non recurring product',
-                'type': 'service',
-                'uom_id': self.product.uom_id.id,
-                'list_price': 25,
-                'invoice_policy': 'order',
-            })
-            # nr_product.taxes_id = False # we avoid using taxes in this example
-        self.pricing_year.unlink()
-        self.pricing_month.price = 25
+            'name': 'Non recurring product',
+            'type': 'service',
+            'uom_id': self.product.uom_id.id,
+            'list_price': 25,
+            'invoice_policy': 'order',
+        })
         self.product2.list_price = -25.0
         self.product.product_subscription_pricing_ids.unlink()
         self.sub_product_tmpl.list_price = -30
         self.product_tmpl_2.list_price = -10
-        self.product2.product_subscription_pricing_ids.unlink()
         sub_negative_recurring = self.env['sale.order'].create({
             'name': 'sub_negative_recurring (1)',
             'partner_id': self.partner.id,
@@ -1693,11 +1532,15 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         Test that when an optional recurring product is added to a subscription sale order that its price unit is
         correctly recalculated after subsequent edits to the order's recurring plan
         """
-        self.sub_product_tmpl.write({'product_subscription_pricing_ids': [Command.set(self.pricing_year.id)]})
+        self.sub_product_tmpl.write({'product_subscription_pricing_ids': [
+            Command.set([]), Command.create({'plan_id': self.plan_year.id, 'fixed_price': 100})
+        ]})
         product_a = self.sub_product_tmpl.product_variant_id
         product_a.list_price = 1.0
 
-        self.product_tmpl_2.write({'product_subscription_pricing_ids': [Command.set(self.pricing_year_2.id)]})
+        self.product_tmpl_2.write({'product_subscription_pricing_ids': [
+            Command.set([]), Command.create({'plan_id': self.plan_year.id, 'fixed_price': 200})
+        ]})
         product_b = self.product_tmpl_2.product_variant_id
         product_b.list_price = 1.0
 
@@ -2339,24 +2182,22 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
     def test_next_billing_details(self):
         with freeze_time("2024-11-20"):
             """Test the value displayed on the portal"""
-            context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True, }
-            self.env.ref('base.MXN').active = True
+            mxn_currency = self._enable_currency('MXN')
             mxn_pricelist = self.env['product.pricelist'].create({
                 'name': 'MXN pricelist',
-                'currency_id': self.env.ref('base.MXN').id,
-            })
-            SubPricing = self.env['sale.subscription.pricing'].with_context(context_no_mail)
-            SubPricing.create({
-                'plan_id': self.plan_month.id,
-                'price': 6,
-                'pricelist_id': mxn_pricelist.id,
-                'product_template_id': self.product.product_tmpl_id.id
-            })
-            SubPricing.create({
-                'plan_id': self.plan_month.id,
-                'price': 600,
-                'pricelist_id': mxn_pricelist.id,
-                'product_template_id': self.product2.product_tmpl_id.id
+                'currency_id': mxn_currency.id,
+                'item_ids': [
+                    Command.create({
+                        'plan_id': self.plan_month.id,
+                        'fixed_price': 6,
+                        'product_tmpl_id': self.product.product_tmpl_id.id,
+                    }),
+                    Command.create({
+                        'plan_id': self.plan_month.id,
+                        'fixed_price': 600,
+                        'product_tmpl_id': self.product2.product_tmpl_id.id,
+                    }),
+                ]
             })
             self.subscription.order_line[0].name = "First recurring product"
             self.subscription.order_line[1].name = "Second recurring product"
@@ -2394,6 +2235,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         """" Ensure the next invoice date is correctly updated for postpaid orders
         This test fix a bug where a new invoice was created every day if postpaid line were mixed with non recurring lines
         """
+        # FIXME ARJ, should be an at_install test
         if self.env.ref('base.module_sale_subscription_stock').state == 'installed':
             self.skipTest("`stock` module is installed. The invoice amount depends on the stock.move validation")
         with freeze_time("2025-01-01"):
@@ -2594,3 +2436,45 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.flush_tracking()
         log = subscription.order_log_ids
         self.assertEqual(log.effective_date, datetime.date(2025, 1, 1))
+
+    def test_product_subscription_pricing_copy(self):
+        """Check that product variants on product pricings after copying
+        a product template.
+        """
+        product = self.product_tmpl_2
+        product_attribute = self.env['product.attribute'].create({
+            'name': 'Color',
+            'value_ids': [Command.create({'name': name}) for name in ('Blue', 'Red')],
+        })
+        product.attribute_line_ids = 2 * [Command.create({
+            'attribute_id': product_attribute.id,
+            'value_ids': product_attribute.value_ids.ids,
+        })]
+        for i, variant in enumerate(product.product_variant_ids, start=1):
+            self.env['product.pricelist.item'].create([{
+                'product_tmpl_id': product.id,
+                'product_id': variant.id,
+                'plan_id': self.plan_week.id,
+                'fixed_price': 10.0 * i,
+            }, {
+                'product_tmpl_id': product.id,
+                'product_id': variant.id,
+                'plan_id': self.plan_month.id,
+                'fixed_price': 25.0 * i,
+           }])
+        pricings_1 = product.product_subscription_pricing_ids
+        pricings_2 = product.copy().product_subscription_pricing_ids
+        self.assertEqual(
+            len(pricings_2),
+            8,  # 2 attributes * 2 values * 2 plans = 8 pricings
+            "copied product should get 8 pricings",
+        )
+        self.assertNotEqual(
+            pricings_2.product_id,
+            pricings_1.product_id,
+            "copied pricings shouldn't be linked to the original products",
+        )
+        for pricing_1, pricing_2 in zip(pricings_1, pricings_2, strict=True):
+            self.assertEqual(pricing_2.fixed_price, pricing_1.fixed_price)
+            self.assertEqual(pricing_2.plan_id, pricing_1.plan_id)
+            self.assertEqual(pricing_2.pricelist_id, pricing_1.pricelist_id)

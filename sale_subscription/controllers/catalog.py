@@ -34,9 +34,11 @@ class SubscriptionProductCatalogController(ProductCatalogController):
         for product in products + order.order_line.product_id:
             if not res.get(product.id) or not product.recurring_invoice:
                 continue
-            subscription_product_pricing = product.product_tmpl_id._get_pricing(product, order.pricelist_id, order.plan_id.id)
+            subscription_product_pricing = product.product_tmpl_id._get_pricing(
+                order.pricelist_id, variant=product, plan_id=order.plan_id.id
+            )
             if subscription_product_pricing:
-                res[product.id]['price'] = subscription_product_pricing.price
+                res[product.id]['price'] = subscription_product_pricing.fixed_price
                 res[product.id]['plan_name'] = subscription_product_pricing.plan_id.name
         return res
 
@@ -62,7 +64,9 @@ class SubscriptionProductCatalogController(ProductCatalogController):
             return res
         if not order.plan_id:
             return product.lst_price
-        subscription_product_pricing = product.product_tmpl_id._get_pricing(product, order.pricelist_id, order.plan_id.id)
+        subscription_product_pricing = product.product_tmpl_id._get_pricing(
+            order.pricelist_id, variant=product, plan_id=order.plan_id.id
+        )
         if subscription_product_pricing:
-            return subscription_product_pricing.price
+            return subscription_product_pricing.fixed_price
         return res

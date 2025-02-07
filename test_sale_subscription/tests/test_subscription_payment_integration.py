@@ -30,6 +30,7 @@ class TestSubscriptionPaymentIntegration(PaymentHttpCommon):
         cls.plan_month = cls.env['sale.subscription.plan'].create({
             'name': "Monthly Plan",
             'billing_period_unit': 'month',
+            'sequence': 4,
         })
         cls.subscription = cls.env['sale.order'].create({
             'name': "Demo Subscription",

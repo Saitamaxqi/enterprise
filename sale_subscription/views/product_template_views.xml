@@ -31,21 +31,40 @@
                     <label for="recurring_invoice" string="Subscriptions"/>
                 </span>
             </div>
+        </field>
+    </record>
+
+    <record id="product_template_only_view_form_recurring" model="ir.ui.view">
+        <field name="name">sale.subscription.product.template.only.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <page name="sales_price" position="attributes">
+                <attribute name="invisible" separator="or" add="recurring_invoice"/>
+            </page>
             <page name="sales" position="after">
-                <page string="Recurring Prices" name="subscription_pricing" invisible="not recurring_invoice">
-                    <field name="product_subscription_pricing_ids" nolabel="1" colspan="2">
-                        <list editable="bottom">
+                <page string="Pricing" name="subscription_pricing" invisible="not recurring_invoice">
+                    <field
+                        name="product_subscription_pricing_ids"
+                        context="{
+                            'form_view_ref': 'sale_subscription.product_pricelist_item_sale_subscription_view',
+                        }"
+                    >
+                        <list default_order="pricelist_id, plan_id, fixed_price">
                             <control>
                                 <create name="add_product_pricing" string="Add a price rule"/>
                             </control>
-                            <field name="product_variant_ids" widget="many2many_tags"
-                                   groups="product.group_product_variant"
-                                   domain="[('product_tmpl_id', '=', parent.id)]"
-                                   column_invisible="parent.product_variant_count &lt; 2"/>
-                            <field name="plan_id"/>
                             <field name="pricelist_id" groups="product.group_product_pricelist"/>
-                            <field name="currency_id" column_invisible="True"/>
+                            <field name="plan_id"/>
+                            <field name="name" string="Applied On" column_invisible="parent.product_variant_count &lt; 2"/>
                             <field name="price"/>
+                            <field name="min_quantity" optional="hide"/>
+                            <field name="date_start" optional="hide"/>
+                            <field name="date_end" optional="hide"/>
+                            <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+
+                            <!-- Needed for rule edition & creation on product.product form -->
+                            <field name="product_tmpl_id" column_invisible="True"/>
                         </list>
                     </field>
                 </page>
@@ -60,8 +79,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='list_price']" position="replace">
                 <group groups="sales_team.group_sale_salesman">
-                    <field name="product_subscription_pricing_ids" invisible="1"/>
-                    <field name="display_subscription_pricing" invisible="not product_subscription_pricing_ids"/>
+                    <field name="display_subscription_pricing" invisible="not display_subscription_pricing"/>
                 </group>
                 <group>
                     <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>

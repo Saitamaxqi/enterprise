@@ -11,10 +11,11 @@ class TestSubscriptionPlan(TestSubscriptionCommon):
     def test_check_count_of_subscription_items_on_plan(self):
 
         # Create a subscription plan
-        sub_monthly_plan = self.SubPlan.create({
+        sub_monthly_plan = self.env['sale.subscription.plan'].create({
             'name': 'Monthly Plan',
             'billing_period_value': 1,
-            'billing_period_unit': 'month'
+            'billing_period_unit': 'month',
+            'sequence': 4,
         })
 
         # Create subscriptions

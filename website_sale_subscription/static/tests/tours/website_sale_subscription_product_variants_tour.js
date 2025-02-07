@@ -24,7 +24,7 @@ registry.category("web_tour.tours").add("sale_subscription_product_variants", {
 registry.category("web_tour.tours").add("sale_subscription_add_to_cart", {
     steps: () => [
         {
-            trigger: "body h1:contains(TestProduct2)",
+            trigger: "body h1:contains(Product with Color)",
         },
         {
             content: "Trigger another plan",
@@ -44,8 +44,7 @@ registry.category("web_tour.tours").add("sale_subscription_add_to_cart", {
         wsTourUtils.goToCart(),
         {
             content: "Check the price of the product that has been added",
-            trigger:
-                "div[name='website_sale_cart_line_price'] .oe_currency_value:contains(\"100.00\")",
+            trigger: "h6[name='website_sale_cart_line_price'] .oe_currency_value:contains(\"100.00\"):visible",
             run: "click",
         },
     ],

@@ -1,16 +1,19 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
+
+from unittest.mock import patch
+
 from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
-from unittest.mock import patch
 
 from odoo import Command
 from odoo.exceptions import ValidationError
-from odoo.tests import tagged, freeze_time
+from odoo.tests import freeze_time, tagged
 from odoo.tools import mute_logger
-from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
+
 from odoo.addons.sale_subscription.models.sale_order import SaleOrder
+from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 
 
 @tagged('post_install', '-at_install')
@@ -337,14 +340,14 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
                     'rate': 20,
                 })]
             })
-            pricing_month_1 = self.env['sale.subscription.pricing'].create({
+            pricing_month_1 = self.env['product.pricelist.item'].create({
                 'plan_id': self.plan_month.id,
-                'price': 10,
+                'fixed_price': 10,
                 'pricelist_id': default_pricelist.id,
             })
-            pricing_month_2 = self.env['sale.subscription.pricing'].create({
+            pricing_month_2 = self.env['product.pricelist.item'].create({
                 'plan_id': self.plan_month.id,
-                'price': 200,
+                'fixed_price': 200,
                 'pricelist_id': other_pricelist.id,
             })
             sub_product_tmpl = self.env['product.template'].create({
@@ -546,11 +549,14 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
             'name': 'Euro pricelist',
             'currency_id': self.env.ref('base.EUR').id,
         })
-        self.pricing_month.write({'pricelist_id': self.subscription.pricelist_id.id, 'price': 42})
-        pricing_month_eur = self.env['sale.subscription.pricing'].create({
+        self.sub_product_tmpl.product_subscription_pricing_ids.filtered(
+            lambda rule: rule.plan_id == self.plan_month
+        ).fixed_price = 42
+        pricing_month_eur = self.env['product.pricelist.item'].create({
             'plan_id': self.plan_month.id,
             'pricelist_id': pricelist_eur.id,
-            'price': 420
+            'fixed_price': 420,
+            'product_tmpl_id': self.sub_product_tmpl.id,
         })
         self.sub_product_tmpl.product_subscription_pricing_ids = [Command.link(pricing_month_eur.id)]
 
@@ -580,14 +586,14 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
                 'currency_id': other_currency.id,
             })
             other_currency.rate_ids = [Command.create({'rate': 20})]
-            pricing_month_1_usd = self.env['sale.subscription.pricing'].create({
+            pricing_month_1_usd = self.env['product.pricelist.item'].create({
                 'plan_id': self.plan_month.id,
-                'price': 100,
+                'fixed_price': 100,
                 'pricelist_id': default_pricelist.id,
             })
-            pricing_month_2_eur = self.env['sale.subscription.pricing'].create({
+            pricing_month_2_eur = self.env['product.pricelist.item'].create({
                 'plan_id': self.plan_month.id,
-                'price': 200,
+                'fixed_price': 200,
                 'pricelist_id': other_pricelist.id,
             })
             sub_product_tmpl = self.env['product.template'].create({

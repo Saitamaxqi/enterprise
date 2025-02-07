@@ -38,6 +38,7 @@ Features:
         'views/sale_order_template_views.xml',
         'views/product_template_views.xml',
         'views/product_pricelist_views.xml',
+        'views/product_pricelist_item_views.xml',
         'views/product_product_views.xml',
         'views/sale_subscription_views.xml',
         'views/sale_order_line_views.xml',

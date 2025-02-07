@@ -164,7 +164,7 @@ class TestPurchaseOrder(TestCommissionsSetup):
                 'property_account_income_id': self.account_sale.id,
                 'invoice_policy': 'order',
             })
-            self.env['sale.subscription.pricing'].create({'plan_id': self.plan_month.id, 'price': 20, 'product_template_id': bar.product_tmpl_id.id})
+            self.env['product.pricelist.item'].create({'plan_id': self.plan_month.id, 'price': 20, 'product_tmpl_id': bar.product_tmpl_id.id})
             rule = self.env['commission.rule'].create({
                 'plan_id': self.gold_plan.id,
                 'category_id': foo.id,

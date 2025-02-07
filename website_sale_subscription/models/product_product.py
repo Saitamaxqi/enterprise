@@ -7,8 +7,8 @@ from odoo import models
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    def _website_can_be_added(self, pricelist=None, pricing=None, product=None):
-        return self.product_tmpl_id._website_can_be_added(pricelist, pricing, product or self)
+    def _website_can_be_added(self, product=None):
+        return self.product_tmpl_id._website_can_be_added(product or self)
 
     def _website_show_quick_add(self):
         self.ensure_one()
@@ -17,6 +17,3 @@ class ProductProduct(models.Model):
     def _is_add_to_cart_allowed(self):
         self.ensure_one()
         return super()._is_add_to_cart_allowed() and self._website_can_be_added(product=self)
-
-    def _get_pricelist_pricings(self, pricelist):
-        return self.product_tmpl_id._get_pricelist_pricings(pricelist, product=self)

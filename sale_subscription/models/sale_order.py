@@ -1,15 +1,17 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import logging
-from dateutil.relativedelta import relativedelta
-from markupsafe import escape, Markup
-from psycopg2.extensions import TransactionRollbackError
-from collections import defaultdict
 import traceback
 
-from odoo import fields, models, _, api, Command, SUPERUSER_ID, modules
+from collections import defaultdict
+
+from dateutil.relativedelta import relativedelta
+from markupsafe import Markup, escape
+from psycopg2.extensions import TransactionRollbackError
+
+from odoo import _, api, fields, models, modules
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools.float_utils import float_is_zero
+from odoo.fields import Command
 from odoo.osv import expression
 from odoo.tools import config, format_amount, plaintext2html, split_every, str2bool
 from odoo.tools.misc import format_date
@@ -1303,11 +1305,11 @@ class SaleOrder(models.Model):
         if not mail_ctx:
             mail_ctx = {}
         billing_details = self._next_billing_details()
-        return {**self._context, **mail_ctx, **{'next_invoice_amount': billing_details['next_invoice_amount'],
+        return {**self._context, **mail_ctx, 'next_invoice_amount': billing_details['next_invoice_amount'],
                                                 'total_amount': self.amount_total,
                                                 'currency_name': self.currency_id.name,
                                                 'responsible_email': self.user_id.email,
-                                                'code': self.client_order_ref}}
+                                                'code': self.client_order_ref}
 
     def _update_next_invoice_date(self):
         """ Update the next_invoice_date according to the periodicity of the order.
@@ -2096,7 +2098,7 @@ class SaleOrder(models.Model):
         all_subscriptions = self.search(parameters['domain'])
         invoiced_sub_ids = all_subscriptions._get_invoiced_subscriptions()
         for subscription in all_subscriptions:
-            if subscription.prepayment_percent != 1 and not subscription.id in invoiced_sub_ids:
+            if subscription.prepayment_percent != 1 and subscription.id not in invoiced_sub_ids:
                 # don't send reminder when prepayment_per <100 and there is no invoice created
                 continue
             auto_close_days = subscription.plan_id.auto_close_limit or 15

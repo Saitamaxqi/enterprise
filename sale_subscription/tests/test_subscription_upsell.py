@@ -1,12 +1,14 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
+
 from dateutil.relativedelta import relativedelta
 
 from odoo import Command
 from odoo.exceptions import ValidationError
-from odoo.tests import tagged, freeze_time
+from odoo.tests import freeze_time, tagged
 from odoo.tools import format_date
+
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 
 
@@ -56,8 +58,8 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
             'uom_id': self.product5.uom_id.id,
         })]
         self.product_tmpl_2.product_subscription_pricing_ids = [(5, 0, 0)]
-        self.env['sale.subscription.pricing'].create({'plan_id': self.plan_month.id, 'product_template_id': self.sub_product_tmpl.id, 'price': 42})
-        self.env['sale.subscription.pricing'].create({'plan_id': self.plan_month.id, 'product_template_id': self.product_tmpl_2.id, 'price': 420})
+        self.env['product.pricelist.item'].create({'plan_id': self.plan_month.id, 'product_tmpl_id': self.sub_product_tmpl.id, 'fixed_price': 42})
+        self.env['product.pricelist.item'].create({'plan_id': self.plan_month.id, 'product_tmpl_id': self.product_tmpl_2.id, 'fixed_price': 420})
         with freeze_time("2021-01-01"):
             self.subscription.order_line = False
             self.subscription.start_date = False
@@ -156,9 +158,8 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
         """ Test the prorated values obtained when creating an upsell. complementary to the previous one where new
          lines had no existing default values.
         """
-        self.env['sale.subscription.pricing'].create({'plan_id': self.plan_2_month.id, 'product_template_id': self.sub_product_tmpl.id, 'price': 42})
-        self.env['sale.subscription.pricing'].create(
-            {'plan_id': self.plan_2_month.id, 'product_template_id': self.product_tmpl_2.id, 'price': 42})
+        self.env['product.pricelist.item'].create({'plan_id': self.plan_2_month.id, 'product_tmpl_id': self.sub_product_tmpl.id, 'fixed_price': 42})
+        self.env['product.pricelist.item'].create({'plan_id': self.plan_2_month.id, 'product_tmpl_id': self.product_tmpl_2.id, 'fixed_price': 42})
         with freeze_time("2021-01-01"):
             self.subscription.order_line = False
             self.subscription.start_date = False
@@ -216,16 +217,15 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
 
     def test_upsell_date_check(self):
         """ Test what happens when the upsell invoice is not generated before the next invoice cron call """
-        self.pricing_year.price = 100
-        self.sub_product_tmpl.write({
-            'product_subscription_pricing_ids': [(6, 0, self.pricing_year.ids)]
-        })
-        self.product_tmpl_2.write({
-            'product_subscription_pricing_ids': [(6, 0, self.pricing_year_2.ids)]
-        })
-        self.product_tmpl_3.write({
-            'product_subscription_pricing_ids': [(6, 0, self.pricing_year_3.ids)]
-        })
+        self.sub_product_tmpl.product_subscription_pricing_ids = [
+            Command.create({'plan_id': self.plan_year.id, 'fixed_price': 100}),
+        ]
+        self.product_tmpl_2.product_subscription_pricing_ids = [
+            Command.create({'plan_id': self.plan_year.id, 'fixed_price': 200}),
+        ]
+        self.product_tmpl_3.product_subscription_pricing_ids = [
+            Command.create({'plan_id': self.plan_year.id, 'fixed_price': 300}),
+        ]
         with freeze_time("2022-01-01"):
             sub = self.env['sale.order'].create({
                 'name': 'TestSubscription',

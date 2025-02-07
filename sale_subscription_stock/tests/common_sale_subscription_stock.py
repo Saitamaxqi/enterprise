@@ -19,20 +19,21 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
         SaleOrder = cls.env['sale.order']
         Product = cls.env['product.product']
 
-        cls.uom_unit = cls.env.ref('uom.product_uom_unit')
-
-        cls.plan_3_months = cls.env['sale.subscription.plan'].create({'billing_period_value': 3, 'billing_period_unit': 'month'})
+        cls.plan_3_months = cls.env['sale.subscription.plan'].create({
+            'billing_period_value': 3,
+            'billing_period_unit': 'month',
+            'sequence': 12,
+        })
 
         # Test user dedicated to avoid sharing moves and batches
         TestUsersEnv = cls.env['res.users'].with_context({'no_reset_password': True})
-        group_portal_id = cls.env.ref('base.group_portal').id
         cls.country_belgium = cls.env.ref('base.be')
         cls.user_portal2 = TestUsersEnv.create({
             'name': 'Beatrice Portal 2',
             'login': 'Beatrice2',
             'country_id': cls.country_belgium.id,
             'email': 'beatrice.employee2@example.com',
-            'group_ids': [(6, 0, [group_portal_id])],
+            'group_ids': [Command.set(cls.group_portal.ids)],
             'property_account_payable_id': cls.account_payable.id,
             'property_account_receivable_id': cls.account_receivable.id,
             'company_id': cls.company_data['company'].id,
@@ -43,23 +44,13 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
         pricing_commands = [
             Command.create({
                 'plan_id': cls.plan_month.id,
-                'price': 45,
+                'fixed_price': 45,
             }),
             Command.create({
                 'plan_id': cls.plan_3_months.id,
-                'price': 50,
+                'fixed_price': 50,
             })
         ]
-
-        cls.pricing_1month = cls.env['sale.subscription.pricing'].create({
-            'plan_id': cls.plan_month.id,
-            'price': 45,
-        })
-
-        cls.pricing_3month = cls.env['sale.subscription.pricing'].create({
-            'plan_id': cls.plan_3_months.id,
-            'price': 50,
-        })
 
         # Product
 

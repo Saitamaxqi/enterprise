@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, Command
+from odoo import api, fields, models
+from odoo.fields import Command
 from odoo.tools import _
 from odoo.tools.date_utils import get_timedelta
 
@@ -8,9 +9,11 @@ from odoo.tools.date_utils import get_timedelta
 class SaleSubscriptionPlan(models.Model):
     _name = 'sale.subscription.plan'
     _description = 'Subscription Plan'
+    _order = 'sequence, id'
 
     active = fields.Boolean(default=True)
     name = fields.Char(translate=True, required=True, default="Monthly")
+    sequence = fields.Integer(default=10)
     company_id = fields.Many2one('res.company')
 
     # Billing Period, use billing_period property for access to the timedelta
@@ -60,8 +63,15 @@ class SaleSubscriptionPlan(models.Model):
                                                help="Email template used to send invoicing email automatically.\n"
                                                     "Leave it empty if you don't want to send email automatically.")
 
-    product_subscription_pricing_ids = fields.One2many('sale.subscription.pricing', 'plan_id', string="Recurring Pricing",
-                                                       domain=['|', ('product_template_id', '=', None), ('product_template_id.active', '=', True)])
+    product_subscription_pricing_ids = fields.One2many(
+        comodel_name='product.pricelist.item',
+        inverse_name='plan_id',
+        string="Recurring Pricing",
+        domain=[
+            ('plan_id', '!=', None),
+            '|', ('product_tmpl_id', '=', None), ('product_tmpl_id.active', '=', True)
+        ]
+    )
 
     # UX
     active_subs_count = fields.Integer(compute="_compute_active_subs_count", string="Subscriptions")

@@ -33,14 +33,15 @@ class TestCommissionsSetup(TestSaleCommon):
 
     def _make_products(self):
         # pricelists
-        self.eur_20 = self.env['product.pricelist'].create({
-            'name': 'EUR 20',
-            'currency_id': self.env.ref('base.EUR').id,
-        })
-        self.usd_8 = self.env['product.pricelist'].create({
-            'name': 'USD 8',
-            'currency_id': self.env.ref('base.USD').id,
-        })
+        self.eur_20, self.usd_8 = self.env['product.pricelist'].create([
+            {
+                'name': 'EUR 20',
+                'currency_id': self.env.ref('base.EUR').id,
+            }, {
+                'name': 'USD 8',
+                'currency_id': self.env.ref('base.USD').id,
+            }
+        ])
 
         # subscription templates
         self.template_yearly = self.env['sale.order.template'].create({
@@ -66,7 +67,11 @@ class TestCommissionsSetup(TestSaleCommon):
             'property_account_income_id': self.account_sale.id,
             'invoice_policy': 'order',
         })
-        self.worker_pricing = self.env['sale.subscription.pricing'].create({'plan_id': self.plan_year.id, 'price': 100, 'product_template_id': self.worker.product_tmpl_id.id})
+        self.env['product.pricelist.item'].create({
+            'plan_id': self.plan_year.id,
+            'fixed_price': 100,
+            'product_tmpl_id': self.worker.product_tmpl_id.id,
+        })
         self.staging = self.env['product.product'].create({
             'name': 'Odoo.sh Staging Branch',
             'categ_id': self.odoo_sh.id,
@@ -76,8 +81,11 @@ class TestCommissionsSetup(TestSaleCommon):
             'property_account_income_id': self.account_sale.id,
             'invoice_policy': 'order',
         })
-        self.staging_pricing = self.env['sale.subscription.pricing'].create(
-            {'plan_id': self.plan_year.id, 'price': 420, 'product_template_id': self.staging.product_tmpl_id.id})
+        self.env['product.pricelist.item'].create({
+            'plan_id': self.plan_year.id,
+            'fixed_price': 420,
+            'product_tmpl_id': self.staging.product_tmpl_id.id,
+        })
 
         # apps support
         self.apps_support = self.env['product.category'].create({
@@ -93,8 +101,11 @@ class TestCommissionsSetup(TestSaleCommon):
             'property_account_income_id': self.account_sale.id,
             'invoice_policy': 'order',
         })
-        self.crm_pricing = self.env['sale.subscription.pricing'].create(
-            {'plan_id': self.plan_month.id, 'price': 15, 'product_template_id': self.crm.product_tmpl_id.id})
+        self.env['product.pricelist.item'].create({
+            'plan_id': self.plan_month.id,
+            'fixed_price': 15,
+            'product_tmpl_id': self.crm.product_tmpl_id.id,
+        })
 
         self.invoicing = self.env['product.product'].create({
             'name': 'Invoicing',
@@ -105,8 +116,11 @@ class TestCommissionsSetup(TestSaleCommon):
             'property_account_income_id': self.account_sale.id,
             'invoice_policy': 'order',
         })
-        self.invoicing_pricing = self.pricing_worker = self.env['sale.subscription.pricing'].create(
-            {'plan_id': self.plan_month.id, 'price': 20, 'product_template_id': self.invoicing.product_tmpl_id.id})
+        self.env['product.pricelist.item'].create({
+            'plan_id': self.plan_month.id,
+            'fixed_price': 20,
+            'product_tmpl_id': self.invoicing.product_tmpl_id.id,
+        })
 
     def _make_commission_plans(self):
         self.learning_plan = self.env['commission.plan'].create({
@@ -210,8 +224,16 @@ class TestCommissionsSetup(TestSaleCommon):
         currency_usd_id.active = True
         currency_eur_id = self.env.ref("base.EUR")
         currency_eur_id.active = True
-        self.plan_month = self.env['sale.subscription.plan'].create({'billing_period_value': 1, 'billing_period_unit': 'month'})
-        self.plan_year = self.env['sale.subscription.plan'].create({'billing_period_value': 1, 'billing_period_unit': 'year'})
+        self.plan_month = self.env['sale.subscription.plan'].create({
+            'billing_period_value': 1,
+            'billing_period_unit': 'month',
+            'sequence': 4,
+        })
+        self.plan_year = self.env['sale.subscription.plan'].create({
+            'billing_period_value': 1,
+            'billing_period_unit': 'year',
+            'sequence': 52,
+        })
 
         self.salesman = self.env['res.users'].create({
             'name': '...',

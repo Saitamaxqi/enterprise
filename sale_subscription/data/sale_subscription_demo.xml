@@ -18,6 +18,7 @@
             <field name="billing_period_value">1</field>
             <field name="billing_period_unit">month</field>
             <field name="user_closable">False</field>
+            <field name="sequence">4</field>
         </record>
 
         <record id="subscription_plan_6_month" model="sale.subscription.plan">
@@ -27,6 +28,7 @@
             <field name="user_closable">True</field>
             <field name="user_quantity">True</field>
             <field name="user_extend">True</field>
+            <field name="sequence">26</field>
         </record>
 
         <record id="subscription_plan_year" model="sale.subscription.plan">
@@ -34,43 +36,7 @@
             <field name="billing_period_value">1</field>
             <field name="billing_period_unit">year</field>
             <field name="user_closable">False</field>
-        </record>
-
-        <!-- Subscription Pricing -->
-        <record id="subscription_pricing_1" model="sale.subscription.pricing">
-            <field name="plan_id" ref="sale_subscription.subscription_plan_month"/>
-            <field name="price" eval="10"/>
-            <field name="currency_id" ref="base.USD"/>
-        </record>
-
-        <record id="subscription_pricing_2" model="sale.subscription.pricing">
-            <field name="plan_id" ref="sale_subscription.subscription_plan_6_month"/>
-            <field name="price" eval="50"/>
-            <field name="currency_id" ref="base.USD"/>
-        </record>
-
-        <record id="subscription_pricing_3" model="sale.subscription.pricing">
-            <field name="plan_id" ref="sale_subscription.subscription_plan_year"/>
-            <field name="price" eval="90"/>
-            <field name="currency_id" ref="base.USD"/>
-        </record>
-
-        <record id="subscription_pricing_4" model="sale.subscription.pricing">
-            <field name="plan_id" ref="sale_subscription.subscription_plan_month"/>
-            <field name="price" eval="20"/>
-            <field name="currency_id" ref="base.USD"/>
-        </record>
-
-        <record id="subscription_pricing_5" model="sale.subscription.pricing">
-            <field name="plan_id" ref="sale_subscription.subscription_plan_6_month"/>
-            <field name="price" eval="100"/>
-            <field name="currency_id" ref="base.USD"/>
-        </record>
-
-        <record id="subscription_pricing_6" model="sale.subscription.pricing">
-            <field name="plan_id" ref="sale_subscription.subscription_plan_year"/>
-            <field name="price" eval="200"/>
-            <field name="currency_id" ref="base.USD"/>
+            <field name="sequence">52</field>
         </record>
 
         <!-- non Recurring products -->
@@ -93,8 +59,28 @@
             <field name="list_price">200.0</field>
             <field name="invoice_policy">order</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="product_subscription_pricing_ids" eval="[(6,0,[ref('subscription_pricing_1'), ref('subscription_pricing_2'), ref('subscription_pricing_3')])]"/>
             <field name="image_1920" type="base64" file="sale_subscription/static/img/product_office_cleaning.jpg"/>
+        </record>
+
+        <record id="subscription_pricing_1" model="product.pricelist.item">
+            <field name="plan_id" ref="sale_subscription.subscription_plan_month"/>
+            <field name="fixed_price" eval="10"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="product_id" ref="product_office_cleaning"/>
+        </record>
+
+        <record id="subscription_pricing_2" model="product.pricelist.item">
+            <field name="plan_id" ref="sale_subscription.subscription_plan_6_month"/>
+            <field name="fixed_price" eval="50"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="product_id" ref="product_office_cleaning"/>
+        </record>
+
+        <record id="subscription_pricing_3" model="product.pricelist.item">
+            <field name="plan_id" ref="sale_subscription.subscription_plan_year"/>
+            <field name="fixed_price" eval="90"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="product_id" ref="product_office_cleaning"/>
         </record>
 
         <record id="product_car_leasing" model="product.product">
@@ -105,8 +91,28 @@
             <field name="list_price">200.0</field>
             <field name="invoice_policy">delivery</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
-            <field name="product_subscription_pricing_ids" eval="[(6,0,[ref('subscription_pricing_4'), ref('subscription_pricing_5'), ref('subscription_pricing_6')])]"/>
             <field name="image_1920" type="base64" file="sale_subscription/static/img/product_car_leasing.jpg"/>
+        </record>
+
+        <record id="subscription_pricing_4" model="product.pricelist.item">
+            <field name="plan_id" ref="sale_subscription.subscription_plan_month"/>
+            <field name="fixed_price" eval="20"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="product_id" ref="product_car_leasing"/>
+        </record>
+
+        <record id="subscription_pricing_5" model="product.pricelist.item">
+            <field name="plan_id" ref="sale_subscription.subscription_plan_6_month"/>
+            <field name="fixed_price" eval="100"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="product_id" ref="product_car_leasing"/>
+        </record>
+
+        <record id="subscription_pricing_6" model="product.pricelist.item">
+            <field name="plan_id" ref="sale_subscription.subscription_plan_year"/>
+            <field name="fixed_price" eval="200"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="product_id" ref="product_car_leasing"/>
         </record>
 
         <!-- Default Subscription Templates

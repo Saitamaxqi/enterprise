@@ -16,6 +16,7 @@ class TestPoSSubscription(TestPointOfSaleHttpCommon):
             'name': 'Monthly',
             'billing_period_value': 1,
             'billing_period_unit': 'month',
+            'sequence': 4,
         })
         self.recurring_product_id = self.env['product.product'].create({
             'name': 'Test2',

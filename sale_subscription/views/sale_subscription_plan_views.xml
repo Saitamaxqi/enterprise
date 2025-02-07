@@ -59,19 +59,20 @@
                     </group>
                     <notebook name="main_book">
                         <page string="Pricing" name="pricing">
-                            <field name="product_subscription_pricing_ids">
-                                <list editable="bottom">
-                                    <control>
-                                        <create name="add_product_pricing" string="Add a price rule"/>
-                                    </control>
-                                    <field name="product_template_id" domain="[('recurring_invoice', '=', True)]"
-                                           options="{'no_create': 1}" required="1"/>
-                                    <field name="product_variant_ids" widget="many2many_tags"
-                                           groups="product.group_product_variant" options="{'no_create': 1}"
-                                           domain="[('product_tmpl_id', '=', product_template_id)]"/>
+                            <field
+                                name="product_subscription_pricing_ids"
+                                context="{'form_view_ref': 'sale_subscription.product_pricelist_item_form_view_recurring'}"
+                            >
+                                <list string="Subscription Pricelist Rules">
+                                    <field name="product_tmpl_id"/>
+                                    <field name="product_id" groups="product.group_product_variant"/>
                                     <field name="pricelist_id" groups="product.group_product_pricelist"/>
-                                    <field name="currency_id" column_invisible="True"/>
                                     <field name="price"/>
+                                    <field name="min_quantity" optional="hide"/>
+
+                                    <field name="base" column_invisible="True"/>
+                                    <field name="price_discount" column_invisible="True"/>
+                                    <field name="compute_price" column_invisible="True"/>
                                 </list>
                             </field>
                         </page>
@@ -86,6 +87,7 @@
         <field name="model">sale.subscription.plan</field>
         <field name="arch" type="xml">
             <list>
+                <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="billing_period_display"/>
                 <field name="auto_close_limit_display"/>
