@@ -366,7 +366,6 @@
                 <field name="url" optional="hide"/>
                 <field name="lock_uid" optional="hide"/>
                 <field name="company_id" optional="hide"/>
-                <field name="folder_id" optional="hide"/>
                 <field name="document_count" string="" widget="document_count"/>
                 <field name="available_embedded_actions_ids" optional="hide" widget="many2many_tags" groups="base.group_user"/>
                 <field name="create_date" optional="hide"/>

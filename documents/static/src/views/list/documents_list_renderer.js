@@ -58,7 +58,7 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
      * Called when a keydown event is triggered.
      */
     onGlobalKeydown(ev) {
-        if (ev.key !== "Enter" && ev.key !== " ") {
+        if (ev.key !== "Enter" && ev.key !== " " || this.editedRecord) {
             return;
         }
         const row = ev.target.closest(".o_data_row");
@@ -95,7 +95,7 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
     }
 
     get editableColumns() {
-        return ["name", "tag_ids", "partner_id", "owner_id", "company_id"];
+        return ["name", "tag_ids", "partner_id", "owner_id", "company_id", "folder_id"];
     }
 
     /**
