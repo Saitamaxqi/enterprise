@@ -10,6 +10,8 @@ from odoo.tools.misc import format_date
 
 from odoo.fields import Datetime, Date
 
+MI_TO_KM_FACTOR = 1.60934
+
 
 class FleetVehicle(models.Model):
     _inherit = 'fleet.vehicle'
@@ -59,9 +61,11 @@ class FleetVehicle(models.Model):
                 elif contract.cost_frequency == "yearly":
                     car.total_cost += contract.cost_generated / 12.0
 
-    def _get_tax_deduction(self, co2, fuel, coefficients, horsepower):
+    def _get_tax_deduction(self, co2, co2_emission_unit, fuel, coefficients, horsepower):
         if fuel == 'electric':
             return 1
+        if co2_emission_unit == 'g/mi':
+            co2 *= MI_TO_KM_FACTOR
         if co2 >= 200:
             return 0.4
         if coefficients and fuel in coefficients:
@@ -72,7 +76,7 @@ class FleetVehicle(models.Model):
             return min(max(1.2 - (0.005 * coeff * co2), 0.5), 1)
         return 0
 
-    @api.depends('fuel_type', 'co2', 'horsepower')
+    @api.depends('fuel_type', 'co2', 'co2_emission_unit', 'horsepower')
     def _compute_tax_deduction(self):
         be_vehicles = self.filtered(lambda vehicle: vehicle.company_id.country_id.code == "BE")
         (self - be_vehicles).tax_deduction = 0
@@ -81,9 +85,10 @@ class FleetVehicle(models.Model):
             if vehicle.vehicle_type == "bike":
                 vehicle.tax_deduction = 1
             else:
-                vehicle.tax_deduction = vehicle._get_tax_deduction(vehicle.co2, vehicle.fuel_type, coefficients, vehicle.horsepower)
+                vehicle.tax_deduction = vehicle._get_tax_deduction(
+                    vehicle.co2, vehicle.co2_emission_unit, vehicle.fuel_type, coefficients, vehicle.horsepower)
 
-    def _get_co2_fee(self, co2, fuel_type):
+    def _get_co2_fee(self, co2, co2_emission_unit, fuel_type):
         # Reference: https://www.socialsecurity.be/employer/instructions/dmfa/fr/latest/instructions/special_contributions/companycar.html
         if not self._from_be() or self.vehicle_type == 'bike':
             return 0
@@ -94,15 +99,17 @@ class FleetVehicle(models.Model):
         if fuel_type and fuel_type in ['gasoline', 'diesel', 'lpg']:
             health_indice = self.env['hr.rule.parameter']._get_parameter_from_code('health_indice', date)
             health_indice_reference = self.env['hr.rule.parameter']._get_parameter_from_code('health_indice_reference', date)
+            if co2_emission_unit == 'g/mi':
+                co2 *= MI_TO_KM_FACTOR
             co2_fee = (((co2 * 9.0) - fuel_coefficient.get(fuel_type)) / 12.0 * health_indice) / health_indice_reference
         return max(co2_fee, co2_fee_min)
 
     @api.depends('co2', 'fuel_type', 'company_id.country_id')
     def _compute_co2_fee(self):
         for car in self:
-            car.co2_fee = car._get_co2_fee(car.co2, car.fuel_type)
+            car.co2_fee = car._get_co2_fee(car.co2, car.co2_emission_unit, car.fuel_type)
 
-    @api.depends('fuel_type', 'car_value', 'acquisition_date', 'co2', 'company_id.country_id')
+    @api.depends('fuel_type', 'car_value', 'acquisition_date', 'co2', 'co2_emission_unit', 'company_id.country_id')
     def _compute_car_atn(self):
         for car in self:
             car.atn = car._get_car_atn()
@@ -128,10 +135,11 @@ class FleetVehicle(models.Model):
         return format_date(self.env, self.acquisition_date, date_format='MMMM y')
 
     def _get_car_atn(self, date=None):
-        return self._get_car_atn_from_values(self.acquisition_date, self.car_value, self.fuel_type, self.co2, date)
+        return self._get_car_atn_from_values(
+            self.acquisition_date, self.car_value, self.fuel_type, self.co2, self.co2_emission_unit, date)
 
     @api.model
-    def _get_car_atn_from_values(self, acquisition_date, car_value, fuel_type, co2, date=None):
+    def _get_car_atn_from_values(self, acquisition_date, car_value, fuel_type, co2, co2_emission_unit, date=None):
         if not self._from_be():
             return 0
 
@@ -141,6 +149,8 @@ class FleetVehicle(models.Model):
             value_loss_per_year = 0.06  # 6% of car value lost each year
             age_coefficient = 1.00 - car_age * value_loss_per_year
             age_coefficient = max(age_coefficient, 0.70)
+            if co2_emission_unit == 'g/mi':
+                co2 *= MI_TO_KM_FACTOR
 
             min_co2_prc = self.env['hr.rule.parameter']._get_parameter_from_code('min_co2_prc', date, raise_if_not_found=False) or 0.04
             max_co2_prc = self.env['hr.rule.parameter']._get_parameter_from_code('max_co2_prc', date, raise_if_not_found=False) or 0.18
@@ -222,24 +232,26 @@ class FleetVehicleModel(models.Model):
 
     current_country_code = fields.Char(compute='_compute_current_country_code')
 
-    @api.depends('default_car_value', 'default_co2', 'default_fuel_type')
+    @api.depends('default_car_value', 'default_co2', 'co2_emission_unit', 'default_fuel_type')
     def _compute_atn(self):
         now = Datetime.now()
         for model in self:
-            model.default_atn = self.env['fleet.vehicle']._get_car_atn_from_values(now, model.default_car_value, model.default_fuel_type, model.default_co2)
+            model.default_atn = self.env['fleet.vehicle']._get_car_atn_from_values(
+                now, model.default_car_value, model.default_fuel_type, model.default_co2, model.co2_emission_unit)
 
     @api.depends('co2_fee', 'default_recurring_cost_amount_depreciated')
     def _compute_default_total_depreciated_cost(self):
         for model in self:
             model.default_total_depreciated_cost = model.co2_fee + model.default_recurring_cost_amount_depreciated
 
-    @api.depends('default_co2', 'default_fuel_type')
+    @api.depends('default_co2', 'co2_emission_unit', 'default_fuel_type')
     def _compute_co2_fee(self):
         for model in self:
             if model.vehicle_type == 'bike':
                 model.co2_fee = 0
             else:
-                model.co2_fee = self.env['fleet.vehicle']._get_co2_fee(model.default_co2, model.default_fuel_type)
+                model.co2_fee = self.env['fleet.vehicle']._get_co2_fee(
+                    model.default_co2, model.co2_emission_unit, model.default_fuel_type)
 
     @api.depends('default_fuel_type')
     def _compute_default_co2(self):
@@ -250,9 +262,12 @@ class FleetVehicleModel(models.Model):
         }
         for model in self:
             if not model.default_co2:
-                model.default_co2 = default_co2_map.get(model.default_fuel_type, 205)
+                default_value = default_co2_map.get(model.default_fuel_type, 205)
+                if model.co2_emission_unit == 'g/mi':
+                    default_value /= MI_TO_KM_FACTOR
+                model.default_co2 = default_value
 
-    @api.depends('default_co2', 'default_fuel_type', 'horsepower')
+    @api.depends('default_co2', 'co2_emission_unit', 'default_fuel_type', 'horsepower')
     def _compute_tax_deduction(self):
         coefficients = self.env['hr.rule.parameter'].sudo()._get_parameter_from_code('tax_deduction_fuel_coefficients', raise_if_not_found=False)
         for model in self:
@@ -260,7 +275,8 @@ class FleetVehicleModel(models.Model):
                 model.tax_deduction = 1
             else:
                 model.tax_deduction = self.env['fleet.vehicle']._get_tax_deduction(
-                    model.default_co2, model.default_fuel_type, coefficients, model.horsepower)
+                    model.default_co2, model.co2_emission_unit,
+                    model.default_fuel_type, coefficients, model.horsepower)
 
     @api.depends_context('uid')
     def _compute_current_country_code(self):

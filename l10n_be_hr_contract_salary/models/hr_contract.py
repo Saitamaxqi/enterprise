@@ -198,16 +198,19 @@ class HrContract(models.Model):
         return description
 
     def _get_company_car_description_values(self, vehicle_id, is_new):
-        vehicle_range = _("%s km", vehicle_id.vehicle_range) if vehicle_id.vehicle_range else False
+        vehicle_range = _("%(range)s %(unit)s",
+            range=vehicle_id.vehicle_range, unit=vehicle_id.range_unit) if vehicle_id.vehicle_range else False
         if is_new:
-            co2 = vehicle_id.default_co2
+            co2 = _("%(co2)s %(unit)s", co2=vehicle_id.default_co2,
+                unit=vehicle_id.co2_emission_unit) if vehicle_id.default_co2 else False
             fuel_type = vehicle_id.default_fuel_type
             transmission = vehicle_id.transmission
             door_number = odometer = immatriculation = trailer_hook = False
             bik_display = "%s €" % round(vehicle_id.default_atn, 2)
             monthly_cost_display = _("%(co2_fee)s € (CO2 Fee) + %(rent)s € (Rent)", co2_fee=round(vehicle_id.co2_fee, 2), rent=round(vehicle_id.default_total_depreciated_cost - vehicle_id.co2_fee, 2))
         else:
-            co2 = vehicle_id.co2
+            co2 = _("%(co2)s %(unit)s", co2=vehicle_id.co2,
+                unit=vehicle_id.co2_emission_unit) if vehicle_id.co2 else False
             fuel_type = vehicle_id.fuel_type
             door_number = vehicle_id.doors
             odometer = vehicle_id.odometer

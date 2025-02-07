@@ -29,6 +29,7 @@ class SignContract(Sign):
                     'state_id': state_new_request and state_new_request.id,
                     'car_value': contract.new_car_model_id.default_car_value,
                     'co2': contract.new_car_model_id.default_co2,
+                    'co2_emission_unit': contract.new_car_model_id.co2_emission_unit,
                     'fuel_type': contract.new_car_model_id.default_fuel_type,
                     'acquisition_date': fields.Date.today(),
                     'company_id': contract.employee_id.company_id.id,
@@ -49,6 +50,7 @@ class SignContract(Sign):
                     'model_id': model.id,
                     'car_value': model.default_car_value,
                     'co2': model.default_co2,
+                    'co2_emission_unit': model.co2_emission_unit,
                     'fuel_type': model.default_fuel_type,
                 })
 
@@ -398,6 +400,7 @@ class HrContractSalary(main.HrContractSalary):
                 'driver_id': employee.work_contact_id.id,
                 'car_value': model.default_car_value,
                 'co2': model.default_co2,
+                'co2_emission_unit': model.co2_emission_unit,
                 'fuel_type': model.default_fuel_type,
                 'company_id': new_contract.company_id.id,
             })

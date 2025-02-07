@@ -151,7 +151,10 @@ class L10nBeSocialSecurityCertificate(models.TransientModel):
             charges_redistribution = 0
 
             if 'vehicle_id' in self.env['hr.payslip']:
-                co2_fees = sum(p.vehicle_id.with_context(co2_fee_date=p.date_from)._get_co2_fee(p.vehicle_id.co2, p.vehicle_id.fuel_type) for p in monthly_slips)
+                co2_fees = sum(
+                    p.vehicle_id.with_context(co2_fee_date=p.date_from)._get_co2_fee(
+                        p.vehicle_id.co2, p.vehicle_id.co2_emission_unit, p.vehicle_id.fuel_type
+                    ) for p in monthly_slips)
             else:
                 co2_fees = 0
             structural_reductions = 0
