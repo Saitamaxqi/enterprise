@@ -230,7 +230,7 @@
                             <record id="account_financial_report_line_fr_cdrc8_balance" model="account.report.expression">
                                 <field name="label">balance</field>
                                 <field name="engine">account_codes</field>
-                                <field name="formula">644 + 635 + 637</field>
+                                <field name="formula">644 + 635 + 637 + 638</field>
                                 <field name="green_on_positive" eval="False"/>
                             </record>
                         </field>
@@ -528,7 +528,7 @@
                             <record id="account_financial_report_line_fr_cdrc18_balance" model="account.report.expression">
                                 <field name="label">balance</field>
                                 <field name="engine">account_codes</field>
-                                <field name="formula">661 + 664 + 665</field>
+                                <field name="formula">661 + 664 + 665 + 669</field>
                                 <field name="green_on_positive" eval="False"/>
                             </record>
                         </field>
