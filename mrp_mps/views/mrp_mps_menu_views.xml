@@ -4,6 +4,7 @@
     <record id="action_mrp_mps" model="ir.actions.client">
         <field name="name">Master Production Schedule</field>
         <field name="res_model">mrp.production.schedule</field>
+        <field name="path">mps</field>
         <field name="tag">mrp_mps_client_action</field>
     </record>
 

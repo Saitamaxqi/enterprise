@@ -88,6 +88,7 @@
         <record id="mrp_report_dashboard_action" model="ir.actions.act_window">
             <field name="name">Production Analysis</field>
             <field name="res_model">mrp.report</field>
+            <field name="path">production-analysis</field>
             <field name="view_mode">graph,pivot</field>
             <field name="search_view_id" ref="mrp_account_enterprise.mrp_report_search_view"/>
             <field name="context">{
