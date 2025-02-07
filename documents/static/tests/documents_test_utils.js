@@ -3,7 +3,7 @@ import { makeView } from "@web/../tests/views/helpers";
 
 // Services
 import { busParametersService } from "@bus/bus_parameters_service";
-import { imStatusService } from "@bus/im_status_service";
+import { imStatusService } from "@mail/core/common/im_status_service";
 import { multiTabService } from "@bus/multi_tab_service";
 import { busService } from "@bus/services/bus_service";
 import { presenceService } from "@bus/services/presence_service";

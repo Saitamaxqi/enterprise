@@ -19,6 +19,7 @@ before(() => {
             services.remove(name);
         }
     }
+    services.remove("im_status");
 
     const main_components = registry.category("main_components");
     for (const [name] of main_components.getEntries()) {
