@@ -41,13 +41,17 @@ const openPreparedView = async (size) => {
     });
     await start();
     await waitForSteps([
-        `/mail/data - ${JSON.stringify({
-            fetch_params: ["failures", "systray_get_activities", "init_messaging"],
-            context: {
-                lang: "en",
-                tz: "taht",
-                uid: serverState.userId,
-                allowed_company_ids: [1],
+        `/web/dataset/call_kw/ir.http/lazy_session_info - ${JSON.stringify({
+            model: "ir.http",
+            method: "lazy_session_info",
+            args: [[]],
+            kwargs: {
+                context: {
+                    lang: "en",
+                    tz: "taht",
+                    uid: serverState.userId,
+                    allowed_company_ids: [1],
+                },
             },
         })}`,
     ]);

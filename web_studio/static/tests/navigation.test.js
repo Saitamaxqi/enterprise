@@ -123,7 +123,7 @@ test("navigation in Studio with act_window", async () => {
     expect.verifySteps([
         "/web/webclient/translations",
         "/web/webclient/load_menus",
-        "/mail/data",
+        "lazy_session_info",
         "/web/action/load",
         "get_views",
         "web_search_read",
@@ -326,13 +326,9 @@ test("error when new app's view is invalid", async () => {
         },
     ]);
 
-    onRpc("/web_studio/create_new_app", async () => {
-        return { menu_id: 99, action_id: 99 };
-    });
+    onRpc("/web_studio/create_new_app", async () => ({ menu_id: 99, action_id: 99 }));
 
-    onRpc("/web_studio/get_studio_view_arch", async () => {
-        return Promise.reject(new Error("Boom"));
-    });
+    onRpc("/web_studio/get_studio_view_arch", async () => Promise.reject(new Error("Boom")));
 
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
@@ -611,17 +607,15 @@ test("leaving studio with a pending rendering in Studio", async () => {
 });
 
 test("auto-save feature works in studio (not editing a view)", async () => {
-    onRpc("/web_studio/get_studio_action", async () => {
-        return {
-            name: "Automated Actions",
-            type: "ir.actions.act_window",
-            res_model: "base.automation",
-            views: [
-                [false, "list"],
-                [false, "form"],
-            ],
-        };
-    });
+    onRpc("/web_studio/get_studio_action", async () => ({
+        name: "Automated Actions",
+        type: "ir.actions.act_window",
+        res_model: "base.automation",
+        views: [
+            [false, "list"],
+            [false, "form"],
+        ],
+    }));
 
     onRpc("web_save", async (params) => {
         expect.step(`web_save: ${params.model}: ${JSON.stringify(params.args)}`);
@@ -674,15 +668,13 @@ test("load with active_id active_ids", async () => {
 });
 
 test("can edit ir.actions.act_window without id", async () => {
-    onRpc("get_formview_action", async (params) => {
-        return {
-            type: "ir.actions.act_window",
-            res_model: "pony",
-            target: "current",
-            views: [[false, "form"]],
-            res_id: params.args[0][0],
-        };
-    });
+    onRpc("get_formview_action", async (params) => ({
+        type: "ir.actions.act_window",
+        res_model: "pony",
+        target: "current",
+        views: [[false, "form"]],
+        res_id: params.args[0][0],
+    }));
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
 

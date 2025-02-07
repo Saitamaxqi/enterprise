@@ -999,7 +999,11 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
 
     await mountWithCleanup(WebClient);
     await animationFrame();
-    expect.verifySteps(["/web/webclient/translations", "/web/webclient/load_menus"]);
+    expect.verifySteps([
+        "/web/webclient/translations",
+        "/web/webclient/load_menus",
+        "lazy_session_info",
+    ]);
     await getService("action").doAction("studio.coucou_action");
     expect.verifySteps(["/web/action/load", "get_views", "web_read"]);
     await openStudio();
