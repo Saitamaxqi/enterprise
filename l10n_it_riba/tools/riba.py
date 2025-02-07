@@ -1,3 +1,4 @@
+import unicodedata
 from collections import Counter
 from datetime import datetime
 from itertools import starmap
@@ -52,7 +53,7 @@ def eq_records(one, two):
             return False
 
         def get_vals(record, keys):
-            return [str(val or '') for key, val in record.items() if key in keys]
+            return [_utf8_ascii(str(val or '')) for key, val in record.items() if key in keys]
         one_vals, two_vals = get_vals(one_record, one_keys), get_vals(two_record, two_keys)
         if one_vals != two_vals:
             return False
@@ -77,7 +78,7 @@ TEMPLATE_MAP = {
     'IB': (  # Header
         ' ',                                   # filler
         'IB',                                  # record type
-        ('creditor_sia_code', '>05', 5, _int),
+        ('creditor_sia_code', '>05', 5, str),
         ('creditor_abi', '>05', 5, str),
         ('today', '%d%m%y', 6, _date),
         ('support_name', '<20', 20),           # must be unique per date, creditor, receiver
@@ -85,7 +86,7 @@ TEMPLATE_MAP = {
         f'{" ":<59}',                          # filler
         ('flow_kind', '1', 1),                 # 1 if ecommerce
         ('flow_specifier', '1', 1),            # fixed to '$' only if flow_kind is present
-        ('gateway_bank_abi', '>05', 5, str),   # only if flow_kind is present
+        ('gateway_bank_abi', '>5', 5, str),    # only if flow_kind is present
         '  ',                                  # filler
         ('currency', '1', 1),                  # Currency, Euros fixed
         ' ',                                   # filler
@@ -96,7 +97,7 @@ TEMPLATE_MAP = {
         '14',                                  # record type
         ('section_number', '>07', 7, _int),
         f'{" ":<12}',                          # filler
-        ('payment_date', '%d%m%y', 6, _date),
+        ('payment_due_date', '%d%m%y', 6, _date),
         '30000',                               # reason, fixed
         ('amount', '>013', 13, _int),
         '-',                                   # sign, fixed
@@ -284,15 +285,27 @@ def _add_default_values(vals=None, line_template=None):
 
 
 def _fix_missing_dates(vals, line_template):
+    """ Dates have a '%y%m%d' format string, but if the value is missing
+        and we have None or False, then we can't use that in formatting.
+        We have to turn the formatstring into something that can format blank.
+    """
     result = []
     for token_template in line_template:
-        if isinstance(token_template, tuple) and len(token_template) == 4:
-            key, _fmt, trim, _date = token_template
+        if (
+            isinstance(token_template, tuple)
+            and len(token_template) == 4
+            and token_template[-1].__name__ == '_date'
+        ):
+            key, _fmt, trim, func = token_template
             if key not in vals or not vals[key]:
-                result.append((key, f'<{trim}s', trim, _date))
+                result.append((key, f'<{trim}s', trim, func))
                 continue
         result.append(token_template)
     return result
+
+
+def _utf8_ascii(s):
+    return unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode('ascii')
 
 
 def _format_record(vals, line_template):
@@ -302,7 +315,7 @@ def _format_record(vals, line_template):
     """
     vals = _add_default_values(vals, line_template)
     line_template = _fix_missing_dates(vals, line_template)
-    fstrings = (_get_fstring(item).format(**vals) for item in line_template)
+    fstrings = [_utf8_ascii(_get_fstring(item).format(**vals)) for item in line_template]
     record = "".join(starmap(_trim_value, zip(fstrings, line_template)))
     assert len(record) == 120, f"{record!a} is not 120 chars long"
     return record

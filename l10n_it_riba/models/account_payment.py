@@ -1,3 +1,5 @@
+import re
+
 from odoo import _, api, models
 from odoo.addons.base_iban.models.res_partner_bank import get_iban_part
 
@@ -8,6 +10,21 @@ def spaced_join(*args):
 
 def fiscal_code(partner):
     return partner._l10n_it_edi_get_values()['codice_fiscale']
+
+
+def accents_to_apostrophes(s):
+    if s and set("áàèéìíóòùúÁÀÈÉÌÍÓÒÙÚ") ^ set(s):
+        s = re.sub('[áà]', "a'", s)
+        s = re.sub('[èé]', "e'", s)
+        s = re.sub('[ìí]', "i'", s)
+        s = re.sub('[óò]', "o'", s)
+        s = re.sub('[ùú]', "u'", s)
+        s = re.sub('[ÁÀ]', "A'", s)
+        s = re.sub('[ÈÉ]', "E'", s)
+        s = re.sub('[ÌÍ]', "I'", s)
+        s = re.sub('[ÓÒ]', "O'", s)
+        s = re.sub('[ÙÚ]', "U'", s)
+    return s
 
 
 class AccountPayment(models.Model):
@@ -45,12 +62,14 @@ class AccountPayment(models.Model):
             partner = payment.partner_id
             company_partner = payment.company_id.partner_id
             debitor_bank_account = partner2bank_accounts.get(payment.partner_id, self.env['res.partner.bank'])[:1]
+            rounded_amount = payment.currency_id.round(payment.amount)
+            reconciled_invoices = payment.reconciled_invoice_ids
             records += [
                 {
                     'record_type': '14',  # Disposition
                     'section_number': section_number,
-                    'payment_date': payment.date,
-                    'amount': int(payment.amount * 100),
+                    'payment_due_date': min(reconciled_invoices.mapped("invoice_date_due")) if reconciled_invoices else payment.date,
+                    'amount': int(rounded_amount * 100),
                     'creditor_abi': get_iban_part(creditor_bank_account.acc_number, "bank"),
                     'creditor_cab': get_iban_part(creditor_bank_account.acc_number, "branch"),
                     'creditor_ccn': get_iban_part(creditor_bank_account.acc_number, "account"),
@@ -61,14 +80,14 @@ class AccountPayment(models.Model):
                 }, {
                     'record_type': '20',  # Creditor description
                     'section_number': section_number,
-                    'segment_1': company_partner.display_name,
+                    'segment_1': accents_to_apostrophes(company_partner.display_name),
                     'segment_2': spaced_join(company_partner.street, company_partner.street2),
                     'segment_3': company_partner.city,
                     'segment_4': spaced_join(company_partner.ref, company_partner.phone or company_partner.email),
                 }, {
                     'record_type': '30',  # Debitor description
                     'section_number': section_number,
-                    'segment_1': partner.display_name,
+                    'segment_1': accents_to_apostrophes(partner.display_name),
                     'debitor_tax_code': fiscal_code(partner),
                 }, {
                     'record_type': '40',  # Debitor address
@@ -77,24 +96,23 @@ class AccountPayment(models.Model):
                     'debitor_zip': partner.zip,
                     'debitor_city': partner.city,
                     'debitor_state': partner.state_id.code,
-                    'debitor_bank_name': debitor_bank_account.bank_id.display_name,
+                    'debitor_bank_name': accents_to_apostrophes(debitor_bank_account.bank_id.display_name),
                 }, {
                     'record_type': '50',  # Creditor address
                     'section_number': section_number,
                     'segment_1': spaced_join(
                         payment.move_id.l10n_it_cig,
                         payment.move_id.l10n_it_cup,
-                        _("Invoice"),
-                        payment.move_id.name,
+                        payment.memo or spaced_join(_("Invoice"), *reconciled_invoices.mapped("name")),
                         _("Amount"),
-                        f"{payment.amount:0.2f}",
+                        f"{rounded_amount:0.2f}",
                     ),
                     'creditor_tax_code': fiscal_code(company_partner),
                 }, {
                     'record_type': '51',  # Creditor information
                     'section_number': section_number,
                     'receipt_number': payment.id % 10 ** 10,
-                    'creditor_name': company_partner.display_name,
+                    'creditor_name': accents_to_apostrophes(company_partner.display_name),
                 }, {
                     'record_type': '70',  # Summary
                     'section_number': section_number,

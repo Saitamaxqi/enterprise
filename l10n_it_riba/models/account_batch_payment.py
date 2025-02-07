@@ -44,7 +44,7 @@ class AccountBatchPayment(models.Model):
         }
 
     def _l10n_it_riba_get_values(self):
-        amount = sum(payment.amount_signed for payment in self.payment_ids) * 100
+        amount = self.amount * 100
         creditor = self.journal_id.company_id
         creditor_bank_account = self.journal_id.bank_account_id
         creditor_bank = self.journal_id.bank_id
@@ -62,8 +62,8 @@ class AccountBatchPayment(models.Model):
                 'record_type': 'EF',
                 **common,
                 'n_sections': len(self.payment_ids),
-                'negative_total': int(abs(amount)) if amount > 0.0 else 0.0,
-                'positive_total': int(abs(amount)) if amount < 0.0 else 0.0,
+                'negative_total': int(abs(amount)) if amount > 0.0 else 0,
+                'positive_total': int(abs(amount)) if amount < 0.0 else 0,
             }]
         )
         records[-1]['n_records'] = len(records)
