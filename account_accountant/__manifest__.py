@@ -41,6 +41,9 @@ It gives the Administrator user access to important invoicing features such as b
         'wizard/account_auto_reconcile_wizard.xml',
         'wizard/account_reconcile_wizard.xml',
     ],
+    'demo': [
+        'demo/demo_data.xml',
+    ],
     'installable': True,
     'auto_install': True,
     'post_init_hook': '_account_accountant_post_init',
