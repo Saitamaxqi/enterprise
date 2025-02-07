@@ -15,7 +15,7 @@
 
         <record id="feature_module_helpdesk" model="website.configurator.feature">
             <field name="name">Helpdesk</field>
-            <field name="description">Offer support with a ticketing system</field>
+            <field name="description">Support with a ticketing system</field>
             <field name="sequence">20</field>
             <field name="module_id" ref="base.module_website_helpdesk"/>
             <field name="icon">fa-life-ring</field>
