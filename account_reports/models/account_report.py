@@ -2330,9 +2330,10 @@ class AccountReport(models.Model):
     ####################################################
 
     def _get_caret_options(self):
-        if self.custom_handler_model_id:
-            return self.env[self.custom_handler_model_name]._caret_options_initializer()
-        return self._caret_options_initializer_default()
+        return {
+            **self._caret_options_initializer_default(),
+            **(self.env[self.custom_handler_model_name]._caret_options_initializer() if self.custom_handler_model_id else {}),
+        }
 
     def _caret_options_initializer_default(self):
         return {
