@@ -321,7 +321,8 @@ export class TaskGanttRenderer extends GanttRenderer {
     }
 
     onPlan(rowId, columnStart, columnStop) {
-        const { start, stop } = this.getColumnStartStop(columnStart, columnStop);
+        let { start, stop } = this.getColumnStartStop(columnStart, columnStop);
+        ({ start, stop } = this.normalizeTimeRange(start, stop));
         this.dialogService.add(
             SelectCreateAutoPlanDialog,
             this.getSelectCreateDialogProps({ rowId, start, stop, withDefault: true })

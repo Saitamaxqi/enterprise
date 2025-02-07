@@ -1,6 +1,6 @@
 import { Component } from "@odoo/owl";
 
-export class GanttResizeBadge extends Component {
+export class GanttTimeDisplayBadge extends Component {
     static props = {
         reactive: {
             type: Object,
@@ -8,28 +8,18 @@ export class GanttResizeBadge extends Component {
                 position: {
                     type: Object,
                     shape: {
-                        top: Number,
+                        top: { type: Number, optional: true },
                         right: { type: Number, optional: true },
                         left: { type: Number, optional: true },
                     },
                     optional: true,
                 },
-                diff: { type: Number, optional: true },
-                scale: { type: String, optional: true },
+                class: { type: String, optional: true },
+                text: { type: String, optional: true },
             },
         },
     };
-    static template = "web_gantt.GanttResizeBadge";
-
-    get diff() {
-        return this.props.reactive.diff || 0;
-    }
-
-    get diffText() {
-        const { diff, props } = this;
-        const prefix = this.diff > 0 ? "+" : "";
-        return `${prefix}${diff} ${props.reactive.scale}`;
-    }
+    static template = "web_gantt.GanttTimeDisplayBadge";
 
     get positionStyle() {
         const { position } = this.props.reactive;

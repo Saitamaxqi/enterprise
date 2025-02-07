@@ -66,7 +66,8 @@ patch(PlanningGanttRenderer.prototype, {
      * @override
      */
     async onPlan(rowId, columnStart, columnStop) {
-        const { start, stop } = this.getColumnStartStop(columnStart, columnStop);
+        let { start, stop } = this.getColumnStartStop(columnStart, columnStop);
+        ({ start, stop } = this.normalizeTimeRange(start, stop));
         const schedule = this.props.model.getDialogContext({ rowId, start, stop });
         if ("sale_line_id" in schedule) {
             if (!schedule.sale_line_id) {

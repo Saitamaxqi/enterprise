@@ -152,16 +152,16 @@ test("if a on_create is specified, execute the action rather than opening a dial
     expect.verifySteps(["[action] this_is_create_action", "get_gantt_data"]);
 });
 
-test("select cells to plan a task", async () => {
+test("select cells to create a task", async () => {
     mockService("dialog", {
         add(_, props) {
             expect.step(`[dialog] ${props.title}`);
             expect(props.context).toEqual({
-                default_start: "2018-12-18 23:00:00",
+                default_start: "2018-12-19 11:00:00",
                 default_stop: "2018-12-21 23:00:00",
                 lang: "en",
                 allowed_company_ids: [1],
-                start: "2018-12-18 23:00:00",
+                start: "2018-12-19 11:00:00",
                 stop: "2018-12-21 23:00:00",
                 tz: "taht",
                 uid: 7,
@@ -173,21 +173,26 @@ test("select cells to plan a task", async () => {
         resModel: "tasks",
         arch: '<gantt date_start="start" date_stop="stop"/>',
     });
-    await contains(getCell("19", "December 2018")).dragAndDrop(getCell("21", "December 2018"));
+    const { drop, moveTo } = await contains(getCell("19", "December 2018")).drag();
+    await moveTo(getCell("21", "December 2018"), { position: { x: 30 }, relative: true });
+    await animationFrame();
+    expect(SELECTORS.startBadge).toHaveText("12/19/2018, 12:00 AM");
+    expect(SELECTORS.stopBadge).toHaveText("12/21/2018, 12:00 PM");
+    await drop();
 
     expect.verifySteps(["[dialog] Create"]);
 });
 
-test("drag and drop on the same cell to plan a task", async () => {
+test("drag and drop on the same cell to create a task", async () => {
     mockService("dialog", {
         add(_, props) {
             expect.step(`[dialog] ${props.title}`);
             expect(props.context).toEqual({
-                default_start: "2018-12-14 23:00:00",
+                default_start: "2018-12-15 11:00:00",
                 default_stop: "2018-12-15 23:00:00",
                 lang: "en",
                 allowed_company_ids: [1],
-                start: "2018-12-14 23:00:00",
+                start: "2018-12-15 11:00:00",
                 stop: "2018-12-15 23:00:00",
                 tz: "taht",
                 uid: 7,
@@ -199,7 +204,11 @@ test("drag and drop on the same cell to plan a task", async () => {
         resModel: "tasks",
         arch: '<gantt date_start="start" date_stop="stop"/>',
     });
-    await contains(getCell("15", "December 2018")).dragAndDrop(getCell("15", "December 2018"));
+    const { drop, moveTo } = await contains(getCell("15", "December 2018")).drag();
+    await moveTo(getCell("15", "December 2018"));
+    expect(SELECTORS.startBadge).toHaveText("12/15/2018, 12:00 AM");
+    expect(SELECTORS.stopBadge).toHaveText("12/15/2018, 12:00 PM");
+    await drop();
 
     expect.verifySteps(["[dialog] Create"]);
 });
@@ -229,12 +238,12 @@ test("select cells to plan a task: 1-level grouped", async () => {
         add(_, props) {
             expect.step(`[dialog] ${props.title}`);
             expect(props.context).toEqual({
-                default_start: "2018-12-10 23:00:00",
+                default_start: "2018-12-11 11:00:00",
                 default_stop: "2018-12-12 23:00:00",
                 default_user_id: 1,
                 lang: "en",
                 allowed_company_ids: [1],
-                start: "2018-12-10 23:00:00",
+                start: "2018-12-11 11:00:00",
                 stop: "2018-12-12 23:00:00",
                 tz: "taht",
                 uid: 7,
@@ -264,13 +273,13 @@ test("select cells to plan a task: 2-level grouped", async () => {
             expect.step(`[dialog] ${props.title}`);
             expect(props.context).toEqual({
                 default_project_id: 1,
-                default_start: "2018-12-10 23:00:00",
+                default_start: "2018-12-11 11:00:00",
                 default_stop: "2018-12-12 23:00:00",
                 default_user_id: 1,
                 allowed_company_ids: [1],
                 lang: "en",
                 project_id: 1,
-                start: "2018-12-10 23:00:00",
+                start: "2018-12-11 11:00:00",
                 stop: "2018-12-12 23:00:00",
                 tz: "taht",
                 uid: 7,
@@ -883,8 +892,6 @@ test("collapsed rows remain collapsed at reload", async () => {
 });
 
 test("resize a pill", async () => {
-    expect.assertions(10);
-
     onRpc("write", ({ args }) => {
         // initial dates -- start: '2018-11-30 18:30:00', stop: '2018-12-31 18:29:59'
         expect.step(args);
@@ -907,7 +914,11 @@ test("resize a pill", async () => {
     expect(SELECTORS.resizeEndHandle).toHaveCount(1);
 
     // resize to one cell smaller at end (-1 day)
-    await resizePill(getPillWrapper("Task 1"), "end", -1);
+    let drop = await resizePill(getPillWrapper("Task 1"), "end", -1, false);
+    expect(SELECTORS.startBadge).toHaveText("11/30/2018, 7:30 PM");
+    expect(SELECTORS.stopBadge).toHaveText("12/30/2018, 7:29 PM (-24 hours)");
+    expect(SELECTORS.stopBadge).toHaveClass("text-danger");
+    await drop();
 
     await selectCustomRange({ startDate: "2018-11-10", stopDate: "2018-11-30" });
 
@@ -921,7 +932,11 @@ test("resize a pill", async () => {
     expect(SELECTORS.resizeEndHandle).toHaveCount(0);
 
     // resize to one cell smaller at start (-1 day)
-    await resizePill(getPillWrapper("Task 1"), "start", -1);
+    drop = await resizePill(getPillWrapper("Task 1"), "start", -1, false);
+    expect(SELECTORS.startBadge).toHaveText("11/29/2018, 7:30 PM (+24 hours)");
+    expect(SELECTORS.stopBadge).toHaveText("12/30/2018, 7:29 PM");
+    expect(SELECTORS.startBadge).toHaveClass("text-success");
+    await drop();
 
     expect.verifySteps([
         [[1], { stop: "2018-12-30 18:29:59" }],
@@ -930,32 +945,25 @@ test("resize a pill", async () => {
 });
 
 test("resize pill in year mode", async () => {
-    expect.assertions(2);
-
-    onRpc(({ method }) => {
-        if (method === "write") {
-            throw new Error("Should not call write");
-        }
+    onRpc("write", ({ args }) => {
+        expect.step(args);
     });
     await mountGanttView({
         resModel: "tasks",
         arch: '<gantt date_start="start" date_stop="stop" default_range="year" />',
     });
 
-    const initialPillWidth = getPillWrapper("Task 5").getBoundingClientRect().width;
-
     expect(getPillWrapper("Task 5")).toHaveClass(CLASSES.resizable);
 
-    // Resize way over the limit
-    await resizePill(getPillWrapper("Task 5"), "end", 0, { x: 200 });
-
-    expect(initialPillWidth).toBe(getPillWrapper("Task 5").getBoundingClientRect().width, {
-        message: "the pill should have the same width as before the resize",
-    });
+    const drop = await resizePill(getPillWrapper("Task 5"), "end", { x: 200 }, false);
+    expect(SELECTORS.startBadge).toHaveText("11/8/2018");
+    expect(SELECTORS.stopBadge).toHaveText("1/4/2019 (+1 months)");
+    expect(SELECTORS.stopBadge).toHaveClass("text-success");
+    await drop();
+    expect.verifySteps([[[5], { stop: "2019-01-04 01:34:34" }]]);
 });
 
 test("resize a pill (2)", async () => {
-    expect.assertions(5);
     onRpc("write", ({ args }) => expect.step(args));
 
     await mountGanttView({
@@ -972,7 +980,11 @@ test("resize a pill (2)", async () => {
     expect(SELECTORS.resizeHandle).toHaveCount(2);
 
     // resize to one cell larger
-    await resizePill(getPillWrapper("Task 2"), "end", +1);
+    const drop = await resizePill(getPillWrapper("Task 2"), "end", +1, false);
+    expect(SELECTORS.startBadge).toHaveText("12/17/2018, 12:30 PM");
+    expect(SELECTORS.stopBadge).toHaveText("12/23/2018, 7:29 AM (+24 hours)");
+    expect(SELECTORS.stopBadge).toHaveClass("text-success");
+    await drop();
 
     expect(".modal").toHaveCount(0);
     expect.verifySteps([[[2], { stop: "2018-12-23 06:29:59" }]]);
@@ -1095,7 +1107,7 @@ test("pill is updated after failed resized", async () => {
 });
 
 test("move a pill in the same row", async () => {
-    expect.assertions(5);
+    expect.assertions(9);
 
     onRpc("write", ({ args }) => {
         expect(args[0]).toEqual([7], { message: "should write on the correct record" });
@@ -1127,8 +1139,13 @@ test("move a pill in the same row", async () => {
     ]);
 
     // move a pill in the next cell (+1 day)
-    const { drop } = await dragPill("Task 7");
-    await drop({ columnHeader: "21", groupHeader: "December 2018", part: 2 });
+    const { moveTo, drop } = await dragPill("Task 7");
+    await moveTo({ columnHeader: "21", groupHeader: "December 2018", part: 2 });
+    expect(SELECTORS.startBadge).toHaveText("12/21/2018, 1:30 PM");
+    expect(SELECTORS.stopBadge).toHaveText("12/21/2018, 7:29 PM");
+    expect(SELECTORS.startBadge).toHaveClass("text-success");
+    expect(SELECTORS.stopBadge).toHaveClass("text-success");
+    await drop();
     expect(getGridContent().rows).toEqual([
         {
             pills: [
@@ -1143,7 +1160,7 @@ test("move a pill in the same row", async () => {
 });
 
 test("move a pill in the same row (with different timezone)", async () => {
-    expect.assertions(4);
+    expect.assertions(8);
 
     patchWithCleanup(luxon.Settings, {
         defaultZone: luxon.IANAZone.create("Europe/Brussels"),
@@ -1181,8 +1198,13 @@ test("move a pill in the same row (with different timezone)", async () => {
     ]);
 
     // +1 day -> move beyond the DST switch
-    const { drop } = await dragPill("Task 8");
-    await drop({ columnHeader: "31", groupHeader: "March 2019", part: 1 });
+    const { moveTo, drop } = await dragPill("Task 8");
+    await moveTo({ columnHeader: "31", groupHeader: "March 2019", part: 1 });
+    expect(SELECTORS.startBadge).toHaveText("3/31/2019, 6:00 AM");
+    expect(SELECTORS.stopBadge).toHaveText("3/31/2019, 7:30 AM");
+    expect(SELECTORS.startBadge).toHaveClass("text-success");
+    expect(SELECTORS.stopBadge).toHaveClass("text-success");
+    await drop();
 
     expect(getGridContent().rows).toEqual([
         {
@@ -1252,7 +1274,7 @@ test("move a pill in another row", async () => {
 });
 
 test("copy a pill in another row", async () => {
-    expect.assertions(6);
+    expect.assertions(10);
     onRpc("copy", ({ args, kwargs }) => {
         expect(args[0]).toEqual([7], { message: "should copy the correct record" });
         expect(kwargs.default).toEqual(
@@ -1304,7 +1326,11 @@ test("copy a pill in another row", async () => {
     expect(SELECTORS.renderer).toHaveClass("o_grabbing");
 
     await keyDown("Control");
-    await drop({ columnHeader: "21", groupHeader: "December 2018", part: 2 });
+    expect(SELECTORS.startBadge).toHaveText("12/21/2018, 1:30 PM");
+    expect(SELECTORS.stopBadge).toHaveText("12/21/2018, 7:29 PM");
+    expect(SELECTORS.startBadge).toHaveClass("text-success");
+    expect(SELECTORS.stopBadge).toHaveClass("text-success");
+    await drop();
 
     expect(getGridContent().rows).toEqual([
         {

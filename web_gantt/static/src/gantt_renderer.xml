@@ -41,7 +41,8 @@
                         />
                     </t>
                 </t>
-                <GanttResizeBadge reactive="resizeBadgeReactive" />
+                <GanttTimeDisplayBadge reactive="timeDisplayBadgeReactiveStart" />
+                <GanttTimeDisplayBadge reactive="timeDisplayBadgeReactiveStop" />
             </div>
             <t t-if="totalRow">
                 <t t-call="{{ constructor.totalRowTemplate }}"/>

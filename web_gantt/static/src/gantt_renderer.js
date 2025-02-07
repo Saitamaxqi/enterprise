@@ -38,6 +38,7 @@ import {
     diffColumn,
     getCellColor,
     getColorIndex,
+    getHoveredCellPart,
     localEndOf,
     localStartOf,
     useGanttConnectorDraggable,
@@ -49,7 +50,7 @@ import {
 } from "./gantt_helpers";
 import { GanttPopover } from "./gantt_popover";
 import { GanttRendererControls } from "./gantt_renderer_controls";
-import { GanttResizeBadge } from "./gantt_resize_badge";
+import { GanttTimeDisplayBadge } from "./gantt_time_display_badge";
 import { GanttRowProgressBar } from "./gantt_row_progress_bar";
 
 const viewRegistry = registry.category("views");
@@ -160,7 +161,7 @@ export class GanttRenderer extends Component {
     static components = {
         GanttConnector,
         GanttRendererControls,
-        GanttResizeBadge,
+        GanttTimeDisplayBadge,
         GanttRowProgressBar,
         Popover: GanttPopover,
     };
@@ -223,7 +224,8 @@ export class GanttRenderer extends Component {
         this.connectors = reactive({});
         this.progressBarsReactive = reactive({ hoveredRowId: null });
         /** @type {ResizeBadge} */
-        this.resizeBadgeReactive = reactive({});
+        this.timeDisplayBadgeReactiveStart = reactive({});
+        this.timeDisplayBadgeReactiveStop = reactive({});
 
         /** @type {Object[]} */
         this.columnsGroups = [];
@@ -295,6 +297,12 @@ export class GanttRenderer extends Component {
             // Style classes
             cellDragClassName: "o_gantt_cell o_drag_hover",
             ghostClassName: "o_dragged_pill_ghost",
+            rtl: () => localization.direction === "rtl",
+            scale: () => this.model.metaData.scale,
+            getBadgesInitialDates: () => ({
+                start: this.badgeInitialStartDate,
+                stop: this.badgeInitialStopDate,
+            }),
             addStickyCoordinates: (rows, columns) => {
                 this.stickyGridRows = Object.assign({}, ...rows.map((row) => ({ [row]: true })));
                 this.stickyGridColumns = Object.assign(
@@ -305,11 +313,17 @@ export class GanttRenderer extends Component {
             },
             // Handlers
             onDragStart: ({ pill }) => {
+                this.initBadges(pill);
                 this.popover.close();
                 this.setStickyPill(pill);
                 this.interaction.mode = "drag";
             },
+            onDrag: ({ startBadge, stopBadge }) => {
+                Object.assign(this.timeDisplayBadgeReactiveStart, startBadge);
+                Object.assign(this.timeDisplayBadgeReactiveStop, stopBadge);
+            },
             onDragEnd: () => {
+                this.clearBadges();
                 this.setStickyPill();
                 this.interaction.mode = null;
             },
@@ -339,8 +353,26 @@ export class GanttRenderer extends Component {
             hoveredCell: this.cellForDrag,
             elements: ".o_gantt_cell:not(.o_gantt_group)",
             edgeScrolling: { speed: 40, threshold: 150, direction: "horizontal" },
+            addStickyCoordinates: (columns) => {
+                this.stickyGridColumns = Object.assign(
+                    {},
+                    ...columns.map((column) => ({ [column]: true }))
+                );
+                this.setSomeGridStyleProperties();
+            },
+            scale: () => this.model.metaData.scale,
+            getBadgesInitialDate: () => ({ initialDate: this.badgeInitialStartDate }),
             rtl: () => localization.direction === "rtl",
+            onDragStart: ({ initialCol }) => {
+                const { start } = this.getSubColumnFromColNumber(initialCol - 1);
+                this.badgeInitialStartDate = start;
+            },
+            onDrag: ({ startBadge, stopBadge }) => {
+                Object.assign(this.timeDisplayBadgeReactiveStart, startBadge);
+                Object.assign(this.timeDisplayBadgeReactiveStop, stopBadge);
+            },
             onDrop: ({ rowId, startCol, stopCol }) => {
+                this.clearBadges();
                 this.onCreate(rowId, startCol, stopCol);
             },
         });
@@ -356,6 +388,11 @@ export class GanttRenderer extends Component {
             // Other params
             handles: "o_resize_handle",
             edgeScrolling: { speed: 40, threshold: 150, direction: "horizontal" },
+            scale: () => this.model.metaData.scale,
+            getBadgesInitialDates: () => ({
+                start: this.badgeInitialStartDate,
+                stop: this.badgeInitialStopDate,
+            }),
             showHandles: (pillEl) => {
                 const pill = this.pills[pillEl.dataset.pillId];
                 const hideHandles = this.connectorDragState.dragging;
@@ -365,31 +402,20 @@ export class GanttRenderer extends Component {
                 };
             },
             rtl: () => localization.direction === "rtl",
-            precision: () => this.model.metaData.scale.cellPart,
             // Handlers
             onDragStart: ({ pill, addClass }) => {
+                this.initBadges(pill);
                 this.popover.close();
                 this.setStickyPill(pill);
                 addClass(pill, "o_resized");
                 this.interaction.mode = "resize";
             },
-            onDrag: ({ pill, grabbedHandle, diff }) => {
-                const rect = pill.getBoundingClientRect();
-                const position = { top: rect.y + rect.height };
-                if (grabbedHandle === "left") {
-                    position.left = rect.x;
-                } else {
-                    position.right = document.body.offsetWidth - rect.x - rect.width;
-                }
-                const { cellTime, unitDescription } = this.model.metaData.scale;
-                Object.assign(this.resizeBadgeReactive, {
-                    position,
-                    diff: diff * cellTime,
-                    scale: unitDescription,
-                });
+            onDrag: ({ startBadge, stopBadge }) => {
+                Object.assign(this.timeDisplayBadgeReactiveStart, startBadge);
+                Object.assign(this.timeDisplayBadgeReactiveStop, stopBadge);
             },
             onDragEnd: ({ pill, removeClass }) => {
-                clearObject(this.resizeBadgeReactive);
+                this.clearBadges();
                 this.setStickyPill();
                 removeClass(pill, "o_resized");
                 this.interaction.mode = null;
@@ -1077,15 +1103,12 @@ export class GanttRenderer extends Component {
         this.cellForDrag.el = isCellHovered ? hoverable : null;
         this.cellForDrag.part = 0;
         if (isCellHovered && scale.cellPart > 1) {
-            const rect = hoverable.getBoundingClientRect();
-            const x = Math.floor(rect.x);
-            const width = Math.floor(rect.width);
-            this.cellForDrag.part = Math.floor(
-                (this.cursorPosition.x - x) / (width / scale.cellPart)
+            this.cellForDrag.part = getHoveredCellPart(
+                hoverable,
+                this.cursorPosition.x,
+                scale.cellPart,
+                localization.direction === "rtl"
             );
-            if (localization.direction === "rtl") {
-                this.cellForDrag.part = scale.cellPart - 1 - this.cellForDrag.part;
-            }
         }
 
         if (this.isDragging) {
@@ -1319,12 +1342,9 @@ export class GanttRenderer extends Component {
      * @param {number} stopCol
      * @param {boolean} [roundUpStop=true]
      */
-    getColumnStartStop(startCol, stopCol, roundUpStop = true) {
+    getColumnStartStop(startCol, stopCol) {
         const { start } = this.getColumnFromColNumber(startCol);
-        let { stop } = this.getColumnFromColNumber(stopCol);
-        if (roundUpStop) {
-            stop = stop.plus({ millisecond: 1 });
-        }
+        const { stop } = this.getColumnFromColNumber(stopCol);
         return { start, stop };
     }
 
@@ -2693,6 +2713,20 @@ export class GanttRenderer extends Component {
         }
     }
 
+    initBadges(pill) {
+        const { dateStartField, dateStopField } = this.model.metaData;
+        const { record } = this.pills[pill.dataset.pillId];
+        this.badgeInitialStartDate = record[dateStartField];
+        this.badgeInitialStopDate = record[dateStopField];
+    }
+
+    clearBadges() {
+        clearObject(this.timeDisplayBadgeReactiveStart);
+        clearObject(this.timeDisplayBadgeReactiveStop);
+        delete this.badgeInitialStartDate;
+        delete this.badgeInitialStopDate;
+    }
+
     //-------------------------------------------------------------------------
     // Handlers
     //-------------------------------------------------------------------------
@@ -2710,13 +2744,15 @@ export class GanttRenderer extends Component {
             if (canPlan) {
                 this.onPlan(rowId, col, col);
             } else if (canCellCreate) {
-                this.onCreate(rowId, col, col);
+                this.onCreate(rowId, col, col + this.model.metaData.scale.cellPart - 1);
             }
         }
     }
 
     onCreate(rowId, startCol, stopCol) {
-        const { start, stop } = this.getColumnStartStop(startCol, stopCol);
+        let { start } = this.getSubColumnFromColNumber(startCol);
+        let { stop } = this.getSubColumnFromColNumber(stopCol);
+        ({ start, stop } = this.normalizeTimeRange(start, stop));
         const context = this.model.getDialogContext({
             rowId,
             start,
@@ -2724,6 +2760,11 @@ export class GanttRenderer extends Component {
             withDefault: true,
         });
         this.props.create(context);
+    }
+
+    normalizeTimeRange(start, stop) {
+        stop = stop.plus({ second: 1 });
+        return { start, stop };
     }
 
     onInteractionChange() {
@@ -2806,7 +2847,8 @@ export class GanttRenderer extends Component {
     }
 
     onPlan(rowId, startCol, stopCol) {
-        const { start, stop } = this.getColumnStartStop(startCol, stopCol);
+        let { start, stop } = this.getColumnStartStop(startCol, stopCol);
+        ({ start, stop } = this.normalizeTimeRange(start, stop));
         this.dialogService.add(
             SelectCreateDialog,
             this.getSelectCreateDialogProps({ rowId, start, stop, withDefault: true })

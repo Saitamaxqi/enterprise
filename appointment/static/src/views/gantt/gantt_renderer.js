@@ -31,7 +31,9 @@ export class AppointmentBookingGanttRenderer extends GanttRenderer {
      * the stop matches the end of the selection instead of being redefined to match the appointment duration.
      */
     onCreate(rowId, columnStart, columnStop) {
-        const { start, stop } = this.getColumnStartStop(columnStart, columnStop);
+        let { start } = this.getSubColumnFromColNumber(columnStart);
+        let { stop } = this.getSubColumnFromColNumber(columnStop);
+        ({ start, stop } = this.normalizeTimeRange(start, stop));
         const context = this.model.getDialogContext({rowId, start, stop, withDefault: true});
         if (columnStart != columnStop){
             delete context['default_duration'];

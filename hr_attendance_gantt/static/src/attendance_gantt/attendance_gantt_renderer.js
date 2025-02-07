@@ -16,7 +16,9 @@ import { HrGanttRenderer } from "@hr_gantt/hr_gantt_renderer";
      * If multiple columns have been selected, keep the check_out's value overwise remove it.
      */
     onCreate(rowId, columnStart, columnStop) {
-        const { start, stop } = this.getColumnStartStop(columnStart, columnStop);
+        let { start } = this.getSubColumnFromColNumber(columnStart);
+        let { stop } = this.getSubColumnFromColNumber(columnStop);
+        ({ start, stop } = this.normalizeTimeRange(start, stop));
         const context = this.model.getDialogContext({rowId, start, stop, withDefault: true});
         if (columnStart == columnStop){
             delete context.check_out;
@@ -25,4 +27,3 @@ import { HrGanttRenderer } from "@hr_gantt/hr_gantt_renderer";
         this.props.create(context);
     }
 }
-

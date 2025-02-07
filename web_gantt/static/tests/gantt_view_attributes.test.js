@@ -257,12 +257,14 @@ test("precision attribute", async () => {
     // resize of a quarter
     const drop = await resizePill(getPillWrapper("Task 7"), "end", 0.25, false);
     await animationFrame();
-    expect(SELECTORS.resizeBadge).toHaveText("+15 minutes");
+    expect(SELECTORS.startBadge).toHaveText("1:30 PM");
+    expect(SELECTORS.stopBadge).toHaveText("7:44 PM (+15 minutes)");
 
     // manually trigger the drop to trigger a write
     await drop();
     await animationFrame();
-    expect(SELECTORS.resizeBadge).toHaveCount(0);
+    expect(SELECTORS.startBadge).toHaveCount(0);
+    expect(SELECTORS.stopBadge).toHaveCount(0);
     expect.verifySteps([[[7], { stop: "2018-12-20 18:44:59" }]]);
 });
 

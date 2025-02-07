@@ -253,16 +253,21 @@ export class PlanningGanttRenderer extends GanttRenderer {
     /**
      * @override
      */
-    getColumnStartStop(startCol, stopCol) {
+    normalizeTimeRange(start, stop) {
         const { scale } = this.model.metaData;
         if (["week", "month"].includes(scale.unit)) {
-            const { start, stop } = super.getColumnStartStop(startCol, stopCol, false);
             return {
-                start: start.set({ hours: 8, minutes: 0, seconds: 0, milliseconds: 0 }),
-                stop: stop.set({ hours: 17, minutes: 0, seconds: 0, milliseconds: 0 }),
+                start:
+                    start.hour < 8
+                        ? start.set({ hours: 8, minutes: 0, seconds: 0, milliseconds: 0 })
+                        : start,
+                stop:
+                    stop.hour > 17
+                        ? stop.set({ hours: 17, minutes: 0, seconds: 0, milliseconds: 0 })
+                        : stop.plus({ second: 1 }),
             };
         }
-        return super.getColumnStartStop(...arguments);
+        return super.normalizeTimeRange(start, stop);
     }
 
     /**
@@ -538,7 +543,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
     /**
      * Given a {start, end} datetime for a resource (row), return whether the resource is on day off.
      * This is determined by checking if the resource has any unavailabilities that intersect with the given column
-     * 
+     *
      * @param {number} column - Column index
      * @param {Row} row - Row Object
      * @returns {boolean} - Whether the resource is on day off
@@ -550,7 +555,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
         return unavailabilities.some(unavailability => {
             const unavailabilityStart = unavailability.start;
             const unavailabilityEnd = unavailability.stop ? unavailability.stop : null;
-            return unavailabilityStart <= start && 
+            return unavailabilityStart <= start &&
                 (!unavailabilityEnd || unavailabilityEnd >= stop);
         });
     }
@@ -560,15 +565,15 @@ export class PlanningGanttRenderer extends GanttRenderer {
      * For shifts with flexible hours or open slots, the split is done without taking into account availabbilities.
      * For shifts with regular working hours, the split is done taking into account the resource's availabilities.
      * As an exception, if the shift spans on weekends (where the resource had no availabilities unavailable)
-     * for a regular working schedule, we split the shift but set a 8-17 schedule for the shift in weekends. 
-     * 
+     * for a regular working schedule, we split the shift but set a 8-17 schedule for the shift in weekends.
+     *
      * @param {Pill} pill
      * @param {number} startColumnId - column where to split the pill
      */
     async onPillSplitToolClicked(pill, startColumnId) {
         const resourceId = pill.record.resource_id[0] || false;
-        const splitRightPill = super.getColumnStartStop(startColumnId, startColumnId, false);
-        const splitLeftPill = super.getColumnStartStop(startColumnId - 1, startColumnId - 1, false);
+        const splitRightPill = this.getColumnStartStop(startColumnId, startColumnId);
+        const splitLeftPill = this.getColumnStartStop(startColumnId - 1, startColumnId - 1);
         let copiedShiftId;
         if (!resourceId || this.isFlexibleHours(resourceId)) {
             const start = splitRightPill.start;
@@ -666,7 +671,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
      * @returns {{ Datetime, Datetime }} { start, stop }
      */
     getColumnAvailabilitiesLimit(pill, column, { fixed_start, fixed_stop } = {}) {
-        const defaultColumnTiming = super.getColumnStartStop(column, column, false);
+        const defaultColumnTiming = super.getColumnStartStop(column, column);
         let start = fixed_start || defaultColumnTiming.start;
         let stop = fixed_stop || defaultColumnTiming.stop;
         const currentRow = this.getRowFromPill(pill);
