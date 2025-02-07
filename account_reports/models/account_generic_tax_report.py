@@ -87,11 +87,12 @@ class AccountTaxReportHandler(models.AbstractModel):
 
     def action_periodic_vat_entries(self, options, from_post=False):
         report = self.env['account.report'].browse(options['report_id'])
-        if (options['date']['period_type'] != 'tax_period' and not self._is_period_equal_to_options(report,
-                                                                                                    options)) and not self.env.context.get(
-                'override_tax_closing_warning'):
-            if len(options['companies']) > 1 and (report.filter_multi_company != 'tax_units' or not (
-                    report.country_id and options['available_tax_units'])):
+        if (
+            options['date']['period_type'] != 'tax_period'
+            and not self._is_period_equal_to_options(report, options)
+            and not self.env.context.get('override_tax_closing_warning')
+        ):
+            if len(options['companies']) > 1 and (report.filter_multi_company != 'tax_units' or not (report.country_id and options['available_tax_units'])):
                 message = _(
                     "You're about the generate the closing entries of multiple companies at once. Each of them will be created in accordance with its company tax periodicity.")
             else:
