@@ -42,5 +42,8 @@
             'website_knowledge/static/tests/**/*',
             ('remove', 'website_knowledge/static/tests/tours/**/*'),
         ],
+        'html_builder.assets': [
+            'website_knowledge/static/src/plugins/**/*',
+        ],
     },
 }

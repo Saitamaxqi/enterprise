@@ -31,8 +31,8 @@ appropriate views and selling choices.
         'web.assets_tests': [
             'website_sale_renting/static/tests/tours/**/*',
         ],
-        'website.assets_wysiwyg': [
-            'website_sale_renting/static/src/snippets/s_rental_search/options.js',
+        'html_builder.assets': [
+            'website_sale_renting/static/src/plugins/**/*',
         ],
     },
     'auto_install': True,

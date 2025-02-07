@@ -113,7 +113,7 @@ registry.category("web_tour.tours").add("website_studio_listing_without_page", {
 registry.category("web_tour.tours").add("website_studio_website_form", {
     steps: () => [
         {
-            trigger: ".o_edit_website_container .o-website-btn-custo-primary",
+            trigger: ".o-website-btn-custo-primary:contains('Edit')",
             run: "click",
         },
         {

@@ -995,6 +995,12 @@ registry.category("web_tour.tours").add("web_studio_new_report_tour", {
                 '.o_web_studio_sidebar .o_field_many2many_tags[name="group_ids"] .o_tag_badge_text:contains(Administrator)',
         },
         {
+            // Focus the editable area
+            trigger:
+                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable div.page div",
+            run: "click",
+        },
+        {
             trigger:
                 ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable div.page div",
             run() {

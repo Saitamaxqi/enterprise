@@ -13,7 +13,7 @@ Allow clients to Schedule Appointments through your Website
 -------------------------------------------------------------
 
 """,
-    'depends': ['appointment', 'website_enterprise', 'website_partner'],
+    'depends': ['appointment', 'website_enterprise', 'website_partner', 'html_builder'],
     'data': [
         'data/website_data.xml',
         'data/website_snippet_data.xml',
@@ -60,6 +60,9 @@ Allow clients to Schedule Appointments through your Website
         ],
         'website.assets_editor': [
             'website_appointment/static/src/js/systray_items/*.js',
+        ],
+        'html_builder.assets': [
+            'website_appointment/static/src/plugins/**/*',
         ],
         'website.assets_wysiwyg': [
             'website_appointment/static/src/snippets/s_online_appointment/options.js',
