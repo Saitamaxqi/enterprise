@@ -2191,7 +2191,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         params = f'?id={uuid or ""}' \
                  f'&re={tools.html_escape(supplier_rfc or "")}' \
                  f'&rr={tools.html_escape(customer_rfc or "")}' \
-                 f'&tt={total or 0.0}]'
+                 f'&tt={total or 0.0}'
         transport = Transport(timeout=20)
 
         try:
