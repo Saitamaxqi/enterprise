@@ -69,7 +69,10 @@ class HrContractSalaryOffer(models.Model):
     def _compute_url(self):
         base_url = self.env['hr.contract.salary.offer'].get_base_url()
         for offer in self:
-            offer.url = base_url + f"/salary_package/simulation/offer/{offer.id}" + (f"?token={offer.access_token}" if offer.applicant_id else "")
+            offer.url = base_url \
+                      + f"/salary_package/simulation/offer/{offer.id}" \
+                      + f"?final_yearly_costs={round(offer.final_yearly_costs, 2)}" \
+                      + (f"&token={offer.access_token}" if offer.applicant_id else "")
 
     @api.depends('applicant_id', 'employee_contract_id')
     def _compute_display_name(self):
