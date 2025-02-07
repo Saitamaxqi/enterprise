@@ -49,7 +49,7 @@ class CalendarEvent(models.Model):
         """
         self.ensure_one()
         post_values = super()._get_post_sync_values(request_values, google_values)
-        if self.appointment_type_id.event_videocall_source == 'google_meet':
+        if self.appointment_type_id.sudo().event_videocall_source == 'google_meet':
             gevent = GoogleEvent([google_values])
             if gevent.id and gevent.hangoutLink:
                 post_values.update({'videocall_location': gevent.hangoutLink})
