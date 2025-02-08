@@ -710,6 +710,7 @@ class AccountMove(models.Model):
                    'Iva': ArrayOfAlicIva(vat_items) if vat_items else None,
                    'Tributos': ArrayOfTributo(tributes) if tributes else None,
                    'Opcionales': ArrayOfOpcional(optionals) if optionals else None,
+                   'CondicionIVAReceptorId': self.partner_id.l10n_ar_afip_responsibility_type_id.code,
                    'Compradores': None}}]}
         return res
 
