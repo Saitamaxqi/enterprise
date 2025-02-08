@@ -445,7 +445,7 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
             self.assertEqual(upsell_so_2.amount_untaxed, 30.25)
             # upsell_so_2.order_line.flush()
             line = upsell_so_2.order_line.filtered('display_type')
-            self.assertEqual(line.display_type, 'line_note')
+            self.assertEqual(line.display_type, 'subscription_discount')
             self.assertFalse(line.product_uom_qty)
             self.assertFalse(line.price_unit)
             self.assertFalse(line.customer_lead)
@@ -587,7 +587,7 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
                 format_date(self.env, upsell_so_2.start_date),
                 format_date(self.env, upsell_so_2.next_invoice_date - relativedelta(days=1))
             ))
-            upsell_order_line_note = upsell_so_2.order_line.filtered(lambda l: l.display_type == 'line_note').name
+            upsell_order_line_note = upsell_so_2.order_line.filtered(lambda l: l.display_type == 'subscription_discount').name
             self.assertEqual(expected_line_name, upsell_order_line_note)
 
             # Test for negative discount (line note should be updated)
@@ -617,5 +617,5 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
                 format_date(self.env, upsell_so.start_date),
                 format_date(self.env, upsell_so.next_invoice_date - relativedelta(days=1))
             ))
-            upsell_order_line_note = upsell_so.order_line.filtered(lambda l: l.display_type == 'line_note').name
+            upsell_order_line_note = upsell_so.order_line.filtered(lambda l: l.display_type == 'subscription_discount').name
             self.assertEqual(expected_line_name, upsell_order_line_note)

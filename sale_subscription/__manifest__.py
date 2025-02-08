@@ -60,6 +60,7 @@ Features:
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [
+            'sale_subscription/static/src/js/components/**/*',
             'sale_subscription/static/src/js/combo_configurator_dialog/*',
             'sale_subscription/static/src/js/product_configurator_dialog/*',
             'sale_subscription/static/src/js/sale_product_field.js',

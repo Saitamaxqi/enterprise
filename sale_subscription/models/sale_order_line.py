@@ -27,6 +27,11 @@ class SaleOrderLine(models.Model):
     next_invoice_date = fields.Date(related="order_id.next_invoice_date")
     product_template_variant_value_ids = fields.Many2many(related="product_id.product_template_variant_value_ids")
     subscription_plan_id = fields.Many2one(related="order_id.plan_id")
+    display_type = fields.Selection(
+        selection_add=[
+            ('subscription_discount', 'Subscription Discount'),
+        ]
+    )
 
     @property
     def upsell_total(self):
@@ -97,29 +102,16 @@ class SaleOrderLine(models.Model):
                 # We don't apply discount
                 continue
             ratio = order_id._get_ratio_value()
-            # If the parent line had a discount, we reapply it to keep the same conditions.
-            # E.G. base price is 200€, parent line has a 10% discount and upsell has a 25% discount.
-            # We want to apply a final price equal to 200 * 0.75 (prorata) * 0.9 (discount) = 135 or 200*0,675
-            # We need 32.5 in the discount
-            add_comment = False
-            line_to_discount, discount_comment = lines._get_renew_discount_info(upsell_ratio=ratio)
+            line_to_discount, dummy = lines._get_renew_discount_info(upsell_ratio=ratio)
             for line in line_to_discount:
                 if line.parent_line_id and line.parent_line_id.discount:
+                    # If the parent line had a discount, we reapply it to keep the same conditions.
+                    # E.G. base price is 200€, parent line has a 10% discount and upsell has a 25% discount.
+                    # We want to apply a final price equal to 200 * 0.75 (prorata) * 0.9 (discount) = 135 or 200*0,675
+                    # We need 32.5 in the discount
                     line.discount = (1 - ratio * (1 - line.parent_line_id.discount / 100)) * 100
                 else:
                     line.discount = (1 - ratio) * 100
-                # Add prorata reason for discount if necessary
-                if ratio != 1 and "(*)" not in line.name:
-                    line.name += "(*)"
-                    add_comment = True
-            if add_comment and not any((l.display_type == 'line_note' and '(*)' in l.name) for l in order_id.order_line):
-                order_id.order_line = [Command.create({
-                    'display_type': 'line_note',
-                    'sequence': 999,
-                    'name': discount_comment,
-                    'product_uom_qty': 0,
-                })]
-
         return super(SaleOrderLine, other_lines)._compute_discount()
 
     @api.depends('order_id.plan_id', 'parent_line_id')
@@ -394,6 +386,13 @@ class SaleOrderLine(models.Model):
         self.ensure_one()
         res = super()._prepare_invoice_line(**optional_values)
         if self.display_type:
+            # we change it to 'line_note' so it is treated as a note instead of a discount line.
+            # This avoids the need to modify the entire invoice logic and manage constraints
+            # in account.move.line, making the process simpler.
+            if res.get('display_type') == 'subscription_discount':
+                res.update({
+                    'display_type': 'line_note'
+                })
             return res
         elif self.order_id.plan_id and (self.recurring_invoice or self.order_id.subscription_state == '7_upsell'):
             lang_code = self.order_id.partner_id.lang
@@ -504,12 +503,21 @@ class SaleOrderLine(models.Model):
     # Business Methods #
     ####################
 
-    def _get_renew_discount_info(self, upsell_ratio=0):
+    def _get_renew_discount_info(self, upsell_ratio=0, start_date=None):
+        """ Get discount values of an upsell order.
+        This method computes the line that need a pro rata temporis discount and the subscription_discount line name
+        This method does not work with the lines in self belongs to several sale.order. It will returns meaningless (empty) values
+            :params float upsell_ratio: the prorata temporis ratio of the upsell
+            :params date start_date: suggested start date of the upsell if we don't have a value yet
+        returns:
+            sale.order.line needing a pro rata discount
+            the line note name
+        """
         order = self.order_id
         if len(order) != 1:
-            return [], ""
+            return self.env['sale.order.line'], ""
         today = fields.Date.today()
-        start_date = max(today, order.first_contract_date or today)
+        start_date = start_date or order.start_date or today
         next_invoice_date = order.next_invoice_date or order.subscription_id.next_invoice_date
         end_date = next_invoice_date - relativedelta(days=1)
         if start_date >= end_date:
@@ -525,11 +533,36 @@ class SaleOrderLine(models.Model):
                 start=format_start, end=format_end)
         return self.filtered_domain(self._need_renew_discount_domain()), line_name
 
+    def _create_update_subscription_discount_values(self, updell_ratio=0, discount_comment=''):
+        """ Create or update a subscription_discount sale.order.line explaining the pro rata temporis
+        self must only contain the recurring service line.
+        """
+        # Initialize a flag to track whether a line_note with subscription discount exists
+        line_note_found = False
+        # a line comment is needed if we have recurring lines and an upsell ratio
+        line_note_needed = self and updell_ratio != 1
+        # Iterate over all order lines to check for a specific note
+        for line in self.order_id.order_line:
+            # Add a marker to recurring line (self only contains them)
+            if line in self and updell_ratio != 1 and "(*)" not in line.name:
+                line.name += "(*)"
+            if line.display_type == 'subscription_discount':
+                # If found, update the subscription discount in the new discount comment
+                line.name = discount_comment
+                line_note_found = True
+        # If no subscription discount is found and a comment should be added
+        if not line_note_found and line_note_needed:
+            self.order_id.order_line = [Command.create({
+                'display_type': 'subscription_discount',
+                'sequence': 999,
+                'name': discount_comment,
+                'product_uom_qty': 0,
+            })]
+
     def _need_renew_discount_domain(self):
         return [('recurring_invoice', '=', True), ('product_id.type', '=', 'service')]
 
-    def _get_renew_upsell_values(self, subscription_state, period_end=None):
-        # TODO master: remove period_end from signature
+    def _get_renew_upsell_values(self, subscription_state):
         order_lines = []
         description_needed, description_name = [], ""
         if subscription_state == '7_upsell':
@@ -537,8 +570,7 @@ class SaleOrderLine(models.Model):
                 ratio = 0
             else:
                 ratio = self.order_id._get_ratio_value(new_upsell=True)
-            # kaput the self is the renewal here !
-            description_needed, description_name = self._get_renew_discount_info(upsell_ratio=ratio)
+            description_needed, description_name = self._get_renew_discount_info(upsell_ratio=ratio, start_date=fields.Date.context_today(self))
         for line in self:
             if not line.recurring_invoice:
                 continue
@@ -559,10 +591,10 @@ class SaleOrderLine(models.Model):
         if description_needed and description_name:
             order_lines.append((0, 0,
                 {
-                    'display_type': 'line_note',
+                    'display_type': 'subscription_discount',
                     'sequence': 999,
                     'name': description_name,
-                    'product_uom_qty': 0
+                    'product_uom_qty': 0,
                 }
             ))
 

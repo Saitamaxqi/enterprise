@@ -605,6 +605,14 @@ class SaleOrder(models.Model):
                     partner_to_remove = current_partner_user.partner_id - order.partner_id
                     order.message_unsubscribe(partner_ids=partner_to_remove.ids)
                     order.partner_id.sudo().user_id = subscription_user
+        for order in self:
+            # Add/update a subscription_discount line depending on the start_date and next_invoice_date
+            if order.subscription_state == '7_upsell' and order.state in ['draft', 'sent'] and \
+                    ('start_date' in vals or 'next_invoice_date' in vals):
+                ratio = order._get_ratio_value()
+                line_to_discount, discount_comment = order.order_line._get_renew_discount_info(upsell_ratio=ratio)
+                # Add/Update subscription_discount line
+                line_to_discount._create_update_subscription_discount_values(updell_ratio=ratio, discount_comment=discount_comment)
         return res
 
     @api.ondelete(at_uninstall=False)
@@ -1225,6 +1233,8 @@ class SaleOrder(models.Model):
                 if pending_section:
                     invoiceable_line_ids.append(pending_section.id)
                     pending_section = False
+                invoiceable_line_ids.append(line.id)
+            if line.display_type == "subscription_discount":
                 invoiceable_line_ids.append(line.id)
 
         return self.env["sale.order.line"].browse(invoiceable_line_ids + downpayment_line_ids)
