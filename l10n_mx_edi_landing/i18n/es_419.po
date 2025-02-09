@@ -30,13 +30,13 @@ msgstr "Código de país"
 #. module: l10n_mx_edi_landing
 #: model:ir.model.fields,field_description:l10n_mx_edi_landing.field_stock_landed_cost__l10n_mx_edi_customs_number
 msgid "Customs number"
-msgstr "Número de pedimento"
+msgstr "Número de Pedimento"
 
 #. module: l10n_mx_edi_landing
 #. odoo-python
 #: code:addons/l10n_mx_edi_landing/models/account_move.py:0
 msgid "Customs Number Date: %s"
-msgstr "Fecha de Pedimiento: %s"
+msgstr "Fecha de Pedimento: %s"
 
 #. module: l10n_mx_edi_landing
 #. odoo-python
