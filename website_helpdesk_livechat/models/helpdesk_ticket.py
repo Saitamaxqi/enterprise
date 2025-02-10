@@ -1,24 +1,41 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 from odoo import api, fields, models
-from odoo.addons.mail.tools.discuss import Store
+from odoo.exceptions import AccessError
 
 
 class HelpdeskTicket(models.Model):
     _inherit = "helpdesk.ticket"
 
-    channel_id = fields.Many2one(
+    origin_channel_id = fields.Many2one(
         "discuss.channel",
         "Live chat from which the ticket was created",
         readonly=True,
-        groups="base.group_erp_manager",
         index="btree_not_null",
     )
-    from_livechat = fields.Boolean(compute="_compute_from_livechat", compute_sudo=True)
 
-    @api.depends("channel_id")
-    def _compute_from_livechat(self):
-        for ticket in self:
-            ticket.from_livechat = bool(ticket.channel_id)
+    @api.model_create_multi
+    def create(self, vals_list):
+        origin_channel_ids = [
+            vals["origin_channel_id"] for vals in vals_list if vals.get("origin_channel_id")
+        ]
+        if not self.env["discuss.channel"].browse(origin_channel_ids).has_access("read"):
+            raise AccessError(
+                self.env._("You cannot create tickets linked to channels you don't have access to.")
+            )
+        return super().create(vals_list)
+
+    def write(self, vals):
+        if origin_channel_id := vals.get("origin_channel_id"):
+            if not self.env["discuss.channel"].browse(origin_channel_id).has_access("read"):
+                raise AccessError(
+                    self.env._(
+                        "You cannot update a ticket and link it to a channel you don't have access to."
+                    )
+                )
+        return super().write(vals)
 
     def action_open_livechat(self):
-        # sudo - discuss.channel: can read origin channel of the lead
-        self.env.user._bus_send_store(self.sudo().channel_id, extra_fields={"open_chat_window": True})
+        self.env.user._bus_send_store(
+            self.origin_channel_id, extra_fields={"open_chat_window": True}
+        )

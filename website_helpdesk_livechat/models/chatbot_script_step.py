@@ -18,7 +18,7 @@ class ChatbotScriptStep(models.Model):
         if msg := self._find_first_user_free_input(discuss_channel):
             name = html2plaintext(msg.body)[:100]
         return {
-            "channel_id": discuss_channel.id,
+            "origin_channel_id": discuss_channel.id,
             # sudo - discuss.channel: can access messages to build the description
             "description": description + discuss_channel.sudo()._get_channel_history(),
             "name": name,

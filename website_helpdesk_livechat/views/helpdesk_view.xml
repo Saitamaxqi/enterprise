@@ -25,7 +25,7 @@
         <field name="arch" type="xml">
             <xpath expr="//sheet/div" position="before">
                 <div class="oe_button_box" name="button_box">
-                    <button name="action_open_livechat" type="object" class="oe_stat_button" icon="fa-comments" groups="helpdesk.group_helpdesk_user" invisible="not from_livechat">
+                    <button name="action_open_livechat" type="object" class="oe_stat_button" icon="fa-comments" groups="helpdesk.group_helpdesk_user" invisible="not origin_channel_id">
                         <div class="o_stat_info"><span class="o_stat_text">View chat</span></div>
                     </button>
                 </div>

@@ -13,14 +13,12 @@ class DiscussChannel(models.Model):
 
     ticket_ids = fields.One2many(
         "helpdesk.ticket",
-        "channel_id",
+        "origin_channel_id",
         string="Tickets",
-        groups="base.group_erp_manager",
+        groups="helpdesk.group_helpdesk_user",
         help="The channel becomes accessible to helpdesk users when tickets are set.",
     )
-    has_helpdesk_ticket = fields.Boolean(
-        compute="_compute_has_helpdesk_ticket", compute_sudo=True, store=True
-    )
+    has_helpdesk_ticket = fields.Boolean(compute="_compute_has_helpdesk_ticket", store=True)
     _has_helpdesk_ticket_index = models.Index("(has_helpdesk_ticket) WHERE has_helpdesk_ticket IS TRUE")
 
     @api.depends("ticket_ids")
@@ -73,7 +71,7 @@ class DiscussChannel(models.Model):
                 team = self.env['helpdesk.team'].search([('use_website_helpdesk_livechat', '=', True)], order='sequence', limit=1)
                 team_id = team.id if team else False
                 helpdesk_ticket = self.env['helpdesk.ticket'].with_context(with_partner=True).create({
-                    "channel_id": self.id,
+                    "origin_channel_id": self.id,
                     'name': ' '.join(list_value),
                     'description': plaintext2html(description),
                     'partner_id': customer.id if customer else False,

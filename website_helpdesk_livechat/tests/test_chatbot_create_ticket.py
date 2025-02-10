@@ -55,7 +55,7 @@ class TestChatbotCreateTicket(HelpdeskChatbotCase):
 
         self.assertEqual(discuss_channel.chatbot_current_step_id, self.step_helpdesk_create_ticket)
         return self.env["helpdesk.ticket"].search(
-            [("channel_id", "=", discuss_channel.id)], order="id desc", limit=1
+            [("origin_channel_id", "=", discuss_channel.id)], order="id desc", limit=1
         )
 
     def test_create_ticket_from_chatbot(self):
@@ -97,5 +97,5 @@ class TestChatbotCreateTicket(HelpdeskChatbotCase):
         self.start_tour(
             f"/im_livechat/support/{livechat_channel.id}", "website_helpdesk_livechat.create_ticket_from_chatbot"
         )
-        ticket = self.env["helpdesk.ticket"].search([("channel_id", "=", livechat_channel.channel_ids.id)])
+        ticket = self.env["helpdesk.ticket"].search([("origin_channel_id", "=", livechat_channel.channel_ids.id)])
         self.assertEqual(ticket.name, "I'd like to know more about the Helpdesk application.")

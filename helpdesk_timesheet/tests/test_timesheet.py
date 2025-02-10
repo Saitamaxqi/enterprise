@@ -322,7 +322,7 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
         self.assertEqual(timesheet_count, 1, "The new timesheet entry's ticket_id should be set correctly.")
 
     def test_create_separate_timesheet_entries_depending_on_ticket_id(self):
-        ticket_copy = self.helpdesk_ticket.copy()
+        ticket_copy = self.helpdesk_ticket.sudo().copy()
         timesheet_1, timesheet_2, timesheet_3 = self.env['account.analytic.line'].with_user(self.user_employee).create([{
             'name': '/',
             'project_id': self.project.id,
