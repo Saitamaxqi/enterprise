@@ -50,12 +50,12 @@ export class Softphone {
     get contacts() {
         return Object.values(this.store.Persona.records).filter(
             (contact) =>
-                contact.hasPhoneNumber &&
+                contact.phone &&
                 (!this.searchBarInputValue ||
                     [
                         contact.name,
                         contact.displayName,
-                        contact.landlineNumber,
+                        contact.phone,
                     ].some((x) => isSubstring(x, this.searchBarInputValue)))
         );
     }

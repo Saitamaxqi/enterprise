@@ -25,7 +25,7 @@ class ResPartner(models.Model):
                 "id": contact.id,
                 "displayName": contact.display_name,
                 "email": contact.email,
-                "landlineNumber": contact.phone,
+                "phone": contact.phone,
                 "name": contact.name,
             }
             for contact in self

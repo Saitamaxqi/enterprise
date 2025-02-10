@@ -12,7 +12,7 @@
                     <div t-if="call?.isInProgress" t-attf-class="mb-2 small {{ call.state === 'ongoing' ? 'text-success' : 'text-muted' }}" t-esc="callStatus"/>
                     <t t-if="call?.isInProgress" t-esc="call.phoneNumber"/>
                     <t t-else="">
-                        <div t-if="landlineNumber"><a class="btn btn-link" t-attf-href="tel:{{ landlineNumber }}" t-on-click="(e) => this.onClickPhoneNumber(e, landlineNumber)"><i class="fa fa-phone" role="img"/> <t t-esc="landlineNumber"/></a></div>
+                        <div t-if="phoneNumber"><a class="btn btn-link" t-attf-href="tel:{{ phoneNumber }}" t-on-click="(e) => this.onClickPhoneNumber(e, phoneNumber)"><i class="fa fa-phone" role="img"/> <t t-esc="phoneNumber"/></a></div>
                     </t>
                     <div t-if="call and !call.isInProgress" class="small" t-esc="call?.callDate"/>
                 </div>

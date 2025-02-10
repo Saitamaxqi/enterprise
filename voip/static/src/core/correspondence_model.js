@@ -42,7 +42,7 @@ export class Correspondence {
             return this.activity.phone;
         }
         if (this.partner) {
-            return this.partner.landlineNumber;
+            return this.partner.phone;
         }
         return "";
     }

@@ -61,7 +61,7 @@ export class Softphone extends Component {
         // FIXME: items should be correspondences
         switch (this.activeTabId) {
             case "contacts":
-                return Object.values(this.store.Persona.records).find((p) => p.hasPhoneNumber);
+                return Object.values(this.store.Persona.records).find((p) => p.phone);
             case "activity":
                 return this.softphone.activities[0];
             case "recent":
@@ -224,7 +224,7 @@ export class Softphone extends Component {
             switch (this.activeTabId) {
                 case "contacts":
                     partner = this.firstItem;
-                    phoneNumber = this.firstItem.landlineNumber;
+                    phoneNumber = this.firstItem.phone;
                     break;
                 case "recent":
                     partner = this.firstItem.partner;
