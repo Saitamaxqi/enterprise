@@ -185,27 +185,81 @@
                             </div>
                             <div class="col-md-3">
                                 <t t-if="benefit.res_field_id">
-                                <div class="input-group">
-                                    <div
-                                        t-if="contract.company_id.currency_id.position == 'before' and benefit.uom == 'currency'"
-                                        t-out="contract.company_id.currency_id.symbol"
-                                        class="w-25 input-group-text form-control o_left text-end d-block"/>
-                                    <input
-                                        t-att-class="'form-control text-start' if contract.company_id.currency_id.position == 'before' and benefit.uom == 'currency' else 'form-control mw-50 text-end'"
-                                        type="text"
-                                        disabled="disabled"
-                                        placeholder="0"
-                                        t-att-name="benefit.field"
-                                        t-att-value="initial_values[benefit.field]"
-                                        applies-on="contract"/>
-                                    <div class="input-group-text">
-                                        <t t-if="benefit.uom == 'days'">Days</t>
-                                        <t t-if="benefit.uom == 'percent'">%</t>
-                                        <t t-if="benefit.uom == 'currency' and contract.company_id.currency_id.position == 'after'">
-                                            <t t-out="contract.company_id.currency_id.symbol"/>
+                                    <div class="input-group">
+                                        <div
+                                            t-if="contract.company_id.currency_id.position == 'before' and benefit.uom == 'currency'"
+                                            t-out="contract.company_id.currency_id.symbol"
+                                            class="w-25 input-group-text form-control o_left text-end d-block"/>
+                                        <t t-if="not benefit.folded and benefit.display_type in ['dropdown', 'slider', 'dropdown-group']">
+                                            <t t-if="benefit.display_type == 'dropdown'">
+                                                <t t-set="init_field_value" t-value="initial_values[benefit.field]"/>
+
+                                                <t t-if="init_field_value == 0.0 and len(dropdown_options[benefit.field]) > 0">
+                                                    <t t-set="init_field_value" t-value="dropdown_options[benefit.field][0][1]"/>
+                                                </t>
+                                                <input
+                                                    t-att-class="'form-control text-start' if contract.company_id.currency_id.position == 'before' and benefit.uom == 'currency' else 'form-control mw-50 text-end'"
+                                                    type="text"
+                                                    disabled="disabled"
+                                                    placeholder="0"
+                                                    t-att-name="benefit.field"
+                                                    t-att-value="init_field_value"
+                                                    applies-on="contract"/>
+                                            </t>
+                                            <t t-elif="benefit.display_type == 'slider'">
+                                                <t t-set="init_field_value" t-value="initial_values[benefit.field]"/>
+                                                <t t-if="init_field_value == 0.0">
+                                                    <t t-set="init_field_value" t-value="benefit.slider_min"/>
+                                                </t>
+                                                <input
+                                                    t-att-class="'form-control text-start' if contract.company_id.currency_id.position == 'before' and benefit.uom == 'currency' else 'form-control mw-50 text-end'"
+                                                    type="text"
+                                                    disabled="disabled"
+                                                    placeholder="0"
+                                                    t-att-name="benefit.field"
+                                                    t-att-value="init_field_value"
+                                                    applies-on="contract" />
+                                            </t>
+                                            <t t-elif="benefit.display_type == 'dropdown-group'">
+                                                <t t-set="groups" t-value="dropdown_group_options[benefit.field]"/>
+                                                <t t-set="init_field_value" t-value="initial_values[benefit.field]"/>
+
+                                                <t t-if="init_field_value == 0.0 ">
+                                                    <t t-foreach="groups.values()" t-as="values">
+                                                        <t t-if="len(values)>0 and not init_field_value">
+                                                            <t t-set="init_field_value" t-value="values[0][1]"/>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <input
+                                                    t-att-class="'form-control text-start' if contract.company_id.currency_id.position == 'before' and benefit.uom == 'currency' else 'form-control mw-50 text-end'"
+                                                    type="text"
+                                                    disabled="disabled"
+                                                    placeholder="0"
+                                                    t-att-name="benefit.field"
+                                                    t-att-value="init_field_value"
+                                                    applies-on="contract"/>
+                                            </t>
                                         </t>
+                                        <t t-else="">
+                                            <input
+                                                t-att-class="'form-control text-start' if contract.company_id.currency_id.position == 'before' and benefit.uom == 'currency' else 'form-control mw-50 text-end'"
+                                                type="text"
+                                                disabled="disabled"
+                                                placeholder="0"
+                                                t-att-name="benefit.field"
+                                                t-att-value="initial_values[benefit.field]"
+                                                applies-on="contract"/>
+                                        </t>
+                                        
+                                        <div class="input-group-text">
+                                            <t t-if="benefit.uom == 'days'">Days</t>
+                                            <t t-if="benefit.uom == 'percent'">%</t>
+                                            <t t-if="benefit.uom == 'currency' and contract.company_id.currency_id.position == 'after'">
+                                                <t t-out="contract.company_id.currency_id.symbol"/>
+                                            </t>
+                                        </div>
                                     </div>
-                                </div>
                                 </t>
                             </div>
                         </div>
