@@ -22,4 +22,12 @@ patch(SaleOrderLineProductField.prototype, {
         }
         return props;
     },
+
+    get m2oProps() {
+        const props = super.m2oProps;
+        return {
+            ...props,
+            context: { ...props.context, show_rental_tag: props.context.in_rental_app },
+        };
+    },
 });

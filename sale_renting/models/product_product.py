@@ -9,10 +9,10 @@ class ProductProduct(models.Model):
     qty_in_rent = fields.Float("Quantity currently in rent", compute='_get_qty_in_rent')
 
     @api.depends('rent_ok')
-    @api.depends_context('in_rental_app')
+    @api.depends_context('show_rental_tag')
     def _compute_display_name(self):
         super()._compute_display_name()
-        if not self.env.context.get('in_rental_app'):
+        if not self.env.context.get('show_rental_tag'):
             return
         for product in self:
             if product.rent_ok:

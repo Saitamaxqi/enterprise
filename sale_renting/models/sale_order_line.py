@@ -94,20 +94,14 @@ class SaleOrderLine(models.Model):
         return_date = self.order_id.rental_return_date
         env = self.with_context(use_babel=True).env
 
-        lang = get_lang(env)
-
-        locale = babel_locale_parse(lang.code)  # lang can be inactive, so `lang`is empty
-        date_format = posix_to_ldml(lang.date_format, locale=locale)
-        time_format = posix_to_ldml(lang.short_time_format, locale=locale)
-        dt_format = '%s %s' % (date_format, time_format)
         if start_date and return_date\
            and start_date.replace(tzinfo=UTC).astimezone(timezone(tz)).date()\
                == return_date.replace(tzinfo=UTC).astimezone(timezone(tz)).date():
             # If return day is the same as pickup day, don't display return_date Y/M/D in description.
-            return_date_part = format_time(env, return_date, tz=tz, time_format=time_format)
+            return_date_part = format_time(env, return_date, tz=tz, time_format='short')
         else:
-            return_date_part = format_datetime(env, return_date, tz=tz, dt_format=dt_format)
-        start_date_part = format_datetime(env, start_date, tz=tz, dt_format=dt_format)
+            return_date_part = format_datetime(env, return_date, tz=tz, dt_format='short')
+        start_date_part = format_datetime(env, start_date, tz=tz, dt_format='short')
         return _(
             "\n%(from_date)s to %(to_date)s", from_date=start_date_part, to_date=return_date_part
         )
