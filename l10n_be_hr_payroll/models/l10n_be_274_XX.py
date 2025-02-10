@@ -266,16 +266,16 @@ class L10n_Be274_Xx(models.Model):
             raise UserError(_('There is no valid payslip to declare.'))
 
         year_period_code = {
-            2022: '6',
-            2023: '7',
-            2024: '8',
-            2021: '9',
+            2: '6',
+            3: '7',
+            0: '8',
+            1: '9',
         }
         reference_number = payslips[0].company_id.l10n_be_company_number
         # payment reference - 12 Characters
         first_10_characters = "%s%s%s" % (
             reference_number[1:8], # 1 - 7
-            year_period_code[payslips[0].date_from.year],  # 8
+            year_period_code[payslips[0].date_from.year % 4],  # 8
             str(payslips[0].date_from.month).zfill(2), # 9-10
         )
         payment_reference = "%s%s" % (
