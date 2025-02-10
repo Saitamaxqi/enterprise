@@ -26,6 +26,9 @@ export class SignTemplate extends Component {
         this.action = useService("action");
         const params = this.props.action.params;
         this.templateID = params.id;
+        if (this.templateID) {
+            this.props.updateActionState({ id: this.templateID });
+        }
         this.actionType = params.sign_edit_call || "";
         this.resModel = params.resModel || "";
         this.signStatus = useState({
