@@ -148,6 +148,8 @@ class HrPayslip(models.Model):
     @api.constrains('input_line_ids', 'employee_id')
     def _check_input_lines(self):
         for payslip in self:
+            if payslip.country_code != "AU":
+                continue
             employee = payslip.employee_id
             input_director_fees = self.env.ref("l10n_au_hr_payroll.input_gross_director_fee")
             if input_director_fees in payslip.input_line_ids.mapped("input_type_id") \
