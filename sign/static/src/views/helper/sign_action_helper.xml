@@ -11,7 +11,7 @@
                 </p>
                 <p t-if="this.props.resModel === 'sign.template'">Upload a PDF file to create a reusable template.</p>
                 <p t-else="">Document to send for signature or to sign yourself.</p>
-                <button class="btn btn-primary text-white o_sign_sample" t-on-click="onClicksampleSign">
+                <button class="btn btn-primary text-white o_sign_sample" t-on-click="onClickSampleSign">
                     <t t-if="this.props.resModel === 'sign.request'">Try a sample contract</t>
                     <t t-else="">Try our sample document</t>
                 </button>
