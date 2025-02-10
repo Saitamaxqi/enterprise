@@ -34,7 +34,7 @@ class TestWebsiteHelpdeskLivechat(HttpCase, HelpdeskCommon):
             'anonymous_name': 'Visitor',
             'channel_id': self.livechat_channel.id,
         })
-        discuss_channel = self.env['discuss.channel'].browse(data["discuss.channel"][0]['id']).with_user(self.helpdesk_manager)
+        discuss_channel = self.env['discuss.channel'].browse(data["channel_id"]).with_user(self.helpdesk_manager)
 
         self.assertFalse(self.env['helpdesk.ticket'].search([('team_id', '=', self.test_team.id)]), 'The team should start with no tickets')
 
