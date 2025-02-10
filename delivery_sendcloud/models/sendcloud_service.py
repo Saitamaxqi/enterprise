@@ -368,7 +368,8 @@ class SendCloud:
         to_europe = to_partner_id.country_id.code in to_partner_id.env.ref('base.europe').country_ids.mapped('code')
         use_multicollo = carrier_id.sendcloud_use_batch_shipping and to_europe
         single_shipping = len(delivery_packages) == 1 or (use_multicollo and len(delivery_packages) <= 20)
-        api_weight = shipping_weight if single_shipping else None
+        #Avg weight for multiple packages in single shipping, sendcloud multiplies it with number of packages
+        api_weight = shipping_weight/len(delivery_packages) if single_shipping else None
 
         # Fetch shipping methods compatible with current picking
         shipping_methods = self._get_shipping_methods(picking.carrier_id, from_country, to_country, api_weight, is_return)
@@ -422,7 +423,7 @@ class SendCloud:
                 if isinstance(pkg, list):
                     max_sizes = self._get_max_package_sizes(pkg)
                     parcel.update({
-                        'weight': float_repr(sum(p.weight for p in pkg), 3),
+                        'weight': float_repr((sum(p.weight for p in pkg)/len(pkg)), 3),  #weight gets multiplied with quantity in sendcloud backend
                         'length': max_sizes['length'],
                         'width': max_sizes['width'],
                         'height': max_sizes['height'],
