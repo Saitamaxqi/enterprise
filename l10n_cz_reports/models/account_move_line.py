@@ -53,8 +53,7 @@ class AccountMoveLine(models.Model):
         for line in self:
             line.is_reverse_charge = any(line.tax_ids.mapped('l10n_cz_reverse_charge'))
 
-    @api.depends('product_id')
+    @api.depends('product_id.l10n_cz_supplies_code')
     def _compute_l10n_cz_supplies_code(self):
         for line in self:
-            if line.product_id and line.product_id.l10n_cz_supplies_code:
-                line.l10n_cz_supplies_code = line.product_id.l10n_cz_supplies_code
+            line.l10n_cz_supplies_code = line.product_id.l10n_cz_supplies_code
