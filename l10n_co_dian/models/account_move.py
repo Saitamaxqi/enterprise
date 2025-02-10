@@ -2,11 +2,14 @@ from pytz import timezone
 from lxml import etree
 
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 import re
 
-from odoo import models, fields, api, _
-from odoo.exceptions import UserError
+from odoo import api, fields, models, modules
+from odoo.exceptions import UserError, ValidationError, AccessError, RedirectWarning
+from odoo.addons.l10n_co_dian import xml_utils
+from odoo.addons.l10n_co_dian.models.l10n_co_dian_document import COMMERCIAL_STATE_SELECTION, EVENT_FILE_SEQUENCE_CODE
+
 
 DESCRIPTION_CREDIT_CODE = [
     ("1", "Devolución parcial de los bienes y/o no aceptación parcial del servicio"),
@@ -37,8 +40,9 @@ class AccountMove(models.Model):
     )
     l10n_co_edi_cufe_cude_ref = fields.Char(
         string="CUFE/CUDE/CUDS",
-        compute="_compute_l10n_co_dian_state_and_cufe",
+        compute='_compute_l10n_co_dian_cufe',
         store=True,
+        readonly=True,
         copy=False,
         help="Unique ID used by the DIAN to identify the invoice.",
     )
@@ -49,13 +53,13 @@ class AccountMove(models.Model):
             ('invoice_rejected', "Rejected"),
             ('invoice_accepted', "Accepted"),
         ],
-        compute="_compute_l10n_co_dian_state_and_cufe",
+        compute='_compute_l10n_co_dian_states',
         store=True,
         copy=False,
     )
     l10n_co_dian_attachment_id = fields.Many2one(
         comodel_name='ir.attachment',
-        compute="_compute_l10n_co_dian_attachment",
+        compute='_compute_l10n_co_dian_attachment_id',
     )
     l10n_co_dian_identifier_type = fields.Selection(
         selection=[
@@ -66,29 +70,86 @@ class AccountMove(models.Model):
         compute="_compute_l10n_co_dian_identifier_type",
     )
     l10n_co_dian_is_enabled = fields.Boolean(compute="_compute_l10n_co_dian_is_enabled")
+    l10n_co_dian_processed_by_get_event_status_cron = fields.Boolean()
+    l10n_co_dian_commercial_state = fields.Selection(
+        string="Commercial Status",
+        default='pending',
+        selection=COMMERCIAL_STATE_SELECTION,
+        compute='_compute_l10n_co_dian_states',
+        copy=False,
+        store=True,
+    )
+
+    l10n_co_dian_claim_reason = fields.Selection(
+        string="Claim Reason",
+        selection=[
+            ('01', "Document with inconsistencies"),
+            ('02', "Undelivered merchandise"),
+            ('03', "Merchandise partially delivered"),
+            ('04', "Service not provided"),
+        ],
+        copy=False,
+    )
+
+    l10n_co_dian_update_commercial_event_enabled = fields.Boolean(compute='_compute_l10n_co_dian_update_commercial_event_enabled')
 
     # -------------------------------------------------------------------------
     # Compute
     # -------------------------------------------------------------------------
 
-    @api.depends('l10n_co_dian_document_ids.state', 'l10n_co_dian_document_ids.identifier')
-    def _compute_l10n_co_dian_state_and_cufe(self):
+    @api.depends(
+        'move_type',
+        'l10n_co_edi_is_support_document',
+        'l10n_co_dian_document_ids.state',
+        'l10n_co_dian_document_ids.commercial_state',
+    )
+    def _compute_l10n_co_dian_cufe(self):
         for move in self:
-            move.l10n_co_dian_state = None
-            move.l10n_co_edi_cufe_cude_ref = None
-            if move.l10n_co_dian_document_ids:
-                doc = move.l10n_co_dian_document_ids.sorted()[:1]
-                move.l10n_co_dian_state = doc.state
-                move.l10n_co_edi_cufe_cude_ref = doc.identifier if doc.state == 'invoice_accepted' else False
+            if move.move_type in ('in_invoice', 'in_refund') and not move.l10n_co_edi_is_support_document:
+                move.l10n_co_edi_cufe_cude_ref = move.l10n_co_edi_cufe_cude_ref
+                continue
 
-    @api.depends('l10n_co_dian_document_ids.state')
-    def _compute_l10n_co_dian_attachment(self):
+            move.l10n_co_edi_cufe_cude_ref = False
+            documents = move.l10n_co_dian_document_ids.sorted()
+            is_accepted_by_issuer = False
+            for document in documents:
+                if document.state not in ('invoice_pending', 'invoice_accepted'):
+                    continue
+
+                # In case a document has been accepted by the issuer, we report the identifier of the first send document when the
+                # commercial state was pending.
+                if document.commercial_state == 'accepted_by_issuer':
+                    is_accepted_by_issuer = True
+                if is_accepted_by_issuer and document.commercial_state == 'pending':
+                    move.l10n_co_edi_cufe_cude_ref = document.identifier
+                    break
+
+                # Otherwise, report the identifier for the 'invoice_accepted' document.
+                if not is_accepted_by_issuer and document.state == 'invoice_accepted':
+                    move.l10n_co_edi_cufe_cude_ref = document.identifier
+                    break
+
+    @api.depends('l10n_co_dian_document_ids', 'l10n_co_dian_document_ids.state', 'l10n_co_dian_document_ids.commercial_state')
+    def _compute_l10n_co_dian_states(self):
         for move in self:
-            doc = move.l10n_co_dian_document_ids.sorted()[:1]
-            if doc.state == 'invoice_accepted':
-                move.l10n_co_dian_attachment_id = doc.attachment_id
-            else:
-                move.l10n_co_dian_attachment_id = False
+            move.l10n_co_dian_commercial_state = False
+            move.l10n_co_dian_state = False
+            documents = move.l10n_co_dian_document_ids.sorted()
+            for document in documents:
+                if not move.l10n_co_dian_state:
+                    move.l10n_co_dian_state = document.state
+                if not move.l10n_co_dian_commercial_state and document.state == 'invoice_accepted':
+                    move.l10n_co_dian_commercial_state = document.commercial_state
+
+    @api.depends('l10n_co_dian_document_ids', 'l10n_co_dian_document_ids.state')
+    def _compute_l10n_co_dian_attachment_id(self):
+        for move in self:
+            move.l10n_co_dian_attachment_id = False
+            documents = move.l10n_co_dian_document_ids.sorted()
+            for document in documents:
+                if document.state == 'invoice_accepted':
+                    move.l10n_co_dian_attachment_id = document.attachment_id
+                    break
 
     @api.depends('journal_id', 'move_type')
     def _compute_l10n_co_dian_identifier_type(self):
@@ -122,6 +183,14 @@ class AccountMove(models.Model):
                 and move.company_id.l10n_co_dian_provider == 'dian'
             )
 
+    @api.depends('l10n_co_dian_document_ids.state', 'l10n_co_dian_commercial_state')
+    def _compute_l10n_co_dian_update_commercial_event_enabled(self):
+        for move in self:
+            move.l10n_co_dian_update_commercial_event_enabled = (
+                    any(doc.state == 'invoice_accepted' for doc in move.l10n_co_dian_document_ids)
+                    and move.l10n_co_dian_commercial_state not in ('claimed', 'accepted', 'accepted_by_issuer')
+            )
+
     # -------------------------------------------------------------------------
     # Extends
     # -------------------------------------------------------------------------
@@ -138,8 +207,9 @@ class AccountMove(models.Model):
     def _compute_show_reset_to_draft_button(self):
         # EXTENDS 'account'
         super()._compute_show_reset_to_draft_button()
-        for move in self:
-            if move.l10n_co_dian_state in ('invoice_pending', 'invoice_accepted'):
+        for move in self.filtered(lambda m: m.move_type == 'out_invoice'):
+            # Reset to draft is not possible for invoices validated by DIAN
+            if any(d.state in ('invoice_pending', 'invoice_accepted') and d.commercial_state == 'pending' for d in move.l10n_co_dian_document_ids):
                 move.show_reset_to_draft_button = False
 
     def _get_name_invoice_report(self):
@@ -179,16 +249,121 @@ class AccountMove(models.Model):
     # Helpers
     # -------------------------------------------------------------------------
 
+    def l10n_co_dian_action_update_event_status(self):
+        self.l10n_co_dian_document_ids.filtered(lambda doc: doc.state == 'invoice_rejected').unlink()
+
+        for move in self.try_lock_for_update():
+            track_id = move._l10n_co_dian_get_last_accepted_document().identifier
+            if not track_id:
+                continue
+
+            self.env['l10n_co_dian.document']._send_get_status_event(move, track_id)
+            if not modules.module.current_test:
+                self.env.cr.commit()
+
+            # unlink duplicate documents and only keep the most recent ones
+            # for this process we exclude the original document containing the invoice data
+            documents = self.l10n_co_dian_document_ids.sorted()[:-1]
+            grouped_documents = documents.grouped(key='commercial_state')
+            for commercial_state, duplicate_documents in grouped_documents.items():
+                duplicate_documents.sorted()[1:].unlink()
+
+    def l10n_co_dian_send_event_update_status_received(self):
+        self._l10n_co_dian_send_event_update_status('received')
+
+    def l10n_co_dian_send_event_update_status_claimed(self):
+        self._l10n_co_dian_send_event_update_status('claimed')
+
+    def l10n_co_dian_send_event_update_status_goods_received(self):
+        self._l10n_co_dian_send_event_update_status('goods_received')
+
+    def l10n_co_dian_send_event_update_status_accepted(self):
+        self._l10n_co_dian_send_event_update_status('accepted')
+
+    def l10n_co_dian_send_event_update_status_accepted_by_issuer(self):
+        self._l10n_co_dian_send_event_update_status('accepted_by_issuer')
+
+    def _l10n_co_dian_send_event_update_status(self, commercial_state_next):
+        if not self.env.user.has_group('account.group_account_invoice'):
+            raise AccessError(self.env._("Only invoicing users can update the DIAN commercial status."))
+
+        self.ensure_one()
+        self._l10n_co_dian_validate_send_event_update_data()
+        document = self.env['l10n_co_dian.document']._send_commercial_event(self, commercial_state_next)
+
+        if document.state == 'invoice_accepted':
+            # Send mail
+            AccountMoveSend = self.env['account.move.send']
+            mail_template = self.env.ref('l10n_co_dian.email_template_commercial_event')
+            mail_lang = AccountMoveSend._get_default_mail_lang(self, mail_template)
+
+            self.with_context(
+                email_notification_allow_footer=True,
+            ).message_post(
+                message_type='comment',
+                subtype_id=self.env.ref('mail.mt_comment').id,
+                body=AccountMoveSend._get_default_mail_body(self, mail_template, mail_lang),
+                subject=AccountMoveSend._get_default_mail_subject(self, mail_template, mail_lang),
+                partner_ids=self.partner_id.ids,
+                attachments=[(self.l10n_co_dian_attachment_id.name, self.l10n_co_dian_attachment_id.raw)],
+            )
+
+    def _l10n_co_dian_validate_send_event_update_data(self):
+        errors = []
+        # Validate required data for vendor bills
+        if self.move_type in ('in_invoice', 'in_refund'):
+            if not self.ref:
+                errors.append(self.env._("The Bill Reference is required to send commercial events."))
+
+            if not self.l10n_co_edi_cufe_cude_ref:
+                errors.append(self.env._("The Bill CUFE/CUDE is required to send commercial events."))
+
+        if errors:
+            raise ValidationError('\n'.join(errors))
+
+        # Validate required data for invoices and vendor bills
+        if self.partner_id and not self.partner_id.vat:
+            raise RedirectWarning(
+                message=self.env._("The receiving partner's identification number is required to send commercial events."),
+                action={
+                    'type': 'ir.actions.act_window',
+                    'res_model': 'res.partner',
+                    'context': {'create': False},
+                    'view_mode': 'form',
+                    'views': [[self.env.ref('base.view_partner_form').id, 'form']],
+                    'res_id': self.partner_id.id,
+                },
+                button_text=self.env._("Go to Partner"),
+            )
+
+    def _l10n_co_dian_get_mail_commercial_state_label(self):
+        self.ensure_one()
+        commercial_states = dict(self._fields['l10n_co_dian_commercial_state']._description_selection(self.with_context(lang=self.partner_id.lang).env))
+        return commercial_states.get(self.l10n_co_dian_commercial_state, '')
+
+    def _l10n_co_dian_get_electronic_document_number(self):
+        self.ensure_one()
+        if not self.l10n_co_dian_attachment_id:
+            return None
+
+        if self.move_type in ('in_invoice', 'in_refund') and not self.l10n_co_edi_is_support_document:
+            root = etree.fromstring(xml_utils._unzip(self.l10n_co_dian_attachment_id.raw))
+        else:
+            root = etree.fromstring(self.l10n_co_dian_attachment_id.raw)
+
+        nsmap = {k: v for k, v in root.nsmap.items() if k}  # empty namespace prefix is not supported for XPaths
+        return root.findtext('./cbc:ID', namespaces=nsmap)
+
     def l10n_co_dian_action_send_bill_support_document(self):
         self.ensure_one()
         xml, errors = self.env['account.edi.xml.ubl_dian']._export_invoice(self)
         if errors:
-            raise UserError(_("Error(s) when generating the UBL attachment:\n- %s", '\n- '.join(errors)))
+            raise UserError(self.env._("Error(s) when generating the UBL attachment:\n- %s", '\n- '.join(errors)))
         doc = self._l10n_co_dian_send_invoice_xml(xml)
         if doc.state == 'invoice_rejected':
             if self.env['account.move.send']._can_commit():
                 self.env.cr.commit()
-            raise UserError(_("Error(s) when sending the document to the DIAN:\n- %s",
+            raise UserError(self.env._("Error(s) when sending the document to the DIAN:\n- %s",
                               "\n- ".join(doc.message_json['errors']) or doc.message_json['status']))
 
     def _l10n_co_dian_get_invoice_report_qr_code_value(self):
@@ -237,7 +412,7 @@ class AccountMove(models.Model):
     def _l10n_co_dian_get_extra_invoice_report_values(self):
         """ Get the values used to render the PDF """
         self.ensure_one()
-        document = self.l10n_co_dian_document_ids.sorted()[:1]
+        document = self._l10n_co_dian_get_last_accepted_document()
         return {
             'barcode_src': f'/report/barcode/?barcode_type=QR&value="{self._l10n_co_dian_get_invoice_report_qr_code_value()}"&width=180&height=180&quiet=0',
             'signing_datetime': document.datetime.replace(microsecond=0),
@@ -289,10 +464,10 @@ class AccountMove(models.Model):
         document = self.env['l10n_co_dian.document']._send_to_dian(xml=xml, move=self)
         if document.state == 'invoice_accepted':
             self.message_post(
-                body=_(
+                body=self.env._(
                     "The %s was accepted by the DIAN.",
                     dict(document.move_id._fields['move_type'].selection)[document.move_id.move_type],
-                ) if not document.move_id.company_id.l10n_co_dian_demo_mode else _(
+                ) if not document.move_id.company_id.l10n_co_dian_demo_mode else self.env._(
                     "The %s was validated locally in Demo Mode.",
                     dict(document.move_id._fields['move_type'].selection)[document.move_id.move_type],
                 ),
@@ -304,6 +479,58 @@ class AccountMove(models.Model):
         self.ensure_one()
         # remove every non-word char or underscore, keep only the alphanumeric characters
         return re.sub(r'[\W_]', '', self.name)
+
+    def _l10n_co_dian_get_commercial_event_document_filename(self, file_ext):
+        self.ensure_one()
+        prefix = 'ar' if file_ext == 'xml' else 'z'
+        vat = self.company_id.partner_id._get_vat_without_verification_code().zfill(10)
+        year = fields.Datetime.now().strftime("%y")
+
+        suffix = self.with_company(self.company_id).env['ir.sequence'].next_by_code(EVENT_FILE_SEQUENCE_CODE)
+        if not suffix:
+            sequence = self.env['ir.sequence'].sudo().create([{
+                'name': f"Commercial Event File Name ({self.company_id.name})",
+                'code': EVENT_FILE_SEQUENCE_CODE,
+                'company_id': self.company_id.id,
+                'implementation': 'no_gap',
+                'use_date_range': True,
+            }])
+            suffix = sequence.next_by_id()
+
+        return f'{prefix}{vat}000{year}{int(suffix):0{8}X}'
+
+    def _l10n_co_dian_get_last_accepted_document(self):
+        self.ensure_one()
+        return next(
+            (d for d in self.l10n_co_dian_document_ids.sorted() if d.state == 'invoice_accepted'),
+            self.env['l10n_co_dian.document'],
+        )
+
+    def _l10n_co_dian_cron_update_event_status(self, *, limit=3):
+        date_limit = fields.Datetime.now().date() - timedelta(days=30)
+
+        # There is no clear-cut way to distinguish processed and non-processed moves
+        # so we need an extra field to prevent multiple batches from processing the same record
+        to_process_domain = [
+            ('move_type', '=', 'out_invoice'),
+            ('state', '=', 'posted'),
+            ('l10n_co_dian_commercial_state', 'in', ('pending', 'received', 'goods_received')),
+            ('l10n_co_edi_cufe_cude_ref', '!=', False),
+            ('invoice_date', '>=', date_limit),
+            ('l10n_co_dian_processed_by_get_event_status_cron', '=', False),
+        ]
+
+        records = self.search(domain=to_process_domain, limit=limit)
+        records.l10n_co_dian_action_update_event_status()
+        records.l10n_co_dian_processed_by_get_event_status_cron = True
+
+        remaining = self.search_count(domain=to_process_domain)
+        if not remaining:
+            # reset processed by cron field
+            processed_records = self.search([('l10n_co_dian_processed_by_get_event_status_cron', '=', True)])
+            processed_records.l10n_co_dian_processed_by_get_event_status_cron = False
+
+        self.env['ir.cron']._commit_progress(len(records), remaining=remaining)
 
 
 class AccountMoveLine(models.Model):

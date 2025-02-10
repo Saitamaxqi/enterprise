@@ -1,5 +1,7 @@
 from lxml import etree
 import requests
+import io
+import zipfile
 
 from base64 import b64encode
 from copy import deepcopy
@@ -155,3 +157,19 @@ def _build_and_send_request(self, payload, service, company):
     if response.status_code != 200:
         _logger.info("DIAN server returned code %s\n%s", response.status_code, response.text)
     return {'response': response.text, 'status_code': response.status_code}
+
+
+def _zip_xml(filename, xml):
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, 'w', compression=zipfile.ZIP_DEFLATED) as zipfile_obj:
+        for att in [{'name': f'{filename}.xml', 'content': xml}]:
+            zipfile_obj.writestr(att['name'], att['content'])
+    return buffer.getvalue()
+
+
+def _unzip(raw):
+    with io.BytesIO(raw) as buffer:
+        zipfile_obj = zipfile.ZipFile(buffer)
+
+        filename = zipfile_obj.namelist()[0]  # there is only ever 1 file in the zipped file
+        return zipfile_obj.read(filename)

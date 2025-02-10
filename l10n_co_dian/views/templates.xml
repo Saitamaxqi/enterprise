@@ -67,6 +67,18 @@
         </wcf:SendBillSync>
     </template>
 
+    <template id="send_event_update_status">
+        <wcf:SendEventUpdateStatus xmlns:wcf="http://wcf.dian.colombia">
+            <wcf:contentFile t-out="content_file"/>
+        </wcf:SendEventUpdateStatus>
+    </template>
+
+    <template id="get_status_event">
+        <wcf:GetStatusEvent xmlns:wcf="http://wcf.dian.colombia">
+            <wcf:trackId t-out="track_id"/>
+        </wcf:GetStatusEvent>
+    </template>
+
     <template id="get_status_zip">
         <wcf:GetStatusZip xmlns:wcf="http://wcf.dian.colombia">
             <wcf:trackId t-out="track_id"/>
@@ -256,30 +268,32 @@
                     <cbc:Description>dummy</cbc:Description> <!-- initial xml representing the move sent to DIAN -->
                 </cac:ExternalReference>
             </cac:Attachment>
-            <cac:ParentDocumentLineReference>
-                <cbc:LineID>1</cbc:LineID>
-                <cac:DocumentReference>
-                    <cbc:ID t-out="parent_document.get('id')"/>
-                    <cbc:UUID
-                        t-att="parent_document.get('uuid_attrs')"
-                        t-out="parent_document.get('uuid')"/>
-                    <cbc:IssueDate t-out="parent_document.get('issue_date')"/>
-                    <cbc:DocumentType>ApplicationResponse</cbc:DocumentType>
-                    <cac:Attachment>
-                        <cac:ExternalReference>
-                            <cbc:MimeCode>text/xml</cbc:MimeCode>
-                            <cbc:EncodingCode>UTF-8</cbc:EncodingCode>
-                            <cbc:Description>dummy</cbc:Description> <!-- result from GetStatus, node 'XmlBase64Bytes' -->
-                        </cac:ExternalReference>
-                    </cac:Attachment>
-                    <cac:ResultOfVerification>
-                        <cbc:ValidatorID>Unidad Especial Dirección de Impuestos y Aduanas Nacionales</cbc:ValidatorID>
-                        <cbc:ValidationResultCode t-out="parent_document.get('response_code')"/>
-                        <cbc:ValidationDate t-out="parent_document.get('validation_date')"/>
-                        <cbc:ValidationTime t-out="parent_document.get('validation_time')"/>
-                    </cac:ResultOfVerification>
-                </cac:DocumentReference>
-            </cac:ParentDocumentLineReference>
+            <t t-foreach="parent_documents" t-as="parent_document">
+                <cac:ParentDocumentLineReference>
+                    <cbc:LineID t-out="parent_document.get('id')"/>
+                    <cac:DocumentReference>
+                        <cbc:ID t-out="parent_document.get('id')"/>
+                        <cbc:UUID
+                                t-att="parent_document.get('uuid_attrs')"
+                                t-out="parent_document.get('uuid')"/>
+                        <cbc:IssueDate t-out="parent_document.get('issue_date')"/>
+                        <cbc:DocumentType>ApplicationResponse</cbc:DocumentType>
+                        <cac:Attachment>
+                            <cac:ExternalReference>
+                                <cbc:MimeCode>text/xml</cbc:MimeCode>
+                                <cbc:EncodingCode>UTF-8</cbc:EncodingCode>
+                                <cbc:Description>dummy</cbc:Description> <!-- Application Response xml -->
+                            </cac:ExternalReference>
+                        </cac:Attachment>
+                        <cac:ResultOfVerification>
+                            <cbc:ValidatorID>Unidad Especial Dirección de Impuestos y Aduanas Nacionales</cbc:ValidatorID>
+                            <cbc:ValidationResultCode t-out="parent_document.get('response_code')"/>
+                            <cbc:ValidationDate t-out="parent_document.get('validation_date')"/>
+                            <cbc:ValidationTime t-out="parent_document.get('validation_time')"/>
+                        </cac:ResultOfVerification>
+                    </cac:DocumentReference>
+                </cac:ParentDocumentLineReference>
+            </t>
         </AttachedDocument>
     </template>
 </odoo>

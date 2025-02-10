@@ -141,7 +141,7 @@ class TestCoDianCommon(AccountTestInvoicingCommon):
 
     @classmethod
     def _create_move(cls, **kwargs):
-        with freeze_time(cls.frozen_today):
+        with freeze_time(kwargs.pop('freeze_date', None) or cls.frozen_today):
             invoice = cls.env['account.move'].create({
                 'partner_id': cls.partner_co.id,
                 'move_type': 'out_invoice',
@@ -179,6 +179,11 @@ class TestCoDianCommon(AccountTestInvoicingCommon):
             self.get_xml_tree_from_string(xml),
             self.get_xml_tree_from_string(expected_dian),
         )
+
+    @classmethod
+    def _get_last_sent_document(cls, move):
+        move.ensure_one()
+        return cls.env['l10n_co_dian.document'] if not move.l10n_co_dian_document_ids else move.l10n_co_dian_document_ids.sorted()[0]
 
     @classmethod
     def _read_file(cls, path, *args):
@@ -236,13 +241,16 @@ class TestCoDianCommon(AccountTestInvoicingCommon):
     def _mock_get_status(self):
         return patch(f'{self.document_path}._get_status', return_value=self._mocked_response('GetStatus_invoice.xml', 200))
 
+    def _mock_build_and_send_request(self, response_file, status_code=200):
+        return patch(f'{self.utils_path}._build_and_send_request', return_value=self._mocked_response(response_file, status_code))
+
     def _disable_get_acquirer_call(self):
         return patch.object(ResPartner, attribute='_l10n_co_dian_call_get_acquirer', return_value=dict())
 
     def _mock_send_and_print(self, move, response_file, response_code=200):
         with (
             self._mock_get_status(),
-            patch(f'{self.utils_path}._build_and_send_request', return_value=self._mocked_response(response_file, response_code)),
+            self._mock_build_and_send_request(response_file, response_code),
             self._disable_get_acquirer_call(),
         ):
             self.env['account.move.send.wizard'] \
