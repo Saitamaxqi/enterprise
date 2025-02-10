@@ -38,7 +38,7 @@ class AccountTaxReportHandler(models.AbstractModel):
         }
 
         options['show_tax_period_filter'] = periodicity not in optional_periods or day != 1 or month != 1
-        if not options['show_tax_period_filter']:
+        if not options['show_tax_period_filter'] and 'custom' not in options['date']['filter']:
             period_type = optional_periods[periodicity]
             options['date']['filter'] = options['date']['filter'].replace('tax_period', period_type)
             options['date']['period_type'] = options['date']['period_type'].replace('tax_period', period_type)
