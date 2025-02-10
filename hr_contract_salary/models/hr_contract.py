@@ -176,7 +176,7 @@ class HrContract(models.Model):
             types += ('text',)
         nonstored_whitelist = self._benefit_white_list()
         benefit_fields = set(
-            field.name for field in self._fields.values() if field.type in types and (field.store or not field.store and field.name in nonstored_whitelist))
+            field.name for field in self._fields.values() if field.type in types and (field.store or not field.store and field.name in nonstored_whitelist) and not field.name.startswith("x_studio_"))
         if not triggers:
             benefit_fields |= {'wage_with_holidays'}
         return tuple(benefit_fields - self._benefit_black_list())
