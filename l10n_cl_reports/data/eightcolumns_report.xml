@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="cl_eightcolumns_report" model="account.report">
-        <field name="name">Chilean Fiscal Balance (8 Columns)</field>
-        <field name="name@es_419">Balanza fiscal chilena (8 columnas)</field>
+        <field name="name">Fiscal Balance Report</field>
+        <field name="name@es_419">Informe de Balance Fiscal</field>
         <field name="root_report_id" ref="account_reports.balance_sheet"/>
         <field name="country_id" ref="base.cl"/>
         <field name="filter_date_range" eval="True"/>

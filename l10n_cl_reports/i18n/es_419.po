@@ -114,3 +114,15 @@ msgstr "Tasa PPM (%)"
 #: code:addons/l10n_cl_reports/models/account_eightcolumns_report.py:0
 msgid "Total"
 msgstr "Total"
+
+#. module: l10n_cl_reports
+#: model:account.report.line,name:l10n_cl_reports.account_financial_report_f29_line_0105
+msgid "Total Sales"
+msgstr "Ventas totales"
+
+#. module: l10n_cl_reports
+#: model:ir.model.fields,field_description:l10n_cl_reports.field_l10n_cl_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_cl_reports.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_cl_reports.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"

@@ -472,3 +472,9 @@ msgstr "Sin prorateo"
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 msgid "ZIP"
 msgstr "Código postal"
+
+
+#. module: l10n_ar_reports
+#: model:ir.model,name:l10n_ar_reports.model_l10n_ar_tax_report_handler
+msgid "Argentinian Tax Report Custom Handler"
+msgstr "Gestor personalizado de reportes fiscales argentinos"
