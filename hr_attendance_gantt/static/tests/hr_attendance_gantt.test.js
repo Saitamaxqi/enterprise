@@ -63,7 +63,7 @@ beforeEach(() => {
 });
 
 test("Open Ended record today", async () => {
-    mockDate("2018-12-10 16:00:00");
+    mockDate("2018-12-10 16:00:00", +0);
     await mountGanttView({
         resModel: "attendances",
         arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' date_stop="check_out"/>`,
@@ -78,12 +78,12 @@ test("Open Ended record today", async () => {
         {
             pills: [
                 {
-                    colSpan: "10am 10 December 2018 -> 12pm 10 December 2018",
+                    colSpan: "9am December 10, 2018 -> 11am December 10, 2018",
                     level: 0,
                     title: "Attendance 1",
                 },
                 {
-                    colSpan: "2pm 10 December 2018 -> 5pm 10 December 2018",
+                    colSpan: "1pm December 10, 2018 -> 4pm December 10, 2018",
                     level: 0,
                     title: "Attendance 2",
                 },
@@ -93,7 +93,7 @@ test("Open Ended record today", async () => {
         {
             pills: [
                 {
-                    colSpan: "9am 10 December 2018 -> 4pm 10 December 2018",
+                    colSpan: "8am December 10, 2018 -> 3pm December 10, 2018",
                     level: 0,
                     title: "Attendance 3",
                 },
@@ -104,7 +104,7 @@ test("Open Ended record today", async () => {
 });
 
 test("Future Open Ended record not displayed", async () => {
-    mockDate("2018-12-10 12:00:00");
+    mockDate("2018-12-10 12:00:00", +0);
     await mountGanttView({
         resModel: "attendances",
         arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' date_stop="check_out"/>`,
@@ -119,7 +119,7 @@ test("Future Open Ended record not displayed", async () => {
         {
             pills: [
                 {
-                    colSpan: "10am 10 December 2018 -> 12pm 10 December 2018",
+                    colSpan: "9am December 10, 2018 -> 11am December 10, 2018",
                     level: 0,
                     title: "Attendance 1",
                 },
@@ -129,7 +129,7 @@ test("Future Open Ended record not displayed", async () => {
         {
             pills: [
                 {
-                    colSpan: "9am 10 December 2018 -> 4pm 10 December 2018",
+                    colSpan: "8am December 10, 2018 -> 3pm December 10, 2018",
                     level: 0,
                     title: "Attendance 3",
                 },
@@ -140,7 +140,7 @@ test("Future Open Ended record not displayed", async () => {
 });
 
 test("Open Ended record spanning multiple days", async () => {
-    mockDate("2018-12-12 14:00:00");
+    mockDate("2018-12-12 14:00:00", +0);
     await mountGanttView({
         resModel: "attendances",
         arch: `<gantt js_class="attendance_gantt" date_start="check_in" default_group_by='user_id' date_stop="check_out"/>`,
@@ -155,7 +155,7 @@ test("Open Ended record spanning multiple days", async () => {
         {
             pills: [
                 {
-                    colSpan: "12am 12 December 2018 -> 3pm 12 December 2018",
+                    colSpan: "12am December 12, 2018 -> 2pm December 12, 2018",
                     level: 0,
                     title: "Attendance 2",
                 },
@@ -172,7 +172,7 @@ test("Open Ended record spanning multiple days", async () => {
         {
             pills: [
                 {
-                    colSpan: "12am 11 December 2018 -> 11pm 11 December 2018",
+                    colSpan: "12am December 11, 2018 -> 11pm December 11, 2018",
                     level: 0,
                     title: "Attendance 2",
                 },
@@ -189,12 +189,12 @@ test("Open Ended record spanning multiple days", async () => {
         {
             pills: [
                 {
-                    colSpan: "10am 10 December 2018 -> 12pm 10 December 2018",
+                    colSpan: "9am December 10, 2018 -> 11am December 10, 2018",
                     level: 0,
                     title: "Attendance 1",
                 },
                 {
-                    colSpan: "2pm 10 December 2018 -> 11pm 10 December 2018",
+                    colSpan: "1pm December 10, 2018 -> 11pm December 10, 2018",
                     level: 0,
                     title: "Attendance 2",
                 },
@@ -204,7 +204,7 @@ test("Open Ended record spanning multiple days", async () => {
         {
             pills: [
                 {
-                    colSpan: "9am 10 December 2018 -> 4pm 10 December 2018",
+                    colSpan: "8am December 10, 2018 -> 3pm December 10, 2018",
                     level: 0,
                     title: "Attendance 3",
                 },
@@ -215,7 +215,7 @@ test("Open Ended record spanning multiple days", async () => {
 });
 
 test("Concurrent open-ended records", async () => {
-    mockDate("2018-12-20 15:00:00");
+    mockDate("2018-12-20 15:00:00", +0);
     Attendances._records = [
         {
             id: 4,
@@ -247,12 +247,12 @@ test("Concurrent open-ended records", async () => {
         {
             pills: [
                 {
-                    colSpan: "9am 20 December 2018 -> 4pm 20 December 2018",
+                    colSpan: "8am December 20, 2018 -> 3pm December 20, 2018",
                     level: 0,
                     title: "Attendance 4",
                 },
                 {
-                    colSpan: "10am 20 December 2018 -> 4pm 20 December 2018",
+                    colSpan: "9am December 20, 2018 -> 3pm December 20, 2018",
                     level: 1,
                     title: "Attendance 5",
                 },
@@ -263,7 +263,7 @@ test("Concurrent open-ended records", async () => {
 });
 
 test("Open ended record Precision", async () => {
-    mockDate("2018-12-20 15:35:00");
+    mockDate("2018-12-20 15:35:00", +0);
     Attendances._records = [
         {
             id: 4,
@@ -288,7 +288,7 @@ test("Open ended record Precision", async () => {
         {
             pills: [
                 {
-                    colSpan: "9am 20 December 2018 -> 4pm (3/4) 20 December 2018",
+                    colSpan: "8am December 20, 2018 -> 3pm (3/4) December 20, 2018",
                     level: 0,
                     title: "Attendance 4",
                 },
@@ -299,7 +299,7 @@ test("Open ended record Precision", async () => {
 });
 
 test("Open ended record updated correctly", async () => {
-    mockDate("2018-12-20 14:00:00");
+    mockDate("2018-12-20 14:00:00", +0);
     Attendances._records = [
         {
             id: 4,
@@ -324,7 +324,7 @@ test("Open ended record updated correctly", async () => {
         {
             pills: [
                 {
-                    colSpan: "9am 20 December 2018 -> 3pm 20 December 2018",
+                    colSpan: "8am December 20, 2018 -> 2pm December 20, 2018",
                     level: 0,
                     title: "Attendance 4",
                 },
@@ -332,7 +332,7 @@ test("Open ended record updated correctly", async () => {
             title: "User 1",
         },
     ]);
-    mockDate("2018-12-20 18:00:00");
+    mockDate("2018-12-20 18:00:00", +0);
     await click(queryOne(SELECTORS.previousButton));
     await advanceTime(500);
     await animationFrame();
@@ -343,12 +343,12 @@ test("Open ended record updated correctly", async () => {
     expect(gridContent.range).toBe("From: 12/20/2018 to: 12/20/2018");
     // TODO fixme: end hour is non deterministic and alternates between 7pm and 8pm.
     const endHour = parseInt(gridContent.rows[0].pills[0].colSpan.match(/->\s*(\d+)/)[1]);
-    expect(endHour).toBeWithin(7, 8);
+    expect(endHour).toBeWithin(6, 7);
     expect(gridContent.rows).toEqual([
         {
             pills: [
                 {
-                    colSpan: `9am 20 December 2018 -> ${endHour}pm 20 December 2018`,
+                    colSpan: `8am December 20, 2018 -> ${endHour}pm December 20, 2018`,
                     level: 0,
                     title: "Attendance 4",
                 },
@@ -359,7 +359,7 @@ test("Open ended record updated correctly", async () => {
 });
 
 test("Future Open ended record not shown before it happens and appears after start date.", async () => {
-    mockDate("2018-11-02 12:00:00");
+    mockDate("2018-11-02 12:00:00", +0);
     Attendances._records = [
         {
             id: 5,
@@ -391,15 +391,15 @@ test("Future Open ended record not shown before it happens and appears after sta
         {
             pills: [
                 {
-                    colSpan: "10am 02 November 2018 -> 12pm 02 November 2018",
+                    colSpan: "9am November 2, 2018 -> 11am November 2, 2018",
                     level: 0,
                     title: "Attendance 5",
                 },
             ],
-            title: "User 1",
+            title: "User 1", 
         },
     ]);
-    mockDate("2018-11-02 17:00:00");
+    mockDate("2018-11-02 17:00:00", +0);
     await click(queryOne(SELECTORS.previousButton));
     await advanceTime(500);
     await animationFrame();
@@ -412,12 +412,12 @@ test("Future Open ended record not shown before it happens and appears after sta
         {
             pills: [
                 {
-                    colSpan: "10am 02 November 2018 -> 12pm 02 November 2018",
+                    colSpan: "9am November 2, 2018 -> 11am November 2, 2018",
                     level: 0,
                     title: "Attendance 5",
                 },
                 {
-                    colSpan: "3pm 02 November 2018 -> 6pm 02 November 2018",
+                    colSpan: "2pm November 2, 2018 -> 5pm November 2, 2018",
                     level: 0,
                     title: "Attendance 6",
                 },
@@ -428,7 +428,7 @@ test("Future Open ended record not shown before it happens and appears after sta
 });
 
 test("Domain correctly applied when allow_open_ended=1.", async () => {
-    mockDate("2018-11-02 19:00:00");
+    mockDate("2018-11-02 19:00:00", +0);
     Attendances._records = [
         {
             id: 7,
@@ -468,7 +468,7 @@ test("Domain correctly applied when allow_open_ended=1.", async () => {
         {
             pills: [
                 {
-                    colSpan: "3pm 02 November 2018 -> 8pm 02 November 2018",
+                    colSpan: "2pm November 2, 2018 -> 7pm November 2, 2018",
                     level: 0,
                     title: "Attendance 8",
                 },
@@ -478,7 +478,7 @@ test("Domain correctly applied when allow_open_ended=1.", async () => {
         {
             pills: [
                 {
-                    colSpan: "4pm 02 November 2018 -> 7pm 02 November 2018",
+                    colSpan: "3pm November 2, 2018 -> 6pm November 2, 2018",
                     level: 0,
                     title: "Attendance 7",
                 },

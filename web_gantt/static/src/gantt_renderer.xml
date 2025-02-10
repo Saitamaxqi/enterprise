@@ -60,6 +60,7 @@
             <t t-foreach="columnsGroups" t-as="columnGroup" t-key="columnGroup_index">
                 <div class="o_gantt_header_title position-sticky d-flex align-items-center ps-2 overflow-hidden bg-100"
                     t-att-style="getGridPosition({column: columnGroup.grid.column})"
+                    t-att-title="!columnGroup.isFolded and model.metaData.scale.groupHeaderTitle(columnGroup.start, env)"
                 >
                     <t t-if="!columnGroup.isFolded" t-esc="model.metaData.scale.groupHeaderFormatter(columnGroup.start, env)"/>
                 </div>
@@ -78,6 +79,7 @@
                     t-att-data-column-index="column.index"
                     t-att-style="getGridPosition({column: column.grid.column})"
                     t-on-click="() => column.isFoldable and this.toggleFoldableColumn(column, !column.isFolded)"
+                    t-att-title="!column.isFolded and model.metaData.scale.colHeaderTitle(column.start, env)"
                 >
                     <t t-if="column.isFolded">
                         <div class="o_gantt_header_cell_title">
@@ -93,10 +95,10 @@
                         </div>
                         <small t-else="" class="o_gantt_header_cell_title text-center">
                             <t t-if="is24HourFormat">
-                                <b t-esc="column.start.toFormat('H')"/>
+                                <t t-esc="column.start.toFormat('H')"/>
                             </t>
                             <t t-else="">
-                                <b t-esc="column.start.toFormat('h')"/>
+                                <t t-esc="column.start.toFormat('h')"/>
                                 <div class="d-xl-inline-block" t-esc="column.start.toFormat('a').toLowerCase()"/>
                             </t>
                         </small>

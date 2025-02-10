@@ -73,7 +73,7 @@ test("concurrent range switches return in inverse order", async () => {
     expect.verifySteps(["patched", "patched"]);
 
     content = getGridContent();
-    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["2017", "2018", "2019"]);
+    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["2018", "2019"]);
     expect(content.range).toBe("Year");
     expect(model.data.records).toHaveLength(7);
 
@@ -81,7 +81,7 @@ test("concurrent range switches return in inverse order", async () => {
     await animationFrame();
 
     content = getGridContent();
-    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["2017", "2018", "2019"]);
+    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["2018", "2019"]);
     expect(content.range).toBe("Year");
     expect(model.data.records).toHaveLength(7);
     expect.verifySteps([]);
@@ -127,8 +127,8 @@ test("concurrent range switches return with gantt unavailabilities", async () =>
     expect(content.range).toBe("From: 12/01/2018 to: 02/28/2019");
     expect(content.groupHeaders.map((h) => h.title)).toEqual(["December 2018", "January 2019"]);
     expect(model.data.records).toHaveLength(6);
-    expect(getCellColorProperties("08 December 2018")).toEqual([]);
-    expect(getCellColorProperties("11 December 2018")).toEqual([
+    expect(getCellColorProperties("08", "December 2018")).toEqual([]);
+    expect(getCellColorProperties("11", "December 2018")).toEqual([
         "--Gantt__DayOff-background-color",
     ]);
 
@@ -142,8 +142,8 @@ test("concurrent range switches return with gantt unavailabilities", async () =>
     expect(content.range).toBe("Week");
     expect(content.groupHeaders.map((h) => h.title)).toEqual(["December 2018", "January 2019"]);
     expect(model.data.records).toHaveLength(6);
-    expect(getCellColorProperties("08 December 2018")).toEqual([]);
-    expect(getCellColorProperties("11 December 2018")).toEqual([
+    expect(getCellColorProperties("08", "December 2018")).toEqual([]);
+    expect(getCellColorProperties("11", "December 2018")).toEqual([
         "--Gantt__DayOff-background-color",
     ]);
 
@@ -155,20 +155,20 @@ test("concurrent range switches return with gantt unavailabilities", async () =>
 
     content = getGridContent();
     expect(content.range).toBe("Year");
-    expect(content.groupHeaders.map((h) => h.title)).toEqual(["2017", "2018", "2019"]);
+    expect(content.groupHeaders.map((h) => h.title)).toEqual(["2018", "2019"]);
     expect(model.data.records).toHaveLength(7);
-    expect(getCellColorProperties("August 2018")).toEqual(["--Gantt__DayOff-background-color"]);
-    expect(getCellColorProperties("November 2018")).toEqual([]);
+    expect(getCellColorProperties("August", "2018")).toEqual(["--Gantt__DayOff-background-color"]);
+    expect(getCellColorProperties("November", "2018")).toEqual([]);
 
     firstReloadProm.resolve();
     await animationFrame();
 
     content = getGridContent();
     expect(content.range).toBe("Year");
-    expect(content.groupHeaders.map((h) => h.title)).toEqual(["2017", "2018", "2019"]);
+    expect(content.groupHeaders.map((h) => h.title)).toEqual(["2018", "2019"]);
     expect(model.data.records).toHaveLength(7);
-    expect(getCellColorProperties("August 2018")).toEqual(["--Gantt__DayOff-background-color"]);
-    expect(getCellColorProperties("November 2018")).toEqual([]);
+    expect(getCellColorProperties("August", "2018")).toEqual(["--Gantt__DayOff-background-color"]);
+    expect(getCellColorProperties("November", "2018")).toEqual([]);
     expect.verifySteps([]);
 });
 

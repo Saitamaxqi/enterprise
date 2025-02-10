@@ -207,7 +207,7 @@ test("check default planned dates on the plan dialog", async function () {
         resModel: "planning.slot",
         arch: `<gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_scale="week"/>`,
     });
-    await clickCell("11 W41 2021");
+    await clickCell("Monday 11", "Week 41 of 2021");
 });
 
 test("Show shift form dialog only when shifts to plan", async function () {
@@ -230,8 +230,8 @@ test("Show shift form dialog only when shifts to plan", async function () {
         resModel: "planning.slot",
         arch: `<gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_scale="week"/>`,
     });
-    await hoverGridCell("13 W41 2021");
-    await clickCell("13 W41 2021");
+    await hoverGridCell("Wednesday 13", "Week 41 of 2021");
+    await clickCell("Wednesday 13", "Week 41 of 2021");
 
     expect(".o_dialog").toHaveCount(1);
     expect(".modal-title").toHaveText("Plan");
@@ -245,20 +245,20 @@ test("Show shift form dialog only when shifts to plan", async function () {
         {
             pills: [
                 {
-                    colSpan: "12 W41 2021 -> 12 W41 2021",
+                    colSpan: "Tuesday 12 Week 41 of 2021 -> Tuesday 12 Week 41 of 2021",
                     level: 0,
                     title: "Shift 1",
                 },
                 {
-                    colSpan: "13 W41 2021 -> 13 W41 2021",
+                    colSpan: "Wednesday 13 Week 41 of 2021 -> Wednesday 13 Week 41 of 2021",
                     level: 0,
                     title: "Shift 2",
                 },
             ],
         },
     ]);
-    await hoverGridCell("13 W41 2021");
-    await clickCell("13 W41 2021");
+    await hoverGridCell("Wednesday 13", "Week 41 of 2021");
+    await clickCell("Wednesday 13", "Week 41 of 2021");
     expect(".o_dialog").toHaveCount(1);
     expect(".modal-title").toHaveText("Add Shift");
 });
@@ -289,8 +289,8 @@ test("Open a dialog to schedule a plan using Open Shift", async function () {
         arch: '<gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_scale="week"/>',
         groupBy: ["resource_id"],
     });
-    await hoverGridCell("13 W41 2021");
-    await clickCell("13 W41 2021");
+    await hoverGridCell("Wednesday 13", "Week 41 of 2021");
+    await clickCell("Wednesday 13", "Week 41 of 2021");
     await click(".modal-footer .o_create_button");
 
     await selectFieldDropdownItem("resource_id", "Jarvo");

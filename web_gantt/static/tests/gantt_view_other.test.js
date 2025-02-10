@@ -87,12 +87,12 @@ test("DST spring forward", async () => {
     expect(columnHeaders.slice(24, 28).map((h) => h.title)).toEqual(["12am", "1am", "3am", "4am"]);
     expect(rows[0].pills).toEqual([
         {
-            colSpan: "4am 30 March 2019 -> 4am 30 March 2019",
+            colSpan: "4am March 30, 2019 -> 4am March 30, 2019",
             level: 0,
             title: "DST Task 1",
         },
         {
-            colSpan: "5am 31 March 2019 -> 5am 31 March 2019",
+            colSpan: "5am March 31, 2019 -> 5am March 31, 2019",
             level: 0,
             title: "DST Task 2",
         },
@@ -129,12 +129,12 @@ test("DST fall back", async () => {
     expect(columnHeaders.slice(24, 28).map((h) => h.title)).toEqual(["12am", "1am", "2am", "2am"]);
     expect(rows[0].pills).toEqual([
         {
-            colSpan: "5am 26 October 2019 -> 5am 26 October 2019",
+            colSpan: "5am October 26, 2019 -> 5am October 26, 2019",
             level: 0,
             title: "DST Task 1",
         },
         {
-            colSpan: "4am 27 October 2019 -> 4am 27 October 2019",
+            colSpan: "4am October 27, 2019 -> 4am October 27, 2019",
             level: 0,
             title: "DST Task 2",
         },
@@ -224,7 +224,7 @@ test("move a pill in multi-level group row after collapse and expand grouped row
 
     // move a pill (task 7) in the other row and in the day 2
     const { drop } = await dragPill("Task 7");
-    await drop({ column: "11 December 2018", part: 2 });
+    await drop({ columnHeader: "11", groupHeader: "December 2018", part: 2 });
     expect.verifySteps(["write"]);
     expect(getGridContent().rows.filter((x) => x.isGroup)).toHaveLength(1);
 });
@@ -254,8 +254,8 @@ test("plan dialog initial domain has the action domain as its only base", async 
     await animationFrame();
 
     expect.verifySteps(["&,start,<,2019-02-28 23:00:00,stop,>,2018-11-30 23:00:00"]);
-    await hoverGridCell("10 December 2018");
-    await clickCell("10 December 2018");
+    await hoverGridCell("10", "December 2018");
+    await clickCell("10", "December 2018");
     expect.verifySteps(["|,start,=,false,stop,=,false"]);
 
     // Load action WITH domain and open plan dialog
@@ -267,8 +267,8 @@ test("plan dialog initial domain has the action domain as its only base", async 
         "&,project_id,=,1,&,start,<,2019-02-28 23:00:00,stop,>,2018-11-30 23:00:00",
     ]);
 
-    await hoverGridCell("10 December 2018");
-    await clickCell("10 December 2018");
+    await hoverGridCell("10", "December 2018");
+    await clickCell("10", "December 2018");
     expect.verifySteps(["&,project_id,=,1,|,start,=,false,stop,=,false"]);
 
     // Load action without domain, activate a filter and then open plan dialog
@@ -281,8 +281,8 @@ test("plan dialog initial domain has the action domain as its only base", async 
         "&,project_id,=,1,&,start,<,2019-02-28 23:00:00,stop,>,2018-11-30 23:00:00",
     ]);
 
-    await hoverGridCell("10 December 2018");
-    await clickCell("10 December 2018");
+    await hoverGridCell("10", "December 2018");
+    await clickCell("10", "December 2018");
     expect.verifySteps(["|,start,=,false,stop,=,false"]);
 });
 
@@ -330,9 +330,9 @@ test("Progress bar rpc is triggered when option set.", async () => {
         "50%",
         "12.5%",
     ]);
-    await hoverGridCell("16 W51 2018");
+    await hoverGridCell("Monday 17", "Week 51 of 2018");
     expect(SELECTORS.progressBarForeground).toHaveText("50h / 100h");
-    await hoverGridCell("16 W51 2018", "User 2");
+    await hoverGridCell("Monday 17", "Week 51 of 2018", "User 2");
     expect(SELECTORS.progressBarForeground).toHaveText("25h / 200h");
 });
 
@@ -359,10 +359,10 @@ test("Progress bar component will not render when hovering cells of the same row
             `,
     });
     expect.verifySteps(["rendering progress bar", "rendering progress bar"]);
-    await hoverGridCell("19 W51 2018");
+    await hoverGridCell("Wednesday 19", "Week 51 of 2018");
     expect.verifySteps(["rendering progress bar", "rendering progress bar"]);
-    await hoverGridCell("18 W51 2018");
-    await hoverGridCell("18 W51 2018", "User 2");
+    await hoverGridCell("Tuesday 18", "Week 51 of 2018");
+    await hoverGridCell("Tuesday 18", "Week 51 of 2018", "User 2");
     expect.verifySteps(["rendering progress bar", "rendering progress bar"]);
 });
 
@@ -401,9 +401,9 @@ test("Progress bar when multilevel grouped.", async () => {
         "12.5%",
         "12.5%",
     ]);
-    await hoverGridCell("16 W51 2018");
+    await hoverGridCell("Monday 17", "Week 51 of 2018");
     expect(SELECTORS.progressBarForeground).toHaveText("50h / 100h");
-    await hoverGridCell("16 W51 2018", "User 2");
+    await hoverGridCell("Monday 17", "Week 51 of 2018", "User 2");
     expect(SELECTORS.progressBarForeground).toHaveText("25h / 200h");
 });
 
@@ -428,7 +428,7 @@ test("Progress bar warning when max_value is zero", async () => {
     });
     expect.verifySteps(["get_gantt_data"]);
     expect(SELECTORS.progressBarWarning).toHaveCount(0);
-    await hoverGridCell("16 W51 2018");
+    await hoverGridCell("Monday 17", "Week 51 of 2018");
     expect(SELECTORS.progressBarWarning).toHaveCount(1);
     expect(queryFirst(SELECTORS.progressBarWarning).parentElement).toHaveText("50h");
     expect(queryFirst(SELECTORS.progressBarWarning).parentElement).toHaveProperty("title", "plop");
@@ -454,7 +454,7 @@ test("Progress bar when value less than hour", async () => {
     });
     expect.verifySteps(["get_gantt_data"]);
     expect(SELECTORS.progressBar).toHaveCount(1);
-    await hoverGridCell("16 W51 2018");
+    await hoverGridCell("Monday 17", "Week 51 of 2018");
     expect(SELECTORS.progressBarForeground).toHaveText("0h30 / 100h");
 });
 
@@ -480,7 +480,7 @@ test("Progress bar danger when ratio > 100", async () => {
     expect(SELECTORS.progressBar).toHaveCount(1);
     expect(SELECTORS.progressBarBackground).toHaveStyle("100%");
     expect(SELECTORS.progressBar).toHaveClass("o_gantt_group_danger");
-    await hoverGridCell("16 W51 2018");
+    await hoverGridCell("Monday 17", "Week 51 of 2018");
     expect(queryFirst(SELECTORS.progressBarForeground).parentElement).toHaveClass("text-bg-danger");
     expect(SELECTORS.progressBarForeground).toHaveText("150h / 100h");
 });
@@ -543,8 +543,8 @@ test("add record in empty gantt", async () => {
         arch: `<gantt date_start="start" date_stop="stop" plan="false"/>`,
         groupBy: ["project_id"],
     });
-    await hoverGridCell("10 December 2018");
-    await clickCell("10 December 2018");
+    await hoverGridCell("10", "December 2018");
+    await clickCell("10", "December 2018");
     expect(".modal").toHaveCount(1);
 });
 
@@ -1773,8 +1773,8 @@ test("context in action should not override context added by the gantt view", as
             default_user_id: false,
         },
     });
-    await hoverGridCell("11 December 2018");
-    await clickCell("11 December 2018");
+    await hoverGridCell("11", "December 2018");
+    await clickCell("11", "December 2018");
     expect(".modal .o_field_many2one[name=user_id]").toHaveCount(1);
     expect(".modal .o_field_many2one[name=user_id] input").toHaveValue("User 1");
 });

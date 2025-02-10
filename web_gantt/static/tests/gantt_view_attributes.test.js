@@ -39,8 +39,8 @@ test("create attribute", async () => {
         arch: `<gantt date_start="start" date_stop="stop" create="0"/>`,
     });
     expect(".o_dialog").toHaveCount(0);
-    await hoverGridCell("06 December 2018");
-    await clickCell("06 December 2018");
+    await hoverGridCell("06", "December 2018");
+    await clickCell("06", "December 2018");
     expect(".o_dialog").toHaveCount(1);
     expect(".modal-title").toHaveText("Plan");
     expect(".o_create_button").toHaveCount(0);
@@ -53,8 +53,8 @@ test("plan attribute", async () => {
         arch: `<gantt date_start="start" date_stop="stop" plan="0"/>`,
     });
     expect(".o_dialog").toHaveCount(0);
-    await hoverGridCell("06 December 2018");
-    await clickCell("06 December 2018");
+    await hoverGridCell("06", "December 2018");
+    await clickCell("06", "December 2018");
     expect(".o_dialog").toHaveCount(1);
     expect(".modal-title").toHaveText("Create");
 });
@@ -547,17 +547,19 @@ test(`Today style with unavailabilities ("week": "day:half")`, async () => {
     });
 
     // Normal day / unavailability
-    expect(getCellColorProperties("18 W51 2018")).toEqual([
+    expect(getCellColorProperties("Tuesday 18", "Week 51 of 2018")).toEqual([
         "--Gantt__Day-background-color",
         "--Gantt__DayOff-background-color",
     ]);
 
     // Full unavailability
-    expect(getCellColorProperties("19 W51 2018")).toEqual(["--Gantt__DayOff-background-color"]);
+    expect(getCellColorProperties("Wednesday 19", "Week 51 of 2018")).toEqual([
+        "--Gantt__DayOff-background-color",
+    ]);
 
     // Unavailability / today
-    expect(getCell("20 W51 2018")).toHaveClass("o_gantt_today");
-    expect(getCellColorProperties("20 W51 2018")).toEqual([
+    expect(getCell("Thursday 20", "Week 51 of 2018")).toHaveClass("o_gantt_today");
+    expect(getCellColorProperties("Thursday 20", "Week 51 of 2018")).toEqual([
         "--Gantt__DayOff-background-color",
         "--Gantt__DayOffToday-background-color",
     ]);
@@ -586,7 +588,7 @@ test("Today style of group rows", async () => {
     expect.verifySteps(["get_gantt_data"]);
 
     // Normal group cell: open
-    let cell4 = getCell("19 W51 2018");
+    let cell4 = getCell("Wednesday 19", "Week 51 of 2018");
     expect(cell4).not.toHaveClass("o_gantt_today");
     expect(cell4).toHaveClass("o_group_open");
     expect(cell4).toHaveStyle({
@@ -594,7 +596,7 @@ test("Today style of group rows", async () => {
     });
 
     // Today group cell: open
-    let cell5 = getCell("20 W51 2018");
+    let cell5 = getCell("Thursday 20", "Week 51 of 2018");
     expect(cell5).toHaveClass("o_gantt_today");
     expect(cell5).toHaveClass("o_group_open");
     expect(cell5).toHaveStyle({
@@ -603,7 +605,7 @@ test("Today style of group rows", async () => {
     await contains(SELECTORS.group).click(); // fold group
     await leave();
     // Normal group cell: closed
-    cell4 = getCell("19 W51 2018");
+    cell4 = getCell("Wednesday 19", "Week 51 of 2018");
     expect(cell4).not.toHaveClass("o_gantt_today");
     expect(cell4).not.toHaveClass("o_group_open");
     expect(cell4).toHaveStyle({
@@ -611,7 +613,7 @@ test("Today style of group rows", async () => {
     });
 
     // Today group cell: closed
-    cell5 = getCell("20 W51 2018");
+    cell5 = getCell("Thursday 20", "Week 51 of 2018");
     expect(cell5).toHaveClass("o_gantt_today");
     expect(cell5).not.toHaveClass("o_group_open");
     expect(cell5).toHaveStyle({ backgroundImage: "none" });
@@ -630,10 +632,10 @@ test("style without unavailabilities", async () => {
         arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1"/>`,
     });
     expect.verifySteps(["get_gantt_data"]);
-    const cell5 = getCell("05 December 2018");
+    const cell5 = getCell("05", "December 2018");
     expect(cell5).toHaveClass("o_gantt_today");
     expect(cell5).toHaveAttribute("style", "grid-column:c9/c11;grid-row:r1/r5;");
-    const cell6 = getCell("06 December 2018");
+    const cell6 = getCell("06", "December 2018");
     expect(cell6).toHaveAttribute("style", "grid-column:c11/c13;grid-row:r1/r5;");
 });
 
@@ -665,23 +667,23 @@ test(`Unavailabilities ("month": "day:half")`, async () => {
         arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1"/>`,
     });
     expect.verifySteps(["get_gantt_data"]);
-    expect(getCell("05 December 2018")).toHaveClass("o_gantt_today");
-    expect(getCellColorProperties("05 December 2018")).toEqual([
+    expect(getCell("05", "December 2018")).toHaveClass("o_gantt_today");
+    expect(getCellColorProperties("05", "December 2018")).toEqual([
         "--Gantt__DayOffToday-background-color",
         "--Gantt__DayOff-background-color",
     ]);
-    expect(getCellColorProperties("06 December 2018")).toEqual([
+    expect(getCellColorProperties("06", "December 2018")).toEqual([
         "--Gantt__DayOff-background-color",
     ]);
-    expect(getCellColorProperties("07 December 2018")).toEqual([]);
-    expect(getCellColorProperties("16 December 2018")).toEqual([
+    expect(getCellColorProperties("07", "December 2018")).toEqual([]);
+    expect(getCellColorProperties("16", "December 2018")).toEqual([
         "--Gantt__Day-background-color",
         "--Gantt__DayOff-background-color",
     ]);
-    expect(getCellColorProperties("17 December 2018")).toEqual([
+    expect(getCellColorProperties("17", "December 2018")).toEqual([
         "--Gantt__DayOff-background-color",
     ]);
-    expect(getCellColorProperties("18 December 2018")).toEqual([
+    expect(getCellColorProperties("18", "December 2018")).toEqual([
         "--Gantt__DayOff-background-color",
         "--Gantt__Day-background-color",
     ]);
@@ -714,7 +716,7 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
         resModel: "tasks",
         arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="day" precision="{'day': 'hours:quarter'}"/>`,
     });
-    expect(getCellColorProperties("9am 19 December 2018")).toEqual([
+    expect(getCellColorProperties("9am", "December 19, 2018")).toEqual([
         "--Gantt__Day-background-color",
         "--Gantt__DayOff-background-color",
         "--Gantt__DayOff-background-color",
@@ -722,7 +724,7 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
         "--Gantt__Day-background-color",
         "--Gantt__Day-background-color",
     ]);
-    expect(getCellColorProperties("11am 19 December 2018")).toEqual([
+    expect(getCellColorProperties("11am", "December 19, 2018")).toEqual([
         "--Gantt__Day-background-color",
         "--Gantt__Day-background-color",
         "--Gantt__Day-background-color",
@@ -730,10 +732,10 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
         "--Gantt__Day-background-color",
         "--Gantt__DayOff-background-color",
     ]);
-    expect(getCellColorProperties("12pm 19 December 2018")).toEqual([
+    expect(getCellColorProperties("12pm", "December 19, 2018")).toEqual([
         "--Gantt__DayOff-background-color",
     ]);
-    expect(getCellColorProperties("1pm 19 December 2018")).toEqual([
+    expect(getCellColorProperties("1pm", "December 19, 2018")).toEqual([
         "--Gantt__DayOff-background-color",
         "--Gantt__Day-background-color",
         "--Gantt__Day-background-color",
@@ -741,7 +743,7 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
         "--Gantt__Day-background-color",
         "--Gantt__Day-background-color",
     ]);
-    expect(getCellColorProperties("9pm 19 December 2018")).toEqual([
+    expect(getCellColorProperties("9pm", "December 19, 2018")).toEqual([
         "--Gantt__Day-background-color",
         "--Gantt__DayOff-background-color",
         "--Gantt__DayOff-background-color",
@@ -784,70 +786,75 @@ test(`Fold unavailabilities ("day": "hours:quarter")`, async () => {
     });
     await contains(".o_content").scroll({ left: 0 });
     const { columnHeaders: initialColumnHeaders, groupHeaders: initialGroupHeaders } =
-        getGridContent();
+        getGridContent({ setTitleAttrOnHeaders: true });
     expect(initialColumnHeaders).toHaveLength(38);
     expect(initialColumnHeaders.some((col) => col.title === "")).toBe(false);
     expect(initialGroupHeaders).toEqual([
         {
             range: [1, 97],
-            title: "19 December 2018",
+            title: "December 19, 2018",
+            titleAttr: "Wednesday, December 19, 2018",
         },
         {
             range: [97, 193],
-            title: "20 December 2018",
+            title: "December 20, 2018",
+            titleAttr: "Thursday, December 20, 2018",
         },
     ]);
     expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(0);
     await contains(SELECTORS.scaleSelectorToggler).click();
     await contains(".o-dropdown-item:contains(Fold off hours)").click();
-    let { columnHeaders, groupHeaders } = getGridContent();
+    let { columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true });
     expect(columnHeaders).toHaveLength(28);
     expect(groupHeaders).toEqual(
         [
             {
                 range: [1, 97],
-                title: "19 December 2018",
+                title: "December 19, 2018",
+                titleAttr: "Wednesday, December 19, 2018",
             },
             {
                 range: [97, 193],
-                title: "20 December 2018",
+                title: "December 20, 2018",
+                titleAttr: "Thursday, December 20, 2018",
             },
             {
                 range: [193, 289],
                 title: "",
+                titleAttr: "",
             },
         ],
         { message: "Last group's title is hidden since all of its content is folded" }
     );
     expect(columnHeaders).toEqual([
-        { range: [1, 33], title: "" },
-        { range: [33, 37], title: "8am" },
-        { range: [37, 41], title: "9am" },
-        { range: [41, 45], title: "10am" },
-        { range: [45, 49], title: "11am" },
-        { range: [49, 53], title: "12pm" },
-        { range: [53, 57], title: "1pm" },
-        { range: [57, 61], title: "2pm" },
-        { range: [61, 65], title: "3pm" },
-        { range: [65, 69], title: "4pm" },
-        { range: [69, 73], title: "5pm" },
-        { range: [73, 109], title: "" },
-        { range: [109, 113], title: "3am" },
-        { range: [113, 117], title: "4am" },
-        { range: [117, 121], title: "5am" },
-        { range: [121, 125], title: "6am" },
-        { range: [125, 129], title: "7am" },
-        { range: [129, 133], title: "8am" },
-        { range: [133, 137], title: "9am" },
-        { range: [137, 141], title: "10am" },
-        { range: [141, 145], title: "11am" },
-        { range: [145, 149], title: "12pm" },
-        { range: [149, 153], title: "1pm" },
-        { range: [153, 157], title: "2pm" },
-        { range: [157, 161], title: "3pm" },
-        { range: [161, 165], title: "4pm" },
-        { range: [165, 169], title: "5pm" },
-        { range: [169, 289], title: "" },
+        { range: [1, 33], title: "", titleAttr: "" },
+        { range: [33, 37], title: "8am", titleAttr: "Wednesday, December 19, 2018, 8:00 AM" },
+        { range: [37, 41], title: "9am", titleAttr: "Wednesday, December 19, 2018, 9:00 AM" },
+        { range: [41, 45], title: "10am", titleAttr: "Wednesday, December 19, 2018, 10:00 AM" },
+        { range: [45, 49], title: "11am", titleAttr: "Wednesday, December 19, 2018, 11:00 AM" },
+        { range: [49, 53], title: "12pm", titleAttr: "Wednesday, December 19, 2018, 12:00 PM" },
+        { range: [53, 57], title: "1pm", titleAttr: "Wednesday, December 19, 2018, 1:00 PM" },
+        { range: [57, 61], title: "2pm", titleAttr: "Wednesday, December 19, 2018, 2:00 PM" },
+        { range: [61, 65], title: "3pm", titleAttr: "Wednesday, December 19, 2018, 3:00 PM" },
+        { range: [65, 69], title: "4pm", titleAttr: "Wednesday, December 19, 2018, 4:00 PM" },
+        { range: [69, 73], title: "5pm", titleAttr: "Wednesday, December 19, 2018, 5:00 PM" },
+        { range: [73, 109], title: "", titleAttr: "" },
+        { range: [109, 113], title: "3am", titleAttr: "Thursday, December 20, 2018, 3:00 AM" },
+        { range: [113, 117], title: "4am", titleAttr: "Thursday, December 20, 2018, 4:00 AM" },
+        { range: [117, 121], title: "5am", titleAttr: "Thursday, December 20, 2018, 5:00 AM" },
+        { range: [121, 125], title: "6am", titleAttr: "Thursday, December 20, 2018, 6:00 AM" },
+        { range: [125, 129], title: "7am", titleAttr: "Thursday, December 20, 2018, 7:00 AM" },
+        { range: [129, 133], title: "8am", titleAttr: "Thursday, December 20, 2018, 8:00 AM" },
+        { range: [133, 137], title: "9am", titleAttr: "Thursday, December 20, 2018, 9:00 AM" },
+        { range: [137, 141], title: "10am", titleAttr: "Thursday, December 20, 2018, 10:00 AM" },
+        { range: [141, 145], title: "11am", titleAttr: "Thursday, December 20, 2018, 11:00 AM" },
+        { range: [145, 149], title: "12pm", titleAttr: "Thursday, December 20, 2018, 12:00 PM" },
+        { range: [149, 153], title: "1pm", titleAttr: "Thursday, December 20, 2018, 1:00 PM" },
+        { range: [153, 157], title: "2pm", titleAttr: "Thursday, December 20, 2018, 2:00 PM" },
+        { range: [157, 161], title: "3pm", titleAttr: "Thursday, December 20, 2018, 3:00 PM" },
+        { range: [161, 165], title: "4pm", titleAttr: "Thursday, December 20, 2018, 4:00 PM" },
+        { range: [165, 169], title: "5pm", titleAttr: "Thursday, December 20, 2018, 5:00 PM" },
+        { range: [169, 289], title: "", titleAttr: "" },
     ]);
     expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(3);
     const cell1 = queryFirst(".o_gantt_cell");
@@ -858,7 +865,7 @@ test(`Fold unavailabilities ("day": "hours:quarter")`, async () => {
     });
     await contains(SELECTORS.scaleSelectorToggler).click();
     await contains(".o-dropdown-item:contains(Unfold off hours)").click();
-    ({ columnHeaders, groupHeaders } = getGridContent());
+    ({ columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true }));
     expect(columnHeaders).toEqual(initialColumnHeaders);
     expect(groupHeaders).toEqual(initialGroupHeaders);
 });
@@ -887,66 +894,70 @@ test(`Fold unavailabilities ("month": "day:half")`, async () => {
         arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="month" scales="month" precision="{'month': 'day:half'}"/>`,
     });
     await contains(".o_content").scroll({ left: 0 });
-    let { columnHeaders, groupHeaders } = getGridContent();
+    let { columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true });
     expect(columnHeaders).toHaveLength(31);
     expect(columnHeaders.some((col) => col.title === "")).toBe(false);
     expect(groupHeaders).toEqual([
         {
             range: [1, 61],
             title: "November 2018",
+            titleAttr: "November 2018",
         },
         {
             range: [61, 123],
             title: "December 2018",
+            titleAttr: "December 2018",
         },
     ]);
     expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(0);
     await contains(SELECTORS.scaleSelectorToggler).click();
     await contains(".o-dropdown-item:contains(Fold off hours)").click();
-    ({ columnHeaders, groupHeaders } = getGridContent());
+    ({ columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true }));
     expect(columnHeaders).toHaveLength(31);
     expect(groupHeaders).toEqual([
         {
             range: [1, 61],
             title: "November 2018",
+            titleAttr: "November 2018",
         },
         {
             range: [61, 123],
             title: "December 2018",
+            titleAttr: "December 2018",
         },
     ]);
     expect(columnHeaders).toEqual([
-        { range: [1, 3], title: "01" },
-        { range: [3, 5], title: "02" },
-        { range: [5, 7], title: "03" },
-        { range: [7, 9], title: "04" },
-        { range: [9, 11], title: "05" },
-        { range: [11, 13], title: "06" },
-        { range: [13, 15], title: "07" },
-        { range: [15, 17], title: "08" },
-        { range: [17, 19], title: "09" },
-        { range: [19, 21], title: "10" },
-        { range: [21, 23], title: "11" },
-        { range: [23, 25], title: "12" },
-        { range: [25, 27], title: "13" },
-        { range: [27, 31], title: "" },
-        { range: [31, 33], title: "16" },
-        { range: [33, 35], title: "17" },
-        { range: [35, 37], title: "18" },
-        { range: [37, 39], title: "19" },
-        { range: [39, 57], title: "" },
-        { range: [57, 59], title: "29" },
-        { range: [59, 61], title: "30" },
-        { range: [61, 63], title: "01" },
-        { range: [63, 65], title: "02" },
-        { range: [65, 67], title: "03" },
-        { range: [67, 69], title: "04" },
-        { range: [69, 71], title: "05" },
-        { range: [71, 73], title: "06" },
-        { range: [73, 75], title: "07" },
-        { range: [75, 77], title: "08" },
-        { range: [77, 79], title: "09" },
-        { range: [79, 81], title: "10" },
+        { range: [1, 3], title: "01", titleAttr: "Thursday, November 1, 2018" },
+        { range: [3, 5], title: "02", titleAttr: "Friday, November 2, 2018" },
+        { range: [5, 7], title: "03", titleAttr: "Saturday, November 3, 2018" },
+        { range: [7, 9], title: "04", titleAttr: "Sunday, November 4, 2018" },
+        { range: [9, 11], title: "05", titleAttr: "Monday, November 5, 2018" },
+        { range: [11, 13], title: "06", titleAttr: "Tuesday, November 6, 2018" },
+        { range: [13, 15], title: "07", titleAttr: "Wednesday, November 7, 2018" },
+        { range: [15, 17], title: "08", titleAttr: "Thursday, November 8, 2018" },
+        { range: [17, 19], title: "09", titleAttr: "Friday, November 9, 2018" },
+        { range: [19, 21], title: "10", titleAttr: "Saturday, November 10, 2018" },
+        { range: [21, 23], title: "11", titleAttr: "Sunday, November 11, 2018" },
+        { range: [23, 25], title: "12", titleAttr: "Monday, November 12, 2018" },
+        { range: [25, 27], title: "13", titleAttr: "Tuesday, November 13, 2018" },
+        { range: [27, 31], title: "", titleAttr: "" },
+        { range: [31, 33], title: "16", titleAttr: "Friday, November 16, 2018" },
+        { range: [33, 35], title: "17", titleAttr: "Saturday, November 17, 2018" },
+        { range: [35, 37], title: "18", titleAttr: "Sunday, November 18, 2018" },
+        { range: [37, 39], title: "19", titleAttr: "Monday, November 19, 2018" },
+        { range: [39, 57], title: "", titleAttr: "" },
+        { range: [57, 59], title: "29", titleAttr: "Thursday, November 29, 2018" },
+        { range: [59, 61], title: "30", titleAttr: "Friday, November 30, 2018" },
+        { range: [61, 63], title: "01", titleAttr: "Saturday, December 1, 2018" },
+        { range: [63, 65], title: "02", titleAttr: "Sunday, December 2, 2018" },
+        { range: [65, 67], title: "03", titleAttr: "Monday, December 3, 2018" },
+        { range: [67, 69], title: "04", titleAttr: "Tuesday, December 4, 2018" },
+        { range: [69, 71], title: "05", titleAttr: "Wednesday, December 5, 2018" },
+        { range: [71, 73], title: "06", titleAttr: "Thursday, December 6, 2018" },
+        { range: [73, 75], title: "07", titleAttr: "Friday, December 7, 2018" },
+        { range: [75, 77], title: "08", titleAttr: "Saturday, December 8, 2018" },
+        { range: [77, 79], title: "09", titleAttr: "Sunday, December 9, 2018" },
+        { range: [79, 81], title: "10", titleAttr: "Monday, December 10, 2018" },
     ]);
     expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(2);
     const cell1 = queryFirst(".o_gantt_cell");
@@ -991,21 +1002,24 @@ test(`fold attribute`, async () => {
         resModel: "tasks",
         arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" fold="1" default_range="day" scales="day" precision="{'day': 'hours:quarter'}"/>`,
     });
-    const { columnHeaders, groupHeaders } = getGridContent();
+    const { columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true });
     expect(columnHeaders).toHaveLength(28);
     expect(groupHeaders).toEqual(
         [
             {
                 range: [1, 97],
-                title: "19 December 2018",
+                title: "December 19, 2018",
+                titleAttr: "Wednesday, December 19, 2018",
             },
             {
                 range: [97, 193],
-                title: "20 December 2018",
+                title: "December 20, 2018",
+                titleAttr: "Thursday, December 20, 2018",
             },
             {
                 range: [193, 289],
                 title: "",
+                titleAttr: "",
             },
         ],
         { message: "Last group's title is hidden since all of its content is folded" }
@@ -1041,8 +1055,8 @@ test(`Fold unavailabilities with multiple rows`, async () => {
     });
     const { columnHeaders, groupHeaders } = getGridContent();
     expect(groupHeaders).toEqual([
-        { range: [1, 97], title: "19 December 2018" },
-        { range: [97, 193], title: "20 December 2018" },
+        { range: [1, 97], title: "December 19, 2018" },
+        { range: [97, 193], title: "December 20, 2018" },
         { range: [193, 289], title: "" },
     ]);
     expect(columnHeaders).toEqual([
@@ -1122,7 +1136,7 @@ test(`Partial fold/unfold in gantt`, async () => {
     });
     expect(rows[0].pills[0]).toEqual({
         title: "Task 4",
-        colSpan: "3am (2/4) 20 December 2018 -> 7am (2/4) 20 December 2018",
+        colSpan: "3am (2/4) December 20, 2018 -> 7am (2/4) December 20, 2018",
         level: 0,
     });
     await contains(".o_gantt_cell:eq(11)").click();
@@ -1154,7 +1168,7 @@ test(`Partial fold/unfold in gantt`, async () => {
         title: "",
     });
     const { drop } = await dragPill("Task 4");
-    await drop({ column: "5pm 19 December 2018", part: 4 });
+    await drop({ columnHeader: "5pm", groupHeader: "December 19, 2018", part: 4 });
     ({ columnHeaders, rows } = getGridContent());
     expect(columnHeaders).toHaveLength(39);
     expect(columnHeaders[18]).toEqual({
@@ -1167,7 +1181,7 @@ test(`Partial fold/unfold in gantt`, async () => {
     });
     expect(rows[0].pills[0]).toEqual({
         title: "Task 4",
-        colSpan: "5pm (3/4) 19 December 2018 -> 9pm (3/4) 19 December 2018",
+        colSpan: "5pm (3/4) December 19, 2018 -> 9pm (3/4) December 19, 2018",
         level: 0,
     });
     await resizePill(getPillWrapper("Task 4"), "end", +1); // wrong but we don't want to rewrite helpers for this
@@ -1179,7 +1193,7 @@ test(`Partial fold/unfold in gantt`, async () => {
     });
     expect(rows[0].pills[0]).toEqual({
         title: "Task 4",
-        colSpan: "5pm (3/4) 19 December 2018 -> 3am 20 December 2018",
+        colSpan: "5pm (3/4) December 19, 2018 -> 3am December 20, 2018",
         level: 0,
     });
     await contains(".o_gantt_header_cell:eq(0)").click();
@@ -1428,19 +1442,19 @@ test("consolidation and unavailabilities", async () => {
     });
     expect.verifySteps(["get_gantt_data"]);
     // Normal day / unavailability
-    expect(getCellColorProperties("18 December 2018", "", { num: 2 })).toEqual([
+    expect(getCellColorProperties("18", "December 2018", "", { num: 2 })).toEqual([
         "--Gantt__Day-background-color",
         "--Gantt__DayOff-background-color",
     ]);
 
     // Full unavailability
-    expect(getCellColorProperties("19 December 2018", "", { num: 2 })).toEqual([
+    expect(getCellColorProperties("19", "December 2018", "", { num: 2 })).toEqual([
         "--Gantt__DayOff-background-color",
     ]);
 
     // Unavailability / today
-    expect(getCell("20 December 2018")).toHaveClass("o_gantt_today");
-    expect(getCellColorProperties("20 December 2018", "", { num: 2 })).toEqual([
+    expect(getCell("20", "December 2018")).toHaveClass("o_gantt_today");
+    expect(getCellColorProperties("20", "December 2018", "", { num: 2 })).toEqual([
         "--Gantt__DayOff-background-color",
         "--Gantt__DayOffToday-background-color",
     ]);

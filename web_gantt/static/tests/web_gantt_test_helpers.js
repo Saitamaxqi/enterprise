@@ -32,7 +32,7 @@ import { contains, mountView } from "@web/../tests/web_test_helpers";
 
 /**
  * @template T
- * @typedef {(columnHeader: string, rowHeader: string, options: CellHelperOptions) => T} CellHelper
+ * @typedef {(columnHeader: string, groupHeader: string, rowHeader: string, options: CellHelperOptions) => T} CellHelper
  */
 
 /**
@@ -40,7 +40,7 @@ import { contains, mountView } from "@web/../tests/web_test_helpers";
  * @typedef {(text: string, options: PillHelperOptions) => T} PillHelper
  */
 
-/** @typedef {CellHelperOptions & { row: number, column: number }} DragGridParams */
+/** @typedef {CellHelperOptions & { row: number, columnHeader: string, groupHeader: string }} DragGridParams */
 
 /** @typedef {PillHelperOptions & { pill: string }} DragPillParams */
 
@@ -203,13 +203,13 @@ export async function dragPill(text, options) {
      */
     const moveTo = async (params) => {
         let cell;
-        if (params?.column) {
-            cell = await hoverGridCell(params.column, params.row, params);
+        if (params?.columnHeader && params?.groupHeader) {
+            cell = await hoverGridCell(params.columnHeader, params.groupHeader, params.row, params);
         } else if (params?.pill) {
             ({ cell } = await hoverPillCell(getPillWrapper(params.pill, params)));
         }
         return dragActions.moveTo(cell, {
-            position: getCellPositionOffset(cell, params.part),
+            position: getCellPositionOffset(cell, params?.part),
             relative: true,
         });
     };
@@ -236,11 +236,9 @@ export async function editPill(text, options) {
 /**
  * @param {string} header
  */
-function findColumnFromHeader(header) {
+function findColumnFromHeader(columnHeader, groupHeader) {
     const columnHeaders = getHeaders(SELECTORS.columnHeader);
     const groupHeaders = getHeaders(SELECTORS.groupHeader);
-    const columnHeader = header.substring(0, header.indexOf(" "));
-    const groupHeader = header.substring(header.indexOf(" ") + 1);
     const groupRange = groupHeaders.find((header) => header.title === groupHeader).range;
     return columnHeaders.find(
         (header) =>
@@ -251,8 +249,8 @@ function findColumnFromHeader(header) {
 }
 
 /** @type {CellHelper<HTMLElement>} */
-export function getCell(columnHeader, rowHeader = null, options) {
-    const columnIndex = findColumnFromHeader(columnHeader);
+export function getCell(columnHeader, groupHeader, rowHeader = null, options) {
+    const columnIndex = findColumnFromHeader(columnHeader, groupHeader);
     const cells = queryAll(`${SELECTORS.cell}[data-col='${columnIndex}']`);
     if (!cells.length) {
         throw new Error(`Could not find cell at column ${columnHeader}`);
@@ -269,8 +267,8 @@ export function getCell(columnHeader, rowHeader = null, options) {
 }
 
 /** @type {CellHelper<string[]>} */
-export function getCellColorProperties(columnHeader, rowHeader = null, options) {
-    const cell = getCell(columnHeader, rowHeader, options);
+export function getCellColorProperties(columnHeader, groupHeader, rowHeader = null, options) {
+    const cell = getCell(columnHeader, groupHeader, rowHeader, options);
     const cssVarRegex = /(--[\w-]+)/g;
 
     if (cell.style.background) {
@@ -312,14 +310,18 @@ function parseNumber(str) {
 /**
  * @param {string} selector
  */
-function getHeaders(selector) {
+function getHeaders(selector, setTitleAttrOnHeaders = false) {
     const groupHeaders = [];
     for (const el of queryAll(selector)) {
         const { column: range } = getGridStyle(el);
-        groupHeaders.push({
+        const header = {
             range,
             title: el.textContent,
-        });
+        };
+        if (setTitleAttrOnHeaders) {
+            header.titleAttr = el.title;
+        }
+        groupHeaders.push(header);
     }
     return groupHeaders;
 }
@@ -332,9 +334,14 @@ export function setCellParts(cellPart) {
     });
 }
 
-export function getGridContent() {
-    const columnHeaders = getHeaders(SELECTORS.columnHeader);
-    const groupHeaders = getHeaders(SELECTORS.groupHeader);
+/**
+ * @param {Object} [params={}]
+ * @param {boolean} [params.setTitleAttrOnHeaders]
+ * @returns {Object}
+ */
+export function getGridContent(params = {}) {
+    const columnHeaders = getHeaders(SELECTORS.columnHeader, params.setTitleAttrOnHeaders);
+    const groupHeaders = getHeaders(SELECTORS.groupHeader, params.setTitleAttrOnHeaders);
     const range = queryAllTexts(SELECTORS.scaleSelectorToggler)[0] || null;
     const viewTitle = queryAllTexts(".o_gantt_title")[0] || null;
     const colsRange = queryFirst(SELECTORS.columnHeader)
@@ -471,8 +478,8 @@ async function hoverCell(cell, options) {
  * Hovers a cell found from given grid coordinates.
  * @type {CellHelper<Promise<HTMLElement>>}
  */
-export async function hoverGridCell(columnHeader, rowHeader = null, options) {
-    const cell = getCell(columnHeader, rowHeader, options);
+export async function hoverGridCell(columnHeader, groupHeader, rowHeader = null, options) {
+    const cell = getCell(columnHeader, groupHeader, rowHeader, options);
     await hoverCell(cell, options);
     return cell;
 }
@@ -481,8 +488,8 @@ export async function hoverGridCell(columnHeader, rowHeader = null, options) {
  * Click on a cell found from given grid coordinates.
  * @type {CellHelper<Promise<HTMLElement>>}
  */
-export async function clickCell(columnHeader, rowHeader = null, options) {
-    const cell = getCell(columnHeader, rowHeader, options);
+export async function clickCell(columnHeader, groupHeader, rowHeader = null, options) {
+    const cell = getCell(columnHeader, groupHeader, rowHeader, options);
     await contains(cell).click();
 }
 

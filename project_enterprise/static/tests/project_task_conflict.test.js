@@ -103,20 +103,42 @@ test("Unassigned tasks will show when search for assignee", async () => {
     expect(getGridContent().rows).toEqual([
         {
             title: "👤 Unassigned",
-            pills: [{ title: "Task 5", level: 0, colSpan: "13 W11 2019 -> 13 W11 2019" }],
+            pills: [
+                {
+                    title: "Task 5",
+                    level: 0,
+                    colSpan: "Wednesday 13 Week 11 of 2019 -> Wednesday 13 Week 11 of 2019",
+                },
+            ],
         },
         {
             title: "User1",
             pills: [
-                { title: "Task 1", level: 0, colSpan: "12 W11 2019 -> 12 W11 2019" },
-                { title: "Task 2", level: 1, colSpan: "12 W11 2019 -> 12 W11 2019" },
+                {
+                    title: "Task 1",
+                    level: 0,
+                    colSpan: "Tuesday 12 Week 11 of 2019 -> Tuesday 12 Week 11 of 2019",
+                },
+                {
+                    title: "Task 2",
+                    level: 1,
+                    colSpan: "Tuesday 12 Week 11 of 2019 -> Tuesday 12 Week 11 of 2019",
+                },
             ],
         },
         {
             title: "User2",
             pills: [
-                { title: "Task 3", level: 0, colSpan: "11 W11 2019 -> 11 W11 2019" },
-                { title: "Task 4", level: 0, colSpan: "14 W11 2019 -> 14 W11 2019" },
+                {
+                    title: "Task 3",
+                    level: 0,
+                    colSpan: "Monday 11 Week 11 of 2019 -> Monday 11 Week 11 of 2019",
+                },
+                {
+                    title: "Task 4",
+                    level: 0,
+                    colSpan: "Thursday 14 Week 11 of 2019 -> Thursday 14 Week 11 of 2019",
+                },
             ],
         },
     ]);
@@ -128,13 +150,27 @@ test("Unassigned tasks will show when search for assignee", async () => {
     expect(getGridContent().rows).toEqual([
         {
             title: "👤 Unassigned",
-            pills: [{ title: "Task 5", level: 0, colSpan: "13 W11 2019 -> 13 W11 2019" }],
+            pills: [
+                {
+                    title: "Task 5",
+                    level: 0,
+                    colSpan: "Wednesday 13 Week 11 of 2019 -> Wednesday 13 Week 11 of 2019",
+                },
+            ],
         },
         {
             title: "User1",
             pills: [
-                { title: "Task 1", level: 0, colSpan: "12 W11 2019 -> 12 W11 2019" },
-                { title: "Task 2", level: 1, colSpan: "12 W11 2019 -> 12 W11 2019" },
+                {
+                    title: "Task 1",
+                    level: 0,
+                    colSpan: "Tuesday 12 Week 11 of 2019 -> Tuesday 12 Week 11 of 2019",
+                },
+                {
+                    title: "Task 2",
+                    level: 1,
+                    colSpan: "Tuesday 12 Week 11 of 2019 -> Tuesday 12 Week 11 of 2019",
+                },
             ],
         },
     ]);

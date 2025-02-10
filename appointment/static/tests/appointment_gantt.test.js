@@ -94,7 +94,7 @@ test("empty default group gantt rendering", async () => {
         }
     }
     const { drop } = await dragPill("Event 2", { nth: 1 });
-    await drop({ row: "Partner 1", column: "21 January 2022", part: 2 });
+    await drop({ row: "Partner 1", columnHeader: "21", groupHeader: "January 2022", part: 2 });
     expect.verifySteps([
         "get_gantt_data",
         "write partners and date",

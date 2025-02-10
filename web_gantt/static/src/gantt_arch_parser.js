@@ -26,10 +26,12 @@ const SCALES = {
         // determines columns
         interval: "hour",
         minimalColumnWidth: 40,
+        colHeaderTitle: (date) => date.toFormat("DDDD, t"),
 
         // determines column groups
         unit: "day",
-        groupHeaderFormatter: (date) => date.toFormat("dd MMMM yyyy"),
+        groupHeaderFormatter: (date) => date.toFormat("DDD"),
+        groupHeaderTitle: (date) => date.toFormat("DDDD"),
     },
     week: {
         cellPrecisions: { full: 24, half: 12 },
@@ -39,10 +41,12 @@ const SCALES = {
 
         interval: "day",
         minimalColumnWidth: 192,
-        colHeaderFormatter: (date) => date.toFormat("dd"),
+        colHeaderFormatter: (date) => date.toFormat("cccc d"),
+        colHeaderTitle: (date) => date.toFormat("DDDD"),
 
         unit: "week",
         groupHeaderFormatter: formatLocalWeekYear,
+        groupHeaderTitle: formatLocalWeekYear,
     },
     month: {
         cellPrecisions: { full: 24, half: 12 },
@@ -53,9 +57,11 @@ const SCALES = {
         interval: "day",
         minimalColumnWidth: 50,
         colHeaderFormatter: (date) => date.toFormat("dd"),
+        colHeaderTitle: (date) => date.toFormat("DDDD"),
 
         unit: "month",
         groupHeaderFormatter: (date, env) => date.toFormat(env.isSmall ? "MMM yyyy" : "MMMM yyyy"),
+        groupHeaderTitle: (date, env) => date.toFormat(env.isSmall ? "MMM yyyy" : "MMMM yyyy"),
     },
     year: {
         cellPrecisions: { full: 1 },
@@ -64,11 +70,13 @@ const SCALES = {
         unitDescription: _t("months"),
 
         interval: "month",
-        minimalColumnWidth: 60,
+        minimalColumnWidth: 100,
         colHeaderFormatter: (date, env) => date.toFormat(env.isSmall ? "MMM" : "MMMM"),
+        colHeaderTitle: (date, env) => date.toFormat(env.isSmall ? "MMM yyyy" : "MMMM yyyy"),
 
         unit: "year",
         groupHeaderFormatter: (date) => date.toFormat("yyyy"),
+        groupHeaderTitle: (date) => date.toFormat("yyyy"),
     },
 };
 
@@ -80,7 +88,7 @@ const SCALES = {
  */
 function formatLocalWeekYear(date) {
     const { year, week } = getLocalYearAndWeek(date);
-    return `W${week} ${year}`;
+    return _t(`Week %(week)s of %(year)s`, { week, year });
 }
 
 function getPreferedScaleId(scaleId, scales) {

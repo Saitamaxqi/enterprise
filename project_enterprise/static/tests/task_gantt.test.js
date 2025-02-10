@@ -253,7 +253,7 @@ test("progress bar has the correct unit", async () => {
     expect(SELECTORS.progressBarBackground).toHaveCount(1);
     expect(queryOne(SELECTORS.progressBarBackground).style.width).toBe("100%");
     expect(SELECTORS.progressBarForeground).toHaveCount(0);
-    await hoverGridCell("10 June 2021", "Jane Doe");
+    await hoverGridCell("10", "June 2021", "Jane Doe");
     expect(SELECTORS.progressBarForeground).toHaveCount(1);
     expect(SELECTORS.progressBarForeground).toHaveText("100h / 100h");
 });
@@ -278,7 +278,7 @@ test("open a dialog to schedule task", async () => {
         resModel: "task",
         type: "gantt",
     });
-    await clickCell("10 June 2021");
+    await clickCell("10", "June 2021");
     await contains(".modal .o_list_view tbody tr:nth-child(1) input").click();
     await animationFrame();
     expect(".modal .o_list_view .o_data_row").toHaveClass("o_data_row_selected");
@@ -709,11 +709,11 @@ test("Copy pill in another row", async () => {
 
     // move blop to John Doe
     const { drop, moveTo } = await dragPill("Blop");
-    await moveTo({ column: "14 June 2021", row: "John Doe" });
+    await moveTo({ columnHeader: "14", groupHeader: "June 2021", row: "John Doe" });
 
     expect(SELECTORS.renderer).toHaveClass("o_copying");
 
-    await drop({ column: "14 June 2021", row: "John Doe" });
+    await drop({ columnHeader: "14", groupHeader: "June 2021", row: "John Doe" });
 
     expect(getGridContent().rows).toEqual([
         {
@@ -766,7 +766,7 @@ test("Smart scheduling", async () => {
         },
     ]);
 
-    await clickCell("10 June 2021", "Jane Doe");
+    await clickCell("10", "June 2021", "Jane Doe");
     expect(".o_dialog").toHaveCount(1);
     await contains(".o_dialog .o_data_row .o-checkbox").click();
     await contains(".o_dialog .o_auto_plan_button:enabled").click();
@@ -833,7 +833,7 @@ test("Smart scheduling: display warnings", async () => {
         groupBy: ["user_ids"],
     });
 
-    await clickCell("10 June 2021", "Jane Doe");
+    await clickCell("10", "June 2021", "Jane Doe");
     expect(".o_dialog").toHaveCount(1);
     await contains(".o_dialog .o_data_row .o-checkbox").click();
     await contains(".o_dialog .o_auto_plan_button:enabled").click();
@@ -880,7 +880,7 @@ test("Schedule a task and verify its display in the gantt view", async () => {
         },
     ]);
 
-    await clickCell("10 June 2021", "Jane Doe");
+    await clickCell("10", "June 2021", "Jane Doe");
     expect(".o_dialog").toHaveCount(1);
     await contains(".o_dialog .o_data_row .o-checkbox input").check();
     await clickModalButton({ text: "Select" });

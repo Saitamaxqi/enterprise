@@ -173,7 +173,7 @@ test("select cells to plan a task", async () => {
         resModel: "tasks",
         arch: '<gantt date_start="start" date_stop="stop"/>',
     });
-    await contains(getCell("19 December 2018")).dragAndDrop(getCell("21 December 2018"));
+    await contains(getCell("19", "December 2018")).dragAndDrop(getCell("21", "December 2018"));
 
     expect.verifySteps(["[dialog] Create"]);
 });
@@ -199,7 +199,7 @@ test("drag and drop on the same cell to plan a task", async () => {
         resModel: "tasks",
         arch: '<gantt date_start="start" date_stop="stop"/>',
     });
-    await contains(getCell("15 December 2018")).dragAndDrop(getCell("15 December 2018"));
+    await contains(getCell("15", "December 2018")).dragAndDrop(getCell("15", "December 2018"));
 
     expect.verifySteps(["[dialog] Create"]);
 });
@@ -218,8 +218,8 @@ test("row id is properly escaped to avoid name issues in selection", async () =>
         arch: '<gantt date_start="start" date_stop="stop" default_group_by="user_id"/>',
     });
 
-    await hoverGridCell("11 December 2018");
-    await clickCell("11 December 2018");
+    await hoverGridCell("11", "December 2018");
+    await clickCell("11", "December 2018");
 
     expect.verifySteps(["[dialog]"]);
 });
@@ -249,9 +249,9 @@ test("select cells to plan a task: 1-level grouped", async () => {
         groupBy: ["user_id"],
     });
 
-    await hoverGridCell("11 December 2018");
-    const { moveTo, drop } = await contains(getCell("11 December 2018")).drag();
-    moveTo(getCell("12 December 2018"));
+    await hoverGridCell("11", "December 2018");
+    const { moveTo, drop } = await contains(getCell("11", "December 2018")).drag();
+    moveTo(getCell("12", "December 2018"));
     await runAllTimers(); // Pointer move is subjected to throttleForAnimation in gantt
     drop();
 
@@ -284,16 +284,16 @@ test("select cells to plan a task: 2-level grouped", async () => {
         arch: '<gantt date_start="start" date_stop="stop"/>',
         groupBy: ["user_id", "project_id"],
     });
-    await hoverGridCell("11 December 2018");
-    const dragAndDrop1 = await contains(getCell("11 December 2018")).drag();
-    dragAndDrop1.moveTo(getCell("12 December 2018"));
+    await hoverGridCell("11", "December 2018");
+    const dragAndDrop1 = await contains(getCell("11", "December 2018")).drag();
+    dragAndDrop1.moveTo(getCell("12", "December 2018"));
     await advanceTime(20); // Pointer move is subjected to throttleForAnimation in gantt
     dragAndDrop1.drop();
     // nothing happens
-    await hoverGridCell("11 December 2018", "Project 1");
+    await hoverGridCell("11", "December 2018", "Project 1");
     await advanceTime(20);
-    const dragAndDrop2 = await contains(getCell("11 December 2018", "Project 1")).drag();
-    dragAndDrop2.moveTo(getCell("12 December 2018", "Project 1"));
+    const dragAndDrop2 = await contains(getCell("11", "December 2018", "Project 1")).drag();
+    dragAndDrop2.moveTo(getCell("12", "December 2018", "Project 1"));
     await advanceTime(20);
     dragAndDrop2.drop();
 
@@ -381,8 +381,8 @@ test("open a dialog to create/edit a task", async () => {
 
     // open dialog to create a task
     expect(".modal").toHaveCount(0);
-    await hoverGridCell("10 December 2018", "In Progress");
-    await clickCell("10 December 2018", "In Progress");
+    await hoverGridCell("10", "December 2018", "In Progress");
+    await clickCell("10", "December 2018", "In Progress");
 
     // check that the dialog is opened with prefilled fields
     expect(".modal").toHaveCount(1);
@@ -502,8 +502,8 @@ test("open a dialog to create a task when grouped by many2many field", async () 
     ]);
 
     // open dialog to create a task with two many2many values
-    await hoverGridCell("10 December 2018", "Project 1", { num: 2 });
-    await clickCell("10 December 2018", "Project 1", { num: 2 });
+    await hoverGridCell("10", "December 2018", "Project 1", { num: 2 });
+    await clickCell("10", "December 2018", "Project 1", { num: 2 });
     await contains(".o_field_widget[name=name] input").edit("NEW TASK 0");
     await contains(".o_field_widget[name=user_ids] input").fill("User 2", { confirm: false });
     await runAllTimers();
@@ -527,8 +527,8 @@ test("open a dialog to create a task when grouped by many2many field", async () 
     });
 
     // open dialog to create a task with no many2many values
-    await hoverGridCell("24 December 2018", "Project 2");
-    await clickCell("24 December 2018", "Project 2");
+    await hoverGridCell("24", "December 2018", "Project 2");
+    await clickCell("24", "December 2018", "Project 2");
     await contains(".o_field_widget[name=name] input").edit("NEW TASK 1");
     await contains(".o_form_button_save").click();
     expect(".modal").toHaveCount(0);
@@ -555,8 +555,8 @@ test("open a dialog to create a task, does not have a delete button", async () =
         arch: '<gantt date_start="start" date_stop="stop" plan="false"/>',
         groupBy: [],
     });
-    await hoverGridCell("10 December 2018");
-    await clickCell("10 December 2018");
+    await hoverGridCell("10", "December 2018");
+    await clickCell("10", "December 2018");
     expect(".modal").toHaveCount(1);
     expect(".modal .o_btn_remove").toHaveCount(0);
 });
@@ -657,8 +657,8 @@ test("create dialog with timezone", async () => {
         arch: '<gantt date_start="start" date_stop="stop" plan="false"/>',
     });
 
-    await hoverGridCell("10 December 2018");
-    await clickCell("10 December 2018");
+    await hoverGridCell("10", "December 2018");
+    await clickCell("10", "December 2018");
     expect(".o_field_widget[name=start] input").toHaveValue("12/10/2018 00:00:00");
     expect(".o_field_widget[name=stop] input").toHaveValue("12/11/2018 00:00:00");
     await contains(".o_form_button_save").click();
@@ -691,8 +691,8 @@ test("open a dialog to plan a task", async () => {
     });
 
     // click on the plan button
-    await hoverGridCell("10 December 2018");
-    await clickCell("10 December 2018");
+    await hoverGridCell("10", "December 2018");
+    await clickCell("10", "December 2018");
     expect(".modal .o_list_view").toHaveCount(1);
     expect(queryAllTexts(".modal .o_list_view .o_data_cell")).toEqual([
         "Task 41",
@@ -739,8 +739,8 @@ test("open a dialog to plan a task (multi-level)", async () => {
     });
 
     // click on the plan button
-    await hoverGridCell("10 December 2018", "To Do");
-    await clickCell("10 December 2018", "To Do");
+    await hoverGridCell("10", "December 2018", "To Do");
+    await clickCell("10", "December 2018", "To Do");
     expect(".modal .o_list_view").toHaveCount(1);
     expect(".modal .o_list_view .o_data_cell").toHaveText("Task 41");
 
@@ -1062,8 +1062,8 @@ test("create a task maintains the domain", async () => {
         domain: [["user_id", "=", 2]], // I am an important line
     });
     expect(SELECTORS.pill).toHaveCount(3);
-    await hoverGridCell("06 December 2018");
-    await clickCell("06 December 2018");
+    await hoverGridCell("06", "December 2018");
+    await clickCell("06", "December 2018");
 
     await contains(".modal [name=name] input").edit("new task");
     await contains(".modal .o_form_button_save").click();
@@ -1128,7 +1128,7 @@ test("move a pill in the same row", async () => {
 
     // move a pill in the next cell (+1 day)
     const { drop } = await dragPill("Task 7");
-    await drop({ column: "21 December 2018", part: 2 });
+    await drop({ columnHeader: "21", groupHeader: "December 2018", part: 2 });
     expect(getGridContent().rows).toEqual([
         {
             pills: [
@@ -1182,7 +1182,7 @@ test("move a pill in the same row (with different timezone)", async () => {
 
     // +1 day -> move beyond the DST switch
     const { drop } = await dragPill("Task 8");
-    await drop({ column: "31 March 2019", part: 1 });
+    await drop({ columnHeader: "31", groupHeader: "March 2019", part: 1 });
 
     expect(getGridContent().rows).toEqual([
         {
@@ -1234,7 +1234,7 @@ test("move a pill in another row", async () => {
 
     // move a pill (task 7) in the other row and in the the next cell (+1 day)
     const { drop } = await dragPill("Task 7");
-    await drop({ column: "21 December 2018", part: 2 });
+    await drop({ columnHeader: "21", groupHeader: "December 2018", part: 2 });
 
     expect(getGridContent().rows).toEqual([
         {
@@ -1295,7 +1295,7 @@ test("copy a pill in another row", async () => {
 
     // move a pill (task 7) in the other row and in the the next cell (+1 day)
     const { drop, moveTo } = await dragPill("Task 7");
-    await moveTo({ column: "21 December 2018", part: 2 });
+    await moveTo({ columnHeader: "21", groupHeader: "December 2018", part: 2 });
 
     expect(SELECTORS.renderer).toHaveClass("o_copying");
 
@@ -1304,7 +1304,7 @@ test("copy a pill in another row", async () => {
     expect(SELECTORS.renderer).toHaveClass("o_grabbing");
 
     await keyDown("Control");
-    await drop({ column: "21 December 2018", part: 2 });
+    await drop({ columnHeader: "21", groupHeader: "December 2018", part: 2 });
 
     expect(getGridContent().rows).toEqual([
         {
@@ -1353,7 +1353,7 @@ test("copy a pill in another row, but in the same column", async () => {
 
     await keyDown("Control");
     const { drop } = await dragPill("Task 7");
-    await drop({ column: "20 December 2018", part: 2 });
+    await drop({ columnHeader: "20", groupHeader: "December 2018", part: 2 });
     await keyUp("Control");
 });
 
@@ -1410,7 +1410,7 @@ test("move a pill in another row in multi-level grouped", async () => {
 
     // move a pill (task 7) in the top-level group (User 2)
     const { drop } = await dragPill("Task 7");
-    await drop({ row: "Cancelled", column: "20 December 2018", part: 2 });
+    await drop({ row: "Cancelled", columnHeader: "20", groupHeader: "December 2018", part: 2 });
 
     expect(getGridContent().rows).toEqual([
         {
@@ -1516,7 +1516,12 @@ test("move a pill in another row in multi-level grouped (many2many case)", async
 
     // move a pill (first task 2) in "Undefined Assignees"
     const { drop } = await dragPill("Task 2", { nth: 1 });
-    await drop({ row: "Undefined Assignees", column: "17 December 2018", part: 2 });
+    await drop({
+        row: "Undefined Assignees",
+        columnHeader: "17",
+        groupHeader: "December 2018",
+        part: 2,
+    });
 
     expect(getGridContent().rows).toEqual([
         {
@@ -1638,17 +1643,17 @@ test("close tooltip when drag pill", async () => {
                 },
                 {
                     title: "Task 2",
-                    colSpan: "16 W51 2018 -> 22 (1/2) W51 2018",
+                    colSpan: "Sunday 16 Week 51 of 2018 -> Saturday 22 (1/2) Week 51 of 2018",
                     level: 1,
                 },
                 {
                     title: "Task 4",
-                    colSpan: "20 W51 2018 -> 20 (1/2) W51 2018",
+                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 (1/2) Week 51 of 2018",
                     level: 2,
                 },
                 {
                     title: "Task 7",
-                    colSpan: "20 (1/2) W51 2018 -> 20 W51 2018",
+                    colSpan: "Thursday 20 (1/2) Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
                     level: 2,
                 },
             ],
@@ -1689,14 +1694,32 @@ test("drag&drop on other pill in grouped view", async () => {
         {
             title: "Project 1",
             pills: [
-                { title: "Task 1", level: 0, colSpan: "16 W51 2018 -> 16 (1/2) W51 2018" },
-                { title: "Task 2", level: 0, colSpan: "17 (1/2) W51 2018 -> 17 W51 2018" },
-                { title: "Task 4", level: 0, colSpan: "20 W51 2018 -> 20 (1/2) W51 2018" },
+                {
+                    title: "Task 1",
+                    level: 0,
+                    colSpan: "Sunday 16 Week 51 of 2018 -> Sunday 16 (1/2) Week 51 of 2018",
+                },
+                {
+                    title: "Task 2",
+                    level: 0,
+                    colSpan: "Monday 17 (1/2) Week 51 of 2018 -> Monday 17 Week 51 of 2018",
+                },
+                {
+                    title: "Task 4",
+                    level: 0,
+                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 (1/2) Week 51 of 2018",
+                },
             ],
         },
         {
             title: "Project 2",
-            pills: [{ title: "Task 7", level: 0, colSpan: "20 (1/2) W51 2018 -> 20 W51 2018" }],
+            pills: [
+                {
+                    title: "Task 7",
+                    level: 0,
+                    colSpan: "Thursday 20 (1/2) Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                },
+            ],
         },
     ]);
     await contains(getPill("Task 2")).click();
@@ -1716,14 +1739,32 @@ test("drag&drop on other pill in grouped view", async () => {
         {
             title: "Project 1",
             pills: [
-                { title: "Task 2", level: 0, colSpan: "16 W51 2018 -> 16 (1/2) W51 2018" },
-                { title: "Task 1", level: 1, colSpan: "16 W51 2018 -> 16 (1/2) W51 2018" },
-                { title: "Task 4", level: 0, colSpan: "20 W51 2018 -> 20 (1/2) W51 2018" },
+                {
+                    title: "Task 2",
+                    level: 0,
+                    colSpan: "Sunday 16 Week 51 of 2018 -> Sunday 16 (1/2) Week 51 of 2018",
+                },
+                {
+                    title: "Task 1",
+                    level: 1,
+                    colSpan: "Sunday 16 Week 51 of 2018 -> Sunday 16 (1/2) Week 51 of 2018",
+                },
+                {
+                    title: "Task 4",
+                    level: 0,
+                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 (1/2) Week 51 of 2018",
+                },
             ],
         },
         {
             title: "Project 2",
-            pills: [{ title: "Task 7", level: 0, colSpan: "20 (1/2) W51 2018 -> 20 W51 2018" }],
+            pills: [
+                {
+                    title: "Task 7",
+                    level: 0,
+                    colSpan: "Thursday 20 (1/2) Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                },
+            ],
         },
     ]);
 });
@@ -2256,7 +2297,7 @@ test("focus today with scroll (in range & outside)", async () => {
     });
     expect.verifySteps(["get_gantt_data"]);
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
-    expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20 December 2018"));
+    expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20", "December 2018"));
     let { columnHeaders } = getGridContent();
     expect(columnHeaders).toHaveLength(34);
     expect(columnHeaders[0].title).toBe("03"); // December
@@ -2308,7 +2349,7 @@ test("focus today with range change (in range & outside)", async () => {
     });
     expect.verifySteps(["get_gantt_data"]);
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
-    expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20 December 2018"));
+    expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20", "December 2018"));
     let gridContent = getGridContent();
     expect(gridContent.range).toBe("From: 12/01/2018 to: 02/28/2019");
     expect(gridContent.columnHeaders).toHaveLength(34);
@@ -2318,7 +2359,7 @@ test("focus today with range change (in range & outside)", async () => {
     await selectCustomRange({ startDate: "2018-11-15", stopDate: "2019-02-15" });
     expect.verifySteps(["get_gantt_data"]);
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
-    expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20 December 2018"));
+    expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20", "December 2018"));
     gridContent = getGridContent();
     expect(gridContent.range).toBe("From: 11/15/2018 to: 02/15/2019");
     expect(gridContent.columnHeaders).toHaveLength(34);
@@ -2349,11 +2390,11 @@ test("set start/stop date: should keep focused date", async () => {
     await scroll(".o_content", { left: 2000 });
     await animationFrame();
     await selectCustomRange({ startDate: "2018-12-01", stopDate: "2019-05-28" });
-    expect(getCell("23 January 2019")).toBeVisible();
+    expect(getCell("23", "January 2019")).toBeVisible();
     await selectCustomRange({ startDate: "2019-01-22", stopDate: "2019-05-28" });
-    expect(getCell("23 January 2019")).toBeVisible();
+    expect(getCell("23", "January 2019")).toBeVisible();
     await selectCustomRange({ startDate: "2018-12-01", stopDate: "2019-01-22" });
-    expect(getCell("22 January 2019")).toBeVisible();
+    expect(getCell("22", "January 2019")).toBeVisible();
 });
 
 test("focus first pill on row header click", async () => {
@@ -2602,7 +2643,7 @@ test("date fields: drag a pill", async () => {
         },
     ]);
     const { drop } = await dragPill("Task 1");
-    await drop({ column: "19 December 2018", part: 1 });
+    await drop({ columnHeader: "19", groupHeader: "December 2018", part: 1 });
     expect(getGridContent().rows).toEqual([
         {
             pills: [

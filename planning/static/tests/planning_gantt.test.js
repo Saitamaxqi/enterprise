@@ -220,7 +220,7 @@ test('add record in empty gantt with sample="1"', async function () {
     expect(firstRowHeader).toHaveText("Open Shifts");
     expect(firstRowHeader).not.toHaveClass("o_sample_data_disabled");
 
-    await clickCell("01 December 2018", "Open Shifts");
+    await clickCell("01", "December 2018", "Open Shifts");
     await contains(".modal .o_form_view .o_field_widget[name=name] input").edit("new shift");
     await clickSave();
     expect(".o_gantt_view .o_content").not.toHaveClass("o_view_sample_data");
@@ -395,7 +395,7 @@ test("progress bar has the correct unit", async () => {
     expect(queryFirst(SELECTORS.progressBarBackground).style.width).toBe("41%");
     expect(SELECTORS.progressBarForeground).toHaveCount(0);
 
-    await hoverGridCell("02 October 2022", "Resource 1");
+    await hoverGridCell("02", "October 2022", "Resource 1");
     expect(SELECTORS.progressBarForeground).toHaveCount(1);
     expect(SELECTORS.progressBarForeground).toHaveText("16h24 / 40h");
 });
@@ -593,7 +593,7 @@ test("Resize or Drag-Drop should open recurrence update wizard", async () => {
 
     // move a pill in the next cell (+1 day)
     const { drop } = await dragPill("Shift With Repeat");
-    await drop({ row: "Resource 1", column: "12 October 2022" });
+    await drop({ row: "Resource 1", columnHeader: "12", groupHeader: "October 2022" });
     // click on the confirm button
     await click(".modal .btn-primary");
     await animationFrame();
@@ -811,7 +811,7 @@ test("The date should take into the account when created through the button in G
         groupBy: ["resource_id"],
     });
 
-    await clickCell("09 W49 2022", "Resource 1");
+    await clickCell("Friday 9", "Week 49 of 2022", "Resource 1");
     await contains(".modal .o_form_view .o_field_widget[name=name] input").edit("New Shift");
     await clickSave();
 

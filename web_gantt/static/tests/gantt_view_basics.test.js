@@ -577,34 +577,59 @@ test("full precision gantt rendering", async () => {
             title: "User 1",
             isGroup: true,
             pills: [
-                { title: "1", colSpan: "Out of bounds (1)  -> 19 W51 2018" },
-                { title: "2", colSpan: "20 W51 2018 -> 20 W51 2018" },
-                { title: "1", colSpan: "21 W51 2018 -> Out of bounds (22) " },
+                { title: "1", colSpan: "Out of bounds (1)  -> Wednesday 19 Week 51 of 2018" },
+                {
+                    title: "2",
+                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                },
+                { title: "1", colSpan: "Friday 21 Week 51 of 2018 -> Out of bounds (22) " },
             ],
         },
         {
             title: "Project 1",
             pills: [
                 { level: 0, colSpan: "Out of bounds (1)  -> Out of bounds (22) ", title: "Task 1" },
-                { level: 1, colSpan: "20 W51 2018 -> 20 W51 2018", title: "Task 4" },
+                {
+                    level: 1,
+                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                    title: "Task 4",
+                },
             ],
         },
         {
             title: "User 2",
             isGroup: true,
             pills: [
-                { title: "1", colSpan: "17 W51 2018 -> 19 W51 2018" },
-                { title: "2", colSpan: "20 W51 2018 -> 20 W51 2018" },
-                { title: "1", colSpan: "21 W51 2018 -> 22 W51 2018" },
+                {
+                    title: "1",
+                    colSpan: "Monday 17 Week 51 of 2018 -> Wednesday 19 Week 51 of 2018",
+                },
+                {
+                    title: "2",
+                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                },
+                { title: "1", colSpan: "Friday 21 Week 51 of 2018 -> Saturday 22 Week 51 of 2018" },
             ],
         },
         {
             title: "Project 1",
-            pills: [{ level: 0, colSpan: "17 W51 2018 -> 22 W51 2018", title: "Task 2" }],
+            pills: [
+                {
+                    level: 0,
+                    colSpan: "Monday 17 Week 51 of 2018 -> Saturday 22 Week 51 of 2018",
+                    title: "Task 2",
+                },
+            ],
         },
         {
             title: "Project 2",
-            pills: [{ level: 0, colSpan: "20 W51 2018 -> 20 W51 2018", title: "Task 7" }],
+            pills: [
+                {
+                    level: 0,
+                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                    title: "Task 7",
+                },
+            ],
         },
     ]);
 });
@@ -685,8 +710,16 @@ test("gantt rendering, pills must be chronologically ordered", async () => {
     expect(rows).toEqual([
         {
             pills: [
-                { title: "Task 08:30:00", level: 0, colSpan: "17 W51 2018 -> 17 W51 2018" },
-                { title: "Task 14:30:00", level: 1, colSpan: "17 (1/2) W51 2018 -> 17 W51 2018" },
+                {
+                    title: "Task 08:30:00",
+                    level: 0,
+                    colSpan: "Monday 17 Week 51 of 2018 -> Monday 17 Week 51 of 2018",
+                },
+                {
+                    title: "Task 14:30:00",
+                    level: 1,
+                    colSpan: "Monday 17 (1/2) Week 51 of 2018 -> Monday 17 Week 51 of 2018",
+                },
             ],
         },
     ]);
@@ -753,12 +786,12 @@ test("range switching", async () => {
                 {
                     title: "Task 4",
                     level: 2,
-                    colSpan: "3am 20 December 2018 -> 7am 20 December 2018",
+                    colSpan: "3am December 20, 2018 -> 7am December 20, 2018",
                 },
                 {
                     title: "Task 7",
                     level: 2,
-                    colSpan: "1pm 20 December 2018 -> 7pm 20 December 2018",
+                    colSpan: "1pm December 20, 2018 -> 7pm December 20, 2018",
                 },
             ],
         },
@@ -778,10 +811,18 @@ test("range switching", async () => {
                 {
                     title: "Task 2",
                     level: 1,
-                    colSpan: "17 (1/2) W51 2018 -> 22 (1/2) W51 2018",
+                    colSpan: "Monday 17 (1/2) Week 51 of 2018 -> Saturday 22 (1/2) Week 51 of 2018",
                 },
-                { title: "Task 4", level: 2, colSpan: "20 W51 2018 -> 20 (1/2) W51 2018" },
-                { title: "Task 7", level: 2, colSpan: "20 (1/2) W51 2018 -> 20 W51 2018" },
+                {
+                    title: "Task 4",
+                    level: 2,
+                    colSpan: "Thursday 20 Week 51 of 2018 -> Thursday 20 (1/2) Week 51 of 2018",
+                },
+                {
+                    title: "Task 7",
+                    level: 2,
+                    colSpan: "Thursday 20 (1/2) Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                },
             ],
         },
     ]);
@@ -828,7 +869,7 @@ test("range switching", async () => {
     expect(SELECTORS.expandCollapseButtons).not.toBeVisible();
     gridContent = getGridContent();
     expect(gridContent.range).toBe("Year");
-    expect(gridContent.columnHeaders).toHaveLength(27);
+    expect(gridContent.columnHeaders).toHaveLength(17);
     expect(gridContent.rows).toEqual([
         {
             pills: [
@@ -1095,7 +1136,7 @@ test("initialization with default_start_date and default_stop_date", async (asse
     });
     const { range, groupHeaders } = getGridContent();
     expect(range).toBe("From: 01/29/2017 to: 05/26/2019");
-    expect(groupHeaders.map((h) => h.title)).toEqual(["2017", "2018", "2019"]);
+    expect(groupHeaders.map((h) => h.title)).toEqual(["2018", "2019"]);
     expect(`${SELECTORS.columnHeader}.o_gantt_today`).toHaveCount(1);
 });
 
