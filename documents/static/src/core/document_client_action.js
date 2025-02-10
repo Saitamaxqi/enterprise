@@ -6,12 +6,19 @@ import { registry } from "@web/core/registry";
  * Not applied in mobile environments (uses the "mobile_view_mode"
  * action field which defaults on "kanban").
  */
-function documentActionPreference(env, action, options) {
+async function documentActionPreference(env, action, options) {
     const viewType = browser.localStorage.getItem("documentsDefaultViewType");
-    return env.services.action.doAction("documents.document_action", {
-        ...options,
-        viewType,
-    });
+
+    const nextAction = await env.services.action.loadAction("documents.document_action");
+
+    return env.services.action.doAction(
+        {
+            ...nextAction,
+            context: action.context,
+            domain: action.domain,
+        },
+        { ...options, viewType }
+    );
 }
 
 registry.category("actions").add("document_action_preference", documentActionPreference);
