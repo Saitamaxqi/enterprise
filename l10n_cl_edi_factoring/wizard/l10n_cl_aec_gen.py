@@ -33,7 +33,8 @@ class AECGenerator(models.TransientModel):
             'l10n_cl_dte_status': 'not_sent'
         })
         lines_data = [{
-            'name': (_("Yield of invoice %s"), line.name),
+            'name': _('Yield of invoice %(invoice_name)s for partner %(partner_name)s') % {
+                'invoice_name': move.name, 'partner_name': move.partner_id.name},
             'credit': line.debit,
             'debit': line.credit,
             'partner_id': line.partner_id.id,

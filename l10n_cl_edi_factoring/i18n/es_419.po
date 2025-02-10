@@ -380,11 +380,6 @@ msgid "Yield Entry"
 msgstr "Asiento de Cesión"
 
 #. module: l10n_cl_edi_factoring
-#: model_terms:ir.ui.view,arch_db:l10n_cl_edi_factoring.account_view_invoice_form
-msgid "Yield Invoice"
-msgstr "Cesión de la factura"
-
-#. module: l10n_cl_edi_factoring
 #: model:ir.model.fields,field_description:l10n_cl_edi_factoring.field_account_bank_statement_line__l10n_cl_aec_yielded
 #: model:ir.model.fields,field_description:l10n_cl_edi_factoring.field_account_move__l10n_cl_aec_yielded
 msgid "Yield Status"
@@ -395,12 +390,6 @@ msgstr "Estado de cesión"
 #: code:addons/l10n_cl_edi_factoring/wizard/l10n_cl_aec_gen.py:0
 msgid "Yield of invoice %(invoice_name)s for partner %(partner_name)s"
 msgstr "Cesión de factura %(invoice_name)s para el cliente %(partner_name)s"
-
-#. module: l10n_cl_edi_factoring
-#. odoo-python
-#: code:addons/l10n_cl_edi_factoring/wizard/l10n_cl_aec_gen.py:0
-msgid "Yield of invoice %s"
-msgstr "Cesión de la factura %s"
 
 #. module: l10n_cl_edi_factoring
 #. odoo-python
