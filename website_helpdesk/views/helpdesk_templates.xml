@@ -21,8 +21,8 @@
                     <div class="col-md-4" id="right-column">
                         <div class="oe_structure oe_empty" id="oe_structure_website_helpdesk_team_2" t-att-data-editor-message="editor_message"/>
                         <t t-if="not is_html_empty(team.description)">
-                            <div class="card bg-secondary mt-2 w-75 pull-right" id="about_team">
-                                <h6 class="card-header"><b>About our team</b></h6>
+                            <div class="card mt-2 w-75 pull-right" id="about_team">
+                                <h6 class="card-header">About our team</h6>
                             <div class="card-body">
                                 <span t-field="team.description"/>
                             </div>
@@ -101,7 +101,7 @@
 
     <template id="ticket_submit_form" name="Helpdesk: Submit a Ticket Form">
         <div class="container">
-            <h2 class="text-muted">
+            <h2>
                 Submit a Ticket
                 <t t-if="multiple_teams"> - <t t-out="team.name" /></t>
             </h2>
