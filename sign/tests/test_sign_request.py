@@ -514,6 +514,8 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         and checking if the notification type is set to 'inbox' in the created sign request.
         """
         self.env.user.write({
+            'name': 'Mitchell Admin',
+            'email': 'admin@example.com',
             'notification_type': 'inbox',
         })
 
