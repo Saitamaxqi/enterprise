@@ -11,4 +11,4 @@ access_mrp_eco_tag_manager,mrp.eco.tag,mrp_plm.model_mrp_eco_tag,mrp_plm.group_p
 access_mrp_eco_type_user,mrp.eco.type,mrp_plm.model_mrp_eco_type,mrp_plm.group_plm_user,1,0,0,0
 access_mrp_eco_type_manager,mrp.eco.type,mrp_plm.model_mrp_eco_type,mrp_plm.group_plm_manager,1,1,1,1
 access_mrp_eco_user,mrp.eco,mrp_plm.model_mrp_eco,mrp_plm.group_plm_user,1,1,1,1
-access_product_template_plm_manager,product.template plm_manager,product.model_product_template,mrp_plm.group_plm_manager,1,1,1,1
+access_product_template_plm_manager,product.template plm_manager,product.model_product_template,mrp_plm.group_plm_manager,1,0,0,0

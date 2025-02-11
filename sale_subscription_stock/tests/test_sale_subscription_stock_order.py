@@ -449,12 +449,6 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
                 'The move lines should match the moves of the second period'
             )
 
-    def test_stock_user_without_sale_permission_can_access_product_form(self):
-        stock_manager = new_test_user(
-            self.env, 'temp_stock_manager', 'stock.group_stock_manager',
-        )
-        Form(self.env['product.product'].with_user(stock_manager))
-
     def test_subscription_stock_delivery_recurring_product(self):
         # make sure we have enough product on hand
         self.test_product_order.invoice_policy = 'delivery'
