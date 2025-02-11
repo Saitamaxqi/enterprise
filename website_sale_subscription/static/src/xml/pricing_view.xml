@@ -2,7 +2,7 @@
 <templates id="template" xml:space="preserve">
     <div t-name="website_sale_subscription.SubscriptionPricingTable" id="oe_wsale_subscription_pricing_table">
         <table class="o_not_editable table w-50">
-            <tbody t-if="combination_info.pricings">
+            <tbody t-if="combination_info.pricings and combination_info.pricings.length > 1">
                 <t t-foreach="combination_info.pricings" t-as="pricing" t-key="pricing.table_name">
                     <tr>
                         <td class="w-50" t-esc="pricing.table_name"/>
