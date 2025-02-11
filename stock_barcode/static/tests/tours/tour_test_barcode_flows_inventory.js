@@ -105,7 +105,7 @@ registry.category("web_tour.tours").add("test_inventory_adjustment", {
         {
             trigger: ".o_notification_bar.bg-success",
             run: function () {
-                helper.assertErrorMessage("The inventory adjustment has been validated");
+                helper.assertErrorMessage("The inventory count has been updated");
             },
         },
     ],
@@ -285,7 +285,7 @@ registry.category("web_tour.tours").add("test_inventory_adjustment_multi_company
         {
             trigger: ".o_stock_barcode_main_menu",
             run: function () {
-                helper.assertErrorMessage("The inventory adjustment has been validated");
+                helper.assertErrorMessage("The inventory count has been updated");
             },
         },
     ],
@@ -345,7 +345,7 @@ registry.category("web_tour.tours").add("test_inventory_adjustment_multi_locatio
         {
             trigger: ".o_stock_barcode_main_menu",
             run: function () {
-                helper.assertErrorMessage("The inventory adjustment has been validated");
+                helper.assertErrorMessage("The inventory count has been updated");
             },
         },
     ],
@@ -480,7 +480,7 @@ registry.category("web_tour.tours").add("test_inventory_adjustment_tracked_produ
         {
             trigger: ".o_stock_barcode_main_menu",
             run: function () {
-                helper.assertErrorMessage("The inventory adjustment has been validated");
+                helper.assertErrorMessage("The inventory count has been updated");
             },
         },
     ],
@@ -586,7 +586,7 @@ registry.category("web_tour.tours").add("test_inventory_adjustment_tracked_produ
         {
             trigger: ".o_stock_barcode_main_menu",
             run: function () {
-                helper.assertErrorMessage("The inventory adjustment has been validated");
+                helper.assertErrorMessage("The inventory count has been updated");
             },
         },
     ],
@@ -656,7 +656,7 @@ registry
             {
                 trigger: ".o_stock_barcode_main_menu",
                 run: function () {
-                    helper.assertErrorMessage("The inventory adjustment has been validated");
+                    helper.assertErrorMessage("The inventory count has been updated");
                 },
             },
         ],
@@ -860,7 +860,7 @@ registry.category("web_tour.tours").add("test_inventory_nomenclature", {
         {
             trigger: ".o_stock_barcode_main_menu",
             run: function () {
-                helper.assertErrorMessage("The inventory adjustment has been validated");
+                helper.assertErrorMessage("The inventory count has been updated");
             },
         },
     ],
@@ -896,7 +896,7 @@ registry.category("web_tour.tours").add("test_inventory_package", {
         {
             trigger: ".o_notification_bar.bg-success",
             run: function () {
-                helper.assertErrorMessage("The inventory adjustment has been validated");
+                helper.assertErrorMessage("The inventory count has been updated");
             },
         },
 
