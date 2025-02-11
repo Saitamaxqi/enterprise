@@ -6,10 +6,9 @@ from json import dumps
 from odoo import Command
 from odoo.exceptions import AccessError, ValidationError
 from odoo.addons.website.tools import MockRequest
-from odoo.http import Request
 from odoo.tests import tagged
 from odoo.tools import formataddr
-from .test_sign_controller_common import TestSignControllerCommon
+from .sign_controller_common import TestSignControllerCommon
 
 @tagged('post_install', '-at_install')
 class TestSignController(TestSignControllerCommon):
