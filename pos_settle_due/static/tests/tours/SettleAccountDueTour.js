@@ -77,29 +77,7 @@ registry.category("web_tour.tours").add("SettleDueAmountMoreCustomers", {
             Chrome.startPoS(),
             Dialog.confirm("Open Register"),
             ProductScreen.clickPartnerButton(),
-            {
-                trigger: ".modal-header .input-container input",
-                run: `fill BPartner`,
-            },
-            {
-                trigger: ".modal-header .input-container input",
-                run: function () {
-                    document
-                        .querySelector(".modal-header .input-container input")
-                        .dispatchEvent(new KeyboardEvent("keyup", { key: "" }));
-                },
-            },
-            {
-                // Searching more customers by pressing enter
-                trigger: ".modal-header .input-group input",
-                run: function () {
-                    document
-                        .querySelector(".modal-header .input-group input")
-                        .dispatchEvent(
-                            new KeyboardEvent("keydown", { bubbles: true, key: "Enter" })
-                        );
-                },
-            },
+            PartnerList.searchCustomerValue("BPartner", true),
             {
                 trigger: ".partner-line-balance:contains('10.00')",
                 run: () => {},
