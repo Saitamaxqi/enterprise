@@ -945,6 +945,41 @@ describe("grid_view_desktop", () => {
         );
     });
 
+    test("edit grid cell with action context defined", async () => {
+        onRpc("grid_update_cell", (args) => {
+            const context = args.kwargs.context;
+            expect.step("grid_update_cell");
+            // the project in the action context should be replaced by the project linked to the grid cell altered
+            expect(context.default_project_id).toBe(31);
+            expect(context.default_selection_field).toBe("abc");
+        });
+        await mountView({
+            type: "grid",
+            resModel: "analytic.line",
+            arch: `<grid editable="1">
+                <field name="project_id" type="row"/>
+                <field name="task_id" type="row"/>
+                <field name="date" type="col">
+                    <range name="week" string="Week" span="week" step="day"/>
+                    <range name="month" string="Month" span="month" step="day"/>
+                </field>
+                <field name="unit_amount" type="measure" widget="float_time"/>
+            </grid>`,
+            context: {
+                default_project_id: 1,
+                default_selection_field: "abc",
+            },
+        });
+
+        await hover(".o_grid_row .o_grid_cell_readonly");
+        await runAllTimers();
+        await contains(".o_grid_cell").click();
+        await animationFrame();
+        expect(".o_grid_cell input").toHaveCount(1);
+        await contains(".o_grid_cell input").edit("2");
+        expect.verifySteps(["grid_update_cell"]);
+    });
+
     test("hide row total", async () => {
         await mountView({
             type: "grid",

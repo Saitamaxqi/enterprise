@@ -49,6 +49,7 @@ export class GridCell {
      */
     get context() {
         return {
+            ...(this.model.searchParams.context || {}),
             ...this.row.section?.context,
             ...this.row.context,
             ...this.column.context,
