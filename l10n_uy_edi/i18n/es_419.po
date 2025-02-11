@@ -147,8 +147,8 @@ msgid ""
 "All lines should have a VAT tax (only one per line). Check line "
 "'%(line_name)s' (Id Invoice: %(move_id)s)"
 msgstr ""
-"Todas la lineas necesitan tener un impuesto de IVA (solo uno por línea). "
-"Revise línea '%(line_name)s' (Id Invoice: %(move_id)s)"
+"Todas las líneas deberían tener impuesto de IVA (solo uno por línea). Verificar línea "
+"'%(line_name)s' (Id Factura: %(move_id)s)"
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__attachment_id
@@ -223,7 +223,7 @@ msgstr "Verificar Credenciales"
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move_send.py:0
 msgid "Check Invoice(s)"
-msgstr "Revisar Factura(s)"
+msgstr "Vertificar Factura(s)"
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_journal__l10n_uy_edi_send_print
@@ -424,7 +424,7 @@ msgstr "Error en la conexión con Odoo IAP para crear cuenta en Uruware"
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
 msgid "Error creating the Uruware account. Please contact support: "
-msgstr "Error creando cuenta en Uruware. Por favor contacte a soporte: "
+msgstr "Error creando la cuenta de Uruware. Por favor contacte a soporte: "
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -463,8 +463,8 @@ msgid ""
 "Export CFE can only have 0%% vat taxes. Check line '%(line_name)s' (Id "
 "Invoice: %(move_id)s)"
 msgstr ""
-"CFE de Exportacion solo puede tener impuesto de IVA 0%%. Revisa la linea "
-"'%(line_name)s' (Factura ID: %(move_id)s)"
+"CFE de exportación solo pueden tenes impuestos de IVA 0%. Verifique línea '%(line_name)s' (Id "
+"Factura: %(move_id)s)"
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -596,8 +596,8 @@ msgid ""
 "Make sure you have a valid enterprise contract in this database. If it is "
 "new, it might take some time for the system to recognize your contract. "
 msgstr ""
-"Asegúrese de tener una suscripción enterprise válida en esta base de datos. "
-"Si es nuevo, el sistema puede tardar un tiempo en reconocer su suscripción. "
+"Asegúrese que tiene un contrato válido en su base de datos. Si la misma es "
+"nueva, podría llevar cierto tiempo para el sistema para reconocer su contrato."
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move_line__l10n_uy_edi_addenda_ids
@@ -674,7 +674,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid "Not valid Uruguayan tax, only VAT taxes are supported (%(taxes_name)s)"
-msgstr ""
+msgstr "Impuesto uruguayo no válido. Solo impuestos de iva son soportados (%(taxes_name)s)"
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -683,6 +683,8 @@ msgid ""
 "Only can get the legal representation of the CFE for customer electronic "
 "invoices"
 msgstr ""
+"Solo puede obtener la representación legal del comprobante fiscal electrónico para facturas electrónicas "
+"de clientes"
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields.selection,name:l10n_uy_edi.selection__account_move__l10n_uy_edi_cfe_transport_route__9
@@ -862,6 +864,8 @@ msgid ""
 "This CFE has been generated in DEMO Mode. It is considered as accepted and "
 "it won\"t be sent to DGI."
 msgstr ""
+"Este comprobante fiscal electrónico fue generado en modo DEMO. Es considerado como aceptado y "
+"no va a ser enviado a DGI."
 
 #. module: l10n_uy_edi
 #. odoo-python

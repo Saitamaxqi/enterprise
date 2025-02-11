@@ -163,32 +163,32 @@ msgstr "Asiento"
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__res_company__l10n_ar_computable_tax_credit__global
 msgid "Global"
-msgstr "Global"
+msgstr ""
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__base_10
 msgid "Grav. 10,5%"
-msgstr "Grav. 10,5%"
+msgstr ""
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__base_25
 msgid "Grav. 2,5%"
-msgstr "Grav. 2,5%"
+msgstr ""
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__base_21
 msgid "Grav. 21%"
-msgstr "Grav. 21%"
+msgstr ""
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__base_27
 msgid "Grav. 27%"
-msgstr "Grav. 27%"
+msgstr ""
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__base_5
 msgid "Grav. 5%"
-msgstr "Grav. 5%"
+msgstr ""
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
@@ -198,7 +198,7 @@ msgstr "Agrupar por..."
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__invoice_date
@@ -293,7 +293,7 @@ msgstr "Gcia. perc."
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__perc_iibb
 msgid "Perc. IIBB"
-msgstr "Perc. IIBB"
+msgstr ""
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__state__posted
@@ -377,7 +377,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__total
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_tree
 msgid "Total"
-msgstr "Total"
+msgstr ""
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
