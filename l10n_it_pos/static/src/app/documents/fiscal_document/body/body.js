@@ -1,7 +1,9 @@
 import { Component } from "@odoo/owl";
 import { usePos } from "@point_of_sale/app/hooks/pos_hook";
 import { _t } from "@web/core/l10n/translation";
-import { formatFloat, floatIsZero } from "@web/core/utils/numbers";
+import { formatFloat } from "@web/core/utils/numbers";
+import { comp, EQ } from "@point_of_sale/app/utils/numbers";
+
 import {
     PrintRecMessage,
     PrintRecItem,
@@ -41,10 +43,10 @@ export class Body extends Component {
         });
     }
     _itFormatQty(qty) {
-        const uom_decimal_places = this.pos.models["decimal.precision"].find(
+        const ProductUnit = this.pos.models["decimal.precision"].find(
             (dp) => dp.name === "Product Unit"
-        ).digits;
-        const decimal_places = Math.min(3, uom_decimal_places);
+        );
+        const decimal_places = Math.min(3, ProductUnit.digits);
         return formatFloat(qty, {
             thousandsSep: "",
             digits: [0, decimal_places],
@@ -78,7 +80,7 @@ export class Body extends Component {
                 ),
                 department,
                 index,
-                discount: (!floatIsZero(line.discount) || isReward) && {
+                discount: (comp(line.discount, 0, { precision: 1 }) !== EQ || isReward) && {
                     description: isReward
                         ? productName
                         : _t("%s discount (%s)", productName, `${line.discount}%`),

@@ -1,6 +1,5 @@
 import { PosOrder } from "@point_of_sale/app/models/pos_order";
 import { patch } from "@web/core/utils/patch";
-import { roundPrecision } from "@web/core/utils/numbers";
 
 patch(PosOrder.prototype, {
     getSettleAmount() {
@@ -11,7 +10,7 @@ patch(PosOrder.prototype, {
     getTotalPaid() {
         if (this.lines.filter((line) => line.isSettleDueLine() || line.isDepositLine()).length) {
             // We exclude the negative payment lines from the total paid (otherwise the total paid is 0)
-            return roundPrecision(
+            return this.currency.round(
                 this.payment_ids
                     .filter(
                         (paymentLine) =>
@@ -19,8 +18,7 @@ patch(PosOrder.prototype, {
                             (paymentLine.getAmount() > 0 ||
                                 paymentLine.payment_method_id.type !== "pay_later")
                     )
-                    .reduce((sum, paymentLine) => sum + paymentLine.getAmount(), 0),
-                this.currency.rounding
+                    .reduce((sum, paymentLine) => sum + paymentLine.getAmount(), 0)
             );
         }
         return super.getTotalPaid();

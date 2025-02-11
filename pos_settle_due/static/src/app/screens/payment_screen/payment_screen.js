@@ -2,7 +2,6 @@ import { _t } from "@web/core/l10n/translation";
 import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
 import { patch } from "@web/core/utils/patch";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { floatIsZero } from "@web/core/utils/numbers";
 import { ask } from "@point_of_sale/app/utils/make_awaitable_dialog";
 
 patch(PaymentScreen, {
@@ -63,7 +62,7 @@ patch(PaymentScreen.prototype, {
 
         //If it's a deposit or settle due order
         if (
-            ((!floatIsZero(change, this.pos.currency.decimal_places) &&
+            ((!this.pos.currency.isZero(change) &&
                 order.getOrderlines().length === 0 &&
                 this.props.isDepositOrder) ||
                 settleDueLines.length) &&
