@@ -47,7 +47,7 @@
                     title="I Take It"
                     string="I Take It"
                     class="btn btn-link float-end"
-                    invisible="not context.get('my_planning_action') or is_past or not start_datetime or not end_datetime or (resource_id and not request_to_switch) or (user_id == uid and (allow_self_unassign or request_to_switch))"
+                    invisible="not context.get('my_planning_action') or is_past or not start_datetime or not end_datetime or resource_id and not request_to_switch or user_id == uid and (allow_self_unassign or request_to_switch)"
                     groups="!planning.group_planning_manager"
                 />
                 <button name="action_cancel_switch"
@@ -76,9 +76,9 @@
                     <button string="Publish &amp; Send" type="object" name="action_send" class="btn btn-primary"
                         close="1" groups="planning.group_planning_manager" data-hotkey="q" invisible="context.get('my_planning_action') or (state == 'published' or resource_type == 'material')"/>
                     <button name="action_self_assign" class="btn btn-primary" type="object" string="I Take It" groups="!planning.group_planning_manager"
-                        close="1" invisible="context.get('my_planning_action') or (not is_users_role or is_past or not start_datetime or not end_datetime or resource_id and not request_to_switch or user_id == uid and (allow_self_unassign or request_to_switch))"/>
+                        close="1" invisible="not context.get('my_planning_action') or not is_users_role or is_past or not start_datetime or not end_datetime or resource_id and not request_to_switch or user_id == uid and (allow_self_unassign or request_to_switch)"/>
                     <button name="action_self_assign" class="btn btn-secondary" type="object" string="I Take It" groups="!planning.group_planning_manager"
-                        close="1" invisible="context.get('my_planning_action') or (is_users_role or is_past or not start_datetime or not end_datetime or resource_id and not request_to_switch or user_id == uid and (allow_self_unassign or request_to_switch))"/>
+                        close="1" invisible="not context.get('my_planning_action') or is_users_role or is_past or not start_datetime or not end_datetime or resource_id and not request_to_switch or user_id == uid and (allow_self_unassign or request_to_switch)"/>
                     <button name="action_switch_shift" class="btn btn-secondary" type="object" string="Ask To Switch" groups="!planning.group_planning_manager"
                         invisible="user_id != uid or is_past or request_to_switch or allow_self_unassign"/>
                     <button name="action_cancel_switch" class="btn btn-secondary" type="object" string="Cancel Switch" groups="!planning.group_planning_manager"
@@ -283,9 +283,9 @@
                         groups="planning.group_planning_manager" data-hotkey="r" invisible="context.get('my_planning_action') or (state == 'draft' or resource_type == 'material')"/>
 
                     <button name="action_self_assign" class="btn btn-primary" type="object" string="I Take It" groups="!planning.group_planning_manager"
-                        invisible="not is_users_role or is_past or not start_datetime or not end_datetime or resource_id and not request_to_switch or user_id == uid and (allow_self_unassign or request_to_switch)" close="1"/>
+                        invisible="not context.get('my_planning_action') or not is_users_role or is_past or not start_datetime or not end_datetime or resource_id and not request_to_switch or user_id == uid and (allow_self_unassign or request_to_switch)" close="1"/>
                     <button name="action_self_assign" class="btn btn-secondary float-end" type="object" string="I Take It" groups="!planning.group_planning_manager"
-                        invisible="is_users_role or is_past or not start_datetime or not end_datetime or resource_id and not request_to_switch or user_id == uid and (allow_self_unassign or request_to_switch)" close="1"/>
+                        invisible="not context.get('my_planning_action') or is_users_role or is_past or not start_datetime or not end_datetime or resource_id and not request_to_switch or user_id == uid and (allow_self_unassign or request_to_switch)" close="1"/>
                     <button name="action_switch_shift" class="btn btn-secondary float-end" type="object" string="Ask To Switch" close="1" groups="!planning.group_planning_manager"
                         invisible="user_id != uid or is_past or request_to_switch or allow_self_unassign"/>
                     <button name="action_cancel_switch" class="btn btn-secondary" type="object" string="Cancel Switch" groups="!planning.group_planning_manager"
