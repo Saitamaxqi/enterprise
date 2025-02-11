@@ -1,8 +1,10 @@
 from odoo import models, fields, api, _
 from odoo.tools import date_utils, float_repr, float_is_zero, float_compare, SQL
+from odoo.tools.xml_utils import cleanup_xml_node
 from odoo.exceptions import UserError, RedirectWarning
 
 from datetime import datetime
+from lxml import etree
 
 import pytz
 
@@ -389,7 +391,7 @@ class L10n_PlTaxReportHandler(models.AbstractModel):
             audit_content = self.env['ir.qweb']._render('l10n_pl_reports.jpk_export_quarterly_template', values)
             return {
                 'file_name': f'jpk_vat_k_{values["date_month"]}_{values["date_year"]}.xml',
-                'file_content': audit_content,
+                'file_content': etree.tostring(cleanup_xml_node(audit_content)),
                 'file_type': 'xml',
             }
         else:
@@ -399,6 +401,6 @@ class L10n_PlTaxReportHandler(models.AbstractModel):
             audit_content = self.env['ir.qweb']._render('l10n_pl_reports.jpk_export_monthly_template', values)
             return {
                 'file_name': f'jpk_vat_m_{values["date_month"]}_{values["date_year"]}.xml',
-                'file_content': audit_content,
+                'file_content': etree.tostring(cleanup_xml_node(audit_content)),
                 'file_type': 'xml',
             }

@@ -1,4 +1,4 @@
-<JPK xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2021/06/08/eD/DefinicjeTypy/" xmlns="http://crd.gov.pl/wzor/2021/12/27/11148/">
+<JPK xmlns="http://crd.gov.pl/wzor/2021/12/27/11148/">
     <Naglowek>
         <KodFormularza kodSystemowy="JPK_V7M (2)" wersjaSchemy="1-0E">JPK_VAT</KodFormularza>
         <WariantFormularza>2</WariantFormularza>
@@ -11,8 +11,8 @@
     </Naglowek>
     <Podmiot1 rola="Podatnik">
         <OsobaNiefizyczna>
-            <etd:NIP>1234567883</etd:NIP>
-            <etd:PelnaNazwa>Polish Company</etd:PelnaNazwa>
+            <NIP>1234567883</NIP>
+            <PelnaNazwa>Polish Company</PelnaNazwa>
             <Email>test@mail.com</Email>
         </OsobaNiefizyczna>
     </Podmiot1>
