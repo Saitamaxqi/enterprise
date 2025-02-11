@@ -29,33 +29,6 @@ class L10n_InGstReturnPeriod(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "GST Return Period"
 
-    def _default_year(self):
-        today_date = fields.Date.context_today(self)
-        company = self.env.company
-        if company.account_return_periodicity == 'trimester':
-            this_quarter = date_utils.get_quarter(today_date)
-            if this_quarter and this_quarter[0].month == today_date.month and today_date.day <= 10:
-                return (fields.Date.context_today(self) - relativedelta.relativedelta(months=3)).strftime('%Y')
-
-        if today_date.day <= 10 and company.account_return_periodicity == 'monthly':
-            return (fields.Date.context_today(self) - relativedelta.relativedelta(months=1)).strftime('%Y')
-        return today_date.strftime('%Y')
-
-    def _default_month(self):
-        today_date = default_date = fields.Date.context_today(self)
-        if today_date.day <= 10:
-            default_date = fields.Date.context_today(self) - relativedelta.relativedelta(months=1)
-        return default_date.strftime('%m')
-
-    def _default_quarterly(self):
-        today_date = fields.Date.context_today(self)
-        this_quarter = date_utils.get_quarter(today_date)
-        default_date = this_quarter[0]
-        if this_quarter and this_quarter[0].month == today_date.month and today_date.day <= 10:
-            default_date = fields.Date.context_today(self) - relativedelta.relativedelta(months=3)
-        return default_date.strftime('%m')
-
-
     name = fields.Char(compute="_compute_name", string="Period")
     return_period_month_year = fields.Char(compute="_compute_rtn_period_month_year", string="Return Period", store=True)
     tax_unit_id = fields.Many2one("account.tax.unit", string="GST Units")
@@ -79,14 +52,14 @@ class L10n_InGstReturnPeriod(models.Model):
         ("10", "October"),
         ("11", "November"),
         ("12", "December"),
-        ], default=_default_month)
+        ], compute='_compute_default_periods', store=True, readonly=False)
     quarter = fields.Selection([
-        ("01", "January"),
-        ("04", "April"),
-        ("07", "July"),
-        ("10", "October"),
-        ], default=_default_quarterly)
-    year = fields.Char(default=_default_year)
+        ("03", "Jan - Mar"),
+        ("06", "Apr - Jun"),
+        ("09", "Jul - Sep"),
+        ("12", "Oct - Dec"),
+        ], compute='_compute_default_periods', store=True, readonly=False)
+    year = fields.Char(compute='_compute_default_periods', store=True, readonly=False)
     l10n_in_gst_efiling_feature_enabled = fields.Boolean(related='company_id.l10n_in_gst_efiling_feature')
 
     # ===============================
@@ -167,9 +140,14 @@ class L10n_InGstReturnPeriod(models.Model):
     # GSTR Common Methods
     # ===============================
 
-    _unique_period = models.Constraint(
-        'UNIQUE(company_id, month, year, quarter)',
-        "Return period must be unique.",
+    _unique_period_monthly = models.Constraint(
+        'UNIQUE(company_id, month, year)',
+        "Monthly Return period must be unique.",
+    )
+
+    _unique_period_quarterly = models.Constraint(
+        'UNIQUE(company_id, quarter, year)',
+        "Quarterly Return period must be unique.",
     )
 
     @api.constrains('tax_unit_id')
@@ -184,13 +162,14 @@ class L10n_InGstReturnPeriod(models.Model):
             if record.gstr1_status != 'to_send' or record.gstr2b_status != 'not_received':
                 raise UserError(_("You cannot change GST filing period after sending/receiving GSTR data"))
 
-    @api.onchange('year')
+    @api.constrains('year')
     def _check_isyear(self):
-        if self.year and len(self.year) != 4 or not self.year.isnumeric():
-            raise UserError(self.env._("The value [%(year)s] should be year", year=self.year))
+        for record in self:
+            if (record.year and len(record.year) != 4) or not record.year.isnumeric():
+                raise UserError(record.env._("The value [%(year)s] should be year", year=record.year))
 
     @api.onchange('tax_unit_id')
-    def on_chnage_tax_unit_id(self):
+    def _on_change_tax_unit_id(self):
         if self.tax_unit_id:
             self.company_id = self.tax_unit_id.main_company_id
 
@@ -204,6 +183,39 @@ class L10n_InGstReturnPeriod(models.Model):
                 period.name += format_date(self.env, period.start_date, date_format="-yyyy")
             else:
                 period.name = False
+
+    @api.depends('company_id')
+    def _compute_default_periods(self):
+        """
+        Compute default periods (year, month, quarter) based on the company's tax periodicity and current date.
+        """
+        for period in self:
+            today_date = fields.Date.context_today(period)
+            company = period.company_id
+            periodicity = company.account_return_periodicity
+
+            is_first_10_days = today_date.day <= 10
+            previous_month_date = today_date - relativedelta.relativedelta(months=1)
+
+            if periodicity == 'monthly':
+                # Compute Year and Month
+                period.year = previous_month_date.strftime('%Y') if is_first_10_days else today_date.strftime('%Y')
+                period.month = previous_month_date.strftime('%m') if is_first_10_days else today_date.strftime('%m')
+                period.quarter = False  # No quarter for monthly periodicity
+
+            else:  # 'trimester'
+                # Compute Year and Quarter
+                if today_date.month in [1, 4, 7, 10] and is_first_10_days:
+                    # Calculate the end date of the previous quarter
+                    previous_quarter_end_date = date_utils.get_quarter(today_date - relativedelta.relativedelta(days=10))[1]
+                    period.year = previous_quarter_end_date.strftime('%Y')
+                    period.quarter = previous_quarter_end_date.strftime('%m')
+                else:
+                    # Calculate the end date of the current quarter
+                    quarter_end_date = date_utils.get_quarter(today_date)[1]
+                    period.year = quarter_end_date.strftime('%Y')
+                    period.quarter = quarter_end_date.strftime('%m')
+                period.month = False  # No month for trimester periodicity
 
     @api.depends("company_id")
     def _compute_periodicity(self):
@@ -406,12 +418,16 @@ class L10n_InGstReturnPeriod(models.Model):
         def _search_or_create_gst_return_period(period_date):
             month = period_date.strftime('%m').zfill(2)
             year = period_date.strftime('%Y')
+            quarter = date_utils.get_quarter(period_date)[1].strftime('%m')
             GstReturnPeriod = self.env['l10n_in.gst.return.period']
             domain = [
                 ('company_id', '=', company.id),
-                ('month', '=', month),
                 ('year', '=', year),
             ]
+            if company.account_return_periodicity == 'monthly':
+                domain.append(('month', '=', month))
+            elif company.account_return_periodicity == 'trimester':
+                domain.append(('quarter', '=', quarter))
             return_period = GstReturnPeriod.search(domain)
             if create_if_not_found:
                 tax_units = self.env['account.tax.unit'].search([('main_company_id', '=', company.id)], limit=1)
@@ -426,7 +442,8 @@ class L10n_InGstReturnPeriod(models.Model):
                 return_period = GstReturnPeriod.create({
                     'company_id': company.id,
                     'year': year,
-                    'month': month,
+                    'month': month if company.account_return_periodicity == 'monthly' else False,
+                    'quarter': quarter if company.account_return_periodicity == 'trimester' else False,
                     'tax_unit_id': tax_units.id if create_if_not_found else False,
                 })
             return return_period
