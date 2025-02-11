@@ -1,8 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
+import re
 
-from odoo import Command
+from odoo import Command, tools
 
 from odoo.addons.approvals_purchase.tests.common import TestApprovalsCommon
 from odoo.exceptions import UserError
@@ -492,3 +493,82 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         self.assertEqual(approval.product_line_ids[0].seller_id.partner_id, self.partner_seller_1)
         self.assertTrue(approval.product_line_ids[1].has_no_seller)
         self.assertFalse(approval.product_line_ids[1].seller_id)
+
+    def test_logging_purchase_order_state_to_approval_request_chatter(self):
+        """
+        This test asserts the logging of the creartion and removal of purchase orders to the chatter
+        of the approval request.
+        """
+        vendor_1 = self.env['product.supplierinfo'].create({
+                    'partner_id': self.partner_seller_1.id,
+                    'min_qty': 1,
+                    'price': 8,
+                    'product_uom_id': self.uom_fortnight.id,
+        })
+        vendor_2 = self.env['product.supplierinfo'].create({
+                    'partner_id': self.partner_seller_2.id,
+                    'min_qty': 1,
+                    'price': 8,
+                    'product_uom_id': self.uom_fortnight.id,
+        })
+        approval_request = self.env['approval.request'].create({
+            'name': 'test_approval_request',
+            'category_id': self.purchase_category.id,
+            'approver_ids': [(0, 0, {'user_id': self.user_approver.id})],
+            'product_line_ids': [
+                (0, 0, {
+                    'product_id':  self.product_earphone.id,
+                    'quantity': 30.0,
+                    'seller_id': vendor_1.id
+                }),
+                (0, 0, {
+                    'product_id':  self.product_computer.id,
+                    'quantity': 10.0,
+                    'seller_id': vendor_2.id
+                })
+            ],
+        })
+        approval_request.with_user(self.user_approver).action_approve()
+
+        approval_request.action_create_purchase_orders()
+        purchase_orders_data = approval_request._get_order_data_from_product_lines(approval_request.product_line_ids)
+        purchase_orders_creation_log_message = approval_request._generate_po_log_message("created", purchase_orders_data)
+        approval_request_chatter_message = approval_request.message_ids[0]
+        expected_message = tools.html2plaintext(purchase_orders_creation_log_message)
+        actual_logged_message = tools.html2plaintext(approval_request_chatter_message.body)
+        self.assertEqual(expected_message, actual_logged_message)
+
+        approval_request_product_lines = approval_request.product_line_ids
+        purchase_orders = approval_request_product_lines.purchase_order_line_id.order_id
+        earphone_purchase_order = purchase_orders[0]
+        earphone_product_line = approval_request_product_lines[0]
+        earphone_purchase_order.button_approve()
+        earphone_purchase_order_approval_log_message = earphone_purchase_order._create_state_change_msg('draft', 'purchase', earphone_product_line)
+        approval_request_chatter_message = approval_request.message_ids[0]
+        expected_message = tools.html2plaintext(earphone_purchase_order_approval_log_message)
+        actual_logged_message = tools.html2plaintext(approval_request_chatter_message.body)
+        self.assertEqual(expected_message, actual_logged_message)
+
+        # Two messages will be logged when the approval request is canceled. The first one logs the state of the
+        # purchase order of the computer which will be changed from draft to canceled so that purchase order can be deleted.
+        computer_purchase_order = purchase_orders[1]
+        computer_product_line = approval_request_product_lines[1]
+        computer_purchase_order_cancelation_log_msg = computer_purchase_order._create_state_change_msg('draft', 'cancel', computer_product_line)
+        approval_request.action_cancel()
+        approval_request_chatter_message = approval_request.message_ids[1]
+        expected_message = tools.html2plaintext(computer_purchase_order_cancelation_log_msg)
+        actual_logged_message = tools.html2plaintext(approval_request_chatter_message.body)
+        self.assertEqual(expected_message, actual_logged_message)
+
+        # The second one logs the purchase orders that are changed / removed and the purchase orders
+        # that require manual actions because they aren't in draft state.
+        approval_request_chatter_message = approval_request.message_ids[0]
+        earphone_purchase_order_data = [purchase_orders_data[0]]
+        computer_purchase_order_data = [purchase_orders_data[1]]
+        computer_purchase_order_removal_log_message = approval_request._generate_po_log_message("removed", computer_purchase_order_data)
+        # The earphone purchase order isn't in draft state, So it cannot be removed.
+        earphone_purchase_order_require_manual_action_log_message = approval_request._generate_po_log_message("require_manual_action", earphone_purchase_order_data)
+        purchase_orders_state_change_log_message = computer_purchase_order_removal_log_message + earphone_purchase_order_require_manual_action_log_message
+        expected_message = tools.html2plaintext(purchase_orders_state_change_log_message)
+        actual_logged_message = tools.html2plaintext(approval_request_chatter_message.body)
+        self.assertEqual(expected_message, actual_logged_message)
