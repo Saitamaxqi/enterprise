@@ -71,9 +71,9 @@ tax_id_pattern = r"[A-Z]{6}[0-9]{2}(A|B|C|D|E|H|L|M|P|R|S|T)[0-9]{2}[A-Z]{1}[0-9
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    l10n_ch_legal_first_name = fields.Char(string="First Name", compute="_compute_l10n_ch_legal_name", store=True, readonly=False, tracking=True)
-    l10n_ch_legal_last_name = fields.Char(string="Last Name", compute="_compute_l10n_ch_legal_name", store=True, readonly=False, tracking=True)
-    l10n_ch_country_id_code = fields.Char(string="Nationality Country Code", related='country_id.code')
+    l10n_ch_legal_first_name = fields.Char(string="First Name", compute="_compute_l10n_ch_legal_name", store=True, readonly=False, tracking=True, groups="hr.group_hr_user")
+    l10n_ch_legal_last_name = fields.Char(string="Last Name", compute="_compute_l10n_ch_legal_name", store=True, readonly=False, tracking=True, groups="hr.group_hr_user")
+    l10n_ch_country_id_code = fields.Char(string="Nationality Country Code", related='country_id.code', groups="hr.group_hr_user")
     l10n_ch_po_box = fields.Char(string="PO. Box", groups="hr.group_hr_user", tracking=True)
 
     l10n_ch_no_nationality = fields.Selection(selection=[("11", "11 - Unknown"),
@@ -110,11 +110,11 @@ class HrEmployee(models.Model):
     l10n_ch_spouse_revenues = fields.Boolean(string="Spouse Has Income", groups="hr.group_hr_user", tracking=True)
     l10n_ch_spouse_work_end_date = fields.Date(groups="hr.group_hr_user", tracking=True)
     l10n_ch_spouse_residence_canton = fields.Selection(string="Spouse Residence Canton", selection=CANTONS_WITH_EX, groups="hr.group_hr_user", tracking=True)
-    l10n_ch_cross_border_commuter = fields.Boolean(string="Cross Border Commuter")
+    l10n_ch_cross_border_commuter = fields.Boolean(string="Cross Border Commuter", groups="hr.group_hr_user")
     l10n_ch_foreign_tax_id = fields.Char(string="Foreign Tax-ID", groups="hr.group_hr_user", tracking=True)
     l10n_ch_cross_border_start = fields.Date(string="Cross Border Commuter Start Date", groups="hr.group_hr_user", tracking=True)
 
-    l10n_ch_agricole_company = fields.Boolean(related="company_id.l10n_ch_agricole_company", tracking=True)
+    l10n_ch_agricole_company = fields.Boolean(related="company_id.l10n_ch_agricole_company", tracking=True, groups="hr.group_hr_user")
     l10n_ch_relationship_ceo = fields.Selection(string="Degree of Relationship with the owner",
                                                 selection=[("unknown", "Unknown"),
                                                            ("unrelated", "Unrelated to the owner"),
@@ -122,18 +122,18 @@ class HrEmployee(models.Model):
                                                            ("OwnerHusband", "Husband of the owner"),
                                                            ("OwnerBloodRelation", "Blood relative with the owner"),
                                                            ("OwnerSiblings", "Siblings with the owner"),
-                                                           ("OwnerFosterChild", "Foster Child of the owner")], tracking=True, default="unknown")
+                                                           ("OwnerFosterChild", "Foster Child of the owner")], tracking=True, default="unknown", groups="hr.group_hr_user")
 
-    l10n_ch_other_employment = fields.Boolean(string="Other Employment", tracking=True)
+    l10n_ch_other_employment = fields.Boolean(string="Other Employment", tracking=True, groups="hr.group_hr_user")
     l10n_ch_total_activity_type = fields.Selection(string="Other Employment Details", selection=[("unknown", "Unknown"),
                                                                                                  ("percentage", "Total Percentage"),
-                                                                                                 ("gross", "Total Gross Monthly Income")], default="unknown", tracking=True)
-    l10n_ch_other_activity_percentage = fields.Float(string="Total Percentage", tracking=True)
-    l10n_ch_other_activity_gross = fields.Float(string="Total Income", tracking=True)
-    l10n_ch_working_days_in_ch = fields.Float(string="Working Days in Switzerland", default=20, tracking=True)
+                                                                                                 ("gross", "Total Gross Monthly Income")], default="unknown", tracking=True, groups="hr.group_hr_user")
+    l10n_ch_other_activity_percentage = fields.Float(string="Total Percentage", tracking=True, groups="hr.group_hr_user")
+    l10n_ch_other_activity_gross = fields.Float(string="Total Income", tracking=True, groups="hr.group_hr_user")
+    l10n_ch_working_days_in_ch = fields.Float(string="Working Days in Switzerland", default=20, tracking=True, groups="hr.group_hr_user")
     l10n_ch_residence_type = fields.Selection(string="Kind of residence", selection=[("Daily", "Daily"),
                                                                                      ("Weekly", "Weekly")],
-                                              default="Daily",
+                                              default="Daily", groups="hr.group_hr_user",
                                               help="""
 Daily: 
 For PIS (Persons subject to Source tax) who do not have a residence or a place of stay in Switzerland, 
@@ -144,22 +144,21 @@ Weekly:
 For PIS who do not have a residence but have a weekly place of stay in Switzerland, 
 the canton and municipality of the weekly stay (based on the address of the weekly stay) are decisive.
 """, tracking=True)
-    l10n_ch_weekly_residence_canton = fields.Selection(string="Weekly Residence Canton", selection=CANTONS, tracking=True
+    l10n_ch_weekly_residence_canton = fields.Selection(string="Weekly Residence Canton", selection=CANTONS, tracking=True, groups = "hr.group_hr_user"
     )
-    l10n_ch_weekly_residence_municipality = fields.Char(string="Weekly Residence Municipality", tracking=True)
+    l10n_ch_weekly_residence_municipality = fields.Char(string="Weekly Residence Municipality", tracking=True, groups="hr.group_hr_user")
 
-    l10n_ch_weekly_residence_address_street = fields.Char(string="Weekly Residence Street", tracking=True)
-    l10n_ch_weekly_residence_address_city = fields.Char(string="Weekly Residence City", tracking=True)
-    l10n_ch_weekly_residence_address_zip = fields.Char(string="Weekly Residence ZIP-Code", tracking=True)
+    l10n_ch_weekly_residence_address_street = fields.Char(string="Weekly Residence Street", tracking=True, groups="hr.group_hr_user")
+    l10n_ch_weekly_residence_address_city = fields.Char(string="Weekly Residence City", tracking=True, groups="hr.group_hr_user")
+    l10n_ch_weekly_residence_address_zip = fields.Char(string="Weekly Residence ZIP-Code", tracking=True, groups="hr.group_hr_user")
 
     l10n_ch_flex_profiling = fields.Char("Flex Profiling", help="""
 This variable can only be provided if a prior agreement has been established between the OFS and the company as part of the Profiling process. 
 It involves additional information required to account for the specific characteristics of certain companies (e.g., to define the staff included).
-""", tracking=True)
+""", tracking=True, groups="hr.group_hr_user")
 
-    l10n_ch_is_mutations = fields.One2many('l10n.ch.is.mutation', 'employee_id')
-    l10n_ch_salary_certificate_profiles = fields.One2many("l10n.ch.salary.certificate.profile", "employee_id")
-    #l10n_ch_employee_warnings = fields.Json(compute="_compute_l10n_ch_employee_warnings", store=True)
+    l10n_ch_is_mutations = fields.One2many('l10n.ch.is.mutation', 'employee_id', groups="hr.group_hr_user")
+    l10n_ch_salary_certificate_profiles = fields.One2many("l10n.ch.salary.certificate.profile", "employee_id", groups="hr.group_hr_user")
 
     @api.constrains("l10n_ch_foreign_tax_id")
     def _check_l10n_ch_foreign_tax_id(self):
@@ -250,7 +249,7 @@ It involves additional information required to account for the specific characte
     @api.model
     def _create_or_update_snapshot(self):
 
-        swiss_employees = self.filtered(lambda e: e.company_id.country_code == "CH")
+        swiss_employees = self.filtered(lambda e: e.company_id.country_id.code == "CH")
         if not swiss_employees:
             return
 

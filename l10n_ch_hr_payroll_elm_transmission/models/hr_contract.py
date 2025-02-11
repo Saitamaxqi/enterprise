@@ -102,7 +102,7 @@ It will enable the distinction between core staff and various external mandates 
     @api.model_create_multi
     def create(self, vals_list):
         contracts = super().create(vals_list)
-        swissdec_structure = self.env.ref("l10n_ch_hr_payroll.hr_payroll_structure_ch_employee_salary", raise_if_not_found=False)
+        swissdec_structure = self.env.ref("l10n_ch_hr_payroll.structure_type_employee_ch", raise_if_not_found=False)
         employees = contracts.filtered(lambda c: c.structure_type_id.id == swissdec_structure.id).mapped("employee_id")
         if not employees:
             return contracts
@@ -111,7 +111,7 @@ It will enable the distinction between core staff and various external mandates 
 
     def write(self, vals):
         res = super().write(vals)
-        swissdec_structure = self.env.ref("l10n_ch_hr_payroll.hr_payroll_structure_ch_employee_salary", raise_if_not_found=False)
+        swissdec_structure = self.env.ref("l10n_ch_hr_payroll.structure_type_employee_ch", raise_if_not_found=False)
         employees = self.filtered(lambda c: c.structure_type_id.id == swissdec_structure.id).mapped("employee_id")
         if not employees:
             return res
