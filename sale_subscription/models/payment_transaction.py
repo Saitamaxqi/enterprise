@@ -226,3 +226,20 @@ class PaymentTransaction(models.Model):
         draft_invoices = subscriptions.order_line.invoice_lines.move_id.filtered(lambda am: am.state == 'draft')
         if draft_invoices:
             draft_invoices.button_cancel()
+
+    def _get_invoices_to_notify(self):
+        """ Override `payment` to filter out invoices whose logging is already handled by the cron.
+
+        This prevents deadlocks from happening in the case where:
+        1. the cron creates invoices linked to the transaction;
+        2. initiate the payment;
+        3. commits the cursor;
+        4. deletes the linked invoices because the payment didn't go through;
+        5. the payment webhook tries to log the payment failure on the committed-but-now-deleted
+           invoices.
+        """
+        return self.invoice_ids.filtered(
+            lambda invoice: not any(
+                o.is_invoice_cron for o in invoice.invoice_line_ids.sale_line_ids.order_id
+            )
+        )
