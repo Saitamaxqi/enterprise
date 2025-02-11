@@ -87,9 +87,12 @@
                                     <div class="o_appraisal_feedback_title col-12 d-flex justify-content-between">
                                         <h3>Employee's Feedback</h3>
                                         <div class="h-100" invisible="state == '3_done'">
-                                            <span class="text-end" invisible="employee_feedback_published">Not Visible to Manager</span>
-                                            <span class="text-end" invisible="not employee_feedback_published or state == '1_new'">Visible to Manager</span>
-                                            <span class="text-end" invisible="not employee_feedback_published or state != '1_new'">Visible &amp; Editable by Manager</span>
+                                            <label for="employee_feedback_published" class="text-end" invisible="employee_feedback_published"
+                                                string="Not Visible to Manager"/>
+                                            <label for="employee_feedback_published" class="text-end" invisible="not employee_feedback_published or state == '1_new'"
+                                                string="Visible to Manager"/>
+                                            <label for="employee_feedback_published" class="text-end" invisible="not employee_feedback_published or state != '1_new'"
+                                                string="Visible &amp; Editable by Manager"/>
                                             <field name="employee_feedback_published" nolabel="1" widget="boolean_toggle_confirm"
                                                 invisible="state == '1_new' and employee_user_id == uid" class="ms-2 me-0"/>
                                         </div>
@@ -112,8 +115,10 @@
                                     <div class="o_appraisal_feedback_title col-12 d-flex justify-content-between">
                                         <h3>Manager's Feedback</h3>
                                         <div class="h-100" invisible="state == '3_done'">
-                                            <span class="text-end" invisible="manager_feedback_published or not can_see_manager_publish">Not Visible to Employee</span>
-                                            <span class="text-end" invisible="not manager_feedback_published or not can_see_manager_publish">Visible to Employee</span>
+                                            <label for="manager_feedback_published" class="text-end" invisible="manager_feedback_published or not can_see_manager_publish"
+                                                string="Not Visible to Employee"/>
+                                            <label for="manager_feedback_published" class="text-end" invisible="not manager_feedback_published or not can_see_manager_publish"
+                                                string="Visible to Employee"/>
                                             <field name="manager_feedback_published" nolabel="1" widget="boolean_toggle" class="ms-2 me-0" invisible="not can_see_manager_publish"/>
                                         </div>
                                     </div>

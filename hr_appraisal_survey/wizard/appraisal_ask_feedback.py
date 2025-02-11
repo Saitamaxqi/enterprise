@@ -176,6 +176,9 @@ class AppraisalAskFeedback(models.TransientModel):
     def action_send(self):
         self.ensure_one()
 
+        if fields.Date.today() > self.deadline:
+            raise UserError(_("Please set an Answer Deadline in the future"))
+
         answers = self._prepare_survey_anwers(self.employee_ids)
         answers.sudo().write({'appraisal_id': self.appraisal_id.id, 'deadline': self.deadline})
         for answer in answers:

@@ -79,8 +79,10 @@ class HrAppraisal(models.Model):
     manager_feedback = fields.Html(compute='_compute_manager_feedback', store=True, readonly=False, groups="hr_appraisal.group_hr_appraisal_user")
     accessible_manager_feedback = fields.Html(compute='_compute_accessible_manager_feedback', inverse="_inverse_accessible_manager_feedback")
     show_manager_feedback_full = fields.Boolean(compute='_compute_show_manager_feedback_full')
-    employee_feedback_published = fields.Boolean(string="Employee Feedback Published", default=True, tracking=True)
-    manager_feedback_published = fields.Boolean(string="Manager Feedback Published", default=True, tracking=True)
+    employee_feedback_published = fields.Boolean(string="Employee Feedback Published", default=True, tracking=True,
+        help="If greened, the manager will be able to see and edit your feedback. Otherwise, your feedback is blurred and visible only to you.")
+    manager_feedback_published = fields.Boolean(string="Manager Feedback Published", default=True, tracking=True,
+        help="If greened, the employee will be able to see your feedback. Otherwise, your feedback is blurred and visible only to you.")
     can_see_employee_publish = fields.Boolean(compute='_compute_buttons_display')
     can_see_manager_publish = fields.Boolean(compute='_compute_buttons_display')
     assessment_note = fields.Many2one('hr.appraisal.note', string="Final Rating", help="This field is not visible to the Employee.", domain="[('company_id', '=', company_id)]")
