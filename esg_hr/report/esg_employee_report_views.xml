@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="esg_employee_report_search" model="ir.ui.view">
+        <field name="name">esg.employee.report.search</field>
+        <field name="model">esg.employee.report</field>
+        <field name="arch" type="xml">
+            <search string="Gender Parity">
+                <field name="department_id"/>
+                <filter string="Full-Time Workers" name="full_time" domain="[('is_full_time', '=', True)]"/>
+                <filter string="Part-Time Workers" name="part_time" domain="[('is_full_time', '=', False)]"/>
+                <separator/>
+                <filter string="Male" name="gender_male" domain="[('gender', '=', 'male')]"/>
+                <filter string="Female" name="gender_female" domain="[('gender', '=', 'female')]"/>
+                <filter string="Other" name="gender_other" domain="[('gender', '=', 'other')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Gender" name="group_by_gender" context="{'group_by': 'gender'}"/>
+                    <filter string="Leadership Level" name="group_by_leadership_level" context="{'group_by': 'leadership_level'}"/>
+                    <filter string="Department" name="group_by_department_id" context="{'group_by': 'department_id'}"/>
+                    <filter string="Country" name="group_by_country_id" context="{'group_by': 'country_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="esg_employee_report_graph" model="ir.ui.view">
+        <field name="name">esg.employee.report.graph</field>
+        <field name="model">esg.employee.report</field>
+        <field name="arch" type="xml">
+            <graph string="Gender Parity" type="pie" disable_linking="1">
+                <field name="gender"/>
+                <field name="leadership_level" invisible="1"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_esg_employee_report_gender_parity" model="ir.actions.act_window">
+        <field name="name">Gender Parity</field>
+        <field name="res_model">esg.employee.report</field>
+        <field name="path">esg-gender-parity</field>
+        <field name="view_mode">graph</field>
+        <field name="context">{'search_default_group_by_gender': 1}</field>
+        <field name="search_view_id" ref="esg_employee_report_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No employee gender data available.
+            </p>
+            <p>
+                Once configured, you'll be able to view gender distribution across your company.
+            </p>
+        </field>
+    </record>
+</odoo>

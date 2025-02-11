@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="menu_esg_social"
+        name="Social"
+        sequence="10"
+        parent="esg.menu_esg_measure"
+    >
+        <menuitem
+            id="menu_esg_gender_parity"
+            name="Gender Parity"
+            sequence="10"
+            action="action_esg_employee_report_gender_parity"
+            groups="hr.group_hr_user"
+        />
+    </menuitem>
+</odoo>

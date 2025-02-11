@@ -208,6 +208,13 @@ class HrContract(models.Model):
         contract_changed.filtered(lambda c: not c.calendar_changed).write({'calendar_changed': True})
         (self - contract_changed).filtered(lambda c: c.calendar_changed).write({'calendar_changed': False})
 
+    def _get_normalized_wage(self):
+        wage = self._get_contract_wage()
+        if self.wage_type == 'hourly' or not self.resource_calendar_id.hours_per_week:
+            return wage
+        else:
+            return wage * self._get_salary_costs_factor() / 52 / self.resource_calendar_id.hours_per_week
+
     def _get_contract_work_entries_values(self, date_start, date_stop):
         contract_vals = super()._get_contract_work_entries_values(date_start, date_stop)
         contract_vals += self._get_contract_credit_time_values(date_start, date_stop)

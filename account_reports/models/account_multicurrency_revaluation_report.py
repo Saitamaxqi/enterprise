@@ -108,7 +108,7 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
 
         return rslt
 
-    def _custom_groupby_line_completer(self, report, options, line_dict):
+    def _custom_groupby_line_completer(self, report, options, line_dict, current_groupby):
         model_info_from_id = report._get_model_info_from_id(line_dict['id'])
         if model_info_from_id[0] == 'res.currency':
             line_dict['unfolded'] = True

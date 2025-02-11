@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="esg_gas_co2" model="esg.gas">
+        <field name="name">Carbon Dioxide (CO₂)</field>
+        <field name="global_warming_potential">1</field>
+        <field name="category">co2</field>
+        <field name="code">co2</field>
+    </record>
+    <record id="esg_gas_ch4f" model="esg.gas">
+        <field name="name">Fossil Methane (CH₄)</field>
+        <field name="global_warming_potential">21</field>
+        <field name="category">ch4</field>
+        <field name="code">ch4f</field>
+    </record>
+    <record id="esg_gas_ch4b" model="esg.gas">
+        <field name="name">Biogenic Methane (CH₄)</field>
+        <field name="global_warming_potential">21</field>
+        <field name="category">ch4</field>
+        <field name="code">ch4b</field>
+    </record>
+    <record id="esg_gas_n2o" model="esg.gas">
+        <field name="name">Nitrous Oxide (N₂O)</field>
+        <field name="global_warming_potential">310</field>
+        <field name="category">n2o</field>
+        <field name="code">n2o</field>
+    </record>
+    <record id="esg_gas_hfc_134a" model="esg.gas">
+        <field name="name">HFC-134a</field>
+        <field name="global_warming_potential">1430</field>
+        <field name="category">hfc</field>
+        <field name="code">hfc_134a</field>
+    </record>
+        <record id="esg_gas_hfc_23" model="esg.gas">
+        <field name="name">HFC-23</field>
+        <field name="global_warming_potential">14800</field>
+        <field name="category">hfc</field>
+        <field name="code">hfc_23</field>
+    </record>
+        <record id="esg_gas_hfc_152a" model="esg.gas">
+        <field name="name">HFC-152a</field>
+        <field name="global_warming_potential">124</field>
+        <field name="category">hfc</field>
+        <field name="code">hfc_152a</field>
+    </record>
+    <record id="esg_gas_pfc_cf4" model="esg.gas">
+        <field name="name">Carbon Tetrafluoride (CF₄)</field>
+        <field name="global_warming_potential">7390</field>
+        <field name="category">pfc</field>
+        <field name="code">cf4</field>
+    </record>
+    <record id="esg_gas_pfc_c2f6" model="esg.gas">
+        <field name="name">Hexafluoroethane (C₂F₆)</field>
+        <field name="global_warming_potential">12200</field>
+        <field name="category">pfc</field>
+        <field name="code">c2f6</field>
+    </record>
+    <record id="esg_gas_sf6" model="esg.gas">
+        <field name="name">Sulfur Hexafluoride (SF₆)</field>
+        <field name="global_warming_potential">23900</field>
+        <field name="category">sf6</field>
+        <field name="code">sf6</field>
+    </record>
+</odoo>

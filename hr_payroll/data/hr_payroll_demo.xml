@@ -141,6 +141,7 @@
             <field name="company_id" ref="base.main_company"/>
             <field eval="1" name="active"/>
             <field name="name">Roger Scott</field>
+            <field name="gender">male</field>
             <field name="parent_id" ref="hr.employee_vad"/>
             <field name="work_location_id" ref="hr.work_location_1"/>
             <field name="work_phone">+3282823500</field>

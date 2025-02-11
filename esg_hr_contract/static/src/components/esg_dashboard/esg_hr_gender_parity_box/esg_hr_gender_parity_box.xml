@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-inherit="esg_hr.GenderParityBox" t-inherit-mode="extension">
+        <xpath expr="//div[@name='title']" position="after">
+            <div class="d-flex justify-content-end mb-2 pt-2" t-if="props.data.overall_pay_gap != null">
+                <div class="row">
+                    <div class="col text-start">
+                        <span class="fw-bold">
+                            Pay Gap
+                        </span>
+                    </div>
+                    <div class="col-auto text-end">
+                        <t t-esc="overallPayGapPercentage"/>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>

@@ -35,7 +35,7 @@ class AccountMoveLine(models.Model):
         super(AccountMoveLine, lines_to_compute)._compute_tax_ids()
 
     @api.model
-    def _prepare_aml_shadowing_for_report(self, change_equivalence_dict):
+    def _prepare_aml_shadowing_for_report(self, change_equivalence_dict, prefix_fields=False):
         """ Prepares the fields lists for creating a temporary table shadowing the account_move_line one.
         This is used to switch the computation mode of the reports, with analytics or financial budgets, for example.
 
@@ -43,6 +43,7 @@ class AccountMoveLine(models.Model):
                                         - aml_field: is a string containing the name of field of account.move.line
                                         - sql_equivalence: is the value to use to shadow aml_field. It can be an SQL object; if
                                           it's not, it'll be escaped in the query.
+        :param prefix_fields: True if you want the returned fields to be prefixed with the `account_move_line` table.
 
         :return: A tuple of 2 SQL objects, so that:
                  - The first one is the fields list to pass into the INSERT TO part of the query filling up the temporary table
@@ -74,4 +75,10 @@ class AccountMoveLine(models.Model):
                     fname=SQL('"account_move_line.%s"', SQL(fname)),
                 ))
 
-        return SQL(', ').join(SQL.identifier(fname) for fname in stored_fields), SQL(', ').join(fields_to_insert)
+        return (
+            SQL(', ').join(
+                SQL.identifier('account_move_line', fname) if prefix_fields else SQL.identifier(fname)
+                for fname in stored_fields
+            ),
+            SQL(', ').join(fields_to_insert)
+        )

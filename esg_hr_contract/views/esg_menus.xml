@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="menu_esg_pay_gap"
+        name="Pay Gap"
+        sequence="20"
+        parent="esg_hr.menu_esg_social"
+        action="action_esg_employee_report_pay_gap"
+        groups="hr_contract.group_hr_contract_employee_manager"
+    />
+</odoo>

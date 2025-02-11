@@ -275,6 +275,7 @@
 
         <record id="employee_aka" model="hr.employee">
             <field name="name">Aka Foster</field>
+            <field name="gender">female</field>
             <field name="department_id" ref="hr.dep_ps"/>
             <field name="parent_id" ref="hr.employee_admin"/>
             <field name="job_id" ref="job_quality_control"/>
@@ -298,6 +299,7 @@
 
         <record id="employee_cry" model="hr.employee">
             <field name="name">Cherry Nelson</field>
+            <field name="gender">male</field>
             <field name="department_id" ref="hr.dep_ps"/>
             <field name="parent_id" ref="hr.employee_admin"/>
             <field name="job_id" ref="job_maintenance_technician"/>
@@ -320,6 +322,7 @@
 
         <record id="employee_oza" model="hr.employee">
             <field name="name">Suman Oza</field>
+            <field name="gender">male</field>
             <field name="department_id" ref="hr.dep_ps"/>
             <field name="parent_id" ref="hr.employee_admin"/>
             <field name="job_id" ref="job_maintenance_technician"/>
