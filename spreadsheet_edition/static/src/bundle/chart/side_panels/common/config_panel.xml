@@ -1,6 +1,13 @@
 <odoo>
     <t t-name="spreadsheet_edition.CommonOdooChartConfigPanel">
-        <t t-if="isModelValid">
+        <t t-if="!isDataLoaded">
+            <div class="text-center mt-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </t>
+        <t t-elif="isModelValid">
             <Section title.translate="Model">
                 <div><t t-esc="modelDisplayName" /> (<t t-esc="model" />)</div>
             </Section>

@@ -27,6 +27,7 @@ export class CommonOdooChartConfigPanel extends Component {
         const loadData = async (figureId) => {
             const dataSource = this.env.model.getters.getChartDataSource(figureId);
             this.isModelValid = dataSource.isModelValid();
+            this.isDataLoaded = dataSource.isReady();
             if (this.isModelValid) {
                 this.modelDisplayName = await dataSource.getModelLabel();
             }
