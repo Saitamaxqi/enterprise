@@ -2,7 +2,7 @@ from freezegun import freeze_time
 
 from odoo import Command, release
 from odoo.tests import tagged
-from odoo.addons.l10n_cz_reports.tests.test_l10n_cz_reports_common import CzechReportsCommon
+from .l10n_cz_reports_common import CzechReportsCommon
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
