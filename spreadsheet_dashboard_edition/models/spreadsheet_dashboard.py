@@ -58,9 +58,6 @@ class SpreadsheetDashboard(models.Model):
             }
         }
 
-    def _creation_msg(self):
-        return _("New dashboard created")
-
     @api.model
     def _get_spreadsheet_selector(self):
         if self.env.user.has_group('spreadsheet_dashboard.group_dashboard_manager'):

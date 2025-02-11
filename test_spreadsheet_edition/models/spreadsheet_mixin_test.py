@@ -14,9 +14,6 @@ class SpreadsheetTest(models.Model):
             }
         }
 
-    def _creation_msg(self):
-        return "test spreadsheet created"
-
     def _get_spreadsheet_selector(self):
         if not modules.module.current_test:
             return None

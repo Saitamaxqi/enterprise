@@ -191,7 +191,7 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         action = spreadsheet.fork_history(rev1.id, {"test": "snapshot"})
         self.assertTrue(isinstance(action, dict))
 
-        self.assertEqual(action["params"]["message"], "test spreadsheet created")
+        self.assertEqual(action["params"]["message"], "New spreadsheet created")
         self.assertEqual(action["tag"], "display_notification")
         self.assertEqual(action["type"], "ir.actions.client")
 

@@ -380,7 +380,7 @@ class SpreadsheetMixin(models.AbstractModel):
 
     @api.model
     def _creation_msg(self):
-        raise NotImplementedError("This method is not implemented for model %s." % self._name)
+        return self.env._("New spreadsheet created")
 
     @api.readonly
     @api.model
