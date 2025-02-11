@@ -74,6 +74,13 @@
         <field name="seller_central_url">https://sellercentral-europe.amazon.com</field>
         <field name="tax_included">True</field>
     </record>
+    <record id="marketplace_IE" model="amazon.marketplace">
+        <field name="name">Amazon.ie</field>
+        <field name="api_ref">A28R8C7NBKEWEA</field>
+        <field name="region">eu-west-1</field>
+        <field name="seller_central_url">https://sellercentral.amazon.ie</field>
+        <field name="tax_included">True</field>
+    </record>
     <record id="marketplace_IN" model="amazon.marketplace">
         <field name="name">Amazon.in</field>
         <field name="api_ref">A21TJRUUN4KGV</field>
