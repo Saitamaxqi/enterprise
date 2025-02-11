@@ -15,7 +15,7 @@ from tempfile import TemporaryDirectory
 
 from dbfread import DBF
 
-from odoo import models, fields, _
+from odoo import Command, models, fields, _
 from odoo.exceptions import UserError, RedirectWarning
 from odoo.tools import frozendict
 
@@ -37,31 +37,23 @@ class AccountWinbooksImportWizard(models.TransientModel):
     suspense_code = fields.Char(string="Suspense Account Code", help="This is the code of the account in which you want to put the counterpart of unbalanced moves. This might be an account from your Winbooks data, or an account that you created in Odoo before the import.")
 
     def _import_partner_info(self, dbf_records):
-        """Import information related to partner from *_table*.dbf files.
-        The data in those files is the title, language, payment term and partner
-        category.
-        :return: (civility_data, category_data)
-            civility_data is a dictionary whose keys are the Winbooks references
-                and the values the civility title
+        """Import partner category information from *_table*.dbf files.
+        :return: category_data
             category_data is a dictionary whose keys are the Winbooks category
                 references and the values the partner categories
         """
         _logger.info("Import Partner Infos")
-        civility_data = {}
         category_data = {}
         ResPartnerCategory = self.env['res.partner.category']
         for rec in dbf_records:
-            if rec.get('TTYPE') == 'CIVILITY':
-                shortcut = rec.get('TID')
-                civility_data[shortcut] = shortcut
-            elif rec.get('TTYPE').startswith('CAT'):
+            if rec.get('TTYPE').startswith('CAT'):
                 category = ResPartnerCategory.search([('name', '=', rec.get('TDESC'))], limit=1)
                 if not category:
                     category = ResPartnerCategory.create({'name': rec.get('TDESC')})
                 category_data[rec.get('TID')] = category.id
-        return civility_data, category_data
+        return category_data
 
-    def _import_partner(self, dbf_records, civility_data, category_data, account_data):
+    def _import_partner(self, dbf_records, category_data, account_data):
         """Import partners from *_csf*.dbf files.
         The data in those files is the partner details, its type, its category,
         bank informations, and central accounts.
@@ -104,9 +96,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
                         if value:  # Winbooks has different partners for customer/supplier. Here we merge the data of the 2
                             data[key] = value
                 if rec.get('NAME2'):
-                    data.update({
-                        'child_ids': [(0, 0, {'name': rec.get('NAME2'), 'title': civility_data.get(rec.get('CIVNAME2'), False)})]
-                    })
+                    data['child_ids'] = [Command.create({'name': rec['NAME2']})]
                 # manage the bank account of the partner
                 if rec.get('IBANAUTO'):
                     partner_bank = ResPartnerBank.search([('acc_number', '=', rec.get('IBANAUTO'))], limit=1)
@@ -779,10 +769,10 @@ class AccountWinbooksImportWizard(models.TransientModel):
                 self._post_process_account(account_data, vatcode_data, account_tax)
 
                 table_recs = get_dbfrecords(lambda file: file.lower().endswith("_table.dbf"))
-                civility_data, category_data = self._import_partner_info(table_recs)
+                category_data = self._import_partner_info(table_recs)
 
                 csf_recs = get_dbfrecords(lambda file: file.lower().endswith("_csf.dbf"))
-                partner_data, partner_ids = self._import_partner(csf_recs, civility_data, category_data, account_data)
+                partner_data, partner_ids = self._import_partner(csf_recs, category_data, account_data)
 
                 act_recs = get_dbfrecords(lambda file: file.lower().endswith("_act.dbf"))
                 move_data, move_ids = self._import_move(act_recs, pdffiles, account_data, account_central, journal_data, partner_data, vatcode_data, param_data)
