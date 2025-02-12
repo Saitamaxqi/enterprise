@@ -41,6 +41,16 @@ export class SignTemplateSidebarRoleItems extends Component {
             roleName: "",
             showEditLabelIcon: false,
         })
+        this.icon_type = {
+            'signature': 'fa-pencil-square-o',
+            'initial': 'fa-pencil-square-o',
+            'text': 'fa-font',
+            'textarea': 'fa-bars',
+            'checkbox': 'fa-check-square-o',
+            'radio': 'fa-dot-circle-o',
+            'selection': 'fa-angle-down',
+            'strikethrough': 'fa-strikethrough',
+        };
         this.orm.call('sign.item.role', 'read', [this.props.roleId]).then(role => {
             this.state.roleName = role[0].name;
         });
