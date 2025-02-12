@@ -136,7 +136,7 @@ export class SignItemCustomPopover extends Component {
     getOptionsProps(record, fieldName) {
         return {
             ...this.getMany2XProps(record, fieldName),
-            domain: [["available", "=", true]],
+            domain: [],
             noSearchMore: true,
             updateSelectionOptions: this.props.updateSelectionOptions,
             state_popover: this.state,

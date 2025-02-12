@@ -9,17 +9,8 @@ class SignItemOption(models.Model):
     _rec_name = "value"
 
     value = fields.Text(string="Option", readonly=True)
-    available = fields.Boolean(string="Available in new templates", default=True)
 
     _value_uniq = models.Constraint(
         'unique (value)',
         "Value already exists!",
     )
-
-    @api.model
-    def name_create(self, name):
-        existing_option = self.search([('value', '=ilike', name.strip())], limit=1)
-        if existing_option:
-            existing_option.available = True
-            return existing_option.id, existing_option.display_name
-        return super().name_create(name)
