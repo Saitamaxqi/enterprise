@@ -2454,6 +2454,9 @@ class KnowledgeArticle(models.Model):
 
                 table_name = self.env[model]._table
                 for (field, field_alias) in fields_list:
+                    recordset = self.env[model]
+                    if field not in recordset or not recordset._fields[field].store:
+                        continue
                     select_fields.append(f'{table_name}.{field} as {field_alias}')
 
             additional_select_fields = ', %s' % ', '.join(select_fields)
