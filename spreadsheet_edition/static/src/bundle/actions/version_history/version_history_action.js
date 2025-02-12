@@ -155,7 +155,7 @@ export class VersionHistoryAction extends Component {
             timestamp,
         });
         const defaultValues = {
-            thumbnail: this.getThumbnail(),
+            display_thumbnail: this.getThumbnail(),
             name,
         };
         const action = await this.orm.call(this.resModel, "fork_history", [this.resId], {

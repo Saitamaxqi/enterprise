@@ -60,7 +60,7 @@ test("copy dashboard from topbar menu", async function () {
         expect.step("dashboard_copied");
         const { spreadsheet_data, thumbnail } = kwargs.default;
         expect(spreadsheet_data).not.toBe(undefined);
-        expect(thumbnail).not.toBe(undefined);
+        expect(thumbnail).toBe(undefined);
         return [111];
     });
     const { env } = await createDashboardEditAction();

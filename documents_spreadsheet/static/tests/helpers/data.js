@@ -26,6 +26,7 @@ const {
 
 export class DocumentsDocument extends Documents {
     spreadsheet_data = fields.Binary({ string: "Data" });
+    display_thumbnail = fields.Binary({ string: "Thumbnail" });
     handler = fields.Selection({
         string: "Handler",
         selection: [
@@ -123,6 +124,7 @@ export class SpreadsheetTemplate extends models.Model {
     name = fields.Char({ string: "Name", type: "char" });
     spreadsheet_data = fields.Binary({ string: "Spreadsheet Data" });
     thumbnail = fields.Binary({ string: "Thumbnail", type: "binary" });
+    display_thumbnail = fields.Binary({ string: "Thumbnail" });
     sequence = fields.Integer({ string: "Sequence", type: "integer" });
 
     fetch_template_data(route, args) {

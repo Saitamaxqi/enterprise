@@ -145,10 +145,10 @@ export class SpreadsheetSelectorPanel extends Component {
      * @returns {string} - URL for the spreadsheet thumbnail
      */
     getThumbnailURL(spreadsheet) {
-        if (!spreadsheet.thumbnail) {
+        if (!spreadsheet.display_thumbnail) {
             return false;
         }
 
-        return `data:image/jpeg;charset=utf-8;base64,${spreadsheet.thumbnail}`;
+        return `data:image/jpeg;charset=utf-8;base64,${spreadsheet.display_thumbnail}`;
     }
 }

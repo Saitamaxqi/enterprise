@@ -214,13 +214,15 @@ class DocumentsDocument(models.Model):
                     "mimetype": "application/o-spreadsheet"
                 })
 
-    @api.depends("thumbnail")
+    @api.depends_context('uid')
+    @api.depends("display_thumbnail")
     def _compute_spreadsheet_thumbnail_checksum(self):
         spreadsheets = self.filtered(lambda doc: doc.handler == "spreadsheet")
-        thumbnails = self.env["ir.attachment"].sudo().search([
-            ("res_model", "=", self._name),
-            ("res_field", "=", "thumbnail"),
-            ("res_id", "in", spreadsheets.ids),
+        thumbnails = self.env['ir.attachment'].sudo().search([
+            ('res_model', '=', self._name),
+            ('res_field', '=', 'display_thumbnail'),
+            ('res_id', 'in', spreadsheets.ids),
+            ('create_uid', '=', self.env.uid)
         ])
         thumbnails_by_documents = thumbnails.grouped("res_id")
         for document in self:
@@ -246,10 +248,10 @@ class DocumentsDocument(models.Model):
             lambda d: d.handler not in ("spreadsheet", "frozen_spreadsheet"))
 
     def _resize_thumbnail_value(self, vals):
-        if 'thumbnail' in vals:
+        if 'display_thumbnail' in vals:
             return dict(
                 vals,
-                thumbnail=base64.b64encode(image_process(base64.b64decode(vals['thumbnail'] or ''), size=(750, 750), crop='center')),
+                display_thumbnail=base64.b64encode(image_process(base64.b64decode(vals['display_thumbnail'] or ''), size=(150, 150), crop='center')),
             )
         return vals
 
@@ -321,7 +323,7 @@ class DocumentsDocument(models.Model):
             docs = docs[offset:offset + limit]
         else:
             docs = docs[offset:]
-        return docs.read(["display_name", "thumbnail"])
+        return docs.read(["display_name", "display_thumbnail"])
 
     @api.model
     def _get_shortcuts_copy_fields(self):

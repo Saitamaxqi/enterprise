@@ -214,6 +214,6 @@ export class TemplateDialog extends Component {
      * @returns {string} - URL for the template thumbnail
      */
     getThumbnailURL(template) {
-        return `/web/image?model=spreadsheet.template&id=${template.id}&field=thumbnail`;
+        return `/web/image?model=spreadsheet.template&id=${template.id}&field=display_thumbnail`;
     }
 }

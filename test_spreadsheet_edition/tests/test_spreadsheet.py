@@ -390,7 +390,7 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
                 "records": [{
                     "id": spreadsheet.id,
                     "display_name": spreadsheet.display_name,
-                    "thumbnail": False
+                    "display_thumbnail": False
                 }],
                 "total": 1,
             }

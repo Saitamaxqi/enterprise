@@ -11,7 +11,7 @@ from typing import Dict, Any, List, Optional
 
 from odoo import _, fields, models, api
 from odoo.exceptions import AccessError, UserError
-from odoo.tools import mute_logger, OrderedSet
+from odoo.tools import mute_logger, OrderedSet, image_process
 
 from odoo.addons.spreadsheet.utils.json import extend_serialized_json
 
@@ -26,6 +26,7 @@ class SpreadsheetMixin(models.AbstractModel):
     _inherit = ["spreadsheet.mixin", "bus.listener.mixin"]
 
     spreadsheet_snapshot = fields.Binary()
+    display_thumbnail = fields.Binary(compute='_compute_display_thumbnail', inverse='_inverse_display_thumbnail')
     spreadsheet_revision_ids = fields.One2many(
         "spreadsheet.revision",
         "res_id",
@@ -387,7 +388,7 @@ class SpreadsheetMixin(models.AbstractModel):
     def get_spreadsheets(self, domain=(), offset=0, limit=None):
         return {
             "total": self.search_count(domain),
-            "records": self.search_read(domain, ["display_name", "thumbnail"], offset=offset, limit=limit)
+            "records": self.search_read(domain, ["display_name", "display_thumbnail"], offset=offset, limit=limit)
         }
 
     @api.readonly
@@ -612,6 +613,42 @@ class SpreadsheetMixin(models.AbstractModel):
             mapping[attachment_id] = attachment_copy
             return attachment_copy
         return self.env["ir.attachment"]
+    
+    def _inverse_display_thumbnail(self):
+        for spreadsheet in self:
+            value = base64.b64encode(image_process(base64.b64decode(self.display_thumbnail or ''), (150, 150), crop='center'))
+            thumbnail = self.sudo().env["ir.attachment"].search([
+                ("res_model", "=", self._name),
+                ("res_id", "=", spreadsheet.id),
+                ("create_uid", "=", self.env.uid),
+                ("res_field", "=", "display_thumbnail"),
+            ], limit=1)
+            if thumbnail:
+                thumbnail.datas = value
+            else:
+                self.env["ir.attachment"].create({
+                    "res_model": self._name,
+                    "res_id": spreadsheet.id,
+                    "res_field": "display_thumbnail",
+                    "datas": value,
+                    "name": f"{self._name},{spreadsheet.id},{self.env.uid}"
+                })
+
+    @api.depends_context('uid')
+    @api.depends('thumbnail')
+    def _compute_display_thumbnail(self):
+        # Spreadsheet thumbnails cannot be computed from their binary data.
+        # They should be saved independently.
+        spreadsheets = self.filtered(lambda d: (d.handler if "handler" in d._fields else 'spreadsheet') == 'spreadsheet')
+        thumbnails = spreadsheets.sudo().env["ir.attachment"].search([
+            ("res_model", "=", self._name),
+            ("res_id", "in", spreadsheets.ids),
+            ("res_field", "=", "display_thumbnail"),
+            ("create_uid", "=", spreadsheets.env.uid),
+        ])
+        thumbnails = {self.browse(tn.res_id): tn.datas for tn in thumbnails}
+        for spreadsheet in spreadsheets:
+            spreadsheet.display_thumbnail = thumbnails.get(spreadsheet, False)
 
     def _get_writable_record_name_field(self):
         if self._rec_name and not self._fields[self._rec_name].readonly:

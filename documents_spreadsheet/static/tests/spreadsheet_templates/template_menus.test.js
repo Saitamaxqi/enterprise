@@ -91,12 +91,11 @@ test("copy template menu", async function () {
                 expect.step("template_copied");
                 const { spreadsheet_data, thumbnail } = args.kwargs.default;
                 expect(spreadsheet_data).not.toBe(undefined);
-                expect(thumbnail).not.toBe(undefined);
+                expect(thumbnail).toBe(undefined);
                 SpreadsheetTemplate._records.push({
                     id: 111,
                     name: "template",
                     spreadsheet_data,
-                    thumbnail,
                 });
                 return [111];
             }

@@ -10,4 +10,5 @@ from . import test_spreadsheet
 from . import test_share_controllers
 from . import test_session_info
 from . import test_template_controller
+from . import test_documents
 from .tours import *

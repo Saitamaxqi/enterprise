@@ -905,7 +905,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
     def test_spreadsheet_thumbnail_checksum(self):
         spreadsheet = self.create_spreadsheet()
         self.assertFalse(spreadsheet.spreadsheet_thumbnail_checksum)
-        spreadsheet.thumbnail = GIF
+        spreadsheet.display_thumbnail = GIF
         thumbnail_attachment = self.env["ir.attachment"].search([
             ("res_model", "=", "documents.document"),
             ("res_field", "=", "thumbnail"),
@@ -947,7 +947,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             "records": [{
                 "id": spreadsheet.id,
                 "display_name": spreadsheet.name,
-                "thumbnail": False
+                "display_thumbnail": False
             }],
             "total": 1,
         })

@@ -253,13 +253,13 @@ export class AbstractSpreadsheetAction extends Component {
      * @protected
      */
     async makeCopy() {
-        const thumbnail = this.getThumbnail();
+        const display_thumbnail = this.getThumbnail();
         const data = this.model.exportData();
         const defaultValues = {
             spreadsheet_data: JSON.stringify(data),
             spreadsheet_snapshot: false,
             spreadsheet_revision_ids: [],
-            thumbnail,
+            display_thumbnail,
         };
         const ids = await this.orm.call(this.resModel, "copy", [[this.resId]], {
             default: defaultValues,
@@ -304,7 +304,7 @@ export class AbstractSpreadsheetAction extends Component {
     }
 
     onSpreadsheetLeftUpdateVals() {
-        return { thumbnail: this.getThumbnail() };
+        return { display_thumbnail: this.getThumbnail() };
     }
 
     /**
