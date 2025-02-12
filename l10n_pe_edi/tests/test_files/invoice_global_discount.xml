@@ -165,7 +165,6 @@
         <LineExtensionAmount currencyID="USD">7800.00</LineExtensionAmount>
         <TaxExclusiveAmount currencyID="USD">7800.00</TaxExclusiveAmount>
         <TaxInclusiveAmount currencyID="USD">9204.00</TaxInclusiveAmount>
-        <AllowanceTotalAmount currencyID="USD">0.00</AllowanceTotalAmount>
         <PrepaidAmount currencyID="USD">0.00</PrepaidAmount>
         <PayableAmount currencyID="USD">9204.00</PayableAmount>
     </LegalMonetaryTotal>

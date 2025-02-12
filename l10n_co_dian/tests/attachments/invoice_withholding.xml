@@ -170,21 +170,10 @@
     <cac:WithholdingTaxTotal>
         <cbc:TaxAmount currencyID="COP">3.60</cbc:TaxAmount>
         <cac:TaxSubtotal>
-            <cbc:TaxableAmount currencyID="COP">100.00</cbc:TaxableAmount>
-            <cbc:TaxAmount currencyID="COP">2.85</cbc:TaxAmount>
+            <cbc:TaxableAmount currencyID="COP">24.00</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="COP">3.60</cbc:TaxAmount>
             <cac:TaxCategory>
-                <cbc:Percent>2.85</cbc:Percent>
-                <cac:TaxScheme>
-                    <cbc:ID>05</cbc:ID>
-                    <cbc:Name>ReteIVA</cbc:Name>
-                </cac:TaxScheme>
-            </cac:TaxCategory>
-        </cac:TaxSubtotal>
-        <cac:TaxSubtotal>
-            <cbc:TaxableAmount currencyID="COP">100.00</cbc:TaxableAmount>
-            <cbc:TaxAmount currencyID="COP">0.75</cbc:TaxAmount>
-            <cac:TaxCategory>
-                <cbc:Percent>0.75</cbc:Percent>
+                <cbc:Percent>15.00</cbc:Percent>
                 <cac:TaxScheme>
                     <cbc:ID>05</cbc:ID>
                     <cbc:Name>ReteIVA</cbc:Name>
@@ -233,10 +222,10 @@
         <cac:WithholdingTaxTotal>
             <cbc:TaxAmount currencyID="COP">2.85</cbc:TaxAmount>
             <cac:TaxSubtotal>
-                <cbc:TaxableAmount currencyID="COP">100.00</cbc:TaxableAmount>
+                <cbc:TaxableAmount currencyID="COP">19.00</cbc:TaxableAmount>
                 <cbc:TaxAmount currencyID="COP">2.85</cbc:TaxAmount>
                 <cac:TaxCategory>
-                    <cbc:Percent>2.85</cbc:Percent>
+                    <cbc:Percent>15.00</cbc:Percent>
                     <cac:TaxScheme>
                         <cbc:ID>05</cbc:ID>
                         <cbc:Name>ReteIVA</cbc:Name>
@@ -291,10 +280,10 @@
         <cac:WithholdingTaxTotal>
             <cbc:TaxAmount currencyID="COP">0.75</cbc:TaxAmount>
             <cac:TaxSubtotal>
-                <cbc:TaxableAmount currencyID="COP">100.00</cbc:TaxableAmount>
+                <cbc:TaxableAmount currencyID="COP">5.00</cbc:TaxableAmount>
                 <cbc:TaxAmount currencyID="COP">0.75</cbc:TaxAmount>
                 <cac:TaxCategory>
-                    <cbc:Percent>0.75</cbc:Percent>
+                    <cbc:Percent>15.00</cbc:Percent>
                     <cac:TaxScheme>
                         <cbc:ID>05</cbc:ID>
                         <cbc:Name>ReteIVA</cbc:Name>

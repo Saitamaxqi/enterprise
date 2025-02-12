@@ -167,7 +167,7 @@
         <LineExtensionAmount currencyID="USD">0.45</LineExtensionAmount>
         <PricingReference>
             <AlternativeConditionPrice>
-                <PriceAmount currencyID="USD">0.0100</PriceAmount>
+                <PriceAmount currencyID="USD">0.0053</PriceAmount>
                 <PriceTypeCode>01</PriceTypeCode>
             </AlternativeConditionPrice>
         </PricingReference>

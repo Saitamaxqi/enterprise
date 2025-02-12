@@ -10,7 +10,6 @@
     'data': [
         'views/account_move_views.xml',
         'views/product_template_views.xml',
-        'views/ubl_20_templates.xml',
     ],
     'installable': True,
     'license': 'OEEL-1',

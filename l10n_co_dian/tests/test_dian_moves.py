@@ -341,6 +341,19 @@ class TestDianMoves(TestCoDianCommon):
         xml = self.env['account.edi.xml.ubl_dian']._export_invoice(invoice)[0]
         self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/invoice_prepaid_payment_2.xml")
 
+    def test_invoice_with_line_discount(self):
+        invoice = self._create_move(
+            invoice_line_ids=[
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'price_unit': 100,
+                    'discount': 10,
+                }),
+            ],
+        )
+        xml = self.env['account.edi.xml.ubl_dian']._export_invoice(invoice)[0]
+        self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/invoice_with_line_discount.xml")
+
     def test_invoice_withholding(self):
         """ Invoice containing retention taxes (should fill the 'WithholdingTaxTotal' nodes) """
         invoice = self._create_move(
@@ -366,6 +379,34 @@ class TestDianMoves(TestCoDianCommon):
         )
         xml = self.env['account.edi.xml.ubl_dian']._export_invoice(invoice)[0]
         self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/invoice_withholding.xml")
+
+    def test_credit_note_withholding(self):
+        """ Credit note containing retention taxes (should NOT fill the 'WithholdingTaxTotal' nodes) """
+        credit_note = self._create_move(
+            move_type='out_refund',
+            l10n_co_edi_type=L10N_CO_EDI_TYPE['Credit Note'],
+            invoice_line_ids=[
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'price_unit': 100,
+                    'tax_ids': [Command.set([
+                        self.tax_iva_19.id,
+                        self.env["account.chart.template"].ref('l10n_co_tax_56').id,
+                        self.tax_ret_ica_0414.id,
+                    ])],
+                }),
+                Command.create({
+                    'product_id': self.product_b.id,
+                    'price_unit': 100,
+                    'tax_ids': [Command.set([
+                        self.tax_iva_5.id,
+                        self.env["account.chart.template"].ref('l10n_co_tax_55').id,
+                    ])],
+                }),
+            ],
+        )
+        xml = self.env['account.edi.xml.ubl_dian']._export_invoice(credit_note)[0]
+        self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/credit_note_withholding.xml")
 
     def test_debit_note_30(self):
         """ Debit note referencing an invoice """
