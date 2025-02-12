@@ -56,6 +56,8 @@ class ResUsers(models.Model):
             calendar_users[calendar] |= self.env['res.users']
         for calendar, users in calendar_users.items():
             # For each calendar used by the users, retrieve the work intervals for every users using it
+            if not calendar:
+                continue
             work_intervals_batch = calendar._work_intervals_batch(start, end, resources=users._get_project_task_resource())
             for user in users:
                 # Make the conjunction between work intervals and calendar validity

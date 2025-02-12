@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from freezegun import freeze_time
+from dateutil.relativedelta import relativedelta
 
 from odoo.fields import Datetime
 from odoo.tests import new_test_user, tagged
@@ -284,3 +285,26 @@ class TestTaskGanttView(TestProjectCommon):
             'date_deadline': '2024-03-08 23:59:59',
         })
         self.assertEqual(self.tasks.mapped('allocated_hours'), [12.0, 12.0], 'The tasks\'s allocated hours shouldn\'t have been recomputed since the allocated hours are being/already set')
+
+    def test_gantt_view_with_empty_schedule(self):
+        """Ensure the Gantt view loads correctly even if a user has no working schedule"""
+
+        self.env.company.resource_calendar_id = False
+
+        project = self.env['project.project'].create({
+            'name': 'Test Project',
+        })
+        no_schedule_user = self.env['res.users'].create({
+            'name': 'Test User No Calendar',
+            'login': 'test_no_calendar',
+            'group_ids': [(6, 0, [self.env.ref('base.group_user').id])],
+            'company_id': self.env.company.id,
+        })
+        task = self.env['project.task'].new({
+            'project_id': project.id,
+            'name': 'Test Task',
+            'planned_date_begin': Datetime.now() - relativedelta(days=30),
+            'date_deadline': Datetime.now() + relativedelta(days=30),
+            'user_ids': [(6, 0, [no_schedule_user.id])],
+        })
+        task._compute_allocated_hours()
