@@ -161,6 +161,16 @@ class SignRequestItem(models.Model):
         self.sign_request_id.message_post(body=message_post)
         self.sign_request_id._refuse(self.partner_id, refusal_reason)
 
+    def _get_url_parameters(self, signer, expiry_link_timestamp):
+        return url_encode({
+                'timestamp': expiry_link_timestamp,
+                'exp': signer._generate_expiry_signature(signer.id, expiry_link_timestamp)
+            })
+
+    def _get_access_token(self, signer):
+        return signer.sudo().access_token
+
+
     def _send_signature_access_mail(self):
         for signer in self:
             signer_email_normalized = email_normalize(signer.signer_email or '')
@@ -169,11 +179,8 @@ class SignRequestItem(models.Model):
             # We hide the validity information if it is the default (6 month from the create_date)
             has_default_validity = signer.sign_request_id.validity and signer.sign_request_id.validity - relativedelta(months=6) == signer.sign_request_id.create_date.date()
             expiry_link_timestamp = signer._generate_expiry_link_timestamp()
-            url_params = url_encode({
-                'timestamp': expiry_link_timestamp,
-                'exp': signer._generate_expiry_signature(signer.id, expiry_link_timestamp)
-            })
-            link_sign = url_join(signer.get_base_url(), "sign/document/mail/%(request_id)s/%(access_token)s?%(url_params)s" % {'request_id': signer.sign_request_id.id, 'access_token': signer.sudo().access_token, 'url_params': url_params})
+            url_params = self._get_url_parameters(signer, expiry_link_timestamp)
+            link_sign = url_join(signer.get_base_url(), "sign/document/mail/%(request_id)s/%(access_token)s?%(url_params)s" % {'request_id': signer.sign_request_id.id, 'access_token': self._get_access_token(signer), 'url_params': url_params})
             link_cancel = link_sign + '&refuseDocument=1'
             body = self.env['ir.qweb']._render('sign.sign_template_mail_request', {
                 'record': signer,

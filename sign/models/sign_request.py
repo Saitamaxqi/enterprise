@@ -9,6 +9,7 @@ from markupsafe import Markup
 from odoo import _, api, fields, models, Command
 from odoo.tools import format_list, get_lang, is_html_empty, format_date
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.pdf.signature import PdfSigner
 
 
 class SignRequest(models.Model):
@@ -601,6 +602,13 @@ class SignRequest(models.Model):
             }
             final_log_hash = self._get_final_signature_log_hash()
             output = self.template_id._render_template_with_items(password=password, signed_values=signed_values, values_dict=values_dict, final_log_hash=final_log_hash)
+
+            signer = PdfSigner(output, self.communication_company_id)
+            signed_output = signer.sign_pdf(True, self._get_signing_field_name(), self.create_uid.partner_id)
+
+            if signed_output is not None:
+                output = signed_output
+
             self.completed_document = base64.b64encode(output.getvalue())
             output.close()
 
@@ -634,6 +642,14 @@ class SignRequest(models.Model):
             'res_id': self.id,
         })
         self.completed_document_attachment_ids = [Command.set([attachment.id, attachment_log.id])]
+
+    def _get_signing_field_name(self) -> str:
+        """Generates a name for the signing field of the pdf document
+
+        Returns:
+            str: the name of the signature field
+        """
+        return self.env.company.name
 
     ##################
     # Mail overrides #

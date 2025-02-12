@@ -48,6 +48,12 @@
                         <setting id="field_types" string="Field Types" help="Configure the field types that can be used to sign documents (placeholder, auto-completion, ...), as well as the values for selection fields in signable documents">
                             <button name="%(sign.sign_item_type_action)d" icon="oi-arrow-right" type="action" string="Edit field types" class="btn-link"/>
                         </setting>
+                        <setting id="company_sign_info" string="Cryptographic signature" help="Allow users to provide the files used in the cryptographic signature process." groups="base.group_system">
+                            <group>
+                                <field name="certificate" widget="binary"  options="{'accepted_file_extensions': '.pfx'}"/>
+                                <field name="certificate_password" password="True" />
+                            </group>
+                        </setting>
                     </block>
                 </app>
             </xpath>

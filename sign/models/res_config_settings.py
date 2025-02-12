@@ -1,7 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
+from uuid import uuid4
 
+# Here we generate a unique placeholder in order to minimise the risks of collisions when checking if the password must be set or not
+# Hack to avoid resetting the password when saving the settings
+PASSWORD_PLACEHOLDER = str(uuid4()) 
 
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
@@ -22,6 +26,12 @@ class ResConfigSettings(models.TransientModel):
 
     module_sign_itsme = fields.Boolean(string="Identify with itsme®")
 
+    company_certificate = fields.Binary(string="Company Certificate", related='company_id.signing_certificate', readonly=False)
+    certificate = fields.Binary(string="Certificate", inverse='_inverse_certificate', readonly=False, default=False) # Visible field 
+
+    company_certificate_password = fields.Char(string="Company certificate password", related='company_id.signing_certificate_password', readonly=False)
+    certificate_password = fields.Char(string="Certificate password", inverse='_inverse_certificate_password', readonly=False, default=PASSWORD_PLACEHOLDER, store=False)
+
     @api.depends('sign_terms_type')
     def _compute_sign_terms_preview(self):
         for setting in self:
@@ -40,3 +50,12 @@ class ResConfigSettings(models.TransientModel):
             'target': 'new',
             'res_id': self.company_id.id,
         }
+    def _inverse_certificate(self):
+        for setting in self:
+            if setting.certificate:
+                setting.company_certificate = setting.certificate
+
+    def _inverse_certificate_password(self):
+        for setting in self:
+            if setting.certificate_password != PASSWORD_PLACEHOLDER:
+                setting.company_certificate_password = setting.certificate_password

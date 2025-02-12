@@ -16,3 +16,6 @@ class ResCompany(models.Model):
     sign_terms_html = fields.Html(string='Sign Default Terms and Conditions as a Web page', translate=True,
         default="""<h1 style="text-align: center; ">Terms &amp; Conditions</h1>
         <p>Your conditions...</p>""", sanitize_attributes=False)
+
+    signing_certificate = fields.Binary(string="Certificate", groups='base.group_system')
+    signing_certificate_password = fields.Char(string="Certificate password", groups='base.group_system') 
