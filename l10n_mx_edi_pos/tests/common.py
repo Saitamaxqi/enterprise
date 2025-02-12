@@ -36,7 +36,8 @@ class TestMxEdiPosCommon(TestMxEdiCommon, TestPoSCommon):
         self.assertTrue(order.l10n_mx_edi_cfdi_to_public)
         yield order
         # invoice order
-        action = order._generate_pos_order_invoice()
+        move = order._generate_pos_order_invoice()
+        action = order.action_view_invoice()
         invoice = self.env['account.move'].browse(action['res_id'])
         # generate CFDI
         with self.with_mocked_pac_sign_success():
