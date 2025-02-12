@@ -16,11 +16,11 @@
             </div>
             <xpath expr="//button[hasclass('o_expense_post_highlight')]" position="after">
                 <button name="action_report_in_next_payslip" string="Report in Next Payslip" type="object"
-                        groups="account.group_account_manager"
+                        groups="account.group_account_invoice,hr_payroll.group_hr_payroll_user"
                         invisible="nb_attachment == 0 or refund_in_payslip or state != 'approved' or payment_mode == 'company_account'"
                         data-hotkey="g"/>
                 <button name="action_remove_from_payslip" string="Remove from Payslip" type="object"
-                        groups="account.group_account_manager"
+                        groups="account.group_account_invoice,hr_payroll.group_hr_payroll_user"
                         invisible="nb_attachment == 0 or not refund_in_payslip or state in ('posted', 'in_payment', 'paid') or payment_mode == 'company_account'"
                         class="oe_highlight" data-hotkey="g"/>
             </xpath>
