@@ -51,12 +51,12 @@
                         <field name="l10n_ch_delegate_country_id" placeholder="Country" class="o_address_country" options="{'no_open': True, 'no_create': True}"/>
                     </div>
                     <field name="l10n_ch_delegate_Po_Box" placeholder="P.O. Box" invisible="not l10n_ch_uses_delegate"/>
-</setting>
+                </setting>
+                <setting id="agricole_company_setting" string="Agricole Company" company_dependent="1" help="Check this box if your company is in the agricole sector.">
+                    <label for="l10n_ch_agricole_company" class="col-md-6 p-0 m-0"/>
+                    <field name="l10n_ch_agricole_company" class="col-md-6 p-0"/>
+                </setting>
             </block>
-            <div name="ch_main_company_div" position="inside">
-                <label for="l10n_ch_agricole_company" class="col-md-6 p-0 m-0"/>
-                <field name="l10n_ch_agricole_company" class="col-md-6 p-0"/>
-            </div>
         </field>
     </record>
 </odoo>

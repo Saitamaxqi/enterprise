@@ -27,7 +27,7 @@ class HrPayslip(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        swiss_employees = self.env['hr.employee'].browse([val["employee_id"] for val in vals_list if "employee_id" in val]).filtered(lambda e: e.company_id.country_code == 'CH')
+        swiss_employees = self.env['hr.employee'].browse([val["employee_id"] for val in vals_list if "employee_id" in val]).filtered(lambda e: e.company_id.country_id.code == 'CH')
         swiss_employees._create_or_update_snapshot()
         return super().create(vals_list)
 
@@ -815,3 +815,8 @@ class HrPayslip(models.Model):
                 'data/hr_salary_rule_data.xml',
                 'data/hr_swiss_leave_types.xml',
             ])]
+
+    @api.depends('date_from', 'date_to', 'struct_id')
+    def _compute_warning_message(self):
+        swiss_slips = self.filtered(lambda p: p.struct_id.code == "CHMONTHLYELM")
+        super(HrPayslip, self - swiss_slips)._compute_warning_message()
