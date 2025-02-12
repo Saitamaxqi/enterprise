@@ -97,7 +97,7 @@ subscription_rules AS (
         {self.env.company.currency_id.id} AS currency_id,
         MAX(log.event_date) AS date,
         MAX(rules.company_id),
-        log.id AS related_res_id
+        log.order_id AS related_res_id
     FROM subscription_rules rules
     CROSS JOIN sale_order_log log
     JOIN currency_rate cr
@@ -112,9 +112,9 @@ subscription_rules AS (
         rules.plan_id,
         cr.rate
 ), subscription_commission_lines AS (
-    (SELECT *, 'sale.order.log' AS related_res_model FROM subscription_commission_lines_team)
+    (SELECT *, 'sale.order' AS related_res_model FROM subscription_commission_lines_team)
     UNION ALL
-    (SELECT *, 'sale.order.log' AS related_res_model FROM subscription_commission_lines_user)
+    (SELECT *, 'sale.order' AS related_res_model FROM subscription_commission_lines_user)
 )""", 'subscription_commission_lines'
 
     def _commission_lines_cte(self, users=None, teams=None):
