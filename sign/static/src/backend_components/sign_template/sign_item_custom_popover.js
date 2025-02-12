@@ -1,44 +1,10 @@
 import { _t } from "@web/core/l10n/translation";
-import { Record } from "@web/model/record";
-import {
-    many2ManyTagsField,
-} from "@web/views/fields/many2many_tags/many2many_tags_field";
-import { SelectionItemMany2ManyTagsField } from "@sign/backend_components/selection_item_many2many_tags/selection_item_many2many_tags";
-import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
 import { useService } from "@web/core/utils/hooks";
-import { Component, useState, useExternalListener } from "@odoo/owl";
-
-const actionFieldsGet = {
-    option_ids: { type: "many2many", relation: "sign.item.option", string: "Selected Options" },
-};
-
-function getActionActiveFields() {
-    const activeFields = {};
-    for (const fName of Object.keys(actionFieldsGet)) {
-        if (actionFieldsGet[fName].type === "many2many") {
-            const related = Object.fromEntries(
-                many2ManyTagsField.relatedFields({ options: {} }).map((f) => [f.name, f])
-            );
-            activeFields[fName] = {
-                related: {
-                    activeFields: related,
-                    fields: related,
-                },
-            };
-        } else {
-            activeFields[fName] = actionFieldsGet[fName];
-        }
-    }
-    return activeFields;
-}
+import { Component, useState, useExternalListener, onWillStart } from "@odoo/owl";
 
 export class SignItemCustomPopover extends Component {
     static template = "sign.SignItemCustomPopover";
-    static components = {
-        Record,
-        SelectionItemMany2ManyTagsField,
-        Many2OneField,
-    };
+    static components = {};
     static props = {
         id: { type: Number },
         alignment: { type: String },
@@ -47,7 +13,6 @@ export class SignItemCustomPopover extends Component {
         required: { type: Boolean },
         option_ids: { type: Array },
         onValidate: { type: Function },
-        updateSelectionOptions: { type: Function },
         type: { type: String },
         onDelete: { type: Function },
         onClose: { type: Function },
@@ -56,7 +21,6 @@ export class SignItemCustomPopover extends Component {
         onCopyItem: { type: Function },
         num_options: {type: Number, optional: true},
         radio_set_id: {type: Number, optional: true},
-        selectionTag: { type: Object },
     };
 
     setup() {
@@ -72,10 +36,17 @@ export class SignItemCustomPopover extends Component {
             option_ids: this.props.option_ids,
             num_options: this.props.num_options,
             radio_set_id: this.props.radio_set_id,
-            isRerenderNeeded: false,
+            selectionOptionsText: "",
+        });
+        this.orm = useService("orm");
+        onWillStart(async() => {
+            const options = await this.orm.searchRead(
+                "sign.item.option",
+                [["id", "in", this.props.option_ids]],
+            );
+            this.state.selectionOptionsText = options.map(option => option.value).join('\n');
         });
         this.notification = useService("notification");
-        this.signItemFieldsGet = getActionActiveFields();
         this.typesWithAlignment = new Set(["text", "textarea"]);
         useExternalListener(window, "keydown", this.onGlobalKeyDown, { capture: true });
     }
@@ -100,51 +71,17 @@ export class SignItemCustomPopover extends Component {
         this.state[key] = value;
     }
 
-    onValidate() {
+    async onValidate() {
+        const options = this.state.selectionOptionsText.split('\n').map(opt => opt.trim()).filter(opt => opt);
+        this.state.option_ids = await this.orm.call('sign.item.option', 'get_selection_ids_from_value', [null, options]); 
         this.props.onValidate(this.state);
-    }
-
-    get recordProps() {
-        return {
-            mode: "edit",
-            resModel: "sign.item",
-            resId: this.props.id,
-            fieldNames: this.signItemFieldsGet,
-            activeFields: this.signItemFieldsGet,
-            onRecordChanged: async (record, changes) => {
-                if (changes.option_ids) {
-                    const ids = record.data.option_ids.currentIds;
-                    this.state.option_ids = ids;
-                    this.props.updateSelectionOptions(ids);
-                    this.state.isRerenderNeeded = !this.state.isRerenderNeeded; // Toggle state to force re-render
-                }
-            },
-        };
-    }
-
-    getMany2XProps(record, fieldName) {
-        return {
-            name: fieldName,
-            id: fieldName,
-            record,
-            readonly: false,
-            canCreateEdit: false,
-            canQuickCreate: true,
-        };
-    }
-
-    getOptionsProps(record, fieldName) {
-        return {
-            ...this.getMany2XProps(record, fieldName),
-            domain: [],
-            noSearchMore: true,
-            updateSelectionOptions: this.props.updateSelectionOptions,
-            state_popover: this.state,
-            selectionTag: this.props.selectionTag,
-        };
     }
 
     get showAlignment() {
         return this.typesWithAlignment.has(this.props.type);
+    }
+
+    onChangeSelectionOptions(value) {
+        this.state.selectionOptionsText = value;
     }
 }

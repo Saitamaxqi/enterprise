@@ -41,10 +41,6 @@ export class SignTemplateBody extends Component {
         this.action = useService("action");
         this.PDFViewerURL = buildPDFViewerURL(this.props.attachmentLocation, this.env.isSmall);
         this.props.signStatus.discardChanges = this.discardChanges.bind(this);
-        this.selectionTag = useState({
-            isSelectionItemEdited: false,
-            isSelectionItemRendered: false,
-        });
         this.state = useState({
             documentUsedTimesCounter: 0,
         })
@@ -148,7 +144,6 @@ export class SignTemplateBody extends Component {
                 saveTemplate: () => this.saveTemplate(),
                 getRadioSetInfo: (id) => this.getRadioSetInfo(id),
                 rotatePDF: () => this.rotatePDF(),
-                selectionTag: this.selectionTag,
                 signStatus: this.props.signStatus,
                 setTemplateChangedState: (state) => this.props.signStatus.isTemplateChanged = state,
             }

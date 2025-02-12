@@ -4,7 +4,6 @@ import { normalizePosition, startResize, generateRandomId } from "@sign/componen
 import { SignItemCustomPopover } from "@sign/backend_components/sign_template/sign_item_custom_popover";
 import { PDFIframe } from "@sign/components/sign_request/PDF_iframe";
 import { EditablePDFIframeMixin } from "@sign/backend_components/editable_pdf_iframe_mixin";
-import { user } from "@web/core/user";
 import { Deferred } from "@web/core/utils/concurrency";
 import { isMobileOS } from "@web/core/browser/feature_detection";
 
@@ -324,7 +323,6 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                 signItem.el,
                 SignItemCustomPopover,
                 {
-                    selectionTag: this.props.selectionTag,
                     debug: this.env.debug,
                     alignment: signItem.data.alignment,
                     required: signItem.data.required,
@@ -346,7 +344,6 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                     onClose: () => {
                         this.closePopover();
                     },
-                    updateSelectionOptions: (ids) => this.updateSelectionOptions(ids),
                     onCopyItem: (id) => this.onCopyItem(id),
                 },
                 {
@@ -432,7 +429,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             return changes;
         }, {});
 
-        if (Object.keys(changes).length || signItem.data.type == "selection" && this.props.selectionTag.isSelectionItemRendered) {
+        if (Object.keys(changes).length ) {
             const pageNumber = signItem.data.page;
             const page = this.getPageContainer(pageNumber);
             signItem.el.parentElement.removeChild(signItem.el);
@@ -445,9 +442,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                 data: newData,
                 el: this.renderSignItem(newData, page),
             };
-            this.props.selectionTag.isSelectionItemRendered = false;
             this.refreshSignItems();
-            this.currentRole = newData.responsible;
             this.saveChangesOnBackend();
         }
     }
@@ -669,24 +664,6 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
      * @property {Object} data // sign item data returned from the search_read
      * @property {HTMLElement} el // html element of the sign item
      */
-
-    /**
-     * Updates the local selection options to include the new records
-     * @param {Array<Number>} optionIds
-     */
-    async updateSelectionOptions(optionIds) {
-        const newIds = optionIds.filter((id) => !(id in this.selectionOptionsById));
-        const newOptions = await this.orm.searchRead(
-            "sign.item.option",
-            [["id", "in", this.props.selectionTag.isSelectionItemEdited ? optionIds : newIds]],
-            ["id", "value"],
-            { context: user.context }
-        );
-        for (const option of newOptions) {
-            this.selectionOptionsById[option.id] = option;
-        }
-        this.props.selectionTag.isSelectionItemEdited = false;
-    }
 
     /**
      * Creates #count new sign radio items and chains them vertically to the lastSignItem

@@ -11,23 +11,23 @@
                     <label for="o_sign_name" class="fw-bold">Placeholder</label>
                     <input type="text" class="form-control o_input" id="o_sign_name" t-att-value="state.placeholder" t-on-change="(e) => this.onChange('placeholder', e.target.value)"/>
                 </div>
-
-                <Record t-props="recordProps" t-slot-scope="data">
-                    <t t-set="record" t-value="data.record"/>
-                    <div t-if="props.type === 'selection'">
-                        <label for="o_sign_select_options_input" class="fw-bold">Options</label>
-                        <div class="o_field_widget d-block" id="o_sign_select_options_input">
-                            <SelectionItemMany2ManyTagsField t-props="getOptionsProps(record, 'option_ids')"/>
-                        </div>
+                <div t-if="props.type === 'selection'">
+                    <label for="o_sign_select_options_input" class="fw-bold">Options</label>
+                    <div class="input-group o_sign_selection_input_option" id="o_sign_select_options_input">
+                        <textarea
+                            placeholder="Enter options separated by Enter."
+                            t-att-value="state.selectionOptionsText"
+                            t-on-change="(ev) => this.onChangeSelectionOptions(ev.target.value)"
+                        />
                     </div>
-                    <div t-if="props.type === 'radio'" class="mb-2">
-                        <div class="o_field_widget d-block d-flex" id="o_sign_select_radio_qty_input">
-                            <label for="o_sign_select_radio_qty_input" class="fw-bold">Options</label>
-                            <input type="number" inputmode="numeric" class="px-2 o_input" t-att-value="state.num_options" t-att-min="2"
-                            t-on-change="(e) => this.handleNumOptionsChange(e.target.value)"/>
-                        </div>
+                </div>
+                <div t-if="props.type === 'radio'" class="mb-2">
+                    <div class="o_field_widget d-block d-flex" id="o_sign_select_radio_qty_input">
+                        <label for="o_sign_select_radio_qty_input" class="fw-bold">Options</label>
+                        <input type="number" inputmode="numeric" class="px-2 o_input" t-att-value="state.num_options" t-att-min="2"
+                        t-on-change="(e) => this.handleNumOptionsChange(e.target.value)"/>
                     </div>
-                </Record>
+                </div>
                 <div t-if="showAlignment" class="o_sign_field_align_group">
                     <label class="w-100 fw-bold">Alignment</label>
                     <div class="btn-group mb-2" role="group">

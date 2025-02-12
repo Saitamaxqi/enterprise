@@ -1,13 +1,11 @@
 import { Component, useState } from "@odoo/owl";
 import { SignTemplateSidebarRoleItems } from "./sign_template_sidebar_role_items";
-import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
 import { useService } from "@web/core/utils/hooks";
 
 export class SignTemplateSidebar extends Component {
     static template = "sign.SignTemplateSidebar";
     static components = {
         SignTemplateSidebarRoleItems,
-        Many2OneField,
     };
     static props = {
         signItemTypes: { type: Array },
