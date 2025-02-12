@@ -84,21 +84,25 @@ export class KnowledgeCommentsHandler extends Component {
         const rtl = localization.direction === "rtl";
         const keys = {
             paddingRight: "paddingRight",
-            marginRight: "marginRight",
-            marginLeft: "marginLeft",
+            left: "left",
+            right: "right",
         };
         if (rtl) {
             Object.assign(keys, {
                 paddingRight: "paddingLeft",
-                marginRight: "marginLeft",
-                marginLeft: "marginRight",
+                left: "right",
+                right: "left",
             });
         }
         const contentStyle = getComputedStyle(this.props.contentRef.el);
         const paddingRight = parseInt(contentStyle[keys.paddingRight]) || 0;
-        const marginRight = parseInt(contentStyle[keys.marginRight]) || 0;
-        const marginLeft = parseInt(contentStyle[keys.marginLeft]) || 0;
+
+        // Manually calculate margin to circumvent zero-margin bug in chromium-based browsers
         const contentRect = this.props.contentRef.el.getBoundingClientRect();
+        const parentRect = this.props.contentRef.el.parentElement.getBoundingClientRect();
+        const marginRight = Math.abs(parentRect[keys.right] - contentRect[keys.right]);
+        const marginLeft = Math.abs(parentRect[keys.left] - contentRect[keys.left]);
+
         const availableWidth = Math.max(0, Math.floor(marginRight + paddingRight));
         let width = Math.min(MAX_THREAD_WIDTH, Math.max(0, availableWidth - 20));
         if (!width) {
