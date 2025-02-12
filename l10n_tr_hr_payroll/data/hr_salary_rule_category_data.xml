@@ -42,4 +42,10 @@
         <field name="parent_id" ref="hr_payroll.DED"/>
         <field name="country_id" ref="base.tr"/>
     </record>
+
+    <record id="hr_salary_rule_category_ytd_gross_tax" model="hr.salary.rule.category">
+        <field name="name">YTD Gross Tax</field>
+        <field name="code">YTDGROSSTAX</field>
+        <field name="country_id" ref="base.tr"/>
+    </record>
 </odoo>
