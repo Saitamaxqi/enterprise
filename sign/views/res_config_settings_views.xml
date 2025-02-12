@@ -50,8 +50,7 @@
                         </setting>
                         <setting id="company_sign_info" string="Cryptographic signature" help="Allow users to provide the files used in the cryptographic signature process." groups="base.group_system">
                             <group>
-                                <field name="certificate" widget="binary"  options="{'accepted_file_extensions': '.pfx'}"/>
-                                <field name="certificate_password" password="True" />
+                                <field name="signing_certificate_id" />
                             </group>
                         </setting>
                     </block>

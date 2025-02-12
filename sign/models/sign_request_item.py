@@ -170,7 +170,6 @@ class SignRequestItem(models.Model):
     def _get_access_token(self, signer):
         return signer.sudo().access_token
 
-
     def _send_signature_access_mail(self):
         for signer in self:
             signer_email_normalized = email_normalize(signer.signer_email or '')
@@ -180,7 +179,12 @@ class SignRequestItem(models.Model):
             has_default_validity = signer.sign_request_id.validity and signer.sign_request_id.validity - relativedelta(months=6) == signer.sign_request_id.create_date.date()
             expiry_link_timestamp = signer._generate_expiry_link_timestamp()
             url_params = self._get_url_parameters(signer, expiry_link_timestamp)
-            link_sign = url_join(signer.get_base_url(), "sign/document/mail/%(request_id)s/%(access_token)s?%(url_params)s" % {'request_id': signer.sign_request_id.id, 'access_token': self._get_access_token(signer), 'url_params': url_params})
+            partial_url = "sign/document/mail/%(request_id)s/%(access_token)s?%(url_params)s" % {
+                    'request_id': signer.sign_request_id.id, 
+                    'access_token': self._get_access_token(signer), 
+                    'url_params': url_params
+                }
+            link_sign = url_join(signer.get_base_url(), partial_url)
             link_cancel = link_sign + '&refuseDocument=1'
             body = self.env['ir.qweb']._render('sign.sign_template_mail_request', {
                 'record': signer,

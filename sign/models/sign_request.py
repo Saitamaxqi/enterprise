@@ -606,7 +606,7 @@ class SignRequest(models.Model):
             signer = PdfSigner(output, self.communication_company_id)
             signed_output = signer.sign_pdf(True, self._get_signing_field_name(), self.create_uid.partner_id)
 
-            if signed_output is not None:
+            if signed_output:
                 output = signed_output
 
             self.completed_document = base64.b64encode(output.getvalue())
