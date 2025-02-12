@@ -1189,7 +1189,7 @@ class L10n_InGstReturnPeriod(models.Model):
             error_codes = [e.get('code') for e in response["error"]]
             error_msg = ""
             if 'no-credit' in error_codes:
-                error_msg = self.env["account.move"]._l10n_in_get_iap_buy_credits_message()
+                error_msg = self.env["account.move"]._l10n_in_edi_get_iap_buy_credits_message()
             else:
                 error_msg = "<br/>".join(["[%s] %s" % (e.get("code"), html_escape(e.get("message"))) for e in response["error"]])
             self.sudo().write({
@@ -1336,7 +1336,7 @@ class L10n_InGstReturnPeriod(models.Model):
             error_msg = ""
             error_codes = [e.get('code') for e in response["error"]]
             if 'no-credit' in error_codes:
-                error_msg = self.env["account.move"]._l10n_in_get_iap_buy_credits_message()
+                error_msg = self.env["account.move"]._l10n_in_edi_get_iap_buy_credits_message()
             else:
                 error_msg = "<br/>".join(["[%s] %s" % (e.get("code"), html_escape(e.get("message"))) for e in response["error"]])
             self.sudo().write({
@@ -1600,7 +1600,7 @@ class L10n_InGstReturnPeriod(models.Model):
             error_msg = ""
             error_codes = [e.get('code') for e in response["error"]]
             if 'no-credit' in error_codes:
-                error_msg = self.env["account.move"]._l10n_in_get_iap_buy_credits_message()
+                error_msg = self.env["account.move"]._l10n_in_edi_get_iap_buy_credits_message()
             else:
                 error_msg = "<br/>".join(["[%s] %s" % (e.get("code"), html_escape(e.get("message"))) for e in response["error"]])
             self.sudo().write({

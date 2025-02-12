@@ -27,5 +27,5 @@ class IrnException(Exception):
             self.errors = [self.errors]
         error_codes = [e.get('code') for e in self.errors]
         if 'no-credit' in error_codes:
-            return self.env["account.move"]._l10n_in_get_iap_buy_credits_message()
+            return self.env["account.move"]._l10n_in_edi_get_iap_buy_credits_message()
         return '\n'.join(["[%s] %s" % (e.get("code"), e.get("message")) for e in self.errors])
