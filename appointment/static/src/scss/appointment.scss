@@ -87,3 +87,37 @@
     pointer-events: none;
     opacity: 60%;
 }
+
+@media (max-width: 768px) {
+    .o_website_calendar_weekdays th {
+        font-size: 14px;
+        padding: 0px;
+    }
+    
+    .o_appointment_days td {
+        font-size: 14px;
+        padding: 0px;
+    }
+    
+    .o_day_wrapper {
+        font-size: 14px;
+        padding: 0px;
+    }
+}
+
+@media (max-width: 340px) {
+    .o_website_calendar_weekdays th {
+        font-size: 11px;
+        padding: 0px;
+    }
+    
+    .o_appointment_days td {
+        font-size: 11px;
+        padding: 0px;
+    }
+    
+    .o_day_wrapper {
+        font-size: 11px;
+        padding: 0px;
+    }
+}
