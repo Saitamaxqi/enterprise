@@ -1,3 +1,4 @@
+import { browser } from "@web/core/browser/browser";
 import { formatDateTime } from '@web/core/l10n/dates';
 import { rpc } from "@web/core/network/rpc";
 import { registry } from '@web/core/registry';
@@ -192,6 +193,11 @@ class KnowledgeTopbar extends Component {
         } else {
             this.commentsState.displayMode = "handler";
         }
+    }
+
+    toggleFullWidth() {
+        this.props.record.update({full_width: !this.props.record.data.full_width});
+        browser.dispatchEvent(new Event("resize"));
     }
 
     /**

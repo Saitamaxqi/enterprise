@@ -1,6 +1,7 @@
 import { _t } from "@web/core/l10n/translation";
 import { ArticleSelectionDialog } from "../../components/article_selection_dialog/article_selection_dialog";
 import { ArticleTemplatePickerDialog } from "@knowledge/components/article_template_picker_dialog/article_template_picker_dialog";
+import { browser } from "@web/core/browser/browser";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import {
     KnowledgeSidebarFavoriteSection,
@@ -871,6 +872,7 @@ export class KnowledgeSidebar extends Component {
         const onPointerMove = throttleForAnimation(event => {
             event.preventDefault();
             this.state.sidebarSize = isRtl ? document.documentElement.clientWidth - event.pageX : event.pageX;
+            browser.dispatchEvent(new Event("resize"));
         });
         const onPointerUp = () => {
             document.removeEventListener('pointermove', onPointerMove);
@@ -878,6 +880,7 @@ export class KnowledgeSidebar extends Component {
             document.body.style.cursor = "auto";
             document.body.style.userSelect = "auto";
             localStorage.setItem(this.storageKeys.size, this.state.sidebarSize);
+            browser.dispatchEvent(new Event("resize"));
         };
         // Add style to root element because resizing has a transition delay,
         // meaning that the cursor is not always on top of the resizer.
