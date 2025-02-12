@@ -167,7 +167,7 @@ export class SignTemplate extends Component {
                 return i;
             }
         }
-        return -1;
+        return 0;
     }
 
     async fetchTemplateData() {

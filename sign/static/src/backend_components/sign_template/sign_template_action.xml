@@ -12,7 +12,7 @@
             manageTemplateAccess="manageTemplateAccess"
             onTemplateSaveClick.bind="onTemplateSaveClick"
         />
-        <div class="d-flex flex-grow-1 h-100">
+        <div class="d-flex flex-grow-1 h-100 overflow-hidden">
             <SignTemplateSidebar t-if="showSidebar" t-props="signTemplateSidebarProps"/>
             <SignTemplateBody
                 isPDF="isPDF"

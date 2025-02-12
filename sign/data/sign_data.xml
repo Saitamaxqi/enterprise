@@ -101,7 +101,7 @@
 
     <record model="sign.item.type" id="sign_item_type_checkbox">
         <field name="name">Checkbox</field>
-        <field name="placeholder">&#9745;</field>
+        <field name="placeholder">✅</field>
         <field name="item_type">checkbox</field>
         <field name="default_width" type="float">0.04</field>
         <field name="default_height" type="float">0.03</field>
@@ -110,7 +110,7 @@
 
     <record model="sign.item.type" id="sign_item_type_radio">
         <field name="name">Radio</field>
-        <field name="placeholder">&#9673;</field>
+        <field name="placeholder">🔘</field>
         <field name="item_type">radio</field>
         <field name="default_width" type="float">0.04</field>
         <field name="default_height" type="float">0.03</field>

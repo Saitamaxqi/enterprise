@@ -55,14 +55,11 @@
     </div>
 
     <div t-name="sign.selectionSignItem" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item" t-att-data-id="id" t-att-style="style + 'white-space: normal;text-align: center;'">
-        <div class="sign_item_body">
+        <div class="sign_item_body px-3">
             <t t-if="!value">
                 <div class="o_sign_selection_item_container">
-                    <select name="selection" id="selection" class="o_sign_selection_item_select" t-att-placeholder="placeholder">
-                        <option>
-                            <t t-esc="placeholder"/>
-                        </option>
-                    </select>
+                    <t t-esc="placeholder"/>
+                    <span class="o_select_arrow d-block pe-2 pb-2"/>
                 </div>
             </t>
             <t t-if="editMode" t-call="sign.signItemConfiguration"/>
