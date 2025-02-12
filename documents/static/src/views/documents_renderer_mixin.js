@@ -1,5 +1,5 @@
 import { useBus, useService } from "@web/core/utils/hooks";
-import { useState } from "@odoo/owl";
+import { useComponent, useState } from "@odoo/owl";
 
 export const DocumentsRendererMixin = (component) =>
     class extends component {
@@ -9,6 +9,7 @@ export const DocumentsRendererMixin = (component) =>
 
             this.documentService.chatterState.previewedDocument = null;
             this.chatterState = useState(this.documentService.chatterState);
+            this.component = useComponent();
 
             useBus(this.documentService.bus, "DOCUMENT_PREVIEWED", async (ev) => {
                 this.chatterState.previewedDocument = this.documentService.previewedDocument;
@@ -62,6 +63,7 @@ export const DocumentsRendererMixin = (component) =>
              */
             record.load = async () => {
                 await this.env.searchModel._reloadSearchPanel();
+                this.component.render();
             };
             /**
              * @override skip to avoid raising validity error for fields that

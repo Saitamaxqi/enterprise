@@ -73,12 +73,12 @@ export class DocumentsSearchPanel extends SearchPanel {
             this.isDocumentManager = await user.hasGroup("documents.group_documents_manager");
             if (this.env.model.config.context.active_model) {
                 // Ensure folders in search panel are folded when users come from another app
-                const categories = this.env.searchModel.getSections((s) => s.type === "category");
+                const categories = await this.env.searchModel.getSections((s) => s.type === "category");
                 for (const category of categories) {
                     this.state.expanded[category.id] = {};
                 }
             } else {
-                const selectedFolderId = this.env.searchModel.getSelectedFolderId();
+                const selectedFolderId = await this.env.searchModel.getSelectedFolderId();
                 if (selectedFolderId) {
                     this.state.expanded[this.sections[0].id]["COMPANY"] = true;
                     this._expandFolder({ folderId: selectedFolderId });
