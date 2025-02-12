@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from odoo import Command
 from odoo.addons.account_avatax.lib.avatax_client import AvataxClient
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.addons.account.tests.common import TestTaxCommon
 from odoo.tests.common import TransactionCase
 from .mocked_invoice_1_response import generate_response as generate_response_invoice_1
 from .mocked_invoice_2_response import generate_response as generate_response_invoice_2
@@ -77,10 +77,11 @@ class TestAvataxCommon(TransactionCase):
         yield
 
 
-class TestAccountAvataxCommon(TestAvataxCommon, AccountTestInvoicingCommon):
+class TestAccountAvataxCommon(TestAvataxCommon, TestTaxCommon):
     @classmethod
     def setUpClass(cls):
         res = super().setUpClass()
+        cls.foreign_currency = cls.setup_other_currency('EUR')
         cls.product = cls.env["product.product"].create({
             'name': "Product",
             'default_code': 'PROD1',

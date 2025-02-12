@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from contextlib import contextmanager
-from unittest.mock import patch
+from unittest.mock import patch, DEFAULT
 
 from freezegun import freeze_time
 
@@ -11,7 +11,7 @@ from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSub
 
 class TestSaleSubscriptionExternalCommon:
     @contextmanager
-    def patch_set_external_taxes(self):
+    def patch_set_external_taxes(self, new_set_external_taxes=None):
         def is_computed_externally(self):
             for move in self.filtered(lambda record: record._name == 'account.move'):
                 move.is_tax_computed_externally = move.move_type == 'out_invoice'
@@ -21,14 +21,10 @@ class TestSaleSubscriptionExternalCommon:
 
         # autospec to capture self in call_args_list (https://docs.python.org/3/library/unittest.mock-examples.html#mocking-unbound-methods)
         # patch out the _post because _create_recurring_invoice will auto-post the invoice which will also trigger tax computation, that's not what this test is about
-        with patch('odoo.addons.account_external_tax.models.account_move.AccountMove._set_external_taxes', autospec=True) as mocked_set, \
+        target = new_set_external_taxes or DEFAULT
+        with patch('odoo.addons.account_external_tax.models.account_external_tax_mixin.AccountExternalTaxMixin._set_external_taxes', target, autospec=target == DEFAULT) as mocked_set, \
              patch('odoo.addons.account_external_tax.models.account_external_tax_mixin.AccountExternalTaxMixin._compute_is_tax_computed_externally', is_computed_externally):
             yield mocked_set
-
-    @contextmanager
-    def patch_set_external_taxes_so(self, new_sale_set_external_taxes):
-        with patch('odoo.addons.sale_external_tax.models.sale_order.SaleOrder._set_external_taxes', new_sale_set_external_taxes):
-            yield
 
 
 @tagged("-at_install", "post_install")
@@ -70,13 +66,13 @@ class TestSaleSubscriptionExternal(TestSubscriptionCommon, TestSaleSubscriptionE
         sub = self.subscription
         self.assertGreater(sub.amount_tax, 0, 'Subscription should have taxes so this test can test what happens when Avatax overrides it.')
 
-        def new_set_external_taxes(self, mapped_taxes, summary):
+        def new_set_external_taxes(self, mapped_taxes):
             """Simulate what happens for an exempt sale order: amounts that don't match the set tax."""
             sub.amount_total = 21.00
             sub.amount_tax = 0.00
 
         # Calculate initial taxes
-        with self.patch_set_external_taxes(), self.patch_set_external_taxes_so(new_set_external_taxes):
+        with self.patch_set_external_taxes(new_set_external_taxes):
             sub.button_external_tax_calculation()
 
         tx = self.env['payment.transaction'].sudo().create({
@@ -99,7 +95,7 @@ class TestSaleSubscriptionExternal(TestSubscriptionCommon, TestSaleSubscriptionE
         })
         self.env.invalidate_all()
 
-        with self.patch_set_external_taxes(), self.patch_set_external_taxes_so(new_set_external_taxes):
+        with self.patch_set_external_taxes(new_set_external_taxes):
             tx._post_process()
 
         self.assertTrue(sub._is_paid(), 'Subscription should be fully paid')

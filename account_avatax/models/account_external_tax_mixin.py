@@ -1,6 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
-from collections import defaultdict
 from pprint import pformat
 
 from odoo import models, api, fields, _
@@ -78,7 +77,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                 })
             return tax_cache[key]
 
-        details, summary = super()._get_external_taxes()
+        record_to_base_line = super()._get_external_taxes()
         tax_cache = {}
         tax_group_cache = {}
 
@@ -103,23 +102,12 @@ class AccountExternalTaxMixin(models.AbstractModel):
             for line_result in query_result['lines']:
                 record_id = line_result['lineNumber'].split(',')
                 record = self.env[record_id[0]].browse(int(record_id[1]))
-                details.setdefault(record, {})
-                details[record]['total'] = line_amounts_sign * line_result['lineAmount']
-                details[record]['tax_amount'] = line_amounts_sign * line_result['tax']
+                record_to_base_line.setdefault(record, self._default_external_tax_base_line(record))
                 for detail in line_result['details']:
                     tax = find_or_create_tax(document, detail)
-                    details[record].setdefault('tax_ids', self.env['account.tax'])
-                    details[record]['tax_ids'] += tax
+                    self._update_external_tax_amounts(record_to_base_line[record], tax, line_amounts_sign * detail['tax'])
 
-            summary[document] = defaultdict(float)
-            for summary_line in query_result['summary']:
-                tax = find_or_create_tax(document, summary_line)
-
-                # Tax avatax returns is opposite from aml balance (avatax is positive on invoice, negative on refund)
-                summary[document][tax] += -summary_line['tax']
-
-        return details, summary
-
+        return record_to_base_line
 
     @api.constrains('partner_id', 'fiscal_position_id')
     def _check_address(self):

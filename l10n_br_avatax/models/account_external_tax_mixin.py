@@ -546,16 +546,9 @@ class AccountExternalTaxMixin(models.AbstractModel):
             'lines': lines,
         }
 
-    def _l10n_br_get_line_total(self, line_result):
-        """The service API already accounts for the discount in the net figure."""
-        if self.l10n_br_is_service_transaction:
-            return line_result["lineNetFigure"]
-        else:
-            return line_result["lineNetFigure"] - line_result["lineTaxedDiscount"]
-
     def _get_external_taxes(self):
         """ Override. """
-        details, summary = super()._get_external_taxes()
+        record_to_base_line = super()._get_external_taxes()
 
         def find_or_create_tax(doc, tax_name, price_include):
             def repartition_line(repartition_type):
@@ -634,10 +627,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
             for line_result in query_result['lines']:
                 record_id = line_result['lineCode']
                 record = self.env[self._l10n_br_line_model_name()].browse(int(record_id))
-                details[record] = {}
-                details[record]['total'] = self._l10n_br_get_line_total(line_result)
-                details[record]['tax_amount'] = 0
-                details[record]['tax_ids'] = self.env['account.tax']
+                record_to_base_line.setdefault(record, self._default_external_tax_base_line(record))
                 for detail in line_result['taxDetails']:
                     if detail['taxImpact']['impactOnNetAmount'] != 'Informative':
                         tax_amount = detail['tax']
@@ -651,31 +641,12 @@ class AccountExternalTaxMixin(models.AbstractModel):
                         price_include = detail['taxImpact']['impactOnNetAmount'] == 'Included'
 
                         # In the unlikely event there is an included and excluded tax with the same tax type we take
-                        # whichever comes first. The tax computation will still be correct and the taxByType summary
-                        # later will group them together.
+                        # whichever comes first.
                         tax_type_to_price_include.setdefault(detail['taxType'], price_include)
                         tax = find_or_create_tax(document, detail['taxType'], price_include)
+                        self._update_external_tax_amounts(record_to_base_line[record], tax, tax_amount)
 
-                        details[record]['tax_amount'] += tax_amount
-                        details[record]['tax_ids'] += tax
-
-            summary[document] = {}
-            for tax_type, type_details in query_result['summary']['taxByType'].items():
-                tax = find_or_create_tax(document, tax_type, tax_type_to_price_include.get(tax_type, False))
-
-                amount = type_details['tax']
-                if is_return:
-                    amount = -amount
-
-                if tax_type in subtracted_tax_types:
-                    amount = -amount
-
-                # Tax avatax returns is opposite from aml balance (avatax is positive on invoice, negative on refund)
-                summary[document][tax] = -amount
-
-        details = {record: taxes for record, taxes in details.items() if taxes['tax_ids']}
-
-        return details, summary
+        return record_to_base_line
 
     # IAP related methods
     def _l10n_br_iap_request(self, route, json=None, company=None):

@@ -1,15 +1,16 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields
-from odoo.tests import tagged
+from odoo.tests.common import tagged
 
+from odoo.addons.sale.tests.common import TestTaxCommonSale
 from odoo.addons.account_avatax_sale.tests.common import TestAccountAvataxSaleCommon
 
 from .mocked_so_response import generate_response
 
 
 @tagged("-at_install", "post_install")
-class TestSaleAvalara(TestAccountAvataxSaleCommon):
+class TestSaleAvalara(TestTaxCommonSale, TestAccountAvataxSaleCommon):
     @classmethod
     def setUpClass(cls):
         res = super().setUpClass()
@@ -44,25 +45,21 @@ class TestSaleAvalara(TestAccountAvataxSaleCommon):
                 'amount_untaxed': 90.0,
                 'amount_tax': 7.68,
             }])
-            totals = order.tax_totals
-            subtotals = totals['subtotals']
-            self.assertEqual(len(subtotals), 1)
-            subtotal = subtotals[0]
-            self.assertEqual(subtotal['base_amount_currency'], order.amount_untaxed)
-            self.assertEqual(subtotal['tax_amount_currency'], order.amount_tax)
-            self.assertEqual(totals['total_amount_currency'], order.amount_total)
 
-            tax_groups = subtotal['tax_groups']
-            self.assertEqual(len(tax_groups), 1, "There should be one tax group on the invoice containing all taxes.")
-            self.assertEqual(tax_groups[0]['group_name'], 'Taxes')
+            self.assert_sale_order_tax_totals_summary(order, {
+                'base_amount_currency': order.amount_untaxed,
+                'tax_amount_currency': order.amount_tax,
+                'total_amount_currency': order.amount_total,
+            }, soft_checking=True)
 
             for avatax_line in mocked_response['lines']:
                 so_line = order.order_line.filtered(lambda l: str(l.id) == avatax_line['lineNumber'].split(',')[1])
                 self.assertRecordValues(so_line, [{
                     'price_subtotal': avatax_line['taxableAmount'],
-                    'price_tax': avatax_line['tax'],
                     'price_total': avatax_line['taxableAmount'] + avatax_line['tax'],
                 }])
+                # no digits= specified on this Float field, so assertRecordValues would do an exact comparison of floats
+                self.assertAlmostEqual(so_line.price_tax, avatax_line['tax'])
         else:
             for line in order.order_line:
                 product_name = line.product_id.display_name
@@ -125,32 +122,6 @@ class TestSaleAvalara(TestAccountAvataxSaleCommon):
             order.button_external_tax_calculation()
             self.assertOrder(order)
 
-    def test_tax_round_globally(self):
-        """The total amount of sale orders elligible for Avatax should never be computed with
-        the 'round_globally' option but should instead use the 'round_per_line' mechanism"""
-        self.env.company.sudo().tax_calculation_rounding_method = 'round_globally'
-        order = self.env['sale.order'].create({
-            'user_id': self.sales_user.id,
-            'partner_id': self.partner.id,
-            'fiscal_position_id': self.fp_avatax.id,
-            'date_order': '2021-01-01',
-            'order_line': [
-                (0, 0, {
-                    'product_id': self.product.id,
-                    'product_uom_qty': 1,
-                    'price_unit': 1.48,
-                    'tax_ids': self.tax_with_diff_amount.ids,
-                }),
-                (0, 0, {
-                    'product_id': self.product.id,
-                    'product_uom_qty': 1,
-                    'price_unit': 1.48,
-                    'tax_ids': self.tax_with_diff_amount.ids,
-                }),
-            ],
-        })
-        self.assertEqual(order.amount_total, 2.98)
-
     def test_sale_order_downpayment(self):
         """ Test the expected down payment flow. Down payments are not sent to Avalara. We invoice everything on the final "regular"
         invoice, as if the down payments never happened.
@@ -182,6 +153,8 @@ class TestSaleAvalara(TestAccountAvataxSaleCommon):
 
         self.assertIsNone(capture.val, "Shouldn't call Avatax when posting a down payment invoice.")
         self.assertEqual(len(order.order_line.filtered(lambda line: not line.display_type)), 6, "Should have generated a new down payment line.")
+        downpayment_amount = order.amount_total * downpayment_pct / 100
+        self.assertAlmostEqual(downpayment_invoice.amount_total, downpayment_amount, msg="Down payment has the wrong amount.")
 
         wizard = (
             self.env["sale.advance.payment.inv"]
@@ -195,15 +168,18 @@ class TestSaleAvalara(TestAccountAvataxSaleCommon):
             wizard.sudo().create_invoices()
 
         final_invoice = order.invoice_ids - downpayment_invoice
+        self.assertEqual(len(final_invoice.invoice_line_ids.filtered(lambda line: line.display_type == "product")), 6, "Should include an extra down payment line.")
+
         self.assertRecordValues(final_invoice.invoice_line_ids, [
-            {'price_unit': 35.0,    'tax_ids': []},
-            {'price_unit': -5.0,    'tax_ids': []},
-            {'price_unit': 30.0,    'tax_ids': []},
-            {'price_unit': 15.0,    'tax_ids': []},
-            {'price_unit': 15.0,    'tax_ids': []},
-            {'price_unit': 0.0,     'tax_ids': []},
-            {'price_unit': 45.0,    'tax_ids': []},
+            {'price_unit': 35.0, 'price_total': 37.98},
+            {'price_unit': -5.0, 'price_total': -5.42},
+            {'price_unit': 30.0, 'price_total': 32.56},
+            {'price_unit': 15.0, 'price_total': 16.28},
+            {'price_unit': 15.0, 'price_total': 16.28},
+            {'price_unit': 0.0, 'price_total': 0.00},
+            {'price_unit': 47.27, 'price_total': -48.84},
         ])
+
         with self._capture_request(return_value={'lines': [], 'summary': []}) as capture:
             final_invoice.sudo().action_post()
             sent_lines = capture.val['json']['createTransactionModel']['lines']

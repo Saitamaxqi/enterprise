@@ -25,7 +25,7 @@ class TestAvalaraBrCommon(AccountTestInvoicingCommon):
     def setUpClass(cls):
         res = super().setUpClass()
         cls._setup_credentials()
-
+        cls.foreign_currency = cls.setup_other_currency('EUR')
         cls.fp_avatax = cls.env['account.fiscal.position'].create({
             'name': 'Avatax Brazil',
             'l10n_br_is_avatax': True,

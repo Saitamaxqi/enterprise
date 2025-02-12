@@ -15,22 +15,12 @@ class SaleOrder(models.Model):
         invoice._get_and_set_external_taxes_on_eligible_records()
         return super()._do_payment(payment_token, invoice, auto_commit=auto_commit)
 
-    def _create_invoices(self, grouped=False, final=False, date=None):
-        moves = super()._create_invoices(grouped=grouped, final=final, date=date)
-        moves._get_and_set_external_taxes_on_eligible_records()
-        return moves
-
-    def action_confirm(self):
-        """Override to recompute taxes after confirmation. sale_external_tax already recomputes taxes before
-        confirmation but sale_subscription makes sale.order.line.discount depend on subscription_state.
-        subscription_state gets written to during confirmation. This launches a re-computation of
-        sale.order.line.discount, which leads to a re-computation of sale.order.line.price_* fields. This will lead
-        to the wrong taxes in the case of (partial) exemptions. When this happens subscriptions also won't be
-        auto-invoiced because the payment will be seen as a partial payment by
-        _get_partial_payment_subscription_transaction()."""
-        res = super().action_confirm()
-        self._get_and_set_external_taxes_on_eligible_records()
-        return res
+    def _get_lines_eligible_for_external_taxes(self):
+        """Override to exclude non-invoicable lines. Only override for confirmed orders. Non-confirmed orders never have
+        invoicable lines and can be paid through /my/orders which will ask to pay all lines. """
+        subscriptions = self.filtered(lambda sub: sub.state == 'sale' and sub.is_subscription)
+        subscription_lines = super(SaleOrder, subscriptions)._get_lines_eligible_for_external_taxes() & subscriptions._get_invoiceable_lines()
+        return subscription_lines | super(SaleOrder, self - subscriptions)._get_lines_eligible_for_external_taxes()
 
     def _get_date_for_external_taxes(self):
         """Override to always send a current date for subscriptions. order_date will never change and if taxes change
@@ -38,23 +28,3 @@ class SaleOrder(models.Model):
         customers know what they will be charged. Or it will be the current date for new or churned subscriptions
         without a next invoice date."""
         return (self.next_invoice_date or fields.Date.context_today(self)) if self.is_subscription else super()._get_date_for_external_taxes()
-
-    def _next_billing_details(self):
-        """
-        Override to re-compute taxes for exempted customers in portal view.
-        """
-        res = super()._next_billing_details()
-
-        if self.is_tax_computed_externally:
-            amount_total = 0
-            amount_untaxed = 0
-            amount_tax = 0
-            for line in res.get('display_lines', []):
-                amount_total += line.price_total
-                amount_untaxed += line.price_subtotal
-                amount_tax += line.price_tax
-
-            res['tax_totals'] = self._get_external_tax_totals(amount_total, amount_untaxed, amount_tax)
-            res['next_invoice_amount'] = self.currency_id.round(sum(self._get_invoiceable_lines().mapped('price_total')))
-
-        return res

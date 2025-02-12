@@ -135,7 +135,7 @@ class PosOrder(models.Model):
         eligible_orders = self.filtered(lambda order: order.l10n_br_is_avatax and order.l10n_br_last_avatax_status != "accepted")
         for order in eligible_orders:
             try:
-                order._set_external_taxes(*order._get_external_taxes())
+                order._set_external_taxes(order._get_external_taxes())
             except (UserError, ValidationError) as e:  # Don't block the POS
                 order.l10n_br_last_avatax_status = "error"
                 order.l10n_br_avatax_error = str(e)
@@ -174,21 +174,6 @@ class PosOrder(models.Model):
             )
         return res
 
-    def _set_external_taxes(self, mapped_taxes, summary):
-        """account.external.tax.mixin override. Since taxes are always fully included, amount_total won't change."""
-        if not any([order.l10n_br_is_avatax for order in self]):
-            return super()._set_external_taxes(mapped_taxes, summary)
-
-        for line, detail in mapped_taxes.items():
-            line.tax_ids = detail["tax_ids"]
-            line.price_subtotal = detail["total"]
-            line.price_subtotal_incl = detail["tax_amount"] + detail["total"]
-
-        # cannot use _onchange_amount_all because it uses AccountTax._compute_all() to compute taxes.
-        for order in self:
-            order.amount_total = sum(line.price_subtotal_incl for line in order.lines)
-            order.amount_tax = sum(line.price_subtotal_incl - line.price_subtotal for line in order.lines)
-
     def _l10n_br_get_operation_type(self):
         """account.external.tax.mixin override. POS is always "sale of goods"."""
         return self.env.ref("l10n_br_avatax.operation_type_1").technical_name
@@ -199,8 +184,6 @@ class PosOrder(models.Model):
 
         # Don't do EDI for refunds or already EDI'd orders, this should happen manually through account.move.
         orders_to_edi = self.filtered(lambda order: order.l10n_br_is_avatax and order.l10n_br_last_avatax_status != "accepted" and not order.refunded_order_id)
-        original_order_amounts = {res["id"]: res for res in orders_to_edi.read(["amount_total", "amount_tax"])}
-        original_line_amounts = {res["id"]: res for res in orders_to_edi.lines.read(["price_subtotal", "price_subtotal_incl"])}
 
         orders_to_edi._get_and_set_external_taxes_on_eligible_records()
         for order in orders_to_edi:
@@ -213,10 +196,9 @@ class PosOrder(models.Model):
 
                 # Clear all taxes if EDI fails. For POS we consider tax calculation and EDI a single step. No savepoint
                 # is used because we need to save some data (l10n_br_avatax_error, ...), and this is simple enough.
-                order.write(original_order_amounts[order.id])
                 for line in order.lines:
+                    line.extra_tax_data = False
                     line.tax_ids = False
-                    line.write(original_line_amounts[line.id])
 
     def _cron_l10n_br_send_nfce(self, batch_size=1):
         def get_order_notification(orders, is_success: bool):

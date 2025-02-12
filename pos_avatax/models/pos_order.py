@@ -13,7 +13,7 @@ class PosOrder(models.Model):
     def _get_and_set_external_taxes_on_eligible_records(self):
         """ account.external.tax.mixin override. """
         eligible_orders = self.filtered(lambda order: order.is_tax_computed_externally and order.state in ('draft'))
-        eligible_orders._set_external_taxes(*eligible_orders._get_external_taxes())
+        eligible_orders._set_external_taxes(eligible_orders._get_external_taxes())
         return super()._get_and_set_external_taxes_on_eligible_records()
 
     def _get_lines_eligible_for_external_taxes(self):
@@ -42,25 +42,6 @@ class PosOrder(models.Model):
                 "warehouse_id": pos_config.warehouse_id if pos_config.ship_later else False
             })
         return res
-
-    def _set_external_taxes(self, mapped_taxes, summary):
-        """ account.external.tax.mixin override. """
-        to_flush = self.env['pos.order.line']
-        for line, detail in mapped_taxes.items():
-            line.tax_ids = detail['tax_ids']
-            to_flush += line
-
-        # Trigger field computation due to changing the tax id. Do
-        # this here because we will manually change the taxes.
-        to_flush.flush_recordset(['price_subtotal', 'price_subtotal_incl'])
-
-        for line, detail in mapped_taxes.items():
-            line.price_subtotal = detail['total']
-            line.price_subtotal_incl = detail['tax_amount'] + detail['total']
-
-        for order in self:
-            order.amount_tax = sum(line.price_subtotal_incl - line.price_subtotal for line in order.lines)
-            order.amount_total = sum(line.price_subtotal_incl for line in order.lines)
 
     def _get_avatax_dates(self):
         """ account.external.tax.mixin override. """

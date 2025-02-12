@@ -1,12 +1,13 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo.tests.common import tagged
 from odoo.fields import Command
+from odoo.addons.sale.tests.common import TestTaxCommonSale
 from odoo.addons.l10n_br_avatax.tests.test_br_avatax import TestAvalaraBrCommon
 from .mocked_so_response import generate_response
 
 
 @tagged("post_install_l10n", "-at_install", "post_install")
-class TestSaleAvalaraBr(TestAvalaraBrCommon):
+class TestSaleAvalaraBr(TestTaxCommonSale, TestAvalaraBrCommon):
     def assertOrder(self, order, mocked_response=None):
         if mocked_response:
             amount_total = 95.00
@@ -16,21 +17,22 @@ class TestSaleAvalaraBr(TestAvalaraBrCommon):
                 'amount_untaxed': amount_total - amount_tax,
                 'amount_tax': amount_tax,
             }])
-            totals = order.tax_totals
-            subtotals = totals['subtotals']
-            self.assertEqual(len(subtotals), 1)
-            subtotal = subtotals[0]
-            self.assertEqual(subtotal['base_amount_currency'], order.amount_untaxed)
-            self.assertEqual(subtotal['tax_amount_currency'], order.amount_tax)
-            self.assertEqual(totals['total_amount_currency'], order.amount_total)
+
+            self.assert_sale_order_tax_totals_summary(order, {
+                'base_amount_currency': order.amount_untaxed,
+                'tax_amount_currency': order.amount_tax,
+                'total_amount_currency': order.amount_total,
+            }, soft_checking=True)
+
             for avatax_line in mocked_response['lines']:
                 so_line = order.order_line.filtered(lambda l: l.id == avatax_line['lineCode'])
                 total_tax_amount = sum(detail['tax'] for detail in avatax_line['taxDetails'] if detail['taxImpact']['impactOnNetAmount'] != 'Informative')
                 self.assertRecordValues(so_line, [{
                     'price_subtotal': avatax_line['lineNetFigure'],
-                    'price_tax': total_tax_amount,
                     'price_total': avatax_line['lineNetFigure'] + total_tax_amount,
                 }])
+                # no digits= specified on this Float field, so assertRecordValues would do an exact comparison of floats
+                self.assertAlmostEqual(so_line.price_tax, total_tax_amount)
         else:
             for line in order.order_line:
                 product_name = line.product_id.display_name
