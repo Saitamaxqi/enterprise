@@ -15,7 +15,6 @@
                 <div t-att-class="missingModel ? 'o_field_invalid' : ''" class="mb-2">
                     <ModelSelector
                         value="relationState.relatedModel.label"
-                        models="relatedModels"
                         onModelSelected.bind="onModelSelected"
                     />
                 </div>

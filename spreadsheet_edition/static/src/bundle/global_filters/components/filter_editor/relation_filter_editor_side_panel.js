@@ -89,25 +89,6 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
     }
 
     /**
-     * List of model names of all related models of all pivots
-     * @returns {Array<string>}
-     */
-    get relatedModels() {
-        const all = this.fieldMatchings.map((object) => Object.values(object.fields()));
-        // Add the model to allow to filter on id.
-        const set = new Set(
-            all
-                .flat()
-                .filter((field) => field.relation)
-                .map((field) => field.relation)
-        );
-        this.fieldMatchings.forEach((object) => {
-            set.add(object.model());
-        });
-        return [...set];
-    }
-
-    /**
      * @override
      * @param {GlobalFilter} globalFilter
      */

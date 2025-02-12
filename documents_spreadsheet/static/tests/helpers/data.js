@@ -242,6 +242,10 @@ export class IrModel extends SpreadsheetModels.IrModel {
     has_searchable_parent_relation() {
         return false;
     }
+
+    get_available_models() {
+        return this.env["ir.model"].search_read([],  ["display_name", "model"])
+    }
 }
 
 export class IrUIMenu extends SpreadsheetModels.IrUIMenu {
