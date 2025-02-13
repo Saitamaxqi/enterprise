@@ -1,5 +1,185 @@
 <odoo>
-    
+    <!--anniversary coupon campaign-->
+    <template id="mailing_anniversary_arch">
+   <div class="o_layout oe_unremovable oe_unmovable o_empty_theme bg-o-color-3" data-name="Mailing"><style id="design-element">.o_mail_wrapper a.btn.btn-link {
+color:rgb(17, 24, 39);
+}
+.o_mail_wrapper a:not(.btn) {
+color:rgb(17, 24, 39);
+}
+.o_mail_wrapper li &gt; * {
+color:rgb(17, 24, 39);
+}
+.o_mail_wrapper li {
+color:rgb(17, 24, 39);
+}
+.o_mail_wrapper p &gt; * {
+color:rgb(17, 24, 39);
+}
+.o_mail_wrapper p {
+color:rgb(17, 24, 39);
+}
+.o_mail_wrapper h3 {
+color:rgb(17, 24, 39);
+}
+.o_mail_wrapper h2 {
+color:rgb(17, 24, 39);
+}
+.o_mail_wrapper h1 {
+color:rgb(17, 24, 39);
+}
+.o_mail_wrapper h1 :not(.fa) {
+font-family:Georgia, Times, "Times New Roman", serif !important;
+}
+.o_mail_wrapper h1:not(.fa) {
+font-family:Georgia, Times, "Times New Roman", serif !important;
+}
+.o_mail_wrapper h2 :not(.fa) {
+font-family:Georgia, Times, "Times New Roman", serif !important;
+}
+.o_mail_wrapper h2:not(.fa) {
+font-family:Georgia, Times, "Times New Roman", serif !important;
+}
+.o_mail_wrapper li :not(.fa) {
+font-family:Georgia, Times, "Times New Roman", serif !important;
+}
+.o_mail_wrapper li:not(.fa) {
+font-family:Georgia, Times, "Times New Roman", serif !important;
+}
+.o_mail_wrapper p :not(.fa) {
+font-family:Georgia, Times, "Times New Roman", serif !important;
+}
+.o_mail_wrapper p:not(.fa) {
+font-family:Georgia, Times, "Times New Roman", serif !important;
+}
+.o_mail_wrapper h3 :not(.fa) {
+font-family:Georgia, Times, "Times New Roman", serif !important;
+}
+.o_mail_wrapper h3:not(.fa) {
+font-family:Georgia, Times, "Times New Roman", serif !important;
+}
+</style>
+<div class="container o_mail_wrapper oe_unremovable o_mail_small">
+    <div class="row">
+        <div class="col o_mail_no_options o_mail_wrapper_td bg-white oe_structure o_editable theme_selection_done">
+            <div class="s_picture o_mail_snippet_general o_cc o_cc2 pt16 pb16" style="padding-left: 15px; padding-right: 15px;" data-snippet="s_picture" data-name="Picture">
+                <div class="container s_allow_columns" style="text-align: center;">
+                    <p><br/></p>
+                    <img
+                        src="/web_editor/shape/marketing_automation_website_sale/anniversary/big-cake.svg?c1=%23714B67&amp;unique=c21752e3"
+                        class="mx-auto d-block mw-100 img img-fluid o_we_custom_image"
+                        style="padding: 10px; width: 50% !important;"
+                        data-mimetype="image/svg+xml"
+                        loading=""
+                    />
+                </div>
+            </div>
+            <div class="s_mail_text_highlight o_mail_snippet_general o_cc o_cc3 w-100 bg-o-color-4 pb0 pt8" data-snippet="s_text_highlight" data-name="Text Highlight">
+                <div class="container s_allow_columns" style="text-align: center;">
+                <h2><span style="font-size: 3.5rem;">Happy Non-birthday!</span></h2>
+                <h3><span style="font-size: 1rem;">You've been with us for a whole year—thank you for being here! 🎈</span></h3>
+                <p style="margin-bottom: 0px;">To celebrate, here’s a little something for you.</p>
+                <p class="o_default_snippet_text" style="text-align: center;">
+                    <span style="font-weight: bolder; color: inherit; font-size: 0.857143rem;">BUY YOURSELF A GIFT</span><span style="font-size: 0.857143rem;">&#xA0;!</span><br />
+                </p>
+                <table style="border-collapse: collapse; border-style: dashed !important;" class="border border-black" align="center" cellspacing="0" cellpadding="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td style="width: 50px !important; min-width: 50px; max-width: 5.6rem; text-align: center;" class="o_mail_no_resize mx-auto o_cc o_cc3 bg-o-color-1" align="center" height="50" width="50">
+                                <i class="fa fa-birthday-cake fa-2x"></i>
+                            </td>
+                            <td style="font-size: 15px; line-height: 22px; font-weight: 700; min-width: 150px; width: 200px; text-align: center;" class="o_cc bg-o-color-3" align="center" height="50" width="200">
+                                <p class="mb0"><font class="text-o-color-1">HBD20</font></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <p style="text-align: center;">
+                    <a class="o_default_snippet_text btn btn-secondary" href="#" role="button" target="_blank">Redeem coupon now</a>
+                </p>
+                </div>
+            </div>
+            <div class="s_mail_blockquote blockquote o_mail_snippet_general o_cc o_cc2 pt16 pb16 mb-0 w-100" data-snippet="s_blockquote" data-name="Blockquote">
+                <div class="container" style="text-align: center;">
+                    <div class="row">
+                        <div class="col-lg-1" style="text-align: left;">
+                            <i class="fa fa-quote-left"></i>
+                        </div>
+                        <div class="col-lg-10">
+                            <div>
+                                <p><i>Cheers to more great years ahead!</i><br /></p>
+                                <div>
+                                    <img
+                                        src="/web_editor/image_shape/mass_mailing.s_company_team_default_image_2/web_editor/geometric_round/geo_round_circle.svg"
+                                        style="width: 40px;"
+                                        class="img me-2"
+                                        data-shape="web_editor/geometric_round/geo_round_circle"
+                                        data-file-name="team_member_2-circle.svg"
+                                        data-shape-colors=";;;;"
+                                        data-original-mimetype="image/png"
+                                        data-mimetype="image/svg+xml"
+                                        data-original-id="454"
+                                        data-original-src="/mass_mailing/static/src/img/theme_default/s_default_image_team_member_2.png"
+                                        data-mimetype-before-conversion="image/png"
+                                        loading=""
+                                    />
+                                    <p style="font-weight: bolder; font-size: 14px;"><b>John DOE</b> • CEO of MyCompany</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1" style="text-align: right;">
+                            <i class="fa fa-quote-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general bg-o-color-3 pt0" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg o_mail_footer_social" style="text-align: center;">
+                            <a aria-label="Facebook" title="Facebook" href="https://www.facebook.com/Odoo">
+                                <span class="fa fa-facebook"></span>
+                            </a>
+                            &#xA0;&#xA0;
+                            <a style="margin-left: 10px;" aria-label="LinkedIn" title="LinkedIn" href="https://www.linkedin.com/company/odoo">
+                                <span class="fa fa-linkedin"></span>
+                            </a>
+                            &#xA0;&#xA0;
+                            <a style="margin-left: 10px;" aria-label="X" title="X" href="https://twitter.com/Odoo">
+                                <span class="fa fa-twitter"></span>
+                            </a>
+                            &#xA0;&#xA0;
+                            <a style="margin-left: 10px;" aria-label="Instagram" title="Instagram" href="https://www.instagram.com/explore/tags/odoo/">
+                                <span class="fa fa-instagram"></span>
+                            </a>
+                            &#xA0;&#xA0;
+                            <a style="margin-left: 10px;" aria-label="TikTok" title="TikTok" href="https://www.tiktok.com/@odoo">
+                                <span class="fa fa-tiktok"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg o_mail_footer_links" style="text-align: center;">
+                            <a role="button" href="/unsubscribe_from_list" class="btn btn-link">Unsubscribe</a>
+                            | <a role="button" href="/contactus" class="btn btn-link">Contact</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg">
+                            <p style="text-align: center;">
+                                © 2024 All Rights Reserved
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+    </template>
+
     <!--followup campaign-->
     <template id="mailing_purchase_followup_arch">
 <div class="o_layout oe_unremovable oe_unmovable bg-200 o_newsletter_theme" style="background-color: rgb(255, 255, 255) !important" data-name="Mailing">

@@ -4,7 +4,6 @@
 from collections import defaultdict
 import threading
 
-from ast import literal_eval
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, tools, _
@@ -345,7 +344,7 @@ class MarketingCampaign(models.Model):
             participants_data = participants.search_read([('campaign_id', '=', campaign.id)], ['res_id'])
             existing_rec_ids = _uniquify_list([live_participant['res_id'] for live_participant in participants_data])
 
-            record_domain = literal_eval(campaign.domain or "[]")
+            record_domain = self.env['mailing.filter']._evaluate_domain(campaign.domain or "[]")
             db_rec_ids = _uniquify_list(RecordModel.search(record_domain).ids)
             to_create = [rid for rid in db_rec_ids if rid not in existing_rec_ids]  # keep ordered IDs
             to_remove = set(existing_rec_ids) - set(db_rec_ids)
