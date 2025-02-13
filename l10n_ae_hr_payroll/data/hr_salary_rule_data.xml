@@ -371,8 +371,12 @@ else:
             <field name="condition_select">python</field>
             <field name="condition_python">result = 'LEAVE90' in worked_days</field>
             <field name="amount_python_compute">
+working_days_in_a_month=0
+line_values = payslip._get_worked_days_line_values(['AEPUBLICH'], ['number_of_days'], True, True)
+for line in line_values.values():
+    working_days_in_a_month+= line['sum']['number_of_days']
 gross_salary = contract.wage + contract.l10n_ae_housing_allowance + contract.l10n_ae_transportation_allowance + contract.l10n_ae_other_allowances
-result = - worked_days['LEAVE90'].number_of_days * (gross_salary / 30)
+result = - worked_days['LEAVE90'].number_of_days * (gross_salary / working_days_in_a_month)
             </field>
             <field name="struct_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure"/>
         </record>
