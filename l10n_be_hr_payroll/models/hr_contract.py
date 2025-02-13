@@ -393,7 +393,9 @@ class HrContract(models.Model):
         self.ensure_one()
         res = super()._get_salary_costs_factor()
         if self.structure_type_id == self.env.ref('hr_contract.structure_type_employee_cp200'):
-            res = 13.92 + 13.0 * EMPLOYER_ONSS
+            res = 13.92
+            if not self.no_onss:
+                res += 13.0 * EMPLOYER_ONSS
         if self.l10n_be_group_insurance_rate:
             return res * (1.0 - self.l10n_be_group_insurance_rate / 100)
         return res
