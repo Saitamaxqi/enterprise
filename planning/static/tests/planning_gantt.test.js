@@ -4,8 +4,10 @@ import { animationFrame, mockDate, mockTimeZone } from "@odoo/hoot-mock";
 import {
     clickSave,
     contains,
+    defineActions,
     getFacetTexts,
     mockService,
+    mountWithCleanup,
     onRpc,
     patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
@@ -23,6 +25,8 @@ import {
 } from "@web_gantt/../tests/web_gantt_test_helpers";
 
 import { Domain } from "@web/core/domain";
+import { redirect } from "@web/core/utils/urls";
+import { WebClient } from "@web/webclient/webclient";
 
 import {
     definePlanningModels,
@@ -34,6 +38,17 @@ import {
 describe.current.tags("desktop");
 
 definePlanningModels();
+
+defineActions([
+    {
+        id: 1,
+        name: "Planning slot Action 1",
+        res_model: "planning.slot",
+        type: "ir.actions.act_window",
+        mobile_view_mode: "gantt",
+        views: [[false, "gantt"]],
+    },
+]);
 
 const getProgressBars = () => ({
     resource_id: {
@@ -849,4 +864,88 @@ test("Gantt Popover recurrence delete confirmation in mode subsequent", async ()
 
 test("Gantt Popover recurrence delete confirmation in mode all", async () => {
     await recurrenceDeletionTemplate("all");
+});
+
+test("date_start in url", async function () {
+    PlanningSlot._records = [];
+    PlanningSlot._views = {
+        gantt: `
+            <gantt
+                js_class="planning_gantt"
+                date_start="start_datetime"
+                date_stop="end_datetime"
+            />`,
+        search: `<search/>`,
+    };
+
+    redirect(`/web?date_start=2020-12-10#action=1&view_type=gantt`);
+    await mountWithCleanup(WebClient);
+    await animationFrame();
+
+    let { groupHeaders, range } = getGridContent();
+    expect(groupHeaders.map((gh) => gh.title)).toEqual(["December 2020"]);
+    expect(range).toEqual("Month");
+});
+
+test("date_start and date_end in url (same week)", async function () {
+    PlanningSlot._records = [];
+    PlanningSlot._views = {
+        gantt: `
+            <gantt
+                js_class="planning_gantt"
+                date_start="start_datetime"
+                date_stop="end_datetime"
+            />`,
+        search: `<search/>`,
+    };
+
+    redirect(`/web?date_start=2020-12-06&date_end=2020-12-10#action=1&view_type=gantt`);
+    await mountWithCleanup(WebClient);
+    await animationFrame();
+
+    let { groupHeaders, range } = getGridContent();
+    expect(groupHeaders.map((gh) => gh.title)).toEqual(["Week 50 of 2020"]);
+    expect(range).toEqual("Week");
+});
+
+test("date_start and date_end in url (same month)", async function () {
+    PlanningSlot._records = [];
+    PlanningSlot._views = {
+        gantt: `
+            <gantt
+                js_class="planning_gantt"
+                date_start="start_datetime"
+                date_stop="end_datetime"
+            />`,
+        search: `<search/>`,
+    };
+
+    redirect(`/web?date_start=2020-12-06&date_end=2020-12-24#action=1&view_type=gantt`);
+    await mountWithCleanup(WebClient);
+    await animationFrame();
+
+    let { groupHeaders, range } = getGridContent();
+    expect(groupHeaders.map((gh) => gh.title)).toEqual(["December 2020"]);
+    expect(range).toEqual("Month");
+});
+
+test("date_start and date_end in url (not in same month)", async function () {
+    PlanningSlot._records = [];
+    PlanningSlot._views = {
+        gantt: `
+            <gantt
+                js_class="planning_gantt"
+                date_start="start_datetime"
+                date_stop="end_datetime"
+            />`,
+        search: `<search/>`,
+    };
+
+    redirect(`/web?date_start=2020-12-06&date_end=2021-01-04#action=1&view_type=gantt`);
+    await mountWithCleanup(WebClient);
+    await animationFrame();
+
+    let { groupHeaders, range } = getGridContent();
+    expect(groupHeaders.map((gh) => gh.title)).toEqual(["December 2020", "January 2021"]);
+    expect(range).toEqual("From: 12/06/2020 to: 01/04/2021");
 });

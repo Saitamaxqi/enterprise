@@ -1,6 +1,6 @@
 import { router } from "@web/core/browser/router";
 import { Domain } from "@web/core/domain";
-import { deserializeDateTime, getStartOfLocalWeek, serializeDateTime } from "@web/core/l10n/dates";
+import { deserializeDateTime, serializeDateTime } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
 import { pick } from "@web/core/utils/objects";
 import { localStartOf } from "@web_gantt/gantt_helpers";
@@ -321,28 +321,31 @@ export class PlanningGanttModel extends GanttModel {
      * @override
      */
     _getInitialRangeParams() {
-        let { focusDate, startDate, stopDate, rangeId } = super._getInitialRangeParams(...arguments);
         // take parameters from url if set https://example.com/web?date_start=2020-11-08
         // this is used by the mail of planning.planning
         const urlState = router.current;
         if (urlState.date_start) {
-            focusDate = deserializeDateTime(urlState.date_start);
+            const focusDate = deserializeDateTime(urlState.date_start);
+            let startDate;
+            let stopDate;
+            let rangeId;
             if (urlState.date_end) {
                 const end = deserializeDateTime(urlState.date_end);
-                const startOfWeek1 = getStartOfLocalWeek(focusDate);
-                const startOfWeek2 = getStartOfLocalWeek(end);
-                if (startOfWeek1.equals(startOfWeek2)) {
-                    rangeId = "week";
+                if (localStartOf(focusDate, "week").equals(localStartOf(end, "week"))) {
+                    ({ startDate, stopDate, rangeId } = this.getRangeFromDate("week", focusDate));
+                } else if (localStartOf(focusDate, "month").equals(localStartOf(end, "month"))) {
+                    ({ startDate, stopDate, rangeId } = this.getRangeFromDate("month", focusDate));
                 } else {
-                    rangeId = "month";
+                    startDate = focusDate;
+                    stopDate = end;
+                    rangeId = "custom";
                 }
+            } else {
+                ({ startDate, stopDate, rangeId } = this.getRangeFromDate("month", focusDate));
             }
-            const { unit } = this.metaData.scales[rangeId];
-            startDate = focusDate.startOf(unit);
-            stopDate = startDate.plus({ [unit]: 1 }).minus({ day: 1 });
+            return { focusDate, startDate, stopDate, rangeId };
         }
-        // TODO: use scale from url like in example (no date_end in example!)?
-        return { focusDate, startDate, stopDate, rangeId };
+        return super._getInitialRangeParams(...arguments);
     }
 
     /**
