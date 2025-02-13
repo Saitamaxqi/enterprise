@@ -26,6 +26,10 @@
             'appointment/static/src/views/gantt/**/*',
             'calendar/static/src/views/widgets/**/*',
             'calendar/static/src/views/calendar_form/**/*',
+            ('remove', 'web_gantt/static/src/**/*.dark.scss'),
+        ],
+        'point_of_sale.assets_prod_dark': [
+            'web_gantt/static/src/**/*.dark.scss',
         ],
     'web.assets_tests': [
             'pos_restaurant_appointment/static/tests/tours/**/*',
