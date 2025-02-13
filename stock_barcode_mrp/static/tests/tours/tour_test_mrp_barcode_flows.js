@@ -1392,3 +1392,33 @@ registry.category("web_tour.tours").add("test_mrp_uncompleted_move_split_on_barc
         { trigger: ".o_stock_barcode_main_menu", run() {} },
     ],
 });
+
+registry.category("web_tour.tours").add("test_add_product_with_different_uom", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_client_action .o_add_line",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name=product_id] input",
+            run: "edit product1",
+        },
+        {
+            trigger: ".dropdown-item:contains([TEST] product1)",
+            run: "click",
+        },
+        {
+            trigger: ".o_digipad_increment",
+            run: "click",
+        },
+        {
+            trigger: "input[id=qty_done_0]:value(1)",
+            run() {},
+        },
+        {
+            trigger: "button.o_save",
+            run: "click",
+        },
+        ...stepUtils.validateBarcodeOperation(),
+    ],
+});

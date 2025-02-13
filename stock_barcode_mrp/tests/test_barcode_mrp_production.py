@@ -828,3 +828,25 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
 
         url = f'/odoo/{mo.id}/action-stock_barcode_mrp.stock_barcode_mo_client_action'
         self.start_tour(url, 'test_setting_barcode_mrp_allow_extra_product', login='admin')
+
+    def test_add_product_with_different_uom(self):
+        """
+        Check that new raw moves for products using a different uom category
+        than the final product of the MO can be created from barcode.
+        """
+        self.clean_access_rights()
+        new_uom = self.env['uom.uom'].create({
+            'name': 'Little Boutch',
+            'rounding': 0.01
+        })
+        self.product1.uom_id = new_uom.id
+        mo_form = Form(self.env['mrp.production'])
+        mo_form.product_id = self.final_product
+        mo_form.product_qty = 1
+        mo = mo_form.save()
+        mo.action_confirm()
+        action = self.env.ref('stock_barcode_mrp.stock_barcode_mo_client_action')
+        url = '/web#action=%s&active_id=%s' % (action.id, mo.id)
+        self.start_tour(url, 'test_add_product_with_different_uom', login='admin')
+        self.assertEqual(mo.move_raw_ids.product_uom, mo.move_raw_ids.product_id.uom_id)
+        self.assertEqual(mo.state, "done")

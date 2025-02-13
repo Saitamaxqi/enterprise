@@ -423,7 +423,6 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
             default_company_id: this.record.company_id,
             default_location_id: this._defaultLocation().id,
             default_location_dest_id: this._defaultDestLocation().id,
-            default_product_uom_id: this.record.product_uom_id.id,
             default_production_id: this.resId,
             default_qty_done: 0,
             final_product_id: this.record.product_id.id,
