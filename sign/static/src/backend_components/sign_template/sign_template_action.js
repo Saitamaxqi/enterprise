@@ -79,7 +79,8 @@ export class SignTemplate extends Component {
                 const updatedInfo = info.map(item => ({
                     ...item,
                     isCollapsed: true,
-                    isInputFocused: false
+                    isInputFocused: false,
+                    itemsCount: 0,
                 }));
 
                 /* Make the last signer uncollapsed. */

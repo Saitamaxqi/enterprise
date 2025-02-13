@@ -7,7 +7,7 @@
                 <button type="button" title="Close" class="btn btn-default oi oi-close p-0" t-on-click="props.onClose"/>
             </div>
             <div class="popover-body">
-                <div t-if="props.type !== 'strikethrough'" class="clearfix o_popover_placeholder mb-3">
+                <div t-if="!['strikethrough', 'radio', 'checkbox'].includes(props.type)" class="clearfix o_popover_placeholder mb-3">
                     <label for="o_sign_name" class="form-label">Placeholder</label>
                     <input type="text" class="form-control o_input rounded-0" id="o_sign_name" t-att-value="state.placeholder" t-on-change="(e) => this.onChange('placeholder', e.target.value)"/>
                 </div>

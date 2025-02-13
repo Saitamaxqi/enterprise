@@ -97,9 +97,8 @@
             <t t-if="value == 'on'">&#9745;</t>
             <t t-if="value == 'off'">&#9744;</t>
             <t t-if="!value">
-                <span class="o_sign_checkbox_item o_placeholder ps-0">
-                    <t t-if="placeholder == '☑'"><span class="o_custom_checkbox"/></t>
-                    <t t-else=""><span class="o_custom_checkbox unchecked"/></t>
+                <span class="o_placeholder ps-0 o_sign_field_alignment">
+                    <t t-esc="placeholder"/>
                 </span>
             </t>
             <t t-if="editMode" t-call="sign.signItemConfiguration"/>

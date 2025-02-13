@@ -166,7 +166,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
              * The minimum width is 5.5% of the page width
              * The minimum height is 1% of the page height
              */
-            if (change.width >= 0.055 && change.height >= 0.01) {
+            if (change.width >= 0.01 && change.height >= 0.01) {
                 Object.assign(signItem.el.style, {
                     height: `${change.height * 100}%`,
                     width: `${change.width * 100}%`,
@@ -571,7 +571,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             const signItemData1 = { ...data };
             const signItemData2 = { ...data };
             signItemData2['id'] = id2;
-            signItemData2['posY'] += 0.025;
+            signItemData2['posY'] += 0.04;
             this.signItems[data.page][data.id] = {
                 data: signItemData1,
                 el: this.renderSignItem(signItemData1, this.getPageContainer(data.page)),
