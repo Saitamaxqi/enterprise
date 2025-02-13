@@ -2222,7 +2222,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         """
         self.ensure_one()
 
-        if self.move_id and self.state in ('invoice_sent', 'invoice_cancel', 'invoice_cancel_requested'):
+        if self.move_id and self.state in ('invoice_sent', 'invoice_cancel', 'invoice_cancel_requested', 'invoice_received'):
             self.move_id._l10n_mx_edi_cfdi_invoice_update_sat_state(self, sat_state, error=error)
             return True
         elif self.state in ('payment_sent', 'payment_cancel'):
