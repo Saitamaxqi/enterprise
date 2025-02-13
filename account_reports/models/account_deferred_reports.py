@@ -21,6 +21,19 @@ class AccountDeferredReportHandler(models.AbstractModel):
     # DEFERRED COMMON (DISPLAY AND GENERATION) #
     ############################################
 
+    def _get_domain_fully_inside_period(self, options):
+        return [  # Exclude if entirely inside the period
+            '!', '&', '&', '&', '&', '&', '&', '&',
+                ('deferred_start_date', '!=', False),
+                ('deferred_end_date', '!=', False),
+                ('deferred_start_date', '>=', options['date']['date_from']),
+                ('deferred_start_date', '<=', options['date']['date_to']),
+                ('deferred_end_date', '>=', options['date']['date_from']),
+                ('deferred_end_date', '<=', options['date']['date_to']),
+                ('move_id.date', '>=', options['date']['date_from']),
+                ('move_id.date', '<=', options['date']['date_to']),
+        ]
+
     def _get_domain(self, report, options, filter_already_generated=False, filter_not_started=False):
         domain = report._get_options_domain(options, "from_beginning")
         account_types = ('expense', 'expense_depreciation', 'expense_direct_cost') if self._get_deferred_report_type() == 'expense' else ('income', 'income_other')
@@ -31,15 +44,7 @@ class AccountDeferredReportHandler(models.AbstractModel):
             ('deferred_end_date', '>=', options['date']['date_from']),
             ('move_id.date', '<=', options['date']['date_to']),
         ]
-        domain += [  # Exclude if entirely inside the period
-            '!', '&', '&', '&', '&', '&',
-            ('deferred_start_date', '>=', options['date']['date_from']),
-            ('deferred_start_date', '<=', options['date']['date_to']),
-            ('deferred_end_date', '>=', options['date']['date_from']),
-            ('deferred_end_date', '<=', options['date']['date_to']),
-            ('move_id.date', '>=', options['date']['date_from']),
-            ('move_id.date', '<=', options['date']['date_to']),
-        ]
+        domain += self._get_domain_fully_inside_period(options)
         if filter_already_generated:
             # Avoid regenerating already generated deferrals
             domain += [
@@ -329,6 +334,7 @@ class AccountDeferredReportHandler(models.AbstractModel):
                     ('date', '>=', column_date_from),
                     ('date', '<=', column_date_to),
                 ]
+        domain += self._get_domain_fully_inside_period(options)
 
         return {
             'type': 'ir.actions.act_window',
