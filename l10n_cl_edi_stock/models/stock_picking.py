@@ -4,13 +4,12 @@ import io
 import logging
 import re
 
-import psycopg2.errors
 from lxml import etree
 from markupsafe import Markup
 
 from odoo import models, fields, _
 from odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util import UnexpectedXMLResponse
-from odoo.exceptions import UserError
+from odoo.exceptions import LockError, UserError
 from odoo.tools import float_repr, html_escape
 
 _logger = logging.getLogger(__name__)
@@ -523,9 +522,8 @@ class StockPicking(models.Model):
         Send the DTE to the SII. It will be
         """
         try:
-            with self.env.cr.savepoint(flush=False):
-                self.env.cr.execute(f'SELECT 1 FROM {self._table} WHERE id IN %s FOR UPDATE NOWAIT', [tuple(self.ids)])
-        except psycopg2.errors.LockNotAvailable:
+            self.lock_for_update()
+        except LockError:
             if not self.env.context.get('cron_skip_connection_errs'):
                 raise UserError(_('This electronic document is being processed already.')) from None
             return

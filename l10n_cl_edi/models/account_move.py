@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import base64
 import logging
@@ -8,7 +7,6 @@ from collections import namedtuple
 from datetime import datetime
 from io import BytesIO
 
-import psycopg2.errors
 from lxml import etree
 from markupsafe import Markup
 from psycopg2 import OperationalError
@@ -16,7 +14,7 @@ from psycopg2 import OperationalError
 
 from odoo import fields, models
 from odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util import UnexpectedXMLResponse, InvalidToken
-from odoo.exceptions import UserError
+from odoo.exceptions import LockError, UserError
 from odoo.tools import _, LazyTranslate
 from odoo.tools.float_utils import float_repr
 
@@ -226,9 +224,8 @@ services reception has been received as well.
 
     def _l10n_cl_send_dte_to_sii_ticket(self):
         try:
-            with self.env.cr.savepoint(flush=False):
-                self.env.cr.execute(f'SELECT 1 FROM {self._table} WHERE id IN %s FOR UPDATE NOWAIT', [tuple(self.ids)])
-        except psycopg2.errors.LockNotAvailable:
+            self.lock_for_update()
+        except LockError:
             if not self.env.context.get('cron_skip_connection_errs'):
                 raise UserError(_('This electronic document is being processed already.')) from None
             return
@@ -262,9 +259,8 @@ services reception has been received as well.
         Send the DTE to the SII.
         """
         try:
-            with self.env.cr.savepoint(flush=False):
-                self.env.cr.execute('SELECT * FROM account_move WHERE id IN %s FOR UPDATE NOWAIT', [tuple(self.ids)])
-        except psycopg2.errors.LockFileExists:
+            self.lock_for_update()
+        except LockError:
             if not self.env.context.get('cron_skip_connection_errs'):
                 raise UserError(_('This invoice is being processed already.')) from None
             return

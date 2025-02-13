@@ -4,11 +4,9 @@ from markupsafe import escape, Markup
 from base64 import b64encode, b64decode
 from pytz import timezone
 from time import sleep
-import psycopg2
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
-from odoo.tools import SQL
+from odoo.exceptions import LockError, UserError
 
 
 class StockPicking(models.Model):
@@ -231,13 +229,8 @@ class StockPicking(models.Model):
 
         """
         try:
-            with self.env.cr.savepoint(flush=False):
-                self.env.cr.execute(SQL(
-                    'SELECT 1 FROM %s WHERE id IN %s FOR UPDATE NOWAIT',
-                    SQL.identifier(self._table),
-                    tuple(self.ids),
-                ))
-        except psycopg2.errors.LockNotAvailable:
+            self.lock_for_update()
+        except LockError:
             if not self.env.context.get('cron_skip_connection_errs'):
                 raise UserError(_('Some of these electronic documents are already being processed.')) from None
             return
@@ -406,13 +399,8 @@ class StockPicking(models.Model):
         Send the delivery guide for the stock picking records that are pending to be cancelled.
         '''
         try:
-            with self.env.cr.savepoint(flush=False):
-                self.env.cr.execute(SQL(
-                    'SELECT 1 FROM %s WHERE id IN %s FOR UPDATE NOWAIT',
-                    SQL.identifier(self._table),
-                    tuple(self.ids),
-                ))
-        except psycopg2.errors.LockNotAvailable:
+            self.lock_for_update()
+        except LockError:
             if not self.env.context.get('cron_skip_connection_errs'):
                 raise UserError(_('Some of these electronic documents are already being processed.')) from None
             return
