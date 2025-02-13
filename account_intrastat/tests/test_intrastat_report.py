@@ -1291,3 +1291,40 @@ class TestIntrastatReport(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_reverse_move_default_intrastat_code(self):
+        """
+        Test that if default values are set for "Default invoice transaction code" and "Default refund transaction code"
+        When a move is reversed, the code is correctly set
+        """
+        self.env.company.intrastat_default_invoice_transaction_code_id = self.intrastat_codes['commodity']
+        self.env.company.intrastat_default_refund_transaction_code_id = self.intrastat_codes['transaction']
+        invoice_to_be_refund = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2022-01-15',
+            'intrastat_country_id': self.env.ref('base.be').id,
+            'invoice_line_ids': [
+                Command.create({
+                    'product_id': self.spanish_rioja.id,
+                    'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                    'quantity': 1.0,
+                    'account_id': self.company_data['default_account_revenue'].id,
+                    'price_unit': 100.0,
+                }),
+            ],
+        })
+        invoice_to_be_refund.action_post()
+        self.assertEqual(invoice_to_be_refund.line_ids.intrastat_transaction_id, self.intrastat_codes['commodity'])
+
+        credit_note_wizard = self.env['account.move.reversal'].with_context({
+            'active_ids': invoice_to_be_refund.ids,
+            'active_id': invoice_to_be_refund.id,
+            'active_model': 'account.move',
+        }).create({
+            'reason': 'reason test create',
+            'journal_id': invoice_to_be_refund.journal_id.id,
+        })
+        action = credit_note_wizard.reverse_moves()
+        credit_note = self.env['account.move'].browse(action['res_id'])
+        self.assertEqual(credit_note.line_ids.intrastat_transaction_id, self.intrastat_codes['transaction'])

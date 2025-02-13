@@ -74,3 +74,12 @@ class AccountMoveLine(models.Model):
         protected_fields = super()._get_lock_date_protected_fields()
         protected_fields['fiscal'] += ['intrastat_product_origin_country_id', 'intrastat_transaction_id']
         return protected_fields
+
+    def copy_data(self, default=None):
+        data_list = super().copy_data(default=default)
+        # Needs to be recomputed
+        for line, values in zip(self, data_list):
+            if line.move_id.intrastat_country_id:
+                values.pop('intrastat_transaction_id', None)
+        return data_list
+
