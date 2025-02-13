@@ -222,6 +222,9 @@
                 <t t-call="website_sale_subscription.pricing_table"/>
             </t>
         </div>
+    </template>
+
+    <template id="product_template_message_add_to_cart" inherit_id="website_sale.cta_wrapper">
         <a id="add_to_cart" position="attributes">
             <attribute name="t-att-data-subscription-plan-id">
                 combination_info['subscription_default_pricing_plan_id'] if combination_info.get('is_subscription') and combination_info['pricings'] else ''

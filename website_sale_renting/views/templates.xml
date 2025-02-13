@@ -32,7 +32,7 @@
         <div name="product_price" position="after">
             <div
                 t-if="combination_info.get('is_rental') and not combination_info['prevent_zero_price_sale']"
-                class="d-inline-block mt-2 mb-3"
+                class="d-inline-block mt-2"
             >
                 <div class="h3">
                     <span
@@ -40,7 +40,7 @@
                         t-out="combination_info['current_rental_price']"
                         t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
                     />
-                    <span class="o_renting_details d-inline-block fs-5 text-muted">
+                    <span class="o_renting_details d-inline-block fs-6 fw-normal text-muted">
                         <span>/</span>
                         <span
                             class="o_renting_duration"
@@ -89,9 +89,9 @@
         <xpath expr="//t[@t-set='combination_info']" position="attributes">
             <attribute name="t-value">product.with_context(start_date=start_date, end_date=end_date)._get_combination_info()</attribute>
         </xpath>
-        <xpath expr="//div[hasclass('js_main_product')]//t[@name='variant_info']" position="after">
+        <xpath expr="//div[@id='product_details']//t[@name='variant_info']" position="after">
             <div t-if="combination_info.get('is_rental') and (not website.prevent_zero_price_sale or combination_info['current_rental_price'])">
-                <div class="mb-3 align-middle input-group-lg o_website_sale_daterange_picker variant_attribute">
+                <div class="my-3 align-middle input-group-lg o_website_sale_daterange_picker variant_attribute">
                     <t
                         t-set="periodIsSet"
                         t-value="request.cart.has_rented_products and request.cart.order_line.filtered('is_rental').product_id != product"
@@ -106,7 +106,7 @@
                     <input type="hidden" name="default_start_date" t-att-value="combination_info['default_start_date']"/>
                     <input type="hidden" name="default_end_date" t-att-value="combination_info['default_end_date']"/>
                     <input type="hidden" name="rental_duration_unit" t-att-value="combination_info['rental_duration_unit']"/>
-                    <strong class="attribute_name">
+                    <h6 class="attribute_name">
                         <span>Rental Period</span>
                         <span
                             t-if="not website._is_customer_in_the_same_timezone()"
@@ -120,7 +120,7 @@
                             t-att-title="disclaimer"
                             role="tooltip"
                         />
-                    </strong>
+                    </h6>
                     <div class="oe_unremovable w-100 o_not_editable">
                         <div class="s_website_form_datetime date o_daterange_picker">
                             <div t-attf-class="d-flex gap-2 align-items-center flex-column flex-md-row #{current_image_cols == 8 and 'flex-lg-column'} #{(current_image_cols == 0 or current_image_cols == 12) and 'd-lg-inline-flex'}">

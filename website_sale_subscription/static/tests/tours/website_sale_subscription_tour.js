@@ -23,7 +23,7 @@ registry.category("web_tour.tours").add('shop_buy_subscription_product', {
         },
         {
             content: "Add one quantity",
-            trigger: '.css_quantity a.js_add_cart_json i.fa-plus',
+            trigger: '.css_quantity a.js_add_cart_json i.oi-plus',
             run: "click",
         },
         {
