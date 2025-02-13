@@ -43,9 +43,10 @@
         <field name="name">appointment.invite.view.form</field>
         <field name="model">appointment.invite</field>
         <field name="arch" type="xml">
-            <form string="Link Generator" create="false">
+            <form string="Link Generator" create="false" js_class="appointment_invite_view_form">
                 <field name="short_code_format_warning" invisible="1"/>
                 <field name="short_code_unique_warning" invisible="1"/>
+                <field name="has_identical_config" invisible="1"/>
                 <field name="schedule_based_on" invisible="1"/>
                 <div class="alert alert-warning" role="alert"
                     invisible="not short_code_format_warning">

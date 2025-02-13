@@ -25,18 +25,24 @@ export class AppointmentInviteCopyClose extends Component {
         if (this.props.readonly) {
             return;
         }
-        if (await this.props.record.save()) {
-            const bookUrl = this.props.record.data.book_url;
-            setTimeout(async () => {
-                await browser.navigator.clipboard.writeText(bookUrl);
-                this.notification.add(
-                    _t("Link copied to clipboard!"),
-                    { type: "success" }
-                );
-                this.env.dialogData.close();
-                this.env.model.action.loadState();
-            });
+
+        if (!this.props.record.data.has_identical_config) {
+            const recordSaved = await this.props.record.save();
+            if (!recordSaved) {
+                return;
+            }
         }
+
+        const bookUrl = this.props.record.data.book_url;
+        setTimeout(async () => {
+            await browser.navigator.clipboard.writeText(bookUrl);
+            this.notification.add(
+                _t("Link copied to clipboard!"),
+                { type: "success" }
+            );
+            this.env.dialogData.close();
+            this.env.model.action.loadState();
+        });
     }
 }
 

@@ -24,6 +24,8 @@ class AppointmentInvite(models.Model):
     short_code_format_warning = fields.Boolean('Short Code Format Warning', compute="_compute_short_code_warning")
     short_code_unique_warning = fields.Boolean('Short Code Unique Warning', compute="_compute_short_code_warning")
     disable_save_button = fields.Boolean('Computes if alert is present', compute='_compute_disable_save_button')
+    has_identical_config = fields.Boolean("Has Identical Config",
+                                          help="Interface field to try to prevent creating identical links")
 
     base_book_url = fields.Char('Base Link URL', compute="_compute_base_book_url")
     book_url = fields.Char('Link URL', compute='_compute_book_url')
@@ -144,11 +146,11 @@ class AppointmentInvite(models.Model):
         for invite in self:
             invite.calendar_event_count = mapped_data.get(invite.id, 0)
 
-    @api.depends('short_code')
+    @api.depends('short_code', 'has_identical_config')
     def _compute_short_code_warning(self):
         for invite in self:
             invite.short_code_format_warning = not bool(re.match(SHORT_CODE_PATTERN, invite.short_code)) if invite.short_code else False
-            invite.short_code_unique_warning = bool(self.env['appointment.invite'].search_count([
+            invite.short_code_unique_warning = not invite.has_identical_config and bool(self.env['appointment.invite'].search_count([
                 ('id', '!=', invite._origin.id), ('short_code', '=', invite.short_code)]))
 
     @api.depends('appointment_type_ids')
@@ -216,6 +218,14 @@ class AppointmentInvite(models.Model):
                 base_redirect_url,
                 url_encode(invite._get_redirect_url_parameters()),
             )
+
+    @api.onchange('appointment_type_ids', 'resources_choice', 'resource_ids', 'staff_user_ids')
+    def _onchange_configuration(self):
+        """ If the end user changes anything to the configuration, we generate a new code
+         instead of trying to re-use a configuration (as it's not identical anymore). """
+        if self.has_identical_config:
+            self.has_identical_config = False
+            self.short_code = secrets.token_hex(4)
 
     @api.model
     def _get_invitation_url_parameters(self):
