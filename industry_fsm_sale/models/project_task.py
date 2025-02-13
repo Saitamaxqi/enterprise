@@ -42,6 +42,7 @@ class ProjectTask(models.Model):
     invoice_count = fields.Integer("Number of invoices", related='sale_order_id.invoice_count')
     pricelist_id = fields.Many2one('product.pricelist', compute="_compute_pricelist_id", export_string_translation=False)
     under_warranty = fields.Boolean('Under Warranty',
+        copy=False,
         help='If ticked, the time and materials used for this task will not be billed to the customer. '
             'However, the inventory of consumed materials will still be updated.')
 
