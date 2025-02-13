@@ -324,7 +324,10 @@ class AccountMove(models.Model):
                     deferral_move.unlink()
 
             deferred_moves = move_fully_deferred + deferral_moves
-            if len(deferral_moves) == 1 and move_fully_deferred.date.month == deferral_moves.date.month:
+            if (
+                len(deferral_moves) == 1
+                and move_fully_deferred.date.replace(day=1) == deferral_moves.date.replace(day=1)
+            ):
                 # If, after calculation, we have 2 deferral entries in the same month, it means that
                 # they simply cancel out each other, so there is no point in creating them.
                 deferred_moves.unlink()

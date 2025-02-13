@@ -328,10 +328,13 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
         If we have an invoice with a start date in the beginning of the month, and an end date in the end of the month,
         we should not create the deferred entries because the original invoice will be totally deferred
         on the last day of the month, but the full amount will be accounted for on the same day too, thus
-        cancelling each other. Therefore we should not create the deferred entries.
+        cancelling each other. Therefore we should not create the deferred entries. This is only the case
+        if the invoice date is also inside the deferred period.
         """
         move = self.create_invoice('in_invoice', [(self.expense_accounts[0], 1680, '2023-01-01', '2023-01-31')], date='2023-01-01')
         self.assertEqual(len(move.deferred_move_ids), 0)
+        move = self.create_invoice('in_invoice', [(self.expense_accounts[0], 1680, '2023-01-01', '2023-01-31')], date='2022-01-01')
+        self.assertEqual(len(move.deferred_move_ids), 2)
 
     def test_deferred_expense_single_period_entries(self):
         """
