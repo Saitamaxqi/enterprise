@@ -26,8 +26,7 @@
             'pos_restaurant_appointment/static/src/**/*',
             'appointment/static/src/components/appointment_booking_action_helper/*',
             'appointment/static/src/views/gantt/**/*',
-            'calendar/static/src/views/widgets/**/*',
-            'calendar/static/src/views/calendar_form/**/*',
+            'calendar/static/src/views/**/*',
             ('remove', 'web_gantt/static/src/**/*.dark.scss'),
         ],
         'point_of_sale.assets_prod_dark': [
