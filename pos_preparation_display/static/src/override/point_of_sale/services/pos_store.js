@@ -17,22 +17,30 @@ patch(PosStore.prototype, {
                     n.qty = line?.getQuantity();
                 }
             }
-
             try {
-                await this.syncAllOrders({
-                    orders: [o],
-                    context: {
-                        preparation: {
-                            process_order_options: {
-                                general_customer_note: o.general_note || "",
-                                note_history: o.uiState.noteHistory,
-                                cancelled: opts.cancelled,
-                                fired_course_id: opts.firedCourseId,
+                const process_order_options = {
+                    general_customer_note: o.general_customer_note || "",
+                    note_history: o.uiState.noteHistory,
+                    cancelled: opts.cancelled,
+                    fired_course_id: opts.firedCourseId,
+                };
+
+                if (opts.cancelled) {
+                    await this.data.call("pos_preparation_display.order", "process_order", [
+                        o.id,
+                        process_order_options,
+                    ]);
+                } else {
+                    await this.syncAllOrders({
+                        orders: [o],
+                        context: {
+                            preparation: {
+                                process_order_options,
                             },
                         },
-                    },
-                });
-                o.updateSavedQuantity();
+                    });
+                    o.updateSavedQuantity();
+                }
             } catch (error) {
                 console.warn(error);
 
