@@ -14,6 +14,7 @@ from . import documents_tag
 # orm
 from . import ir_attachment
 from . import ir_binary
+from . import ir_http
 
 # inherit
 from . import ir_actions_server
