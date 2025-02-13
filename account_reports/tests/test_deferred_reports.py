@@ -1750,9 +1750,9 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
             self.get_audited_line_to_assert('2023-01-01',     1),   # Original line 2
         # However the reversal of line 1 should appear so that it can cancel out with the deferrals created for Jan & Feb 23
             self.get_audited_line_to_assert('2023-01-01',   -10),   # Reversal Original line 1
+            self.get_audited_line_to_assert('2023-01-01',    -1),   # Cancel out original line 2
             self.get_audited_line_to_assert('2023-01-31',     5),   # Jan 23 for line 1
             self.get_audited_line_to_assert('2023-02-28',     5),   # Feb 23 for line 1
-            self.get_audited_line_to_assert('2023-01-01',    -1),   # Cancel out original line 2
             self.get_audited_line_to_assert('2023-01-31',     0.2),  # Jan 23 for line 2
             self.get_audited_line_to_assert('2023-02-28',     0.2),  # Feb 23 for line 2
         ])
