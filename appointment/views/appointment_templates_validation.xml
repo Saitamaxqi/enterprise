@@ -84,21 +84,20 @@
                                     <t t-out="event.duration" t-options="{'widget': 'duration', 'unit': 'hour', 'round': 'minute'}"/>
                                 </div>
                             </div>
-                            <div t-if="not based_on_users and (
-                                    (len(resources) > 1 and
-                                        (appointment_type.assign_method != 'time_auto_assign' or
-                                         appointment_type.avatars_display == 'show'))
-                                    or
-                                    (len(resources) == 1 and
-                                        appointment_type.assign_method != 'time_auto_assign' and
-                                        appointment_type.avatars_display == 'hide' and
-                                        is_html_empty(resources[0].description))
+                            <div t-if="(appointment_type.assign_method != 'time_auto_assign' or appointment_type.avatars_display == 'show') and
+                                (appointment_type.resource_manage_capacity or
+                                    (len(resources) == 1 and appointment_type.avatars_display == 'hide' and is_html_empty(resources[0].description))
                                 )" class="row mb-4">
                                 <div class="col-3">
                                     <span class="text-muted">Resources</span>
                                 </div>
                                 <div class="col-9 col-lg-6">
-                                    <div t-foreach="event.appointment_resource_ids" t-as="resource">
+                                    <div t-foreach="event.appointment_resource_ids" t-as="resource" class="d-flex flex-nowrap gap-2 align-items-center mb-1">
+                                        <div t-if="appointment_type.avatars_display == 'show'"
+                                            class="o_appointment_avatar_container o_appointment_avatar_multi_resource ratio ratio-1x1">
+                                            <div t-attf-style="background-image: url('/appointment/#{appointment_type.id}/resource_avatar?resource_id=#{resource.id}');"
+                                                class="o_appointment_avatar_background rounded-circle"/>
+                                        </div>
                                         <t t-out="resource.name"/>
                                     </div>
                                 </div>
@@ -205,7 +204,8 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-4 px-md-4">
-                            <t t-call="appointment.appointment_validated_card"/>
+                            <t t-if="appointment_type.assign_method != 'time_auto_assign' or appointment_type.avatars_display == 'show'"
+                                t-call="appointment.appointment_validated_card"/>
                         </div>
                     </div>
                 </div>
@@ -238,10 +238,8 @@
                 </main>
             </article>
         </div>
-        <div t-elif="len(resources) == 1 and (
-            appointment_type.avatars_display == 'show' or
-            (not is_html_empty(resources[0].description) and appointment_type.assign_method != 'time_auto_assign')
-        )">
+        <div t-elif="not appointment_type.resource_manage_capacity and
+            len(resources) == 1 and (appointment_type.avatars_display == 'show' or not is_html_empty(resources[0].description))">
             <t t-set="resource" t-value="resources[0]"/>
             <article class="card o_appointment_user_short_card card border-0" itemscope="itemscope">
                 <header t-if="appointment_type.avatars_display == 'show'" class="bg-secondary rounded o_appointment_avatar_container ratio ratio-4x3">
