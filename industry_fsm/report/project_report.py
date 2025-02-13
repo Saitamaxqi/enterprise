@@ -29,12 +29,12 @@ class ReportProjectTaskUserFsm(models.Model):
 
     def _group_by(self):
         return super()._group_by() + """ ,
-            partner_zip,
-            partner_city,
-            partner_street,
-            partner_street2,
-            partner_country_id,
-            partner_state_id
+            rp.zip,
+            rp.city,
+            rp.street,
+            rp.street2,
+            rp.country_id,
+            rp.state_id
         """
 
     def _from(self):
