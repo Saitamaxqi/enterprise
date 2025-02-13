@@ -5,16 +5,11 @@ patch(BomOverviewComponent.prototype, {
     setup() {
         super.setup();
         this.state.showOptions.ecos = false;
-        this.state.showOptions.ecoAllowed = false;
     },
 
     async getBomData() {
         const bomData = await super.getBomData();
-        this.state.showOptions.ecoAllowed = bomData['is_eco_applied'];
+        this.state.showOptions.ecos = bomData['has_ecos'];
         return bomData;
     },
-
-    getReportName(printAll) {
-        return super.getReportName(...arguments) + "&show_ecos=" + (this.state.showOptions.ecoAllowed && this.state.showOptions.ecos);
-    }
 });
