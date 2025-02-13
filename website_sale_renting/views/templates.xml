@@ -472,14 +472,4 @@
             <attribute name="class" add="accordion-collapse collapse show" separator=" "/>
         </xpath>
     </template>
-
-    <template id="website_sale_renting_period" inherit_id="website_sale.products_attributes">
-        <xpath
-            expr="//form[hasclass('js_attributes')]//div[hasclass('accordion-item')]"
-            position="before"
-        >
-            <input type="hidden" id="start_date" name="start_date" t-att-value="start_date"/>
-            <input type="hidden" id="end_date" name="end_date" t-att-value="end_date"/>
-        </xpath>
-    </template>
 </odoo>

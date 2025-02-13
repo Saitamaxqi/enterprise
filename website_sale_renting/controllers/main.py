@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from werkzeug import urls
+
 from odoo import fields
 from odoo.http import request, route
 
@@ -17,16 +19,8 @@ class WebsiteSaleRenting(WebsiteSale):
         })
         return options
 
-    def _shop_get_query_url_kwargs(self, category, search, min_price, max_price, **post):
-        result = super()._shop_get_query_url_kwargs(category, search, min_price, max_price, **post)
-        result.update(
-            start_date=post.get('start_date'),
-            end_date=post.get('end_date'),
-        )
-        return result
-
-    def _product_get_query_url_kwargs(self, category, search, **kwargs):
-        result = super()._product_get_query_url_kwargs(category, search, **kwargs)
+    def _shop_get_query_url_kwargs(self, search, min_price, max_price, **kwargs):
+        result = super()._shop_get_query_url_kwargs(search, min_price, max_price, **kwargs)
         result.update(
             start_date=kwargs.get('start_date'),
             end_date=kwargs.get('end_date'),
@@ -59,18 +53,27 @@ class WebsiteSaleRenting(WebsiteSale):
             'website_tz': request.website.tz,
         }
 
-    def _prepare_product_values(self, product, category, search, start_date=None, end_date=None, **kwargs):
-        result = super()._prepare_product_values(product, category, search, **kwargs)
+    def _prepare_product_values(self, product, category, start_date=None, end_date=None, **kwargs):
+        result = super()._prepare_product_values(
+            product, category, start_date=start_date, end_date=end_date, **kwargs
+        )
         result.update(
             start_date=fields.Datetime.to_datetime(start_date),
             end_date=fields.Datetime.to_datetime(end_date),
         )
         return result
 
-    def _get_additional_extra_shop_values(self, values, **post):
-        vals = super()._get_additional_extra_shop_values(values, **post)
-        vals.update({
-            'start_date': post.get('start_date'),
-            'end_date': post.get('end_date'),
-        })
+    def _get_additional_shop_values(self, values, start_date=None, end_date=None, **kwargs):
+        vals = super()._get_additional_shop_values(
+            values, start_date=start_date, end_date=end_date, **kwargs
+        )
+        vals.update({'start_date': start_date, 'end_date': end_date})
         return vals
+
+    def _get_product_query_string(self, start_date=None, end_date=None, **kwargs):
+        query = urls.url_parse(
+            super()._get_product_query_string(start_date=start_date, end_date=end_date, **kwargs)
+        ).decode_query()
+        query['start_date'] = start_date
+        query['end_date'] = end_date
+        return urls.url_encode(query)

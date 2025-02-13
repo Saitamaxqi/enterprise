@@ -8,9 +8,11 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale
 
 class WebsiteSaleStockRenting(WebsiteSale):
 
-    def _shop_lookup_products(self, attrib_set, options, post, search, website):
+    def _shop_lookup_products(self, options, post, search, website):
         # Override to add rental stock search on /shop
-        fuzzy_search_term, product_count, search_result = super()._shop_lookup_products(attrib_set, options, post, search, website)
+        fuzzy_search_term, product_count, search_result = super()._shop_lookup_products(
+            options, post, search, website
+        )
         if options.get('from_date') and options.get('to_date'):
             try:
                 search_result = search_result.sudo()._filter_on_available_rental_products(
