@@ -3,7 +3,6 @@ import math
 
 from odoo import fields, models, _
 from odoo.exceptions import ValidationError, UserError
-from odoo.tools import format_list
 
 
 class HrPayrollPaymentReportWizard(models.TransientModel):
@@ -241,14 +240,12 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
             filtered_payslips = self.payslip_ids.filtered(lambda p: p.state == "done" and p.net_wage > 0)
             employees = filtered_payslips.employee_id.filtered(lambda e: not e.work_contact_id)
             if employees:
-                raise UserError(_(
-                    "Some employees (%s) don't have a work contact.",
-                    format_list(self.env, employees.mapped('name'))))
+                raise UserError(_("Some employees (%s) don't have a work contact.", employees.mapped('name')))
             employees = filtered_payslips.employee_id.filtered(lambda e: e.work_contact_id and not e.work_contact_id.name)
             if employees:
                 raise UserError(_(
                     "Some employees (%s) don't have a valid name on the work contact.",
-                    format_list(self.env, employees.mapped('name'))))
+                    employees.mapped('name')))
             self._validate_journal_for_nacha()
 
     def generate_payment_report(self):

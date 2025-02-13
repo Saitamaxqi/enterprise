@@ -4,7 +4,6 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _, Command
 from odoo.exceptions import UserError
-from odoo.tools import format_list
 
 
 class SignSendRequest(models.TransientModel):
@@ -161,7 +160,7 @@ class SignSendRequest(models.TransientModel):
             self.is_user_signer = False
 
     def _activity_done(self):
-        signatories = self.signer_id.name or format_list(self.env, self.signer_ids.partner_id.mapped('name'))
+        signatories = self.signer_id.name or self.signer_ids.partner_id.mapped('name')
         feedback = _('Signature requested for template: %(template)s\nSignatories: %(signatories)s', template=self.template_id.name, signatories=signatories)
         self.activity_id._action_done(feedback=feedback)
 

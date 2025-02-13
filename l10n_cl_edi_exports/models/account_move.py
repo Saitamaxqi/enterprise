@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import fields, models, _
 from odoo.exceptions import UserError
-from odoo.tools import float_round, format_list
+from odoo.tools import float_round
 
 
 class AccountMove(models.Model):

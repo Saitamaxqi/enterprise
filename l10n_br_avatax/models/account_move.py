@@ -1,6 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import models, api, fields, _
-from odoo.tools import format_list
 
 
 class AccountMove(models.Model):
@@ -57,8 +56,8 @@ class AccountMove(models.Model):
             res["invoice_products_missing_fields_warning"] = {
                 "message": _(
                     "To avoid tax miscalculations make sure to set up %(fields)s on the following:\n%(products)s",
-                    fields=format_list(self.env, [field._description_string(self.env) for field in fields]),
-                    products=format_list(self.env, incomplete_products.mapped("display_name")),
+                    fields=[field._description_string(self.env) for field in fields],
+                    products=incomplete_products.mapped("display_name"),
                 ),
                 "action_text": _("View products"),
                 "action": incomplete_products._l10n_br_avatax_action_missing_fields(self.l10n_br_is_service_transaction),
@@ -76,7 +75,7 @@ class AccountMove(models.Model):
             res["missing_partner_fields_warning"] = {
                 "message": _(
                     "To avoid tax miscalculations make sure to set up %(fields)s on %(partner_name)s.",
-                    fields=format_list(self.env, [field._description_string(self.env) for field in missing_fields]),
+                    fields=[field._description_string(self.env) for field in missing_fields],
                     partner_name=self.partner_id.display_name
                 ),
                 "action_text": _("View customer"),

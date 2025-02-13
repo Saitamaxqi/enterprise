@@ -5,7 +5,6 @@ from io import StringIO
 
 from odoo import fields, models, _
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import format_list
 from odoo.tools.misc import format_date
 
 
@@ -77,15 +76,13 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         employees = payslips.employee_id
         no_bank_employee_ids = employees.filtered(lambda e: not e.bank_account_id)
         if no_bank_employee_ids:
-            raise UserError(_(
-                "Some employees (%s) don't have a bank account.",
-                format_list(self.env, no_bank_employee_ids.mapped('name'))))
+            raise UserError(_("Some employees (%s) don't have a bank account.", no_bank_employee_ids.mapped('name')))
 
         untrusted_banks_employee_ids = employees.filtered(lambda e: not e.bank_account_id.allow_out_payment)
         if untrusted_banks_employee_ids:
             raise UserError(_(
                 "Untrusted bank account for the following employees:\n%s",
-                format_list(self.env, untrusted_banks_employee_ids.mapped('name'))))
+                untrusted_banks_employee_ids.mapped('name')))
 
     def generate_payment_report(self):
         """

@@ -7,7 +7,7 @@ from werkzeug.urls import url_join, url_quote
 from markupsafe import Markup
 
 from odoo import _, api, fields, models, Command
-from odoo.tools import format_list, get_lang, is_html_empty, format_date
+from odoo.tools import get_lang, is_html_empty, format_date
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.pdf.signature import PdfSigner
 
@@ -504,7 +504,7 @@ class SignRequest(models.Model):
         if cc_partners_valid:
             body = _(
                 "The mail has been sent to contacts in copy: %(contacts)s",
-                contacts=format_list(self.env, cc_partners_valid.mapped("name")),
+                contacts=cc_partners_valid.mapped("name"),
             )
             if not is_html_empty(self.message_cc):
                 body += self.message_cc

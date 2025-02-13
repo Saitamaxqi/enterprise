@@ -371,7 +371,7 @@ class ProjectTask(models.Model):
             depends_on_names = depends_on_names_for_id.get(task.id)
             task.dependency_warning = depends_on_names and _(
                 'This task cannot be planned before the following tasks on which it depends: %(task_list)s',
-                task_list=format_list(self.env, depends_on_names)
+                task_list=depends_on_names,
             )
 
     @api.model

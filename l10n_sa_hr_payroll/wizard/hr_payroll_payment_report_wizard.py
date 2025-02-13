@@ -1,6 +1,5 @@
 from odoo import fields, models, _
 from odoo.exceptions import UserError
-from odoo.tools import format_list
 import base64
 import csv
 import io
@@ -54,7 +53,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
             if invalid_banks_employee_ids:
                 raise UserError(_(
                     "Missing SARIE code for the bank account for the following employees:\n%s",
-                    format_list(self.env, invalid_banks_employee_ids.mapped('name'))))
+                    invalid_banks_employee_ids.mapped('name')))
             company_bank_account = company.l10n_sa_bank_account_id
             if not company_bank_account:
                 raise UserError(_("Please set the establishment's bank account in the settings"))

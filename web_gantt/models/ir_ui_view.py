@@ -2,7 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models, _
-from odoo.tools import format_list
 from lxml import etree
 
 GANTT_VALID_ATTRIBUTES = set([
@@ -102,8 +101,8 @@ class IrUiView(models.Model):
         if remaining:
             msg = _(
                 "Invalid attributes (%(invalid_attributes)s) in gantt view. Attributes must be in (%(valid_attributes)s)",
-                invalid_attributes=format_list(self.env, remaining),
-                valid_attributes=format_list(self.env, GANTT_VALID_ATTRIBUTES),
+                invalid_attributes=remaining,
+                valid_attributes=GANTT_VALID_ATTRIBUTES,
             )
             self._raise_view_error(msg, node)
 

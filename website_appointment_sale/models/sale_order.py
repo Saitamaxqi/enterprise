@@ -2,7 +2,6 @@
 
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import format_list
 
 
 class SaleOrder(models.Model):
@@ -50,7 +49,7 @@ class SaleOrder(models.Model):
                 _(
                     "The following bookings are not available anymore during the selected period"
                     " and your cart must be updated. We are sorry for the inconvenience.\n\n%(bookings)s",
-                    bookings=format_list(self.env, [booking._get_description() for booking in unavailable_bookings]),
+                    bookings=[booking._get_description() for booking in unavailable_bookings],
                 ),
             )
         return super()._check_cart_is_ready_to_be_paid()

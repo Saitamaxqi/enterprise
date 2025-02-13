@@ -8,7 +8,7 @@ from odoo import models, fields, _, api
 from odoo.addons.iap.tools.iap_tools import iap_jsonrpc
 from odoo.addons.l10n_br_avatax.models.product_template import USE_TYPE_SELECTION
 from odoo.exceptions import UserError, ValidationError, RedirectWarning
-from odoo.tools import format_list, partition
+from odoo.tools import partition
 from odoo.tools.float_utils import float_round, json_float_round
 
 logger = logging.getLogger(__name__)
@@ -177,7 +177,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                     "message": _(
                         "%(transaction)s is a goods transaction but has service products:\n%(products)s.",
                         transaction=self.display_name,
-                        products=format_list(self.env, service_products.mapped('display_name')),
+                        products=service_products.mapped('display_name'),
                     ),
                     "action_text": _("View products"),
                     "action": service_products._get_records_action(name=_("View Product(s)")),
@@ -190,7 +190,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                     "message": _(
                         "%(transaction)s is a service transaction but has non-service products:\n%(products)s",
                         transaction=self.display_name,
-                        products=format_list(self.env, consumable_products.mapped('display_name')),
+                        products=consumable_products.mapped('display_name'),
                     ),
                     "action_text": _("View products"),
                     "action": consumable_products._get_records_action(name=_("View Product(s)")),
@@ -212,7 +212,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
             res["products_missing_fields_danger"] = {
                     "message": _(
                         "For Brazilian tax calculation you must set a Mercosul NCM Code on the following:\n%(products)s",
-                        products=format_list(self.env, incomplete_products.mapped("display_name"))
+                        products=incomplete_products.mapped("display_name")
                     ),
                     "action_text": _("View products"),
                     "action": incomplete_products._l10n_br_avatax_action_missing_fields(self.l10n_br_is_service_transaction),

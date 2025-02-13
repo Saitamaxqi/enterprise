@@ -235,7 +235,7 @@ class L10n_AuSuperStream(models.Model):
         if invalid:
             raise UserError(_(
                 "The employee(s) for following payslips do not have 100%% super contribution assigned: %s",
-                format_list(self.env, invalid.mapped("name")),
+                invalid.mapped("name"),
             ))
 
     @api.model

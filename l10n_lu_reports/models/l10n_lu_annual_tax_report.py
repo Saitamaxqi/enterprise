@@ -3,7 +3,7 @@
 from collections import defaultdict
 
 from odoo import _, api, fields, models
-from odoo.tools import float_compare, format_list
+from odoo.tools import float_compare
 
 from ..models.l10n_lu_tax_report_data import MULTI_COLUMN_FIELDS
 
@@ -134,7 +134,7 @@ class L10n_LuAnnualTaxReportHandler(models.AbstractModel):
                     errors.add(
                         _("The field %(field)s must be filled in because one of the dependent fields (%(dependent_fields)s) is filled in.",
                         field=check_field,
-                        dependent_fields=format_list(self.env, [related['field_name'] for related in dependent_fields[check_field]])),
+                        dependent_fields=[related['field_name'] for related in dependent_fields[check_field]]),
                     )
 
         return errors

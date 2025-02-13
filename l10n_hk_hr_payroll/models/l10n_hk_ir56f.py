@@ -9,7 +9,6 @@ from lxml import etree
 
 from odoo import _, models, api
 from odoo.exceptions import UserError
-from odoo.tools import format_list
 
 
 class L10n_HkIr56f(models.Model):
@@ -50,7 +49,7 @@ class L10n_HkIr56f(models.Model):
         if invalid_lines:
             error_messages += "\n" + _(
                 "The following employees don't have a valid departure reason: %s",
-                format_list(self.env, invalid_lines.employee_id.mapped("name")),
+                invalid_lines.employee_id.mapped("name"),
             )
         return error_messages
 

@@ -5,7 +5,6 @@ from urllib.parse import urlencode
 
 from odoo import fields, models, api
 from odoo.exceptions import ValidationError, UserError
-from odoo.tools import format_list
 
 from .envia_request import Envia
 
@@ -283,8 +282,7 @@ class DeliverCarrier(models.Model):
 
             invalid_trackings = envia._cancel_picking(pick)
             if invalid_trackings:
-                order_numbers = format_list(self.env, invalid_trackings)
-                pick.message_post(body=pick.env._("Unable to cancel order: %(order_number)s", order_number=order_numbers))
+                pick.message_post(body=pick.env._("Unable to cancel order: %(order_number)s", order_number=invalid_trackings))
             else:
                 pick.write({
                     "carrier_tracking_ref": '',

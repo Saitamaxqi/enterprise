@@ -7,7 +7,6 @@ from markupsafe import Markup
 
 from odoo import _, api, fields, models, modules
 from odoo.exceptions import AccessError, UserError, ValidationError
-from odoo.tools import format_list
 
 
 class SocialPost(models.Model):
@@ -75,7 +74,7 @@ class SocialPost(models.Model):
             if not (post.account_ids <= post.account_allowed_ids):
                 raise ValidationError(_(
                     'Selected accounts (%(account_list)s) do not match the selected company (%(company)s)',
-                    account_list=format_list(self.env, (post.account_ids - post.account_allowed_ids).mapped('name')),
+                    account_list=(post.account_ids - post.account_allowed_ids).mapped('name'),
                     company=post.company_id.name
                 ))
 

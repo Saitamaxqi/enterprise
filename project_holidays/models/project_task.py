@@ -3,7 +3,6 @@
 from collections import defaultdict
 
 from odoo import _, api, fields, models
-from odoo.tools import format_list
 
 
 class ProjectTask(models.Model):
@@ -85,11 +84,11 @@ class ProjectTask(models.Model):
                                              leaves=self.env['hr.leave'].format_date_range_to_string(leave["leaves"]))
                             else:
                                 warning += _('%(names)s are on time off %(leaves)s. \n',
-                                             names=format_list(self.env, leave["names"]),
+                                             names=leave["names"],
                                              leaves=self.env['hr.leave'].format_date_range_to_string(leave["leaves"]))
                         else:
                             warning += _('%(names)s requested time off %(leaves)s. \n',
-                                         names=format_list(self.env, leave["names"]),
+                                         names=leave["names"],
                                          leaves=self.env['hr.leave'].format_date_range_to_string(leave["leaves"]))
             task.leave_warning = warning or False
             task.is_absent = bool(warning)

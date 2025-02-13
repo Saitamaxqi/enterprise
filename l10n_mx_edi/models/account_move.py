@@ -15,7 +15,7 @@ from odoo.addons.l10n_mx_edi.models.l10n_mx_edi_document import (
     USAGE_SELECTION,
 )
 from odoo.exceptions import ValidationError, UserError
-from odoo.tools import format_list, frozendict
+from odoo.tools import frozendict
 from odoo.tools.float_utils import float_round
 from odoo.tools.sql import column_exists, create_column
 from odoo.addons.base.models.ir_qweb import keep_query
@@ -863,7 +863,7 @@ class AccountMove(models.Model):
                 and x.state in ('invoice_sent', 'payment_sent')
             ))[0]
             return doc.action_cancel()
-        
+
         return super().button_request_cancel()
 
     def _reverse_moves(self, default_values_list=None, cancel=False):

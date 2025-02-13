@@ -11,7 +11,7 @@ from odoo import fields, models, _, api, Command, SUPERUSER_ID, modules
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.float_utils import float_is_zero
 from odoo.osv import expression
-from odoo.tools import config, format_amount, format_list, plaintext2html, split_every, str2bool
+from odoo.tools import config, format_amount, plaintext2html, split_every, str2bool
 from odoo.tools.misc import format_date
 
 _logger = logging.getLogger(__name__)
@@ -1712,8 +1712,8 @@ class SaleOrder(models.Model):
             else:
                 payment_state = _("Payment not recorded")
             error_message = _("Error during renewal of contract %(order_ids)s %(order_refs)s %(payment_state)s",
-                             order_ids=self.ids,
-                             order_refs=format_list(self.env, self.mapped(lambda order: order.client_order_ref or order.name)),
+                             order_ids=str(self.ids),
+                             order_refs=self.mapped(lambda order: order.client_order_ref or order.name),
                              payment_state=payment_state)
             body = self._get_traceback_body(e, error_message)
             _logger.exception(error_message)

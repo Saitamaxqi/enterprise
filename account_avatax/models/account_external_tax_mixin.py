@@ -7,7 +7,7 @@ from odoo import models, api, fields, _
 from odoo.addons.account_avatax.lib.avatax_client import AvataxClient
 from odoo.exceptions import UserError, ValidationError, RedirectWarning
 from odoo.release import version
-from odoo.tools import float_round, format_list
+from odoo.tools import float_round
 
 _logger = logging.getLogger(__name__)
 
@@ -132,7 +132,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                     "- %(partner_name)s (ID: %(partner_id)s) on %(record_list)s",
                     partner_name=partner.display_name,
                     partner_id=partner.id,
-                    record_list=format_list(self.env, [record.display_name for record in records]),
+                    record_list=[record.display_name for record in records],
                 )
                 for partner, records in incomplete_partner_to_records.items()
             ]

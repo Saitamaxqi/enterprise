@@ -9,7 +9,6 @@ from random import randint
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import ValidationError, UserError
 from odoo.addons.base.models.ir_model import MODULE_UNINSTALL_FLAG
-from odoo.tools import format_list
 
 
 class WorksheetTemplate(models.Model):
@@ -68,10 +67,10 @@ class WorksheetTemplate(models.Model):
                     for record in records:
                         if record.company_id not in record.worksheet_template_id.company_id:
                             if update_company_id:
-                                company_name = format_list(self.env, update_company_id.mapped('name'))
+                                company_name = update_company_id.mapped('name')
                                 raise UserError(_("Unfortunately, you cannot unlink this worksheet template from %s because the template is still connected to tasks within the company.", company_name))
                             else:
-                                company_name = format_list(self.env, record.worksheet_template_id.company_id.mapped('name'))
+                                company_name = record.worksheet_template_id.company_id.mapped('name')
                                 raise UserError(_("You can't restrict this worksheet template to '%(selected_company)s' because it's still connected to tasks in '%(tasks_company)s' (and potentially other companies). Please either unlink those tasks from this worksheet template, "
                                                   "move them to a project for the right company, or keep this worksheet template open to all companies.", selected_company=company_name, tasks_company=record.company_id.name))
         return res

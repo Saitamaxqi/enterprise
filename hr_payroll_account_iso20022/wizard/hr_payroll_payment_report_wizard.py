@@ -2,7 +2,6 @@ import base64
 
 from odoo import fields, models, _
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import format_list
 
 
 class HrPayrollPaymentReportWizard(models.TransientModel):
@@ -36,14 +35,12 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         if self.export_format in ['sepa', 'iso20022_ch']:
             employees = self.payslip_ids.employee_id.filtered(lambda e: not e.work_contact_id)
             if employees:
-                raise UserError(_(
-                    "Some employees (%s) don't have a work contact.",
-                    format_list(self.env, employees.mapped('name'))))
+                raise UserError(_("Some employees (%s) don't have a work contact.", employees.mapped('name')))
             employees = self.payslip_ids.employee_id.filtered(lambda e: e.work_contact_id and not e.work_contact_id.name)
             if employees:
                 raise UserError(_(
                     "Some employees (%s) don't have a valid name on the work contact.",
-                    format_list(self.env, employees.mapped('name'))))
+                    employees.mapped('name')))
             if self.journal_id.bank_account_id.acc_type != 'iban':
                 raise UserError(_(
                     "The journal '%s' requires a proper IBAN account to pay via SEPA. "

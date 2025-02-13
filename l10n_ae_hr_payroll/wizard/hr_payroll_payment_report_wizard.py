@@ -1,6 +1,5 @@
 from odoo import fields, models, _
 from odoo.exceptions import UserError
-from odoo.tools import format_list
 import base64
 import csv
 import io
@@ -36,12 +35,12 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
             if invalid_banks_employee_ids:
                 raise UserError(_(
                     "Missing UAE routing code for the bank account for the following employees:\n%s",
-                    format_list(self.env, invalid_banks_employee_ids.mapped('name'))))
+                    invalid_banks_employee_ids.mapped('name')))
             missing_id_employee_ids = employees.filtered(lambda e: not e.identification_id)
             if missing_id_employee_ids:
                 raise UserError(_(
                     "Missing unique Identification No. for the following employees:\n%s",
-                    format_list(self.env, missing_id_employee_ids.mapped('name'))))
+                    missing_id_employee_ids.mapped('name')))
 
             company = self._l10n_ae_get_company_wps(raise_if_multi=True)
             company_bank_account = company.l10n_ae_bank_account_id

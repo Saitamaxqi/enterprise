@@ -3,7 +3,6 @@
 
 from odoo import api, Command, fields, models, _
 from odoo.exceptions import UserError
-from odoo.tools import format_list
 
 
 class HrPayslip(models.Model):
@@ -99,7 +98,7 @@ class HrPayslip(models.Model):
             return {'warning': {
                 'title': _("Warning"),
                 'message': _(
-                    "Failed to reconcile the following payslips with their payments: %s", format_list(self.env, failed_reconciliation))
+                    "Failed to reconcile the following payslips with their payments: %s", failed_reconciliation)
             }}
 
     def _clear_super_stream_lines(self):

@@ -5,7 +5,6 @@ from collections import defaultdict
 
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError
-from odoo.tools import format_list
 
 
 class SaleOrder(models.Model):
@@ -74,7 +73,7 @@ class SaleOrder(models.Model):
                 "You cannot update the company for sales order %(order_name)s as it's linked to shifts in another company.\n"
                 "Please transfer shifts %(slots_names)s to the destination company first.",
                 order_name=order.name,
-                slots_names=format_list(self.env, [slot.display_name for slot in different_company_slots]),
+                slots_names=[slot.display_name for slot in different_company_slots],
             ))
 
     # -----------------------------------------------------------------

@@ -10,7 +10,7 @@ from stdnum.br.cpf import format as format_cpf
 from odoo import models, fields, api, _, Command
 from odoo.addons.iap import InsufficientCreditError
 from odoo.exceptions import UserError
-from odoo.tools import html2plaintext, format_list
+from odoo.tools import html2plaintext
 from odoo.tools.xml_utils import find_xml_value
 
 _logger = logging.getLogger(__name__)
@@ -201,7 +201,7 @@ class AccountMove(models.Model):
                 "partners_missing_fields": {
                     "message": _(
                         "For Brazilian electronic invoicing, contacts must have a complete address, VAT number and identification type:\n%s",
-                        format_list(self.env, partners_missing_fields.mapped('display_name')),
+                        partners_missing_fields.mapped('display_name'),
                     ),
                     "action_text": _("View contacts"),
                     "action": partners_missing_fields._l10n_br_avatax_action_missing_fields(),

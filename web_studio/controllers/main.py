@@ -1568,5 +1568,5 @@ Are you sure you want to remove the selection values of those records?""", len(r
         try:
             get_public_method(model, method_name)
         except (AttributeError, AccessError):
-            raise ValidationError(_('The method %(method)s does not exist on the model %(model)s.', method=method_name, model=model))
+            raise ValidationError(_('The method %(method)s does not exist on the model %(model)s.', method=method_name, model=str(model)))
         return True
