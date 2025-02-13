@@ -19,6 +19,7 @@
         <field name="description_done" type="html">
             <p>Thanks a lot for your time and participation !</p>
         </field>
+        <field name="lang_ids" eval="False"/>
     </record>
     <record model="survey.question" id="appraisal_360_1">
         <field name="title">About you</field>
@@ -190,6 +191,7 @@
         <field name="description" type="html">
             <p>This survey allows you to give a feedback about your collaboration with an employee. Filling it helps us improving the appraisal process.</p>
         </field>
+        <field name="lang_ids" eval="False"/>
     </record>
     <!-- Page 1 -->
     <record model="survey.question" id="appraisal_1">

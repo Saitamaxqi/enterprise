@@ -263,6 +263,7 @@
         <field name="access_mode">token</field>
         <field name="users_can_go_back" eval="True"/>
         <field name="description" type="html"><p> </p></field>
+        <field name="lang_ids" eval="False"/>
     </record>
     <!-- Appraisal survey -->
     <record id="survey_appraisal" model="survey.user_input">
