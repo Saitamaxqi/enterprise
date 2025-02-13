@@ -8,6 +8,7 @@ import {
     AppointmentSlot,
     AppointmentType,
     defineAppointmentModels,
+    FilterPartner,
 } from "./appointment_tests_common";
 
 describe.current.tags("desktop");
@@ -128,7 +129,12 @@ test("create/search anytime appointment type", async () => {
 
 test("discard slot in calendar", async () => {
     expect.assertions(11);
-
+    FilterPartner._records = [{
+        id: 1,
+        user_id: 7,
+        partner_id: 214,
+        partner_checked: true,
+    }];
     onRpc("/appointment/appointment_type/search_create_anytime", () => {
         expect.step("/appointment/appointment_type/search_create_anytime");
     });
@@ -142,10 +148,9 @@ test("discard slot in calendar", async () => {
                         date_start="start"
                         date_stop="stop">
                 <field name="name"/>
-                <field name="partner_ids" write_model="filter.partner" write_field="partner_id"/>
+                <field name="partner_ids" write_model="filter.partner" write_field="partner_id" filter_field="partner_checked"/>
             </calendar>`,
     });
-    await contains(".o_calendar_filter_item[data-value=all] input").click();
     await contains(".o_appointment_select_slots").click();
     await animationFrame();
     expect('.o_appointment_scheduling_box b:contains("Pick your availabilities")').toHaveCount(1);
@@ -178,6 +183,12 @@ test("discard slot in calendar", async () => {
 
 test("cannot move real event in slots-creation mode", async () => {
     expect.assertions(4);
+    FilterPartner._records = [{
+        id: 1,
+        user_id: 7,
+        partner_id: 214,
+        partner_checked: true,
+    }];
     onRpc("write", () => {
         expect.step("write event");
     });
@@ -192,11 +203,10 @@ test("cannot move real event in slots-creation mode", async () => {
                         date_stop="stop">
                 <field name="name"/>
                 <field name="start"/>
-                <field name="partner_ids" write_model="filter.partner" write_field="partner_id"/>
+                <field name="partner_ids" write_model="filter.partner" write_field="partner_id" filter_field="partner_checked"/>
             </calendar>`,
     });
 
-    await contains(".o_calendar_filter_item[data-value=all] input").click();
     await contains(".o_appointment_select_slots").click();
 
     expect('.o_appointment_scheduling_box b:contains("Pick your availabilities")').toHaveCount(1);
@@ -210,7 +220,12 @@ test("cannot move real event in slots-creation mode", async () => {
 
 test("create slots for custom appointment type", async () => {
     expect.assertions(12);
-
+    FilterPartner._records = [{
+        id: 1,
+        user_id: 7,
+        partner_id: 214,
+        partner_checked: true,
+    }];
     patchWithCleanup(navigator, {
         clipboard: {
             writeText: (value) => {
@@ -233,11 +248,10 @@ test("create slots for custom appointment type", async () => {
                             date_start="start"
                             date_stop="stop">
                     <field name="name"/>
-                    <field name="partner_ids" write_model="filter.partner" write_field="partner_id"/>
+                    <field name="partner_ids" write_model="filter.partner" write_field="partner_id" filter_field="partner_checked"/>
                 </calendar>`,
     });
 
-    await contains(".o_calendar_filter_item[data-value=all] input").click();
     await contains(".o_appointment_select_slots").click();
 
     expect('.o_appointment_scheduling_box b:contains("Pick your availabilities")').toHaveCount(1);
@@ -265,7 +279,12 @@ test("create slots for custom appointment type", async () => {
 
 test("filter works in slots-creation mode", async () => {
     expect.assertions(11);
-
+    FilterPartner._records = [{
+        id: 1,
+        user_id: 7,
+        partner_id: 214,
+        partner_checked: true,
+    }];
     await mountView({
         type: "calendar",
         resModel: "calendar.event",
@@ -276,12 +295,11 @@ test("filter works in slots-creation mode", async () => {
                         date_stop="stop"
                         color="partner_id">
                 <field name="name"/>
-                <field name="partner_ids" write_model="filter.partner" write_field="partner_id"/>
+                <field name="partner_ids" write_model="filter.partner" write_field="partner_id" filter_field="partner_checked"/>
                 <field name="partner_id" filters="1" invisible="1"/>
             </calendar>`,
     });
 
-    await contains(".o_calendar_filter_item[data-value=all] input").click();
     // Two events are displayed
     expect(".fc-event").toHaveCount(2);
     expect(".o_calendar_slot").toHaveCount(0);
