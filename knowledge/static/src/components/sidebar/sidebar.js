@@ -8,6 +8,7 @@ import {
     KnowledgeSidebarSharedSection,
     KnowledgeSidebarWorkspaceSection
 } from "./sidebar_section";
+import { localization } from "@web/core/l10n/localization";
 import { user } from "@web/core/user";
 import { throttleForAnimation } from "@web/core/utils/timing";
 import { useNestedSortable } from "@web/core/utils/nested_sortable";
@@ -866,9 +867,10 @@ export class KnowledgeSidebar extends Component {
      * Resize the sidebar horizontally.
      */
     resize() {
+        const isRtl = localization.direction === "rtl";
         const onPointerMove = throttleForAnimation(event => {
             event.preventDefault();
-            this.state.sidebarSize = event.pageX;
+            this.state.sidebarSize = isRtl ? document.documentElement.clientWidth - event.pageX : event.pageX;
         });
         const onPointerUp = () => {
             document.removeEventListener('pointermove', onPointerMove);
