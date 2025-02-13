@@ -369,3 +369,27 @@ class TestLoanManagement(AccountTestInvoicingCommon):
         self.assertEqual(loan.state, 'running')
         self.assertTrue(loan.line_ids.generated_move_ids)
         self.assertEqual(loan.outstanding_balance, 20_000) # = 24_000 - (2_000 * 2 months (June -> July))
+
+
+    @freeze_time('2025-01-01')
+    def test_loan_skip_until_date_2(self):
+        """Test loan closing when skip_until_date field is set"""
+        loan = self.env['account.loan'].create({
+            'name': 'Test',
+            'date': '2024-01-01',
+            'duration': 12,
+            'amount_borrowed': 20_000,
+            'interest': 107.87,
+            'skip_until_date': '2024-10-31',
+            'journal_id': self.loan_journal.id,
+            'long_term_account_id': self.long_term_account.id,
+            'short_term_account_id': self.short_term_account.id,
+            'expense_account_id': self.expense_account.id,
+        })
+
+        wizard = self.env['account.loan.compute.wizard'].browse(loan.action_open_compute_wizard()['res_id'])
+        wizard.action_save()
+        loan.action_confirm()
+
+        self.assertTrue(loan.line_ids.generated_move_ids)
+        self.assertEqual(loan.state, 'closed')

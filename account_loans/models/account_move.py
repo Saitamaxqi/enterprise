@@ -19,7 +19,8 @@ class AccountMove(models.Model):
     def _post(self, soft=True):
         posted = super()._post(soft)
         for move in self:
-            if move.loan_id and all(l.is_payment_move_posted for l in move.loan_id.line_ids):
+            skip_date = move.loan_id.skip_until_date
+            if move.loan_id and all(l.is_payment_move_posted or skip_date and l.date < skip_date for l in move.loan_id.line_ids):
                 move.loan_id.state = 'closed'
         return posted
 
