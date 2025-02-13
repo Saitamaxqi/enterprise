@@ -64,7 +64,6 @@ Prerequisites:
         'views/reports.xml',
         'wizard/hr_payroll_employee_departure_notice_views.xml',
         'wizard/hr_payroll_employee_departure_holiday_attest_views.xml',
-        'wizard/hr_payroll_generate_warrant_payslips_views.xml',
         'wizard/l10n_be_hr_payroll_schedule_change_wizard_views.xml',
         'wizard/hr_payroll_allocating_paid_time_off_views.xml',
         'wizard/l10n_be_december_slip_wizard_views.xml',
