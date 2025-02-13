@@ -29,6 +29,15 @@ class HrApplicant(models.Model):
     def _check_create_documents(self):
         return self.company_id.documents_recruitment_settings and super()._check_create_documents()
 
+    def _get_document_vals_access_rights(self):
+        vals = super()._get_document_vals_access_rights()
+        if self.company_id.recruitment_folder_id:
+            vals.update({
+                'access_internal': self.company_id.recruitment_folder_id.access_internal,
+                'access_via_link': self.company_id.recruitment_folder_id.access_via_link,
+            })
+        return vals
+
     def action_open_attachments(self):
         if not self.company_id.documents_recruitment_settings:
             return super().action_open_attachments()

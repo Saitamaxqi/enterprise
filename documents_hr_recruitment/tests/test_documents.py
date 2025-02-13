@@ -123,3 +123,31 @@ class TestCaseDocumentsBridgeRecruitment(TransactionCaseDocumentsHr, TestRecruit
         applicant.interviewer_ids = self.env['res.users']
         unassigned_partner_access_id = applicant_document.access_ids.filtered(lambda p: p.partner_id == applicant.interviewer_ids.partner_id)
         self.assertEqual(unassigned_partner_access_id.role, False, "The partner should not have access of the document")
+
+    def test_document_vals_access_rights(self):
+        """
+        documents created in a recruitment folder inherit the correct access rights from their parent folder
+        """
+        company = self.env['res.company'].create({'name': 'Test Company', 'documents_recruitment_settings': True})
+        recruitment_folder = self.env['documents.document'].create({
+            'name': 'Recruitment Folder',
+            'type': 'folder',
+            'access_internal': 'view',
+            'access_via_link': 'edit',
+        })
+        company.recruitment_folder_id = recruitment_folder.id
+        partner = self.env['res.partner'].create({'name': 'Applicant Partner'})
+        applicant = self.env['hr.applicant'].create({
+            'partner_id': partner.id,
+            'company_id': company.id,
+        })
+        attachment = self.env['ir.attachment'].create({
+            'datas': self.TEXT,
+            'name': 'fileTextTwo.txt',
+            'mimetype': 'text/plain',
+            'res_model': 'hr.applicant',
+            'res_id': applicant.id
+        })
+        applicant_document = self.env['documents.document'].search([('attachment_id', '=', attachment.id)])
+        self.assertEqual(recruitment_folder.access_internal, applicant_document.access_internal)
+        self.assertEqual(recruitment_folder.access_via_link, applicant_document.access_via_link)
