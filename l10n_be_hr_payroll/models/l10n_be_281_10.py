@@ -408,7 +408,7 @@ class L10n_Be281_10(models.Model):
                 'f10_2085_forfbezoldiging': 0,
                 'f10_2086_openbaargemeenschap': _to_eurocent(round(mapped_total['PUB.TRANS'], 2)),
                 'f10_2087_bedrag': 0,
-                'f10_2088_andervervoermiddel': _to_eurocent(round(mapped_total['CAR.PRIV'], 2) if has_private_car else round(other_transport_exemption, 2)),
+                'f10_2088_andervervoermiddel': _to_eurocent(round(mapped_total['CAR.PRIV'] - other_transport_exemption, 2) if has_private_car else round(other_transport_exemption, 2)),
                 'f10_2090_outborderdays': 0,
                 'f10_2092_othercode1': 0,
                 'f10_2094_othercode2': 0,
