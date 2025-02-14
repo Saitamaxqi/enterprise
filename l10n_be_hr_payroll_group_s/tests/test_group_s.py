@@ -2,7 +2,7 @@
 
 from odoo.tests.common import TransactionCase
 from odoo.tests import tagged
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 
 @tagged('post_install', '-at_install', 'post_install_l10n')
@@ -66,3 +66,11 @@ class TestHrContractGroupSCode(TransactionCase):
             'state': 'open',
         })
         self.assertEqual(other_contract.group_s_code, '123456', "Group S code should be valid in a different company.")
+
+    def test_export_to_group_s_with_no_group_s_code_in_company(self):
+        """Test export to Group S with no Group S code in the company"""
+        export_to_group_s = self.env['l10n.be.hr.payroll.export.group.s'].with_company(
+            self.company.id).create({
+        })
+        with self.assertRaises(UserError):
+            export_to_group_s.action_export_file()

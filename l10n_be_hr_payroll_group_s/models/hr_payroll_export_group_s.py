@@ -38,7 +38,7 @@ class L10nBeHrPayrollExportGroupS(models.Model):
         ```
         eg: 000PTG001202405171618120000654321EUR  000001 ODOO
         """
-        affiliation_number = '0000' + self.env.company.group_s_code
+        affiliation_number = self.env.company.group_s_code and '0000' + self.env.company.group_s_code
         if not affiliation_number:
             raise UserError(_('The company must have an affiliation number to export to Group S.'))
         create_date = datetime.now().strftime('%Y%m%d%H%M%S')
