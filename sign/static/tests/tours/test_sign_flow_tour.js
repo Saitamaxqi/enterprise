@@ -71,11 +71,10 @@ registry.category("web_tour.tours").add("test_sign_flow_tour", {
         },
         {
             content: "Click it",
-            trigger: ':iframe .o_sign_sign_item_navigator',
+            trigger: ":iframe .o_sign_sign_item_navigator",
             run: "click",
         },
         {
-            isActive: ["auto"],
             trigger: ":iframe :not(:has(.o_sign_sign_item_navigator))",
         },
         {

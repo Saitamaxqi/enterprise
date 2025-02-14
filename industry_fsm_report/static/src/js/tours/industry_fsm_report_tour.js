@@ -17,7 +17,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             fsmStartStepIndex + 1,
             0,
             {
-                isActive: ["auto"],
                 trigger: 'button[name="action_timer_stop"]',
             },
             {
@@ -32,7 +31,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             run: "click",
             },
             {
-                isActive: ["auto"],
                 trigger: '.o_control_panel:not(:has(button[name="action_fsm_worksheet"]))',
             },
             {
@@ -61,7 +59,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             fsmTimerStopStepIndex + 1,
             0,
             {
-                isActive: ["auto"],
                 trigger: ".o_form_project_tasks",
             },
             {
@@ -71,7 +68,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                isActive: ["auto"],
                 trigger: ".o_project_portal_sidebar",
             },
             {
@@ -82,12 +78,10 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                isActive: ["auto"],
                 trigger: "div[name=worksheet_map] h5#task_worksheet",
                 content: '"Worksheet" section is rendered',
             },
             {
-                isActive: ["auto"],
                 trigger: "div[name=worksheet_map] div[class*=row] div:not(:empty)",
                 content: "At least a field is rendered",
             },
@@ -129,7 +123,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                isActive: ["auto"],
                 trigger: ".o_form_project_tasks",
             },
             {

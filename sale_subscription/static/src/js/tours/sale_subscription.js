@@ -25,7 +25,6 @@ registry.category("web_tour.tours").add('sale_subscription_tour', {
     run: "click",
 },
 {
-    isActive: ["auto"],
     trigger: '.o_kanban_renderer',
 },
 {
@@ -35,7 +34,6 @@ registry.category("web_tour.tours").add('sale_subscription_tour', {
     run: "click",
 },
 {
-    isActive: ["auto"],
     trigger: '.o_form_editable',
 },
 {
@@ -45,7 +43,6 @@ registry.category("web_tour.tours").add('sale_subscription_tour', {
     run: "click",
 },
 {
-    isActive: ["auto"],
     trigger: '.o_form_editable',
 },
 {
@@ -55,7 +52,6 @@ registry.category("web_tour.tours").add('sale_subscription_tour', {
     run: "click",
 },
 {
-    isActive: ["auto"],
     trigger: '.o_form_editable',
 },
 {
@@ -64,7 +60,6 @@ registry.category("web_tour.tours").add('sale_subscription_tour', {
     run: "click",
 },
 {
-    isActive: ["auto"],
     trigger: '.o_form_editable',
 },
 {
@@ -73,7 +68,6 @@ registry.category("web_tour.tours").add('sale_subscription_tour', {
     run: "click",
 },
 {
-    isActive: ["auto"],
     trigger: '.o_form_editable',
 },
 {
@@ -112,7 +106,6 @@ registry.category("web_tour.tours").add('sale_subscription_tour', {
     run: 'click',
 },
 {
-    isActive: ["auto"],
     trigger: ".o_sale_order",
 },
 {

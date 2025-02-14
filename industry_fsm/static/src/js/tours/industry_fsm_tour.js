@@ -12,7 +12,6 @@ registry.category("web_tour.tours").add("industry_fsm_tour", {
             run: "click",
         },
         {
-            isActive: ["auto"],
             trigger: ".o_fsm_kanban",
         },
         {
@@ -22,7 +21,6 @@ registry.category("web_tour.tours").add("industry_fsm_tour", {
             run: "click",
         },
         {
-            isActive: ["auto"],
             trigger: ".o_form_editable",
         },
         {
@@ -48,7 +46,6 @@ registry.category("web_tour.tours").add("industry_fsm_tour", {
             run: "click",
         },
         {
-            isActive: ["auto"],
             trigger: ".o_form_project_tasks",
         },
         {
@@ -72,7 +69,6 @@ registry.category("web_tour.tours").add("industry_fsm_tour", {
             run: "click",
         },
         {
-            isActive: ["auto"],
             trigger: ".o_form_project_tasks",
         },
         {
@@ -82,10 +78,9 @@ registry.category("web_tour.tours").add("industry_fsm_tour", {
             run: "click",
         },
         {
-            isActive: ["auto"],
-    // check the task is marked as done
-    trigger: "div[name='state'] .btn-outline-success",
-    id: 'fsm_invoice_create',
+            // check the task is marked as done
+            trigger: "div[name='state'] .btn-outline-success",
+            id: "fsm_invoice_create",
         },
     ],
 });

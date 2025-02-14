@@ -9,7 +9,6 @@ import { registry } from "@web/core/registry";
 registry.category("web_tour.tours").add("knowledge_readonly_favorite_tour", {
     steps: () => [
         {
-            isActive: ["auto"],
             trigger: ".o_article_active:contains(Readonly Article 1)",
         },
         {
@@ -19,7 +18,6 @@ registry.category("web_tour.tours").add("knowledge_readonly_favorite_tour", {
             run: "click",
         },
         {
-            isActive: ["auto"],
             trigger: "a.o_knowledge_toggle_favorite:has(.fa-star)",
         },
         {
@@ -32,7 +30,6 @@ registry.category("web_tour.tours").add("knowledge_readonly_favorite_tour", {
             run: "click",
         },
         {
-            isActive: ["auto"],
             trigger: ".o_article_active:contains(Readonly Article 2)",
         },
         {
@@ -52,7 +49,6 @@ registry.category("web_tour.tours").add("knowledge_readonly_favorite_tour", {
                 ),
         },
         {
-            isActive: ["auto"],
             trigger: 'section[data-section="favorites"] li:first:contains("Readonly Article 2")',
         },
         {

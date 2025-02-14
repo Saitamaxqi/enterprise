@@ -12,7 +12,6 @@ registry.category("web_tour.tours").add("knowledge_sidebar_readonly_tour", {
             run: "click",
         },
         {
-            isActive: ["auto"],
             trigger:
                 '.o_knowledge_tree .o_article:contains("Workspace Article") + .o_article:contains("Private Article")',
         },
@@ -33,7 +32,6 @@ registry.category("web_tour.tours").add("knowledge_sidebar_readonly_tour", {
             },
         },
         {
-            isActive: ["auto"],
             trigger: '.modal-title:contains("Move cancelled")',
         },
         {
@@ -53,7 +51,6 @@ registry.category("web_tour.tours").add("knowledge_sidebar_readonly_tour", {
             },
         },
         {
-            isActive: ["auto"],
             trigger:
                 '.o_knowledge_tree .o_article:contains("Workspace Article") + .o_article:contains("Private Article")',
         },

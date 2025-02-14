@@ -5,7 +5,6 @@ import { queryFirst } from "@odoo/hoot-dom";
 
 import { markup } from "@odoo/owl";
 
-
 export function dragAndDropSignItemAtHeight(from, height = 0.5, width = 0.5) {
     function triggerDragEvent(element, type, data = {}) {
         const event = new DragEvent(type, { bubbles: true });
@@ -64,17 +63,17 @@ registry.category("web_tour.tours").add("sign_tour", {
         },
         {
             isActive: ["manual"],
-            trigger: ".o_sign_field_type_button:contains(" + _t("Signature") +")",
+            trigger: ".o_sign_field_type_button:contains(" + _t("Signature") + ")",
             content: markup(_t("<b>Drag & drop “Signature”</b> into the bottom of the document.")),
             tooltipPosition: "bottom",
             run: "drag_and_drop :iframe #viewer",
         },
         {
             isActive: ["auto"],
-            trigger: ".o_sign_field_type_button:contains(" + _t("Signature") +")",
+            trigger: ".o_sign_field_type_button:contains(" + _t("Signature") + ")",
             run() {
                 dragAndDropSignItemAtHeight(this.anchor, 0.5, 0.25);
-            }
+            },
         },
         {
             trigger: ".o_control_panel .o_sign_template_send",
@@ -130,7 +129,6 @@ registry.category("web_tour.tours").add("sign_tour", {
             run: "click",
         },
         {
-            isActive: ["auto"],
             trigger: ":iframe body:not(:has(footer.modal-footer button.btn-primary))",
         },
         {

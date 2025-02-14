@@ -6,7 +6,6 @@ registry.category("web_tour.tours").add("web_studio_home_menu_background_tour", 
     url: "/odoo",
     steps: () => [
         {
-            isActive: ["auto"],
             trigger: ".o_home_menu_background",
         },
         {

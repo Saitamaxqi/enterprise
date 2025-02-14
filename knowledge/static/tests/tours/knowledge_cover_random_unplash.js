@@ -36,7 +36,6 @@ registry.category("web_tour.tours").add('knowledge_random_cover_tour', {
     run: "click",
 },
 {
-    isActive: ["auto"],
     trigger: ".modal-body .o_load_done_msg",
 },
 {
@@ -74,7 +73,6 @@ registry.category("web_tour.tours").add('knowledge_random_cover_tour', {
     run: "click",
 },
 {
-    isActive: ["auto"],
     trigger: ".modal-body .o_load_more",
 },
 {

@@ -110,7 +110,6 @@ registry.category("web_tour.tours").add('planning_test_tour', {
     tooltipPosition: "right",
     run: 'click',
 }, {
-    isActive: ["auto"],
     id: "planning_check_format_step",
     trigger: ".o_gantt_pill span:contains(Developer)",
     content: "Check naming format of resource and role when grouped",
@@ -125,7 +124,6 @@ registry.category("web_tour.tours").add('planning_test_tour', {
     tooltipPosition: "right",
     run: 'click',
 }, {
-    isActive: ["auto"],
     id: "planning_check_format_step",
     trigger: ".o_gantt_pill.opacity-25",
     content: "Check that the filter is applied",

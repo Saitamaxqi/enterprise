@@ -84,7 +84,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                isActive: ["auto"],
                 content: _t("Wait for the invoice to show up"),
                 trigger: "span:contains('Customer Invoice')",
             }
@@ -96,8 +95,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             fsmTimerStopStepIndex + 1,
             0,
             {
-                in_modal: false,
-                isActive: ["auto"],
                 trigger: ".o_form_project_tasks",
                 id: 'industry_fsm_sale_sign_send_start',
             },
@@ -108,8 +105,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                in_modal: false,
-                isActive: ["auto"],
                 trigger: ".o_project_portal_sidebar",
             },
             {
@@ -120,8 +115,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                in_modal: false,
-                isActive: ["auto"],
                 trigger: ".o_project_portal_sidebar",
             },
             {
@@ -131,8 +124,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                in_modal: false,
-                isActive: ["auto"],
                 trigger: ".o_project_portal_sidebar",
             },
             {
@@ -148,8 +139,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                in_modal: false,
-                isActive: ["auto"],
                 trigger: ".o_project_portal_sidebar",
             },
             {
@@ -159,8 +148,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                in_modal: false,
-                isActive: ["auto"],
                 trigger: ".o_project_portal_sidebar",
             },
             {
@@ -170,8 +157,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                in_modal: false,
-                isActive: ["auto"],
                 trigger: ".o_form_project_tasks",
             },
             {
@@ -187,8 +172,6 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                in_modal: false,
-                isActive: ["auto"],
                 trigger: ".o_form_project_tasks",
             },
             {
