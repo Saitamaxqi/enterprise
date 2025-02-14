@@ -153,10 +153,84 @@ export default class BarcodePickingBatchModel extends BarcodePickingModel {
         return this.picking.use_create_lots;
     }
 
-    groupKey(line) {
-        if (this.config.group_lines_by_product) {
-            return super.groupKey(...arguments);
+    displayLineQtyDemand(line) {
+        if (this.config.group_lines_by_product && this.getQtyDemand(line) && line.batchParentLine) {
+            return true;
         }
+        return super.displayLineQtyDemand(line);
+    }
+
+    groupLines() {
+        const groupedLines = super.groupLines();
+        if (this.config.group_lines_by_product) {
+            // Make a second grouping by product.
+            const lines = [...groupedLines];
+            const groupedLinesByKey = {};
+            for (let index = lines.length - 1; index >= 0; index--) {
+                const line = lines[index];
+                const key = super.groupKey(line);
+                if (!groupedLinesByKey[key]) {
+                    groupedLinesByKey[key] = [];
+                }
+                if (line.batchParentLine) {
+                    // Remove previous parent line's link.
+                    delete line.batchParentLine;
+                }
+                const linesToPush = line.lines ? line.lines : [line];
+                lines.splice(index, 1);
+                groupedLinesByKey[key].push(...linesToPush);
+            }
+            for (const sublines of Object.values(groupedLinesByKey)) {
+                if (sublines.length === 1) {
+                    lines.push(...sublines);
+                    continue;
+                }
+                const ids = [];
+                const virtual_ids = [];
+                let [qtyDemand, qtyDone] = [0, 0];
+                for (const subline of sublines) {
+                    ids.push(subline.id);
+                    virtual_ids.push(subline.virtual_id);
+                    qtyDemand += this.getQtyDemand(subline);
+                    qtyDone += this.getQtyDone(subline);
+                }
+                const groupedLine = this._groupBatchSublines(
+                    sublines,
+                    ids,
+                    virtual_ids,
+                    qtyDemand,
+                    qtyDone
+                );
+                lines.push(groupedLine);
+            }
+            this._groupedLines = this._sortLine(lines);
+            return this._groupedLines;
+        }
+        return groupedLines;
+    }
+
+    _groupBatchSublines(sublines, ids, virtual_ids, qtyDemand, qtyDone) {
+        const sortedSublines = this._sortLine(sublines);
+        // Use the line with lowest ID as the reference (info shown on summary
+        // line and also the move line opened for the form view.)
+        const referenceLine = sortedSublines.reduce((result, line) =>
+            line.id && (!result.id || result.id > line.id) ? line : result
+        );
+        const groupedLine = Object.assign({}, referenceLine, {
+            ids,
+            lines: sortedSublines,
+            opened: false,
+            virtual_ids,
+            reserved_uom_qty: qtyDemand,
+            qty_done: qtyDone,
+        });
+        for (const subline of sublines) {
+            subline.batchParentLine = groupedLine;
+        }
+        return groupedLine;
+    }
+
+    groupKey(line) {
         return `${line.picking_id.id}_` + super.groupKey(...arguments);
     }
 

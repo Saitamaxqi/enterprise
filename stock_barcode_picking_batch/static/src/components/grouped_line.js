@@ -17,4 +17,11 @@ patch(GroupedLineComponent.prototype, {
         }
         return super.displayToggleBtn;
     },
+
+    get linesToDisplay() {
+        if (this.env.model.resModel === "stock.picking.batch" && !this.pickingName) {
+            return this.props.line.lines;
+        }
+        return super.linesToDisplay;
+    },
 });

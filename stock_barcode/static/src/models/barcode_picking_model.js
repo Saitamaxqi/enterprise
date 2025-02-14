@@ -646,6 +646,7 @@ export default class BarcodePickingModel extends BarcodeModel {
             location_dest_id: line.location_dest_id.id,
         };
         const newLine = await this._createNewLine({ copyOf: line, fieldsParams });
+        delete newLine.parentLine;
         // Update the reservation of the both old and new lines.
         newLine.reserved_uom_qty = line.reserved_uom_qty - line.qty_done;
         line.reserved_uom_qty = line.qty_done;
@@ -1552,6 +1553,7 @@ export default class BarcodePickingModel extends BarcodeModel {
                                 copyOf: line,
                                 fieldsParams,
                             });
+                            delete newLine.parentLine;
                             line.reserved_uom_qty = line.qty_done;
                         }
                     }

@@ -205,14 +205,23 @@ export default class BarcodeModel extends EventBus {
      * @returns
      */
     get groupedLines() {
-        if (!this.groupingLinesEnabled) {
-            return this._sortLine(this.pageLines);
-        }
+        this.groupLines();
+        return this._groupedLines;
+    }
 
+    groupLines() {
+        if (!this.groupingLinesEnabled) {
+            this._groupedLines = this._sortLine(this.pageLines);
+            return this._groupedLines;
+        }
         const lines = [...this.pageLines];
         const groupedLinesByKey = {};
         for (let index = lines.length - 1; index >= 0; index--) {
             const line = lines[index];
+            if (line.parentLine) {
+                // Remove previous parent line's link.
+                delete line.parentLine;
+            }
             if (this.lineCannotBeGrouped(line)) {
                 continue;
             }
@@ -241,7 +250,8 @@ export default class BarcodeModel extends EventBus {
         }
         // Before to return the line, we sort them to have new lines always on
         // top and complete lines always on the bottom.
-        return this._sortLine(lines);
+        this._groupedLines = this._sortLine(lines);
+        return this._groupedLines;
     }
 
     get groupedLinesByLocation() {
@@ -862,10 +872,7 @@ export default class BarcodeModel extends EventBus {
     }
 
     _getParentLine(line) {
-        return (
-            Boolean(line) &&
-            this.groupedLines.find((gl) => (gl.virtual_ids || []).includes(line.virtual_id))
-        );
+        return line && line.parentLine;
     }
 
     _getFieldToWrite() {
@@ -923,12 +930,16 @@ export default class BarcodeModel extends EventBus {
         const referenceLine = sortedSublines.reduce((result, line) =>
             line.id && (!result.id || result.id > line.id) ? line : result
         );
-        return Object.assign({}, referenceLine, {
+        const groupedLine = Object.assign({}, referenceLine, {
             ids,
             lines: sortedSublines,
             opened: false,
             virtual_ids,
         });
+        for (const subline of sublines) {
+            subline.parentLine = groupedLine;
+        }
+        return groupedLine;
     }
 
     async _goToMainMenu() {
@@ -1676,10 +1687,12 @@ export default class BarcodeModel extends EventBus {
         const { lot, lotName, product } = barcodeData;
         const quantPackage = barcodeData.package;
         const dataLotName = lotName || (lot && lot.name) || false;
-        let pageLines = [...this.pageLines]
+        const pageLines = [...this.pageLines];
         // If a line is selected, unshift it to the first position to start the search by it
         if (this.selectedLineVirtualId) {
-            const selectedLineIndex = pageLines.findIndex(line => line.virtual_id == this.selectedLineVirtualId);
+            const selectedLineIndex = pageLines.findIndex(
+                (line) => line.virtual_id == this.selectedLineVirtualId
+            );
             if (selectedLineIndex > -1) {
                 pageLines.splice(selectedLineIndex, 1);
                 pageLines.unshift(this.pageLines[selectedLineIndex]);
@@ -1872,6 +1885,7 @@ export default class BarcodeModel extends EventBus {
         }
         this.initialState = { lines };
         this.currentState = JSON.parse(JSON.stringify(this.initialState)); // Deep copy
+        this.groupLines();
     }
 
     _getPrintOptions() {

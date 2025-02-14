@@ -1167,13 +1167,33 @@ registry.category("web_tour.tours").add("test_setting_group_lines_by_product", {
                 helper.assertButtonIsVisible(line4, "toggle_sublines", false);
             },
         },
+        // Check quantity for each pickings' line is visible also for tracked product.
+        {
+            trigger: ".o_barcode_line:nth-child(3) .o_toggle_sublines",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line.o_selected .o_sublines .o_barcode_line",
+            run: () => {
+                helper.assertSublinesCount(2);
+                const selectedLine = helper.getLine({ selected: true });
+                helper.assertLineProduct(selectedLine, "productlot1");
+                const sublines = helper.getSublines();
+                // receipt1
+                helper.assertLineQty(sublines[0], "0/4");
+                helper.assertLineBelongTo(sublines[0], "receipt1");
+                // receipt2
+                helper.assertLineQty(sublines[1], "0/2");
+                helper.assertLineBelongTo(sublines[1], "receipt2");
+            },
+        },
         // Unfolds the first grouped line.
         {
             trigger: ".o_barcode_line:first-child .o_toggle_sublines",
             run: "click",
         },
         {
-            trigger: ".o_barcode_line.o_selected .o_sublines .o_barcode_line",
+            trigger: ".o_barcode_line:first-child.o_selected .o_sublines .o_barcode_line",
             run: function () {
                 helper.assertSublinesCount(3);
                 const sublines = document.querySelectorAll(".o_sublines .o_barcode_line");
@@ -1337,13 +1357,13 @@ registry.category("web_tour.tours").add("test_setting_group_lines_by_product", {
                 helper.assertSublinesCount(3);
                 const sublines = document.querySelectorAll(".o_sublines .o_barcode_line");
                 // lot1 receipt1
-                helper.assertLineQty(sublines[0], "2");
+                helper.assertLineQty(sublines[0], "2/4");
                 helper.assertLineBelongTo(sublines[0], "receipt1");
-                // lot2 receipt2
+                // lot2 receipt1
                 helper.assertLineQty(sublines[1], "2");
-                helper.assertLineBelongTo(sublines[1], "receipt2");
+                helper.assertLineBelongTo(sublines[1], "receipt1");
                 // lot3 receipt2
-                helper.assertLineQty(sublines[2], "2");
+                helper.assertLineQty(sublines[2], "2/2");
                 helper.assertLineBelongTo(sublines[2], "receipt2");
             },
         },
