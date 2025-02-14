@@ -27,7 +27,8 @@ class WhatsAppMessage(WhatsAppFullCase, MockIncomingWhatsApp):
             [cls.env.ref('base.be')] * 4 +
             [cls.env.ref('base.in'), cls.env.ref('base.ca'), cls.env.ref('base.us')] +
             [cls.env.ref('base.br')] * 2 +
-            [cls.env.ref('base.ci')] * 2
+            [cls.env.ref('base.ci')] * 2 +
+            [cls.env.ref('base.mx')] * 3
         )
         cls.mobile_numbers = [
             "0456001122",
@@ -41,6 +42,9 @@ class WhatsAppMessage(WhatsAppFullCase, MockIncomingWhatsApp):
             "+55 11 6123 4561",
             "0708151718",
             "+225 0708151719",
+            "5585460749",
+            "15585440749",
+            "+52 15585440659",
         ]
         cls.test_base_records = cls.env['whatsapp.test.base'].create([
             {
@@ -62,6 +66,9 @@ class WhatsAppMessage(WhatsAppFullCase, MockIncomingWhatsApp):
             "5511961234561",
             "2250708151718",
             "2250708151719",
+            "525585460749",
+            "525585440749",
+            "525585440659",
         ]
         # E164 (+ sign) formatting
         cls.mobile_numbers_formatted = [
@@ -76,6 +83,9 @@ class WhatsAppMessage(WhatsAppFullCase, MockIncomingWhatsApp):
             "+5511961234561",
             "+2250708151718",
             "+2250708151719",
+            "+525585460749",
+            "+525585440749",
+            "+525585440659",
         ]
         # International formatting
         cls.mobile_numbers_formatted_intl = [
@@ -90,6 +100,9 @@ class WhatsAppMessage(WhatsAppFullCase, MockIncomingWhatsApp):
             "+55 11 96123-4561",
             "+225 07 08 151 718",
             "+225 07 08 151 719",
+            "+52 55 8546 0749",
+            "+52 55 8544 0749",
+            "+52 55 8544 0659",
         ]
 
         # test templates
