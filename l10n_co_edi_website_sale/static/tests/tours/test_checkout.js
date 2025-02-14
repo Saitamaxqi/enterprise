@@ -61,7 +61,7 @@ registry.category("web_tour.tours").add("test_checkout_id_nit", {
         },
         {
             content: "Continue Checkout",
-            trigger: '.btn-primary:contains("Continue checkout")',
+            trigger: '.btn-primary:contains("Confirm")',
             run: "click",
         },
         {
@@ -126,7 +126,7 @@ registry.category("web_tour.tours").add("test_checkout_other_id", {
         },
         {
             content: "Validate address",
-            trigger: '.btn-primary:contains("Continue checkout")',
+            trigger: '.btn-primary:contains("Confirm")',
             run: "click",
         },
         {
