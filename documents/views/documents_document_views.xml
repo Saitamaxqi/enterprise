@@ -166,10 +166,6 @@
                                 <field name="tag_ids" class="d-block text-wrap" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             </footer>
                         </div>
-                        <t t-if="record.is_multipage.raw_value">
-                            <div class="o_kanban_stack"/>
-                            <div class="o_kanban_stack"/>
-                        </t>
                     </t>
                 </templates>
             </kanban>

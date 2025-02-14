@@ -25,7 +25,7 @@ registry.category("web_tour.tours").add("account_merge_wizard_tour", {
         },
         {
             content: "Check that exactly 4 accounts are present and selected",
-            trigger: ".o_list_selection_box:contains(4):contains(selected)",
+            trigger: ".o_selection_box:contains(4):contains(selected)",
         },
         {
             content: "Open Actions menu",

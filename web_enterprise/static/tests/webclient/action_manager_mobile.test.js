@@ -44,7 +44,14 @@ class Partner extends models.Model {
     };
 }
 
-defineModels([Partner]);
+class User extends models.Model {
+    _name = "res.users";
+    has_group() {
+        return true;
+    }
+}
+
+defineModels([Partner, User]);
 
 defineActions([
     {
@@ -113,6 +120,7 @@ test("lazy load mobile-friendly view", async () => {
         "get_views",
         "onchange", // default_get/onchange to open form view
         "web_search_read", // web search read when coming back to Kanban
+        "has_group",
     ]);
 });
 
@@ -141,6 +149,7 @@ test("lazy load mobile-friendly view; legacy url", async () => {
         "get_views",
         "onchange", // default_get/onchange to open form view
         "web_search_read", // web search read when coming back to Kanban
+        "has_group",
     ]);
 });
 

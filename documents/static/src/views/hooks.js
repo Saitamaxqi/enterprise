@@ -349,16 +349,12 @@ function useDocumentsViewFilePreviewer({
                             return;
                         }
                         await component.model.load();
-                        let count = 0;
                         for (const record of documents) {
                             if (!newDocumentIds.includes(record.resId)) {
                                 record.model.root.deleteRecords(record);
                                 continue;
                             }
-                            record.onRecordClick(null, {
-                                isKeepSelection: count++ !== 0,
-                                isRangeSelection: false,
-                            });
+                            record.onRecordClick();
                         }
                     },
                 }
@@ -522,15 +518,11 @@ function useDocumentsViewFileUpload() {
             return;
         }
         const records = env.model.root.records;
-        let count = 0;
         for (const record of records) {
             if (!newDocumentIds.includes(record.resId)) {
                 continue;
             }
-            record.onRecordClick(null, {
-                isKeepSelection: count++ !== 0,
-                isRangeSelection: false,
-            });
+            record.onRecordClick();
         }
     });
 

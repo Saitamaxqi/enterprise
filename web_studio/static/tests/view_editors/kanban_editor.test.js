@@ -47,13 +47,20 @@ class Partner extends models.Model {
     ];
 }
 
+class User extends models.Model {
+    _name = "res.users";
+    has_group() {
+        return true;
+    }
+}
+
 class Product extends models.Model {
     display_name = fields.Char();
 
     _records = [{ id: 1, display_name: "A very good product" }];
 }
 
-defineModels([Coucou, Product, Partner]);
+defineModels([Coucou, Product, Partner, User]);
 
 test("empty kanban editor", async () => {
     await mountViewEditor({
@@ -570,21 +577,19 @@ test("kanban editor, grouped on date field granular, no record, progressbar", as
                     </t>
                 </templates>
             </kanban>`;
-    onRpc("/web_studio/get_xml_editor_resources", () => {
-        return {
-            main_view_key: "",
-            views: [
-                {
-                    active: true,
-                    arch,
-                    id: 99999999,
-                    inherit_id: false,
-                    name: "default view",
-                    xml_id: "default",
-                },
-            ],
-        };
-    });
+    onRpc("/web_studio/get_xml_editor_resources", () => ({
+        main_view_key: "",
+        views: [
+            {
+                active: true,
+                arch,
+                id: 99999999,
+                inherit_id: false,
+                name: "default view",
+                xml_id: "default",
+            },
+        ],
+    }));
     await mountViewEditor({
         type: "kanban",
         resModel: "coucou",

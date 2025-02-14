@@ -1,5 +1,6 @@
 import { TemplateDialog } from "@documents_spreadsheet/spreadsheet_template/spreadsheet_template_dialog";
 import { useService } from "@web/core/utils/hooks";
+import { loadBundle } from "@web/core/assets";
 
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { SpreadsheetCloneCSVXlsxDialog } from "@documents_spreadsheet/spreadsheet_clone_xlsx_dialog/spreadsheet_clone_xlsx_dialog";
@@ -93,5 +94,72 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
                 .getFolders()
                 .filter((folder) => folder.id && typeof folder.id === "number"),
         });
+    },
+
+    async onClickFreezeAndShareSpreadsheet() {
+        const selection = this.targetRecords;
+        if (
+            selection.length !== 1 ||
+            !["spreadsheet", "frozen_spreadsheet"].includes(selection[0].data.handler)
+        ) {
+            this.notification.add(_t("Select one and only one spreadsheet"));
+            return;
+        }
+
+        const doc = selection[0];
+
+        // Freeze the spreadsheet
+        await loadBundle("spreadsheet.o_spreadsheet");
+        const { fetchSpreadsheetModel, freezeOdooData } = odoo.loader.modules.get(
+            "@spreadsheet/helpers/model"
+        );
+        const model = await fetchSpreadsheetModel(this.env, "documents.document", doc.resId);
+        const spreadsheetData = JSON.stringify(await freezeOdooData(model));
+        const excelFiles = model.exportXLSX().files;
+
+        // Create a new <documents.document> with the frozen data
+        const record = await this.orm.call("documents.document", "action_freeze_and_copy", [
+            doc.resId,
+            spreadsheetData,
+            excelFiles,
+        ]);
+
+        await this.env.searchModel._reloadSearchModel(true);
+        await this.env.documentsView.bus.trigger("documents-open-share", {
+            id: record.id,
+            withUpload: false,
+            shortcut_document_id: record.shortcut_document_id,
+        });
+    },
+
+    getTopBarActionMenuItems() {
+        const menuItems = super.getTopBarActionMenuItems();
+        const selectionCount = this.model.targetRecords.length;
+        const singleSelection = selectionCount === 1 && this.targetRecords[0];
+        const hasDocumentAttachment = (r) =>
+            r.data.attachment_id || r.shortcutTarget?.data?.attachment_id;
+        menuItems.download.isAvailable = () =>
+            this.model.targetRecords.some(
+                (r) => hasDocumentAttachment(r) && r.data.handler !== "spreadsheet"
+            );
+        return {
+            ...menuItems,
+            freezeAndShare: {
+                isAvailable: () =>
+                    this.documentService.userIsInternal &&
+                    singleSelection?.data?.handler === "spreadsheet",
+                sequence: 52,
+                description: _t("Freeze and Share"),
+                icon: "fa fa-share-alt",
+                callback: () => this.onClickFreezeAndShareSpreadsheet(),
+                groupNumber: 1,
+            },
+        };
+    },
+
+    getStaticActionMenuItems() {
+        const menuItems = super.getStaticActionMenuItems(...arguments);
+        menuItems.insert.isAvailable = () => this.documentService.userIsInternal;
+        return menuItems;
     },
 });

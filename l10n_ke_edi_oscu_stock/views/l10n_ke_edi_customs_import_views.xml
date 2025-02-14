@@ -129,7 +129,7 @@
         <field name="state">code</field>
         <field name="model_id" ref="model_l10n_ke_edi_customs_import"/>
         <field name="binding_model_id" ref="model_l10n_ke_edi_customs_import"/>
-        <field name="binding_view_types">form,list</field>
+        <field name="binding_view_types">form,list,kanban</field>
         <field name="code">
             if records:
                 action = records.action_create_purchase_order()

@@ -601,7 +601,7 @@
             'default_partner_to': '{{ object.partner_id.id or \'\' }}',
         }</field>
         <field name="binding_model_id" ref="helpdesk.model_helpdesk_ticket"/>
-        <field name="binding_view_types">list</field>
+        <field name="binding_view_types">list,kanban</field>
     </record>
 
     <!-- Action for dashboard button -->
@@ -1083,6 +1083,6 @@
         <field name="target">new</field>
         <field name="context">{'default_res_model': 'helpdesk.ticket', 'default_res_ids': active_ids}</field>
         <field name="binding_model_id" ref="helpdesk.model_helpdesk_ticket"/>
-        <field name="binding_view_types">list</field>
+        <field name="binding_view_types">list,kanban</field>
     </record>
 </odoo>

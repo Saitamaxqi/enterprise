@@ -52,6 +52,7 @@ export class DocumentService {
         if (this._initData.folderId) {
             browser.localStorage.setItem("searchpanel_documents_document", this._initData.folderId);
         }
+        this.getSelectionActions = null;
     }
 
     /**

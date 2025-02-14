@@ -488,7 +488,7 @@ QUnit.module("documents", {}, function () {
                     );
 
                     // disable selection mode
-                    await click(document.querySelector(".o_list_unselect_all"));
+                    await click(document.querySelector(".o_unselect_all"));
                     assert.containsNone(
                         document.body,
                         ".o_document_list_record.o_data_row_selected",
