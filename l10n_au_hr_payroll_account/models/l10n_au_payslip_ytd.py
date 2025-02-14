@@ -1,6 +1,10 @@
+from datetime import date
+from collections import defaultdict
+
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.addons.l10n_au_hr_payroll.models.hr_employee import INCOME_STREAM_TYPES
+from odoo.tools import date_utils
 
 
 class L10n_AuPayslipYtd(models.Model):
@@ -41,17 +45,29 @@ class L10n_AuPayslipYtd(models.Model):
             else:
                 rec.ytd_amount = rec.start_value
 
+    @api.model
+    def _get_start_date(self, start_date: date):
+        fiscal_year_last_month = int(self.env.company.fiscalyear_last_month)
+        start_year = start_date.year
+        # Start is previous year
+        if start_date.month <= fiscal_year_last_month:
+            start_year -= 1
+        if fiscal_year_last_month == 12:
+            fiscal_year_last_month = 0
+        return start_date.replace(day=1, month=fiscal_year_last_month + 1, year=start_year)
+
+    @api.model
+    def _is_past_fiscal_year(self, start_date):
+        return self._get_start_date(start_date) < self._get_start_date(fields.Date.today())
+
+    ####################################################
+    # ORM METHODS
+    ####################################################
+
     def _fiscal_start_date(self):
         for rec in self:
             if rec.start_date:
-                fiscal_year_last_month = int(rec.company_id.fiscalyear_last_month)
-                start_year = rec.start_date.year
-                # Start is previous year
-                if rec.start_date.month <= fiscal_year_last_month:
-                    start_year -= 1
-                if fiscal_year_last_month == 12:
-                    fiscal_year_last_month = 0
-                rec.start_date = rec.start_date.replace(day=1, month=fiscal_year_last_month + 1, year=start_year)
+                rec.start_date = rec._get_start_date(rec.start_date)
 
     @api.depends("employee_id", "rule_id")
     def _compute_name(self):
@@ -63,14 +79,18 @@ class L10n_AuPayslipYtd(models.Model):
         for rec in self:
             rec.struct_id = rec.employee_id.contract_id.structure_type_id.default_struct_id
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        records = super().create(vals_list)
-        employees = self.env["hr.payslip"].search([("employee_id", "=", records.employee_id.ids), ("state", "in", ("done", "paid"))]).mapped("employee_id.name")
-        if employees:
-            raise UserError(_("You can't create or update YTD opening balances for %(employees)s, because there are "
-                "validated payslips for these employee(s).", employees=", ".join(employees)))
-        return records
+    @api.constrains("employee_id", "rule_id", "start_value")
+    def _check_unique_rule(self):
+        for rec in self:
+            start_date = self._get_start_date(rec.start_date)
+            end_date = start_date + date_utils.get_timedelta(1, "year") - date_utils.get_timedelta(1, "day")
+            if self.env["hr.payslip"].search_count([
+                ("employee_id", "=", rec.employee_id.id),
+                ("state", "in", ("done", "paid")),
+                ("date_from", "<=", end_date),
+                ("date_from", ">=", start_date)]):
+                raise UserError(_("You can't create or update YTD opening balances for %s, because there are "
+                    "validated payslips for this employee.", (rec.employee_id.name)))
 
     def write(self, vals):
         if any(finalised for finalised in self.mapped("finalised")):
@@ -85,13 +105,49 @@ class L10n_AuPayslipYtd(models.Model):
             target="new",
         )
 
+    @api.model
+    def _get_ote_total(self, employee_ids, start_date):
+        start_date = self._get_start_date(start_date)
+        ote_input_type_ids = self.env["hr.payslip.input.type"].search([
+            ("l10n_au_superannuation_treatment", "=", "ote")
+        ]).ids
+        ote_work_entry_type_ids = self.env["hr.work.entry.type"].search([
+            ("l10n_au_is_ote", "=", True)
+        ]).ids
+        opening_balances = self.env["l10n_au.payslip.ytd.input"].read_group([
+                ("l10n_au_payslip_ytd_id.employee_id", "in", employee_ids),
+                ("l10n_au_payslip_ytd_id.start_date", "=", start_date),
+                '|',
+                    '&',
+                        ('res_model', '=', 'hr.payslip.input.type'),
+                        ('res_id', 'in', ote_input_type_ids),
+                    '&',
+                        ('res_model', '=', 'hr.work.entry.type'),
+                        ('res_id', 'in', ote_work_entry_type_ids)
+            ],
+            ["ytd_amount:sum"],
+            ["employee_id"],
+        )
+        opening_balances = {r["employee_id"][0]: r["ytd_amount"] for r in opening_balances}
+        res = defaultdict(float, opening_balances)
+        rtw_lines = self.search_read([
+                ("employee_id", "in", employee_ids),
+                ("start_date", "=", start_date),
+                ("rule_id.code", "=", "RTW")
+            ],
+            ["ytd_amount", "employee_id"], load="")
+        for rtw in rtw_lines:
+            res[rtw["employee_id"]] += rtw["ytd_amount"]
+        return res
 
-class L10n_AuPayslipYtdInput(models.Model):
-    _name = 'l10n_au.payslip.ytd.input'
+
+class L10nAUPayslipYTDInput(models.Model):
+    _name = "l10n_au.payslip.ytd.input"
     _description = "YTD Opening Balances Inputs"
 
     l10n_au_payslip_ytd_id = fields.Many2one("l10n_au.payslip.ytd", required=True, ondelete="cascade")
     name = fields.Char(string="Description", compute="_compute_name", store=True)
+    employee_id = fields.Many2one(related="l10n_au_payslip_ytd_id.employee_id")
     res_id = fields.Many2oneReference('Input', model_field='res_model', readonly=True)
     res_model = fields.Selection(
         selection=[

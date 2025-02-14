@@ -7,6 +7,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import AccessError, UserError, ValidationError
+from odoo.tools import groupby, ormcache
 
 
 PERIODS_PER_YEAR = {
@@ -35,7 +36,21 @@ class HrPayslip(models.Model):
     _inherit = "hr.payslip"
 
     l10n_au_income_stream_type = fields.Selection(
-        related="employee_id.l10n_au_income_stream_type", store=True)
+        [
+            ("SAW", "Salary and wages"),
+            ("CHP", "Closely held payees"),
+            ("IAA", "Inbound assignees to Australia"),
+            ("WHM", "Working holiday makers"),
+            ("SWP", "Seasonal worker programme"),
+            ("FEI", "Foreign employment income"),
+            ("JPD", "Joint petroleum development area"),
+            ("VOL", "Voluntary agreement"),
+            ("LAB", "Labour hire"),
+            ("OSP", "Other specified payments"),
+        ],
+        compute="_compute_income_stream_type",
+        store=True,
+    )
     l10n_au_foreign_tax_withheld = fields.Float(
         string="Foreign Tax Withheld",
         help="Foreign tax withheld for the current financial year")
@@ -153,6 +168,11 @@ class HrPayslip(models.Model):
                 continue
             payslip.l10n_au_salary_sacrifice_other = payslip.contract_id.l10n_au_salary_sacrifice_other
 
+    @api.depends("employee_id")
+    def _compute_income_stream_type(self):
+        for payslip in self:
+            payslip.l10n_au_income_stream_type = payslip.employee_id.l10n_au_income_stream_type
+
     @api.constrains('input_line_ids', 'employee_id')
     def _check_input_lines(self):
         for payslip in self:
@@ -227,31 +247,81 @@ class HrPayslip(models.Model):
         if fields_to_compute is None:
             fields_to_compute = []
         year_slips = self._l10n_au_get_year_to_date_slips(l10n_au_include_current_slip=l10n_au_include_current_slip)
-        totals = {
-            "slip_lines": defaultdict(lambda: defaultdict(float)),
-            "worked_days": defaultdict(lambda: defaultdict(float)),
-            "periods": len(year_slips),
-            "fields": defaultdict(float),
-        }
+        # Change to a parameter in master
+        group_income_stream_types = self.env.context.get("group_income_stream_types", False)
+        if group_income_stream_types:
+            totals = {
+                income_stream: {
+                    "slip_lines": defaultdict(lambda: defaultdict(float)),
+                    "worked_days": defaultdict(lambda: defaultdict(float)),
+                    "periods": len(year_slips),
+                    "fields": defaultdict(float),
+                } for income_stream in set(year_slips.mapped("l10n_au_income_stream_type"))
+            }
+        else:
+            totals = {
+                "slip_lines": defaultdict(lambda: defaultdict(float)),
+                "worked_days": defaultdict(lambda: defaultdict(float)),
+                "periods": len(year_slips),
+                "fields": defaultdict(float),
+            }
         for line in year_slips.line_ids:
-            totals["slip_lines"][line.category_id.code]["total"] += line.total
-            totals["slip_lines"][line.category_id.code][line.code] += line.total
+            if group_income_stream_types:
+                total_line = totals[line.slip_id.l10n_au_income_stream_type]["slip_lines"][line.category_id.code]
+            else:
+                total_line = totals["slip_lines"][line.category_id.code]
+            total_line["total"] += line.total
+            total_line[line.code] += line.total
         for line in year_slips.worked_days_line_ids:
-            totals["worked_days"][line.work_entry_type_id]["amount"] += line.amount
-        for field in fields_to_compute:
-            totals["fields"][field] += sum(year_slips.mapped(field))
+            if group_income_stream_types:
+                total_line = totals[line.payslip_id.l10n_au_income_stream_type]["worked_days"][line.work_entry_type_id.id]
+            else:
+                total_line = totals["worked_days"][line.work_entry_type_id.id]
+            total_line["amount"] += line.amount
+            total_line["payroll_code"] = line.work_entry_type_id.l10n_au_work_stp_code
+            total_line["is_leave"] = line.work_entry_type_id.is_leave
+
+        if not fields_to_compute:
+            return totals
+
+        for income_stream, slips in groupby(year_slips, lambda x: x.l10n_au_income_stream_type):
+            for field in fields_to_compute:
+                if group_income_stream_types:
+                    totals[income_stream]["fields"][field] = sum(slip[field] for slip in slips)
+                else:
+                    totals["fields"][field] += sum(slip[field] for slip in slips)
         return totals
 
     def _l10n_au_get_ytd_inputs(self, l10n_au_include_current_slip=False):
-        inputs = defaultdict(lambda: defaultdict(float))
         year_slips = self._l10n_au_get_year_to_date_slips(l10n_au_include_current_slip=l10n_au_include_current_slip)
+        # Change to a parameter in master
+        group_income_stream_types = self.env.context.get("group_income_stream_types", False)
+        if group_income_stream_types:
+            inputs = {
+                income_stream: defaultdict(lambda: defaultdict(float))
+                for income_stream in set(year_slips.mapped("l10n_au_income_stream_type"))
+            }
+        else:
+            inputs = defaultdict(lambda: dict())
         lump_sum_e = self.env.ref("l10n_au_hr_payroll.l10n_au_lumpsum_e")
         for line in year_slips.input_line_ids:
+            if group_income_stream_types:
+                input_line = inputs[line.payslip_id.l10n_au_income_stream_type][line.input_type_id.id]
+            else:
+                input_line = inputs[line.input_type_id.id]
             if line.input_type_id == lump_sum_e:
                 if not line.name.isnumeric() and len(line.name) != 4:
                     raise UserError(_("The description of input Lump Sum E should be the financial year."))
-                inputs[line.input_type_id]["financial_year"] = line.name
-            inputs[line.input_type_id]["amount"] += line.amount
+                input_line["financial_year"] = line.name
+            if not input_line:
+                input_line.update({
+                    "amount": 0.0,
+                    "code": line.input_type_id.code,
+                    "payroll_code": line.input_type_id.l10n_au_payroll_code,
+                    "payment_type": line.input_type_id.l10n_au_payment_type,
+                    "payroll_code_description": line.input_type_id.l10n_au_payroll_code_description,
+                })
+            input_line["amount"] += line.amount
         return inputs
 
     @api.model

@@ -10,9 +10,7 @@ class L10n_AuPreviousPayrollTransfer(models.TransientModel):
     _description = "Transfer From Previous Payroll System"
 
     def _default_fiscal_year_start_date(self):
-        company = self.env.company
-        start_month = int(company.fiscalyear_last_month) + 1 if int(company.fiscalyear_last_month) < 12 else 1
-        return fields.Date.today().replace(month=start_month, day=1)
+        return self.env["l10n_au.payslip.ytd"]._get_start_date(fields.Date.today())
 
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company, required=True)
     previous_bms_id = fields.Char(string="Previous BMS ID", required=True, help="Enter the ID of the employee in the previous payroll system.")

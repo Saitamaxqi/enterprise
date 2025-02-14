@@ -306,8 +306,10 @@ class L10n_AuStp(models.Model):
                 "l10n_au_extra_negotiated_super",
                 "l10n_au_extra_compulsory_super",
             ]
-            employee_ytd = payslips._l10n_au_get_year_to_date_totals(fields_to_compute=fields_to_compute, zero_amount=self.is_zeroing)
-            employee_input_totals = payslips._l10n_au_get_ytd_inputs(zero_amount=self.is_zeroing)
+            employee_ytd_totals = payslips.with_context(group_income_stream_types=True)._l10n_au_get_year_to_date_totals(fields_to_compute=tuple(fields_to_compute), zero_amount=self.is_zeroing, include_ytd_balances=True, l10n_au_include_current_slip=True)
+            employee_ytd_ungrouped = payslips._l10n_au_get_year_to_date_totals(fields_to_compute=tuple(fields_to_compute), zero_amount=self.is_zeroing, include_ytd_balances=True, l10n_au_include_current_slip=True)
+            employee_input_totals = payslips.with_context(group_income_stream_types=True)._l10n_au_get_ytd_inputs(zero_amount=self.is_zeroing, l10n_au_include_current_slip=True, include_ytd_balances=True)
+            employee_input_totals_ungrouped = payslips._l10n_au_get_ytd_inputs(zero_amount=self.is_zeroing, l10n_au_include_current_slip=True, include_ytd_balances=True)
 
             start_date = max(min_date, employee.first_contract_date) or unknown_date
             remunerations = []
