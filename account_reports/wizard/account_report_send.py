@@ -262,6 +262,7 @@ class AccountReportSend(models.TransientModel):
                     subject=subject,
                     partner_ids=recipient_partner_ids,
                     attachment_ids=attachments_ids + report_attachment.ids,
+                    email_add_signature=False,
                 )
 
             if to_download:
