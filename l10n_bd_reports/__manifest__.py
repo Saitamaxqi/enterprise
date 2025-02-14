@@ -1,10 +1,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Bangladesh - Accounting Reports',
-    'website': 'https://www.odoo.com/documentation/18.0/applications/finance/fiscal_localizations.html',
+    'countries': ['bd'],
     'version': '1.0.0',
     'description': """
-        Accounting reports for Bangladesh
+Accounting reports for Bangladesh
+============================================
+- Corporate tax report
     """,
     'depends': [
         'account_reports',

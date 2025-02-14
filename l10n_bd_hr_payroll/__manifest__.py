@@ -6,7 +6,9 @@
     'description': """
 Bangladesh Payroll Rules.
 =========================
-
+- Salary rules calculation
+- Income tax credits handling
+- Introduced the income tax slabs calculations
     """,
     'depends': ['hr_payroll'],
     'auto_install': ['hr_payroll'],
