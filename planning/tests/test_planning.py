@@ -886,3 +886,15 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         # Exception we keep the archived resource if the shift is split
         slot = self.slot.with_context(planning_split_tool=True).copy()
         self.assertEqual(slot.resource_id, self.resource_joseph)
+
+    def test_unavailability_open_shift(self):
+        """ Ensure that there is no unavailabilities for open shifts. """
+        gantt_unavailabilities = self.env['planning.slot']._gantt_unavailability(
+            'resource_id',
+            self.resource_bert.ids,
+            datetime(2024, 1, 1),
+            datetime(2024, 1, 7),
+            'month',
+        )
+        self.assertEqual(gantt_unavailabilities[False], [], 'There should be no unavailability for open shifts.')
+        self.assertNotEqual(gantt_unavailabilities[self.resource_bert.id], [], 'There should be unavailabilities for Bert.')

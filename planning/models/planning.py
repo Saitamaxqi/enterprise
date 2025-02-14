@@ -1422,7 +1422,7 @@ class PlanningSlot(models.Model):
         company_leaves = self.env.company.resource_calendar_id._unavailable_intervals(start.replace(tzinfo=pytz.utc), stop.replace(tzinfo=pytz.utc))
         cell_dt = timedelta(hours=1) if scale in ['day', 'week'] else timedelta(hours=12)
 
-        result = {}
+        result = {False: []}
         for resource in resources:
             # return no unavailability if the resource is fully flexible hours (both material and employee).
             if (resource.id not in res_ids) or (resource and resource._is_fully_flexible()):
@@ -1433,10 +1433,6 @@ class PlanningSlot(models.Model):
             # like: 2019-05-22 20:00 -> 2019-05-23 08:00 which will make the first half of the 23's cell grey
             notable_intervals = filter(lambda interval: interval[1] - interval[0] >= cell_dt, calendar)
             result[resource.id] = [{'start': interval[0], 'stop': interval[1]} for interval in notable_intervals]
-        # Handle open slots
-        calendar = leaves_mapping.get(False, company_leaves)
-        notable_intervals = filter(lambda interval: interval[1] - interval[0] >= cell_dt, calendar)
-        result[False] = [{'start': interval[0], 'stop': interval[1]} for interval in notable_intervals]
 
         return result
 
