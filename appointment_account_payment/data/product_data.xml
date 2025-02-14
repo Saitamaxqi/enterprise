@@ -7,7 +7,7 @@
         <field name="list_price">50.00</field>
         <field name="type">service</field>
         <field name="purchase_ok" eval="False"/>
-        <field name="categ_id" ref="product.product_category_services"/>
+        <field name="categ_id" eval="ref('product.product_category_services', raise_if_not_found=False)"/>
         <field name="image_1920" type="base64" file="appointment_account_payment/static/src/img/booking_product.png"/>
     </record>
 </data></odoo>
