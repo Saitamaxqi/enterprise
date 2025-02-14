@@ -216,8 +216,8 @@ class AccountChartTemplate(models.AbstractModel):
         rules_mapping[rule]['credit'] = '5000'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_2060')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '5000'
+        rules_mapping[rule]['debit'] = '5000'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_2065')
         rules_mapping[rule]['debit'] = '1090'
@@ -296,20 +296,20 @@ class AccountChartTemplate(models.AbstractModel):
         rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5010')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2270'
+        rules_mapping[rule]['debit'] = '2270'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5020')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2270'
+        rules_mapping[rule]['debit'] = '2270'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5400')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2270'
+        rules_mapping[rule]['debit'] = '2270'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_compl_ac')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2270'
+        rules_mapping[rule]['debit'] = '2270'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_7400')
         rules_mapping[rule]['debit'] = '5700'
@@ -348,24 +348,24 @@ class AccountChartTemplate(models.AbstractModel):
         rules_mapping[rule]['credit'] = '2273'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5040')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2273'
+        rules_mapping[rule]['debit'] = '2273'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_laac1')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2273'
+        rules_mapping[rule]['debit'] = '2273'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_laac_2')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2273'
+        rules_mapping[rule]['debit'] = '2273'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_ijm_1')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2274'
+        rules_mapping[rule]['debit'] = '2274'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_ijm_2')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2274'
+        rules_mapping[rule]['debit'] = '2274'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_ijm_comp_1')
         rules_mapping[rule]['debit'] = '5740'
@@ -376,68 +376,72 @@ class AccountChartTemplate(models.AbstractModel):
         rules_mapping[rule]['credit'] = '2274'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_5050')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2271'
+        rules_mapping[rule]['debit'] = '2271'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_7050')
         rules_mapping[rule]['debit'] = '5720'
         rules_mapping[rule]['credit'] = '2271'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_5111')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '5720'
+        rules_mapping[rule]['debit'] = '5720'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_5112')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '5720'
+        rules_mapping[rule]['debit'] = '5720'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_5051')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2271'
+        rules_mapping[rule]['debit'] = '2271'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_hr_elm_7051')
         rules_mapping[rule]['debit'] = '5720'
         rules_mapping[rule]['credit'] = '2271'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5061')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2279'
+        rules_mapping[rule]['debit'] = '2279'
+        rules_mapping[rule]['credit'] = '1090'
+
+        rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5061_nk')
+        rules_mapping[rule]['debit'] = '2279'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5060')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2279'
+        rules_mapping[rule]['debit'] = '2279'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5070')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '2272'
+        rules_mapping[rule]['debit'] = '2272'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_7070')
         rules_mapping[rule]['debit'] = '5710'
         rules_mapping[rule]['credit'] = '2272'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5080')
-        rules_mapping[rule]['debit'] = '5891'
-        rules_mapping[rule]['credit'] = '1090'
+        rules_mapping[rule]['debit'] = '1090'
+        rules_mapping[rule]['credit'] = '5891'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5100')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '5800'
+        rules_mapping[rule]['debit'] = '5800'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5110')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '5000'
+        rules_mapping[rule]['debit'] = '5000'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5310')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '1091'
+        rules_mapping[rule]['debit'] = '1091'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_7310')
         rules_mapping[rule]['debit'] = '1090'
         rules_mapping[rule]['credit'] = '1091'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5300')
-        rules_mapping[rule]['debit'] = '1090'
-        rules_mapping[rule]['credit'] = '1091'
+        rules_mapping[rule]['debit'] = '1091'
+        rules_mapping[rule]['credit'] = '1090'
 
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_7300')
         rules_mapping[rule]['debit'] = '1090'
