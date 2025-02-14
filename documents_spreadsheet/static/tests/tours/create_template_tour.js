@@ -10,7 +10,11 @@ registry.category("web_tour.tours").add("documents_spreadsheet_create_template_t
     steps: () => [
         ...stepUtils.goToAppSteps("documents.menu_root", "Open Document app"),
         {
-            trigger: '.o_search_panel_label_title:contains("Company)',
+            trigger: '.o_documents_title:contains("Folders")',
+            content: "check if the folders are loaded",
+        },
+        {
+            trigger: '.o_search_panel_category_value:contains("Company).o_toggle_fold',
             content: "Select parent folder",
             run: "click",
         },
