@@ -29,7 +29,9 @@ class ResConfigSettings(models.TransientModel):
 
     @api.depends('company_id')
     def _compute_show_barcode_nomenclature(self):
-        self.show_barcode_nomenclature = self.module_stock_barcode and self.env['barcode.nomenclature'].search_count([]) > 1
+        barcode_nomenclature_count = self.env['barcode.nomenclature'].search_count([])
+        for rec in self:
+            rec.show_barcode_nomenclature = rec.module_stock_barcode and barcode_nomenclature_count > 1
 
     @api.depends('company_id')
     def _compute_stock_barcode_demo_active(self):
