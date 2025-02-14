@@ -492,26 +492,11 @@ export class GanttRenderer extends Component {
     }
 
     get controlsProps() {
-        const hasFoldableColumns =
-            this.model.metaData.displayUnavailability && this.foldableColumns.includes(1);
         return {
             displayExpandCollapseButtons: this.rows[0]?.isGroup, // all rows on same level have same type
             model: this.model,
-            hasFoldableColumns,
-            offHoursFolded: this.allColumnsFolded,
             focusToday: () => this.focusToday(),
             getCurrentFocusDate: () => this.getCurrentFocusDate(),
-            foldOffHours: () => {
-                delete this.offHoursState.foldedColumns;
-                this.offHoursState.focusedDate = this.getCurrentFocusDate();
-                this.computeFoldedGrid();
-            },
-            unfoldOffHours: () => {
-                const focusedDate = this.getCurrentFocusDate();
-                this.offHoursState.foldedColumns = Array(this.columnCount).fill(0);
-                this.computeFoldedGrid();
-                this.offHoursState.focusedDate = focusedDate;
-            },
         };
     }
 
@@ -1059,8 +1044,6 @@ export class GanttRenderer extends Component {
 
         if (displayUnavailability) {
             this.computeUnavailabilityPeriods();
-        }
-        if (this.offHoursState.foldedGridColumnSpans || this.model.metaData.fold) {
             this.computeFoldedGrid();
         }
         this.shouldComputeSomeWidths = true;

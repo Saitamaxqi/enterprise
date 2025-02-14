@@ -36,14 +36,6 @@
                     Display Total row
                 </Property>
                 <Property
-                    name="'fold'"
-                    value="modelParams.fold === true"
-                    type="'boolean'"
-                    onChange.bind="onViewAttributeChanged"
-                >
-                    Fold unavailabilities by default
-                </Property>
-                <Property
                     name="'date_start'"
                     type="'selection'"
                     value="modelParams.dateStartField"

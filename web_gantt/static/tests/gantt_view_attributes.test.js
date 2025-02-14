@@ -785,26 +785,7 @@ test(`Fold unavailabilities ("day": "hours:quarter")`, async () => {
         arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" scales="day" default_range="day" precision="{'day': 'hours:quarter'}"/>`,
     });
     await contains(".o_content").scroll({ left: 0 });
-    const { columnHeaders: initialColumnHeaders, groupHeaders: initialGroupHeaders } =
-        getGridContent({ setTitleAttrOnHeaders: true });
-    expect(initialColumnHeaders).toHaveLength(38);
-    expect(initialColumnHeaders.some((col) => col.title === "")).toBe(false);
-    expect(initialGroupHeaders).toEqual([
-        {
-            range: [1, 97],
-            title: "December 19, 2018",
-            titleAttr: "Wednesday, December 19, 2018",
-        },
-        {
-            range: [97, 193],
-            title: "December 20, 2018",
-            titleAttr: "Thursday, December 20, 2018",
-        },
-    ]);
-    expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(0);
-    await contains(SELECTORS.scaleSelectorToggler).click();
-    await contains(".o-dropdown-item:contains(Fold off hours)").click();
-    let { columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true });
+    const { columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true });
     expect(columnHeaders).toHaveLength(28);
     expect(groupHeaders).toEqual(
         [
@@ -863,11 +844,6 @@ test(`Fold unavailabilities ("day": "hours:quarter")`, async () => {
         message:
             "Folded cells have similar width compared to regular cells besides covering a wider date range",
     });
-    await contains(SELECTORS.scaleSelectorToggler).click();
-    await contains(".o-dropdown-item:contains(Unfold off hours)").click();
-    ({ columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true }));
-    expect(columnHeaders).toEqual(initialColumnHeaders);
-    expect(groupHeaders).toEqual(initialGroupHeaders);
 });
 
 test(`Fold unavailabilities ("month": "day:half")`, async () => {
@@ -894,25 +870,7 @@ test(`Fold unavailabilities ("month": "day:half")`, async () => {
         arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="month" scales="month" precision="{'month': 'day:half'}"/>`,
     });
     await contains(".o_content").scroll({ left: 0 });
-    let { columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true });
-    expect(columnHeaders).toHaveLength(31);
-    expect(columnHeaders.some((col) => col.title === "")).toBe(false);
-    expect(groupHeaders).toEqual([
-        {
-            range: [1, 61],
-            title: "November 2018",
-            titleAttr: "November 2018",
-        },
-        {
-            range: [61, 123],
-            title: "December 2018",
-            titleAttr: "December 2018",
-        },
-    ]);
-    expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(0);
-    await contains(SELECTORS.scaleSelectorToggler).click();
-    await contains(".o-dropdown-item:contains(Fold off hours)").click();
-    ({ columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true }));
+    const { columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true });
     expect(columnHeaders).toHaveLength(31);
     expect(groupHeaders).toEqual([
         {
@@ -966,65 +924,6 @@ test(`Fold unavailabilities ("month": "day:half")`, async () => {
         message:
             "Folded cells have similar width compared to regular cells besides covering a wider date range",
     });
-    await contains(SELECTORS.scaleSelectorToggler).click();
-    await contains(".o-dropdown-item:contains(Unfold off hours)").click();
-    expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(0);
-});
-
-test(`fold attribute`, async () => {
-    Tasks._records = [Tasks._records[3]]; // id: 4
-    const unavailabilities = [
-        // in utc
-        {
-            start: "2018-12-18 16:00:00",
-            stop: "2018-12-19 07:00:00",
-        },
-        {
-            start: "2018-12-19 11:00:00",
-            stop: "2018-12-19 12:25:00",
-        },
-        {
-            start: "2018-12-19 16:15:00",
-            stop: "2018-12-20 08:00:00",
-        },
-        {
-            start: "2018-12-20 16:15:00",
-            stop: "2018-12-22 08:00:00",
-        },
-    ];
-    onRpc("get_gantt_data", ({ kwargs, parent }) => {
-        expect(kwargs.unavailability_fields).toEqual([]);
-        const result = parent();
-        result.unavailabilities = { __default: { false: unavailabilities } };
-        return result;
-    });
-    await mountGanttView({
-        resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" fold="1" default_range="day" scales="day" precision="{'day': 'hours:quarter'}"/>`,
-    });
-    const { columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true });
-    expect(columnHeaders).toHaveLength(28);
-    expect(groupHeaders).toEqual(
-        [
-            {
-                range: [1, 97],
-                title: "December 19, 2018",
-                titleAttr: "Wednesday, December 19, 2018",
-            },
-            {
-                range: [97, 193],
-                title: "December 20, 2018",
-                titleAttr: "Thursday, December 20, 2018",
-            },
-            {
-                range: [193, 289],
-                title: "",
-                titleAttr: "",
-            },
-        ],
-        { message: "Last group's title is hidden since all of its content is folded" }
-    );
-    expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(3);
 });
 
 test(`Fold unavailabilities with multiple rows`, async () => {
@@ -1049,7 +948,7 @@ test(`Fold unavailabilities with multiple rows`, async () => {
     });
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" fold="1" default_range="day" scales="day" precision="{'day': 'hours:quarter'}"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="day" scales="day" precision="{'day': 'hours:quarter'}"/>`,
         groupBy: ["user_id"],
         domain: [["id", "in", [4, 7]]],
     });
@@ -1124,7 +1023,7 @@ test(`Partial fold/unfold in gantt`, async () => {
     });
     await mountGanttView({
         resModel: "tasks",
-        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" fold="1" default_range="day" scales="day" precision="{'day': 'hours:quarter'}"/>`,
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="day" scales="day" precision="{'day': 'hours:quarter'}"/>`,
     });
     setCellParts(4);
     await contains(".o_content").scroll({ left: 0 });
@@ -1196,12 +1095,6 @@ test(`Partial fold/unfold in gantt`, async () => {
         colSpan: "5pm (3/4) December 19, 2018 -> 3am December 20, 2018",
         level: 0,
     });
-    await contains(".o_gantt_header_cell:eq(0)").click();
-    await contains(SELECTORS.scaleSelectorToggler).click();
-    expect(".o_popover .dropdown-item:eq(2)").toHaveText("Fold off hours");
-    await contains(".o_gantt_header_cell:eq(22)").click();
-    await contains(SELECTORS.scaleSelectorToggler).click();
-    expect(".o_popover .dropdown-item:eq(2)").toHaveText("Unfold off hours");
 });
 
 test("default_group_by attribute", async () => {

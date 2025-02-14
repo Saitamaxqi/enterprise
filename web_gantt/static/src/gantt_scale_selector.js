@@ -15,10 +15,6 @@ export class GanttScaleSelector extends ViewScaleSelector {
         startDate: DateTime,
         stopDate: DateTime,
         selectCustomRange: Function,
-        hasFoldableColumns: Boolean,
-        offHoursFolded: Boolean,
-        foldOffHours: Function,
-        unfoldOffHours: Function,
     };
 
     setup() {
