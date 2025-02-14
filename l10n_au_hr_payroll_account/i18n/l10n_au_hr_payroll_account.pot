@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.1alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-19 12:42+0000\n"
-"PO-Revision-Date: 2024-12-19 12:42+0000\n"
+"POT-Creation-Date: 2025-04-01 05:22+0000\n"
+"PO-Revision-Date: 2025-04-01 05:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,14 +19,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_au_hr_payroll_account/models/l10n_au_stp.py:0
 msgid "- %(field)s for Employee %(name)s.\n"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.view_hr_payslip_form
-msgid ""
-"<span class=\"o_stat_text\">\n"
-"                            STP Submission\n"
-"                        </span>"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -57,7 +49,17 @@ msgstr ""
 
 #. module: l10n_au_hr_payroll_account
 #: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.hr_payslip_run_form_inherit_l10n_au_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.view_hr_payslip_form
 msgid "<span class=\"o_stat_text\">STP Submission</span>"
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.l10n_au_stp_form_wizard
+msgid ""
+"<span>\n"
+"                            Please note that the ATO expects payment of wages to be processed on the payment date\n"
+"                            indicated below.\n"
+"                        </span>"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -90,8 +92,22 @@ msgstr ""
 
 #. module: l10n_au_hr_payroll_account
 #. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/models/l10n_au_stp.py:0
+msgid "A Full File Replacement must have a previous report."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#. odoo-python
 #: code:addons/l10n_au_hr_payroll_account/models/hr_payslip.py:0
 msgid "A payslip cannot be reset to draft after submitting to ATO."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/models/l10n_au_payslip_ytd.py:0
+msgid ""
+"A record for %(rule)s rule for %(employee)s already exists for the selected "
+"fiscal year. Please update that before creating new one."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -105,6 +121,14 @@ msgstr ""
 #. module: l10n_au_hr_payroll_account
 #: model:ir.model.constraint,message:l10n_au_hr_payroll_account.constraint_l10n_au_stp_l10n_au_l10n_au_previous_report
 msgid "A report can't update iself."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/wizard/l10n_au_stp_ffr.py:0
+msgid ""
+"A submission can only be replaced once. Please use an update event for "
+"further modifications."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -186,8 +210,17 @@ msgid "Amount Total"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
-#: model:ir.model.constraint,message:l10n_au_hr_payroll_account.constraint_l10n_au_previous_payroll_transfer_employee_unique_empl_e943300c
-msgid "An employee can only be transferred once per Income Stream Type."
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/models/l10n_au_super_stream.py:0
+#: code:addons/l10n_au_hr_payroll_account/wizard/account_payment_register.py:0
+msgid ""
+"An Outstanding Payments Account for the payment method '%(payment_method)s' is required to allow reconciliation.\n"
+"Please select one under Accounting > Configuration > Journals > '%(journal)s' > Outgoing Payments"
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#: model:ir.model.constraint,message:l10n_au_hr_payroll_account.constraint_l10n_au_previous_payroll_transfer_employee_unique_employee_transfer
+msgid "An employee can only be transferred once."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -225,6 +258,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp__message_attachment_count
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_stream__message_attachment_count
 msgid "Attachment Count"
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard_emp__available_employee_ids
+msgid "Available Employee"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -268,6 +306,12 @@ msgid "Batch Payment"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/wizard/account_payment_register.py:0
+msgid "Batch payment for %(amount)s done at %(batch)s"
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_stream_line__benefit_category_text
 msgid "Benefit Category Text"
 msgstr ""
@@ -302,9 +346,8 @@ msgid "Child Contributions Amount"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_payslip_ytd__l10n_au_income_stream_type__chp
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_previous_payroll_transfer_employee__l10n_au_income_stream_type__chp
-msgid "Closely held payees"
+#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payslip_ytd__code
+msgid "Code"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -443,14 +486,6 @@ msgid "Description"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_account_batch_payment__display_name
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_account_chart_template__display_name
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_account_payment_register__display_name
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_contract__display_name
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payroll_payment_report_wizard__display_name
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payslip__display_name
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payslip_line__display_name
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payslip_run__display_name
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard_emp__display_name
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payslip_ytd__display_name
@@ -494,8 +529,10 @@ msgid "EOFY Finalisation - %s"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
+#: model:ir.model,name:l10n_au_hr_payroll_account.model_hr_employee
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard_emp__employee_id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payslip_ytd__employee_id
+#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payslip_ytd_input__employee_id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_previous_payroll_transfer_employee__employee_id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp_emp__employee_id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_stream_line__employee_id
@@ -509,6 +546,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_au_hr_payroll_account/models/l10n_au_stp.py:0
 msgid "Employee %s has more than one payslip in the report."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/wizard/l10n_au_payroll_finalisation.py:0
+msgid "Employee %s has no phone number set."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -641,6 +684,8 @@ msgstr ""
 #. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payslip__l10n_au_finalised
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payslip_ytd__finalised
+#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.l10n_au_payslip_ytd_search
+#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.view_hr_payslip_filter
 msgid "Finalised"
 msgstr ""
 
@@ -651,6 +696,7 @@ msgstr ""
 
 #. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard__fiscal_year
+#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.l10n_au_payslip_ytd_search
 msgid "Fiscal Year"
 msgstr ""
 
@@ -683,12 +729,6 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_au_hr_payroll_account.field_l10n_au_stp__activity_type_icon
 #: model:ir.model.fields,help:l10n_au_hr_payroll_account.field_l10n_au_super_stream__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_payslip_ytd__l10n_au_income_stream_type__fei
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_previous_payroll_transfer_employee__l10n_au_income_stream_type__fei
-msgid "Foreign employment income"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -757,14 +797,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_account_batch_payment__id
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_account_chart_template__id
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_account_payment_register__id
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_contract__id
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payroll_payment_report_wizard__id
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payslip__id
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payslip_line__id
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payslip_run__id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard__id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard_emp__id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payslip_ytd__id
@@ -776,7 +808,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp_ffr_payslip__id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp_ffr_wizard__id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp_submit__id
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_fund__id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_stream__id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_stream_line__id
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_res_company__id
@@ -811,8 +842,16 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
+#: model:ir.model.fields,help:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard_emp__contract_active
+msgid ""
+"If the active field is set to False, it will allow you to hide the resource "
+"record without removing it."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
 #: model:ir.actions.act_window,name:l10n_au_hr_payroll_account.action_open_transfer_previous_payroll
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_previous_payroll_transfer_employee__import_ytd
+#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.l10n_au_payslip_ytd_list
 #: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.res_config_settings_view_form
 msgid "Import YTD Balances"
 msgstr ""
@@ -820,27 +859,6 @@ msgstr ""
 #. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_super_stream__state__processing
 msgid "In Process"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.l10n_au_previous_payroll_transfer_form
-msgid ""
-"In case an employee switched income stream type during this financial year\n"
-"                    (e.g. \"working holiday maker\" to \"salary &amp; wages\"), make sure to create\n"
-"                    an extra line for that employee with the additional income stream type."
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_payslip_ytd__l10n_au_income_stream_type__iaa
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_previous_payroll_transfer_employee__l10n_au_income_stream_type__iaa
-msgid "Inbound assignees to Australia"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payslip_ytd__l10n_au_income_stream_type
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_previous_payroll_transfer_employee__l10n_au_income_stream_type
-#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.l10n_au_payslip_ytd_search
-msgid "Income Stream Type"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -900,6 +918,11 @@ msgid "Is Latest"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
+#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp__is_not_paid
+msgid "Is Not Paid"
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp__is_replaced
 msgid "Is Replaced"
 msgstr ""
@@ -912,12 +935,6 @@ msgstr ""
 #. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields,help:l10n_au_hr_payroll_account.field_hr_payslip_run__l10n_au_stp_status
 msgid "Is the payslip ready for STP submission?"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_payslip_ytd__l10n_au_income_stream_type__jpd
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_previous_payroll_transfer_employee__l10n_au_income_stream_type__jpd
-msgid "Joint petroleum development area"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -936,6 +953,7 @@ msgid "L10N Au Previous Payroll Transfer Employee"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
+#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payslip__l10n_au_stp_count
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payslip_run__l10n_au_stp_count
 msgid "L10N Au Stp Count"
 msgstr ""
@@ -943,12 +961,6 @@ msgstr ""
 #. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_stream_line__l10n_au_super_stream_id
 msgid "L10N Au Super Stream"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_payslip_ytd__l10n_au_income_stream_type__lab
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_previous_payroll_transfer_employee__l10n_au_income_stream_type__lab
-msgid "Labour hire"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -996,6 +1008,11 @@ msgid "Locked"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
+#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.l10n_au_payslip_ytd_list
+msgid "Mark as Finalised"
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_stream_line__member_registration_amendment_reason_text
 msgid "Member Registration Amendment Reason Text"
 msgstr ""
@@ -1031,10 +1048,14 @@ msgstr ""
 #. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard__name
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp__name
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_fund__display_name
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_stream__name
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_stream_line__name
 msgid "Name"
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_payslip__net_wage
+msgid "Net Wage"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -1135,13 +1156,6 @@ msgid "Opening Balances"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
-#: model:ir.model.constraint,message:l10n_au_hr_payroll_account.constraint_l10n_au_payslip_ytd_unique_employee
-msgid ""
-"Opening balances for an employee with the same income stream type can only "
-"be imported once."
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_payslip_ytd_input__res_model__hr_payslip_input_type
 msgid "Other Input"
 msgstr ""
@@ -1149,12 +1163,6 @@ msgstr ""
 #. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_stream_line__other_third_party_contributions_amount
 msgid "Other Third Party Contributions Amount"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_payslip_ytd__l10n_au_income_stream_type__osp
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_previous_payroll_transfer_employee__l10n_au_income_stream_type__osp
-msgid "Other specified payments"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -1171,14 +1179,6 @@ msgstr ""
 #. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_super_stream_line__employment_status_code__part_time
 msgid "Part time"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#. odoo-python
-#: code:addons/l10n_au_hr_payroll_account/wizard/l10n_au_payroll_finalisation.py:0
-msgid ""
-"Past finalisations can only be done for the complete year please select EOFY"
-" finalisation."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -1213,6 +1213,11 @@ msgid "Payment Batch"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
+#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.l10n_au_stp_form_wizard
+msgid "Payment Date"
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
 #: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.view_account_payment_register_form_inherit
 msgid ""
 "Payments related to employee(s) with no bank account specified will be "
@@ -1225,7 +1230,6 @@ msgid "Payroll Structure"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard_emp__payslip_ids
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp__payslip_ids
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp_emp__payslip_ids
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp_ffr_payslip__payslip_id
@@ -1249,6 +1253,21 @@ msgid "Payslip Line"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/models/hr_payslip.py:0
+msgid "Payslip or Employee is required to compute YTD totals."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/wizard/l10n_au_stp_ffr.py:0
+msgid ""
+"Payslip(s) have been reset for Full File Replacement. Please verify the "
+"payslip batch before resubmitting."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard_emp__payslip_ids
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp_ffr_wizard__ffr_payslip_ids
 #: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.l10n_au_stp_emp_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.l10n_au_stp_ffr_view_form
@@ -1318,6 +1337,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_au_hr_payroll_account/models/l10n_au_super_stream.py:0
 msgid "Please select a payment journal before locking this document."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/wizard/l10n_au_payroll_finalisation.py:0
+msgid "Please select at least one employee to Finalise / Unfinalise."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/models/l10n_au_stp.py:0
+msgid "Please set a Payment Date before submitting the report to ATO."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -1455,8 +1486,6 @@ msgid "STP Full File Replacement Wizard"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
-#. odoo-python
-#: code:addons/l10n_au_hr_payroll_account/models/hr_payslip.py:0
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp_submit__l10n_au_stp_id
 msgid "STP Report"
 msgstr ""
@@ -1490,18 +1519,6 @@ msgid "Salary Sacrificed Amount"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_payslip_ytd__l10n_au_income_stream_type__saw
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_previous_payroll_transfer_employee__l10n_au_income_stream_type__saw
-msgid "Salary and wages"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_payslip_ytd__l10n_au_income_stream_type__swp
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_previous_payroll_transfer_employee__l10n_au_income_stream_type__swp
-msgid "Seasonal worker programme"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_super_stream_line__sender_id
 msgid "Sender"
 msgstr ""
@@ -1523,6 +1540,7 @@ msgstr ""
 
 #. module: l10n_au_hr_payroll_account
 #. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/models/hr_payslip.py:0
 #: code:addons/l10n_au_hr_payroll_account/models/hr_payslip_run.py:0
 #: model:ir.actions.act_window,name:l10n_au_hr_payroll_account.l10n_au_stp_action
 #: model:ir.model,name:l10n_au_hr_payroll_account.model_l10n_au_stp
@@ -1797,11 +1815,10 @@ msgid "The branch code of the company, if any."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
-#. odoo-python
-#: code:addons/l10n_au_hr_payroll_account/models/res_company.py:0
+#: model:ir.model.fields,help:l10n_au_hr_payroll_account.field_l10n_au_payslip_ytd__code
 msgid ""
-"The contract for employee %(employee)s might be archived or deleted. Please "
-"unarchive it first to proceed."
+"The code of salary rules can be used as reference in computation of other "
+"rules. In that case, it is case sensitive."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -1839,30 +1856,47 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_au_hr_payroll_account/models/l10n_au_stp.py:0
 msgid ""
-"The replacement report has been submitted less than 24 hours ago. Please try"
-" again later."
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#. odoo-python
-#: code:addons/l10n_au_hr_payroll_account/models/l10n_au_stp.py:0
-msgid ""
 "The report must be in the 'Submitted' state to replace the file. Please make"
 " any modifications before proceeding with submission."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
 #. odoo-python
-#: code:addons/l10n_au_hr_payroll_account/wizard/l10n_au_previous_payroll_transfer.py:0
-msgid "This company already has a previous BMS ID set."
+#: code:addons/l10n_au_hr_payroll_account/models/hr_payslip.py:0
+msgid ""
+"There are existing STP records for the following employee(s) at a later date. Please remove them from this batch, create a separate batch with these employees and proceed with another submission (update event).\n"
+"%s"
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/models/l10n_au_stp_emp.py:0
+#: code:addons/l10n_au_hr_payroll_account/wizard/l10n_au_payroll_finalisation.py:0
+msgid ""
+"There is no data to finalise for employee %s for the selected Fiscal year. "
+"Please unfinalise the employee to make any adjustments."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/models/l10n_au_stp_emp.py:0
+#: code:addons/l10n_au_hr_payroll_account/wizard/l10n_au_payroll_finalisation.py:0
+msgid ""
+"There is no data to unfinalise for employee %s for the selected Fiscal year."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
 #. odoo-python
 #: code:addons/l10n_au_hr_payroll_account/models/hr_payslip.py:0
 msgid ""
-"This company does not have an employee responsible for managing "
-"SuperStream.You can set one in Payroll > Configuration > Settings."
+"This company does not have an employee responsible for managing SuperStream."
+" You can set one in Payroll > Configuration > Settings."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/models/l10n_au_stp_emp.py:0
+msgid "This employee has no payslips for the Current."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -1974,12 +2008,6 @@ msgid "Voluntary Amount"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_payslip_ytd__l10n_au_income_stream_type__vol
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_previous_payroll_transfer_employee__l10n_au_income_stream_type__vol
-msgid "Voluntary agreement"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
 #. odoo-python
 #: code:addons/l10n_au_hr_payroll_account/models/hr_payslip.py:0
 msgid "Warning"
@@ -2025,12 +2053,6 @@ msgid "Work Entry Type"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_payslip_ytd__l10n_au_income_stream_type__whm
-#: model:ir.model.fields.selection,name:l10n_au_hr_payroll_account.selection__l10n_au_previous_payroll_transfer_employee__l10n_au_income_stream_type__whm
-msgid "Working holiday makers"
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp__xml_file
 msgid "XML File"
 msgstr ""
@@ -2053,6 +2075,8 @@ msgstr ""
 
 #. module: l10n_au_hr_payroll_account
 #: model:ir.actions.act_window,name:l10n_au_hr_payroll_account.action_open_payslip_ytd
+#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_hr_employee__ytd_balance_ids
+#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard_emp__ytd_balance_ids
 #: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_stp_emp__ytd_balance_ids
 msgid "YTD Balances"
 msgstr ""
@@ -2076,6 +2100,11 @@ msgid "YTD Opening Balances Inputs"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
+#: model_terms:ir.ui.view,arch_db:l10n_au_hr_payroll_account.view_hr_payslip_filter
+msgid "Yet to be finalised"
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
 #. odoo-python
 #: code:addons/l10n_au_hr_payroll_account/models/hr_payslip_run.py:0
 msgid "You can only register payment for posted journal entries."
@@ -2085,8 +2114,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_au_hr_payroll_account/models/l10n_au_payslip_ytd.py:0
 msgid ""
-"You can't create or update YTD opening balances for %(employees)s, because "
-"there are validated payslips for these employee(s)."
+"You can't create or update YTD opening balances for %s, because there are "
+"validated payslips for this employee during the selected fiscal year."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -2094,6 +2123,14 @@ msgstr ""
 #: code:addons/l10n_au_hr_payroll_account/models/l10n_au_super_stream.py:0
 msgid ""
 "You can't generate a new SAFF file while the super stream is in %s state."
+msgstr ""
+
+#. module: l10n_au_hr_payroll_account
+#. odoo-python
+#: code:addons/l10n_au_hr_payroll_account/models/account_batch_payment.py:0
+msgid ""
+"You cannot delete a Payroll payment record once it is done! Please create a "
+"credit note to refund the payment."
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account
@@ -2120,11 +2157,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_au_hr_payroll_account/wizard/l10n_au_stp_submit.py:0
 msgid "You need to accept the terms and conditions to submit the STP report."
-msgstr ""
-
-#. module: l10n_au_hr_payroll_account
-#: model:ir.model.fields,field_description:l10n_au_hr_payroll_account.field_l10n_au_payroll_finalisation_wizard_emp__ytd_balance_ids
-msgid "Ytd Balance"
 msgstr ""
 
 #. module: l10n_au_hr_payroll_account

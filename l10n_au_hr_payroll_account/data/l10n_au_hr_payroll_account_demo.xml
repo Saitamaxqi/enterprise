@@ -130,7 +130,7 @@
         <field name="company_id" ref="base.demo_company_au"/>
         <field name="user_id" ref="l10n_au_hr_payroll_account.user_dennis"/>
         <field name="l10n_au_tfn_declaration">provided</field>
-        <field name="l10n_au_tfn">141592653</field>
+        <field name="l10n_au_tfn">999999854</field>
     </record>
 
     <record id="hr_contract_cdi_dennis_previous" model="hr.contract">

@@ -98,6 +98,7 @@ class L10n_AuStp(models.Model):
     start_date = fields.Date("Start Date", inverse="_fiscal_start_date", default=_default_start_date)
     end_date = fields.Date("End Date", compute="_compute_end_date", store=True, readonly=False)
     is_zeroing = fields.Boolean("Zero Out YTD")
+    is_not_paid = fields.Boolean(compute="_compute_is_not_paid")
 
     # constraints ffr, cannot be true if type is update
     _ffr = models.Constraint(
@@ -115,9 +116,15 @@ class L10n_AuStp(models.Model):
         for rec in res:
             rec.activity_schedule(
                 "l10n_au_hr_payroll_account.l10n_au_activity_submit_stp",
+                date_deadline=self.env.context.get("finalization_deadline", rec.submit_date),
                 user_id=rec.company_id.l10n_au_stp_responsible_id.user_id.id
             )
         return res
+
+    def write(self, vals):
+        if vals.get("payevent_type") == "submit":
+            vals['is_zeroing'] = False
+        return super().write(vals)
 
     def _fiscal_start_date(self):
         for rec in self:
@@ -140,7 +147,9 @@ class L10n_AuStp(models.Model):
     @api.depends("payslip_ids", "payslip_batch_id")
     def _compute_currency_id(self):
         for report in self:
-            if report.payslip_batch_id:
+            if report.payevent_type == "update":
+                report.currency_id = report.company_id.currency_id
+            elif report.payslip_batch_id:
                 report.currency_id = report.payslip_batch_id.currency_id
             else:
                 report.currency_id = report.payslip_ids[:1].currency_id
@@ -162,14 +171,14 @@ class L10n_AuStp(models.Model):
             if report.ffr:
                 report.name += " (FFR)"
 
-    @api.depends("payevent_type", "l10n_au_stp_emp")
+    @api.depends("payevent_type", "payslip_ids", "l10n_au_stp_emp.payslip_ids", "l10n_au_stp_emp.ytd_balance_ids")
     def _compute_submit_date(self):
         for report in self:
             if report.payevent_type == "submit":
                 if report.payslip_ids:
-                    report.submit_date = report.payslip_batch_id.date_end if report.payslip_batch_id else report.payslip_ids[0].date_to
+                    report.submit_date = False
             elif report.payevent_type == "update":
-                if not report.l10n_au_stp_emp:
+                if not report.l10n_au_stp_emp.payslip_ids:
                     report.submit_date = date.today()
                 elif report._is_for_current_fiscal_year():
                     report.submit_date = fields.Date.today()
@@ -208,6 +217,13 @@ class L10n_AuStp(models.Model):
         for report in self:
             report.is_latest = self.search([("state", "=", "sent")], order="id desc", limit=1) == report
 
+    def _compute_is_not_paid(self):
+        for report in self:
+            if report.payslip_batch_id:
+                report.is_not_paid = report.payslip_batch_id.state != 'paid'
+            else:
+                report.is_not_paid = any(report.payslip_ids.filtered(lambda p: p.state != 'paid'))
+
     def _get_fiscal_year_start(self):
         self.ensure_one()
         slips = self.payslip_ids if self.payevent_type == 'submit' else self.l10n_au_stp_emp.payslip_ids
@@ -225,6 +241,12 @@ class L10n_AuStp(models.Model):
                 fiscal_start, fiscal_end = report._get_fiscal_year_start()
                 if report.submit_date < fiscal_start or report.submit_date > fiscal_end:
                     raise ValidationError(_("An update event must be submitted within the same fiscal year."))
+
+    @api.constrains("ffr", "previous_report_id")
+    def _check_ffr(self):
+        for report in self:
+            if report.ffr and not report.previous_report_id:
+                raise ValidationError(_("A Full File Replacement must have a previous report."))
 
     def _is_for_current_fiscal_year(self):
         fiscal_start, fiscal_end = self._get_fiscal_year_start()
@@ -265,29 +287,34 @@ class L10n_AuStp(models.Model):
     def _get_complex_rendering_data(self):
         payslips_ids = self.payslip_ids if self.payevent_type == 'submit' else self.l10n_au_stp_emp.payslip_ids
         employees = payslips_ids.employee_id
+        rounding = self.currency_id.rounding
 
         # == Date and Run Date ==
         if self.payevent_type == "submit":
-            run_date = self.payslip_batch_id.payment_report_date or self.create_date
-            submit_date = self.payslip_batch_id.payment_report_date or self.create_date.date()
+            run_date = fields.Datetime.now()
+            submit_date = self.payslip_batch_id.payment_report_date or self.submit_date
+            if not submit_date:
+                raise ValidationError(_("Please set a Payment Date before submitting the report to ATO."))
         elif self.payevent_type == "update":
             submit_date = self.submit_date
             run_date = self.create_date
 
         # == Totals == (may not be reported in an update event)
-        line_codes = ["BASIC", "WITHHOLD.TOTAL", "CHILD.SUPPORT", "CHILD.SUPPORT.GARNISHEE", "SUPER", "SUPER.CONTRIBUTION", "OTE", "RFBA", "ETP.WITHHOLD", "ETP.TAXABLE", "ETP.TAXFREE"]
+        line_codes = ["GROSS", "ALW.TAXFREE", "WITHHOLD.TOTAL", "CHILD.SUPPORT", "CHILD.SUPPORT.GARNISHEE", "ETP.TAXABLE", "ETP.LEAVE.GROSS"]
         all_line_values = payslips_ids._get_line_values(line_codes, vals_list=['total', 'ytd'], compute_sum=True)
         extra_data = {
             "PaymentRecordTransactionD": submit_date,
-            "MessageTimestampGenerationDt": run_date.isoformat(),
+            "MessageTimestampGenerationDt": run_date.isoformat() + "Z",
         }
         if self.payevent_type == "submit":
             # These values are reported per pay period. The difference between the YTD in this and the last pay period.
+            reportable_gross = all_line_values["ETP.TAXABLE"]['sum']['total'] + all_line_values["ETP.LEAVE.GROSS"]['sum']['total'] \
+                + all_line_values["GROSS"]['sum']['total'] + all_line_values["ALW.TAXFREE"]['sum']['total']
             extra_data.update({
                 "PayAsYouGoWithholdingTaxWithheldA": abs(all_line_values["WITHHOLD.TOTAL"]['sum']['total']),
-                "TotalGrossPaymentsWithholdingA": all_line_values["BASIC"]['sum']['total'],
-                "ChildSupportGarnisheeA": abs(all_line_values["CHILD.SUPPORT.GARNISHEE"]['sum']['total']),  # TODO
-                "ChildSupportWithholdingA": abs(round(all_line_values["CHILD.SUPPORT"]['sum']['total'] - all_line_values["CHILD.SUPPORT.GARNISHEE"]['sum']['total'], 2)),
+                "TotalGrossPaymentsWithholdingA": float_round(reportable_gross, precision_rounding=rounding),
+                "ChildSupportGarnisheeA": abs(float_round(all_line_values["CHILD.SUPPORT.GARNISHEE"]['sum']['total'], precision_rounding=rounding)),  # TODO
+                "ChildSupportWithholdingA": abs(float_round(all_line_values["CHILD.SUPPORT"]['sum']['total'] - all_line_values["CHILD.SUPPORT.GARNISHEE"]['sum']['total'], precision_rounding=rounding)),
             })
         # Employees extra data reported year to date for the current financial year
         unknown_date = date(1800, 1, 1)
@@ -306,198 +333,220 @@ class L10n_AuStp(models.Model):
                 "l10n_au_extra_negotiated_super",
                 "l10n_au_extra_compulsory_super",
             ]
-            employee_ytd_totals = payslips.with_context(group_income_stream_types=True)._l10n_au_get_year_to_date_totals(fields_to_compute=tuple(fields_to_compute), zero_amount=self.is_zeroing, include_ytd_balances=True, l10n_au_include_current_slip=True)
-            employee_ytd_ungrouped = payslips._l10n_au_get_year_to_date_totals(fields_to_compute=tuple(fields_to_compute), zero_amount=self.is_zeroing, include_ytd_balances=True, l10n_au_include_current_slip=True)
+            employee_ytd_totals = payslips.with_context(group_income_stream_types=True)._l10n_au_get_year_to_date_totals(fields_to_compute=fields_to_compute, zero_amount=self.is_zeroing, include_ytd_balances=True, l10n_au_include_current_slip=True)
+            employee_ytd_ungrouped = payslips._l10n_au_get_year_to_date_totals(fields_to_compute=fields_to_compute, zero_amount=self.is_zeroing, include_ytd_balances=True, l10n_au_include_current_slip=True)
             employee_input_totals = payslips.with_context(group_income_stream_types=True)._l10n_au_get_ytd_inputs(zero_amount=self.is_zeroing, l10n_au_include_current_slip=True, include_ytd_balances=True)
             employee_input_totals_ungrouped = payslips._l10n_au_get_ytd_inputs(zero_amount=self.is_zeroing, l10n_au_include_current_slip=True, include_ytd_balances=True)
 
             start_date = max(min_date, employee.first_contract_date) or unknown_date
             remunerations = []
             deductions = []
-            for payslip in payslips:
+            for income_stream_type, employee_ytd in employee_ytd_totals.items():
                 Remuneration = defaultdict(lambda: False)
-                contract_id = payslip.contract_id
+                contract_id = payslips.contract_id
                 # == Gross, income type, paygw ==
-                Remuneration["IncomeStreamTypeC"] = payslip.l10n_au_income_stream_type
+                Remuneration["IncomeStreamTypeC"] = income_stream_type
                 # == Foreign income == (required for FEI, IAA, WHM )
-                if payslip.l10n_au_income_stream_type in ["FEI", "IAA", "WHM"]:
+                if income_stream_type in ["FEI", "IAA", "WHM"]:
                     Remuneration["AddressDetailsCountryC"] = employee.country_id.code.lower()
-                Remuneration["IncomeTaxForeignWithholdingA"] = employee_ytd['fields']['l10n_au_foreign_tax_withheld']
-                Remuneration["IndividualNonBusinessExemptForeignEmploymentIncomeA"] = employee_ytd['fields']['l10n_au_exempt_foreign_income']
+                if not self.is_zeroing:
+                    Remuneration["IncomeTaxForeignWithholdingA"] = employee_ytd['fields']['l10n_au_foreign_tax_withheld']
+                    Remuneration["IndividualNonBusinessExemptForeignEmploymentIncomeA"] = employee_ytd['fields']['l10n_au_exempt_foreign_income']
+                    ytd_gross = filter(lambda item: item[1]['payroll_code'] == "G", employee_ytd['worked_days'].items())
+                    ytd_gross_inputs = filter(
+                        lambda item: item[1]["payment_type"] in ["other", False]
+                        and item[1]["payroll_code"] == "Gross",
+                        employee_input_totals[income_stream_type].items(),
+                    )
+                    Remuneration["GrossA"] = float_round(
+                        sum(line[1]['amount'] for line in ytd_gross) + sum(line[1]['amount'] for line in ytd_gross_inputs),
+                        precision_rounding=rounding
+                    )
+                # == PAYG ==
                 Remuneration["IncomeTaxPayAsYouGoWithholdingTaxWithheldA"] = abs(employee_ytd['slip_lines']['WITHHOLD.TOTAL']['WITHHOLD.TOTAL'])
-                Remuneration["GrossA"] = employee_ytd['slip_lines']['GROSS']['GROSS']
                 # == Paid Leave ==
-                leave_lines = filter(lambda item: item[0].is_leave, employee_ytd["worked_days"].items())
+                leave_lines = filter(lambda item: item[1]['is_leave'], employee_ytd["worked_days"].items())
                 Remuneration["PaidLeaveCollection"] = []
                 for work_type, leave in leave_lines:
                     Remuneration["PaidLeaveCollection"].append({
-                        "TypeC": work_type.l10n_au_work_stp_code,
-                        "PaymentA": float_round(leave['amount'], precision_rounding=payslip.currency_id.rounding),
+                        "TypeC": leave['payroll_code'],
+                        "PaymentA": float_round(leave['amount'], precision_rounding=rounding),
                     })
-                # leave_inputs = input_lines_ids.filtered(lambda l: l.input_type_id.l10n_au_payment_type == 'leave')
-                leave_inputs = filter(lambda item: item[0].l10n_au_payment_type == 'leave', employee_input_totals.items())
+                leave_inputs = filter(lambda item: item[1]["payment_type"] == 'leave', employee_input_totals[income_stream_type].items())
                 for input_type, leave in leave_inputs:
                     Remuneration["PaidLeaveCollection"].append({
                         "TypeC": input_type.l10n_au_payroll_code,
-                        "PaymentA": float_round(leave['amount'], precision_rounding=payslip.currency_id.rounding),
+                        "PaymentA": float_round(leave['amount'], precision_rounding=rounding),
                     })
                 # == Allowance ==
                 allowance_lines = filter(
                     lambda item: (
-                        item[0].l10n_au_payment_type == "allowance"
-                        and item[0].l10n_au_payroll_code not in ["Overtime", False]
+                        item[1]["payment_type"] == "allowance"
+                        and item[1]["payroll_code"] not in ["Overtime", False]
                     ),
-                    employee_input_totals.items()
+                    employee_input_totals[income_stream_type].items()
                 )
                 Remuneration["AllowanceCollection"] = []
-                for code, allowances in groupby(allowance_lines, lambda item: (item[0].l10n_au_payroll_code, item[0].l10n_au_payroll_code_description)):
+                for code, allowances in groupby(allowance_lines, lambda item: (item[1]["payroll_code"], item[1]["payroll_code_description"])):
                     Remuneration["AllowanceCollection"].append({
                         "TypeC": code[0],
                         "OtherAllowanceTypeDe": code[1] if code[0] == "OD" else False,
                         "EmploymentAllowancesA": sum(allowance[1]['amount'] for allowance in allowances),
                     })
                 # == Overtime ==
-                overtime_lines = filter(lambda item: item[0].l10n_au_work_stp_code == "T", employee_ytd["worked_days"].items())
-                overtime_inputs = filter(lambda item: item[0].l10n_au_payroll_code == "Overtime", employee_input_totals.items())
+                overtime_lines = filter(lambda item: item[1]['payroll_code'] == "T", employee_ytd["worked_days"].items())
+                overtime_inputs = filter(lambda item: item[1]["payroll_code"] == "Overtime", employee_input_totals[income_stream_type].items())
                 Remuneration["OvertimePaymentA"] = sum([line[1]['amount'] for line in overtime_lines] + [ot[1]['amount'] for ot in overtime_inputs])
 
                 # == Bonuses and commissions ==
-                bonus_commissions_lines = filter(lambda item: item[0].l10n_au_payroll_code == "Bonus and Commissions", employee_input_totals.items())
+                bonus_commissions_lines = filter(lambda item: item[1]["payroll_code"] == "Bonus and Commissions", employee_input_totals[income_stream_type].items())
                 Remuneration["GrossBonusesAndCommissionsA"] = sum(bonus[1]['amount'] for bonus in bonus_commissions_lines)
                 # == Directors fees ==
                 directors_fee_input_type = self.env.ref("l10n_au_hr_payroll.input_gross_director_fee")
                 Remuneration["GrossDirectorsFeesA"] = sum(
                     value["amount"]
                     for _, value in filter(
-                        lambda item: item[0] == directors_fee_input_type,
-                        employee_input_totals.items(),
+                        lambda item: item[0] == directors_fee_input_type.id,
+                        employee_input_totals[income_stream_type].items(),
                     )
                 )
                 # == Salary sacrifice ==
                 Remuneration["SalarySacrificeCollection"] = []
-                if employee_ytd["fields"]["l10n_au_salary_sacrifice_superannuation"]:
+                if not self.is_zeroing and employee_ytd["fields"]["l10n_au_salary_sacrifice_superannuation"]:
                     Remuneration["SalarySacrificeCollection"].append(
-                        {"TypeC": "S", "PaymentA": float_round(employee_ytd["fields"]["l10n_au_salary_sacrifice_superannuation"], precision_rounding=payslip.currency_id.rounding)},
+                        {"TypeC": "S", "PaymentA": float_round(employee_ytd["fields"]["l10n_au_salary_sacrifice_superannuation"], precision_rounding=rounding)},
                     )
-                if employee_ytd["fields"]["l10n_au_salary_sacrifice_other"]:
+                if not self.is_zeroing and employee_ytd["fields"]["l10n_au_salary_sacrifice_other"]:
                     Remuneration["SalarySacrificeCollection"].append(
-                        {"TypeC": "O", "PaymentA": float_round(employee_ytd["fields"]["l10n_au_salary_sacrifice_other"], precision_rounding=payslip.currency_id.rounding)},
+                        {"TypeC": "O", "PaymentA": float_round(employee_ytd["fields"]["l10n_au_salary_sacrifice_other"], precision_rounding=rounding)},
                     )
                 # == Lump Sum (Loempia sum) ==
-                lump_sum_input_type = filter(lambda item: item[0].l10n_au_payment_type == 'lump_sum', employee_input_totals.items())
+                lump_sum_input_type = filter(lambda item: item[1]["payment_type"] == 'lump_sum', employee_input_totals[income_stream_type].items())
                 Remuneration["LumpSumCollection"] = []
                 for input_type, lump_sum in lump_sum_input_type:
                     Remuneration["LumpSumCollection"].append({
-                        "TypeC": input_type.l10n_au_payroll_code,
+                        "TypeC": lump_sum["payroll_code"],
                         "PaymentsA": lump_sum['amount'],
                     })
-                    if input_type.l10n_au_payroll_code == "E":
+                    if lump_sum["payroll_code"] == "E":
                         Remuneration["LumpSumCollection"][-1]["FinancialY"] = lump_sum.get("financial_year")
 
                 # == Termination Payments ==
-                Remuneration["EmploymentTerminationPaymentCollection"] = []
-                termination_inputs = filter(lambda item: item[0].l10n_au_payment_type == 'etp', employee_input_totals.items())
-                for code, input_lines in groupby(termination_inputs, lambda item: item[0].l10n_au_payroll_code):
-                    tax_free = sum(line[1]['amount'] for line in input_lines if line[0].l10n_au_etp_type == "excluded")
-                    taxable = sum(line[1]['amount'] for line in input_lines if line[0].l10n_au_etp_type != "excluded")
-                    Remuneration["EmploymentTerminationPaymentCollection"].append({
-                        "IncomePayAsYouGoWithholdingA": abs(employee_ytd['slip_lines']['WITHHOLD']['ETP.WITHHOLD']),
-                        "IncomeTaxPayAsYouGoWithholdingTypeC": code,
-                        "IncomeD": payslip.paid_date or payslip.date,
-                        "IncomeTaxableA": taxable,
-                        "IncomeTaxFreeA": tax_free,
-                    })
+                if not self.is_zeroing:
+                    Remuneration["EmploymentTerminationPaymentCollection"] = []
+                    tax_free_types = payslips._l10n_au_get_tax_free_etp_types()
+                    termination_inputs = filter(lambda item: item[1]["payment_type"] == 'etp', employee_input_totals[income_stream_type].items())
+                    for code, input_lines in groupby(termination_inputs, lambda item: item[1]["payroll_code"]):
+                        taxable = employee_ytd['slip_lines']['ETP.BASE']['ETP.TAXABLE']
+                        taxfree = employee_ytd['slip_lines']['ETP.FREE']['ETP.TAXFREE']
+                        if code == "R":
+                            tax_free_lumpsum_d = sum(line[1]['amount'] for line in input_lines if line[0] in tax_free_types.ids)
+                            tax_free_lumpsum_d = min(tax_free_lumpsum_d, taxfree)
+                            # Tax free types that are added to Lump Sum Type D < tax_free_threshold
+                            if tax_free_lumpsum_d:
+                                Remuneration["LumpSumCollection"].append({
+                                    "TypeC": "D",
+                                    "PaymentsA": tax_free_lumpsum_d,
+                                })
+                        Remuneration["EmploymentTerminationPaymentCollection"].append({
+                            "IncomePayAsYouGoWithholdingA": abs(employee_ytd['slip_lines']['WITHHOLD']['ETP.WITHHOLD']),
+                            "IncomeTaxPayAsYouGoWithholdingTypeC": code,
+                            "IncomeD": payslips.paid_date or payslips.date,
+                            "IncomeTaxableA": taxable,
+                            "IncomeTaxFreeA": taxfree,
+                        })
 
                 # == ETP Leaves ==
-                etp_leaves, total = payslip._l10n_au_get_leaves_for_withhold()
-                if payslip.l10n_au_termination_type == "normal":
+                etp_leaves, total = payslips._l10n_au_get_leaves_for_withhold()
+                if payslips.l10n_au_termination_type == "normal":
                     leave_amount_u = etp_leaves["annual"]["post_1993"] + etp_leaves["long_service"]["post_1993"]
                     if leave_amount_u:
                         Remuneration["PaidLeaveCollection"].append({
                         "TypeC": "U",
-                        "PaymentA": float_round(leave_amount_u, precision_rounding=payslip.currency_id.rounding),
+                        "PaymentA": float_round(leave_amount_u, precision_rounding=rounding),
                     })
                     lumpsum_amount_t = etp_leaves["annual"]["pre_1993"] + etp_leaves["long_service"]["pre_1993"]
                     if lumpsum_amount_t:
                         Remuneration["LumpSumCollection"].append({
                             "TypeC": "T",
-                            "PaymentsA": float_round(lumpsum_amount_t, precision_rounding=payslip.currency_id.rounding),
+                            "PaymentsA": float_round(lumpsum_amount_t, precision_rounding=rounding),
                         })
                     lumpsum_amount_b = etp_leaves["long_service"]["pre_1978"]
                     if lumpsum_amount_b:
                         Remuneration["LumpSumCollection"].append({
                             "TypeC": "B",
-                            "PaymentsA": float_round(lumpsum_amount_b, precision_rounding=payslip.currency_id.rounding),
+                            "PaymentsA": float_round(lumpsum_amount_b, precision_rounding=rounding),
                         })
-                    assert float_compare(total, leave_amount_u + lumpsum_amount_t + lumpsum_amount_b, precision_rounding=payslip.currency_id.rounding) == 0
+                    assert float_compare(total, leave_amount_u + lumpsum_amount_t + lumpsum_amount_b, precision_rounding=rounding) == 0
                 else:
                     # In case of genuine redundancy all are type R
                     if total:
                         Remuneration['LumpSumCollection'].append({
                             "TypeC": "R",
-                            "PaymentsA": float_round(total, precision_rounding=payslip.currency_id.rounding),
+                            "PaymentsA": float_round(total, precision_rounding=rounding),
                         })
 
                 remunerations.append(Remuneration)
 
-                # == DEDUCTIONS ==
-                if employee_ytd["slip_lines"]["WORK.GIVING"]["WORKPLACE.GIVING"]:
+            # == DEDUCTIONS ==
+            if not self.is_zeroing:
+                if employee_ytd_ungrouped["slip_lines"]["WORK.GIVING"]["WORKPLACE.GIVING"]:
                     deductions.append({
                         "RemunerationTypeC": "W",
-                        "RemunerationA": abs(employee_ytd["slip_lines"]["WORK.GIVING"]["WORKPLACE.GIVING"]),
+                        "RemunerationA": abs(employee_ytd_ungrouped["slip_lines"]["WORK.GIVING"]["WORKPLACE.GIVING"]),
                     })
-                child_support_garnishee = employee_ytd["slip_lines"]["CHILD.SUPPORT.GARNISHEE"]["CHILD.SUPPORT.GARNISHEE"]
+                child_support_garnishee = employee_ytd_ungrouped["slip_lines"]["CHILD.SUPPORT.GARNISHEE"]["CHILD.SUPPORT.GARNISHEE"]
                 if child_support_garnishee:
                     deductions.append({
                         "RemunerationTypeC": "G",
-                        "RemunerationA": abs(child_support_garnishee),
+                        "RemunerationA": float_round(abs(child_support_garnishee), precision_rounding=rounding),
                     })
-                child_support_deduction = employee_ytd["slip_lines"]["CHILD.SUPPORT"]["CHILD.SUPPORT"]
+                child_support_deduction = employee_ytd_ungrouped["slip_lines"]["CHILD.SUPPORT"]["CHILD.SUPPORT"] - child_support_garnishee
                 if child_support_deduction:
                     deductions.append({
                         "RemunerationTypeC": "D",
-                        "RemunerationA": abs(child_support_deduction),
+                        "RemunerationA": float_round(abs(child_support_deduction), precision_rounding=rounding),
                     })
-                deduction_inputs = filter(lambda item: item[0].l10n_au_payment_type == 'deduction', employee_input_totals.items())
+                deductions_excluded = ["CHILD_SUPPORT_GARNISHEE"]  # Already included in the Child Support Garnishee rule)
+                deduction_inputs = filter(lambda item: item[1]["payment_type"] == 'deduction' and item[1]["code"] not in deductions_excluded, employee_input_totals_ungrouped.items())
                 for input_type, deduction in deduction_inputs:
                     deductions.append({
-                        "RemunerationTypeC": input_type.l10n_au_payroll_code,
+                        "RemunerationTypeC": deduction["payroll_code"],
                         "RemunerationA": abs(deduction['amount']),
                     })
 
-                # == Super Contribution ==
-                contributions = []
-                # OTE Entitlement
-                ote = employee_ytd["slip_lines"]['OTE']['OTE']
-                if ote:
-                    contributions.append({
-                        "EntitlementTypeC": "O",
-                        "EmployerContributionsYearToDateA": ote,
-                    })
-                # Non-Resc
-                super_liability = employee_ytd["slip_lines"]["SUPER"]["SUPER"] + employee_ytd["fields"]["l10n_au_extra_compulsory_super"]
-                if super_liability:
-                    contributions.append({
-                        "EntitlementTypeC": "L",
-                        "EmployerContributionsYearToDateA": round(super_liability, 2),
-                    })
-                # RESC
-                super_contribution = employee_ytd["slip_lines"]["SALARY.SACRIFICE"]["SUPER.CONTRIBUTION"] - employee_ytd["fields"]["l10n_au_extra_compulsory_super"]
+            # == Super Contribution ==
+            contributions = []
+            # OTE Entitlement
+            ote = employee_ytd_ungrouped["slip_lines"]['OTE']['OTE']
+            contributions.append({
+                "EntitlementTypeC": "O",
+                "EmployerContributionsYearToDateA": ote,
+            })
+            # Non-Resc
+            super_liability = employee_ytd_ungrouped["slip_lines"]["SUPER"]["SUPER"] + employee_ytd_ungrouped["fields"]["l10n_au_extra_compulsory_super"]
+            contributions.append({
+                "EntitlementTypeC": "L",
+                "EmployerContributionsYearToDateA": float_round(super_liability, precision_rounding=rounding),
+            })
+            # RESC
+            if not self.is_zeroing:
+                super_contribution = employee_ytd_ungrouped["slip_lines"]["SALARY.SACRIFICE"]["SUPER.CONTRIBUTION"] - employee_ytd_ungrouped["fields"]["l10n_au_extra_compulsory_super"]
                 if super_contribution:
                     contributions.append({
                         "EntitlementTypeC": "R",
-                        "EmployerContributionsYearToDateA": round(super_contribution, 2),
+                        "EmployerContributionsYearToDateA": float_round(super_contribution, precision_rounding=rounding),
                     })
 
-                # == Reportable Fringe Benefits ==
-                benefits = []
-                # rfba = employee_ytd["slip_lines"]["BENEFITS"]["RFBA"]
-                rfba_input = filter(lambda item: item[0].code == 'FBT', employee_input_totals.items())
-                for input_type, rfba in rfba_input:
-                    benefits.append({
-                        "FringeBenefitsReportableExemptionC": input_type.l10n_au_payroll_code,
-                        "A": rfba['amount'],
-                    })
+            # == Reportable Fringe Benefits ==
+            benefits = []
+            # rfba = employee_ytd["slip_lines"]["BENEFITS"]["RFBA"]
+            rfba_input = filter(lambda item: item[1]["code"] == 'FBT', employee_input_totals_ungrouped.items())
+            for input_type, rfba in rfba_input:
+                benefits.append({
+                    "FringeBenefitsReportableExemptionC": rfba["payroll_code"],
+                    "A": rfba['amount'],
+                })
 
             employee_data = {
                 "EmploymentStartD": start_date,
@@ -506,7 +555,7 @@ class L10n_AuStp(models.Model):
                 "contributions": contributions,
                 "benefits": benefits,
                 "contract": contract_id,
-                "payslip": payslip,
+                "payslip": payslips,
             }
 
             extra_data.update({
@@ -572,9 +621,9 @@ class L10n_AuStp(models.Model):
                 # For update events, the start date is the submission date for the current fiscal year
                 # and the last payrun date for the previous fiscal years. End date is the same as start
                 # for update events.
-                end_date = start_date
                 if is_current_fiscal_year:
                     start_date = self.submit_date
+                end_date = start_date
 
             values = defaultdict(str, {
                 "TaxFileNumberId": employee.l10n_au_tfn,
@@ -590,8 +639,8 @@ class L10n_AuStp(models.Model):
                 "Line1T": employee.private_street,
                 "Line2T": employee.private_street2,
                 "LocalityNameT": employee.private_city,
-                "StateOrTerritoryC": employee.private_state_id.code,
-                "PostcodeT": employee.private_zip,
+                "StateOrTerritoryC": employee.private_state_id.code if employee.l10n_au_income_stream_type != "IAA" else False,
+                "PostcodeT": employee.private_zip if employee.l10n_au_income_stream_type != "IAA" else False,
                 "CountryC": employee.private_country_id.code.lower() if employee.private_country_id else False,
                 "ElectronicMailAddressT": employee.private_email,
                 "TelephoneMinimalN": strip_phonenumber(employee.private_phone),
@@ -600,7 +649,7 @@ class L10n_AuStp(models.Model):
                 "PaymentBasisC": employee.l10n_au_employment_basis_code,
                 "CessationTypeC": payslip.contract_id.l10n_au_cessation_type_code,
                 "TaxTreatmentC": employee.l10n_au_tax_treatment_code,
-                "TaxOffsetClaimTotalA": employee.l10n_au_nat_3093_amount,
+                "TaxOffsetClaimTotalA": None if self.is_zeroing else employee.l10n_au_nat_3093_amount,
                 "StartD": start_date,
                 "EndD": end_date,
                 "RemunerationPayrollEventFinalI": "true" if self.is_finalisation else "false",
@@ -616,7 +665,10 @@ class L10n_AuStp(models.Model):
             employees.append(values)
 
         # sequence at the end to avoid generating if there was an error
-        self.submission_id = self.env['ir.sequence'].next_by_code("stp.transaction")
+        if self.ffr:
+            self.submission_id = self.previous_report_id.submission_id
+        else:
+            self.submission_id = self.env['ir.sequence'].next_by_code("stp.transaction")
         employer["InteractionTransactionId"] = self.submission_id
         return employer, employees, intermediary
 
@@ -627,6 +679,7 @@ class L10n_AuStp(models.Model):
         payevent_xsd_root = etree.parse(file_path(f"l10n_au_hr_payroll_account/data/{schema_file_name}.xsd"))
         payevent_schema = etree.XMLSchema(payevent_xsd_root)
         try:
+            # print(xml_string)
             root = etree.fromstring(xml_string)
             payevent_schema.assertValid(root)
             error = ""
@@ -683,7 +736,8 @@ class L10n_AuStp(models.Model):
         # Employee fields check
         message = "Please configure the following fields for the employees:\n"
         faulty = False
-        for emp in self.payslip_ids.employee_id:
+        employees = self.payslip_ids.employee_id if self.payevent_type == "submit" else self.l10n_au_stp_emp.employee_id
+        for emp in employees:
             for field in EMPLOYEE_REQUIRED_FIELDS:
                 if not emp[field]:
                     faulty = True
@@ -715,12 +769,10 @@ class L10n_AuStp(models.Model):
 
     def action_replace_file(self):
         self.ensure_one()
-        if self.ffr and (self.create_date - fields.Datetime.now()) < timedelta(hours=24):
-            raise ValidationError(_("The replacement report has been submitted less than 24 hours ago. Please try again later."))
-
-        if self.state != "sent" and not self.file_replacement_message:
+        if self.state != "sent":
             raise ValidationError(_("The report must be in the 'Submitted' state to replace the file. "
             "Please make any modifications before proceeding with submission."))
+
         return {
             "type": "ir.actions.act_window",
             "name": _("Replace File"),

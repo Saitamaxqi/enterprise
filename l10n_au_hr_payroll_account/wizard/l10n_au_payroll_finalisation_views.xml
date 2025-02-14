@@ -25,15 +25,15 @@
                             <field name="date_start" />
                             <field name="date_end" />
                             <field name="fiscal_year" force_save="1"/>
-                            <field name="date_deadline"/>
+                            <field name="date_deadline" invisible="is_eofy"/>
                             <field name="responsible_user_id" />
                         </group>
                     </group>
                     <notebook>
                         <page name="employees" string="Employee Finalisation">
                             <field name="l10n_au_payroll_finalisation_emp_ids" widget="one2many_list" force_save="1">
-                                <list editable="bottom" open_form_view="True">
-                                    <field name="employee_id" domain="[('company_id', '=', company_id)]" options="{'no_create': True}"/>
+                                <list editable="bottom">
+                                    <field name="employee_id" options="{'no_create': True}"/>
                                     <field name="contract_id" />
                                     <field name="contract_active" optional="hide"/>
                                     <field name="contract_start_date" />

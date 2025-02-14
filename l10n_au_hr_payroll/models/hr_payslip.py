@@ -7,7 +7,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import AccessError, UserError, ValidationError
-from odoo.tools import groupby, ormcache
+from odoo.tools import groupby
 
 
 PERIODS_PER_YEAR = {
@@ -66,6 +66,7 @@ class HrPayslip(models.Model):
     l10n_au_extra_compulsory_super = fields.Float(compute="_compute_l10n_au_extra_compulsory_super", store=True, readonly=True)
     l10n_au_salary_sacrifice_superannuation = fields.Float(compute="_compute_l10n_au_salary_sacrifice_superannuation", store=True, readonly=True)
     l10n_au_salary_sacrifice_other = fields.Float(compute="_compute_l10n_au_salary_sacrifice_other", store=True, readonly=True)
+    payslip_ytd_totals = fields.Json(compute="_compute_payslip_ytd_totals")
 
     def _get_data_files_to_update(self):
         # Note: file order should be maintained
@@ -77,6 +78,8 @@ class HrPayslip(models.Model):
 
     def _get_base_local_dict(self):
         res = super()._get_base_local_dict()
+        if self.country_code != "AU":
+            return res
         slips = self._l10n_au_get_year_to_date_slips()
         res.update({
             "year_slips": slips,
@@ -173,6 +176,127 @@ class HrPayslip(models.Model):
         for payslip in self:
             payslip.l10n_au_income_stream_type = payslip.employee_id.l10n_au_income_stream_type
 
+    @api.model
+    def _template_payslip_ytd_totals(self, with_inputs=False):
+        return {
+            "slip_lines": defaultdict(lambda: defaultdict(float)),
+            "worked_days": defaultdict(lambda: {"amount": 0.0, "is_leave": False, "payroll_code": False}),
+            "periods": 0,
+            "fields": defaultdict(float),
+            "input_lines": defaultdict(lambda: {
+                    "amount": 0.0, "code": "", "payroll_code": "", "payment_type": "", "payroll_code_description": "",
+                }) if with_inputs else {},
+        }
+
+    @api.model
+    def _clean_payslip_ytd_totals(self, totals):
+        """ Json converts integer keys to string and drops 'defaultdict'.
+            This method converts the keys back to integer and adds the 'defaultdict'.
+        """
+        if not totals:
+            return {}
+        clean_totals = {}
+        for income_stream, income_stream_totals in totals.items():
+            clean_totals[income_stream] = self._template_payslip_ytd_totals(with_inputs=True)
+            for category, categ_values in income_stream_totals["slip_lines"].items():
+                for code, value in categ_values.items():
+                    if value:
+                        clean_totals[income_stream]["slip_lines"][category][code] = value
+            for entry_type, values in income_stream_totals["worked_days"].items():
+                if values["amount"]:
+                    clean_totals[income_stream]["worked_days"][int(entry_type)] = values
+            clean_totals[income_stream]["periods"] = income_stream_totals["periods"]
+            for field, value in income_stream_totals["fields"].items():
+                clean_totals[income_stream]["fields"][field] = value
+            for input_type, values in income_stream_totals["input_lines"].items():
+                if values["amount"]:
+                    clean_totals[income_stream]["input_lines"][int(input_type)] = values
+        return clean_totals
+
+    @api.depends_context("l10n_au_include_current_slip")
+    @api.depends("employee_id", "employee_id.slip_ids", "date_from", "date_to", "state", "line_ids", "input_line_ids")
+    def _compute_payslip_ytd_totals(self):
+        """ Dict with all the year to date totals for the payslip.
+        Each slip has the YTD computed based on all the previous slips. These are grouped
+        by income stream type.
+
+        Force include current slip using `l10n_au_include_current_slip`
+        Not stored to allow recomputing if a new slip is added to a previous period.
+
+        Example: (All slips from same employee)
+        Slip 1: ytd = Slip 1
+        Slip 2: ytd = Slip 1 + Slip 2
+        Slip 3: ytd = Slip 1 + Slip 2 + Slip 3
+        """
+        self.update({"payslip_ytd_totals": {}})
+        au_slips = self.filtered(lambda x: x.country_code == "AU")
+        if not au_slips:
+            return
+        # Groups the ytd slips for each payslip
+        slips_to_read = self.browse()
+        ytd_slips = defaultdict(lambda: self.env["hr.payslip"])
+        for slip in au_slips:
+            ytd_slips[slip.id] = slip._l10n_au_get_year_to_date_slips(l10n_au_include_current_slip=self.env.context.get("l10n_au_include_current_slip"))
+            slips_to_read |= ytd_slips[slip.id]
+
+        fields_to_compute = [
+            "l10n_au_foreign_tax_withheld",
+            "l10n_au_exempt_foreign_income",
+            "l10n_au_salary_sacrifice_other",
+            "l10n_au_salary_sacrifice_superannuation",
+            "l10n_au_extra_negotiated_super",
+            "l10n_au_extra_compulsory_super",
+        ]
+        # Prefetch the data to avoid multiple reads
+        slips_to_read.fetch(fields_to_compute + ["l10n_au_income_stream_type"])
+        slip_lines_data = self.env["hr.payslip.line"].search_fetch(
+            [("slip_id", "in", slips_to_read.ids)],
+            ["slip_id", "category_id", "code", "total"],
+        )
+        worked_days_data = self.env["hr.payslip.worked_days"].search_fetch(
+            [("payslip_id", "in", slips_to_read.ids)],
+            ["payslip_id", "code", "amount", "work_entry_type_id"],
+        )
+        input_lines_data = self.env["hr.payslip.input"].search_fetch(
+            [("payslip_id", "in", slips_to_read.ids)],
+            ["payslip_id", "code", "amount", "l10n_au_payroll_code_description", "l10n_au_payroll_code", "l10n_au_payment_type"],
+        )
+        lump_sum_e = self.env.ref("l10n_au_hr_payroll.l10n_au_lumpsum_e")
+
+        for payslip in au_slips.sorted(key=lambda x: x.date_from):
+            year_slips = ytd_slips[payslip.id]
+            totals = {
+                income_stream: self._template_payslip_ytd_totals(with_inputs=True)
+                for income_stream in set((year_slips + payslip).mapped("l10n_au_income_stream_type"))
+            }
+
+            for line in slip_lines_data.filtered(lambda x: x.slip_id.id in year_slips.ids):
+                totals[line.slip_id.l10n_au_income_stream_type]["slip_lines"][line.category_id.code][line.code] += line.total
+                totals[line.slip_id.l10n_au_income_stream_type]["slip_lines"][line.category_id.code]["total"] += line.total
+
+            for line in worked_days_data.filtered(lambda x: x.payslip_id.id in year_slips.ids):
+                totals[line.payslip_id.l10n_au_income_stream_type]["worked_days"][line.work_entry_type_id.id]["amount"] += line.amount
+                totals[line.payslip_id.l10n_au_income_stream_type]["worked_days"][line.work_entry_type_id.id]["is_leave"] = line.work_entry_type_id.is_leave
+                totals[line.payslip_id.l10n_au_income_stream_type]["worked_days"][line.work_entry_type_id.id]["payroll_code"] = line.work_entry_type_id.l10n_au_work_stp_code
+
+            for income_stream, slips in groupby(year_slips, lambda x: x.l10n_au_income_stream_type):
+                for field in fields_to_compute:
+                    totals[income_stream]["fields"][field] = sum(slip[field] for slip in slips)
+
+            for input_line in input_lines_data.filtered(lambda x: x.payslip_id.id in year_slips.ids):
+                if input_line.input_type_id.id not in totals[input_line.payslip_id.l10n_au_income_stream_type]["input_lines"]:
+                    totals[input_line.payslip_id.l10n_au_income_stream_type]["input_lines"][input_line.input_type_id.id] = {
+                        "amount": 0.0,
+                        "code": input_line.code,
+                        "payroll_code": input_line.l10n_au_payroll_code,
+                        "payment_type": input_line.l10n_au_payment_type,
+                        "payroll_code_description": input_line.l10n_au_payroll_code_description,
+                    }
+                if input_line.input_type_id == lump_sum_e:
+                    totals[input_line.payslip_id.l10n_au_income_stream_type]["input_lines"][input_line.input_type_id.id]["financial_year"] = input_line.name
+                totals[input_line.payslip_id.l10n_au_income_stream_type]["input_lines"][input_line.input_type_id.id]["amount"] += input_line.amount
+            payslip.payslip_ytd_totals = totals
+
     @api.constrains('input_line_ids', 'employee_id')
     def _check_input_lines(self):
         for payslip in self:
@@ -186,9 +310,6 @@ class HrPayslip(models.Model):
                     "Director fees are not allowed for income stream type '%s'.",
                     employee.l10n_au_income_stream_type,
                 ))
-            lump_sum_e = self.input_line_ids.filtered(lambda x: x.input_type_id == self.env.ref("l10n_au_hr_payroll.l10n_au_lumpsum_e"))
-            if lump_sum_e and not str(lump_sum_e.name).isnumeric() and len(str(lump_sum_e.name)) != 4:
-                raise ValidationError(_("The description of input Lump Sum E should be the financial year for payment."))
 
             if (payslip.contract_id.l10n_au_salary_sacrifice_superannuation or payslip.contract_id.l10n_au_salary_sacrifice_other)\
                 and employee.l10n_au_income_stream_type in ["OSP", "LAB", "VOL"]:
@@ -197,7 +318,7 @@ class HrPayslip(models.Model):
                     self.employee_id.l10n_au_income_stream_type,
                 ))
 
-            if payslip.input_line_ids.filtered(lambda x: x.code == "BACKPAY") and employee.l10n_au_income_stream_type == "OSP":
+            if payslip.input_line_ids.filtered(lambda x: x.code == "BACKPAY.INPUT") and employee.l10n_au_income_stream_type == "OSP":
                 raise ValidationError(_("Bonuses and Commissions are not allowed for income stream type 'OSP'."))
 
             overtime_lines = payslip.worked_days_line_ids.filtered(lambda l: l.work_entry_type_id.l10n_au_work_stp_code == "T")
@@ -229,7 +350,22 @@ class HrPayslip(models.Model):
         self.sudo()._add_unused_leaves_to_payslip()
         super().action_refresh_from_work_entries()
 
+    def action_payslip_done(self):
+        lump_sum_e = self.env.ref("l10n_au_hr_payroll.l10n_au_lumpsum_e")
+        for line in self.input_line_ids:
+            if line.input_type_id == lump_sum_e:
+                if not line.name.isnumeric() or len(line.name) != 4:
+                    raise UserError(_(
+                        "Invalid Financial year on Payslip %s. The description of input Lump Sum E should be the financial year.",
+                        self.name
+                    ))
+        super().action_payslip_done()
+
     def _l10n_au_get_year_to_date_slips(self, l10n_au_include_current_slip=False):
+        """ Returns a list of all payslips in the same fiscal year as the current payslip.
+            Current slip is included if it is done. Else it can be forced to be included using
+            'l10n_au_include_current_slip=True'
+        """
         start_year = self.contract_id._l10n_au_get_financial_year_start(self.date_from)
         year_slips = self.env["hr.payslip"].search([
             ("employee_id", "=", self.employee_id.id),
@@ -244,85 +380,63 @@ class HrPayslip(models.Model):
         return year_slips
 
     def _l10n_au_get_year_to_date_totals(self, fields_to_compute=None, l10n_au_include_current_slip=False):
-        if fields_to_compute is None:
-            fields_to_compute = []
-        year_slips = self._l10n_au_get_year_to_date_slips(l10n_au_include_current_slip=l10n_au_include_current_slip)
-        # Change to a parameter in master
+        """ Uses the 'payslip_ytd_totals' field to return YTD values. Can be computed once and manipulated
+            to get the desired values according to the arguments.
+        """
+        fields_to_compute = fields_to_compute or []
+        # Add as a method arg in master
         group_income_stream_types = self.env.context.get("group_income_stream_types", False)
+        payslip_ytd_totals = self.with_context(l10n_au_include_current_slip=l10n_au_include_current_slip).payslip_ytd_totals
+        payslip_ytd_totals = self._clean_payslip_ytd_totals(payslip_ytd_totals)
+
         if group_income_stream_types:
-            totals = {
-                income_stream: {
-                    "slip_lines": defaultdict(lambda: defaultdict(float)),
-                    "worked_days": defaultdict(lambda: defaultdict(float)),
-                    "periods": len(year_slips),
-                    "fields": defaultdict(float),
-                } for income_stream in set(year_slips.mapped("l10n_au_income_stream_type"))
-            }
+            totals = payslip_ytd_totals
         else:
-            totals = {
-                "slip_lines": defaultdict(lambda: defaultdict(float)),
-                "worked_days": defaultdict(lambda: defaultdict(float)),
-                "periods": len(year_slips),
-                "fields": defaultdict(float),
-            }
-        for line in year_slips.line_ids:
-            if group_income_stream_types:
-                total_line = totals[line.slip_id.l10n_au_income_stream_type]["slip_lines"][line.category_id.code]
-            else:
-                total_line = totals["slip_lines"][line.category_id.code]
-            total_line["total"] += line.total
-            total_line[line.code] += line.total
-        for line in year_slips.worked_days_line_ids:
-            if group_income_stream_types:
-                total_line = totals[line.payslip_id.l10n_au_income_stream_type]["worked_days"][line.work_entry_type_id.id]
-            else:
-                total_line = totals["worked_days"][line.work_entry_type_id.id]
-            total_line["amount"] += line.amount
-            total_line["payroll_code"] = line.work_entry_type_id.l10n_au_work_stp_code
-            total_line["is_leave"] = line.work_entry_type_id.is_leave
+            # Sum all income stream types from payslip_ytd_totals
+            totals = self._template_payslip_ytd_totals()
+            for income_stream, income_stream_totals in payslip_ytd_totals.items():
+                for category, slip_line in income_stream_totals["slip_lines"].items():
+                    for code, value in slip_line.items():
+                        totals["slip_lines"][category][code] += value
+                for entry_type, worked_day_total in income_stream_totals["worked_days"].items():
+                    totals["worked_days"][entry_type]["amount"] += worked_day_total["amount"]
+                    totals["worked_days"][entry_type]["is_leave"] = worked_day_total["is_leave"]
+                    totals["worked_days"][entry_type]["payroll_code"] = worked_day_total["payroll_code"]
+                totals["periods"] += income_stream_totals["periods"]
+                for field, value in income_stream_totals["fields"].items():
+                    totals["fields"][field] += value
+                    if field in fields_to_compute:
+                        fields_to_compute.remove(field)
 
-        if not fields_to_compute:
-            return totals
+        # Add any remaining fields to compute
+        if fields_to_compute:
+            year_slips = self._l10n_au_get_year_to_date_slips(l10n_au_include_current_slip=l10n_au_include_current_slip)
+            for income_stream, slips in groupby(year_slips, lambda x: x.l10n_au_income_stream_type):
+                for field in fields_to_compute:
+                    if group_income_stream_types:
+                        totals[income_stream]["fields"][field] = sum(slip[field] for slip in slips)
+                    else:
+                        totals["fields"][field] += sum(slip[field] for slip in slips)
 
-        for income_stream, slips in groupby(year_slips, lambda x: x.l10n_au_income_stream_type):
-            for field in fields_to_compute:
-                if group_income_stream_types:
-                    totals[income_stream]["fields"][field] = sum(slip[field] for slip in slips)
-                else:
-                    totals["fields"][field] += sum(slip[field] for slip in slips)
         return totals
 
     def _l10n_au_get_ytd_inputs(self, l10n_au_include_current_slip=False):
-        year_slips = self._l10n_au_get_year_to_date_slips(l10n_au_include_current_slip=l10n_au_include_current_slip)
-        # Change to a parameter in master
+        payslip_ytd_totals = self.with_context(l10n_au_include_current_slip=l10n_au_include_current_slip).payslip_ytd_totals
+        payslip_ytd_totals = self._clean_payslip_ytd_totals(payslip_ytd_totals)
         group_income_stream_types = self.env.context.get("group_income_stream_types", False)
         if group_income_stream_types:
-            inputs = {
-                income_stream: defaultdict(lambda: defaultdict(float))
-                for income_stream in set(year_slips.mapped("l10n_au_income_stream_type"))
-            }
+            input_totals = {}
+            for income_stream, income_stream_totals in payslip_ytd_totals.items():
+                input_totals[income_stream] = income_stream_totals["input_lines"]
         else:
-            inputs = defaultdict(lambda: dict())
-        lump_sum_e = self.env.ref("l10n_au_hr_payroll.l10n_au_lumpsum_e")
-        for line in year_slips.input_line_ids:
-            if group_income_stream_types:
-                input_line = inputs[line.payslip_id.l10n_au_income_stream_type][line.input_type_id.id]
-            else:
-                input_line = inputs[line.input_type_id.id]
-            if line.input_type_id == lump_sum_e:
-                if not line.name.isnumeric() and len(line.name) != 4:
-                    raise UserError(_("The description of input Lump Sum E should be the financial year."))
-                input_line["financial_year"] = line.name
-            if not input_line:
-                input_line.update({
-                    "amount": 0.0,
-                    "code": line.input_type_id.code,
-                    "payroll_code": line.input_type_id.l10n_au_payroll_code,
-                    "payment_type": line.input_type_id.l10n_au_payment_type,
-                    "payroll_code_description": line.input_type_id.l10n_au_payroll_code_description,
-                })
-            input_line["amount"] += line.amount
-        return inputs
+            input_totals = self._template_payslip_ytd_totals(with_inputs=True)["input_lines"]
+            for income_stream, income_stream_totals in payslip_ytd_totals.items():
+                for input_type, input_line in income_stream_totals["input_lines"].items():
+                    if input_type not in input_totals:
+                        input_totals[input_type] = input_line
+                    else:
+                        input_totals[input_type]["amount"] += input_line["amount"]
+        return input_totals
 
     @api.model
     def _l10n_au_compute_weekly_earning(self, amount, period):
@@ -490,6 +604,15 @@ class HrPayslip(models.Model):
 
         return period_amount
 
+    @api.model
+    def _l10n_au_get_tax_free_etp_types(self):
+        return self.env["hr.payslip.input.type"].concat(
+            self.env.ref("l10n_au_hr_payroll.input_genuine_redundancy"),
+            self.env.ref("l10n_au_hr_payroll.input_early_retirement_scheme"),
+            self.env.ref("l10n_au_hr_payroll.input_in_lieu_of_notice_genuine"),
+            self.env.ref("l10n_au_hr_payroll.input_severance_pay_genuine"),
+        )
+
     def _l10n_au_compute_termination_withhold(self, ytd_total):
         """
         Compute the withholding amount for the termination payment.
@@ -518,7 +641,7 @@ class HrPayslip(models.Model):
         # If both caps are equal, we use the whole-of-income cap. Otherwise, we use the smallest of the two caps.
 
         whole_of_income_cap = (self._rule_parameter("l10n_au_whoic_cap_schedule_11")
-                               - ytd_total["slip_lines"]["Taxable Salary"]["total"])
+                               - ytd_total["slip_lines"]["GROSS"]["total"])
         etp_cap = self._rule_parameter("l10n_au_etp_cap_schedule_11")
         smallest_withholding_cap = min(whole_of_income_cap, etp_cap)
 
@@ -550,9 +673,8 @@ class HrPayslip(models.Model):
         over_the_cap_rate = life_benefits_etp_rates['over_cap']
         no_tfn_rate = life_benefits_etp_rates['no_tfn']
 
-        # These two payments are subjects to a tax-free limit.
-        genuine_redundancy = self.env.ref("l10n_au_hr_payroll.input_genuine_redundancy")
-        early_retirement = self.env.ref("l10n_au_hr_payroll.input_early_retirement_scheme")
+        # These payments are subjects to a tax-free limit.
+        tax_free_types = self._l10n_au_get_tax_free_etp_types()
 
         preservation_ages = self._rule_parameter("l10n_au_preservation_age_schedule_11")
         # The preservation age is determined based on the financial year in which the employee was born.
@@ -584,7 +706,7 @@ class HrPayslip(models.Model):
             taxable_amount = input_line.amount
             applicable_tax_free_limit = 0
             # We check if the payment is subject to a tax-free limit.
-            if input_line.input_type_id in {genuine_redundancy, early_retirement}:
+            if input_line.input_type_id in tax_free_types:
                 applicable_tax_free_limit = tax_free_limit
 
             tax_free_amount += min(applicable_tax_free_limit, input_line.amount)

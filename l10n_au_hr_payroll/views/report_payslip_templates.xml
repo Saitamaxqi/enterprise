@@ -94,7 +94,7 @@
                                     t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                             </td>
                             <td class="text-end align-middle">
-                                <t t-esc="year_to_date_totals['worked_days'][worked_line.work_entry_type_id]['amount']"
+                                <t t-esc="worked_line.ytd"
                                     t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                             </td>
                         </tr>
@@ -120,8 +120,7 @@
                                 <t t-esc="line.total" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                             </td>
                             <td class="text-end align-middle">
-                                <t t-esc="year_to_date_totals['slip_lines'][line.category_id.code]['total']"
-                                    t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
+                                <t t-esc="line.ytd" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                             </td>
                         </tr>
                     </tbody>

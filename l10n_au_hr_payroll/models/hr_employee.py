@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import re
+
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare
@@ -301,9 +303,25 @@ class HrEmployee(models.Model):
 
     @api.constrains('l10n_au_tfn')
     def _check_l10n_au_tfn(self):
+        def validate_tfn(tfn):
+            # Source: https://clearwater.com.au/code/tfn
+            # Checksum
+            weights = [1, 4, 3, 7, 5, 8, 6, 9, 10]
+            tfn = re.sub(r'/[^\d]/', '', tfn)
+            if len(tfn) == 9:
+                sum = 0
+                for i, t in enumerate(tfn):
+                    sum += int(t) * weights[i]
+                return sum % 11 == 0
+            return False
+
         for employee in self:
+            if employee.l10n_au_tfn_declaration != "provided":
+                continue
             if employee.l10n_au_tfn and (len(employee.l10n_au_tfn) < 8 or not employee.l10n_au_tfn.isdigit()):
                 raise ValidationError(_("The TFN must be at least 8 characters long and contain only numbers."))
+            if employee.l10n_au_tfn and not validate_tfn(employee.l10n_au_tfn):
+                raise ValidationError(_("The TFN %s is not valid. Please provide a valid TFN.", employee.l10n_au_tfn))
 
     # == Compute Methods ==
 

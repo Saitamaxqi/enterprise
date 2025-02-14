@@ -154,7 +154,7 @@ class L10n_AuSuperStream(models.Model):
 
         self.super_stream_file.unlink()
         with io.StringIO() as output:
-            writer = csv.writer(output, delimiter=';', quotechar='"', quoting=2)
+            writer = csv.writer(output, delimiter=',', quotechar='"', quoting=2)
             data = self.prepare_rendering_data()
             writer.writerows(data)
             base64_result = base64.encodebytes(output.getvalue().encode())

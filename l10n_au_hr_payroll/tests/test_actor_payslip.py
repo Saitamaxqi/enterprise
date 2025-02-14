@@ -107,7 +107,7 @@ class TestPayrollActor(TestPayrollCommon):
         employee, contract = self._create_employee(contract_info={
             'employee': 'Test Employee',
             'tfn_declaration': 'provided',
-            'tfn': '123456789',
+            'tfn': '999999661',
             'salary_sacrifice_superannuation': 200,
             'salary_sacrifice_other': 100,
             'workplace_giving_employee': 50,
@@ -157,7 +157,7 @@ class TestPayrollActor(TestPayrollCommon):
         employee, contract = self._create_employee(contract_info={
             'employee': 'Test Employee',
             'tfn_declaration': 'provided',
-            'tfn': '123456789',
+            'tfn': '999999661',
             'salary_sacrifice_superannuation': 200,
             'salary_sacrifice_other': 100,
             'workplace_giving_employee': 50,
@@ -206,7 +206,7 @@ class TestPayrollActor(TestPayrollCommon):
         employee, contract = self._create_employee(contract_info={
             'employee': 'Test Employee',
             'tfn_declaration': 'provided',
-            'tfn': '123456789',
+            'tfn': '999999661',
             'salary_sacrifice_superannuation': 200,
             'salary_sacrifice_other': 100,
             'workplace_giving_employee': 50,
@@ -256,7 +256,7 @@ class TestPayrollActor(TestPayrollCommon):
         employee, contract = self._create_employee(contract_info={
             'employee': 'Test Employee',
             'tfn_declaration': 'provided',
-            'tfn': '123456789',
+            'tfn': '999999661',
             'salary_sacrifice_superannuation': 200,
             'salary_sacrifice_other': 100,
             'workplace_giving_employee': 50,

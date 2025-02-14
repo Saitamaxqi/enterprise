@@ -14,6 +14,7 @@
         <field name="partner_id" ref="base.partner_demo_company_au"/>
         <field name="resource_calendar_id" ref="l10n_au_hr_payroll.resource_calendar_au_38"/>
         <field name="vat">83914571673</field>
+        <field name="l10n_au_branch_code">110</field>
     </record>
 
     <record id="res_partner_employee_au" model="res.partner">
@@ -33,13 +34,18 @@
         <field name="name">Roger Woodrum</field>
         <field name="job_title">Salesperson</field>
         <field name="work_phone">0123 456 789</field>
+        <field name="private_phone">0123 456 789</field>
         <field name="work_email">roger.woodrum@example.com</field>
+        <field name="private_email">roger.woodrum@ato.com</field>
         <field name="private_street">Australian Street</field>
         <field name="private_city">Sydney</field>
+        <field name="private_zip">1234</field>
+        <field name="private_state_id" ref="base.state_au_2"/>
+        <field name="private_country_id" ref="base.au"/>
         <field name="birthday" eval="datetime(1970, 3, 21).date()"/>
         <field name="image_1920" type="base64" file="hr/static/img/employee_han-image.jpg"/>
         <field name="l10n_au_tfn_declaration">provided</field>
-        <field name="l10n_au_tfn">123456789</field>
+        <field name="l10n_au_tfn">999999846</field>
         <field name="l10n_au_training_loan">True</field>
         <field name="l10n_au_nat_3093_amount">150</field>
         <field name="l10n_au_child_support_garnishee_amount">0.1</field>

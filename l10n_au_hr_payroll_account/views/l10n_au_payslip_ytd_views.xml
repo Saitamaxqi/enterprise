@@ -47,7 +47,7 @@
                 <field name="currency_id" column_invisible="1"/>
                 <field name="struct_id" readonly="1"/>
                 <field name="rule_id" readonly="1"/>
-                <field name="requires_inputs" widget="boolean_toggle" readonly="1"/>
+                <field name="requires_inputs" widget="boolean_toggle" readonly="1" column_invisible="1"/>
                 <button name="action_add_inputs" type="object" icon="fa-list" string="Add inputs" class="oe_inline" invisible="not requires_inputs"/>
                 <field name="start_value" invisible="requires_inputs" />
                 <field name="ytd_amount"/>

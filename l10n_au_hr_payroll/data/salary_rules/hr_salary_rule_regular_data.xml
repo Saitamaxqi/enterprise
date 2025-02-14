@@ -41,11 +41,10 @@ result = sum(ote_inputs.mapped('amount')) + sum(ote_worked_day.mapped('amount'))
         <field name="code">EXTRA</field>
         <field name="sequence">40</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = 'EXTRA' in inputs</field>
+        <field name="condition_python">result = 'EXTRA.INPUT' in inputs</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = inputs['EXTRA'].amount
-result_name = inputs['EXTRA'].name
+result = sum(payslip.input_line_ids.filtered(lambda i: i.code == 'EXTRA.INPUT').mapped('amount'))
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
         <field name="appears_on_payroll_report" eval="True"/>
@@ -64,7 +63,7 @@ result = -contract.l10n_au_salary_sacrifice_other - contract.l10n_au_workplace_g
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 sacrifice_other = "SS.O" in inputs and inputs["SS.O"].amount or 0
-result = -contract.l10n_au_salary_sacrifice_other - contract.l10n_au_workplace_giving_employer - contract.l10n_au_salary_sacrifice_superannuation
+result = -contract.l10n_au_salary_sacrifice_other - contract.l10n_au_workplace_giving_employer - contract.l10n_au_salary_sacrifice_superannuation - sacrifice_other
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>
@@ -84,7 +83,7 @@ allowances = payslip.input_line_ids.filtered(
         x.input_type_id.l10n_au_paygw_treatment == "regular"
         or (
             x.input_type_id.l10n_au_paygw_treatment == "excess"
-            and ytd_inputs[x.input_type_id]["amount"] &gt;= x.input_type_id.l10n_au_ato_rate_limit
+            and ytd_inputs[x.input_type_id.id]["amount"] &gt;= x.input_type_id.l10n_au_ato_rate_limit
         )
     )
 )
@@ -108,7 +107,7 @@ allowances = payslip.input_line_ids.filtered(
         x.input_type_id.l10n_au_paygw_treatment == "no_paygw" # Fix excess
         or (
             x.input_type_id.l10n_au_paygw_treatment == "excess"
-            and ytd_inputs[x.input_type_id]["amount"] &lt; x.input_type_id.l10n_au_ato_rate_limit
+            and ytd_inputs[x.input_type_id.id]["amount"] &lt; x.input_type_id.l10n_au_ato_rate_limit
         )
     )
 )
@@ -141,11 +140,11 @@ result = sum(payslip.input_line_ids.filtered(lambda l: l.input_type_id == b2work
         <field name="code">BACKPAY</field>
         <field name="sequence">70</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = 'BACKPAY' in inputs</field>
+        <field name="condition_python">result = 'BACKPAY.INPUT' in inputs</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = inputs['BACKPAY'].amount
-result_name = inputs['BACKPAY'].name
+result = sum(payslip.input_line_ids.filtered(lambda x: x.code == 'BACKPAY.INPUT').mapped('amount'))
+
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>
@@ -322,7 +321,7 @@ result = -employee.l10n_au_additional_withholding_amount
         <field name="code">BACKPAY.WITHHOLD</field>
         <field name="sequence">109</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = 'BACKPAY' in inputs</field>
+        <field name="condition_python">result = 'BACKPAY.INPUT' in inputs</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 net_salary = categories['BASIC'] + categories['ALW'] + categories['DED'] + categories['RTW'] + categories['EXTRA'] - result_rules['BACKPAY']['total']
@@ -412,7 +411,7 @@ if employee.l10n_au_tax_treatment_category in ['R', 'S', 'F'] and employee.l10n_
     coefficients = payslip._rule_parameter("l10n_au_stsl")["tax-free" if employee.l10n_au_tax_free_threshold or employee.is_non_resident else "no-tax-free"]
     gross = categories['GROSS'] - result_rules['BACKPAY']['total']
     result = -payslip._l10n_au_compute_loan_withhold(gross, contract.schedule_pay, coefficients)
-if "BACKPAY" in inputs:
+if "BACKPAY.INPUT" in inputs:
     result += backpay_stsl
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
@@ -561,7 +560,7 @@ result = employee.l10n_au_child_support_garnishee_amount or 'CHILD_SUPPORT_GARNI
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 net_salary = categories['BASIC'] + categories['ALW'] + categories['DED'] + categories['RTW'] + categories['EXTRA']
-lumpsum_child_support = 'CHILD_SUPPORT_GARNISHEE' in inputs and inputs['CHILD_SUPPORT_GARNISHEE'].amount
+lumpsum_child_support = sum(payslip.input_line_ids.filtered(lambda x: x.code == 'CHILD_SUPPORT_GARNISHEE').mapped("amount"))
 net_earnings = net_salary - lumpsum_child_support
 lumpsum_child_support += net_earnings * employee.l10n_au_child_support_garnishee_amount
 result = -round(min(net_salary, lumpsum_child_support), 2)

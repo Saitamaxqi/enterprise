@@ -29,15 +29,16 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
         })
         schedule = cls.env.ref("l10n_au_hr_payroll.structure_type_schedule_1")
         cls.default_payroll_structure = cls.env.ref('l10n_au_hr_payroll.hr_payroll_structure_au_regular')
-        bank_journal = cls.company_data['default_journal_bank']
-        bank_journal.write({
+        cls.bank_journal = cls.company_data['default_journal_bank']
+        cls.bank_journal.write({
             'bank_account_id': cls.company_bank_account.id,
             "aba_fic": "CBA",
             "aba_user_spec": "Test Ltd",
             "aba_user_number": "111111",
         })
-        cls.aba_ct = bank_journal.outbound_payment_method_line_ids.filtered(lambda l: l.code == 'aba_ct')
-        cls.aba_ct.payment_account_id = cls.outbound_payment_method_line.payment_account_id
+        cls.aba_ct = cls.bank_journal.outbound_payment_method_line_ids.filtered(lambda l: l.code == 'aba_ct')
+        cls.outbound_manual = cls.bank_journal.outbound_payment_method_line_ids.filtered(lambda l: l.code == 'manual')
+        (cls.aba_ct + cls.outbound_manual).payment_account_id = cls.outbound_payment_method_line.payment_account_id
 
         # Employees Setup
         cls.employee_user_1 = new_test_user(cls.env, login='mel', groups='hr.group_hr_manager')
@@ -82,8 +83,9 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             "private_country_id": cls.env.ref("base.au").id,
             "birthday": date(2000, 1, 1),
             "l10n_au_tfn_declaration": "provided",
-            "l10n_au_tfn": "12345678",
+            "l10n_au_tfn": "999999661",
             "l10n_au_tax_free_threshold": True,
+            "l10n_au_previous_payroll_id": "12312321"
         })
         cls.employee_2 = cls.env["hr.employee"].create({
             "name": "Harry Potter",
@@ -101,8 +103,9 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             "private_country_id": cls.env.ref("base.au").id,
             "birthday": date(2000, 3, 1),
             "l10n_au_tfn_declaration": "provided",
-            "l10n_au_tfn": "12345678",
+            "l10n_au_tfn": "999999661",
             "l10n_au_tax_free_threshold": True,
+            "l10n_au_previous_payroll_id": "12312321"
         })
         super_fund = cls.env['l10n_au.super.fund'].create({
             'display_name': 'Fund A',
@@ -151,3 +154,18 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
         cls.company.l10n_au_hr_super_responsible_id = cls.employee_1
         cls.company.l10n_au_stp_responsible_id = cls.employee_1
         cls.company.ytd_reset_month = "7"
+
+    def _register_payment(self, payslip_run):
+        action = payslip_run.action_register_payment()
+
+        payment_register = (
+                    self.env["account.payment.register"]
+                    .with_context(
+                        **action["context"],
+                        hr_payroll_payment_register=True,
+                        hr_payroll_payment_register_batch=payslip_run.id,
+                    )
+                    .create({})
+                )
+
+        return payment_register._create_payments()

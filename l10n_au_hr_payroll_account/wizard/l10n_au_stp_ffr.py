@@ -20,6 +20,8 @@ class L10n_AuStpFfrWizard(models.TransientModel):
     @api.constrains("stp_id")
     def _check_stp_status(self):
         for rec in self:
+            if rec.stp_id.ffr:
+                raise UserError(_("A submission can only be replaced once. Please use an update event for further modifications."))
             if rec.stp_id.state != "sent":
                 raise UserError(_("STP must be submit state to create a full file replacement."))
 
@@ -30,8 +32,16 @@ class L10n_AuStpFfrWizard(models.TransientModel):
             raise UserError(_("Only payroll managers can create a full file replacement. Since it requires resetting payslips."))
         payslips_to_reset.sudo().action_payslip_cancel()
         payslips_to_reset.with_context(allow_ffr=True).action_payslip_draft()
+
+        payslip_reset_message = _("Payslip(s) have been reset for Full File Replacement. "
+                                  "Please verify the payslip batch before resubmitting.")
+        for slip in payslips_to_reset:
+            slip.message_post(subject="Single Touch Payroll", body=payslip_reset_message)
+
         if payslips_to_reset.payslip_run_id:
             payslips_to_reset.payslip_run_id.state = "verify"
+            payslips_to_reset.payslip_run_id.message_post(subject="Single Touch Payroll", body=payslip_reset_message)
+        payslips_to_reset.compute_sheet()
         self.stp_id.is_replaced = True
         new_stp = self.env["l10n_au.stp"].create({
             "company_id": self.stp_id.company_id.id,

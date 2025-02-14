@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
+from odoo import api, Command, fields, models, _
 from odoo.exceptions import UserError
 from odoo.addons.l10n_au_hr_payroll.models.hr_employee import INCOME_STREAM_TYPES
 
@@ -12,14 +12,40 @@ class L10n_AuPreviousPayrollTransfer(models.TransientModel):
     def _default_fiscal_year_start_date(self):
         return self.env["l10n_au.payslip.ytd"]._get_start_date(fields.Date.today())
 
-    company_id = fields.Many2one("res.company", default=lambda self: self.env.company, required=True)
+    company_id = fields.Many2one("res.company", default=lambda self: self.env.company, required=True, domain=[("country_code", "=", "AU")])
     previous_bms_id = fields.Char(string="Previous BMS ID", required=True, help="Enter the ID of the employee in the previous payroll system.")
-    l10n_au_previous_payroll_transfer_employee_ids = fields.One2many("l10n_au.previous.payroll.transfer.employee", "l10n_au_previous_payroll_transfer_id")
+    l10n_au_previous_payroll_transfer_employee_ids = fields.One2many("l10n_au.previous.payroll.transfer.employee", "l10n_au_previous_payroll_transfer_id", store=True, readonly=False, compute="_compute_all_employees")
     fiscal_year_start_date = fields.Date(
         string="Fiscal Year Start Date",
         required=True,
         default=_default_fiscal_year_start_date
     )
+
+    @api.depends("company_id")
+    def _compute_all_employees(self):
+        for rec in self:
+            if not rec.company_id:
+                continue
+            employees_to_add = (
+                rec.env["hr.employee"]
+                .with_context(active_test=False)
+                .search(
+                    [
+                        ("id", "not in", rec.l10n_au_previous_payroll_transfer_employee_ids.employee_id.ids),
+                        ("company_id", "=", rec.company_id.id),
+                        ("contract_id", "!=", False)
+                    ]
+                )
+            )
+            employees_to_remove = rec.l10n_au_previous_payroll_transfer_employee_ids.filtered(lambda x: x.employee_id.company_id != rec.company_id)
+            rec.update(
+                {
+                    "l10n_au_previous_payroll_transfer_employee_ids": [
+                        Command.create({"employee_id": emp.id, "previous_payroll_id": emp.l10n_au_previous_payroll_id})
+                        for emp in employees_to_add
+                    ] + [Command.unlink(emp.id) for emp in employees_to_remove]
+                }
+            )
 
     def action_transfer(self):
         self.ensure_one()
@@ -31,9 +57,12 @@ class L10n_AuPreviousPayrollTransfer(models.TransientModel):
             rec.employee_id.l10n_au_previous_payroll_id = rec.previous_payroll_id
         prev_pay_transfer_employees = self.l10n_au_previous_payroll_transfer_employee_ids.filtered(lambda x: x.import_ytd)
 
-        return self.company_id._create_ytd_values(prev_pay_transfer_employees, self.fiscal_year_start_date)\
-            .with_context(search_default_filter_group_employee_id=1, search_default_filter_group_income_stream= 1)\
-            ._get_records_action(name=_("Opening Balances"))
+        created_ytd = self.company_id._create_ytd_values(prev_pay_transfer_employees, self.fiscal_year_start_date)
+
+        if created_ytd:
+            return created_ytd.with_context(search_default_filter_group_employee_id=1, search_default_filter_group_income_stream=1)\
+                ._get_records_action(name=_("Opening Balances"))
+        return {"type": "ir.actions.act_window_close"}
 
 
 class L10n_AuPreviousPayrollTransferEmployee(models.TransientModel):

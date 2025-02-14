@@ -5,6 +5,9 @@
         <field name="l10n_au_is_ote" eval="True"/>
         <field name="l10n_au_work_stp_code">G</field>
     </record>
+    <record id="hr_work_entry.overtime_work_entry_type" model="hr.work.entry.type">
+        <field name="l10n_au_work_stp_code">T</field>
+    </record>
 
     <!-- Time Off Entries -->
     <record id="hr_work_entry.l10n_au_work_entry_type_paid_time_off" model="hr.work.entry.type">
@@ -23,10 +26,13 @@
     </record>
 
     <record id="hr_work_entry.l10n_au_work_entry_type_other" model="hr.work.entry.type">
+        <field name="is_leave" eval="True"/>
         <field name="l10n_au_is_ote" eval="True"/>
+        <field name="l10n_au_work_stp_code">O</field>
     </record>
 
     <record id="hr_work_entry.l10n_au_work_entry_type_parental" model="hr.work.entry.type">
+        <field name="is_leave" eval="True"/>
         <field name="l10n_au_is_ote" eval="True"/>
         <field name="l10n_au_work_stp_code">P</field>
     </record>
@@ -37,6 +43,7 @@
     </record>
 
     <record id="hr_work_entry.l10n_au_work_entry_type_defence" model="hr.work.entry.type">
+        <field name="is_leave" eval="True"/>
         <field name="l10n_au_is_ote" eval="True"/>
         <field name="l10n_au_work_stp_code">A</field>
     </record>
@@ -50,8 +57,10 @@
     </record>
 
     <!-- Overtime Entries -->
+    <!-- Remove the record in master, switch to hr_work_entry.overtime_work_entry_type -->
     <record id="hr_work_entry.l10n_au_work_entry_type_overtime_regular" model="hr.work.entry.type">
         <field name="l10n_au_work_stp_code">T</field>
+        <field name="active" eval="False"/>
     </record>
 
     <record id="hr_work_entry.l10n_au_work_entry_type_overtime_saturday" model="hr.work.entry.type">

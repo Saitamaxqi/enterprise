@@ -16,8 +16,7 @@
             <xpath expr="//label[@for='private_street']" position="before">
                 <field name='l10n_au_other_names' invisible="company_country_code != 'AU'"/>
             </xpath>
-            <group name="payroll_group" position="replace" />
-            <xpath expr="//page[@name='hr_settings']//group" position="after">
+            <page name="hr_payroll" position="inside">
                 <group name="au_payroll" string="Australian Payroll">
                     <group name="l10n_au_personal" string="Personal Information" invisible="company_country_code != 'AU'">
                         <field name="is_non_resident"/>
@@ -78,7 +77,7 @@
                         <field name="l10n_au_additional_withholding_amount" />
                     </group>
                 </group>
-            </xpath>
+            </page>
             <xpath expr="//notebook" position="inside">
                 <page name="super_accounts" string="Super Accounts" invisible="company_country_code != 'AU'" groups="hr.group_hr_user">
                     <field name="l10n_au_super_account_ids">

@@ -125,6 +125,6 @@ class L10n_AuTerminationPayment(models.TransientModel):
         else:  # if not handled, put the monthly behaviour
             date_from = date_to.replace(day=1)
 
-        if date_from < self.contract_id.date_start:
+        if self.contract_id.date_start and date_from < self.contract_id.date_start:
             date_from = self.contract_id.date_start
         return date_from

@@ -40,7 +40,7 @@
                 <attribute name="invisible" separator=" or " add="(l10n_au_stp_status != 'sent' and country_code == 'AU')"/>
             </button>
             <button name="action_payment_report" position="attributes">
-                <attribute name="invisible" separator=" or " add="(l10n_au_stp_status != 'sent' and country_code == 'AU')"/>
+                <attribute name="invisible" separator=" or " add="(l10n_au_stp_status != 'sent' and state != 'paid' and country_code == 'AU')"/>
             </button>
             <field name="payment_report" position="after">
                 <field name="l10n_au_stp_status" readonly="1" groups="base.group_no_one"/>

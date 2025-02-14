@@ -177,6 +177,9 @@ class TestPerformance(AccountTestInvoicingCommon):
     @users('admin')
     @warmup
     def test_performance_l10n_au_payroll_whole_flow(self):
+        # Create Opening Balances
+        self.company._create_ytd_values(self.employees, self.date_from)
+
         # Work entry generation
         self.employees.generate_work_entries(self.date_from, self.date_to)
 
@@ -192,7 +195,7 @@ class TestPerformance(AccountTestInvoicingCommon):
         } for i in range(self.EMPLOYEES_COUNT)]
 
         # Payslip Creation
-        with self.assertQueryCount(admin=1070):  # randomness
+        with self.assertQueryCount(admin=1300):  # randomness
             start_time = time.time()
             payslips = self.env['hr.payslip'].with_context(allowed_company_ids=self.company.ids).create(payslips_values)
             # --- 0.11892914772033691 seconds ---
@@ -206,7 +209,7 @@ class TestPerformance(AccountTestInvoicingCommon):
             _logger.info("Payslips Computation: --- %s seconds ---", time.time() - start_time)
 
         # Payslip Validation
-        with self.assertQueryCount(admin=350):
+        with self.assertQueryCount(admin=600):
             start_time = time.time()
             payslips.action_payslip_done()
             # --- 0.3815627098083496 seconds ---
@@ -215,7 +218,7 @@ class TestPerformance(AccountTestInvoicingCommon):
         # STP Submission
         with self.assertQueryCount(admin=2000):
             start_time = time.time()
-            stp = payslips._get_payslip_stp()
+            stp = payslips._get_payslip_stp()[payslips[0].id]
             self.assertTrue(stp, "The STP record should have been created when the payslip was created")
             self.assertEqual(stp.state, "draft", "The STP record should be in draft state")
             stp.submit_date = stp.submit_date or date.today()

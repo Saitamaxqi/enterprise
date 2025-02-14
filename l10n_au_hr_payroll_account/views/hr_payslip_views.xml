@@ -25,9 +25,8 @@
                         invisible="l10n_au_stp_status in ['draft'] or country_code != 'AU'"
                 >
                     <div class="o_stat_info">
-                        <span class="o_stat_text">
-                            STP Submission
-                        </span>
+                        <span class="o_stat_text">STP Submission</span>
+                        <span class="o_stat_value"><field name="l10n_au_stp_count"/></span>
                     </div>
                 </button>
             </xpath>
@@ -36,6 +35,9 @@
             </button>
             <button name="action_payslip_paid" position="after">
                 <button name="action_open_payslip_stp" string="Submit to ATO" type="object" class="btn-primary" invisible="l10n_au_stp_status in ['draft', 'sent'] or country_code != 'AU'"/>
+            </button>
+            <button name="action_payslip_payment_report" position="attributes">
+                <attribute name="invisible" separator=" or " add="(l10n_au_stp_status != 'sent' and state != 'paid' and country_code == 'AU')"/>
             </button>
             <field name="struct_id" position="after">
                 <field name="l10n_au_stp_status" readonly="1" groups="base.group_no_one"/>

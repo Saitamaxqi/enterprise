@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+from datetime import timedelta
 
 from odoo import api, Command, fields, models, _
 from odoo.tools import date_utils, format_list
@@ -76,6 +77,7 @@ class L10n_AuPayrollFinalisationWizard(models.TransientModel):
                     [
                         ("id", "not in", rec.l10n_au_payroll_finalisation_emp_ids.employee_id.ids),
                         ("company_id", "=", rec.company_id.id),
+                        ("slip_ids", "!=", False),
                         "|",
                         ("departure_date", ">=", rec.date_start),
                         ("departure_date", "=", False),
@@ -100,7 +102,12 @@ class L10n_AuPayrollFinalisationWizard(models.TransientModel):
 
     def submit_to_ato(self):
         self.ensure_one()
-        stp = self.env["l10n_au.stp"].create({
+        if self.is_eofy:
+            date_deadline = self.date_end + timedelta(days=14)
+        else:
+            date_deadline = self.date_deadline
+
+        stp = self.env["l10n_au.stp"].with_context(finalization_deadline=date_deadline).create({
             "name": self.name,
             "company_id": self.company_id.id,
             "payevent_type": "update",
@@ -124,13 +131,21 @@ class L10n_AuPayrollFinalisationWizardEmp(models.TransientModel):
 
     l10n_au_payroll_finalisation_id = fields.Many2one("l10n_au.payroll.finalisation.wizard", string="Finalisation Wizard", required=True, ondelete="cascade")
     company_id = fields.Many2one(related="l10n_au_payroll_finalisation_id.company_id", string="Company", store=True)
-    employee_id = fields.Many2one("hr.employee", string="Employee", required=True, domain="[('active', 'in', [False, True])]")
+    employee_id = fields.Many2one("hr.employee", string="Employee", required=True, domain="[('company_id', '=', company_id), ('slip_ids', '!=', False), ('active', 'in', [False, True])]")
     contract_id = fields.Many2one("hr.contract", related="employee_id.contract_id", string="Contract", required=True)
     contract_start_date = fields.Date("Contract Start Date", related="contract_id.date_start", required=True)
     contract_end_date = fields.Date("Contract End Date", related="contract_id.date_end")
-    contract_active = fields.Boolean("Active", related="contract_id.active")
+    contract_active = fields.Boolean("Active", related="employee_id.active")
     ytd_balance_ids = fields.Many2many("l10n_au.payslip.ytd", "YTD Balances", compute="_compute_amounts_to_report")
     payslip_ids = fields.Many2many("hr.payslip", "Payslips", compute="_compute_amounts_to_report")
+
+    @api.constrains("employee_id")
+    def _check_employee(self):
+        for rec in self:
+            if not rec.employee_id.slip_ids:
+                raise ValidationError(_("Employee %s has no payslips to finalise.", rec.employee_id.name))
+            if not rec.employee_id.private_phone:
+                raise ValidationError(_("Employee %s has no phone number set.", rec.employee_id.name))
 
     @api.depends("employee_id", "l10n_au_payroll_finalisation_id.date_start", "l10n_au_payroll_finalisation_id.date_end")
     def _compute_amounts_to_report(self):
@@ -142,7 +157,7 @@ class L10n_AuPayrollFinalisationWizardEmp(models.TransientModel):
                     ("start_date", "<=", rec.l10n_au_payroll_finalisation_id.date_end),
                 ]
             )
-            rec.payslip_ids = self.employee_id.slip_ids.filtered_domain(
+            rec.payslip_ids = rec.employee_id.slip_ids.filtered_domain(
                 [
                     ("date_from", ">=", rec.l10n_au_payroll_finalisation_id.date_start),
                     ("date_from", "<=", rec.l10n_au_payroll_finalisation_id.date_end),

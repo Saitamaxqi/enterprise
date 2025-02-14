@@ -769,7 +769,7 @@
     <!-- ( from YEARLY earning, to YEARLY earning, maximum value, rate) -->
     <record id="rule_parameter_whm_tax_rate_2023" model="hr.rule.parameter.value">
         <field name="rule_parameter_id" ref="rule_parameter_whm_tax_rate"/>
-        <field name="date_from" eval="datetime(2022, 7, 1).date()"/>
+        <field name="date_from" eval="datetime(2023, 7, 1).date()"/>
         <field name="parameter_value">
             {
                 "registered": [

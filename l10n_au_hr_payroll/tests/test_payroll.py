@@ -272,7 +272,7 @@ class TestPayroll(TestPayrollCommon):
         # Scenario 13: 4 children, medicare reduction
         employee_id.write({
             "l10n_au_tfn_declaration": "provided",
-            "l10n_au_tfn": "12345678",
+            "l10n_au_tfn": "999999661",
             "marital": "married",
             "children": 4,
         })
@@ -281,7 +281,7 @@ class TestPayroll(TestPayrollCommon):
         self.assertEqual(-lbc["WITHHOLD.TOTAL"]["total"], 893, "test scenario 13: 4 children, medicare reduction")
         employee_id.write({
             "l10n_au_tfn_declaration": "provided",
-            "l10n_au_tfn": "12345678",
+            "l10n_au_tfn": "999999661",
             # kill the wife
             "marital": "single",
             # kill the children
@@ -392,7 +392,7 @@ class TestPayroll(TestPayrollCommon):
         # Scenario 38: 4 children, medicare reduction
         employee_id.write({
             "l10n_au_tfn_declaration": "provided",
-            "l10n_au_tfn": "12345678",
+            "l10n_au_tfn": "999999661",
             "marital": "married",
             "children": 4,
         })
@@ -401,7 +401,7 @@ class TestPayroll(TestPayrollCommon):
         self.assertEqual(-lbc["WITHHOLD.TOTAL"]["total"], 142, "test scenario 38: 4 children, medicare reduction")
         employee_id.write({
             "l10n_au_tfn_declaration": "provided",
-            "l10n_au_tfn": "12345678",
+            "l10n_au_tfn": "999999661",
             # kill the wife
             "marital": "single",
             # kill the children

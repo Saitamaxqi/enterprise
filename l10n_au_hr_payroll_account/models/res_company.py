@@ -54,7 +54,7 @@ class ResCompany(models.Model):
                             "ytd_amount": 0,
                         }),
                         (0, 0, {
-                            "res_id": self.env.ref("hr_work_entry.l10n_au_work_entry_type_overtime_regular").id,
+                            "res_id": self.env.ref("hr_work_entry.overtime_work_entry_type").id,
                             "res_model": "hr.work.entry.type",
                             "ytd_amount": 0,
                         }),
@@ -91,7 +91,7 @@ class ResCompany(models.Model):
                         (0, 0, {
                             "res_id": input_type.id,
                             "res_model": "hr.payslip.input.type",
-                        }) for input_type in self.env["hr.payslip.input.type"].search([("code", "=", "EXTRA")])
+                        }) for input_type in self.env["hr.payslip.input.type"].search([("code", "=", "EXTRA.INPUT")])
                     ],
                 }, {
                     "employee_id": employee_transfer.employee_id.id,
@@ -170,7 +170,7 @@ class ResCompany(models.Model):
                             "res_id": input_type.id,
                             "res_model": "hr.payslip.input.type",
                         })
-                        for input_type in self.env["hr.payslip.input.type"].search([("code", "=", "BACKPAY")])
+                        for input_type in self.env["hr.payslip.input.type"].search([("code", "=", "BACKPAY.INPUT")])
                     ],
                 }, {
                     "employee_id": employee_transfer.employee_id.id,
@@ -211,10 +211,14 @@ class ResCompany(models.Model):
                     "start_date": start_date,
                     "l10n_au_payslip_ytd_input_ids": [
                         (0, 0, {
-                            "name": "Salary Sacrifice Superannuation",
+                            "res_id": self.env.ref("l10n_au_hr_payroll.input_salary_sacrifice_superannuation"),
+                            "res_model": "hr.payslip.input.type",
                         }),
                         (0, 0, {
-                            "name": "Extra RESC",
+                            "name": "Extra Negotiated Super (RESC)",
+                        }),
+                        (0, 0, {
+                            "name": "Extra Compusory Super (Non RESC)",
                         }),
                     ],
                 }, {

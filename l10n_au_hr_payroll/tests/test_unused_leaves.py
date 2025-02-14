@@ -45,7 +45,7 @@ class TestPayrollUnusedLeaves(TestPayrollCommon):
             'birthday': fields.Date.to_date(birthday),
             'contract_date_start': fields.Date.to_date(date_start),
             'contract_date_end': fields.Date.to_date(date_end),
-            'tfn': 12345678,
+            'tfn': 999999661,
             'tfn_declaration': 'provided' if tfn_provided else '000000000',
             'non_resident': not resident,
             'l10n_au_tax_free_threshold': resident

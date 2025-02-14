@@ -1,10 +1,11 @@
 from datetime import date
+from dateutil.relativedelta import relativedelta
 from collections import defaultdict
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.addons.l10n_au_hr_payroll.models.hr_employee import INCOME_STREAM_TYPES
-from odoo.tools import date_utils
+from odoo.tools import create_index
 
 
 class L10n_AuPayslipYtd(models.Model):
@@ -19,6 +20,7 @@ class L10n_AuPayslipYtd(models.Model):
         string="Income Stream Type", readonly=True, required=True)
     company_id = fields.Many2one(related="employee_id.company_id", required=True)
     currency_id = fields.Many2one(related="company_id.currency_id")
+    code = fields.Char(related="rule_id.code")
     struct_id = fields.Many2one(
         "hr.payroll.structure",
         compute="_compute_struct_id",
@@ -64,6 +66,10 @@ class L10n_AuPayslipYtd(models.Model):
     # ORM METHODS
     ####################################################
 
+    def _auto_init(self):
+        super()._auto_init()
+        create_index(self._cr, 'l10n_au_payslip_ytd_employee_date', 'l10n_au_payslip_ytd', ["employee_id", "start_date"])
+
     def _fiscal_start_date(self):
         for rec in self:
             if rec.start_date:
@@ -83,7 +89,7 @@ class L10n_AuPayslipYtd(models.Model):
     def _check_unique_rule(self):
         for rec in self:
             start_date = self._get_start_date(rec.start_date)
-            end_date = start_date + date_utils.get_timedelta(1, "year") - date_utils.get_timedelta(1, "day")
+            end_date = start_date + relativedelta(years=1, days=-1)
             if self.env["hr.payslip"].search_count([
                 ("employee_id", "=", rec.employee_id.id),
                 ("state", "in", ("done", "paid")),
@@ -95,6 +101,9 @@ class L10n_AuPayslipYtd(models.Model):
     def write(self, vals):
         if any(finalised for finalised in self.mapped("finalised")):
             raise UserError(_("YTD Balances cannot be updated once finalised."))
+        is_negative = self.filtered(lambda x: x.rule_id.code in ["WORKPLACE.GIVING", "WITHHOLD.TOTAL"])
+        if self in is_negative and "start_value" in vals:
+            vals["start_value"] = -abs(vals["start_value"])
         return super().write(vals)
 
     def action_add_inputs(self):
@@ -176,3 +185,15 @@ class L10nAUPayslipYTDInput(models.Model):
     def input_type(self):
         input_ids = self.filtered(lambda l: l.res_model == "hr.payslip.input.type").mapped("res_id")
         return self.env["hr.payslip.input.type"].browse(input_ids)
+
+    def write(self, vals):
+        # Should be negative
+        is_negative = self.filtered(lambda x: x.input_type.code in [
+            "SS.O", "CHILD_SUPPORT_GARNISHEE"
+        ] or x.name in [
+            "Salary Sacrificed Workplace Giving",
+            "Child Support Deduction",
+        ])
+        if self in is_negative and "ytd_amount" in vals:
+            vals["ytd_amount"] = -abs(vals["ytd_amount"])
+        return super().write(vals)

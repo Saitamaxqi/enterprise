@@ -8,9 +8,9 @@ class HrLeaveType(models.Model):
 
     l10n_au_leave_type = fields.Selection(
         selection=[
-            ("annual", "Annual"),
+            ("annual", "General Leave"),
             ("long_service", "Long Service"),
-            ("personal", "Personal Leave"),
+            ("personal", "Unpaid at Termination"),
         ],
         default="personal",
         required=True,

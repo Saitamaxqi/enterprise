@@ -18,6 +18,10 @@ class AccountChartTemplate(models.AbstractModel):
                 ('company_ids', '=', company.id),
                 ('code', '=', 21400)])
             clearing_house.with_company(company).property_account_payable_id = account_21400
+            company.write({
+                'ytd_reset_day': 1,
+                'ytd_reset_month': '7',
+            })
 
     def _configure_payroll_account_au(self, companies):
         """

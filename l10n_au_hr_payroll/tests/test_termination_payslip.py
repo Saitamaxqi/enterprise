@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+from collections import defaultdict
 from datetime import date
 from unittest.mock import patch
 from freezegun import freeze_time
@@ -6,6 +7,17 @@ from freezegun import freeze_time
 from odoo import fields
 from odoo.tests import tagged
 from .common import TestPayrollCommon
+
+
+def _patched_ytd(self, **kwargs):
+    totals = {
+        "slip_lines": defaultdict(lambda: defaultdict(float)),
+        "worked_days": defaultdict(lambda: defaultdict(float)),
+        "periods": 1,
+        "fields": defaultdict(float),
+    }
+    totals["slip_lines"]["GROSS"]["total"] = 49000
+    return totals
 
 
 @tagged("post_install_l10n", "post_install", "-at_install", "l10n_au_hr_payroll")
@@ -112,7 +124,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'tax_treatment_category': 'V',
             'birthday': fields.Date.to_date('1987-05-09'),
             'contract_date_start': fields.Date.to_date('2015-01-01'),
-            'tfn': '211111111',
+
         })
         self._test_payslip(
             employee,
@@ -165,7 +177,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'tax_treatment_category': 'V',
             'birthday': fields.Date.to_date('1964-08-01'),
             'contract_date_start': fields.Date.to_date('2015-01-01'),
-            'tfn': '211111111',
+
         })
         self._test_payslip(
             employee,
@@ -218,7 +230,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'tax_treatment_category': 'V',
             'birthday': fields.Date.to_date('1998-07-25'),
             'contract_date_start': fields.Date.to_date('2015-01-01'),
-            'tfn': '211111111',
+
         })
         self._test_payslip(
             employee,
@@ -271,7 +283,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'tax_treatment_category': 'V',
             'birthday': fields.Date.to_date('1975-01-01'),
             'contract_date_start': fields.Date.to_date('2015-01-01'),
-            'tfn': '211111111',
+
         })
         self._test_payslip(
             employee,
@@ -310,17 +322,8 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
         )
 
     # Patching is faster than generating payslip for the ytd, and has the same effect.
-    @patch(
-        'odoo.addons.l10n_au_hr_payroll.models.hr_payslip.HrPayslip._l10n_au_get_year_to_date_totals',
-        return_value={
-            'slip_lines': {
-                'Taxable Salary': {
-                    'total': 49000,
-                }
-            }
-        }
-    )
-    def test_termination_withholding_5(self, patched_l10n_au_get_year_to_date_totals):
+    @patch('odoo.addons.l10n_au_hr_payroll.models.hr_payslip.HrPayslip._l10n_au_get_year_to_date_totals', _patched_ytd)
+    def test_termination_withholding_5(self):
         # We need the ytd total for this test.
         employee, contract = self._create_employee(contract_info={
             'employee': 'Test Employee',
@@ -336,7 +339,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'tax_treatment_category': 'V',
             'birthday': fields.Date.to_date('1975-01-01'),
             'contract_date_start': fields.Date.to_date('2015-01-01'),
-            'tfn': '211111111',
+
         })
         self._test_payslip(
             employee,
@@ -390,7 +393,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'tax_treatment_category': 'V',
             'birthday': fields.Date.to_date('1975-01-01'),
             'contract_date_start': fields.Date.to_date('2015-01-01'),
-            'tfn': '211111111',
+
         })
         self._test_payslip(
             employee,
@@ -444,7 +447,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'tax_treatment_category': 'V',
             'birthday': fields.Date.to_date('1975-01-01'),
             'contract_date_start': fields.Date.to_date('2015-01-01'),
-            'tfn': '211111111',
+
         })
         self._test_payslip(
             employee,
@@ -498,7 +501,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'tax_treatment_category': 'V',
             'birthday': fields.Date.to_date('1959-01-01'),
             'contract_date_start': fields.Date.to_date('2015-01-01'),
-            'tfn': '211111111',
+
         })
         self._test_payslip(
             employee,
@@ -552,7 +555,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'tax_treatment_category': 'V',
             'birthday': fields.Date.to_date('1963-01-01'),
             'contract_date_start': fields.Date.to_date('2015-01-01'),
-            'tfn': '211111111',
+
         })
         self._test_payslip(
             employee,
@@ -590,17 +593,8 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             termination_type="normal"
         )
 
-    @patch(
-        'odoo.addons.l10n_au_hr_payroll.models.hr_payslip.HrPayslip._l10n_au_get_year_to_date_totals',
-        return_value={
-            'slip_lines': {
-                'Taxable Salary': {
-                    'total': 49000,
-                }
-            }
-        }
-    )
-    def test_termination_withholding_10(self, patched_l10n_au_get_year_to_date_totals):
+    @patch('odoo.addons.l10n_au_hr_payroll.models.hr_payslip.HrPayslip._l10n_au_get_year_to_date_totals', _patched_ytd)
+    def test_termination_withholding_10(self):
         # We need the ytd total for this test.
         employee, contract = self._create_employee(contract_info={
             'employee': 'Test Employee',
@@ -616,7 +610,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'tax_treatment_category': 'V',
             'birthday': fields.Date.to_date('1963-01-01'),
             'contract_date_start': fields.Date.to_date('2015-01-01'),
-            'tfn': '211111111',
+
         })
         self._test_payslip(
             employee,
@@ -670,7 +664,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'tax_treatment_category': 'V',
             'birthday': fields.Date.to_date('1963-01-01'),
             'contract_date_start': fields.Date.to_date('2015-01-01'),
-            'tfn': '211111111',
+
         })
         self._test_payslip(
             employee,
@@ -724,7 +718,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'birthday': fields.Date.to_date('1975-01-01'),
             'contract_date_start': fields.Date.to_date('2023-11-01'),
             'tfn_declaration': 'provided',
-            'tfn': '123456789',
+            'tfn': '999999661',
         })
         self._test_payslip(
             employee,
