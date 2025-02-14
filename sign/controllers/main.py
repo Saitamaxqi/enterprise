@@ -420,8 +420,7 @@ class Sign(http.Controller):
             request_item = request_item.with_user(refuse_user).sudo()
             refuse_log = _("The signature has been canceled by %(partner)s (%(role)s)", partner=refuse_user.name, role=request_item.role_id.name)
             request_item.sign_request_id.message_post(body=refuse_log)
-        request_item._refuse(refusal_reason)
-        request_item.sign_request_id.with_context(default_sign_request_item_id=request_item.id).cancel()
+        request_item.with_context(default_sign_request_item_id=request_item.id)._refuse(refusal_reason)
         return True
 
     @http.route(['/sign/password/<int:sign_request_id>'], type='jsonrpc', auth='public')
@@ -519,7 +518,7 @@ class Sign(http.Controller):
         """
         sign_request = request.env['sign.request'].browse(request_id).sudo()
         if not sign_request or not consteq(sign_request.access_token, token):
-            return http.request.not_found()
+            return []
         uid = sign_request.create_uid.id
         items = request.env['sign.request.item'].sudo().search_read(
             domain=[

@@ -185,10 +185,10 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertEqual(sign_request_item_employee.state, 'canceled', 'The sign.request.item should be completed')
         self.assertEqual(sign_request_item_company.state, 'canceled', 'The sign.request.item should be canceled')
         self.assertEqual(sign_request_3_roles.state, 'canceled', 'The sign request should be canceled')
-        self.assertEqual(sign_request_item_customer.access_token, sign_request_item_customer_token, 'The access token should not be changed')
-        self.assertEqual(sign_request_item_employee.access_token, sign_request_item_employee_token, 'The access token should not be changed')
-        self.assertEqual(sign_request_item_company.access_token, sign_request_item_company_token, 'The access token should not be changed')
-        self.assertEqual(sign_request_3_roles.access_token, sign_request_3_roles_token, 'The access token should not be changed')
+        self.assertNotEqual(sign_request_item_customer.access_token, sign_request_item_customer_token, 'The access token should be changed')
+        self.assertNotEqual(sign_request_item_employee.access_token, sign_request_item_employee_token, 'The access token should be changed')
+        self.assertNotEqual(sign_request_item_company.access_token, sign_request_item_company_token, 'The access token should be changed')
+        self.assertNotEqual(sign_request_3_roles.access_token, sign_request_3_roles_token, 'The access token should be changed')
         self.assertEqual(len(sign_request_3_roles.sign_log_ids.filtered(
             lambda log: log.action == 'refuse' and log.sign_request_item_id == sign_request_item_employee)),
             1, 'A log with action="refuse" should be created')
@@ -208,7 +208,8 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         self.assertNotEqual(sign_request_item_employee.access_token, sign_request_item_employee_token, 'The access token should be changed')
         self.assertNotEqual(sign_request_item_company.access_token, sign_request_item_company_token, 'The access token should be changed')
         self.assertNotEqual(sign_request_3_roles.access_token, sign_request_3_roles_token, 'The access token should be changed')
-        self.assertEqual(len(sign_request_3_roles.sign_log_ids.filtered(lambda log: log.action == 'cancel')), 1, 'A log with action="cancel" should be created')
+        # now the cancel method is also called from refuse method so the log count is become 2
+        self.assertEqual(len(sign_request_3_roles.sign_log_ids.filtered(lambda log: log.action == 'cancel')), 2, 'A log with action="cancel" should be created')
 
     def test_sign_request_item_auto_resend(self):
         # create

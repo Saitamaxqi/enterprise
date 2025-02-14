@@ -364,8 +364,7 @@ class SignRequest(models.Model):
         if self.state != 'sent':
             raise UserError(_("This sign request cannot be refused"))
         self._check_senders_validity()
-        self.write({'state': 'canceled'})
-        self.request_item_ids._cancel(no_access=False)
+        self.cancel()
 
         # cancel request and activities for other unsigned users
         for user in self.request_item_ids.partner_id.user_ids.filtered(lambda u: u.has_group('sign.group_sign_user')):
