@@ -101,6 +101,7 @@ Prerequisites:
         'data/hr_departure_reason_data.xml',
         'data/cp200/employee_double_holidays_data.xml',
         'data/cp200/employee_pfi_data.xml',
+        'data/cp200/employee_salary_advance_data.xml',
         'data/cp200/employee_salary_data.xml',
         'data/cp200/employee_termination_fees_data.xml',
         'data/cp200/employee_termination_holidays_N1_data.xml',

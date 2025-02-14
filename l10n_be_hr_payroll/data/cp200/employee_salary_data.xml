@@ -889,15 +889,14 @@ result_name = inputs['DEDUCTION'].name
 
     <record id="cp200_employees_salary_advance" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">Salary Advance</field>
-        <field name="code">ADVANCE</field>
+        <field name="name">Salary Advance Recovery</field>
+        <field name="code">SALARYADVREC</field>
         <field name="sequence">199</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">result = 'ADVANCE' in inputs</field>
+        <field name="condition_select">input</field>
+        <field name="condition_other_input_id" ref="cp200_input_advance"/>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = -inputs['ADVANCE'].amount
-result_name = inputs['ADVANCE'].amount
+result = -inputs['SALARYADVREC'].amount
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
     </record>

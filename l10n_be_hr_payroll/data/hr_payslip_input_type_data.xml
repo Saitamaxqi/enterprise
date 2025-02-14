@@ -65,8 +65,8 @@
     </record>
 
     <record id="cp200_input_advance" model="hr.payslip.input.type">
-        <field name="name">Salary Advance</field>
-        <field name="code">ADVANCE</field>
+        <field name="name">Salary Advance Recovery</field>
+        <field name="code">SALARYADVREC</field>
         <field name="country_id" ref="base.be"/>
         <field name="struct_ids" eval="[(4, ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary'))]"/>
     </record>
@@ -310,5 +310,12 @@
         <field name="code">EULEAVEDEDUC</field>
         <field name="country_id" ref="base.be"/>
         <field name="struct_ids" eval="[(4, ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_double_holiday'))]"/>
+    </record>
+
+    <record id="input_salary_advance" model="hr.payslip.input.type">
+        <field name="name">Salary Advance</field>
+        <field name="code">SALARYADV</field>
+        <field name="country_id" ref="base.be"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_salary_advance'))]"/>
     </record>
 </odoo>

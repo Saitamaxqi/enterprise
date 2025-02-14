@@ -258,17 +258,23 @@
                                   <td></td>
                                 </tr>                      
                                 <tr>
+                                  <th>Net Salary</th>
+                                  <td><t t-esc="round(aggregate_data['net'], 2)"/></td>
+                                  <td><t t-esc="round(aggregate_data['net'], 2)"/></td>
+                                  <td></td>
+                                </tr>
+                                <tr>
                                   <th>Salary Advance</th>
                                   <td><t t-esc="round(aggregate_data['salary_advance'], 2)"/></td>
                                   <td><t t-esc="round(aggregate_data['salary_advance'], 2)"/></td>
                                   <td></td>
                                 </tr>
                                 <tr>
-                                  <th>Net Salary</th>
-                                  <td><t t-esc="round(aggregate_data['net'], 2)"/></td>
-                                  <td><t t-esc="round(aggregate_data['net'], 2)"/></td>
+                                  <th>Salary Advance Recovery</th>
+                                  <td><t t-esc="round(aggregate_data['salary_advance_recovery'], 2)"/></td>
+                                  <td><t t-esc="round(aggregate_data['salary_advance_recovery'], 2)"/></td>
                                   <td></td>
-                                </tr>                            
+                                </tr>
                                 <tr>
                                   <th>Total Net (Advance included)</th>
                                   <td><t t-esc="round(aggregate_data['total_net'], 2)"/></td>

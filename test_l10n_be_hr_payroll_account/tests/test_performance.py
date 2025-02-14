@@ -345,7 +345,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             'date_from': self.date_from + relativedelta(day=1, month=1),
             'date_to': self.date_from + relativedelta(day=31, month=12),
         })
-        with self.assertQueryCount(admin=38):
+        with self.assertQueryCount(admin=39):
             start_time = time.time()
             social_security_certificate.print_report()
             # --- 0.1080021858215332 seconds ---

@@ -5,6 +5,7 @@ from dateutil.relativedelta import relativedelta, MO, SU
 from dateutil import rrule
 from collections import defaultdict, Counter
 from datetime import date, datetime, timedelta
+from itertools import chain
 
 from odoo import api, models, fields, _
 from odoo.tools import float_round, float_is_zero, date_utils, ormcache
@@ -32,6 +33,7 @@ class HrPayslip(models.Model):
     @api.depends('employee_id', 'contract_id', 'struct_id', 'date_from', 'date_to')
     def _compute_input_line_ids(self):
         res = super()._compute_input_line_ids()
+        balance_by_employee = self._get_salary_advance_balances()
         for slip in self:
             if not slip.employee_id or not slip.date_from or not slip.date_to:
                 continue
@@ -63,6 +65,33 @@ class HrPayslip(models.Model):
                         'input_type_id': european_type.id,
                     })]
                     slip.write({'input_line_ids': to_remove_vals + to_add_vals})
+            elif slip.struct_id.code == 'CP200SALARYADV':
+                sal_adv_type = self.env.ref('l10n_be_hr_payroll.input_salary_advance')
+                sal_adv_rec_type = self.env.ref('l10n_be_hr_payroll.cp200_input_advance')
+                lines_to_remove = slip.input_line_ids.filtered(lambda x: x.input_type_id in (sal_adv_type, sal_adv_rec_type))
+                to_remove_vals = [(3, line.id, False) for line in lines_to_remove]
+                to_add_vals = [(0, 0, {
+                    'name': _('Salary Advance'),
+                    'amount': 0,
+                    'input_type_id': sal_adv_type.id,
+                })]
+                slip.write({'input_line_ids': to_remove_vals + to_add_vals})
+            elif slip.struct_id.code == 'CP200MONTHLY':
+                balance = balance_by_employee[slip.employee_id]
+                if balance <= 0:
+                    continue
+                sal_adv_type = self.env.ref('l10n_be_hr_payroll.input_salary_advance')
+                sal_adv_rec_type = self.env.ref('l10n_be_hr_payroll.cp200_input_advance')
+                lines_to_remove = slip.input_line_ids.filtered(
+                    lambda x: x.input_type_id in (sal_adv_rec_type, sal_adv_type)
+                )
+                to_remove_vals = [(3, line.id, False) for line in lines_to_remove]
+                to_add_vals = [(0, 0, {
+                    'name': _('Salary Advance Recovery'),
+                    'amount': balance,
+                    'input_type_id': sal_adv_rec_type.id,
+                })]
+                slip.write({'input_line_ids': to_remove_vals + to_add_vals})
         return res
 
     @ormcache('self.employee_id', 'self.date_from', 'self.date_to')
@@ -266,6 +295,24 @@ class HrPayslip(models.Model):
             else:
                 payslip.l10n_be_max_seizable_warning = False
 
+    def _get_salary_advance_balances(self):
+        payslips_by_employee = self._read_group(
+            domain=[
+                ('state', 'in', ('done', 'paid')),
+                ('employee_id', 'in', self.employee_id.ids),
+                ('input_line_ids.code', 'in', ('SALARYADVREC', 'SALARYADV')),
+            ],
+            groupby=['employee_id'],
+            aggregates=['id:recordset']
+        )
+        balance_by_employee = defaultdict(float)
+        for employee_id, payslips in payslips_by_employee:
+            for input_line in chain.from_iterable(payslip.input_line_ids for payslip in payslips):
+                if input_line.code == 'SALARYADV':
+                    balance_by_employee[employee_id] += input_line.amount
+                elif input_line.code == 'SALARYADVREC':
+                    balance_by_employee[employee_id] -= input_line.amount
+        return balance_by_employee
     def _get_worked_day_lines_hours_per_day(self):
         self.ensure_one()
         if self.contract_id.time_credit:
