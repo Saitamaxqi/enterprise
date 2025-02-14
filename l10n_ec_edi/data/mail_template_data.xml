@@ -39,7 +39,7 @@
         Do not hesitate to contact us if you have any questions.
         <t t-if="object.invoice_user_id.signature">
             <br />
-            <t t-out="object.invoice_user_id.signature or ''">--<br/>Mitchell Admin</t>
+            <div>--<br/><t t-out="object.invoice_user_id.signature or ''">Mitchell Admin</t></div>
         </t>
     </p>
 </div>

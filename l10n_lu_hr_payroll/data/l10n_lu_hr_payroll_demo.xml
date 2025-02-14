@@ -56,7 +56,7 @@
         <field name="partner_id" ref="l10n_lu_hr_payroll.res_partner_frida_poirish"/>
         <field name="login">fridapoirish@example.com</field>
         <field name="password">fridapoirish</field>
-        <field name="signature" type="html"><span>--<br/>+F. Poirish</span></field>
+        <field name="signature">F. Poirish</field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_lu'))]"/>
         <field name="company_id" ref="base.demo_company_lu"/>
         <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>

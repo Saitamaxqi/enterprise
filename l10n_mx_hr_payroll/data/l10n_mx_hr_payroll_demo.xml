@@ -91,7 +91,7 @@
         <field name="partner_id" ref="l10n_mx_hr_payroll.res_partner_elvera"/>
         <field name="login">elveraramirez@example.com</field>
         <field name="password">elveraramirez</field>
-        <field name="signature" type="html"><span>--<br/>+E. Ramirez</span></field>
+        <field name="signature">E. Ramirez</field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_mx'))]"/>
         <field name="company_id" ref="base.demo_company_mx"/>
         <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>

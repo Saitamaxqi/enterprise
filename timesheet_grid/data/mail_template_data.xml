@@ -48,7 +48,7 @@
                         </div>
                         <br/>Thank you,<br/>
                         <t t-if="user.signature">
-                            <t t-out="user.signature or ''">--<br/>Mitchell Admin</t>
+                            <div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div>
                         </t>
                     </div>
                 </td></tr>
@@ -137,7 +137,7 @@
                         </div>
                         <br />Thank you,<br/>
                         <t t-if="user.signature">
-                            <t t-out="user.signature or ''">--<br/>Mitchell Admin</t>
+                            <div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div>
                         </t>
                     </div>
                 </td></tr>

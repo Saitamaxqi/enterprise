@@ -211,7 +211,7 @@
                         Best regards,
                         <t t-if="not is_html_empty(user.signature)">
                             <br/><br/>
-                            <t t-out="user.signature">--<br/>Mitchell Admin</t>
+                            <div>--<br/><t t-out="user.signature">Mitchell Admin</t></div>
                         </t>
                     </p>
                 </div>

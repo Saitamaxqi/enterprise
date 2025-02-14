@@ -73,7 +73,7 @@
         <field name="partner_id" ref="l10n_us_hr_payroll.res_partner_maggie"/>
         <field name="login">davidson@example.com</field>
         <field name="password">davidson</field>
-        <field name="signature" type="html"><span>--<br/>+M. Davidson</span></field>
+        <field name="signature">M. Davidson</field>
         <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
         <field name="company_id" ref="base.main_company"/>
         <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>

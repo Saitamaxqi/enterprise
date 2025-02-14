@@ -66,7 +66,7 @@
                                             Please provide us with the missing document before <t t-out="object.request_activity_id.date_deadline">2021-05-17</t>.
                                             <t t-if="user and user.signature">
                                                 <br/>
-                                                <t t-out="user.signature or ''">--<br/>Mitchell Admin</t>
+                                                <div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div>
                                                 <br/>
                                             </t>
                                         </div>
@@ -180,7 +180,7 @@
                                             Thank you,
                                             <t t-if="user and user.signature">
                                                 <br/>
-                                                <t t-out="user.signature">--<br/>Mitchell Admin</t>
+                                                <div>--<br/><t t-out="user.signature">Mitchell Admin</t></div>
                                                 <br/>
                                             </t>
                                         </div>

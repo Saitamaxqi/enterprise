@@ -46,7 +46,7 @@
         <field name="partner_id" ref="l10n_ke_hr_payroll_account.res_partner_barack"/>
         <field name="login">barackakintola@example.com</field>
         <field name="password">barackakintola</field>
-        <field name="signature" type="html"><span>--<br/>+B. Akintola</span></field>
+        <field name="signature">B. Akintola</field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_ke'))]"/>
         <field name="company_id" ref="base.demo_company_ke"/>
         <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>

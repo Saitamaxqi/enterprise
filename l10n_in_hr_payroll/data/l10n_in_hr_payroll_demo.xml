@@ -87,7 +87,7 @@
             <field name="partner_id" ref="l10n_in_hr_payroll.l10n_in_res_partner_vihaan"/>
             <field name="login">vihaan@example.com</field>
             <field name="password">vihaan@123</field>
-            <field name="signature" type="html"><span>--<br />+V. Sengupta</span></field>
+            <field name="signature">V. Sengupta</field>
             <field name="company_ids" eval="[(4, ref('base.demo_company_in'))]"/>
             <field name="company_id" ref="base.demo_company_in"/>
             <field name="groups_id" eval="[(6,0, [ref('base.group_user')])]"/>

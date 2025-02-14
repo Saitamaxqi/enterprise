@@ -55,7 +55,7 @@
                     Thank you for choosing <t t-out="company.name or ''">YourCompany</t>!
                     <div t-if="user.signature">
                         <br/><br/>
-                        <t t-out="user.signature or ''">--<br/>Mitchell Admin</t>
+                        <div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div>
                     </div>
                 </td></tr>
                 <tr><td style="text-align:center;">
@@ -163,7 +163,7 @@
                     <div>
                     <t t-if="user.signature">
                         <br/><br/>
-                        <t t-out="user.signature or ''">--<br/>Mitchell Admin</t>
+                        <div>--<br/><t t-out="user.signature or ''">Mitchell Admin</t></div>
                     </t>
                     </div>
                 </td></tr>

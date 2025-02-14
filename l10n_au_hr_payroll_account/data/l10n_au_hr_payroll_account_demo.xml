@@ -70,7 +70,7 @@
         <field name="partner_id" ref="l10n_au_hr_payroll_account.res_partner_dennis"/>
         <field name="login">denniscactus@example.com</field>
         <field name="password">denniscactus</field>
-        <field name="signature" type="html"><span>--<br/>+D. Cactus</span></field>
+        <field name="signature">D. Cactus</field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_au'))]"/>
         <field name="company_id" ref="base.demo_company_au"/>
         <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
