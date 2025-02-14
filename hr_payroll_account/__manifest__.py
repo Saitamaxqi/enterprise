@@ -27,7 +27,7 @@ Generic Payroll system Integrated with Accounting.
         'data/hr_payroll_account_demo.xml',
     ],
     'pre_init_hook': '_salaries_account_journal_pre_init',
-    'auto_install': True,
+    'auto_install':  ['hr_payroll', 'account_accountant'],
     'post_init_hook': '_hr_payroll_account_post_init',
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
