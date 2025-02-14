@@ -13,9 +13,11 @@
 
         <div class="d-flex o-version-history-item-text" t-ref="revisionNameDiv">
           <TextInput
+            t-if="props.editable"
             value="state.editName"
             onChange.bind="renameRevision"
           />
+          <span t-else="" t-esc="state.editName" />
         </div>
         <div
           t-if="revision.name"

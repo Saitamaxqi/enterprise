@@ -84,15 +84,6 @@ export class VersionHistoryItem extends Component {
                 isReadonlyAllowed: true,
             },
         ];
-        if (this.props.editable) {
-            actions.unshift({
-                name: this.revision.name ? _t("Rename") : _t("Name this version"),
-                execute: () => {
-                    this.inputRef.el.focus();
-                },
-                isReadonlyAllowed: true,
-            });
-        }
 
         return createActions(actions);
     }

@@ -324,7 +324,7 @@ test("Side panel > make copy", async function () {
     await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
 
     const menuItems = document.querySelectorAll(".o-menu .o-menu-item");
-    await contains(menuItems[1]).click();
+    await contains(menuItems[0]).click();
     expect.verifySteps(["forking"]);
 });
 
@@ -352,6 +352,27 @@ test("Side panel > rename revision", async function () {
     await contains(nameInput).click();
     await contains(nameInput).edit("test 11");
     expect.verifySteps(["renamed"]);
+});
+
+test("First revision should not be editable", async function () {
+    await createSpreadsheetTestAction("action_open_spreadsheet_history", {
+        mockRPC: async function (route, args) {
+            if (args.method === "get_spreadsheet_history") {
+                return {
+                    data: {},
+                    name: "test",
+                    revisions: [createRevision([], "REMOTE_REVISION")],
+                };
+            }
+        },
+    });
+
+    const historyItems = document.querySelectorAll(".o-version-history-item-text");
+    expect(historyItems).toHaveCount(2); // One should be an input, the other a span
+    expect(historyItems[0].querySelector("input")).toHaveCount(1);
+    expect(historyItems[1].querySelector("span")).toHaveCount(1);
+    expect(historyItems[0].querySelector("span")).toBe(null);
+    expect(historyItems[1].querySelector("input")).toBe(null);
 });
 
 test("Side panel > restore revision and confirm", async function () {
@@ -382,7 +403,7 @@ test("Side panel > restore revision and confirm", async function () {
     });
     await contains(`${revisionSelector}:eq(1)`).click();
     await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
-    await contains(".o-menu .o-menu-item:eq(2)").click();
+    await contains(".o-menu .o-menu-item:eq(1)").click();
     await contains(".o_dialog .btn-primary").click();
 
     expect.verifySteps(["restored"]);
@@ -410,7 +431,7 @@ test("Side panel > restore revision and cancel", async function () {
     });
     await contains(`${revisionSelector}:eq(1)`).click();
     await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
-    await contains(".o-menu .o-menu-item:eq(2)").click();
+    await contains(".o-menu .o-menu-item:eq(1)").click();
     await contains(".o_dialog footer .btn:eq(2)").click();
 
     expect(".o_dialog").toHaveCount(0);
@@ -445,7 +466,7 @@ test("Side panel > restore revision but copy instead", async function () {
     });
     await contains(`${revisionSelector}:eq(1)`).click();
     await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
-    await contains(".o-menu .o-menu-item:eq(2)").click();
+    await contains(".o-menu .o-menu-item:eq(1)").click();
     await contains(".o_dialog footer .btn:eq(1)").click();
 
     expect.verifySteps(["forking"]);
