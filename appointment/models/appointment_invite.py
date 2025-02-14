@@ -46,10 +46,15 @@ class AppointmentInvite(models.Model):
     suggested_staff_user_count = fields.Integer('# Staff Users', compute='_compute_suggested_staff_user_count')
     resources_choice = fields.Selection(
         selection=[
-            ('current_user', 'Me (only with Users)'),
-            ('all_assigned_resources', 'Any User/Resource'),
-            ('specific_resources', 'Specific Users/Resources')],
+            ('current_user', 'Me'),
+            ('all_assigned_resources', 'Any User'),
+            ('specific_resources', 'Specific Users')],
         string='Assign to', compute='_compute_resources_choice', store=True, readonly=False)
+    resources_resource_choice = fields.Selection(
+        selection=[
+            ('all_assigned_resources', 'Any Resource'),
+            ('specific_resources', 'Specific Resources')],
+        compute='_compute_resources_resource_choice', inverse='_inverse_resources_resource_choice')
     resource_ids = fields.Many2many('appointment.resource', string='Resources', domain="[('id', 'in', suggested_resource_ids)]",
         compute='_compute_resource_ids', store=True, readonly=False)
     staff_user_ids = fields.Many2many('res.users', string='Users', domain="[('id', 'in', suggested_staff_user_ids)]",
@@ -219,7 +224,17 @@ class AppointmentInvite(models.Model):
                 url_encode(invite._get_redirect_url_parameters()),
             )
 
-    @api.onchange('appointment_type_ids', 'resources_choice', 'resource_ids', 'staff_user_ids')
+    @api.depends('resources_choice')
+    def _compute_resources_resource_choice(self):
+        for invite in self:
+            if invite.resources_choice != 'current_user':
+                invite.resources_resource_choice = invite.resources_choice
+
+    def _inverse_resources_resource_choice(self):
+        for invite in self:
+            invite.resources_choice = invite.resources_resource_choice if invite.schedule_based_on == "resources" else invite.resources_choice
+
+    @api.onchange('appointment_type_ids', 'resources_choice', 'resources_resource_choice', 'resource_ids', 'staff_user_ids')
     def _onchange_configuration(self):
         """ If the end user changes anything to the configuration, we generate a new code
          instead of trying to re-use a configuration (as it's not identical anymore). """

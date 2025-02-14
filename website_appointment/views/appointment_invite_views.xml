@@ -7,7 +7,8 @@
         <field name="inherit_id" ref="appointment.appointment_invite_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='appointment_type_ids']" position="before">
-                <field name="website_id" options="{'no_open': True, 'no_create': True}" groups="website.group_multi_website"/>
+                <field name="website_id" options="{'no_open': True, 'no_create': True}" groups="website.group_multi_website"
+                    placeholder="All websites" invisible="context.get('default_appointment_type_ids')"/>
                 <field name="website_id" invisible='1'/>
             </xpath>
             <field name="appointment_type_ids" position="attributes">

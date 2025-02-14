@@ -83,11 +83,12 @@
                         <field name="suggested_staff_user_ids" invisible="1"/>
                         <field name="suggested_staff_user_count" invisible="1"/>
                         <field name="appointment_type_count" invisible="1"/>
-                        <field name="resources_choice" widget="radio" invisible="appointment_type_count != 1 or (suggested_resource_count &lt;= 1 and suggested_staff_user_count &lt;= 1)"/>
+                        <field name="resources_choice" widget="radio" invisible="schedule_based_on == 'resources' or appointment_type_count != 1 or (suggested_resource_count &lt;= 1 and suggested_staff_user_count &lt;= 1)"/>
+                        <field name="resources_resource_choice" string="Assign to" widget="radio" invisible="schedule_based_on == 'users' or appointment_type_count != 1 or (suggested_resource_count &lt;= 1 and suggested_staff_user_count &lt;= 1)"/>
                         <field name="staff_user_ids" class="o_input" widget="many2many_tags_avatar" options="{'no_create': True}"
-                            invisible="not suggested_staff_user_ids or appointment_type_count != 1 or resources_choice in ['current_user', 'all_assigned_resources']"/>
+                            invisible="not suggested_staff_user_ids or appointment_type_count != 1 or schedule_based_on == 'resources' or resources_choice in ['current_user', 'all_assigned_resources']"/>
                         <field name="resource_ids" class="o_input" widget="many2many_tags_avatar" options="{'no_create': True}"
-                               invisible="not suggested_resource_ids or appointment_type_count != 1 or resources_choice == 'current_user' or resources_choice == 'all_assigned_resources'"/>
+                               invisible="not suggested_resource_ids or appointment_type_count != 1 or schedule_based_on == 'users' or resources_resource_choice == 'all_assigned_resources'"/>
                     </group>
                     <div invisible="not suggested_staff_user_ids and not suggested_resource_ids">
                         <label for="base_book_url" string="Link URL" class="opacity-100 fw-bold text-900"/><br/>
