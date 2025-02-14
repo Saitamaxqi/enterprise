@@ -3958,3 +3958,20 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(len(delivery_picking.move_ids), 2)
         url = self._get_client_action_url(delivery_picking.id)
         self.start_tour(url, 'test_select_with_same_product_and_lot', login='admin', timeout=180)
+
+    def test_description_picking_tour(self):
+        """ Test that when creating a receipt or internal transfer using the barcode app, the
+        description_picking field of the move_line is not empty
+        """
+        self.clean_access_rights()
+        product = self.env['product.product'].create({
+            'name': 'test_product',
+            'description_pickingin': 'receipt',
+            'barcode': 'test_product',
+        })
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = "/web#action=" + str(action_id.id)
+        self.start_tour(url, 'test_description_picking_tour', login='admin', timeout=180)
+        picking = self.env['stock.picking'].search([('move_ids.product_id.id', '=', product.id), ('state', '=', 'done')])
+
+        self.assertEqual(picking.move_ids.description_picking, 'receipt')

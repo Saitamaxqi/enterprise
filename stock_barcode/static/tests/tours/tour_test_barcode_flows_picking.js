@@ -6207,3 +6207,9 @@ registry.category("web_tour.tours").add("test_confirmation_location_delivery_pic
         ...stepUtils.validateBarcodeOperation(),
     ],
 });
+
+registry.category("web_tour.tours").add("test_description_picking_tour", { steps: () => [
+    { trigger: '.o_stock_barcode_main_menu', run: 'scan WHIN' },
+    { trigger: '.o_barcode_client_action', run: 'scan test_product' },
+    ...stepUtils.validateBarcodeOperation(),
+]});
