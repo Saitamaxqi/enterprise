@@ -349,7 +349,11 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
                     'name': 'Goods',
                     'price_unit': 5000, # Has to be over 250 to be considered as an EC sale
                     'quantity': 1,
-                    'tax_ids': self.env['account.tax'].search([('amount', '=', 0), ('type_tax_use', '=', 'sale')]).ids,
+                    'tax_ids': self.env['account.tax'].search([
+                        ('amount', '=', 0),
+                        ('type_tax_use', '=', 'sale'),
+                        ('company_id', '=', self.company.id),
+                    ]).ids,
                 })
             ],
         })
