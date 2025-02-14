@@ -3,7 +3,8 @@
 import base64
 from datetime import datetime
 
-from odoo import fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class AccountBatchPayment(models.Model):
@@ -47,3 +48,9 @@ class AccountBatchPayment(models.Model):
             return export_file_data
 
         return super()._generate_export_file()
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_payslip_payment(self):
+        if self.filtered(lambda batch: batch.l10n_au_is_payroll_payment and batch.state != 'draft'):
+            raise ValidationError(_("You cannot delete a Payroll payment record once it is done! "
+                                    "Please create a credit note to refund the payment."))

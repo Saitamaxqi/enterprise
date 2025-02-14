@@ -49,7 +49,7 @@ class AccountPayment(models.Model):
         if faulty_partners:
             # Redirects to the contacts as some contacts may not have accounts set
             raise RedirectWarning(
-                message=_("The Contact(s) requires a bank account with a valid BSB and account number."
+                message=_("The Contact(s) requires a bank account with a valid BSB and account number. "
                           "Please configure the account(s) for the following Contact(s):\n%s", "\n".join(faulty_partners.mapped("display_name"))),
                 action=faulty_partners._get_records_action(name=_("Configure Contact Account(s)"), target='new', views=[(False, "form"), (self.env.ref("l10n_au_aba.view_partner_tree").id, "list")]),
                 button_text=_("Configure Contact Account(s)")

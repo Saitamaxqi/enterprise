@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-07 10:04+0000\n"
-"PO-Revision-Date: 2024-02-07 10:04+0000\n"
+"POT-Creation-Date: 2025-04-01 05:19+0000\n"
+"PO-Revision-Date: 2025-04-01 05:19+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,6 @@ msgstr ""
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_journal_dashboard.py:0
-#, python-format
 msgid "ABA Credit Transfers to Send"
 msgstr ""
 
@@ -40,16 +39,22 @@ msgstr ""
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_payment.py:0
-#, python-format
 msgid ""
-"ABA fields for account '%s' on journal '%s' are not set. Please set the "
-"fields under ABA section!"
+"ABA fields for account '%(account)s' on journal '%(journal)s' are not set. "
+"Please set the fields under ABA section!"
+msgstr ""
+
+#. module: l10n_au_aba
+#. odoo-python
+#: code:addons/l10n_au_aba/models/account_batch_payment.py:0
+msgid ""
+"ABA fields for account '%(account_number)s', of journal "
+"'%(journal_name)s',are not set. Please set the fields under ABA section!"
 msgstr ""
 
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_payment.py:0
-#, python-format
 msgid "ABA payments must be defined in AUD."
 msgstr ""
 
@@ -61,7 +66,6 @@ msgstr ""
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_journal.py:0
-#, python-format
 msgid ""
 "APCA Identification Number is not valid (expected format is \"NNNNNN\", only"
 " digits). Please check with your Financial Institution"
@@ -78,40 +82,40 @@ msgid "BSB code of the account associated to this journal"
 msgstr ""
 
 #. module: l10n_au_aba
-#. odoo-python
-#: code:addons/l10n_au_aba/models/account_batch_payment.py:0
-#, python-format
-msgid "Bank account for payment '%s' has an invalid BSB or account number."
-msgstr ""
-
-#. module: l10n_au_aba
 #: model:ir.model,name:l10n_au_aba.model_account_batch_payment
 msgid "Batch Payment"
 msgstr ""
 
 #. module: l10n_au_aba
 #. odoo-python
+#: code:addons/l10n_au_aba/models/account_batch_payment.py:0
 #: code:addons/l10n_au_aba/models/res_partner.py:0
-#, python-format
 msgid "Configure Account"
 msgstr ""
 
 #. module: l10n_au_aba
 #. odoo-python
-#: code:addons/l10n_au_aba/models/account_payment.py:0
-#: code:addons/l10n_au_aba/models/account_payment.py:0
-#, python-format
-msgid "Configure Contact Account(s)"
+#: code:addons/l10n_au_aba/models/account_batch_payment.py:0
+msgid "Configure Bank Account(s)"
 msgstr ""
 
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_payment.py:0
+msgid "Configure Contact Account(s)"
+msgstr ""
+
+#. module: l10n_au_aba
+#. odoo-python
+#: code:addons/l10n_au_aba/models/account_batch_payment.py:0
 #: code:addons/l10n_au_aba/models/account_payment.py:0
-#: code:addons/l10n_au_aba/models/account_payment.py:0
-#: code:addons/l10n_au_aba/models/account_payment.py:0
-#, python-format
 msgid "Configure Journal"
+msgstr ""
+
+#. module: l10n_au_aba
+#. odoo-python
+#: code:addons/l10n_au_aba/models/account_batch_payment.py:0
+msgid "Configure Journal Bank Account"
 msgstr ""
 
 #. module: l10n_au_aba
@@ -132,10 +136,17 @@ msgstr ""
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_journal.py:0
-#, python-format
 msgid ""
 "Financial Institution Code is not valid (expected format is \"XXX\"). Please"
 " check with your Financial Institution."
+msgstr ""
+
+#. module: l10n_au_aba
+#. odoo-python
+#: code:addons/l10n_au_aba/models/account_batch_payment.py:0
+msgid ""
+"Following bank account(s) have invalid BSB or account number.\n"
+"%s"
 msgstr ""
 
 #. module: l10n_au_aba
@@ -146,7 +157,6 @@ msgstr ""
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_batch_payment.py:0
-#, python-format
 msgid ""
 "Individual amount of payment %s is too high for ABA file - Please adjust"
 msgstr ""
@@ -159,7 +169,6 @@ msgstr ""
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_payment.py:0
-#, python-format
 msgid ""
 "Journal '%s' requires a proper ABA account. Please configure the Account "
 "first."
@@ -205,7 +214,6 @@ msgstr ""
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_journal.py:0
-#, python-format
 msgid ""
 "Supplying User Name cannot be longer than 26 characters. Please check with "
 "your Financial Institution."
@@ -214,34 +222,30 @@ msgstr ""
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_payment.py:0
-#, python-format
 msgid ""
-"The Contact(s) requires a bank account with a valid BSB and account number.Please configure the account(s) for the following Contact(s):\n"
+"The Contact(s) requires a bank account with a valid BSB and account number. Please configure the account(s) for the following Contact(s):\n"
 "%s"
 msgstr ""
 
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_batch_payment.py:0
-#, python-format
 msgid ""
-"The account %s, of journal '%s', is not set up for ABA payments.\n"
-"Please fill in its ABA fields."
-msgstr ""
-
-#. module: l10n_au_aba
-#. odoo-python
-#: code:addons/l10n_au_aba/models/account_batch_payment.py:0
-#, python-format
-msgid ""
-"The account %s, of journal '%s', is not valid for ABA.\n"
+"The account %(account_number)s, of journal '%(journal_name)s', is not valid for ABA.\n"
 "Either its account number is incorrect or it has no BSB set."
 msgstr ""
 
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_batch_payment.py:0
-#, python-format
+msgid ""
+"The bank account on journal '%s' is not set. Please create a new account or "
+"set an existing one."
+msgstr ""
+
+#. module: l10n_au_aba
+#. odoo-python
+#: code:addons/l10n_au_aba/models/account_batch_payment.py:0
 msgid ""
 "The value of transactions is too high for one ABA file - Please split in to "
 "multiple transfers"
@@ -250,7 +254,6 @@ msgstr ""
 #. module: l10n_au_aba
 #. odoo-python
 #: code:addons/l10n_au_aba/models/account_batch_payment.py:0
-#, python-format
 msgid ""
 "Too many transactions for one ABA file - Please split in to multiple "
 "transfers"

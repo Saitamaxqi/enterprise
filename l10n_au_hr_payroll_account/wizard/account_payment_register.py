@@ -20,9 +20,7 @@ class AccountPaymentRegister(models.TransientModel):
                         lambda line: line.account_id != super_account
                     )
                 ):
-                    payslip.write(
-                        {"state": "paid", "paid_date": self.payment_date}
-                    )
+                    payslip.action_payslip_paid()
 
         # Create a batche if payment register is created from hr.payslip.run
         if self.env.context.get("hr_payroll_payment_register_batch"):
@@ -32,7 +30,7 @@ class AccountPaymentRegister(models.TransientModel):
             if not payments:
                 raise UserError(_("No payments to create a batch for."))
 
-            payslip_batch.l10n_au_payment_batch_id = self.env['account.batch.payment'].create({
+            payment_batch = self.env['account.batch.payment'].create({
                 'journal_id': payments[0].journal_id.id,
                 'payment_ids': [(4, payment.id, None) for payment in payments],
                 'payment_method_id': payments[0].payment_method_id.id,
@@ -40,8 +38,23 @@ class AccountPaymentRegister(models.TransientModel):
                 'name': f"Payroll Payments ({payslip_batch.name})",
                 'l10n_au_is_payroll_payment': True,
             })
-
+            payment_batch.validate_batch()
+            payslip_batch.l10n_au_payment_batch_id = payment_batch
+            payslip_batch.message_post(body=_("Batch payment for %(amount)s done at %(batch)s", amount=payment_batch.currency_id.format(
+                abs(payment_batch.amount)), batch=payment_batch._get_html_link()))
             payslip_batch.write({'state': 'paid'})
+            # Force the payslips to be paid after FFR for payslips with no new payments
+            payslip_batch.slip_ids.write({'state': 'paid'})
+
+    def _create_payments(self):
+        # Journal entry of payment is required for australian payroll to ensure any past payments are reconciled
+        # before a new payment for FFR is made.
+        if self.env.context.get("hr_payroll_payment_register") and self.country_code == "AU" and not self.payment_method_line_id.payment_account_id:
+            raise UserError(_(
+                "An Outstanding Payments Account for the payment method '%(payment_method)s' is required to allow reconciliation.\n"
+                "Please select one under Accounting > Configuration > Journals > '%(journal)s' > Outgoing Payments",
+                payment_method=self.payment_method_line_id.name, journal=self.journal_id.name))
+        return super()._create_payments()
 
     def _create_payment_vals_from_batch(self, batch):
         res = super()._create_payment_vals_from_batch(batch)

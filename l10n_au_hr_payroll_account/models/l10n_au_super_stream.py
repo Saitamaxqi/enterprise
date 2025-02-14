@@ -111,6 +111,11 @@ class L10n_AuSuperStream(models.Model):
         # To be changed to direct debit once the api is implimented
         pay_method_line = self.journal_id._get_available_payment_method_lines('outbound').filtered(
             lambda x: x.code == 'manual')
+        if not pay_method_line.payment_account_id:
+            raise UserError(_(
+                "An Outstanding Payments Account for the payment method '%(payment_method)s' is required to allow reconciliation.\n"
+                "Please select one under Accounting > Configuration > Journals > '%(journal)s' > Outgoing Payments",
+                payment_method=pay_method_line.name, journal=self.journal_id.name))
         clearing_house_partner = self.env.ref('l10n_au_hr_payroll_account.res_partner_clearing_house', raise_if_not_found=False)
         if not clearing_house_partner.property_account_payable_id:
             raise UserError(_("Please set the SuperStream Payable Account for company %s.", self.company_id.name))
