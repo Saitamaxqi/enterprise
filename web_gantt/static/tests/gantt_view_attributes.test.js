@@ -838,11 +838,8 @@ test(`Fold unavailabilities ("day": "hours:quarter")`, async () => {
         { range: [169, 289], title: "", titleAttr: "" },
     ]);
     expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(3);
-    const cell1 = queryFirst(".o_gantt_cell");
-    const cell2 = queryOne(".o_gantt_cell:eq(1)");
-    expect(Math.abs(cell1.clientWidth - cell2.clientWidth)).toBeLessThan(4, {
-        message:
-            "Folded cells have similar width compared to regular cells besides covering a wider date range",
+    expect(queryFirst(".o_gantt_cell").offsetWidth).toBe(36, {
+        message: "Folded cells have a fixed width of 36px",
     });
 });
 

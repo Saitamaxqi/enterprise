@@ -931,6 +931,7 @@ export class GanttRenderer extends Component {
     }
 
     computeColsTemplate() {
+        const { cellPart } = this.model.metaData.scale;
         const colsTemplate = [];
         const colInCoarseGridKeys = this.getColInCoarseGridKeys();
         for (let i = 0; i < colInCoarseGridKeys.length - 1; i++) {
@@ -938,9 +939,24 @@ export class GanttRenderer extends Component {
             const y = +colInCoarseGridKeys[i + 1];
             const X = this.getColNumberInFoldedGrid(x);
             const Y = this.getColNumberInFoldedGrid(y);
+            let width = 0;
+            let bypassMinWidth = false;
+            if (this.offHoursState.foldedGridColumnSpans) {
+                for (let j = X; j < Y; j++) {
+                    if (
+                        this.offHoursState.foldedGridColumnSpans[Math.floor((j - 1) / cellPart)] > 1
+                    ) {
+                        width += 36 / cellPart;
+                        bypassMinWidth = true;
+                    } else {
+                        width += this.cellPartWidth;
+                    }
+                }
+            } else {
+                width = (Y - X) * this.cellPartWidth;
+            }
             const colName = `c${x}`;
-            const width = (Y - X) * this.cellPartWidth;
-            colsTemplate.push(`[${colName}]minmax(${width}px,${width ? 1 : 0}fr)`);
+            colsTemplate.push(`[${colName}]minmax(${width}px,${bypassMinWidth ? 0 : 1}fr)`);
         }
         colsTemplate.push(`[c${colInCoarseGridKeys.at(-1)}]`);
         return colsTemplate.join("");
@@ -2047,7 +2063,11 @@ export class GanttRenderer extends Component {
 
         if (this.shouldComputeSomeWidths || this.shouldComputeGridColumns) {
             this.virtualGrid.setColumnsWidths(
-                new Array(this.foldedGridColumnCount).fill(this.columnWidth)
+                this.offHoursState.foldedGridColumnSpans
+                    ? this.offHoursState.foldedGridColumnSpans.map((val) =>
+                          val > 1 ? 36 : this.columnWidth
+                      )
+                    : new Array(this.foldedGridColumnCount).fill(this.columnWidth)
             );
             this.computeVisibleColumns();
         }
