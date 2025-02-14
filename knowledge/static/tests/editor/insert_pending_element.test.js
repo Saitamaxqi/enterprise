@@ -56,7 +56,7 @@ test("insert pending block in empty article", async () => {
         config: getConfig(),
     });
     expect(getContent(el)).toBe(
-        `<div class="oe_unbreakable">coucou</div><p placeholder='Type "/" for commands' class="o-we-hint">[]<br></p>`
+        `<div class="oe_unbreakable">coucou</div><p o-we-hint-text='Type "/" for commands' class="o-we-hint">[]<br></p>`
     );
 });
 
@@ -66,6 +66,6 @@ test("insert pending block in non-empty article", async () => {
         config: getConfig(),
     });
     expect(getContent(el)).toBe(
-        `<p><br></p><p>content</p><div class="oe_unbreakable">coucou</div><p placeholder='Type "/" for commands' class="o-we-hint">[]<br></p>`
+        `<p><br></p><p>content</p><div class="oe_unbreakable">coucou</div><p o-we-hint-text='Type "/" for commands' class="o-we-hint">[]<br></p>`
     );
 });
