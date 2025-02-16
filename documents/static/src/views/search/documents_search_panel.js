@@ -66,7 +66,6 @@ export class DocumentsSearchPanel extends SearchPanel {
             popoverClass: "o_search_panel_item_settings_popover",
         });
         this.dialog = useService("dialog");
-        this.root = useState(this.env.model.root);
 
         onWillStart(async () => {
             if (this.env.model.config.context.active_model) {
@@ -91,14 +90,6 @@ export class DocumentsSearchPanel extends SearchPanel {
         useBus(this.env.searchModel, "update-search-panel", async () => {
             this.updateActiveValues();
             this.render();
-        });
-
-        // todo: remove in master
-        useBus(this.env.documentsView.bus, "documents-open-edit-selected-folder", () => {
-            const selectedFolderId = this.env.searchModel.getSelectedFolderId();
-            if (selectedFolderId) {
-                this.editSectionValue("documents.document", selectedFolderId);
-            }
         });
 
         useNestedSortable({
@@ -264,26 +255,6 @@ export class DocumentsSearchPanel extends SearchPanel {
         if (needRefresh) {
             this.render(true);
         }
-    }
-
-    async editSectionValue(resModel, resId) {
-        this.env.documentsView.bus.trigger("documents-close-preview");
-        return this.action.doAction(
-            {
-                res_model: resModel,
-                res_id: resId,
-                name: _t("Edit"),
-                type: "ir.actions.act_window",
-                target: "new",
-                views: [[false, "form"]],
-                context: {
-                    create: false,
-                },
-            },
-            {
-                onClose: () => this.env.searchModel._reloadSearchModel(true),
-            }
-        );
     }
 
     //---------------------------------------------------------------------
