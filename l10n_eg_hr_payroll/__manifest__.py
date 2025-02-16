@@ -6,7 +6,13 @@
     "description": """
 Egypt Payroll and End of Service rules.
 =======================================
-
+- Basic calculation
+- End of service calculation
+- Other inputs (overtime, salary attachments, etc.)
+- Social insurance calculation
+- End of service provisions
+- Tax break calculations and deductions
+- Master payroll export
     """,
     "depends": ["hr_payroll"],
     "auto_install": ["hr_payroll"],

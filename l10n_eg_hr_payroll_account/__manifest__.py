@@ -1,9 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Egypt - Payroll with Accounting',
-    'author': 'Odoo',
-    'version': '1.0',
+    'author': 'Odoo S.A.',
     'countries': ['eg'],
+    'version': '1.0',
     'category': 'Human Resources',
     'description': """
 Accounting Data for Egypt Payroll Rules.
