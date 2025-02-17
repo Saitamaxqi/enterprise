@@ -81,3 +81,14 @@ class AccountMove(models.Model):
                 },
             }
         return super()._action_tax_to_pay_wizard()
+
+    def _action_tax_to_send(self):
+        if self.company_id.account_fiscal_country_id.code == 'BE':
+            return {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'views': [(self.env.ref('account.view_move_form').id, 'form')],
+                'res_model': self._name,
+                'res_id': self.id,
+            }
+        return super()._action_tax_to_send()
