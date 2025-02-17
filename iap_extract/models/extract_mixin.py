@@ -107,7 +107,7 @@ class ExtractMixin(models.AbstractModel):
 
         for record in records_to_validate:
             try:
-                self._contact_iap_extract(
+                record._contact_iap_extract(
                     'validate',
                     params={
                         'document_token': record.extract_document_uuid,
