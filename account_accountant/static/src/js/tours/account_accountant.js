@@ -63,7 +63,7 @@
                 tooltipPosition: "bottom",
                 run: "click",
             }, {
-                trigger: '.o_bank_rec_st_line:not(.o_bank_rec_selected_st_line)',
+                trigger: '.o_kanban_renderer:not(:has(.o_bank_rec_quick_create)) .o_bank_rec_st_line:not(.o_bank_rec_selected_st_line)',
                 content: _t('Click on a fetched bank transaction to start the reconciliation process.'),
                 run: "click",
             }, {
