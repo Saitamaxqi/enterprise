@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # pylint: disable=C0326
 from .common import TestAccountReportsCommon
 
@@ -585,3 +584,120 @@ class TestPartnerLedgerReport(TestAccountReportsCommon):
         self.assertEqual(len(self.env['res.currency'].search([])), 1)
         options = self._generate_options(self.report, fields.Date.from_string('2023-01-01'), fields.Date.from_string('2023-12-31'))
         self.assertFalse(any(col['expression_label'] == 'amount_currency' for col in options['columns']))
+
+    def test_partner_ledger_fully_reconcile_previous_year(self):
+        """
+        Verify the report's behavior when a partner is fully reconciled and has a zero balance.
+        If the partner's balance is zero:
+            If the partner has any unreconciled items, display the partner's information in the report.
+            If the partner has no unreconciled items but has an initial balance > 0, show the partner.
+            If the partner has no unreconciled items and has an initial balance = 0, hide the partner.
+        """
+        new_partner = self.env['res.partner'].create({'name': 'Anakin Skywalker'})
+        move = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2019-01-01',
+            'partner_id': new_partner.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 500.0,
+                'tax_ids': [],
+            })]
+        })
+        move.action_post()
+
+        payment_1 = self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': '2019-01-01',
+            'journal_id': self.company_data['default_journal_misc'].id,
+            'partner_id': new_partner.id,
+            'line_ids': [
+                Command.create({'debit': 0.0,       'credit': 500.0,    'account_id': self.company_data['default_account_receivable'].id}),
+                Command.create({'debit': 500.0,     'credit': 0.0,      'account_id': self.company_data['default_journal_bank'].default_account_id.id}),
+            ],
+        })
+        payment_1.action_post()
+
+        options = self._generate_options(self.report, '2020-01-01', '2020-12-31', default_options={'partner_ids': new_partner.ids})
+        # Balance is 0 but there are unreconciled entries, so we show the line
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #                   Name                          Debit              Credit           Balance
+            [                     0,                             6,                  7,                9],
+            [
+                ('Anakin Skywalker',                         500.0,              500.0,              0.0),
+                ('Total',                                    500.0,              500.0,              0.0),
+            ],
+            options,
+        )
+
+        (payment_1 + move).line_ids.filtered(
+            lambda line: line.account_id == self.company_data['default_account_receivable']
+        ).reconcile()
+
+        # Balance is still 0 and there is no more unreconciled entries, the partner is hide from the report
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #        Name                                     Debit              Credit           Balance
+            [          0,                                        6,                  7,                9],
+            [
+                ('Total',                                      0.0,                0.0,              0.0),
+            ],
+            options,
+        )
+
+    def test_partner_ledger_fully_reconcile_current_year(self):
+        new_partner = self.env['res.partner'].create({'name': 'Darth Vader'})
+        move = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2019-01-01',
+            'partner_id': new_partner.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 500.0,
+                'tax_ids': [],
+            })]
+        })
+        move.action_post()
+
+        payment_1 = self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': '2019-01-01',
+            'journal_id': self.company_data['default_journal_misc'].id,
+            'partner_id': new_partner.id,
+            'line_ids': [
+                Command.create({'debit': 0.0,       'credit': 500.0,    'account_id': self.company_data['default_account_receivable'].id}),
+                Command.create({'debit': 500.0,     'credit': 0.0,      'account_id': self.company_data['default_journal_bank'].default_account_id.id}),
+            ],
+        })
+        payment_1.action_post()
+
+        options = self._generate_options(self.report, '2019-01-01', '2019-12-31', default_options={'partner_ids': new_partner.ids})
+        # Balance is 0 but there are unreconciled entries, so we show the line
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #              Name                              Debit              Credit            Balance
+            [                0,                                  6,                  7,                9],
+            [
+                ('Darth Vader',                              500.0,              500.0,              0.0),
+                ('Total',                                    500.0,              500.0,              0.0),
+            ],
+            options,
+        )
+
+        (payment_1 + move).line_ids.filtered(
+            lambda line: line.account_id == self.company_data['default_account_receivable']
+        ).reconcile()
+
+        # Balance is still 0 and there is no more unreconciled entries, but the moves is in the current report period,
+        # so we still show the partner in the report
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #             Name                               Debit              Credit            Balance
+            [                0,                                  6,                  7,                9],
+            [
+                ('Darth Vader',                              500.0,              500.0,              0.0),
+                ('Total',                                    500.0,              500.0,              0.0),
+            ],
+            options,
+        )

@@ -262,19 +262,29 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         # Create the currency table.
         for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
             query = report._get_report_query(column_group_options, 'from_beginning')
+            date_from = options['date']['date_from']
             queries.append(SQL(
                 """
-                SELECT
-                    account_move_line.partner_id  AS groupby,
-                    %(column_group_key)s          AS column_group_key,
-                    SUM(%(debit_select)s)         AS debit,
-                    SUM(%(credit_select)s)        AS credit,
-                    SUM(%(balance_select)s)       AS amount,
-                    SUM(%(balance_select)s)       AS balance
-                FROM %(table_references)s
-                %(currency_table_join)s
-                WHERE %(search_condition)s
-                GROUP BY account_move_line.partner_id
+                WITH partner_sums AS (
+                    SELECT
+                        account_move_line.partner_id            AS groupby,
+                        %(column_group_key)s                    AS column_group_key,
+                        SUM(%(debit_select)s)                   AS debit,
+                        SUM(%(credit_select)s)                  AS credit,
+                        SUM(%(balance_select)s)                 AS amount,
+                        SUM(%(balance_select)s)                 AS balance,
+                        BOOL_AND(account_move_line.reconciled)  AS all_reconciled,
+                        MAX(account_move_line.date)             AS latest_date
+                    FROM %(table_references)s
+                    %(currency_table_join)s
+                    WHERE %(search_condition)s
+                    GROUP BY account_move_line.partner_id
+                )
+                SELECT *
+                FROM partner_sums
+                WHERE partner_sums.balance != 0
+                OR partner_sums.all_reconciled = FALSE
+                OR partner_sums.latest_date >= %(date_from)s
                 """,
                 column_group_key=column_group_key,
                 debit_select=report._currency_table_apply_rate(SQL("account_move_line.debit")),
@@ -283,6 +293,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 table_references=query.from_clause,
                 currency_table_join=report._currency_table_aml_join(column_group_options),
                 search_condition=query.where_clause,
+                date_from=date_from,
             ))
 
         return SQL(' UNION ALL ').join(queries)
@@ -458,7 +469,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
 
         This method is intended to be overridden by other modules to add custom fields
         to the partner ledger query, e.g. SQL("account_move_line.date AS date,").
-        
+
         By default, it returns an empty SQL object.
         """
         return SQL()
