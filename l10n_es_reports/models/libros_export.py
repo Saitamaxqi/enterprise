@@ -197,7 +197,8 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
         line_vals.update({
             'expense_concept': expense_concept,
             'expense_deductible': line.balance,
-            'expense_series_number': line.move_id.name,
+            'expense_series_number': line.move_id.ref or '',
+            'reception_number': line.move_id.name,
             'date_reception': format_date(self.env, line.date.isoformat(), date_format='MM/dd/yyyy'),
             'investment_good': 'S' if (tax.l10n_es_bien_inversion and
                                        line_vals['operation_code'] != '02') else 'N',

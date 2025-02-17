@@ -56,7 +56,9 @@ class TestLibrosExport(TestAccountReportsCommon):
 
     def test_libros_export_line_vals(self):
         self.init_invoice('out_invoice', amounts=[1000], invoice_date=fields.Date.from_string('2019-10-12'), taxes=self.tax_21, post=True)
-        self.init_invoice('in_invoice', amounts=[1000], invoice_date=fields.Date.from_string('2019-06-15'), taxes=self.tax_21, post=True)
+        bill = self.init_invoice('in_invoice', amounts=[1000], invoice_date=fields.Date.from_string('2019-06-15'), taxes=self.tax_21)
+        bill.write({'ref': 'test ref'})
+        bill.action_post()
         inc_line_vals, exp_line_vals = self.get_libros_sheet_line_vals()
         line_vals = [inc_line_vals[m][t] for m in inc_line_vals for t in inc_line_vals[m]][0]
         self.assertDictEqual(line_vals, {
@@ -77,11 +79,11 @@ class TestLibrosExport(TestAccountReportsCommon):
             'billing_agreement': '', 'date_expedition': '06/15/2019', 'date_reception': '06/15/2019',
             'date_transaction': '', 'deductible_later': '', 'deduction_period': '', 'deduction_year': '',
             'expense_concept': 'G01', 'expense_deductible': 1000.0, 'expense_final_number': '',
-            'expense_series_number': 'BILL/2019/06/0001', 'external_reference': '', 'investment_good': 'N',
+            'expense_series_number': 'test ref', 'external_reference': '', 'investment_good': 'N',
             'invoice_type': 'F1', 'isp_taxable': 'N', 'operation_code': '01', 'partner_name': 'Esperado Espagnole',
             'partner_nif_code': '', 'partner_nif_id': '59962470K', 'partner_nif_type': '', 'payment_amount': '',
             'payment_date': '', 'payment_medium': '', 'payment_medium_id': '', 'period': '2T', 'property_reference': '',
-            'property_situation': '', 'reception_number': '', 'reception_number_final': '', 'surcharge_fee': 0.0,
+            'property_situation': '', 'reception_number': 'BILL/2019/06/0001', 'reception_number_final': '', 'surcharge_fee': 0.0,
             'surcharge_type': 0.0, 'tax_deductible': 210.0, 'tax_rate': 21.0, 'taxed_amount': 210.0,
             'total_amount': 1210.0, 'withholding_amount': 0.0, 'withholding_type': 0.0, 'year': 2019,
         })
@@ -152,7 +154,9 @@ class TestLibrosExport(TestAccountReportsCommon):
         })
 
     def test_libros_export_with_dua_group(self):
-        self.init_invoice('in_invoice', amounts=[500], post=True, taxes=[self.tax_dua_group])
+        bill = self.init_invoice('in_invoice', amounts=[500], taxes=[self.tax_dua_group])
+        bill.write({'ref': 'test ref'})
+        bill.action_post()
         exp_line_vals = self.get_libros_sheet_line_vals()[1]
         line_vals_list = [exp_line_vals[m][t] for m in exp_line_vals for t in exp_line_vals[m]]
         self.assertEqual(len(line_vals_list), 1)
@@ -162,11 +166,11 @@ class TestLibrosExport(TestAccountReportsCommon):
             'billing_agreement': '', 'date_expedition': '01/01/2019', 'date_reception': '01/01/2019',
             'date_transaction': '', 'deductible_later': '', 'deduction_period': '', 'deduction_year': '',
             'expense_concept': 'G01', 'expense_deductible': 500.0, 'expense_final_number': '',
-            'expense_series_number': 'BILL/2019/01/0001', 'external_reference': '', 'investment_good': 'N',
+            'expense_series_number': 'test ref', 'external_reference': '', 'investment_good': 'N',
             'invoice_type': 'F5', 'isp_taxable': 'N', 'operation_code': '01', 'partner_name': 'Esperado Espagnole',
             'partner_nif_code': '', 'partner_nif_id': '59962470K', 'partner_nif_type': '', 'payment_amount': '',
             'payment_date': '', 'payment_medium': '', 'payment_medium_id': '', 'period': '1T', 'property_reference': '',
-            'property_situation': '', 'reception_number': '', 'reception_number_final': '', 'surcharge_fee': 0.0,
+            'property_situation': '', 'reception_number': 'BILL/2019/01/0001', 'reception_number_final': '', 'surcharge_fee': 0.0,
             'surcharge_type': 0.0, 'tax_deductible': 50.0, 'tax_rate': 10.0, 'taxed_amount': 50.0,
             'total_amount': 550.0, 'withholding_amount': 0.0, 'withholding_type': 0.0, 'year': 2019,
         })
