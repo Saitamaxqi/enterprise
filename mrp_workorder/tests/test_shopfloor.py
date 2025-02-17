@@ -584,3 +584,83 @@ class TestShopFloor(HttpCase):
         self.start_tour(url, "test_mrp_manual_consumption_in_shopfloor", login="admin", timeout=100)
         self.assertEqual(mo.move_raw_ids.picked, False)
         self.assertEqual(mo.workorder_ids.state, 'progress')
+
+    def test_component_registration_on_split_productions(self):
+        """
+        Test that the component registration are not erased by the split
+        production process. Since the shopfloor process differs if the
+        component registration happens prior or after the final product
+        registration, we will test both flows here.
+        """
+        warehouse = self.env.ref("stock.warehouse0")
+        warehouse.manu_type_id.prefill_shop_floor_lots = True
+        self.env.ref('base.group_user').write({'implied_ids': [Command.link(self.ref('stock.group_production_lot'))]})
+        final_product, component = self.env['product.product'].create([
+            {
+                'name': 'Lovely Product',
+                'is_storable': True,
+                'tracking': 'serial',
+            },
+            {
+                'name': 'Lovely Component',
+                'is_storable': True,
+                'tracking': 'serial',
+            },
+        ])
+        comp_lots = self.env['stock.lot'].create([
+            {
+                'name': f"SN00{i+1}",
+                'product_id': component.id,
+                'company_id': self.env.company.id,
+            } for i in range(6)
+        ])
+        for lot in comp_lots:
+            self.env['stock.quant']._update_available_quantity(product_id=component, location_id=warehouse.lot_stock_id, quantity=1, lot_id=lot)
+        workcenter = self.env['mrp.workcenter'].create({
+            'name': 'Lovely Workcenter',
+        })
+        bom = self.env['mrp.bom'].create({
+            'product_tmpl_id': final_product.product_tmpl_id.id,
+            'product_qty': 1.0,
+            'operation_ids': [
+                Command.create({'name': 'Lovely Operation', 'workcenter_id': workcenter.id}),
+                Command.create({'name': 'Bad Operation', 'workcenter_id': workcenter.id}),
+            ],
+            'bom_line_ids': [
+                Command.create({'product_id': component.id, 'product_qty': 1}),
+            ]
+        })
+        self.env['quality.point'].create([
+            {
+                'picking_type_ids': [Command.link(warehouse.manu_type_id.id)],
+                'product_ids': [Command.link(final_product.id)],
+                'operation_id': bom.operation_ids.ids[0],
+                'title': 'Register component',
+                'component_id': component.id,
+                'test_type_id': self.env.ref('mrp_workorder.test_type_register_consumed_materials').id,
+                'sequence': 1,
+            },
+        ])
+        mos = self.env['mrp.production'].create([
+            {
+                'name': f"SMO{i+1}",
+                'product_id': final_product.id,
+                'product_qty': 2,
+                'bom_id': bom.id,
+            } for i in range(2)
+        ])
+        mos.action_confirm()
+        mos.action_assign()
+        self.assertEqual(mos.move_raw_ids.lot_ids, comp_lots[:4])
+        mos.button_plan()
+        action = self.env["ir.actions.actions"]._for_xml_id("mrp_workorder.action_mrp_display")
+        url = '/web?#action=%s' % (action['id'])
+        self.start_tour(url, "test_component_registration_on_split_productions", login='admin')
+        # check that both productions were splitted and that the component registration was not erased.
+        self.assertEqual([len(mo.procurement_group_id.mrp_production_ids) for mo in mos], [2, 2])
+        self.assertRecordValues(mos[0].move_raw_ids, [
+            {"quantity": 1.0, "lot_ids": comp_lots[2].ids}
+        ])
+        self.assertRecordValues(mos[1].move_raw_ids, [
+            {"quantity": 2.0, "lot_ids": (comp_lots[5]|comp_lots[4]).ids}
+        ])

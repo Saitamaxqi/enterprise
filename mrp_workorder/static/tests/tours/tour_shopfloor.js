@@ -631,29 +631,29 @@ registry.category("web_tour.tours").add("test_change_qty_produced", {
     ],
 });
 
-registry.category("web_tour.tours").add('test_mrp_manual_consumption_in_shopfloor', {
+registry.category("web_tour.tours").add("test_mrp_manual_consumption_in_shopfloor", {
     steps: () => [
         {
             trigger: ".form-check:has(input[name='Nuclear Workcenter'])",
-            run: "click"
+            run: "click",
         },
         {
             trigger: '.form-check:has(input[name="Nuclear Workcenter"]:checked)',
         },
         {
             trigger: "button:contains('Confirm')",
-            run: "click"
+            run: "click",
         },
         {
             trigger: "button.btn-light:contains('Nuclear Workcenter')",
-            run: "click"
+            run: "click",
         },
         {
             trigger: ".o_control_panel_actions button.active:contains('Nuclear Workcenter')",
         },
         {
             trigger: ".o_finished_product span:contains('Finish')",
-            run: "click"
+            run: "click",
         },
         {
             trigger: ".o_mrp_display_record.o_active",
@@ -661,4 +661,172 @@ registry.category("web_tour.tours").add('test_mrp_manual_consumption_in_shopfloo
         {
             trigger: ".o_mrp_record_line:not(.text-muted) span:contains('Component')",
         },
-]});
+    ],
+});
+
+registry.category("web_tour.tours").add("test_component_registration_on_split_productions", {
+    steps: () => [
+        {
+            trigger: ".form-check:has(input[name='Lovely Workcenter'])",
+            run: "click",
+        },
+        {
+            trigger: ".form-check:has(input[name='Lovely Workcenter']:checked)",
+            run() {},
+        },
+        {
+            trigger: "button:contains('Confirm')",
+            run: "click",
+        },
+        {
+            content: "Swap to the WO view of the Lovely Workcenter",
+            trigger: ".o_control_panel button:contains(Lovely Workcenter)",
+            run: "click",
+        },
+        {
+            content: "Open register production",
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(SMO1)) .accordion button:contains('Instructions')",
+            run: "click",
+        },
+        {
+            trigger: ".o_data_row:contains(SN002) .o_list_record_remove button",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .o_field_widget[name='quant_id']:contains(SN001)",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .o_field_widget[name='quant_id'] input",
+            run: "edit SN003",
+        },
+        {
+            trigger: ".dropdown-item:contains(SN003)",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .modal-header",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .o_field_widget[name='quant_id']:contains(SN003)",
+            run() {},
+        },
+        {
+            trigger: ".o_form_button_save",
+            run: "click",
+        },
+        {
+            content: "Check that the component registration has been completed",
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(SMO1)) button:contains(Mark as Done)",
+            run() {},
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(SMO1)) .o_mrp_record_line:contains(Register Production) button.fa-plus",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(SMO1)) .o_mrp_record_line:has(.text-decoration-line-through:contains(Register Production)) span:contains(00)",
+            run() {},
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(SMO1)) button:contains(Mark as Done)",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(SMO1)) button:contains(Close Production)",
+            run: "click",
+        },
+        {
+            content: "Check that the production was splitted",
+            trigger: ".o_mrp_display_record:has(.card-title:contains(SMO1-002))",
+            run() {},
+        },
+        // Process the operations for SMO2 in reverse order and consume more than expected
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(SMO2)) .o_mrp_record_line:contains(Register Production) button.fa-plus",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(SMO2)) .o_mrp_record_line:has(.text-decoration-line-through:contains(Register Production)) span:contains(00)",
+            run() {},
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(SMO2)) .accordion button:contains('Instructions')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .o_field_widget[name='quant_id']:contains(SN004)",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .o_field_widget[name='quant_id'] input",
+            run: "edit SN006",
+        },
+        {
+            trigger: ".dropdown-item:contains(SN006)",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .modal-header",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .o_field_widget[name='quant_id']:contains(SN006)",
+            run() {},
+        },
+        {
+            trigger: ".modal-content .o_field_widget[name='quant_id']:not(:contains(SN006))",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .o_field_widget[name='quant_id'] input",
+            run: "edit SN005",
+        },
+        {
+            trigger: ".dropdown-item:contains(SN005)",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .modal-header",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .o_field_widget[name='quant_id']:contains(SN005)",
+            run() {},
+        },
+        {
+            trigger: ".o_form_button_save",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(SMO2)) button:contains(Mark as Done)",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(SMO2)) button:contains(Close Production)",
+            run: "click",
+        },
+        {
+            trigger:
+                ".modal-content:has(.modal-title:contains(Consumption Warning)) button[name=action_confirm]",
+            run: "click",
+        },
+        {
+            content: "Check that the production was splitted",
+            trigger: ".o_mrp_display_record:has(.card-title:contains(SMO2-002))",
+            run() {},
+        },
+    ],
+});
