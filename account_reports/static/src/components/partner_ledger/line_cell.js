@@ -11,7 +11,7 @@ export class PartnerLedgerLineCell extends AccountReportLineCell {
             cell.figure_type === 'date'
             && cell.expression_label == 'date_maturity'
             && cell.no_format
-            && DateTime.fromISO(cell.no_format) < DateTime.now()
+            && DateTime.fromISO(cell.no_format).startOf('day') < DateTime.now().startOf('day')
         ) {
             superCellClasses += ' text-danger';
         }
