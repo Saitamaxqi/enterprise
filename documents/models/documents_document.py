@@ -100,8 +100,7 @@ class DocumentsDocument(models.Model):
     owner_id = fields.Many2one(
         'res.users', tracking=True, index=True, string="Owner", copy=False,
         default=lambda self: self.env.user.id if self.env.user.active else False)
-    lock_uid = fields.Many2one('res.users', string="Locked by")
-    is_locked = fields.Boolean(compute="_compute_is_locked", string="Locked")
+    lock_uid = fields.Many2one('res.users', string="Locked by", tracking=True)
     request_activity_id = fields.Many2one('mail.activity')
     requestee_partner_id = fields.Many2one('res.partner')
     sequence = fields.Integer('Sequence', default=10)
@@ -1677,23 +1676,13 @@ class DocumentsDocument(models.Model):
         sets a lock user, the lock user is the user who locks a file for themselves, preventing data replacement
         and archive (therefore deletion) for any user but himself.
 
-        Members of the group documents.group_documents_manager and the superuser can unlock the file regardless.
+        Any user with the edit permission can unlock the file.
         """
         self.ensure_one()
         if self.lock_uid:
-            if self.env.user == self.lock_uid or self.env.is_admin() or self.env.user.has_group('documents.group_documents_manager'):
-                self.lock_uid = False
+            self.lock_uid = False
         else:
             self.lock_uid = self.env.uid
-
-    @api.depends_context('uid')
-    @api.depends('lock_uid')
-    def _compute_is_locked(self):
-        for record in self:
-            record.is_locked = record.lock_uid and not (
-                    self.env.user == record.lock_uid or
-                    self.env.is_admin() or
-                    self.env.user.has_group('documents.group_documents_manager'))
 
     def action_archive(self):
         if not self:

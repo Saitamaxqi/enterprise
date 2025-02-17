@@ -1,4 +1,5 @@
 import { browser } from "@web/core/browser/browser";
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
@@ -16,6 +17,7 @@ export const DocumentsModelMixin = (component) =>
             if (this.config.resModel === "documents.document") {
                 this.originalSelection = params.state?.sharedSelection;
             }
+            this.dialogService = useService("dialog");
             this.documentService = useService("document.document");
         }
 
@@ -135,7 +137,8 @@ export const DocumentsModelMixin = (component) =>
                 singleSelection &&
                 currentFolder?.id !== "TRASH" &&
                 singleSelection.data.type === "binary" &&
-                singleSelection.data.attachment_id
+                singleSelection.data.attachment_id &&
+                !singleSelection.data.lock_uid
             );
         }
 
@@ -156,7 +159,11 @@ export const DocumentsModelMixin = (component) =>
 
         get canDuplicateRecords() {
             const currentFolder = this.env.searchModel.getSelectedFolder();
-            return currentFolder?.id !== "TRASH" && this.documentService.isEditable(currentFolder);
+            return (
+                currentFolder?.id !== "TRASH" &&
+                this.documentService.isEditable(currentFolder) &&
+                this.targetRecords.every((r) => !r.data.lock_uid)
+            );
         }
 
         /**
@@ -185,8 +192,25 @@ export const DocumentsModelMixin = (component) =>
                 return;
             }
             const record = this.targetRecords[0];
-            await this.orm.call("documents.document", "toggle_lock", [record.data.id]);
-            await record.load();
+            if (record.data.lock_uid && record.data.lock_uid[0] !== user.userId) {
+                this.dialogService.add(ConfirmationDialog, {
+                    title: _t("Warning"),
+                    body: _t(
+                        "This document is locked by %s.\nAre you sure you want to unlock it?",
+                        record.data.lock_uid[1]
+                    ),
+                    confirmLabel: _t("Unlock"),
+                    confirm: async () => {
+                        await this.orm.call("documents.document", "toggle_lock", [record.data.id]);
+                        await record.load();
+                    },
+                    cancelLabel: _t("Discard"),
+                    cancel: () => {},
+                });
+            } else {
+                await this.orm.call("documents.document", "toggle_lock", [record.data.id]);
+                await record.load();
+            }
         }
 
         /**
@@ -228,7 +252,7 @@ export const DocumentsModelMixin = (component) =>
          * Send the selected documents to the trash.
          */
         async onArchive() {
-            const records = this.targetRecords.filter((r) => r.data.active);
+            const records = this.targetRecords.filter((r) => r.data.active && !r.data.lock_uid);
             const recordIds = records.map((r) => r.data.id);
             await toggleArchive(records[0].model, records[0].resModel, recordIds, true);
             await this._notifyChange();

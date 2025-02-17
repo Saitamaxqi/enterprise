@@ -637,3 +637,18 @@ class TestCaseDocuments(TransactionCaseDocuments):
             'res_id':folder.id
         })
         self.assertNotEqual(attachment.name, folder.name,'the folder name should not change')
+
+    def test_document_toggle_lock(self):
+        """ Test unlocking of the documents when the user_permission is set to edit. """
+
+        self.document_txt.write({'owner_id': self.document_manager.id})
+        self.document_txt.access_ids.filtered('role').unlink()
+
+        self.document_txt.with_user(self.document_manager).toggle_lock()
+        with self.assertRaises(AccessError):
+            self.document_txt.with_user(self.doc_user).toggle_lock()
+        self.assertEqual(self.document_txt.lock_uid.id, self.document_manager.id, 'viewer should not have unlocked')
+
+        self.document_txt.access_internal = 'edit'
+        self.document_txt.with_user(self.doc_user).toggle_lock()
+        self.assertFalse(self.document_txt.lock_uid, 'editor should have unlocked')

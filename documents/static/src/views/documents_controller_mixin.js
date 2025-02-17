@@ -68,6 +68,7 @@ export const DocumentsControllerMixin = (component) =>
             const editMode = this.targetRecords.every((r) => r.data.user_permission === "edit");
             const someActive = this.targetRecords.some((r) => r.data.active);
             const someArchived = this.targetRecords.some((r) => !r.data.active);
+            const someUnlocked = this.targetRecords.some((r) => !r.data.lock_uid);
             const menuItems = super.getStaticActionMenuItems();
             const topBarActions = this.env.isSmall ? this.getTopBarActionMenuItems() : {};
             return {
@@ -82,7 +83,11 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 1,
                 },
                 trash: {
-                    isAvailable: () => userIsInternal && editMode && someActive,
+                    isAvailable: () =>
+                        userIsInternal &&
+                        editMode &&
+                        someActive &&
+                        someUnlocked,
                     sequence: 55,
                     description: _t("Move to Trash"),
                     icon: "fa fa-trash",
@@ -106,7 +111,11 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 1,
                 },
                 rename: {
-                    isAvailable: () => (userIsInternal || editMode) && singleSelection && !isInTrash,
+                    isAvailable: () =>
+                        (userIsInternal || editMode) &&
+                        singleSelection &&
+                        someUnlocked &&
+                        !isInTrash,
                     sequence: 70,
                     description: _t("Rename"),
                     icon: "fa fa-edit",
@@ -138,7 +147,7 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 2,
                 },
                 lock: {
-                    isAvailable: () => userIsInternal && singleSelection && !isInTrash,
+                    isAvailable: () => userIsInternal && singleSelection && !isInTrash && editMode,
                     sequence: 90,
                     description: singleSelection?.data?.lock_uid ? _t("Unlock") : _t("Lock"),
                     icon: "fa fa-lock",
@@ -154,7 +163,13 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 2,
                 },
                 pdf: {
-                    isAvailable: () => userIsInternal && selectionCount && this.targetRecords.every((record) => record.isPdf()) && !isInTrash,
+                    isAvailable: () =>
+                        userIsInternal &&
+                        selectionCount &&
+                        this.targetRecords.every(
+                            (record) => record.isPdf() && !record.data.lock_uid
+                        ) &&
+                        !isInTrash,
                     sequence: 100,
                     description: singleSelection ? _t("Split PDF") : _t("Merge PDFs"),
                     icon: "fa fa-scissors",

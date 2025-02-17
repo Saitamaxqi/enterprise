@@ -4,7 +4,6 @@ import { DRAGGED_CLASS } from "@web/core/utils/draggable_hook_builder";
 import { escape } from "@web/core/utils/strings";
 import { makeDraggableHook } from "@web/core/utils/draggable_hook_builder_owl";
 import { toggleArchive } from "@documents/views/hooks";
-import { user } from "@web/core/user";
 
 export const useDraggableDocuments = makeDraggableHook({
     name: "useDraggableDocuments",
@@ -249,11 +248,7 @@ export const useDraggableDocuments = makeDraggableHook({
     _setDraggedRecords(model) {
         this.draggedRecords = {};
         this.draggedRecords.movableRecordIds = model.root.selection
-            .filter(
-                (record) =>
-                    (!record.data.lock_uid || record.data.lock_uid[0] === user.userId) &&
-                    record.data.user_permission === "edit",
-            )
+            .filter((record) => !record.data.lock_uid && record.data.user_permission === "edit")
             .map((record) => record.data.id);
         this.draggedRecords.nonMovableRecordIds = model.root.selection
             .filter((record) => !this.draggedRecords.movableRecordIds.includes(record.data.id))
