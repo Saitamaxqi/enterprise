@@ -109,6 +109,10 @@ REPORT_CONFIG = {
         'asset_line_ref': 'l10n_dk_reports.account_balance_report_l10n_dk_active',
         'liability_line_ref': 'l10n_dk_reports.account_balance_report_l10n_dk_passiv',
     },
+    'l10n_dk_reports.account_balance_report_l10n_dk_balance_minimal': {
+        'asset_line_ref': 'l10n_dk_reports.account_balance_report_minimal_l10n_dk_active',
+        'liability_line_ref': 'l10n_dk_reports.account_balance_report_minimal_l10n_dk_passive',
+    },
     'l10n_do_reports.l10n_do_bs': {
         'asset_line_ref': 'l10n_do_reports.l10n_do_bs_assets',
         'liability_line_ref': 'l10n_do_reports.l10n_do_bs_liabilities_plus_equity',

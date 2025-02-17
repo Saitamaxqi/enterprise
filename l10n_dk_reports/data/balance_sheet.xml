@@ -1793,8 +1793,8 @@
                                 <field name="aggregation_formula">DK_cash_cash_equival.balance + DK_bank_account.balance</field>
                                 <field name="children_ids">
                                     <record id="account_balance_report_l10n_dk_active_2_4_1" model="account.report.line">
-                                        <field name="name">a) Cash and cash equivalents</field>
-                                        <field name="name@da_DK">a) Likvide beholdninger</field>
+                                        <field name="name">1. Cash and cash equivalents</field>
+                                        <field name="name@da_DK">1. Likvide beholdninger</field>
                                         <field name="code">DK_cash_cash_equival</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -1807,8 +1807,8 @@
                                         </field>
                                     </record>
                                     <record id="account_balance_report_l10n_dk_active_2_4_2" model="account.report.line">
-                                        <field name="name">b) Bank account</field>
-                                        <field name="name@da_DK">b) Bankkonto</field>
+                                        <field name="name">2. Bank account</field>
+                                        <field name="name@da_DK">2. Bankkonto</field>
                                         <field name="code">DK_bank_account</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2274,8 +2274,8 @@
                                 <field name="aggregation_formula">DK_owed_credit_institutions.balance + DK_owed_bank.balance + DK_other_credit_institutions.balance</field>
                                 <field name="children_ids">
                                     <record id="account_balance_report_l10n_dk_passiv_1_4_1_1" model="account.report.line">
-                                        <field name="name">1) Amounts owed to credit institutions</field>
-                                        <field name="name@da_DK">1) Gæld til kreditinstitutter</field>
+                                        <field name="name">1. Amounts owed to credit institutions</field>
+                                        <field name="name@da_DK">1. Gæld til kreditinstitutter</field>
                                         <field name="code">DK_owed_credit_institutions</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2288,8 +2288,8 @@
                                         </field>
                                     </record>
                                     <record id="account_balance_report_l10n_dk_passiv_1_4_1_2" model="account.report.line">
-                                        <field name="name">2) Amounts owed to banks</field>
-                                        <field name="name@da_DK">2) Gæld til banker - kortfristet gæld</field>
+                                        <field name="name">2. Amounts owed to banks</field>
+                                        <field name="name@da_DK">2. Gæld til banker - kortfristet gæld</field>
                                         <field name="code">DK_owed_bank</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2302,8 +2302,8 @@
                                         </field>
                                     </record>
                                     <record id="account_balance_report_l10n_dk_passiv_1_4_1_3" model="account.report.line">
-                                        <field name="name">3) Other credit institutions</field>
-                                        <field name="name@da_DK">3) Kreditinstitutter i øvrigt</field>
+                                        <field name="name">3. Other credit institutions</field>
+                                        <field name="name@da_DK">3. Kreditinstitutter i øvrigt</field>
                                         <field name="code">DK_other_credit_institutions</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2352,8 +2352,8 @@
                                 <field name="aggregation_formula">DK_owed_short_term.balance + DK_payable_short_term.balance</field>
                                 <field name="children_ids">
                                     <record id="account_balance_report_l10n_dk_passiv_1_4_4_1" model="account.report.line">
-                                        <field name="name">1) Amounts owed to affiliated enterprises</field>
-                                        <field name="name@da_DK">1) Gæld til tilknyttede virksomheder</field>
+                                        <field name="name">1. Amounts owed to affiliated enterprises</field>
+                                        <field name="name@da_DK">1. Gæld til tilknyttede virksomheder</field>
                                         <field name="code">DK_owed_short_term</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2366,8 +2366,8 @@
                                         </field>
                                     </record>
                                     <record id="account_balance_report_l10n_dk_passiv_1_4_4_2" model="account.report.line">
-                                        <field name="name">2) Amounts payable to participating interests</field>
-                                        <field name="name@da_DK">2) Gæld til kapitalinteresser</field>
+                                        <field name="name">2. Amounts payable to participating interests</field>
+                                        <field name="name@da_DK">2. Gæld til kapitalinteresser</field>
                                         <field name="code">DK_payable_short_term</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2722,6 +2722,975 @@
                                         <field name="label">balance</field>
                                         <field name="engine">account_codes</field>
                                         <field name="formula">-tag(l10n_dk.account_tag_8070)</field>
+                                    </record>
+                                </field>
+                            </record>
+                        </field>
+                    </record>
+                </field>
+            </record>
+        </field>
+    </record>
+
+    <record id="account_balance_report_l10n_dk_balance_minimal" model="account.report">
+        <field name="name">Balance minimal</field>
+        <field name="root_report_id" ref="account_reports.balance_sheet"/>
+        <field name="filter_date_range" eval="False"/>
+        <field name="filter_unfold_all" eval="True"/>
+        <field name="filter_journals" eval="True"/>
+        <field name="filter_analytic_groupby" eval="True"/>
+        <field name="country_id" ref="base.dk"/>
+        <field name="filter_multi_company">selector</field>
+        <field name="column_ids">
+            <record id="account_balance_report_l10n_dk_balance_minimal_column" model="account.report.column">
+                <field name="name">Balance</field>
+                <field name="expression_label">balance</field>
+            </record>
+        </field>
+        <field name="line_ids">
+            <record id="account_balance_report_minimal_l10n_dk_active" model="account.report.line">
+                <field name="name">Active</field>
+                <field name="code">DK_min_active</field>
+                <field name="aggregation_formula">DK_min_fixed.balance + DK_min_current.balance</field>
+                <field name="hierarchy_level">0</field>
+                <field name="children_ids">
+                    <record id="account_balance_report_minimal_l10n_dk_active_1" model="account.report.line">
+                        <field name="name">1. Fixed assets</field>
+                        <field name="code">DK_min_fixed</field>
+                        <field name="aggregation_formula">DK_min_intangible_fixed.balance + DK_min_tangible_fixed.balance + DK_min_financial_fixed.balance</field>
+                        <field name="children_ids">
+                            <record id="account_balance_report_minimal_l10n_dk_active_1_1" model="account.report.line">
+                                <field name="name">a) Intangible fixed assets</field>
+                                <field name="code">DK_min_intangible_fixed</field>
+                                <field name="aggregation_formula">DK_min_goodwill.balance + DK_min_acquired_intangible.balance</field>
+                                <field name="children_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_1_1" model="account.report.line">
+                                        <field name="name">1. Goodwill</field>
+                                        <field name="code">DK_min_goodwill</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_1_1_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5010) +
+                                                    tag(l10n_dk.account_tag_5020) +
+                                                    tag(l10n_dk.account_tag_5030) +
+                                                    tag(l10n_dk.account_tag_5040) +
+                                                    tag(l10n_dk.account_tag_5050) +
+                                                    tag(l10n_dk.account_tag_5060)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_1_2" model="account.report.line">
+                                        <field name="name">2. Acquired intangible fixed assets</field>
+                                        <field name="code">DK_min_acquired_intangible</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_1_2_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5080) +
+                                                    tag(l10n_dk.account_tag_5090) +
+                                                    tag(l10n_dk.account_tag_5100) +
+                                                    tag(l10n_dk.account_tag_5110) +
+                                                    tag(l10n_dk.account_tag_5120) +
+                                                    tag(l10n_dk.account_tag_5130)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_active_1_2" model="account.report.line">
+                                <field name="name">b) Tangible fixed assets</field>
+                                <field name="code">DK_min_tangible_fixed</field>
+                                <field name="aggregation_formula">DK_min_investment_properties.balance + DK_min_investment_properties_const.balance + DK_min_land_buildings.balance + DK_min_prod_plant_machin.balance + DK_min_furnishing_rented.balance + DK_min_other_fixtures.balance + DK_min_tangible_fixes_constr.balance + DK_min_assets_under_leases.balance</field>
+                                <field name="children_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_2_1" model="account.report.line">
+                                        <field name="name">1. Investment properties</field>
+                                        <field name="code">DK_min_investment_properties</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_2_1_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5160) +
+                                                    tag(l10n_dk.account_tag_5170) +
+                                                    tag(l10n_dk.account_tag_5180) +
+                                                    tag(l10n_dk.account_tag_5190) +
+                                                    tag(l10n_dk.account_tag_5200) +
+                                                    tag(l10n_dk.account_tag_5210) +
+                                                    tag(l10n_dk.account_tag_5220)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_2_2" model="account.report.line">
+                                        <field name="name">2. Investment properties under construction</field>
+                                        <field name="code">DK_min_investment_properties_const</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_2_2_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5240) +
+                                                    tag(l10n_dk.account_tag_5250) +
+                                                    tag(l10n_dk.account_tag_5260) +
+                                                    tag(l10n_dk.account_tag_5270) +
+                                                    tag(l10n_dk.account_tag_5280) +
+                                                    tag(l10n_dk.account_tag_5290) +
+                                                    tag(l10n_dk.account_tag_5300)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_2_3" model="account.report.line">
+                                        <field name="name">3. Land and buildings</field>
+                                        <field name="code">DK_min_land_buildings</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_2_3_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5320) +
+                                                    tag(l10n_dk.account_tag_5330) +
+                                                    tag(l10n_dk.account_tag_5340) +
+                                                    tag(l10n_dk.account_tag_5350) +
+                                                    tag(l10n_dk.account_tag_5370) +
+                                                    tag(l10n_dk.account_tag_5390) +
+                                                    tag(l10n_dk.account_tag_5400)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_2_4" model="account.report.line">
+                                        <field name="name">4. Production plant and machinery</field>
+                                        <field name="code">DK_min_prod_plant_machin</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_2_4_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5420) +
+                                                    tag(l10n_dk.account_tag_5430) +
+                                                    tag(l10n_dk.account_tag_5440) +
+                                                    tag(l10n_dk.account_tag_5450) +
+                                                    tag(l10n_dk.account_tag_5470) +
+                                                    tag(l10n_dk.account_tag_5480)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_2_5" model="account.report.line">
+                                        <field name="name">5. Furnishing of rented premises</field>
+                                        <field name="code">DK_min_furnishing_rented</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_2_5_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5500) +
+                                                    tag(l10n_dk.account_tag_5510) +
+                                                    tag(l10n_dk.account_tag_5520) +
+                                                    tag(l10n_dk.account_tag_5530) +
+                                                    tag(l10n_dk.account_tag_5540) +
+                                                    tag(l10n_dk.account_tag_5550)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_2_6" model="account.report.line">
+                                        <field name="name">6. Other fixtures and fittings, tools and equipment</field>
+                                        <field name="code">DK_min_other_fixtures</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_2_6_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5570) +
+                                                    tag(l10n_dk.account_tag_5580) +
+                                                    tag(l10n_dk.account_tag_5590) +
+                                                    tag(l10n_dk.account_tag_5600) +
+                                                    tag(l10n_dk.account_tag_5610) +
+                                                    tag(l10n_dk.account_tag_5620)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_2_7" model="account.report.line">
+                                        <field name="name">7. Tangible fixed assets under construction and prepayments for tangible fixed assets</field>
+                                        <field name="code">DK_min_tangible_fixes_constr</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_2_7_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5640) +
+                                                    tag(l10n_dk.account_tag_5650) +
+                                                    tag(l10n_dk.account_tag_5660) +
+                                                    tag(l10n_dk.account_tag_5670) +
+                                                    tag(l10n_dk.account_tag_5680) +
+                                                    tag(l10n_dk.account_tag_5690)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_2_8" model="account.report.line">
+                                        <field name="name">8. Assets held under finance leases</field>
+                                        <field name="code">DK_min_assets_under_leases</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_2_8_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5710) +
+                                                    tag(l10n_dk.account_tag_5720) +
+                                                    tag(l10n_dk.account_tag_5730) +
+                                                    tag(l10n_dk.account_tag_5740) +
+                                                    tag(l10n_dk.account_tag_5750) +
+                                                    tag(l10n_dk.account_tag_5760)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_active_1_3" model="account.report.line">
+                                <field name="name">c) Financial fixed assets</field>
+                                <field name="code">DK_min_financial_fixed</field>
+                                <field name="aggregation_formula">DK_min_receivables_participants.balance + DK_min_other_non_current_receivables.balance + DK_min_other_secu_equity.balance + DK_min_long_receivables_participating_interests.balance + DK_min_invest_participating_interests.balance + DK_min_long_receivables_affiliated.balance + DK_min_invest_affiliated_financial.balance</field>
+                                <field name="children_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_3_1" model="account.report.line">
+                                        <field name="name">1. Investments in affiliated enterprises</field>
+                                        <field name="code">DK_min_invest_affiliated_financial</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_3_1_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5800) +
+                                                    tag(l10n_dk.account_tag_5810) +
+                                                    tag(l10n_dk.account_tag_5820) +
+                                                    tag(l10n_dk.account_tag_5830) +
+                                                    tag(l10n_dk.account_tag_5840) +
+                                                    tag(l10n_dk.account_tag_5850)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_3_2" model="account.report.line">
+                                        <field name="name">2. Long-term receivables from affiliated enterprises</field>
+                                        <field name="code">DK_min_long_receivables_affiliated</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_3_2_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5870) +
+                                                    tag(l10n_dk.account_tag_5880)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_3_3" model="account.report.line">
+                                        <field name="name">3. Investments in participating interests</field>
+                                        <field name="code">DK_min_invest_participating_interests</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_3_3_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5900) +
+                                                    tag(l10n_dk.account_tag_5910) +
+                                                    tag(l10n_dk.account_tag_5920) +
+                                                    tag(l10n_dk.account_tag_5930) +
+                                                    tag(l10n_dk.account_tag_5940) +
+                                                    tag(l10n_dk.account_tag_5950)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_3_4" model="account.report.line">
+                                        <field name="name">4. Long-term receivables from participating interests</field>
+                                        <field name="code">DK_min_long_receivables_participating_interests</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_3_4_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_5970) +
+                                                    tag(l10n_dk.account_tag_5980)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_3_5" model="account.report.line">
+                                        <field name="name">5. Other securities and equity</field>
+                                        <field name="code">DK_min_other_secu_equity</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_3_5_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6000)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_3_6" model="account.report.line">
+                                        <field name="name">6. Other (non-current) receivables</field>
+                                        <field name="code">DK_min_other_non_current_receivables</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_3_6_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6020) +
+                                                    tag(l10n_dk.account_tag_6030) +
+                                                    tag(l10n_dk.account_tag_6040)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_3_7" model="account.report.line">
+                                        <field name="name">7. Receivables from enterprise participants and management</field>
+                                        <field name="code">DK_min_receivables_participants</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_1_3_7_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6060)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="account_balance_report_minimal_l10n_dk_active_2" model="account.report.line">
+                        <field name="name">2. Current assets</field>
+                        <field name="code">DK_min_current</field>
+                        <field name="aggregation_formula">DK_min_inventories.balance + DK_min_receivable.balance + DK_min_secu_equity_invest.balance + DK_min_cash.balance</field>
+                        <field name="children_ids">
+                            <record id="account_balance_report_minimal_l10n_dk_active_2_1" model="account.report.line">
+                                <field name="name">a) Inventories</field>
+                                <field name="code">DK_min_inventories</field>
+                                <field name="aggregation_formula">DK_min_raw_mat_consu_write_down.balance + DK_min_goods_manu_write_down.balance + DK_min_manu_goods_impairment.balance + DK_min_prepayments_goods.balance</field>
+                                <field name="children_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_1_1" model="account.report.line">
+                                        <field name="name">1. Raw materials, consumables and write-down</field>
+                                        <field name="code">DK_min_raw_mat_consu_write_down</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_2_1_1_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6080) +
+                                                    tag(l10n_dk.account_tag_6090)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_1_2" model="account.report.line">
+                                        <field name="name">2. Goods in the course of manufacture and write-down</field>
+                                        <field name="code">DK_min_goods_manu_write_down</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_2_1_2_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6110) +
+                                                    tag(l10n_dk.account_tag_6120) +
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_1_3" model="account.report.line">
+                                        <field name="name">3. Manufactured and traded goods and impairment losses</field>
+                                        <field name="code">DK_min_manu_goods_impairment</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_2_1_3_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6140) +
+                                                    tag(l10n_dk.account_tag_6150) +
+                                                    tag(l10n_dk.account_tag_6180)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_1_4" model="account.report.line">
+                                        <field name="name">4. Prepayments for goods</field>
+                                        <field name="code">DK_min_prepayments_goods</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_2_1_4_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6170) +
+                                                    tag(l10n_dk.account_tag_6483) +
+                                                    tag(l10n_dk.account_tag_6484)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_active_2_2" model="account.report.line">
+                                <field name="name">b) Receivables</field>
+                                <field name="code">DK_min_receivable</field>
+                                <field name="aggregation_formula">DK_min_trade_other_receiv_accumul.balance + DK_min_current_receivables_affiliated_other.balance + DK_min_work_in_progress_third.balance + DK_min_other_receivables_current.balance + DK_min_claims_payment_company.balance + DK_min_current_receivables.balance + DK_min_prepayment_accrued_income.balance</field>
+                                <field name="children_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_2_1" model="account.report.line">
+                                        <field name="name">1. Trade and other receivables and accumulated provision</field>
+                                        <field name="code">DK_min_trade_other_receiv_accumul</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_2_2_1_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6190) +
+                                                    tag(l10n_dk.account_tag_6200)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_2_2" model="account.report.line">
+                                        <field name="name">2. Current receivables from affiliated enterprises and other</field>
+                                        <field name="code">DK_min_current_receivables_affiliated_other</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_2_2_2_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6220) +
+                                                    tag(l10n_dk.account_tag_6230) +
+                                                    tag(l10n_dk.account_tag_6240) +
+                                                    tag(l10n_dk.account_tag_6250)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_2_3" model="account.report.line">
+                                        <field name="name">3. Work in progress on behalf of third parties</field>
+                                        <field name="code">DK_min_work_in_progress_third</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_2_2_3_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6270)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_2_4" model="account.report.line">
+                                        <field name="name">4. Other receivables (current)</field>
+                                        <field name="code">DK_min_other_receivables_current</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_2_2_4_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6290) +
+                                                    tag(l10n_dk.account_tag_6300) +
+                                                    tag(l10n_dk.account_tag_6310) +
+                                                    tag(l10n_dk.account_tag_6320) +
+                                                    tag(l10n_dk.account_tag_6330) +
+                                                    tag(l10n_dk.account_tag_5960) +
+                                                    tag(l10n_dk.account_tag_5961) +
+                                                    tag(l10n_dk.account_tag_6070)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_2_5" model="account.report.line">
+                                        <field name="name">5. Claims for payment of company capital and share premium</field>
+                                        <field name="code">DK_min_claims_payment_company</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_2_2_5_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6350)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_2_6" model="account.report.line">
+                                        <field name="name">6. Current receivables from enterprise participants and management</field>
+                                        <field name="code">DK_min_current_receivables</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_2_2_6_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">tag(l10n_dk.account_tag_6370)</field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_2_7" model="account.report.line">
+                                        <field name="name">7. Prepayments and accrued income</field>
+                                        <field name="code">DK_min_prepayment_accrued_income</field>
+                                        <field name="groupby">account_id</field>
+                                        <field name="foldable" eval="True"/>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_active_2_2_7_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">
+                                                    tag(l10n_dk.account_tag_6390) +
+                                                    tag(l10n_dk.account_tag_6400)
+                                                </field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_active_2_3" model="account.report.line">
+                                <field name="name">c) Securities and equity investments</field>
+                                <field name="code">DK_min_secu_equity_invest</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_3_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            tag(l10n_dk.account_tag_6420) +
+                                            tag(l10n_dk.account_tag_6450)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_active_2_4" model="account.report.line">
+                                <field name="name">d) Cash, cash equivalents and bank account</field>
+                                <field name="code">DK_min_cash</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_active_2_4_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            tag(l10n_dk.account_tag_6470) +
+                                            tag(l10n_dk.account_tag_6471) +
+                                            tag(l10n_dk.account_tag_6831) +
+                                            tag(l10n_dk.account_tag_6480) +
+                                            tag(l10n_dk.account_tag_6481) +
+                                            tag(l10n_dk.account_tag_6482)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                        </field>
+                    </record>
+                </field>
+            </record>
+            <record id="account_balance_report_minimal_l10n_dk_passive" model="account.report.line">
+                <field name="name">Passive</field>
+                <field name="code">DK_min_passive</field>
+                <field name="aggregation_formula">DK_min_equity_capital.balance + DK_min_provisions.balance + DK_min_long_term_debt.balance + DK_min_short_term_debt.balance</field>
+                <field name="hierarchy_level">0</field>
+                <field name="children_ids">
+                    <record id="account_balance_report_minimal_l10n_dk_passive_1" model="account.report.line">
+                        <field name="name">1. Equity capital</field>
+                        <field name="code">DK_min_equity_capital</field>
+                        <field name="aggregation_formula">DK_min_working_capital.balance + DK_min_share_premium.balance + DK_min_reval_reserve.balance + DK_min_reserve_reval.balance + DK_min_other_reserves_equity.balance + DK_min_retained_earnings.balance + DK_min_proposed_dividend.balance</field>
+                        <field name="children_ids">
+                            <record id="account_balance_report_minimal_l10n_dk_passive_1_1" model="account.report.line">
+                                <field name="name">a) Working capital</field>
+                                <field name="code">DK_min_working_capital</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_active_1_1_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_6510)
+                                            -tag(l10n_dk.account_tag_6520)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_1_2" model="account.report.line">
+                                <field name="name">b) Share premium on issue</field>
+                                <field name="code">DK_min_share_premium</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_1_2_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">-tag(l10n_dk.account_tag_6540)</field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_1_3" model="account.report.line">
+                                <field name="name">c) Revaluation reserve</field>
+                                <field name="code">DK_min_reval_reserve</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_1_3_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">-tag(l10n_dk.account_tag_6560)</field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_1_4" model="account.report.line">
+                                <field name="name">d) Reserve for net revaluation under the equity method</field>
+                                <field name="code">DK_min_reserve_reval</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_1_4_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">-tag(l10n_dk.account_tag_6580)</field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_1_5" model="account.report.line">
+                                <field name="name">e) Other reserves</field>
+                                <field name="code">DK_min_other_reserves_equity</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_1_5_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_6810)
+                                            -tag(l10n_dk.account_tag_6830)
+                                            -tag(l10n_dk.account_tag_6870)
+                                            -tag(l10n_dk.account_tag_6890)
+                                            -tag(l10n_dk.account_tag_6910)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_1_6" model="account.report.line">
+                                <field name="name">f) Retained earnings</field>
+                                <field name="code">DK_min_retained_earnings</field>
+                                <field name="aggregation_formula">DK_min_brought_forward.balance + DK_min_result_pnl.balance</field>
+                                <field name="children_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_1_6_1" model="account.report.line">
+                                        <field name="name">1. Profit brought forward</field>
+                                        <field name="code">DK_min_brought_forward</field>
+                                        <field name="expression_ids">
+                                            <record id="account_balance_report_minimal_l10n_dk_passive_1_6_1_expr" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">account_codes</field>
+                                                <field name="formula">-tag(l10n_dk.account_tag_6940)</field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                   <record id="account_financial_report_minimal_dk_profit_loss0" model="account.report.line">
+                                        <field name="name">2. Profit or loss for the year</field>
+                                        <field name="code">DK_min_result_pnl</field>
+                                        <field name="expression_ids">
+                                            <record id="account_financial_report_minimal_dk_profit_loss0_balance" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">aggregation</field>
+                                                <field name="formula">DK_min_result.balance</field>
+                                                <field name="subformula">cross_report(l10n_dk_reports.account_financial_report_dk_pnl_minimal)</field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_1_7" model="account.report.line">
+                                <field name="name">g) Proposed dividend recognized in equity</field>
+                                <field name="code">DK_min_proposed_dividend</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_1_7_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">-tag(l10n_dk.account_tag_6960)</field>
+                                    </record>
+                                </field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="account_balance_report_minimal_l10n_dk_passive_2" model="account.report.line">
+                        <field name="name">2. Provisions for liabilities and charges</field>
+                        <field name="code">DK_min_provisions</field>
+                        <field name="aggregation_formula">DK_min_provisions_deferred_pensions.balance + DK_min_other_provisions.balance</field>
+                        <field name="children_ids">
+                            <record id="account_balance_report_minimal_l10n_dk_passive_2_1" model="account.report.line">
+                                <field name="name">a) Provision for deferred taxes and pensions</field>
+                                <field name="code">DK_min_provisions_deferred_pensions</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_2_1_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_7010)
+                                            -tag(l10n_dk.account_tag_7020)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_2_2" model="account.report.line">
+                                <field name="name">b) Other Provisions</field>
+                                <field name="code">DK_min_other_provisions</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_2_2_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_7040)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="account_balance_report_minimal_l10n_dk_passive_3" model="account.report.line">
+                        <field name="name">3. Long-term debt</field>
+                        <field name="code">DK_min_long_term_debt</field>
+                        <field name="aggregation_formula">DK_min_credit_banks.balance + DK_min_owed_payable_affiliated.balance + DK_min_other_long_term_debt.balance</field>
+                        <field name="children_ids">
+                            <record id="account_balance_report_minimal_l10n_dk_passive_3_1" model="account.report.line">
+                                <field name="name">a) Amounts owed to credit institutions and banks</field>
+                                <field name="code">DK_min_credit_banks</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_3_1_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_7110)
+                                            -tag(l10n_dk.account_tag_7120)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_3_2" model="account.report.line">
+                                <field name="name">b) Amounts owed to affiliated enterprises and payable to participating interests</field>
+                                <field name="code">DK_min_owed_payable_affiliated</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_3_2_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_7160)
+                                            -tag(l10n_dk.account_tag_7170)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_3_3" model="account.report.line">
+                                <field name="name">c) Other debts, including taxes and social security contributions payable</field>
+                                <field name="code">DK_min_other_long_term_debt</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_3_3_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_7190)
+                                            -tag(l10n_dk.account_tag_7180)
+                                            -tag(l10n_dk.account_tag_7210)
+                                            -tag(l10n_dk.account_tag_7230)
+                                            -tag(l10n_dk.account_tag_7240)
+                                            -tag(l10n_dk.account_tag_7250)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="account_balance_report_minimal_l10n_dk_passive_4" model="account.report.line">
+                        <field name="name">4. Short-term debt</field>
+                        <field name="code">DK_min_short_term_debt</field>
+                        <field name="aggregation_formula">DK_min_owed_credit_institutions_bank_other.balance + DK_min_prepayments_custo.balance + DK_min_suppliers_goods_services.balance + DK_min_owed_payables_short_term.balance + DK_min_other_debts_taxes.balance + DK_min_prepayments_accrued_income.balance</field>
+                        <field name="children_ids">
+                            <record id="account_balance_report_minimal_l10n_dk_passive_4_1" model="account.report.line">
+                                <field name="name">a) Amounts owed to credit institutions, banks and other</field>
+                                <field name="code">DK_min_owed_credit_institutions_bank_other</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_4_1_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_7310)
+                                            -tag(l10n_dk.account_tag_7330)
+                                            -tag(l10n_dk.account_tag_7350)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_4_2" model="account.report.line">
+                                <field name="name">b) Prepayments received from customers</field>
+                                <field name="code">DK_min_prepayments_custo</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_4_2_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_7410)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_4_3" model="account.report.line">
+                                <field name="name">c) Suppliers of goods and services</field>
+                                <field name="code">DK_min_suppliers_goods_services</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_4_3_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_7440)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_4_4" model="account.report.line">
+                                <field name="name">d) Amounts owed to affiliated enterprises and payable to participating interests</field>
+                                <field name="code">DK_min_owed_payables_short_term</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_4_4_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_7510)
+                                            -tag(l10n_dk.account_tag_7520)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_4_5" model="account.report.line">
+                                <field name="name">e) Other debts, including taxes and social security contributions payable</field>
+                                <field name="code">DK_min_other_debts_taxes</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_4_5_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_7590)
+                                            -tag(l10n_dk.account_tag_7610)
+                                            -tag(l10n_dk.account_tag_7630)
+                                            -tag(l10n_dk.account_tag_7680)
+                                            -tag(l10n_dk.account_tag_7681)
+                                            -tag(l10n_dk.account_tag_7700)
+                                            -tag(l10n_dk.account_tag_7742)
+                                            -tag(l10n_dk.account_tag_7720)
+                                            -tag(l10n_dk.account_tag_7741)
+                                            -tag(l10n_dk.account_tag_7740)
+                                            -tag(l10n_dk.account_tag_7760)
+                                            -tag(l10n_dk.account_tag_7780)
+                                            -tag(l10n_dk.account_tag_7800)
+                                            -tag(l10n_dk.account_tag_7810)
+                                            -tag(l10n_dk.account_tag_7820)
+                                            -tag(l10n_dk.account_tag_7830)
+                                            -tag(l10n_dk.account_tag_7840)
+                                            -tag(l10n_dk.account_tag_7860)
+                                            -tag(l10n_dk.account_tag_7880)
+                                            -tag(l10n_dk.account_tag_7900)
+                                            -tag(l10n_dk.account_tag_7920)
+                                            -tag(l10n_dk.account_tag_7940)
+                                            -tag(l10n_dk.account_tag_7960)
+                                            -tag(l10n_dk.account_tag_7980)
+                                            -tag(l10n_dk.account_tag_8000)
+                                            -tag(l10n_dk.account_tag_8040)
+                                        </field>
+                                    </record>
+                                </field>
+                            </record>
+                            <record id="account_balance_report_minimal_l10n_dk_passive_4_6" model="account.report.line">
+                                <field name="name">f) Prepayments and accrued income</field>
+                                <field name="code">DK_min_prepayments_accrued_income</field>
+                                <field name="groupby">account_id</field>
+                                <field name="foldable" eval="True"/>
+                                <field name="expression_ids">
+                                    <record id="account_balance_report_minimal_l10n_dk_passive_4_6_expr" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">account_codes</field>
+                                        <field name="formula">
+                                            -tag(l10n_dk.account_tag_8070)
+                                        </field>
                                     </record>
                                 </field>
                             </record>
