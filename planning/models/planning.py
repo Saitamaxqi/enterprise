@@ -1396,8 +1396,8 @@ class PlanningSlot(models.Model):
 
         result = {}
         for resource in resources:
-            # return no unavailability if the resource has flexible hours or no calendar for material.
-            if (resource.id not in res_ids) or (resource and (not resource.calendar_id or resource._is_flexible())):
+            # return no unavailability if the resource is fully flexible hours (both material and employee).
+            if (resource.id not in res_ids) or (resource and resource._is_fully_flexible()):
                 continue
             calendar = leaves_mapping.get(resource.id, company_leaves)
             # remove intervals smaller than a cell, as they will cause half a cell to turn grey

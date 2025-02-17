@@ -3,6 +3,7 @@ import datetime
 
 from odoo.tests import freeze_time
 from .test_common import TestCommon
+from pytz import utc
 
 from odoo import Command
 
@@ -206,3 +207,65 @@ class TestPlanningLeaves(TestCommon):
             'resource_id', self.resource_bert.ids, datetime.datetime(2020, 1, 5, 8, 0), datetime.datetime(2020, 1, 11, 17, 0)
         )
         self.assertEqual(75, (planning_hours_info[self.resource_bert.id]['value'] / planning_hours_info[self.resource_bert.id]['max_value']) * 100)
+
+    def test_half_day_off_leave_of_flexible_resource(self):
+        """
+        Test half-day off leave for a flexible resource.
+        The leave intervals should be set to 00:00:00 - 12:00:00 for AM half-day off
+        and 12:00:00 - 23:59:59 for PM half-day off in the planning_gantt view.
+        """
+        flexible_calendar = self.env['resource.calendar'].create({
+            'name': 'Flex Calendar',
+            'tz': 'UTC',
+            'flexible_hours': True,
+            'hours_per_day': 8,
+            'attendance_ids': [],
+        })
+        employee = self.employee_bert
+        employee.resource_calendar_id = flexible_calendar
+
+        # Test AM half-day leave
+        leave_am = self.env['hr.leave'].sudo().create({
+            'name': 'AM Half Day Off',
+            'employee_id': employee.id,
+            'holiday_status_id': self.leave_type.id,
+            'request_date_from': '2025-03-05',
+            'request_date_to': '2025-03-05',
+            'request_unit_half': True,
+            'request_date_from_period': 'am',
+            'state': 'confirm',
+        })
+        leave_am.sudo().action_validate()
+    
+        start_dt_am = datetime.datetime(2025, 3, 5, 0, 0, 0, tzinfo=utc)
+        end_dt_am = datetime.datetime(2025, 3, 5, 12, 0, 0, tzinfo=utc)
+
+        intervals_am = flexible_calendar._leave_intervals_batch(start_dt_am, end_dt_am, [employee.resource_id])
+        intervals_list_am = list(intervals_am[employee.resource_id.id])
+        self.assertEqual(len(intervals_list_am), 1, "There should be one leave interval for AM half-day")
+        interval_am = intervals_list_am[0]
+        self.assertEqual(interval_am[0], start_dt_am, "The start of the interval should be 00:00:00")
+        self.assertEqual(interval_am[1], end_dt_am, "The end of the interval should be 12:00:00")
+
+        # Test PM half-day leave on next day
+        leave_pm = self.env['hr.leave'].sudo().create({
+            'name': 'PM Half Day Off',
+            'employee_id': employee.id,
+            'holiday_status_id': self.leave_type.id,
+            'request_date_from': '2025-03-06',
+            'request_date_to': '2025-03-06',
+            'request_unit_half': True,
+            'request_date_from_period': 'pm',
+            'state': 'confirm',
+        })
+        leave_pm.sudo().action_validate()
+
+        start_dt_pm = datetime.datetime(2025, 3, 6, 0, 0, 0, tzinfo=utc)
+        end_dt_pm = datetime.datetime(2025, 3, 6, 23, 59, 59, 999999, tzinfo=utc)
+
+        intervals_pm = flexible_calendar._leave_intervals_batch(start_dt_pm, end_dt_pm, [employee.resource_id])
+        intervals_list_pm = list(intervals_pm[employee.resource_id.id])
+        self.assertEqual(len(intervals_list_pm), 1, "There should be one leave interval for PM half-day")
+        interval_pm = intervals_list_pm[0]
+        self.assertEqual(interval_pm[0], datetime.datetime(2025, 3, 6, 12, 0, 0, tzinfo=utc), "The start of the interval should be 12:00:00")
+        self.assertEqual(interval_pm[1], end_dt_pm, "The end of the interval should be 23:59:59.999999")
