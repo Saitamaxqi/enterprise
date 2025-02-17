@@ -21,7 +21,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         <div
             role="article"
             t-att-class="getRecordClasses()"
-            t-att-data-id="props.canResequence and props.record.id"
+            t-att-data-id="props.record.id"
             t-att-tabindex="props.record.model.useSampleModel ? -1 : 0"
             t-on-click.synthetic="onGlobalClick"
             t-on-dragenter.stop.prevent="onDragEnter"
@@ -120,7 +120,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         } else if (this.env.searchModel.getSelectedFolderId() === "TRASH" || this.props.record.data.type !== "folder") {
             // Select only one document record
             this.props.getSelection().forEach(r => r.toggleSelection(false));
-            this.props.record.toggleSelection(true);
+            this.props.toggleSelection(this.props.record);
         } else {
             this.props.record.openFolder();
         }
