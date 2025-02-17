@@ -63,9 +63,8 @@ registry.category("web_tour.tours").add("can_export_new_module", {
             run: "click",
         },
         {
-            content: "close modal",
-            trigger: ".modal .modal-footer button:contains(cancel)",
-            run: "click",
+            content: "modal is closed",
+            trigger: ":not(.modal)",
         },
     ],
 });

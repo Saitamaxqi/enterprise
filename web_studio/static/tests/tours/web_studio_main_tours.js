@@ -635,9 +635,8 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
             run: "click",
         },
         {
-            content: "close modal",
-            trigger: ".modal .modal-footer button:contains(cancel)",
-            run: "click",
+            content: "modal is closed",
+            trigger: ":not(.modal)",
         },
         {
             // click on the created app

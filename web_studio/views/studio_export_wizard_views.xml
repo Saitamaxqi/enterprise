@@ -38,6 +38,7 @@
                         string="Export"
                         type="action"
                         name="web_studio.studio_export_action"
+                        close="1"
                         class="btn-primary"
                         data-hotkey="q"
                     />
