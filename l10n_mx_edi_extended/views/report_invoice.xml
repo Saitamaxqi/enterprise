@@ -16,6 +16,19 @@
             </t>
         </xpath>
 
+        <xpath expr="(//span[@t-field='o.partner_id.vat'])[1]" position="replace">
+            <t t-if="o.l10n_mx_edi_external_trade"><span>XEXX010101000</span></t>
+            <t t-else=""><span t-field="o.partner_id.vat"/></t>
+        </xpath>
+        <xpath expr="(//span[@t-field='o.partner_id.vat'])[2]" position="replace">
+            <t t-if="o.l10n_mx_edi_external_trade"><span>XEXX010101000</span></t>
+            <t t-else=""><span t-field="o.partner_id.vat"/></t>
+        </xpath>
+        <xpath expr="(//span[@t-field='o.partner_id.vat'])[3]" position="replace">
+            <t t-if="o.l10n_mx_edi_external_trade"><span>XEXX010101000</span></t>
+            <t t-else=""><span t-field="o.partner_id.vat"/></t>
+        </xpath>
+
         <!-- Add new columns on invoice lines: Tariff Fraction, Customs Qty, Customs Unit -->
         <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[last()]" position="after">
             <th t-if="o.l10n_mx_edi_external_trade">Tariff Fraction</th>
