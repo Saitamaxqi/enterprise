@@ -280,9 +280,9 @@ test("Progressbar: check the progressbar percentage visibility.", async () => {
     expect(rowTitle1.matches(SELECTORS.rowTitle)).toBe(true);
     expect(rowTitle1.nextElementSibling).toBe(progressBar1);
 
-    expect(rowHeader1).toHaveStyle({ gridTemplateRows: "36px 35px" });
-    expect(rowTitle1).toHaveStyle({ height: "36px" });
-    expect(progressBar1).toHaveStyle({ height: "35px" });
+    expect(rowHeader1).toHaveStyle({ gridTemplateRows: "25px 25px" });
+    expect(rowTitle1).toHaveStyle({ height: "25px" });
+    expect(progressBar1).toHaveStyle({ height: "25px" });
 });
 
 test("Progressbar: grouped row", async () => {
@@ -335,9 +335,9 @@ test("Progressbar: grouped row", async () => {
     expect(rowTitle1.matches(SELECTORS.rowTitle)).toBe(true);
     expect(rowTitle1.nextElementSibling).toBe(progressBar1);
 
-    expect(rowHeader1).toHaveStyle({ gridTemplateRows: "24px 35px" });
-    expect(rowTitle1).toHaveStyle({ height: "24px" });
-    expect(progressBar1).toHaveStyle({ height: "35px" });
+    expect(rowHeader1).toHaveStyle({ gridTemplateRows: "23px 25px" });
+    expect(rowTitle1).toHaveStyle({ height: "23px" });
+    expect(progressBar1).toHaveStyle({ height: "25px" });
 });
 
 test("horizontal scroll applies to the content [SMALL SCREEN]", async () => {

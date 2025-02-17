@@ -834,7 +834,7 @@ test("The date should take into the account when created through the button in G
         { message: "Records should be match for Shifts" });
 
     expect([...queryAll(".o_gantt_pill_wrapper")].map((node) => node.style.gridRow.split(' / ')[0])).
-        toEqual(["r2","r2"], { message: "The record should be added to the Resource column" });
+        toEqual(["r3","r3"], { message: "The record should be added to the Resource column" });
 });
 
 test("Gantt Popover delete confirmation", async () => {

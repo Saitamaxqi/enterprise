@@ -1561,7 +1561,7 @@ export class GanttRenderer extends Component {
         const colsTemplate = this.computeColsTemplate();
         const style = {
             "--Gantt__RowHeader-width": `${this.rowHeaderWidth}px`,
-            "--Gantt__Pill-height": "35px",
+            "--Gantt__Pill-height": "25px",
             "--Gantt__Thumbnail-max-height": "16px",
             "--Gantt__GridRows-grid-template-rows": rowsTemplate,
             "--Gantt__GridColumns-grid-template-columns": colsTemplate,
@@ -1988,7 +1988,7 @@ export class GanttRenderer extends Component {
     getRowTypeHeight(type) {
         return {
             t0: 24,
-            t1: 36,
+            t1: 25,
             t2: 10,
         }[type];
     }
@@ -2239,7 +2239,7 @@ export class GanttRenderer extends Component {
 
         const isGroup = displayMode === "sparse" ? processAsGroup : Boolean(rows);
 
-        const gridRowTypes = isGroup ? { t0: 1 } : { t1: 1 };
+        const gridRowTypes = isGroup ? { t0: 1 } : { t1: 1, t2: +!this.isTouchDevice };
         if (rowPills.length) {
             if (isGroup) {
                 if (this.shouldComputeAggregateValues(row)) {
@@ -2256,9 +2256,6 @@ export class GanttRenderer extends Component {
             } else {
                 const level = this.calculatePillsLevel(rowPills);
                 gridRowTypes.t1 = level;
-                if (!this.isTouchDevice) {
-                    gridRowTypes.t2 = 1;
-                }
             }
         }
 

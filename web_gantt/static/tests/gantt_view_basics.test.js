@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, queryAll, queryAllTexts } from "@odoo/hoot-dom";
+import { click, queryAll, queryAllTexts, queryFirst } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import {
     contains,
@@ -50,6 +50,9 @@ test("empty ungrouped gantt rendering", async () => {
     expect(columnHeaders).toHaveLength(32);
     expect(rows).toEqual([{}]);
     expect(SELECTORS.noContentHelper).toHaveCount(0);
+    expect(queryFirst(".o_gantt_cell").offsetHeight).toBe(35, {
+        message: "row height is 35px (25 * 1 pill height + 10px of default empty space)",
+    });
 });
 
 test("ungrouped gantt rendering", async () => {
@@ -102,6 +105,10 @@ test("ungrouped gantt rendering", async () => {
             ],
         },
     ]);
+
+    expect(queryFirst(".o_gantt_cell").offsetHeight).toBe(85, {
+        message: "row height is 85px (25 * 3 pills + 10px of default empty space)",
+    });
 
     // test popover and local timezone
     expect(`.o_popover`).toHaveCount(0);
