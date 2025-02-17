@@ -29,6 +29,10 @@ registry.category("web_tour.tours").add("pos_settle_account_due", {
             PaymentScreen.clickPaymentMethod("Bank"),
             PaymentScreen.clickValidate(),
             Utils.selectButton("Yes"),
+            {
+                content: "Receipt doesn't include Empty State",
+                trigger: ".pos-receipt:not(:has(i.fa-shopping-cart))",
+            },
             ProductScreen.closePos(),
             Dialog.confirm("Close Register"),
             {
