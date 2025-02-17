@@ -534,7 +534,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
         _logger.info("Import Analytic Accounts")
         analytic_account_data = {}
         analytic_plan_dict = {}
-        analytic_account = self.env['account.analytic.account']
+        analytic_accounts = self.env['account.analytic.account']
         AccountAnalyticAccount = self.env['account.analytic.account']
         AccountAnalyticPlan = self.env['account.analytic.plan']
         for rec in dbf_records:
@@ -544,7 +544,10 @@ class AccountWinbooksImportWizard(models.TransientModel):
                 [('code', '=', rec.get('NUMBER')), ('company_id', '=', self.env.company.id)], limit=1)
             plan_name = 'Imported Plan ' + rec.get('TYPE', '0')
             if not analytic_plan_dict.get(plan_name):
-                analytic_plan_dict[plan_name] = AccountAnalyticPlan.create({'name': plan_name})
+                analytic_plan_dict[plan_name] = (
+                    AccountAnalyticPlan.search([('name', '=', plan_name)], limit=1)
+                    or AccountAnalyticPlan.create({'name': plan_name})
+                )
             if not analytic_account:
                 data = {
                     'code': rec.get('NUMBER'),
@@ -553,8 +556,9 @@ class AccountWinbooksImportWizard(models.TransientModel):
                     'plan_id': analytic_plan_dict[plan_name].id,
                 }
                 analytic_account = AccountAnalyticAccount.create(data)
-            analytic_account_data[rec.get('NUMBER')] = analytic_account.id
-        return analytic_account_data, analytic_account
+            analytic_accounts += analytic_account
+            analytic_account_data[rec['NUMBER']] = analytic_account
+        return analytic_account_data, analytic_accounts
 
     def _import_analytic_account_line(self, dbf_records, analytic_account_data, account_data, move_data, param_data):
         """Import the analytic lines from the *_ant*.dbf files.
@@ -562,7 +566,11 @@ class AccountWinbooksImportWizard(models.TransientModel):
         _logger.info("Import Analytic Account Lines")
         analytic_line_data_list = []
         analytic_list = None
+        line2analytics2amount = collections.defaultdict(lambda: collections.defaultdict(float))  # {account.move.line: {analytic_ids: amount}}
         for rec in dbf_records:
+            bookyear = int(rec['BOOKYEAR'] or '0', 36)
+            if not bookyear or (self.only_open and bookyear not in param_data['openyears']):
+                continue
             if not analytic_list:
                 # In this winbooks file, there is one column for each analytic plan, named 'ZONANA' + [number of the plan].
                 # These columns contain the analytic account number associated to that plan.
@@ -571,31 +579,41 @@ class AccountWinbooksImportWizard(models.TransientModel):
             bookyear_first_year = param_data['period_date'][int(rec['BOOKYEAR'], 36)][0].year
             bookyear_last_year = param_data['period_date'][int(rec['BOOKYEAR'], 36)][-1].year
             journal_code, move_number = rec['DBKCODE'], rec['DOCNUMBER']
-            move_line_id = False
+            account_id = account_data.get(rec.get('ACCOUNTGL'))
+            analytic_accounts = [
+                analytic_account_data.get(rec[analytic])
+                for analytic in analytic_list
+                if analytic_account_data.get(rec.get(analytic))
+            ]
             move = move_data.get(f"{bookyear_first_year}_{journal_code}_{move_number}") or move_data.get(f"{bookyear_last_year}_{journal_code}_{move_number}")
             if move:
-                if rec['DOCORDER'] == 'VAT':
-                    # A move can have multiple VAT lines. If that's the case, we will just take any tax with a corresponding account and amount,
-                    # as the docorder just says "VAT".
-                    tax_lines = move.line_ids.filtered(lambda l:
-                        l.display_type == 'tax'
-                        and l.account_id.id == account_data.get(rec.get('ACCOUNTGL'))
-                        and round(l.balance, 1) == round(rec.get('AMOUNTGL'), 1))
-                    move_line_id = tax_lines[0].id if tax_lines else False
-                else:
-                    move_line_id = move.line_ids.filtered(lambda l: l.winbooks_line_id == rec['DOCORDER']).id
-            data = {
-                'date': rec.get('DATE', False),
-                'name': rec.get('COMMENT'),
-                'amount': -rec.get('AMOUNTEUR'),
-                'general_account_id': account_data.get(rec.get('ACCOUNTGL')),
-                'move_line_id': move_line_id,
-            }
-            for analytic in analytic_list:
-                if rec.get(analytic):
-                    new_analytic_line = data.copy()
-                    new_analytic_line['account_id'] = analytic_account_data.get(rec.get(analytic))
-                    analytic_line_data_list.append(new_analytic_line)
+                # Since the moves are in draft, the analytic lines can't exist yet
+                move_line = move.line_ids.filtered(lambda l:
+                    l.winbooks_line_id == rec['DOCORDER']
+                    and l.account_id.id == account_id
+                    and round(l.balance, 1) == round(rec.get('AMOUNTGL'), 1)
+                )[:1]
+                line2analytics2amount[move_line][','.join(str(a.id) for a in analytic_accounts)] += rec.get('AMOUNTEUR')
+            else:
+                analytic_line_data_list.append({
+                    'date': rec.get('DATE', False),
+                    'name': rec.get('COMMENT'),
+                    'amount': -rec.get('AMOUNTEUR'),
+                    'general_account_id': account_id,
+                    **{account.plan_id._column_name(): account.id for account in analytic_accounts},
+                })
+                if len(analytic_line_data_list) % 100 == 0:
+                    _logger.info("Advancement: %s", len(analytic_line_data_list))
+        if line2analytics2amount:
+            _logger.info("Updating Analytic Distributions on %s lines", len(line2analytics2amount))
+            self.env['decimal.precision'].search([('name', '=', 'Percentage Analytic')]).digits = 6
+            for line, analytics2amount in line2analytics2amount.items():
+                line.analytic_distribution = {
+                    analytics: 100 * (amount / line.balance if amount and line.balance else 1)
+                    for analytics, amount in analytics2amount.items()
+                }
+        if analytic_line_data_list:
+            _logger.info("Creating Analytic Lines")
         return self.env['account.analytic.line'].create(analytic_line_data_list)
 
     def _import_vat(self, dbf_records, account_central):
