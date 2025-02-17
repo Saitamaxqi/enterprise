@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { click, queryText } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
-import { clickEvent, resizeEventToTime } from "@web/../tests/views/calendar/calendar_test_helpers";
+import { clickEvent, resizeEventToTime, toggleFilter } from "@web/../tests/views/calendar/calendar_test_helpers";
 import {
     definePlanningModels,
     planningModels,
@@ -121,8 +121,7 @@ test("planning calendar view: copy previous week", async () => {
     expect.verifySteps(["copy_previous_week()"]);
 
     // deselect "Maganlal" from Assigned to
-    await click(".o_calendar_filter_item[data-value='2'] > input");
-    await animationFrame();
+    await toggleFilter("role_id", 2);
     expect(".fc-event").toHaveCount(1, {
         message: "should display 1 events on the week",
     });

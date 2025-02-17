@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { queryOne } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 
-import { clickAllDaySlot } from "@web/../tests/views/calendar/calendar_test_helpers";
+import { clickAllDaySlot, toggleFilter } from "@web/../tests/views/calendar/calendar_test_helpers";
 import { contains, mountView, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
 import {
     AppointmentSlot,
@@ -322,11 +322,11 @@ test("filter works in slots-creation mode", async () => {
     expect(".o_calendar_slot").toHaveCount(1);
 
     // Modify filters of the calendar to display less calendar event
-    await contains(".o_calendar_filter_item:last-of-type > input").click();
+    await toggleFilter("partner_ids", 214);
     expect(".fc-event").toHaveCount(1);
     expect(".o_calendar_slot").toHaveCount(1);
 
-    await contains(".o_calendar_filter_item:last-of-type > input").click();
+    await toggleFilter("partner_ids", 214);
     await contains("button.o_appointment_discard_slots").click();
     expect(".fc-event").toHaveCount(1);
     expect(".o_calendar_slot").toHaveCount(0);
