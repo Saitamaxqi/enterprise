@@ -381,6 +381,8 @@ class AccountWinbooksImportWizard(models.TransientModel):
                 matching_number = rec.get('MATCHNO') and '%s-%s' % (rec.get('ACCOUNTGL'), rec.get('MATCHNO')) or False
                 balance = rec.get('AMOUNTEUR', 0.0)
                 amount_currency = rec.get('CURRAMOUNT') if currency and rec.get('CURRAMOUNT') else balance
+                if balance and not account_id:
+                    account_id = suspense_account
                 line_data = {
                     'date': rec.get('DATE', False),
                     'account_id': account_id.id,
@@ -451,7 +453,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
                     'tax_tag_ids': [(6, 0, tax_line.get_tax_tags(is_refund, repartition_type).ids)],
                     'tax_repartition_line_id': is_vat and repartition_line.filtered(lambda x: x.repartition_type == repartition_type and x.account_id.id == line_data[2]['account_id']).id or False,
                 })
-            move_line_data_list = [line for line in move_line_data_list if line[2]['account_id'] or line[2]['balance']]  # Remove empty lines
+            move_line_data_list = [line for line in move_line_data_list if line[2]['account_id']]  # Remove empty lines
 
             # Adapt invoice specific informations
             if move_data_dict['move_type'] != 'entry':

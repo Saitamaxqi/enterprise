@@ -9,11 +9,11 @@
                <group>
                     <field name="zip_file"/>
                     <field name="only_open"/>
-                    <span/>
+                    <span invisible="only_open"/>
                     <span class="text-warning mb4 mt16" invisible="only_open">
                         The export of data from Winbooks for closed years might contain unbalanced entries. However if you want to try to import everything, Odoo will set the difference of balance in a Suspense Account.
                     </span>
-                    <field name="suspense_code" invisible="only_open" required="not only_open"/>
+                    <field name="suspense_code" required="not only_open"/>
                </group>
                <footer>
                     <button name="import_winbooks_file" string="Import" type="object" class="btn-primary" data-hotkey="q"/>
