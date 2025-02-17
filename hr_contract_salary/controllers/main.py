@@ -458,7 +458,7 @@ class HrContractSalary(http.Controller):
             'wage': benefits['wage'],
             'final_yearly_costs': benefits['final_yearly_costs'],
             'resource_calendar_id': contract.resource_calendar_id.id,
-            'default_contract_id': contract.default_contract_id.id,
+            'default_contract_id': offer.contract_template_id.id,
             'hr_responsible_id': contract.hr_responsible_id.id,
             'sign_template_id': contract.sign_template_id.id,
             'contract_update_template_id': contract.contract_update_template_id.id,

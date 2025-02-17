@@ -97,7 +97,8 @@
                     </div>
                     <group>
                         <group name="group_offer">
-                            <field name="contract_template_id" readonly="state == 'cancelled'"/>
+                            <field name="contract_template_id" readonly="state == 'cancelled'"
+                                context="{'form_view_ref': 'hr_contract.hr_contract_view_form_contract_templates'}"/>
                             <field name="final_yearly_costs" readonly="state == 'cancelled'"/>
                             <field name="job_title" readonly="state == 'cancelled'"/>
                             <field name="employee_job_id" readonly="state == 'cancelled'"/>
