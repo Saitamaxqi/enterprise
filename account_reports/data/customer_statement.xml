@@ -1,4 +1,4 @@
-<odoo>
+<odoo auto_sequence="1">
     <record id="customer_statement_report" model="account.report">
         <field name="name">Customer Statement</field>
         <field name="filter_journals" eval="True"/>
