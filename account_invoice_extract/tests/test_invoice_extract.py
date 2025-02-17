@@ -978,9 +978,10 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCase)
         # Test that when we validate 3 bills without modification from the OCR data, we show
         # the user a wizard to automate the posting for that vendor
 
-        def create_bill_with_ocr():
+        def create_bill_with_ocr(ref):
             move = self.env['account.move'].create({
                 'move_type': 'in_invoice',
+                'ref': ref,
                 'extract_state': 'waiting_extraction',
                 'extract_document_uuid': 'some_token',
             })
@@ -993,14 +994,14 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCase)
 
         # Do it two times, no wizard should be shown
         for _ in range(2):
-            bill = create_bill_with_ocr()
+            bill = create_bill_with_ocr("ref1")
             self.assertEqual(bill.state, "draft")
             autopost_bills_wizard = bill.action_post()
             self.assertFalse(autopost_bills_wizard)
             self.assertFalse(bill.is_manually_modified)
 
         # Create a third invoice, No modification for the third time, we should show the wizard
-        bill = create_bill_with_ocr()
+        bill = create_bill_with_ocr("ref2")
         self.assertEqual(bill.state, "draft")
         post_result = bill.action_post()
         self.assertEqual(post_result.get('res_model'), 'account.autopost.bills.wizard')
@@ -1009,7 +1010,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCase)
         autopost_bills_wizard.action_automate_partner()
 
         # Now, next time the OCR is finished, we should autopost the bill
-        bill = create_bill_with_ocr()
+        bill = create_bill_with_ocr("ref3")
         self.assertEqual(bill.state, "posted")
 
     def test_invoice_ocr_note_author(self):
