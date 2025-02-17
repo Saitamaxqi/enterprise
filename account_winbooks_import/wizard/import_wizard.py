@@ -355,6 +355,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
                 'ref': '%s_%s' % (key[1], key[0]),
                 'company_id': self.env.company.id,
                 'date': min(max(start_period_date, move_date), end_period_date),
+                'payment_state': 'not_paid',
             }
             if not move_data_dict.get('journal_id') and key[1] == 'MATCHG':
                 continue
