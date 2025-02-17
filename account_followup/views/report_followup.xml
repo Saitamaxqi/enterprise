@@ -23,7 +23,7 @@
                         <t t-set="report_summary" t-value="report._get_main_body(options)"/>
                         <div class="o_account_report_summary" role="alert">
                             <span class="o_account_report_summary_content" t-att-style="'' if report_summary else 'display: none;'">
-                                <span t-out="report_summary" t-options="{'widget': 'text'}">Invoices Analysis</span>
+                                <span t-out="report_summary">Invoices Analysis</span>
                             </span>
                             <span t-if="not report_summary and not context.get('print_mode')" class="o_account_report_summary_placeholder">
                                 Add a note
