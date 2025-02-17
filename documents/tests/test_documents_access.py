@@ -1,4 +1,5 @@
 import datetime
+from unittest.mock import patch
 
 from odoo import Command, fields
 from odoo.addons.documents.tests.test_documents_common import TransactionCaseDocuments
@@ -954,6 +955,79 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.document_txt.owner_id = self.document_manager
         self.assertFalse(
             self.env['documents.document'].with_user(self.internal_user).search([('id', '=', shortcut.id)]))
+        self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'none')
+
+    def test_access_rights_shortcuts_target(self):
+        Doc_as_internal = self.env['documents.document'].with_user(self.internal_user)
+        # Check in SUDO to remove the added `user_permission` domain from the access rules
+        Doc_as_internal_sudo = Doc_as_internal.sudo()
+        shortcut = self.document_txt.action_create_shortcut(location_folder_id=self.folder_a.id)
+
+        # Check edit access on the shortcut when we can only read the target
+        self.document_txt.action_update_access_rights(access_internal='view', access_via_link='none')
+        shortcut.sudo().owner_id = self.internal_user
+        self.assertEqual(self.document_txt.with_user(self.internal_user).user_permission, 'view')
+        self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'edit')
+        self.assertTrue(Doc_as_internal_sudo.search([('id', '=', shortcut.id), ('user_permission', '=', 'edit')]))
+        doc_class = Doc_as_internal_sudo.pool['documents.document']
+
+        original_search = doc_class._search_user_permission
+
+        with patch.object(
+            doc_class,
+            "_search_user_permission",
+            autospec=True,
+            side_effect=original_search,
+        ) as patched_search_user_permission:
+            self.assertTrue(Doc_as_internal_sudo.search([('id', '=', shortcut.id), ('user_permission', '!=', 'none')]))
+            self.assertEqual(patched_search_user_permission.call_count, 1)
+
+        self.document_txt.action_update_access_rights(access_internal='none')
+        self.assertEqual(self.document_txt.with_user(self.internal_user).user_permission, 'none')
+        self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'none')
+        self.assertFalse(Doc_as_internal.search([('id', '=', shortcut.id)]))
+        with patch.object(
+            doc_class,
+            "_search_user_permission",
+            autospec=True,
+            side_effect=original_search,
+        ) as patched_search_user_permission:
+            self.assertFalse(Doc_as_internal_sudo.search([('id', '=', shortcut.id), ('user_permission', '=', 'edit')]))
+            self.assertEqual(patched_search_user_permission.call_count, 2)
+        self.assertFalse(Doc_as_internal_sudo.search([('id', '=', shortcut.id), ('user_permission', '=', 'view')]))
+
+        self.document_txt.sudo().owner_id = self.internal_user
+        self.assertEqual(self.document_txt.with_user(self.internal_user).user_permission, 'edit')
+        self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'edit')
+        self.assertTrue(Doc_as_internal_sudo.search([('id', '=', shortcut.id), ('user_permission', '=', 'edit')]))
+        self.assertTrue(Doc_as_internal_sudo.search([('id', '=', shortcut.id), ('user_permission', '!=', 'none')]))
+        self.assertFalse(Doc_as_internal_sudo.search([('id', '=', shortcut.id), ('user_permission', '=', 'view')]))
+
+    def test_access_rights_shortcuts_target_accessible_via_link(self):
+        Doc_as_internal_sudo = self.env['documents.document'].with_user(self.internal_user).sudo()
+        self.folder_a.access_internal = 'edit'
+
+        self.document_txt.folder_id.action_update_access_rights(access_internal='view')
+        self.document_txt.action_update_access_rights(
+            access_internal='none',
+            access_via_link='view',
+            is_access_via_link_hidden=False,
+        )
+        self.env['documents.access'].create([{
+            'document_id': self.document_txt.id,
+            'partner_id': self.internal_user.partner_id.id,
+            'last_access_date': fields.Datetime.now(),
+        }])
+        shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(
+            location_folder_id=self.folder_a.id)
+        self.assertEqual(self.document_txt.with_user(self.internal_user).user_permission, 'view')
+        self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'edit')
+        self.assertTrue(Doc_as_internal_sudo.search([('id', '=', shortcut.id), ('user_permission', '=', 'edit')]))
+        self.assertTrue(Doc_as_internal_sudo.search([('id', '=', shortcut.id), ('user_permission', '!=', 'none')]))
+
+        # We remove the access on the target
+        self.document_txt.action_update_access_rights(access_via_link='none')
+        self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'none')
         self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'none')
 
     @mute_logger('odoo.addons.base.models.ir_rule')

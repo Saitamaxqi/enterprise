@@ -373,7 +373,16 @@ class DocumentsDocument(models.Model):
             document.user_permission = document._get_permission_without_token()
             if document.user_permission == 'view' and document.access_via_link == 'edit':
                 document.user_permission = 'edit'
-            elif document.user_permission == 'none' and document.folder_id and document.access_via_link != 'none' \
+
+            elif (
+                document.shortcut_document_id
+                and document.owner_id == self.env.user
+                and (document.user_permission == 'view' or document.shortcut_document_owner_id == self.env.user)
+            ):
+                # Extend shortcut owner permission when target is accessible
+                document.user_permission = 'edit'
+
+            if document.user_permission == 'none' and document.folder_id and document.access_via_link != 'none' \
                     and not document.is_access_via_link_hidden \
                     and (document.company_id in self.env.companies or document.company_id not in self.env.user.company_ids):
                 # If the user can access the parent, they have the link.
@@ -384,14 +393,13 @@ class DocumentsDocument(models.Model):
 
     def _get_permission_without_token(self):
         self.ensure_one()
+        exclude_ownership = bool(self.shortcut_document_id)
         is_user_company = self.company_id and self.company_id in self.env.user.company_ids
         is_disabled_company = is_user_company and self.company_id not in self.env.companies
         if is_disabled_company:
             return 'none'
 
-        # own documents except shortcuts to targets not owned (other fields are used as they are synced)
-        if (self.owner_id == self.env.user
-                and (not self.shortcut_document_id or self.shortcut_document_owner_id == self.env.user)):
+        if self.owner_id == self.env.user and not exclude_ownership:
             return 'edit'
 
         user_permission = 'none'
@@ -412,9 +420,9 @@ class DocumentsDocument(models.Model):
 
         return user_permission
 
-    def _search_user_permission(self, operator, value):
+    def _search_user_permission(self, operator, value, exclude_ownership=False):
         if self.env.user._is_public():
-            return expression.FALSE_DOMAIN
+            return Domain.FALSE
         searched_roles = {'view', 'edit', 'none'}
         if operator == 'in':
             searched_roles.intersection_update(value)
@@ -425,7 +433,7 @@ class DocumentsDocument(models.Model):
 
         searched_roles.discard('none')
         if not searched_roles:
-            return expression.FALSE_DOMAIN
+            return Domain.FALSE
         searched_roles = list(searched_roles)
 
         other_company = [('company_id', '!=', False), ('company_id', 'not in', self.env.user.company_ids.ids)]
@@ -436,7 +444,7 @@ class DocumentsDocument(models.Model):
 
         if self.env.user.has_group('documents.group_documents_system'):
             if searched_roles == ['view']:
-                return expression.FALSE_DOMAIN  # System Administrator has "edit" on all documents, so finds none with "view" only.
+                return Domain.FALSE  # System Administrator has "edit" on all documents, so finds none with "view" only.
             return any_except_disabled_company
 
         # Access from membership
@@ -462,13 +470,22 @@ class DocumentsDocument(models.Model):
         ]))]
 
         # Access from ownership
-        owner_domain = expression.AND([
-            [('owner_id', '=', self.env.user.id)],
-            expression.OR([
-                [('shortcut_document_id', '=', False)],
-                [('shortcut_document_owner_id', '=', self.env.user.id)],
-            ]),
-        ])
+        if exclude_ownership:
+            owner_domain = Domain.FALSE
+        else:
+            owner_domain = expression.AND([
+                [('owner_id', '=', self.env.user.id)],
+                expression.OR([
+                    [('shortcut_document_id', '=', False)],
+                    [('shortcut_document_owner_id', '=', self.env.user.id)],
+                    # extend permission to edit on shortcuts when otherwise viewer (synced with target)
+                    # optimized to avoid recursive call if owner_domain is not going to be used (see below)
+                    # or if everything we need is already in `access_domain`
+                    self._search_user_permission('in', ['view'], exclude_ownership=True)
+                    if set(searched_roles) == {'edit'}
+                    else Domain.FALSE,
+                ]),
+            ])
         direct_domain = expression.AND([
             any_except_disabled_company,
             access_domain if 'edit' not in searched_roles else expression.OR([access_domain, owner_domain]),
@@ -497,6 +514,9 @@ class DocumentsDocument(models.Model):
             else:
                 internal_domain = [('access_internal', 'in', ('view', 'edit'))]
             direct_domain = expression.OR([direct_domain, expression.AND([internal_domain, allowed_or_no_company])])
+
+        if exclude_ownership:
+            return direct_domain
 
         # Look one level up for links unless hidden
         link_via_parent_domain = expression.AND([
