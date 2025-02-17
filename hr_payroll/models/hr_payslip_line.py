@@ -38,6 +38,8 @@ class HrPayslipLine(models.Model):
     company_id = fields.Many2one(related='slip_id.company_id')
     currency_id = fields.Many2one('res.currency', related='slip_id.currency_id')
 
+    _slip_id_code = models.Index("(slip_id, code)")
+
     @api.model_create_multi
     def create(self, vals_list):
         for values in vals_list:

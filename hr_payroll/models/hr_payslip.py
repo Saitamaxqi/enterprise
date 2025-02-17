@@ -101,7 +101,7 @@ class HrPayslip(models.Model):
     contract_id = fields.Many2one(
         'hr.contract', string='Contract', precompute=True,
         domain="[('id', 'in', contract_domain_ids)]", tracking=True,
-        compute='_compute_contract_id', store=True, readonly=False)
+        compute='_compute_contract_id', store=True, readonly=False, index=True)
     credit_note = fields.Boolean(
         string='Credit Note',
         help="Indicates this payslip has a refund of another")
