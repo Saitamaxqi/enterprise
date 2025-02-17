@@ -1,5 +1,7 @@
+import { useCommand } from "@web/core/commands/command_hook";
+import { _t } from "@web/core/l10n/translation";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { useComponent, useState } from "@odoo/owl";
+import { useComponent, useState, useEffect } from "@odoo/owl";
 
 export const DocumentsRendererMixin = (component) =>
     class extends component {
@@ -14,6 +16,38 @@ export const DocumentsRendererMixin = (component) =>
             useBus(this.documentService.bus, "DOCUMENT_PREVIEWED", async (ev) => {
                 this.chatterState.previewedDocument = this.documentService.previewedDocument;
             });
+            useCommand(
+                _t("Move to trash"),
+                () => this.env.model.onArchive(),
+                {
+                    category: "smart_action",
+                    hotkey: "control+m",
+                    isAvailable: () =>
+                        this.documentService.userIsInternal &&
+                        this.recordsToArchive &&
+                        this.targetRecords.every((r) => r.data.user_permission === "edit")
+                }
+            );
+            useCommand(
+                _t("Delete"),
+                () => this.env.model.onDelete(),
+                {
+                    category: "smart_action",
+                    hotkey: "control+d",
+                    isAvailable: () =>
+                        this.recordsToDelete &&
+                        this.env.model.canDeleteRecords
+                }
+            );
+            useEffect(
+                () => {
+                    this.recordsToDelete = !this.documentService.userIsInternal
+                        ? this.targetRecords
+                        : this.targetRecords.some((r) => !r.data.active);
+                    this.recordsToArchive = this.targetRecords.some((r) => r.data.active);
+                },
+                () => [this.targetRecords]
+            );
         }
         /**
          * Record for showing/modifying details of containing folder
