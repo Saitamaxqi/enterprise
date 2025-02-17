@@ -106,7 +106,7 @@
         .o_widget_web_ribbon {
             position: absolute;
             width: var(--Ribbon-wrapper-width, var(--Ribbon-wrapper-width-default));
-            right: var(--Ribbon-gap-right, var(--Ribbon-gap-right-default));
+            right: 0;
             top: 0;
             bottom: 0;
             .ribbon {
