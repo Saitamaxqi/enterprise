@@ -176,6 +176,7 @@ class HrContractSalaryOffer(models.Model):
         }
 
     def action_refuse_offer(self, message=None, refusal_reason=None):
+        self.applicant_id.unlink_archived_contracts()
         if not message:
             message = _("%s manually set the Offer to Refused", self.env.user.name)
         self.write({
@@ -196,6 +197,10 @@ class HrContractSalaryOffer(models.Model):
             'url': url,
             'target': 'new',
         }
+
+    def unlink(self):
+        self.applicant_id.unlink_archived_contracts()
+        return super().unlink()
 
     def _cron_update_state(self):
         self.search([

@@ -817,56 +817,27 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_hr_sign", {
                 ".o_menu_systray .o_switch_company_menu button.dropdown-toggle span:contains('My Belgian Company - TEST')",
         },
         {
-            content: "Recruitment",
-            trigger: '.o_app[data-menu-xmlid="hr_recruitment.menu_hr_recruitment_root"]',
+            content: "Open Activity Systray",
+            trigger: ".o-mail-ActivityMenu-counter",
             run: "click",
         },
         {
-            content: "Jobs list view",
-            trigger: ".o_switch_view.o_list",
+            content: "Open Sign Requests",
+            trigger: '.o-dropdown--menu .list-group-item:contains("Signature")',
             run: "click",
         },
         {
-            content: "Select Our Job",
-            trigger: 'table.o_list_table tbody td:contains("Experienced Developer")',
+            content: "Go to Signable Document",
+            trigger: "button[name='go_to_signable_document']",
             run: "click",
         },
         {
-            trigger: ".o_form_saved",
-        },
-        {
-            content: "Open Application Pipe",
-            trigger: "button.oe_stat_button:contains(Applications)",
+            content: "Next 1",
+            trigger: ":iframe .o_sign_sign_item_navigator",
             run: "click",
         },
         {
-            content: "Select Our Applicant",
-            trigger: 'div.o_kanban_view span.fw-bold:contains("Mitchell Admin 2")',
-            run: "click",
-        },
-        {
-            trigger: ".o_form_saved",
-        },
-        {
-            content: "Open Contracts",
-            trigger: "button.oe_stat_button:contains(Contracts)",
-            run: "click",
-        },
-        {
-            trigger: ".o_form_saved",
-        },
-        {
-            content: "Open Signature Request",
-            trigger: "button.oe_stat_button:contains(Sign)",
-            run: "click",
-        },
-        {
-            content: "Sign",
-            trigger: "button:contains(Sign Now)",
-            run: "click",
-        },
-        {
-            content: "Next 5",
+            content: "Next 2",
             trigger: ":iframe .o_sign_sign_item_navigator",
             run: "click",
         },
@@ -874,6 +845,19 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_hr_sign", {
             content: "Click Signature",
             trigger: ":iframe button.o_sign_sign_item",
             run: "click",
+        },
+        {
+            content: "Click Auto",
+            trigger: "a.o_web_sign_auto_button:contains('Auto')",
+            run: "click",
+        },
+        {
+            content: "Adopt & Sign",
+            trigger: "footer.modal-footer button.btn-primary:enabled",
+            run: "click",
+        },
+        {
+            trigger: ":iframe body:not(:has(footer.modal-footer button.btn-primary))",
         },
         {
             content: "Validate and Sign",

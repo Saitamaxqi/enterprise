@@ -143,3 +143,13 @@ class HrApplicant(models.Model):
             ],
             limit=1)
         return contract_template
+
+    def unlink_archived_contracts(self):
+        archived_contracts = self.env['hr.contract'].search([
+            ('applicant_id', 'in', self.ids),
+            ('active', '=', False)
+        ])
+        if archived_contracts:
+            archived_contracts.sign_request_ids.write({'state': 'canceled', 'active': False})
+            archived_contracts.employee_id.unlink()
+            archived_contracts.unlink()

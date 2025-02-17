@@ -112,6 +112,7 @@ class TestEmployeeJobChange(common.TestPayrollAccountCommon):
         new_contract = self.env['hr.contract'].search([
             ('employee_id', '=', job_changing_employee.id),
             ('state', '=', 'draft'),
+            ('active', '=', False),
         ])
         self.assertTrue(job_changing_employee.active, 'Employee is active')
         self.assertTrue(new_contract.ip, 'The new contract should have an IP')

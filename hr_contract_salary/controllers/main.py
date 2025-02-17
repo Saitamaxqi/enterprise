@@ -46,7 +46,6 @@ class SignContract(Sign):
         wage_to_apply = contract._get_wage_to_apply()
         # Only the applicant/employee has signed
         if request_item.sign_request_id.nb_closed == 1:
-            contract.active = True
             contract.hash_token = False
             if contract.applicant_id:
                 contract.applicant_id.employee_id = contract.employee_id
@@ -56,6 +55,7 @@ class SignContract(Sign):
 
         # Both applicant/employee and HR responsible have signed
         if request_item.sign_request_id.nb_closed == 2:
+            contract.active = True
             if contract.employee_id:
                 contract.employee_id.active = True
                 if contract.applicant_id:

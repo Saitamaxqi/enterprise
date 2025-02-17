@@ -15,8 +15,8 @@ class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
         with freeze_time("2022-01-01 10:00:00"):
             self.start_tour("/", 'hr_contract_salary_tour', login='admin', timeout=350)
 
-            new_contract_id = self.env['hr.contract'].search([('name', 'ilike', 'nathalie')])
-            self.assertTrue(new_contract_id, 'A contract has been created')
+            new_contract_id = self.env['hr.contract'].search([('name', 'ilike', 'nathalie'), ('active', '=', False)])
+            self.assertTrue(new_contract_id, 'A archived contract has been created')
             new_employee_id = new_contract_id.employee_id
             self.assertTrue(new_employee_id, 'An employee has been created')
             self.assertFalse(new_employee_id.active, 'Employee is not yet active')
@@ -31,6 +31,8 @@ class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
         with freeze_time("2022-01-01 11:00:00"):
             self.start_tour("/", 'hr_contract_salary_tour_hr_sign', login='admin', timeout=350)
             # Contract is signed by new employee and HR, the new car must be created
+            new_contract_id = self.env['hr.contract'].search([('name', 'ilike', 'nathalie')])
+            self.assertTrue(new_contract_id, 'A contract has been created')
             vehicle = self.env['fleet.vehicle'].search([('company_id', '=', self.company_id.id), ('model_id', '=', self.model_a3.id)])
             self.assertTrue(vehicle, 'A vehicle Exists')
             self.assertEqual(vehicle.future_driver_id, new_employee_id.work_contact_id, 'Futur driver is set')
@@ -43,8 +45,8 @@ class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
 
         with freeze_time("2022-01-01 12:00:00"):
             self.start_tour("/", 'hr_contract_salary_tour_2', login='admin', timeout=350)
-            new_contract_id = self.env['hr.contract'].search([('name', 'ilike', 'Mitchell Admin 3')])
-            self.assertTrue(new_contract_id, 'A contract has been created')
+            new_contract_id = self.env['hr.contract'].search([('name', 'ilike', 'Mitchell Admin 3'), ('active', '=', False)])
+            self.assertTrue(new_contract_id, 'A archived contract has been created')
             new_employee_id = new_contract_id.employee_id
             self.assertTrue(new_employee_id, 'An employee has been created')
             self.assertTrue(new_employee_id.active, 'Employee is active')
@@ -57,6 +59,8 @@ class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
             # We now fully sign the offer to see if the vehicle to order is created correctly
             self.start_tour("/", 'hr_contract_salary_tour_counter_sign', login='admin', timeout=350, step_delay=300)
 
+            new_contract_id = self.env['hr.contract'].search([('name', 'ilike', 'Mitchell Admin 3')])
+            self.assertTrue(new_contract_id, 'A contract has been created')
             vehicle = self.env['fleet.vehicle'].search([('company_id', '=', self.company_id.id), ('model_id', '=', self.model_corsa.id)])
             self.assertTrue(vehicle, 'A vehicle has been created')
             self.assertEqual(vehicle.model_id, self.model_corsa, 'Car is right model')
