@@ -58,7 +58,7 @@ registry.category("web_tour.tours").add("spreadsheet_open_pivot_sheet", {
                 assert(
                     Boolean(
                         pivot.querySelector(
-                            'div.o_multi_record_selector span.badge[title="AdminDude"]'
+                            'div.o_multi_record_selector span.badge[data-tooltip="AdminDude"]'
                         )
                     ),
                     true,
@@ -72,7 +72,7 @@ registry.category("web_tour.tours").add("spreadsheet_open_pivot_sheet", {
             content: "Check filter values",
             run: function () {
                 const defaultFilterValue = document.querySelectorAll(
-                    'div.o_multi_record_selector span.badge[title="AdminDude"]'
+                    'div.o_multi_record_selector span.badge[data-tooltip="AdminDude"]'
                 );
                 assert(
                     defaultFilterValue.length,
