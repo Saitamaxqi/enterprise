@@ -239,18 +239,24 @@ class SendCloud:
                then OR :
                   the key IS present AND it's value IN filter's values
                   the key IS NOT present
+                  the value IS present default value of the filter
             if there are ONLY "other values":
                   the key IS present AND it's value IN filter's values
         Default : return all the ids when there's no user_filters
         Return : set of id
         """
+        default_shipping_functionalities = None
+        try:
+            default_shipping_functionalities = self._get_shipping_functionalities()
+        except Exception as err:
+            self.logger(str(err), f'default shipping functionalities for filtering')
+
         shipping_ids = {m['id'] for m in shipping_methods}
         if not user_filters:
             return shipping_ids
         for func, options in user_filters.items():
             def pass_filter(shipping_method):
-                return (func not in shipping_method['functionalities'] and 'None' in options) or (func in shipping_method['functionalities'] and shipping_method['functionalities'][func] in options)
-
+                return (func not in shipping_method['functionalities'] and ('None' in options or (default_shipping_functionalities and default_shipping_functionalities[func]['default_value'] in options))) or (func in shipping_method['functionalities'] and shipping_method['functionalities'][func] in options)
             filtered_ids = {m['id'] for m in shipping_methods if pass_filter(m)}
             if not filtered_ids:
                 return []
