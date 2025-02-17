@@ -29,6 +29,7 @@ class SpreadsheetShareRoute(ShareRoute):
             {
                 "spreadsheet_name": document.name,
                 "share": document,
+                "is_frozen": document.handler == "frozen_spreadsheet",
                 "session_info": request.env["ir.http"].session_info(),
                 "props": {
                     "dataUrl": f"/documents/spreadsheet/{document.access_token}",
