@@ -299,46 +299,6 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
             # code 13. Carried over grids can be ignored by these rules, they will be set to 0 if they are negative.
             (_("Not allowed negative amounts"),
                 lambda expr_totals: all(expr_totals[expr]['value'] >= 0 for expr in expr_map.values())),
-
-            # Code C
-            (_('[55] > 0 if [86] > 0 or [88] > 0'),
-                lambda expr_totals: expr_totals[expr_map['c55']]['value'] > 0 if expr_totals[expr_map['c86']]['value'] > 0 or expr_totals[expr_map['c88']]['value'] > 0 else True),
-
-            # Code D
-            (_('[56] + [57] > 0 if [87] > 0'),
-                lambda expr_totals: expr_totals[expr_map['c56']]['value'] + expr_totals[expr_map['c57']]['value'] > 0 if expr_totals[expr_map['c87']]['value'] > 0 else True),
-
-            # Code O
-            ('[01] * 6% + [02] * 12% + [03] * 21% = [54] ± 62',
-                lambda expr_totals: abs(expr_totals[expr_map['c01']]['value'] * 0.06 + expr_totals[expr_map['c02']]['value'] * 0.12 + expr_totals[expr_map['c03']]['value'] * 0.21 - expr_totals[expr_map['c54']]['value']) <= round_adm_tol),
-
-            # Code P
-            ('([84] + [86] + [88]) * 21% >= [55] - 62',
-                lambda expr_totals: (expr_totals[expr_map['c84']]['value'] + expr_totals[expr_map['c86']]['value'] + expr_totals[expr_map['c88']]['value']) * 0.21 >= expr_totals[expr_map['c55']]['value'] - round_adm_tol),
-
-            # Code Q
-            ('([85] + [87]) * 21% >= ([56] + [57]) - 62',
-                lambda expr_totals: ((expr_totals[expr_map['c85']]['value'] + expr_totals[expr_map['c87']]['value']) * 0.21) >= (expr_totals[expr_map['c56']]['value'] + expr_totals[expr_map['c57']]['value']) - round_adm_tol),
-
-            # Code S
-            ('([81] + [82] + [83] + [84] + [85]) * 50% >= [59]',
-                lambda expr_totals: sum(expr_totals[expr_map[grid]]['value'] for grid in ('c81', 'c82', 'c83', 'c84', 'c85')) * 0.5 >= expr_totals[expr_map['c59']]['value']),
-
-            # Code T
-            ('[85] * 21% >= [63] - 62',
-                lambda expr_totals: expr_totals[expr_map['c85']]['value'] * 0.21 >= expr_totals[expr_map['c63']]['value'] - round_adm_tol),
-
-            # Code U
-            ('[49] * 21% >= [64] - 62',
-                lambda expr_totals: expr_totals[expr_map['c49']]['value'] * 0.21 >= expr_totals[expr_map['c64']]['value'] - round_adm_tol),
-
-            # Code AC
-            (_('[88] < ([81] + [82] + [83] + [84]) * 100 if [88] > 99.999'),
-                lambda expr_totals: expr_totals[expr_map['c88']]['value'] < sum(expr_totals[expr_map[grid]]['value'] for grid in ('c81', 'c82', 'c83', 'c84')) * 100 if expr_totals[expr_map['c88']]['value'] > 99999 else True),
-
-            # Code AD
-            (_('[44] < ([00] + [01] + [02] + [03] + [45] + [46] + [47] + [48] + [49]) * 200 if [44] > 99.999'),
-                lambda expr_totals: expr_totals[expr_map['c44']]['value'] < sum(expr_totals[expr_map[grid]]['value'] for grid in ('c00', 'c01', 'c02', 'c03', 'c45', 'c46', 'c47', 'c48', 'c49')) * 200 if expr_totals[expr_map['c44']]['value'] > 99999 else True),
         ]
 
         failed_controls = [
