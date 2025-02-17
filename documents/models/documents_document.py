@@ -1346,7 +1346,7 @@ class DocumentsDocument(models.Model):
             custom_values['tag_ids'] = self.env['documents.tag'].browse(tags).exists().ids
 
         custom_values['active'] = False
-        return super().message_new(msg_dict, custom_values)
+        return super().message_new(msg_dict, custom_values).with_context(document_message_new=True)
 
     def _alias_get_creation_values(self):
         values = super()._alias_get_creation_values()
@@ -1356,12 +1356,23 @@ class DocumentsDocument(models.Model):
             values['alias_defaults'] |= {'folder_id': self.id}
         return values
 
+    def message_post(self, *, message_type='notification', **kwargs):
+        """ Prevent document creation when posting message with attachment on a document (_create_attachments_for_post).
+
+         If new documents must be created (ex.: alias on document folder), it will be handled by the
+         _message_post_after_hook based on the context variable "document_message_new" (ignoring no_document)
+         That variable is set to True by the message_new method (and not set by message_update method).
+        """
+        return super(DocumentsDocument, self.with_context(no_document=True)).message_post(
+            message_type=message_type, **kwargs)
+
     def _message_post_after_hook(self, message, msg_vals):
         # If the res model was an attachment and a mail, adds all the custom values of the linked
         # document settings to the attachments of the mail.
         m2m_commands = msg_vals['attachment_ids']
         attachments = self.env['ir.attachment'].browse([x[1] for x in m2m_commands])
-        if (not self.env.context.get("no_document") or message.message_type == 'email') and attachments:
+        email_message_new = message.message_type == 'email' and self.env.context.get("document_message_new")
+        if email_message_new and attachments:
             self.attachment_id = False
             documents = self.env['documents.document'].create([{
                 'name': attachment.name,
