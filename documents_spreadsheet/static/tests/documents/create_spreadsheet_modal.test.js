@@ -1,5 +1,5 @@
 import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
-import { getEnrichedSearchArch } from "@documents_spreadsheet/../tests/helpers/document_helpers";
+import { getEnrichedSearchArch } from "@documents/../tests/helpers/views/search";
 import { mockActionService } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { describe, expect, test } from "@odoo/hoot";
 import { click, dblclick, queryFirst, select, press } from "@odoo/hoot-dom";

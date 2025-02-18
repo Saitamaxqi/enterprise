@@ -1,4 +1,6 @@
 import { DocumentsSearchPanel } from "@documents/views/search/documents_search_panel";
+import { basicDocumentsKanbanArch } from "@documents/../tests/helpers/views/kanban";
+import { getDocumentsTestServerData } from "@documents/../tests/helpers/data";
 import {
     defineDocumentSpreadsheetModels,
     getMySpreadsheetPermissionPanelData,
@@ -21,7 +23,7 @@ import { browser } from "@web/core/browser/browser";
 import { download } from "@web/core/network/download";
 import { deepEqual } from "@web/core/utils/objects";
 import { SearchPanel } from "@web/search/search_panel/search_panel";
-import { getEnrichedSearchArch } from "../helpers/document_helpers";
+import { getEnrichedSearchArch } from "@documents/../tests/helpers/views/search";
 
 describe.current.tags("desktop");
 defineDocumentSpreadsheetModels();
@@ -29,71 +31,28 @@ preloadBundle("spreadsheet.o_spreadsheet");
 
 let target;
 
-const basicDocumentKanbanArch = /* xml */ `
-<kanban js_class="documents_kanban">
-    <templates>
-        <field name="id"/>
-        <field name="available_embedded_actions_ids"/>
-        <field name="access_token"/>
-        <field name="mimetype"/>
-        <field name="folder_id"/>
-        <field name="owner_id"/>
-        <field name="active"/>
-        <field name="type"/>
-        <field name="attachment_id"/>
-        <t t-name="card">
-            <div>
-                <div name="document_preview" class="o_kanban_image_wrapper">a thumbnail</div>
-                <i class="fa fa-circle o_record_selector" />
-                <field name="name" />
-                <field name="handler" />
-            </div>
-        </t>
-    </templates>
-</kanban>
-`;
+const basicDocumentKanbanArch = basicDocumentsKanbanArch.replace(
+    `<field name="name"/>`,
+    `<field name="name"/><field name="handler"/>`
+);
 
 /**
  * @returns {Object}
  */
 function getTestServerData(spreadsheetData = {}) {
-    return {
-        models: {
-            "res.users": {
-                records: [
-                    { name: "OdooBot", id: serverState.odoobotId },
-                    {
-                        name: serverState.partnerName,
-                        id: serverState.userId,
-                        active: true,
-                        partner_id: serverState.partnerId,
-                    },
-                ],
-            },
-            "documents.document": {
-                records: [
-                    {
-                        id: 1,
-                        name: "Workspace1",
-                        type: "folder",
-                        available_embedded_actions_ids: [],
-                        owner_id: serverState.odoobotId,
-                    },
-                    {
-                        id: 2,
-                        name: "My spreadsheet",
-                        display_name: "My spreadsheet",
-                        spreadsheet_data: JSON.stringify(spreadsheetData),
-                        is_favorited: false,
-                        folder_id: 1,
-                        handler: "spreadsheet",
-                        access_token: "accessTokenMyspreadsheet",
-                        owner_id: serverState.userId,
-                    },
-                ],
-            },
+    return getDocumentsTestServerData([
+        {
+            id: 2,
+            name: "My spreadsheet",
+            display_name: "My spreadsheet",
+            spreadsheet_data: JSON.stringify(spreadsheetData),
+            is_favorited: false,
+            folder_id: 1,
+            handler: "spreadsheet",
+            access_token: "accessTokenMyspreadsheet",
+            owner_id: serverState.userId,
         },
-    };
+    ]);
 }
 
 beforeEach(() => {

@@ -95,11 +95,14 @@ App to upload and manage your documents.
         ],
         'web.tests_assets': [
             'documents/static/tests/helpers/**/*',
+            ('remove', 'documents/static/tests/helpers/data.js'),
         ],
         'web.assets_tests': [
             'documents/static/tests/tours/*',
         ],
         'web.assets_unit_tests': [
+            'documents/static/tests/helpers/**/*',
+            ('remove', 'documents/static/tests/helpers/mock_server/**/*'),
             'documents/static/tests/error_dialog_patch.test.js',
             "documents/static/tests/documents_systray_activity_menu.test.js",
             "documents/static/tests/documents_test_helpers.js",
