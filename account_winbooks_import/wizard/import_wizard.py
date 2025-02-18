@@ -604,6 +604,11 @@ class AccountWinbooksImportWizard(models.TransientModel):
                 })
                 if len(analytic_line_data_list) % 100 == 0:
                     _logger.info("Advancement: %s", len(analytic_line_data_list))
+        if line2analytics2amount or analytic_line_data_list:
+            group_user = self.env.ref('base.group_user', raise_if_not_found=False)
+            group_analytic = self.env.ref('analytic.group_analytic_accounting', raise_if_not_found=False)
+            if group_user and group_analytic:
+                group_user.sudo()._apply_group(group_analytic)
         if line2analytics2amount:
             _logger.info("Updating Analytic Distributions on %s lines", len(line2analytics2amount))
             self.env['decimal.precision'].search([('name', '=', 'Percentage Analytic')]).digits = 6
