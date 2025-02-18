@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     "name": "Argentinean Electronic Invoicing",
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Accounting/Localizations/EDI',
     'sequence': 14,
     'author': 'ADHOC SA',

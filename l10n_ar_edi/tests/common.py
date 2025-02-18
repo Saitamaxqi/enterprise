@@ -102,7 +102,7 @@ class TestEdi(TestAr):
         super()._prepare_multicurrency_values()
         # Set Rates for USD currency takint into account the value from AFIP
         USD = self.env.ref('base.USD')
-        _date, value = USD.with_context(l10n_ar_invoice_skip_commit=True)._l10n_ar_get_afip_ws_currency_rate()
+        _date, value = USD.with_context(l10n_ar_invoice_skip_commit=True)._l10n_ar_get_afip_ws_currency_rate(self.journal.l10n_ar_afip_ws)
         self._set_today_rate(USD, 1.0 / value)
 
     # Re used unit tests methods
@@ -213,6 +213,51 @@ class TestEdi(TestAr):
         self.assertTrue(invoice.l10n_ar_afip_xml_request, error_msg)
         self.assertTrue(invoice.l10n_ar_afip_xml_response, error_msg)
 
+    def _l10n_ar_xml_tag(self, afip_ws, data):
+        """ Easy helper to get XML tag for a given purpose data """
+        xml_tags = {
+            'wsfe': {'currency': 'MonId', 'rate': 'MonCotiz'},
+            'wsfex': {'currency': 'Moneda_Id', 'rate': 'Moneda_ctz'},
+            'wsbfe': {'currency': 'Imp_moneda_Id', 'rate': 'Imp_moneda_ctz'}}
+        return xml_tags[afip_ws][data]
+
+    def _test_payment_foreign_currency(self):
+        """ Payment in Foreign Currency  """
+        USD = self.env.ref('base.USD')
+        self.assertEqual(USD.rate, 1.0)
+        self._prepare_multicurrency_values()
+        self.assertNotEqual(USD.rate, 1.0)
+        afip_ws = self.journal.l10n_ar_afip_ws
+
+        # No + any rate (does not matter rate): Will work always is the current behavior, is the default value
+        invoice = self._create_invoice({"currency": USD})
+        self.assertEqual(invoice.l10n_ar_payment_foreign_currency, "No")
+        self._validate_and_review(invoice)
+        currency_tag = self._l10n_ar_xml_tag(afip_ws, 'currency')
+        self.assertIn(f"<ns0:{currency_tag}>DOL</ns0:{currency_tag}>", invoice.l10n_ar_afip_xml_request)
+        self.assertIn("<ns0:CanMisMonExt>N</ns0:CanMisMonExt>", invoice.l10n_ar_afip_xml_request)
+
+        # Yes + Correct last business day rate: Will work
+        self.env['ir.config_parameter'].sudo().set_param(
+            f"l10n_ar_edi.{self.env.company.id}_foreign_currency_payment", "Yes")
+        invoice = self._create_invoice({"currency": USD})
+        self.assertEqual(invoice.l10n_ar_payment_foreign_currency, "Yes")
+        self._validate_and_review(invoice)
+        self.assertIn(f"<ns0:{currency_tag}>DOL</ns0:{currency_tag}>", invoice.l10n_ar_afip_xml_request)
+        self.assertIn("<ns0:CanMisMonExt>S</ns0:CanMisMonExt>", invoice.l10n_ar_afip_xml_request)
+
+        # Yes + bad rate: Will fail because is not last business day
+        USD.rate_ids.rate = USD.rate_ids.rate * 0.10
+        invoice = self._create_invoice({"currency": USD})
+        with self.assertRaisesRegex(UserError, "The rate to be reported.*differs from that of ARCA Remember that if you pay in foreign currency you must use the same rate of the last business day of ARCA"):
+            self._validate_and_review(invoice)
+
+        # Yes + No rate defined: Will raise error
+        USD.rate_ids.rate = 1.0
+        invoice = self._create_invoice({"currency": USD})
+        with self.assertRaisesRegex(UserError, "The currency rate to be reported.*is not valid. It must be between"):
+            self._validate_and_review(invoice)
+
 
 class TestFexCommon(TestEdi):
 
@@ -220,7 +265,7 @@ class TestFexCommon(TestEdi):
     def setUpClass(cls):
         super(TestFexCommon, cls).setUpClass('wsfex')
 
-        cls.partner = cls.res_partner_expresso
+        cls.partner = cls.res_partner_barcelona_food
         cls.incoterm = cls.env.ref('account.incoterm_EXW')
         cls.journal = cls._create_journal(cls, 'wsfex')
 
@@ -228,6 +273,11 @@ class TestFexCommon(TestEdi):
         cls.document_type.update({
             'invoice_e': cls.env.ref('l10n_ar.dc_e_f'),
             'credit_note_e': cls.env.ref('l10n_ar.dc_e_nc')})
+
+    def _create_invoice(self, data=None, invoice_type='out_invoice'):
+        data = data or {}
+        data.update({'incoterm': self.incoterm})
+        return super()._create_invoice(data=data, invoice_type=invoice_type)
 
     def _create_invoice_product(self, data=None):
         data = data or {}

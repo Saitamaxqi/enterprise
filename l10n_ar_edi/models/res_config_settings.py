@@ -13,6 +13,10 @@ class ResConfigSettings(models.TransientModel):
     l10n_ar_afip_ws_crt_id = fields.Many2one(related='company_id.l10n_ar_afip_ws_crt_id', readonly=False)
 
     l10n_ar_fce_transmission_type = fields.Selection(related="company_id.l10n_ar_fce_transmission_type", readonly=False)
+    l10n_ar_payment_foreign_currency = fields.Selection(
+        related="company_id.l10n_ar_payment_foreign_currency",
+        readonly=False,
+        inverse="_inverse_l10n_ar_payment_foreign_currency")
 
     def l10n_ar_action_create_certificate_request(self):
         self.ensure_one()
@@ -71,3 +75,8 @@ class ResConfigSettings(models.TransientModel):
 
     def random_demo_cert(self):
         self.company_id.set_demo_random_cert()
+
+    def _inverse_l10n_ar_payment_foreign_currency(self):
+        for record in self:
+            self.env['ir.config_parameter'].sudo().set_param(
+                f"l10n_ar_edi.{record.company_id.id}_foreign_currency_payment", record.l10n_ar_payment_foreign_currency)

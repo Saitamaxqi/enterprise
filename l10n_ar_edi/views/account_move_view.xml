@@ -16,6 +16,18 @@
                 <attribute name="colspan">1</attribute>
             </field>
 
+            <sheet position="before">
+                <field name="l10n_ar_currency_code" invisible="1"/>
+                <div class="alert alert-warning" colspan="2" role="alert"
+                    invisible="country_code != 'AR' or not l10n_latam_use_documents or not l10n_ar_afip_ws or state != 'draft' or l10n_ar_currency_code == 'ARS'" >
+                    The payment is in foreign currency: <field name="l10n_ar_payment_foreign_currency" nolabel="1" class="oe_inline"/>
+                    <span invisible="l10n_ar_payment_foreign_currency_default != 'account'">
+                        ( <field name="l10n_ar_payment_foreign_currency_default" /> ) 
+                        <i class="fa fa-info-circle" title="This value depends on the receivable account's currency, To change it to Yes change the account to one that use currency that differs to the company currency" role="img"/>
+                    </span>
+                </div>
+            </sheet>
+
             <field name="l10n_latam_document_number" position="after">
                 <field name='l10n_ar_afip_result' readonly="state != 'draft'" invisible="country_code != 'AR'"/>
                 <label for="l10n_ar_afip_auth_code" invisible="l10n_ar_afip_verification_type == 'not_available' or move_type not in ('in_invoice', 'in_refund', 'in_receipt')"/>

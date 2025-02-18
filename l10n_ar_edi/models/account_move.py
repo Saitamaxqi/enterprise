@@ -4,6 +4,7 @@ from odoo.exceptions import UserError, RedirectWarning
 from odoo.tools.float_utils import float_repr, float_round
 from odoo.tools import html2plaintext, plaintext2html
 from odoo.tools.sql import column_exists, create_column
+from odoo.tools.float_utils import float_compare
 from datetime import datetime
 from . import afip_errors
 import re
@@ -71,6 +72,36 @@ class AccountMove(models.Model):
         [('SCA', 'SCA - TRANSFERENCIA AL SISTEMA DE CIRCULACION ABIERTA'), ('ADC', 'ADC - AGENTE DE DEPOSITO COLECTIVO')],
         string='FCE: Transmission Option', compute="_compute_l10n_ar_fce_transmission_type", store=True, readonly=False,
         help="This field only need to be set when you are reporting a MiPyME FCE documents. Default value can be set in the Accouting Settings")
+
+    l10n_ar_payment_foreign_currency_default = fields.Selection(related="company_id.l10n_ar_payment_foreign_currency")
+    l10n_ar_payment_foreign_currency = fields.Selection(
+        selection=[("Yes", "Yes"), ("No", "No")],
+        compute="_compute_l10n_ar_payment_foreign_currency",
+        string="Payment in Foreign Currency")
+    l10n_ar_currency_code = fields.Char("Currency Code", related="currency_id.name")
+
+    @api.depends("currency_id", "line_ids")
+    def _compute_l10n_ar_payment_foreign_currency(self):
+        """ Compute that let us know in the payment will be done in Foreign currency
+        Only applies to sale EDI invoices and depends on the company default value
+
+        if company default values is:
+            * No: all the invoices will be send as Payment Foreign Currency = No
+            * Yes: all the invoices will be send as Payment Foreign Currency = Yes
+            * Account's Dependent: Will be Yes or No will depend on the payment lines, if they use an a account we
+              a forced  currency then will send Yes, but for a regular account will be No
+        """
+        for move in self:
+            if not move.is_sale_document() or move.country_code != 'AR' or not move.journal_id.l10n_ar_afip_ws \
+               or move.currency_id == move.company_currency_id:
+                move.l10n_ar_payment_foreign_currency = False
+            else:
+                value = move.l10n_ar_payment_foreign_currency_default
+                if move.l10n_ar_payment_foreign_currency_default == "account":
+                    payment_terms = move.line_ids.filtered(lambda aml: aml.display_type == 'payment_term')
+                    account = payment_terms.account_id[:1]
+                    value = "Yes" if account.currency_id and account.currency_id != move.company_currency_id else "No"
+                move.l10n_ar_payment_foreign_currency = value
 
     # Compute methods
 
@@ -153,7 +184,7 @@ class AccountMove(models.Model):
     def _post(self, soft=True):
         """ After validate the invoice we then validate in AFIP. The last thing we do is request the cae because if an
         error occurs after CAE requested, the invoice has been already validated on AFIP """
-        ar_invoices = self.filtered(lambda x: x.is_invoice() and x.company_id.account_fiscal_country_id.code == "AR")
+        ar_invoices = self.filtered(lambda x: x.is_invoice() and x.country_code == "AR")
         sale_ar_invoices = ar_invoices.filtered(lambda x: x.move_type in ['out_invoice', 'out_refund'])
 
         # Verify only Vendor bills (only when verification is configured as 'required')
@@ -257,6 +288,41 @@ class AccountMove(models.Model):
             if response.Observaciones or response.Errors:
                 inv.message_post(body=_('AFIP authorization verification result: %(observations)s%(errors)s', observations=response.Observaciones, errors=response.Errors))
 
+    def l10n_ar_check_rate(self):
+        """ If the user indicates that the payment will be done in foreign currency (option YES) then ARCA force that
+        the rate used is exactly the same as the last business day (if date in future then do not report the rate)
+
+        We alert the user and show them the correct rate and date so they can fixed in the currency config to continue
+        with the invoice validation """
+        self.ensure_one()
+        if self.l10n_ar_payment_foreign_currency == "Yes":
+
+            arca_date, arca_rate = self.currency_id._l10n_ar_get_last_business_day_rate(
+                self.journal_id.l10n_ar_afip_ws, self.invoice_date)
+
+            # WSFE 10119 / WSFEX 1667 / WSBFE 1014: Extra Show that the rates are out of allowed margin
+            min_rate = arca_rate - (arca_rate * 0.02)
+            max_rate = arca_rate * 400
+            if not (min_rate <= self.l10n_ar_currency_rate <= max_rate):
+                raise UserError(_(
+                    "The currency rate to be reported (%(currency_rate)s) is not valid. It must be between 2%% and 400%% of"
+                    " the official quote (%(min_rate)s - %(max_rate)s)",
+                    currency_rate=float_repr(self.l10n_ar_currency_rate, precision_digits=3),
+                    min_rate=float_repr(min_rate, precision_digits=3),
+                    max_rate=float_repr(max_rate, precision_digits=3),
+                ))
+
+            # WSFE 10038 / WSFEX 1604
+            if self.l10n_ar_payment_foreign_currency == "Yes" and float_compare(
+               self.l10n_ar_currency_rate, arca_rate, precision_digits=3) != 0:
+                raise UserError(_(
+                    "The rate to be reported (%(currency_rate)s) differs from that of ARCA Remember that if you pay"
+                    " in foreign currency you must use the same rate of the last business day of ARCA (%(arca_rate)s - %(arca_date)s)",
+                    currency_rate=float_repr(self.l10n_ar_currency_rate, precision_digits=3),
+                    arca_rate=arca_rate,
+                    arca_date=arca_date,
+                ))
+
     # Main methods
 
     def _l10n_ar_do_afip_ws_request_cae(self, client, auth, transport):
@@ -282,6 +348,8 @@ class AccountMove(models.Model):
             request_data = False
             return_codes = []
             values = {}
+
+            self.l10n_ar_check_rate()
 
             # We need to call a different method for every webservice type and assemble the returned errors if they exist
             if afip_ws == 'wsfe':
@@ -683,36 +751,45 @@ class AccountMove(models.Model):
                 self.commercial_partner_id.country_id.code not in ['AR', False]):
             vat = self.get_vat_country()
 
-        res = {'FeCabReq': {
-                   'CantReg': 1, 'PtoVta': self.journal_id.l10n_ar_afip_pos_number, 'CbteTipo': self.l10n_latam_document_type_id.code},
-               'FeDetReq': [{'FECAEDetRequest': {
-                   'Concepto': int(self.l10n_ar_afip_concept),
-                   'DocTipo': partner_id_code or 0,
-                   'DocNro': vat and int(vat) or 0,
-                   'CbteDesde': invoice_number,
-                   'CbteHasta': invoice_number,
-                   'CbteFch': self.invoice_date.strftime(WS_DATE_FORMAT['wsfe']),
+        res = {
+            'Concepto': int(self.l10n_ar_afip_concept),
+            'DocTipo': partner_id_code or 0,
+            'DocNro': vat and int(vat) or 0,
+            'CbteDesde': invoice_number,
+            'CbteHasta': invoice_number,
+            'CbteFch': self.invoice_date.strftime(WS_DATE_FORMAT['wsfe']),
 
-                   'ImpTotal': float_repr(self.amount_total, precision_digits=2),
-                   'ImpTotConc': float_repr(amounts['vat_untaxed_base_amount'], precision_digits=2),  # Not Taxed VAT
-                   'ImpNeto': float_repr(amounts['vat_taxable_amount'], precision_digits=2),
-                   'ImpOpEx': float_repr(amounts['vat_exempt_base_amount'], precision_digits=2),
-                   'ImpTrib': float_repr(amounts['not_vat_taxes_amount'], precision_digits=2),
-                   'ImpIVA': float_repr(amounts['vat_amount'], precision_digits=2),
+            'ImpTotal': float_repr(self.amount_total, precision_digits=2),
+            'ImpTotConc': float_repr(amounts['vat_untaxed_base_amount'], precision_digits=2),  # Not Taxed VAT
+            'ImpNeto': float_repr(amounts['vat_taxable_amount'], precision_digits=2),
+            'ImpOpEx': float_repr(amounts['vat_exempt_base_amount'], precision_digits=2),
+            'ImpTrib': float_repr(amounts['not_vat_taxes_amount'], precision_digits=2),
+            'ImpIVA': float_repr(amounts['vat_amount'], precision_digits=2),
 
-                   # Service dates are only informed when AFIP Concept is (2,3)
-                   'FchServDesde': service_start.strftime(WS_DATE_FORMAT['wsfe']) if service_start else False,
-                   'FchServHasta': service_end.strftime(WS_DATE_FORMAT['wsfe']) if service_end else False,
-                   'FchVtoPago': due_payment_date.strftime(WS_DATE_FORMAT['wsfe']) if due_payment_date else False,
-                   'MonId': self.currency_id.l10n_ar_afip_code,
-                   'MonCotiz':  float_repr(1 / self.invoice_currency_rate, precision_digits=6),
-                   'CbtesAsoc': ArrayOfCbteAsoc([related_invoices]) if related_invoices else None,
-                   'Iva': ArrayOfAlicIva(vat_items) if vat_items else None,
-                   'Tributos': ArrayOfTributo(tributes) if tributes else None,
-                   'Opcionales': ArrayOfOpcional(optionals) if optionals else None,
-                   'CondicionIVAReceptorId': self.partner_id.l10n_ar_afip_responsibility_type_id.code,
-                   'Compradores': None}}]}
-        return res
+            # Service dates are only informed when AFIP Concept is (2,3)
+            'FchServDesde': service_start.strftime(WS_DATE_FORMAT['wsfe']) if service_start else False,
+            'FchServHasta': service_end.strftime(WS_DATE_FORMAT['wsfe']) if service_end else False,
+            'FchVtoPago': due_payment_date.strftime(WS_DATE_FORMAT['wsfe']) if due_payment_date else False,
+            'MonId': self.currency_id.l10n_ar_afip_code,
+            'MonCotiz': float_repr(self.l10n_ar_currency_rate, precision_digits=6),
+            'CbtesAsoc': ArrayOfCbteAsoc([related_invoices]) if related_invoices else None,
+            'Iva': ArrayOfAlicIva(vat_items) if vat_items else None,
+            'Tributos': ArrayOfTributo(tributes) if tributes else None,
+            'Opcionales': ArrayOfOpcional(optionals) if optionals else None,
+            'CondicionIVAReceptorId': self.partner_id.l10n_ar_afip_responsibility_type_id.code,
+            'Compradores': None}
+
+        if res.get('MonId') != 'PES':  # WSFE 10241
+            # if currency date in future then do not send MonCotiz
+            res['CanMisMonExt'] = {"Yes": "S", "No": "N"}.get(self.l10n_ar_payment_foreign_currency)
+            if self.l10n_ar_payment_foreign_currency == "Yes" and self.invoice_date > fields.Date.context_today(self):
+                res.pop('MonCotiz')
+
+        return {
+            'FeCabReq': {
+                'CantReg': 1, 'PtoVta': self.journal_id.l10n_ar_afip_pos_number,
+                'CbteTipo': self.l10n_latam_document_type_id.code},
+            'FeDetReq': [{'FECAEDetRequest': res}]}
 
     def get_vat_country(self):
         """ CUIT PAIS: Is default VAT(CUIT) that AFIP define per country to identify a foreign country partner, We have
@@ -784,6 +861,9 @@ class AccountMove(models.Model):
             if int(self.l10n_latam_document_type_id.code) == 19 and int(self.l10n_ar_afip_concept) in [2, 4] and self.invoice_date_due else ''
         if payment_date:
             res.update({'Fecha_pago': payment_date})
+
+        if res.get("Moneda_Id") != "PES" and res.get("Cbte_Tipo") == "19":
+            res['CanMisMonExt'] = {"Yes": "S", "No": "N"}.get(self.l10n_ar_payment_foreign_currency)
         return res
 
     def wsbfe_get_cae_request(self, last_id, client=None):
@@ -815,6 +895,7 @@ class AccountMove(models.Model):
                'Imp_moneda_ctz': float_repr(1 / self.invoice_currency_rate, precision_digits=6),
                'Fecha_cbte': self.invoice_date.strftime(WS_DATE_FORMAT['wsbfe']),
                'CbtesAsoc': ArrayOfCbteAsoc([related_invoices]) if related_invoices else None,
+               'CondicionIVAReceptorId': int(self.partner_id.l10n_ar_afip_responsibility_type_id.code),
                'Items': ArrayOfItem(self._get_line_details())}
         if self.l10n_latam_document_type_id.code in ['201', '206']:  # WS4900
             res.update({'Fecha_vto_pago': self._due_payment_date().strftime(WS_DATE_FORMAT['wsbfe'])})
@@ -823,6 +904,10 @@ class AccountMove(models.Model):
         if optionals:
             ArrayOfOpcional = client.get_type('ns0:ArrayOfOpcional')
             res.update({'Opcionales': ArrayOfOpcional(optionals)})
+
+        if res.get("Imp_moneda_Id") != "PES":
+            res['CanMisMonExt'] = {"Yes": "S", "No": "N"}.get(self.l10n_ar_payment_foreign_currency)
+
         return res
 
     def _is_argentina_electronic_invoice(self):

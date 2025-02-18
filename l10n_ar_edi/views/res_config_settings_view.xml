@@ -44,6 +44,22 @@
                 <setting string="Default MiPyME FCE Transmission Option" company_dependent="1" help="This information will be sent to AFIP by default when validating electronic FCE documents. RG 4919/2021 requirement." invisible="country_code != 'AR'">
                     <field name="l10n_ar_fce_transmission_type" class="o_light_label" widget="radio"/>
                 </setting>
+                <div class="col-xs-12 col-md-6 o_setting_box" invisible="country_code != 'AR'">
+                    <div class="o_setting_left_pane"/>
+                    <div class="o_setting_right_pane">
+                        <label for="l10n_ar_payment_foreign_currency"/>
+                        <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                        <div class="text-muted">
+                            Please select the default option that will be used to inform ARCA whether the payment is made in a foreign currency, as required by RG 5616/2024:<ul>
+                            <li>Yes → Always report foreign currency payments to ARCA</li>
+                            <li>No → Do not report payments in foreign currency by default</li>
+                            <li>Account's Currency Dependant → The reporting will follow the currency of the Accounts Receivable account used for the transaction</li></ul>
+                        </div>
+                        <div class="content-group">
+                            <field name="l10n_ar_payment_foreign_currency" class="o_light_label" widget="radio"/>
+                        </div>
+                    </div>
+                </div>
             </xpath>
         </field>
     </record>

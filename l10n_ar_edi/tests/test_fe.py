@@ -175,3 +175,7 @@ class TestFe(common.TestEdi):
         self.assertTrue(bill.l10n_ar_afip_verification_result)
         # Need to use a real CUIT to be able to verify vendor bills in AFIP, that is why we receive Rejected
         self.assertEqual(bill.l10n_ar_afip_verification_result, 'R', bill.message_ids[0].body)
+
+    def test_29_payment_foreign_currency(self):
+        """ Payment in Foreign Currency  """
+        self._test_payment_foreign_currency()

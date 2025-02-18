@@ -38,7 +38,7 @@ class TestFex(common.TestFexCommon):
 
     def test_08_free_zone(self):
         """ Invoice to "IVA Liberado - Free Zone" partner (similar to demo_invoice_6) """
-        partner = self.res_partner_cerrocastor
+        partner = self.res_partner_montana_sur
         invoice = self._test_case('invoice_e', 'product_service', forced_values={
             'partner': partner,
             'lines': [{'product': self.product_iva_105, 'price_unit': 642.0, 'quantity': 5},
@@ -53,7 +53,7 @@ class TestFex(common.TestFexCommon):
     def test_09_invoice_e_product_service(self):
         """ Invoice "4 - Otros (expo)" because it have Services (similar to demo_invoice_7) """
         # Can be unified with test_04_invoice_e_product_service? why 4 - Otros (expo)?
-        partner = self.res_partner_expresso
+        partner = self.res_partner_barcelona_food
         invoice = self._test_case('invoice_e', 'product_service', forced_values={
             'partner': partner,
             'lines': [{'product': self.product_iva_105, 'price_unit': 642.0, 'quantity': 5},
@@ -67,7 +67,7 @@ class TestFex(common.TestFexCommon):
 
     def test_10_invoice_with_notes(self):
         """ Invoice with multiple products/services and with line note """
-        partner = self.res_partner_expresso
+        partner = self.res_partner_barcelona_food
         invoice = self._test_case('invoice_e', 'product_service', forced_values={
             'partner': partner,
             'lines': [{'product': self.product_iva_105, 'price_unit': 642.0, 'quantity': 5},
@@ -80,3 +80,7 @@ class TestFex(common.TestFexCommon):
                       ]})
         tax_exento = self._search_tax('iva_exento')
         self.assertEqual(invoice.invoice_line_ids.mapped('tax_ids'), tax_exento)
+
+    def test_11_payment_foreign_currency(self):
+        """ Payment in Foreign Currency  """
+        self._test_payment_foreign_currency()
