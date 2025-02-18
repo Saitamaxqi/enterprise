@@ -39,6 +39,14 @@ class ResPartner(models.Model):
         else:
             return [self.id]
 
+    def get_partner_settle_details(self):
+        partner_list = self.get_company_partner_ids()
+        count_order_to_settle = self.env['pos.order'].search_count([
+            ('partner_id', 'in', partner_list),
+            ('customer_due_total', '>', 0)
+        ])
+        return partner_list, count_order_to_settle
+
     def get_all_total_due(self, config_id):
         due_amounts = []
         for partner in self:

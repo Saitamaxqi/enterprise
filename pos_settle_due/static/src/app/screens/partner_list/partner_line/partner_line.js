@@ -18,7 +18,10 @@ patch(PartnerLine.prototype, {
     async settleCustomerDue() {
         this.props.close();
         const partner_id = this.props.partner.id;
-        const partner_ids = await this.pos.getCompanyPartnerIds(partner_id);
+        const partnerDetails = await this.pos.getPartnerSettleDetails(partner_id);
+        if (!partnerDetails[1]) {
+            return this.depositMoney(this.props.partner.total_due);
+        }
         this.dialog.add(CustomSelectCreateDialog, {
             resModel: "pos.order",
             noCreate: true,
@@ -27,7 +30,7 @@ patch(PartnerLine.prototype, {
                 (v) => v.name == "customer_due_pos_order_list_view"
             ).id,
             domain: [
-                ["partner_id", "in", partner_ids],
+                ["partner_id", "in", partnerDetails[0]],
                 ["customer_due_total", ">", 0],
             ],
             onSelected: async (orderIds) => {
@@ -44,12 +47,12 @@ patch(PartnerLine.prototype, {
                         body: _t("One of the selected orders is already being settled."),
                     });
                 }
-                this.pos.onClickSettleDue(orderIds, partner_id, partner_ids);
+                this.pos.onClickSettleDue(orderIds, partner_id, partnerDetails[0]);
             },
         });
     },
-    async depositMoney() {
+    async depositMoney(amount = 0) {
         this.props.close();
-        this.pos.depositMoney(this.props.partner);
+        this.pos.depositMoney(this.props.partner, amount);
     },
 });

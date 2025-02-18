@@ -67,8 +67,8 @@ patch(PosStore.prototype, {
         }
         return [partners];
     },
-    async getCompanyPartnerIds(partnerId) {
-        return await this.data.call("res.partner", "get_company_partner_ids", [partnerId]);
+    async getPartnerSettleDetails(partnerId) {
+        return await this.data.call("res.partner", "get_partner_settle_details", [partnerId]);
     },
     async onClickSettleDue(orderIds, partner_id, partner_ids) {
         const orders = await this.data.read("pos.order", orderIds);
@@ -85,7 +85,7 @@ patch(PosStore.prototype, {
             });
         }
     },
-    async depositMoney(partner) {
+    async depositMoney(partner, amount = 0) {
         const paymentMethods = this.config.payment_method_ids.filter(
             (method) => method.type != "pay_later"
         );
@@ -114,7 +114,7 @@ patch(PosStore.prototype, {
                     newOrder = this.addNewOrder();
                 }
                 const payment = newOrder.addPaymentline(selectedPaymentMethod);
-                payment.setAmount(0);
+                payment.setAmount(amount);
                 newOrder.setPartner(partner);
                 this.showScreen("PaymentScreen", {
                     orderUuid: this.selectedOrderUuid,
