@@ -526,7 +526,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
         self.env['ir.attachment'].create(attachment_data_list)
         return {f"{m.date.year}_{m.ref}" : m for m in move_ids}, move_ids
 
-    def _import_analytic_account(self, dbf_records):
+    def _import_analytic_account(self, dbf_records, param_data):
         """Import the analytic accounts from *_anf*.dbf files.
         :return: a dictionary whose keys are the Winbooks analytic account
         references and the values the analytic account ids in Odoo.
@@ -542,7 +542,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
                 continue
             analytic_account = AccountAnalyticAccount.search(
                 [('code', '=', rec.get('NUMBER')), ('company_id', '=', self.env.company.id)], limit=1)
-            plan_name = 'Imported Plan ' + rec.get('TYPE', '0')
+            plan_name = param_data['ZONANA' + rec['TYPE']]
             if not analytic_plan_dict.get(plan_name):
                 analytic_plan_dict[plan_name] = (
                     AccountAnalyticPlan.search([('name', '=', plan_name)], limit=1)
@@ -696,6 +696,9 @@ class AccountWinbooksImportWizard(models.TransientModel):
         in Winbooks.
         :return: a dictionary with the parameters extracted.
         """
+        def parse_csv_value(csv_values):
+            return dict(pair.split('=') for pair in csv_values.split(','))
+
         param_data = {}
         param_data['openyears'] = []
         param_data['period_date'] = {}
@@ -713,6 +716,12 @@ class AccountWinbooksImportWizard(models.TransientModel):
             search = re.search(r'BOOKYEAR(\d+).PERDATE', rec_id)
             if search and search.group(1):
                 param_data['period_date'][int(search.group(1))] = [datetime.strptime(value[i*8:(i+1)*8], '%d%m%Y').date() for i in range(int(len(value)/8))]
+            try:
+                csv_values = parse_csv_value(value + rec.get('VALUEEXT'))
+            except ValueError:
+                csv_values = {}
+            if csv_values.get('NAME', '').startswith('ZONANA'):  # get the names of analytic plans
+                param_data[csv_values['NAME']] = csv_values['TIT1']
         return param_data
 
     def _post_import(self, account_deprecated_ids):
@@ -799,7 +808,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
                 move_data, move_ids = self._import_move(act_recs, pdffiles, account_data, account_central, journal_data, partner_data, vatcode_data, param_data)
 
                 anf_recs = get_dbfrecords(lambda file: file.lower().endswith("_anf.dbf"))
-                analytic_account_data, analytic_account_ids = self._import_analytic_account(anf_recs)
+                analytic_account_data, analytic_account_ids = self._import_analytic_account(anf_recs, param_data)
 
                 ant_recs = get_dbfrecords(lambda file: file.lower().endswith("_ant.dbf"))
                 analytic_account_line_ids = self._import_analytic_account_line(ant_recs, analytic_account_data, account_data, move_data, param_data)
