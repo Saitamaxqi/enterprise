@@ -64,10 +64,6 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
         );
     }
 
-    handleRecordSelection(target) {
-        target.click();
-    }
-
     /**
      * Called when clicking in the kanban renderer.
      */
