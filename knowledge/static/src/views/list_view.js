@@ -25,7 +25,7 @@ export class KnowledgeArticleController extends ListController {
             icon: "fa fa-clone",
             description: _t("Duplicate"),
             callback: async () => {
-                const selectedResIds = await this.getSelectedResIds();
+                const selectedResIds = await this.model.root.getResIds(true);
                 if (selectedResIds.length === 1) {
                     await this.model.orm.call(this.props.resModel, "copy", [selectedResIds]);
                 } else {

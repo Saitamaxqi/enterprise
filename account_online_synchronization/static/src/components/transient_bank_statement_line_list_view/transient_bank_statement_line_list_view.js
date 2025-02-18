@@ -13,7 +13,7 @@ export class TransientBankStatementLineListController extends ListController {
     }
 
     async onClickImportTransactions() {
-        const resIds = await this.getSelectedResIds();
+        const resIds = await this.model.root.getResIds(true);
         const resultAction = await this.orm.call("account.bank.statement.line.transient", "action_import_transactions", [resIds]);
         this.action.doAction(resultAction);
     }
