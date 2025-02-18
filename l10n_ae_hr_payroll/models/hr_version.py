@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class HrVersion(models.Model):
@@ -9,6 +9,7 @@ class HrVersion(models.Model):
     l10n_ae_housing_allowance = fields.Monetary(string="Housing Allowance", groups="hr.group_hr_user")
     l10n_ae_transportation_allowance = fields.Monetary(string="Transportation Allowance", groups="hr.group_hr_user")
     l10n_ae_other_allowances = fields.Monetary(string="Other Allowances", groups="hr.group_hr_user")
+    l10n_ae_total_salary = fields.Monetary(string="Total Salary", compute="_compute_total_salary", help="Used in salary rules and on printouts")
     l10n_ae_is_dews_applied = fields.Boolean(string="Is DEWS Applied", groups="hr.group_hr_user",
                                              help="Daman Investments End of Service Programme")
     l10n_ae_number_of_leave_days = fields.Integer(string="Number of Leave Days", default=30, groups="hr.group_hr_user",
@@ -21,3 +22,8 @@ class HrVersion(models.Model):
         'CHECK(l10n_ae_number_of_leave_days >= 0)',
         "Number of Leave Days must be equal to or greater than 0",
     )
+
+    @api.depends('wage', 'l10n_ae_housing_allowance', 'l10n_ae_transportation_allowance', 'l10n_ae_other_allowances')
+    def _compute_total_salary(self):
+        for contract in self:
+            contract.l10n_ae_total_salary = contract.wage + contract.l10n_ae_housing_allowance + contract.l10n_ae_transportation_allowance + contract.l10n_ae_other_allowances

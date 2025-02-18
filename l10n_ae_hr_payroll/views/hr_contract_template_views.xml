@@ -20,6 +20,11 @@
                     <field name="l10n_ae_other_allowances" class="o_hr_narrow_field"/>
                     <span>/ month</span>
                 </div>
+                <label for="l10n_ae_total_salary" invisible="country_code != 'AE'"/>
+                <div class="o_row" name="l10n_ae_total_salary" invisible="country_code != 'AE'">
+                    <field name="l10n_ae_total_salary" nolabel="1"/>
+                    <span>/ month</span>
+                </div>
             </group>
             <group name="salary_info" position="after">
                 <group>

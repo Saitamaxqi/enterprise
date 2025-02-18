@@ -37,6 +37,8 @@ United Arab Emirates Payroll and End of Service rules.
         'views/res_bank_views.xml',
         'views/res_config_settings_view.xml',
         'wizard/hr_payroll_payment_report_wizard.xml',
+        'report/report_hr_employee_salary_certificate_template.xml',
+        'report/report_hr_employee_salary_certificate.xml'
     ],
     'demo': [
         'data/l10n_ae_hr_payroll_demo.xml'
