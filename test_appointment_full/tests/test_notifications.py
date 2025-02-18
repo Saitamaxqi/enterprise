@@ -107,14 +107,13 @@ class TestAppointmentNotificationsMicrosoftCalendar(MsftTestCommon, TestAppointm
         self.assertNotSentEmail()
 
     @freeze_time('2020-02-01 09:00:00')
-    @users('mike@organizer.com', 'john@attendee.com', 'user_public')
+    @users('mike@organizer.com', 'john@attendee.com', 'ms_sync_paused_user', 'user_public')
     @patch.object(
         MsftUser, '_get_microsoft_calendar_token',
         lambda user: user.login not in ['user_public', 'john@attendee.com'] and 'some-token'
     )
     def test_sync_or_email_resource_appointment(self):
         """Check that resource appointments are synced even if there is no organizer, unless the attendee is not syncing."""
-        #TODO this test should work with ms_sync_paused_user
         for with_organizer in [True, False]:
             with self.subTest(with_organizer=with_organizer):
                 is_public = self.env.user == self.user_public
@@ -124,7 +123,7 @@ class TestAppointmentNotificationsMicrosoftCalendar(MsftTestCommon, TestAppointm
                     expected_author = self.organizer_user.partner_id
                 with self.mock_mail_gateway(mail_unlink_sent=False), patch.object(MicrosoftCalendarService, 'insert') as mock_insert:
                     mock_insert.return_value = ('1', '1')
-                    self.env['calendar.event'].with_context(mail_notify_author=True).sudo(is_public).create({
+                    meeting = self.env['calendar.event'].with_context(mail_notify_author=True).sudo(is_public).create({
                         'appointment_type_id': self.apt_type_resource.id,
                         'name': f'Resource Appointment {booking_partner.name}',
                         'partner_ids': booking_partner.ids,
@@ -135,7 +134,8 @@ class TestAppointmentNotificationsMicrosoftCalendar(MsftTestCommon, TestAppointm
                     self.env.flush_all()
                     self.cr.precommit.run()
                     self.cr.postcommit.run()
-                if self.env.user == self.organizer_user:
+                # synced with the organizer (who can always sync in this test), but checked against the create user
+                if meeting._check_microsoft_sync_status() and self.env.user._get_microsoft_sync_status() == "sync_active":
                     mock_insert.assert_called_once()
                     self.assertNotSentEmail()
                 else:
