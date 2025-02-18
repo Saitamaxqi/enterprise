@@ -3204,7 +3204,7 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_payslip__private_car_missing_days
-msgid "Days Not Granting Private Car Reimbursement"
+msgid "Days Granting Private Car Reimbursement"
 msgstr ""
 
 #. module: l10n_be_hr_payroll

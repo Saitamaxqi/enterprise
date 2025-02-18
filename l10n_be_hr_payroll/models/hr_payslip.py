@@ -16,8 +16,9 @@ class HrPayslip(models.Model):
 
     meal_voucher_count = fields.Integer(
         compute='_compute_work_entry_dependent_benefits')  # Overrides compute method
+    # YTI NOTE: Changed nature of field (from missing dats to granting days)
     private_car_missing_days = fields.Integer(
-        string='Days Not Granting Private Car Reimbursement',
+        string='Days Granting Private Car Reimbursement',
         compute='_compute_work_entry_dependent_benefits')
     representation_fees_missing_days = fields.Integer(
         string='Days Not Granting Representation Fees',
@@ -165,7 +166,7 @@ class HrPayslip(models.Model):
                 intervals = mapped_intervals[(calendar, payslip.date_from, payslip.date_to)][resource.id]
 
                 nb_of_days_to_work = len({dt_from.date(): True for (dt_from, dt_to, attendance) in intervals})
-                payslip.private_car_missing_days = nb_of_days_to_work - (benefits['private_car'] if 'private_car' in benefits else 0)
+                payslip.private_car_missing_days = benefits['private_car'] if 'private_car' in benefits else 0
                 payslip.representation_fees_missing_days = nb_of_days_to_work - (benefits['representation_fees'] if 'representation_fees' in benefits else 0)
                 payslip.meal_voucher_count = benefits['meal_voucher']
 

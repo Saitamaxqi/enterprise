@@ -613,7 +613,9 @@ else:
         total_amount = contract.with_context(payslip_date=payslip.date_from)._get_private_car_reimbursed_amount(contract.km_home_work) / 5 * days_per_week
         daily_amount = total_amount * 3 / 13 / days_per_week
         cycle_days = inputs['CYCLE'].amount if 'CYCLE' in inputs else 0
-        result = max(0, total_amount - daily_amount * (payslip.private_car_missing_days + cycle_days))
+        # YTI NOTE: Changed nature of field (from missing dats to granting days)
+        result_qty = max(payslip.private_car_missing_days - cycle_days, 0)
+        result = daily_amount
     else:
         result = 0
         </field>

@@ -1829,7 +1829,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         self._validate_worked_days(payslip, {'WORK100': (22.0, 167.2, 3707.12)})
 
-        payslip_results = {'BASIC': 3707.12, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 3716.12, 'ONSS': -485.7, 'ONSSTOTAL': 485.7, 'GROSSIP': 3230.42, 'IP.PART': -741.42, 'GROSS': 2489.0, 'P.P': -557.38, 'PPTOTAL': 557.38, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -35.29, 'MEAL_V_EMP': -23.98, 'CAR.PRIV': 69.5, 'REP.FEES': 150.0, 'IP': 741.42, 'IP.DED': -55.61, 'NET': 2768.67, 'REMUNERATION': 2965.7, 'ONSSEMPLOYERBASIC': 929.77, 'ONSSEMPLOYERFFE': 4.83, 'ONSSEMPLOYERMFFE': 3.72, 'ONSSEMPLOYERCPAE': 8.55, 'ONSSEMPLOYERRESTREINT': 62.8, 'ONSSEMPLOYERUNEMP': 3.72, 'ONSSEMPLOYER': 1013.39}
+        payslip_results = {'BASIC': 3707.12, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 3716.12, 'ONSS': -485.7, 'ONSSTOTAL': 485.7, 'GROSSIP': 3230.42, 'IP.PART': -741.42, 'GROSS': 2489.0, 'P.P': -557.38, 'PPTOTAL': 557.38, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -35.29, 'MEAL_V_EMP': -23.98, 'CAR.PRIV': 70.57, 'REP.FEES': 150.0, 'IP': 741.42, 'IP.DED': -55.61, 'NET': 2769.74, 'REMUNERATION': 2965.7, 'ONSSEMPLOYERBASIC': 929.77, 'ONSSEMPLOYERFFE': 4.83, 'ONSSEMPLOYERMFFE': 3.72, 'ONSSEMPLOYERCPAE': 8.55, 'ONSSEMPLOYERRESTREINT': 62.8, 'ONSSEMPLOYERUNEMP': 3.72, 'ONSSEMPLOYER': 1013.39}
         self._validate_payslip(payslip, payslip_results)
 
     def test_sample_payslip_lines_edition(self):
@@ -3099,7 +3099,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         self._validate_worked_days(payslip_1, {'WORK100': (23.0, 174.8, 2650.0)})
 
-        payslip_results = {'BASIC': 2650.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2659.0, 'ONSS': -347.53, 'ONSSTOTAL': 347.53, 'GROSSIP': 2311.47, 'IP.PART': -662.5, 'GROSS': 1648.97, 'P.P': -176.06, 'PPTOTAL': 176.06, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -23.66, 'MEAL_V_EMP': -25.07, 'CAR.PRIV': 98.5, 'REP.FEES': 150.0, 'IP': 662.5, 'IP.DED': -49.69, 'NET': 2276.49, 'REMUNERATION': 1987.5, 'ONSSEMPLOYERBASIC': 665.28, 'ONSSEMPLOYERFFE': 3.46, 'ONSSEMPLOYERMFFE': 2.66, 'ONSSEMPLOYERCPAE': 6.12, 'ONSSEMPLOYERRESTREINT': 44.94, 'ONSSEMPLOYERUNEMP': 2.66, 'ONSSEMPLOYER': 725.11}
+        payslip_results = {'BASIC': 2650.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2659.0, 'ONSS': -347.53, 'ONSSTOTAL': 347.53, 'GROSSIP': 2311.47, 'IP.PART': -662.5, 'GROSS': 1648.97, 'P.P': -176.06, 'PPTOTAL': 176.06, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -23.66, 'MEAL_V_EMP': -25.07, 'CAR.PRIV': 104.56, 'REP.FEES': 150.0, 'IP': 662.5, 'IP.DED': -49.69, 'NET': 2282.55, 'REMUNERATION': 1987.5, 'ONSSEMPLOYERBASIC': 665.28, 'ONSSEMPLOYERFFE': 3.46, 'ONSSEMPLOYERMFFE': 2.66, 'ONSSEMPLOYERCPAE': 6.12, 'ONSSEMPLOYERRESTREINT': 44.94, 'ONSSEMPLOYERUNEMP': 2.66, 'ONSSEMPLOYER': 725.11}
         self._validate_payslip(payslip_1, payslip_results)
         # ================================================ #
         #         Accounting entries for slip 1            #
@@ -3135,7 +3135,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         self._validate_worked_days(payslip_2, {'WORK100': (23.0, 174.8, 2000.0)})
 
-        payslip_results = {'BASIC': 2000.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2009.0, 'ONSS': -262.58, 'EmpBonus.1': 132.26, 'ONSSTOTAL': 130.32, 'GROSSIP': 1878.68, 'IP.PART': -500.0, 'GROSS': 1378.68, 'P.P': -81.36, 'P.P.DED': 43.83, 'PPTOTAL': 37.53, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -4.15, 'MEAL_V_EMP': -25.07, 'CAR.PRIV': 98.5, 'REP.FEES': 150.0, 'IP': 500.0, 'IP.DED': -37.5, 'NET': 2013.93, 'REMUNERATION': 1500.0, 'ONSSEMPLOYERBASIC': 502.65, 'ONSSEMPLOYERFFE': 2.61, 'ONSSEMPLOYERMFFE': 2.01, 'ONSSEMPLOYERCPAE': 4.62, 'ONSSEMPLOYERRESTREINT': 33.95, 'ONSSEMPLOYERUNEMP': 2.01, 'ONSSEMPLOYER': 547.85}
+        payslip_results = {'BASIC': 2000.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2009.0, 'ONSS': -262.58, 'EmpBonus.1': 132.26, 'ONSSTOTAL': 130.32, 'GROSSIP': 1878.68, 'IP.PART': -500.0, 'GROSS': 1378.68, 'P.P': -81.36, 'P.P.DED': 43.83, 'PPTOTAL': 37.53, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -4.15, 'MEAL_V_EMP': -25.07, 'CAR.PRIV': 104.56, 'REP.FEES': 150.0, 'IP': 500.0, 'IP.DED': -37.5, 'NET': 2019.99, 'REMUNERATION': 1500.0, 'ONSSEMPLOYERBASIC': 502.65, 'ONSSEMPLOYERFFE': 2.61, 'ONSSEMPLOYERMFFE': 2.01, 'ONSSEMPLOYERCPAE': 4.62, 'ONSSEMPLOYERRESTREINT': 33.95, 'ONSSEMPLOYERUNEMP': 2.01, 'ONSSEMPLOYER': 547.85}
         self._validate_payslip(payslip_2, payslip_results)
         # ================================================ #
         #         Accounting entries for slip 2            #
@@ -3168,7 +3168,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         account_move = payslip_1.move_id
         move_lines = account_move.line_ids
 
-        balance = 6419.96
+        balance = 6432.08
         move_line_results = [
             ('620200', 'debit', 3487.5),        # remuneration
             ('453000', 'credit', 213.59),       # PP
@@ -3176,10 +3176,10 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             ('453000', 'credit', 87.19),        # IP DED
             ('454000', 'credit', 477.85),       # ONSS - Emp Bonus
             ('454000', 'credit', 27.81),        # Misc ONSS
-            ('620200', 'debit', 197),           # Private Car
+            ('620200', 'debit', 209.12),           # Private Car
             ('620200', 'debit', 300),           # Representation Fees
             ('743000', 'credit', 50.14),        # Meal vouchers
-            ('455000', 'credit', 4290.42),      # NET
+            ('455000', 'credit', 4302.54),      # NET
             ('454000', 'credit', 1272.96),      # ONSS Employer
             ('621000', 'debit', 1272.96),       # ONSS Employer
         ]
@@ -3294,7 +3294,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         self._validate_worked_days(payslip, {'WORK100': (4.0, 30.4, 2650.0)})
 
-        payslip_results = {'BASIC': 2650.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2659.0, 'ONSS': -347.53, 'ONSSTOTAL': 347.53, 'GROSS': 2311.47, 'P.P': -473.38, 'PPTOTAL': 473.38, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -23.66, 'MEAL_V_EMP': -4.36, 'CAR.PRIV': 10.0, 'REP.FEES': 150.0, 'NET': 1961.07, 'REMUNERATION': 2650.0, 'ONSSEMPLOYERBASIC': 665.28, 'ONSSEMPLOYERFFE': 3.46, 'ONSSEMPLOYERMFFE': 2.66, 'ONSSEMPLOYERCPAE': 6.12, 'ONSSEMPLOYERRESTREINT': 44.94, 'ONSSEMPLOYERUNEMP': 2.66, 'ONSSEMPLOYER': 725.11}
+        payslip_results = {'BASIC': 2650.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2659.0, 'ONSS': -347.53, 'ONSSTOTAL': 347.53, 'GROSS': 2311.47, 'P.P': -473.38, 'PPTOTAL': 473.38, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -23.66, 'MEAL_V_EMP': -4.36, 'CAR.PRIV': 9.23, 'REP.FEES': 150.0, 'NET': 1960.3, 'REMUNERATION': 2650.0, 'ONSSEMPLOYERBASIC': 665.28, 'ONSSEMPLOYERFFE': 3.46, 'ONSSEMPLOYERMFFE': 2.66, 'ONSSEMPLOYERCPAE': 6.12, 'ONSSEMPLOYERRESTREINT': 44.94, 'ONSSEMPLOYERUNEMP': 2.66, 'ONSSEMPLOYER': 725.11}
         self._validate_payslip(payslip, payslip_results)
 
     def test_private_car_capping_part_time_1_time_off(self):
@@ -3329,7 +3329,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'LEAVE110': (1.0, 7.6, 611.54),
         })
 
-        payslip_results = {'BASIC': 2650.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2659.0, 'ONSS': -347.53, 'ONSSTOTAL': 347.53, 'GROSS': 2311.47, 'P.P': -473.38, 'PPTOTAL': 473.38, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -23.66, 'MEAL_V_EMP': -3.27, 'CAR.PRIV': 7.69, 'REP.FEES': 150.0, 'NET': 1959.85, 'REMUNERATION': 2650.0, 'ONSSEMPLOYERBASIC': 665.28, 'ONSSEMPLOYERFFE': 3.46, 'ONSSEMPLOYERMFFE': 2.66, 'ONSSEMPLOYERCPAE': 6.12, 'ONSSEMPLOYERRESTREINT': 44.94, 'ONSSEMPLOYERUNEMP': 2.66, 'ONSSEMPLOYER': 725.11}
+        payslip_results = {'BASIC': 2650.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2659.0, 'ONSS': -347.53, 'ONSSTOTAL': 347.53, 'GROSS': 2311.47, 'P.P': -473.38, 'PPTOTAL': 473.38, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -23.66, 'MEAL_V_EMP': -3.27, 'CAR.PRIV': 6.92, 'REP.FEES': 150.0, 'NET': 1959.08, 'REMUNERATION': 2650.0, 'ONSSEMPLOYERBASIC': 665.28, 'ONSSEMPLOYERFFE': 3.46, 'ONSSEMPLOYERMFFE': 2.66, 'ONSSEMPLOYERCPAE': 6.12, 'ONSSEMPLOYERRESTREINT': 44.94, 'ONSSEMPLOYERUNEMP': 2.66, 'ONSSEMPLOYER': 725.11}
         self._validate_payslip(payslip, payslip_results)
 
     def test_maternity_time_off_bank_holidays(self):
@@ -3693,7 +3693,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'LEAVE500': (0.5, 3.8, 40.95),
         })
 
-        payslip_results = {'BASIC': 873.51, 'SALARY': 873.51, 'ONSS': -114.17, 'EmpBonus.1': 94.87, 'ONSSTOTAL': 19.3, 'ATN.CAR': 150.53, 'GROSSIP': 1004.74, 'IP.PART': -174.7, 'GROSS': 830.04, 'P.P': 0.0, 'P.P.DED': 0.0, 'PPTOTAL': 0.0, 'ATN.CAR.2': -150.53, 'M.ONSS': 0.0, 'MEAL_V_EMP': -21.8, 'CAR.PRIV': 76.25, 'REP.FEES': 279.31, 'REP.FEES.VOLATILE': 59.85, 'IP': 174.7, 'IP.DED': -13.1, 'NET': 1234.71, 'REMUNERATION': 698.81, 'ONSSEMPLOYERBASIC': 218.55, 'ONSSEMPLOYERFFE': 1.14, 'ONSSEMPLOYERMFFE': 0.87, 'ONSSEMPLOYERCPAE': 2.01, 'ONSSEMPLOYERRESTREINT': 14.76, 'ONSSEMPLOYERUNEMP': 0.87, 'ONSSEMPLOYER': 238.21, 'CO2FEE': 21.16}
+        payslip_results = {'BASIC': 873.51, 'SALARY': 873.51, 'ONSS': -114.17, 'EmpBonus.1': 94.87, 'ONSSTOTAL': 19.3, 'ATN.CAR': 150.53, 'GROSSIP': 1004.74, 'IP.PART': -174.7, 'GROSS': 830.04, 'P.P': 0.0, 'P.P.DED': 0.0, 'PPTOTAL': 0.0, 'ATN.CAR.2': -150.53, 'M.ONSS': 0.0, 'MEAL_V_EMP': -21.8, 'CAR.PRIV': 77.54, 'REP.FEES': 279.31, 'REP.FEES.VOLATILE': 59.85, 'IP': 174.7, 'IP.DED': -13.1, 'NET': 1236.01, 'REMUNERATION': 698.81, 'ONSSEMPLOYERBASIC': 218.55, 'ONSSEMPLOYERFFE': 1.14, 'ONSSEMPLOYERMFFE': 0.87, 'ONSSEMPLOYERCPAE': 2.01, 'ONSSEMPLOYERRESTREINT': 14.76, 'ONSSEMPLOYERUNEMP': 0.87, 'ONSSEMPLOYER': 238.21, 'CO2FEE': 21.16}
         self._validate_payslip(payslip, payslip_results)
 
     def test_double_holidays(self):
@@ -4804,8 +4804,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }])
         (payslip_1 + payslip_2).compute_sheet()
 
-        payslip_1_results = {'BASIC': 1549.23, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 1558.23, 'ONSS': -203.66, 'EmpBonus.1': 0.0, 'ONSSTOTAL': 203.66, 'ATN.CAR': 162.42, 'GROSSIP': 1516.99, 'IP.PART': -387.31, 'GROSS': 1129.68, 'P.P': -25.41, 'PPTOTAL': 25.41, 'ATN.CAR.2': -162.42, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': 0.0, 'MEAL_V_EMP': -11.99, 'PUB.TRANS': 40.0, 'CAR.PRIV': 42.38, 'REP.FEES': 87.69, 'IP': 387.31, 'IP.DED': -29.05, 'CANTEEN': -42.00, 'NET': 1407.2, 'REMUNERATION': 1161.92, 'ONSSEMPLOYERBASIC': 390.02, 'ONSSEMPLOYERFFE': 1.09, 'ONSSEMPLOYERMFFE': 1.56, 'ONSSEMPLOYERCPAE': 3.58, 'ONSSEMPLOYERRESTREINT': 26.33, 'ONSSEMPLOYERUNEMP': 1.56, 'ONSSEMPLOYER': 424.15, 'CO2FEE': 28.17}
-        payslip_2_results = {'BASIC': 1304.62, 'ATN.INT': 0.0, 'ATN.MOB': 0.0, 'SALARY': 1304.62, 'ONSS': -170.51, 'EmpBonus.1': 0.0, 'ONSSTOTAL': 170.51, 'ATN.CAR': 0.0, 'GROSSIP': 1134.11, 'IP.PART': -326.16, 'GROSS': 807.95, 'P.P': 0.0, 'PPTOTAL': 0.0, 'ATN.CAR.2': 0.0, 'ATN.INT.2': 0.0, 'ATN.MOB.2': 0.0, 'M.ONSS': 0.0, 'MEAL_V_EMP': -9.81, 'PUB.TRANS': 0.0, 'CAR.PRIV': 35.69, 'REP.FEES': 73.85, 'IP': 326.16, 'IP.DED': -24.46, 'CANTEEN': 0.00, 'NET': 1209.38, 'REMUNERATION': 978.47, 'ONSSEMPLOYERBASIC': 326.55, 'ONSSEMPLOYERFFE': 0.91, 'ONSSEMPLOYERMFFE': 1.3, 'ONSSEMPLOYERCPAE': 3.0, 'ONSSEMPLOYERRESTREINT': 22.05, 'ONSSEMPLOYERUNEMP': 1.3, 'ONSSEMPLOYER': 355.12, 'CO2FEE': 0.0}
+        payslip_1_results = {'BASIC': 1549.23, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 1558.23, 'ONSS': -203.66, 'EmpBonus.1': 0.0, 'ONSSTOTAL': 203.66, 'ATN.CAR': 162.42, 'GROSSIP': 1516.99, 'IP.PART': -387.31, 'GROSS': 1129.68, 'P.P': -25.41, 'PPTOTAL': 25.41, 'ATN.CAR.2': -162.42, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': 0.0, 'MEAL_V_EMP': -11.99, 'PUB.TRANS': 40.0, 'CAR.PRIV': 36.81, 'REP.FEES': 87.69, 'IP': 387.31, 'IP.DED': -29.05, 'CANTEEN': -42.0, 'NET': 1401.62, 'REMUNERATION': 1161.92, 'ONSSEMPLOYERBASIC': 390.02, 'ONSSEMPLOYERFFE': 1.09, 'ONSSEMPLOYERMFFE': 1.56, 'ONSSEMPLOYERCPAE': 3.58, 'ONSSEMPLOYERRESTREINT': 26.33, 'ONSSEMPLOYERUNEMP': 1.56, 'ONSSEMPLOYER': 424.15, 'CO2FEE': 28.17}
+        payslip_2_results = {'BASIC': 1304.62, 'ATN.INT': 0.0, 'ATN.MOB': 0.0, 'SALARY': 1304.62, 'ONSS': -170.51, 'EmpBonus.1': 0.0, 'ONSSTOTAL': 170.51, 'ATN.CAR': 0.0, 'GROSSIP': 1134.11, 'IP.PART': -326.16, 'GROSS': 807.95, 'P.P': 0.0, 'PPTOTAL': 0.0, 'ATN.CAR.2': 0.0, 'ATN.INT.2': 0.0, 'ATN.MOB.2': 0.0, 'M.ONSS': 0.0, 'MEAL_V_EMP': -9.81, 'PUB.TRANS': 0.0, 'CAR.PRIV': 30.12, 'REP.FEES': 73.85, 'IP': 326.16, 'IP.DED': -24.46, 'CANTEEN': 0.0, 'NET': 1203.8, 'REMUNERATION': 978.47, 'ONSSEMPLOYERBASIC': 326.55, 'ONSSEMPLOYERFFE': 0.91, 'ONSSEMPLOYERMFFE': 1.3, 'ONSSEMPLOYERCPAE': 3.0, 'ONSSEMPLOYERRESTREINT': 22.05, 'ONSSEMPLOYERUNEMP': 1.3, 'ONSSEMPLOYER': 355.12, 'CO2FEE': 0.0}
         self._validate_payslip(payslip_1, payslip_1_results)
         self._validate_payslip(payslip_2, payslip_2_results)
 
@@ -4863,7 +4863,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         (payslip_1 + payslip_2).compute_sheet()
 
         payslip_1_results = {'BASIC': 1549.23, 'SALARY': 1549.23, 'ONSS': -202.48, 'EmpBonus.1': 0.0, 'ONSSTOTAL': 202.48, 'GROSSIP': 1346.75, 'IP.PART': -387.31, 'GROSS': 959.44, 'P.P': 0.0, 'PPTOTAL': 0.0, 'M.ONSS': 0.0, 'MEAL_V_EMP': -11.99, 'REP.FEES': 87.69, 'IP': 387.31, 'IP.DED': -29.05, 'NET': 1393.4, 'REMUNERATION': 1161.92, 'ONSSEMPLOYERBASIC': 387.77, 'ONSSEMPLOYERFFE': 1.08, 'ONSSEMPLOYERMFFE': 1.55, 'ONSSEMPLOYERCPAE': 3.56, 'ONSSEMPLOYERRESTREINT': 26.18, 'ONSSEMPLOYERUNEMP': 1.55, 'ONSSEMPLOYER': 421.7}
-        payslip_2_results = {'BASIC': 1304.62, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 1313.62, 'ONSS': -171.69, 'EmpBonus.1': 0.0, 'ONSSTOTAL': 171.69, 'ATN.CAR': 162.42, 'GROSSIP': 1304.35, 'IP.PART': -326.16, 'GROSS': 978.2, 'P.P': 0.0, 'PPTOTAL': 0.0, 'ATN.CAR.2': -162.42, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': 0.0, 'MEAL_V_EMP': -9.81, 'PUB.TRANS': 0.0, 'CAR.PRIV': 35.69, 'REP.FEES': 73.85, 'IP': 326.16, 'IP.DED': -24.46, 'NET': 1208.2, 'REMUNERATION': 978.47, 'ONSSEMPLOYERBASIC': 328.8, 'ONSSEMPLOYERFFE': 0.92, 'ONSSEMPLOYERMFFE': 1.31, 'ONSSEMPLOYERCPAE': 3.02, 'ONSSEMPLOYERRESTREINT': 22.2, 'ONSSEMPLOYERUNEMP': 1.31, 'ONSSEMPLOYER': 357.57, 'CO2FEE': 28.17}
+        payslip_2_results = {'BASIC': 1304.62, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 1313.62, 'ONSS': -171.69, 'EmpBonus.1': 0.0, 'ONSSTOTAL': 171.69, 'ATN.CAR': 162.42, 'GROSSIP': 1304.35, 'IP.PART': -326.16, 'GROSS': 978.2, 'P.P': 0.0, 'PPTOTAL': 0.0, 'ATN.CAR.2': -162.42, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': 0.0, 'MEAL_V_EMP': -9.81, 'PUB.TRANS': 0.0, 'CAR.PRIV': 30.12, 'REP.FEES': 73.85, 'IP': 326.16, 'IP.DED': -24.46, 'NET': 1202.62, 'REMUNERATION': 978.47, 'ONSSEMPLOYERBASIC': 328.8, 'ONSSEMPLOYERFFE': 0.92, 'ONSSEMPLOYERMFFE': 1.31, 'ONSSEMPLOYERCPAE': 3.02, 'ONSSEMPLOYERRESTREINT': 22.2, 'ONSSEMPLOYERUNEMP': 1.31, 'ONSSEMPLOYER': 357.57, 'CO2FEE': 28.17}
         self._validate_payslip(payslip_1, payslip_1_results)
         self._validate_payslip(payslip_2, payslip_2_results)
 
@@ -5031,14 +5031,14 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         (payslip_1 + payslip_2).compute_sheet()
 
         payslip_1_results = {'BASIC': 0.0, 'SALARY': 0.0, 'ONSS': 0.0, 'ONSSTOTAL': 0.0, 'GROSSIP': 0.0, 'IP.PART': 0.0, 'GROSS': 0.0, 'P.P': 0.0, 'PPTOTAL': 0.0, 'M.ONSS': 0.0, 'MEAL_V_EMP': 0.0, 'PUB.TRANS': 0.0, 'CAR.PRIV': 0.0, 'REP.FEES': 0.0, 'IP': 0.0, 'IP.DED': 0.0, 'NET': 0.0, 'REMUNERATION': 0.0, 'ONSSEMPLOYERBASIC': 0.0, 'ONSSEMPLOYERFFE': 0.0, 'ONSSEMPLOYERMFFE': 0.0, 'ONSSEMPLOYERCPAE': 0.0, 'ONSSEMPLOYERRESTREINT': 0.0, 'ONSSEMPLOYERUNEMP': 0.0, 'ONSSEMPLOYER': 0.0}
-        payslip_2_results = {'BASIC': 2720.09, 'SALARY': 2720.09, 'ONSS': -355.52, 'EmpBonus.1': 0, 'ONSSTOTAL': 355.52, 'GROSSIP': 2364.57, 'IP.PART': -326.41, 'GROSS': 2038.16, 'P.P': -316.67, 'PPTOTAL': 316.67, 'M.ONSS': -20.27, 'MEAL_V_EMP': -17.44, 'PUB.TRANS': 34.0, 'CAR.PRIV': 41.27, 'REP.FEES': 279.31, 'REP.FEES.VOLATILE': 4.59, 'IP': 326.41, 'IP.DED': -24.48, 'NET': 2344.88, 'REMUNERATION': 2393.68, 'ONSSEMPLOYERBASIC': 680.84, 'ONSSEMPLOYERFFE': 1.9, 'ONSSEMPLOYERMFFE': 2.72, 'ONSSEMPLOYERCPAE': 6.26, 'ONSSEMPLOYERRESTREINT': 45.97, 'ONSSEMPLOYERUNEMP': 2.72, 'ONSSEMPLOYER': 740.41}
+        payslip_2_results = {'BASIC': 2720.09, 'SALARY': 2720.09, 'ONSS': -355.52, 'EmpBonus.1': 0.0, 'ONSSTOTAL': 355.52, 'GROSSIP': 2364.57, 'IP.PART': -326.41, 'GROSS': 2038.16, 'P.P': -316.67, 'PPTOTAL': 316.67, 'M.ONSS': -20.27, 'MEAL_V_EMP': -17.44, 'PUB.TRANS': 34.0, 'CAR.PRIV': 53.54, 'REP.FEES': 279.31, 'REP.FEES.VOLATILE': 4.59, 'IP': 326.41, 'IP.DED': -24.48, 'NET': 2357.15, 'REMUNERATION': 2393.68, 'ONSSEMPLOYERBASIC': 680.84, 'ONSSEMPLOYERFFE': 1.9, 'ONSSEMPLOYERMFFE': 2.72, 'ONSSEMPLOYERCPAE': 6.26, 'ONSSEMPLOYERRESTREINT': 45.97, 'ONSSEMPLOYERUNEMP': 2.72, 'ONSSEMPLOYER': 740.41}
         self._validate_payslip(payslip_1, payslip_1_results)
         self._validate_payslip(payslip_2, payslip_2_results)
 
         action_refund_payslip_2 = payslip_2.refund_sheet()
         refund_payslip = self.env['hr.payslip'].browse(action_refund_payslip_2['domain'][0][2])
 
-        refund_payslip_results = {'BASIC': -2720.09, 'SALARY': -2720.09, 'ONSS': 355.52, 'EmpBonus.1': 0, 'ONSSTOTAL': -355.52, 'GROSSIP': -2364.57, 'IP.PART': 326.41, 'GROSS': -2038.16, 'P.P': 316.67, 'PPTOTAL': -316.67, 'M.ONSS': 20.27, 'MEAL_V_EMP': 17.44, 'PUB.TRANS': -34.0, 'CAR.PRIV': -41.27, 'REP.FEES': -279.31, 'REP.FEES.VOLATILE': -4.59, 'IP': -326.41, 'IP.DED': 24.48, 'NET': -2344.88, 'REMUNERATION': -2393.68, 'ONSSEMPLOYERBASIC': -680.84, 'ONSSEMPLOYERFFE': -1.9, 'ONSSEMPLOYERMFFE': -2.72, 'ONSSEMPLOYERCPAE': -6.26, 'ONSSEMPLOYERRESTREINT': -45.97, 'ONSSEMPLOYERUNEMP': -2.72, 'ONSSEMPLOYER': -740.41}
+        refund_payslip_results = {'BASIC': -2720.09, 'SALARY': -2720.09, 'ONSS': 355.52, 'EmpBonus.1': 0.0, 'ONSSTOTAL': -355.52, 'GROSSIP': -2364.57, 'IP.PART': 326.41, 'GROSS': -2038.16, 'P.P': 316.67, 'PPTOTAL': -316.67, 'M.ONSS': 20.27, 'MEAL_V_EMP': 17.44, 'PUB.TRANS': -34.0, 'CAR.PRIV': -53.54, 'REP.FEES': -279.31, 'REP.FEES.VOLATILE': -4.59, 'IP': -326.41, 'IP.DED': 24.48, 'NET': -2357.15, 'REMUNERATION': -2393.68, 'ONSSEMPLOYERBASIC': -680.84, 'ONSSEMPLOYERFFE': -1.9, 'ONSSEMPLOYERMFFE': -2.72, 'ONSSEMPLOYERCPAE': -6.26, 'ONSSEMPLOYERRESTREINT': -45.97, 'ONSSEMPLOYERUNEMP': -2.72, 'ONSSEMPLOYER': -740.41}
         self._validate_payslip(refund_payslip, refund_payslip_results)
 
         new_payslip_2 = self.env['hr.payslip'].create([{
@@ -5052,7 +5052,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }])
         new_payslip_2.compute_sheet()
 
-        new_payslip_2_results = {'BASIC': 2720.09, 'SALARY': 2720.09, 'ONSS': -355.52, 'EmpBonus.1': 0, 'ONSSTOTAL': 355.52, 'GROSSIP': 2364.57, 'IP.PART': -326.41, 'GROSS': 2038.16, 'P.P': -316.67, 'PPTOTAL': 316.67, 'M.ONSS': -20.27, 'MEAL_V_EMP': -17.44, 'PUB.TRANS': 34.0, 'CAR.PRIV': 41.27, 'REP.FEES': 279.31, 'REP.FEES.VOLATILE': 4.59, 'IP': 326.41, 'IP.DED': -24.48, 'NET': 2344.88, 'REMUNERATION': 2393.68, 'ONSSEMPLOYERBASIC': 680.84, 'ONSSEMPLOYERFFE': 1.9, 'ONSSEMPLOYERMFFE': 2.72, 'ONSSEMPLOYERCPAE': 6.26, 'ONSSEMPLOYERRESTREINT': 45.97, 'ONSSEMPLOYERUNEMP': 2.72, 'ONSSEMPLOYER': 740.41}
+        new_payslip_2_results = {'BASIC': 2720.09, 'SALARY': 2720.09, 'ONSS': -355.52, 'EmpBonus.1': 0.0, 'ONSSTOTAL': 355.52, 'GROSSIP': 2364.57, 'IP.PART': -326.41, 'GROSS': 2038.16, 'P.P': -316.67, 'PPTOTAL': 316.67, 'M.ONSS': -20.27, 'MEAL_V_EMP': -17.44, 'PUB.TRANS': 34.0, 'CAR.PRIV': 53.54, 'REP.FEES': 279.31, 'REP.FEES.VOLATILE': 4.59, 'IP': 326.41, 'IP.DED': -24.48, 'NET': 2357.15, 'REMUNERATION': 2393.68, 'ONSSEMPLOYERBASIC': 680.84, 'ONSSEMPLOYERFFE': 1.9, 'ONSSEMPLOYERMFFE': 2.72, 'ONSSEMPLOYERCPAE': 6.26, 'ONSSEMPLOYERRESTREINT': 45.97, 'ONSSEMPLOYERUNEMP': 2.72, 'ONSSEMPLOYER': 740.41}
         self._validate_payslip(new_payslip_2, new_payslip_2_results)
 
     def test_company_car_pp_exemption_2021(self):
@@ -5547,7 +5547,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self._add_other_input(payslip, self.env.ref('l10n_be_hr_payroll.cp200_input_cycle_transportation'), 2)
         payslip.compute_sheet()
 
-        payslip_results = {'BASIC': 2650.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2659.0, 'ONSS': -347.53, 'EmpBonus.1': 43.75, 'ONSSTOTAL': 303.78, 'GROSSIP': 2355.22, 'IP.PART': -662.5, 'GROSS': 1692.72, 'P.P': -169.01, 'P.P.DED': 14.5, 'PPTOTAL': 154.51, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -15.39, 'MEAL_V_EMP': -22.89, 'CAR.PRIV': 93.04, 'CYCLE': 16.0, 'REP.FEES': 150.0, 'IP': 662.5, 'IP.DED': -49.69, 'NET': 2362.78, 'REMUNERATION': 1987.5, 'ONSSEMPLOYERBASIC': 665.55, 'ONSSEMPLOYERCPAE': 6.12, 'ONSSEMPLOYERFFE': 1.86, 'ONSSEMPLOYERMFFE': 2.66, 'ONSSEMPLOYERRESTREINT': 44.94, 'ONSSEMPLOYERUNEMP': 2.66, 'ONSSEMPLOYER': 723.78}
+        payslip_results = {'BASIC': 2650.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2659.0, 'ONSS': -347.53, 'EmpBonus.1': 43.75, 'ONSSTOTAL': 303.78, 'GROSSIP': 2355.22, 'IP.PART': -662.5, 'GROSS': 1692.72, 'P.P': -169.01, 'P.P.DED': 14.5, 'PPTOTAL': 154.51, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -15.39, 'MEAL_V_EMP': -22.89, 'CAR.PRIV': 89.88, 'CYCLE': 16.0, 'REP.FEES': 150.0, 'IP': 662.5, 'IP.DED': -49.69, 'NET': 2359.63, 'REMUNERATION': 1987.5, 'ONSSEMPLOYERBASIC': 665.55, 'ONSSEMPLOYERCPAE': 6.12, 'ONSSEMPLOYERFFE': 1.86, 'ONSSEMPLOYERMFFE': 2.66, 'ONSSEMPLOYERRESTREINT': 44.94, 'ONSSEMPLOYERUNEMP': 2.66, 'ONSSEMPLOYER': 723.78}
         self._validate_payslip(payslip, payslip_results)
 
     def test_simple_n1_holiday_pay_recovery_half_days(self):
