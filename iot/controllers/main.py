@@ -7,6 +7,7 @@ import itertools
 import json
 import logging
 import pathlib
+import pprint
 import textwrap
 import zipfile
 
@@ -14,6 +15,8 @@ from odoo import http
 from odoo.http import request, Response, Stream
 from odoo.modules import get_module_path
 from odoo.tools.misc import str2bool
+
+_logger = logging.getLogger(__name__)
 
 _iot_logger = logging.getLogger(__name__ + '.iot_log')
 # We want to catch any log level that the IoT send
@@ -129,22 +132,28 @@ class IoTController(http.Controller):
             iot_box = data
             devices = data['devices']
 
-         # Update or create box
-        box = self._search_box(iot_box['identifier'])
+        # Update or create box
+        iot_identifier = iot_box['identifier']  # IoT Mac Address
+        box = self._search_box(iot_identifier)
+        create_update_value = {
+            'name': iot_box['name'],
+            'ip': iot_box['ip'],
+            'version': iot_box['version'],
+        }
         if box:
-            box = box[0]
-            box.ip = iot_box['ip']
-            box.name = iot_box['name']
+            _logger.info('Updating IoT %s with data: %s', box, create_update_value)
+            box.write(create_update_value)
         else:
-            iot_token = request.env['ir.config_parameter'].sudo().search([('key', '=', 'iot_token')], limit=1)
-            if iot_token.value.strip('\n') == iot_box['token']:
-                box = request.env['iot.box'].sudo().create({
-                    'name': iot_box['name'],
-                    'identifier': iot_box['identifier'],
-                    'ip': iot_box['ip'],
-                    'version': iot_box['version'],
-                })
+            iot_token = request.env['ir.config_parameter'].sudo().search([('key', '=', 'iot_token')], limit=1).value.strip('\n')
+            if iot_token == iot_box['token']:
+                create_update_value['identifier'] = iot_identifier
+                _logger.info('Creating IoT with data: %s', create_update_value)
+                box = request.env['iot.box'].sudo().create(create_update_value)
+            else:
+                _logger.warning('Token mismatch for IoT %s expected %s got %s', iot_identifier, iot_token, iot_box['token'])
+                return
 
+        _logger.info('IoT %s devices:\n%s', box, pprint.pformat(devices))
         # Update or create devices
         if box:
             previously_connected_iot_devices = request.env['iot.device'].sudo().search([
