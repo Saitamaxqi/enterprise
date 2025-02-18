@@ -190,6 +190,9 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
     }
 
     toggleRangeSelection(record) {
+        if (!this.lastCheckedRecord) {
+            return;
+        }
         const { records } = this.props.list;
         const documentIds = Array.from(
             document.querySelectorAll(".o_kanban_record:not(.o_kanban_ghost)")
