@@ -975,7 +975,7 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
     handleDefaultStudioRoutes();
     onRpc("/web_studio/chatter_allowed", () => true);
     onRpc("name_search", async ({ kwargs }) => {
-        expect(kwargs.args).toEqual(
+        expect(kwargs.domain).toEqual(
             [
                 ["relation", "=", "partner"],
                 ["ttype", "in", ["many2one", "many2many"]],

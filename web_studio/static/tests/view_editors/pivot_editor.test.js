@@ -232,7 +232,7 @@ test("pivot measure fields domain", async () => {
 
     onRpc("ir.model.fields", "name_search", (params) => {
         expect.step("name_search");
-        expect(params.kwargs.args).toEqual([
+        expect(params.kwargs.domain).toEqual([
             "&",
             "&",
             ["model", "=", "stage"],

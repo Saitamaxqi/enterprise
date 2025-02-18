@@ -80,9 +80,9 @@ class SignTemplate(models.Model):
     is_sharing = fields.Boolean(compute='_compute_is_sharing', help='Checked if this template has created a shared document for you')
 
     @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
+    def name_search(self, name='', domain=None, operator='ilike', limit=100):
         # Display favorite templates first
-        domain = expression.AND([[('display_name', operator, name)], args or []])
+        domain = expression.AND([[('display_name', operator, name)], domain or []])
         templates = self.search_fetch(domain, ['display_name'], limit=limit)
         if limit is None or len(templates) < limit:
             templates = templates.sorted(key=lambda t: self.env.user in t.favorited_ids, reverse=True)

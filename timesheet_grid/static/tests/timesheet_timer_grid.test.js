@@ -695,9 +695,9 @@ test("hr.timesheet (grid)(timer): start timer and cancel it", async () => {
             };
         } else if (method === "name_search") {
             if (model === "project.project") {
-                kwargs.args = [["allow_timesheets", "=", true]];
+                kwargs.domain = [["allow_timesheets", "=", true]];
             } else if (model === "project.task") {
-                kwargs.args = [];
+                kwargs.domain = [];
             }
         }
     });
@@ -964,9 +964,9 @@ test("hr.timesheet (grid)(timer): start timer and create a new project and a new
             reload = false;
         } else if (method === "name_search") {
             if (model === "project.project") {
-                kwargs.args = [["allow_timesheets", "=", true]];
+                kwargs.domain = [["allow_timesheets", "=", true]];
             } else if (model === "project.task") {
-                kwargs.args = [];
+                kwargs.domain = [];
             }
         }
     });

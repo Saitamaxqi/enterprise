@@ -134,7 +134,7 @@ test("map additional fields domain", async () => {
 
     onRpc("ir.model.fields", "name_search", async (params) => {
         expect.step("name_search");
-        expect(params.kwargs.args).toEqual([
+        expect(params.kwargs.domain).toEqual([
             "&",
             "&",
             ["model", "=", "task"],

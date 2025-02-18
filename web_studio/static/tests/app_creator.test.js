@@ -171,7 +171,7 @@ test("app creator: debug flow with existing model", async () => {
     serverState.debug = "1";
 
     onRpc("ir.model", "name_search", async (params) => {
-        expect(params.kwargs.args).toEqual([
+        expect(params.kwargs.domain).toEqual([
             "&",
             "&",
             ["transient", "=", false],

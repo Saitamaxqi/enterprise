@@ -102,7 +102,7 @@ test("fetch available menus", async function () {
         mockRPC: function (route, args) {
             if (args.method === "name_search" && args.model === "ir.ui.menu") {
                 expect.step("fetch_menus");
-                expect(args.kwargs.args).toEqual(
+                expect(args.kwargs.domain).toEqual(
                     [
                         "|",
                         ["id", "in", [1]],

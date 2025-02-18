@@ -498,7 +498,7 @@ QUnit.module("View Editors", () => {
                 arch,
                 mockRPC: function (route, args) {
                     if (args.method === "name_search") {
-                        assert.deepEqual(args.kwargs.args, [
+                        assert.deepEqual(args.kwargs.domain, [
                             "&",
                             "&",
                             "&",
