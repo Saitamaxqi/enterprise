@@ -141,7 +141,7 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 2
                 },
                 version: {
-                    isAvailable: () => this.model.canManageVersion,
+                    isAvailable: () => this.model.canManageVersions,
                     sequence: 85,
                     description: _t("Manage Versions"),
                     icon: "fa fa-history",
