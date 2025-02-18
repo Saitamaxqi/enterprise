@@ -369,6 +369,7 @@ test("cohort view with aggregator equals to sum should only visible in measures"
 test("export cohort", async () => {
     expect.assertions(6);
 
+    const downloadDef = new Deferred();
     patchWithCleanup(download, {
         _download: async (options) => {
             const data = JSON.parse(await options.data.data.text());
@@ -378,6 +379,7 @@ test("export cohort", async () => {
             expect(data.date_start_string).toBe("Start");
             expect(data.date_stop_string).toBe("Stop");
             expect(data.title).toBe("Subscription");
+            downloadDef.resolve();
         },
     });
 
@@ -388,6 +390,7 @@ test("export cohort", async () => {
     });
 
     await contains(".o_cohort_download_button").click();
+    await downloadDef;
 });
 
 test.tags("desktop");
