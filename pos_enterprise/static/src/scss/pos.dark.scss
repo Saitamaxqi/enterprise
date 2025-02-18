@@ -60,7 +60,7 @@
     }
 
     .o_colorlist_item_numpad_color_#{$size - 1} {
-        $-background-color: $-list-color;
+        $-background-color: mix($-list-color, $white, 35%);
         $-text-color: color-contrast($-background-color);
         --bg: #{$-background-color};
         --hover-bg: #{darken($-background-color, 5%)};
@@ -73,13 +73,7 @@
 }
 
 .payment-method-icon, .navbar-icon {
-    filter: invert(.80);
-}
-
-.btn-light {
-    &.navbar-icon {
-        filter: invert(1);
-    }
+    filter: invert(1);
 }
 
 .floor-table {

@@ -5,7 +5,7 @@
         <xpath expr="//div[hasclass('navbar-menu')]" position="inside">
             <button t-if="pos.config.module_pos_restaurant_appointment"
                 class="btn btn-light btn-lg lh-lg"
-                t-att-class="{'active fw-bolder': mainButton === 'booking'}"
+                t-att-class="{'active': mainButton === 'booking'}"
                 t-on-click="() => this.pos.manageBookings()" >
                 <span t-if="!ui.isSmall">Booking</span>
                 <i t-else="" class="fa fa-fw fa-calendar" t-att-class="{'fa-lg' : !ui.isSmall}"/>
