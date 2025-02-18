@@ -8,7 +8,7 @@ class HrExpense(models.Model):
     _inherit = "hr.expense"
 
     refund_in_payslip = fields.Boolean(string="Reimburse In Next Payslip")
-    payslip_id = fields.Many2one('hr.payslip', string="Payslip", readonly=True)
+    payslip_id = fields.Many2one('hr.payslip', string="Payslip", readonly=True, index='btree_not_null')
 
     def _compute_is_editable(self):
         """ Add the condition that an expense is not editable if it is linked to a payslip."""

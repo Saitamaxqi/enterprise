@@ -352,7 +352,7 @@ class AccountTransferModelLine(models.Model):
     _description = "Account Transfer Model Line"
     _order = "sequence, id"
 
-    transfer_model_id = fields.Many2one('account.transfer.model', string="Transfer Model", required=True, ondelete='cascade')
+    transfer_model_id = fields.Many2one('account.transfer.model', string="Transfer Model", required=True, index=True, ondelete='cascade')
     account_id = fields.Many2one('account.account', string="Destination Account", required=True,
                                  domain="[('account_type', '!=', 'off_balance')]")
     percent = fields.Float(string="Percent", required=True, default=100, help="Percentage of the sum of lines from the origin accounts will be transferred to the destination account")

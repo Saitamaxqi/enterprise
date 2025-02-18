@@ -13,13 +13,13 @@ class SaleSubscriptionPricing(models.Model):
     active = fields.Boolean('Active', default=True)
     name = fields.Char(related="plan_id.billing_period_display")
 
-    product_template_id = fields.Many2one('product.template', string="Products", ondelete='cascade',
+    product_template_id = fields.Many2one('product.template', string="Products", index=True, ondelete='cascade',
                                           help="Select products on which this pricing will be applied.")
     product_variant_ids = fields.Many2many('product.product', string="Product Variants",
                                            help="Select Variants of the Product for which this rule applies. Leave empty if this rule applies for any variant of this template.")
 
-    plan_id = fields.Many2one('sale.subscription.plan', string='Recurring Plan', required=True)
-    pricelist_id = fields.Many2one('product.pricelist', ondelete='cascade')
+    plan_id = fields.Many2one('sale.subscription.plan', string='Recurring Plan', required=True, index=True)
+    pricelist_id = fields.Many2one('product.pricelist', index='btree_not_null', ondelete='cascade')
     company_id = fields.Many2one('res.company', related='plan_id.company_id')
 
     price = fields.Monetary(string="Recurring Price", required=True, default=1.0)

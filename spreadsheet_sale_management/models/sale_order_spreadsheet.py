@@ -24,7 +24,7 @@ class SaleOrderSpreadsheet(models.Model):
 
     name = fields.Char(required=True, default=lambda self: self.env._('Untitled spreadsheet'))
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
-    order_id = fields.Many2one('sale.order', ondelete='cascade')
+    order_id = fields.Many2one('sale.order', index='btree_not_null', ondelete='cascade')
 
     def get_formview_action(self, access_uid=None):
         return self.action_open_spreadsheet()

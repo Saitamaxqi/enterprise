@@ -48,7 +48,7 @@ class AccountOnlineAccount(models.Model):
     account_number = fields.Char(help='Set if third party provider has the full account number')
     account_data = fields.Char(help='Extra information needed by third party provider', readonly=True)
 
-    account_online_link_id = fields.Many2one('account.online.link', readonly=True, ondelete='cascade')
+    account_online_link_id = fields.Many2one('account.online.link', readonly=True, index=True, ondelete='cascade')
     journal_ids = fields.One2many('account.journal', 'account_online_account_id', string='Journal', domain=[('type', 'in', ('bank', 'credit'))])
     last_sync = fields.Date("Last synchronization")
     company_id = fields.Many2one('res.company', related='account_online_link_id.company_id')

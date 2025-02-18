@@ -53,7 +53,7 @@ class HrPayrollStructure(models.Model):
     code = fields.Char()
     active = fields.Boolean(default=True)
     type_id = fields.Many2one(
-        'hr.payroll.structure.type', required=True)
+        'hr.payroll.structure.type', required=True, index=True)
     country_id = fields.Many2one(
         'res.country',
         string='Country',

@@ -95,7 +95,7 @@ class DocumentsDocument(models.Model):
     favorited_ids = fields.Many2many('res.users', string="Favorite of")
     is_favorited = fields.Boolean(compute='_compute_is_favorited', inverse='_inverse_is_favorited')
     tag_ids = fields.Many2many('documents.tag', 'document_tag_rel', string="Tags")
-    partner_id = fields.Many2one('res.partner', string="Contact", tracking=True)
+    partner_id = fields.Many2one('res.partner', string="Contact", tracking=True, index='btree_not_null')
     owner_id = fields.Many2one(
         'res.users', tracking=True, index=True, string="Owner", copy=False,
         default=lambda self: self.env.user.id if self.env.user.active else False)

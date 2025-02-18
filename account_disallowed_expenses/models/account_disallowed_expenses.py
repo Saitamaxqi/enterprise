@@ -81,5 +81,5 @@ class AccountDisallowedExpensesRate(models.Model):
 
     rate = fields.Float(string='Deductibility (%)', required=True)
     date_from = fields.Date(string='Start Date', required=True)
-    category_id = fields.Many2one('account.disallowed.expenses.category', string='Category', required=True, ondelete='cascade')
+    category_id = fields.Many2one('account.disallowed.expenses.category', string='Category', required=True, index=True, ondelete='cascade')
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)

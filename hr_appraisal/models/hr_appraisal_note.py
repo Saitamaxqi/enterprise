@@ -11,4 +11,4 @@ class HrAppraisalNote(models.Model):
 
     name = fields.Char(required=True)
     sequence = fields.Integer(default=10)
-    company_id = fields.Many2one('res.company', default=lambda self: self.env.company, required=True)
+    company_id = fields.Many2one('res.company', default=lambda self: self.env.company, required=True, index=True)

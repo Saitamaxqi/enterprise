@@ -13,4 +13,4 @@ class SocialStreamType(models.Model):
 
     name = fields.Char("Name", readonly=True, required=True, translate=True)
     stream_type = fields.Char("Stream type name (technical)", readonly=True, required=True)
-    media_id = fields.Many2one('social.media', string="Social Media", readonly=True, required=True)
+    media_id = fields.Many2one('social.media', string="Social Media", readonly=True, required=True, index=True)

@@ -16,7 +16,7 @@ class HrPayslipLine(models.Model):
     code = fields.Char(required=True,
                        help="The code of salary rules can be used as reference in computation of other rules. "
                        "In that case, it is case sensitive.")
-    slip_id = fields.Many2one('hr.payslip', string='Pay Slip', required=True, ondelete='cascade')
+    slip_id = fields.Many2one('hr.payslip', string='Pay Slip', required=True, index=True, ondelete='cascade')
     salary_rule_id = fields.Many2one('hr.salary.rule', string='Rule', required=True)
     contract_id = fields.Many2one('hr.contract', string='Contract', required=True, index=True)
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)

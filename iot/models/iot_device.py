@@ -5,7 +5,7 @@ class IotDevice(models.Model):
     _name = 'iot.device'
     _description = 'IOT Device'
 
-    iot_id = fields.Many2one('iot.box', string='IoT Box', required=True, ondelete='cascade')
+    iot_id = fields.Many2one('iot.box', string='IoT Box', required=True, index=True, ondelete='cascade')
     name = fields.Char('Name')
     identifier = fields.Char(string='Identifier', readonly=True)
     type = fields.Selection([

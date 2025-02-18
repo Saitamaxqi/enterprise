@@ -1335,7 +1335,7 @@ class L10n_BeDmfaLocationUnit(models.Model):
     _rec_name = 'code'
 
     code = fields.Char(required=True)
-    company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
+    company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company, index=True)
     partner_id = fields.Many2one('res.partner', string="Working Address", required=True)
 
     def _get_code(self):

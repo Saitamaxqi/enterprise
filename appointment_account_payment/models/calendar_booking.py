@@ -37,7 +37,7 @@ class CalendarBooking(models.Model):
     # Staff User
     staff_user_id = fields.Many2one('res.users', 'Operator')
     # Payment
-    account_move_id = fields.Many2one("account.move", string="Appointment Invoice", readonly=True)
+    account_move_id = fields.Many2one("account.move", string="Appointment Invoice", readonly=True, index='btree_not_null')
     product_id = fields.Many2one('product.product', required=True)
     # Access for front-end view
     booking_token = fields.Char('Access Token', default=_default_booking_token, readonly=True)

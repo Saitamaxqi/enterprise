@@ -30,6 +30,7 @@ class SpreadsheetRevision(models.Model):
         '(parent_revision_id, res_model, res_id) WHERE parent_revision_id IS NOT NULL',
         "A revision based on the same revision already exists",
     )
+    _res_model_res_id_idx = models.Index('(res_model, res_id)')
 
     @api.depends('name', 'revision_uuid')
     def _compute_display_name(self):

@@ -50,7 +50,7 @@ class CommissionRule(models.Model):
     _name = 'commission.rule'
     _description = 'Commission rules management.'
 
-    plan_id = fields.Many2one('commission.plan', 'Commission Plan', required=True, ondelete='cascade')
+    plan_id = fields.Many2one('commission.plan', 'Commission Plan', required=True, index=True, ondelete='cascade')
     category_id = fields.Many2one('product.category', 'Product Category', required=True, ondelete='cascade')
     product_id = fields.Many2one(
         'product.product',

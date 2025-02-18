@@ -31,7 +31,7 @@ class SignRequestItem(models.Model):
     display_name = fields.Char(compute_sudo=True)
 
     partner_id = fields.Many2one('res.partner', string="Signer", ondelete='restrict')
-    sign_request_id = fields.Many2one('sign.request', string="Signature Request", ondelete='cascade', required=True, copy=False)
+    sign_request_id = fields.Many2one('sign.request', string="Signature Request", ondelete='cascade', required=True, copy=False, index=True)
     sign_item_value_ids = fields.One2many('sign.request.item.value', 'sign_request_item_id', string="Value")
     reference = fields.Char(related='sign_request_id.reference', string="Document Name")
     mail_sent_order = fields.Integer(default=1)

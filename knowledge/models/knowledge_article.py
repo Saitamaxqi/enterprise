@@ -39,7 +39,7 @@ class KnowledgeArticle(models.Model):
     name = fields.Char(string="Title", tracking=20, default_export_compatible=True, index="trigram")
     body = fields.Html(string="Body", prefetch=False)
     icon = fields.Char(string='Emoji')
-    cover_image_id = fields.Many2one("knowledge.cover", string='Article cover')
+    cover_image_id = fields.Many2one("knowledge.cover", string='Article cover', index='btree_not_null')
     cover_image_url = fields.Char(related="cover_image_id.attachment_url", string="Cover url")
     cover_image_position = fields.Float(string="Cover vertical offset")
     is_locked = fields.Boolean(
@@ -88,7 +88,7 @@ class KnowledgeArticle(models.Model):
     # Hierarchy and sequence
     parent_id = fields.Many2one(
         "knowledge.article", string="Parent Article", tracking=30,
-        ondelete="cascade")
+        index=True, ondelete="cascade")
     # used to speed-up hierarchy operators such as child_of/parent_of
     # see '_parent_store' implementation in the ORM for details
     parent_path = fields.Char(index=True)

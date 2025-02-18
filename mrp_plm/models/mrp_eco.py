@@ -71,7 +71,7 @@ class MrpEcoApprovalTemplate(models.Model):
         ('comment', 'Comments only')], 'Approval Type',
         default='mandatory', required=True, index=True)
     user_ids = fields.Many2many('res.users', string='Users', domain=lambda self: [('all_group_ids', 'in', self.env.ref('mrp_plm.group_plm_user').id)], required=True)
-    stage_id = fields.Many2one('mrp.eco.stage', 'Stage', required=True)
+    stage_id = fields.Many2one('mrp.eco.stage', 'Stage', required=True, index=True)
 
     @api.constrains('user_ids', 'stage_id')
     def _check_unique_user_stage(self):
@@ -93,7 +93,7 @@ class MrpEcoApproval(models.Model):
 
     eco_id = fields.Many2one(
         'mrp.eco', 'ECO',
-        ondelete='cascade', required=True)
+        ondelete='cascade', required=True, index=True)
     approval_template_id = fields.Many2one(
         'mrp.eco.approval.template', 'Template',
         ondelete='cascade', required=True)
@@ -262,9 +262,9 @@ class MrpEco(models.Model):
     allow_apply_change = fields.Boolean(
         'Show Apply Change', compute='_compute_allow_apply_change')
 
-    product_tmpl_id = fields.Many2one('product.template', "Product", check_company=True)
+    product_tmpl_id = fields.Many2one('product.template', "Product", check_company=True, index='btree_not_null')
     production_id = fields.Many2one(
-        'mrp.production', string='Manufacturing Orders', readonly=True, copy=False)
+        'mrp.production', string='Manufacturing Orders', readonly=True, copy=False, index='btree_not_null')
     type = fields.Selection(selection=_get_type_selection, string='Apply on',
         default='bom', required=True)
     bom_id = fields.Many2one(
@@ -272,7 +272,7 @@ class MrpEco(models.Model):
         domain="[('product_tmpl_id', '=', product_tmpl_id)]", check_company=True)  # Should at least have bom or routing on which it is applied?
     new_bom_id = fields.Many2one(
         'mrp.bom', 'New Bill of Materials',
-        copy=False)
+        copy=False, index='btree_not_null')
     new_bom_revision = fields.Integer('BoM Revision', related='new_bom_id.version', readonly=False)
     will_update_version = fields.Boolean(
         "Update Version", default=True,
@@ -873,10 +873,10 @@ class MrpEcoBomChange(models.Model):
     _name = 'mrp.eco.bom.change'
     _description = 'ECO BoM changes'
 
-    eco_id = fields.Many2one('mrp.eco', 'Engineering Change', ondelete='cascade')
+    eco_id = fields.Many2one('mrp.eco', 'Engineering Change', index=True, ondelete='cascade')
     company_id = fields.Many2one(related='eco_id.company_id')
-    eco_rebase_id = fields.Many2one('mrp.eco', 'ECO Rebase', ondelete='cascade')
-    rebase_id = fields.Many2one('mrp.eco', 'Rebase', ondelete='cascade')
+    eco_rebase_id = fields.Many2one('mrp.eco', 'ECO Rebase', index='btree_not_null', ondelete='cascade')
+    rebase_id = fields.Many2one('mrp.eco', 'Rebase', ondelete='cascade', index='btree_not_null')
     change_type = fields.Selection([('add', 'Add'), ('remove', 'Remove'), ('update', 'Update')], string='Type', required=True)
     product_id = fields.Many2one('product.product', 'Product', required=True)
     old_uom_id = fields.Many2one('uom.uom', 'Previous Product UoM')
@@ -932,7 +932,7 @@ class MrpEcoRoutingChange(models.Model):
     _name = 'mrp.eco.routing.change'
     _description = 'Eco Routing changes'
 
-    eco_id = fields.Many2one('mrp.eco', 'Engineering Change', ondelete='cascade', required=True)
+    eco_id = fields.Many2one('mrp.eco', 'Engineering Change', ondelete='cascade', required=True, index=True)
     change_type = fields.Selection([('add', 'Add'), ('remove', 'Remove'), ('update', 'Update')], string='Type', required=True)
     workcenter_id = fields.Many2one('mrp.workcenter', 'Work Center')
     upd_time_mode = fields.Char('Mode Change')

@@ -31,7 +31,7 @@ class FrontdeskVisitor(models.Model):
                    ('canceled', 'Cancelled')],
         default='planned', tracking=True
     )
-    station_id = fields.Many2one('frontdesk.frontdesk', required=True)
+    station_id = fields.Many2one('frontdesk.frontdesk', required=True, index=True)
     visitor_properties = fields.Properties('Properties', definition='station_id.visitor_properties_definition', copy=True)
     served = fields.Boolean(string='Drink Served')
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)

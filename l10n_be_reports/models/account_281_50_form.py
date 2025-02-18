@@ -17,6 +17,7 @@ class L10n_BeForm28150(models.Model):
         string='Form 325',
         readonly=True,
         required=True,
+        index=True,
     )
     state = fields.Selection(
         string='State',
@@ -48,6 +49,7 @@ class L10n_BeForm28150(models.Model):
         comodel_name='res.partner',
         string='Partner',
         required=True,
+        index=True,
         help="Partner for which this 281.50 form has been created",
         readonly=True,
     )

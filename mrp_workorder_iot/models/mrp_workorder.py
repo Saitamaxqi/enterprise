@@ -15,9 +15,9 @@ class IotTrigger(models.Model):
     _order = 'sequence'
 
     sequence = fields.Integer(default=1)
-    device_id = fields.Many2one('iot.device', 'Device', required=True, domain="[('type', '=', 'keyboard')]")
+    device_id = fields.Many2one('iot.device', 'Device', required=True, index=True, domain="[('type', '=', 'keyboard')]")
     key = fields.Char('Key')
-    workcenter_id = fields.Many2one('mrp.workcenter')
+    workcenter_id = fields.Many2one('mrp.workcenter', index='btree_not_null')
     action = fields.Selection([('picture', 'Take Picture'),
                                ('SKIP', 'Skip'),
                                ('PAUS', 'Pause'),

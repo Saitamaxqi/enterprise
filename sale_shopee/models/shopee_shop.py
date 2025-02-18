@@ -23,6 +23,7 @@ class ShopeeShop(models.Model):
         string="Shopee Account",
         comodel_name='shopee.account',
         ondelete='cascade',
+        index=True,
         readonly=True,
         required=True,
     )

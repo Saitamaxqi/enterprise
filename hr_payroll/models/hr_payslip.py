@@ -47,7 +47,7 @@ class HrPayslip(models.Model):
         string='Payslip Name', required=True,
         compute='_compute_name', store=True, readonly=False)
     employee_id = fields.Many2one(
-        'hr.employee', string='Employee', required=True,
+        'hr.employee', string='Employee', required=True, index=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), '|', ('active', '=', True), ('active', '=', False)]")
     employee_reference = fields.Char(related='employee_id.registration_number')
     image_128 = fields.Image(related='employee_id.image_128')
@@ -108,7 +108,7 @@ class HrPayslip(models.Model):
     has_refund_slip = fields.Boolean(compute='_compute_has_refund_slip')
     payslip_run_id = fields.Many2one(
         'hr.payslip.run', string='Batch Name',
-        copy=False, ondelete='cascade', tracking=True,
+        copy=False, ondelete='cascade', tracking=True, index='btree_not_null',
         domain="[('company_id', '=', company_id)]")
     sum_worked_hours = fields.Float(compute='_compute_worked_hours', store=True, help='Total hours of attendance and time off (paid or not)')
     compute_date = fields.Date('Computed On')

@@ -36,6 +36,7 @@ class ProductPricing(models.Model):
     product_template_id = fields.Many2one(
         comodel_name='product.template',
         ondelete='cascade',
+        index='btree_not_null',
         help="Select products on which this pricing will be applied.",
     )
     product_variant_ids = fields.Many2many(
@@ -43,7 +44,7 @@ class ProductPricing(models.Model):
         help="Select Variants of the Product for which this rule applies."
             "Leave empty if this rule applies for any variant of this template.",
     )
-    pricelist_id = fields.Many2one('product.pricelist', ondelete='cascade')
+    pricelist_id = fields.Many2one('product.pricelist', index='btree_not_null', ondelete='cascade')
     company_id = fields.Many2one(related='pricelist_id.company_id')
 
     @api.constrains('product_template_id', 'pricelist_id', 'recurrence_id', 'product_variant_ids')

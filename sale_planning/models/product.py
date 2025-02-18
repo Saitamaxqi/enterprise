@@ -15,7 +15,7 @@ class ProductTemplate(models.Model):
                 The system will consider employee availability and the remaining time to be planned. \
                 You can also manually schedule open shifts for your Sales Order or assign them to any employee you prefer.""",
     )
-    planning_role_id = fields.Many2one('planning.role')
+    planning_role_id = fields.Many2one('planning.role', index='btree_not_null')
 
     @api.constrains('planning_enabled', 'type')
     def _check_planning_product_is_service(self):

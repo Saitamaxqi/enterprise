@@ -15,6 +15,7 @@ class BudgetAnalytic(models.Model):
     parent_id = fields.Many2one(
         string="Revision Of",
         comodel_name='budget.analytic',
+        index=True,
         ondelete='cascade',
     )
     children_ids = fields.One2many(

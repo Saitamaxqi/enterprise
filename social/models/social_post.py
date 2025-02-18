@@ -59,7 +59,7 @@ class SocialPost(models.Model):
     is_hatched = fields.Boolean(string="Hatched", compute='_compute_is_hatched')
     #UTM
     utm_campaign_id = fields.Many2one('utm.campaign', domain="[('is_auto_campaign', '=', False)]",
-        string="Campaign", ondelete="set null")
+        string="Campaign", ondelete="set null", index='btree_not_null')
     source_id = fields.Many2one(readonly=True)
     # Statistics
     stream_posts_count = fields.Integer("Feed Posts Count", compute='_compute_stream_posts_count')

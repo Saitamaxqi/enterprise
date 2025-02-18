@@ -20,7 +20,7 @@ class AppointmentBookingLine(models.Model):
         help="Capacity reserved by the user")
     capacity_used = fields.Integer('Capacity Used', compute="_compute_capacity_used", readonly=True,
         precompute=True, store=True, help="Capacity that will be used based on the capacity and resource selected")
-    calendar_event_id = fields.Many2one('calendar.event', string="Booking", ondelete="cascade", required=True)
+    calendar_event_id = fields.Many2one('calendar.event', string="Booking", ondelete="cascade", required=True, index=True)
     event_start = fields.Datetime('Booking Start', related="calendar_event_id.start", readonly=True, store=True)
     event_stop = fields.Datetime('Booking End', related="calendar_event_id.stop", readonly=True, store=True)
 

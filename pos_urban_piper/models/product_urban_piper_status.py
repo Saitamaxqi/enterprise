@@ -7,4 +7,4 @@ class ProductUrbanPiperStatus(models.Model):
 
     config_id = fields.Many2one('pos.config', string='Urban Piper Config')
     is_product_linked = fields.Boolean(string='Is Product Linked?', help='Product Status on Urban piper.')
-    product_tmpl_id = fields.Many2one('product.template', string='Product')
+    product_tmpl_id = fields.Many2one('product.template', string='Product', index='btree_not_null')

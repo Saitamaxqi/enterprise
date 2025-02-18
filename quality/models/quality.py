@@ -183,7 +183,7 @@ class QualityCheck(models.Model):
 
     name = fields.Char('Reference', copy=False)
     point_id = fields.Many2one(
-        'quality.point', 'Control Point', check_company=True)
+        'quality.point', 'Control Point', check_company=True, index='btree_not_null')
     title = fields.Char('Title', compute='_compute_title', store=True, precompute=True, readonly=False)
     quality_state = fields.Selection([
         ('none', 'To do'),
@@ -194,7 +194,7 @@ class QualityCheck(models.Model):
     product_id = fields.Many2one(
         'product.product', 'Product', check_company=True,
         domain="[('type', '=', 'consu')]")
-    picking_id = fields.Many2one('stock.picking', 'Picking', check_company=True)
+    picking_id = fields.Many2one('stock.picking', 'Picking', check_company=True, index='btree_not_null')
     partner_id = fields.Many2one(
         related='picking_id.partner_id', string='Partner')
     lot_id = fields.Many2one(
@@ -307,7 +307,7 @@ class QualityAlert(models.Model):
     tag_ids = fields.Many2many('quality.tag', string="Tags")
     date_assign = fields.Datetime('Date Assigned')
     date_close = fields.Datetime('Date Closed')
-    picking_id = fields.Many2one('stock.picking', 'Picking', check_company=True)
+    picking_id = fields.Many2one('stock.picking', 'Picking', check_company=True, index='btree_not_null')
     action_corrective = fields.Html('Corrective Action')
     action_preventive = fields.Html('Preventive Action')
     user_id = fields.Many2one('res.users', 'Responsible', tracking=True, default=lambda self: self.env.user)
@@ -315,7 +315,7 @@ class QualityAlert(models.Model):
         'quality.alert.team', 'Team', required=True, check_company=True,
         default=lambda x: x._get_default_team_id())
     partner_id = fields.Many2one('res.partner', 'Vendor', check_company=True)
-    check_id = fields.Many2one('quality.check', 'Check', check_company=True)
+    check_id = fields.Many2one('quality.check', 'Check', check_company=True, index='btree_not_null')
     product_tmpl_id = fields.Many2one(
         'product.template', 'Product', check_company=True,
         domain="[('type', '=', 'consu')]")

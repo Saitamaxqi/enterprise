@@ -9,7 +9,7 @@ class SignItem(models.Model):
     _order = "page asc, posY asc, posX asc"
     _rec_name = 'template_id'
 
-    template_id = fields.Many2one('sign.template', string="Document Template", required=True, ondelete='cascade')
+    template_id = fields.Many2one('sign.template', string="Document Template", required=True, index=True, ondelete='cascade')
 
     type_id = fields.Many2one('sign.item.type', string="Type", required=True, ondelete='restrict')
 
@@ -18,7 +18,7 @@ class SignItem(models.Model):
 
     option_ids = fields.Many2many("sign.item.option", string="Selection options", relation='sign_item_option_rel')
 
-    radio_set_id = fields.Many2one("sign.item.radio.set", string="Radio button options", ondelete='cascade')
+    radio_set_id = fields.Many2one("sign.item.radio.set", string="Radio button options", ondelete='cascade', index='btree_not_null')
     num_options = fields.Integer(related="radio_set_id.num_options")
 
     name = fields.Char(string="Field Name", default=lambda self: self.type_id.placeholder)

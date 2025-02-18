@@ -100,7 +100,7 @@ class QualityPoint(models.Model):
 
     is_workorder_step = fields.Boolean(compute='_compute_is_workorder_step')
     operation_id = fields.Many2one(
-        'mrp.routing.workcenter', 'Step', check_company=True)
+        'mrp.routing.workcenter', 'Step', check_company=True, index='btree_not_null')
     bom_id = fields.Many2one(related='operation_id.bom_id')
     bom_active = fields.Boolean('Related Bill of Material Active', related='bom_id.active')
     component_ids = fields.One2many('product.product', compute='_compute_component_ids')
@@ -189,9 +189,9 @@ class QualityPoint(models.Model):
 class QualityAlert(models.Model):
     _inherit = "quality.alert"
 
-    workorder_id = fields.Many2one('mrp.workorder', 'Operation', check_company=True)
+    workorder_id = fields.Many2one('mrp.workorder', 'Operation', check_company=True, index='btree_not_null')
     workcenter_id = fields.Many2one('mrp.workcenter', 'Work Center', check_company=True)
-    production_id = fields.Many2one('mrp.production', "Production Order", check_company=True)
+    production_id = fields.Many2one('mrp.production', "Production Order", check_company=True, index='btree_not_null')
 
 
 class QualityCheck(models.Model):
@@ -210,7 +210,7 @@ class QualityCheck(models.Model):
 
     # For components registration
     move_id = fields.Many2one(
-        'stock.move', 'Stock Move', check_company=True)
+        'stock.move', 'Stock Move', check_company=True, index='btree_not_null')
     component_id = fields.Many2one(
         'product.product', 'Component', check_company=True)
     component_barcode = fields.Char(related='component_id.barcode')

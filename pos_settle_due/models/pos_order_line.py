@@ -7,7 +7,7 @@ from odoo import fields, models, api
 class PosOrderLine(models.Model):
     _inherit = 'pos.order.line'
 
-    settled_order_id = fields.Many2one('pos.order', string='Settled Order')
+    settled_order_id = fields.Many2one('pos.order', string='Settled Order', index='btree_not_null')
 
     @api.model
     def _load_pos_data_fields(self, config_id):

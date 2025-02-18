@@ -7,7 +7,7 @@ from odoo import fields, models
 class QualityPoint(models.Model):
     _inherit = "quality.point"
 
-    device_id = fields.Many2one('iot.device', ondelete='restrict', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+    device_id = fields.Many2one('iot.device', ondelete='restrict', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", index='btree_not_null')
 
 
 class QualityCheck(models.Model):

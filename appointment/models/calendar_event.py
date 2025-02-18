@@ -68,10 +68,10 @@ class CalendarEvent(models.Model):
         ('no_show', 'No Show'),
         ('cancelled', 'Cancelled'),
     ], string="Appointment Status", compute='_compute_appointment_status', store=True, readonly=False, tracking=True)
-    appointment_type_id = fields.Many2one('appointment.type', 'Appointment', tracking=True)
+    appointment_type_id = fields.Many2one('appointment.type', 'Appointment', index=True, tracking=True)
     appointment_type_schedule_based_on = fields.Selection(related="appointment_type_id.schedule_based_on")
     appointment_type_manage_capacity = fields.Boolean(related="appointment_type_id.resource_manage_capacity")
-    appointment_invite_id = fields.Many2one('appointment.invite', 'Appointment Invitation', readonly=True, ondelete='set null')
+    appointment_invite_id = fields.Many2one('appointment.invite', 'Appointment Invitation', readonly=True, index='btree_not_null', ondelete='set null')
     appointment_resource_ids = fields.Many2many('appointment.resource', 'appointment_booking_line', 'calendar_event_id', 'appointment_resource_id',
                                                 string="Appointment Resources", group_expand="_read_group_appointment_resource_ids",
                                                 depends=['booking_line_ids'], readonly=True, copy=False)

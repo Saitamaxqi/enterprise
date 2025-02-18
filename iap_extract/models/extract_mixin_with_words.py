@@ -19,6 +19,8 @@ class IAPExtractedWords(models.Model):
     res_model = fields.Char('Resource Model')
     res_id = fields.Many2oneReference('Resource ID', model_field='res_model')
 
+    _res_id_res_model_idx = models.Index('(res_id, res_model)')
+
 
 class ExtractMixinWithWords(models.AbstractModel):
     _name = 'extract.mixin.with.words'

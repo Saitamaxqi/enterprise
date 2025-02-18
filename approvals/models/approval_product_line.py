@@ -11,7 +11,7 @@ class ApprovalProductLine(models.Model):
 
     _check_company_auto = True
 
-    approval_request_id = fields.Many2one('approval.request', required=True)
+    approval_request_id = fields.Many2one('approval.request', required=True, index=True)
     description = fields.Char(
         "Description", required=True,
         compute="_compute_description", store=True, readonly=False, precompute=True)

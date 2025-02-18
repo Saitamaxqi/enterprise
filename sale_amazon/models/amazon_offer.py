@@ -41,6 +41,7 @@ class AmazonOffer(models.Model):
         help="The seller account used to manage this product.",
         comodel_name='amazon.account',
         required=True,
+        index=True,
         ondelete='cascade',
     )  # The default account provided in the context of the list view.
     company_id = fields.Many2one(related='account_id.company_id', readonly=True)

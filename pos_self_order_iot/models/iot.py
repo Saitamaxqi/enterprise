@@ -18,7 +18,7 @@ class IotBox(models.Model):
         default='normal',
     )
     can_be_kiosk = fields.Boolean(compute='_compute_can_be_kiosk', store=True)
-    pos_id = fields.Many2one('pos.config', string='Linked To Point of Sale')
+    pos_id = fields.Many2one('pos.config', string='Linked To Point of Sale', index='btree_not_null')
 
     def get_computed_img_version(self):
         # Once connected to db, version is like 'L24.08-17.0#f30b83ff': we need to extract between 'L' and '-'

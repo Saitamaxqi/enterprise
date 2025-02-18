@@ -30,7 +30,7 @@ class ResCompany(models.Model):
     account_revaluation_expense_provision_account_id = fields.Many2one('account.account', string='Expense Provision Account', check_company=True)
     account_revaluation_income_provision_account_id = fields.Many2one('account.account', string='Income Provision Account', check_company=True)
     account_tax_unit_ids = fields.Many2many(string="Tax Units", comodel_name='account.tax.unit', help="The tax units this company belongs to.")
-    account_representative_id = fields.Many2one('res.partner', string='Accounting Firm',
+    account_representative_id = fields.Many2one('res.partner', string='Accounting Firm', index='btree_not_null',
                                                 help="Specify an Accounting Firm that will act as a representative when exporting reports.")
     account_display_representative_field = fields.Boolean(compute='_compute_account_display_representative_field')
 

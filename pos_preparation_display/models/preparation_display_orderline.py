@@ -19,7 +19,7 @@ class Pos_Preparation_DisplayOrderline(models.Model):
         'combo_parent_id',
         string="Combo Lines"
     )
-    combo_parent_id = fields.Many2one('pos_preparation_display.orderline', string="Parent Combo Line", help="Indicates the parent line if this is part of a combo")
+    combo_parent_id = fields.Many2one('pos_preparation_display.orderline', string="Parent Combo Line", help="Indicates the parent line if this is part of a combo", index='btree_not_null')
 
     def change_line_status(self, status):
         orderlines_status = []

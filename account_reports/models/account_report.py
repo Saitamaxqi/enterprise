@@ -55,7 +55,7 @@ class AccountReportAnnotation(models.Model):
     _name = 'account.report.annotation'
     _description = 'Account Report Annotation'
 
-    report_id = fields.Many2one('account.report', help="The id of the annotated report.")
+    report_id = fields.Many2one('account.report', help="The id of the annotated report.", index='btree_not_null')
     line_id = fields.Char(index=True, help="The id of the annotated line.")
     text = fields.Char(string="The annotation's content.")
     date = fields.Date(help="Date considered as annotated by the annotation.")
@@ -7355,7 +7355,7 @@ class AccountReportHorizontalGroupRule(models.Model):
             if aml_field['type'] in ('many2one', 'many2many')
         ]
 
-    horizontal_group_id = fields.Many2one(string="Horizontal Group", comodel_name='account.report.horizontal.group', required=True)
+    horizontal_group_id = fields.Many2one(string="Horizontal Group", comodel_name='account.report.horizontal.group', required=True, index=True)
     domain = fields.Char(string="Domain", required=True, default='[]')
     field_name = fields.Selection(string="Field", selection='_field_name_selection_values', required=True)
     res_model_name = fields.Char(string="Model", compute='_compute_res_model_name')

@@ -105,12 +105,13 @@ class AccountReportBudgetItem(models.Model):
     _name = 'account.report.budget.item'
     _description = "Accounting Report Budget Item"
 
-    budget_id = fields.Many2one(string="Budget", comodel_name='account.report.budget', required=True, ondelete='cascade')
+    budget_id = fields.Many2one(string="Budget", comodel_name='account.report.budget', required=True, index=True, ondelete='cascade')
     account_id = fields.Many2one(
         string="Account",
         comodel_name='account.account',
         domain="[('account_type', 'in', ('income', 'income_other', 'expense', 'expense_depreciation', 'expense_direct_cost'))]",
         required=True,
+        index=True,
     )
     amount = fields.Float(string="Amount", default=0)
     date = fields.Date(required=True)

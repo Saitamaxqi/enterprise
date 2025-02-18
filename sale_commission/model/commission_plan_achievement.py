@@ -8,7 +8,7 @@ class SaleCommissionPlanAchievement(models.Model):
     _description = 'Commission Plan Achievement'
     _order = 'id'
 
-    plan_id = fields.Many2one('sale.commission.plan', required=True, ondelete='cascade')
+    plan_id = fields.Many2one('sale.commission.plan', required=True, index=True, ondelete='cascade')
 
     type = fields.Selection([
         ('amount_invoiced', "Amount Invoiced"),

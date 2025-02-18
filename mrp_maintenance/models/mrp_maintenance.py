@@ -67,7 +67,7 @@ class MaintenanceEquipment(models.Model):
     _check_company_auto = True
 
     workcenter_id = fields.Many2one(
-        'mrp.workcenter', string='Work Center', check_company=True)
+        'mrp.workcenter', string='Work Center', check_company=True, index='btree_not_null')
 
     def button_mrp_workcenter(self):
         self.ensure_one()
@@ -89,7 +89,7 @@ class MaintenanceRequest(models.Model):
     _check_company_auto = True
 
     production_id = fields.Many2one(
-        'mrp.production', string='Manufacturing Order', check_company=True)
+        'mrp.production', string='Manufacturing Order', check_company=True, index='btree_not_null')
     workorder_id = fields.Many2one(
         'mrp.workorder', string='Work Order', check_company=True)
     production_company_id = fields.Many2one(string='Production Company', related='production_id.company_id')
@@ -99,7 +99,7 @@ class MaintenanceRequest(models.Model):
         ('workcenter', 'Work Center')],
         string='For', default='equipment', required=True)
     equipment_id = fields.Many2one(compute='_compute_equipment_id', store=True, readonly=False)
-    workcenter_id = fields.Many2one('mrp.workcenter', string='Work Center', compute='_compute_workcenter_id', store=True, readonly=False, check_company=True)
+    workcenter_id = fields.Many2one('mrp.workcenter', string='Work Center', compute='_compute_workcenter_id', store=True, readonly=False, check_company=True, index='btree_not_null')
     block_workcenter = fields.Boolean('Block Workcenter', help="It won't be possible to plan work orders or other maintenances on this workcenter during this time.")
     recurring_leaves_count = fields.Integer('Additional Leaves to Plan Ahead', help='Block the workcenter for this many time slots in the future in advance.')
     leave_ids = fields.Many2many('resource.calendar.leaves', string="Leaves")

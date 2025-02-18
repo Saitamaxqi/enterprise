@@ -11,8 +11,8 @@ class HrContractSignatory(models.Model):
     sign_role_id = fields.Many2one('sign.item.role', string="Contract Role")
     signatory = fields.Selection([('employee', 'Employee'), ('hr', 'HR Responsible'), ('partner', 'Specific Partner')], string="Signatory")
     partner_id = fields.Many2one('res.partner', copy=True)
-    contract_template_id = fields.Many2one('hr.contract')
-    update_contract_template_id = fields.Many2one('hr.contract')
+    contract_template_id = fields.Many2one('hr.contract', index='btree_not_null')
+    update_contract_template_id = fields.Many2one('hr.contract', index='btree_not_null')
     order = fields.Integer('Sign Order', required=True)
 
     @api.model

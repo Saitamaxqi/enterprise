@@ -17,10 +17,10 @@ class QualityPoint(models.Model):
 class QualityCheck(models.Model):
     _inherit = "quality.check"
 
-    repair_id = fields.Many2one('repair.order', 'Repair Order', check_company=True)
+    repair_id = fields.Many2one('repair.order', 'Repair Order', check_company=True, index='btree_not_null')
 
 
 class QualityAlert(models.Model):
     _inherit = "quality.alert"
 
-    repair_id = fields.Many2one('repair.order', "Repair Order", check_company=True)
+    repair_id = fields.Many2one('repair.order', "Repair Order", check_company=True, index='btree_not_null')

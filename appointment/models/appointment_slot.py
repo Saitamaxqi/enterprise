@@ -12,7 +12,7 @@ class AppointmentSlot(models.Model):
     _rec_name = "weekday"
     _order = "weekday, start_hour, start_datetime, end_datetime"
 
-    appointment_type_id = fields.Many2one('appointment.type', 'Appointment Type', ondelete='cascade')
+    appointment_type_id = fields.Many2one('appointment.type', 'Appointment Type', index=True, ondelete='cascade')
     schedule_based_on = fields.Selection(related="appointment_type_id.schedule_based_on")
     slot_type = fields.Selection([('recurring', 'Regular'), ('unique', 'One Shot')],
         string='Slot type', default='recurring', required=True, compute="_compute_slot_type", store=True,

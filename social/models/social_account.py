@@ -45,7 +45,7 @@ class SocialAccount(models.Model):
     social_account_handle = fields.Char("Handle / Short Name",
         help="Contains the social media handle of the person that created this account. E.g: '@odoo.official' for the 'Odoo' X account")
     active = fields.Boolean("Active", default=True)
-    media_id = fields.Many2one('social.media', string="Social Media", required=True, readonly=True,
+    media_id = fields.Many2one('social.media', string="Social Media", required=True, readonly=True, index=True,
         help="Related Social Media (Facebook, X, ...).", ondelete='cascade')
     media_type = fields.Selection(related='media_id.media_type')
     stats_link = fields.Char("Stats Link", compute='_compute_stats_link',

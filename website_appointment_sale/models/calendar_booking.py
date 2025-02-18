@@ -9,7 +9,7 @@ from odoo import _, fields, models
 class CalendarBooking(models.Model):
     _inherit = "calendar.booking"
 
-    order_line_id = fields.Many2one("sale.order.line", 'Sale Order Line', ondelete="cascade")
+    order_line_id = fields.Many2one("sale.order.line", 'Sale Order Line', index='btree_not_null', ondelete="cascade")
 
     def _make_event_from_paid_booking(self):
         """ Override: link calendar event to SOL when created """

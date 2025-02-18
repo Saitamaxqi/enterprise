@@ -20,7 +20,7 @@ class StudioApprovalRuleApprover(models.Model):
     _log_access = True  # explicit: we need create_uid and create_date
 
     user_id = fields.Many2one("res.users", required=True, ondelete="cascade")
-    rule_id = fields.Many2one("studio.approval.rule", required=True, ondelete="cascade")
+    rule_id = fields.Many2one("studio.approval.rule", required=True, index=True, ondelete="cascade")
     date_to = fields.Date()
     is_delegation = fields.Boolean(default=True)
 

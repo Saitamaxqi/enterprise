@@ -12,4 +12,4 @@ class SocialStreamPostImage(models.Model):
     _description = 'Social Stream Post Image Attachment'
 
     image_url = fields.Char("Image URL", readonly=True, required=True)
-    stream_post_id = fields.Many2one('social.stream.post', string="Stream Post", ondelete="cascade")
+    stream_post_id = fields.Many2one('social.stream.post', string="Stream Post", index='btree_not_null', ondelete="cascade")

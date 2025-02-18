@@ -13,7 +13,7 @@ class HrJobPost(models.Model):
     _order = "write_date desc"
 
     job_id = fields.Many2one(
-        'hr.job', string="Job", required=True, readonly=True)
+        'hr.job', string="Job", required=True, readonly=True, index=True)
     recruiter_id = fields.Many2one(
         'res.users', string="Recruiter", related='job_id.user_id', readonly=True)
     platform_id = fields.Many2one(

@@ -26,6 +26,7 @@ class ProductProduct(models.Model):
     pricer_store_id = fields.Many2one(
         comodel_name='pricer.store',
         string='Pricer Store',
+        index='btree_not_null',
         help='This product will be linked to and displayed on the Pricer tags of the store selected here'
     )
     pricer_tag_ids = fields.One2many(

@@ -23,7 +23,7 @@ class AccountJournal(models.Model):
     next_link_synchronization = fields.Datetime("Online Link Next synchronization", related='account_online_link_id.next_refresh')
     expiring_synchronization_date = fields.Date(related='account_online_link_id.expiring_synchronization_date')
     expiring_synchronization_due_day = fields.Integer(compute='_compute_expiring_synchronization_due_day')
-    account_online_account_id = fields.Many2one('account.online.account', copy=False, ondelete='set null')
+    account_online_account_id = fields.Many2one('account.online.account', copy=False, ondelete='set null', index='btree_not_null')
     account_online_link_id = fields.Many2one('account.online.link', related='account_online_account_id.account_online_link_id', readonly=True, store=True)
     account_online_link_state = fields.Selection(related="account_online_link_id.state", readonly=True)
     renewal_contact_email = fields.Char(

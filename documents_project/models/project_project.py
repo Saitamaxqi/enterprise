@@ -17,6 +17,7 @@ class ProjectProject(models.Model):
         },
         domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False), "
                "'|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        index='btree_not_null',
         help="Folder in which all of the documents of this project will be categorized. All of the attachments of "
              "your tasks will be automatically added as documents in this workspace as well.")
     documents_tag_ids = fields.Many2many(

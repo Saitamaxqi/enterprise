@@ -9,5 +9,5 @@ class Pos_Preparation_DisplayStage(models.Model):
     name = fields.Char("Name", required=True)
     color = fields.Char("Color")
     alert_timer = fields.Integer(string="Alert timer (min)", help="Timer after which the order will be highlighted")
-    preparation_display_id = fields.Many2one('pos_preparation_display.display', string="Preparation display", ondelete='cascade')
+    preparation_display_id = fields.Many2one('pos_preparation_display.display', string="Preparation display", ondelete='cascade', index='btree_not_null')
     sequence = fields.Integer('Sequence')

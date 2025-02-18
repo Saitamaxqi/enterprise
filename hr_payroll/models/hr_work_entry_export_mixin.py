@@ -203,7 +203,7 @@ class HrWorkEntryExportEmployeeMixin(models.AbstractModel):
     _name = 'hr.work.entry.export.employee.mixin'
     _description = 'Work Entry Export Employee'
 
-    export_id = fields.Many2one('hr.work.entry.export.mixin', required=True, ondelete='cascade')
+    export_id = fields.Many2one('hr.work.entry.export.mixin', required=True, index=True, ondelete='cascade')
     employee_id = fields.Many2one('hr.employee', required=True, ondelete='cascade')
     contract_ids = fields.Many2many('hr.contract', compute="_compute_contract_ids", store=True, required=True, ondelete='cascade', readonly=False)
     work_entry_ids = fields.Many2many('hr.work.entry', compute='_compute_work_entry_ids')

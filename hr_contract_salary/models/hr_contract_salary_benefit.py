@@ -95,7 +95,7 @@ class HrContractSalaryBenefit(models.Model):
         help='Contract field used to manually encode an benefit value.')
     manual_field = fields.Char(related='manual_res_field_id.name', string="Manual Field Name", readonly=True)
     country_id = fields.Many2one('res.country')
-    structure_type_id = fields.Many2one('hr.payroll.structure.type', string="Salary Structure Type", required=True)
+    structure_type_id = fields.Many2one('hr.payroll.structure.type', string="Salary Structure Type", required=True, index=True)
     icon = fields.Char(compute='_compute_icon', store=True, readonly=False)
     display_type = fields.Selection(selection=[
         ('always', 'Always Selected'),
@@ -237,7 +237,7 @@ class HrContractSalaryBenefitValue(models.Model):
 
     name = fields.Char(translate=True)
     sequence = fields.Integer(default=100)
-    benefit_id = fields.Many2one('hr.contract.salary.benefit')
+    benefit_id = fields.Many2one('hr.contract.salary.benefit', index='btree_not_null')
     value = fields.Float()
     selector_highlight = fields.Selection(selection=[('none', 'None'), ('red', 'Red')], string="Selector Highlight", default='none')
     always_show_description = fields.Boolean()

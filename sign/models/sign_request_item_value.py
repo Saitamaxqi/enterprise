@@ -9,7 +9,7 @@ class SignRequestItemValue(models.Model):
     _rec_name = 'sign_request_id'
 
     sign_request_item_id = fields.Many2one('sign.request.item', string="Signature Request item", required=True,
-                                           ondelete='cascade')
+                                           index=True, ondelete='cascade')
     sign_item_id = fields.Many2one('sign.item', string="Signature Item", required=True, ondelete='cascade')
     sign_request_id = fields.Many2one(string="Signature Request", required=True, ondelete='cascade', related='sign_request_item_id.sign_request_id')
 

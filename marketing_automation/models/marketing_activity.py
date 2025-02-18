@@ -28,7 +28,7 @@ class MarketingActivity(models.Model):
         ], string='Activity Type', required=True, default='email')
     mass_mailing_id = fields.Many2one(
         'mailing.mailing', string='Marketing Template', compute='_compute_mass_mailing_id',
-        readonly=False, store=True)
+        readonly=False, store=True, index='btree_not_null')
     # Technical field doing the mapping of activity type and mailing type
     mass_mailing_id_mailing_type = fields.Selection([
         ('mail', 'Email')], string='Mailing Type', compute='_compute_mass_mailing_id_mailing_type',

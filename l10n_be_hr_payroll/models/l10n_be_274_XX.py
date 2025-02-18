@@ -485,7 +485,7 @@ class L10n_Be274_XxLine(models.Model):
     _name = 'l10n_be.274_xx.line'
     _description = '274.XX Sheets Line'
 
-    sheet_id = fields.Many2one('l10n_be.274_xx')
+    sheet_id = fields.Many2one('l10n_be.274_xx', index=True)
     employee_id = fields.Many2one('hr.employee')
     certificate = fields.Selection(related='employee_id.certificate')
     taxable_amount = fields.Monetary()

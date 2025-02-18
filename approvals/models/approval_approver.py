@@ -21,7 +21,7 @@ class ApprovalApprover(models.Model):
         ('refused', 'Refused'),
         ('cancel', 'Cancel')], string="Status", default="new", readonly=True)
     request_id = fields.Many2one('approval.request', string="Request",
-        ondelete='cascade', check_company=True)
+        index='btree_not_null', ondelete='cascade', check_company=True)
     company_id = fields.Many2one(
         string='Company', related='request_id.company_id',
         store=True, readonly=True, index=True)

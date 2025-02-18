@@ -17,5 +17,5 @@ class FleetDisallowedExpensesRate(models.Model):
 
     rate = fields.Float(string='Deductibility (%)', required=True)
     date_from = fields.Date(string='Start Date', required=True)
-    vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle', required=True)
+    vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle', required=True, index=True)
     company_id = fields.Many2one('res.company', string='Company', related='vehicle_id.company_id', readonly=True)

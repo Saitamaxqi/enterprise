@@ -9,7 +9,7 @@ class Data_MergeRule(models.Model):
     _description = 'Deduplication Rule'
     _order = 'sequence, field_id'
 
-    model_id = fields.Many2one('data_merge.model', string='Deduplication Model', ondelete='cascade', required=True)
+    model_id = fields.Many2one('data_merge.model', string='Deduplication Model', ondelete='cascade', required=True, index=True)
     res_model_id = fields.Many2one(related='model_id.res_model_id', readonly=True, store=True)
     field_id = fields.Many2one('ir.model.fields', string='Unique ID Field',
         domain="[('model_id', '=', res_model_id), ('ttype', 'in', ('char', 'text', 'many2one')), ('store', '=', True)]",

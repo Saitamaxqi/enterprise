@@ -12,8 +12,8 @@ class WhatsappTemplateVariable(models.Model):
     _order = 'line_type desc, name, id'
 
     name = fields.Char(string="Placeholder", required=True)
-    button_id = fields.Many2one('whatsapp.template.button', ondelete='cascade')
-    wa_template_id = fields.Many2one(comodel_name='whatsapp.template', required=True, ondelete='cascade')
+    button_id = fields.Many2one('whatsapp.template.button', ondelete='cascade', index='btree_not_null')
+    wa_template_id = fields.Many2one(comodel_name='whatsapp.template', required=True, index=True, ondelete='cascade')
     model = fields.Char(string="Model Name", related='wa_template_id.model')
 
     line_type = fields.Selection([

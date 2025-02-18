@@ -8,7 +8,7 @@ class HelpdeskTicket(models.Model):
     _inherit = ['helpdesk.ticket', 'timer.parent.mixin']
 
     project_id = fields.Many2one(
-        "project.project", related="team_id.project_id", readonly=True, store=True)
+        "project.project", related="team_id.project_id", readonly=True, store=True, index='btree_not_null')
     timesheet_ids = fields.One2many('account.analytic.line', 'helpdesk_ticket_id', 'Timesheets',
         help="Time spent on this ticket. By default, your timesheets will be linked to the sales order item of your ticket.\n"
              "Remove the sales order item to make your timesheet entries non billable.")

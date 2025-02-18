@@ -1159,7 +1159,7 @@ class MrpProductForecast(models.Model):
     _description = 'Product Forecast at Date'
 
     production_schedule_id = fields.Many2one('mrp.production.schedule',
-        required=True, ondelete='cascade')
+        required=True, index=True, ondelete='cascade')
     date = fields.Date('Date', required=True)
 
     forecast_qty = fields.Float('Demand Forecast')

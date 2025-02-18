@@ -30,7 +30,7 @@ class SocialStreamPost(models.Model):
         help="Author link to the external social.media (ex: link to the X Account).")
     post_link = fields.Char('Post Link', compute='_compute_post_link',
         help="Post link to the external social.media (ex: link to the actual Facebook Post).")
-    stream_id = fields.Many2one('social.stream', string="Social Stream", ondelete="cascade")
+    stream_id = fields.Many2one('social.stream', string="Social Stream", ondelete="cascade", index='btree_not_null')
     media_type = fields.Selection(related='stream_id.media_id.media_type', string="Related Social Media")
     published_date = fields.Datetime('Published date', help="The post published date based on third party information.")
     formatted_published_date = fields.Char('Formatted Published Date', compute='_compute_formatted_published_date')

@@ -14,7 +14,7 @@ class WhatsappTemplateButton(models.Model):
 
     sequence = fields.Integer()
     name = fields.Char(string="Button Text", size=25)
-    wa_template_id = fields.Many2one(comodel_name='whatsapp.template', required=True, ondelete='cascade')
+    wa_template_id = fields.Many2one(comodel_name='whatsapp.template', required=True, index=True, ondelete='cascade')
 
     button_type = fields.Selection([
         ('url', 'Visit Website'),

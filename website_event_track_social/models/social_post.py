@@ -9,4 +9,4 @@ class SocialPost(models.Model):
 
     # Technical field that holds the relationship between a track and this 'reminder' post
     event_track_id = fields.Many2one('event.track', string="Linked Event Track",
-        ondelete='cascade')
+        index='btree_not_null', ondelete='cascade')

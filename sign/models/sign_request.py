@@ -29,7 +29,7 @@ class SignRequest(models.Model):
         return [(model.model, model.name)
                 for model in self.env['ir.model'].sudo().search([('model', '!=', 'sign.request'), ('is_mail_thread', '=', 'True')])]
 
-    template_id = fields.Many2one('sign.template', string="Template", required=True)
+    template_id = fields.Many2one('sign.template', string="Template", required=True, index=True)
     subject = fields.Char(string="Email Subject")
     reference = fields.Char(required=True, string="Document Name", help="This is how the document will be named in the mail")
     reference_doc = fields.Reference(string="Linked To", selection='_selection_target_model', index='btree_not_null')

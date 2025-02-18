@@ -8,7 +8,7 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     calendar_booking_ids = fields.One2many("calendar.booking", "order_line_id", "Bookings")
-    calendar_event_id = fields.Many2one("calendar.event", "Meeting")
+    calendar_event_id = fields.Many2one("calendar.event", "Meeting", index='btree_not_null')
 
     @api.depends('calendar_booking_ids')
     def _compute_product_uom_readonly(self):

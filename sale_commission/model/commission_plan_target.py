@@ -8,7 +8,7 @@ class SaleCommissionPlanTarget(models.Model):
     _description = 'Commission Plan Target'
     _order = 'id'
 
-    plan_id = fields.Many2one('sale.commission.plan', ondelete='cascade')
+    plan_id = fields.Many2one('sale.commission.plan', ondelete='cascade', index='btree_not_null')
     name = fields.Char("Period", required=True, readonly=True)
     date_from = fields.Date("From", required=True, readonly=True)
     date_to = fields.Date("To", required=True, readonly=True)

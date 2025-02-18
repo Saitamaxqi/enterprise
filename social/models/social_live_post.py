@@ -19,7 +19,7 @@ class SocialLivePost(models.Model):
     _name = 'social.live.post'
     _description = 'Social Live Post'
 
-    post_id = fields.Many2one('social.post', string="Social Post", required=True, readonly=True, ondelete="cascade")
+    post_id = fields.Many2one('social.post', string="Social Post", required=True, index=True, readonly=True, ondelete="cascade")
     account_id = fields.Many2one('social.account', string="Social Account", required=True, readonly=True, ondelete="cascade")
     message = fields.Char('Message', compute='_compute_message',
         help="Content of the social post message that is post-processed (links are shortened, UTMs, ...)")

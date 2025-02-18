@@ -59,6 +59,7 @@ class SddMandate(models.Model):
         comodel_name='res.partner',
         string='Customer',
         required=True,
+        index=True,
         check_company=True,
         help="Customer whose payments are to be managed by this mandate.",
     )

@@ -12,8 +12,8 @@ class SaleCommissionPlanUser(models.Model):
     _rec_names_search = ['user_id', 'plan_id']
     _order = 'id'
 
-    plan_id = fields.Many2one('sale.commission.plan', required=True, ondelete='cascade')
-    user_id = fields.Many2one('res.users', "Salesperson", required=True, domain="[('share', '=', False)]")
+    plan_id = fields.Many2one('sale.commission.plan', required=True, index=True, ondelete='cascade')
+    user_id = fields.Many2one('res.users', "Salesperson", required=True, domain="[('share', '=', False)]", index=True)
 
     date_from = fields.Date("From", compute='_compute_date_from', store=True, readonly=False)
     date_to = fields.Date("To")

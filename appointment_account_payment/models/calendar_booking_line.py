@@ -11,6 +11,6 @@ class CalendarBookingLine(models.Model):
     _rec_name = "calendar_booking_id"
 
     appointment_resource_id = fields.Many2one('appointment.resource', 'Resource', ondelete='cascade', required=True, readonly=True)
-    calendar_booking_id = fields.Many2one('calendar.booking', 'Meeting Booking', ondelete='cascade', required=True)
+    calendar_booking_id = fields.Many2one('calendar.booking', 'Meeting Booking', index=True, ondelete='cascade', required=True)
     capacity_reserved = fields.Integer('Capacity Reserved', default=1, readonly=True)
     capacity_used = fields.Integer('Capacity Used', readonly=True)

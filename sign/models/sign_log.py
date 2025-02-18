@@ -21,7 +21,7 @@ class SignLog(models.Model):
 
     # Accessed on ?
     log_date = fields.Datetime(default=fields.Datetime.now, required=True)
-    sign_request_id = fields.Many2one('sign.request', required=True, ondelete="cascade")
+    sign_request_id = fields.Many2one('sign.request', required=True, index=True, ondelete="cascade")
     sign_request_item_id = fields.Many2one('sign.request.item')
     # Accessed as ?
     user_id = fields.Many2one('res.users', groups="sign.group_sign_manager")

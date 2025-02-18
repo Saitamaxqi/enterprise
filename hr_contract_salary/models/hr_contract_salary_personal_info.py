@@ -51,7 +51,7 @@ class HrContractSalaryPersonalInfo(models.Model):
         ('state', 'States'),
         ('lang', 'Languages'),
     ], string="Selection Nature")
-    parent_id = fields.Many2one('hr.contract.salary.personal.info')
+    parent_id = fields.Many2one('hr.contract.salary.personal.info', index=True)
     child_ids = fields.One2many('hr.contract.salary.personal.info', 'parent_id')
 
     @api.onchange('applies_on')
@@ -105,6 +105,6 @@ class HrContractSalaryPersonalInfoValue(models.Model):
 
     name = fields.Char(required=True, translate=True)
     sequence = fields.Integer(default=100)
-    personal_info_id = fields.Many2one('hr.contract.salary.personal.info')
+    personal_info_id = fields.Many2one('hr.contract.salary.personal.info', index=True)
     value = fields.Char(required=True)
     hide_children = fields.Boolean(help="Hide children personal info when checked.")

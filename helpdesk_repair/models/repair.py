@@ -7,7 +7,7 @@ from odoo import api, fields, models, _
 class RepairOrder(models.Model):
     _inherit = 'repair.order'
 
-    ticket_id = fields.Many2one('helpdesk.ticket', export_string_translation=False)
+    ticket_id = fields.Many2one('helpdesk.ticket', export_string_translation=False, index='btree_not_null')
 
     def write(self, vals):
         previous_states = None

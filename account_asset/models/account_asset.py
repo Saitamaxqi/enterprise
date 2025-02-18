@@ -151,7 +151,7 @@ class AccountAsset(models.Model):
     display_account_asset_id = fields.Boolean(compute="_compute_display_account_asset_id")
 
     # Capital gain
-    parent_id = fields.Many2one('account.asset', help="An asset has a parent when it is the result of gaining value")
+    parent_id = fields.Many2one('account.asset', index=True, help="An asset has a parent when it is the result of gaining value")
     children_ids = fields.One2many('account.asset', 'parent_id', help="The children are the gains in value of this asset")
 
     # Adapt for import fields
