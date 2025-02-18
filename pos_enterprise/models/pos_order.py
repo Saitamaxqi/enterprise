@@ -119,7 +119,7 @@ class PosOrder(models.Model):
             for line in pdis_lines[::-1]:
                 product_id = str(line.product_id.id)
                 for note in note_history.get(product_id, []):
-                    if note["uuid"] == line.pos_order_line_uuid and line.internal_note == note['old'] and note['qty'] > 0 and line.quantity <= note['qty'] - note.get('used_qty', 0):
+                    if note["uuid"] == line.pos_order_line_uuid and line.internal_note == note['old'] and 'qty' in note and note['qty'] > 0 and line.quantity <= note['qty'] - note.get('used_qty', 0):
                         if not note.get('used_qty'):
                             note['used_qty'] = line.quantity
                         else:

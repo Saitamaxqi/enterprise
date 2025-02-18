@@ -167,3 +167,43 @@ registry.category("web_tour.tours").add("PreparationDisplayPaymentNotCancelDispl
             Chrome.endTour(),
         ].flat(),
 });
+
+function clickOrderButton() {
+    return [
+        ProductScreen.clickOrderButton(),
+        {
+            trigger: ".oe_status .fa.fa-spin",
+        },
+        Chrome.isSynced(),
+        ProductScreen.orderlinesHaveNoChange(),
+    ].flat();
+}
+
+registry.category("web_tour.tours").add("test_update_internal_note_of_order", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+            FloorScreen.clickTable("5"),
+            ProductScreen.clickSubcategory("Test-cat"),
+            ProductScreen.clickDisplayedProduct("Demo Food"),
+            ProductScreen.clickDisplayedProduct("Test Food"),
+            ProductScreen.orderlineIsToOrder("Test Food"),
+            clickOrderButton(),
+            FloorScreen.clickTable("5"),
+            ProductScreen.clickOrderline("Test Food"),
+            ProductScreen.addInternalNote("Test Internal Notes"),
+            ProductScreen.selectedOrderlineHas("Test Food", "1.0"),
+            ProductScreen.clickNumpad("⌫"),
+            ProductScreen.selectedOrderlineHas("Test Food", "0.0"),
+            ProductScreen.clickNumpad("⌫"),
+            ProductScreen.selectedOrderlineHas("Demo Food", "1.0"),
+            clickOrderButton(),
+            FloorScreen.clickTable("5"),
+            ProductScreen.totalAmountIs("10"),
+            ProductScreen.clickPayButton(),
+            PaymentScreen.clickPaymentMethod("Cash"),
+            PaymentScreen.clickValidate(),
+            ReceiptScreen.isShown(),
+        ].flat(),
+});

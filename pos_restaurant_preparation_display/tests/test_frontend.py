@@ -139,3 +139,43 @@ class TestUi(test_frontend.TestFrontendCommon):
         self.assertEqual(pdis_lines[0].cancelled, 1.0)
         self.assertEqual(pdis_lines[1].quantity, 2.0)
         self.assertEqual(pdis_lines[1].cancelled, 0.0)
+
+    def test_update_internal_note_of_order(self):
+        category = self.env['pos.category'].create({'name': 'Test-cat'})
+        product_1, product_2 = self.env['product.product'].create([{
+            'name': 'Test Food',
+            'list_price': 10,
+            'taxes_id': False,
+            'available_in_pos': True,
+            'pos_categ_ids': category,
+        }, {
+            'name': 'Demo Food',
+            'list_price': 10,
+            'taxes_id': False,
+            'available_in_pos': True,
+            'pos_categ_ids': category,
+        }])
+
+        self.env['pos.prep.display'].create({
+            'name': 'Preparation Display (Food only)',
+            'pos_config_ids': [(4, self.pos_config.id)],
+            'category_ids': category,
+        })
+
+        self.pos_config.with_user(self.pos_admin).open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.pos_config.id, 'test_update_internal_note_of_order', login='pos_admin')
+
+        pos_order = self.env['pos.order'].search([('session_id', 'in', self.pos_config.session_ids.ids)], limit=1)
+        order_lines = self.env['pos.prep.order'].search([('pos_order_id', '=', pos_order.id)], limit=1).prep_line_ids
+        self.assertEqual(len(order_lines), 2)
+        self.assertEqual(pos_order.state, 'paid')
+        self.assertEqual(pos_order.amount_paid, product_2.list_price)
+
+        self.assertEqual(order_lines[0]['product_id'].id, product_2.id)
+        self.assertEqual(order_lines[0]['quantity'], 1)
+        self.assertEqual(order_lines[0]['cancelled'], 0)
+
+        self.assertEqual(order_lines[1]['product_id'].id, product_1.id)
+        self.assertEqual(order_lines[1]['internal_note'], '[]')
+        self.assertEqual(order_lines[1]['quantity'], 1)
+        self.assertEqual(order_lines[1]['cancelled'], 1)
