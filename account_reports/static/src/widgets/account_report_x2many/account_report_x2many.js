@@ -1,4 +1,4 @@
-import { useRef } from "@odoo/owl";
+import { useRef, onWillRender } from "@odoo/owl";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { WarningDialog } from "@web/core/errors/error_dialogs";
 import { _t } from "@web/core/l10n/translation";
@@ -42,6 +42,11 @@ export class AccountReportListRenderer extends ListRenderer {
             onDragStart: (ctx) => this.onDragStart(ctx),
             onDragEnd: () => this.onDragEnd(),
             onDrop: (ctx) => this.onDrop(ctx),
+        });
+
+        onWillRender(() => {
+            this.allColumns = this.processAllColumn(this.props.archInfo.columns, this.props.list);
+            this.columns = this.getActiveColumns(this.props.list);
         });
     }
 

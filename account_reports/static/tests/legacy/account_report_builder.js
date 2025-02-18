@@ -644,4 +644,39 @@ QUnit.module("Account Reports Builder", ({ beforeEach }) => {
 
         await click(target.querySelector(".o_form_button_save"));
     });
+
+    QUnit.test("can display and hide 'Code' column when toggled in optional fields", async (assert) => {
+        await makeView({
+            type: "form",
+            resId: 1,
+            resModel: "report",
+            serverData,
+            arch,
+        });
+        // Ensure `code` column is hidden by default
+        assert.containsNone(
+            target.querySelector(".account_report_lines_list_x2many"),
+            "span.fw-bold.fixed:contains('Code')",
+            "The 'Code' column should be hidden initially"
+        );
+
+        // simulate toggling the `code` field to make it visible
+        await click(target.querySelector(".o-dropdown.dropdown-toggle"));
+        await click(target.querySelector("input[name='code']"));
+
+        // Check that the column is now visible
+        assert.containsOnce(
+            target.querySelector(".account_report_lines_list_x2many"),
+            "span.fw-bold.fixed:contains('Code')",
+            "The 'Code' column should now be visible after toggling"
+        );
+
+        // Toggle it back to hide and verify
+        await click(target.querySelector("input[name='code']"));
+        assert.containsNone(
+            target.querySelector(".account_report_lines_list_x2many"),
+            "span.fw-bold.fixed:contains('Code')",
+            "The 'Code' column should be hidden after toggling back"
+        );
+    });
 });
