@@ -94,7 +94,7 @@ class FleetVehicle(models.Model):
         if fuel_type and fuel_type in ['gasoline', 'diesel', 'lpg']:
             health_indice = self.env['hr.rule.parameter']._get_parameter_from_code('health_indice', date)
             health_indice_reference = self.env['hr.rule.parameter']._get_parameter_from_code('health_indice_reference', date)
-            co2_fee = ((co2 * 9.0) - fuel_coefficient.get(fuel_type)) * health_indice / health_indice_reference / 12.0
+            co2_fee = (((co2 * 9.0) - fuel_coefficient.get(fuel_type)) / 12.0 * health_indice) / health_indice_reference
         return max(co2_fee, co2_fee_min)
 
     @api.depends('co2', 'fuel_type', 'company_id.country_id')
