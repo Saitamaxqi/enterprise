@@ -1054,7 +1054,7 @@ class PlanningSlot(models.Model):
             ('calendar_id.flexible_hours', '=', False),
             '|',
                 ('default_role_id', 'in', open_shift_role_ids),
-                ('role_ids', 'in', open_shift_role_ids),
+                ('role_ids', 'in', self.role_id.ids),
         ])
         # And make two dictionnaries out of it (default roles and roles). We will prioritize default roles.
         resource_ids_per_role = defaultdict(list)
