@@ -136,8 +136,14 @@
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    Dicha Retención fue consignada oportunamente a nombre de la Dirección de Impuestos y Aduanas Nacionales en la Ciudad de
-                                    <t t-out="env.company.city"/>
+                                    <t t-if="report_name.endswith('ica')">
+                                        Dicha Retención fue consignada oportunamente a nombre de la Secretaría de Hacienda en la Ciudad de
+                                        <t t-esc="env.company.city"/>
+                                    </t>
+                                    <t t-else="">
+                                        Dicha Retención fue consignada oportunamente a nombre de la Dirección de Impuestos y Aduanas Nacionales en la Ciudad de
+                                        <t t-esc="env.company.city"/>
+                                    </t>
                                 </div>
                             </div>
                             <div class="row">
