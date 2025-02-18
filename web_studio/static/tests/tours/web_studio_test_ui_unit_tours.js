@@ -439,7 +439,7 @@ registry.category("web_tour.tours").add("web_studio_set_view_default_group_by", 
             run: "click",
         },
         {
-            trigger: ".o_web_studio_property[name='default_group_by'] .o_select_menu_toggler",
+            trigger: ".o_web_studio_property [name='default_group_by'] .o_select_menu_toggler",
             run: "click",
         },
         {
@@ -467,7 +467,7 @@ registry.category("web_tour.tours").add("web_studio_set_view_default_group_by", 
             run: "click",
         },
         {
-            trigger: ".o_web_studio_property[name='default_group_by'] .o_select_menu_toggler",
+            trigger: ".o_web_studio_property [name='default_group_by'] .o_select_menu_toggler",
             run: "click",
         },
         {
@@ -1784,8 +1784,10 @@ registry.category("web_tour.tours").add("web_studio_test_kanban_menu_ribbon", {
         {
             trigger: ".nav .o_web_studio_new.active",
             run() {
-                return waitFor(".o_web_studio_component.o_web_studio_field_menu", { timeout: 3000 })
-            }
+                return waitFor(".o_web_studio_component.o_web_studio_field_menu", {
+                    timeout: 3000,
+                });
+            },
         },
         {
             trigger: ".o_web_studio_view_renderer .o_web_studio_hook[data-type='t']",

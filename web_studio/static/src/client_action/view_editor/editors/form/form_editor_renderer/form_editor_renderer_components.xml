@@ -23,9 +23,7 @@
 
   <t t-name="web_studio.FormViewAddButtonAction" t-inherit="web.StatusBarButtons">
     <xpath expr="//div/t[2]" position="after">
-      <div class="mt-2 mb-2">
         <AddButtonAction/>
-      </div>
     </xpath>
   </t>
 

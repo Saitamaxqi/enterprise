@@ -8,6 +8,10 @@
 </t>
 
 <t t-name="web_studio.KanbanEditorRenderer" t-inherit="web.KanbanRenderer">
+  <xpath expr="//div[hasclass('o_kanban_renderer')]" position="before">
+      <SelectionHeaderButtons headerButtons="props.archInfo.headerButtons" />
+  </xpath>
+
   <!--   Demo kanban records ungrouped -->
   <xpath expr="//div[hasclass('o_kanban_ghost')]" position="before">
     <t t-call="web_studio.KanbanEditorRenderer.KanbanDemoRecords">

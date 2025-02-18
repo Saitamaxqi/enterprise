@@ -18,7 +18,7 @@ _logger = logging.getLogger(__name__)
 # contains all valid operations
 OPERATIONS_WHITELIST = [
     'add',
-    'add_button_action',
+    'add_header_button',
     'attributes',
     'avatar_image',
     'buttonbox',
@@ -726,6 +726,37 @@ class WebStudioController(http.Controller):
             if filename_field_id:
                 filename_field_id.write({'name': new_name + '_filename'})
 
+    @http.route('/web_studio/get_actions_for_model', type='jsonrpc', auth='user')
+    def get_actions_for_model(self, model):
+        actions_list = {}
+        # first get all actions that are available in the Cog menu
+        actions_for_model = request.env["ir.actions.actions"].search([
+            ('binding_model_id', '=', model)
+        ])
+        # the following code groups action_ids by type to avoid having a browse call for each action
+        actions_types = {}
+        for action in actions_for_model:
+            actions_types.setdefault(action.type, []).append(action.id)
+        for action_type, action_ids in actions_types.items():
+            actions = request.env[action_type].browse(action_ids)
+            for action in actions:
+                actions_list[action.id] = {
+                    'name': action.display_name,
+                    'xml_id': action.xml_id or action.id
+                }
+
+        # also list server actions that are not available in the Cog menu
+        server_actions_for_model = request.env["ir.actions.server"].search([
+            ('model_id', '=', model),
+            ('binding_model_id', '=', False)
+        ])
+        for action in server_actions_for_model:
+            actions_list[action.id] = {
+                'name': action.display_name,
+                'xml_id': action.xml_id
+            }
+        return actions_list
+
     def _create_studio_view(self, view, arch):
         # We have to play with priorities in order for our customization to be the last
         # to be applied.
@@ -1057,7 +1088,9 @@ Are you sure you want to remove the selection values of those records?""", len(r
                     options['color_field'] = 'x_color'
                 new_attrs['options'] = json.dumps(options)
 
-
+        if new_attrs.get('type') and operation['target']['tag'] == 'button':
+            # Set an empty name value for the button
+            new_attrs['name'] = ''
         xpath_node = self._get_xpath_node(arch, operation)
 
         for key, new_attr in new_attrs.items():
@@ -1097,28 +1130,11 @@ Are you sure you want to remove the selection values of those records?""", len(r
             buttonbox_node = etree.Element('div', {'name': 'button_box', 'class': 'oe_button_box'})
             xpath_node.append(buttonbox_node)
 
-    def _operation_add_button_action(self, arch, operation, model=None):
-        """Add action button for form or list view"""
-
-        label = operation.get("label")
-        button_type = operation.get("button_type")
-        if not label:
-            raise UserError(self.env._('The label string is mandatory.'))
-
-        params = {'string': label}
-        if button_type is not None and button_type == 'action':
-            actionId = operation["actionId"]
-            abstract_action = request.env["ir.actions.actions"].browse(actionId)
-            action = request.env[abstract_action.type].browse(actionId)
-            params['name'] = action.xml_id or str(actionId)
-            params['type'] = button_type
-        elif button_type is not None and button_type == 'object':
-            methodId = operation["methodId"]
-            params['name'] = str(methodId)
-            params['type'] = button_type
-        else:
-            raise UserError(self.env._('The type of statusBarButton must be "action" or "method".'))
-
+    def _operation_add_header_button(self, arch, operation, model):
+        """Add action button for form, list or kanban view"""
+        actions_for_model = self.get_actions_for_model(model)
+        type = 'action' if len(actions_for_model) > 0 else 'object'
+        params = {'string': 'New Button', 'type': type}
         expression = "//header[1]"
         position = "inside"
         xpath_node = arch.find('xpath[@expr="{expr}"][@position="{position}"]'.format(expr=expression, position=position))
@@ -1301,9 +1317,9 @@ Are you sure you want to remove the selection values of those records?""", len(r
         )
 
     def _operation_statusbar(self, arch, operation, model=None):
-        """ Create and insert a header as the first child of the form. """
+        """ Create and insert a header as the first child of the element. """
         xpath_node = etree.SubElement(arch, 'xpath', {
-            'expr': '//form[1]/*[1] | //list[1]/*[1]',
+            'expr': '//form[1]/*[1] | //list[1]/*[1] | //kanban[1]/*[1]',
             'position': 'before'
         })
         xpath_node.append(etree.Element('header'))
@@ -1536,17 +1552,3 @@ Are you sure you want to remove the selection values of those records?""", len(r
                 inline_view_etree.remove(node)
 
         return inline_view_etree
-
-    @http.route('/web_studio/check_method', type='jsonrpc', auth='user')
-    def check_method(self, model_name, method_name):
-        """check if a method exists and is callable for a model"""
-        model = request.env[model_name]
-        if model is None:
-            raise ValidationError(_('The model %s doesn\'t exist.', model_name))
-        elif not method_name:
-            raise ValidationError(_('It lacks a method to check.'))
-        try:
-            get_public_method(model, method_name)
-        except (AttributeError, AccessError):
-            raise ValidationError(_('The method %(method)s does not exist on the model %(model)s.', method=method_name, model=str(model)))
-        return True

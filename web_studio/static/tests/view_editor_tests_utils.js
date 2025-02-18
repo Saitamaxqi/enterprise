@@ -96,6 +96,7 @@ export function handleDefaultStudioRoutes() {
     }));
     onRpc("/web_studio/edit_view", () => {});
     onRpc("/web_studio/edit_view_arch", () => {});
+    onRpc("/web_studio/get_actions_for_model", () => []);
     onRpc("/web_studio/get_default_value", () => ({ default_value: undefined }));
     onRpc("/web_studio/get_studio_view_arch", () => ({ studio_view_arch: "" }));
     onRpc("get_approval_spec", ({ args }) => {

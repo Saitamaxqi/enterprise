@@ -6,7 +6,7 @@ import { ExistingFields } from "@web_studio/client_action/view_editor/editors/co
 import { Property } from "@web_studio/client_action/view_editor/property/property";
 import { SidebarViewToolbox } from "@web_studio/client_action/view_editor/interactive_editor/sidebar_view_toolbox/sidebar_view_toolbox";
 import { Properties } from "@web_studio/client_action/view_editor/interactive_editor/properties/properties";
-import { KanbanButtonProperties } from "@web_studio/client_action/view_editor/editors/kanban/kanban_editor_sidebar/properties/kanban_button_properties/kanban_button_properties";
+import { ButtonProperties } from "@web_studio/client_action/view_editor/interactive_editor/properties/button_properties/button_properties";
 import { FieldProperties } from "@web_studio/client_action/view_editor/interactive_editor/properties/field_properties/field_properties";
 import { WidgetProperties } from "@web_studio/client_action/view_editor/interactive_editor/properties/widget_properties/widget_properties";
 import { useEditNodeAttributes } from "@web_studio/client_action/view_editor/view_editor_model";
@@ -93,10 +93,16 @@ export class KanbanEditorSidebar extends Component {
         this.editArchAttributes = useEditNodeAttributes({ isRoot: true });
         this.propertiesComponents = {
             a: {
-                component: KanbanButtonProperties,
+                component: ButtonProperties,
+                props: {
+                    availableOptions: ["invisible"],
+                },
             },
             button: {
-                component: KanbanButtonProperties,
+                component: ButtonProperties,
+                props: {
+                    availableOptions: ["invisible"],
+                },
             },
             field: {
                 component: KanbanFieldProperties,

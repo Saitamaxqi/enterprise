@@ -1,6 +1,7 @@
 import { Component, onWillStart, onWillUpdateProps, useState } from "@odoo/owl";
 import { CheckBox } from "@web/core/checkbox/checkbox";
 import { DomainSelectorDialog } from "@web/core/domain_selector_dialog/domain_selector_dialog";
+import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
 import { SelectMenu } from "@web/core/select_menu/select_menu";
 import { Property } from "@web_studio/client_action/view_editor/property/property";
@@ -39,7 +40,9 @@ export class ButtonProperties extends Component {
         this.dialog = useService("dialog");
         this.orm = useService("orm");
         this.actionService = useService("action");
-        this.state = useState({});
+        this.state = useState({
+            actionsList: [],
+        });
         this.editNodeAttributes = useEditNodeAttributes();
 
         this.decoratedOrmCall = useSnackbarWrapper(this.orm.call.bind(this.orm));
@@ -75,12 +78,54 @@ export class ButtonProperties extends Component {
             activeFields: approvalRecordDefinition,
         };
 
-        onWillStart(() => {
-            this.updateApprovalSpec();
-        });
+        // We don't want to display 'a' in the sidebar.
+        this.env.viewEditorModel.activeNode.humanName = _t("Button");
+
+        onWillStart(async () => Promise.all([this.updateApprovalSpec(), this.loadActions()]));
 
         onWillUpdateProps((nextProps) => {
             this.updateApprovalSpec(this.getApprovalParams(nextProps.node));
+        });
+    }
+
+    get availableOptions() {
+        if (
+            this.env.viewEditorModel.viewType !== "form" &&
+            this.env.viewEditorModel.activeNode.arch.closest("header")
+        ) {
+            // Invisible property is not editable for Header buttons in List and Kanban
+            return [];
+        }
+        return this.props.availableOptions;
+    }
+
+    get currentActionValue() {
+        if (this.state.actionsList?.[this.props.node.attrs.name]) {
+            return this.state.actionsList[this.props.node.attrs.name].xml_id;
+        }
+        return this.props.node.attrs.name;
+    }
+
+    get actionsForModel() {
+        return Object.values(this.state.actionsList).map((a) => ({
+            label: odoo.debug ? `${a.name} (${a.xml_id})` : a.name,
+            value: a.xml_id,
+        }));
+    }
+
+    get types() {
+        return [
+            { label: _t("Run a Server Action"), value: _t("action") },
+            { label: _t("Call a method"), value: _t("object") },
+        ];
+    }
+
+    async loadActions() {
+        if (this.props.node.attrs.type !== "action") {
+            return;
+        }
+        this.state.actionsList = await rpc("/web_studio/get_actions_for_model", {
+            model: this.env.viewEditorModel.resModel,
         });
     }
 
@@ -99,6 +144,10 @@ export class ButtonProperties extends Component {
     async onChangeApprovalRecord(record, changes, id) {
         await this.decoratedOrmWrite("studio.approval.rule", [id], changes);
         this.updateApprovalSpec();
+    }
+
+    get showApprovals() {
+        return this.env.viewEditorModel.viewType === "form";
     }
 
     get showRainbowMan() {

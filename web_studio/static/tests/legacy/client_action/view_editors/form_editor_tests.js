@@ -875,7 +875,7 @@ QUnit.module("View Editors", (hooks) => {
         );
 
         assert.strictEqual(
-            document.querySelector(".o_web_studio_property.o_web_studio_sidebar_text input").value,
+            document.querySelector(".o_web_studio_property .o_web_studio_sidebar_text input").value,
             "Kikou",
             "the page name in sidebar should be set"
         );
@@ -1039,7 +1039,7 @@ QUnit.module("View Editors", (hooks) => {
 
         await click(target.querySelector("li .kikou2"));
         assert.strictEqual(
-            target.querySelector(".o_web_studio_property.o_web_studio_sidebar_text input").value,
+            target.querySelector(".o_web_studio_property .o_web_studio_sidebar_text input").value,
             "Kikou2",
             "the page name in sidebar should be set"
         );
@@ -2394,6 +2394,9 @@ QUnit.module("View Editors", (hooks) => {
                 `,
             resId: 1,
             mockRPC: async function (route, args, performRPC) {
+                if (route === "/web_studio/get_actions_for_model") {
+                    return [];
+                }
                 if (route === "/web_studio/get_studio_view_arch") {
                     return { studio_view_arch: "" };
                 }

@@ -2,8 +2,8 @@
 
 <t t-name="web_studio.ViewEditor.InteractiveEditorProperties.Button">
     <ViewStructureProperties>
-        <div class="o_web_studio_sidebar_approval border-bottom border-secondary pb-4 mb-3">
-            <ModifiersProperties node="props.node" availableOptions="props.availableOptions"/>
+        <ModifiersProperties node="props.node" availableOptions="availableOptions"/>
+        <div t-if="showApprovals" class="o_web_studio_sidebar_approval border-bottom border-secondary pb-4 mb-3">
             <div class="d-flex align-items-center mb-1">
                 <h6 class="mb-0">Approvals</h6>
                 <button class="ms-auto btn btn-custom" title="Open kanban view of approvals" t-on-click="openKanbanApprovalRules">
@@ -30,6 +30,7 @@
             type="'string'"
             value="this.props.node.attrs.string"
             onChange.bind="onChangeAttribute"
+            autofocus="true"
         >
             Label
         </Property>
@@ -37,6 +38,36 @@
             value="this.props.node.attrs.class"
             onChange.bind="onChangeAttribute"
         />
+        <Property
+            name="'type'"
+            type="'selection'"
+            value="this.props.node.attrs.type"
+            childProps="{ choices: types }"
+            onChange.bind="onChangeAttribute"
+        >
+            What should the button do
+        </Property>
+        <t t-if="this.props.node.attrs.type === 'action'">
+            <Property
+                name="'name'"
+                type="'selection'"
+                value="currentActionValue"
+                childProps="{ choices: actionsForModel }"
+                onChange.bind="onChangeAttribute"
+            >
+                Action
+            </Property>
+        </t>
+        <t t-else="">
+            <Property
+                name="'name'"
+                type="'string'"
+                value="props.node.attrs.name"
+                onChange.bind="onChangeAttribute"
+            >
+                Method
+            </Property>
+        </t>
     </ViewStructureProperties>
 </t>
 

@@ -4,23 +4,7 @@
   <t t-name="web_studio.ListEditorRenderer" t-inherit="web.ListRenderer" >
 
     <xpath expr="//*[@t-ref='table']" position="before">
-      <div class="d-flex justify-content-between mt-2 mb-2">
-        <div class="d-flex align-items-center align-content-around flex-wrap gap-1">
-          <t t-foreach="props.archInfo.headerButtons" t-as="button" t-key="button.id">
-            <button
-              class="btn btn-secondary o-web-studio-editor--element-clickable"
-              t-att-studioxpath="button.studioXpath"
-              t-att-data-studio-xpath="button.studioXpath"
-              t-att-data-tooltip-template="this.env.debug ? 'views.ViewButtonTooltip' : false"
-              t-att-data-tooltip-info="this.env.debug ? makeTooltipButton(button) : false"
-              data-tooltip-delay="1000"
-              t-on-click="() => this.env.config.onNodeClicked(button.studioXpath)">
-              <t t-esc="button.string"></t>
-            </button>
-          </t>
-          <AddButtonAction/>
-        </div>
-      </div>
+      <SelectionHeaderButtons headerButtons="props.archInfo.headerButtons" />
     </xpath>
 
     <xpath expr="//*[@t-ref='table']" position="attributes">

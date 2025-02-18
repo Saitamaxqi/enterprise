@@ -1,4 +1,4 @@
-import { Component, toRaw } from "@odoo/owl";
+import { Component, toRaw, useSubEnv } from "@odoo/owl";
 
 import { closest, touching } from "@web/core/utils/ui";
 import { useDraggable } from "@web/core/utils/draggable";
@@ -185,9 +185,7 @@ export class InteractiveEditor extends Component {
 
                 const attrForXpath = Object.entries(attrs)
                     .filter(([, value]) => !!value)
-                    .map(([attName, value]) => {
-                        return `@${attName}='${value}'`;
-                    })
+                    .map(([attName, value]) => `@${attName}='${value}'`)
                     .join(" and ");
                 const nodeXpath = `${tag}[${attrForXpath}]`;
                 const fullXpath = `${xpathToClick}/${nodeXpath}`;
@@ -209,6 +207,10 @@ export class InteractiveEditor extends Component {
                 domEl.click();
             }
         };
+
+        useSubEnv({
+            setAutoClick: (targetInfo, nodeDescr) => this.setAutoClick(targetInfo, nodeDescr),
+        });
     }
 
     get viewEditorModel() {

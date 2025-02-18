@@ -481,13 +481,17 @@ test("buttons can be edited when being selected", async () => {
     </kanban>
     `,
     });
+    onRpc("/web_studio/get_actions_for_model", () => [
+        { name: "Action 1", xml_id: "my_first_action" },
+        { name: "Action 2", xml_id: "my_last_action" },
+    ]);
     expect("footer .o-web-studio-editor--element-clickable").toHaveCount(2);
     await contains("a.o-web-studio-editor--element-clickable").click();
     expect("input[id=class]").toHaveCount(1);
-    expect("input[id=name]").toHaveValue("my_first_action");
+    expect("[name=name] .o_select_menu_toggler").toHaveText("Action 1");
     await contains("button.o-web-studio-editor--element-clickable").click();
     expect("input[id=class]").toHaveCount(1);
-    expect("input[id=name]").toHaveValue("my_last_action");
+    expect("[name=name] .o_select_menu_toggler").toHaveText("Action 2");
 });
 
 test("grouped kanban editor", async () => {
@@ -691,9 +695,7 @@ test("grouped kanban fold_field can be change for custom model", async () => {
         }
     });
 
-    onRpc("ir.model.fields", "web_search_read", (params) => {
-        return [];
-    });
+    onRpc("ir.model.fields", "web_search_read", (params) => []);
 
     onRpc("ir.model.fields", "write", (params) => {
         expect(params.args[0][0]).toBe(999);

@@ -220,8 +220,8 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         })
 
     @mute_logger('odoo.http')
-    def test_web_studio_check_method_in_model(self):
-        self.start_tour("/odoo?debug=tests", 'web_studio_check_method_in_model', login="admin")
+    def test_web_studio_add_button_type_object(self):
+        self.start_tour("/odoo?debug=tests", 'web_studio_add_button_type_object', login="admin")
 
     def test_create_action_button_in_form_view(self):
         self.start_tour("/odoo?debug=tests", 'web_studio_test_create_action_button_in_form_view', login="admin")
@@ -237,7 +237,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             <data>
                 <xpath expr="//form[1]/field[@name='name']" position="before">
                     <header>
-                        <button string="web_studio_new_button_action_name" name="{action1_Id}" type="action"/>
+                        <button string="web_studio_new_button_action_name" type="action" name="{action1_Id}"/>
                     </header>
                 </xpath>
             </data>""".format(action1_Id=action1.xml_id))
@@ -253,8 +253,8 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             <data>
                 <xpath expr="//form[1]/field[@name='name']" position="before">
                     <header>
-                        <button string="web_studio_new_button_action_name" name="{action1_Id}" type="action"/>
-                        <button string="web_studio_other_button_action_name" name="{action2_Id}" type="action"/>
+                        <button string="web_studio_new_button_action_name" type="action" name="{action1_Id}"/>
+                        <button string="web_studio_other_button_action_name" type="action" name="{action2_Id}"/>
                     </header>
                 </xpath>
             </data>""".format(action1_Id=action1.xml_id, action2_Id=action2.xml_id))
@@ -285,7 +285,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             <data>
                 <xpath expr="//field[@name='avatar_128']" position="before">
                     <header>
-                        <button string="web_studio_new_button_action_name" name="{actionId}" type="action"/>
+                        <button string="web_studio_new_button_action_name" type="action" name="{actionId}"/>
                     </header>
                 </xpath>
             </data>""".format(actionId=action.xml_id))

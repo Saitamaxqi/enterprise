@@ -7,6 +7,7 @@ import {
 import { Property } from "@web_studio/client_action/view_editor/property/property";
 import { SidebarViewToolbox } from "@web_studio/client_action/view_editor/interactive_editor/sidebar_view_toolbox/sidebar_view_toolbox";
 import { Properties } from "@web_studio/client_action/view_editor/interactive_editor/properties/properties";
+import { ButtonProperties } from "@web_studio/client_action/view_editor/interactive_editor/properties/button_properties/button_properties";
 import { _t } from "@web/core/l10n/translation";
 import { sprintf } from "@web/core/utils/strings";
 import { FieldProperties } from "@web_studio/client_action/view_editor/interactive_editor/properties/field_properties/field_properties";
@@ -51,6 +52,12 @@ export class ListEditorSidebar extends Component {
         this.viewEditorModel = useState(this.env.viewEditorModel);
         this.editArchAttributes = useEditNodeAttributes({ isRoot: true });
         this.propertiesComponents = {
+            button: {
+                component: ButtonProperties,
+                props: {
+                    availableOptions: ["invisible"],
+                },
+            },
             field: {
                 component: ListFieldNodeProperties,
                 props: {
@@ -90,7 +97,10 @@ export class ListEditorSidebar extends Component {
     get sortChoices() {
         // only have stored fields that are present in arch
         const storeFieldsInArch = Object.fromEntries(
-            Object.values(this.archInfo.fieldNodes).map((field) => [field.name, this.viewEditorModel.fields[field.name]])
+            Object.values(this.archInfo.fieldNodes).map((field) => [
+                field.name,
+                this.viewEditorModel.fields[field.name],
+            ])
         );
         return fieldsToChoices(
             storeFieldsInArch,

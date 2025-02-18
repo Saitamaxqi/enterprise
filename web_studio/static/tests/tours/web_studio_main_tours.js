@@ -1676,7 +1676,7 @@ const buttonToogleStudio = {
     trigger: `button[title="Toggle Studio"]`,
     run: "click",
 };
-const addActionButtonModalSteps = (
+const addActionButtonSteps = (
     ActionLabel = "web_studio_new_button_action_name",
     ActionName = "Privacy Lookup"
 ) => [
@@ -1685,47 +1685,43 @@ const addActionButtonModalSteps = (
         run: "click",
     },
     {
-        trigger: ".o-web-studio-editor--modal-add-action input#set_label",
+        trigger: ".o_web_studio_property input[name='string']",
         run: `edit ${ActionLabel}`,
     },
     {
-        trigger: ".o-web-studio-editor--modal-add-action input#set_button_type_to_action",
+        trigger: ".o_web_studio_property [name='name'] button",
         run: "click",
     },
     {
-        trigger: ".o-web-studio-editor--modal-add-action .o_record_selector input",
-        run: `edit ${ActionName}`,
-    },
-    {
-        trigger: `.o-web-studio-editor--modal-add-action .o-autocomplete--dropdown-menu li a:not(:has(.fa-spin)):contains(${ActionName})`,
-        run: "click",
-    },
-    {
-        trigger: "footer button.o-web-studio-editor--add-button-confirm",
+        trigger: `.o_select_menu_menu .o_select_menu_item:contains(${ActionName})`,
         run: "click",
     },
 ];
 
-const addMethodButtonModalSteps = () => [
+const addMethodButtonSteps = () => [
     {
         trigger: ".o-web-studio-editor--add-button-action",
         run: "click",
     },
     {
-        trigger: ".o-web-studio-editor--modal-add-action input#set_label",
+        trigger: ".o_web_studio_property input[name='string']",
         run: `edit test`,
     },
     {
-        trigger: ".o-web-studio-editor--modal-add-action input#set_button_type_to_object",
+        trigger: ".o_web_studio_property [name='type'] button",
         run: "click",
     },
     {
-        trigger: ".o-web-studio-editor--modal-add-action  input#set_method",
+        trigger: ".o_select_menu_menu .o_select_menu_item:contains(Call a method)",
+        run: "click",
+    },
+    {
+        trigger: ".o_web_studio_property input[name='name']",
         run: `edit demo && click body`,
     },
 ];
 
-registry.category("web_tour.tours").add("web_studio_check_method_in_model", {
+registry.category("web_tour.tours").add("web_studio_add_button_type_object", {
     steps: () => [
         {
             trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
@@ -1736,17 +1732,7 @@ registry.category("web_tour.tours").add("web_studio_check_method_in_model", {
             run: "click",
         },
         buttonToogleStudio,
-        ...addMethodButtonModalSteps(),
-        {
-            trigger: "div.text-danger",
-            run() {
-                const div_error = document.querySelector("div.text-danger");
-                assertEqual(
-                    div_error.innerHTML,
-                    "The method demo does not exist on the model res.partner()."
-                );
-            },
-        },
+        ...addMethodButtonSteps(),
     ],
 });
 
@@ -1761,7 +1747,7 @@ registry.category("web_tour.tours").add("web_studio_test_create_action_button_in
             run: "click",
         },
         buttonToogleStudio,
-        ...addActionButtonModalSteps(),
+        ...addActionButtonSteps(),
         {
             trigger: ".o_web_studio_leave a",
             run: "click",
@@ -1783,7 +1769,7 @@ registry
                 run: "click",
             },
             buttonToogleStudio,
-            ...addActionButtonModalSteps("web_studio_other_button_action_name", "Download (vCard)"),
+            ...addActionButtonSteps("web_studio_other_button_action_name", "Download (vCard)"),
             {
                 trigger: ".o_web_studio_leave a",
                 run: "click",
@@ -1811,7 +1797,7 @@ registry.category("web_tour.tours").add("web_studio_test_create_action_button_in
             trigger: ".o_optional_columns_dropdown button",
             run: "click",
         },
-        ...addActionButtonModalSteps(),
+        ...addActionButtonSteps(),
         {
             trigger: ".o_web_studio_leave a",
             run: "click",

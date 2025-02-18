@@ -834,18 +834,18 @@ test("CharField can edit its placeholder_field option", async () => {
     `,
     });
     await contains(".o_cell[data-field-name=display_name]").click();
-    expect(".o_web_studio_property[name=placeholder_field]").toHaveCount(1);
+    expect(".o_web_studio_property [name=placeholder_field]").toHaveCount(1);
     expect(".o_web_studio_property label[for=placeholder_field]").toHaveText(
         "Dynamic Placeholder?",
         {
             message: "the option is title Dynamic Placeholder and has a tooltip",
         }
     );
-    expect(".o_web_studio_property[name=dynamic_placeholder]").toHaveCount(0, {
+    expect(".o_web_studio_property [name=dynamic_placeholder]").toHaveCount(0, {
         message:
             "this options is not documented, because it does not make sense to edit this from studio",
     });
-    expect(".o_web_studio_property[name=dynamic_placeholder_model_reference_field]").toHaveCount(
+    expect(".o_web_studio_property [name=dynamic_placeholder_model_reference_field]").toHaveCount(
         0,
         {
             message:
@@ -870,7 +870,7 @@ test("TextField can edit its placeholder", async () => {
     });
     await contains(".o_cell[data-field-name=text]").click();
     expect(".o_web_studio_property input[name=placeholder]").toHaveCount(1);
-    expect(".o_web_studio_property[name=placeholder_field]").toHaveCount(1);
+    expect(".o_web_studio_property [name=placeholder_field]").toHaveCount(1);
 });
 
 test("form editor - chatter edition", async () => {

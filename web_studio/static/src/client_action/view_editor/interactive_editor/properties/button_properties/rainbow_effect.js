@@ -22,10 +22,10 @@ export class RainbowEffect extends Component {
     }
     get choices() {
         return [
-            { label:  _t("Fast"), value: "fast" },
-            { label:  _t("Medium"), value: "medium" },
-            { label:  _t("Slow"), value: "slow" },
-            { label:  _t("None"), value: "no" },
+            { label: _t("Fast"), value: "fast" },
+            { label: _t("Medium"), value: "medium" },
+            { label: _t("Slow"), value: "slow" },
+            { label: _t("None"), value: "no" },
         ];
     }
     get rainbowEffect() {

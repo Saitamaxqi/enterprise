@@ -1,6 +1,6 @@
 import { formView } from "@web/views/form/form_view";
 import { StudioHook } from "@web_studio/client_action/view_editor/editors/components/studio_hook_component";
-import { NewButtonBoxDialog } from "@web_studio/client_action/view_editor/editors/form/form_editor_sidebar/properties/button_properties/new_button_box_dialog";
+import { NewButtonBoxDialog } from "@web_studio/client_action/view_editor/interactive_editor/properties/button_properties/new_button_box_dialog";
 import { FieldSelectorDialog } from "@web_studio/client_action/view_editor/editors/components/field_selector_dialog";
 import { SelectionContentDialog } from "@web_studio/client_action/view_editor/interactive_editor/field_configuration/selection_content_dialog";
 import {

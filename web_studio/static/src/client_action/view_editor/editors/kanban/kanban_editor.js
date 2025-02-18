@@ -1,6 +1,7 @@
 import { registry } from "@web/core/registry";
 import { omit } from "@web/core/utils/objects";
 import { kanbanView } from "@web/views/kanban/kanban_view";
+import { computeXpath } from "../xml_utils";
 import { KanbanEditorCompiler } from "./kanban_editor_compiler";
 import { KanbanEditorRecord } from "@web_studio/client_action/view_editor/editors/kanban/kanban_editor_record";
 import { KanbanEditorRenderer } from "@web_studio/client_action/view_editor/editors/kanban/kanban_editor_renderer";
@@ -9,11 +10,24 @@ import { KanbanEditorSidebar } from "./kanban_editor_sidebar/kanban_editor_sideb
 import { getStudioNoFetchFields, useModelConfigFetchInvisible } from "../utils";
 import { KANBAN_CARD_ATTRIBUTE } from "@web/views/kanban/kanban_arch_parser";
 
+function parseStudioGroups(node) {
+    if (node.hasAttribute("studio_groups")) {
+        return node.getAttribute("studio_groups");
+    }
+}
+
 class EditorArchParser extends kanbanView.ArchParser {
     parse(arch, models, modelName) {
         const parsed = super.parse(...arguments);
         const noFetch = getStudioNoFetchFields(parsed.fieldNodes);
         parsed.fieldNodes = omit(parsed.fieldNodes, ...noFetch.fieldNodes);
+        return parsed;
+    }
+
+    processButton(node) {
+        const parsed = super.processButton(node);
+        parsed.studioXpath = computeXpath(node, "kanban");
+        parsed.studio_groups = parseStudioGroups(node);
         return parsed;
     }
 }

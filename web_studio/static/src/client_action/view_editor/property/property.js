@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component, useEffect, useRef } from "@odoo/owl";
 import { CheckBox } from "@web/core/checkbox/checkbox";
 import { DomainSelectorDialog } from "@web/core/domain_selector_dialog/domain_selector_dialog";
 import { SelectMenu } from "@web/core/select_menu/select_menu";
@@ -25,10 +25,26 @@ export class Property extends Component {
         },
         tooltip: { type: String, optional: true },
         inputAttributes: { type: Object, optional: true },
+        autofocus: { type: Boolean, optional: true },
     };
 
     setup() {
         this.dialog = useService("dialog");
+        this.rootRef = useRef("root");
+
+        useEffect(
+            (el) => {
+                if (!this.props.autofocus || !el) {
+                    return;
+                }
+                if (this.props.type === "selection") {
+                    el.querySelector(".o_select_menu_toggler").click();
+                } else {
+                    el.querySelector("input").focus();
+                }
+            },
+            () => [this.rootRef.el, this.env.viewEditorModel.activeNodeXpath]
+        );
     }
 
     get className() {

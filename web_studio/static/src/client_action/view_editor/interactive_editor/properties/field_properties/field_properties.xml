@@ -35,6 +35,7 @@
             type="'string'"
             value="props.node.attrs.string || props.node.field.string"
             onChange.bind="onChangeFieldString"
+            autofocus="true"
         >
             Label
         </Property>

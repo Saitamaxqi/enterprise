@@ -1,7 +1,7 @@
 import { listView } from "@web/views/list/list_view";
 import { useThrottleForAnimation } from "@web/core/utils/timing";
 import { reactive, useEffect, useState } from "@odoo/owl";
-import { AddButtonAction } from "../../interactive_editor/action_button/action_button";
+import { SelectionHeaderButtons } from "../../interactive_editor/action_button/action_button";
 
 const colSelectedClass = "o-web-studio-editor--element-clicked";
 const colHoverClass = "o-web-studio--col-hovered";
@@ -31,7 +31,7 @@ export class ListEditorRenderer extends listView.Renderer {
     static recordRowTemplate = "web_studio.ListEditorRenderer.RecordRow";
     static components = {
         ...listView.Renderer.components,
-        AddButtonAction,
+        SelectionHeaderButtons,
     };
 
     setup() {
@@ -129,14 +129,12 @@ export class ListEditorRenderer extends listView.Renderer {
     get allColumns() {
         let cols = this._allColumns;
         if (this.viewEditorModel.showInvisible) {
-            cols = cols.map((c) => {
-                return {
-                    ...c,
-                    optional: false,
-                    studioColumnInvisible:
-                        c.optional === "hide" || super.evalColumnInvisible(c.column_invisible),
-                };
-            });
+            cols = cols.map((c) => ({
+                ...c,
+                optional: false,
+                studioColumnInvisible:
+                    c.optional === "hide" || super.evalColumnInvisible(c.column_invisible),
+            }));
         } else {
             cols = cols.filter((c) => !this.evalColumnInvisible(c.column_invisible));
         }
