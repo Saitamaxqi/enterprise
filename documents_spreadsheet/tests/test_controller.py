@@ -78,8 +78,8 @@ class TestSpreadsheetDocumentController(SpreadsheetTestCommon, HttpCase):
             files=[('ufile', ('test.osheet.json', json.dumps(data), 'application/json'))],
         )
 
-        self.assertEqual(response.status_code, 400)
-        self.assertTrue('Looks like the spreadsheet file contains invalid data.' in response.text)
+        self.assertIn('Looks like the spreadsheet file contains invalid data.', response.text)
+        self.assertEqual(response.status_code, 422)
 
     def test_get_blank_spreadsheet_data(self):
         self.authenticate(self.spreadsheet_user.login, self.spreadsheet_user.password)
