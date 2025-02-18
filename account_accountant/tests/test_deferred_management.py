@@ -193,8 +193,8 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
         move.button_draft()
         # January deferred entry is in lock period, so it is reversed, not deleted, thus we have one deferred entry and its revert
         self.assertEqual(len(move.deferred_move_ids), 2)
-        self.assertEqual(move.deferred_move_ids[0].date, fields.Date.to_date('2023-02-28'))
-        self.assertEqual(move.deferred_move_ids[1].date, fields.Date.to_date('2023-01-31'))
+        self.assertEqual(move.deferred_move_ids[0].date, fields.Date.to_date('2023-01-31'))
+        self.assertEqual(move.deferred_move_ids[1].date, fields.Date.to_date('2023-02-28'))
 
         # If we repost the move, it should be allowed
         move.action_post()
