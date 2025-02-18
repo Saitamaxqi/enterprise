@@ -103,6 +103,7 @@ subscription_rules AS (
     JOIN currency_rate cr
         ON cr.company_id = log.company_id
     WHERE NOT rules.team_rule
+      AND log.event_type != '3_transfer'
       AND (rules.recurring_plan_id IS NULL OR log.plan_id = rules.recurring_plan_id)
       AND log.user_id = rules.user_id
     {'AND log.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
