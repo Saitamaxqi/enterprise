@@ -228,12 +228,7 @@
         }
     }
 }
-.modal.o_sign_signature_dialog {
-    .modal-footer {
-        display: flex;
-        justify-content: flex-start;
-    }
-}
+
 .modal {
     .o_sign_refuse_confirm_message {
         width: 100%;
@@ -261,49 +256,6 @@
 
 @media only screen and (min-width:769px) {
     .mobile-tablet-show {
-        display: none !important;
-    }
-}
-
-@include media-breakpoint-down(md) {
-
-    .o_sign_item_bottom_sheet {
-        display: none;
-        opacity: 0;
-
-        &.show {
-            opacity: 1;
-            display: block;
-            box-shadow: 0 0 5px 0 rgba(0,0,0,0.25);
-        }
-
-        .o_sign_next_button {
-            text-transform: uppercase;
-        }
-
-        .o_sign_label {
-            width: 100%;
-            text-transform: uppercase;
-        }
-    }
-
-    .modal.o_sign_signature_dialog .modal-footer .btn {
-        width: calc((100% - 4 * 0.25rem) / 3) !important;
-    }
-}
-
-@media only screen and (max-width:380px) {
-    .mobile-xs-hide{
-        display: none !important;
-    }
-}
-.mobile-xs-show{
-    .dropdown-item{
-        margin-bottom: 3px;
-    }
-}
-@media only screen and (min-width:381px) {
-    .mobile-xs-show{
         display: none !important;
     }
 }

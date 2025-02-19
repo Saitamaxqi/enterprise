@@ -49,23 +49,3 @@
         }
     }
 }
-
-@include media-breakpoint-down(md) {
-    .modal.o_sign_signature_dialog {
-        h1 {
-            font-size: $h1-font-size * 3 / 4;
-        }
-
-        h2, h3, h4, h5, h6 {
-            font-size: $o-font-size-base-touch;
-        }
-
-        .card.o_web_sign_signature_group {
-            padding: 0;
-
-            .row {
-                flex-wrap: nowrap;
-            }
-        }
-    }
-}
