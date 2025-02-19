@@ -61,7 +61,7 @@ class L10n_InGstReturnPeriod(models.Model):
             details_pos_lines = {}
             for pos_order_line in pos_order_lines:
                 move_id = pos_order_line.order_id.session_move_id.id
-                income_account = pos_order_line.product_id.with_company(pos_order_line.company_id)._get_product_accounts()["income"]
+                income_account = pos_order_line.product_id.with_company(pos_order_line.company_id)._get_product_accounts()["income"] or pos_order_line.order_id.config_id.journal_id.default_account_id
                 if pos_order_line.order_id.fiscal_position_id:
                     income_account = pos_order_line.order_id.fiscal_position_id.map_account(income_account)
                 details_pos_lines.setdefault(move_id, {})
