@@ -1,0 +1,9 @@
+.o_pay_run_calendar_view, .o_action_manager:has(.o_pay_run_calendar_view)~.o-main-components-container {
+  .o_cw_popover_link {
+    background-color: #fff !important;
+  }
+
+  .o_cw_filter_input_bg:not(:checked) {
+    background-color: #fff !important;
+  }
+}

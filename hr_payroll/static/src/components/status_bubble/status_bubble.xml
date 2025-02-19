@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="hr_payroll.StatusBubble">
+        <span class="state-bubbles d-flex">
+            <t t-foreach="props.selection" t-as="option" t-key="option_index">
+                <span class="state d-inline-flex flex-column align-items-center justify-content-center">
+                    <span class="state-label" t-att-class="{'state-label-issue':activeIndex &gt;= 0 &amp;&amp; (props.warningCount || props.errorCount) }">
+                        <span t-if="option_index === activeIndex &amp;&amp; (props.warningCount || props.errorCount)">
+                            <t t-esc="(props.warningCount + props.errorCount).toString()"/> Issues
+                        </span>
+                    </span>
+                    <div class="w-100 d-inline-flex position-relative justify-content-center">
+                        <div class="state-bubble" t-att-class="{
+                            'success': option_index &lt;= activeIndex,
+                            'warning': option_index === activeIndex &amp;&amp; props.warningCount,
+                            'danger': option_index === activeIndex &amp;&amp; props.errorCount,
+                            }"/>
+                        <span class="state-bubble-line-left position-absolute w-50 border"
+                              t-if="option_index &gt; 0"
+                              t-att-class="{
+                            'success': option_index &lt;= activeIndex,
+                            'warning': option_index === activeIndex &amp;&amp; props.warningCount,
+                            'danger': option_index === activeIndex &amp;&amp; props.errorCount,
+                            }"/>
+                        <span class="state-bubble-line-right position-absolute w-50 border"
+                              t-if="option_index &lt; props.selection.length-1"
+                              t-att-class="{
+                            'success': option_index &lt; activeIndex,
+                            }"/>
+                    </div>
+                    <span class="state-label"><t t-esc="option[1]"/></span>
+                </span>
+            </t>
+        </span>
+    </t>
+</templates>

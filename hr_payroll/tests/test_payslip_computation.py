@@ -231,14 +231,16 @@ class TestPayslipComputation(TestPayslipContractBase):
             'date_stop': end,
         })
         work_entry.action_validate()
-        payslip_wizard = self.env['hr.payslip.employees'].create({'employee_ids': [(4, self.richard_emp.id)]})
-        batch_id = payslip_wizard.with_context({
-            'default_date_start': Date.to_string(start),
-            'default_date_end': Date.to_string(end + relativedelta(days=1))
-        }).compute_sheet()['res_id']
+        payslip_run = self.env['hr.payslip.run'].create({
+            'date_start': Date.to_string(start),
+            'date_end': Date.to_string(end + relativedelta(days=1)),
+        })
+
+        payslip_run.generate_payslips([self.richard_emp.id])
+
         payslip = self.env['hr.payslip'].search([
             ('employee_id', '=', self.richard_emp.id),
-            ('payslip_run_id', '=', batch_id),
+            ('payslip_run_id', '=', payslip_run.id),
         ])
         work_line = payslip.worked_days_line_ids.filtered(lambda l: l.work_entry_type_id == self.env.ref('hr_work_entry.work_entry_type_attendance'))  # From default calendar.attendance
         extra_work_line = payslip.worked_days_line_ids.filtered(lambda l: l.work_entry_type_id == self.work_entry_type)

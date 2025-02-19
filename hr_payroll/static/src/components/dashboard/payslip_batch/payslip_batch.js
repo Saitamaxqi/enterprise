@@ -14,7 +14,7 @@ export class PayrollDashboardPayslipBatch extends Component {
      * Handles clicking on the title
      */
     onClickTitle() {
-        this.actionService.doAction('hr_payroll.action_hr_payslip_run_tree');
+        this.actionService.doAction("hr_payroll.action_hr_payslip_run");
     }
 
     getColorFromState(state) {

@@ -136,13 +136,13 @@ class TestCreditTime(AccountTestInvoicingCommon):
         self.assertEqual(len(work_entries_2), 38) # 5-6 (2), 9-13 (5), 16-20 (5), 23-27 (5), 30-31 (2) March Morning - Afternoon
 
         # Generate Payslip
-        payslip_run_id = self.env['hr.payslip.employees'].with_context(
-            default_date_start='2020-03-01',
-            default_date_end='2020-03-31',
-            allowed_company_ids=self.env.company.ids,
-        ).create({}).compute_sheet()['res_id']
+        payslip_run = self.env["hr.payslip.run"].create({
+            "date_start": "2020-03-01",
+            "date_end": "2020-03-31",
+        })
 
-        payslip_run = self.env['hr.payslip.run'].browse(payslip_run_id)
+        employees = self.env["hr.employee"].search(payslip_run._get_employees_domain())
+        payslip_run.generate_payslips(employees.ids)
 
         self.assertEqual(len(payslip_run.slip_ids), 2)
 
@@ -271,14 +271,13 @@ class TestCreditTime(AccountTestInvoicingCommon):
         self.assertEqual(len(credit_time_we), 6) # 11,18,25 Morning - Afternoon
         self.assertEqual(len(attendance_we), 32) # Remaining days
 
-        # Generate Payslip
-        payslip_run_id = self.env['hr.payslip.employees'].with_context(
-            default_date_start='2020-03-01',
-            default_date_end='2020-03-31',
-            allowed_company_ids=self.env.company.ids,
-        ).create({}).compute_sheet()['res_id']
+        payslip_run = self.env["hr.payslip.run"].create({
+            "date_start": "2020-03-01",
+            "date_end": "2020-03-31",
+        })
 
-        payslip_run = self.env['hr.payslip.run'].browse(payslip_run_id)
+        employees = self.env["hr.employee"].search(payslip_run._get_employees_domain())
+        payslip_run.generate_payslips(employees.ids)
 
         self.assertEqual(len(payslip_run.slip_ids), 2)
 

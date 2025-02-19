@@ -15,7 +15,6 @@ class TestPayrollCommon(TransactionCase):
         cls.Bank = cls.env['res.partner.bank']
         cls.Employee = cls.env['hr.employee']
         cls.PayslipRun = cls.env['hr.payslip.run']
-        cls.PayslipEmployee = cls.env['hr.payslip.employees']
         cls.Company = cls.env['res.company']
         cls.partner = cls.env.ref('base.partner_admin')
         cls.bank_1 = cls.env.ref('base.res_bank_1')

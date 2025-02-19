@@ -5,38 +5,18 @@
         <field name="name">hr.payslip.run.search</field>
         <field name="model">hr.payslip.run</field>
         <field name="arch" type="xml">
-            <search string="Search Payslip Batches">
-                <field name="name" string="Payslip Batch"/>
-                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]" help="Draft Payslip Batches"/>
-                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'verify')]" help="Confirmed Payslip Batches"/>
-                <filter string="Done" name="done_filter" domain="[('state', '=', 'close')]" help="Done Payslip Batches"/>
-                <filter string="Paid" name="paid" domain="[('state', '=', 'paid')]" help="Paid Payslip Batches"/>
+            <search string="Search Pay Run">
+                <field name="name" string="Pay Run"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', '01_draft')]" help="Draft Pay Runs"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state', '=', '02_verify')]" help="Confirmed Payslip Batches"/>
+                <filter string="Done" name="done_filter" domain="[('state', '=', '03_close')]" help="Done Pay Runs"/>
+                <filter string="Paid" name="paid" domain="[('state', '=', '04_paid')]" help="Paid Payslip Batches"/>
                 <separator/>
                 <filter string="Date" name="date_filter" date="date_start"/>
                 <group expand="0" string="Group By">
-                    <filter string="Status" name="state" context="{'group_by': 'state'}"/>
+                    <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
                 </group>
             </search>
-        </field>
-    </record>
-
-    <record id="hr_payslip_run_tree" model="ir.ui.view">
-        <field name="name">hr.payslip.run.list</field>
-        <field name="model">hr.payslip.run</field>
-        <field name="arch" type="xml">
-            <list string="Payslips Batches" sample="1">
-                <field name="name" readonly="state != 'draft'"/>
-                <field name="date_start" readonly="state != 'draft'"/>
-                <field name="date_end" readonly="state != 'draft'"/>
-                <field name="state" widget="badge"
-                    decoration-info="state == 'draft'"
-                    decoration-warning="state == 'verify'"
-                    decoration-success="state == 'close'"
-                    decoration-primary="state == 'paid'"
-                />
-                <field name="payslip_count" string="# Payslips"/>
-                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
-            </list>
         </field>
     </record>
 
@@ -44,32 +24,55 @@
         <field name="name">hr.payslip.run.kanban</field>
         <field name="model">hr.payslip.run</field>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_mobile" sample="1">
+            <kanban
+                default_order="date_end desc, date_start desc, id desc"
+                js_class="payrun_kanban"
+                edit="0"
+                quick_create="0">
                 <templates>
-                    <t t-name="card" class="row g-0">
-                        <field name="name" readonly="state != 'draft'" class="col-6 fw-bolder"/>
-                        <div class="col-6">
-                            <field name="state" class="float-end" widget="badge"
-                                decoration-info="state == 'draft'"
-                                decoration-warning="state == 'verify'"
-                                decoration-success="state == 'close'"
-                                decoration-primary="state == 'paid'"/>
-                        </div>
-                        <div class="mt-auto">
-                            <div class="row">
-                                <div class="col-8">
-                                    <field name="date_start" readonly="state != 'draft'"/> - <field name="date_end" readonly="state != 'draft'"/>
-                                </div>
-                                <div class="col-4 text-end">
-                                    <a name="action_open_payslips" type="object" help="Generated Payslips" invisible="payslip_count == 0">
-                                        <field name="payslip_count"/> Payslips
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </t>
+                    <t t-name="card" class="cursor-pointer o_payrun_card_kanban w-100"/>
                 </templates>
             </kanban>
+        </field>
+    </record>
+
+    <record id="hr_payslip_run_view_calendar" model="ir.ui.view">
+        <field name="name">hr.payslip.run.calendar</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="arch" type="xml">
+            <calendar js_class="pay_run_calendar"
+                    string="Pay Runs"
+                    date_start="date_start"
+                    date_stop="date_end"
+                    mode="year"
+                    scales="week,month,year"
+                    show_unusual_days="True"
+                    quick_create="0"
+                    hide_time="True"
+                    delete="0"
+                    create="1"
+                    color="state"
+                    show_date_picker="0">
+                <field name="state" filters="1" invisible="1"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="hr_payslip_run_view_pivot" model="ir.ui.view">
+        <field name="name">hr.payslip.run.pivot</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="arch" type="xml">
+            <pivot disable_linking="True">
+            </pivot>
+        </field>
+    </record>
+
+    <record id="hr_payslip_run_view_graph" model="ir.ui.view">
+        <field name="name">hr.payslip.run.graph</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="arch" type="xml">
+            <graph disable_linking="True">
+            </graph>
         </field>
     </record>
 
@@ -77,68 +80,77 @@
         <field name="name">hr.payslip.run.form</field>
         <field name="model">hr.payslip.run</field>
         <field name="arch" type="xml">
-            <form string="Payslips Batches" js_class="hr_payslip_batch_form">
-            <header>
-                <button string="Confirm" name="action_confirm" type="object" invisible="state != 'draft' or payslip_count == 0" class="oe_highlight"/>
-                <button string="Generate Payslips" name="%(action_hr_payslip_by_employees)d" type="action" class="btn-primary" invisible="state != 'draft' or payslip_count != 0"/>
-                <button string="Generate Payslips" name="%(action_hr_payslip_by_employees)d" type="action" class="btn-secondary" invisible="state != 'draft' or payslip_count == 0"/>
-                <widget string="Add Payslips" name="add_payslips" invisible="state != 'draft'"/>
-                <button string="Validate" name="action_validate" type="object" class="oe_highlight" invisible="state != 'verify'" context="{'payslip_generate_pdf': True}"/>
-                <button string="Mark as paid" name="action_paid" type="object" class="oe_highlight" invisible="state != 'close'"/>
-                <button string="Create Payment Report" name="action_payment_report" type="object" invisible="state != 'close'"/>
-                <button string="Set to Draft" name="action_draft" type="object" invisible="state not in ('verify', 'close')"/>
-                <button string="Unpaid" name="action_unpaid" type="object" invisible="state != 'paid'"/>
-                <field name="state" widget="statusbar"/>
-            </header>
-            <sheet>
-                <div class="oe_button_box" name="button_box">
-                    <button name="action_open_payslips" class="oe_stat_button" icon="fa-book" type="object" help="Generated Payslips" invisible="payslip_count == 0">
-                        <div class="o_field_widget o_stat_info">
-                            <span class="o_stat_value"><field name="payslip_count"/></span>
-                            <span class="o_stat_text">Payslips</span>
-                        </div>
-                    </button>
+            <form string="Pay Runs" js_class="hr_payslip_batch_form">
+                <div name="button_box">
+                <action>
+                    <field name="payment_report" filename="payment_report_filename" format="payment_report_format"
+                           widget="payrun_binary" class="btn btn-secondary btn-addr"  invisible="not payment_report"/>
+                    <button name="action_confirm" type="object" class="btn oe_highlight" string="Compute" invisible="state != '01_draft' or not payslip_count"/>
+                    <button name="action_validate" type="object" class="btn oe_highlight" string="Confirm" invisible="state != '02_verify'" context="{'payslip_generate_pdf': True}"/>
+                    <button name="action_paid" type="object" class="btn oe_highlight" string="Mark as Paid" invisible="state != '03_close'"/>
+                    <button name="action_unpaid" type="object" class="btn btn-secondary" string="Revert" invisible="state != '04_paid'"/>
+                    <button name="action_payment_report" type="object" class="btn btn-secondary" string="Create Payment Report" invisible="state != '03_close'"/>
+                    <button name="action_draft" type="object" class="btn btn-secondary" string="Set to Draft" invisible="state not in ('02_verify', '03_close')"/>
+                    <button name="add_payslips" type="object" class="btn btn-secondary" string="Add Payslips" invisible="state in ('03_close', '04_paid')"/>
+                    <button name="action_payroll_hr_employee_list_view_payrun" type="object" class="btn btn-secondary" string="Generate Payslips" invisible="state in ('03_close', '04_paid')"/>
+                    <button name="unlink" type="object" class="btn text-danger" string="Delete"/>
+                </action>
                 </div>
-                <label for="name" string="Batch Name"/>
-                <h1>
-                    <field name="name" placeholder="e.g. April 2021" readonly="state != 'draft'"/>
-                </h1>
                 <group>
-                    <group>
-                        <label for="date_start" string="Period"/>
-                        <div class="o_row">
-                            <field name="date_start" class="oe_inline o_hr_narrow_field" readonly="state != 'draft'"/> - <field name="date_end" class="oe_inline o_hr_narrow_field" readonly="state != 'draft'"/>
-                        </div>
-                        <field name="payment_report_filename" invisible="1"/>
-                        <field name="payment_report" filename="payment_report_filename" invisible="not payment_report"/>
-                    </group>
-                    <group>
-                        <field name="company_id" groups="base.group_multi_company"/>
-                        <field name="country_id" invisible="1"/>
-                        <field name="country_code" invisible="1"/>
-                    </group>
+                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': 1, 'no_quick_create': 1}"
+                           placeholder="Visible to all" domain="[('id', 'in', allowed_company_ids)]"
+                           invisible="context.get('allowed_company_ids', []).length &lt; 2"/>
+                    <field name="structure_id" domain="[('country_id', 'in', [country_id, False])]"/>
+                    <field name="schedule_pay"/>
+                    <label for="date_start" string="Period"/>
+                    <div class="o_row">
+                        <field name="date_start" class="oe_inline" widget="daterange"
+                               options="{'end_date_field': 'date_end'}" readonly="state != '01_draft'"/>
+                        <field name="date_end" class="oe_inline" invisible="1"
+                               readonly="state != '01_draft'"/>
+                    </div>
                 </group>
-            </sheet>
-            <chatter/>
+                <field name="name" invisible="1"/>
+                <field name="country_id" invisible="1"/>
+                <field name="payslip_count" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="gross_sum" invisible="1"/>
+                <field name="net_sum" invisible="1"/>
+                <field name="payment_report_format" invisible="1"/>
+                <field name="payment_report_filename" invisible="1"/>
+                <field name="payment_report" invisible="1"/>
             </form>
         </field>
     </record>
 
-    <record id="action_hr_payslip_run_tree" model="ir.actions.act_window">
-        <field name="name">Payslips Batches</field>
+    <record id="action_hr_payslip_run_create" model="ir.actions.act_window">
+        <field name="name">New Pay Run</field>
         <field name="res_model">hr.payslip.run</field>
-        <field name="view_mode">list,kanban,form</field>
-        <field name="search_view_id" ref="hr_payslip_run_filter"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'dialog_size': 'medium'}</field>
     </record>
 
-    <record id="action_hr_payslip_run_generate" model="ir.actions.server">
-        <field name="name">Generate Payslips</field>
-        <field name="model_id" ref="model_hr_payslip_run"/>
-        <field name="binding_model_id" ref="model_hr_payslip_run"/>
-        <field name="binding_view_types">form</field>
-        <field name="state">code</field>
-        <field name="code">
-action = records._generate_payslips()
+    <record id="action_hr_payslip_run" model="ir.actions.act_window">
+        <field name="name">Pay Runs</field>
+        <field name="res_model">hr.payslip.run</field>
+        <field name="view_mode">kanban,calendar,pivot,graph</field>
+        <field name="search_view_id" ref="hr_payslip_run_filter"/>
+        <field name="context">{'search_default_groupby_state': 1}</field>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No Pay Runs.
+              </p><p>
+                A Pay Run is a batch of individual payslips processed together for a specific pay period, including wages, taxes, and deductions.<br/><br/>
+                <a name="hr_payroll.action_hr_payslip_run_create" type="action" class="btn btn-secondary">Create a Pay Run</a>
+              </p>
         </field>
+    </record>
+
+    <record id="action_hr_payroll_open_pay_run" model="ir.actions.act_window">
+        <field name="name">Pay Run Payslips</field>
+        <field name="res_model">hr.payslip</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_hr_payslip_filter"/>
     </record>
 </odoo>

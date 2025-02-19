@@ -19,7 +19,7 @@ patch(WorkEntriesGanttController.prototype, {
         const employeeIds = new Set();
         for (const rec of this.model.data.records) {
             if (rec.employee_id) {
-                employeeIds.add(rec.employee_id[0]);
+                employeeIds.add(rec.employee_id.id);
             }
         }
         return [...employeeIds];

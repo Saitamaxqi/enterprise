@@ -14,10 +14,6 @@ def _generate_payslips(env):
     if employee_maggie := env.ref('l10n_us_hr_payroll.hr_employee_maggie', raise_if_not_found=False):
         if not env['hr.payslip'].sudo().search_count([('employee_id.name', '=', 'Maggie Davidson (mda)')]):
             _logger.info('Generating payslips')
-            wizard_vals = {
-                'employee_ids': [(4, employee_maggie.id)],
-                'structure_id': env.ref('l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary').id
-            }
             cids = env.ref('base.main_company').ids
             payslip_runs = env['hr.payslip.run']
             payslis_values = []
@@ -31,11 +27,11 @@ def _generate_payslips(env):
                     'date_start': date_start,
                     'date_end': date_end,
                     'company_id': env.ref('base.main_company').id,
+                    'structure_id': env.ref('l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary').id,
                 })
             payslip_runs = env['hr.payslip.run'].create(payslis_values)
             for payslip_run in payslip_runs:
-                wizard = env['hr.payslip.employees'].create(wizard_vals)
-                wizard.with_context(active_id=payslip_run.id, allowed_company_ids=cids).compute_sheet()
+                payslip_run.generate_payslips([employee_maggie.id])
             _logger.info('Validating payslips')
             # after many insertions in work_entries, table statistics may be broken.
             # In this case, query plan may be randomly suboptimal leading to slow search

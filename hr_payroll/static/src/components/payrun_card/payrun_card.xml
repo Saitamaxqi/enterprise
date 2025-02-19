@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="hr_payroll.PayRunCard">
+        <div class="position-relative d-flex o_payrun_full_card" t-if="payrun" t-att-class="{
+                    'o_draft': payrun.state === '01_draft',
+                    'o_verify': payrun.state === '02_verify',
+                    'o_close': payrun.state === '03_close',
+                    'o_paid': payrun.state === '04_paid',
+                }">
+            <div class="o_payrun_card w-100">
+                <div class="o_cell o_payrun_info">
+                    <div class="o_text">
+                        <input t-if="env.model.config.resModel === 'hr.payslip'" type="text" t-att-value="payrun.name"
+                               t-on-change="onChange" t-att-placeholder="'Pay Run Name'"
+                               class="o_field_widget o_input text-truncate mb-2 w-100"/>
+                        <t t-else="" t-out="payrun.name"/>
+                    </div>
+                    <div class="o_subtext">
+                        <span>
+                            <t t-out="dateStart"/>
+                            <i class="oi oi-arrow-right o_inline_separator"></i>
+                            <t t-out="dateEnd"/>
+                        </span>
+                        <span class="o_info_pill">
+                            <t t-out="payrun.payslip_count"/> payslips
+                        </span>
+                    </div>
+                </div>
+                <div class="o_cell o_payrun_cost">
+                    <div class="o_text">
+                        <t t-out="formatMonetary(payrun.gross_sum, {currencyId: payrun.currency_id.id})"/>
+                    </div>
+                    <div class="o_subtext">
+                        <span>gross</span>
+                    </div>
+                </div>
+                <div class="o_cell o_payrun_cost">
+                    <div class="o_text">
+                        <t t-out="formatMonetary(payrun.net_sum, {currencyId: payrun.currency_id.id})"/>
+                    </div>
+                    <div class="o_subtext">
+                        <span>net</span>
+                    </div>
+                </div>
+                <div class="o_cell o_payrun_state">
+                    <StatusBubble selection="props.record.fields.state.selection"
+                                  activeOption="payrun.state"
+                                  warningCount=""
+                                  errorCount=""
+                                  removeOptions="['05_cancel']"
+                    />
+                </div>
+                <div class="o_cell o_payrun_buttons gap-1">
+                    <t t-if="props.archInfo?.buttonBoxTemplate">
+                        <t t-call="{{ props.archInfo.buttonBoxTemplate }}"
+                           t-call-context="{ __comp__: Object.assign(Object.create(this), { this, props: { ...this.props } }) }"/>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

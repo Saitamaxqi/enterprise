@@ -13,10 +13,7 @@ class TestPayrollSEPANewCreditTransferXmlValidity(TestPayrollSEPACreditTransferC
     @test_xsd(path='account_sepa/schemas/pain.001.001.09.xsd')
     def test_hr_payroll_account_iso20022_09(self):
         self.bank_journal.sepa_pain_version = 'pain.001.001.09'
-        payslip_employee = self.env['hr.payslip.employees'].create({
-            'employee_ids': [(4, self.hr_employee_john.id)]
-        })
-        payslip_employee.with_context(active_id=self.payslip_run.id).compute_sheet()
+        self.payslip_run.generate_payslips([self.hr_employee_john.id])
         self.payslip_run.action_validate()
         # make the SEPA payment.
         file = self.env['hr.payroll.payment.report.wizard'].create({

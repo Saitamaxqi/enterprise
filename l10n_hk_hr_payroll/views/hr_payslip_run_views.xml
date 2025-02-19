@@ -6,10 +6,10 @@
         <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
         <field name="arch" type="xml">
             <button name="action_paid" position="before">
-                <button name="action_open_hsbc_autopay_wizard" type="object" string="Create HSBC Autopay Report" class="oe_highlight" invisible="not l10n_hk_autopay or state not in ['close', 'paid'] or l10n_hk_autopay_export_first_batch or l10n_hk_autopay_export_second_batch" />
+                <button name="action_open_hsbc_autopay_wizard" type="object" string="Create HSBC Autopay Report" class="oe_highlight" invisible="not l10n_hk_autopay or state not in ['03_close', '04_paid'] or l10n_hk_autopay_export_first_batch or l10n_hk_autopay_export_second_batch" />
             </button>
             <button name="action_paid" position="after">
-                <button name="action_open_hsbc_autopay_wizard" type="object" string="Create HSBC Autopay Report" invisible="(not l10n_hk_autopay or state not in ['close', 'paid'] or not l10n_hk_autopay_export_first_batch) and not l10n_hk_autopay_export_second_batch" />
+                <button name="action_open_hsbc_autopay_wizard" type="object" string="Create HSBC Autopay Report" invisible="(not l10n_hk_autopay or state not in ['03_close', '04_paid'] or not l10n_hk_autopay_export_first_batch) and not l10n_hk_autopay_export_second_batch" />
             </button>
             <xpath expr="//div[hasclass('o_row')]" position="after">
                 <field name="l10n_hk_autopay" invisible="1" />

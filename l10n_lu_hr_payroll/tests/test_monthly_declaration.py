@@ -22,12 +22,9 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'date_start': '2022-03-01',
             'date_end': '2022-03-31',
             'company_id': self.lux_company.id,
-            'state': 'verify',
+            'state': '02_verify',
         })
-        self.payslip_employee = self.env['hr.payslip.employees'].create({
-            'employee_ids': [(4, self.employee_david.id)],
-        })
-        self.payslip_employee.with_context(active_id=self.payslip_run.id).compute_sheet()
+        self.payslip_run.generate_payslips([self.employee_david.id])
 
     def test_01_generate_missing_identification(self):
         wizard = self.env['l10n.lu.monthly.declaration.wizard'].create({
@@ -114,12 +111,10 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'date_start': '2022-03-01',
             'date_end': '2022-03-31',
             'company_id': self.lux_company.id,
-            'state': 'verify',
+            'state': '02_verify',
         })
-        payslip_employees = self.env['hr.payslip.employees'].create({
-            'employee_ids': [(4, self.employee_david.id), (4, madison_employee.id), (4, laura_employee.id)],
-        })
-        payslip_employees.with_context(active_id=batch.id).compute_sheet()
+
+        batch.generate_payslips([self.employee_david.id, madison_employee.id, laura_employee.id])
 
         wizard = self.env['l10n.lu.monthly.declaration.wizard'].create({
             'month': '3',
@@ -220,12 +215,9 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'date_start': '2022-03-01',
             'date_end': '2022-03-31',
             'company_id': self.lux_company.id,
-            'state': 'verify',
+            'state': '02_verify',
         })
-        payslip_employees = self.env['hr.payslip.employees'].create({
-            'employee_ids': [(4, self.employee_david.id), (4, jade_employee.id)],
-        })
-        payslip_employees.with_context(active_id=batch.id).compute_sheet()
+        batch.generate_payslips([self.employee_david.id, jade_employee.id])
 
         wizard = self.env['l10n.lu.monthly.declaration.wizard'].create({
             'month': '3',

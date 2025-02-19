@@ -105,7 +105,7 @@ class HrPayslip(models.Model):
         help="Indicates this payslip has a refund of another")
     has_refund_slip = fields.Boolean(compute='_compute_has_refund_slip')
     payslip_run_id = fields.Many2one(
-        'hr.payslip.run', string='Batch Name',
+        'hr.payslip.run', string='Pay Run',
         copy=False, ondelete='cascade', tracking=True, index='btree_not_null',
         domain="[('company_id', '=', company_id)]")
     sum_worked_hours = fields.Float(compute='_compute_worked_hours', store=True, help='Total hours of attendance and time off (paid or not)')
@@ -143,12 +143,8 @@ class HrPayslip(models.Model):
     payment_report_date = fields.Date(readonly=True)
     ytd_computation = fields.Boolean(related='struct_id.ytd_computation')
 
-    def _get_schedule_period_start(self):
-        schedule = self.version_id.schedule_pay or self.version_id.structure_type_id.default_schedule_pay
-        today = date.today()
+    def _schedule_period_start(self, schedule, today, country_code=False):
         week_start = self.env["res.lang"]._get_data(code=self.env.user.lang).week_start
-        date_from = today
-
         if schedule == 'quarterly':
             current_year_quarter = math.ceil(today.month / 3)
             date_from = today.replace(day=1, month=(current_year_quarter - 1) * 3 + 1)
@@ -165,12 +161,21 @@ class HrPayslip(models.Model):
             week_day = today.weekday()
             is_second_week = week % 2 == 0
             date_from = today + relativedelta(days=-week_day - 7 * int(is_second_week))
+        elif schedule == 'semi-monthly':
+            date_from = today.replace(day=1 if today.day < 15 else 15)
         elif schedule == 'bi-monthly':
             current_year_slice = math.ceil(today.month / 2)
             date_from = today.replace(day=1, month=(current_year_slice - 1) * 2 + 1)
+        elif schedule == 'daily':
+            date_from = today
         else:  # if not handled, put the monthly behaviour
             date_from = today.replace(day=1)
         return date_from
+
+    def _get_schedule_period_start(self):
+        self.ensure_one()
+        schedule = self.version_id.schedule_pay or self.version_id.structure_type_id.default_schedule_pay
+        return self._schedule_period_start(schedule, date.today())
 
     @api.depends('version_id', 'struct_id')
     def _compute_date_from(self):
@@ -180,9 +185,7 @@ class HrPayslip(models.Model):
             else:
                 payslip.date_from = payslip._get_schedule_period_start()
 
-    def _get_schedule_timedelta(self):
-        self.ensure_one()
-        schedule = self.version_id.schedule_pay or self.version_id.structure_type_id.default_schedule_pay
+    def _schedule_timedelta(self, schedule, date_from, country_code=False):
         if schedule == 'quarterly':
             timedelta = relativedelta(months=3, days=-1)
         elif schedule == 'semi-annually':
@@ -194,7 +197,7 @@ class HrPayslip(models.Model):
         elif schedule == 'bi-weekly':
             timedelta = relativedelta(days=13)
         elif schedule == 'semi-monthly':
-            timedelta = relativedelta(day=15 if self.date_from.day < 15 else 31)
+            timedelta = relativedelta(day=15 if date_from.day < 15 else 31)
         elif schedule == 'bi-monthly':
             timedelta = relativedelta(months=2, days=-1)
         elif schedule == 'daily':
@@ -202,6 +205,11 @@ class HrPayslip(models.Model):
         else:  # if not handled, put the monthly behaviour
             timedelta = relativedelta(months=1, days=-1)
         return timedelta
+
+    def _get_schedule_timedelta(self):
+        self.ensure_one()
+        schedule = self.version_id.schedule_pay or self.version_id.structure_type_id.default_schedule_pay
+        return self._schedule_timedelta(schedule, self.date_from)
 
     @api.depends('date_from', 'version_id', 'struct_id')
     def _compute_date_to(self):
@@ -343,9 +351,11 @@ class HrPayslip(models.Model):
     def _compute_basic_net(self):
         line_values = (self._origin)._get_line_values(['BASIC', 'GROSS', 'NET'])
         for payslip in self:
-            payslip.basic_wage = line_values['BASIC'][payslip._origin.id]['total']
-            payslip.gross_wage = line_values['GROSS'][payslip._origin.id]['total']
-            payslip.net_wage = line_values['NET'][payslip._origin.id]['total']
+            payslip.write({
+                'basic_wage': line_values['BASIC'][payslip._origin.id]['total'],
+                'gross_wage': line_values['GROSS'][payslip._origin.id]['total'],
+                'net_wage': line_values['NET'][payslip._origin.id]['total'],
+            })
 
     @api.depends('worked_days_line_ids.number_of_hours', 'worked_days_line_ids.is_paid', 'worked_days_line_ids.is_credit_time')
     def _compute_worked_hours(self):
@@ -469,7 +479,6 @@ class HrPayslip(models.Model):
         line_values = self._get_line_values(['NET'])
 
         self.filtered(lambda p: not p.credit_note and line_values['NET'][p.id]['total'] < 0).write({'has_negative_net_to_report': True})
-        self.mapped('payslip_run_id').action_close()
         # Validate work entries for regular payslips (exclude end of year bonus, ...)
         regular_payslips = self.filtered(lambda p: p.struct_id.type_id.default_struct_id == p.struct_id)
         work_entries = self.env['hr.work.entry']
@@ -495,7 +504,6 @@ class HrPayslip(models.Model):
         if not self.env.user._is_system() and self.filtered(lambda slip: slip.state == 'done'):
             raise UserError(_("Cannot cancel a payslip that is done."))
         self.write({'state': 'cancel'})
-        self.mapped('payslip_run_id').action_close()
 
     def action_payslip_paid(self):
         if any(slip.state not in ['done', 'paid'] for slip in self):
@@ -527,7 +535,7 @@ class HrPayslip(models.Model):
         if any(slip.state != 'paid' for slip in self):
             raise UserError(_('You cannot cancel the payment if the payslip has not been paid.'))
         self.write({'state': 'done'})
-        self.payslip_run_id.write({'state': 'close'})
+        self.payslip_run_id.write({'state': '03_close'})
 
     def action_open_work_entries(self):
         self.ensure_one()
@@ -618,6 +626,9 @@ class HrPayslip(models.Model):
         payslips.mapped('line_ids').unlink()
         payslips._compute_worked_days_line_ids()
         payslips.compute_sheet()
+
+    def action_move_to_off_cycle(self):
+        self.payslip_run_id = False
 
     def _round_days(self, work_entry_type, days):
         if work_entry_type.round_days != 'NO':

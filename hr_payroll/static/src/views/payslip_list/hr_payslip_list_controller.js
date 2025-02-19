@@ -1,142 +1,159 @@
-/** @odoo-module **/
 import { useService } from "@web/core/utils/hooks";
-import { registry } from '@web/core/registry';
-import { listView } from '@web/views/list/list_view';
+import { registry } from "@web/core/registry";
+import { listView } from "@web/views/list/list_view";
 import { ListController } from "@web/views/list/list_controller";
 import { _t } from "@web/core/l10n/translation";
+import { onWillStart, onWillRender, useState, markup } from "@odoo/owl";
+import { PayRunCard } from "../../components/payrun_card/payrun_card";
+import { Record } from "@web/model/record";
+import { PayslipListRenderer } from "./hr_payslip_list_renderer";
+import { useFormViewArch } from "../load_form_arch_hook";
 
 export class PayslipListController extends ListController {
+    static template = "hr_payroll.PayslipListView";
+    static components = {
+        ...ListController.components,
+        PayRunCard,
+        Record,
+    };
+
     setup() {
         super.setup();
         this.orm = useService("orm");
+        this.viewService = useService("view");
+        this.notificationService = useService("notification");
+        this.loadFormArchService = useFormViewArch();
+        this.state = useState({});
+        this.revId = 0;
+
+        onWillStart(async()=> {
+            const {archInfo, buttonBoxTemplate } = await this.loadFormArchService("hr.payslip.run");
+            this.payRunArchInfo = archInfo;
+            this.props.archInfo.fieldNodes = {
+                ...this.props.archInfo.fieldNodes,
+                ...archInfo.fieldNodes
+            };
+            this.props.archInfo.buttonBoxTemplate = buttonBoxTemplate;
+            this.state.payRunInfo = {
+                id: this.env.searchModel.domain.find(([field, operator]) =>
+                    field === "payslip_run_id" && operator === "="
+                )?.[2] ?? null,
+            };
+        });
+
+        onWillRender(async() => {
+            this.state.payRunInfo.id = this.env.searchModel.domain.find(([field, operator]) =>
+                field === "payslip_run_id" && operator === "="
+            )?.[2] ?? null;
+        });
+
+        this.displayHeaderButtonsTransitions = {
+            draft: "compute_sheet",
+            verify: "action_payslip_done",
+            done: "action_payslip_paid",
+            paid: "action_payslip_draft",
+        };
     }
 
-    getStaticActionMenuItems() {
-        const menuItems = super.getStaticActionMenuItems();
-
-        if (this.model.root.selection.every((record) => ['draft', 'verify'].includes(record.data.state))) {
-            menuItems.compute_sheet = {
-                description: _t('Compute Sheet'),
-                callback: async () => await this.compute_sheet(),
-            };
-            menuItems.recompute_whole_sheet = {
-                description: _t('Recompute Whole Sheet'),
-                callback: async () => await this.recompute_whole_sheet(),
-            };
-        }
-
-        if (this.model.root.selection.every((record) => record.data.state === 'verify')) {
-            menuItems.confirm = {
-                description: _t('Confirm'),
-                callback: async () => await this.confirm(),
-            };
-        }
-
-        if (this.model.root.selection.every((record) => record.data.state === 'done')) {
-            menuItems.paid = {
-                description: _t('Mark as Paid'),
-                callback: async () => await this.paid(),
-            };
-        }
-
-        if (this.model.root.selection.every((record) => record.data.state === 'paid')) {
-            menuItems.unpaid = {
-                description: _t('Unpaid'),
-                callback: async () => await this.unpaid(),
-            };
-        }
-
-        if (this.model.root.selection.every((record) => record.data.state === 'cancel')) {
-            menuItems.draft = {
-                description: _t('Set to Draft'),
-                callback: async () => await this.draft(),
-            };
-        }
-
-        if (this.model.root.selection.every((record) => record.data.state !== 'cancel')) {
-            menuItems.cancel = {
-                description: _t('Cancel'),
-                callback: async () => await this.cancel(),
-            };
-        }
-
-        return menuItems;
+    get payrunId() {
+        return this.state.payRunInfo.id;
     }
 
-    async refresh_page() {
-        await this.actionService.doAction({
-            'type': 'ir.actions.client',
-            'tag': 'soft_reload',
+    async onSelectionChanged() {
+        await super.onSelectionChanged();
+        let selection;
+        if ((selection = await this.model.root.getResIds(true)))
+            this.state.selectionStates = await this.orm.read("hr.payslip", selection, ["state"]);
+    }
+
+    displayButton(button) {
+        if (!this.state.selectionStates?.map(s => s.state).every((state, i, array) => state === array[0])) return false;
+        return button.clickParams.name === this.displayHeaderButtonsTransitions[this.state.selectionStates[0]?.state];
+    }
+
+    createNewPayRun() {
+        return this.actionService.doAction("hr_payroll.action_hr_payslip_run_create");
+    }
+
+    async selectEmployees() {
+        const employeeListAction = await this.orm.call("hr.payslip.run", "action_payroll_hr_employee_list_view_payrun", [
+            [this.payrunId]
+        ]);
+        return this.actionService.doAction({
+            ...employeeListAction,
+            help: markup(employeeListAction.help),
+            context: {
+                active_id: this.payrunId,
+            },
         });
     }
 
-    async paid() {
-        await this.orm.call(
-            "hr.payslip",
-            "action_payslip_paid",
-            [this.model.root.selection.map((a) => a.resId)]
-        );
-        await this.refresh_page();
+    async onReload() {
+        return this.actionService.doAction({type: "ir.actions.client", tag: "soft_reload"});
     }
 
-    async unpaid() {
-        await this.orm.call(
-            "hr.payslip",
-            "action_payslip_unpaid",
-            [this.model.root.selection.map((a) => a.resId)]
-        );
-        await this.refresh_page();
+    async onClose() {
+        return this.actionService.doAction({ type: "ir.actions.act_window_close" });
     }
 
-    async confirm() {
-        await this.orm.call(
-            "hr.payslip",
-            "action_payslip_done",
-            [this.model.root.selection.map((a) => a.resId)],
-            { context: { payslip_generate_pdf: true } },
-        );
-        await this.refresh_page();
+    async addPayslips(){
+        const slipIds = await this.model.root.getResIds(true);
+        await this.orm.write("hr.payslip", slipIds, {
+            "payslip_run_id": this.model.config.context.active_id,
+        });
+        await this.env.model.root.load();
+        this.notificationService.add(_t("The payslips(s) are now added to the batch"), { type: "success" });
+        await this.onClose();
+        await this.onReload();
     }
 
-    async compute_sheet() {
-        await this.orm.call(
-            "hr.payslip",
-            "compute_sheet",
-            [this.model.root.selection.map((a) => a.resId)]
-        );
-        await this.refresh_page();
+    get recordComponentProps() {
+        return {
+            resModel: "hr.payslip.run",
+            resId: this.payrunId,
+            fieldNames: Object.values(this.payRunArchInfo.fieldNodes).map(f => f.name),
+            mode: "readonly",
+        };
     }
 
-    async recompute_whole_sheet() {
-        await this.orm.call(
-            "hr.payslip",
-            "action_refresh_from_work_entries",
-            [this.model.root.selection.map((a) => a.resId)]
-        );
-        await this.refresh_page();
+    async beforeExecuteActionButton(clickParams) {
+        if (clickParams.name !== "unlink") {
+            this.revId++;
+        }
+        return super.beforeExecuteActionButton(...arguments);
     }
 
-    async draft() {
-        await this.orm.call(
-            "hr.payslip",
-            "action_payslip_draft",
-            [this.model.root.selection.map((a) => a.resId)]
-        );
-        await this.refresh_page();
+    async afterExecuteActionButton(clickParams) {
+        if (clickParams.name === "unlink") {
+            const payrun = await this.orm.search("hr.payslip.run", [["id", "=", this.payrunId]]);
+            if (!payrun.length) {
+                this.env.config.historyBack();
+            }
+        }
+        return super.afterExecuteActionButton(...arguments);
     }
 
-    async cancel() {
-        await this.orm.call(
-            "hr.payslip",
-            "action_payslip_cancel",
-            [this.model.root.selection.map((a) => a.resId)]
-        );
-        await this.refresh_page();
+    get actionMenuProps(){
+        const res = super.actionMenuProps;
+        const oldOnActionExecuted = res.onActionExecuted;
+        res.onActionExecuted = () => {
+            this.revId ++;
+            oldOnActionExecuted?.call(res);
+        };
+        return res;
+    }
+
+    onDeleteSelectedRecords() {
+        super.onDeleteSelectedRecords();
+        this.revId++;
     }
 }
+
 export const payslipListView = {
     ...listView,
+    Renderer: PayslipListRenderer,
     Controller: PayslipListController,
+    buttonTemplate: "hr_payroll.PayslipListView.Buttons",
 };
 
-registry.category('views').add('hr_payroll_payslip_list', payslipListView)
+registry.category("views").add("hr_payroll_payslip_list", payslipListView);

@@ -1,0 +1,11 @@
+<templates>
+    <t t-name="hr_payroll.PayRunBinaryField" t-inherit="web.BinaryField" t-inherit-mode="primary">
+        <xpath expr="//input[@t-att-value='fileName']" position="attributes">
+            <attribute name="t-att-value">'Download ' + format</attribute>
+        </xpath>
+        <xpath expr="//t[@t-if='fileName']" position="attributes">
+            <attribute name="t-if">format</attribute>
+            <attribute name="t-esc">'Download ' + format</attribute>
+        </xpath>
+    </t>
+</templates>

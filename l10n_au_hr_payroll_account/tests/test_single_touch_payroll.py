@@ -97,17 +97,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             }
         )
 
-        payslip_employee = (
-            self.env["hr.payslip.employees"]
-            .create(
-                {
-                    "employee_ids": [
-                        Command.set(employee_ids.ids)
-                    ]
-                }
-            )
-        )
-        payslip_employee.with_context(active_id=payslip_run.id).compute_sheet()
+        payslip_run.generate_payslips(employee_ids.ids)
         payslip_run.slip_ids.write({"input_line_ids": [(0, 0, {
             "input_type_id": self.env.ref(input_id).id,
             "amount": amount,
@@ -764,7 +754,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         batch.slip_ids.compute_sheet()
         batch.action_validate()
         self.assertEqual(batch.slip_ids.mapped("state"), ["done", "done"], "The payslips should have been done!")
-        self.assertEqual(batch.state, "close", "The payslip batch should be done!")
+        self.assertEqual(batch.state, "03_close", "The payslip batch should be done!")
         # Submit the new STP record
         ffr = self.env["l10n_au.stp"].search([("payslip_batch_id", "=", batch.id), ("ffr", "=", True)])
         self.assertEqual(ffr.previous_report_id, stp, "The previous report should be the original STP record")

@@ -42,7 +42,7 @@ class AccountPaymentRegister(models.TransientModel):
             payslip_batch.l10n_au_payment_batch_id = payment_batch
             payslip_batch.message_post(body=_("Batch payment for %(amount)s done at %(batch)s", amount=payment_batch.currency_id.format(
                 abs(payment_batch.amount)), batch=payment_batch._get_html_link()))
-            payslip_batch.write({'state': 'paid'})
+            payslip_batch.write({'state': '04_paid'})
             # Force the payslips to be paid after FFR for payslips with no new payments
             payslip_batch.slip_ids.write({'state': 'paid'})
 

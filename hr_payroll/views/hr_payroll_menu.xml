@@ -65,24 +65,16 @@
     <!-- **** Payslips **** -->
     <menuitem
         id="menu_hr_payroll_employee_payslips"
-        name="All Payslips"
+        name="Payslips"
         parent="menu_hr_payroll_payslips"
         sequence="60"
         action="action_view_hr_payslip_month_form"
         groups="hr_payroll.group_hr_payroll_user"/>
 
-    <menuitem
-        id="menu_hr_payroll_employee_payslips_to_pay"
-        name="To Pay"
-        parent="menu_hr_payroll_payslips"
-        sequence="20"
-        action="hr_payslip_action_view_to_pay"
-        groups="hr_payroll.group_hr_payroll_user"/>
-
-    <menuitem
+      <menuitem
         id="menu_hr_payslip_run"
-        action="action_hr_payslip_run_tree"
-        name="Batches"
+        action="action_hr_payslip_run"
+        name="Pay Runs"
         sequence="80"
         parent="menu_hr_payroll_payslips"/>
 

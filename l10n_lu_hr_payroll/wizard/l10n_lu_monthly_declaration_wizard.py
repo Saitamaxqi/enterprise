@@ -70,7 +70,7 @@ class L10nLuMonthlyDeclarationWizard(models.TransientModel):
                 ('company_id', '=', wizard.company_id.id),
                 ('date_start', '>=', wizard.date_start),
                 ('date_end', '<=', wizard.date_end),
-                ('state', '!=', 'draft'),
+                ('state', '!=', '01_draft'),
             ])
 
     @api.model

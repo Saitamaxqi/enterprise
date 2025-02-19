@@ -78,11 +78,9 @@ class TestSEPAFile(AccountTestInvoicingCommon):
             'company_id': self.company.id,
         })
 
-        payslip_employee = self.env['hr.payslip.employees'].with_company(self.company).create({
-            'employee_ids': [(4, self.employee.id)]
-        })
         self.employee.action_trust_bank_accounts()
-        payslip_employee.with_context(active_id=payslip_run.id).compute_sheet()
+
+        payslip_run.generate_payslips([self.employee.id])
         payslip_run.action_validate()
 
         sepa_wizard = (self.env['hr.payroll.payment.report.wizard'].with_company(self.company).create({

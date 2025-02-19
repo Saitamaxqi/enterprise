@@ -378,10 +378,6 @@
         </function>
 
         <!-- Validate Batch -->
-        <function model="hr.payslip.run" name="action_open">
-            <value model="hr.payslip.run" eval="[ref('hr_payslip_batch_latest'), ref('hr_payslip_batch_month_1'), ref('hr_payslip_batch_month_2')]"/>
-        </function>
-
         <function model="hr.payslip.run" name="action_validate">
             <value model="hr.payslip.run" eval="[ref('hr_payslip_batch_month_1'), ref('hr_payslip_batch_month_2')]"/>
         </function>

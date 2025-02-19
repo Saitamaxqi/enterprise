@@ -223,7 +223,7 @@ class L10n_AuStp(models.Model):
     def _compute_is_not_paid(self):
         for report in self:
             if report.payslip_batch_id:
-                report.is_not_paid = report.payslip_batch_id.state != 'paid'
+                report.is_not_paid = report.payslip_batch_id.state != '04_paid'
             else:
                 report.is_not_paid = any(report.payslip_ids.filtered(lambda p: p.state != 'paid'))
 

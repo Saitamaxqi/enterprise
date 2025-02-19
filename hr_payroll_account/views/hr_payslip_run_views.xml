@@ -6,17 +6,14 @@
         <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
         <field name="arch" type="xml">
             <div name="button_box" position="inside">
-                <button class="oe_stat_button" name="action_open_move" type="object" icon="fa-dollar"
-                        invisible="not move_id" groups="account.group_account_readonly">
-                    <div class="o_stat_info">
-                        <span class="o_stat_text" invisible="move_state != 'draft'">Journal Entry <br/>(Draft)</span>
-                        <span class="o_stat_text" invisible="move_state != 'posted'">Journal Entry <br/>(Posted)</span>
-                        <span class="o_stat_text" invisible="move_state != 'cancel'">Journal Entry <br/>(Canceled)</span>
-                    </div>
+                <button name="action_open_move" class="oe_stat_button" type="object" help="Generated Journal Entries" invisible="not move_id" groups="account.group_account_readonly">
+                    <span invisible="move_state != 'draft'">Journal Entry <br/>(Draft)</span>
+                    <span invisible="move_state != 'posted'">Journal Entry <br/>(Posted)</span>
+                    <span invisible="move_state != 'cancel'">Journal Entry <br/>(Canceled)</span>
                 </button>
             </div>
             <xpath expr="//button[@name='action_validate']" position="replace">
-                <button name="action_validate" type="object" string="Create Draft Entry" invisible="state != 'verify'" class="oe_highlight" context="{'payslip_generate_pdf': True}" confirm="Are you sure you want to proceed?"/>
+                <button name="action_validate" type="object" string="Create Draft Entry" invisible="state != '02_verify'" class="oe_highlight" context="{'payslip_generate_pdf': True}" confirm="Are you sure you want to proceed?"/>
             </xpath>
         </field>
     </record>

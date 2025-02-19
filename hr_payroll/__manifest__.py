@@ -15,7 +15,6 @@
     'data': [
         'security/hr_payroll_security.xml',
         'security/ir.model.access.csv',
-        'wizard/hr_payroll_payslips_by_employees_views.xml',
         'wizard/hr_payroll_index_wizard_views.xml',
         'wizard/hr_payroll_edit_payslip_lines_wizard_views.xml',
         'views/hr_contract_views.xml',

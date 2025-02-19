@@ -4,7 +4,6 @@ import base64
 
 from lxml import etree
 
-from odoo import Command
 from odoo.addons.hr_payroll_account.tests.test_hr_payroll_account import TestHrPayrollAccountCommon
 from odoo.tests.common import test_xsd
 from odoo.tests import tagged
@@ -81,28 +80,22 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
     def test_01_hr_payroll_account_iso20022(self):
         """ Checking the process of payslip run when you create a SEPA payment. """
         # I verify the payslip run is in draft state.
-        self.assertEqual(self.payslip_run.state, 'draft', 'State not changed!')
+        self.assertEqual(self.payslip_run.state, '01_draft', 'State not changed!')
 
         # I create a payslip employee.
-        payslip_employee = self.env['hr.payslip.employees'].create({
-            'selection_mode': 'employee',
-            'select_employee_ids': [(4, self.hr_employee_john.id)]
-        })
-        payslip_employee._compute_employee_ids()
-        # I generate the payslip by clicking on Generate button wizard.
-        payslip_employee.with_context(active_id=self.payslip_run.id).compute_sheet()
+        self.payslip_run.generate_payslips([self.hr_employee_john.id])
 
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')
 
         # I verify the payslip run is in verify state.
-        self.assertEqual(self.payslip_run.state, 'verify', 'State not changed!')
+        self.assertEqual(self.payslip_run.state, '02_verify', 'State not changed!')
 
         # I confirm the payslip run.
         self.payslip_run.action_validate()
 
         # I verify the payslip run is in close state.
-        self.assertEqual(self.payslip_run.state, 'close', 'State not changed!')
+        self.assertEqual(self.payslip_run.state, '03_close', 'State not changed!')
 
         # I make the SEPA payment.
         file = self.env['hr.payroll.payment.report.wizard'].create({
@@ -116,22 +109,20 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
         self.assertTrue(file, 'SEPA payment has not been created!')
 
         # I verify the payslip is in paid state.
-        self.assertEqual(self.payslip_run.state, 'close', 'State should not change!')
+        self.assertEqual(self.payslip_run.state, '03_close', 'State should not change!')
 
     def test_02_hr_payroll_account_iso20022_ch(self):
-        self.assertEqual(self.payslip_run.state, 'draft')
+        self.assertEqual(self.payslip_run.state, '01_draft')
 
-        payslip_employee = self.env['hr.payslip.employees'].create({
-            'employee_ids': [(4, self.hr_employee_john.id)]
-        })
-        payslip_employee.with_context(active_id=self.payslip_run.id).compute_sheet()
+        # I create a payslip employee.
+        self.payslip_run.generate_payslips([self.hr_employee_john.id])
 
         self.assertTrue(len(self.payslip_run.slip_ids) > 0)
-        self.assertEqual(self.payslip_run.state, 'verify')
+        self.assertEqual(self.payslip_run.state, '02_verify')
 
         self.payslip_run.action_validate()
 
-        self.assertEqual(self.payslip_run.state, 'close')
+        self.assertEqual(self.payslip_run.state, '03_close')
 
         file = self.env['hr.payroll.payment.report.wizard'].create({
             'payslip_ids': self.payslip_run.slip_ids.ids,
@@ -141,7 +132,7 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
         })._create_sepa_binary()
 
         self.assertTrue(file)
-        self.assertEqual(self.payslip_run.state, 'close')
+        self.assertEqual(self.payslip_run.state, '03_close')
 
 @tagged('external_l10n', 'post_install', '-at_install', '-standard')
 class TestPayrollSEPACreditTransferXmlValidity(TestPayrollSEPACreditTransferCommon):
@@ -163,10 +154,7 @@ class TestPayrollSEPACreditTransferXmlValidity(TestPayrollSEPACreditTransferComm
     def test_01_hr_payroll_account_iso20022(self):
         """ Checking the process of payslip run when you create a SEPA payment. """
 
-        payslip_employee = self.env['hr.payslip.employees'].create({
-            'employee_ids': [Command.set(self.hr_employee_john.id)]
-        })
-        payslip_employee.with_context(active_id=self.payslip_run.id).compute_sheet()
+        self.payslip_run.generate_payslips([self.hr_employee_john.id])
         self.payslip_run.action_validate()
         file = self.env['hr.payroll.payment.report.wizard'].create({
             'payslip_ids': self.payslip_run.slip_ids.ids,

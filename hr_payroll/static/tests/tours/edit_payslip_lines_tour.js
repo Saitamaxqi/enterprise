@@ -21,11 +21,6 @@ registry.category("web_tour.tours").add('hr_payroll_edit_payslip_lines_tour', {
         run: "click",
     },
     {
-        content: 'Remove "Batch" filter',
-        trigger: ".o_searchview .o_facet_remove",
-        run: "click",
-    },
-    {
         content: "Click on payslip",
         trigger: '.o_data_row td:contains("Richard")',
         run: "click",

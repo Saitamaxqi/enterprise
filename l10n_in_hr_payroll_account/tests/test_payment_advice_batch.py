@@ -3,7 +3,6 @@
 from datetime import date
 
 
-from odoo import Command
 from odoo.addons.l10n_in_hr_payroll_account.tests.common import TestPayrollAccountCommon
 from odoo.tests import tagged
 
@@ -18,20 +17,13 @@ class TestPaymentAdviceBatch(TestPayrollAccountCommon):
             'company_id': self.company_in.id,
         })
 
-        payslip_employee = self.env['hr.payslip.employees'].create({
-            'selection_mode': 'employee',
-            'select_employee_ids': [
-                Command.set([self.rahul_emp.id, self.jethalal_emp.id])
-            ]
-        })
-
-        payslip_employee.with_context(active_id=payslip_run.id).compute_sheet()
+        payslip_run.generate_payslips([self.rahul_emp.id, self.jethalal_emp.id])
         payslip_run.action_validate()
         return payslip_run
 
     def test_payment_report_advice_xlsx_creation(self):
         payslip_run = self._prepare_payslip_run()
-        self.assertEqual(payslip_run.state, "close", "Payslip run should be in Done state")
+        self.assertEqual(payslip_run.state, "03_close", "Payslip run should be in Done state")
 
         # Generating the XLSX report for the batch
         payment_report_dict = self.env["hr.payroll.payment.report.wizard"].create({
@@ -49,7 +41,7 @@ class TestPaymentAdviceBatch(TestPayrollAccountCommon):
 
     def test_payment_report_advice_pdf_creation(self):
         payslip_run = self._prepare_payslip_run()
-        self.assertEqual(payslip_run.state, "close", "Payslip run should be in Done state")
+        self.assertEqual(payslip_run.state, "03_close", "Payslip run should be in Done state")
 
         # Generating the PDF report for the batch
         payment_report_dict = self.env["hr.payroll.payment.report.wizard"].create({

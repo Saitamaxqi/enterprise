@@ -3063,12 +3063,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         # Generate Batch / payslips
         self.contract.generate_work_entries(datetime.date(2020, 12, 1), datetime.date(2020, 12, 31))
-        payslip_run_id = self.env['hr.payslip.employees'].with_context(
-            default_date_start='2020-12-01',
-            default_date_end='2020-12-31',
-            allowed_company_ids=self.env.company.ids,
-        ).create({}).compute_sheet()['res_id']
-        payslip_run = self.env['hr.payslip.run'].browse(payslip_run_id)
+
+        payslip_run = self.env["hr.payslip.run"].create({
+            "date_start": '2020-12-01',
+            "date_end": '2020-12-31',
+        })
+        employees = self.env["hr.employee"].search(payslip_run._get_employees_domain())
+        payslip_run.generate_payslips(employees.ids)
 
         payslips = payslip_run.slip_ids
         self.assertEqual(len(payslips), 2)

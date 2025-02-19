@@ -1,0 +1,270 @@
+@media (max-width: 1200px) {
+  .o_payrun_card {
+    grid-template-columns: repeat(4, 1fr) minmax(0, 1fr) !important;
+    .o_cell:nth-child(4) {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .o_payrun_card {
+    grid-template-columns: repeat(3, 1fr) minmax(0, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .o_payrun_card {
+    grid-template-columns: repeat(1, 1fr) minmax(0, 1fr) !important;
+    .o_cell:nth-child(3), .o_cell:nth-child(2) {
+      display: none;
+    }
+  }
+}
+
+.o_hr_payroll_payslip_list_view .o_content {
+  display: flex;
+  flex-direction: column;
+}
+
+.o_payrun_full_card {
+
+  &.o_draft {
+    .o_stat_button_bolt {
+      background-color: $o_info;
+      border-color: $o_info;
+
+      &:hover {
+        background-color: $o-view-background-color;
+        i {
+          color: $o_info;
+        }
+      }
+    }
+
+    .o_payrun_card {
+      border-left-width: 2px;
+      border-left-color: $o_info;
+    }
+  }
+
+  &.o_verify {
+    .o_stat_button_bolt {
+      background-color: $o_warning;
+      border-color: $o_warning;
+
+      &:hover {
+        background-color: $o-view-background-color;
+        i {
+          color: $o_warning;
+        }
+      }
+    }
+
+    .o_payrun_card {
+      border-left-width: 2px;
+      border-left-color: $o_warning;
+    }
+  }
+
+  &.o_close {
+    .o_stat_button_bolt {
+      background-color: $o-success;
+      border-color: $o-success;
+
+      &:hover {
+        background-color: $o-view-background-color;
+        i {
+          color: $o-success;
+        }
+      }
+    }
+
+    .o_payrun_card {
+      border-left-width: 2px;
+      border-left-color: $o-success;
+    }
+  }
+
+  &.o_paid {
+    .o_stat_button_bolt {
+      background-color: $o-brand-primary;
+      border-color: $o-brand-primary;
+
+      &:hover {
+        background-color: $o-view-background-color;
+        i {
+          color: $o-brand-primary;
+        }
+      }
+    }
+
+    .o_payrun_card {
+      border-left-width: 2px;
+      border-left-color: $o-brand-primary;
+    }
+  }
+}
+
+.o_payrun_card {
+  position: relative;
+  z-index: 1;
+  display: grid !important;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(5, 1fr) minmax(0, 1fr);
+  grid-gap: 24px;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  height: fit-content;
+  padding: 0 16px;
+  border-bottom: solid $border-color $border-width;
+  background-color: $o-view-background-color;
+
+  .o_cell {
+    display: flex;
+    flex-direction: column;
+    margin: 8px 0;
+    .o_text {
+      font-size: 20px;
+    }
+    .o_inline_separator {
+      padding: 0 10px;
+    }
+    .o_subtext {
+      font-size: 13px;
+      font-weight: $o-font-weight-medium;
+      text-wrap: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  .o_payrun_info {
+    grid-column: span 2;
+    width: 100%;
+    word-break: break-all;
+    justify-self: flex-start;
+
+    .o_info_pill {
+      text-wrap: nowrap;
+      padding: 1px 6px;
+      border-radius: 10px;
+      border: solid $border-color $border-width;
+      background-color: $o-kanban-background;
+      i {
+        padding-right: 4px;
+      }
+    }
+
+    .o_report_download:hover {
+      color: $white;
+      background-color: $o-main-link-color;
+      border-color: $white;
+    }
+  }
+
+  .o_payrun_cost {
+    min-width: 100%;
+  }
+
+  .o_payrun_buttons {
+    flex-direction: row;
+    justify-self: end;
+    align-items: center;
+
+    a {
+      color: inherit !important;
+    }
+  }
+
+  .o_payrun_state {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.o_payrun_kanban {
+  padding: 0 4%;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+
+  .o_kanban_group {
+    .o_kanban_header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      padding: 0 !important;
+      font-weight: $o-font-weight-normal;
+
+      &:after {
+        content: "";
+        flex-grow: 1;
+        height: 1px;
+        background-color: $border-color;
+      }
+    }
+  }
+}
+
+.o_payrun_action_buttons .oe_stat_button {
+  width: 100%;
+  background-color: inherit;
+  color: inherit;
+  font-weight: $font-weight-normal;
+  text-align: left;
+
+  &:hover {
+    background-color: $dropdown-link-hover-bg;
+    color: inherit;
+  }
+}
+
+
+.o_payrun_card_kanban {
+  .o_payrun_full_card {
+    margin: 0;
+
+    .o_payrun_card:hover {
+      outline-color: $black;
+      z-index: 2;
+    }
+
+    &.o_draft .o_payrun_card:hover {
+      outline-color: $o-info;
+      z-index: 2;
+    }
+
+    &.o_verify .o_payrun_card:hover {
+      outline-color: $o-warning;
+      z-index: 2;
+    }
+
+    &.o_close .o_payrun_card:hover {
+      outline-color: $o-success;
+      z-index: 2;
+    }
+
+    &.o_paid .o_payrun_card:hover {
+      outline-color: $o-brand-primary;
+      z-index: 2;
+    }
+  }
+
+  cursor: pointer;
+  .o_payrun_card {
+    border-bottom: none;
+    border-left: solid;
+    border-left-width: 2px;
+    outline: solid $border-color $border-width;
+
+    .o_cell {
+      margin: 4px 0;
+    }
+  }
+}

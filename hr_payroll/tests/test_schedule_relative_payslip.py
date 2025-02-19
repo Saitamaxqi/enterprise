@@ -32,8 +32,8 @@ PAY_SCHEDULES = {
         'date_to': Date.to_date('2023-04-30'),
     },
     'daily': {
-        'date_from': Date.to_date('2023-04-01'),
-        'date_to': Date.to_date('2023-04-01'),
+        'date_from': Date.to_date('2023-04-12'),
+        'date_to': Date.to_date('2023-04-12'),
     }
 }
 

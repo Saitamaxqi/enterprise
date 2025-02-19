@@ -49,6 +49,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
             self.payslip_run_id.write({
                 'payment_report': payment_report,
                 'payment_report_filename': batch_filename + extension,
+                'payment_report_format': dict(self._fields['export_format']._description_selection(self.env))[self.export_format],
                 'payment_report_date': fields.Date.today()})
 
         for payslip in self.payslip_ids:

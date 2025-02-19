@@ -3,14 +3,16 @@ import { useService } from "@web/core/utils/hooks";
 
 export function useWorkEntryPayslip({ getEmployeeIds, getRange }) {
     const action = useService("action");
-    return () => {
+    const orm = useService("orm");
+    return async() => {
         const { start, end } = getRange();
-        action.doAction("hr_payroll.action_generate_payslips_from_work_entries", {
-            additionalContext: {
-                default_date_start: serializeDate(start),
-                default_date_end: serializeDate(end),
-                active_employee_ids: getEmployeeIds()
-            }
+        const ids = await orm.create("hr.payslip.run", [{
+            date_start: serializeDate(start),
+            date_end: serializeDate(end),
+        }]);
+        await orm.call("hr.payslip.run","generate_payslips", [ids], {
+            employee_ids: getEmployeeIds(),
         });
-    }
+        await action.doAction(await orm.call("hr.payslip.run", "action_open_payslips", [ids]));
+    };
 }

@@ -1,0 +1,44 @@
+.state-bubbles {
+  .state {
+    min-width: 60px;
+
+    .state-bubble {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: $border-color;
+      z-index: 1;
+    }
+    .state-bubble-line-left {
+      left: 0;
+      top: 50%;
+    }
+    .state-bubble-line-right{
+      right: 0;
+      top: 50%;
+    }
+
+    .success {
+      background-color: $o_success;
+      border-color: $o-success !important;
+    }
+
+    .warning {
+      background-color: $o-warning;
+      border-color: $o-warning !important;
+    }
+
+    .danger {
+      background-color: $o-danger;
+      border-color: $o-danger !important;
+    }
+
+    .state-label {
+      font-size: .8rem;
+    }
+
+    .state-label-issue {
+      height: 20px;
+    }
+  }
+}

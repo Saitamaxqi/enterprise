@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <t t-name="hr_payroll.PayslipListRenderer" t-inherit="web.ListRenderer" t-inherit-mode="primary">
+        <ActionHelper position="replace">
+            <t t-if="showNoContentHelper">
+                <PayslipActionHelper payrunId="props.payRunInfo.id" onClickCreate.bind="props.onAdd" onClickGenerate.bind="props.onGenerate"/>
+            </t>
+        </ActionHelper>
+    </t>
+</odoo>
