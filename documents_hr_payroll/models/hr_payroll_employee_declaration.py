@@ -46,6 +46,7 @@ class HrPayrollEmployeeDeclaration(models.Model):
                     'access_ids': [] if not partner_id else [
                         Command.create({'partner_id': partner_id, 'role': 'view'})
                     ],
+                    'partner_id': partner_id or False,
                     'datas': line.pdf_file,
                     'name': line.pdf_filename,
                     'folder_id': line.company_id.documents_payroll_folder_id.id,
