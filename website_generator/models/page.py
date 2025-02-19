@@ -119,68 +119,24 @@ class WebsitePage(models.Model):
         return menu
 
     def _apply_website_themes(self, homepage_data):
-        values = {}
-        color_palette = homepage_data.get('color_palette', {})
-        for i in range(1, 6):
-            color = color_palette.get(f'o-color-{i}')
-            if color:
-                values[f'o-color-{i}'] = color
-
-        header_color = homepage_data.get('header_color', {})
-        if header_color:
-            values.update({
-                'menu': header_color.get('menu', "'NULL'"),
-                'menu-gradient': header_color.get('menu-gradient', "'NULL'"),
-                'menu-custom': header_color.get('menu-custom', "'NULL'"),
-            })
-
-        footer_color = homepage_data.get('footer_color', {})
-        if footer_color:
-            values.update({
-                'footer': footer_color.get('footer', "'NULL'"),
-                'footer-gradient': footer_color.get('footer-gradient', "'NULL'"),
-                'footer-custom': footer_color.get('footer-custom', "'NULL'"),
-            })
-
-        # TODO: Try add this new color palette as an option to the odoo editor list of options.
-        self.env['web_editor.assets'].make_scss_customization(
-            '/website/static/src/scss/options/colors/user_color_palette.scss',
-            values,
-        )
+        user_color_palette = homepage_data.get('user_color_palette', {})
+        if user_color_palette:
+            self.env['web_editor.assets'].make_scss_customization(
+                '/website/static/src/scss/options/colors/user_color_palette.scss',
+                user_color_palette,
+            )
 
     def _apply_user_values(self, homepage_data):
-        user_values = {
-            'font': 'null'
-        }
+        user_values = homepage_data.get('user_values', {})
+
         if homepage_data.get('footer'):
             user_values.update({'footer-template': f"'imported-footer-{self.website_id.id}'"})
 
-        fonts = homepage_data.get('fonts', {})
-        if fonts:
-            google_fonts = fonts.get('google-fonts', 'null')
-            google_fonts_tuple = 'null'
-            if google_fonts != 'null':
-                google_fonts_tuple = f"""('{"', '".join(google_fonts)}')"""
-            user_values.update({
-                'google-fonts': google_fonts_tuple,
-                'headings-font': fonts.get('h1', 'null'),
-                'h2-font': fonts.get('h2', 'null'),
-                'h3-font': fonts.get('h3', 'null'),
-                'h4-font': fonts.get('h4', 'null'),
-                'h5-font': fonts.get('h5', 'null'),
-                'h6-font': fonts.get('h6', 'null'),
-                'font': fonts.get('p', 'null'),
-                'buttons-font': fonts.get('button', 'null'),
-                'display-1-font': fonts.get('h1-display-1', 'null'),
-                'display-2-font': fonts.get('h1-display-2', 'null'),
-                'display-3-font': fonts.get('h1-display-3', 'null'),
-                'display-4-font': fonts.get('h1-display-4', 'null'),
-            })
-
-        self.env['web_editor.assets'].make_scss_customization(
-            '/website/static/src/scss/options/user_values.scss',
-            user_values,
-        )
+        if user_values:
+            self.env['web_editor.assets'].make_scss_customization(
+                '/website/static/src/scss/options/user_values.scss',
+                user_values,
+            )
 
     def _create_footer(self, homepage_data):
         footer_html_list = homepage_data.get('footer', [])
