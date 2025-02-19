@@ -24,7 +24,7 @@ export class FieldStudio extends Field {
         const fieldComponentProps = super.fieldComponentProps;
         if (this.type === "kanban.many2one_avatar_user") {
             // This field must be visible, even when dealing without a record
-            fieldComponentProps.isEditable = true;
+            fieldComponentProps.readonly = false;
         }
         delete fieldComponentProps.studioXpath;
         delete fieldComponentProps.hasEmptyPlaceholder;

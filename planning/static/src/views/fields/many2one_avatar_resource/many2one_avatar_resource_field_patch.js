@@ -1,35 +1,54 @@
-import { patch } from "@web/core/utils/patch";
+import { AvatarCardResourcePopover } from "@resource_mail/components/avatar_card_resource/avatar_card_resource_popover";
+import {
+    kanbanMany2OneAvatarResourceField,
+    KanbanMany2OneAvatarResourceField,
+} from "@resource_mail/views/fields/many2one_avatar_resource/kanban_many2one_avatar_resource_field";
 import {
     Many2OneAvatarResourceField,
     many2OneAvatarResourceField,
-    KanbanMany2OneAvatarResourceField,
-    kanbanMany2OneAvatarResourceField
 } from "@resource_mail/views/fields/many2one_avatar_resource/many2one_avatar_resource_field";
+import { usePopover } from "@web/core/popover/popover_hook";
+import { patch } from "@web/core/utils/patch";
 
-
-export const patchM2oResourceFieldPrototype = {
-    get displayAvatarCard() {
-        return !this.env.isSmall && this.relation === "resource.resource" &&
-            (this.props.record.data.resource_type == "user" || this.props.record.data.resource_roles?.records.length > 1);
-    },
-};
-
-export const patchM2oResourceField = {
-    fieldDependencies: [
-        ...many2OneAvatarResourceField.fieldDependencies,
-        {
-            name: "resource_roles",
-            type: "many2many"
+function patchFieldComponent(o) {
+    patch(o, {
+        setup() {
+            super.setup();
+            this.materialPopover = usePopover(AvatarCardResourcePopover);
         },
-        {
-            name: "resource_color",
-            type: "integer"
+        openMaterialPopover(target) {
+            if (
+                !this.materialPopover.isOpen &&
+                this.props.record.data.resource_roles?.records.length <= 1
+            ) {
+                return;
+            }
+            this.materialPopover.open(target, {
+                id: this.props.record.data[this.props.name][0],
+                recordModel: this.props.record.fields[this.props.name].relation,
+            });
         },
-    ],
-};
+    });
+}
 
-patch(Many2OneAvatarResourceField.prototype, patchM2oResourceFieldPrototype);
-export const unpatchM2oResourceFieldPlanning = patch(many2OneAvatarResourceField, patchM2oResourceField);
+patchFieldComponent(Many2OneAvatarResourceField.prototype);
+patchFieldComponent(KanbanMany2OneAvatarResourceField.prototype);
 
-patch(KanbanMany2OneAvatarResourceField.prototype, patchM2oResourceFieldPrototype);
-export const unpatchKanbanM2oResourceFieldPlanning = patch(kanbanMany2OneAvatarResourceField, patchM2oResourceField);
+function patchFieldDescr(o) {
+    patch(o, {
+        fieldDependencies: [
+            ...o.fieldDependencies,
+            {
+                name: "resource_roles",
+                type: "many2many",
+            },
+            {
+                name: "resource_color",
+                type: "integer",
+            },
+        ],
+    });
+}
+
+patchFieldDescr(many2OneAvatarResourceField);
+patchFieldDescr(kanbanMany2OneAvatarResourceField);

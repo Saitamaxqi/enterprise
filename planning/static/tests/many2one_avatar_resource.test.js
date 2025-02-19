@@ -207,12 +207,12 @@ test("many2one_avatar_resource widget in kanban view", async () => {
     });
 
     // 1. Clicking on material resource's icon with only one role
-    await click(".o_kanban_record:nth-of-type(1) .o_m2o_avatar");
+    await click(".o_kanban_record:nth-of-type(1) .o_m2o_avatar i");
     await animationFrame();
     expect(".o_avatar_card").toHaveCount(0);
 
     // 2. Clicking on material resource's icon with two roles
-    await click(".o_kanban_record:nth-of-type(2) .o_m2o_avatar");
+    await click(".o_kanban_record:nth-of-type(2) .o_m2o_avatar i");
     await animationFrame();
     expect(".o_avatar_card").toHaveCount(1);
     expect(".o_avatar_card .o_avatar > img").toHaveCount(0, {
@@ -224,12 +224,12 @@ test("many2one_avatar_resource widget in kanban view", async () => {
     });
 
     // 3. Clicking on human resource's avatar with no user associated
-    await click(".o_kanban_record:nth-of-type(3) .o_m2o_avatar");
+    await click(".o_kanban_record:nth-of-type(3) .o_m2o_avatar img");
     await animationFrame();
     expect(".o_card_user_infos span:first").toHaveText("Marie");
 
     // 4. Clicking on human resource's avatar with one user associated
-    await click(".o_kanban_record:nth-of-type(4) .o_m2o_avatar");
+    await click(".o_kanban_record:nth-of-type(4) .o_m2o_avatar img");
     await animationFrame();
     expect(".o_card_user_infos span:first").toHaveText("Pierre");
 });

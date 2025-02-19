@@ -5498,7 +5498,7 @@ registry.category("web_tour.tours").add("test_split_uncomplete_moves_on_exit", {
         },
         {
             content: "Exit the barcode app to look at look at back end data.",
-            trigger: ".o_field_widget[name=product_id] > a",
+            trigger: ".o_field_widget[name=product_id] a.o_form_uri",
             run: "click",
         },
         {
@@ -5537,7 +5537,7 @@ registry.category("web_tour.tours").add("test_split_uncomplete_moves_on_exit", {
         },
         {
             content: "Exit the barcode app to look at look at back end data.",
-            trigger: ".o_field_widget[name=product_id] > a",
+            trigger: ".o_field_widget[name=product_id] a.o_form_uri",
             run: "click",
         },
         {
