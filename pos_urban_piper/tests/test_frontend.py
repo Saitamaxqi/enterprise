@@ -13,6 +13,15 @@ class TestPosUrbanPiperCommon(TestPointOfSaleHttpCommon):
     def setUpClass(cls):
         super().setUpClass()
         archive_products(cls.env)
+        cls.env['product.product'].search([
+            ('id', 'in', [
+                cls.env.ref('pos_urban_piper.product_packaging_charges').id,
+                cls.env.ref('pos_urban_piper.product_delivery_charges').id,
+                cls.env.ref('pos_urban_piper.product_other_charges').id,
+            ])
+        ]).product_tmpl_id.write({
+            'active': True,
+        })
         cls.env['ir.config_parameter'].set_param('pos_urban_piper.urbanpiper_username', 'demo')
         cls.env['ir.config_parameter'].set_param('pos_urban_piper.urbanpiper_apikey', 'demo')
         cls.urban_piper_config = cls.env['pos.config'].create({
