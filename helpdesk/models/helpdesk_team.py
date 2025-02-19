@@ -103,7 +103,7 @@ class HelpdeskTeam(models.Model):
     use_sla = fields.Boolean('SLA Policies', default=True)
     unassigned_tickets = fields.Integer(string='Unassigned Tickets', compute='_compute_unassigned_tickets')
     resource_calendar_id = fields.Many2one('resource.calendar', 'Working Hours',
-        default=lambda self: self.env.company.resource_calendar_id, domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        default=lambda self: self.env.company.resource_calendar_id, domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), ('flexible_hours', '=', False), ('attendance_ids', '!=', False)]",
         help="Working hours used to determine the deadline of SLA Policies.")
     open_ticket_count = fields.Integer("# Open Tickets", compute='_compute_open_ticket_count')
     sla_policy_count = fields.Integer("# SLA Policy", compute='_compute_sla_policy_count')
