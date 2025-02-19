@@ -10,9 +10,14 @@ class PosOrder(models.Model):
 
     def _prepare_invoice_vals(self):
         vals = super()._prepare_invoice_vals()
-        if self.amount_total >= 0:
-            if self.invoice_type == 'factura':
-                if self.amount_tax == 0:
+        invoice_types = self.mapped("invoice_type")
+        if len(set(invoice_types)) > 1:
+            raise ValueError("All orders must have the same invoice type")
+        amount_total = sum(self.mapped("amount_total"))
+        amount_tax = sum(self.mapped("amount_tax"))
+        if amount_total >= 0:
+            if invoice_types[0] == 'factura':
+                if amount_tax == 0:
                     vals.update({
                         'l10n_latam_document_type_id': self.env.ref('l10n_cl.dc_y_f_dte').id,
                     })
@@ -20,8 +25,8 @@ class PosOrder(models.Model):
                     vals.update({
                         'l10n_latam_document_type_id': self.env.ref('l10n_cl.dc_a_f_dte').id,
                     })
-            elif self.invoice_type == 'boleta':
-                if self.amount_tax == 0:
+            elif invoice_types[0] == 'boleta':
+                if amount_tax == 0:
                     vals.update({
                         'l10n_latam_document_type_id': self.env.ref('l10n_cl.dc_b_e_dte').id,
                     })
