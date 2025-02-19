@@ -98,10 +98,10 @@ export class ModifiersProperties extends Component {
         if (typeof value !== "string" || value === "") {
             value = "False"; // See py.js:evaluateBooleanExpr default value is False
         }
-        const { fields, resModel, fieldsInArch } = this.env.viewEditorModel;
+        const { fields, resModel } = this.env.viewEditorModel;
         this.addDialog(ExpressionEditorDialog, {
             resModel,
-            fields: Object.fromEntries(["id", ...fieldsInArch].map((name) => [name, fields[name]])),
+            fields,
             expression: value,
             onConfirm: (expression) => this.onChangeModifier(name, expression),
         });
