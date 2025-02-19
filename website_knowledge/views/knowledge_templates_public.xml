@@ -10,21 +10,71 @@
         </xpath>
         <xpath expr="//body" position="replace">
             <body>
-                <t t-out="0"/>
+                <div id="wrapwrap">
+                    <t t-out="0"/>
+                </div>
             </body>
         </xpath>
     </template>
 
     <template id="website_knowledge.article_view_public" name="Knowledge Public">
         <t t-call="website_knowledge.layout">
-            <t t-set="public_knowledge_props" t-value="{
-                'record': {
-                    'resId': res_id,
-                    'data': article_data,
-                },
-                'showSidebar': show_sidebar, 
-            }"/>
-            <owl-component name="knowledge.public_view" t-att-props="json.dumps(public_knowledge_props)"/>
+            <t t-set="sidebar_props" t-value="{ 'resId': res_id, 'showSidebar': show_sidebar }"/>
+            <div class="container-fluid h-100 o_knowledge_public_view o_knowledge_public_view_static p-0" t-att-data-res_id="str(res_id)">
+                <div class="d-sm-flex h-100">
+                    <owl-component name="knowledge.public_view" t-att-props="json.dumps(sidebar_props)"
+                        t-att-class="'o_knowledge_sidebar_owl_component' if show_sidebar else ''"/>
+                    <div class="flex-grow-1 position-relative min-w-0">
+                        <div class="d-flex flex-column h-100">
+                            <!-- Article header -->
+                            <header class="o_knowledge_header justify-content-between flex-shrink-1">
+                                <div class="d-flex align-items-center p-3 flex-grow-1">
+                                    <a t-if="show_sidebar" role="button" class="o_header_toggle_aside_button d-md-none btn align-self-start px-2 me-2 py-1">
+                                        <i class="fa fa-lg fa-bars" title="Toggle aside menu"/>
+                                    </a>
+                                    <!-- Title -->
+                                    <div class="min-w-0 text-truncate" t-if="res_id">
+                                        <span t-if="article_data.get('display_name')" t-out="article_data.get('display_name')"/>
+                                        <span t-else="">Untitled</span>
+                                    </div>
+                                    <!-- Log In -->
+                                    <div class="d-flex my-auto mx-3 o_knowledge_public_virality flex-grow-1 flex-shrink-1 justify-content-end">
+                                        <div class="nav-item text-center o_no_autohide_item">
+                                            <a t-att-href="'/web/login?redirect=/knowledge' + (('/article/' + str(res_id)) if res_id else '/home')"
+                                                class="nav-link fw-bold text-nowrap">Sign in</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="p-3 text-center" t-if="not res_id">
+                                <p class="o_view_nocontent_empty_folder">
+                                    <h2>Article not found</h2>
+                                    <br />
+                                    <p>The article you are trying the read has either been removed or you do not have access to it.</p>
+                                </p>
+                            </div>
+                            <main t-else="" class="flex-grow-1 position-relative">
+                                <div class="o_scroll_view">
+                                    <!-- Article Cover -->
+                                    <div t-if="article_data.get('cover_image_id')" class="o_knowledge_cover">
+                                        <img t-att-src="article_data.get('cover_image_url')" t-attf-style="object-position: 50% #{article_data.get('cover_image_position') or 50}%;"/>
+                                    </div>
+                                    <div class="pt-md-5" t-else=""/>
+                                    <!-- Article Icon -->
+                                    <div t-if="article_data.get('icon')" t-attf-class="o_knowledge_icon px-3 #{'o_full_width' if article_data.get('full_width') else ''}">
+                                        <t t-out="article_data.get('icon')" />
+                                    </div>
+                                    <!-- Article Body -->
+                                    <div t-attf-class="o_knowledge_article px-3 #{'pt-3' if not article_data.get('icon') else ''} #{'o_full_width' if article_data.get('full_width') else ''}">
+                                        <div class="o_readonly" t-out="article_data.get('body')"/>
+                                    </div>
+                                </div>
+                            </main>
+                        </div>
+                        <owl-component name="website_knowledge.public_form_resizer"/>
+                    </div>
+                </div>
+            </div>
         </t>
     </template>
 

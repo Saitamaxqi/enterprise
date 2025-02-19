@@ -16,6 +16,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: website_knowledge
+#: model_terms:ir.ui.view,arch_db:website_knowledge.article_view_public
+msgid "<i class=\"fa fa-lg fa-bars\" title=\"Toggle aside menu\"/>"
+msgstr ""
+
+#. module: website_knowledge
 #. odoo-javascript
 #: code:addons/website_knowledge/static/src/backend/components/permission_panel/permission_panel.xml:0
 msgid "Article not Published"
@@ -24,6 +29,7 @@ msgstr ""
 #. module: website_knowledge
 #. odoo-javascript
 #: code:addons/website_knowledge/static/src/frontend/knowledge_public_view/knowledge_public_view.xml:0
+#: model_terms:ir.ui.view,arch_db:website_knowledge.article_view_public
 msgid "Article not found"
 msgstr ""
 
@@ -127,6 +133,7 @@ msgstr ""
 #. module: website_knowledge
 #. odoo-javascript
 #: code:addons/website_knowledge/static/src/frontend/knowledge_public_view/knowledge_public_view.xml:0
+#: model_terms:ir.ui.view,arch_db:website_knowledge.article_view_public
 msgid "Sign in"
 msgstr ""
 
@@ -138,6 +145,7 @@ msgstr ""
 #. module: website_knowledge
 #. odoo-javascript
 #: code:addons/website_knowledge/static/src/frontend/knowledge_public_view/knowledge_public_view.xml:0
+#: model_terms:ir.ui.view,arch_db:website_knowledge.article_view_public
 msgid ""
 "The article you are trying the read has either been removed or you do not "
 "have access to it."
@@ -181,6 +189,7 @@ msgstr ""
 #. module: website_knowledge
 #. odoo-javascript
 #: code:addons/website_knowledge/static/src/frontend/knowledge_public_view/knowledge_public_view.xml:0
+#: model_terms:ir.ui.view,arch_db:website_knowledge.article_view_public
 msgid "Untitled"
 msgstr ""
 

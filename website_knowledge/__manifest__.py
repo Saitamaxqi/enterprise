@@ -26,6 +26,7 @@
             'html_editor/static/src/html_migrations/**/*',
             'html_editor/static/src/others/embedded_component_utils.js',
             'html_editor/static/src/others/embedded_components/core/**/*',
+            'html_editor/static/src/main/media/file.scss',
             'knowledge/static/src/editor/embedded_components/core/**/*',
             'knowledge/static/src/editor/html_migrations/**/*',
             'website_knowledge/static/src/frontend/**/*',
