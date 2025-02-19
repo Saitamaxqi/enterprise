@@ -10,7 +10,7 @@
             <field name="company_id" position="after">
                 <field name="currency_id" invisible="1"/>
             </field>
-            <page name="hr_settings" position="before">
+            <page name="personal_information" position="after">
                 <page name="hr_payroll" string="Payroll" groups="hr.group_hr_user">
                     <group>
                         <group name="payroll_group" string="Payroll">
