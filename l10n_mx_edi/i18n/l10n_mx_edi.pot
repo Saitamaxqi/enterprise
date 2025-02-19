@@ -2090,3 +2090,8 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_mx_edi.selection__l10n_mx_edi_invoice_cancel__mode__invoice_with_replacement
 msgid "invoice_with_replacement"
 msgstr ""
+
+#. module: l10n_mx_edi
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi.l10n_mx_identification_number
+msgid "<span name=\"identification_no\">Identification No.: </span>"
+msgstr ""
