@@ -1,5 +1,17 @@
-import { SpreadsheetModels, defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
-import { defineActions, fields, models, onRpc, webModels } from "@web/../tests/web_test_helpers";
+import {
+    getBasicData as getBasicSpreadsheetData,
+    getBasicServerData as getBasicSpreadsheetServerData,
+    SpreadsheetModels,
+    defineSpreadsheetModels,
+} from "@spreadsheet/../tests/helpers/data";
+import {
+    defineActions,
+    fields,
+    models,
+    onRpc,
+    serverState,
+    webModels,
+} from "@web/../tests/web_test_helpers";
 import { Domain } from "@web/core/domain";
 import { getBasicPermissionPanelData, DocumentsModels } from "@documents/../tests/helpers/data";
 
@@ -69,7 +81,17 @@ export class DocumentsDocument extends Documents {
         };
     }
 
-    _records = this._records.concat([
+    _records = [
+        {
+            id: 1,
+            name: "Workspace1",
+            description: "Workspace",
+            folder_id: false,
+            handler: false,
+            available_embedded_actions_ids: [],
+            type: "folder",
+            access_token: "accessTokenWorkspace1",
+        },
         {
             id: 2,
             name: "My spreadsheet",
@@ -79,6 +101,7 @@ export class DocumentsDocument extends Documents {
             handler: "spreadsheet",
             active: true,
             access_token: ACCESS_TOKEN_MY_SPREADSHEET,
+            available_embedded_actions_ids: [],
         },
         {
             id: 3,
@@ -89,8 +112,9 @@ export class DocumentsDocument extends Documents {
             handler: "spreadsheet",
             active: true,
             access_token: "accessToken",
+            available_embedded_actions_ids: [],
         },
-    ]);
+    ];
 }
 
 export class SpreadsheetTemplate extends models.Model {
@@ -225,4 +249,60 @@ export function getMySpreadsheetPermissionPanelData() {
         display_name: "My Spreadsheet",
         handler: "spreadsheet",
     });
+}
+
+/**
+ * @override to add necessary users
+ */
+export const getBasicData = () => {
+    const res = getBasicSpreadsheetData();
+    res["res.users"] = getDocumentBasicData().models["res.users"];
+    return res;
+};
+
+/**
+ * @override to add necessary users
+ */
+export const getBasicServerData = () => {
+    const res = getBasicSpreadsheetServerData();
+    res.models["res.users"] = getDocumentBasicData().models["res.users"];
+    return res;
+};
+
+export function getDocumentBasicData(views = {}) {
+    const models = {};
+    models["mail.alias"] = { records: [{ alias_name: "hazard@rmcf.es", id: 1 }] };
+    models["res.users"] = {
+        records: [
+            { name: "OdooBot", id: serverState.odoobotId },
+            {
+                name: "Test User",
+                id: serverState.userId,
+                active: true,
+                partner_id: serverState.partnerId,
+            },
+        ],
+    };
+    models["documents.document"] = {
+        records: [
+            {
+                name: "Folder 1",
+                alias_id: 1,
+                description: "Folder",
+                type: "folder",
+                id: 1,
+                available_embedded_actions_ids: [],
+            },
+        ],
+    };
+    models["spreadsheet.template"] = {
+        records: [
+            { id: 1, name: "Template 1", spreadsheet_data: "{}" },
+            { id: 2, name: "Template 2", spreadsheet_data: "{}" },
+        ],
+    };
+    return {
+        models,
+        views,
+    };
 }

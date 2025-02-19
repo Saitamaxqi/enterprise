@@ -1,11 +1,14 @@
-import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
+import {
+    defineDocumentSpreadsheetModels,
+    getDocumentBasicData,
+} from "@documents_spreadsheet/../tests/helpers/data";
 import { getEnrichedSearchArch } from "@documents/../tests/helpers/views/search";
 import { mockActionService } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { describe, expect, test } from "@odoo/hoot";
 import { click, dblclick, queryFirst, select, press } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
-import { contains, mountView, serverState } from "@web/../tests/web_test_helpers";
+import { contains, mountView } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");
 defineDocumentSpreadsheetModels();
@@ -40,45 +43,6 @@ const TEST_TEMPLATES = [
     { id: 11, name: "Template 11", spreadsheet_data: "{}" },
     { id: 12, name: "Template 12", spreadsheet_data: "{}" },
 ];
-
-function getDocumentBasicData(views = {}) {
-    const models = {};
-    models["mail.alias"] = { records: [{ alias_name: "hazard@rmcf.es", id: 1 }] };
-    models["res.users"] = {
-        records: [
-            { name: "OdooBot", id: serverState.odoobotId },
-            {
-                name: "Test User",
-                id: serverState.userId,
-                active: true,
-                partner_id: serverState.partnerId,
-            },
-        ],
-    };
-    models["documents.document"] = {
-        records: [
-            {
-                name: "Folder 1",
-                alias_id: 1,
-                description: "Folder",
-                type: "folder",
-                id: 1,
-                available_embedded_actions_ids: [],
-                owner_id: serverState.odoobotId,
-            },
-        ],
-    };
-    models["spreadsheet.template"] = {
-        records: [
-            { id: 1, name: "Template 1", spreadsheet_data: "{}" },
-            { id: 2, name: "Template 2", spreadsheet_data: "{}" },
-        ],
-    };
-    return {
-        models,
-        views,
-    };
-}
 
 /**
  * @typedef InitArgs

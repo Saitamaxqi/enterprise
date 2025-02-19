@@ -1,6 +1,7 @@
 import {
     SpreadsheetTemplate,
     defineDocumentSpreadsheetModels,
+    getBasicData,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import {
@@ -11,7 +12,6 @@ import { expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { setCellContent } from "@spreadsheet/../tests/helpers/commands";
-import { getBasicData } from "@spreadsheet/../tests/helpers/data";
 import { doMenuAction } from "@spreadsheet/../tests/helpers/ui";
 import { contains } from "@web/../tests/web_test_helpers";
 import { registry } from "@web/core/registry";

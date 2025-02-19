@@ -1,6 +1,9 @@
 import {
     defineDocumentSpreadsheetModels,
     defineDocumentSpreadsheetTestAction,
+    getBasicData,
+    getBasicServerData,
+    getDocumentBasicData,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import {
@@ -8,17 +11,12 @@ import {
     spawnPivotViewForSpreadsheet,
 } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_action";
-import { expect, getFixture, test } from "@odoo/hoot";
+import { beforeEach, expect, getFixture, test } from "@odoo/hoot";
 import { pointerDown } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { Model, constants, helpers } from "@odoo/o-spreadsheet";
 import { selectCell, setCellContent } from "@spreadsheet/../tests/helpers/commands";
-import {
-    Partner,
-    Product,
-    getBasicData,
-    getBasicServerData,
-} from "@spreadsheet/../tests/helpers/data";
+import { Partner, Product, ResUsers } from "@spreadsheet/../tests/helpers/data";
 import {
     getCellContent,
     getCellValue,
@@ -51,6 +49,10 @@ defineDocumentSpreadsheetModels();
 defineDocumentSpreadsheetTestAction();
 
 const { PIVOT_TABLE_CONFIG } = constants;
+
+beforeEach(() => {
+    ResUsers._records = getDocumentBasicData().models["res.users"].records;
+});
 
 test("simple pivot export", async () => {
     const { model } = await createSpreadsheetFromPivotView({

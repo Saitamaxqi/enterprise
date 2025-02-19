@@ -197,17 +197,18 @@ test("Freeze&Share a spreadsheet", async function () {
 });
 
 test("open xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", async function () {
-    const spreadsheetId = 1;
+    const spreadsheetId = 10;
     const spreadsheetCopyId = 99;
     const serverData = getTestServerData();
-    serverData.models["documents.document"].records = [
-        {
-            id: spreadsheetId,
-            name: "My excel file",
-            mimetype: XLSX_MIME_TYPES[0],
-            thumbnail_status: "present",
-        },
-    ];
+    serverData.models["ir.attachment"] = { records: [{ id: 1 }] };
+    serverData.models["documents.document"].records.push({
+        id: spreadsheetId,
+        name: "My excel file",
+        mimetype: XLSX_MIME_TYPES[0],
+        thumbnail_status: "present",
+        type: "binary",
+        attachment_id: 1, // Necessary to not be considered as a request
+    });
     await makeDocumentsSpreadsheetMockEnv({
         serverData,
         mockRPC: async (route, args) => {
@@ -229,7 +230,7 @@ test("open xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", 
         expect.step(action.tag);
         expect(action.params.spreadsheet_id).toEqual(spreadsheetCopyId);
     });
-    await contains(".o_kanban_image_wrapper").click();
+    await contains(".o_kanban_record:contains('My excel file') .o_kanban_image_wrapper").click();
 
     // confirm conversion to o-spreadsheet
     await contains(".modal-content .btn.btn-primary").click();
@@ -237,17 +238,19 @@ test("open xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", 
 });
 
 test("open WPS-marked xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", async function () {
-    const spreadsheetId = 1;
+    const spreadsheetId = 10;
     const spreadsheetCopyId = 99;
     const serverData = getTestServerData();
-    serverData.models["documents.document"].records = [
-        {
-            id: spreadsheetId,
-            name: "My excel file",
-            mimetype: XLSX_MIME_TYPES[1],
-            thumbnail_status: "present",
-        },
-    ];
+    serverData.models["ir.attachment"] = { records: [{ id: 1 }] };
+    serverData.models["documents.document"].records.push({
+        id: spreadsheetId,
+        folder_id: 1,
+        name: "My excel file",
+        mimetype: XLSX_MIME_TYPES[1],
+        thumbnail_status: "present",
+        type: "binary",
+        attachment_id: 1, // Necessary to not be considered as a request
+    });
     await makeDocumentsSpreadsheetMockEnv({
         serverData,
         mockRPC: async (route, args) => {
@@ -269,7 +272,7 @@ test("open WPS-marked xlsx converts to o-spreadsheet, clone it and opens the spr
         expect.step(action.tag);
         expect(action.params.spreadsheet_id).toEqual(spreadsheetCopyId);
     });
-    await contains(".oe_kanban_previewer").click();
+    await contains(".o_kanban_record:contains('My excel file') .oe_kanban_previewer").click();
 
     // confirm conversion to o-spreadsheet
     await contains(".modal-content .btn.btn-primary").click();
@@ -326,7 +329,7 @@ test("download a frozen spreadsheet document while selecting requested document"
             name: "My spreadsheet",
             raw: "{}",
             is_favorited: false,
-            folder_id: 1,
+            folder_id: false,
             handler: "frozen_spreadsheet",
             type: "binary",
             access_token: "accessTokenMyspreadsheet",
@@ -334,7 +337,7 @@ test("download a frozen spreadsheet document while selecting requested document"
         },
         {
             name: "Request",
-            folder_id: 1,
+            folder_id: false,
             type: "binary",
             access_token: "accessTokenRequest",
         },
@@ -366,8 +369,6 @@ test("can open spreadsheet while multiple documents are selected along with it",
     const serverData = getTestServerData();
     serverData.models["documents.document"].records = [
         { id: 1, name: "demo-workspace", type: "folder" },
-    ];
-    serverData.models["documents.document"].records = [
         {
             name: "test-spreadsheet",
             raw: "{}",
@@ -398,6 +399,9 @@ test("can open spreadsheet while multiple documents are selected along with it",
         expect.step(action.tag);
     });
     const fixture = getFixture();
+    await contains(".o_kanban_record:contains('demo-workspace')").click();
+    await animationFrame();
+
     const records = fixture.querySelectorAll(".o_kanban_record");
     await contains(records[0].querySelector(".o_record_selector")).click();
     await contains(records[1].querySelector(".o_record_selector")).click();

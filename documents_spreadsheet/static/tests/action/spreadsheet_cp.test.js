@@ -2,13 +2,14 @@ import {
     defineDocumentSpreadsheetModels,
     DocumentsDocument,
     getMySpreadsheetPermissionPanelData,
+    getBasicData,
+    getBasicServerData,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { Model } from "@odoo/o-spreadsheet";
-import { getBasicData, getBasicServerData } from "@spreadsheet/../tests/helpers/data";
 import { contains, getService, patchWithCleanup } from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
 

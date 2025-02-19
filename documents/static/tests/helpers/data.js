@@ -1,13 +1,16 @@
+import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { fields, models, serverState } from "@web/../tests/web_test_helpers";
 
 export class DocumentsDocument extends models.Model {
     _name = "documents.document";
+    _parent_name = "folder_id";
 
     id = fields.Integer({ string: "ID" });
     name = fields.Char({ string: "Name" });
     thumbnail = fields.Binary({ string: "Thumbnail" });
     favorited_ids = fields.Many2many({ string: "Name", relation: "res.users" });
     is_favorited = fields.Boolean({ string: "Name" });
+    is_folder = fields.Boolean({ string: "is_folder" });  // used for ordering
     is_multipage = fields.Boolean({ string: "Is multipage" });
     is_company_root_folder = fields.Boolean({ string: "Pinned to Company roots" });
     mimetype = fields.Char({ string: "Mimetype" });
@@ -68,39 +71,84 @@ export class DocumentsDocument extends models.Model {
     }
 
     /**
-     * @override
+     * @override to avoid super() not working for us.
      */
     search_panel_select_range(fieldName) {
         const result = super.search_panel_select_range(...arguments);
-        if (fieldName === "folder_id") {
-            const coModel = this.env[this._fields[fieldName].relation];
-            for (const recordValues of result.values || []) {
-                const [record] = coModel.browse(recordValues.id);
-                for (const fName of [
-                    "display_name",
-                    "description",
-                    "parent_folder_id",
-                    "user_permission",
-                    "company_id",
-                ]) {
-                    recordValues[fName] ??= record[fName];
-                }
-            }
-        }
+        result.values = [
+            {
+                "bold": true,
+                "childrenIds": [],
+                "parentId": false,
+                "user_permission": "view",
+                "display_name": "Company",
+                "id": "COMPANY",
+                "description": "Common roots for all company users."
+            },
+            {
+                "bold": true,
+                "childrenIds": [],
+                "parentId": false,
+                "user_permission": "edit",
+                "display_name": "My Drive",
+                "id": "MY",
+                "description": "Your individual space."
+            },
+            {
+                "bold": true,
+                "childrenIds": [],
+                "parentId": false,
+                "user_permission": "edit",
+                "display_name": "Shared with me",
+                "id": "SHARED",
+                "description": "Additional documents you have access to."
+            },
+            {
+                "bold": true,
+                "childrenIds": [],
+                "parentId": false,
+                "user_permission": "edit",
+                "display_name": "Recent",
+                "id": "RECENT",
+                "description": "Recently accessed documents."
+            },
+            {
+                "bold": true,
+                "childrenIds": [],
+                "parentId": false,
+                "user_permission": "edit",
+                "display_name": "Trash",
+                "id": "TRASH",
+                "description": "Items in trash will be deleted forever after 30 days."
+            },
+            ...this.env["documents.document"].search_read([["type", "=", "folder"]])
+                .filter((r) => r.type === "folder")
+                .map((record) => {
+                    const recordValues = {};
+                    if (!record.folder_id) {
+                        recordValues.folder_id = record.owner_id[0] === serverState.odoobotId
+                            ? "COMPANY"
+                            : record.owner_id[0] === serverState.userId
+                                ? "MY"
+                                : "SHARED";
+                    }
+                    if (!record.active) {
+                        recordValues.folder_id = "TRASH";
+                    }
+                    [
+                        "company_id",
+                        "description",
+                        "display_name",
+                        "id",
+                        "is_folder",
+                        "type",
+                        "user_permission",
+                    ].forEach((fieldName) => recordValues[fieldName] = record[fieldName]);
+                    return recordValues;
+                }),
+        ];
         return result;
     }
-
-    _records = [
-        {
-            id: 1,
-            name: "Folder 1",
-            description: "Folder",
-            folder_id: false,
-            available_embedded_actions_ids: [],
-            type: "folder",
-            access_token: "accessTokenFolder1",
-        },
-    ]
 }
 
 export class DocumentsTag extends models.Model {
@@ -145,12 +193,13 @@ export function getDocumentsTestServerData(additionalRecords = []) {
             "documents.document": {
                 records: [
                     {
+                        access_token: "accessTokenFolder1",
+                        available_embedded_actions_ids: [],
                         id: 1,
+                        is_folder: true,
+                        folder_id: false,
                         name: "Folder 1",
                         type: "folder",
-                        available_embedded_actions_ids: [],
-                        owner_id: false,
-                        access_token: "accessTokenFolder1"
                     },
                     ...additionalRecords,
                 ],
@@ -165,16 +214,8 @@ export function getBasicPermissionPanelData(recordExtra) {
         access_via_link: "view",
         access_ids: [],
         active: true,
-        owner_id: {
-            id: serverState.userId,
-            partner_id: {
-                id: serverState.partner_id,
-                mail: "user@mock.example.com",
-                name: "User Mock",
-                user_id: serverState.userId,
-                partner_share: false,
-            },
-        },
+        owner_id: false,
+        user_permission: "view",
         ...recordExtra,
     };
     const selections = {
@@ -201,9 +242,14 @@ export function getBasicPermissionPanelData(recordExtra) {
 }
 
 export const DocumentsModels = {
+    ...mailModels,
     MailActivityType,
     MailAlias,
     MailAliasDomain,
     DocumentsDocument,
     DocumentsTag,
+}
+
+export function getDocumentsModel(modelName) {
+    return Object.values(DocumentsModels).find((model) => model._name === modelName);
 }

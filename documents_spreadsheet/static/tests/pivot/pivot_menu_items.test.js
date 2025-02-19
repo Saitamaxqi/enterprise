@@ -1,8 +1,12 @@
 import {
     defineDocumentSpreadsheetModels,
     defineDocumentSpreadsheetTestAction,
+    getBasicServerData,
 } from "@documents_spreadsheet/../tests/helpers/data";
-import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
+import {
+    createSpreadsheetFromPivotView,
+    createSpreadsheetWithPivot,
+} from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { getHighlightsFromStore } from "@documents_spreadsheet/../tests/helpers/store_helpers";
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
@@ -15,7 +19,7 @@ import {
     setCellContent,
     setGlobalFilterValue,
 } from "@spreadsheet/../tests/helpers/commands";
-import { Partner, getBasicPivotArch, getBasicServerData } from "@spreadsheet/../tests/helpers/data";
+import { Partner, getBasicPivotArch } from "@spreadsheet/../tests/helpers/data";
 import {
     getCell,
     getCellFormula,
@@ -24,7 +28,6 @@ import {
     getCorrespondingCellFormula,
 } from "@spreadsheet/../tests/helpers/getters";
 import {
-    createSpreadsheetWithPivot,
     getZoneOfInsertedDataSource,
     insertPivotInSpreadsheet,
 } from "@spreadsheet/../tests/helpers/pivot";
@@ -411,14 +414,7 @@ test("Can rebuild the Odoo domain of records based on the according merged pivot
     await animationFrame();
     const root = cellMenuRegistry.getAll().find((item) => item.id === "pivot_see_records");
     await root.execute(env);
-    expect.verifySteps([
-        "partner",
-        [
-            "&",
-            ["foo", "=", 2],
-            ["bar", "=", false],
-        ],
-    ]);
+    expect.verifySteps(["partner", ["&", ["foo", "=", 2], ["bar", "=", false]]]);
 });
 
 test("See records is visible even if the formula is lowercase", async function () {
@@ -470,14 +466,7 @@ test("'See records' loads a specific action if set in the pivot definition", asy
     await animationFrame();
     const root = cellMenuRegistry.getAll().find((item) => item.id === "pivot_see_records");
     await root.execute(env);
-    expect.verifySteps([
-        "partner",
-        [
-            "&",
-            ["foo", "=", 2],
-            ["bar", "=", false],
-        ],
-    ]);
+    expect.verifySteps(["partner", ["&", ["foo", "=", 2], ["bar", "=", false]]]);
 });
 
 test("Context is passed correctly to the action service", async function () {
