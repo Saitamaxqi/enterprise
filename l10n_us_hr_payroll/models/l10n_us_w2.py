@@ -75,6 +75,26 @@ class L10nUsW2(models.Model):
                 allowed_payslips = self.env['hr.payslip'].search(w2._get_allowed_payslips_domain())
                 w2.allowed_payslip_ids = allowed_payslips
 
+    def _get_box17_state_income_tax(self, line_values):
+        state_income_tax_codes = ['CAINCOMETAX', 'NYINCOMETAX', 'COINCOMETAX', 'ALINCOMETAX']
+        return abs(sum(line_values[code]['sum']['total'] for code in state_income_tax_codes))
+
+    def _get_box18_local_wage(self, state, line_values):
+        if state == 'CO':
+            return abs(line_values['TAXABLE']['sum']['total'])
+        return ""
+
+    def _get_box19_local_income_tax(self, state, line_values):
+        if state == 'CO':
+            colorado_local_income_tax_codes = ['COOPTAURORA', 'COOPTDENVER', 'COOPTGLENDALE', 'COOPTGREENWOODVILLAGE', 'COOPTSHERIDAN']
+            return abs(sum(line_values[code]['sum']['total'] for code in colorado_local_income_tax_codes))
+        return ""
+
+    def _get_box20_locality_name(self, employee):
+        if (employee.address_id.state_id.code == 'CO' and employee.address_id.city in ('Aurora', 'Denver', 'Glendale', 'Greenwood Village', 'Sheridan')):
+            return employee.address_id.city
+        return ""
+
     def action_generate_csv(self):
         self.ensure_one()
         header = [
@@ -154,8 +174,9 @@ class L10nUsW2(models.Model):
             line_values = payslips._get_line_values([
                 'TAXABLE', 'FIT', '401K', 'TIPS', 'SST', 'MEDICARE', 'MEDICAREADD', 'ALLOCATEDTIPS',
                 'MEDICALFSADC', 'MEDICALHSA', 'ROTH401K',
-                'CAINCOMETAX', 'NYINCOMETAX',
+                'CAINCOMETAX', 'NYINCOMETAX', 'COINCOMETAX', 'ALINCOMETAX',
                 'CASDITAX', 'NYSDITAX',
+                'COOPTAURORA', 'COOPTDENVER', 'COOPTGLENDALE', 'COOPTGREENWOODVILLAGE', 'COOPTSHERIDAN',
             ], compute_sum=True)
 
             writer.writerow([
@@ -213,10 +234,10 @@ class L10nUsW2(models.Model):
                 employee.address_id.state_id.code or "",
                 self.company_id.company_registry or "",
                 abs(line_values['TAXABLE']['sum']['total']),
-                abs(line_values['CAINCOMETAX']['sum']['total'] + line_values['NYINCOMETAX']['sum']['total']),
-                "",
-                "",
-                "",
+                self._get_box17_state_income_tax(line_values),
+                self._get_box18_local_wage(employee.address_id.state_id.code, line_values),
+                self._get_box19_local_income_tax(employee.address_id.state_id.code, line_values),
+                self._get_box20_locality_name(employee),
                 "",
                 "R",
                 "N",
