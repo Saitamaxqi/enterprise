@@ -4,7 +4,7 @@
 import datetime
 import logging
 
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from odoo import api, fields, models, _
 from odoo.fields import Datetime
 
@@ -68,11 +68,11 @@ class L10n_BeIndividualAccount(models.Model):
             employee: {
                 'year': self.year,
                 'rules': OrderedDict(
-                    (rule[0], {
+                    (rule[0], defaultdict(lambda: {
                         'year': {'name': False, 'total': 0},
                         'month': {m: {'name': False, 'total': 0} for m in range(12)},
                         'quarter': {q: {'name': False, 'total': 0} for q in range(4)}
-                    }) for rule in payslip_rules),
+                    })) for rule in payslip_rules),
                 'worked_days': {
                     code: {
                         'year': {'name': False, 'number_of_days': 0, 'number_of_hours': 0},
@@ -86,8 +86,9 @@ class L10n_BeIndividualAccount(models.Model):
         for other_input in other_inputs:
             if other_input.input_type_id.code != "ECOVOUCHERS":
                 continue
+            other_input = other_input.with_context(lang=other_input.payslip_id.employee_id.lang or self.env.user.lang)
             slip = other_input.payslip_id
-            rule = result[slip.employee_id]['rules']['ECOVOUCHERS']
+            rule = result[slip.employee_id]['rules']['ECOVOUCHERS'][other_input.payslip_id.struct_id.name]
             month = slip.date_from.month - 1
             line_name = _('Ecovouchers')
             rule['month'][month]['name'] = line_name
@@ -99,7 +100,7 @@ class L10n_BeIndividualAccount(models.Model):
 
         for line in lines:
             line = line.with_context(lang=line.slip_id.employee_id.lang or self.env.user.lang)
-            rule = result[line.employee_id]['rules'][line.salary_rule_id.code]
+            rule = result[line.slip_id.employee_id]['rules'][line.salary_rule_id.code][line.salary_rule_id.struct_id.name]
             month = line.slip_id.date_from.month - 1
             line_name = rule['month'][month]['name']
             if not line_name or (line.slip_id.struct_id.type_id.default_struct_id == line.slip_id.struct_id):

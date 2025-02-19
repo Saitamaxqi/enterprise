@@ -193,25 +193,32 @@
                                     <td colspan="12"/>
                                 </tr>
                                 <tr t-foreach="report_data['rules']" t-as="rule">
-                                    <t t-set="value" t-value="report_data['rules'][rule]['month']"/>
-                                    <t t-set="name" t-value="False"/>
+                                    <tr t-foreach="report_data['rules'][rule]" t-as="structure">
+                                        <t t-set="value" t-value="report_data['rules'][rule][structure]['month']"/>
+                                        <t t-set="name" t-value="False"/>
 
-                                    <t t-foreach="[0,1,2,3,4,5,6,7,8,9,10,11]" t-as="c">
-                                        <t t-if="value[c]['name'] != False">
-                                            <t t-set="name" t-value="value[c]['name']"/>
-                                        </t>
-                                    </t>
-                                    <t t-if="name != False">
-                                        <td><span t-out="name">Demo Name</span></td>
-                                        <t t-foreach="[0,1,2,3,4,5,6,7,8,9,10,11]" t-as="m">
-                                            <t t-if="value[m]['total'] != 0">
-                                                <td class="text-end"><t t-esc="round(value[m]['total'], 2)"/></td>
-                                            </t>
-                                            <t t-else="">
-                                                <td class="text-center">/</td>
+                                        <t t-foreach="[0,1,2,3,4,5,6,7,8,9,10,11]" t-as="c">
+                                            <t t-if="value[c]['name'] != False">
+                                                <t t-if="len(report_data['rules'][rule]) > 1">
+                                                    <t t-set="name" t-value="value[c]['name'] + ' - ' + structure"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="name" t-value="value[c]['name']"/>
+                                                </t>
                                             </t>
                                         </t>
-                                    </t>
+                                        <t t-if="name != False">
+                                            <td><span t-out="name" style="white-space: normal; word-wrap: break-word; max-width: 300px; display: block;">Demo Name</span></td>
+                                            <t t-foreach="[0,1,2,3,4,5,6,7,8,9,10,11]" t-as="m">
+                                                <t t-if="value[m]['total'] != 0">
+                                                    <td class="text-end"><t t-esc="round(value[m]['total'], 2)"/></td>
+                                                </t>
+                                                <t t-else="">
+                                                    <td class="text-center">/</td>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </tr>
                                 </tr>
                             </table>
                             <div class="oe_structure"></div>
@@ -265,23 +272,30 @@
                                     <td colspan="5"/>
                                 </tr>
                                 <tr t-foreach="report_data['rules']" t-as="rule">
-                                    <t t-set="value_q" t-value="report_data['rules'][rule]['quarter']"/>
-                                    <t t-set="value_y" t-value="report_data['rules'][rule]['year']"/>
-                                    <t t-set="name_t" t-value="False"/>
-                                    <t t-foreach="[0,1,2,3]" t-as="c">
-                                        <t t-if="value_q[c]['name'] != False">
-                                            <t t-set="name_t" t-value="value_q[c]['name']"/>
+                                    <tr t-foreach="report_data['rules'][rule]" t-as="structure">
+                                        <t t-set="value_q" t-value="report_data['rules'][rule][structure]['quarter']"/>
+                                        <t t-set="value_y" t-value="report_data['rules'][rule][structure]['year']"/>
+                                        <t t-set="name_t" t-value="False"/>
+                                        <t t-foreach="[0,1,2,3]" t-as="c">
+                                            <t t-if="value_q[c]['name'] != False">
+                                                <t t-if="len(report_data['rules'][rule]) > 1">    
+                                                    <t t-set="name_t" t-value="value_q[c]['name'] + ' - ' + structure"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="name_t" t-value="value_q[c]['name']"/>
+                                                </t>
+                                            </t>
                                         </t>
-                                    </t>
-                                    <t t-if="name_t != False">
-                                        <td><span t-out="name_t">Demo Name</span></td>
-                                        <t t-foreach="[0,1,2,3]" t-as="q">
-                                            <td t-if="value_q[q]['total'] != 0" class="text-end"><span t-out="round(value_q[q]['total'], 2)">1500.00</span></td>
+                                        <t t-if="name_t != False">
+                                            <td><span t-out="name_t" style="white-space: normal; word-wrap: break-word; max-width: 300px; display: block;">Demo Name</span></td>
+                                            <t t-foreach="[0,1,2,3]" t-as="q">
+                                                <td t-if="value_q[q]['total'] != 0" class="text-end"><span t-out="round(value_q[q]['total'], 2)">1500.00</span></td>
+                                                <td t-else="" class="text-center">/</td>
+                                            </t>
+                                            <td t-if="value_y['total'] != 0" class="text-end"><span t-out="round(value_y['total'], 2)">6000.00</span></td>
                                             <td t-else="" class="text-center">/</td>
                                         </t>
-                                        <td t-if="value_y['total'] != 0" class="text-end"><span t-out="round(value_y['total'], 2)">6000.00</span></td>
-                                        <td t-else="" class="text-center">/</td>
-                                    </t>
+                                    </tr>
                                 </tr>
                             </table>
                         </tbody>
