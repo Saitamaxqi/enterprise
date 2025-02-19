@@ -68,6 +68,7 @@
             'knowledge/static/src/js/knowledge_views.js',
             'knowledge/static/src/webclient/**/*',
             'knowledge/static/src/views/**/*',
+            'knowledge/static/src/search/**/*',
             ('remove', 'knowledge/static/src/views/hierarchy/**'),
             'knowledge/static/src/services/**/*',
             'knowledge/static/src/macros/**/*',

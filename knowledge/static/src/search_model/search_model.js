@@ -42,10 +42,31 @@ export const KnowledgeSearchModelMixin = (T) => class extends T {
     }
 
     /**
-     * Delete from the embedded view arch instead of deleting the record
+     * The super method handles real ir.filters records from the database. In an
+     * Embedded View, favorites are only stored as html metadata, they do not
+     * relate to a database record, so there is nothing to reconciliate.
      * @override
      */
-    async _deleteIrFilters(searchItem) {
+    _reconciliateFavorites() {}
+
+    deleteFavorite(favoriteId) {
+        const searchItem = this.searchItems[favoriteId];
+        if (searchItem.type !== "favorite") {
+            return;
+        }
+        this._deleteIrFilters(searchItem);
+        const index = this.query.findIndex((queryElem) => queryElem.searchItemId === favoriteId);
+        delete this.searchItems[favoriteId];
+        if (index >= 0) {
+            this.query.splice(index, 1);
+        }
+        this._notify();
+    }
+
+    /**
+     * Delete from the embedded view embedded state
+     */
+    _deleteIrFilters(searchItem) {
         this.deleteEmbeddedViewFavoriteFilter(searchItem);
     }
 
