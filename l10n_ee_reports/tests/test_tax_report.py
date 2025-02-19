@@ -52,6 +52,8 @@ class EstonianTaxReportTest(AccountSalesReportCommon):
         cls.vat_in_22_imp_kms_38 = cls.env['account.chart.template'].ref('l10n_ee_vat_in_22_imp_kms_38')
         cls.vat_in_0_kms_41_2 = cls.env['account.chart.template'].ref('l10n_ee_vat_in_0_kms_41_2')
         cls.vat_in_22_s.l10n_ee_kmd_inf_code = '11'  # added to test if the special comments column is filled
+        cls.vat_in_13_s = cls.env['account.chart.template'].ref('l10n_ee_vat_in_13_s')
+        
         # Sales Taxes
         cls.vat_out_22_g = cls.env['account.chart.template'].ref('l10n_ee_vat_out_22_g')
         cls.vat_out_9_g = cls.env['account.chart.template'].ref('l10n_ee_vat_out_9_g')
@@ -68,6 +70,7 @@ class EstonianTaxReportTest(AccountSalesReportCommon):
             'name': '22% erikord',
             'l10n_ee_kmd_inf_code': '1',
         })
+        cls.vat_out_13_s = cls.env['account.chart.template'].ref('l10n_ee_vat_out_13_s')
 
         cls.kmd_report = cls.env.ref('l10n_ee.tax_report')
         cls.kmd_inf_a_report = cls.env.ref('l10n_ee_reports.kmd_inf_report_part_a')
@@ -542,6 +545,142 @@ class EstonianTaxReportTest(AccountSalesReportCommon):
                 <sumForRateInPeriod>500.00</sumForRateInPeriod>
                 </saleLine>
             </salesAnnex>
+            </vatDeclaration>
+        """
+
+        options = self.kmd_report.get_options({})
+        actual_xml = self.env[self.kmd_report.custom_handler_model_name].export_to_xml(options)['file_content']
+
+        self.assertXmlTreeEqual(
+            self.get_xml_tree_from_string(actual_xml),
+            self.get_xml_tree_from_string(expected_xml)
+        )
+
+    @freeze_time('2025-02-01')
+    def test_generate_xml_purchase_13_tax(self):
+        self.create_invoice(
+            move_type='in_invoice',
+            partner_id=self.partner_ee_1.id,
+            invoice_date='2025-01-11',
+            ref='INV001',
+            invoice_line_ids=[{'name': 'PT1', 'price_unit': 500, 'tax_ids': self.vat_in_13_s.ids}],
+        )
+        self.create_invoice(
+            move_type='in_invoice',
+            partner_id=self.partner_ee_2.id,
+            invoice_date='2025-01-12',
+            ref='INV002',
+            invoice_line_ids=[
+                {'name': 'PT1', 'price_unit': 500, 'tax_ids': self.vat_in_22_s.ids},
+                {'name': 'PT4', 'price_unit': 100, 'tax_ids': self.vat_in_13_s.ids},
+            ],
+        )
+
+        expected_xml = """
+            <vatDeclaration>
+                <taxPayerRegCode>12345678</taxPayerRegCode>
+                <year>2025</year>
+                <month>1</month>
+                <declarationType>1</declarationType>
+                <version>KMD5</version>
+                <declarationBody>
+                    <noSales>true</noSales>
+                    <noPurchases>false</noPurchases>
+                    <sumPerPartnerSales>false</sumPerPartnerSales>
+                    <sumPerPartnerPurchases>false</sumPerPartnerPurchases>
+                    <inputVatTotal>188.00</inputVatTotal>
+                </declarationBody>
+                <purchasesAnnex>
+                    <purchaseLine>
+                        <sellerName>Partner EE 2</sellerName>
+                        <invoiceNumber>INV002</invoiceNumber>
+                        <invoiceDate>2025-01-12</invoiceDate>
+                        <invoiceSumVat>723.00</invoiceSumVat>
+                        <vatInPeriod>123.00</vatInPeriod>
+                        <comments>11</comments>
+                    </purchaseLine>
+                    <purchaseLine>
+                        <sellerRegCode>98765432</sellerRegCode>
+                        <sellerName>Partner EE 1</sellerName>
+                        <invoiceNumber>INV001</invoiceNumber>
+                        <invoiceDate>2025-01-11</invoiceDate>
+                        <invoiceSumVat>565.00</invoiceSumVat>
+                        <vatInPeriod>65.00</vatInPeriod>
+                    </purchaseLine>
+                </purchasesAnnex>
+            </vatDeclaration>
+        """
+
+        options = self.kmd_report.get_options({})
+        actual_xml = self.env[self.kmd_report.custom_handler_model_name].export_to_xml(options)['file_content']
+
+        self.assertXmlTreeEqual(
+            self.get_xml_tree_from_string(actual_xml),
+            self.get_xml_tree_from_string(expected_xml)
+        )
+
+    @freeze_time('2025-02-01')
+    def test_generate_xml_sale_13_tax(self):
+        self.create_invoice(
+            move_type='out_invoice',
+            partner_id=self.partner_ee_1.id,
+            invoice_date='2025-01-11',
+            invoice_line_ids=[{'name': 'PT1', 'price_unit': 500, 'tax_ids': self.vat_out_13_s.ids}]
+        )
+        self.create_invoice(
+            move_type='out_invoice',
+            partner_id=self.partner_ee_2.id,
+            invoice_date='2025-01-13',
+            invoice_line_ids=[
+                {'name': 'PT1', 'price_unit': 500, 'tax_ids': self.vat_out_22_g.ids},
+                {'name': 'PT2', 'price_unit': 300, 'tax_ids': self.vat_out_13_s.ids},
+            ],
+        )
+
+        expected_xml = """
+            <vatDeclaration>
+                <taxPayerRegCode>12345678</taxPayerRegCode>
+                <year>2025</year>
+                <month>1</month>
+                <declarationType>1</declarationType>
+                <version>KMD5</version>
+                <declarationBody>
+                    <noSales>false</noSales>
+                    <noPurchases>true</noPurchases>
+                    <sumPerPartnerSales>false</sumPerPartnerSales>
+                    <sumPerPartnerPurchases>false</sumPerPartnerPurchases>
+                    <transactions22>500.00</transactions22>
+                    <transactions13>800.00</transactions13>
+                </declarationBody>
+                <salesAnnex>
+                    <saleLine>
+                        <buyerName>Partner EE 2</buyerName>
+                        <invoiceNumber>INV/2025/00002</invoiceNumber>
+                        <invoiceDate>2025-01-13</invoiceDate>
+                        <invoiceSum>800.00</invoiceSum>
+                        <taxRate>22</taxRate>
+                        <sumForRateInPeriod>500.00</sumForRateInPeriod>
+                        <comments>3</comments>
+                    </saleLine>
+                    <saleLine>
+                        <buyerName>Partner EE 2</buyerName>
+                        <invoiceNumber>INV/2025/00002</invoiceNumber>
+                        <invoiceDate>2025-01-13</invoiceDate>
+                        <invoiceSum>800.00</invoiceSum>
+                        <taxRate>13</taxRate>
+                        <sumForRateInPeriod>300.00</sumForRateInPeriod>
+                        <comments>3</comments>
+                    </saleLine>
+                    <saleLine>
+                        <buyerRegCode>98765432</buyerRegCode>
+                        <buyerName>Partner EE 1</buyerName>
+                        <invoiceNumber>INV/2025/00001</invoiceNumber>
+                        <invoiceDate>2025-01-11</invoiceDate>
+                        <invoiceSum>500.00</invoiceSum>
+                        <taxRate>13</taxRate>
+                        <sumForRateInPeriod>500.00</sumForRateInPeriod>
+                    </saleLine>
+                </salesAnnex>
             </vatDeclaration>
         """
 
