@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-28 09:54+0000\n"
-"PO-Revision-Date: 2024-11-28 09:54+0000\n"
-"Last-Translator: Fernanda Alvarez, 2024\n"
+"POT-Creation-Date: 2025-03-05 19:20+0000\n"
+"PO-Revision-Date: 2025-03-05 19:20+0000\n"
+"Last-Translator: Katherine Zaoral <kz@adhoc.com.ar>\n"
 "Language-Team: \n"
 "Language: es_419\n"
 "MIME-Version: 1.0\n"
@@ -1061,6 +1061,17 @@ msgstr "Producción"
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.report_invoice_document
 msgid "QR Code"
 msgstr "Código QR"
+
+#. module: l10n_ar_edi
+#. odoo-python
+#: code:addons/l10n_ar_edi/models/afip_errors.py:0
+#, python-format
+msgid ""
+"Recently ARCA changed the types VAT Conditions available. Please verify the "
+"AFIP Responsibility in the partner is Deprecated and set a valid one."
+msgstr ""
+"Recientemente ARCA cambió los tipos de Condición de IVA disponibles. Por favor revise si la "
+"Responsabilidad AFIP en el contacto está depreciada and asigne una válida."
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields.selection,name:l10n_ar_edi.selection__account_move__l10n_ar_afip_verification_result__r

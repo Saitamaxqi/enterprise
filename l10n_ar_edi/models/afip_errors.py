@@ -29,6 +29,7 @@ WSFE_ERRORS = {
     '10180': _lt('Please check the next conditions:\n    * Review that the invoice total invoice is greater than the amount defined by AFIP for this type of document\n    * Review that the customer is a MiPYME'),
     '10216': _lt('The new RG 4919/2021 define that MiPYME document requires to inform the FCE Transmission Option. Set this one in your Accounting Settings in order to continue. Possible values are: SCA or ADC. These options means:\n * SCA - TRANSFERENCIA AL SISTEMA DE CIRCULACION ABIERTA\n * ADC - AGENTE DE DEPOSITO COLECTIVO'),
     '10164': _lt('The due date should not be earlier than the invoice date. Please verify the invoice dates and payment terms.'),
+    '10242': _lt('Recently ARCA changed the types VAT Conditions available. Please verify the AFIP Responsibility in the partner is Deprecated and set a valid one.'),
 }
 
 WSFEX_ERRORS = {
