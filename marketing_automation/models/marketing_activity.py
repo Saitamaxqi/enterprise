@@ -258,6 +258,11 @@ class MarketingActivity(models.Model):
         return super(MarketingActivity, self).write(values)
 
     def _get_full_statistics(self):
+        self.env['marketing.trace'].flush_model(['activity_id', 'participant_id', 'state'])
+        self.env['mailing.trace'].flush_model([
+            'marketing_trace_id', 'links_click_datetime', 'sent_datetime', 'trace_status',
+        ])
+        self.env['marketing.participant'].flush_model(['is_test'])
         self.env.cr.execute("""
             SELECT
                 trace.activity_id,
@@ -291,6 +296,7 @@ class MarketingActivity(models.Model):
         base = date.today() + timedelta(days=-14)
         date_range = [base + timedelta(days=d) for d in range(0, 15)]
 
+        self.env['marketing.trace'].flush_model(['activity_id', 'is_test', 'schedule_date', 'state'])
         self.env.cr.execute("""
             SELECT
                 activity.id AS activity_id,
