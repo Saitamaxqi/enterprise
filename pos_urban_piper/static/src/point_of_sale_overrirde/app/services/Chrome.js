@@ -7,5 +7,8 @@ patch(Chrome.prototype, {
         this.pos.data.connectWebSocket("DELIVERY_ORDER_COUNT", async (order_id) => {
             await this.pos._fetchUrbanpiperOrderCount(order_id);
         });
+        this.pos.data.connectWebSocket("STORE_ACTION", async (data) => {
+            await this.pos._fetchStoreAction(data);
+        });
     },
 });

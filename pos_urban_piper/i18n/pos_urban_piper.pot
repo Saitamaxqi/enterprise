@@ -1033,7 +1033,7 @@ msgstr ""
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/delivery_button/delivery_button.xml:0
-msgid "There are no active order(s)."
+msgid "There are no active delivery providers(s)."
 msgstr ""
 
 #. module: pos_urban_piper

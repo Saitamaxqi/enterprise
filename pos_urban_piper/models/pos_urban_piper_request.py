@@ -413,11 +413,13 @@ class UrbanPiperClient:
         """
         Change store status in urban piper.
         """
-        for delivery_provider in self.config.urbanpiper_delivery_provider_ids:
+        provider_name = self.config._context.get('provider_name')
+        platforms = [provider_name] if provider_name else [p.technical_name for p in self.config.urbanpiper_delivery_provider_ids]
+        if platforms:
             payload = {
                 'location_ref_id': self.config.urbanpiper_store_identifier,
-                'platforms': [delivery_provider.technical_name],
-                'action': status and 'enable' or 'disable',
+                'platforms': platforms,
+                'action': 'enable' if status else 'disable',
             }
             self._make_api_request('hub/api/v1/location/', data=payload)
 
@@ -468,7 +470,7 @@ class UrbanPiperClient:
         When the user switches the database, they can press the refresh webhook button to
         update the webhook parameters according to the new database.
         """
-        self.config.urbanpiper_webhook_url = ''
+        self.config.urbanpiper_webhook_url = self.config.get_base_url()   # registring webhook
         self._register_webhook()
         wehbook_json = self._make_api_request('external/api/v1/webhooks?limit=50', method='GET')
         webhooks = wehbook_json.get('webhooks')

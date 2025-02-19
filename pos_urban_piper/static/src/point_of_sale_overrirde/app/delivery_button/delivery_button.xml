@@ -9,11 +9,11 @@
                 <i class="oi oi-food-delivery ms-1 fs-2"/>
             </div>
             <t t-set-slot="content">
-                <t t-if="this.pos.delivery_providers_active">
+                <t t-if="this.pos.delivery_providers">
                     <t t-set="delivery_order_count" t-value="this.pos.delivery_order_count.urbanpiper"/>
                     <div class="urbanpiper-dropdown-container">
                         <t t-foreach="this.pos.delivery_providers" t-as="provider" t-key="provider.id">
-                            <DropdownItem t-if="provider.is_active">
+                            <DropdownItem>
                                 <div class="d-flex">
                                     <img class="me-1 provider-image" t-att-src="'/web/image?model=pos.delivery.provider&amp;field=image_128&amp;id=' + provider.id"/>
                                     <div class="container-fluid flex-grow-1">
@@ -42,6 +42,11 @@
                                                     </span>
                                                 </div>
                                             </div>
+                                            <div class="col d-flex justify-content-center align-items-center">
+                                                <div class="form-switch" onclick="event.stopPropagation()">
+                                                    <input type="checkbox" class="form-check-input" t-att-checked="this.pos.toggleState.enableProviders[provider.code]" t-on-click="() => this.handleToggle(provider.code)" />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -50,7 +55,7 @@
                     </div>
                 </t>
                 <t t-else="">
-                    <span class="m-2 d-flex justify-content-center"><strong>There are no active order(s).</strong></span>
+                    <span class="m-2 d-flex justify-content-center"><strong>There are no active delivery providers(s).</strong></span>
                 </t>
             </t>
         </Dropdown>

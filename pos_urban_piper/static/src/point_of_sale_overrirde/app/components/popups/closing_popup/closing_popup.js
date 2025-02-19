@@ -7,6 +7,7 @@ patch(ClosePosPopup.prototype, {
      */
     async confirm() {
         await this.pos.updateStoreStatus();
+        localStorage.removeItem("toggle_state_" + this.pos.config.id);
         return super.confirm();
     },
 });

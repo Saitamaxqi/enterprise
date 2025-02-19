@@ -261,6 +261,14 @@ class PosConfig(models.Model):
         if self.current_session_id:
             self._notify('DELIVERY_ORDER_COUNT', order_id)
 
+    def _store_action_update(self, data):
+        """
+        Send store status update to pos ui
+        """
+        self.ensure_one()
+        if self.current_session_id:
+            self._notify('STORE_ACTION', data)
+
     def get_delivery_data(self):
         """
         Fetch delivery order count and providers for pos ui
@@ -268,15 +276,6 @@ class PosConfig(models.Model):
         self.ensure_one()
         delivery_order_count = self._get_urbanpiper_order_count()
         delivery_providers = self._get_active_delivery_providers()
-        for provider in delivery_providers:
-            provider_code = provider.get("code")
-            if provider_code in delivery_order_count['urbanpiper']:
-                order_counts = delivery_order_count['urbanpiper'][provider_code]
-                order_count = sum(order_counts.values())
-                provider['is_active'] = order_count > 0
-            else:
-                provider['is_active'] = False
-        delivery_providers_active = any(provider['is_active'] for provider in delivery_providers)
         total_new_order = sum(
             provider_data.get('awaiting', 0)
             for provider_data in delivery_order_count['urbanpiper'].values()
@@ -284,7 +283,6 @@ class PosConfig(models.Model):
         combined_data = {
             'delivery_order_count': delivery_order_count,
             'delivery_providers': delivery_providers,
-            'delivery_providers_active': delivery_providers_active,
             'total_new_order': total_new_order,
         }
         return combined_data

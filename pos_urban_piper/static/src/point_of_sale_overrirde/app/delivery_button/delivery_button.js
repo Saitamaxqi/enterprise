@@ -16,6 +16,16 @@ export class DeliveryButton extends Component {
         this.ui = useService("ui");
     }
 
+    async handleToggle(providerCode) {
+        const toggleStatus = !this.pos.toggleState.enableProviders[providerCode];
+        this.pos.toggleState.enableProviders[providerCode] = toggleStatus;
+        localStorage.setItem(
+            "toggle_state_" + this.pos.config.id,
+            JSON.stringify(this.pos.toggleState.enableProviders)
+        );
+        await this.pos.updateStoreStatus(toggleStatus, providerCode);
+    }
+
     goToOrders(deliveryProvider, upState, filter = "ONGOING") {
         const stateOverride = {
             search: {

@@ -62,6 +62,13 @@ rider_status_update_schema = object_of({
     }),
 })
 
+store_action_schema = object_of({
+    'status': True,
+    'platform': True,
+    'action': True,
+    'location_ref_id': True,
+})
+
 
 class PosUrbanPiperController(http.Controller):
 
@@ -77,6 +84,8 @@ class PosUrbanPiperController(http.Controller):
             self._handle_data(data, order_status_update_schema, self._order_status_update, event_type)
         elif event_type == 'rider_status_update':
             self._handle_data(data, rider_status_update_schema, self._rider_status_update, event_type)
+        elif event_type == 'store_action':
+            self._handle_data(data, store_action_schema, self._store_action, event_type)
 
     def _handle_data(self, data, schema, handler, event_type):
         is_valid, error = schema(data)
@@ -359,3 +368,9 @@ class PosUrbanPiperController(http.Controller):
             ('urbanpiper_store_identifier', '=', data['store']['ref_id'])
         ])
         pos_config_sudo._send_delivery_order_count()
+
+    def _store_action(self, data):
+        pos_config_sudo = request.env['pos.config'].sudo().search([
+            ('urbanpiper_store_identifier', '=', data['location_ref_id'])
+        ])
+        pos_config_sudo._store_action_update(data)
