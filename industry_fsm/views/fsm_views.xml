@@ -228,7 +228,6 @@
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <xpath expr="//kanban" position="attributes">
-                <attribute name="group_create">0</attribute>
                 <attribute name="default_order">planned_date_begin</attribute>
                 <attribute name="class">o_fsm_kanban o_kanban_project_tasks</attribute>
                 <attribute name="quick_create_view">industry_fsm.quick_create_task_form_fsm_inherited</attribute>
