@@ -39,9 +39,6 @@
                                 </div>
                             </div>
                         </setting>
-                        <setting id="rental_sign" help="Ask customer to sign documents on the spot.">
-                            <field name="module_sale_renting_sign"/>
-                        </setting>
                     </block>
                 </app>
             </xpath>

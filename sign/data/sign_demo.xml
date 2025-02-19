@@ -441,6 +441,42 @@
         <field name="name">Initials</field>
     </record>
 
+    <record id="sign_template_tag_4" model="sign.template.tag">
+        <field name="name">Rental</field>
+        <field name="color">5</field>
+    </record>
+
+    <record id="attachment_sign_6" model="ir.attachment">
+        <field name="name">Rental_Agreement.pdf</field>
+        <field name="datas" type="base64" file="sign/static/demo/rental.pdf"/>
+        <field name="mimetype">application/pdf</field>
+    </record>
+    <record id="template_sign_6" model="sign.template">
+        <field name="attachment_id" ref="attachment_sign_6"/>
+        <field name="group_ids" eval="[(4,ref('sign.group_sign_user'))]"/>
+        <field name="tag_ids" eval="[(4, ref('sign.sign_template_tag_4'))]"/>
+    </record>
+    <record model="sign.item" id="sign_item_1">
+        <field name="template_id" ref="template_sign_6"/>
+        <field name="type_id" ref="sign_item_type_name"/>
+        <field name="responsible_id" ref="sign_item_role_customer"/>
+        <field name="page" type="int">1</field>
+        <field name="posX" type="float">0.050</field>
+        <field name="posY" type="float">0.580</field>
+        <field name="width" type="float">0.200</field>
+        <field name="height" type="float">0.015</field>
+    </record>
+    <record model="sign.item" id="sign_item_2">
+        <field name="template_id" ref="template_sign_6"/>
+        <field name="type_id" ref="sign_item_type_signature"/>
+        <field name="responsible_id" ref="sign_item_role_customer"/>
+        <field name="page" type="int">1</field>
+        <field name="posX" type="float">0.050</field>
+        <field name="posY" type="float">0.600</field>
+        <field name="width" type="float">0.200</field>
+        <field name="height" type="float">0.050</field>
+    </record>
+
     <record id="base.user_admin" model="res.users">
         <field name="sign_signature" type="base64" file="sign/static/demo/signature.png"/>
     </record>

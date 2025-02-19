@@ -34,8 +34,6 @@ class ResConfigSettings(models.TransientModel):
         domain=[('type', '=', 'service')],
     )
 
-    module_sale_renting_sign = fields.Boolean(string="Digital Documents")
-
     @api.depends('company_id')
     def _compute_extra_hour(self):
         for setting in self:
