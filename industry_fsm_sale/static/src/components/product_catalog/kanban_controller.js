@@ -25,9 +25,9 @@ export class FSMProductCatalogKanbanController extends ProductCatalogKanbanContr
         // If, for some weird reason, the user reloads the page then the breadcrumbs are
         // lost, and we fall back to the form view ourselves.
         if (this.env.config.breadcrumbs.length > 1) {
-            await this.action.restore();
+            await this.actionService.restore();
         } else {
-            await this.action.doAction({
+            await this.actionService.doAction({
                 type: "ir.actions.act_window",
                 res_model: this.taskResModel,
                 views: [[false, "form"]],
