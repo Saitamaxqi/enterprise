@@ -305,21 +305,6 @@ export class TaskGanttRenderer extends GanttRenderer {
         return false;
     }
 
-    highlightPill(pillId, highlighted) {
-        if (!this.connectorDragState.dragging) {
-            return super.highlightPill(pillId, highlighted);
-        }
-        const pill = this.pills[pillId];
-        if (!pill) {
-            return;
-        }
-        const { record } = pill;
-        if (!this.shouldRenderRecordConnectors(record)) {
-            return super.highlightPill(pillId, false);
-        }
-        return super.highlightPill(pillId, highlighted);
-    }
-
     onPlan(rowId, columnStart, columnStop) {
         let { start, stop } = this.getColumnStartStop(columnStart, columnStop);
         ({ start, stop } = this.normalizeTimeRange(start, stop));

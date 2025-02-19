@@ -192,7 +192,7 @@
             <t t-if="renderConnectors" t-call="{{ constructor.connectorCreatorTemplate }}">
                 <t t-set="alignment" t-value="getConnectorCreatorAlignment('top')" />
             </t>
-            <div class="o_gantt_pill position-relative h-100 d-flex align-items-center"
+            <div class="o_gantt_pill position-relative h-100 d-flex align-items-center rounded-2"
                 t-att-class="pill.className"
                 t-on-click.synthetic="(ev) => this.onPillClicked(ev, pill)"
             >

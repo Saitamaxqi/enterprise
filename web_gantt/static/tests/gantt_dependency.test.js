@@ -464,9 +464,9 @@ test("Buttons are displayed when hovering a connector after a pill has been hove
     await animationFrame();
 
     expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(0);
-    expect(getConnector(1)).toHaveClass(CLASSES.highlightedConnector);
 
     await hover(getConnector(1));
+    await animationFrame();
     await animationFrame();
 
     expect(getConnector(1)).toHaveClass(CLASSES.highlightedConnector);
@@ -556,129 +556,6 @@ test("Connector buttons: reschedule task forward, different data.", async () => 
             ["forward", 1, 2, "depend_on_ids", null, "planned_date_begin", "date_deadline"],
         ],
     ]);
-});
-
-test("Hovering a task pill should highlight related tasks and dependencies", async () => {
-    /** @type {Map<ConnectorTaskIds, boolean>} */
-    const testMap = new Map([
-        ["[1,1,2,1]", true],
-        ["[1,1,2,3]", true],
-        ["[2,1,3,false]", true],
-        ["[2,3,3,false]", true],
-        ["[2,1,4,2]", true],
-        ["[2,3,4,3]", true],
-        ["[10,2,11,2]", false],
-    ]);
-
-    ProjectTask._records = [
-        {
-            id: 1,
-            name: "Task 1",
-            planned_date_begin: "2021-10-10 18:30:00",
-            date_deadline: "2021-10-11 19:29:59",
-            user_ids: [1],
-            depend_on_ids: [],
-        },
-        {
-            id: 2,
-            name: "Task 2",
-            planned_date_begin: "2021-10-12 11:30:00",
-            date_deadline: "2021-10-12 12:29:59",
-            user_ids: [1, 3],
-            depend_on_ids: [1],
-        },
-        {
-            id: 3,
-            name: "Task 3",
-            planned_date_begin: "2021-10-13 06:30:00",
-            date_deadline: "2021-10-13 07:29:59",
-            user_ids: [],
-            depend_on_ids: [2],
-        },
-        {
-            id: 4,
-            name: "Task 4",
-            planned_date_begin: "2021-10-14 22:30:00",
-            date_deadline: "2021-10-14 23:29:59",
-            user_ids: [2, 3],
-            depend_on_ids: [2],
-        },
-        {
-            id: 10,
-            name: "Task 10",
-            planned_date_begin: "2021-10-19 06:30:12",
-            date_deadline: "2021-10-19 07:29:59",
-            user_ids: [2],
-            depend_on_ids: [],
-            display_warning_dependency_in_gantt: false,
-        },
-        {
-            id: 11,
-            name: "Task 11",
-            planned_date_begin: "2021-10-18 06:30:12",
-            date_deadline: "2021-10-18 07:29:59",
-            user_ids: [2],
-            depend_on_ids: [10],
-        },
-    ];
-
-    const view = await mountGanttView(ganttViewParams);
-    const renderer = findComponent(view, (c) => c instanceof GanttRenderer);
-
-    const connectorMap = getConnectorMap(renderer);
-    const pills = [];
-    for (const wrapper of queryAll(SELECTORS.pillWrapper)) {
-        const pillId = wrapper.dataset.pillId;
-        pills.push({
-            el: queryFirst(SELECTORS.pill, { root: wrapper }),
-            recordId: renderer.pills[pillId].record.id,
-        });
-    }
-
-    const task2Pills = pills.filter((p) => p.recordId === 2);
-
-    expect(task2Pills).toHaveLength(2);
-    expect(CLASSES.highlightedPill).toHaveCount(0);
-
-    // Check that all connectors are not in hover state.
-    for (const testKey of testMap.keys()) {
-        expect(getConnector(connectorMap.get(testKey).id)).not.toHaveClass(
-            CLASSES.highlightedConnector
-        );
-    }
-
-    await contains(getPill("Task 2", { nth: 1 })).hover();
-    // Both pills should be highlighted
-    expect(getPillWrapper("Task 2", { nth: 1 })).toHaveClass(CLASSES.highlightedPill);
-    expect(getPillWrapper("Task 2", { nth: 2 })).toHaveClass(CLASSES.highlightedPill);
-
-    // The rest of the pills should not be highlighted nor display connector creators
-    for (const { el, recordId } of pills) {
-        if (recordId !== 2) {
-            expect(el).not.toHaveClass(CLASSES.highlightedPill);
-        }
-    }
-
-    // Check that all connectors are in the expected hover state.
-    for (const [testKey, shouldBeHighlighted] of testMap.entries()) {
-        const connector = getConnector(connectorMap.get(testKey).id);
-        if (shouldBeHighlighted) {
-            expect(connector).toHaveClass(CLASSES.highlightedConnector);
-        } else {
-            expect(connector).not.toHaveClass(CLASSES.highlightedConnector);
-        }
-        expect(queryAll(SELECTORS.connectorStrokeButton, { root: connector })).toHaveCount(0);
-    }
-});
-
-test("Hovering a connector should cause the connected pills to get highlighted.", async () => {
-    await mountGanttView(ganttViewParams);
-    expect(SELECTORS.highlightedConnector).toHaveCount(0);
-    expect(SELECTORS.highlightedPill).toHaveCount(0);
-
-    await contains(getConnector(1)).hover();
-    expect(SELECTORS.highlightedConnector).toHaveCount(1);
-    expect(SELECTORS.highlightedPill).toHaveCount(2);
 });
 
 test("Connectors are displayed behind pills, except on hover.", async () => {
@@ -829,31 +706,6 @@ test("Connector creators of initial pill are highlighted when creating a connect
     await moveTo(getPill("Task 2"));
 
     expect(`${SELECTORS.pillWrapper}:first`).toHaveClass(CLASSES.lockedConnectorCreator);
-
-    await cancel();
-});
-
-test("Connector creators of hovered pill are highlighted when creating a connector", async () => {
-    await mountGanttView(ganttViewParams);
-
-    // Explicitly shows the connector creator wrapper since its "display: none"
-    // disappears on native CSS hover, which cannot be programatically emulated.
-    const rightWrapper = queryFirst(SELECTORS.connectorCreatorWrapper);
-    rightWrapper.classList.add("d-block");
-
-    // Creating a connector and hover another pill while dragging it
-    const { cancel, moveTo } = await contains(SELECTORS.connectorCreatorBullet, {
-        root: rightWrapper,
-    }).drag();
-
-    const destinationWrapper = getPillWrapper("Task 2");
-    const destinationPill = queryFirst(SELECTORS.pill, { root: destinationWrapper });
-    await moveTo(destinationPill);
-
-    // moveTo only triggers a pointerenter event on destination pill,
-    // a pointermove event is still needed to highlight it
-    await contains(destinationPill).hover();
-    expect(destinationWrapper).toHaveClass(CLASSES.highlightedConnectorCreator);
 
     await cancel();
 });

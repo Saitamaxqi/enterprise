@@ -262,11 +262,14 @@
 	// ================================ Pills =================================
 	// ========================================================================
 	.o_gantt_pill_wrapper {
-		padding: 2px 2px 3px 3px;
+		padding: 1px;
 		min-height: var(--Gantt__Pill-height);
 		@include o-gantt-zindex(pill);
 
-        &.highlight, &.o_connector_creator_lock {
+        @include o-gantt-hover() {
+            @include o-gantt-zindex(pill-interact);
+        }
+        &.o_connector_creator_lock {
             @include o-gantt-zindex(pill-interact);
         }
 
@@ -344,16 +347,6 @@
 					right: 0;
 				}
 			}
-
-			@include o-gantt-hover() {
-				&:not(.o_resized) .o_resize_handle {
-					background-color: rgba(230, 230, 230, 0.5);
-
-					&:hover {
-						background-color: rgba(230, 230, 230, 0.8);
-					}
-				}
-			}
 		}
 
 		&.o_draggable,
@@ -383,11 +376,6 @@
 			.o_gantt_pill {
 				cursor: inherit;
 			}
-
-			.o_resize_handle {
-				background-color: rgba(black, 0.5);
-				@include o-gantt-zindex(interact);
-			}
 		}
 
 		.o_gantt_consolidated_pill_title {
@@ -402,7 +390,7 @@
 			}
 		}
 
-		&:not(.o_connector_creator_lock):not(.o_connector_creator_highlight) .o_connector_creator_wrapper {
+		&:not(.o_connector_creator_lock) .o_connector_creator_wrapper {
 			display: none;
 		}
 
@@ -420,11 +408,6 @@
 				opacity: 0.2;
 				background-color: darken($color, 30%);
 			}
-
-			&.highlight .o_gantt_pill.o_gantt_color_#{$index - 1} {
-				color: color-contrast($color);
-				background-color: $color;
-			}
 		}
 	}
 
@@ -440,7 +423,7 @@
 		user-select: none;
 		box-sizing: content-box;
 		cursor: pointer;
-		@include o-gantt-hoverable-colors(nth($o-colors-complete, 1));
+		@include o-gantt-colors(nth($o-colors-complete, 1));
 
 		.o_gantt_pill_title {
 			// Prevent displaying pill's description when size is smaller than 50px
@@ -461,7 +444,7 @@
 			&.o_gantt_color_#{$index - 1} {
 				$gantt-color: nth($o-colors-complete, $index);
 
-				@include o-gantt-hoverable-colors($gantt-color);
+				@include o-gantt-colors($gantt-color);
 
 				&.decoration-info {
 					@include o-gantt-gradient-decorations($gantt-color);

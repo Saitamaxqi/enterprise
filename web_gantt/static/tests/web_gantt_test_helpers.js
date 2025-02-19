@@ -58,12 +58,10 @@ function makeClassSelector(key) {
 export const CLASSES = {
     draggable: "o_draggable",
     group: "o_gantt_group",
-    highlightedPill: "highlight",
     resizable: "o_resizable",
 
     // Connectors
     highlightedConnector: "o_connector_highlighted",
-    highlightedConnectorCreator: "o_connector_creator_highlight",
     lockedConnectorCreator: "o_connector_creator_lock", // Connector creators highlight for initial pill
 };
 
@@ -80,7 +78,6 @@ export const SELECTORS = {
     group: makeClassSelector(CLASSES.group),
     groupHeader: ".o_gantt_header_title",
     columnHeader: ".o_gantt_header_cell",
-    highlightedPill: makeClassSelector(CLASSES.highlightedPill),
     hoverable: ".o_gantt_hoverable",
     noContentHelper: ".o_view_nocontent",
     pill: ".o_gantt_pill",

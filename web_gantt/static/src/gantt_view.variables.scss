@@ -8,23 +8,18 @@
     &:focus,
     &.o_dragged_pill,
     &.ui-resizable-resize {
-        // Avoid visual feedback if 'o_gantt_renderer' has class 'o_grabbing', 'o_copying', 'o_no_dragging' or 'o_connect'
-        @at-root #{selector-replace(&, ".o_gantt_renderer", ".o_gantt_renderer:not(.o_grabbing):not(.o_copying):not(.o_no_dragging):not(.o_connect)")} {
+        // Avoid visual feedback if 'o_gantt_renderer' has class 'o_grabbing', 'o_copying' or 'o_no_dragging'
+        @at-root #{selector-replace(&, ".o_gantt_renderer", ".o_gantt_renderer:not(.o_grabbing):not(.o_copying):not(.o_no_dragging)")} {
             @content;
         }
     }
 }
 
 // Generate background and text for each color.
-@mixin o-gantt-hoverable-colors($color) {
+@mixin o-gantt-colors($color) {
     $color-subdle: mix($color, white, 60%);
     color: color-contrast($color-subdle);
     background-color: $color-subdle;
-
-    @include o-gantt-hover() {
-        background-color: $color;
-        color: color-contrast($color);
-    }
 }
 
 // Generate stripes decorations for each color.

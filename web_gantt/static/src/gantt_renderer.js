@@ -105,7 +105,6 @@ const { DateTime, Interval } = luxon;
  * @property {PillId} id
  * @property {boolean} disableStartResize
  * @property {boolean} disableStopResize
- * @property {boolean} highlighted
  * @property {number} leftMargin
  * @property {number} level
  * @property {string} name
@@ -1123,7 +1122,7 @@ export class GanttRenderer extends Component {
     computeDerivedParamsFromHover() {
         const { scale } = this.model.metaData;
 
-        const { connector, collapsableColumnHeader, hoverable, pill } = this.hovered;
+        const { connector, collapsableColumnHeader, hoverable } = this.hovered;
 
         // Update cell in drag
         const isCellHovered = hoverable?.matches(".o_gantt_cell");
@@ -1156,15 +1155,6 @@ export class GanttRenderer extends Component {
                 return this.toggleConnectorHighlighting(hoveredConnectorId, true);
             }
         }
-
-        // Highlight pill
-        const hoveredPillId = pill?.dataset.pillId;
-        for (const pillId in this.pills) {
-            if (pillId !== hoveredPillId) {
-                this.togglePillHighlighting(pillId, false);
-            }
-        }
-        this.togglePillHighlighting(hoveredPillId, true);
 
         this.toggleCollapsableColumnHeaderHighlighting(collapsableColumnHeader);
         // Update progress bars
@@ -2039,20 +2029,6 @@ export class GanttRenderer extends Component {
         return totalRow;
     }
 
-    highlightPill(pillId, highlighted) {
-        const pill = this.pills[pillId];
-        if (!pill) {
-            return;
-        }
-        pill.highlighted = highlighted;
-        const pillWrapper = this.getPillWrapperEl(pillId);
-        pillWrapper?.classList.toggle("highlight", highlighted);
-        pillWrapper?.classList.toggle(
-            "o_connector_creator_highlight",
-            highlighted && this.connectorDragState.dragging
-        );
-    }
-
     initializeConnectors() {
         for (const connectorId in this.connectors) {
             this.deleteConnector(connectorId);
@@ -2492,11 +2468,6 @@ export class GanttRenderer extends Component {
 
         connector.highlighted = highlighted;
         connector.displayButtons = highlighted;
-
-        const { sourcePillId, targetPillId } = this.mappingConnectorToPills[connectorId];
-
-        this.highlightPill(sourcePillId, highlighted);
-        this.highlightPill(targetPillId, highlighted);
     }
 
     computeUnavailabilityPeriods() {
@@ -2694,42 +2665,6 @@ export class GanttRenderer extends Component {
         }
     }
 
-    /**
-     * @param {PillId} pillId
-     * @param {boolean} highlighted
-     */
-    togglePillHighlighting(pillId, highlighted) {
-        const pill = this.pills[pillId];
-        if (!pill || pill.highlighted === highlighted) {
-            return;
-        }
-
-        const { record } = pill;
-        const pillIdsToHighlight = new Set([pillId]);
-
-        if (record && this.shouldRenderRecordConnectors(record)) {
-            // Find other related pills
-            const { pills: relatedPills } = this.mappingRecordToPillsByRow[record.id];
-            for (const pill of Object.values(relatedPills)) {
-                pillIdsToHighlight.add(pill.id);
-            }
-
-            // Highlight related connectors
-            for (const [connectorId, connector] of Object.entries(this.connectors)) {
-                const ids = Object.values(this.getRecordIds(connectorId));
-                if (ids.includes(record.id)) {
-                    connector.highlighted = highlighted;
-                    connector.displayButtons = false;
-                }
-            }
-        }
-
-        // Highlight pills from found IDs
-        for (const id of pillIdsToHighlight) {
-            this.highlightPill(id, highlighted);
-        }
-    }
-
     initBadges(pill) {
         const { dateStartField, dateStopField } = this.model.metaData;
         const { record } = this.pills[pill.dataset.pillId];
@@ -2802,9 +2737,6 @@ export class GanttRenderer extends Component {
         if (!this.isDragging) {
             const hoveredConnectorId = this.hovered.connector?.dataset.connectorId;
             this.toggleConnectorHighlighting(hoveredConnectorId, false);
-
-            const hoveredPillId = this.hovered.pill?.dataset.pillId;
-            this.togglePillHighlighting(hoveredPillId, false);
 
             this.toggleCollapsableColumnHeaderHighlighting(null);
         }
