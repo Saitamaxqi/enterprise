@@ -162,7 +162,7 @@ class PosConfig(models.Model):
         """
         self.ensure_one()
         fiscal_position = self.urbanpiper_fiscal_position_id or self.env.ref('pos_urban_piper.pos_account_fiscal_position_urbanpiper', False)
-        if fiscal_position and fiscal_position.sudo().company_id.id != self.company_id.id:
+        if not fiscal_position or fiscal_position.sudo().company_id.id != self.company_id.id:
             fiscal_position = self.env['account.fiscal.position'].create({
                 'name': 'UrbanPiper'
             })
