@@ -58,9 +58,9 @@ function getDocumentBasicData(views = {}) {
     models["documents.document"] = {
         records: [
             {
-                name: "Workspace1",
+                name: "Folder 1",
                 alias_id: 1,
-                description: "Workspace",
+                description: "Folder",
                 type: "folder",
                 id: 1,
                 available_embedded_actions_ids: [],
@@ -112,8 +112,8 @@ async function initTestEnvWithBlankSpreadsheet(params = {}) {
     serverData.models["documents.document"] = {
         records: [
             {
-                name: "Workspace1",
-                description: "Workspace",
+                name: "Folder 1",
+                description: "Folder",
                 type: "folder",
                 id: 1,
                 available_embedded_actions_ids: [],

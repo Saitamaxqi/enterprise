@@ -93,12 +93,12 @@ export class DocumentsDocument extends models.Model {
     _records = [
         {
             id: 1,
-            name: "Workspace1",
-            description: "Workspace",
+            name: "Folder 1",
+            description: "Folder",
             folder_id: false,
             available_embedded_actions_ids: [],
             type: "folder",
-            access_token: "accessTokenWorkspace1",
+            access_token: "accessTokenFolder1",
         },
     ]
 }
@@ -146,11 +146,11 @@ export function getDocumentsTestServerData(additionalRecords = []) {
                 records: [
                     {
                         id: 1,
-                        name: "Workspace1",
+                        name: "Folder 1",
                         type: "folder",
                         available_embedded_actions_ids: [],
                         owner_id: false,
-                        access_token: "accessTokenWorkspace1"
+                        access_token: "accessTokenFolder1"
                     },
                     ...additionalRecords,
                 ],
