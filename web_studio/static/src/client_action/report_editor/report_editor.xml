@@ -73,4 +73,14 @@
     </div>
 </t>
 
+<t t-name="web_studio.ReportEditor.ReportsTab" >
+    <button class="btn h-100 d-table px-2 pe-auto rounded-0" role="button"
+        t-att-disabled="this.isDisabled"
+        t-att-data-tooltip="this.tooltip"
+        t-on-click="onClick">
+        <span class="d-table-cell align-middle" t-esc="props.tab.name"/>
+        <i t-if="this.isDisabled" class="fa fa-exclamation-triangle ps-1 d-table-cell align-middle" />
+    </button>
+</t>
+
 </templates>

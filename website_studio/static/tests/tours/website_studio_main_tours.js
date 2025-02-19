@@ -9,7 +9,7 @@ registry.category("web_tour.tours").add("website_studio_listing_and_page", {
             run: "click",
         },
         {
-            trigger: ".o_menu_sections a:contains('Model Pages')",
+            trigger: ".o_menu_sections button:contains('Model Pages')",
             run: "click",
         },
         {
@@ -61,7 +61,7 @@ registry.category("web_tour.tours").add("website_studio_listing_without_page", {
             run: "click",
         },
         {
-            trigger: ".o_menu_sections a:contains('Model Pages')",
+            trigger: ".o_menu_sections button:contains('Model Pages')",
             run: "click",
         },
         {

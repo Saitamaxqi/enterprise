@@ -26,7 +26,7 @@ test("add a gantt view", async () => {
 
     await contains(".o_web_studio_navbar_item button").click();
     await contains(".o_app[data-menu-xmlid=app_1]").click();
-    await contains(".o_menu_sections a:contains(Views)").click();
+    await contains(".o_menu_sections button:contains(Views)").click();
     await contains(".o_web_studio_thumbnail_item.o_web_studio_thumbnail_gantt").click();
 
     expect(".o_web_studio_new_view_dialog").toHaveCount(1);
@@ -41,7 +41,7 @@ test("create unavailable view", async () => {
 
     await contains(".o_web_studio_navbar_item button").click();
     await contains(".o_app[data-menu-xmlid=app_1]").click();
-    await contains(".o_menu_sections a:contains(Views)").click();
+    await contains(".o_menu_sections button:contains(Views)").click();
     await contains(".o_web_studio_thumbnail_item.o_web_studio_thumbnail_activity").click();
 
     expect(".o_notification_content").toHaveText("Activity view unavailable on this model");
@@ -80,7 +80,7 @@ test("disable the view from studio", async () => {
 
     await contains(".o_web_studio_navbar_item button").click();
     await contains(".o_app[data-menu-xmlid=app_1]").click();
-    await contains(".o_menu_sections a:contains(Views)").click();
+    await contains(".o_menu_sections button:contains(Views)").click();
     await contains(".o_web_studio_thumbnail_list .o_web_studio_more").click();
     await contains(".o-dropdown-item:contains('Disable View')").click();
 
@@ -105,7 +105,7 @@ test("add groups on action", async () => {
 
     await contains(".o_web_studio_navbar_item button").click();
     await contains(".o_app[data-menu-xmlid=app_1]").click();
-    await contains(".o_menu_sections a:contains(Views)").click();
+    await contains(".o_menu_sections button:contains(Views)").click();
 
     await contains("input#group_ids").click();
     await contains(".o-autocomplete--dropdown-item .dropdown-item:nth-child(1)").click();
@@ -146,7 +146,7 @@ test("concurrency: keep user's input when editing action", async () => {
 
     await contains(".o_web_studio_navbar_item button").click();
     await contains(".o_app[data-menu-xmlid=app_1]").click();
-    await contains(".o_menu_sections a:contains(Views)").click();
+    await contains(".o_menu_sections button:contains(Views)").click();
     expect.verifySteps(["load_action"]);
 
     await contains(".o_web_studio_sidebar_content input#name").click();
@@ -183,7 +183,7 @@ test("active_id and active_ids present in context at reload", async () => {
     ]);
 
     await contains(".o_web_studio_navbar_item button").click();
-    await contains(".o_menu_sections a:contains(Views)").click();
+    await contains(".o_menu_sections button:contains(Views)").click();
 
     await contains(".o_web_studio_sidebar_content input#name").click();
     await edit("testInput");

@@ -96,7 +96,7 @@ test("switch view and close Studio", async () => {
     await click(".o_web_studio_navbar_item button");
     await waitFor(".o_web_studio_editor_manager");
 
-    await click(".o_web_studio_menu .o_menu_sections a");
+    await click(".o_web_studio_menu .o_menu_sections button");
     await waitFor(".o_web_studio_action_editor");
 
     await click(".o_web_studio_views .o_web_studio_thumbnail_item.o_web_studio_thumbnail_list");
@@ -275,7 +275,7 @@ test("user context is not polluted when getting views", async () => {
         `web_search_read, context studio: "1"`,
     ]);
 
-    await contains(".o_web_studio_menu .o_menu_sections a:contains(Automations)").click();
+    await contains(".o_web_studio_menu .o_menu_sections button:contains(Automations)").click();
     await waitFor(".o_web_studio_editor  :not(.o_web_studio_view_renderer) .o_list_view");
     expect.verifySteps([
         "get_studio_action",
@@ -636,7 +636,7 @@ test("auto-save feature works in studio (not editing a view)", async () => {
     await click(".o_web_studio_navbar_item button");
     await waitFor(".o_web_studio_editor_manager");
 
-    await click(".o_menu_sections a:contains(Automations)");
+    await click(".o_menu_sections button:contains(Automations)");
     await contains(".o_web_studio_editor .o_list_button_add").click();
     await contains(".o_field_widget[name='name'] input").edit("created base automation");
     await animationFrame();
@@ -698,7 +698,7 @@ test("can edit ir.actions.act_window without id", async () => {
     expect(browser.location.pathname).toBe("/odoo/action-1/1/m-pony/1/studio");
     expect(browser.location.search).toBe("?mode=editor&_tab=views&_view_type=form");
 
-    await click(".o_menu_sections a:contains(Views)");
+    await click(".o_menu_sections button:contains(Views)");
     await animationFrame();
     expect(
         ".o_web_studio_thumbnail_item:not(.disabled.pe-none):has(img[data-alt='View Form'])"

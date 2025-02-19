@@ -126,9 +126,10 @@ class WebStudioController(http.Controller):
             [("model_id.abstract", "=", False)],
             [("report_type", "not in", ['qweb-text'])],
             [("report_name", "not in", report_name_blacklist)],
+            [("model", "=", model.model)]
         ])
         return {
-            'name': _('Reports'),
+            'name': _('Reports for %(model_name)s (%(model)s)', model_name=model.name, model=model.model),
             'type': 'ir.actions.act_window',
             'res_model': 'ir.actions.report',
             'views': [[False, 'kanban'], [False, 'form']],
@@ -136,7 +137,6 @@ class WebStudioController(http.Controller):
             'domain': report_domain,
             'context': {
                 'default_model': model.model,
-                'search_default_model': model.model,
             },
             'help': _(""" <p class="o_view_nocontent_empty_report">
                 Add a new report

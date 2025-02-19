@@ -632,7 +632,7 @@ registry.category("web_tour.tours").add("web_studio.test_add_field_blank_report"
     steps: () => [
         {
             // edit reports
-            trigger: ".o_web_studio_menu li a:contains(Reports)",
+            trigger: ".o_web_studio_menu button:contains(Reports)",
             run: "click",
         },
         {
@@ -1253,60 +1253,6 @@ registry.category("web_tour.tours").add("web_studio.test_xml_and_form_diff", {
     ],
 });
 
-registry.category("web_tour.tours").add("web_studio.test_record_model_differs_from_action", {
-    steps: () => {
-        const stepsToAssert = [];
-
-        return [
-            {
-                trigger: ".o_studio_report_kanban_view",
-                run() {
-                    const { ReportEditorModel } = odoo.loader.modules.get(
-                        "@web_studio/client_action/report_editor/report_editor_model"
-                    );
-
-                    patch(ReportEditorModel.prototype, {
-                        async loadReportEditor() {
-                            await super.loadReportEditor(...arguments);
-                            stepsToAssert.push(
-                                `report editor loaded. actionModel: "${this._services.studio.editedAction.res_model}". reportModel: "${this.reportResModel}"`
-                            );
-                        },
-                    });
-                },
-            },
-            {
-                trigger: ".o_studio_report_kanban_view .o_searchview input",
-                run: "fill dummy test",
-            },
-            {
-                trigger:
-                    ".o_searchview_autocomplete .o-dropdown-item:contains(Report):contains(dummy test)",
-                run: "click",
-            },
-            {
-                trigger: ".o_facet_remove",
-                run: "click",
-            },
-            {
-                trigger: ".o_kanban_record:contains(dummy test)",
-                run: "click",
-            },
-            {
-                trigger: ".o-web-studio-report-editor-wysiwyg",
-                run() {
-                    assertEqual(
-                        JSON.stringify(stepsToAssert),
-                        JSON.stringify([
-                            `report editor loaded. actionModel: "res.partner". reportModel: "x_dummy.test"`,
-                        ])
-                    );
-                },
-            },
-        ];
-    },
-});
-
 registry.category("web_tour.tours").add("web_studio.test_remove_branding_on_copy", {
     steps: () => [
         {
@@ -1480,7 +1426,7 @@ registry.category("web_tour.tours").add("web_studio.test_translations_are_copied
 registry.category("web_tour.tours").add("web_studio.test_reports_view_concurrence", {
     steps: () => [
         {
-            trigger: ".o_menu_sections li:contains('Reports')",
+            trigger: ".o_menu_sections button:contains('Reports')",
             run: "click",
         },
         {

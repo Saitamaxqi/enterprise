@@ -67,6 +67,6 @@ test("should render the no content helper of studio actions", async () => {
     await contains(".o_app[data-menu-xmlid=app_2]").click();
     await animationFrame();
     await contains(".o_web_studio_navbar_item").click();
-    await contains(".o_menu_sections a:contains(Automations)").click();
+    await contains(".o_menu_sections button:contains(Automations)").click();
     expect(".no_content_helper_class").toHaveCount(1);
 });

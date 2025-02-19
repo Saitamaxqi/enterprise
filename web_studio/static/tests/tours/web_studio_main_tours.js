@@ -396,7 +396,7 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         },
         {
             // edit action
-            trigger: ".o_web_studio_menu .o_menu_sections li a:contains(Views)",
+            trigger: ".o_web_studio_menu .o_menu_sections button:contains(Views)",
             run: "click",
         },
         {
@@ -505,7 +505,7 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         },
         {
             // edit action
-            trigger: '.o_web_studio_menu .o_menu_sections li a:contains("Views")',
+            trigger: '.o_web_studio_menu .o_menu_sections button:contains("Views")',
             run: "click",
         },
         {
@@ -575,7 +575,7 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         },
         {
             // edit action
-            trigger: '.o_web_studio_menu .o_menu_sections li a:contains("Views")',
+            trigger: '.o_web_studio_menu .o_menu_sections button:contains("Views")',
             run: "click",
         },
         {
@@ -592,7 +592,7 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         },
         {
             // edit action
-            trigger: '.o_web_studio_menu .o_menu_sections li a:contains("Views")',
+            trigger: '.o_web_studio_menu .o_menu_sections button:contains("Views")',
             timeout: 20000, // activating a view takes a while and sometimes reaches the default 10s timeout
             run: "click",
         },
@@ -605,7 +605,7 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
             trigger: ".o_graph_renderer",
         },
         {
-            trigger: '.o_web_studio_menu .o_menu_sections li a:contains("Views")',
+            trigger: '.o_web_studio_menu .o_menu_sections button:contains("Views")',
             run: "click",
         },
         {
@@ -962,7 +962,7 @@ registry.category("web_tour.tours").add("web_studio_new_report_tour", {
         },
         {
             // edit reports
-            trigger: ".o_web_studio_menu li a:contains(Reports)",
+            trigger: ".o_web_studio_menu button:contains(Reports)",
             run: "click",
         },
         {
@@ -1090,7 +1090,7 @@ registry.category("web_tour.tours").add("web_studio_new_report_basic_layout_tour
         },
         {
             // edit reports
-            trigger: ".o_web_studio_menu li a:contains(Reports)",
+            trigger: ".o_web_studio_menu button:contains(Reports)",
             run: "click",
         },
         {
@@ -1514,7 +1514,7 @@ registry.category("web_tour.tours").add("web_studio_create_app_with_pipeline_and
             run: "click",
         },
         {
-            trigger: ".o_web_studio_editor .o_menu_sections a:contains(Views)",
+            trigger: ".o_web_studio_editor .o_menu_sections button:contains(Views)",
             run: "click",
         },
         {

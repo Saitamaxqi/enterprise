@@ -5,16 +5,20 @@ import {
     contains,
     mockService,
     makeMockEnv,
+    onRpc,
 } from "@web/../tests/web_test_helpers";
 import { Component, onWillRender, useState, xml } from "@odoo/owl";
 import { ReportEditorModel } from "@web_studio/client_action/report_editor/report_editor_model";
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { defineStudioEnvironment } from "../../studio_tests_context";
+import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
+import { hover, waitFor } from "@odoo/hoot-dom";
 
 describe.current.tags("desktop");
 
-defineMailModels();
-
 test("setting is in edition doesn't produce intempestive renders", async () => {
+    defineMailModels();
+
     mockService("ui", {
         block: () => expect.step("block"),
         unblock: () => expect.step("unblock"),
@@ -57,4 +61,27 @@ test("setting is in edition doesn't produce intempestive renders", async () => {
 
     expect(".child").toHaveText("false");
     expect.verifySteps(["unblock", "Child rendered"]);
+});
+
+test("reports tab disabled when no record", async () => {
+    defineStudioEnvironment();
+    onRpc("/web/dataset/call_kw/ir.model/studio_model_infos", async (request) => {
+        const methArgs = (await request.json()).params;
+        return {
+            is_mail_thread: true,
+            record_ids: [],
+            name: "Custom Partner Model",
+            model: methArgs.args[0],
+        };
+    });
+    await mountWithCleanup(WebClientEnterprise);
+    await contains("a.o_app[data-menu-xmlid=app_1]").click();
+    await contains(".o_web_studio_navbar_item").click();
+    expect(".o_web_studio_menu .o_menu_sections button:contains(Reports)").toHaveCount(1);
+    expect(".o_web_studio_menu .o_menu_sections button:contains(Reports):disabled").toHaveCount(1);
+    await hover(".o_web_studio_menu .o_menu_sections button:contains(Reports)");
+    await waitFor(".o-overlay-item", { timeout: 1000 });
+    expect(".o-overlay-item").toHaveText(
+        "You cannot edit a report while there is no Custom Partner Model (partner)"
+    );
 });

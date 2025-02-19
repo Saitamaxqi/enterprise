@@ -922,21 +922,6 @@ class TestReportEditorUIUnit(HttpCase):
     def test_xml_and_form_diff(self):
         self.start_tour(self.tour_url + "&debug=1", "web_studio.test_xml_and_form_diff", login="admin")
 
-    def test_record_model_differs_from_action(self):
-        dummy = self.env["ir.model"].create({
-            "name": "dummy.test",
-            "model": "x_dummy.test"
-        })
-        self.env['ir.model.access'].create({
-            "name": "dummy",
-            "perm_read": True,
-            "model_id": dummy.id,
-        })
-
-        self.report.model = dummy.model
-        self.report.name = "dummy test"
-        self.start_tour(f"/odoo/action-{self.testAction.id}/studio?mode=editor&_tab=reports&menu_id={self.testMenu.id}", "web_studio.test_record_model_differs_from_action", login="admin")
-
     def test_recursive_t_calls(self):
         self.authenticate("admin", "admin")
         self.main_view_document.arch = """

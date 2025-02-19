@@ -182,7 +182,7 @@ registry.category("web_tour.tours").add("web_studio_new_app_tour", {
             run: "click",
         },
         {
-            trigger: ".o_web_studio_menu .o_menu_sections li:contains(Views)",
+            trigger: ".o_web_studio_menu .o_menu_sections button:contains(Views)",
             content: markup(_t("Want more fun? Let's create more <b>views</b>.")),
             tooltipPosition: "bottom",
             run: "click",
