@@ -80,10 +80,10 @@ class TestOfferMailFeatures(MailCommon):
                 'email_cc': '', 'email_to': '', 'partner_ids': [],
             },
             offers[1].id: {
-                'email_cc': '', 'email_to': '', 'partner_ids': [],
+                'email_cc': '', 'email_to': '', 'partner_ids': self.applicant.partner_id.ids,
             },
             offers[2].id: {
-                'email_cc': '', 'email_to': '', 'partner_ids': [],
+                'email_cc': '', 'email_to': '', 'partner_ids': self.employee.work_contact_id.ids,
             },
         }
 
