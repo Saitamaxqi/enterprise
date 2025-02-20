@@ -388,6 +388,11 @@ class HrApplicant(models.Model):
             values['source_id'] = utm_source_referral.id if utm_source_referral else False
         return values
 
+    def reset_applicant(self):
+        """ Reset the applicant state to progress """
+        super().reset_applicant()
+        self.write({'referral_state': 'progress'})
+
 
 class HrRecruitmentStage(models.Model):
     _inherit = "hr.recruitment.stage"

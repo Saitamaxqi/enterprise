@@ -179,3 +179,64 @@ class TestHrReferral(TestHrReferralBase):
         job_applicant.stage_id = stage_parking_1
         info_dashboard = json.loads(job_applicant.shared_item_infos)
         self.assertEqual([x['done'] for x in info_dashboard], [True, True, True, True, True, True, False, False], 'parking2 should not be marked as done anymore')
+
+    def test_referral_reset_applicant(self):
+        """Test that reset_applicant correctly resets the referral state to 'progress'"""
+        # Create an applicant in 'progress' state
+        applicant = self.env['hr.applicant'].create({
+            'partner_name': 'Test Applicant',
+            'job_id': self.job_dev.id,
+            'ref_user_id': self.richard_user.id,
+            'company_id': self.company_1.id,
+            'referral_state': 'progress'
+        })
+        # Change state to 'hired'
+        applicant.write({'referral_state': 'hired'})
+        self.assertEqual(applicant.referral_state, 'hired', "Applicant referral state should be 'hired'")
+        # Reset the applicant
+        applicant.reset_applicant()
+        # Check if the referral state is reset to 'progress'
+        self.assertEqual(applicant.referral_state, 'progress', "After reset_applicant, referral state should be 'progress'")
+        # Test resetting from 'closed' state
+        applicant.write({'referral_state': 'closed'})
+        self.assertEqual(applicant.referral_state, 'closed', "Applicant referral state should be 'closed'")
+        # Reset the applicant again
+        applicant.reset_applicant()
+        # Check if the referral state is reset to 'progress'
+        self.assertEqual(applicant.referral_state, 'progress', "After reset_applicant, referral state should be 'progress'")
+
+    def test_referral_reset_applicant_batch(self):
+        """Test that reset_applicant correctly works when called on multiple records"""
+        # Create applicants with different referral states
+        applicants = self.env['hr.applicant'].create([
+            {
+                'partner_name': 'Applicant 1',
+                'job_id': self.job_dev.id,
+                'ref_user_id': self.richard_user.id,
+                'company_id': self.company_1.id,
+                'referral_state': 'hired'
+            },
+            {
+                'partner_name': 'Applicant 2',
+                'job_id': self.job_dev.id,
+                'ref_user_id': self.steve_user.id,
+                'company_id': self.company_1.id,
+                'referral_state': 'closed'
+            },
+            {
+                'partner_name': 'Applicant 3',
+                'job_id': self.job_dev.id,
+                'ref_user_id': self.richard_user.id,
+                'company_id': self.company_1.id,
+                'referral_state': 'progress'
+            }
+        ])
+        # Test initial states
+        self.assertEqual(applicants[0].referral_state, 'hired')
+        self.assertEqual(applicants[1].referral_state, 'closed')
+        self.assertEqual(applicants[2].referral_state, 'progress')
+        # Reset all applicants at once
+        applicants.reset_applicant()
+        # Verify all records have been reset to 'progress'
+        for applicant in applicants:
+            self.assertEqual(applicant.referral_state, 'progress', f"Applicant {applicant.partner_name} should have referral_state 'progress' after reset")
