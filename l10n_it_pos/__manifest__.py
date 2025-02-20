@@ -24,6 +24,10 @@
         'web.assets_frontend': [
             'l10n_it_pos/static/src/app/overrides/helpers/account_tax.js',
         ],
+        'web.assets_unit_tests': [
+            'l10n_it_pos/static/src/app/utils/html_to_xml.js',
+            'l10n_it_pos/static/tests/unit/**/*',
+        ]
     },
     'license': 'OEEL-1',
 }

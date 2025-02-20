@@ -1,4 +1,5 @@
 import { registry } from "@web/core/registry";
+import { htmlToXml } from "@l10n_it_pos/app/utils/html_to_xml";
 
 const tags = [
     "printerFiscalReceipt",
@@ -24,7 +25,6 @@ const tags = [
     "setLogo",
     "printRecRefund",
     "directIO",
-    "printRecItemAdjustment",
     "printDuplicateReceipt",
     "openDrawer",
 ];
@@ -40,7 +40,6 @@ const attributes = [
     "documentType",
     "documentNumber",
     "graphicFormat",
-    "adjustmentType",
     "statusType",
 ];
 
@@ -80,14 +79,7 @@ const EpsonFiscalPrinterCommandService = {
         async function create(template, props = {}) {
             const commandRaw = await renderer.toHtml(template, props);
 
-            // replace all tags and attributes
-            let htmlString = commandRaw.outerHTML;
-            for (const tag of [...tags, ...attributes]) {
-                htmlString = htmlString.replaceAll(tag.toLowerCase(), tag);
-            }
-
-            // make self-closing tags
-            const xmlString = htmlString.replaceAll(/<(\w+)([^>]*)>\s*<\/\1>/g, "<$1$2 />");
+            const xmlString = htmlToXml(commandRaw.outerHTML, tags, attributes);
 
             const command =
                 '<?xml version="1.0" encoding="utf-8"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>' +
