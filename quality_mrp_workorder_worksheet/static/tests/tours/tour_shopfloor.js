@@ -52,6 +52,10 @@ registry.category("web_tour.tours").add("test_worksheet_quality_check", {
             run: "click",
         },
         {
+            trigger:
+                ".o_mrp_display_record:has(.accordion:contains(1/1):has(.collapse:not(.show)))",
+        },
+        {
             content: "Check that the quality check has been validated",
             trigger: ".btn:contains('Close Production')",
             run: "click",

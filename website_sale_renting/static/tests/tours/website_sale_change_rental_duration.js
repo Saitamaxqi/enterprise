@@ -22,6 +22,10 @@ registry.category("web_tour.tours").add("rental_cart_update_duration", {
             run: "click",
         },
         {
+            content: "Wait computer informations are loaded",
+            trigger: "img.product_detail_img[src*='Computer']",
+        },
+        {
             content: "Open daterangepicker",
             trigger: "input[name=renting_start_date]",
             run: "click",

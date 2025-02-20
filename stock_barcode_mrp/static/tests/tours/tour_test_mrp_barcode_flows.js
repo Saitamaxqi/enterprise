@@ -1170,6 +1170,7 @@ registry.category("web_tour.tours").add("test_kit_bom_decomposition_keeps_locati
         { trigger: ".btn.o_save", run: "click" },
         { trigger: ".btn.o_validate_page", run: "click" },
         { trigger: ".o_notification_body" },
+        { trigger: ".o_barcode_lines:has(.o_barcode_line:eq(3)):not(:has(.o_barcode_line:eq(4))" },
         { trigger: ".btn.o_validate_page", run: "click" },
         /* Test 2: two move lines
             different final product, different bom, different location */
@@ -1196,6 +1197,7 @@ registry.category("web_tour.tours").add("test_kit_bom_decomposition_keeps_locati
         { trigger: ".modal-dialog button.btn-primary", run: "click" },
         { trigger: ".btn.o_validate_page", run: "click" },
         { trigger: ".o_notification_body" },
+        { trigger: ".o_barcode_lines:has(.o_barcode_line:eq(3)):not(:has(.o_barcode_line:eq(4))" },
         { trigger: ".btn.o_validate_page", run: "click" },
     ],
 });
