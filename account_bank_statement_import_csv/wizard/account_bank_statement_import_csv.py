@@ -129,7 +129,7 @@ class Base_ImportImport(models.TransientModel):
 
     def execute_import(self, fields, columns, options, dryrun=False):
         if options.get('bank_stmt_import'):
-            self._cr.execute('SAVEPOINT import_bank_stmt')
+            savepoint = self.env.cr.savepoint()
             res = super().execute_import(fields, columns, options, dryrun=dryrun)
             statement = self.env['account.bank.statement'].create({
                 'reference': self.file_name,
@@ -138,10 +138,8 @@ class Base_ImportImport(models.TransientModel):
             })
 
             try:
-                if dryrun:
-                    self._cr.execute('ROLLBACK TO SAVEPOINT import_bank_stmt')
-                else:
-                    self._cr.execute('RELEASE SAVEPOINT import_bank_stmt')
+                savepoint.close(rollback=dryrun)
+                if not dryrun:
                     res['messages'].append({
                         'statement_id': statement.id,
                         'type': 'bank_statement'
