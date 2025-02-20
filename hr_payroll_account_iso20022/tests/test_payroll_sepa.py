@@ -118,6 +118,30 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
         # I verify the payslip is in paid state.
         self.assertEqual(self.payslip_run.state, 'close', 'State should not change!')
 
+    def test_02_hr_payroll_account_iso20022_ch(self):
+        self.assertEqual(self.payslip_run.state, 'draft')
+
+        payslip_employee = self.env['hr.payslip.employees'].create({
+            'employee_ids': [(4, self.hr_employee_john.id)]
+        })
+        payslip_employee.with_context(active_id=self.payslip_run.id).compute_sheet()
+
+        self.assertTrue(len(self.payslip_run.slip_ids) > 0)
+        self.assertEqual(self.payslip_run.state, 'verify')
+
+        self.payslip_run.action_validate()
+
+        self.assertEqual(self.payslip_run.state, 'close')
+
+        file = self.env['hr.payroll.payment.report.wizard'].create({
+            'payslip_ids': self.payslip_run.slip_ids.ids,
+            'payslip_run_id': self.payslip_run.id,
+            'export_format': 'iso20022_ch',
+            'journal_id': self.bank_journal.id,
+        })._create_sepa_binary()
+
+        self.assertTrue(file)
+        self.assertEqual(self.payslip_run.state, 'close')
 
 @tagged('external_l10n', 'post_install', '-at_install', '-standard')
 class TestPayrollSEPACreditTransferXmlValidity(TestPayrollSEPACreditTransferCommon):

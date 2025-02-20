@@ -6,8 +6,8 @@
         <field name="inherit_id" ref="hr_payroll.hr_payroll_payment_report_view_form"/>
         <field name="arch" type="xml">
             <group id="payment_report_group" position="inside">
-                <field name="journal_id" invisible="export_format != 'sepa'"/>
-                <field name="effective_date" invisible="export_format != 'sepa'"/>
+                <field name="journal_id" invisible="export_format not in ['sepa', 'iso20022_ch']"/>
+                <field name="effective_date" invisible="export_format not in ['sepa', 'iso20022_ch']"/>
             </group>
         </field>
     </record>

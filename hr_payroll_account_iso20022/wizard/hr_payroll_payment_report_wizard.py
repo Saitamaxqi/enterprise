@@ -8,7 +8,7 @@ from odoo.tools import format_list
 class HrPayrollPaymentReportWizard(models.TransientModel):
     _inherit = 'hr.payroll.payment.report.wizard'
 
-    export_format = fields.Selection(selection_add=[('sepa', 'SEPA')], default='sepa', ondelete={'sepa': 'set csv'})
+    export_format = fields.Selection(selection_add=[('sepa', 'SEPA'), ('iso20022_ch', 'Swiss ISO20022')], default='sepa', ondelete={'sepa': 'set csv', 'iso20022_ch': 'set csv'})
     journal_id = fields.Many2one(
         string='Bank Journal', comodel_name='account.journal', required=True,
         default=lambda self: self.env['account.journal'].search([('type', '=', 'bank')], limit=1))
@@ -22,17 +22,18 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         payments_data = []
         for slip in self.payslip_ids.filtered(lambda p: p.state == "done" and p.net_wage > 0):
             payments_data.append(slip._get_payments_vals(self.journal_id, self.effective_date))
+        payment_method_code = self.env.context.get('payment_method') or 'sepa_ct'
 
         # Generate XML File
         xml_doc = self.journal_id.sudo().with_context(
             sepa_payroll_sala=True,
             l10n_be_hr_payroll_sepa_salary_payment=self.journal_id.company_id.account_fiscal_country_id.code == "BE"
-        ).create_iso20022_credit_transfer(payments=payments_data, payment_method_code='sepa_ct', batch_booking=True)
+        ).create_iso20022_credit_transfer(payments=payments_data, payment_method_code=payment_method_code, batch_booking=True)
         return base64.encodebytes(xml_doc)
 
     def _perform_checks(self):
         super()._perform_checks()
-        if self.export_format == 'sepa':
+        if self.export_format in ['sepa', 'iso20022_ch']:
             employees = self.payslip_ids.employee_id.filtered(lambda e: not e.work_contact_id)
             if employees:
                 raise UserError(_(
@@ -51,8 +52,11 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
 
     def generate_payment_report(self):
         super().generate_payment_report()
-        if self.export_format == 'sepa':
+        if self.export_format in ['sepa', 'iso20022_ch']:
             if self.effective_date < fields.Date.today():
                 raise ValidationError(_("The effective date cannot be in the past."))
-            payment_report = self._create_sepa_binary()
+            if self.export_format == 'sepa':
+                payment_report = self.with_context(payment_method='sepa_ct')._create_sepa_binary()
+            elif self.export_format == 'iso20022_ch':
+                payment_report = self.with_context(payment_method='iso20022_ch')._create_sepa_binary()
             self._write_file(payment_report, '.xml')
