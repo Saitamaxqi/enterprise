@@ -294,13 +294,15 @@ class AccountTaxReportHandler(models.AbstractModel):
                     withhold_taxes_without_ats_code |= income_withhold_base_lines.tax_ids.filtered(
                         lambda t: not t.l10n_ec_code_ats or len(t.l10n_ec_code_ats) < 3
                     )
-
                     air_vals = [
                         {
                             'codRetAir': tax.l10n_ec_code_ats or 'NA',
                             'porcentajeAir': abs(tax.amount),
                             'baseImpAir': abs(sum(base_line.balance for base_line in base_lines)),
-                            'valRetAir': abs(withhold_lines.filtered(lambda l: l.tax_line_id == tax).balance or 0.0)
+                            'valRetAir': abs(withhold_lines.filtered(lambda l: l.tax_line_id == tax).balance or 0.0),
+                            'fechaPagoDiv': base_lines[0].move_id.l10n_ec_dividend_payment_date.strftime('%d/%m/%Y') if base_lines[0].move_id.l10n_ec_is_dividend_withhold else None,
+                            'imRentaSoc': (base_lines[0].move_id.l10n_ec_dividend_income_tax or 0.0) if base_lines[0].move_id.l10n_ec_is_dividend_withhold else None,
+                            'anioUtDiv': base_lines[0].move_id.l10n_ec_dividend_fiscal_year if base_lines[0].move_id.l10n_ec_is_dividend_withhold else None,
                         }
                         for tax, base_lines in groupby(income_withhold_base_lines, lambda l: l.tax_ids)
                     ]
@@ -316,15 +318,11 @@ class AccountTaxReportHandler(models.AbstractModel):
                         'fechaEmiRet1': withhold.l10n_ec_withhold_date.strftime('%d/%m/%Y'),
                     })
 
-                # 2.4. DIVIDEND WITHHOLDINGS ARE NOT SUPPORTED
-                #   - Dividend Payment Date
-                #   - Income tax paid by the company corresponding to the dividend
-                #   - Year in which the profits attributable to the dividend were generated
-
-                # 2.5. WITHHOLDS FOR BANANA IMPORTS ARE NOT SUPPORTED
+                # 2.4. WITHHOLDS FOR BANANA IMPORTS ARE NOT SUPPORTED
                 #   - Quantity of standard banana boxes
                 #   - Price of standard banana boxes
                 #   - Banana box price
+
                 self._get_reimbursements_values(in_inv, values, errors)
 
                 purchase_vals.append(values)

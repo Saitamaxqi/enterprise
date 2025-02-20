@@ -472,6 +472,65 @@ msgid "<strong>Withhold Date:</strong>"
 msgstr ""
 
 #. module: l10n_ec_edi
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_account_bank_statement_line__l10n_ec_dividend_fiscal_year
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_account_move__l10n_ec_dividend_fiscal_year
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_l10n_ec_wizard_account_withhold__dividend_fiscal_year
+msgid "Dividend fiscal year"
+msgstr ""
+
+#. module: l10n_ec_edi
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_account_bank_statement_line__l10n_ec_dividend_income_tax
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_account_move__l10n_ec_dividend_income_tax
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_l10n_ec_wizard_account_withhold__dividend_income_tax
+msgid "Dividend income tax"
+msgstr ""
+
+#. module: l10n_ec_edi
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_account_bank_statement_line__l10n_ec_dividend_payment_date
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_account_move__l10n_ec_dividend_payment_date
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_l10n_ec_wizard_account_withhold__dividend_payment_date
+msgid "Dividend payment date"
+msgstr ""
+
+#. module: l10n_ec_edi
+#. odoo-python
+#: code:addons/l10n_ec_edi/wizard/l10n_ec_wizard_account_withhold.py:0
+msgid "In a dividend withhold, all lines must have a tax with base code 327."
+msgstr ""
+
+#. module: l10n_ec_edi
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_account_bank_statement_line__l10n_ec_is_dividend_withhold
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_account_move__l10n_ec_is_dividend_withhold
+#: model:ir.model.fields,field_description:l10n_ec_edi.field_l10n_ec_wizard_account_withhold__is_dividend_withhold
+msgid "Is a dividend withholding"
+msgstr ""
+
+#. module: l10n_ec_edi
+#: model:ir.model.fields,help:l10n_ec_edi.field_account_bank_statement_line__l10n_ec_dividend_payment_date
+#: model:ir.model.fields,help:l10n_ec_edi.field_account_move__l10n_ec_dividend_payment_date
+#: model:ir.model.fields,help:l10n_ec_edi.field_l10n_ec_wizard_account_withhold__dividend_payment_date
+msgid "Enter the date the dividend payment was made."
+msgstr ""
+
+#. module: l10n_ec_edi
+#: model:ir.model.fields,help:l10n_ec_edi.field_account_bank_statement_line__l10n_ec_dividend_fiscal_year
+#: model:ir.model.fields,help:l10n_ec_edi.field_account_move__l10n_ec_dividend_fiscal_year
+#: model:ir.model.fields,help:l10n_ec_edi.field_l10n_ec_wizard_account_withhold__dividend_fiscal_year
+msgid ""
+"Enter the fiscal year in which earnings on the reported dividend are "
+"generated. The company could pay previous periods"
+msgstr ""
+
+#. module: l10n_ec_edi
+#: model:ir.model.fields,help:l10n_ec_edi.field_account_bank_statement_line__l10n_ec_dividend_income_tax
+#: model:ir.model.fields,help:l10n_ec_edi.field_account_move__l10n_ec_dividend_income_tax
+#: model:ir.model.fields,help:l10n_ec_edi.field_l10n_ec_wizard_account_withhold__dividend_income_tax
+msgid ""
+"Enter the value of the Income Tax paid by the company that corresponds to "
+"the reported dividend."
+msgstr ""
+
+#. module: l10n_ec_edi
 #: model:ir.model.fields,field_description:l10n_ec_edi.field_res_country__l10n_ec_code_ats
 msgid "ATS Code"
 msgstr ""

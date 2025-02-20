@@ -138,7 +138,7 @@ class TestAtsReport(TestEcEdiCommon, TestAccountReportsCommon):
             self.assert_xml_ats_equal(xml_content_ats, 'ats_purchase_invoices.xml')
 
             ## Step 2: test with a credit note for invoice 8
-            credit_note = self._create_credit_notes(invoices[7])
+            credit_note = self._create_credit_notes(invoices[8])
             credit_note.write({
                 'l10n_latam_document_number': '001-001-000000099',
             })
@@ -313,6 +313,7 @@ class TestAtsReport(TestEcEdiCommon, TestAccountReportsCommon):
                 32: ['tax_vat_510_sup_01', 'tax_vat_541_sup_02', 'tax_vat_542_sup_02'],
                 33: ['tax_vat_517_sup_07', 'tax_vat_541_sup_02', 'tax_vat_542_sup_02'],
                 1: ['tax_vat_541_sup_02'],
+                1.5: ['tax_vat_541_sup_02_dividend'],
             }
             for tax in tax_list.get(lines_number, []):
                 lines.append(self._get_invoice_line_with_price_vals(tax_xml_id=tax, price_unit=10.00))
@@ -324,6 +325,7 @@ class TestAtsReport(TestEcEdiCommon, TestAccountReportsCommon):
             self.partner_ced: [
                 ('03', '01', 4),
                 ('19', '01', 1),
+                ('19', '01', 1.5),
             ],
             self.partner_ext: [
                 ('03', '01', 4),
@@ -381,23 +383,22 @@ class TestAtsReport(TestEcEdiCommon, TestAccountReportsCommon):
                 Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_vat_100').id, 'taxsupport_code': '01', 'amount': 1.20, 'base': 1.20}),
             ],
         )
-        self._create_withhold(invoices[2], withhold_sequence=2)
-        self._create_withhold(invoices[5], withhold_sequence=3)
-        self._create_withhold(
-            invoices[7],
-            withhold_sequence=4,
+        self._create_withhold( # dividends withhold
+            invoices[2],
+            withhold_sequence=2,
             withhold_lines=[
                 Command.clear(),
-                Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_profit_312').id, 'taxsupport_code': '01', 'base': 10.00, 'amount': 0.18}),
-                Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_profit_312').id, 'taxsupport_code': '07', 'base': 10.00, 'amount': 0.18}),
-                Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_profit_312').id, 'taxsupport_code': '02', 'base': 20.00, 'amount': 0.35}),
+                Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_profit_327_5').id, 'taxsupport_code': '10','base': 7000.00, 'amount': 780}),
             ],
         )
+        self._create_withhold(invoices[3], withhold_sequence=3)
+        self._create_withhold(invoices[6], withhold_sequence=4)
         self._create_withhold(
             invoices[8],
             withhold_sequence=5,
             withhold_lines=[
                 Command.clear(),
+                Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_profit_312').id, 'taxsupport_code': '01', 'base': 10.00, 'amount': 0.18}),
                 Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_profit_312').id, 'taxsupport_code': '07', 'base': 10.00, 'amount': 0.18}),
                 Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_profit_312').id, 'taxsupport_code': '02', 'base': 20.00, 'amount': 0.35}),
             ],
@@ -407,12 +408,21 @@ class TestAtsReport(TestEcEdiCommon, TestAccountReportsCommon):
             withhold_sequence=6,
             withhold_lines=[
                 Command.clear(),
+                Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_profit_312').id, 'taxsupport_code': '07', 'base': 10.00, 'amount': 0.18}),
+                Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_profit_312').id, 'taxsupport_code': '02', 'base': 20.00, 'amount': 0.35}),
+            ],
+        )
+        self._create_withhold(
+            invoices[10],
+            withhold_sequence=7,
+            withhold_lines=[
+                Command.clear(),
                 Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_profit_312').id, 'taxsupport_code': '01', 'base': 10.00, 'amount': 0.18}),
                 Command.create({'tax_id': self._get_tax_by_xml_id('tax_withhold_profit_312').id, 'taxsupport_code': '02', 'base': 20.00, 'amount': 0.35}),
             ]
         )
-        self._create_withhold(invoices[10], withhold_sequence=7)
-        self._create_withhold(invoices[12], withhold_sequence=8)
+        self._create_withhold(invoices[11], withhold_sequence=8)
+        self._create_withhold(invoices[13], withhold_sequence=9)
 
         return invoices
 
@@ -559,7 +569,14 @@ class TestAtsReport(TestEcEdiCommon, TestAccountReportsCommon):
     def _create_withhold(self, invoice, withhold_sequence, withhold_lines=None):
         entity = invoice.journal_id.l10n_ec_entity
         emission = invoice.journal_id.l10n_ec_emission
+
         wizard = self.env['l10n_ec.wizard.account.withhold'].with_context(active_ids=invoice.ids, active_model='account.move').create({})
+        is_dividend = all(taxsupport == '10' for taxsupport in invoice.line_ids.tax_ids.mapped('l10n_ec_code_taxsupport'))
+        if is_dividend:
+            wizard.dividend_payment_date = self.frozen_today
+            wizard.dividend_income_tax = 3660.99
+            wizard.dividend_income_tax = 3660.99
+            wizard.dividend_fiscal_year = '2021'
         wizard.document_number = f'{entity.zfill(3)}-{emission.zfill(3)}-{withhold_sequence:09}'
         if withhold_lines:
             wizard.write({

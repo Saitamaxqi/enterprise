@@ -27,6 +27,15 @@
                     <group name="foreign-container" invisible="partner_country_code == 'EC' or withhold_type != 'in_withhold'">
                         <field name="foreign_regime" required="partner_country_code != 'EC'"/>
                     </group>
+                    <group name="dividend_group" invisible="not is_dividend_withhold">
+                        <field name="is_dividend_withhold" invisible="1"/>
+                        <field name="dividend_payment_date"
+                               required="is_dividend_withhold"/>
+                        <field name="dividend_income_tax"
+                               required="is_dividend_withhold"/>
+                        <field name="dividend_fiscal_year"
+                               required="is_dividend_withhold"/>
+                    </group>
                 </group>
                 <notebook>
                     <page id="withhold_lines_tab" string="Withhold Lines" name="page_withhold_lines">
@@ -46,7 +55,8 @@
                                        options="{'no_create': True, 'no_open': True}
                                        "/>
                                 <field name="base"/>
-                                <field name="amount" readonly="1"/> <!-- No functionality yet to adapt the calculated amount for rounding, but it could be done -->
+                                <!-- it's editable only for dividends. Read the comments in _prepare_withhold_move_lines -->
+                                <field name="amount" readonly="parent.withhold_type == 'in_withhold' and not parent.is_dividend_withhold"/> <!-- No functionality yet to adapt the calculated amount for rounding, but it could be done -->
                             </list>
                         </field>
                          <group class="oe_subtotal_footer">

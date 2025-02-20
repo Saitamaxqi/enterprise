@@ -67,6 +67,9 @@ L10N_EC_WTH_FOREIGN_NOT_SUBJECT_WITHHOLD_CODES = ['412', '423', '433']
 L10N_EC_WTH_FOREIGN_SUBJECT_WITHHOLD_CODES = list(set(L10N_EC_WTH_FOREIGN_GENERAL_REGIME_CODES) - set(L10N_EC_WTH_FOREIGN_NOT_SUBJECT_WITHHOLD_CODES))
 L10N_EC_WTH_FOREIGN_DOUBLE_TAXATION_CODES = ['402', '403', '404', '405', '406', '407', '408', '409', '410', '411', '412']
 L10N_EC_WITHHOLD_FOREIGN_REGIME = [('01', '(01) General Regime'), ('02', '(02) Fiscal Paradise'), ('03', '(03) Preferential Tax Regime')]
+_L10N_EC_DIVIDEND_YEAR_MAX = datetime.today().year
+_L10N_EC_DIVIDEND_YEAR_MIN = datetime.today().year - 5
+
 
 
 class AccountMove(models.Model):
@@ -161,6 +164,32 @@ class AccountMove(models.Model):
         help='Functional fields to calculate amount totals.'
     )
 
+    # ==== DIVIDENDS WITHHOLDING ====
+
+    l10n_ec_dividend_fiscal_year = fields.Char(
+        'Dividend fiscal year',
+        help='Enter the fiscal year in which earnings on the reported dividend are generated. The company could pay previous periods',
+        tracking=True,
+    )
+
+    l10n_ec_dividend_payment_date = fields.Date(
+        'Dividend payment date',
+        help='Enter the date the dividend payment was made.',
+        tracking=True,
+    )
+    l10n_ec_dividend_income_tax = fields.Monetary(
+        'Dividend income tax',
+        help='Enter the value of the Income Tax paid by the company that corresponds to the reported dividend.',
+        tracking=True,
+        currency_field='currency_id',
+    )
+
+    l10n_ec_is_dividend_withhold = fields.Boolean(
+        compute='_compute_l10n_ec_is_dividend_withhold',
+        string='Is a dividend withholding',
+        help='Technical field, true if this journal entry is a withholding for a dividend payment in Ecuador.'
+    )
+
     # ===== COMPUTE / ONCHANGE / CONSTRAINTS METHODS =====
 
     @api.depends('l10n_latam_document_type_id', 'l10n_ec_authorization_number', 'journal_id')
@@ -204,6 +233,7 @@ class AccountMove(models.Model):
                 '09',  # Tiquetes
                 '11',  # Pasajes
                 '12',  # Inst FInancieras
+                '19',  # Comprobante de pagos de cuotas o aportes (for dividends)
                 '20',  # Estado
                 '21',  # Carta porte aereo
                 '47',  # Nota de crédito de reembolso
@@ -293,6 +323,14 @@ class AccountMove(models.Model):
                 )
             else:
                 move.reimbursement_totals = None
+
+    @api.depends('line_ids', 'line_ids.l10n_ec_code_taxsupport')
+    def _compute_l10n_ec_is_dividend_withhold(self):
+        # Check if the withholding is a dividend withhold
+        self.l10n_ec_is_dividend_withhold = False
+        for withhold in self.filtered(lambda withhold: withhold.journal_id.l10n_ec_withhold_type == 'in_withhold'):
+            withhold.l10n_ec_is_dividend_withhold = '10' in withhold.l10n_ec_withhold_line_ids.mapped(
+                'l10n_ec_code_taxsupport')
 
     # ===== BUTTONS =====
 
@@ -1010,6 +1048,15 @@ class AccountMoveLine(models.Model):
             'price_discount': float_round(results['price_discount'] * currency_rate, precision_digits=6),
             'price_unit': float_round(price_unit * currency_rate, precision_digits=6),
         }
+
+    def _compute_totals(self):
+        # `price_total` and `price_subtotal` are `readonly=True` which means they will get recomputed
+        # even when their values are provided when creating an account.move.line.
+        # For dividends withholdings, we do not want to recompute those fields, in order to keep the
+        # amount set in the withhold wizard.
+        super(AccountMoveLine, self.filtered(
+            lambda l: not l.tax_ids or not l.move_id.l10n_ec_is_dividend_withhold
+        ))._compute_totals()
 
     # ============================================
     # Compute overrides when exists purchase reimbursements lines

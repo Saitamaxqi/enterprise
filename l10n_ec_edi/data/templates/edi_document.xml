@@ -100,6 +100,13 @@
                             <baseImponible t-out="format_num_2(withhold_line['tax_base_amount'])"/>
                             <porcentajeRetener t-out="format_num_2(withhold_line['tax_rate'])"/>
                             <valorRetenido t-out="format_num_2(withhold_line['tax_amount'])"/>
+                             <t t-if="is_withhold and is_dividend_withhold">
+                                <dividendos>
+                                    <fechaPagoDiv t-out="strftime(dividend_payment_date)"/>
+                                    <imRentaSoc t-out="format_num_2(dividend_income_tax)"/>
+                                    <ejerFisUtDiv t-out="dividend_fiscal_year"/>
+                                </dividendos>
+                            </t>
                         </retencion>
                     </retenciones>
                     <t t-call="l10n_ec_edi.detail_reimbursement"/>

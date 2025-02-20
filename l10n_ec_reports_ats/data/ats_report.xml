@@ -85,6 +85,9 @@
                             <baseImpAir t-out="format_float(withholding_vals['baseImpAir'])"/>
                             <porcentajeAir t-out="format_float(withholding_vals['porcentajeAir'])"/>
                             <valRetAir t-out="format_float(withholding_vals['valRetAir'])"/>
+                            <fechaPagoDiv t-out="withholding_vals.get('fechaPagoDiv')"/>
+                            <imRentaSoc t-out="withholding_vals.get('imRentaSoc')"/>
+                            <anioUtDiv t-out="withholding_vals.get('anioUtDiv')"/>
                         </detalleAir>
                     </air>
 

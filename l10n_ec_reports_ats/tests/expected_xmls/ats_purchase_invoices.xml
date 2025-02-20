@@ -193,6 +193,58 @@
             </formasDePago>
         </detalleCompras>
         <detalleCompras>
+            <codSustento>10</codSustento>
+            <tpIdProv>02</tpIdProv>
+            <idProv>0704396241</idProv>
+            <tipoComprobante>19</tipoComprobante>
+            <parteRel>NO</parteRel>
+            <fechaRegistro>25/01/2022</fechaRegistro>
+            <establecimiento>999</establecimiento>
+            <puntoEmision>999</puntoEmision>
+            <secuencial>000000003</secuencial>
+            <fechaEmision>04/01/2022</fechaEmision>
+            <autorizacion>9999999999</autorizacion>
+            <baseNoGraIva>10.00</baseNoGraIva>
+            <baseImponible>0.00</baseImponible>
+            <baseImpGrav>0.00</baseImpGrav>
+            <baseImpExe>0.00</baseImpExe>
+            <montoIce>0.00</montoIce>
+            <montoIva>0.00</montoIva>
+            <valRetBien10>0.00</valRetBien10>
+            <valRetServ20>0.00</valRetServ20>
+            <valorRetBienes>0.00</valorRetBienes>
+            <valRetServ50>0.00</valRetServ50>
+            <valorRetServicios>0.00</valorRetServicios>
+            <valRetServ100>0.00</valRetServ100>
+            <valorRetencionNc>0.00</valorRetencionNc>
+            <totbasesImpReemb>0.00</totbasesImpReemb>
+            <pagoExterior>
+                <pagoLocExt>01</pagoLocExt>
+                <paisEfecPago>NA</paisEfecPago>
+                <aplicConvDobTrib>NA</aplicConvDobTrib>
+                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+            </pagoExterior>
+            <formasDePago>
+                <formaPago>01</formaPago>
+            </formasDePago>
+            <air>
+                <detalleAir>
+                    <codRetAir>327</codRetAir>
+                    <baseImpAir>7000.00</baseImpAir>
+                    <porcentajeAir>5.00</porcentajeAir>
+                    <valRetAir>780.00</valRetAir>
+                    <fechaPagoDiv>25/01/2022</fechaPagoDiv>
+                    <imRentaSoc>3660.99</imRentaSoc>
+                    <anioUtDiv>2021</anioUtDiv>
+                </detalleAir>
+            </air>
+            <estabRetencion1>001</estabRetencion1>
+            <ptoEmiRetencion1>001</ptoEmiRetencion1>
+            <secRetencion1>000000002</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000023121521414</autRetencion1>
+            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
+        </detalleCompras>
+        <detalleCompras>
             <codSustento>01</codSustento>
             <tpIdProv>03</tpIdProv>
             <idProv>1234567890</idProv>
@@ -203,9 +255,9 @@
             <fechaRegistro>25/01/2022</fechaRegistro>
             <establecimiento>001</establecimiento>
             <puntoEmision>001</puntoEmision>
-            <secuencial>000000003</secuencial>
-            <fechaEmision>04/01/2022</fechaEmision>
-            <autorizacion>0401202203179236683600110010010000000033121521412</autorizacion>
+            <secuencial>000000004</secuencial>
+            <fechaEmision>05/01/2022</fechaEmision>
+            <autorizacion>0501202203179236683600110010010000000043121521412</autorizacion>
             <baseNoGraIva>0.00</baseNoGraIva>
             <baseImponible>0.00</baseImponible>
             <baseImpGrav>10.00</baseImpGrav>
@@ -243,9 +295,9 @@
             <fechaRegistro>25/01/2022</fechaRegistro>
             <establecimiento>001</establecimiento>
             <puntoEmision>001</puntoEmision>
-            <secuencial>000000003</secuencial>
-            <fechaEmision>04/01/2022</fechaEmision>
-            <autorizacion>0401202203179236683600110010010000000033121521412</autorizacion>
+            <secuencial>000000004</secuencial>
+            <fechaEmision>05/01/2022</fechaEmision>
+            <autorizacion>0501202203179236683600110010010000000043121521412</autorizacion>
             <baseNoGraIva>0.00</baseNoGraIva>
             <baseImponible>10.00</baseImponible>
             <baseImpGrav>0.00</baseImpGrav>
@@ -283,9 +335,9 @@
             <fechaRegistro>25/01/2022</fechaRegistro>
             <establecimiento>001</establecimiento>
             <puntoEmision>001</puntoEmision>
-            <secuencial>000000003</secuencial>
-            <fechaEmision>04/01/2022</fechaEmision>
-            <autorizacion>0401202203179236683600110010010000000033121521412</autorizacion>
+            <secuencial>000000004</secuencial>
+            <fechaEmision>05/01/2022</fechaEmision>
+            <autorizacion>0501202203179236683600110010010000000043121521412</autorizacion>
             <baseNoGraIva>10.00</baseNoGraIva>
             <baseImponible>0.00</baseImponible>
             <baseImpGrav>0.00</baseImpGrav>
@@ -323,8 +375,8 @@
             <fechaRegistro>25/01/2022</fechaRegistro>
             <establecimiento>999</establecimiento>
             <puntoEmision>999</puntoEmision>
-            <secuencial>000000005</secuencial>
-            <fechaEmision>06/01/2022</fechaEmision>
+            <secuencial>000000006</secuencial>
+            <fechaEmision>07/01/2022</fechaEmision>
             <autorizacion>9999999999</autorizacion>
             <baseNoGraIva>10.00</baseNoGraIva>
             <baseImponible>0.00</baseImponible>
@@ -363,198 +415,9 @@
             <fechaRegistro>25/01/2022</fechaRegistro>
             <establecimiento>001</establecimiento>
             <puntoEmision>001</puntoEmision>
-            <secuencial>000000006</secuencial>
-            <fechaEmision>07/01/2022</fechaEmision>
-            <autorizacion>0701202203179236683600110010010000000063121521412</autorizacion>
-            <baseNoGraIva>0.00</baseNoGraIva>
-            <baseImponible>0.00</baseImponible>
-            <baseImpGrav>10.00</baseImpGrav>
-            <baseImpExe>0.00</baseImpExe>
-            <montoIce>0.00</montoIce>
-            <montoIva>1.20</montoIva>
-            <valRetBien10>0.00</valRetBien10>
-            <valRetServ20>0.00</valRetServ20>
-            <valorRetBienes>0.00</valorRetBienes>
-            <valRetServ50>0.00</valRetServ50>
-            <valorRetServicios>0.00</valorRetServicios>
-            <valRetServ100>0.00</valRetServ100>
-            <valorRetencionNc>0.00</valorRetencionNc>
-            <totbasesImpReemb>0.00</totbasesImpReemb>
-            <pagoExterior>
-                <pagoLocExt>01</pagoLocExt>
-                <paisEfecPago>NA</paisEfecPago>
-                <aplicConvDobTrib>NA</aplicConvDobTrib>
-                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
-            </pagoExterior>
-            <formasDePago>
-                <formaPago>16</formaPago>
-            </formasDePago>
-            <air>
-                <detalleAir>
-                    <codRetAir>332G</codRetAir>
-                    <baseImpAir>10.00</baseImpAir>
-                    <porcentajeAir>0.00</porcentajeAir>
-                    <valRetAir>0.00</valRetAir>
-                </detalleAir>
-            </air>
-            <estabRetencion1>001</estabRetencion1>
-            <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000003</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000033121521411</autRetencion1>
-            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
-        </detalleCompras>
-        <detalleCompras>
-            <codSustento>07</codSustento>
-            <tpIdProv>03</tpIdProv>
-            <idProv>0701733727</idProv>
-            <tipoComprobante>03</tipoComprobante>
-            <tipoProv>01</tipoProv>
-            <denoProv>cliente pas</denoProv>
-            <parteRel>NO</parteRel>
-            <fechaRegistro>25/01/2022</fechaRegistro>
-            <establecimiento>001</establecimiento>
-            <puntoEmision>001</puntoEmision>
-            <secuencial>000000006</secuencial>
-            <fechaEmision>07/01/2022</fechaEmision>
-            <autorizacion>0701202203179236683600110010010000000063121521412</autorizacion>
-            <baseNoGraIva>0.00</baseNoGraIva>
-            <baseImponible>10.00</baseImponible>
-            <baseImpGrav>0.00</baseImpGrav>
-            <baseImpExe>0.00</baseImpExe>
-            <montoIce>0.00</montoIce>
-            <montoIva>0.00</montoIva>
-            <valRetBien10>0.00</valRetBien10>
-            <valRetServ20>0.00</valRetServ20>
-            <valorRetBienes>0.00</valorRetBienes>
-            <valRetServ50>0.00</valRetServ50>
-            <valorRetServicios>0.00</valorRetServicios>
-            <valRetServ100>0.00</valRetServ100>
-            <valorRetencionNc>0.00</valorRetencionNc>
-            <totbasesImpReemb>0.00</totbasesImpReemb>
-            <pagoExterior>
-                <pagoLocExt>01</pagoLocExt>
-                <paisEfecPago>NA</paisEfecPago>
-                <aplicConvDobTrib>NA</aplicConvDobTrib>
-                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
-            </pagoExterior>
-            <formasDePago>
-                <formaPago>16</formaPago>
-            </formasDePago>
-            <air>
-                <detalleAir>
-                    <codRetAir>332G</codRetAir>
-                    <baseImpAir>10.00</baseImpAir>
-                    <porcentajeAir>0.00</porcentajeAir>
-                    <valRetAir>0.00</valRetAir>
-                </detalleAir>
-            </air>
-            <estabRetencion1>001</estabRetencion1>
-            <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000003</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000033121521411</autRetencion1>
-            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
-        </detalleCompras>
-        <detalleCompras>
-            <codSustento>02</codSustento>
-            <tpIdProv>03</tpIdProv>
-            <idProv>0701733727</idProv>
-            <tipoComprobante>03</tipoComprobante>
-            <tipoProv>01</tipoProv>
-            <denoProv>cliente pas</denoProv>
-            <parteRel>NO</parteRel>
-            <fechaRegistro>25/01/2022</fechaRegistro>
-            <establecimiento>001</establecimiento>
-            <puntoEmision>001</puntoEmision>
-            <secuencial>000000006</secuencial>
-            <fechaEmision>07/01/2022</fechaEmision>
-            <autorizacion>0701202203179236683600110010010000000063121521412</autorizacion>
-            <baseNoGraIva>10.00</baseNoGraIva>
-            <baseImponible>0.00</baseImponible>
-            <baseImpGrav>0.00</baseImpGrav>
-            <baseImpExe>10.00</baseImpExe>
-            <montoIce>0.00</montoIce>
-            <montoIva>0.00</montoIva>
-            <valRetBien10>0.00</valRetBien10>
-            <valRetServ20>0.00</valRetServ20>
-            <valorRetBienes>0.00</valorRetBienes>
-            <valRetServ50>0.00</valRetServ50>
-            <valorRetServicios>0.00</valorRetServicios>
-            <valRetServ100>0.00</valRetServ100>
-            <valorRetencionNc>0.00</valorRetencionNc>
-            <totbasesImpReemb>0.00</totbasesImpReemb>
-            <pagoExterior>
-                <pagoLocExt>01</pagoLocExt>
-                <paisEfecPago>NA</paisEfecPago>
-                <aplicConvDobTrib>NA</aplicConvDobTrib>
-                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
-            </pagoExterior>
-            <formasDePago>
-                <formaPago>16</formaPago>
-            </formasDePago>
-            <air>
-                <detalleAir>
-                    <codRetAir>332G</codRetAir>
-                    <baseImpAir>20.00</baseImpAir>
-                    <porcentajeAir>0.00</porcentajeAir>
-                    <valRetAir>0.00</valRetAir>
-                </detalleAir>
-            </air>
-            <estabRetencion1>001</estabRetencion1>
-            <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000003</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000033121521411</autRetencion1>
-            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
-        </detalleCompras>
-        <detalleCompras>
-            <codSustento>02</codSustento>
-            <tpIdProv>03</tpIdProv>
-            <idProv>0701733727</idProv>
-            <tipoComprobante>19</tipoComprobante>
-            <tipoProv>01</tipoProv>
-            <denoProv>cliente pas</denoProv>
-            <parteRel>NO</parteRel>
-            <fechaRegistro>25/01/2022</fechaRegistro>
-            <establecimiento>999</establecimiento>
-            <puntoEmision>999</puntoEmision>
             <secuencial>000000007</secuencial>
             <fechaEmision>08/01/2022</fechaEmision>
-            <autorizacion>9999999999</autorizacion>
-            <baseNoGraIva>10.00</baseNoGraIva>
-            <baseImponible>0.00</baseImponible>
-            <baseImpGrav>0.00</baseImpGrav>
-            <baseImpExe>0.00</baseImpExe>
-            <montoIce>0.00</montoIce>
-            <montoIva>0.00</montoIva>
-            <valRetBien10>0.00</valRetBien10>
-            <valRetServ20>0.00</valRetServ20>
-            <valorRetBienes>0.00</valorRetBienes>
-            <valRetServ50>0.00</valRetServ50>
-            <valorRetServicios>0.00</valorRetServicios>
-            <valRetServ100>0.00</valRetServ100>
-            <valorRetencionNc>0.00</valorRetencionNc>
-            <totbasesImpReemb>0.00</totbasesImpReemb>
-            <pagoExterior>
-                <pagoLocExt>01</pagoLocExt>
-                <paisEfecPago>NA</paisEfecPago>
-                <aplicConvDobTrib>NA</aplicConvDobTrib>
-                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
-            </pagoExterior>
-            <formasDePago>
-                <formaPago>19</formaPago>
-            </formasDePago>
-        </detalleCompras>
-        <detalleCompras>
-            <codSustento>01</codSustento>
-            <tpIdProv>01</tpIdProv>
-            <idProv>1768156470001</idProv>
-            <tipoComprobante>01</tipoComprobante>
-            <parteRel>NO</parteRel>
-            <fechaRegistro>25/01/2022</fechaRegistro>
-            <establecimiento>001</establecimiento>
-            <puntoEmision>001</puntoEmision>
-            <secuencial>000000008</secuencial>
-            <fechaEmision>09/01/2022</fechaEmision>
-            <autorizacion>9999999999</autorizacion>
+            <autorizacion>0801202203179236683600110010010000000073121521412</autorizacion>
             <baseNoGraIva>0.00</baseNoGraIva>
             <baseImponible>0.00</baseImponible>
             <baseImpGrav>10.00</baseImpGrav>
@@ -576,14 +439,14 @@
                 <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
             </pagoExterior>
             <formasDePago>
-                <formaPago>01</formaPago>
+                <formaPago>16</formaPago>
             </formasDePago>
             <air>
                 <detalleAir>
-                    <codRetAir>312</codRetAir>
+                    <codRetAir>332G</codRetAir>
                     <baseImpAir>10.00</baseImpAir>
-                    <porcentajeAir>1.75</porcentajeAir>
-                    <valRetAir>0.18</valRetAir>
+                    <porcentajeAir>0.00</porcentajeAir>
+                    <valRetAir>0.00</valRetAir>
                 </detalleAir>
             </air>
             <estabRetencion1>001</estabRetencion1>
@@ -594,16 +457,18 @@
         </detalleCompras>
         <detalleCompras>
             <codSustento>07</codSustento>
-            <tpIdProv>01</tpIdProv>
-            <idProv>1768156470001</idProv>
-            <tipoComprobante>01</tipoComprobante>
+            <tpIdProv>03</tpIdProv>
+            <idProv>0701733727</idProv>
+            <tipoComprobante>03</tipoComprobante>
+            <tipoProv>01</tipoProv>
+            <denoProv>cliente pas</denoProv>
             <parteRel>NO</parteRel>
             <fechaRegistro>25/01/2022</fechaRegistro>
             <establecimiento>001</establecimiento>
             <puntoEmision>001</puntoEmision>
-            <secuencial>000000008</secuencial>
-            <fechaEmision>09/01/2022</fechaEmision>
-            <autorizacion>9999999999</autorizacion>
+            <secuencial>000000007</secuencial>
+            <fechaEmision>08/01/2022</fechaEmision>
+            <autorizacion>0801202203179236683600110010010000000073121521412</autorizacion>
             <baseNoGraIva>0.00</baseNoGraIva>
             <baseImponible>10.00</baseImponible>
             <baseImpGrav>0.00</baseImpGrav>
@@ -625,301 +490,7 @@
                 <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
             </pagoExterior>
             <formasDePago>
-                <formaPago>01</formaPago>
-            </formasDePago>
-            <air>
-                <detalleAir>
-                    <codRetAir>312</codRetAir>
-                    <baseImpAir>10.00</baseImpAir>
-                    <porcentajeAir>1.75</porcentajeAir>
-                    <valRetAir>0.18</valRetAir>
-                </detalleAir>
-            </air>
-            <estabRetencion1>001</estabRetencion1>
-            <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000004</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000043121521415</autRetencion1>
-            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
-        </detalleCompras>
-        <detalleCompras>
-            <codSustento>02</codSustento>
-            <tpIdProv>01</tpIdProv>
-            <idProv>1768156470001</idProv>
-            <tipoComprobante>01</tipoComprobante>
-            <parteRel>NO</parteRel>
-            <fechaRegistro>25/01/2022</fechaRegistro>
-            <establecimiento>001</establecimiento>
-            <puntoEmision>001</puntoEmision>
-            <secuencial>000000008</secuencial>
-            <fechaEmision>09/01/2022</fechaEmision>
-            <autorizacion>9999999999</autorizacion>
-            <baseNoGraIva>10.00</baseNoGraIva>
-            <baseImponible>0.00</baseImponible>
-            <baseImpGrav>0.00</baseImpGrav>
-            <baseImpExe>10.00</baseImpExe>
-            <montoIce>0.00</montoIce>
-            <montoIva>0.00</montoIva>
-            <valRetBien10>0.00</valRetBien10>
-            <valRetServ20>0.00</valRetServ20>
-            <valorRetBienes>0.00</valorRetBienes>
-            <valRetServ50>0.00</valRetServ50>
-            <valorRetServicios>0.00</valorRetServicios>
-            <valRetServ100>0.00</valRetServ100>
-            <valorRetencionNc>0.00</valorRetencionNc>
-            <totbasesImpReemb>0.00</totbasesImpReemb>
-            <pagoExterior>
-                <pagoLocExt>01</pagoLocExt>
-                <paisEfecPago>NA</paisEfecPago>
-                <aplicConvDobTrib>NA</aplicConvDobTrib>
-                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
-            </pagoExterior>
-            <formasDePago>
-                <formaPago>01</formaPago>
-            </formasDePago>
-            <air>
-                <detalleAir>
-                    <codRetAir>312</codRetAir>
-                    <baseImpAir>20.00</baseImpAir>
-                    <porcentajeAir>1.75</porcentajeAir>
-                    <valRetAir>0.35</valRetAir>
-                </detalleAir>
-            </air>
-            <estabRetencion1>001</estabRetencion1>
-            <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000004</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000043121521415</autRetencion1>
-            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
-        </detalleCompras>
-        <detalleCompras>
-            <codSustento>07</codSustento>
-            <tpIdProv>01</tpIdProv>
-            <idProv>1768156470001</idProv>
-            <tipoComprobante>02</tipoComprobante>
-            <parteRel>NO</parteRel>
-            <fechaRegistro>25/01/2022</fechaRegistro>
-            <establecimiento>001</establecimiento>
-            <puntoEmision>001</puntoEmision>
-            <secuencial>000000009</secuencial>
-            <fechaEmision>10/01/2022</fechaEmision>
-            <autorizacion>9999999999</autorizacion>
-            <baseNoGraIva>0.00</baseNoGraIva>
-            <baseImponible>10.00</baseImponible>
-            <baseImpGrav>0.00</baseImpGrav>
-            <baseImpExe>0.00</baseImpExe>
-            <montoIce>0.00</montoIce>
-            <montoIva>0.00</montoIva>
-            <valRetBien10>0.00</valRetBien10>
-            <valRetServ20>0.00</valRetServ20>
-            <valorRetBienes>0.00</valorRetBienes>
-            <valRetServ50>0.00</valRetServ50>
-            <valorRetServicios>0.00</valorRetServicios>
-            <valRetServ100>0.00</valRetServ100>
-            <valorRetencionNc>0.00</valorRetencionNc>
-            <totbasesImpReemb>0.00</totbasesImpReemb>
-            <pagoExterior>
-                <pagoLocExt>01</pagoLocExt>
-                <paisEfecPago>NA</paisEfecPago>
-                <aplicConvDobTrib>NA</aplicConvDobTrib>
-                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
-            </pagoExterior>
-            <formasDePago>
-                <formaPago>01</formaPago>
-            </formasDePago>
-            <air>
-                <detalleAir>
-                    <codRetAir>312</codRetAir>
-                    <baseImpAir>10.00</baseImpAir>
-                    <porcentajeAir>1.75</porcentajeAir>
-                    <valRetAir>0.18</valRetAir>
-                </detalleAir>
-            </air>
-            <estabRetencion1>001</estabRetencion1>
-            <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000005</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000053121521410</autRetencion1>
-            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
-        </detalleCompras>
-        <detalleCompras>
-            <codSustento>02</codSustento>
-            <tpIdProv>01</tpIdProv>
-            <idProv>1768156470001</idProv>
-            <tipoComprobante>02</tipoComprobante>
-            <parteRel>NO</parteRel>
-            <fechaRegistro>25/01/2022</fechaRegistro>
-            <establecimiento>001</establecimiento>
-            <puntoEmision>001</puntoEmision>
-            <secuencial>000000009</secuencial>
-            <fechaEmision>10/01/2022</fechaEmision>
-            <autorizacion>9999999999</autorizacion>
-            <baseNoGraIva>10.00</baseNoGraIva>
-            <baseImponible>0.00</baseImponible>
-            <baseImpGrav>0.00</baseImpGrav>
-            <baseImpExe>10.00</baseImpExe>
-            <montoIce>0.00</montoIce>
-            <montoIva>0.00</montoIva>
-            <valRetBien10>0.00</valRetBien10>
-            <valRetServ20>0.00</valRetServ20>
-            <valorRetBienes>0.00</valorRetBienes>
-            <valRetServ50>0.00</valRetServ50>
-            <valorRetServicios>0.00</valorRetServicios>
-            <valRetServ100>0.00</valRetServ100>
-            <valorRetencionNc>0.00</valorRetencionNc>
-            <totbasesImpReemb>0.00</totbasesImpReemb>
-            <pagoExterior>
-                <pagoLocExt>01</pagoLocExt>
-                <paisEfecPago>NA</paisEfecPago>
-                <aplicConvDobTrib>NA</aplicConvDobTrib>
-                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
-            </pagoExterior>
-            <formasDePago>
-                <formaPago>01</formaPago>
-            </formasDePago>
-            <air>
-                <detalleAir>
-                    <codRetAir>312</codRetAir>
-                    <baseImpAir>20.00</baseImpAir>
-                    <porcentajeAir>1.75</porcentajeAir>
-                    <valRetAir>0.35</valRetAir>
-                </detalleAir>
-            </air>
-            <estabRetencion1>001</estabRetencion1>
-            <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000005</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000053121521410</autRetencion1>
-            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
-        </detalleCompras>
-        <detalleCompras>
-            <codSustento>01</codSustento>
-            <tpIdProv>01</tpIdProv>
-            <idProv>1768156470001</idProv>
-            <tipoComprobante>11</tipoComprobante>
-            <parteRel>NO</parteRel>
-            <fechaRegistro>25/01/2022</fechaRegistro>
-            <establecimiento>999</establecimiento>
-            <puntoEmision>999</puntoEmision>
-            <secuencial>000000010</secuencial>
-            <fechaEmision>11/01/2022</fechaEmision>
-            <autorizacion>9999999999</autorizacion>
-            <baseNoGraIva>0.00</baseNoGraIva>
-            <baseImponible>0.00</baseImponible>
-            <baseImpGrav>10.00</baseImpGrav>
-            <baseImpExe>0.00</baseImpExe>
-            <montoIce>0.00</montoIce>
-            <montoIva>1.20</montoIva>
-            <valRetBien10>0.00</valRetBien10>
-            <valRetServ20>0.00</valRetServ20>
-            <valorRetBienes>0.00</valorRetBienes>
-            <valRetServ50>0.00</valRetServ50>
-            <valorRetServicios>0.00</valorRetServicios>
-            <valRetServ100>0.00</valRetServ100>
-            <valorRetencionNc>0.00</valorRetencionNc>
-            <totbasesImpReemb>0.00</totbasesImpReemb>
-            <pagoExterior>
-                <pagoLocExt>01</pagoLocExt>
-                <paisEfecPago>NA</paisEfecPago>
-                <aplicConvDobTrib>NA</aplicConvDobTrib>
-                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
-            </pagoExterior>
-            <formasDePago>
-                <formaPago>01</formaPago>
-            </formasDePago>
-            <air>
-                <detalleAir>
-                    <codRetAir>312</codRetAir>
-                    <baseImpAir>10.00</baseImpAir>
-                    <porcentajeAir>1.75</porcentajeAir>
-                    <valRetAir>0.18</valRetAir>
-                </detalleAir>
-            </air>
-            <estabRetencion1>001</estabRetencion1>
-            <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000006</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000063121521416</autRetencion1>
-            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
-        </detalleCompras>
-        <detalleCompras>
-            <codSustento>02</codSustento>
-            <tpIdProv>01</tpIdProv>
-            <idProv>1768156470001</idProv>
-            <tipoComprobante>11</tipoComprobante>
-            <parteRel>NO</parteRel>
-            <fechaRegistro>25/01/2022</fechaRegistro>
-            <establecimiento>999</establecimiento>
-            <puntoEmision>999</puntoEmision>
-            <secuencial>000000010</secuencial>
-            <fechaEmision>11/01/2022</fechaEmision>
-            <autorizacion>9999999999</autorizacion>
-            <baseNoGraIva>10.00</baseNoGraIva>
-            <baseImponible>0.00</baseImponible>
-            <baseImpGrav>0.00</baseImpGrav>
-            <baseImpExe>10.00</baseImpExe>
-            <montoIce>0.00</montoIce>
-            <montoIva>0.00</montoIva>
-            <valRetBien10>0.00</valRetBien10>
-            <valRetServ20>0.00</valRetServ20>
-            <valorRetBienes>0.00</valorRetBienes>
-            <valRetServ50>0.00</valRetServ50>
-            <valorRetServicios>0.00</valorRetServicios>
-            <valRetServ100>0.00</valRetServ100>
-            <valorRetencionNc>0.00</valorRetencionNc>
-            <totbasesImpReemb>0.00</totbasesImpReemb>
-            <pagoExterior>
-                <pagoLocExt>01</pagoLocExt>
-                <paisEfecPago>NA</paisEfecPago>
-                <aplicConvDobTrib>NA</aplicConvDobTrib>
-                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
-            </pagoExterior>
-            <formasDePago>
-                <formaPago>01</formaPago>
-            </formasDePago>
-            <air>
-                <detalleAir>
-                    <codRetAir>312</codRetAir>
-                    <baseImpAir>20.00</baseImpAir>
-                    <porcentajeAir>1.75</porcentajeAir>
-                    <valRetAir>0.35</valRetAir>
-                </detalleAir>
-            </air>
-            <estabRetencion1>001</estabRetencion1>
-            <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000006</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000063121521416</autRetencion1>
-            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
-        </detalleCompras>
-        <detalleCompras>
-            <codSustento>01</codSustento>
-            <tpIdProv>01</tpIdProv>
-            <idProv>1768156470001</idProv>
-            <tipoComprobante>12</tipoComprobante>
-            <parteRel>NO</parteRel>
-            <fechaRegistro>25/01/2022</fechaRegistro>
-            <establecimiento>999</establecimiento>
-            <puntoEmision>999</puntoEmision>
-            <secuencial>000000011</secuencial>
-            <fechaEmision>12/01/2022</fechaEmision>
-            <autorizacion>9999999999</autorizacion>
-            <baseNoGraIva>0.00</baseNoGraIva>
-            <baseImponible>0.00</baseImponible>
-            <baseImpGrav>10.00</baseImpGrav>
-            <baseImpExe>0.00</baseImpExe>
-            <montoIce>0.00</montoIce>
-            <montoIva>1.20</montoIva>
-            <valRetBien10>0.00</valRetBien10>
-            <valRetServ20>0.00</valRetServ20>
-            <valorRetBienes>0.00</valorRetBienes>
-            <valRetServ50>0.00</valRetServ50>
-            <valorRetServicios>0.00</valorRetServicios>
-            <valRetServ100>0.00</valRetServ100>
-            <valorRetencionNc>0.00</valorRetencionNc>
-            <totbasesImpReemb>0.00</totbasesImpReemb>
-            <pagoExterior>
-                <pagoLocExt>01</pagoLocExt>
-                <paisEfecPago>NA</paisEfecPago>
-                <aplicConvDobTrib>NA</aplicConvDobTrib>
-                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
-            </pagoExterior>
-            <formasDePago>
-                <formaPago>19</formaPago>
+                <formaPago>16</formaPago>
             </formasDePago>
             <air>
                 <detalleAir>
@@ -931,22 +502,24 @@
             </air>
             <estabRetencion1>001</estabRetencion1>
             <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000007</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000073121521411</autRetencion1>
+            <secRetencion1>000000004</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000043121521415</autRetencion1>
             <fechaEmiRet1>25/01/2022</fechaEmiRet1>
         </detalleCompras>
         <detalleCompras>
             <codSustento>02</codSustento>
-            <tpIdProv>01</tpIdProv>
-            <idProv>1768156470001</idProv>
-            <tipoComprobante>12</tipoComprobante>
+            <tpIdProv>03</tpIdProv>
+            <idProv>0701733727</idProv>
+            <tipoComprobante>03</tipoComprobante>
+            <tipoProv>01</tipoProv>
+            <denoProv>cliente pas</denoProv>
             <parteRel>NO</parteRel>
             <fechaRegistro>25/01/2022</fechaRegistro>
-            <establecimiento>999</establecimiento>
-            <puntoEmision>999</puntoEmision>
-            <secuencial>000000011</secuencial>
-            <fechaEmision>12/01/2022</fechaEmision>
-            <autorizacion>9999999999</autorizacion>
+            <establecimiento>001</establecimiento>
+            <puntoEmision>001</puntoEmision>
+            <secuencial>000000007</secuencial>
+            <fechaEmision>08/01/2022</fechaEmision>
+            <autorizacion>0801202203179236683600110010010000000073121521412</autorizacion>
             <baseNoGraIva>10.00</baseNoGraIva>
             <baseImponible>0.00</baseImponible>
             <baseImpGrav>0.00</baseImpGrav>
@@ -968,7 +541,7 @@
                 <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
             </pagoExterior>
             <formasDePago>
-                <formaPago>19</formaPago>
+                <formaPago>16</formaPago>
             </formasDePago>
             <air>
                 <detalleAir>
@@ -980,21 +553,500 @@
             </air>
             <estabRetencion1>001</estabRetencion1>
             <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000007</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000073121521411</autRetencion1>
+            <secRetencion1>000000004</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000043121521415</autRetencion1>
             <fechaEmiRet1>25/01/2022</fechaEmiRet1>
         </detalleCompras>
         <detalleCompras>
             <codSustento>02</codSustento>
-            <tpIdProv>01</tpIdProv>
-            <idProv>1768156470001</idProv>
+            <tpIdProv>03</tpIdProv>
+            <idProv>0701733727</idProv>
             <tipoComprobante>19</tipoComprobante>
+            <tipoProv>01</tipoProv>
+            <denoProv>cliente pas</denoProv>
+            <parteRel>NO</parteRel>
+            <fechaRegistro>25/01/2022</fechaRegistro>
+            <establecimiento>999</establecimiento>
+            <puntoEmision>999</puntoEmision>
+            <secuencial>000000008</secuencial>
+            <fechaEmision>09/01/2022</fechaEmision>
+            <autorizacion>9999999999</autorizacion>
+            <baseNoGraIva>10.00</baseNoGraIva>
+            <baseImponible>0.00</baseImponible>
+            <baseImpGrav>0.00</baseImpGrav>
+            <baseImpExe>0.00</baseImpExe>
+            <montoIce>0.00</montoIce>
+            <montoIva>0.00</montoIva>
+            <valRetBien10>0.00</valRetBien10>
+            <valRetServ20>0.00</valRetServ20>
+            <valorRetBienes>0.00</valorRetBienes>
+            <valRetServ50>0.00</valRetServ50>
+            <valorRetServicios>0.00</valorRetServicios>
+            <valRetServ100>0.00</valRetServ100>
+            <valorRetencionNc>0.00</valorRetencionNc>
+            <totbasesImpReemb>0.00</totbasesImpReemb>
+            <pagoExterior>
+                <pagoLocExt>01</pagoLocExt>
+                <paisEfecPago>NA</paisEfecPago>
+                <aplicConvDobTrib>NA</aplicConvDobTrib>
+                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+            </pagoExterior>
+            <formasDePago>
+                <formaPago>19</formaPago>
+            </formasDePago>
+        </detalleCompras>
+        <detalleCompras>
+            <codSustento>01</codSustento>
+            <tpIdProv>01</tpIdProv>
+            <idProv>1768156470001</idProv>
+            <tipoComprobante>01</tipoComprobante>
+            <parteRel>NO</parteRel>
+            <fechaRegistro>25/01/2022</fechaRegistro>
+            <establecimiento>001</establecimiento>
+            <puntoEmision>001</puntoEmision>
+            <secuencial>000000009</secuencial>
+            <fechaEmision>10/01/2022</fechaEmision>
+            <autorizacion>9999999999</autorizacion>
+            <baseNoGraIva>0.00</baseNoGraIva>
+            <baseImponible>0.00</baseImponible>
+            <baseImpGrav>10.00</baseImpGrav>
+            <baseImpExe>0.00</baseImpExe>
+            <montoIce>0.00</montoIce>
+            <montoIva>1.20</montoIva>
+            <valRetBien10>0.00</valRetBien10>
+            <valRetServ20>0.00</valRetServ20>
+            <valorRetBienes>0.00</valorRetBienes>
+            <valRetServ50>0.00</valRetServ50>
+            <valorRetServicios>0.00</valorRetServicios>
+            <valRetServ100>0.00</valRetServ100>
+            <valorRetencionNc>0.00</valorRetencionNc>
+            <totbasesImpReemb>0.00</totbasesImpReemb>
+            <pagoExterior>
+                <pagoLocExt>01</pagoLocExt>
+                <paisEfecPago>NA</paisEfecPago>
+                <aplicConvDobTrib>NA</aplicConvDobTrib>
+                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+            </pagoExterior>
+            <formasDePago>
+                <formaPago>01</formaPago>
+            </formasDePago>
+            <air>
+                <detalleAir>
+                    <codRetAir>312</codRetAir>
+                    <baseImpAir>10.00</baseImpAir>
+                    <porcentajeAir>1.75</porcentajeAir>
+                    <valRetAir>0.18</valRetAir>
+                </detalleAir>
+            </air>
+            <estabRetencion1>001</estabRetencion1>
+            <ptoEmiRetencion1>001</ptoEmiRetencion1>
+            <secRetencion1>000000005</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000053121521410</autRetencion1>
+            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
+        </detalleCompras>
+        <detalleCompras>
+            <codSustento>07</codSustento>
+            <tpIdProv>01</tpIdProv>
+            <idProv>1768156470001</idProv>
+            <tipoComprobante>01</tipoComprobante>
+            <parteRel>NO</parteRel>
+            <fechaRegistro>25/01/2022</fechaRegistro>
+            <establecimiento>001</establecimiento>
+            <puntoEmision>001</puntoEmision>
+            <secuencial>000000009</secuencial>
+            <fechaEmision>10/01/2022</fechaEmision>
+            <autorizacion>9999999999</autorizacion>
+            <baseNoGraIva>0.00</baseNoGraIva>
+            <baseImponible>10.00</baseImponible>
+            <baseImpGrav>0.00</baseImpGrav>
+            <baseImpExe>0.00</baseImpExe>
+            <montoIce>0.00</montoIce>
+            <montoIva>0.00</montoIva>
+            <valRetBien10>0.00</valRetBien10>
+            <valRetServ20>0.00</valRetServ20>
+            <valorRetBienes>0.00</valorRetBienes>
+            <valRetServ50>0.00</valRetServ50>
+            <valorRetServicios>0.00</valorRetServicios>
+            <valRetServ100>0.00</valRetServ100>
+            <valorRetencionNc>0.00</valorRetencionNc>
+            <totbasesImpReemb>0.00</totbasesImpReemb>
+            <pagoExterior>
+                <pagoLocExt>01</pagoLocExt>
+                <paisEfecPago>NA</paisEfecPago>
+                <aplicConvDobTrib>NA</aplicConvDobTrib>
+                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+            </pagoExterior>
+            <formasDePago>
+                <formaPago>01</formaPago>
+            </formasDePago>
+            <air>
+                <detalleAir>
+                    <codRetAir>312</codRetAir>
+                    <baseImpAir>10.00</baseImpAir>
+                    <porcentajeAir>1.75</porcentajeAir>
+                    <valRetAir>0.18</valRetAir>
+                </detalleAir>
+            </air>
+            <estabRetencion1>001</estabRetencion1>
+            <ptoEmiRetencion1>001</ptoEmiRetencion1>
+            <secRetencion1>000000005</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000053121521410</autRetencion1>
+            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
+        </detalleCompras>
+        <detalleCompras>
+            <codSustento>02</codSustento>
+            <tpIdProv>01</tpIdProv>
+            <idProv>1768156470001</idProv>
+            <tipoComprobante>01</tipoComprobante>
+            <parteRel>NO</parteRel>
+            <fechaRegistro>25/01/2022</fechaRegistro>
+            <establecimiento>001</establecimiento>
+            <puntoEmision>001</puntoEmision>
+            <secuencial>000000009</secuencial>
+            <fechaEmision>10/01/2022</fechaEmision>
+            <autorizacion>9999999999</autorizacion>
+            <baseNoGraIva>10.00</baseNoGraIva>
+            <baseImponible>0.00</baseImponible>
+            <baseImpGrav>0.00</baseImpGrav>
+            <baseImpExe>10.00</baseImpExe>
+            <montoIce>0.00</montoIce>
+            <montoIva>0.00</montoIva>
+            <valRetBien10>0.00</valRetBien10>
+            <valRetServ20>0.00</valRetServ20>
+            <valorRetBienes>0.00</valorRetBienes>
+            <valRetServ50>0.00</valRetServ50>
+            <valorRetServicios>0.00</valorRetServicios>
+            <valRetServ100>0.00</valRetServ100>
+            <valorRetencionNc>0.00</valorRetencionNc>
+            <totbasesImpReemb>0.00</totbasesImpReemb>
+            <pagoExterior>
+                <pagoLocExt>01</pagoLocExt>
+                <paisEfecPago>NA</paisEfecPago>
+                <aplicConvDobTrib>NA</aplicConvDobTrib>
+                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+            </pagoExterior>
+            <formasDePago>
+                <formaPago>01</formaPago>
+            </formasDePago>
+            <air>
+                <detalleAir>
+                    <codRetAir>312</codRetAir>
+                    <baseImpAir>20.00</baseImpAir>
+                    <porcentajeAir>1.75</porcentajeAir>
+                    <valRetAir>0.35</valRetAir>
+                </detalleAir>
+            </air>
+            <estabRetencion1>001</estabRetencion1>
+            <ptoEmiRetencion1>001</ptoEmiRetencion1>
+            <secRetencion1>000000005</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000053121521410</autRetencion1>
+            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
+        </detalleCompras>
+        <detalleCompras>
+            <codSustento>07</codSustento>
+            <tpIdProv>01</tpIdProv>
+            <idProv>1768156470001</idProv>
+            <tipoComprobante>02</tipoComprobante>
+            <parteRel>NO</parteRel>
+            <fechaRegistro>25/01/2022</fechaRegistro>
+            <establecimiento>001</establecimiento>
+            <puntoEmision>001</puntoEmision>
+            <secuencial>000000010</secuencial>
+            <fechaEmision>11/01/2022</fechaEmision>
+            <autorizacion>9999999999</autorizacion>
+            <baseNoGraIva>0.00</baseNoGraIva>
+            <baseImponible>10.00</baseImponible>
+            <baseImpGrav>0.00</baseImpGrav>
+            <baseImpExe>0.00</baseImpExe>
+            <montoIce>0.00</montoIce>
+            <montoIva>0.00</montoIva>
+            <valRetBien10>0.00</valRetBien10>
+            <valRetServ20>0.00</valRetServ20>
+            <valorRetBienes>0.00</valorRetBienes>
+            <valRetServ50>0.00</valRetServ50>
+            <valorRetServicios>0.00</valorRetServicios>
+            <valRetServ100>0.00</valRetServ100>
+            <valorRetencionNc>0.00</valorRetencionNc>
+            <totbasesImpReemb>0.00</totbasesImpReemb>
+            <pagoExterior>
+                <pagoLocExt>01</pagoLocExt>
+                <paisEfecPago>NA</paisEfecPago>
+                <aplicConvDobTrib>NA</aplicConvDobTrib>
+                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+            </pagoExterior>
+            <formasDePago>
+                <formaPago>01</formaPago>
+            </formasDePago>
+            <air>
+                <detalleAir>
+                    <codRetAir>312</codRetAir>
+                    <baseImpAir>10.00</baseImpAir>
+                    <porcentajeAir>1.75</porcentajeAir>
+                    <valRetAir>0.18</valRetAir>
+                </detalleAir>
+            </air>
+            <estabRetencion1>001</estabRetencion1>
+            <ptoEmiRetencion1>001</ptoEmiRetencion1>
+            <secRetencion1>000000006</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000063121521416</autRetencion1>
+            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
+        </detalleCompras>
+        <detalleCompras>
+            <codSustento>02</codSustento>
+            <tpIdProv>01</tpIdProv>
+            <idProv>1768156470001</idProv>
+            <tipoComprobante>02</tipoComprobante>
+            <parteRel>NO</parteRel>
+            <fechaRegistro>25/01/2022</fechaRegistro>
+            <establecimiento>001</establecimiento>
+            <puntoEmision>001</puntoEmision>
+            <secuencial>000000010</secuencial>
+            <fechaEmision>11/01/2022</fechaEmision>
+            <autorizacion>9999999999</autorizacion>
+            <baseNoGraIva>10.00</baseNoGraIva>
+            <baseImponible>0.00</baseImponible>
+            <baseImpGrav>0.00</baseImpGrav>
+            <baseImpExe>10.00</baseImpExe>
+            <montoIce>0.00</montoIce>
+            <montoIva>0.00</montoIva>
+            <valRetBien10>0.00</valRetBien10>
+            <valRetServ20>0.00</valRetServ20>
+            <valorRetBienes>0.00</valorRetBienes>
+            <valRetServ50>0.00</valRetServ50>
+            <valorRetServicios>0.00</valorRetServicios>
+            <valRetServ100>0.00</valRetServ100>
+            <valorRetencionNc>0.00</valorRetencionNc>
+            <totbasesImpReemb>0.00</totbasesImpReemb>
+            <pagoExterior>
+                <pagoLocExt>01</pagoLocExt>
+                <paisEfecPago>NA</paisEfecPago>
+                <aplicConvDobTrib>NA</aplicConvDobTrib>
+                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+            </pagoExterior>
+            <formasDePago>
+                <formaPago>01</formaPago>
+            </formasDePago>
+            <air>
+                <detalleAir>
+                    <codRetAir>312</codRetAir>
+                    <baseImpAir>20.00</baseImpAir>
+                    <porcentajeAir>1.75</porcentajeAir>
+                    <valRetAir>0.35</valRetAir>
+                </detalleAir>
+            </air>
+            <estabRetencion1>001</estabRetencion1>
+            <ptoEmiRetencion1>001</ptoEmiRetencion1>
+            <secRetencion1>000000006</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000063121521416</autRetencion1>
+            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
+        </detalleCompras>
+        <detalleCompras>
+            <codSustento>01</codSustento>
+            <tpIdProv>01</tpIdProv>
+            <idProv>1768156470001</idProv>
+            <tipoComprobante>11</tipoComprobante>
+            <parteRel>NO</parteRel>
+            <fechaRegistro>25/01/2022</fechaRegistro>
+            <establecimiento>999</establecimiento>
+            <puntoEmision>999</puntoEmision>
+            <secuencial>000000011</secuencial>
+            <fechaEmision>12/01/2022</fechaEmision>
+            <autorizacion>9999999999</autorizacion>
+            <baseNoGraIva>0.00</baseNoGraIva>
+            <baseImponible>0.00</baseImponible>
+            <baseImpGrav>10.00</baseImpGrav>
+            <baseImpExe>0.00</baseImpExe>
+            <montoIce>0.00</montoIce>
+            <montoIva>1.20</montoIva>
+            <valRetBien10>0.00</valRetBien10>
+            <valRetServ20>0.00</valRetServ20>
+            <valorRetBienes>0.00</valorRetBienes>
+            <valRetServ50>0.00</valRetServ50>
+            <valorRetServicios>0.00</valorRetServicios>
+            <valRetServ100>0.00</valRetServ100>
+            <valorRetencionNc>0.00</valorRetencionNc>
+            <totbasesImpReemb>0.00</totbasesImpReemb>
+            <pagoExterior>
+                <pagoLocExt>01</pagoLocExt>
+                <paisEfecPago>NA</paisEfecPago>
+                <aplicConvDobTrib>NA</aplicConvDobTrib>
+                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+            </pagoExterior>
+            <formasDePago>
+                <formaPago>01</formaPago>
+            </formasDePago>
+            <air>
+                <detalleAir>
+                    <codRetAir>312</codRetAir>
+                    <baseImpAir>10.00</baseImpAir>
+                    <porcentajeAir>1.75</porcentajeAir>
+                    <valRetAir>0.18</valRetAir>
+                </detalleAir>
+            </air>
+            <estabRetencion1>001</estabRetencion1>
+            <ptoEmiRetencion1>001</ptoEmiRetencion1>
+            <secRetencion1>000000007</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000073121521411</autRetencion1>
+            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
+        </detalleCompras>
+        <detalleCompras>
+            <codSustento>02</codSustento>
+            <tpIdProv>01</tpIdProv>
+            <idProv>1768156470001</idProv>
+            <tipoComprobante>11</tipoComprobante>
+            <parteRel>NO</parteRel>
+            <fechaRegistro>25/01/2022</fechaRegistro>
+            <establecimiento>999</establecimiento>
+            <puntoEmision>999</puntoEmision>
+            <secuencial>000000011</secuencial>
+            <fechaEmision>12/01/2022</fechaEmision>
+            <autorizacion>9999999999</autorizacion>
+            <baseNoGraIva>10.00</baseNoGraIva>
+            <baseImponible>0.00</baseImponible>
+            <baseImpGrav>0.00</baseImpGrav>
+            <baseImpExe>10.00</baseImpExe>
+            <montoIce>0.00</montoIce>
+            <montoIva>0.00</montoIva>
+            <valRetBien10>0.00</valRetBien10>
+            <valRetServ20>0.00</valRetServ20>
+            <valorRetBienes>0.00</valorRetBienes>
+            <valRetServ50>0.00</valRetServ50>
+            <valorRetServicios>0.00</valorRetServicios>
+            <valRetServ100>0.00</valRetServ100>
+            <valorRetencionNc>0.00</valorRetencionNc>
+            <totbasesImpReemb>0.00</totbasesImpReemb>
+            <pagoExterior>
+                <pagoLocExt>01</pagoLocExt>
+                <paisEfecPago>NA</paisEfecPago>
+                <aplicConvDobTrib>NA</aplicConvDobTrib>
+                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+            </pagoExterior>
+            <formasDePago>
+                <formaPago>01</formaPago>
+            </formasDePago>
+            <air>
+                <detalleAir>
+                    <codRetAir>312</codRetAir>
+                    <baseImpAir>20.00</baseImpAir>
+                    <porcentajeAir>1.75</porcentajeAir>
+                    <valRetAir>0.35</valRetAir>
+                </detalleAir>
+            </air>
+            <estabRetencion1>001</estabRetencion1>
+            <ptoEmiRetencion1>001</ptoEmiRetencion1>
+            <secRetencion1>000000007</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000073121521411</autRetencion1>
+            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
+        </detalleCompras>
+        <detalleCompras>
+            <codSustento>01</codSustento>
+            <tpIdProv>01</tpIdProv>
+            <idProv>1768156470001</idProv>
+            <tipoComprobante>12</tipoComprobante>
             <parteRel>NO</parteRel>
             <fechaRegistro>25/01/2022</fechaRegistro>
             <establecimiento>999</establecimiento>
             <puntoEmision>999</puntoEmision>
             <secuencial>000000012</secuencial>
             <fechaEmision>13/01/2022</fechaEmision>
+            <autorizacion>9999999999</autorizacion>
+            <baseNoGraIva>0.00</baseNoGraIva>
+            <baseImponible>0.00</baseImponible>
+            <baseImpGrav>10.00</baseImpGrav>
+            <baseImpExe>0.00</baseImpExe>
+            <montoIce>0.00</montoIce>
+            <montoIva>1.20</montoIva>
+            <valRetBien10>0.00</valRetBien10>
+            <valRetServ20>0.00</valRetServ20>
+            <valorRetBienes>0.00</valorRetBienes>
+            <valRetServ50>0.00</valRetServ50>
+            <valorRetServicios>0.00</valorRetServicios>
+            <valRetServ100>0.00</valRetServ100>
+            <valorRetencionNc>0.00</valorRetencionNc>
+            <totbasesImpReemb>0.00</totbasesImpReemb>
+            <pagoExterior>
+                <pagoLocExt>01</pagoLocExt>
+                <paisEfecPago>NA</paisEfecPago>
+                <aplicConvDobTrib>NA</aplicConvDobTrib>
+                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+            </pagoExterior>
+            <formasDePago>
+                <formaPago>19</formaPago>
+            </formasDePago>
+            <air>
+                <detalleAir>
+                    <codRetAir>332G</codRetAir>
+                    <baseImpAir>10.00</baseImpAir>
+                    <porcentajeAir>0.00</porcentajeAir>
+                    <valRetAir>0.00</valRetAir>
+                </detalleAir>
+            </air>
+            <estabRetencion1>001</estabRetencion1>
+            <ptoEmiRetencion1>001</ptoEmiRetencion1>
+            <secRetencion1>000000008</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000083121521417</autRetencion1>
+            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
+        </detalleCompras>
+        <detalleCompras>
+            <codSustento>02</codSustento>
+            <tpIdProv>01</tpIdProv>
+            <idProv>1768156470001</idProv>
+            <tipoComprobante>12</tipoComprobante>
+            <parteRel>NO</parteRel>
+            <fechaRegistro>25/01/2022</fechaRegistro>
+            <establecimiento>999</establecimiento>
+            <puntoEmision>999</puntoEmision>
+            <secuencial>000000012</secuencial>
+            <fechaEmision>13/01/2022</fechaEmision>
+            <autorizacion>9999999999</autorizacion>
+            <baseNoGraIva>10.00</baseNoGraIva>
+            <baseImponible>0.00</baseImponible>
+            <baseImpGrav>0.00</baseImpGrav>
+            <baseImpExe>10.00</baseImpExe>
+            <montoIce>0.00</montoIce>
+            <montoIva>0.00</montoIva>
+            <valRetBien10>0.00</valRetBien10>
+            <valRetServ20>0.00</valRetServ20>
+            <valorRetBienes>0.00</valorRetBienes>
+            <valRetServ50>0.00</valRetServ50>
+            <valorRetServicios>0.00</valorRetServicios>
+            <valRetServ100>0.00</valRetServ100>
+            <valorRetencionNc>0.00</valorRetencionNc>
+            <totbasesImpReemb>0.00</totbasesImpReemb>
+            <pagoExterior>
+                <pagoLocExt>01</pagoLocExt>
+                <paisEfecPago>NA</paisEfecPago>
+                <aplicConvDobTrib>NA</aplicConvDobTrib>
+                <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+            </pagoExterior>
+            <formasDePago>
+                <formaPago>19</formaPago>
+            </formasDePago>
+            <air>
+                <detalleAir>
+                    <codRetAir>332G</codRetAir>
+                    <baseImpAir>20.00</baseImpAir>
+                    <porcentajeAir>0.00</porcentajeAir>
+                    <valRetAir>0.00</valRetAir>
+                </detalleAir>
+            </air>
+            <estabRetencion1>001</estabRetencion1>
+            <ptoEmiRetencion1>001</ptoEmiRetencion1>
+            <secRetencion1>000000008</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000083121521417</autRetencion1>
+            <fechaEmiRet1>25/01/2022</fechaEmiRet1>
+        </detalleCompras>
+        <detalleCompras>
+            <codSustento>02</codSustento>
+            <tpIdProv>01</tpIdProv>
+            <idProv>1768156470001</idProv>
+            <tipoComprobante>19</tipoComprobante>
+            <parteRel>NO</parteRel>
+            <fechaRegistro>25/01/2022</fechaRegistro>
+            <establecimiento>999</establecimiento>
+            <puntoEmision>999</puntoEmision>
+            <secuencial>000000013</secuencial>
+            <fechaEmision>14/01/2022</fechaEmision>
             <autorizacion>9999999999</autorizacion>
             <baseNoGraIva>10.00</baseNoGraIva>
             <baseImponible>0.00</baseImponible>
@@ -1029,8 +1081,8 @@
             <fechaRegistro>25/01/2022</fechaRegistro>
             <establecimiento>999</establecimiento>
             <puntoEmision>999</puntoEmision>
-            <secuencial>000000013</secuencial>
-            <fechaEmision>14/01/2022</fechaEmision>
+            <secuencial>000000014</secuencial>
+            <fechaEmision>15/01/2022</fechaEmision>
             <autorizacion>9999999999</autorizacion>
             <baseNoGraIva>10.00</baseNoGraIva>
             <baseImponible>0.00</baseImponible>
@@ -1065,8 +1117,8 @@
             </air>
             <estabRetencion1>001</estabRetencion1>
             <ptoEmiRetencion1>001</ptoEmiRetencion1>
-            <secRetencion1>000000008</secRetencion1>
-            <autRetencion1>2501202207179236683600110010010000000083121521417</autRetencion1>
+            <secRetencion1>000000009</secRetencion1>
+            <autRetencion1>2501202207179236683600110010010000000093121521412</autRetencion1>
             <fechaEmiRet1>25/01/2022</fechaEmiRet1>
         </detalleCompras>
         <detalleCompras>
@@ -1078,8 +1130,8 @@
             <fechaRegistro>25/01/2022</fechaRegistro>
             <establecimiento>999</establecimiento>
             <puntoEmision>999</puntoEmision>
-            <secuencial>000000014</secuencial>
-            <fechaEmision>15/01/2022</fechaEmision>
+            <secuencial>000000015</secuencial>
+            <fechaEmision>16/01/2022</fechaEmision>
             <autorizacion>9999999999</autorizacion>
             <baseNoGraIva>0.00</baseNoGraIva>
             <baseImponible>0.00</baseImponible>
@@ -1114,8 +1166,8 @@
             <fechaRegistro>25/01/2022</fechaRegistro>
             <establecimiento>999</establecimiento>
             <puntoEmision>999</puntoEmision>
-            <secuencial>000000014</secuencial>
-            <fechaEmision>15/01/2022</fechaEmision>
+            <secuencial>000000015</secuencial>
+            <fechaEmision>16/01/2022</fechaEmision>
             <autorizacion>9999999999</autorizacion>
             <baseNoGraIva>10.00</baseNoGraIva>
             <baseImponible>0.00</baseImponible>

@@ -262,6 +262,10 @@ class AccountEdiFormat(models.Model):
             'currency_round': move.company_currency_id.round,
             'clean_str': self._l10n_ec_remove_newlines,
             'strftime': partial(datetime.strftime, format='%d/%m/%Y'),
+            'is_dividend_withhold': move.l10n_ec_is_dividend_withhold,
+            'dividend_payment_date': move.l10n_ec_dividend_payment_date,
+            'dividend_income_tax': move.l10n_ec_dividend_income_tax,
+            'dividend_fiscal_year': move.l10n_ec_dividend_fiscal_year,
         }
 
     def l10n_ec_merge_negative_and_positive_line(self, negative_line_tax_data, tax_data, precision_digits):

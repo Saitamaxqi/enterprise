@@ -15,6 +15,7 @@ from odoo.addons.l10n_ec_edi.models.account_move import L10N_EC_WTH_FOREIGN_TAX_
 from odoo.addons.l10n_ec_edi.models.account_move import L10N_EC_WTH_FOREIGN_SUBJECT_WITHHOLD_CODES
 from odoo.addons.l10n_ec_edi.models.account_move import L10N_EC_WTH_FOREIGN_DOUBLE_TAXATION_CODES
 from odoo.addons.l10n_ec_edi.models.account_move import L10N_EC_WITHHOLD_FOREIGN_REGIME
+from odoo.addons.l10n_ec_edi.models.account_move import _L10N_EC_DIVIDEND_YEAR_MIN, _L10N_EC_DIVIDEND_YEAR_MAX
 
 
 class L10n_EcWizardAccountWithhold(models.TransientModel):
@@ -80,6 +81,27 @@ class L10n_EcWizardAccountWithhold(models.TransientModel):
     foreign_regime = fields.Selection(
         selection=L10N_EC_WITHHOLD_FOREIGN_REGIME,
         string="Foreign Fiscal Regime",
+    )
+
+    # Dividend fields
+    dividend_payment_date = fields.Date(
+        'Dividend payment date',
+        help='Enter the date the utility payment was made.'
+    )
+    dividend_income_tax = fields.Monetary(
+        'Dividend income tax',
+        help='Enter the value of the Income Tax paid by the company that corresponds to the reported dividend.',
+        currency_field='currency_id'
+    )
+    dividend_fiscal_year = fields.Selection(
+        [(str(year), str(year)) for year in range(_L10N_EC_DIVIDEND_YEAR_MIN, _L10N_EC_DIVIDEND_YEAR_MAX + 1)],
+        'Dividend fiscal year',
+        help='Enter the fiscal year in which earnings on the reported dividend are generated. The company could pay previous periods'
+    )
+    is_dividend_withhold = fields.Boolean(
+        compute='_compute_is_dividend_withhold',
+        string='Show fields dividend',
+        help='Technical field, to show the fields required with tax support: "Distribution of Dividends, Benefits or Profits" code 10.'
     )
 
     # ===== DEFAULT GET: calculate initial fields and lines =====
@@ -181,6 +203,20 @@ class L10n_EcWizardAccountWithhold(models.TransientModel):
                 wizard.company_id.currency_id, lines
             )
 
+    @api.depends('withhold_line_ids.taxsupport_code')
+    def _compute_is_dividend_withhold(self):
+        # Computes if the withhold wizard should show the dividend section
+        for wizard in self:
+            wizard.is_dividend_withhold = '10' in wizard.withhold_line_ids.mapped('taxsupport_code')
+
+    @api.onchange('dividend_payment_date')
+    def _onchange_dividend_payment_date(self):
+        # Suggest the fiscal year of the earnings according to the payment date
+        if self.dividend_payment_date:
+            default_fiscal = self.dividend_payment_date.year
+            if _L10N_EC_DIVIDEND_YEAR_MIN < default_fiscal <= _L10N_EC_DIVIDEND_YEAR_MAX:
+                self.dividend_fiscal_year = str(default_fiscal - 1)
+
     # ===== MOVE CREATION METHODS =====
 
     def action_create_and_post_withhold(self):
@@ -221,6 +257,9 @@ class L10n_EcWizardAccountWithhold(models.TransientModel):
             'partner_id': self.partner_id.id,
             'move_type': 'entry',
             'l10n_ec_withhold_foreign_regime': self.foreign_regime,
+            'l10n_ec_dividend_payment_date': self.dividend_payment_date,
+            'l10n_ec_dividend_income_tax': self.dividend_income_tax,
+            'l10n_ec_dividend_fiscal_year': self.dividend_fiscal_year
         }
 
         name_key = 'ref' if self.withhold_type == 'out_withhold' else 'name'
@@ -249,10 +288,11 @@ class L10n_EcWizardAccountWithhold(models.TransientModel):
         # 1. Create the base line (and its counterpart to cancel out) for every withhold line.  Tax lines will be created automatically.
         for line in self.withhold_line_ids:
             account = self.company_id.l10n_ec_tax_base_sale_account_id if self.withhold_type == 'out_withhold' else self.company_id.l10n_ec_tax_base_purchase_account_id
+            __, tax_account_id = line._tax_compute_all_helper(1.0, line.tax_id)
             if account:
                 account_id = account.id
             else:  # fallback account
-                __, account_id = line._tax_compute_all_helper(1.0, line.tax_id)
+                account_id = tax_account_id
             total_per_invoice[line.invoice_id][0] += line.amount
             total_per_invoice[line.invoice_id][1] = line
 
@@ -262,11 +302,47 @@ class L10n_EcWizardAccountWithhold(models.TransientModel):
             nice_base_label_elements.append("{:.2f}%".format(abs(line.tax_id.amount)))
             nice_base_label_elements.append(line.invoice_id.name)
             nice_base_label = ", ".join(nice_base_label_elements)
+
+            extra_vals_base_line = {}
+            if self.is_dividend_withhold:  # only for dividends
+                # withholding amount for dividends withholding is editable because the taxable base varies depending on
+                # exemptions, non-deductible expenses, deferred taxes, shareholder participation,
+                # annual withholding table with fixed withholding for the basic fraction
+                # (base amount that follows tier levels) and excess fraction (amount exceeding the base)
+                # and many other factors specific to each company.
+                # Allowing editing prevents inconsistencies with the SRI (government entity).
+                # Create the tax line manually so it doesn't get created by `_sync_tax_lines`
+                tax_repartition_line = line.tax_id.invoice_repartition_line_ids.filtered(lambda x: x.repartition_type == 'tax')
+                vals_tax_line = {  # Avoid using _get_move_line_default_values to be more explicit in this tax line
+                    'partner_id': self.partner_id.commercial_partner_id.id,
+                    'account_id': tax_account_id,
+                    'balance': line.amount if self.withhold_type == 'out_withhold' else -line.amount,
+                    'tax_base_amount': -line.base if self.withhold_type == 'out_withhold' else line.base,
+                    'display_type': 'tax',
+                    'l10n_ec_withhold_invoice_id': line.invoice_id.id,
+                    'l10n_ec_code_taxsupport': line.taxsupport_code,
+                    'name': line.tax_id.name,
+                    'tax_line_id': line.tax_id.id,
+                    'tax_repartition_line_id': tax_repartition_line.id,
+                    'tax_tag_ids': [Command.set(tax_repartition_line.tag_ids.ids)],
+                }
+
+                total_lines.append(vals_tax_line)
+                base_repartition_line = line.tax_id.invoice_repartition_line_ids.filtered(lambda x: x.repartition_type == 'base')
+
+                # Set `price_subtotal` and `price_total` to prevent them from being computed by `_compute_totals`
+                extra_vals_base_line = {
+                    'tax_tag_ids': [Command.set(base_repartition_line.tag_ids.ids)],
+                    'price_subtotal': line.base,
+                    'price_total': line.base - line.amount,
+                }
+
             vals_base_line = {
                 **self._get_move_line_default_values(line, line.base, 'in_withhold'),
                 'name': 'Base Ret: ' + nice_base_label,
                 'tax_ids': [Command.set(line.tax_id.ids)],
                 'account_id': account_id,
+                **extra_vals_base_line
             }
             total_lines.append(vals_base_line)
 
@@ -357,6 +433,8 @@ class L10n_EcWizardAccountWithhold(models.TransientModel):
                            "According to art. 36 of the RTLI:\n Expense reimbursements will not be subject to withholding tax when the sales receipts are issued in the name of the intermediary, "
                            "i.e., the person in favor of whom such reimbursements are made, and comply with the "
                            "requirements established in the Sales and Withholding Receipts Regulations.")
+        if self.is_dividend_withhold and (not self.withhold_line_ids.tax_id or not all(tax_code_base == '327' for tax_code_base in self.withhold_line_ids.tax_id.mapped('l10n_ec_code_base'))):
+            error += _("In a dividend withhold, all lines must have a tax with base code 327.")
         if error:
             raise ValidationError(error)
 
@@ -507,10 +585,11 @@ class L10n_EcWizardAccountWithholdLine(models.TransientModel):
 
     @api.depends('tax_id', 'base')
     def _compute_amount(self):
-        # Recomputes amount according to "base amount" and tax percentage
+        # Recomputes amount according to "base amount" and tax percentage.
+        # For dividends withholdings, don't compute the amount, as it is editable
         for line in self:
             tax_amount = 0.0
-            if line.tax_id:
+            if line.tax_id and not line.wizard_id.is_dividend_withhold:
                 tax_amount, dummy = self._tax_compute_all_helper(line.base, line.tax_id)
             line.amount = tax_amount
 

@@ -150,6 +150,7 @@ class AccountChartTemplate(models.AbstractModel):
             'tax_vat_545_sup_09': {'l10n_ec_code_taxsupport': "09"},
             'tax_vat_05_545_sup_09': {'l10n_ec_code_taxsupport': "09"},
             'tax_vat_15_545_sup_09': {'l10n_ec_code_taxsupport': "09"},
+            'tax_vat_541_sup_02_dividend': {'l10n_ec_code_taxsupport': "10"}
         }
 
     def _l10n_ec_copy_taxsupport_codes_from_templates(self, companies):

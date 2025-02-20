@@ -5,6 +5,8 @@ from freezegun import freeze_time
 from odoo import Command
 from odoo.exceptions import ValidationError
 from odoo.tests import tagged, Form
+from pytz import timezone
+from datetime import datetime
 
 from .common import TestEcEdiCommon
 
@@ -346,7 +348,69 @@ class TestEcEdiWithholdWizard(TestEcEdiCommon):
         }]
         self.assertRecordValues(wizard.withhold_line_ids, expected_values)
 
+    def test_purchase_invoice_withhold_with_dividends(self):
+        """Creates a payment receipts (19 type document) with a tax with tax support 10 and checks that when adding a withhold
+        - Show the divident fields
+        - tax supports of wizard are a subset of the invoice's tax supports
+        - Edit the withholding amount manually.
+        """
+        self.frozen_today = datetime(year=2024, month=4, day=24, hour=0, minute=0, second=0, tzinfo=timezone('utc'))
+        # Create bill and withhold wizard
+        wizard, purchase_invoice = self.get_wizard_and_invoice(invoice_args={
+            'partner_id': self.partner_b.id,
+            'move_type': 'in_invoice',
+            'journal_id': self.company_data['default_journal_purchase'].id,
+            'l10n_ec_sri_payment_id': self.env.ref('l10n_ec.P1').id,
+            'l10n_latam_document_type_id': self.env.ref('l10n_ec.ec_dt_19').id,
+            'invoice_line_ids': self.get_lines_for_dividend(),
+        })
+        wizard.document_number = '001-001-000000001'
+
+        # Validation: wizard's tax support is dividends taxsupport
+        self.assertRecordValues(wizard.withhold_line_ids, [{'taxsupport_code': '10'}])
+
+        # Validation: wizard has dividend fields
+        self.assertTrue(wizard.is_dividend_withhold)
+
+        with freeze_time(self.frozen_today):
+            # Edit the withholding amount manually
+            wizard.write({
+                'dividend_payment_date': self.frozen_today,
+                'dividend_fiscal_year': str(self.frozen_today.year - 1),
+                'dividend_income_tax': 46301.71,
+            })
+            self.assertEqual(len(wizard.withhold_line_ids), 1)
+            wizard.withhold_line_ids[0].tax_id = self._get_tax_by_xml_id('tax_withhold_profit_327_5')
+            wizard.withhold_line_ids[0].base = 136000.00
+            wizard.withhold_line_ids[0].amount = 2440.00
+            withhold = wizard.action_create_and_post_withhold()
+
+        expected_withhold_values = [{
+            'state': 'posted',
+            'amount_total': 2440.00, # total must be exactly the same as the amount in the withhold line
+            'l10n_ec_dividend_fiscal_year': '2023',
+        }]
+        self.assertRecordValues(withhold, expected_withhold_values)
+        expected_lines_values = [{
+            'balance': 136000.00,
+            'l10n_ec_withhold_tax_amount': 2440.00,
+            'tax_ids': self._get_tax_by_xml_id('tax_withhold_profit_327_5').ids,
+        }]
+        self.assertRecordValues(withhold.l10n_ec_withhold_line_ids, expected_lines_values)
+
     # ===== HELPER METHODS =====
+
+    def get_lines_for_dividend(self):
+        # Lines with a dividend tax in order to validate dividends WTH
+        dividends_tax_xml_id = 'tax_vat_541_sup_02_dividend'
+        return [
+            Command.create({
+                'product_id': self.product_a.id,
+                'price_unit': 54400.00,
+                'quantity': 1.0,
+                'discount': 0.0,
+                'tax_ids': [Command.set(self._get_tax_by_xml_id(dividends_tax_xml_id).ids)],
+            })]
 
     def get_wizard_and_invoice(self, invoice_args=None):
         invoice_vals = {

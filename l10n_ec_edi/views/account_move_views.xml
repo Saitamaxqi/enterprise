@@ -82,6 +82,22 @@
                 </xpath>
                 <xpath expr="//field[@name='reversed_entry_id']" position="after">
                     <field name="invoice_origin" invisible="l10n_ec_withhold_type not in ['out_withhold', 'in_withhold']"/>
+
+                    <!-- Dividend Fields -->
+                    <field name="l10n_ec_is_dividend_withhold" invisible="1"/>
+                    <field name="l10n_ec_dividend_payment_date"
+                           invisible="not l10n_ec_is_dividend_withhold"
+                           required="l10n_ec_is_dividend_withhold"
+                           readonly="state != 'draft'"/>
+                    <field name="l10n_ec_dividend_income_tax"
+                           invisible="not l10n_ec_is_dividend_withhold"
+                           required="l10n_ec_is_dividend_withhold"
+                           readonly="state != 'draft'"/>
+                    <field name="l10n_ec_dividend_fiscal_year"
+                           invisible="not l10n_ec_is_dividend_withhold"
+                           required="l10n_ec_is_dividend_withhold"
+                           readonly="state != 'draft'"/>
+
                     <field name="l10n_ec_authorization_date" invisible="not l10n_ec_authorization_date"/>
                     <field name="l10n_latam_internal_type" invisible="1"/>
                     <field name="l10n_ec_withhold_count" invisible="1"/>
