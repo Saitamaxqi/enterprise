@@ -142,6 +142,8 @@ export class KanbanEditorCompiler extends KanbanCompiler {
             const fieldNameExpr = `__comp__.props.record.fields["${fieldName}"].string`;
             const originalTOut = compiled.getAttribute("t-out");
             compiled.setAttribute("t-out", `${isEmptyExpr} ? ${fieldNameExpr} : ${originalTOut}`);
+        } else {
+            compiled.setAttribute("hasEmptyPlaceholder", true);
         }
         return compiled;
     }

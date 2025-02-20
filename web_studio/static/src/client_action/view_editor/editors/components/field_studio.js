@@ -49,6 +49,9 @@ export class FieldStudio extends Field {
         if (hasLabel) {
             return false;
         }
+        if (this.type === "kanban.many2one_avatar_user") {
+            return false; // The widget has its own visibility when empty
+        }
         return "isEmpty" in this.field ? this.field.isEmpty(record, name) : !record.data[name];
     }
 
