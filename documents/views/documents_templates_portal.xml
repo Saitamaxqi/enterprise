@@ -5,7 +5,7 @@
             <t t-set="head_document_portal_view">
                 <script type="text/javascript">
                     odoo.__session_info__ = <t t-out="json.dumps(session_info)"/>;
-                    odoo.loadMenusPromise = Promise.resolve({});
+                    odoo.loadMenusPromise = Promise.resolve();
                 </script>
                 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
                 <base target="_parent"/>

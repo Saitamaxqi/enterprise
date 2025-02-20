@@ -127,7 +127,6 @@ export class TimesheetTimerRendererHook {
                 resId: values.id || false,
                 resIds: values.id ? [values.id] : [],
                 isMonoRecord: true,
-                companies: this.propsList.companies,
                 mode: "edit",
             },
             values,

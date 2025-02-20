@@ -100,7 +100,6 @@ export const DocumentsModelMixin = (component) =>
                     resId: data.id || false,
                     resIds: data.id ? [data.id] : [],
                     isMonoRecord: true,
-                    companies: this.config.companies,
                     mode,
                 },
                 data,

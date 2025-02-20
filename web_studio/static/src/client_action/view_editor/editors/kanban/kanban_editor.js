@@ -37,14 +37,12 @@ class OneRecordModel extends kanbanView.Model {
                     activeFields: list.config.activeFields,
                     groupByFieldName: list.groupByField.name,
                     context: list.context,
-                    companies: list.config.companies,
                     list: {
                         resModel: list.config.resModel,
                         fields: list.config.fields,
                         activeFields: list.config.activeFields,
                         groupBy: [],
                         context: list.context,
-                        companies: list.config.companies,
                     },
                 };
 
