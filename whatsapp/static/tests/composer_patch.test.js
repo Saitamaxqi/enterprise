@@ -49,13 +49,13 @@ test("Allow only single attachment in every message", async () => {
     await contains(".dropdown-item:contains('Attach Files')");
     await click(".o-mail-Composer button[title='More Actions']"); // close
     await inputFiles(".o-mail-Composer .o_input_file", [file1]);
-    await contains(".o-mail-AttachmentCard", { text: "text.txt", contains: [".fa-check"] });
+    await contains(".o-mail-AttachmentContainer", { text: "text.txt", contains: [".fa-check"] });
     await contains(".o-mail-Composer button[title='More Actions']", { count: 0 });
     await pasteFiles(".o-mail-Composer-input", [file2]);
-    await contains(".o-mail-AttachmentCard", { text: "text.txt", contains: [".fa-check"] });
+    await contains(".o-mail-AttachmentContainer", { text: "text.txt", contains: [".fa-check"] });
     await dragenterFiles(".o-mail-Composer-input", [file2]);
     await dropFiles(".o-Dropzone", [file2]);
-    await contains(".o-mail-AttachmentCard", { text: "text.txt", contains: [".fa-check"] });
+    await contains(".o-mail-AttachmentContainer", { text: "text.txt", contains: [".fa-check"] });
 });
 
 test("Can not add attachment after copy pasting an attachment", async () => {
@@ -73,12 +73,12 @@ test("Can not add attachment after copy pasting an attachment", async () => {
     await pasteFiles(".o-mail-Composer-input", [file1]);
     await click(".o-mail-Composer button[title='More Actions']");
     await contains(".dropdown-item:contains('Attach Files')", { count: 0 });
-    await contains(".o-mail-AttachmentCard", { text: "text.txt", contains: [".fa-check"] });
+    await contains(".o-mail-AttachmentContainer", { text: "text.txt", contains: [".fa-check"] });
     await pasteFiles(".o-mail-Composer-input", [file2]);
-    await contains(".o-mail-AttachmentCard", { text: "text.txt", contains: [".fa-check"] });
+    await contains(".o-mail-AttachmentContainer", { text: "text.txt", contains: [".fa-check"] });
     await dragenterFiles(".o-mail-Composer-input", [file2]);
     await dropFiles(".o-Dropzone", [file2]);
-    await contains(".o-mail-AttachmentCard", { text: "text.txt", contains: [".fa-check"] });
+    await contains(".o-mail-AttachmentContainer", { text: "text.txt", contains: [".fa-check"] });
 });
 
 test("Can not add attachment after drag dropping an attachment", async () => {
@@ -97,9 +97,9 @@ test("Can not add attachment after drag dropping an attachment", async () => {
     await dropFiles(".o-Dropzone", [file1]);
     await click(".o-mail-Composer button[title='More Actions']");
     await contains(".dropdown-item:contains('Attach Files')", { count: 0 });
-    await contains(".o-mail-AttachmentCard", { text: "text.txt", contains: [".fa-check"] });
+    await contains(".o-mail-AttachmentContainer", { text: "text.txt", contains: [".fa-check"] });
     await pasteFiles(".o-mail-Composer-input", [file2]);
-    await contains(".o-mail-AttachmentCard", { text: "text.txt", contains: [".fa-check"] });
+    await contains(".o-mail-AttachmentContainer", { text: "text.txt", contains: [".fa-check"] });
 });
 
 test("Disabled composer should be enabled after message from whatsapp user", async () => {

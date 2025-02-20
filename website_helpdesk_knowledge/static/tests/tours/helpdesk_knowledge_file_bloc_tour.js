@@ -58,7 +58,7 @@ registry.category("web_tour.tours").add('helpdesk_pick_file_as_message_attachmen
     trigger: '[data-embedded="file"] .o_embedded_toolbar_button_text:contains("Send")',
     run: 'click',
 }, { // wait for the file to be uploaded
-    trigger: '.o-mail-Composer .o-mail-AttachmentCard i.fa-check',
+    trigger: '.o-mail-Composer .o-mail-AttachmentContainer i.fa-check',
 }, { // check that the file is added to the attachment of the message, and that the file finished being uploaded
     trigger: '.o-mail-Chatter .o-mail-Composer .o-mail-AttachmentCard:contains("Onboarding"):not(.o-isUploading)',
 }]});
