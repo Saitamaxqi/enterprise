@@ -155,7 +155,7 @@
                                     <t t-out="event.resource_total_capacity_reserved"/> people
                                 </div>
                             </div>
-                            <div t-if="based_on_users or appointment_type.allow_guests" class="row mb-4">
+                            <div t-if="not appointment_type or based_on_users or appointment_type.allow_guests" class="row mb-4">
                                 <div class="col-3">
                                     <span class="text-muted">Attendees</span>
                                 </div>
