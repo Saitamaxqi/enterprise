@@ -33,8 +33,9 @@
                 <div t-if="showAlignment" class="o_sign_field_align_group mb-3">
                     <label class="form-label">Alignment</label>
                     <div class="btn-group w-100" role="group">
-                        <button t-foreach="alignmentOptions" t-as="alignment" t-key="alignment.key" type="button" t-att-title="alignment.title" t-on-click="(e) => this.onChange('alignment', alignment.key)" class="btn btn-secondary">
-                            <i t-attf-class="fa fa-align-{{alignment.key}} {{alignment.key === state.alignment ? 'active': ''}}"/>
+                        <button t-foreach="alignmentOptions" t-as="alignment" t-key="alignment.key" type="button" t-att-title="alignment.title" t-on-click="(e) => this.onChange('alignment', alignment.key)"
+                        t-attf-class="btn btn-secondary {{alignment.key === state.alignment ? 'active': ''}}">
+                            <i t-attf-class="fa fa-align-{{alignment.key}}"/>
                         </button>
                     </div>
                 </div>

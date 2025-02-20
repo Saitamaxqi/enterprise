@@ -140,6 +140,7 @@ export class SignTemplate extends Component {
             'colorId': colorId,
             'isCollapsed': false,
             'itemsCount': 0,
+            'isInputFocused': true,
         });
         this.updateCollapse(this.state.nextId, false);
         this.state.iframe.setRoleColor(roleId, colorId);

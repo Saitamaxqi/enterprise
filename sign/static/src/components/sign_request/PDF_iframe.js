@@ -310,6 +310,7 @@ export class PDFIframe {
      */
     createSignItemDataFromType({ itemTypeId, roleId, roleName }) {
         const type = this.signItemTypesById[itemTypeId];
+        const alignment = this.getAlignmentByItemType(type.item_type);
         return {
             required: true,
             editMode: true,
@@ -322,11 +323,15 @@ export class PDFIframe {
             name: type.name,
             width: type.default_width,
             height: type.default_height,
-            alignment: this.getAlignmentByItemType(type.item_type),
+            alignment: alignment,
             type: type.item_type,
             placeholder: type.placeholder,
             classes: `o_color_responsible_${this.roleColors[roleId]}`,
-            style: `width: ${type.default_width * 100}%; height: ${type.default_height * 100}%;`,
+            style: `
+                width: ${type.default_width * 100}%;
+                height: ${type.default_height * 100}%;
+                text-align: ${alignment};
+            `,
             type_id: [type.id],
             icon: type.icon || "",
         };
