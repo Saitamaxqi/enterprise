@@ -47,9 +47,9 @@ class AccountChartTemplate(models.AbstractModel):
             }
         }
 
-    def _load(self, template_code, company, install_demo):
+    def _load(self, template_code, company, install_demo, force_create=True):
         # EXTENDS account to create journals and setup withhold taxes in company configuration
-        res = super()._load(template_code, company, install_demo)
+        res = super()._load(template_code, company, install_demo, force_create)
         if template_code == 'ec':
             self._l10n_ec_configure_ecuadorian_withhold_taxpayer_type(company)
             self._l10n_ec_setup_profit_withhold_taxes(company)

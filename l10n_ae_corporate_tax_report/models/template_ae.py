@@ -4,9 +4,9 @@ from odoo import models, Command
 class AccountChartTemplate(models.AbstractModel):
     _inherit = 'account.chart.template'
 
-    def _load(self, template_code, company, install_demo):
+    def _load(self, template_code, company, install_demo, force_create=True):
         # Override
-        super()._load(template_code, company, install_demo)
+        super()._load(template_code, company, install_demo, force_create)
 
         if template_code == 'ae':
             self._l10n_ae_corporate_tax_report_setup_account_tags([company])
