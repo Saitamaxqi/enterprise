@@ -179,6 +179,12 @@ class QualityPoint(models.Model):
         if self.test_type_id.technical_name not in ('register_byproducts', 'register_consumed_materials'):
             self.component_id = False
 
+    def write(self, vals):
+        res = super().write(vals)
+        if 'picking_type_ids' in vals:
+            self.filtered(lambda p: not p.is_workorder_step).operation_id = False
+        return res
+
 
 class QualityAlert(models.Model):
     _inherit = "quality.alert"

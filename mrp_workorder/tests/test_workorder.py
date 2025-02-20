@@ -328,13 +328,23 @@ class TestWorkOrder(TestMrpWorkorderCommon):
             ]
         })
 
+        manufacture_picking_type = self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')], limit=1)
         p1 = self.env['quality.point'].create({
             'product_ids': [(4, product_a1.id)],
-            'picking_type_ids': [(4, self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')], limit=1).id)],
+            'picking_type_ids': [(4, manufacture_picking_type.id)],
             'operation_id': bom_who.operation_ids[0].id,
             'test_type_id': self.env.ref('quality.test_type_instructions').id,
             'note': 'Installing VIM (pcs xi ipzth adi du ixbt)',
         })
+        # Check that the operation is removed when the picking type is updated and none have the mrp_operation code.
+        self.assertTrue(p1.operation_id)
+        p1.picking_type_ids = self.env['stock.picking.type'].search([('code', '=', 'internal'), ('company_id', '=', self.env.company.id)], limit=1)
+        self.assertFalse(p1.operation_id)
+        # reset manufacture_picking_type
+        p1.picking_type_ids = manufacture_picking_type
+        p1.operation_id = bom_who.operation_ids[0].id,
+        self.assertTrue(p1.operation_id)
+
         p2 = self.env['quality.point'].create({
             'product_ids': [(4, product_a2.id)],
             'picking_type_ids': [(4, self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')], limit=1).id)],
