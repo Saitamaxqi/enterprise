@@ -7,7 +7,7 @@ patch(PaymentScreen.prototype, {
     async _isOrderValid(isForceValidate) {
         if (this.pos.isEcuadorianCompany()) {
             if (
-                this.currentOrder._isRefundOrder() &&
+                this.currentOrder.isRefund &&
                 this.currentOrder.getPartner().id === this.pos.session._final_consumer_id
             ) {
                 this.dialog.add(AlertDialog, {

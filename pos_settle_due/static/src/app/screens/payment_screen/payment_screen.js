@@ -87,7 +87,7 @@ patch(PaymentScreen.prototype, {
             paylaterPaymentMethod &&
             !existingPayLaterPayment
         ) {
-            if (order._isRefundOrder()) {
+            if (order.isRefund) {
                 return this.dialog.add(AlertDialog, {
                     title: _t("Error"),
                     body: _t("You cannot refund a deposit/settling order."),

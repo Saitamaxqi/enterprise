@@ -31,7 +31,7 @@ patch(PaymentScreen.prototype, {
                 return false;
             }
             if (
-                this.currentOrder._isRefundOrder() &&
+                this.currentOrder.isRefund &&
                 this.currentOrder.getPartner().id === this.pos.session._consumidor_final_anonimo_id
             ) {
                 this.dialog.add(AlertDialog, {
@@ -50,7 +50,7 @@ patch(PaymentScreen.prototype, {
             ];
             const missingFields = [];
             const partner = this.currentOrder.getPartner();
-            if (this.currentOrder.invoice_type == "factura" || this.currentOrder._isRefundOrder()) {
+            if (this.currentOrder.invoice_type == "factura" || this.currentOrder.isRefund) {
                 for (const field of mandatoryFacturaFields) {
                     if (!partner[field]) {
                         missingFields.push(field);
