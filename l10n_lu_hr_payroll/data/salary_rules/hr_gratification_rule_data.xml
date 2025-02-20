@@ -112,8 +112,8 @@ def get_tax(taxable_amount):
         return 0, 0
 
     if payslip.l10n_lu_tax_classification:
-        rates = payslip._rule_parameter(f'l10n_lu_withholding_annual_taxes_{payslip.l10n_lu_tax_classification}')
-        threshold, threshold_adjustment = payslip._rule_parameter(f'l10n_lu_withholding_annual_taxes_threshold_{payslip.l10n_lu_tax_classification}')
+        rates = payslip._rule_parameter(f'l10n_lu_withholding_annual_nonperiodic_taxes_{payslip.l10n_lu_tax_classification}')
+        threshold, threshold_adjustment = payslip._rule_parameter(f'l10n_lu_withholding_annual_nonperiodic_taxes_threshold_{payslip.l10n_lu_tax_classification}')
     else:
         return 0.0
 

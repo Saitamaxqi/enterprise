@@ -138,13 +138,13 @@
         <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
     </record>
 
-    <!-- Annual -->
-    <record id="rule_parameter_withholding_annual_taxes_1" model="hr.rule.parameter">
-        <field name="name">Lux Withholding Annual Taxes: Category 1</field>
-        <field name="code">l10n_lu_withholding_annual_taxes_1</field>
+    <!-- Annual Non-Periodic -->
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_1" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Non-Periodic Taxes: Category 1</field>
+        <field name="code">l10n_lu_withholding_annual_nonperiodic_taxes_1</field>
         <field name="country_id" ref="base.lu"/>
     </record>
-    <record id="rule_parameter_l10n_lu_withholding_annual_taxes_1_2017" model="hr.rule.parameter.value">
+    <record id="rule_parameter_l10n_lu_withholding_annual_nonperiodic_taxes_1_2017" model="hr.rule.parameter.value">
         <field name="parameter_value">
 [
 (     0.00,   12250.00, 0.000,     0.0000),
@@ -171,10 +171,10 @@
 (151050.00,  201000.00, 0.410, 13311.3300),
 (201050.00, 9999999.99, 0.420, 15321.5700),
 ]</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_1"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_1"/>
         <field name="date_from" eval="datetime(2017, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_l10n_lu_withholding_annual_taxes_1_2024" model="hr.rule.parameter.value">
+    <record id="rule_parameter_l10n_lu_withholding_annual_nonperiodic_taxes_1_2024" model="hr.rule.parameter.value">
         <field name="parameter_value">
 [
 (     0.00,   13450.00, 0.000,     0.0000),
@@ -201,10 +201,10 @@
 (166650.00,  221800.00, 0.410, 14665.7400),
 (221850.00, 9999999.99, 0.420, 16883.8200),
 ]</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_1"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_1"/>
         <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_l10n_lu_withholding_annual_taxes_1_2025" model="hr.rule.parameter.value">
+    <record id="rule_parameter_l10n_lu_withholding_annual_nonperiodic_taxes_1_2025" model="hr.rule.parameter.value">
         <field name="parameter_value">
 [
 (     0.00,   14250.00, 0.000,     0.0000),
@@ -231,28 +231,76 @@
 (177200.00,  235850.00, 0.410, 15589.8000),
 (235900.00, 9999999.99, 0.420, 17948.7000),
 ]</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_1"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_1"/>
         <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
     </record>
 
-    <record id="rule_parameter_withholding_annual_taxes_threshold_1" model="hr.rule.parameter">
-        <field name="name">Lux Withholding Annual Taxes: Threshold Category 1</field>
-        <field name="code">l10n_lu_withholding_annual_taxes_threshold_1</field>
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Non-Periodic Taxes: Threshold Category 1</field>
+        <field name="code">l10n_lu_withholding_annual_nonperiodic_taxes_threshold_1</field>
         <field name="country_id" ref="base.lu"/>
     </record>
-    <record id="rule_parameter_withholding_annual_taxes_threshold_1_2017" model="hr.rule.parameter.value">
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1_2017" model="hr.rule.parameter.value">
         <field name="parameter_value">(151020.00, 972.12)</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_threshold_1"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1"/>
         <field name="date_from" eval="datetime(2017, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_withholding_annual_taxes_threshold_1_2024" model="hr.rule.parameter.value">
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1_2024" model="hr.rule.parameter.value">
         <field name="parameter_value">(151020.00, 948.16)</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_threshold_1"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1"/>
         <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_withholding_annual_taxes_threshold_1_2025" model="hr.rule.parameter.value">
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1_2025" model="hr.rule.parameter.value">
         <field name="parameter_value">(151020.00, 931.8)</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_threshold_1"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+    </record>
+
+    <!-- Annual Periodic -->
+     <record id="rule_parameter_withholding_annual_periodic_taxes_1" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Periodic Taxes: Category 1</field>
+        <field name="code">l10n_lu_withholding_annual_periodic_taxes_1</field>
+        <field name="country_id" ref="base.lu"/>
+    </record>
+    <record id="rule_parameter_l10n_lu_withholding_annual_periodic_taxes_1_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">
+[
+(     0.00,   13200.00, 0.00,     0.00000),
+( 13250.00,   15400.00, 0.08,  1058.40000),
+( 15450.00,   17600.00, 0.09,  1212.75000),
+( 17650.00,   19800.00, 0.10,  1389.15000),
+( 19850.00,   22050.00, 0.11,  1587.60000),
+( 22100.00,   24250.00, 0.12,  1808.10000),
+( 24300.00,   26550.00, 0.14,  2293.20000),
+( 26600.00,   28800.00, 0.16,  2824.20000),
+( 28850.00,   31100.00, 0.18,  3401.10000),
+( 31150.00,   33400.00, 0.20,  4023.90000),
+( 33450.00,   35700.00, 0.22,  4692.60000),
+( 35750.00,   38000.00, 0.24,  5407.20000),
+( 38050.00,   40300.00, 0.26,  6167.70000),
+( 40350.00,   42600.00, 0.28,  6974.10000),
+( 42650.00,   44900.00, 0.30,  7826.40000),
+( 44950.00,   47200.00, 0.32,  8724.60000),
+( 47250.00,   49500.00, 0.34,  9668.70000),
+( 49550.00,   51750.00, 0.36, 10658.70000),
+( 51800.00,   54050.00, 0.38, 11694.60000),
+( 54100.00,  117450.00, 0.39, 12235.50000),
+(117500.00,  176150.00, 0.40, 13410.00000),
+(176200.00,  234850.00, 0.41, 15171.60000),
+(234900.00, 9999999.00, 0.42, 17520.30000),
+]</field>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_periodic_taxes_1"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+    </record>
+
+    <record id="rule_parameter_withholding_annual_periodic_taxes_threshold_1" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Periodic Taxes: Threshold Category 1</field>
+        <field name="code">l10n_lu_withholding_annual_periodic_taxes_threshold_1</field>
+        <field name="country_id" ref="base.lu"/>
+    </record>
+    <record id="rule_parameter_withholding_annual_periodic_taxes_threshold_1_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">(150000.00, 931.8)</field>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_periodic_taxes_threshold_1"/>
         <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
     </record>
 
@@ -375,13 +423,13 @@
         <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
     </record>
 
-    <!-- Annual -->
-    <record id="rule_parameter_withholding_annual_taxes_1a" model="hr.rule.parameter">
-        <field name="name">Lux Withholding Annual Taxes: Category 1A</field>
-        <field name="code">l10n_lu_withholding_annual_taxes_1a</field>
+    <!-- Annual Non-Periodic -->
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_1a" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Non-Periodic Taxes: Category 1A</field>
+        <field name="code">l10n_lu_withholding_annual_nonperiodic_taxes_1a</field>
         <field name="country_id" ref="base.lu"/>
     </record>
-    <record id="rule_parameter_l10n_lu_withholding_annual_taxes_1a_2017" model="hr.rule.parameter.value">
+    <record id="rule_parameter_l10n_lu_withholding_annual_nonperiodic_taxes_1a_2017" model="hr.rule.parameter.value">
         <field name="parameter_value">
 [
 (     0.00,   23550.00, 0.000,     0.0000),
@@ -401,10 +449,10 @@
 (151050.00,  201000.00, 0.410, 14019.0000),
 (201050.00, 9999999.99, 0.420, 16029.2400),
 ]</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_1a"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_1a"/>
         <field name="date_from" eval="datetime(2017, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_l10n_lu_withholding_annual_taxes_1a_2024" model="hr.rule.parameter.value">
+    <record id="rule_parameter_l10n_lu_withholding_annual_nonperiodic_taxes_1a_2024" model="hr.rule.parameter.value">
         <field name="parameter_value">
 [
 (     0.00,   25850.00, 0.000,     0.0000),
@@ -424,10 +472,10 @@
 (166650.00,  221800.00, 0.410, 15439.2900),
 (221850.00, 9999999.99, 0.420, 17657.3700),
 ]</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_1a"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_1a"/>
         <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_l10n_lu_withholding_annual_taxes_1a_2025" model="hr.rule.parameter.value">
+    <record id="rule_parameter_l10n_lu_withholding_annual_nonperiodic_taxes_1a_2025" model="hr.rule.parameter.value">
         <field name="parameter_value">
 [
 (     0.00,   27450.00, 0.0000,     0.00000),
@@ -450,28 +498,72 @@
 (177200.00,  235850.00, 0.4100, 17911.26000),
 (235900.00, 9999999.99, 0.4200, 20270.16000),
 ]</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_1a"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_1a"/>
         <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
     </record>
 
-    <record id="rule_parameter_withholding_annual_taxes_threshold_1a" model="hr.rule.parameter">
-        <field name="name">Lux Withholding Annual Taxes: Threshold Category 1A</field>
-        <field name="code">l10n_lu_withholding_annual_taxes_threshold_1a</field>
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1a" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Non-Periodic Taxes: Threshold Category 1A</field>
+        <field name="code">l10n_lu_withholding_annual_nonperiodic_taxes_threshold_1a</field>
         <field name="country_id" ref="base.lu"/>
     </record>
-    <record id="rule_parameter_withholding_annual_taxes_threshold_1a_2017" model="hr.rule.parameter.value">
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1a_2017" model="hr.rule.parameter.value">
         <field name="parameter_value">(151020.00, 957.98)</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_threshold_1a"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1a"/>
         <field name="date_from" eval="datetime(2017, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_withholding_annual_taxes_threshold_1a_2024" model="hr.rule.parameter.value">
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1a_2024" model="hr.rule.parameter.value">
         <field name="parameter_value">(151020.00, 932.68)</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_threshold_1a"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1a"/>
         <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_withholding_annual_taxes_threshold_1a_2025" model="hr.rule.parameter.value">
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1a_2025" model="hr.rule.parameter.value">
         <field name="parameter_value">(151020.00, 885.36)</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_threshold_1a"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_1a"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+    </record>
+
+    <!-- Annual Periodic -->
+    <record id="rule_parameter_withholding_annual_periodic_taxes_1a" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Periodic Taxes: Category 1A</field>
+        <field name="code">l10n_lu_withholding_annual_periodic_taxes_1a</field>
+        <field name="country_id" ref="base.lu"/>
+    </record>
+    <record id="rule_parameter_l10n_lu_withholding_annual_periodic_taxes_1a_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">
+[
+(     0.00,   26450.00, 0.0000,     0.00000),
+( 26500.00,   28200.00, 0.1000,  2646.00000),
+( 28250.00,   29950.00, 0.1125,  2998.80000),
+( 30000.00,   31750.00, 0.1250,  3373.65000),
+( 31800.00,   33500.00, 0.1375,  3770.55000),
+( 33550.00,   35250.00, 0.1500,  4189.50000),
+( 35300.00,   37100.00, 0.1750,  5071.50000),
+( 37150.00,   38950.00, 0.2000,  5999.40000),
+( 39000.00,   40750.00, 0.2250,  6973.20000),
+( 40800.00,   42600.00, 0.2500,  7992.90000),
+( 42650.00,   44450.00, 0.2750,  9058.50000),
+( 44500.00,   46250.00, 0.3000, 10170.00000),
+( 46300.00,   48100.00, 0.3250, 11327.40000),
+( 48150.00,   49950.00, 0.3500, 12530.70000),
+( 50000.00,   51800.00, 0.3750, 13779.90000),
+( 51850.00,  117450.00, 0.3900, 14556.96000),
+(117500.00,  176150.00, 0.4000, 15731.46000),
+(176200.00,  234850.00, 0.4100, 17493.06000),
+(234900.00, 9999999.00, 0.4200, 19841.76000),
+]</field>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_periodic_taxes_1a"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+    </record>
+
+    <record id="rule_parameter_withholding_annual_periodic_taxes_threshold_1a" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Periodic Taxes: Threshold Category 1A</field>
+        <field name="code">l10n_lu_withholding_annual_periodic_taxes_threshold_1a</field>
+        <field name="country_id" ref="base.lu"/>
+    </record>
+    <record id="rule_parameter_withholding_annual_periodic_taxes_threshold_1a_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">(150000.00, 885.36)</field>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_periodic_taxes_threshold_1a"/>
         <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
     </record>
 
@@ -612,13 +704,13 @@
         <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
     </record>
 
-    <!-- Annual -->
-    <record id="rule_parameter_withholding_annual_taxes_2" model="hr.rule.parameter">
-        <field name="name">Lux Withholding Annual Taxes: Category 2</field>
-        <field name="code">l10n_lu_withholding_annual_taxes_2</field>
+    <!-- Annual Non-Periodic -->
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_2" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Non-Periodic Taxes: Category 2</field>
+        <field name="code">l10n_lu_withholding_annual_nonperiodic_taxes_2</field>
         <field name="country_id" ref="base.lu"/>
     </record>
-    <record id="rule_parameter_l10n_lu_withholding_annual_taxes_2_2017" model="hr.rule.parameter.value">
+    <record id="rule_parameter_l10n_lu_withholding_annual_nonperiodic_taxes_2_2017" model="hr.rule.parameter.value">
         <field name="parameter_value">
 [
 (     0.00,   23550.00, 0.000,     0.0000),
@@ -645,10 +737,10 @@
 (301050.00,  401000.00, 0.410, 26204.4600),
 (401050.00, 9999999.99, 0.420, 30214.7400),
 ]</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_2"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_2"/>
         <field name="date_from" eval="datetime(2017, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_l10n_lu_withholding_annual_taxes_2_2024" model="hr.rule.parameter.value">
+    <record id="rule_parameter_l10n_lu_withholding_annual_nonperiodic_taxes_2_2024" model="hr.rule.parameter.value">
         <field name="parameter_value">
 [
 (     0.00,   25850.00, 0.000,     0.0000),
@@ -675,10 +767,10 @@
 (332250.00,  442550.00, 0.410, 28913.2800),
 (442600.00, 9999999.99, 0.420, 33339.2400),
 ]</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_2"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_2"/>
         <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_l10n_lu_withholding_annual_taxes_2_2025" model="hr.rule.parameter.value">
+    <record id="rule_parameter_l10n_lu_withholding_annual_nonperiodic_taxes_2_2025" model="hr.rule.parameter.value">
         <field name="parameter_value">
 [
 (     0.00,   27450.00, 0.00,     0.00000),
@@ -705,28 +797,76 @@
 (353350.00,  470750.00, 0.41, 30761.40000),
 (470800.00, 9999999.99, 0.42, 35469.00000),
 ]</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_2"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_2"/>
         <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
     </record>
 
-    <record id="rule_parameter_withholding_annual_taxes_threshold_2" model="hr.rule.parameter">
-        <field name="name">Lux Withholding Annual Taxes: Threshold Category 2</field>
-        <field name="code">l10n_lu_withholding_annual_taxes_threshold_2</field>
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_2" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Non-Periodic Taxes: Threshold Category 2</field>
+        <field name="code">l10n_lu_withholding_annual_nonperiodic_taxes_threshold_2</field>
         <field name="country_id" ref="base.lu"/>
     </record>
-    <record id="rule_parameter_withholding_annual_taxes_threshold_2_2017" model="hr.rule.parameter.value">
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_2_2017" model="hr.rule.parameter.value">
         <field name="parameter_value">(301020.00, 1944.26)</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_threshold_2"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_2"/>
         <field name="date_from" eval="datetime(2017, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_withholding_annual_taxes_threshold_2_2024" model="hr.rule.parameter.value">
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_2_2024" model="hr.rule.parameter.value">
         <field name="parameter_value">(301020.00, 1896.32)</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_threshold_2"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_2"/>
         <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
     </record>
-    <record id="rule_parameter_withholding_annual_taxes_threshold_2_2025" model="hr.rule.parameter.value">
+    <record id="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_2_2025" model="hr.rule.parameter.value">
         <field name="parameter_value">(301020.00, 1863.6)</field>
-        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_taxes_threshold_2"/>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_nonperiodic_taxes_threshold_2"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+    </record>
+
+    <!-- Annual Periodic -->
+    <record id="rule_parameter_withholding_annual_periodic_taxes_2" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Periodic Taxes: Category 2</field>
+        <field name="code">l10n_lu_withholding_annual_periodic_taxes_2</field>
+        <field name="country_id" ref="base.lu"/>
+    </record>
+    <record id="rule_parameter_l10n_lu_withholding_annual_periodic_taxes_2_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">
+[
+(     0.00,   26450.00, 0.00,     0.00000),
+( 26500.00,   30850.00, 0.08,  2116.80000),
+( 30900.00,   35250.00, 0.09,  2425.50000),
+( 35300.00,   39650.00, 0.10,  2778.30000),
+( 39700.00,   44100.00, 0.11,  3175.20000),
+( 44150.00,   48500.00, 0.12,  3616.20000),
+( 48550.00,   53100.00, 0.14,  4586.40000),
+( 53150.00,   57650.00, 0.16,  5648.40000),
+( 57700.00,   62250.00, 0.18,  6802.20000),
+( 62300.00,   66850.00, 0.20,  8047.80000),
+( 66900.00,   71450.00, 0.22,  9385.20000),
+( 71500.00,   76050.00, 0.24, 10814.40000),
+( 76100.00,   80600.00, 0.26, 12335.40000),
+( 80650.00,   85200.00, 0.28, 13948.20000),
+( 85250.00,   89800.00, 0.30, 15652.80000),
+( 89850.00,   94400.00, 0.32, 17449.20000),
+( 94450.00,   99000.00, 0.34, 19337.40000),
+( 99050.00,  103550.00, 0.36, 21317.40000),
+(103600.00,  108150.00, 0.38, 23389.20000),
+(108200.00,  234900.00, 0.39, 24471.00000),
+(234950.00,  352300.00, 0.40, 26820.00000),
+(352350.00,  469700.00, 0.41, 30343.20000),
+(469750.00, 9999999.99, 0.42, 35040.60000),
+]</field>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_periodic_taxes_2"/>
+        <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+    </record>
+
+    <record id="rule_parameter_withholding_annual_periodic_taxes_threshold_2" model="hr.rule.parameter">
+        <field name="name">Lux Withholding Annual Periodic Taxes: Threshold Category 2</field>
+        <field name="code">l10n_lu_withholding_annual_periodic_taxes_threshold_2</field>
+        <field name="country_id" ref="base.lu"/>
+    </record>
+    <record id="rule_parameter_withholding_annual_periodic_taxes_threshold_2_2025" model="hr.rule.parameter.value">
+        <field name="parameter_value">(300000.00, 1863.6)</field>
+        <field name="rule_parameter_id" ref="rule_parameter_withholding_annual_periodic_taxes_threshold_2"/>
         <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
     </record>
 </odoo>
