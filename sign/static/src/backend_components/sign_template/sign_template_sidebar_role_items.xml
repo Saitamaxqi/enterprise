@@ -12,10 +12,9 @@
                             t-att-readonly="!props.isInputFocused"
                             t-on-click="() => this.onFocusRoleInput(this.props.id)"
                             t-on-change="ev => this.onChangeRoleName(ev.target.value)"
-                            t-on-mouseover="ev => this.updateShowEditLabelIcon(ev, true)"
                             t-on-mouseout="ev => this.updateShowEditLabelIcon(ev, false)"
                         />
-                        <i t-if="this.state.showEditLabelIcon" class="fa fa-pencil"/>
+                        <i t-if="!props.isCollapsed" class="fa fa-pencil"/>
                     </div>
                 </div>
                 <!-- Edit, delete and collapse signer options. -->

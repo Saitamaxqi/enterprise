@@ -58,7 +58,7 @@ export class SignTemplateSidebarRoleItems extends Component {
 
     updateShowEditLabelIcon(ev, value) {
         /* Save signer name when unfocusing input for avoiding save conflicts.*/
-        if (ev.target.value && !value)
+        if (ev.target.value && !value && ev.target.value !== this.state.roleName)
             this.onChangeRoleName(ev.target.value);
         this.state.showEditLabelIcon = value;
     }
@@ -87,8 +87,8 @@ export class SignTemplateSidebarRoleItems extends Component {
     }
 
     onChangeRoleName(name) {
-        /* When the new role name is valid, save it to the ORM. */
-        if (name && this.state.roleId) {
+       // Check if the new role name is different from the current one
+       if (name && this.state.roleId && name !== this.state.roleName) {
             this.orm.write('sign.item.role', [this.state.roleId], { name: name });
             this.state.roleName = name;
             this.props.iframe.updateRoleName(this.state.roleId, this.state.roleName);

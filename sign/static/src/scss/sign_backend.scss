@@ -30,6 +30,16 @@
         }
     }
 
+    .o_sign_sidebar_role_input_container .fa-pencil,
+    .o_sign_template_header_document_name .fa-pencil {
+        display: none;
+    }
+
+    .o_sign_sidebar_role_input_container:hover .fa-pencil,
+    .o_sign_template_header_document_name:hover .fa-pencil {
+        display: inline-block;
+    }
+
     /* Module pages */
     .o_sign_template, .o_sign_document {
         display: flex;

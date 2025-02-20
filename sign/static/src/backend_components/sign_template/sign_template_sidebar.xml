@@ -8,9 +8,8 @@
                         t-att-value="state.templateName"
                         t-att-disabled="props.hasSignRequests"
                         t-on-change="ev => this.onTemplateNameChanged(ev)"
-                        t-on-mouseenter="ev => this.updateShowEditNameIcon(ev, true)"
                         t-on-mouseleave="ev => this.updateShowEditNameIcon(ev, false)"/>
-                    <i t-if="state.showEditNameIcon" class="fa fa-pencil"/>
+                    <i class="fa fa-pencil"/>
                     <span>.pdf</span>
                 </div>
 

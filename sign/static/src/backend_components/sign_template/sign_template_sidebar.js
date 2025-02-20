@@ -31,7 +31,8 @@ export class SignTemplateSidebar extends Component {
 
     updateShowEditNameIcon(ev, value) {
         /* Save template name when unfocusing input for avoiding save conflicts.*/
-        if (ev.target.value && !value)
+        const newTemplateName = ev.target.value;
+        if (newTemplateName && !value && newTemplateName !== this.state.templateName)
             this.onTemplateNameChanged(ev);
         this.state.showEditNameIcon = value;
     }
