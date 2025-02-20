@@ -163,7 +163,8 @@ class HrContractSalary(http.Controller):
             request.env["ir.qweb"]._get_asset_nodes(bundle_name, debug=debug, js=True, css=True)
         request.env.cr.commit()
 
-        request.env.cr.execute('SAVEPOINT salary')
+        # THE REST OF THE TRANSACTION WILL BE ROLLED-BACK
+        # This is just a simulation.
 
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)
         contract = offer.contract_template_id
@@ -264,8 +265,7 @@ class HrContractSalary(http.Controller):
         response = request.render("hr_contract_salary.salary_package", values)
         response.flatten()
         request.env.flush_all()
-        request.env.cr.precommit.clear()
-        request.env.cr.execute('ROLLBACK TO SAVEPOINT salary')
+        request.env.cr.rollback()
         return response
 
     @http.route(['/salary_package/thank_you/<int:contract_id>'], type='http', auth="public", website=True, sitemap=False)
