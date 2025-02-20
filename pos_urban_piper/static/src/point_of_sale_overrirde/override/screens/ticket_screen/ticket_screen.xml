@@ -26,7 +26,7 @@
                 </t>
             </td>
         </xpath>
-        <xpath expr="//div[hasclass('pads')]//div[hasclass('pads')]//BackButton" position="after">
+        <xpath expr="//div[hasclass('pads')]//div[hasclass('pads')]//button" position="after">
             <t t-set="order" t-value="getSelectedOrder()"/>
             <t t-if="order.delivery_status and order.state !== 'paid'">
                 <div class="container" t-if="order.delivery_status != 'cancelled' and order.delivery_status != 'completed' and order.delivery_status != 'food_ready' and order.delivery_status != 'dispatched'">
