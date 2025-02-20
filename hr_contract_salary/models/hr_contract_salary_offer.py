@@ -254,12 +254,3 @@ class HrContractSalaryOffer(models.Model):
             record.id: record.applicant_id.email_from or record.employee_id.work_email
             for record in self
         }
-
-    def _message_add_suggested_recipients(self, primary_email=False):
-        email_to_lst, partners = super()._message_add_suggested_recipients(primary_email)
-        if self.applicant_id:
-            email_to_lst.append(self.applicant_id.email_from)
-        elif self.employee_id:
-            # tde FIXME: check sudo ?
-            partners += self.employee_id.work_contact_id.sudo()
-        return email_to_lst, partners
