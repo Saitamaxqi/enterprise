@@ -9,6 +9,9 @@ export function addDocument(documentParams) {
     const steps = [];
     for (const values of documentParams) {
         steps.push(...ProductScreen.addOrderline(values.product, values.quantity));
+        if (values.discount) {
+            steps.push(ProductScreen.addDiscount(values.discount));
+        }
     }
     steps.push(
         ...[
@@ -51,5 +54,8 @@ registry.category("web_tour.tours").add("test_taxes_l10n_it_epson_printer_pos", 
                 { product: "product_3_2", quantity: "3" },
             ]),
             ...assertTaxTotals("22.08", "4.86", "26.94"),
+
+            ...addDocument([{ product: "product_4_1", quantity: "1", discount: "50" }]),
+            ...assertTaxTotals("25.00", "5.50", "30.50"),
         ].flat(),
 });

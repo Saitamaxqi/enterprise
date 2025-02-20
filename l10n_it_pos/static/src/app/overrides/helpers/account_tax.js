@@ -20,6 +20,7 @@ patch(accountTaxHelpers, {
         ) {
             let new_base_line = this.prepare_base_line_for_taxes_computation(base_line, {
                 quantity: 1.0,
+                discount: 0.0,
             });
             super.add_tax_details_in_base_line(new_base_line, company);
             this.round_base_lines_tax_details([new_base_line], company);

@@ -21,7 +21,7 @@ class AccountTax(models.Model):
             and base_line['tax_ids'][0].amount_type == 'percent'
             and not base_line['tax_ids'][0].price_include
         ):
-            new_base_line = self._prepare_base_line_for_taxes_computation(base_line, quantity=1)
+            new_base_line = self._prepare_base_line_for_taxes_computation(base_line, quantity=1, discount=0)
             super()._add_tax_details_in_base_line(new_base_line, company, rounding_method=rounding_method)
             super()._round_base_lines_tax_details([new_base_line], company)
             tax_details = new_base_line['tax_details']

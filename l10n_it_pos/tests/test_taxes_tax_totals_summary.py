@@ -120,6 +120,35 @@ class TestTaxesTaxTotalsSummaryL10nItPos(TestPointOfSaleHttpCommon, TestTaxesTax
         }
         yield 3, self.populate_document(document_params), expected_values
 
+        document_params = self.init_document(
+            lines=[
+                {'price_unit': 50, 'quantity': 1.0, 'discount': 50.0, 'tax_ids': tax, 'l10n_it_epson_printer': True},
+            ],
+        )
+        expected_values = {
+            'same_tax_base': True,
+            'currency_id': self.currency.id,
+            'base_amount_currency': 25.00,
+            'tax_amount_currency': 5.50,
+            'total_amount_currency': 30.50,
+            'subtotals': [
+                {
+                    'name': "Untaxed Amount",
+                    'base_amount_currency': 25.00,
+                    'tax_amount_currency': 5.50,
+                    'tax_groups': [
+                        {
+                            'id': self.tax_groups[0].id,
+                            'base_amount_currency': 25.00,
+                            'tax_amount_currency': 5.50,
+                            'display_base_amount_currency': 25.00,
+                        },
+                    ],
+                },
+            ],
+        }
+        yield 4, self.populate_document(document_params), expected_values
+
     def test_taxes_l10n_it_epson_printer_generic_helpers(self):
         for test_index, document, expected_values in self._test_taxes_l10n_it_epson_printer():
             with self.subTest(test_index=test_index):
@@ -135,6 +164,8 @@ class TestTaxesTaxTotalsSummaryL10nItPos(TestPointOfSaleHttpCommon, TestTaxesTax
         test3 = next(tests)
         self.create_base_line_product(test3[1]['lines'][0], name='product_3_1')
         self.create_base_line_product(test3[1]['lines'][1], name='product_3_2')
+        test4 = next(tests)
+        self.create_base_line_product(test4[1]['lines'][0], name='product_4_1')
         with self.with_new_session(user=self.pos_user) as session:
             self.start_pos_tour('test_taxes_l10n_it_epson_printer_pos')
             orders = self.env['pos.order'].search([('session_id', '=', session.id)])
