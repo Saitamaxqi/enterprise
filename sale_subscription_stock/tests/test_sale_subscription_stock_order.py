@@ -60,8 +60,8 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         for n_iter, date in enumerate(["2022-03-02", "2022-04-02", "2022-05-02", "2022-06-02"], 1):
             invoice, picking = self.simulate_period(sub, date)
             self.assertEqual(sub.invoice_count, n_iter, f'Subscription should have {n_iter} invoices at date {date}')
-            self.assertEqual(len(sub.picking_ids), n_iter + 1,
-                             f'Subscription should have {n_iter + 1} delivery order at date {date}')
+            self.assertEqual(len(sub.picking_ids), n_iter,
+                             f'Subscription should have {n_iter} delivery order at date {date}')
             self.assertEqual(invoice.invoice_line_ids.quantity, 1, 'We should always invoice the same quantity')
             self.assertEqual(invoice.amount_total, 45, 'And the same amount')
             self.assertEqual(invoice.date.isoformat(), date, 'Invoice date should correspond to the current date')
@@ -872,7 +872,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             and skip the picking creation.
         """
 
-        self.storable_product = self.env['product.product'].create({
+        storable_product = self.env['product.product'].create({
             'name': 'Storable Product',
             'type': 'consu',
             'is_storable': True,
@@ -882,7 +882,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         warehouse = self.env['stock.warehouse'].search(
             [('company_id', '=', self.env.company.id)], limit=1
         )
-        self.env['stock.quant']._update_available_quantity(self.storable_product, warehouse.lot_stock_id, 100.0)
+        self.env['stock.quant']._update_available_quantity(storable_product, warehouse.lot_stock_id, 100.0)
 
         sub = self.env['sale.order'].create({
             'name': "Order",
@@ -891,26 +891,126 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             'plan_id': self.plan_month.id,
             'start_date': "2024-10-01",
             'next_invoice_date': False,
-            'order_line': [Command.create({'product_id': self.storable_product.id, 'product_uom_qty': 1})]
+            'order_line': [Command.create({'product_id': storable_product.id, 'product_uom_qty': 1})]
         })
+        self.assertEqual(storable_product.invoice_policy, "order", "The product is invoiced on ordered quantity")
+        self.assertFalse(sub.order_line._is_postpaid_line(), "The line is invoiced at the beginning of the period")
 
         with freeze_time("2024-11-15"):
             sub.action_confirm()
-
+            self.assertEqual(sub.next_invoice_date, datetime.date(2024, 10, 1))
             # Period = "2024-10-01" -> "2024-10-31"
             first_picking = sub.picking_ids
-            self.assertTrue(bool(first_picking))
+            self.assertTrue(first_picking)
             first_picking.move_ids.write({'quantity': 1, 'picked': True})
             first_picking.button_validate()
             quantity_delivered = sum(sub.order_line.move_ids.mapped("quantity"))
             self.assertEqual(quantity_delivered, 1)
-
+            # start the cron once, it will increment the next invoice date but no new picking is created
             self.env["sale.order"]._create_recurring_invoice()
+            self.assertEqual(sub.next_invoice_date, datetime.date(2024, 11, 1))
+            other_picking = sub.picking_ids - first_picking
+            self.assertFalse(other_picking, "No new picking should be created for the first period")
+
+        with freeze_time("2024-11-16"):
+            # the next day, the cron run again and as the next invoice_date is passed, we process the order
+            self.env["sale.order"]._create_recurring_invoice()
+            self.assertEqual(sub.next_invoice_date, datetime.date(2024, 12, 1))
 
             # Period = "2024-11-01" -> "2024-11-30"
             second_picking = sub.picking_ids - first_picking
-            self.assertTrue(bool(second_picking))
+            self.assertTrue(second_picking, "new picking should be created")
             second_picking.move_ids.write({'quantity': 1, 'picked': True})
             second_picking.button_validate()
             quantity_delivered = sum(sub.order_line.move_ids.mapped("quantity"))
             self.assertEqual(quantity_delivered, 2)
+
+    def test_sale_order_with_passed_start_date(self):
+        storable_product = self.env['product.product'].create({
+            'name': 'Storable Product',
+            'type': 'consu',
+            'is_storable': True,
+            'uom_id': self.uom_unit.id,
+            'recurring_invoice': True,
+        })
+
+        warehouse = self.env['stock.warehouse'].search(
+            [('company_id', '=', self.env.company.id)], limit=1
+        )
+        self.env['stock.quant']._update_available_quantity(storable_product, warehouse.lot_stock_id, 100.0)
+        sub = self.env['sale.order'].create({
+            'name': "Order",
+            'is_subscription': True,
+            'partner_id': self.user_portal.partner_id.id,
+            'plan_id': self.plan_month.id,
+            'start_date': "2024-10-01",
+            'next_invoice_date': False,
+            'order_line': [Command.create({'product_id': storable_product.id, 'product_uom_qty': 1})]
+        })
+
+        with freeze_time("2024-10-05"):
+            sub.action_confirm()
+
+            picking = sub.picking_ids
+            self.assertTrue(bool(picking))
+            self.assertEqual(picking.date_deadline, datetime.datetime(2024, 10, 31), "The delivery deadline should be set to the end of the period.")
+
+    def test_sale_order_with_future_start_date(self):
+        storable_product = self.env['product.product'].create({
+            'name': 'Storable Product',
+            'type': 'consu',
+            'is_storable': True,
+            'uom_id': self.uom_unit.id,
+            'recurring_invoice': True,
+        })
+        warehouse = self.env['stock.warehouse'].search(
+            [('company_id', '=', self.env.company.id)], limit=1
+        )
+        self.env['stock.quant']._update_available_quantity(storable_product, warehouse.lot_stock_id, 100.0)
+
+        sub = self.env['sale.order'].create({
+            'name': "Order",
+            'is_subscription': True,
+            'partner_id': self.user_portal.partner_id.id,
+            'plan_id': self.plan_month.id,
+            'start_date': "2024-11-06",
+            'next_invoice_date': False,
+            'order_line': [Command.create({'product_id': storable_product.id, 'product_uom_qty': 1})]
+        })
+
+        with freeze_time("2024-10-05"):
+            sub.action_confirm()
+
+            picking = sub.picking_ids
+            self.assertTrue(bool(picking))
+            self.assertEqual(picking.date_deadline, datetime.datetime(2024, 12, 5), "The delivery deadline should be set to the end of the period.")
+
+    def test_sale_order_with_different_start_and_invoice_dates(self):
+        storable_product = self.env['product.product'].create({
+            'name': 'Storable Product',
+            'type': 'consu',
+            'is_storable': True,
+            'uom_id': self.uom_unit.id,
+            'recurring_invoice': True,
+        })
+        warehouse = self.env['stock.warehouse'].search(
+            [('company_id', '=', self.env.company.id)], limit=1
+        )
+        self.env['stock.quant']._update_available_quantity(storable_product, warehouse.lot_stock_id, 100.0)
+
+        sub = self.env['sale.order'].create({
+            'name': "Order",
+            'is_subscription': True,
+            'partner_id': self.user_portal.partner_id.id,
+            'plan_id': self.plan_month.id,
+            'start_date': "2024-10-01",
+            'next_invoice_date': "2024-10-02",
+            'order_line': [Command.create({'product_id': storable_product.id, 'product_uom_qty': 1})]
+        })
+
+        with freeze_time("2024-10-05"):
+            sub.action_confirm()
+
+            picking = sub.picking_ids
+            self.assertTrue(bool(picking))
+            self.assertEqual(picking.date_deadline.date(), datetime.date(2024, 10, 1), "The delivery deadline should be set to the end of the period.")

@@ -109,7 +109,7 @@ class SaleOrderLine(models.Model):
             start, end = self.order_id.last_invoice_date, self.order_id.next_invoice_date
 
             def date_filter(m):
-                return m.date_deadline and start <= m.date_deadline.date() < end
+                return m.date_deadline and start and end and start <= m.date_deadline.date() < end
             return {
                 'incoming_moves': lambda m: base_filter['incoming_moves'](m) and date_filter(m),
                 'outgoing_moves': lambda m: base_filter['outgoing_moves'](m) and date_filter(m)
@@ -134,9 +134,11 @@ class SaleOrderLine(models.Model):
         if not self.recurring_invoice or self.order_id.subscription_state == '7_upsell':
             return values
         # Remove 1 day as normal people thinks in terms of inclusive ranges.
-        current_deadline = self.order_id.next_invoice_date + self.order_id.plan_id.billing_period - relativedelta(days=1) \
-                if self.order_id.next_invoice_date == self.order_id.date_order.date() and not self.order_id.last_invoice_date \
-                else self.order_id.next_invoice_date - relativedelta(days=1)
+        if not self.order_id.start_date or self.order_id.next_invoice_date == self.order_id.start_date and not self.order_id.last_invoice_date:
+            current_deadline = self.order_id.next_invoice_date + self.order_id.plan_id.billing_period - relativedelta(days=1)
+        else:
+            current_deadline = self.order_id.next_invoice_date - relativedelta(days=1)
+
         current_period_start = self.order_id.last_invoice_date or self.order_id.start_date or fields.Date.today()
         lang_code = self.order_id.partner_id.lang
         format_start = format_date(self.env, current_period_start, lang_code=lang_code)
