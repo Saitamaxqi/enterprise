@@ -74,6 +74,12 @@ publicWidget.registry.SalaryPackageWidget = publicWidget.Widget.extend({
         const selectWrapperEls = document.querySelectorAll(
             "#hr_contract_salary select:not(.refuse-reason-select)"
         );
+        // Create a wrapper div to ensure the working schedule selection appears directly below the label TODO: remove master
+        const workingScheduleSelect = document.querySelector("#hr_contract_salary select[name='simulation_working_schedule']");
+        if (workingScheduleSelect) {
+            const wrapperDiv = workingScheduleSelect.parentNode.insertBefore(document.createElement("div"), workingScheduleSelect);
+            wrapperDiv.append(workingScheduleSelect);
+        }
 
         const promises = [];
         selectWrapperEls.forEach((el) => {
