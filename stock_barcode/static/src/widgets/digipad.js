@@ -112,6 +112,7 @@ export class Digipad extends Component {
      */
     async _fetchPackagingButtons() {
         const record = this.props.record.data;
+        this.productUom = (await this.orm.searchRead("uom.uom", [["id", "=", record.product_uom_id?.id]], ["factor"]))?.[0];
         if (record.product_id.id) {
             let domain = [["id", "=", record.product_id.id]];
             const product_uoms = await this.orm.searchRead(
