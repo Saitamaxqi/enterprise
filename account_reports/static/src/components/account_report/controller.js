@@ -495,6 +495,14 @@ export class AccountReportController {
 
         if (this.filters.show_totals && this.lines[totalIndex] && this.isTotalLine(totalIndex))
             this.lines[totalIndex].visible = true;
+
+        // Update options
+        this.options.unfolded_lines.push(
+            ...newLines.filter(line => line.unfolded).map(({ id }) => id)
+        );
+
+        this.saveSessionOptions(this.options);
+
         return totalIndex
     }
 
