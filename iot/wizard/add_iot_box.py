@@ -84,9 +84,6 @@ class AddIotBox(models.TransientModel):
                     'type': 'info',
                     'message': _("Using Pairing Code to connect..."),
                     'sticky': False,
-                    'params': {
-                        'next': {'type': 'ir.actions.act_window_close'},
-                    }
                 },
             }
 

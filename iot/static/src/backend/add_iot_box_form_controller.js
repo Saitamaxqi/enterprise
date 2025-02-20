@@ -13,6 +13,7 @@ export class AddIoTBoxFormController extends FormController {
         this.orm = useService("orm");
         this.onClickViewButton = this.env.onClickViewButton;
         this.iotBoxesBeforeConnection = [];
+        this.newIoTBoxes = [];              // List of new IoT boxes found
         this.successNotification = null;    // Notification to show when a new IoT box is found
         this.iotCheckTimer = null;          // Timer to manage polling
 
@@ -24,10 +25,7 @@ export class AddIoTBoxFormController extends FormController {
         });
 
         onWillUnmount(() => {
-            if (this.iotCheckTimer) {
-                clearInterval(this.iotCheckTimer);
-            }
-            this.closeConnectingNotification?.();
+            this.onWillUnmount();
         });
     }
 
@@ -82,13 +80,13 @@ export class AddIoTBoxFormController extends FormController {
      */
     async lookForNewIoTBox() {
         const iotBoxesAfterConnection = await this.orm.call("iot.box", "search_read", [[], ["identifier"]]);
-        const newIoTBoxes = iotBoxesAfterConnection.filter(
-            afterBox => !this.iotBoxesBeforeConnection.some(
+        this.newIoTBoxes = iotBoxesAfterConnection.filter(
+            (afterBox) => !this.iotBoxesBeforeConnection.some(
                 beforeBox => beforeBox.identifier === afterBox.identifier
             )
         );
 
-        return newIoTBoxes.length > 0;
+        return this.newIoTBoxes.length > 0;
     }
 
     /**
@@ -103,6 +101,16 @@ export class AddIoTBoxFormController extends FormController {
         } else {
             this.notification.add(_t("No new IoT Box found."), { type: "warning" });
         }
+    }
+
+    /**
+     * Clear the timer when the component is unmounted.
+     */
+    onWillUnmount() {
+        if (this.iotCheckTimer) {
+            clearInterval(this.iotCheckTimer);
+        }
+        this.closeConnectingNotification?.();
     }
 }
 

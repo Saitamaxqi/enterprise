@@ -21,6 +21,13 @@ Supported devices include payment terminals, receipt printers, scales and custom
     'uninstall_hook': 'uninstall_hook',
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
+    'data': [
+        'views/pos_config_views.xml',
+        'views/pos_printer_views.xml',
+        'views/res_config_setting_views.xml',
+        'wizard/auto_config_views.xml',
+        'security/ir.model.access.csv',
+    ],
     'assets': {
         'point_of_sale._assets_pos': [
             'iot/static/src/iot_longpolling.js',
@@ -30,9 +37,13 @@ Supported devices include payment terminals, receipt printers, scales and custom
             'iot/static/src/select_printer_wizard.js',
             'iot/static/src/client_action/delete_local_storage.js',
             'pos_iot/static/src/**/*',
+            ('remove', 'pos_iot/static/src/backend/**/*'),
         ],
         'web.assets_tests': [
             'pos_iot/static/tests/tours/**/*',
+        ],
+        'web.assets_backend': [
+            'pos_iot/static/src/backend/**/*',
         ],
     }
 }
