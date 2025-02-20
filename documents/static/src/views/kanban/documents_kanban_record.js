@@ -21,7 +21,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         <div
             role="article"
             t-att-class="getRecordClasses()"
-            t-att-data-id="props.canResequence and props.record.id"
+            t-att-data-id="props.record.id"
             t-att-tabindex="props.record.model.useSampleModel ? -1 : 0"
             t-on-click.synthetic="onGlobalClick"
             t-on-dragenter.stop.prevent="onDragEnter"
@@ -109,18 +109,16 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         // We can enable selection mode when only one item is selected if a key is pressed,
         // or if we have more than one item selected
         const isSelectionModeActive = selectionLength === 1 ? ev.shiftKey : selectionLength > 1;
-        if (ev.altKey || ev.ctrlKey || isSelectionModeActive) {
+        const selectionKeyActive = ev.altKey || ev.ctrlKey;
+        if (ev.target.closest("div[name='document_preview']") && !(selectionKeyActive || ev.shiftKey)) {
+            this.props.record.onClickPreview(ev);
+        } else if (selectionKeyActive || isSelectionModeActive) {
             this.rootRef.el.focus();
             this.props.toggleSelection(this.props.record, ev.shiftKey);
-        } else if (ev.target.closest("div[name='document_preview']")) {
-            this.props.record.onClickPreview(ev);
-            if (ev.cancelBubble) {
-                return;
-            }
         } else if (this.env.searchModel.getSelectedFolderId() === "TRASH" || this.props.record.data.type !== "folder") {
             // Select only one document record
             this.props.getSelection().forEach(r => r.toggleSelection(false));
-            this.props.record.toggleSelection(true);
+            this.props.toggleSelection(this.props.record);
         } else {
             this.props.record.openFolder();
         }

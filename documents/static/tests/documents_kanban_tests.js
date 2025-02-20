@@ -5477,6 +5477,31 @@ QUnit.module("documents", {}, function () {
                 await legacyClick($(".o_form_button_save").get(0));
                 assert.verifySteps(["web_save", "copy"]);
             });
+
+            QUnit.test(
+                "documents kanban: select a range with SHIFT key",
+                async function (assert) {
+                    await createDocumentsView({
+                        type: "kanban",
+                        resModel: "documents.document",
+                        arch: `
+                        <kanban js_class="documents_kanban" draggable="true"><templates><t t-name="card" class="flex-row">
+                            <i class="fa fa-circle mt-1 o_record_selector"/>
+                            <field name="name"/>
+                        </t></templates></kanban>`,
+                    });
+
+                    await legacyClick(target, ".o_kanban_record:nth-of-type(2)");
+                    assert.hasClass(
+                        target.querySelector(".o_kanban_record:nth-of-type(2)"),
+                        "o_record_selected",
+                    );
+                    await triggerEvent(target.querySelector(".o_kanban_record:nth-of-type(5)"), null, "click", {
+                        shiftKey: true,
+                    });
+                    assert.containsN(target, ".o_record_selected", 4)
+                }
+            );
         }
     );
 });

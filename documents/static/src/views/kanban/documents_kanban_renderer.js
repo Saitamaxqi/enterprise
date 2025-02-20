@@ -64,10 +64,6 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
         );
     }
 
-    handleRecordSelection(target) {
-        target.click();
-    }
-
     /**
      * Called when clicking in the kanban renderer.
      */
@@ -190,17 +186,20 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
     }
 
     toggleRangeSelection(record) {
+        if (!this.lastCheckedRecord) {
+            return;
+        }
         const { records } = this.props.list;
         const documentIds = Array.from(
-            document.querySelectorAll(".o_kanban_record:not(.o_kanban_ghost)"),
-        ).map((el) => parseInt(el.querySelector("div").dataset.id));
-        const recordIndex = documentIds.indexOf(record.resId);
-        const lastCheckedRecordIndex = documentIds.indexOf(this.lastCheckedRecord.resId);
+            document.querySelectorAll(".o_kanban_record:not(.o_kanban_ghost)")
+        ).map((el) => el.dataset.id);
+        const recordIndex = documentIds.indexOf(record.id);
+        const lastCheckedRecordIndex = documentIds.indexOf(this.lastCheckedRecord.id);
         const start = Math.min(recordIndex, lastCheckedRecordIndex);
         const end = Math.max(recordIndex, lastCheckedRecordIndex);
         const toSelectDocumentIds = documentIds.slice(start, end + 1);
         records.forEach((r) => {
-            if (toSelectDocumentIds.includes(r.resId)) {
+            if (toSelectDocumentIds.includes(r.id)) {
                 r.toggleSelection(!record.selected);
             }
         });

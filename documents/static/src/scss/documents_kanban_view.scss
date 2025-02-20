@@ -151,7 +151,7 @@
                 }
             }
 
-            .oe_kanban_previewer {
+            &:not(.o_record_selection_available) .oe_kanban_previewer {
                 cursor: zoom-in;
             }
 
