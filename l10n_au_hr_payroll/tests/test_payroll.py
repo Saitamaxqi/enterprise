@@ -4,7 +4,7 @@
 from collections import defaultdict
 from datetime import date
 from freezegun import freeze_time
-from contextlib import contextmanager
+from contextlib import closing
 from unittest import skip
 
 from odoo import Command
@@ -23,13 +23,6 @@ class TestPayroll(TestPayrollCommon):
         cls.tax_treatment_category = 'R'
 
     def test_withholding_amounts(self):
-
-        @contextmanager
-        def rollback():
-            savepoint = self.cr.savepoint()
-            yield
-            savepoint.rollback()
-
         test_scales = [
             {'l10n_au_tax_free_threshold': False},  # Scale 1
             {'l10n_au_tax_free_threshold': True},  # Scale 2
@@ -53,7 +46,7 @@ class TestPayroll(TestPayrollCommon):
                 self.contract_ids[0].wage = earnings
                 for idx, test_data in enumerate(row[1:]):
                     with self.subTest(earnings=earnings, scale=test_scales[idx]):
-                        with rollback():
+                        with closing(self.env.cr.savepoint()):
                             self.employee_id.write(test_scales[idx])
                             coefficients = payslip._l10n_au_tax_schedule_parameters()
                             amount = payslip._l10n_au_compute_withholding_amount(earnings, period, coefficients)

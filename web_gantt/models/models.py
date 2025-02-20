@@ -209,10 +209,10 @@ class Base(models.AbstractModel):
                 }
             }
 
-        sp = self.env.cr.savepoint()
-        log_messages, old_vals_per_pill_id = trigger_record._web_gantt_action_reschedule_candidates(dependency_field_name, dependency_inverted_field_name, start_date_field_name, stop_date_field_name, direction, related_record)
-        has_errors = bool(log_messages.get("errors"))
-        sp.close(rollback=has_errors)
+        with self.env.cr.savepoint() as sp:
+            log_messages, old_vals_per_pill_id = trigger_record._web_gantt_action_reschedule_candidates(dependency_field_name, dependency_inverted_field_name, start_date_field_name, stop_date_field_name, direction, related_record)
+            has_errors = bool(log_messages.get("errors"))
+            sp.close(rollback=has_errors)
         notification_type = "success"
         message = _("Reschedule done successfully.")
         if has_errors or log_messages.get("warnings"):

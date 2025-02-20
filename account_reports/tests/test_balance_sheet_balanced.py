@@ -425,41 +425,37 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
         self.existing_companies = self.env['res.company'].search([])
 
         self.env.flush_all()
-        savepoint = self.env.cr.savepoint(flush=False)
 
         for coa in installed_coas:
-            with self.subTest(CoA=coa):
-                try:
-                    # === 1. Set-up localization === #
-                    available_reports, aml_pairs, accounts_by_aml = self._set_up_localization(coa)
+            with self.env.cr.savepoint(flush=False), self.subTest(CoA=coa):
+                # === 1. Set-up localization === #
+                available_reports, aml_pairs, accounts_by_aml = self._set_up_localization(coa)
 
-                    # Test each of the Balance Sheet reports available for the CoA.
-                    for report in available_reports:
-                        report_ref = report.get_external_id()[report.id]
-                        with self.subTest(Report=report_ref):
-                            _logger.info('Testing report %s with CoA %s', report_ref, coa)
+                # Test each of the Balance Sheet reports available for the CoA.
+                for report in available_reports:
+                    report_ref = report.get_external_id()[report.id]
+                    with self.subTest(Report=report_ref):
+                        _logger.info('Testing report %s with CoA %s', report_ref, coa)
 
-                            # === 2. Set-up report === #
-                            report_setup_data = self._set_up_report(report)
+                        # === 2. Set-up report === #
+                        report_setup_data = self._set_up_report(report)
 
-                            # === 3. Test that the report is balanced with both the debits journal entry and the credits journal entry. === #
-                            if not IDENTIFY_INCORRECT_ACCOUNTS:
-                                self._check_balance_sheet_balanced(report_setup_data, aml_pairs)
-                            else:
-                                bad_account_ids = set()
-                                logging_fn = log_incorrect_accounts_detailed if EXTRA_DETAIL else log_incorrect_accounts_quiet
+                        # === 3. Test that the report is balanced with both the debits journal entry and the credits journal entry. === #
+                        if not IDENTIFY_INCORRECT_ACCOUNTS:
+                            self._check_balance_sheet_balanced(report_setup_data, aml_pairs)
+                        else:
+                            bad_account_ids = set()
+                            logging_fn = log_incorrect_accounts_detailed if EXTRA_DETAIL else log_incorrect_accounts_quiet
 
-                                self._identify_incorrect_accounts(
-                                    report_setup_data,
-                                    aml_pairs,
-                                    accounts_by_aml,
-                                    bad_account_ids,
-                                    logging_fn,
-                                )
-                                if bad_account_ids:
-                                    self.fail('Balance Sheet not balanced.')
-                finally:
-                    savepoint.rollback()
+                            self._identify_incorrect_accounts(
+                                report_setup_data,
+                                aml_pairs,
+                                accounts_by_aml,
+                                bad_account_ids,
+                                logging_fn,
+                            )
+                            if bad_account_ids:
+                                self.fail('Balance Sheet not balanced.')
 
     def _set_up_localization(self, coa):
         ''' Set up a localization for testing.
