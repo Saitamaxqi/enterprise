@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:22+0000\n"
-"PO-Revision-Date: 2024-12-24 15:22+0000\n"
+"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"PO-Revision-Date: 2025-02-20 10:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,13 @@ msgid "%(job)s on %(platform)s"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
+msgid ""
+"<span class=\"o_stat_value\">New</span>\n"
+"                            <span class=\"o_stat_text\">Job Board</span>"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban
 msgid "<span class=\"px-2\">-</span>"
 msgstr ""
@@ -29,6 +36,11 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban
 msgid "<span class=\"text-muted\" invisible=\"campaign_end_date\">No limit</span>"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
+msgid "<strong class=\"mx-1\">to</strong>"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -44,16 +56,6 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_form
 msgid "<strong class=\"px-2\">to</strong>"
-msgstr ""
-
-#. module: hr_recruitment_integration_base
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
-msgid "<strong>From</strong>"
-msgstr ""
-
-#. module: hr_recruitment_integration_base
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
-msgid "<strong>to</strong>"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -168,7 +170,7 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/wizard/hr_recruitment_post.py:0
-msgid "Campaign start date can't be after campaign end date"
+msgid "Campaign start date can't be after campaign end date.\n"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -264,6 +266,8 @@ msgid "Deleted"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__post_html
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__post_html
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
 msgid "Description"
@@ -295,6 +299,12 @@ msgid "Email"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
+#. odoo-python
+#: code:addons/hr_recruitment_integration_base/wizard/hr_recruitment_post.py:0
+msgid "Email is required if the apply method is 'Send an email'.\n"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban_search
 msgid "Expiration date"
 msgstr ""
@@ -323,6 +333,11 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
+msgid "From"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -578,6 +593,11 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
+#: model_terms:ir.actions.act_window,help:hr_recruitment_integration_base.action_open_hr_job_post
+msgid "Or you can start with the creation of a new open job position"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job_post__status__pending
 msgid "Pending"
 msgstr ""
@@ -589,8 +609,6 @@ msgid "Platform"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
-#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__post_html
-#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__post_html
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
 msgid "Post"
 msgstr ""
@@ -633,14 +651,25 @@ msgid "Price to Update"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
+#: model:ir.actions.server,name:hr_recruitment_integration_base.action_publish_on_job_board
 msgid "Publish on Job Board"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban
+msgid "Publish on Jobs Board"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_job.py:0
+#: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
 msgid "Publish on a Job Board"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model_terms:ir.actions.act_window,help:hr_recruitment_integration_base.action_open_hr_job_post
+msgid "Publish one of our job position to a Jobs Board"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -666,12 +695,6 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__activity_user_id
 msgid "Responsible User"
-msgstr ""
-
-#. module: hr_recruitment_integration_base
-#. odoo-python
-#: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
-msgid "Reuse Job Post"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -764,7 +787,6 @@ msgstr ""
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__campaign_start_date
-#: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__campaign_start_date
 msgid "The date when the campaign will start."
 msgstr ""
 

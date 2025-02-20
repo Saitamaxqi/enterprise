@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:22+0000\n"
-"PO-Revision-Date: 2024-12-24 15:22+0000\n"
+"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"PO-Revision-Date: 2025-02-20 10:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -48,6 +48,11 @@ msgstr ""
 #. module: helpdesk_sale_timesheet
 #: model:ir.model,name:helpdesk_sale_timesheet.model_project_task_convert_wizard
 msgid "Convert Project Tasks to Tickets"
+msgstr ""
+
+#. module: helpdesk_sale_timesheet
+#: model:ir.model,website_form_label:helpdesk_sale_timesheet.model_helpdesk_ticket
+msgid "Create a Ticket"
 msgstr ""
 
 #. module: helpdesk_sale_timesheet
@@ -170,7 +175,6 @@ msgstr ""
 
 #. module: helpdesk_sale_timesheet
 #. odoo-python
-#: code:addons/helpdesk_sale_timesheet/controllers/portal.py:0
 #: code:addons/helpdesk_sale_timesheet/models/helpdesk_ticket.py:0
 #: model:ir.model,name:helpdesk_sale_timesheet.model_sale_order
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_sale_timesheet
@@ -178,6 +182,8 @@ msgid "Sales Order"
 msgstr ""
 
 #. module: helpdesk_sale_timesheet
+#. odoo-python
+#: code:addons/helpdesk_sale_timesheet/controllers/portal.py:0
 #: model:ir.model.fields,field_description:helpdesk_sale_timesheet.field_helpdesk_sla_report_analysis__sale_line_id
 #: model:ir.model.fields,field_description:helpdesk_sale_timesheet.field_helpdesk_ticket__sale_line_id
 #: model:ir.model.fields,field_description:helpdesk_sale_timesheet.field_helpdesk_ticket_report_analysis__sale_line_id
@@ -202,7 +208,7 @@ msgstr ""
 #. module: helpdesk_sale_timesheet
 #. odoo-python
 #: code:addons/helpdesk_sale_timesheet/controllers/portal.py:0
-msgid "Search in Sales Order"
+msgid "Search in Sales Order Item"
 msgstr ""
 
 #. module: helpdesk_sale_timesheet

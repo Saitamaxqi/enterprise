@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:22+0000\n"
-"PO-Revision-Date: 2024-12-24 15:22+0000\n"
+"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"PO-Revision-Date: 2025-02-20 10:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -88,6 +88,20 @@ msgid "Must only contain digits"
 msgstr ""
 
 #. module: pos_iot_six
+#. odoo-javascript
+#: code:addons/pos_iot_six/static/src/js/payment_six.js:0
+msgid "Payment terminal error"
+msgstr ""
+
+#. module: pos_iot_six
+#. odoo-javascript
+#: code:addons/pos_iot_six/static/src/js/payment_six.js:0
+msgid ""
+"Please check the network connection and then check the status of the last "
+"transaction manually."
+msgstr ""
+
+#. module: pos_iot_six
 #: model:ir.model,name:pos_iot_six.model_pos_payment_method
 msgid "Point of Sale Payment Methods"
 msgstr ""
@@ -121,6 +135,12 @@ msgid "Terminal Device"
 msgstr ""
 
 #. module: pos_iot_six
+#. odoo-javascript
+#: code:addons/pos_iot_six/static/src/js/payment_six.js:0
+msgid "Terminal Disconnected"
+msgstr ""
+
+#. module: pos_iot_six
 #: model:ir.model.fields,help:pos_iot_six.field_iot_box__six_terminal_id
 #: model:ir.model.fields,help:pos_iot_six.field_pos_iot_six_add_six_terminal__six_terminal_id
 msgid ""
@@ -132,4 +152,10 @@ msgstr ""
 #. module: pos_iot_six
 #: model:ir.model.fields,help:pos_iot_six.field_pos_iot_six_add_six_terminal__iot_box_id
 msgid "The IoT Box that your Six terminal is connected to."
+msgstr ""
+
+#. module: pos_iot_six
+#. odoo-javascript
+#: code:addons/pos_iot_six/static/src/js/payment_six.js:0
+msgid "Transaction could not be cancelled"
 msgstr ""

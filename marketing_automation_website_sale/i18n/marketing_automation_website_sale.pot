@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:22+0000\n"
-"PO-Revision-Date: 2024-12-24 15:22+0000\n"
+"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"PO-Revision-Date: 2025-02-20 10:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,11 +28,21 @@ msgid ""
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
+msgid "<b>John DOE</b> • CEO of MyCompany"
+msgstr ""
+
+#. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
 msgid ""
 "<br/>\n"
 "            <span style=\"font-size: 12px\">\n"
 "              <font style=\"color: rgb(183, 191, 199)\">To unsubscribe,</font></span>"
+msgstr ""
+
+#. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
+msgid "<font class=\"text-o-color-1\">HBD20</font>"
 msgstr ""
 
 #. module: marketing_automation_website_sale
@@ -43,6 +53,11 @@ msgstr ""
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_purchase_arch
 msgid "<font style=\"color: rgb(255, 0, 0)\">THANK YOU FOR CHOOSING US</font>"
+msgstr ""
+
+#. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
+msgid "<i>Cheers to more great years ahead!</i><br/>"
 msgstr ""
 
 #. module: marketing_automation_website_sale
@@ -92,13 +107,57 @@ msgid ""
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
+msgid ""
+"<span style=\"font-size: 1rem;\">You've been with us for a whole year—thank "
+"you for being here! 🎈</span>"
+msgstr ""
+
+#. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
+msgid "<span style=\"font-size: 3.5rem;\">Happy Non-birthday!</span>"
+msgstr ""
+
+#. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
+msgid ""
+"<span style=\"font-weight: bolder; color: inherit; font-size: "
+"0.857143rem;\">BUY YOURSELF A GIFT</span><span style=\"font-size: "
+"0.857143rem;\"> !</span><br/>"
+msgstr ""
+
+#. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch
 msgid "<strong>VISIT STORE</strong>"
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#. odoo-python
+#: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
+msgid "Add Coupon Recipient Tag"
+msgstr ""
+
+#. module: marketing_automation_website_sale
+#. odoo-python
+#: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
+msgid "Anniversary Discount"
+msgstr ""
+
+#. module: marketing_automation_website_sale
+#. odoo-python
+#: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
+msgid "Anniversary Discount Coupon Recipient"
+msgstr ""
+
+#. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch
 msgid "CHECK OUT OUR LATEST ARRIVALS"
+msgstr ""
+
+#. module: marketing_automation_website_sale
+#. odoo-python
+#: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
+msgid "Celebrate contacts that registered one year ago."
 msgstr ""
 
 #. module: marketing_automation_website_sale
@@ -113,6 +172,11 @@ msgid "Cheers,"
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
+msgid "Contact"
+msgstr ""
+
+#. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
 msgid "Create Repeat Customers"
@@ -124,10 +188,17 @@ msgid "Display Name"
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_purchase_arch
 msgid "Facebook"
+msgstr ""
+
+#. module: marketing_automation_website_sale
+#. odoo-python
+#: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
+msgid "Happy non-birthday!"
 msgstr ""
 
 #. module: marketing_automation_website_sale
@@ -163,6 +234,7 @@ msgid ""
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_purchase_arch
@@ -175,6 +247,7 @@ msgid "John Doe, from all of us at MyCompany"
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_purchase_arch
 msgid "LinkedIn"
@@ -227,6 +300,17 @@ msgid "Recent Purchase Follow-up"
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
+msgid "Redeem coupon now"
+msgstr ""
+
+#. module: marketing_automation_website_sale
+#. odoo-python
+#: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
+msgid "Send Anniversary Email"
+msgstr ""
+
+#. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
 msgid ""
@@ -245,6 +329,12 @@ msgid "So...<strong>Thank you once again for choosing us</strong>."
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#. odoo-python
+#: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
+msgid "Tag User With Promotion"
+msgstr ""
+
+#. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
 msgid "Thank you again for choosing us!"
 msgstr ""
@@ -256,9 +346,15 @@ msgid "Thank you for your purchase"
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_purchase_arch
 msgid "TikTok"
+msgstr ""
+
+#. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
+msgid "To celebrate, here’s a little something for you."
 msgstr ""
 
 #. module: marketing_automation_website_sale
@@ -268,6 +364,7 @@ msgid "Turn one-time visitors into repeat buyers."
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_purchase_arch
 msgid "Unsubscribe"
@@ -335,9 +432,16 @@ msgid "eCommerce"
 msgstr ""
 
 #. module: marketing_automation_website_sale
+#: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_purchase_arch
 msgid "© 2024 All Rights Reserved"
+msgstr ""
+
+#. module: marketing_automation_website_sale
+#. odoo-python
+#: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
+msgid "✨ We have a surprise for you ✨"
 msgstr ""
 
 #. module: marketing_automation_website_sale

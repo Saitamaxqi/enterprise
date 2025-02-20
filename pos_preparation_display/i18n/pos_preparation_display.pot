@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:21+0000\n"
-"PO-Revision-Date: 2024-12-24 15:21+0000\n"
+"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"PO-Revision-Date: 2025-02-20 10:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -94,6 +94,11 @@ msgstr ""
 #. module: pos_preparation_display
 #: model:ir.model.fields,field_description:pos_preparation_display.field_pos_preparation_display_stage__color
 msgid "Color"
+msgstr ""
+
+#. module: pos_preparation_display
+#: model:ir.model.fields,field_description:pos_preparation_display.field_pos_preparation_display_orderline__combo_line_ids
+msgid "Combo Lines"
 msgstr ""
 
 #. module: pos_preparation_display
@@ -224,6 +229,11 @@ msgid "ID of the original PoS order"
 msgstr ""
 
 #. module: pos_preparation_display
+#: model:ir.model.fields,help:pos_preparation_display.field_pos_preparation_display_orderline__combo_parent_id
+msgid "Indicates the parent line if this is part of a combo"
+msgstr ""
+
+#. module: pos_preparation_display
 #: model:ir.model.fields,field_description:pos_preparation_display.field_pos_preparation_display_orderline__internal_note
 msgid "Internal Note"
 msgstr ""
@@ -331,6 +341,11 @@ msgstr ""
 #. module: pos_preparation_display
 #: model:ir.model.fields,help:pos_preparation_display.field_pos_preparation_display_orderline__pos_order_line_uuid
 msgid "Original pos order line UUID"
+msgstr ""
+
+#. module: pos_preparation_display
+#: model:ir.model.fields,field_description:pos_preparation_display.field_pos_preparation_display_orderline__combo_parent_id
+msgid "Parent Combo Line"
 msgstr ""
 
 #. module: pos_preparation_display

@@ -4,21 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:21+0000\n"
-"PO-Revision-Date: 2024-12-24 15:21+0000\n"
+"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"PO-Revision-Date: 2025-02-20 10:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: website_helpdesk
-#: model_terms:ir.ui.view,arch_db:website_helpdesk.team
-msgid "<b>About our team</b>"
-msgstr ""
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar
@@ -84,6 +79,11 @@ msgstr ""
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar
 msgid "<span class=\"text-muted\">Results for</span>"
+msgstr ""
+
+#. module: website_helpdesk
+#: model_terms:ir.ui.view,arch_db:website_helpdesk.team
+msgid "About our team"
 msgstr ""
 
 #. module: website_helpdesk
@@ -185,6 +185,11 @@ msgstr ""
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.helpdesk_all_team
 msgid "Contact us <i class=\"oi oi-arrow-right\"/>"
+msgstr ""
+
+#. module: website_helpdesk
+#: model:ir.model,website_form_label:website_helpdesk.model_helpdesk_ticket
+msgid "Create a Ticket"
 msgstr ""
 
 #. module: website_helpdesk
@@ -340,6 +345,12 @@ msgid "No results found. Please try another search."
 msgstr ""
 
 #. module: website_helpdesk
+#. odoo-python
+#: code:addons/website_helpdesk/controllers/main.py:0
+msgid "Other Information"
+msgstr ""
+
+#. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.footer
 msgid "Our support team is here to help."
 msgstr ""
@@ -404,22 +415,27 @@ msgid "Thank you!"
 msgstr ""
 
 #. module: website_helpdesk
+#. odoo-javascript
+#: code:addons/website_helpdesk/static/src/js/website_helpdesk_edit_menu.js:0
+msgid ""
+"The %s URL is reserved for the helpdesk team with the same name. \n"
+"                        To use it, please enable the 'website form' feature on that team instead."
+msgstr ""
+
+#. module: website_helpdesk
 #. odoo-python
 #: code:addons/website_helpdesk/models/helpdesk.py:0
 msgid "The companies of the team and the website should match."
 msgstr ""
 
 #. module: website_helpdesk
-#. odoo-javascript
-#: code:addons/website_helpdesk/static/src/js/website_helpdesk_edit_menu.js:0
-#, python-format
-msgid "The %s URL is reserved for the helpdesk team with the same name. "
-"To use it, please enable the 'website form' feature on that team instead."
+#: model:ir.model.fields,help:website_helpdesk.field_helpdesk_team__website_absolute_url
+msgid "The full absolute URL to access the document through the website."
 msgstr ""
 
 #. module: website_helpdesk
 #: model:ir.model.fields,help:website_helpdesk.field_helpdesk_team__website_url
-msgid "The full URL to access the document through the website."
+msgid "The full relative URL to access the document through the website."
 msgstr ""
 
 #. module: website_helpdesk
@@ -441,6 +457,11 @@ msgstr ""
 #: model:ir.model,name:website_helpdesk.model_website
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__website_id
 msgid "Website"
+msgstr ""
+
+#. module: website_helpdesk
+#: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__website_absolute_url
+msgid "Website Absolute URL"
 msgstr ""
 
 #. module: website_helpdesk
@@ -481,10 +502,4 @@ msgstr ""
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.search_results
 msgid "go back to help page"
-msgstr ""
-
-#. module: website_helpdesk
-#. odoo-python
-#: code:addons/website_helpdesk/controllers/main.py:0
-msgid "Other Information"
 msgstr ""

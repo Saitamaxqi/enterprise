@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:21+0000\n"
-"PO-Revision-Date: 2024-12-24 15:21+0000\n"
+"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"PO-Revision-Date: 2025-02-20 10:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,6 +37,17 @@ msgid "Created on"
 msgstr ""
 
 #. module: account_disallowed_expenses_fleet
+#: model:ir.model.fields,field_description:account_disallowed_expenses_fleet.field_fleet_disallowed_expenses_rate__rate
+msgid "Deductibility (%)"
+msgstr ""
+
+#. module: account_disallowed_expenses_fleet
+#: model:ir.model.fields,field_description:account_disallowed_expenses_fleet.field_fleet_vehicle__rate_ids
+#: model_terms:ir.ui.view,arch_db:account_disallowed_expenses_fleet.fleet_vehicle_view_form
+msgid "Deductibility Rates"
+msgstr ""
+
+#. module: account_disallowed_expenses_fleet
 #: model:ir.model,name:account_disallowed_expenses_fleet.model_account_deferred_report_handler
 msgid "Deferred Expense Report Custom Handler"
 msgstr ""
@@ -49,12 +60,6 @@ msgstr ""
 #. module: account_disallowed_expenses_fleet
 #: model:ir.model,name:account_disallowed_expenses_fleet.model_account_disallowed_expenses_fleet_report_handler
 msgid "Disallowed Expenses Fleet Custom Handler"
-msgstr ""
-
-#. module: account_disallowed_expenses_fleet
-#: model:ir.model.fields,field_description:account_disallowed_expenses_fleet.field_fleet_vehicle__rate_ids
-#: model_terms:ir.ui.view,arch_db:account_disallowed_expenses_fleet.fleet_vehicle_view_form
-msgid "Disallowed Expenses Rate"
 msgstr ""
 
 #. module: account_disallowed_expenses_fleet
@@ -108,7 +113,7 @@ msgstr ""
 
 #. module: account_disallowed_expenses_fleet
 #: model:ir.model.fields,field_description:account_disallowed_expenses_fleet.field_account_disallowed_expenses_category__car_category
-msgid "Make Vehicle Required"
+msgid "Requires a Vehicle"
 msgstr ""
 
 #. module: account_disallowed_expenses_fleet
@@ -134,7 +139,7 @@ msgstr ""
 
 #. module: account_disallowed_expenses_fleet
 #. odoo-javascript
-#: code:addons/account_disallowed_expenses_fleet/static/src/components/disallowed_expenses_report/filter_extra_options.xml:0
+#: code:addons/account_disallowed_expenses_fleet/static/src/components/disallowed_expenses_report/filters.js:0
 msgid "Vehicle Split"
 msgstr ""
 

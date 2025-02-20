@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:22+0000\n"
-"PO-Revision-Date: 2024-12-24 15:22+0000\n"
+"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"PO-Revision-Date: 2025-02-20 10:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -128,14 +128,6 @@ msgid "Documents to sign"
 msgstr ""
 
 #. module: hr_contract_sign
-#: model:ir.model.fields,help:hr_contract_sign.field_hr_contract_sign_document_wizard__sign_template_ids
-msgid ""
-"Documents to sign. Only documents with 1 or 2 different responsible are selectable.\n"
-"        Documents with 1 responsible will only have to be signed by the employee while documents with 2 different responsible will have to be signed by both the employee and the responsible.\n"
-"        "
-msgstr ""
-
-#. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__mail_to
 msgid "Email"
 msgstr ""
@@ -232,9 +224,7 @@ msgstr ""
 #. module: hr_contract_sign
 #. odoo-python
 #: code:addons/hr_contract_sign/wizard/hr_contract_sign_document_wizard.py:0
-msgid ""
-"No appropriate template could be found, please make sure you configured them"
-" properly."
+msgid "No documents templates on the database."
 msgstr ""
 
 #. module: hr_contract_sign
@@ -277,6 +267,14 @@ msgstr ""
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_mail_activity_plan_template__responsible_count
 msgid "Responsible Count"
+msgstr ""
+
+#. module: hr_contract_sign
+#: model:ir.model.fields,help:hr_contract_sign.field_hr_contract_sign_document_wizard__sign_template_ids
+msgid ""
+"Select only documents with either 1 or 2 different signatories.\n"
+"        Documents with 1 signatory require only the employee's signature, while those with 2 signatories require signatures from both the employee and the HR responsible.\n"
+"        "
 msgstr ""
 
 #. module: hr_contract_sign
@@ -339,6 +337,12 @@ msgstr ""
 msgid ""
 "This sign request has been cancelled due to the cancellation of the related "
 "contract."
+msgstr ""
+
+#. module: hr_contract_sign
+#. odoo-javascript
+#: code:addons/hr_contract_sign/static/src/widget/upload_pdf_button_view.xml:0
+msgid "Upload a PDF to set a new one."
 msgstr ""
 
 #. module: hr_contract_sign

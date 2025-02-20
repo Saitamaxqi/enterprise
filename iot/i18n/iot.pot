@@ -4,46 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:20+0000\n"
-"PO-Revision-Date: 2024-12-24 15:20+0000\n"
+"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"PO-Revision-Date: 2025-02-20 10:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: iot
-#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
-msgid ""
-".\n"
-"\n"
-"                    <br/><br/>\n"
-"\n"
-"                    <strong>Option A. Pairing Code</strong><br/>\n"
-"                    1. Read the pairing code from a display or thermal printer connected to the IoT Box. You can also find it on the IoT Box Homepage<br/>\n"
-"                    2. Enter the code below and click on \"Pair\".<br/>\n"
-"                    3. After some time the IoT Box should appear in the list along with the connected devices.<br/>"
-msgstr ""
-
-#. module: iot
-#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
-msgid ""
-"0. Power on the IoT Box and connect it to the internet through ethernet"
-msgstr ""
-
-#. module: iot
-#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
-msgid ""
-"<br/>\n"
-"                    1. Copy the token below<br/>\n"
-"                    2. While on the same network as the IoT Box open a web browser and go to the IoT Box ip address<br/>\n"
-"                    3. In the \"Server\" section click on \"Configure\" button<br/>\n"
-"                    4. Paste the token in the \"Server token\" section and click on \"Connect\" button<br/>\n"
-"                    5. After some time the IoT Box should appear in the list along with the connected devices<br/>"
-msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
@@ -58,6 +28,13 @@ msgstr ""
 #. module: iot
 #: model:ir.model,name:iot.model_add_iot_box
 msgid "Add IoT Box wizard"
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid ""
+"After some time the IoT Box should appear in the list along with the "
+"connected devices"
 msgstr ""
 
 #. module: iot
@@ -155,13 +132,16 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_kanban
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_list
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
 msgid "Connect"
 msgstr ""
 
 #. module: iot
+#. odoo-python
+#: code:addons/iot/wizard/add_iot_box.py:0
 #: model:ir.actions.act_window,name:iot.action_add_iot_box
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
-msgid "Connect an IoT Box"
+msgid "Connect my IoT Box"
 msgstr ""
 
 #. module: iot
@@ -186,6 +166,11 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_websocket_service.js:0
 msgid "Connection to printer failed "
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid "Copy the token below"
 msgstr ""
 
 #. module: iot
@@ -254,6 +239,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:iot.field_iot_device__display_name
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__display_name
 #: model:ir.model.fields,field_description:iot.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:iot.field_ir_http__display_name
 #: model:ir.model.fields,field_description:iot.field_ir_websocket__display_name
 #: model:ir.model.fields,field_description:iot.field_publisher_warranty_contract__display_name
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__display_name
@@ -289,6 +275,11 @@ msgid "Download logs"
 msgstr ""
 
 #. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid "Enter the code below and click on \"Connect\""
+msgstr ""
+
+#. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_report_action.js:0
 msgid "Failed to send to printer."
@@ -306,6 +297,11 @@ msgid "Fiscal Data Module"
 msgstr ""
 
 #. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid "Follow the instructions below to connect your IoT Box to your database"
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
 msgid "Group By"
 msgstr ""
@@ -316,12 +312,18 @@ msgid "HDMI"
 msgstr ""
 
 #. module: iot
+#: model:ir.model,name:iot.model_ir_http
+msgid "HTTP Routing"
+msgstr ""
+
+#. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__id
 #: model:ir.model.fields,field_description:iot.field_iot_box__id
 #: model:ir.model.fields,field_description:iot.field_iot_channel__id
 #: model:ir.model.fields,field_description:iot.field_iot_device__id
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__id
 #: model:ir.model.fields,field_description:iot.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:iot.field_ir_http__id
 #: model:ir.model.fields,field_description:iot.field_ir_websocket__id
 #: model:ir.model.fields,field_description:iot.field_publisher_warranty_contract__id
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__id
@@ -365,6 +367,11 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version
 msgid "Image Version"
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid "In the \"Server\" section click on the \"Configure\" button"
 msgstr ""
 
 #. module: iot
@@ -541,18 +548,13 @@ msgid ""
 msgstr ""
 
 #. module: iot
-#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
-msgid "Option B. Connection Token"
-msgstr ""
-
-#. module: iot
-#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
-msgid "Pair"
-msgstr ""
-
-#. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__pairing_code
 msgid "Pairing Code"
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid "Paste the token in the \"Server token\" field and click on \"Connect\""
 msgstr ""
 
 #. module: iot
@@ -587,6 +589,11 @@ msgid "Please wait"
 msgstr ""
 
 #. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid "Power on the IoT Box and connect it to the internet through ethernet"
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_printers_wizard
 msgid "Print"
 msgstr ""
@@ -615,6 +622,13 @@ msgstr ""
 #. module: iot
 #: model:ir.model,name:iot.model_publisher_warranty_contract
 msgid "Publisher Warranty Contract For IoT Box"
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid ""
+"Read the pairing code from a display or thermal printer connected to the IoT"
+" Box. You can also find it on the IoT Box Homepage"
 msgstr ""
 
 #. module: iot
@@ -790,6 +804,16 @@ msgid "USB"
 msgstr ""
 
 #. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid "Use another method"
+msgstr ""
+
+#. module: iot
+#: model:ir.model.fields,field_description:iot.field_add_iot_box__use_token
+msgid "Use other method"
+msgstr ""
+
+#. module: iot
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
 msgid "Using Pairing Code to connect..."
@@ -801,9 +825,8 @@ msgid "Variant"
 msgstr ""
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/views/add_iot_box_form_controller.js:0
-msgid "Waiting for a new IoT Box..."
+#: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
+msgid "Visible to all"
 msgstr ""
 
 #. module: iot
@@ -813,10 +836,23 @@ msgid "We had troubles pairing your IoT Box. Please try again later."
 msgstr ""
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/views/add_iot_box_form_controller.js:0
+msgid "We're looking for your IoT Box"
+msgstr ""
+
+#. module: iot
 #: model:ir.model.fields,help:iot.field_ir_actions_report__device_ids
 msgid ""
 "When setting a device here, the report will be printed through this device "
 "on the IoT Box"
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid ""
+"While on the same network as the IoT Box, open a web browser and go to the "
+"IoT Box IP address"
 msgstr ""
 
 #. module: iot

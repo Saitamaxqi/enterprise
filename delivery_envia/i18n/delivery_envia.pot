@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-23 16:38+0000\n"
-"PO-Revision-Date: 2025-01-23 16:38+0000\n"
+"POT-Creation-Date: 2025-02-20 10:30+0000\n"
+"PO-Revision-Date: 2025-02-20 10:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -177,14 +177,16 @@ msgid "Delivery Service"
 msgstr ""
 
 #. module: delivery_envia
+#: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_envia.field_envia_shipping_wizard__display_name
+#: model:ir.model.fields,field_description:delivery_envia.field_stock_package_type__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"Don’t worry about the printing options, just note which ones exist for your "
+"Don't worry about the printing options, just note which ones exist for your "
 "favorite carrier as we will select them in Odoo."
 msgstr ""
 
@@ -339,6 +341,12 @@ msgid "Envia.com Service Name"
 msgstr ""
 
 #. module: delivery_envia
+#: model_terms:ir.ui.view,arch_db:delivery_envia.res_config_settings_view_form_sale_envia
+#: model_terms:ir.ui.view,arch_db:delivery_envia.res_config_settings_view_form_stock_envia
+msgid "Envia.com Shipping Methods"
+msgstr ""
+
+#. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/delivery_carrier.py:0
 msgid "Failed to fetch Envia Carriers, Please try again later."
@@ -363,7 +371,7 @@ msgstr ""
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"For your available carriers you’ll need to make sure that they are available"
+"For your available carriers you'll need to make sure that they are available"
 " through Envia (make sure to select all available countries):<br/>"
 msgstr ""
 
@@ -378,7 +386,9 @@ msgid "Generate an Access Token from within the Sandbox Portal of Envia"
 msgstr ""
 
 #. module: delivery_envia
+#: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_envia.field_envia_shipping_wizard__id
+#: model:ir.model.fields,field_description:delivery_envia.field_stock_package_type__id
 msgid "ID"
 msgstr ""
 
@@ -396,7 +406,7 @@ msgstr ""
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-msgid "If you don’t have an account, we recommend heading to"
+msgid "If you don't have an account, we recommend heading to"
 msgstr ""
 
 #. module: delivery_envia

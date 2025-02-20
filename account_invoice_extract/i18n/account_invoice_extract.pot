@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:21+0000\n"
-"PO-Revision-Date: 2024-12-24 15:21+0000\n"
+"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"PO-Revision-Date: 2025-02-20 10:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -59,18 +59,8 @@ msgstr ""
 
 #. module: account_invoice_extract
 #. odoo-javascript
-#: code:addons/account_invoice_extract/static/src/js/invoice_extract_form_renderer.js:0
+#: code:addons/account_invoice_extract/static/src/js/invoice_extract_form.js:0
 msgid "Create"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__create_uid
-msgid "Created by"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__create_date
-msgid "Created on"
 msgstr ""
 
 #. module: account_invoice_extract
@@ -106,7 +96,6 @@ msgid "Digitize on demand only"
 msgstr ""
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__display_name
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__display_name
 #: model:ir.model.fields,field_description:account_invoice_extract.field_ir_attachment__display_name
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_company__display_name
@@ -131,7 +120,6 @@ msgid "Error message"
 msgstr ""
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_bank_statement_line__extract_attachment_id
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extract_attachment_id
 msgid "Extract Attachment"
 msgstr ""
@@ -160,12 +148,6 @@ msgid "Extract State Processed"
 msgstr ""
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_bank_statement_line__extract_word_ids
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extract_word_ids
-msgid "Extract Word"
-msgstr ""
-
-#. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extract_state
 msgid "Extract state"
 msgstr ""
@@ -176,18 +158,13 @@ msgid "Extract status"
 msgstr ""
 
 #. module: account_invoice_extract
-#: model:ir.model,name:account_invoice_extract.model_account_invoice_extract_words
-msgid "Extracted words from invoice scan"
+#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extracted_word_ids
+msgid "Extracted Words"
 msgstr ""
 
 #. module: account_invoice_extract
 #: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
 msgid "Extraction Information"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__field
-msgid "Field"
 msgstr ""
 
 #. module: account_invoice_extract
@@ -206,7 +183,6 @@ msgid "Has Message"
 msgstr ""
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__id
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__id
 #: model:ir.model.fields,field_description:account_invoice_extract.field_ir_attachment__id
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_company__id
@@ -228,11 +204,6 @@ msgstr ""
 #: model:ir.model.fields,help:account_invoice_extract.field_account_move__message_has_error
 #: model:ir.model.fields,help:account_invoice_extract.field_account_move__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__invoice_id
-msgid "Invoice"
 msgstr ""
 
 #. module: account_invoice_extract
@@ -258,16 +229,6 @@ msgstr ""
 #. module: account_invoice_extract
 #: model:ir.model,name:account_invoice_extract.model_account_move
 msgid "Journal Entry"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__write_uid
-msgid "Last Updated by"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__write_date
-msgid "Last Updated on"
 msgstr ""
 
 #. module: account_invoice_extract
@@ -306,11 +267,6 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__ocr_selected
-msgid "Ocr Selected"
-msgstr ""
-
-#. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__rating_ids
 msgid "Ratings"
 msgstr ""
@@ -337,11 +293,6 @@ msgid "Single Invoice Line Per Tax"
 msgstr ""
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__user_selected
-msgid "User Selected"
-msgstr ""
-
-#. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_config_settings__extract_in_invoice_digitalization_mode
 msgid "Vendor Bills"
 msgstr ""
@@ -354,41 +305,6 @@ msgstr ""
 #. module: account_invoice_extract
 #: model:ir.model.fields,help:account_invoice_extract.field_account_move__website_message_ids
 msgid "Website communication history"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_box_angle
-msgid "Word Box Angle"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_box_height
-msgid "Word Box Height"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_box_midX
-msgid "Word Box Midx"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_box_midY
-msgid "Word Box Midy"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_box_width
-msgid "Word Box Width"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_page
-msgid "Word Page"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_text
-msgid "Word Text"
 msgstr ""
 
 #. module: account_invoice_extract

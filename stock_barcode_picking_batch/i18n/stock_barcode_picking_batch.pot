@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:23+0000\n"
-"PO-Revision-Date: 2024-12-24 15:23+0000\n"
+"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"PO-Revision-Date: 2025-02-20 10:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -135,12 +135,6 @@ msgid "No batch transfer found"
 msgstr ""
 
 #. module: stock_barcode_picking_batch
-#. odoo-javascript
-#: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-msgid "No ready transfers found"
-msgstr ""
-
-#. module: stock_barcode_picking_batch
 #. odoo-python
 #: code:addons/stock_barcode_picking_batch/models/stock_picking_batch.py:0
 msgid "Open picking batch form"
@@ -177,18 +171,6 @@ msgstr ""
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-msgid "Select an operation type for batch transfer"
-msgstr ""
-
-#. module: stock_barcode_picking_batch
-#. odoo-javascript
-#: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-msgid "Select transfers for batch transfer"
-msgstr ""
-
-#. module: stock_barcode_picking_batch
-#. odoo-javascript
-#: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
 msgid "The Batch Transfer has been validated"
 msgstr ""
 
@@ -210,26 +192,6 @@ msgstr ""
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,help:stock_barcode_picking_batch.field_stock_move_line__picking_id
 msgid "The stock operation where the packing has been made"
-msgstr ""
-
-#. module: stock_barcode_picking_batch
-#. odoo-javascript
-#: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-msgid "This batch transfer is already done"
-msgstr ""
-
-#. module: stock_barcode_picking_batch
-#. odoo-javascript
-#: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-msgid "This batch transfer is cancelled"
-msgstr ""
-
-#. module: stock_barcode_picking_batch
-#. odoo-javascript
-#: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-msgid ""
-"This batch transfer is still draft, it must be confirmed before being "
-"processed"
 msgstr ""
 
 #. module: stock_barcode_picking_batch

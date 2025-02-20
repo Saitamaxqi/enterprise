@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:22+0000\n"
-"PO-Revision-Date: 2024-12-24 15:22+0000\n"
+"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"PO-Revision-Date: 2025-02-20 10:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 #. module: hr_recruitment_integration_website
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
-msgid "At least one platform must be selected"
+msgid "At least one job board must be selected.\n"
 msgstr ""
 
 #. module: hr_recruitment_integration_website
@@ -34,12 +34,23 @@ msgstr ""
 #. module: hr_recruitment_integration_website
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
-msgid "Campaign Start Date is required."
+msgid "Campaign Start Date is required.\n"
 msgstr ""
 
 #. module: hr_recruitment_integration_website
 #: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_job_post__apply_method
 msgid "Contact Method"
+msgstr ""
+
+#. module: hr_recruitment_integration_website
+#: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_recruitment_post_job_wizard__post_html
+msgid "Description"
+msgstr ""
+
+#. module: hr_recruitment_integration_website
+#. odoo-python
+#: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
+msgid "Description is required.\n"
 msgstr ""
 
 #. module: hr_recruitment_integration_website
@@ -81,6 +92,11 @@ msgid ""
 msgstr ""
 
 #. module: hr_recruitment_integration_website
+#: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_recruitment_post_job_wizard__job_is_published
+msgid "Is Published"
+msgstr ""
+
+#. module: hr_recruitment_integration_website
 #: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_recruitment_post_job_wizard__platform_ids
 msgid "Job Board"
 msgstr ""
@@ -107,13 +123,6 @@ msgid "Oops, it looks like our AI is unreachable!"
 msgstr ""
 
 #. module: hr_recruitment_integration_website
-#: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_recruitment_post_job_wizard__post_html
-msgid "Post"
-msgstr ""
-
-#. module: hr_recruitment_integration_website
-#. odoo-python
-#: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
 #: model:ir.model,name:hr_recruitment_integration_website.model_hr_recruitment_post_job_wizard
 msgid "Post Job"
 msgstr ""
@@ -121,7 +130,7 @@ msgstr ""
 #. module: hr_recruitment_integration_website
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
-msgid "Post is required."
+msgid "Publish on a Job Board"
 msgstr ""
 
 #. module: hr_recruitment_integration_website
@@ -160,29 +169,10 @@ msgid ""
 msgstr ""
 
 #. module: hr_recruitment_integration_website
-#: model:ir.model.fields,help:hr_recruitment_integration_website.field_hr_recruitment_post_job_wizard__campaign_start_date
-msgid "The date when the campaign will start."
-msgstr ""
-
-#. module: hr_recruitment_integration_website
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
 msgid ""
-"The job must be published on the website to generate a post with a redirect "
-"apply method."
-msgstr ""
-
-#. module: hr_recruitment_integration_website
-#. odoo-python
-#: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
-msgid ""
-"URL is required if the apply method is 'Redirect to company's website'."
-msgstr ""
-
-#. module: hr_recruitment_integration_website
-#. odoo-python
-#: code:addons/hr_recruitment_integration_website/models/hr_job.py:0
-msgid "You can only generate a post for a published job offer."
+"URL is required if the apply method is 'Redirect to company's website'.\n"
 msgstr ""
 
 #. module: hr_recruitment_integration_website
@@ -191,4 +181,9 @@ msgstr ""
 msgid ""
 "You have reached the maximum number of requests for this service. Try again "
 "later."
+msgstr ""
+
+#. module: hr_recruitment_integration_website
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_website.hr_recruitment_post_job_wizard_view_form
+msgid "Your job will be automatically published."
 msgstr ""

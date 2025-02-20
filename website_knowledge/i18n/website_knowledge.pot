@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:23+0000\n"
-"PO-Revision-Date: 2024-12-24 15:23+0000\n"
+"POT-Creation-Date: 2025-02-20 10:34+0000\n"
+"PO-Revision-Date: 2025-02-20 10:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -144,8 +144,13 @@ msgid ""
 msgstr ""
 
 #. module: website_knowledge
+#: model:ir.model.fields,help:website_knowledge.field_knowledge_article__website_absolute_url
+msgid "The full absolute URL to access the document through the website."
+msgstr ""
+
+#. module: website_knowledge
 #: model:ir.model.fields,help:website_knowledge.field_knowledge_article__website_url
-msgid "The full URL to access the document through the website."
+msgid "The full relative URL to access the document through the website."
 msgstr ""
 
 #. module: website_knowledge
@@ -187,6 +192,11 @@ msgstr ""
 #. module: website_knowledge
 #: model:ir.model,name:website_knowledge.model_website
 msgid "Website"
+msgstr ""
+
+#. module: website_knowledge
+#: model:ir.model.fields,field_description:website_knowledge.field_knowledge_article__website_absolute_url
+msgid "Website Absolute URL"
 msgstr ""
 
 #. module: website_knowledge

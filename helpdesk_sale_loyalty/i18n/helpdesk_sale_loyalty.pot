@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:22+0000\n"
-"PO-Revision-Date: 2024-12-24 15:22+0000\n"
+"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"PO-Revision-Date: 2025-02-20 10:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -47,6 +47,11 @@ msgstr ""
 #: code:addons/helpdesk_sale_loyalty/models/helpdesk_ticket.py:0
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_loyalty.helpdesk_ticket_view_form_inherit_helpdesk_sale_coupon
 msgid "Coupons"
+msgstr ""
+
+#. module: helpdesk_sale_loyalty
+#: model:ir.model,website_form_label:helpdesk_sale_loyalty.model_helpdesk_ticket
+msgid "Create a Ticket"
 msgstr ""
 
 #. module: helpdesk_sale_loyalty
@@ -121,4 +126,10 @@ msgstr ""
 #. module: helpdesk_sale_loyalty
 #: model:ir.model.fields,field_description:helpdesk_sale_loyalty.field_helpdesk_sale_coupon_generate__valid_until
 msgid "Valid Until"
+msgstr ""
+
+#. module: helpdesk_sale_loyalty
+#. odoo-python
+#: code:addons/helpdesk_sale_loyalty/models/helpdesk_ticket.py:0
+msgid "id"
 msgstr ""

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:21+0000\n"
-"PO-Revision-Date: 2024-12-24 15:21+0000\n"
+"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"PO-Revision-Date: 2025-02-20 10:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -63,14 +63,17 @@ msgid "Google Meet"
 msgstr ""
 
 #. module: appointment_google_calendar
-#: model:ir.model.fields,field_description:appointment_google_calendar.field_appointment_type__id
-#: model:ir.model.fields,field_description:appointment_google_calendar.field_calendar_event__id
-msgid "ID"
-
 #. odoo-python
 #: code:addons/appointment_google_calendar/models/appointment_type.py:0
 msgid ""
-"Google Sync is either paused or not properly configured. Google Meet links won't be added to the meetings."
+"Google Sync is either paused or not properly configured. Google Meet links "
+"won't be added to the meetings."
+msgstr ""
+
+#. module: appointment_google_calendar
+#: model:ir.model.fields,field_description:appointment_google_calendar.field_appointment_type__id
+#: model:ir.model.fields,field_description:appointment_google_calendar.field_calendar_event__id
+msgid "ID"
 msgstr ""
 
 #. module: appointment_google_calendar

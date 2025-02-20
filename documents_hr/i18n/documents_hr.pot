@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.1+e\n"
+"Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 15:22+0000\n"
-"PO-Revision-Date: 2024-12-24 15:22+0000\n"
+"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"PO-Revision-Date: 2025-02-20 10:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -81,11 +81,6 @@ msgid "Display Name"
 msgstr ""
 
 #. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_res_users__document_ids
-msgid "Document"
-msgstr ""
-
-#. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__document_count
 msgid "Document Count"
 msgstr ""
@@ -96,9 +91,6 @@ msgid "Document Redirect"
 msgstr ""
 
 #. module: documents_hr
-#. odoo-python
-#: code:addons/documents_hr/models/res_users.py:0
-#: model:ir.model.fields,field_description:documents_hr.field_res_users__document_count
 #: model_terms:ir.ui.view,arch_db:documents_hr.hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:documents_hr.res_users_view_form
 msgid "Documents"
@@ -131,6 +123,21 @@ msgstr ""
 #. module: documents_hr
 #: model:documents.tag,name:documents_hr.documents_tag_employees
 msgid "Employees Documents"
+msgstr ""
+
+#. module: documents_hr
+#: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
+msgid "Folder"
+msgstr ""
+
+#. module: documents_hr
+#: model:documents.document,name:documents_hr.document_hr_folder
+msgid "HR"
+msgstr ""
+
+#. module: documents_hr
+#: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_hr_folder
+msgid "HR Folder"
 msgstr ""
 
 #. module: documents_hr
@@ -215,11 +222,6 @@ msgid "Warning Message"
 msgstr ""
 
 #. module: documents_hr
-#: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
-msgid "Workspace"
-msgstr ""
-
-#. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/hr_employee.py:0
 msgid "You can not send the documents link to the employee."
@@ -231,11 +233,6 @@ msgstr ""
 msgid ""
 "You must set a work contact address on the Employee in order to use "
 "Document's features."
-msgstr ""
-
-#. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_hr_folder
-msgid "hr Workspace"
 msgstr ""
 
 #. module: documents_hr
