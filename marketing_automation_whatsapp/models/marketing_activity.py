@@ -77,7 +77,17 @@ class MarketingActivity(models.Model):
         return summary_dependency
 
     def _get_full_statistics(self):
-        super_stats = super()._get_full_statistics()
+        whatsapp_activities = self.filtered(lambda activity: activity.activity_type == 'whatsapp')
+        non_whatsapp_activities = self - whatsapp_activities
+
+        non_whatsapp_stats = (
+            super(MarketingActivity, non_whatsapp_activities)._get_full_statistics()
+            if non_whatsapp_activities else []
+        )
+
+        if not whatsapp_activities:
+            return non_whatsapp_stats
+
         self.env["marketing.trace"].flush_model(["activity_id", "whatsapp_message_id", "participant_id"])
         self.env["whatsapp.message"].flush_model(["state", "links_click_datetime"])
         self.env.cr.execute(SQL("""
@@ -101,8 +111,9 @@ class MarketingActivity(models.Model):
                 trace.activity_id IN %s
             GROUP BY
             trace.activity_id;
-        """, tuple(self.ids)))
-        return super_stats + self.env.cr.dictfetchall()
+        """, tuple(whatsapp_activities.ids)))
+
+        return non_whatsapp_stats + self.env.cr.dictfetchall()
 
     def _get_reschedule_trigger_types(self):
         types = super()._get_reschedule_trigger_types()
