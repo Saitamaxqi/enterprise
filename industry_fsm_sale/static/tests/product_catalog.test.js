@@ -23,18 +23,21 @@ const saleOrderLineInfo = {
         readOnly: false,
         price: 14,
         productType: "consu",
+        uomDisplayName: "Unit",
     },
     2: {
         quantity: 1,
         readOnly: false,
         price: 400,
         productType: "consu",
+        uomDisplayName: "Unit",
     },
     3: {
         quantity: 3,
         price: 70,
         readOnly: false,
         productType: "consu",
+        uomDisplayName: "Unit",
     },
 };
 
@@ -225,7 +228,7 @@ test("edit manually the product quantity and check Unit price update", async () 
     });
 
     expect('.o_kanban_record:nth-child(2) div[name="o_kanban_price"] span').toHaveText(
-        "Unit price: 400.00",
+        "400.00",
         {
             message: "The Unit price should be equal to 400",
         }
@@ -241,7 +244,7 @@ test("edit manually the product quantity and check Unit price update", async () 
         message: "The product quantity should be equal to 12",
     });
     expect('.o_kanban_record:nth-child(2) div[name="o_kanban_price"] span').toHaveText(
-        "Unit price: 100.00",
+        "100.00",
         {
             message: "The Unit price should be equal to 100 after the input change",
         }

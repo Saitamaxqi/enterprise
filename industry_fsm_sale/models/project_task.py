@@ -406,14 +406,7 @@ class ProjectTask(models.Model):
         kanban_view = self.env.ref('industry_fsm_sale.industry_fsm_sale_product_catalog_kanban_view')
         search_view = self.env.ref('industry_fsm_sale.industry_fsm_sale_product_catalog_inherit_search_view')
 
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Add Products'),
-            'res_model': 'product.product',
-            'views': [(kanban_view.id, 'kanban'), (False, 'form')],
-            'search_view_id': [search_view.id, 'search'],
-            'domain': domain,
-            'context': {
+        context = {
                 'fsm_mode': True,
                 'create': self.env['product.template'].has_access('create'),
                 'fsm_task_id': self.id,  # avoid 'default_' context key as we are going to create SOL with this context
@@ -423,7 +416,18 @@ class ProjectTask(models.Model):
                 'hide_qty_buttons': self.sale_order_id.sudo().locked,
                 'default_invoice_policy': 'delivery',
                 'search_default_fsm_quantity': self.state == '1_done',
-            },
+            }
+        if not context['product_catalog_currency_id']:
+            # fallback currency in case no SO yet
+            context['product_catalog_currency_id'] = self.currency_id.id
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Add Products'),
+            'res_model': 'product.product',
+            'views': [(kanban_view.id, 'kanban'), (False, 'form')],
+            'search_view_id': [search_view.id, 'search'],
+            'domain': domain,
+            'context': context,
             'help': _("""<p class="o_view_nocontent_smiling_face">
                             No products found. Let's create one!
                         </p><p>

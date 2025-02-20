@@ -1709,10 +1709,10 @@ class TestFsmFlowStock(TestFsmFlowSaleCommon):
         self.assertDictEqual(
             products_catalog,
             {
-                self.product_lot_no_stock.id: {'quantity': 3.0, 'readOnly': False, 'deliveredQty': 0.0, 'tracking': True, 'minimumQuantityOnProduct': 0.0, 'price': 60, 'productType': 'consu'},
-                self.storable_product_ordered.id: {'quantity': 4.0, 'readOnly': False, 'deliveredQty': 0.0, 'tracking': False, 'minimumQuantityOnProduct': 0.0, 'price': 60, 'productType': 'consu'},
-                self.storable_product_delivered.id: {'quantity': 0, 'readOnly': False, 'deliveredQty': 0, 'tracking': False, 'minimumQuantityOnProduct': 0, 'price': 75.6, 'productType': 'consu'},
-                self.product_sn_no_stock.id: {'quantity': 0, 'readOnly': False, 'deliveredQty': 0, 'tracking': True, 'minimumQuantityOnProduct': 0, 'price': 60, 'productType': 'consu'}
+                self.product_lot_no_stock.id: {'quantity': 3.0, 'readOnly': False, 'deliveredQty': 0.0, 'tracking': True, 'minimumQuantityOnProduct': 0.0, 'price': 60, 'productType': 'consu', 'uomDisplayName': 'Units', 'code': ''},
+                self.storable_product_ordered.id: {'quantity': 4.0, 'readOnly': False, 'deliveredQty': 0.0, 'tracking': False, 'minimumQuantityOnProduct': 0.0, 'price': 60, 'productType': 'consu', 'uomDisplayName': 'Units', 'code': ''},
+                self.storable_product_delivered.id: {'quantity': 0, 'readOnly': False, 'deliveredQty': 0, 'tracking': False, 'minimumQuantityOnProduct': 0, 'price': 75.6, 'productType': 'consu', 'uomDisplayName': 'Units', 'code': ''},
+                self.product_sn_no_stock.id: {'quantity': 0, 'readOnly': False, 'deliveredQty': 0, 'tracking': True, 'minimumQuantityOnProduct': 0, 'price': 60, 'productType': 'consu', 'uomDisplayName': 'Units', 'code': ''}
             },
             "The tracked product should have the 'tracking' key set to True, even if the product was not added to the task."
         )

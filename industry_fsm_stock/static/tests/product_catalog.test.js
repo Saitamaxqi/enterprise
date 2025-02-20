@@ -18,6 +18,7 @@ const stockSaleOrderLineInfo = {
         minimumQuantityOnProduct: 0,
         tracking: false,
         productType: "consu",
+        uomDisplayName: "Unit",
     },
     2: {
         quantity: 1,
@@ -27,6 +28,7 @@ const stockSaleOrderLineInfo = {
         minimumQuantityOnProduct: 0,
         tracking: true,
         productType: "consu",
+        uomDisplayName: "Unit",
     },
     3: {
         quantity: 3,
@@ -36,6 +38,7 @@ const stockSaleOrderLineInfo = {
         minimumQuantityOnProduct: 2,
         tracking: false,
         productType: "consu",
+        uomDisplayName: "Unit",
     },
 };
 
