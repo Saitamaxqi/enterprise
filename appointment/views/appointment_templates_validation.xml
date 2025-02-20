@@ -84,8 +84,16 @@
                                     <t t-out="event.duration" t-options="{'widget': 'duration', 'unit': 'hour', 'round': 'minute'}"/>
                                 </div>
                             </div>
-                            <div t-if="not based_on_users and (len(resources) > 1 or (len(resources) == 1 and appointment_type.avatars_display == 'hide'
-                                and is_html_empty(resources[0].description)))" class="row mb-4">
+                            <div t-if="not based_on_users and (
+                                    (len(resources) > 1 and
+                                        (appointment_type.assign_method != 'time_auto_assign' or
+                                         appointment_type.avatars_display == 'show'))
+                                    or
+                                    (len(resources) == 1 and
+                                        appointment_type.assign_method != 'time_auto_assign' and
+                                        appointment_type.avatars_display == 'hide' and
+                                        is_html_empty(resources[0].description))
+                                )" class="row mb-4">
                                 <div class="col-3">
                                     <span class="text-muted">Resources</span>
                                 </div>
@@ -230,7 +238,10 @@
                 </main>
             </article>
         </div>
-        <div t-elif="len(resources) == 1 and (appointment_type.avatars_display == 'show' or not is_html_empty(resources[0].description))">
+        <div t-elif="len(resources) == 1 and (
+            appointment_type.avatars_display == 'show' or
+            (not is_html_empty(resources[0].description) and appointment_type.assign_method != 'time_auto_assign')
+        )">
             <t t-set="resource" t-value="resources[0]"/>
             <article class="card o_appointment_user_short_card card border-0" itemscope="itemscope">
                 <header t-if="appointment_type.avatars_display == 'show'" class="bg-secondary rounded o_appointment_avatar_container ratio ratio-4x3">

@@ -55,8 +55,16 @@
                                 <t t-out="total_capacity_reserved"/> people
                             </div>
                         </div>
-                        <div t-if="not based_on_users and (len(resources) > 1 or (len(resources) == 1 and appointment_type.avatars_display == 'hide'
-                                and is_html_empty(resources[0].description)))" class="row mb-4">
+                        <div t-if="not based_on_users and (
+                                (len(resources) > 1 and
+                                    (appointment_type.assign_method != 'time_auto_assign' or
+                                        appointment_type.avatars_display == 'show'))
+                                or
+                                (len(resources) == 1 and
+                                    appointment_type.assign_method != 'time_auto_assign' and
+                                    appointment_type.avatars_display == 'hide' and
+                                    is_html_empty(resources[0].description))
+                            )" class="row mb-4">
                             <div class="col-3">
                                 <label class="text-muted">Resources</label>
                             </div>
