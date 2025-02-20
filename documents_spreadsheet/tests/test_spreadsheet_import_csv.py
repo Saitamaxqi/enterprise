@@ -3,7 +3,7 @@ import json
 from odoo.tests.common import HttpCase
 
 from .common import SpreadsheetTestCommon
-from odoo.tools import file_open
+from odoo.tools import file_open, mute_logger
 
 
 class SpreadsheetImportCSV(HttpCase, SpreadsheetTestCommon):
@@ -16,7 +16,8 @@ class SpreadsheetImportCSV(HttpCase, SpreadsheetTestCommon):
                 'mimetype': 'text/csv',
                 'folder_id': folder.id
             })
-            spreadsheet_id = document_csv.import_to_spreadsheet()
+            with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+                spreadsheet_id = document_csv.import_to_spreadsheet()
             spreadsheet = self.env["documents.document"].browse(spreadsheet_id).exists()
             self.assertTrue(spreadsheet)
             self.assertEqual(spreadsheet.name, "test")

@@ -41,15 +41,18 @@ class HrPayrollEmployeeDeclaration(models.Model):
             if line.pdf_filename not in posted_documents and line.pdf_file:
                 lines_to_post += line
                 partner_id = self.env[line.res_model]._get_posted_document_owner(line.employee_id).partner_id.id
+                folder = line.company_id.documents_payroll_folder_id
+                access_ids = {}
+                if (partner_id
+                        and partner_id not in (v['partner_id'] for v in folder._get_inherited_access_ids_vals())):
+                    access_ids = {'access_ids': [Command.create({'partner_id': partner_id, 'role': 'view'})]}
                 create_vals.append({
                     'owner_id': False,
-                    'access_ids': [] if not partner_id else [
-                        Command.create({'partner_id': partner_id, 'role': 'view'})
-                    ],
+                    **access_ids,
                     'partner_id': partner_id or False,
                     'datas': line.pdf_file,
                     'name': line.pdf_filename,
-                    'folder_id': line.company_id.documents_payroll_folder_id.id,
+                    'folder_id': folder.id,
                     'res_model': 'hr.payslip',  # Security Restriction to payroll managers
                 })
                 if template:

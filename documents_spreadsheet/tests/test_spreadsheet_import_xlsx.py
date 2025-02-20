@@ -6,7 +6,7 @@ from odoo import http
 from odoo.tests.common import HttpCase
 
 from .common import SpreadsheetTestCommon
-from odoo.tools import file_open
+from odoo.tools import file_open, mute_logger
 from odoo.exceptions import UserError
 
 
@@ -22,7 +22,8 @@ class SpreadsheetImportXlsx(HttpCase, SpreadsheetTestCommon):
                 'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'folder_id': folder.id
             })
-            spreadsheet_id = document_xlsx.import_to_spreadsheet()
+            with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+                spreadsheet_id = document_xlsx.import_to_spreadsheet()
             spreadsheet = self.env["documents.document"].browse(spreadsheet_id).exists()
             self.assertTrue(spreadsheet)
 
@@ -37,7 +38,8 @@ class SpreadsheetImportXlsx(HttpCase, SpreadsheetTestCommon):
                 'mimetype': 'application/wps-office.xlsx',
                 'folder_id': folder.id
             })
-            spreadsheet_id = document_xlsx.import_to_spreadsheet()
+            with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+                spreadsheet_id = document_xlsx.import_to_spreadsheet()
             spreadsheet = self.env["documents.document"].browse(spreadsheet_id).exists()
             self.assertTrue(spreadsheet)
 
@@ -106,8 +108,8 @@ class SpreadsheetImportXlsx(HttpCase, SpreadsheetTestCommon):
                 )
                 with self.subTest(is_multipage=is_multipage, kind="xlsx"):
                     self.assertEqual(document_xlsx.is_multipage, is_multipage)
-
-            spreadsheet_id = document_xlsx.import_to_spreadsheet()
+            with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+                spreadsheet_id = document_xlsx.import_to_spreadsheet()
             spreadsheet = self.env["documents.document"].browse(spreadsheet_id).exists()
             with self.subTest(is_multipage=is_multipage, kind="spreadsheet"):
                 self.assertEqual(spreadsheet.is_multipage, is_multipage)

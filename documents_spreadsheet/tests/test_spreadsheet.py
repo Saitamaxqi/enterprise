@@ -7,6 +7,7 @@ from .common import SpreadsheetTestCommon, TEST_CONTENT, GIF
 from odoo.exceptions import AccessError
 from odoo.tests import Form
 from odoo.tests.common import new_test_user
+from odoo.tools import mute_logger
 
 
 class SpreadsheetDocuments(SpreadsheetTestCommon):
@@ -683,7 +684,8 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         #########
         # ADMIN #
         #########
-        copy_admin = spreadsheet.copy()
+        with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+            copy_admin = spreadsheet.copy()
         self.assertEqual(
             len(copy_admin.spreadsheet_revision_ids),
             1,
@@ -708,7 +710,8 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             spreadsheet,
             spreadsheet.current_revision_uuid, "snapshot-revision-id", {"sheets": [], "revisionId": "snapshot-revision-id"},
         )
-        copy = spreadsheet.copy()
+        with mute_logger('odoo.addons.documents.models.documents_document'):
+            copy = spreadsheet.copy()
         self.assertEqual(
             copy.spreadsheet_snapshot,
             spreadsheet.spreadsheet_snapshot,
@@ -717,12 +720,14 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
 
     def test_copy_sheet_name(self):
         spreadsheet = self.create_spreadsheet({"name": "spreadsheet"})
-        copy = spreadsheet.copy()
+        with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+            copy = spreadsheet.copy()
         self.assertEqual(copy.name, 'spreadsheet (copy)')
 
     def test_copy_default_sheet_name(self):
         spreadsheet = self.create_spreadsheet({"name": "spreadsheet"})
-        copy = spreadsheet.copy({'name': 'sheet'})
+        with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+            copy = spreadsheet.copy({'name': 'sheet'})
         self.assertEqual(copy.name, 'sheet')
 
     def test_copy_image_in_snapshot(self):
@@ -768,10 +773,11 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         }
         spreadsheet.spreadsheet_data = json.dumps(spreadsheet_data)
         self.snapshot(spreadsheet, "START_REVISION", "NEW_REVISION", spreadsheet_data)
-        copy = spreadsheet.copy({
-            "spreadsheet_data": spreadsheet.spreadsheet_data,
-            "spreadsheet_snapshot": spreadsheet.spreadsheet_snapshot,
-        })
+        with mute_logger('odoo.addons.documents.models.documents_document'):
+            copy = spreadsheet.copy({
+                "spreadsheet_data": spreadsheet.spreadsheet_data,
+                "spreadsheet_snapshot": spreadsheet.spreadsheet_snapshot,
+            })
         copied_data = json.loads(copy.spreadsheet_data)
         copied_snapshot = json.loads(copy._get_spreadsheet_serialized_snapshot())
         for data_copy in (copied_data, copied_snapshot):
@@ -821,7 +827,8 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         }]
 
         spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet, commands=commands))
-        copy = spreadsheet.copy()
+        with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+            copy = spreadsheet.copy()
         revision = copy.spreadsheet_revision_ids
         [command, command_with_token] = json.loads(revision.commands)["commands"]
         path = command["definition"]["path"]
@@ -869,7 +876,8 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         spreadsheet = self.create_spreadsheet({
             "spreadsheet_data": json.dumps(spreadsheet_data)
         })
-        copy = spreadsheet.copy({
+        with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+            copy = spreadsheet.copy({
             "spreadsheet_data": spreadsheet.spreadsheet_data,
             "spreadsheet_snapshot": spreadsheet.spreadsheet_snapshot,
         })

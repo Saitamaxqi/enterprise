@@ -34,8 +34,8 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
             'role': False,
             'last_access_date': date.today(),
         })
-
-        shared_spreadsheet_action = document.action_freeze_and_copy({}, b"")
+        with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+            shared_spreadsheet_action = document.action_freeze_and_copy({}, b"")
         shared_spreadsheet = document.browse(shared_spreadsheet_action['id'])
 
         self.assertNotEqual(document.access_token, shared_spreadsheet.access_token)
@@ -203,13 +203,15 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
             spreadsheet.flush_recordset()
 
         with self.assertRaises(CheckViolation):
-            frozen_action = spreadsheet.action_freeze_and_copy({}, b"")
+            with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+                frozen_action = spreadsheet.action_freeze_and_copy({}, b"")
             frozen = spreadsheet.browse(frozen_action['id'])
             frozen.access_via_link = 'edit'
             frozen.flush_recordset()
 
         with self.assertRaises(CheckViolation):
-            frozen_action = spreadsheet.action_freeze_and_copy({}, b"")
+            with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+                frozen_action = spreadsheet.action_freeze_and_copy({}, b"")
             frozen = spreadsheet.browse(frozen_action['id'])
             frozen.access_internal = 'edit'
             frozen.flush_recordset()

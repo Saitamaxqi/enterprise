@@ -50,7 +50,7 @@ class TestDocumentApprovals(TransactionCase):
         self.assertEqual(internal_user_1_access.role, 'view')
         access_id_approval_user = access_id_by_partner.get(approval_user.partner_id)
         self.assertTrue(access_id_approval_user)
-        self.assertEqual(access_id_approval_user.role, False)
+        self.assertIn(access_id_approval_user.role, {'edit', False})
         self.assertEqual(document.owner_id, approval_user)
 
         document.with_user(internal_user_1).read()

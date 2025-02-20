@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from unittest.mock import patch
+
+from odoo.addons.documents.tests.test_documents_multipage import single_page_pdf
 from odoo.addons.documents_hr.tests.test_documents_hr_common import TransactionCaseDocumentsHr
 from odoo.addons.hr_payroll.tests.common import TestPayslipBase
 from odoo.tests.common import tagged
@@ -70,3 +73,49 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
     def test_hr_payslip_document_creation_permission_employee_only(self):
         """ created hr.payslip documents are only viewable by the employee and editable by payroll managers. """
         self.check_document_creation_permission(self.payslip, self.payroll_folder, self.payroll_manager)
+
+    def test_hr_payroll_employee_declaration_document_creation_simple(self):
+        """Check that the employee and the payroll folder members are given access to the declarations."""
+        self._test_hr_payroll_employee_declaration_document_creation('view')
+
+    def test_hr_payroll_employee_declaration_document_creation_employee_folder_member(self):
+        """Check that the employee can be a member of the payroll folder without errors for duplicate access."""
+        self.env['documents.access'].create({
+            'document_id': self.payroll_folder.id,
+            'partner_id': self.employee.user_partner_id.id,
+            'role': 'edit',
+        })
+        self._test_hr_payroll_employee_declaration_document_creation('edit')
+
+    def _test_hr_payroll_employee_declaration_document_creation(self, employee_role):
+        self.assertFalse(self.payroll_folder.children_ids)
+        declaration = self.env['hr.payroll.employee.declaration'].create({
+            'res_model': 'hr.payslip',
+            'res_id': self.payslip.id,
+            'employee_id': self.employee.id,
+            'pdf_file': single_page_pdf,
+            'pdf_filename': 'Test Declaration.pdf',
+            'state': 'pdf_to_post',
+        })
+
+        # add required hr.payroll.declaration.mixin methods
+        with patch.object(
+            self.env['hr.payslip'].pool['hr.payslip'],
+            "_get_posted_mail_template",
+            lambda s: self.env.ref('documents_hr_payroll.mail_template_new_declaration',
+                                   raise_if_not_found=False),
+            create=True
+        ), patch.object(
+            self.env['hr.payslip'].pool['hr.payslip'],
+            "_get_posted_document_owner",
+            lambda _s, employee: employee.user_id,
+            create=True
+        ):
+            declaration._post_pdf()
+
+        document = self.payroll_folder.children_ids
+        self.assertEqual(document.name, 'Test Declaration.pdf')
+        self.assertEqual(
+            set(document.access_ids.mapped(lambda a: (a.partner_id, a.role))),
+            {(self.payroll_manager.partner_id, 'edit'), (self.employee.user_partner_id, employee_role)}
+        )

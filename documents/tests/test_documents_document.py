@@ -5,10 +5,11 @@ import base64
 from datetime import datetime, timedelta
 from unittest import skip
 
-from odoo import Command, http
+from odoo import http
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests.common import new_test_user
 from odoo.tests import users
+from odoo.tools import mute_logger
 
 from .test_documents_common import TransactionCaseDocuments, GIF, TEXT
 
@@ -141,7 +142,7 @@ class TestCaseDocuments(TransactionCaseDocuments):
         ])
         folders.flush_recordset()
         folders.invalidate_recordset()
-        with self.assertQueryCount(162):
+        with self.assertQueryCount(161):
             self.env['documents.document'].create([{
                 'folder_id': folder.id,
                 'type': 'binary',
@@ -393,7 +394,8 @@ class TestCaseDocuments(TransactionCaseDocuments):
         self.assertFalse(self.document_txt.exists(), 'the document should not exist')
 
     def test_copy_document(self):
-        copy = self.document_txt.copy()
+        with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+            copy = self.document_txt.copy()
         self.assertEqual(copy.name, "file.txt (copy)")
         self.assertNotEqual(
             copy.attachment_id.ensure_one().id,
@@ -401,8 +403,8 @@ class TestCaseDocuments(TransactionCaseDocuments):
             "There must be a new attachment"
         )
         self.assertEqual(copy.raw, self.document_txt.raw)
-
-        copy_with_default = self.document_txt.copy({"name": "test"})
+        with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+            copy_with_default = self.document_txt.copy({"name": "test"})
         self.assertEqual(copy_with_default.name, "test")
         self.assertNotEqual(
             copy.attachment_id.ensure_one().id,
@@ -444,7 +446,8 @@ class TestCaseDocuments(TransactionCaseDocuments):
             "res_model": "res.partner",
             "res_id": self.env.user.partner_id.id,
         })
-        copied_document = self.document_gif.copy()
+        with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+            copied_document = self.document_gif.copy()
         self.assertEqual(copied_document.res_id, copied_document.id)
         self.assertEqual(copied_document.res_model, "documents.document")
 
