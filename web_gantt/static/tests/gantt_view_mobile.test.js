@@ -359,7 +359,7 @@ test("horizontal scroll applies to the content [SMALL SCREEN]", async () => {
     expect(o_view_controller).toHaveClass("o_action_delegate_scroll");
     expect(o_view_controller).toHaveStyle({ overflow: "hidden" });
     expect(o_content).toHaveStyle({ overflow: "auto" });
-    expect(o_content).toHaveProperty("scrollLeft", 762);
+    expect(o_content).toHaveProperty("scrollLeft", 800);
 
     // Horizontal scroll
     const newScrollLeft = o_content.scrollLeft - 50;

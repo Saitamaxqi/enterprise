@@ -23,7 +23,7 @@ test("empty sparse gantt", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(34);
+    expect(columnHeaders).toHaveLength(32);
     expect(rows).toEqual([{ title: "" }]);
     expect(SELECTORS.noContentHelper).toHaveCount(0);
 });
@@ -37,7 +37,7 @@ test("sparse gantt", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(34);
+    expect(columnHeaders).toHaveLength(32);
     expect(rows).toEqual([
         {
             pills: [
@@ -62,7 +62,7 @@ test("sparse grouped gantt", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(34);
+    expect(columnHeaders).toHaveLength(32);
     expect(rows).toEqual([
         {
             isGroup: true,
@@ -182,7 +182,7 @@ test("sparse gantt with consolidation", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(34);
+    expect(columnHeaders).toHaveLength(32);
     expect(rows).toEqual([
         {
             isGroup: true,
@@ -323,7 +323,7 @@ test("sparse gantt with a group expand", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(34);
+    expect(columnHeaders).toHaveLength(32);
     expect(rows).toEqual([
         {
             isGroup: true,

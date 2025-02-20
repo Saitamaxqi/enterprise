@@ -55,7 +55,7 @@ const SCALES = {
         unitDescription: _t("hours"),
 
         interval: "day",
-        minimalColumnWidth: 50,
+        minimalColumnWidth: 52,
         colHeaderFormatter: (date) => date.toFormat("dd"),
         colHeaderTitle: (date) => date.toFormat("DDDD"),
 

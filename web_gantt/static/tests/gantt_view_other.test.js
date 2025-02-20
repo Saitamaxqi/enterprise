@@ -876,8 +876,6 @@ test("date grid and dst winterToSummer (1 cell part)", async () => {
 
     await selectCustomRange({ startDate: "2019-03-01", stopDate: "2019-04-01" });
     expect(getGridInfo()).toEqual([
-        "2019-03-02T00:00:00.000+01:00",
-        "2019-03-03T00:00:00.000+01:00",
         "2019-03-04T00:00:00.000+01:00",
         "2019-03-05T00:00:00.000+01:00",
         "2019-03-06T00:00:00.000+01:00",
@@ -1007,8 +1005,6 @@ test("date grid and dst summerToWinter (1 cell part)", async () => {
 
     await selectCustomRange({ startDate: "2019-10-01", stopDate: "2019-11-01" });
     expect(getGridInfo()).toEqual([
-        "2019-10-02T00:00:00.000+02:00",
-        "2019-10-03T00:00:00.000+02:00",
         "2019-10-04T00:00:00.000+02:00",
         "2019-10-05T00:00:00.000+02:00",
         "2019-10-06T00:00:00.000+02:00",
@@ -1184,10 +1180,6 @@ test("date grid and dst winterToSummer (2 cell part)", async () => {
 
     await selectCustomRange({ startDate: "2019-03-01", stopDate: "2019-04-01" });
     expect(getGridInfo()).toEqual([
-        "2019-03-02T00:00:00.000+01:00",
-        "2019-03-02T12:00:00.000+01:00",
-        "2019-03-03T00:00:00.000+01:00",
-        "2019-03-03T12:00:00.000+01:00",
         "2019-03-04T00:00:00.000+01:00",
         "2019-03-04T12:00:00.000+01:00",
         "2019-03-05T00:00:00.000+01:00",
@@ -1374,10 +1366,6 @@ test("date grid and dst summerToWinter (2 cell part)", async () => {
 
     await selectCustomRange({ startDate: "2019-10-01", stopDate: "2019-11-01" });
     expect(getGridInfo()).toEqual([
-        "2019-10-02T00:00:00.000+02:00",
-        "2019-10-02T12:00:00.000+02:00",
-        "2019-10-03T00:00:00.000+02:00",
-        "2019-10-03T12:00:00.000+02:00",
         "2019-10-04T00:00:00.000+02:00",
         "2019-10-04T12:00:00.000+02:00",
         "2019-10-05T00:00:00.000+02:00",

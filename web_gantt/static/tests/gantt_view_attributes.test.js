@@ -225,7 +225,7 @@ test("scales attribute", async () => {
     });
     const { columnHeaders, range } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(34);
+    expect(columnHeaders).toHaveLength(32);
 
     await contains(SELECTORS.scaleSelectorToggler).click();
     await animationFrame();
@@ -870,7 +870,7 @@ test(`Fold unavailabilities ("month": "day:half")`, async () => {
     });
     await contains(".o_content").scroll({ left: 0 });
     const { columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true });
-    expect(columnHeaders).toHaveLength(31);
+    expect(columnHeaders).toHaveLength(30);
     expect(groupHeaders).toEqual([
         {
             range: [1, 61],
@@ -914,7 +914,6 @@ test(`Fold unavailabilities ("month": "day:half")`, async () => {
         { range: [73, 75], title: "07", titleAttr: "Friday, December 7, 2018" },
         { range: [75, 77], title: "08", titleAttr: "Saturday, December 8, 2018" },
         { range: [77, 79], title: "09", titleAttr: "Sunday, December 9, 2018" },
-        { range: [79, 81], title: "10", titleAttr: "Monday, December 10, 2018" },
     ]);
     expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(2);
     const cell1 = queryFirst(".o_gantt_cell");
@@ -1094,6 +1093,80 @@ test(`Partial fold/unfold in gantt`, async () => {
         colSpan: "5pm (3/4) December 19, 2018 -> 3am December 20, 2018",
         level: 0,
     });
+});
+
+test(`Full unavailabilities period`, async () => {
+    Tasks._records = []; // no pill
+    const unavailabilities = [
+        // in utc
+        {
+            start: "2018-12-18 16:00:00",
+            stop: "2018-12-23 07:00:00",
+        },
+    ];
+    onRpc("get_gantt_data", ({ kwargs, parent }) => {
+        expect(kwargs.unavailability_fields).toEqual([]);
+        const result = parent();
+        result.unavailabilities = { __default: { false: unavailabilities } };
+        return result;
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="day" scales="day" precision="{'day': 'hours:quarter'}"/>`,
+    });
+    // Only one folded cell appears which takes the full screen width instead of 36px
+    expect(SELECTORS.cell).toHaveCount(1);
+    expect(SELECTORS.cell).toHaveClass("o_gantt_cell_folded");
+    expect(SELECTORS.cell).toHaveRect({ width: 1366 });
+    expect(SELECTORS.groupHeader).toHaveCount(2);
+    expect(queryAllTexts(SELECTORS.groupHeader)).toEqual(["", ""]);
+
+    await contains(SELECTORS.cell).click();
+    const { columnHeaders, groupHeaders } = getGridContent();
+    expect(groupHeaders).toEqual([
+        { range: [1, 97], title: "December 19, 2018" },
+        { range: [97, 193], title: "December 20, 2018" },
+    ]);
+    expect(columnHeaders).toEqual([
+        { range: [1, 5], title: "12am" },
+        { range: [5, 9], title: "1am" },
+        { range: [9, 13], title: "2am" },
+        { range: [13, 17], title: "3am" },
+        { range: [17, 21], title: "4am" },
+        { range: [21, 25], title: "5am" },
+        { range: [25, 29], title: "6am" },
+        { range: [29, 33], title: "7am" },
+        { range: [33, 37], title: "8am" },
+        { range: [37, 41], title: "9am" },
+        { range: [41, 45], title: "10am" },
+        { range: [45, 49], title: "11am" },
+        { range: [49, 53], title: "12pm" },
+        { range: [53, 57], title: "1pm" },
+        { range: [57, 61], title: "2pm" },
+        { range: [61, 65], title: "3pm" },
+        { range: [65, 69], title: "4pm" },
+        { range: [69, 73], title: "5pm" },
+        { range: [73, 77], title: "6pm" },
+        { range: [77, 81], title: "7pm" },
+        { range: [81, 85], title: "8pm" },
+        { range: [85, 89], title: "9pm" },
+        { range: [89, 93], title: "10pm" },
+        { range: [93, 97], title: "11pm" },
+        { range: [97, 101], title: "12am" },
+        { range: [101, 105], title: "1am" },
+        { range: [105, 109], title: "2am" },
+        { range: [109, 113], title: "3am" },
+        { range: [113, 117], title: "4am" },
+        { range: [117, 121], title: "5am" },
+        { range: [121, 125], title: "6am" },
+        { range: [125, 129], title: "7am" },
+        { range: [129, 133], title: "8am" },
+        { range: [133, 137], title: "9am" },
+        { range: [137, 141], title: "10am" },
+        { range: [141, 145], title: "11am" },
+        { range: [145, 149], title: "12pm" },
+        { range: [149, 153], title: "1pm" },
+    ]);
 });
 
 test("default_group_by attribute", async () => {

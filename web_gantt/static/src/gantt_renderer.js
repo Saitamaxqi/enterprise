@@ -957,35 +957,39 @@ export class GanttRenderer extends Component {
     }
 
     computeColsTemplate() {
-        const { cellPart } = this.model.metaData.scale;
         const colsTemplate = [];
         const colInCoarseGridKeys = this.getColInCoarseGridKeys();
         for (let i = 0; i < colInCoarseGridKeys.length - 1; i++) {
             const x = +colInCoarseGridKeys[i];
             const y = +colInCoarseGridKeys[i + 1];
-            const X = this.getColNumberInFoldedGrid(x);
-            const Y = this.getColNumberInFoldedGrid(y);
-            let width = 0;
-            let bypassMinWidth = false;
-            if (this.offHoursState.foldedGridColumnSpans) {
-                for (let j = X; j < Y; j++) {
-                    if (
-                        this.offHoursState.foldedGridColumnSpans[Math.floor((j - 1) / cellPart)] > 1
-                    ) {
-                        width += 36 / cellPart;
-                        bypassMinWidth = true;
-                    } else {
-                        width += this.cellPartWidth;
-                    }
-                }
-            } else {
-                width = (Y - X) * this.cellPartWidth;
-            }
+            const { distance, flexible } = this.getSubColumnsDistance(x, y, this.cellPartWidth);
             const colName = `c${x}`;
-            colsTemplate.push(`[${colName}]minmax(${width}px,${bypassMinWidth ? 0 : 1}fr)`);
+            colsTemplate.push(`[${colName}]minmax(${distance}px,${+flexible}fr)`);
         }
         colsTemplate.push(`[c${colInCoarseGridKeys.at(-1)}]`);
         return colsTemplate.join("");
+    }
+
+    getSubColumnsDistance(start, stop, cellPartWidth) {
+        const { cellPart } = this.model.metaData.scale;
+        if (this.offHoursState.foldedGridColumnSpans) {
+            const X = this.getColNumberInFoldedGrid(start);
+            const Y = this.getColNumberInFoldedGrid(stop);
+            let distance = 0;
+            let flexible = true;
+            for (let j = X; j < Y; j++) {
+                if (this.offHoursState.foldedGridColumnSpans[Math.floor((j - 1) / cellPart)] > 1) {
+                    distance += 36 / cellPart;
+                    if (this.offHoursState.foldedGridColumnSpans.length > 1) {
+                        flexible = false;
+                    }
+                } else {
+                    distance += cellPartWidth;
+                }
+            }
+            return { distance, flexible };
+        }
+        return { distance: (stop - start) * cellPartWidth, flexible: true };
     }
 
     computeRowsTemplate() {
@@ -1011,14 +1015,37 @@ export class GanttRenderer extends Component {
         this.rowHeaderWidth = this.hasRowHeaders
             ? Math.round((rowHeaderWidthPercentage * this.contentRefWidth) / 100)
             : 0;
-        const cellContainerWidth = this.contentRefWidth - this.rowHeaderWidth;
-        const columnWidth = Math.floor(cellContainerWidth / this.foldedGridColumnCount);
+        if (this.foldedGridColumnCount === 1) {
+            this.cellPartWidth = Math.floor(
+                (this.contentRefWidth - this.rowHeaderWidth) / cellPart
+            );
+            this.columnWidth = this.cellPartWidth * cellPart;
+            this.virtualGrid.setColumnsWidths([this.columnWidth]);
+            this.totalWidth = null;
+            return;
+        }
+        const visibleCellContainerWidth = this.contentRefWidth - this.rowHeaderWidth;
+        const foldedColumnsCount =
+            this.offHoursState.foldedGridColumnSpans?.reduce(
+                (sum, span) => (span > 1 ? sum + 1 : sum),
+                0
+            ) || 0;
+        const columnWidth = Math.floor(
+            (visibleCellContainerWidth - 36 * foldedColumnsCount) /
+                (this.foldedGridColumnCount - foldedColumnsCount)
+        );
         const rectifiedColumnWidth = Math.max(columnWidth, minimalColumnWidth);
         this.cellPartWidth = Math.floor(rectifiedColumnWidth / cellPart);
         this.columnWidth = this.cellPartWidth * cellPart;
+        const columnWidths = this.offHoursState.foldedGridColumnSpans
+            ? this.offHoursState.foldedGridColumnSpans.map((val) =>
+                  val > 1 ? 36 : this.columnWidth
+              )
+            : new Array(this.foldedGridColumnCount).fill(this.columnWidth);
+        this.virtualGrid.setColumnsWidths(columnWidths);
         if (columnWidth <= minimalColumnWidth) {
             // overflow
-            this.totalWidth = this.rowHeaderWidth + this.columnWidth * this.foldedGridColumnCount;
+            this.totalWidth = columnWidths.reduce((sum, w) => sum + w, 0) + this.rowHeaderWidth;
         } else {
             this.totalWidth = null;
         }
@@ -2082,13 +2109,6 @@ export class GanttRenderer extends Component {
         }
 
         if (this.shouldComputeSomeWidths || this.shouldComputeGridColumns) {
-            this.virtualGrid.setColumnsWidths(
-                this.offHoursState.foldedGridColumnSpans
-                    ? this.offHoursState.foldedGridColumnSpans.map((val) =>
-                          val > 1 ? 36 : this.columnWidth
-                      )
-                    : new Array(this.foldedGridColumnCount).fill(this.columnWidth)
-            );
             this.computeVisibleColumns();
         }
 

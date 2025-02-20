@@ -2325,44 +2325,44 @@ test("focus today with scroll (in range & outside)", async () => {
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
     expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20", "December 2018"));
     let { columnHeaders } = getGridContent();
-    expect(columnHeaders).toHaveLength(34);
-    expect(columnHeaders[0].title).toBe("03"); // December
-    expect(columnHeaders.at(-1).title).toBe("05"); // January
+    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders[0].title).toBe("04"); // December
+    expect(columnHeaders.at(-1).title).toBe("04"); // January
 
     await scroll(".o_content", { left: 800 });
     await animationFrame();
 
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
     columnHeaders = getGridContent().columnHeaders;
-    expect(columnHeaders).toHaveLength(34);
-    expect(columnHeaders[0].title).toBe("14"); // December
-    expect(columnHeaders.at(-1).title).toBe("16"); // January
+    expect(columnHeaders).toHaveLength(33);
+    expect(columnHeaders[0].title).toBe("13"); // December
+    expect(columnHeaders.at(-1).title).toBe("14"); // January
 
     await focusToday();
     await ganttControlsChanges();
 
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
     columnHeaders = getGridContent().columnHeaders;
-    expect(columnHeaders).toHaveLength(34);
-    expect(columnHeaders[0].title).toBe("03"); // December
-    expect(columnHeaders.at(-1).title).toBe("05"); // January
+    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders[0].title).toBe("04"); // December
+    expect(columnHeaders.at(-1).title).toBe("04"); // January
 
     await scroll(".o_content", { left: 2000 });
     await animationFrame();
 
     expect(".o_gantt_cell.o_gantt_today").not.toBeVisible();
     columnHeaders = getGridContent().columnHeaders;
-    expect(columnHeaders).toHaveLength(34);
-    expect(columnHeaders[0].title).toBe("07"); // January
-    expect(columnHeaders.at(-1).title).toBe("09"); // February
+    expect(columnHeaders).toHaveLength(33);
+    expect(columnHeaders[0].title).toBe("05"); // January
+    expect(columnHeaders.at(-1).title).toBe("06"); // February
 
     await focusToday();
     await ganttControlsChanges();
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
     columnHeaders = getGridContent().columnHeaders;
-    expect(columnHeaders).toHaveLength(34);
-    expect(columnHeaders[0].title).toBe("03"); // December
-    expect(columnHeaders.at(-1).title).toBe("05"); // January
+    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders[0].title).toBe("04"); // December
+    expect(columnHeaders.at(-1).title).toBe("04"); // January
 });
 
 test("focus today with range change (in range & outside)", async () => {
@@ -2378,9 +2378,9 @@ test("focus today with range change (in range & outside)", async () => {
     expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20", "December 2018"));
     let gridContent = getGridContent();
     expect(gridContent.range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(gridContent.columnHeaders).toHaveLength(34);
-    expect(gridContent.columnHeaders[0].title).toBe("03"); // December
-    expect(gridContent.columnHeaders.at(-1).title).toBe("05"); // January
+    expect(gridContent.columnHeaders).toHaveLength(32);
+    expect(gridContent.columnHeaders[0].title).toBe("04"); // December
+    expect(gridContent.columnHeaders.at(-1).title).toBe("04"); // January
 
     await selectCustomRange({ startDate: "2018-11-15", stopDate: "2019-02-15" });
     expect.verifySteps(["get_gantt_data"]);
@@ -2388,9 +2388,9 @@ test("focus today with range change (in range & outside)", async () => {
     expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20", "December 2018"));
     gridContent = getGridContent();
     expect(gridContent.range).toBe("From: 11/15/2018 to: 02/15/2019");
-    expect(gridContent.columnHeaders).toHaveLength(34);
-    expect(gridContent.columnHeaders[0].title).toBe("03"); // December
-    expect(gridContent.columnHeaders.at(-1).title).toBe("05"); // January
+    expect(gridContent.columnHeaders).toHaveLength(32);
+    expect(gridContent.columnHeaders[0].title).toBe("04"); // December
+    expect(gridContent.columnHeaders.at(-1).title).toBe("04"); // January
     await focusToday();
     await ganttControlsChanges();
     // nothing happens
