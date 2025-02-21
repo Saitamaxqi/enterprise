@@ -459,18 +459,23 @@ class TestSmartSchedule(TestSmartScheduleCommon):
             'date_deadline': '2023-10-16 21:59:59',
             'user_ids': self.user_projectmanager.ids,
         })
-
+        # the project will automatically be timesheetable since the default value is true and so the allocated_hours will
+        # not be recomputed when the project is timesheetable since we assume the user will manually set the allocated
+        # hours on his tasks to correctly timesheets.
+        allocated_hours = 12
+        if hasattr(self.env['project.task'], 'allow_timesheets'):
+            allocated_hours = 0
         self.assertEqual(
             tasks.sorted('planned_date_begin').mapped(lambda t: (t.name, t.allocated_hours, t.planned_date_begin, t.date_deadline)),
             [
                 ('Task (deadline: Tuesday, allocated: 8h, priority: 1)', 8.0, datetime(2023, 10, 16, 6, 0), datetime(2023, 10, 16, 15, 0)),
                 ('Task (deadline: Tuesday, allocated: 8h, priority: 0)', 8.0, datetime(2023, 10, 17, 6, 0), datetime(2023, 10, 17, 15, 0)),
-                ('Task (deadline: Tuesday, allocated: 0h, priority: 1)', 0.0, datetime(2023, 10, 18, 6, 0), datetime(2023, 10, 19, 10, 0)),
-                ('Task (deadline: Tuesday, allocated: 0h, priority: 0)', 0.0, datetime(2023, 10, 19, 11, 0), datetime(2023, 10, 20, 15, 0)),
+                ('Task (deadline: Tuesday, allocated: 0h, priority: 1)', allocated_hours, datetime(2023, 10, 18, 6, 0), datetime(2023, 10, 19, 10, 0)),
+                ('Task (deadline: Tuesday, allocated: 0h, priority: 0)', allocated_hours, datetime(2023, 10, 19, 11, 0), datetime(2023, 10, 20, 15, 0)),
                 ('Task (deadline: Wednesday, allocated: 8h, priority: 1)', 8.0, datetime(2023, 10, 23, 6, 0), datetime(2023, 10, 23, 15, 0)),
                 ('Task (deadline: Wednesday, allocated: 8h, priority: 0)', 8.0, datetime(2023, 10, 24, 6, 0), datetime(2023, 10, 24, 15, 0)),
-                ('Task (deadline: Wednesday, allocated: 0h, priority: 1)', 0.0, datetime(2023, 10, 25, 6, 0), datetime(2023, 10, 26, 10, 0)),
-                ('Task (deadline: Wednesday, allocated: 0h, priority: 0)', 0.0, datetime(2023, 10, 26, 11, 0), datetime(2023, 10, 27, 15, 0)),
+                ('Task (deadline: Wednesday, allocated: 0h, priority: 1)', allocated_hours, datetime(2023, 10, 25, 6, 0), datetime(2023, 10, 26, 10, 0)),
+                ('Task (deadline: Wednesday, allocated: 0h, priority: 0)', allocated_hours, datetime(2023, 10, 26, 11, 0), datetime(2023, 10, 27, 15, 0)),
                 ('Task (deadline: None, allocated: 8h, priority: 1)', 8.0, datetime(2023, 10, 30, 7, 0), datetime(2023, 10, 30, 16, 0)),
                 ('Task (deadline: None, allocated: 8h, priority: 0)', 8.0, datetime(2023, 10, 31, 7, 0), datetime(2023, 10, 31, 16, 0)),
                 ('Task (deadline: None, allocated: 0h, priority: 1)', 12.0, datetime(2023, 11, 1, 7, 0), datetime(2023, 11, 2, 11, 0)),
