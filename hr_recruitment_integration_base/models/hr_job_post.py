@@ -25,7 +25,9 @@ class HrJobPost(models.Model):
     ], string='Contact Method', required=True, default="email")
     apply_vector = fields.Char(
         string="Contact Point",
-        help="The email address, phone number, url to send applications to.")
+        help="The email address, phone number, url to send applications to.",
+        compute="_compute_apply_vector",
+        store=True, readonly=False)
     post_html = fields.Html(string="Description", prefetch=False, required=True)
     status = fields.Selection([
         ('success', 'Success'),
@@ -54,6 +56,18 @@ class HrJobPost(models.Model):
                 job=record.job_id.name,
                 platform=record.platform_id.name
             )
+
+    @api.depends('apply_method', 'job_id.alias_id.alias_full_name', 'job_id.user_id.employee_id', 'job_id.user_id.work_email')
+    def _compute_apply_vector(self):
+        if self.apply_method != 'email':
+            return
+        job = self.job_id
+        if job and job.alias_id.alias_full_name:
+            self.apply_vector = job.alias_id.alias_full_name
+        elif job and job.user_id and job.user_id.employee_id:
+            self.apply_vector = job.user_id.work_email
+        else:
+            self.apply_vector = False
 
     def unlink(self):
         for job_post in self:

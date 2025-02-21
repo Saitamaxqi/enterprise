@@ -16,6 +16,7 @@ descriptions that will attract potential candidates.
     ],
     'auto_install': True,
     'data': [
+        'views/hr_job_post_views.xml',
         'wizard/hr_recruitment_post_views.xml'
     ],
     'author': 'Odoo S.A.',

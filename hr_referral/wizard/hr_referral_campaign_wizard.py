@@ -2,7 +2,6 @@
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from odoo.osv.expression import AND
 
 
 class HrReferralCampaignWizard(models.TransientModel):
@@ -26,27 +25,9 @@ class HrReferralCampaignWizard(models.TransientModel):
         string='Contacted Employees', default='all', required=True)
     employee_ids = fields.Many2many(
         comodel_name='hr.employee', domain=_domain_employee_ids, store=True, export_string_translation=False)
-    sending_method = fields.Selection(
-        selection=[('work_email', 'Email'), ('work_phone', 'SMS')], default='work_email', required=True)
 
     mail_subject = fields.Char(string='Subject', compute='_compute_mail_subject', readonly=False, store=True)
     mail_body = fields.Html(string='Body', compute='_compute_mail_body', readonly=False, store=True)
-
-    sms_body = fields.Text(string='SMS Content', compute='_compute_sms_body', readonly=False, store=True)
-
-    @api.depends('job_id')
-    def _compute_sms_body(self):
-        for wizard in self:
-            if not wizard.sms_body:
-                wizard.sms_body = self.env['ir.ui.view']._render_template(
-                    'hr_referral.referral_campaign_sms_template',
-                    {
-                        'employee_name': '[employee_name]',
-                        'job_id': wizard.job_id,
-                        'company_id': wizard.job_id.company_id,
-                        'job_url': '[job_url]',
-                    }
-                )
 
     @api.depends('job_id')
     def _compute_mail_body(self):
@@ -74,14 +55,10 @@ class HrReferralCampaignWizard(models.TransientModel):
 
     def _get_employees(self):
         self.ensure_one()
-        if self.target == 'selection':
-            return self.employee_ids.filtered(lambda employee: employee[self.sending_method])
+        if self.target == 'selection' and self.employee_ids:
+            return self.employee_ids.filtered(lambda employee: employee['work_email'])
         base_domain = [('company_id', 'in', self.env.companies.ids), ('user_id', '!=', False)]
-        sending_domain = []
-        if self.sending_method == 'work_phone':
-            sending_domain = ['|', ('work_phone', '!=', False), ('user_id.work_phone', '!=', False)]
-        search_domain = AND([base_domain, sending_domain])
-        return self.env['hr.employee'].search(search_domain)
+        return self.env['hr.employee'].search(base_domain)
 
     def _prepare_personalized_content(self):
         self.ensure_one()
@@ -93,7 +70,7 @@ class HrReferralCampaignWizard(models.TransientModel):
             self.job_id.write({'is_published': True})
 
         links_per_user = self.job_id.search_or_create_referral_links(users)
-        sending_method = 'email_formatted' if self.sending_method == 'work_email' else 'work_phone'
+        sending_method = 'email_formatted'
         personalized_contents = [{
             'employee_name': user.employee_id.name,
             'sending_method': user[sending_method]
@@ -103,7 +80,8 @@ class HrReferralCampaignWizard(models.TransientModel):
         } for user in users]
         return personalized_contents
 
-    def _action_send_email(self):
+    def action_send(self):
+        self.ensure_one()
         personalized_contents = self._prepare_personalized_content()
         mails = [{
             'email_to': personalized_content['sending_method'],
@@ -120,20 +98,3 @@ class HrReferralCampaignWizard(models.TransientModel):
         } for personalized_content in personalized_contents]
         self.env['mail.mail'].sudo().create(mails)
         return {'type': 'ir.actions.act_window_close'}
-
-    def _action_send_sms(self):
-        personalized_contents = self._prepare_personalized_content()
-        smss = [{
-            'number': personalized_content['sending_method'],
-            'body': self.sms_body
-                .replace('[employee_name]', personalized_content['employee_name'])
-                .replace('[job_url]', personalized_content['job_url']),
-        } for personalized_content in personalized_contents]
-        self.env['sms.sms'].sudo().create(smss)
-        return {'type': 'ir.actions.act_window_close'}
-
-    def action_send(self):
-        self.ensure_one()
-        if self.sending_method == 'work_email':
-            return self._action_send_email()
-        return self._action_send_sms()

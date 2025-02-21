@@ -140,15 +140,21 @@
         </field>
     </record>
 
-    <record id="action_hr_job_launch_referral_campaign" model="ir.actions.server">
-        <field name="name">Referral Campaign</field>
-        <field name="model_id" ref="model_hr_job"/>
-        <field name="binding_model_id" ref="model_hr_job"/>
-        <field name="binding_view_types">form</field>
-        <field name="state">code</field>
-        <field name="group_ids" eval="[(4, ref('hr_recruitment.group_hr_recruitment_manager'))]"/>
-        <field name="code">
-            action = records.action_referral_campaign()
+    <record id="hr_job_form_inherit_hr_referral" model="ir.ui.view">
+        <field name="name">hr.job.view.form.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="priority">201</field>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="action_referral_campaign"
+                        string="Promote"
+                        type="object"
+                        class="btn btn-secondary"
+                        groups="hr_recruitment.group_hr_recruitment_manager"
+                        invisible="not website_published"                        
+                        />
+            </header>
         </field>
     </record>
 

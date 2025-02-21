@@ -6,25 +6,34 @@
         <field name="inherit_id" ref="hr.view_hr_job_form"/>
         <field name="priority">200</field>
         <field name="arch" type="xml">
-            <button name="action_job_board_modules" position="replace">
+            <div name="button_box" position="inside">
                 <button class="oe_stat_button"
                     icon="fa-newspaper-o"
                     name="action_open_hr_job_post"
-                    type="object">
+                    type="object"
+                    invisible="job_post_count == 0">
                     <field
                         name="job_post_count"
                         widget="statinfo"
                         string="Job Board"
-                        invisible="not job_post_count"/>
-                        <div class="o_stat_info" invisible="job_post_count">
-                            <span class="o_stat_value">New</span>
-                            <span class="o_stat_text">Job Board</span>
-                        </div>
+                        />
                 </button>
-            </button>
+            </div>
+            <header position="inside">
+                <button name="action_post_job" string="Post on Job Boards" type="object" class="btn-secondary"/>
+            </header>
             <field name="contract_type_id" position="after">
                 <field name="schedule_id"/>
+                <field
+                    name="date_from"
+                    widget="daterange"
+                    string="Mission Dates"
+                    options="{'end_date_field': 'date_to'}"/>
+                <field name="date_to" invisible="1"/> <!-- Added to the view so that it is passed to the write method when the record is saved-->
                 <field name="currency_id" invisible="True"/> <!-- necessary for the display of monetary fields -->
+            </field>
+
+            <field name="industry_id" position="after">
                 <label for="salary_min" string="Salary Range"/>
                 <div>
                     <field name="salary_min" class="oe_inline"/> -
@@ -33,13 +42,15 @@
                 </div>
             </field>
 
-            <xpath expr="//page[@name='job_description_page']" position="after">
+
+            <xpath expr="//page[@name='trackers_page']" position="after">
                 <page string="Job Boards" name="job_boards">
-                    <separator string="Posts" name="posts"/>
                     <div>
                         <field name="job_post_ids">
                             <list string="Posts">
                                 <field name="platform_id" widget="many2one_avatar"/>
+                                <field name="campaign_start_date" string="Start Date"/>
+                                <field name="campaign_end_date" string="End Date"/>
                                 <field name="apply_method"/>
                                 <field name="status"
                                     decoration-danger="status == 'failure'"
