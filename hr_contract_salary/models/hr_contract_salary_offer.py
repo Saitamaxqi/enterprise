@@ -198,14 +198,6 @@ class HrContractSalaryOffer(models.Model):
         else:
             default_template_id = template_id
 
-        if not self.employee_id and self.applicant_id and not self.applicant_id.partner_id:
-            self.applicant_id.partner_id = self.env['res.partner'].create({
-                'is_company': False,
-                'name': self.applicant_id.partner_name,
-                'email': self.applicant_id.email_from,
-                'phone': self.applicant_id.partner_phone,
-            })
-
         ctx = {
             'default_composition_mode': 'comment',
             'default_email_layout_xmlid': "mail.mail_notification_light",
@@ -254,6 +246,13 @@ class HrContractSalaryOffer(models.Model):
         return {
             offer.id: (offer.applicant_id.partner_id + offer.employee_id.work_contact_id)
             for offer in self
+        }
+
+    def _mail_get_primary_email(self):
+        # Override as there is no "_primary_email" defined here, it is a related
+        return {
+            record.id: record.applicant_id.email_from or record.employee_id.work_email
+            for record in self
         }
 
     def _message_add_suggested_recipients(self, primary_email=False):
