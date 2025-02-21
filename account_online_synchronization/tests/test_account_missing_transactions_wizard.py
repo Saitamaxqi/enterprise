@@ -1,7 +1,8 @@
-from odoo import fields
-from odoo.addons.account_online_synchronization.tests.common import AccountOnlineSynchronizationCommon
-from odoo.tests import tagged
 from unittest.mock import patch
+
+from odoo import fields
+from odoo.tests import tagged
+from odoo.addons.account_online_synchronization.tests.common import AccountOnlineSynchronizationCommon
 
 
 @tagged('post_install', '-at_install')
@@ -49,3 +50,34 @@ class TestAccountMissingTransactionsWizard(AccountOnlineSynchronizationCommon):
         self.assertEqual(transient_transactions[1]['state'], 'pending')
         self.assertEqual(transient_transactions[1]['foreign_currency_id'], gbp_currency)
         self.assertEqual(transient_transactions[1]['amount_currency'], 8.0)
+
+    def test_missing_transaction_transient_handle_dict_properly_for_transaction_details(self):
+        expected_transaction_details = {
+            'online_transaction_identifier': 'ABCD01',
+            'date': '2023-07-06',
+            'payment_ref': 'ABCD01',
+            'amount': 10.0,
+            'partner_name': 'Test partner',
+        }
+
+        transaction_to_import = {
+            **self._create_one_online_transaction(
+                transaction_identifier='ABCD01',
+                date='2023-07-06',
+                payment_ref='ABCD01',
+                amount=10.0,
+                partner_name='Test partner',
+                transaction_details=True,
+            ),
+            'journal_id': self.euro_bank_journal.id,
+            'company_id': self.euro_bank_journal.company_id.id,
+        }
+        transient_transaction = self.env['account.bank.statement.line.transient'].create(transaction_to_import)
+
+        transaction_details = transient_transaction.read(['transaction_details'], load=None)[0]['transaction_details']
+        self.assertEqual(transaction_details, expected_transaction_details)
+
+        transient_transaction.action_import_transactions()
+
+        transaction = self.env['account.bank.statement.line'].search([('payment_ref', '=', 'ABCD01')], limit=1)
+        self.assertEqual(transaction.transaction_details, expected_transaction_details)

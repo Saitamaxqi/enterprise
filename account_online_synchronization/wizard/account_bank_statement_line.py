@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import json
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools import html2plaintext
 
@@ -52,6 +53,13 @@ class AccountBankStatementLineTransient(models.TransientModel):
         currency_field='foreign_currency_id',
     )
 
+    @api.model_create_multi
+    def create(self, vals_data):
+        for vals in vals_data:
+            if isinstance(vals.get('transaction_details'), dict):
+                vals['transaction_details'] = json.dumps(vals['transaction_details'])
+        return super().create(vals_data)
+
     def action_import_transactions(self):
         # This action could be call on multiple lines.
         if not self:
@@ -84,6 +92,6 @@ class AccountBankStatementLineTransient(models.TransientModel):
         # Clean eventual <p>...</p> encapsulation for the 'transaction_details' field to be decoded as a JSON later.
         for transaction in transactions:
             if 'transaction_details' in transaction:
-                transaction['transaction_details'] = html2plaintext(transaction['transaction_details'])
+                transaction['transaction_details'] = json.loads(html2plaintext(transaction['transaction_details']))
 
         return transactions

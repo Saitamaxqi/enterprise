@@ -353,16 +353,3 @@ If you've already opened a ticket for this issue, don't report it again: a suppo
         ])
         self.assertEqual(online_link.account_online_account_ids, online_accounts)
         self.assertEqual(len(online_link.journal_ids), 2)  # Our online link connections should have 2 journals.
-
-    def test_transaction_details_json_compatibility_from_html(self):
-        """ This test checks that, after being imported from the transient model
-            the records of account.bank.statement.line will have the
-            'transaction_details' field able to be decoded to a JSON,
-            i.e. it is not encapsulated in <p> </p> tags.
-        """
-        transaction = self._create_one_online_transaction()
-        transaction['transaction_details'] = '{\n    "account_id": "1",\n    "status": "posted"\n}'
-        transient_transaction = self.env['account.bank.statement.line.transient'].create(transaction)
-        transaction_details = transient_transaction.read(fields=['transaction_details'], load=None)[0]['transaction_details']
-        self.assertFalse(transaction_details.startswith('<p>'), 'Transient transaction details should not start with <p> when read.')
-        self.assertFalse(transaction_details.endswith('</p>'), 'Transient transaction details should not end with </p> when read.')

@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from copy import deepcopy
+
 from odoo import Command, fields
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.tests import tagged
@@ -38,7 +40,7 @@ class AccountOnlineSynchronizationCommon(AccountTestInvoicingCommon):
         self.transaction_id = 1
         self.account_online_account.balance = 0.0
 
-    def _create_one_online_transaction(self, transaction_identifier=None, date=None, payment_ref=None, amount=10.0, partner_name=None, foreign_currency_code=None, amount_currency=8.0):
+    def _create_one_online_transaction(self, transaction_identifier=None, date=None, payment_ref=None, amount=10.0, partner_name=None, foreign_currency_code=None, amount_currency=8.0, transaction_details=False):
         """ This method allows to create an online transaction granularly
 
             :param transaction_identifier: Online identifier of the transaction, by default transaction_id from the
@@ -48,6 +50,7 @@ class AccountOnlineSynchronizationCommon(AccountTestInvoicingCommon):
             :param amount: Amount of the transaction, by default equals 10.0
             :param foreign_currency_code: Code of transaction's foreign currency
             :param amount_currency: Amount of transaction in foreign currency, update transaction only if foreign_currency_code is given, by default equals 8.0
+            :param transaction_details: Whether the transaction details should be included or not, by default False
             :return: A dictionnary representing an online transaction (not formatted)
         """
         transaction_identifier = transaction_identifier if transaction_identifier is not None else self.transaction_id
@@ -69,6 +72,9 @@ class AccountOnlineSynchronizationCommon(AccountTestInvoicingCommon):
                 'foreign_currency_code': foreign_currency_code,
                 'amount_currency': amount_currency
             })
+
+        if transaction_details:
+            transaction['transaction_details'] = deepcopy(transaction)
         return transaction
 
     def _create_online_transactions(self, dates):
