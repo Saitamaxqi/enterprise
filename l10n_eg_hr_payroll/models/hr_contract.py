@@ -19,6 +19,7 @@ class HrContract(models.Model):
         string='Total End of service benefit',
         compute='_compute_end_of_service')
     l10n_eg_social_insurance_reference = fields.Monetary(string='Social Insurance Reference Amount')
+    l10n_eg_total_leave_days = fields.Float(string='Total Leave Days', default=21)
 
     @api.depends('l10n_eg_total_number_of_days', 'l10n_eg_other_allowances', 'l10n_eg_transportation_allowance', 'wage')
     def _compute_end_of_service(self):

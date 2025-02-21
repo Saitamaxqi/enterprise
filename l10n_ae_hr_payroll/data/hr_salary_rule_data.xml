@@ -333,10 +333,10 @@ result = - worked_days['SICKLEAVE50'].number_of_days * gross_salary / 30 * 0.5
             <field name="sequence">50</field>
             <field name="amount_select">code</field>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = employee.active and 'SICKLEAVE0' in worked_days</field>
+            <field name="condition_python">result = employee.active and 'AESICKLEAVE0' in worked_days</field>
             <field name="amount_python_compute">
 gross_salary = contract.wage + contract.l10n_ae_housing_allowance + contract.l10n_ae_transportation_allowance + contract.l10n_ae_other_allowances
-result = - worked_days['SICKLEAVE0'].number_of_days * gross_salary / 30
+result = - worked_days['AESICKLEAVE0'].number_of_days * gross_salary / 30
             </field>
             <field name="struct_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure"/>
         </record>

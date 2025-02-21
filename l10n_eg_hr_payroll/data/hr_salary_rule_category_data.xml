@@ -6,4 +6,11 @@
         <field name="parent_id" ref="hr_payroll.DED"/>
         <field name="country_id" ref="base.eg"/>
     </record>
+
+    <record id="hr_salary_rule_category_eg_basic_alw" model="hr.salary.rule.category">
+        <field name="name">Basic Allowances</field>
+        <field name="code">BASICALW</field>
+        <field name="parent_id" ref="hr_payroll.ALW"/>
+        <field name="country_id" ref="base.eg"/>
+    </record>
 </odoo>

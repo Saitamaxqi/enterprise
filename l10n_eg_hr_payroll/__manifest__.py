@@ -14,15 +14,17 @@ Egypt Payroll and End of Service rules.
 - Tax break calculations and deductions
 - Master payroll export
     """,
-    "depends": ["hr_payroll"],
+    "depends": ["hr_payroll", "hr_payroll_holidays"],
     "auto_install": ["hr_payroll"],
     "data": [
         "data/hr_rule_parameter_data.xml",
         "data/hr_salary_rule_category_data.xml",
         "data/hr_payroll_structure_type_data.xml",
         "data/hr_payroll_structure_data.xml",
+        "data/hr_payslip_input_type.xml",
         "data/hr_salary_rule_data.xml",
         "views/hr_contract_views.xml",
+        "views/res_config_settings.xml",
     ],
     "author": "Odoo S.A.",
     "license": "OEEL-1",

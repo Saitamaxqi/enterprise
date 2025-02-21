@@ -23,6 +23,11 @@
                     <span>/ month</span>
                 </div>
             </group>
+            <group name="salary_info" position="after">
+                <group name="annual_leave_provision" string="Annual Leave Provision" invisible="country_code != 'EG'">
+                    <field name="l10n_eg_total_leave_days"/>
+                </group>
+            </group>
             <group name="yearly_benefits" position="after">
                 <group name="end_of_service_benefit" string="End Of Service benefit" invisible="country_code != 'EG'">
                     <field name="l10n_eg_number_of_days"/>

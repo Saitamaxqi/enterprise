@@ -38,9 +38,6 @@ class AccountChartTemplate(models.AbstractModel):
         rule = self.env.ref('l10n_eg_hr_payroll.egypt_social_insurance_contribution_company')
         rules_mapping[rule]['debit'] = '400078'
 
-        rule = self.env.ref('l10n_eg_hr_payroll.egypt_social_insurance_contribution_total')
-        rules_mapping[rule]['credit'] = '201026'
-
         rule = self.env.ref('l10n_eg_hr_payroll.egypt_end_of_service_provision_salary_rule')
         rules_mapping[rule]['debit'] = '400008'
         rules_mapping[rule]['credit'] = '202001'
