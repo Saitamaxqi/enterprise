@@ -915,6 +915,7 @@ test("resize a pill", async () => {
 
     // resize to one cell smaller at end (-1 day)
     let drop = await resizePill(getPillWrapper("Task 1"), "end", -1, false);
+    await animationFrame();
     expect(SELECTORS.startBadge).toHaveText("11/30/2018, 7:30 PM");
     expect(SELECTORS.stopBadge).toHaveText("12/30/2018, 7:29 PM (-24 hours)");
     expect(SELECTORS.stopBadge).toHaveClass("text-danger");
@@ -933,6 +934,7 @@ test("resize a pill", async () => {
 
     // resize to one cell smaller at start (-1 day)
     drop = await resizePill(getPillWrapper("Task 1"), "start", -1, false);
+    await animationFrame();
     expect(SELECTORS.startBadge).toHaveText("11/29/2018, 7:30 PM (+24 hours)");
     expect(SELECTORS.stopBadge).toHaveText("12/30/2018, 7:29 PM");
     expect(SELECTORS.startBadge).toHaveClass("text-success");
