@@ -9,7 +9,6 @@
                 date_stop="date"
                 default_scale="month"
                 scales="week,month,year"
-                color="stage_id"
                 string="Planning"
                 display_unavailability="1"
                 js_class="project_gantt"
