@@ -46,7 +46,7 @@
           "content": "=_t(\"possible issues in cash availability at short term\")"
         },
         "B34": {
-          "content": "=_t(\"Net Credit Purchases / Average accounts payable balance for period\")"
+          "content": "=_t(\"Sales on account / Average accounts receivable balance for period\")"
         },
         "B35": {
           "content": "=_t(\"< 45: company gets paid for sales quickly\")"
@@ -98,7 +98,7 @@
           "content": "=_t(\"possible issues in cash availability at short term\")"
         },
         "D34": {
-          "content": "=_t(\"Sales on account / Average accounts receivable balance for period\")"
+          "content": "=_t(\"Net Credit Purchases / Average accounts payable balance for period\")"
         },
         "D35": {
           "content": "=_t(\"< 45: company liquidates debts to suppliers quickly\")"
@@ -496,7 +496,7 @@
         "B8": { "content": "=FORMAT.LARGE.NUMBER(IFERROR(B20-B21))" },
         "B9": { "content": "=IFERROR(B26/ABS(B21))" },
         "B10": { "content": "=IFERROR(B28/ABS(B14)*30)" },
-        "B11": { "content": "=IFERROR(B27/ABS(B18)*30)" },
+        "B11": { "content": "=IFERROR(B27/ABS(B15)*30)" },
         "B13": { "content": "=_t(\"Value\")" },
         "B14": { "content": "=B42" },
         "B15": { "content": "=B46" },
