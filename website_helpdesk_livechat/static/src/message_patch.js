@@ -1,20 +1,20 @@
 import { Message } from "@mail/core/common/message";
+import { createDocumentFragmentFromContent } from "@mail/utils/common/html";
+
 import { markup } from "@odoo/owl";
 
+import { setElementContent } from "@web/core/utils/html";
 import { patch } from "@web/core/utils/patch";
 
 function addNewTicketsToMessage(oldMessage, newElement) {
-    const parsedDoc = new DOMParser().parseFromString(oldMessage,'text/html');
-
-    const loadMoreDiv = parsedDoc.querySelector('.o_load_more');
+    const parsedDoc = createDocumentFragmentFromContent(oldMessage);
+    const loadMoreDiv = parsedDoc.querySelector(".o_load_more");
     if (loadMoreDiv) {
         loadMoreDiv.parentElement.removeChild(loadMoreDiv);
     }
-
-    const tempContainer = parsedDoc.createElement('div');
-    tempContainer.innerHTML = newElement;
-
-    const bodyElement = parsedDoc.querySelector('.o_mail_notification');
+    const tempContainer = parsedDoc.createElement("div");
+    setElementContent(tempContainer, newElement);
+    const bodyElement = parsedDoc.querySelector(".o_mail_notification");
     while (tempContainer.firstChild) {
         bodyElement.appendChild(tempContainer.firstChild);
     }
@@ -32,8 +32,7 @@ patch(Message.prototype, {
                 load_counter: parseInt(loadCounter),
             }
         );
-
-        message.body = addNewTicketsToMessage(message.body, ticketsHTML);
+        message.body = addNewTicketsToMessage(message.body, markup(ticketsHTML));
     },
     onClick(ev) {
         const { oeLst, oeLoadCounter, oeType } = ev.target.dataset;
