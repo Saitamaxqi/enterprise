@@ -22,6 +22,7 @@ def _get_init_store_data_result(self):
             "channel_types_with_seen_infos": sorted(channel_types_with_seen_infos),
             "hasDocumentsUserGroup": False,
             "helpdesk_livechat_active": False,
+            "has_access_create_ticket": False,
             "voipConfig": {
                 "callActivityTypeId": self.env.ref("mail.mail_activity_data_call").id,
                 "mode": "demo",
