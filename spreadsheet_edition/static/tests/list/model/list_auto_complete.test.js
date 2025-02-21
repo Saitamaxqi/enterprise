@@ -1,8 +1,11 @@
 import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { stores } from "@odoo/o-spreadsheet";
-import { Partner, defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
-import { insertListInSpreadsheet } from "@spreadsheet/../tests/helpers/list";
+import { Partner, Product, defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
+import {
+    insertListInSpreadsheet,
+    createSpreadsheetWithList,
+} from "@spreadsheet/../tests/helpers/list";
 import { createModelWithDataSource } from "@spreadsheet/../tests/helpers/model";
 import { makeStore, makeStoreWithModel } from "@spreadsheet/../tests/helpers/stores";
 
@@ -74,6 +77,38 @@ test("ODOO.LIST field name", async function () {
     await animationFrame();
     expect(composer.currentContent).toBe('=ODOO.LIST(1,1,"id"');
     expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
+});
+
+test("ODOO.LIST related field name", async function () {
+    const { model } = await createSpreadsheetWithList();
+    const { store: composer } = await makeStoreWithModel(model, CellComposerStore);
+    composer.startEdition('=ODOO.LIST(1,1,"product_id"');
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    const allFields = Object.keys(Product._fields);
+    expect(proposals.map((p) => p.text).sort(String.localeCompare)).toEqual(
+        allFields.map((field) => `"product_id.${field}"`).sort(String.localeCompare),
+        { message: "all fields are proposed, quoted" }
+    );
+    // check completely only the first one
+    expect(proposals[0]).toEqual({
+        description: "Id",
+        fuzzySearchKey: 'Id"product_id.id"',
+        htmlContent: [{ color: "#00a82d", value: '.id"' }],
+        text: '"product_id.id"',
+    });
+    composer.insertAutoCompleteValue(proposals[0].text);
+    await animationFrame();
+    expect(composer.currentContent).toBe('=ODOO.LIST(1,1,"product_id.id"');
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
+});
+
+test("ODOO.LIST invalid related field path", async function () {
+    const { model } = await createSpreadsheetWithList();
+    const { store: composer } = await makeStoreWithModel(model, CellComposerStore);
+    composer.startEdition('=ODOO.LIST(1,1,"product_id.name.name"');
+    await animationFrame();
+    expect(composer.isAutoCompleteDisplayed).toBe(false);
 });
 
 test("ODOO.LIST.HEADER field name", async function () {
