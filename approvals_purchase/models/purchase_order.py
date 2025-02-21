@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+from collections import defaultdict
 from markupsafe import Markup
 
 from odoo import models, _
@@ -9,21 +10,16 @@ class PurchaseOrder(models.Model):
 
     def write(self, vals):
         if 'state' in vals:
-            self = self.filtered(lambda purchase_order: purchase_order.state != vals['state'])
-            related_product_lines = self.sudo().env['approval.product.line'].search(
-                domain=[('purchase_order_line_id.order_id', 'in', self.ids)],
-            )
-            grouped_product_lines = dict()
-            for product_line in related_product_lines:
-                approval_request_id = product_line.approval_request_id
-                purchase_order_id = product_line.purchase_order_line_id.order_id
-                if not grouped_product_lines.get(approval_request_id):
-                    grouped_product_lines[approval_request_id] = dict()
-                if not grouped_product_lines[approval_request_id].get(purchase_order_id):
-                    grouped_product_lines[approval_request_id][purchase_order_id] = self.env['approval.product.line']
-                grouped_product_lines[approval_request_id][purchase_order_id] |= product_line
-
-            self._log_po_state_change_to_approval_request_chatter(vals['state'], grouped_product_lines)
+            orders_changed_state = self.filtered(lambda purchase_order: purchase_order.state != vals['state'])
+            if orders_changed_state:
+                related_product_lines = self.sudo().env['approval.product.line'].search(
+                    domain=[('purchase_order_line_id.order_id', 'in', orders_changed_state.ids)],
+                )
+                if related_product_lines:
+                    grouped_product_lines = defaultdict(lambda: defaultdict(lambda: self.env['approval.product.line']))
+                    for product_line in related_product_lines:
+                        grouped_product_lines[product_line.approval_request_id][product_line.purchase_order_line_id.order_id] |= product_line
+                    self._log_po_state_change_to_approval_request_chatter(vals['state'], grouped_product_lines)
         return super().write(vals)
 
     def _log_po_state_change_to_approval_request_chatter(self, new_state, grouped_product_lines):
