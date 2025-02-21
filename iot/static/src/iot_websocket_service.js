@@ -87,26 +87,32 @@ export class IotWebsocket {
 export const IotWebsocketService = {
     dependencies: ["bus_service", "lazy_session", "notification", "orm"],
 
-    start(env, { bus_service, lazy_session, notification, orm }) {
-        const ws = new IotWebsocket(bus_service, notification, orm);
-        if (navigator.onLine) {
-            try {
-                lazy_session.getValue("iot_channel", (iot_channel) => {
-                    if (iot_channel) {
-                        bus_service.addChannel(iot_channel);
-                        bus_service.subscribe("print_confirmation", (payload) => {
-                            if (ws.jobs[payload["print_id"]]) {
-                                ws.onPrintConfirmation(
-                                    payload["device_identifier"],
-                                    payload["print_id"]
-                                );
-                            }
-                        });
+    _addIotChannel(busService, ws, iotChannel) {
+        try {
+            if (iotChannel) {
+                busService.addChannel(iotChannel);
+                busService.subscribe("print_confirmation", (payload) => {
+                    if (ws.jobs[payload["print_id"]]) {
+                        ws.onPrintConfirmation(
+                            payload["device_identifier"],
+                            payload["print_id"]
+                        );
                     }
                 });
-            } catch (error) {
-                console.warn(error);
             }
+        } catch (error) {
+            console.warn(error);
+        }
+    },
+    _requestIotChannel(services, ws) {
+        services.lazy_session.getValue("iot_channel", (iotChannel) => {
+            this._addIotChannel(services.bus_service, ws, iotChannel);
+        });
+    },
+    start(env, services) {
+        const ws = new IotWebsocket(services.bus_service, services.notification, services.orm);
+        if (navigator.onLine) {
+            this._requestIotChannel(services, ws);
         }
         return ws;
     },
