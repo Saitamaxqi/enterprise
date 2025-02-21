@@ -422,6 +422,98 @@ class TestAccountAvalaraInternal(TestAccountAvalaraInternalCommon):
         self.assertRecordValues(invoice, [{'amount_tax': 60.48, 'amount_total': 650.48, 'amount_untaxed': 590.0}])
         self.assertRecordValues(tax_lines, [{'amount_currency': -17.7}, {'amount_currency': -17.7}])
 
+    def test_fully_discounted_invoice(self):
+        """By default, accounting removes tax lines that are $0. This results in incorrect journal items in case Avatax
+        doesn't calculate it as $0 and we have to set a tax amount."""
+        invoice = self.env['account.move'].create([{
+            'move_type': 'out_invoice',
+            'partner_id': self.partner.id,
+            'fiscal_position_id': self.fp_avatax.id,
+            'invoice_date': '2021-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'product_id': self.product_accounting.id,
+                    'tax_ids': None,
+                    'price_unit': 295.00,
+                }),
+                Command.create({
+                    'product_id': self.product_user_discound.id,
+                    'tax_ids': None,
+                    'price_unit': -295.00,
+                }),
+            ]
+        }])
+        self.assertEqual(invoice.amount_total, 0.00, "Invoice should be $0 before tax calculation.")
+
+        response = {
+            'lines': [{'details': [{'jurisCode': '06',
+                                    'rate': 0.06,
+                                    'taxName': 'CA STATE TAX'},
+                                   {'jurisCode': '075',
+                                    'rate': 0.0025,
+                                    'taxName': 'CA COUNTY TAX'},
+                                   {'jurisCode': 'EMAK0',
+                                    'rate': 0.03,
+                                    'taxName': 'CA SPECIAL TAX'},
+                                   {'jurisCode': 'EMTV0',
+                                    'rate': 0.01,
+                                    'taxName': 'CA SPECIAL TAX'}],
+                       'lineAmount': 295.0,
+                       'lineNumber': f'account.move.line,{invoice.invoice_line_ids[0].id}',
+                       'tax': 30.24},
+                      {'details': [{'jurisCode': '06',
+                                    'rate': 0.06,
+                                    'taxName': 'CA STATE TAX'},
+                                   {'jurisCode': '075',
+                                    'rate': 0.0025,
+                                    'taxName': 'CA COUNTY TAX'},
+                                   {'jurisCode': 'EMAK0',
+                                    'rate': 0.03,
+                                    'taxName': 'CA SPECIAL TAX'},
+                                   {'jurisCode': 'EMTV0',
+                                    'rate': 0.01,
+                                    'taxName': 'CA SPECIAL TAX'}],
+                       'lineAmount': -295.0,
+                       'lineNumber': f'account.move.line,{invoice.invoice_line_ids[1].id}',
+                       'tax': 0.00}],  # This discount is tax-exempt.
+            'summary': [{'jurisCode': '06',
+                         'rate': 0.06,
+                         'tax': 17.7,
+                         'taxName': 'CA STATE TAX',
+                         'taxable': 295.0},
+                        {'jurisCode': '075',
+                         'rate': 0.0025,
+                         'tax': 0.74,
+                         'taxName': 'CA COUNTY TAX',
+                         'taxable': 295.0},
+                        {'jurisCode': 'EMAK0',
+                         'rate': 0.03,
+                         'tax': 8.85,
+                         'taxName': 'CA SPECIAL TAX',
+                         'taxable': 295.0},
+                        {'jurisCode': 'EMAK0',
+                         'rate': 0.01,
+                         'tax': 2.95,
+                         'taxName': 'CA SPECIAL TAX',
+                         'taxable': 295.0},
+                        ]}
+
+        with self._capture_request(return_value=response):
+            invoice.button_external_tax_calculation()
+
+        self.assertRecordValues(
+            invoice.line_ids,
+            [
+                {'name': 'Accounting', 'balance': -295.00},  # Income account
+                {'name': 'Odoo User Initial Discount', 'balance': 295.00},  # Income account
+                {'name': '', 'balance': sum(t['tax'] for t in response['summary'])},  # AR
+                {'name': 'CA STATE 6%', 'balance': -17.7},
+                {'name': 'CA COUNTY 0.25%', 'balance': -0.74},
+                {'name': 'CA SPECIAL 3%', 'balance': -8.85},
+                {'name': 'CA SPECIAL 1%', 'balance': -2.95},
+            ]
+        )
+
 
 @tagged("external_l10n", "external", "-at_install", "post_install", "-standard")
 class TestAccountAvalaraInternalIntegration(TestAccountAvalaraInternalCommon):
