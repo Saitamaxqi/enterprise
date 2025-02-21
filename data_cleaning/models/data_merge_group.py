@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
@@ -193,8 +192,8 @@ class Data_MergeGroup(models.Model):
                 'archived': rec._original_records().exists(),
             })
             if self.model_id.removal_mode == 'archive':
-                rec._original_records()._message_log_with_view('data_merge.data_merge_merged', render_values=values)
-            master_record._original_records()._message_log_with_view('data_merge.data_merge_main', render_values=master_values)
+                rec._original_records()._message_log_with_view('data_cleaning.data_merge_merged', render_values=values)
+            master_record._original_records()._message_log_with_view('data_cleaning.data_merge_main', render_values=master_values)
 
 
     ## Generic Merge

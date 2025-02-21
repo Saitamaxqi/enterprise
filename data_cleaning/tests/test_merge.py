@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import Command
+from odoo.tests import tagged
 from odoo.tests.common import new_test_user
 
 from unittest.mock import patch
@@ -138,3 +138,42 @@ class TestMerge(test_common.TestCommon):
         model.find_duplicates()
         self.assertEqual(rec.with_company(company1).x_cd, 'one', 'The original field value should stay')
         self.assertEqual(rec.with_company(company2).x_cd, 'twoB', 'The new field value should be available on the master record')
+
+
+@tagged('post_install', '-at_install')
+class TestMergeLog(test_common.TestCommon):
+    def test_merge_log_note_project_task(self):
+        """
+        Check that log notes are posted in the chatter of the merged records of a model inheriting from `mail.thread`
+        """
+        if self.env['ir.module.module']._get('project').state != 'installed':
+            self.skipTest("The project module is required to run this test.")
+
+        test_project = self.env['project.project'].create({'name': 'Test project'})
+        task_1, task_2, task_3 = self.env['project.task'].create([
+            {'name': 'Task 1',  'user_ids': False, 'project_id': test_project.id},
+            {'name': 'Task 2',  'user_ids': False, 'project_id': test_project.id},
+            {'name': 'Task 3',  'user_ids': False, 'project_id': test_project.id},
+        ])
+
+        res_model_id = self.env['ir.model'].search([('model', '=', 'project.task')])
+        model_id = self.env['data_merge.model'].create({
+            'name': 'project.task',
+            'res_model_id': res_model_id.id,
+        })
+        data_merge_group = self.env['data_merge.group'].create({
+            'model_id': model_id.id,
+            'res_model_id': res_model_id.id,
+            'record_ids': [
+                Command.create({'res_id': task_1.id, 'is_master': True}),
+                Command.create({'res_id': task_2.id}),
+                Command.create({'res_id': task_3.id}),
+            ],
+        })
+
+        res = data_merge_group.merge_records(data_merge_group.record_ids.ids)
+
+        self.assertEqual(res["records_merged"], 3)
+        self.assertIn("merged into this one", task_1.message_ids.sorted(key=lambda m: m.create_date)[0].body)
+        self.assertIn("Task merged into", task_2.message_ids.sorted(key=lambda m: m.create_date)[0].body)
+        self.assertIn("Task merged into", task_3.message_ids.sorted(key=lambda m: m.create_date)[0].body)
