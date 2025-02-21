@@ -85,15 +85,9 @@
                             <button class="o_level_up btn o_hr_referral_level_up" t-if="dashboardData.reach_new_level">
                                 <img class="img-fluid" src="/hr_referral/static/src/img/levelup.png" />
                             </button>
-                            <div id="progress_referral" class="progress progress_hr_referral_onboarding" t-att-data-percentage="dashboardData.level_percentage">
-                                <span class="progress-left">
-                                    <span class="progress-bar"/>
-                                </span>
-                                <span class="progress-right">
-                                    <span class="progress-bar"/>
-                                </span>
+                            <div id="progress_referral" class="o_hr_referral_progressbar progress_hr_referral_onboarding d-flex rounded-circle z-1" t-att-style="`--o-hr-referral-progressbar-progress: ${dashboardData.level_percentage}%`">
+                                <img class="img img-fluid rounded-circle o_employee_image" t-attf-src="/web/image?model=res.users&amp;field=avatar_256&amp;id=#{dashboardData.id}" t-att-title="dashboardData.name" t-att-alt="dashboardData.name"/>
                             </div>
-                            <img class="img img-fluid rounded-circle o_employee_image" t-attf-src="/web/image?model=res.users&amp;field=avatar_256&amp;id=#{dashboardData.id}" t-att-title="dashboardData.name" t-att-alt="dashboardData.name"/>
                         </div>
                         <div class="user_info bg-view">
                             <p class="m-0 user_total">
