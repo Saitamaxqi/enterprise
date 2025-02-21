@@ -204,7 +204,6 @@ class HrContractSalaryOffer(models.Model):
                 'name': self.applicant_id.partner_name,
                 'email': self.applicant_id.email_from,
                 'phone': self.applicant_id.partner_phone,
-                'mobile': self.applicant_id.partner_phone,
             })
 
         ctx = {
