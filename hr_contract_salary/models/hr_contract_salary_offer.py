@@ -198,21 +198,14 @@ class HrContractSalaryOffer(models.Model):
         else:
             default_template_id = template_id
 
-        partner_to = False
-        email_to = False
-        if self.employee_id:
-            email_to = self.employee_id.work_email
-        elif self.applicant_id:
-            partner_to = self.applicant_id.partner_id
-            if not partner_to:
-                partner_to = self.env['res.partner'].create({
-                    'is_company': False,
-                    'name': self.applicant_id.partner_name,
-                    'email': self.applicant_id.email_from,
-                    'phone': self.applicant_id.partner_phone,
-                    'mobile': self.applicant_id.partner_phone,
-                })
-                self.applicant_id.partner_id = partner_to
+        if not self.employee_id and self.applicant_id and not self.applicant_id.partner_id:
+            self.applicant_id.partner_id = self.env['res.partner'].create({
+                'is_company': False,
+                'name': self.applicant_id.partner_name,
+                'email': self.applicant_id.email_from,
+                'phone': self.applicant_id.partner_phone,
+                'mobile': self.applicant_id.partner_phone,
+            })
 
         ctx = {
             'default_composition_mode': 'comment',
@@ -223,9 +216,7 @@ class HrContractSalaryOffer(models.Model):
             'default_record_name': _("%(company)s: Job Offer - %(job_title)s", company=self.company_id.name, job_title=self.job_title),
             'offer_id': self.id,
             'access_token': self.access_token,
-            'partner_to': partner_to and partner_to.id or False,
             'validity_end': self.offer_end_date,
-            'email_to': email_to or False,
         }
         return {
             'type': 'ir.actions.act_window',
@@ -258,6 +249,12 @@ class HrContractSalaryOffer(models.Model):
             'res_model': 'hr.contract',
             'res_id': self.employee_contract_id.id,
             'target': 'current',
+        }
+
+    def _mail_get_partners(self, introspect_fields=False):
+        return {
+            offer.id: (offer.applicant_id.partner_id + offer.employee_id.work_contact_id)
+            for offer in self
         }
 
     def _message_add_suggested_recipients(self, primary_email=False):
