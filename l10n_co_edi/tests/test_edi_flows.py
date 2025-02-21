@@ -50,5 +50,5 @@ class TestEdiFlows(TestCoEdiCommon):
             self.assertTrue(document.attachment_id)
 
             # Test that we can cancel the invoice
-            with self.assertRaises(UserError), self.cr.savepoint():
+            with self.assertRaises(UserError):
                 self.invoice.button_draft()

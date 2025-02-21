@@ -369,8 +369,7 @@ class TestKnowledgeArticleConstraints(KnowledgeCommon):
         })
 
         with self.assertRaises(IntegrityError, msg='An internal permission should be set for root article'):
-            with self.cr.savepoint():
-                article.write({'internal_permission': False})
+            article.write({'internal_permission': False})
 
         article_child = self.env['knowledge.article'].create({
             'name': 'Article',
@@ -380,8 +379,7 @@ class TestKnowledgeArticleConstraints(KnowledgeCommon):
         self.assertEqual(article_child.category, 'workspace')
         self.assertEqual(article_child.root_article_id, article)
         with self.assertRaises(IntegrityError, msg='An internal permission should be set for root article'):
-            with self.cr.savepoint():
-                article_child.sudo().write({'parent_id': False})
+            article_child.sudo().write({'parent_id': False})
 
     @users('employee')
     def test_article_should_have_at_least_one_writer(self):
@@ -447,8 +445,7 @@ class TestKnowledgeArticleConstraints(KnowledgeCommon):
         })
 
         with self.assertRaises(IntegrityError, msg='Trashed articles must be archived.'):
-            with self.cr.savepoint():
-                article.write({'to_delete': True})
+            article.write({'to_delete': True})
 
         article.write({
             'to_delete': True,
@@ -458,8 +455,7 @@ class TestKnowledgeArticleConstraints(KnowledgeCommon):
         self.assertFalse(article.active)
 
         with self.assertRaises(IntegrityError, msg='Trashed articles must be archived.'):
-            with self.cr.savepoint():
-                article.write({'active': True})
+            article.write({'active': True})
 
         article.write({
             'to_delete': False,

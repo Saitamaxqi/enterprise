@@ -242,28 +242,28 @@ class TestYTD(TestPayslipContractBase):
         # when it's edited. It should stay between 1 and the last day of the month
 
         self.richard_emp.company_id.ytd_reset_day = 1
-        with self.assertRaises(ValidationError), self.cr.savepoint():
+        with self.assertRaises(ValidationError):
             self.richard_emp.company_id.ytd_reset_day = -20
-        with self.assertRaises(ValidationError), self.cr.savepoint():
+        with self.assertRaises(ValidationError):
             self.richard_emp.company_id.ytd_reset_day = 0
 
         self.richard_emp.company_id.ytd_reset_month = '1'
         self.richard_emp.company_id.ytd_reset_day = 31
-        with self.assertRaises(ValidationError), self.cr.savepoint():
+        with self.assertRaises(ValidationError):
             self.richard_emp.company_id.ytd_reset_day = 32
 
         # Since the reset day is 31, we can't change the month to april directly
-        with self.assertRaises(ValidationError), self.cr.savepoint():
+        with self.assertRaises(ValidationError):
             self.richard_emp.company_id.ytd_reset_month = '4'
         self.richard_emp.company_id.ytd_reset_day = 30
         self.richard_emp.company_id.ytd_reset_month = '4'
-        with self.assertRaises(ValidationError), self.cr.savepoint():
+        with self.assertRaises(ValidationError):
             self.richard_emp.company_id.ytd_reset_day = 31
 
         # If the reset month is February, then the reset day will always be capped to 28.
         self.richard_emp.company_id.ytd_reset_day = 28
         self.richard_emp.company_id.ytd_reset_month = '2'
-        with self.assertRaises(ValidationError), self.cr.savepoint():
+        with self.assertRaises(ValidationError):
             self.richard_emp.company_id.ytd_reset_day = 29
 
         # Then, even in leap years, the reset date will stay on the 28th

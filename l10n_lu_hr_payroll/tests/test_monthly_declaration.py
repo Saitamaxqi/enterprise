@@ -36,20 +36,20 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
         })
 
         self.employee_david.identification_id = False
-        with self.assertRaisesRegex(UserError, r'missing an identification number'), self.cr.savepoint():
+        with self.assertRaisesRegex(UserError, r'missing an identification number'):
             wizard.action_generate_declaration()
 
         self.employee_david.identification_id = 111111111
         wizard.action_generate_declaration()
 
         self.lux_company.l10n_lu_seculine = False
-        with self.assertRaisesRegex(UserError, r'Missing (.+) SECUline numbers'), self.cr.savepoint():
+        with self.assertRaisesRegex(UserError, r'Missing (.+) SECUline numbers'):
             wizard.action_generate_declaration()
 
         self.lux_company.l10n_lu_seculine = 999999999
 
         self.lux_company.l10n_lu_official_social_security = False
-        with self.assertRaisesRegex(UserError, r'Missing (.+) social security'), self.cr.savepoint():
+        with self.assertRaisesRegex(UserError, r'Missing (.+) social security'):
             wizard.action_generate_declaration()
 
     def test_02_company_identification(self):
@@ -134,7 +134,7 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'year': '2022',
         })
 
-        with self.assertRaisesRegex(UserError, r'^Missing amounts'), self.env.cr.savepoint():
+        with self.assertRaisesRegex(UserError, r'^Missing amounts'):
             wizard.action_generate_declaration()
 
         self.assertEqual(len(wizard.situational_unemployment_ids), 1)

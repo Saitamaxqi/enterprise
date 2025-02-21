@@ -1,4 +1,5 @@
 from datetime import timedelta
+from contextlib import closing
 
 from odoo import fields
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
@@ -21,7 +22,7 @@ class TestChangeLockDateWizard(AccountTestInvoicingCommon):
         self.env['account.lock_exception'].search([]).sudo().unlink()
 
         for lock_date_field in SOFT_LOCK_DATE_FIELDS:
-            with self.subTest(lock_date_field=lock_date_field), self.cr.savepoint() as sp:
+            with self.subTest(lock_date_field=lock_date_field), closing(self.cr.savepoint()):
                 # We can set the lock date if there is none.
                 self.env['account.change.lock.date'].create({lock_date_field: '2010-01-01'}).change_lock_date()
                 self.assertEqual(self.env.company[lock_date_field], fields.Date.from_string('2010-01-01'))
@@ -68,8 +69,6 @@ class TestChangeLockDateWizard(AccountTestInvoicingCommon):
                     'end_datetime': self.env.cr.now() + timedelta(minutes=5),
                     'reason': False,
                 }])
-
-                sp.close()  # Rollback to ensure all subtests start in the same situation
 
     def test_exception_generation_multiple(self):
         """
@@ -152,7 +151,7 @@ class TestChangeLockDateWizard(AccountTestInvoicingCommon):
             'exception_duration': '1h',
             'exception_reason': ':TestChangeLockDateWizard.test_hard_lock_date',
         })
-        with self.assertRaises(UserError), self.env.cr.savepoint():
+        with self.assertRaises(UserError):
             wizard.change_lock_date()
         self.assertEqual(self.env.company.hard_lock_date, fields.Date.from_string('2011-01-01'))
 
@@ -163,7 +162,7 @@ class TestChangeLockDateWizard(AccountTestInvoicingCommon):
             'exception_duration': '1h',
             'exception_reason': ':TestChangeLockDateWizard.test_hard_lock_date',
         })
-        with self.assertRaises(UserError), self.env.cr.savepoint():
+        with self.assertRaises(UserError):
             wizard.change_lock_date()
         self.assertEqual(self.env.company.hard_lock_date, fields.Date.from_string('2011-01-01'))
 
@@ -173,7 +172,7 @@ class TestChangeLockDateWizard(AccountTestInvoicingCommon):
         self.env['account.lock_exception'].search([]).sudo().unlink()
 
         for lock_date_field in SOFT_LOCK_DATE_FIELDS:
-            with self.subTest(lock_date_field=lock_date_field), self.cr.savepoint() as sp:
+            with self.subTest(lock_date_field=lock_date_field), closing(self.cr.savepoint()):
                 self.env['account.change.lock.date'].create({lock_date_field: '2010-01-01'}).change_lock_date()
                 self.assertEqual(self.env.company[lock_date_field], fields.Date.from_string('2010-01-01'))
 
@@ -197,5 +196,3 @@ class TestChangeLockDateWizard(AccountTestInvoicingCommon):
 
                 # Ensure we have not created any exceptions
                 self.assertEqual(self.env['account.lock_exception'].search_count([]), 0)
-
-                sp.close()  # Rollback to ensure all subtests start in the same situation
