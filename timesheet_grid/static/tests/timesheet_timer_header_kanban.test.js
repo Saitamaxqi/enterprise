@@ -1,7 +1,6 @@
 import { describe, expect, test, beforeEach } from "@odoo/hoot";
-import { click } from "@odoo/hoot-dom";
-import { delay } from "@odoo/hoot-mock";
-import { onRpc, mountView } from "@web/../tests/web_test_helpers";
+import { waitFor, click } from "@odoo/hoot-dom";
+import { contains, onRpc, mountView } from "@web/../tests/web_test_helpers";
 
 import { defineTimesheetModels } from "./hr_timesheet_models";
 import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
@@ -18,18 +17,14 @@ test("timesheet.grid (kanban)(timer): start & stop", async () => {
         type: "kanban",
         resModel: "account.analytic.line",
     });
-    expect(".btn_start_timer").toHaveCount(1);
-
-    await click(".btn_start_timer");
-    await delay(50);
-    expect(".btn_stop_timer").toHaveCount(1);
+    await contains(".btn_start_timer").click();
+    await waitFor(".btn_stop_timer");
     expect("div.pinned_header input").toHaveCount(3, {
         message: "When the timer is running in the kanban view, the timesheet in the header should be editable."
     });
 
     await click(".btn_stop_timer");
-    await delay(50);
-    expect(".btn_start_timer").toHaveCount(1);
+    await waitFor(".btn_start_timer");
     expect("div.pinned_header input").toHaveCount(0);
 });
 
@@ -39,18 +34,14 @@ test("timesheet.grid (kanban)(timer): start & stop, view is grouped", async () =
         resModel: "account.analytic.line",
         groupBy: [ "project_id"],
     });
-    expect(".btn_start_timer").toHaveCount(1);
-
-    await click(".btn_start_timer");
-    await delay(50);
-    expect(".btn_stop_timer").toHaveCount(1);
+    await contains(".btn_start_timer").click();
+    await waitFor(".btn_stop_timer");
     expect("div.pinned_header input").toHaveCount(3, {
         message: "When the timer is running in the kanban view, the timesheet in the header should be editable."
     });
 
     await click(".btn_stop_timer");
-    await delay(50);
-    expect(".btn_start_timer").toHaveCount(1);
+    await waitFor(".btn_start_timer");
     expect("div.pinned_header input").toHaveCount(0);
 });
 
@@ -60,18 +51,14 @@ test("timesheet.grid (kanban)(timer): start & stop, view is grouped multiple tim
         resModel: "account.analytic.line",
         groupBy: [ "project_id", "task_id", "name"],
     });
-    expect(".btn_start_timer").toHaveCount(1);
-
-    await click(".btn_start_timer");
-    await delay(50);
-    expect(".btn_stop_timer").toHaveCount(1);
+    await contains(".btn_start_timer").click();
+    await waitFor(".btn_stop_timer");
     expect("div.pinned_header input").toHaveCount(3, {
         message: "When the timer is running in the kanban view, the timesheet in the header should be editable."
     });
 
     await click(".btn_stop_timer");
-    await delay(50);
-    expect(".btn_start_timer").toHaveCount(1);
+    await waitFor(".btn_start_timer");
     expect("div.pinned_header input").toHaveCount(0);
 });
 
@@ -85,17 +72,14 @@ test("timesheet.grid (kanban)(timer): start the timer with no valid project", as
         type: "kanban",
         resModel: "account.analytic.line",
     });
-    expect(".btn_start_timer").toHaveCount(1);
-
-    await click(".btn_start_timer");
-    await delay(50);
-    expect(".btn_stop_timer").toHaveCount(1);
+    await contains(".btn_start_timer").click();
+    await waitFor(".btn_stop_timer");
     expect("div.pinned_header input").toHaveCount(3, {
         message: "When the timer is running in the kanban view, the timesheet in the header should be editable."
     });
 
     await click(".btn_stop_timer");
-    await delay(50);
+    await waitFor("div.o_notification_manager h5:contains(Invalid fields:)");
     expect("div.o_notification_manager h5:contains(Invalid fields:)").toHaveCount(1, {
         message: "The default notification of 'required fields' of a Many2one relation should be raised."
     });
