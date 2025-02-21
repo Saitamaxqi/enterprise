@@ -147,6 +147,11 @@ REPORT_CONFIG = {
         'liability_line_ref': 'l10n_fr_reports.account_financial_report_fr_bilan_passif_total',
         'balance_col_label': 'net',
     },
+    'l10n_fr_reports.account_financial_report_l10n_fr_bilan_2024': {
+        'asset_line_ref': 'l10n_fr_reports.account_financial_report_fr_bilan_actif_total_2024',
+        'liability_line_ref': 'l10n_fr_reports.account_financial_report_fr_bilan_passif_total_2024',
+        'balance_col_label': 'net',
+    },
     'l10n_gr_reports.l10n_gr_bs_accounting_report': {
         'asset_line_ref': 'l10n_gr_reports.l10n_gr_bs_assets',
         'liability_line_ref': 'l10n_gr_reports.l10n_gr_bs_equity_provisions_liabilities',
