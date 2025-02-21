@@ -92,6 +92,7 @@ class ProjectProject(models.Model):
             lambda: {
                 'allocated': 0,
                 'spent': 0,
+                'budget_type': False,
                 **({
                     'ids': [],
                     'budgets': [],
@@ -105,6 +106,7 @@ class ProjectProject(models.Model):
             budget_data['name'] = budget_analytic.display_name
             budget_data['allocated'] += allocated
             budget_data['spent'] += spent
+            budget_data['budget_type'] = budget_analytic.budget_type
             total_allocated += allocated
             total_spent += spent
 
@@ -114,6 +116,7 @@ class ProjectProject(models.Model):
                     'name': budget_analytic.display_name,
                     'allocated': allocated,
                     'spent': spent,
+                    'budget_type': budget_analytic.budget_type,
                     'progress': allocated and (spent - allocated) / abs(allocated),
                 }
                 budget_data['budgets'].append(budget_item)

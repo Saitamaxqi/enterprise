@@ -61,6 +61,7 @@ class TestProject(TestProjectCommon):
                 {
                     'allocated': 500,
                     'budgets': [],
+                    'budget_type': 'expense',
                     'progress': -1.0,
                     'spent': 0.0,
                 },
@@ -104,6 +105,7 @@ class TestProject(TestProjectCommon):
                     'progress': -1.0,
                     'spent': 0.0,
                     'budgets': [],
+                    'budget_type': 'expense',
                     'action': {
                         'name': 'action_view_budget_lines',
                         'type': 'object',
@@ -115,6 +117,7 @@ class TestProject(TestProjectCommon):
                     'progress': -1.0,
                     'spent': 0.0,
                     'budgets': [],
+                    'budget_type': 'expense',
                     'action': {
                         'name': 'action_view_budget_lines',
                         'type': 'object',
