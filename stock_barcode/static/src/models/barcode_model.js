@@ -206,26 +206,31 @@ export default class BarcodeModel extends EventBus {
      */
     get groupedLines() {
         this.groupLines();
-        return this._groupedLines;
+        // Before to return the line, we sort them to have new lines always on
+        // top and complete lines always on the bottom.
+        return this._sortLine(this._groupedLines);
     }
 
     groupLines() {
-        if (!this.groupingLinesEnabled) {
-            this._groupedLines = this._sortLine(this.pageLines);
-            return this._groupedLines;
+        this._groupedLines = [...this.pageLines];
+        if (this.groupingLinesEnabled) {
+            this._groupedLines = this._groupLines(this._groupedLines, "parentLine", this.groupKey);
         }
-        const lines = [...this.pageLines];
+        return this._groupedLines;
+    }
+
+    _groupLines(lines, parentKeyString, groupKeyMethod, conditionalGrouping = true) {
         const groupedLinesByKey = {};
         for (let index = lines.length - 1; index >= 0; index--) {
             const line = lines[index];
-            if (line.parentLine) {
+            if (line[parentKeyString]) {
                 // Remove previous parent line's link.
-                delete line.parentLine;
+                delete line[parentKeyString];
             }
-            if (this.lineCannotBeGrouped(line)) {
+            if (conditionalGrouping && this.lineCannotBeGrouped(line)) {
                 continue;
             }
-            const key = this.groupKey(line);
+            const key = groupKeyMethod(line);
             if (!groupedLinesByKey[key]) {
                 groupedLinesByKey[key] = [];
             }
@@ -236,22 +241,10 @@ export default class BarcodeModel extends EventBus {
                 lines.push(...sublines);
                 continue;
             }
-            const ids = [];
-            const virtual_ids = [];
-            let [qtyDemand, qtyDone] = [0, 0];
-            for (const subline of sublines) {
-                ids.push(subline.id);
-                virtual_ids.push(subline.virtual_id);
-                qtyDemand += this.getQtyDemand(subline);
-                qtyDone += this.getQtyDone(subline);
-            }
-            const groupedLine = this._groupSublines(sublines, ids, virtual_ids, qtyDemand, qtyDone);
+            const groupedLine = this._groupSublines(sublines, parentKeyString);
             lines.push(groupedLine);
         }
-        // Before to return the line, we sort them to have new lines always on
-        // top and complete lines always on the bottom.
-        this._groupedLines = this._sortLine(lines);
-        return this._groupedLines;
+        return lines;
     }
 
     get groupedLinesByLocation() {
@@ -923,21 +916,31 @@ export default class BarcodeModel extends EventBus {
         throw new Error("Not Implemented");
     }
 
-    _groupSublines(sublines, ids, virtual_ids, _qtyDemand, _qtyDone) {
+    _groupSublines(sublines, parentKey = "parentLine") {
+        const [ids, virtual_ids] = [[], []];
+        let [totalQtyDemand, totalQtyDone] = [0, 0];
         const sortedSublines = this._sortLine(sublines);
         // Use the line with lowest ID as the reference (info shown on summary
         // line and also the move line opened for the form view.)
         const referenceLine = sortedSublines.reduce((result, line) =>
             line.id && (!result.id || result.id > line.id) ? line : result
         );
+        for (const subline of sublines) {
+            ids.push(subline.id);
+            virtual_ids.push(subline.virtual_id);
+            totalQtyDemand += this.getQtyDemand(subline);
+            totalQtyDone += this.getQtyDone(subline);
+        }
         const groupedLine = Object.assign({}, referenceLine, {
             ids,
             lines: sortedSublines,
             opened: false,
             virtual_ids,
+            totalQtyDemand,
+            totalQtyDone,
         });
         for (const subline of sublines) {
-            subline.parentLine = groupedLine;
+            subline[parentKey] = groupedLine;
         }
         return groupedLine;
     }

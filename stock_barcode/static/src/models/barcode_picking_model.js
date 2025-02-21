@@ -998,13 +998,15 @@ export default class BarcodePickingModel extends BarcodeModel {
                 let qtyDone = line.qty_done;
                 if (qtyDone < line.reserved_uom_qty) {
                     // Checks if another move line shares the same move id and adds its quantity done in that case.
-                    qtyDone += this.currentState.lines.reduce((additionalQtyDone, otherLine) => {
-                        return otherLine.product_id.id === line.product_id.id &&
+                    qtyDone += this.currentState.lines.reduce(
+                        (additionalQtyDone, otherLine) =>
+                            otherLine.product_id.id === line.product_id.id &&
                             otherLine.move_id === line.move_id &&
                             !otherLine.reserved_uom_qty
-                            ? additionalQtyDone + otherLine.qty_done
-                            : additionalQtyDone;
-                    }, 0);
+                                ? additionalQtyDone + otherLine.qty_done
+                                : additionalQtyDone,
+                        0
+                    );
                     if (qtyDone < line.reserved_uom_qty) {
                         // Quantity done still insufficient.
                         uncompletedLines.push(line);
@@ -1279,7 +1281,8 @@ export default class BarcodePickingModel extends BarcodeModel {
         smlData.virtual_id = smlData.dummy_id || previousVirtualId || this._uniqueVirtualId;
         smlData.product_id = this.cache.getRecord("product.product", smlData.product_id);
         smlData.product_uom_id = this.cache.getRecord("uom.uom", smlData.product_uom_id);
-        smlData.packaging_uom_id = smlData.packaging_uom_id && this.cache.getRecord("uom.uom", smlData.packaging_uom_id);
+        smlData.packaging_uom_id =
+            smlData.packaging_uom_id && this.cache.getRecord("uom.uom", smlData.packaging_uom_id);
         smlData.location_id = this.cache.getRecord("stock.location", smlData.location_id);
         smlData.location_dest_id = this.cache.getRecord("stock.location", smlData.location_dest_id);
         smlData.lot_id = smlData.lot_id && this.cache.getRecord("stock.lot", smlData.lot_id);
@@ -1431,11 +1434,11 @@ export default class BarcodePickingModel extends BarcodeModel {
         return _t("Scan a package or put in pack");
     }
 
-    _groupSublines(sublines, ids, virtual_ids, qtyDemand, qtyDone) {
-        return Object.assign(super._groupSublines(...arguments), {
-            reserved_uom_qty: qtyDemand,
-            qty_done: qtyDone,
-        });
+    _groupSublines() {
+        const groupedLine = super._groupSublines(...arguments);
+        groupedLine.reserved_uom_qty = groupedLine.totalQtyDemand;
+        groupedLine.qty_done = groupedLine.totalQtyDone;
+        return groupedLine;
     }
 
     _incrementTrackedLine() {
@@ -1718,13 +1721,12 @@ export default class BarcodePickingModel extends BarcodeModel {
             const linesToUpdate = [currentLine];
             if (this.config.restrict_put_in_pack === "optional") {
                 linesToUpdate.push(
-                    ...this.previousScannedLines.filter((line) => {
-                        return (
+                    ...this.previousScannedLines.filter(
+                        (line) =>
                             line.qty_done &&
                             !line.result_package_id &&
                             line.virtual_id !== currentLine.virtual_id
-                        );
-                    })
+                    )
                 );
             }
             for (const line of linesToUpdate) {
