@@ -32,6 +32,14 @@ class TestOfferMailFeatures(MailCommon):
             'email_from': '"Mr Applicant" <applicant@test.example.com>',
             'partner_name': 'Amazing Applicant',
         })
+        cls.applicant_nopartner = cls.env['hr.applicant'].create({
+            'email_from': '"Mr Applicant NoPartner" <applicant.nopartner@test.example.com>',
+            'partner_id': False,
+            'partner_name': 'Amazing Applicant NoPartner',
+        })
+        auto_partner = cls.applicant_nopartner.partner_id
+        cls.applicant_nopartner.partner_id = False
+        auto_partner.unlink()
         cls.employee = cls.env['hr.employee'].create({
             'email': 'private@test.example.com',
             'name': 'Mr Employee',
@@ -57,6 +65,9 @@ class TestOfferMailFeatures(MailCommon):
                 'applicant_id': cls.applicant.id,
                 'contract_template_id': cls.contract_template.id,
             }, {
+                'applicant_id': cls.applicant_nopartner.id,
+                'contract_template_id': cls.contract_template.id,
+            }, {
                 'contract_template_id': cls.contract_template.id,
                 'employee_contract_id': cls.contract_employee.id,
             },
@@ -70,6 +81,8 @@ class TestOfferMailFeatures(MailCommon):
         # not sure where it comes from
         self.assertTrue(self.applicant.partner_id)
         self.assertEqual(self.applicant.partner_id.email, 'applicant@test.example.com')
+        # forced
+        self.assertFalse(self.applicant_nopartner.partner_id)
 
     def test_offer_default_recipients(self):
         """ Check default recipients, should try to contact always someone """
@@ -83,6 +96,11 @@ class TestOfferMailFeatures(MailCommon):
                 'email_cc': '', 'email_to': '', 'partner_ids': self.applicant.partner_id.ids,
             },
             offers[2].id: {
+                'email_cc': '',
+                'email_to': '"Mr Applicant NoPartner" <applicant.nopartner@test.example.com>',
+                'partner_ids': [],
+            },
+            offers[3].id: {
                 'email_cc': '', 'email_to': '', 'partner_ids': self.employee.work_contact_id.ids,
             },
         }
@@ -90,12 +108,13 @@ class TestOfferMailFeatures(MailCommon):
         for offer, user in zip(offers, (
             self.user_contract_manager,
             self.user_recruitment_manager,
-            self.user_contract_manager)
+            self.user_recruitment_manager,
+            self.user_contract_manager), strict=True
         ):
             # due to ACLs, we have to differentiate users (employee / applicant contracts)
             offer = offer.with_user(user)
             expected = expected_all.get(offer.id)
-            with self.subTest(offer=offer):
+            with self.subTest(offer=offer, applicant_name=offer.applicant_id.partner_name, employee=offer.employee_id):
                 self.assertEqual(defaults[offer.id], expected)
 
     def test_offer_suggested_recipients(self):
@@ -114,6 +133,13 @@ class TestOfferMailFeatures(MailCommon):
             ], [
                 {
                     'create_values': {},
+                    'email': 'applicant.nopartner@test.example.com',
+                    'name': 'Mr Applicant NoPartner',
+                    'partner_id': False,
+                },
+            ], [
+                {
+                    'create_values': {},
                     'email': 'hr.employee@test.example.com',
                     'name': 'Mr Employee',
                     'partner_id': self.employee.work_contact_id.id,
@@ -124,11 +150,12 @@ class TestOfferMailFeatures(MailCommon):
         for offer, user, expected in zip(offers, (
             self.user_contract_manager,
             self.user_recruitment_manager,
+            self.user_recruitment_manager,
             self.user_contract_manager
         ), expected_all, strict=True):
             # due to ACLs, we have to differentiate users (employee / applicant contracts)
             offer = offer.with_user(user)
-            with self.subTest(offer=offer, applicant=offer.applicant_id, employee=offer.employee_id):
+            with self.subTest(offer=offer, applicant_name=offer.applicant_id.partner_name, employee=offer.employee_id):
                 suggested = offer._message_get_suggested_recipients()
                 self.assertEqual(suggested, expected)
 
@@ -138,20 +165,27 @@ class TestOfferMailFeatures(MailCommon):
         template_app = self.env.ref('hr_contract_salary.mail_template_send_offer_applicant')
         for offer, exp_template, exp_notif in zip(
             self.salary_offers,
-            (template_emp, template_app, template_emp),
+            (template_emp, template_app, template_app, template_emp),
             (
                 [],  # no-one on first offer, just void message
                 [{'partner': self.applicant.partner_id, 'type': 'email',}],
+                [],  # specific, partner created during sending
                 [{'partner': self.employee.work_contact_id, 'type': 'email',}],
             ),
             strict=True,
         ):
-            with self.subTest(offer=offer, applicant=offer.applicant_id, employee=offer.employee_id):
+            with self.subTest(offer=offer, applicant_name=offer.applicant_id.partner_name, employee=offer.employee_id):
                 action = offer.action_send_by_email()
                 composer = self.env['mail.compose.message'].with_context(**action['context']).create({})
                 self.assertEqual(composer.template_id, exp_template)
                 with self.mock_mail_gateway():
                     _mails, message = composer._action_send_mail()
+                # partner was created during sending mail process
+                if offer == self.salary_offers[2]:
+                    new_partner = self.env['res.partner'].search([('email_normalized', '=', 'applicant.nopartner@test.example.com')])
+                    self.assertTrue(new_partner)
+                    exp_notif = [{'partner': new_partner, 'type': 'email'}]
+
                 self.assertMailNotifications(
                     message,
                     [{

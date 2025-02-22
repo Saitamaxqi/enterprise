@@ -97,7 +97,7 @@ class Account_FollowupManual_Reminder(models.TransientModel):
                 rendered_values = template._generate_template_recipients(
                     [partner.id],
                     {'partner_to', 'email_cc', 'email_to'},
-                    True
+                    find_or_create_partners=True,
                 )[partner.id]
                 if rendered_values.get('partner_ids'):
                     wizard.email_recipient_ids = [Command.link(partner_id) for partner_id in rendered_values['partner_ids']]

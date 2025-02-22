@@ -345,7 +345,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                 self.gateway_mail_reply_from_smtp_email(
                     MAIL_TEMPLATE, [author.email_normalized], reply_all=True,
                     cc=f'"Another Cc" <another.cc@test.agrolait.com>, {self.partner_3.email}',
-                    target_model='project.task',
+                    target_model='helpdesk.ticket',
                 )
                 self.assertEqual(
                     ticket.email_cc,
