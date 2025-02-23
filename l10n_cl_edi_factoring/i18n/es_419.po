@@ -144,6 +144,13 @@ msgid "DTE has been sent to SII with response: %s."
 msgstr "El DTE ha sido enviado al SII con la siguiente respuesta: %s."
 
 #. module: l10n_cl_edi_factoring
+#. odoo-python
+#: code:addons/l10n_cl_edi_factoring/models/account_move.py:0
+#, fuzzy
+msgid "WARNING: Message from SII was: %s"
+msgstr "ALERTA: El mensaje del SII fué: %s"
+
+#. module: l10n_cl_edi_factoring
 #: model:ir.model.fields,field_description:l10n_cl_edi_factoring.field_l10n_cl_aec_generator__invoice_date_due
 msgid "Date Due"
 msgstr "Fecha de Vencimiento"

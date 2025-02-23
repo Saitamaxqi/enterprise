@@ -1,7 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import base64
 import logging
-from lxml import etree
+from contextlib import suppress
+from lxml import etree, html
 from markupsafe import Markup
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -53,6 +54,25 @@ class AccountMove(models.Model):
         res = super()._post(soft=soft)
         return res
 
+    def _parse_response(self, response):
+        # This method is to ensure to find the response in the correct encoding
+        try:
+            return {'result': etree.fromstring(response), 'type': 'xml'}
+        except etree.XMLSyntaxError as e:
+            _logger.error(f'XMLSyntaxError: {e}')
+            _logger.error(f'Response: {response}')
+            if isinstance(response, bytes):
+                for encoding in ['utf-8', 'iso-8859-1', 'windows-1252']:
+                    with suppress(UnicodeDecodeError, etree.XMLSyntaxError):
+                        return {'result': etree.fromstring(response.decode(encoding)), 'type': 'xml'}
+        # If we arrive here, we don't have an XML response, and probably there is a
+        # message with a warning or similar, which we should put on chatter
+        try:
+            return {'result': html.fromstring(response), 'type': 'html'}
+        except Exception as e:
+            _logger.error(f"Parse error as HTML: {e}")
+            return {'result': None, 'type': None}
+
     def _get_fields_to_detach(self):
         # EXTENDS account
         fields_list = super()._get_fields_to_detach()
@@ -88,7 +108,14 @@ class AccountMove(models.Model):
         )
         if not response:
             return None
-        response_parsed = etree.fromstring(response)
+        analyze_response = self._parse_response(response)
+        if analyze_response['type'] == 'html':
+            self.messsage_post(body=_('WARNING: Message from SII was: %s', analyze_response['result']))
+            return None
+        elif analyze_response['type'] is None:
+            self.messsage_post(body=_('The SII did not answered properly. Please try again'))
+            return None
+        response_parsed = analyze_response['result']
         self.l10n_cl_sii_send_ident = response_parsed.findtext('TRACKID')
         sii_response_status = response_parsed.findtext('STATUS')
         if sii_response_status == '5':
