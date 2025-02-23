@@ -58,7 +58,8 @@ class ProductProduct(models.Model):
                 ('sale_line_id.order_id', '=', task.sale_order_id.id),
                 ('sale_line_id.task_id', '=', task.id),
                 ('product_id', 'in', self.ids),
-                ('warehouse_id', '=', self.env.user._get_default_warehouse_id().id),
+                ('warehouse_id', '=', self.env.user.with_company(
+                    task.sale_order_id.company_id.id)._get_default_warehouse_id().id),
                 ('state', 'not in', ['done', 'cancel']),
             ],
             ['product_id'],

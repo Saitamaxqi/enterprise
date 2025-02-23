@@ -1421,6 +1421,42 @@ class TestFsmFlowStock(TestFsmFlowSaleCommon):
         self.task.sale_order_id.order_line.move_ids._action_done()
         self.assertFalse(product.quantity_decreasable)
 
+    def test_quantity_decreasable_on_multicompany(self):
+        # Give user access of company A + B, with default A
+        company_A = self.env.company
+        company_B = self.env['res.company'].search([('id', '!=', company_A.id)], limit=1)
+        warehouse_B = self.env['stock.warehouse'].search([('company_id', '=', company_B.id)], limit=1)
+        if not warehouse_B:
+            warehouse_B = self.env['stock.warehouse'].sudo().create({'name': 'WH', 'code': 'WH-B', 'company_id': company_B.id})
+        self.env.user.write({'company_ids': [(6, 0, [company_A.id, company_B.id])], 'company_id': company_A.id})
+
+        # customer belongs to company B
+        customer = self.env['res.partner'].create({'name': 'Customer', 'company_id': company_B.id})
+
+        # Task setup
+        project = self.env['project.project'].create({
+            'name': 'test-project',
+            'allow_billable': True,
+            'allow_material': True,
+        })
+        fsm_task = self.env['project.task'].create({
+            'name': 'Fsm task',
+            'project_id': project.id,
+            'partner_id':customer.id,
+        })
+        fsm_task.with_user(self.env.user)._fsm_ensure_sale_order()
+        product = self.storable_product_ordered.with_context({'fsm_task_id': fsm_task.id})
+
+        # Check that quantity is decreasable
+        product.set_fsm_quantity(2)
+        product._compute_quantity_decreasable()
+        self.assertTrue(product.quantity_decreasable)
+        self.assertEqual(product.quantity_decreasable_sum, 2)
+
+        # Validate warehouse assignment from company_B's default
+        move = self.env['stock.move'].search([('product_id', '=', product.id)], limit=1)
+        self.assertEqual(move.warehouse_id.id, warehouse_B.id, "Reservation happened on a wrong warehouse")
+
     def test_is_same_warehouse(self):
         self.task.write({'partner_id': self.partner_1.id})
         self.task.with_user(self.project_user)._fsm_ensure_sale_order()
