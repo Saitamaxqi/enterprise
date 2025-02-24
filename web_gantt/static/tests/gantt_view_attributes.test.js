@@ -73,9 +73,9 @@ test("edit attribute", async () => {
                 {
                     title: "Task 5",
                     level: 0,
-                    colSpan: "Out of bounds (1)  -> 04 (1/2) December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
                 },
-                { title: "Task 1", level: 1, colSpan: "Out of bounds (1)  -> 31 December 2018" },
+                { title: "Task 1", level: 1, colSpan: "01 December 2018 -> Out of bounds (63) " },
                 {
                     title: "Task 2",
                     level: 0,
@@ -91,7 +91,7 @@ test("edit attribute", async () => {
                     level: 2,
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
                 },
-                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
     ]);
@@ -115,9 +115,9 @@ test("total_row attribute", async () => {
                 {
                     title: "Task 5",
                     level: 0,
-                    colSpan: "Out of bounds (1)  -> 04 (1/2) December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
                 },
-                { title: "Task 1", level: 1, colSpan: "Out of bounds (1)  -> 31 December 2018" },
+                { title: "Task 1", level: 1, colSpan: "01 December 2018 -> Out of bounds (63) " },
                 {
                     title: "Task 2",
                     level: 0,
@@ -133,14 +133,14 @@ test("total_row attribute", async () => {
                     level: 2,
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
                 },
-                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
         {
             isTotalRow: true,
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 04 (1/2) December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
                     level: 0,
                     title: "2",
                 },
@@ -175,14 +175,9 @@ test("total_row attribute", async () => {
                     title: "1",
                 },
                 {
-                    colSpan: "27 December 2018 -> 31 December 2018",
+                    colSpan: "27 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "2",
-                },
-                {
-                    colSpan: "01 January 2019 -> 03 (1/2) January 2019",
-                    level: 0,
-                    title: "1",
                 },
             ],
         },
@@ -206,7 +201,7 @@ test("default_range omitted, scales provided", async () => {
     });
     const { columnHeaders, range } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(10);
+    expect(columnHeaders).toHaveLength(9);
 
     await contains(SELECTORS.scaleSelectorToggler).click();
     await animationFrame();
@@ -225,7 +220,7 @@ test("scales attribute", async () => {
     });
     const { columnHeaders, range } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
 
     await contains(SELECTORS.scaleSelectorToggler).click();
     await animationFrame();
@@ -274,7 +269,7 @@ test("progress attribute", async () => {
         arch: `<gantt string="Tasks" date_start="start" date_stop="stop" progress="progress"/>`,
         groupBy: ["project_id"],
     });
-    expect(`${SELECTORS.pill} .o_gantt_progress`).toHaveCount(3);
+    expect(`${SELECTORS.pill} .o_gantt_progress`).toHaveCount(4);
     expect(
         queryAll(SELECTORS.pill).map((el) => ({
             text: el.innerText,
@@ -285,6 +280,7 @@ test("progress attribute", async () => {
         { text: "Task 2", progress: "30%" },
         { text: "Task 4", progress: null },
         { text: "Task 3", progress: "60%" },
+        { text: "Task 5", progress: "100%" },
         { text: "Task 7", progress: "80%" },
     ]);
 });
@@ -368,9 +364,10 @@ test("consolidation feature", async () => {
     // Consolidation
     // 0 over the size of Task 5 (Task 5 is 100 but is excluded!) then 0 over the rest of Task 1, cut by Task 4 which has progress 0
     expect(rows[0].pills).toEqual([
-        { colSpan: "Out of bounds (8)  -> 19 December 2018", title: "0" },
+        { colSpan: "01 December 2018 -> 04 (1/2) December 2018", title: "0" },
+        { colSpan: "04 (1/2) December 2018 -> 19 December 2018", title: "0" },
         { colSpan: "20 December 2018 -> 20 (1/2) December 2018", title: "0" },
-        { colSpan: "20 (1/2) December 2018 -> 31 December 2018", title: "0" },
+        { colSpan: "20 (1/2) December 2018 -> Out of bounds (63) ", title: "0" },
     ]);
 
     // 30 over Task 2 until Task 7 then 110 (Task 2 (30) + Task 7 (80)) then 30 again until end of task 2 then 60 over Task 3
@@ -378,7 +375,7 @@ test("consolidation feature", async () => {
         { colSpan: "17 (1/2) December 2018 -> 20 (1/2) December 2018", title: "30" },
         { colSpan: "20 (1/2) December 2018 -> 20 December 2018", title: "110" },
         { colSpan: "21 December 2018 -> 22 (1/2) December 2018", title: "30" },
-        { colSpan: "27 December 2018 -> 03 (1/2) January 2019", title: "60" },
+        { colSpan: "27 December 2018 -> Out of bounds (68) ", title: "60" },
     ]);
 
     const withStatus = [];
@@ -392,6 +389,7 @@ test("consolidation feature", async () => {
     }
 
     expect(withStatus).toEqual([
+        { title: "0", danger: false },
         { title: "0", danger: false },
         { title: "0", danger: false },
         { title: "0", danger: false },
@@ -425,8 +423,9 @@ test("consolidation feature (single level)", async () => {
         {
             isGroup: true,
             pills: [
+                { colSpan: "01 December 2018 -> 04 (1/2) December 2018", title: "0" },
                 {
-                    colSpan: "Out of bounds (8)  -> 19 December 2018",
+                    colSpan: "04 (1/2) December 2018 -> 19 December 2018",
                     title: "0",
                 },
                 {
@@ -434,7 +433,7 @@ test("consolidation feature (single level)", async () => {
                     title: "0",
                 },
                 {
-                    colSpan: "20 (1/2) December 2018 -> 31 December 2018",
+                    colSpan: "20 (1/2) December 2018 -> Out of bounds (63) ",
                     title: "0",
                 },
             ],
@@ -443,7 +442,12 @@ test("consolidation feature (single level)", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+                {
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 1,
                     title: "Task 1",
                 },
@@ -471,7 +475,7 @@ test("consolidation feature (single level)", async () => {
                     title: "30",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     title: "60",
                 },
             ],
@@ -490,7 +494,7 @@ test("consolidation feature (single level)", async () => {
                     title: "Task 7",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 0,
                     title: "Task 3",
                 },
@@ -718,6 +722,7 @@ test(`Unavailabilities ("day": "hours:quarter")`, async () => {
         resModel: "tasks",
         arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="day" precision="{'day': 'hours:quarter'}"/>`,
     });
+    await contains(".o_content").scroll({ left: 0 });
     expect(getCellColorProperties("9am", "December 19, 2018")).toEqual([
         "--Gantt__Day-background-color",
         "--Gantt__DayOff-background-color",
@@ -1183,7 +1188,12 @@ test("default_group_by attribute", async () => {
             title: "User 1",
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+                {
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 1,
                     title: "Task 1",
                 },
@@ -1208,7 +1218,7 @@ test("default_group_by attribute", async () => {
                     title: "Task 7",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 0,
                     title: "Task 3",
                 },
@@ -1232,7 +1242,7 @@ test("default_group_by attribute with groupBy", async () => {
             title: "Project 1",
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },
@@ -1247,7 +1257,7 @@ test("default_group_by attribute with groupBy", async () => {
                     title: "Task 4",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 1,
                     title: "Task 3",
                 },
@@ -1256,6 +1266,11 @@ test("default_group_by attribute with groupBy", async () => {
         {
             title: "Project 2",
             pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
                 {
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
                     level: 0,
@@ -1281,7 +1296,11 @@ test("default_group_by attribute with 2 fields", async () => {
             isGroup: true,
             pills: [
                 {
-                    colSpan: "Out of bounds (8)  -> 19 December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    title: "2",
+                },
+                {
+                    colSpan: "04 (1/2) December 2018 -> 19 December 2018",
                     title: "1",
                 },
                 {
@@ -1289,7 +1308,7 @@ test("default_group_by attribute with 2 fields", async () => {
                     title: "2",
                 },
                 {
-                    colSpan: "20 (1/2) December 2018 -> 31 December 2018",
+                    colSpan: "20 (1/2) December 2018 -> Out of bounds (63) ",
                     title: "1",
                 },
             ],
@@ -1298,7 +1317,7 @@ test("default_group_by attribute with 2 fields", async () => {
             title: "Project 1",
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },
@@ -1310,6 +1329,13 @@ test("default_group_by attribute with 2 fields", async () => {
             ],
         },
         {
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
             title: "Project 2",
         },
         {
@@ -1329,7 +1355,7 @@ test("default_group_by attribute with 2 fields", async () => {
                     title: "1",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     title: "1",
                 },
             ],
@@ -1343,7 +1369,7 @@ test("default_group_by attribute with 2 fields", async () => {
                     title: "Task 2",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 0,
                     title: "Task 3",
                 },

@@ -48,10 +48,9 @@ test("concurrent range switches return in inverse order", async () => {
         resModel: "tasks",
         arch: `<gantt date_start="start" date_stop="stop"/>`,
     });
-    expect.verifySteps(["patched"]);
 
     let content = getGridContent();
-    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["December 2018", "January 2019"]);
+    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["December 2018"]);
     expect(content.range).toBe("From: 12/01/2018 to: 02/28/2019");
     expect(model.data.records).toHaveLength(6);
 
@@ -62,7 +61,7 @@ test("concurrent range switches return in inverse order", async () => {
     await ganttControlsChanges();
 
     content = getGridContent();
-    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["December 2018", "January 2019"]);
+    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["December 2018"]);
     expect(content.range).toBe("Week");
     expect(model.data.records).toHaveLength(6);
 
@@ -73,7 +72,7 @@ test("concurrent range switches return in inverse order", async () => {
     expect.verifySteps(["patched", "patched"]);
 
     content = getGridContent();
-    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["2018", "2019"]);
+    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["2017", "2018", "2019"]);
     expect(content.range).toBe("Year");
     expect(model.data.records).toHaveLength(7);
 
@@ -81,7 +80,7 @@ test("concurrent range switches return in inverse order", async () => {
     await animationFrame();
 
     content = getGridContent();
-    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["2018", "2019"]);
+    expect(content.groupHeaders.map((gh) => gh.title)).toEqual(["2017", "2018", "2019"]);
     expect(content.range).toBe("Year");
     expect(model.data.records).toHaveLength(7);
     expect.verifySteps([]);
@@ -121,11 +120,10 @@ test("concurrent range switches return with gantt unavailabilities", async () =>
         resModel: "tasks",
         arch: `<gantt date_start="start" date_stop="stop" display_unavailability="true"/>`,
     });
-    expect.verifySteps(["patched"]);
 
     let content = getGridContent();
     expect(content.range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(content.groupHeaders.map((h) => h.title)).toEqual(["December 2018", "January 2019"]);
+    expect(content.groupHeaders.map((h) => h.title)).toEqual(["December 2018"]);
     expect(model.data.records).toHaveLength(6);
     expect(getCellColorProperties("08", "December 2018")).toEqual([]);
     expect(getCellColorProperties("11", "December 2018")).toEqual([
@@ -140,7 +138,7 @@ test("concurrent range switches return with gantt unavailabilities", async () =>
 
     content = getGridContent();
     expect(content.range).toBe("Week");
-    expect(content.groupHeaders.map((h) => h.title)).toEqual(["December 2018", "January 2019"]);
+    expect(content.groupHeaders.map((h) => h.title)).toEqual(["December 2018"]);
     expect(model.data.records).toHaveLength(6);
     expect(getCellColorProperties("08", "December 2018")).toEqual([]);
     expect(getCellColorProperties("11", "December 2018")).toEqual([
@@ -155,7 +153,7 @@ test("concurrent range switches return with gantt unavailabilities", async () =>
 
     content = getGridContent();
     expect(content.range).toBe("Year");
-    expect(content.groupHeaders.map((h) => h.title)).toEqual(["2018", "2019"]);
+    expect(content.groupHeaders.map((h) => h.title)).toEqual(["2017", "2018", "2019"]);
     expect(model.data.records).toHaveLength(7);
     expect(getCellColorProperties("August", "2018")).toEqual(["--Gantt__DayOff-background-color"]);
     expect(getCellColorProperties("November", "2018")).toEqual([]);
@@ -165,7 +163,7 @@ test("concurrent range switches return with gantt unavailabilities", async () =>
 
     content = getGridContent();
     expect(content.range).toBe("Year");
-    expect(content.groupHeaders.map((h) => h.title)).toEqual(["2018", "2019"]);
+    expect(content.groupHeaders.map((h) => h.title)).toEqual(["2017", "2018", "2019"]);
     expect(model.data.records).toHaveLength(7);
     expect(getCellColorProperties("August", "2018")).toEqual(["--Gantt__DayOff-background-color"]);
     expect(getCellColorProperties("November", "2018")).toEqual([]);
@@ -219,7 +217,7 @@ test("concurrent pill resize and groupBy change", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 04 (1/2) December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
                     level: 0,
                     title: "Task 5",
                 },
@@ -255,7 +253,7 @@ test("concurrent pill resize and groupBy change", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 04 (1/2) December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
                     level: 0,
                     title: "Task 5",
                 },
@@ -281,7 +279,7 @@ test("concurrent pill resize and groupBy change", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 04 (1/2) December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
                     level: 0,
                     title: "Task 5",
                 },
@@ -368,7 +366,7 @@ test("concurrent display mode change and fetch", async () => {
     const initialRows = [
         {
             pills: [
-                { title: "Task 1", level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018" },
+                { title: "Task 1", level: 0, colSpan: "01 December 2018 -> Out of bounds (63) " },
                 {
                     title: "Task 2",
                     level: 1,
@@ -393,7 +391,7 @@ test("concurrent display mode change and fetch", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },
@@ -420,7 +418,7 @@ test("concurrent display mode change and fetch", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },

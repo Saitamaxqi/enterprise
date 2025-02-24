@@ -1005,6 +1005,9 @@ test("date grid and dst summerToWinter (1 cell part)", async () => {
 
     await selectCustomRange({ startDate: "2019-10-01", stopDate: "2019-11-01" });
     expect(getGridInfo()).toEqual([
+        "2019-10-01T00:00:00.000+02:00",
+        "2019-10-02T00:00:00.000+02:00",
+        "2019-10-03T00:00:00.000+02:00",
         "2019-10-04T00:00:00.000+02:00",
         "2019-10-05T00:00:00.000+02:00",
         "2019-10-06T00:00:00.000+02:00",
@@ -1031,9 +1034,6 @@ test("date grid and dst summerToWinter (1 cell part)", async () => {
         "2019-10-27T00:00:00.000+02:00",
         "2019-10-28T00:00:00.000+01:00",
         "2019-10-29T00:00:00.000+01:00",
-        "2019-10-30T00:00:00.000+01:00",
-        "2019-10-31T00:00:00.000+01:00",
-        "2019-11-01T00:00:00.000+01:00",
     ]);
 
     await selectCustomRange({ startDate: "2019-01-01", stopDate: "2020-01-01" });
@@ -1366,6 +1366,12 @@ test("date grid and dst summerToWinter (2 cell part)", async () => {
 
     await selectCustomRange({ startDate: "2019-10-01", stopDate: "2019-11-01" });
     expect(getGridInfo()).toEqual([
+        "2019-10-01T00:00:00.000+02:00",
+        "2019-10-01T12:00:00.000+02:00",
+        "2019-10-02T00:00:00.000+02:00",
+        "2019-10-02T12:00:00.000+02:00",
+        "2019-10-03T00:00:00.000+02:00",
+        "2019-10-03T12:00:00.000+02:00",
         "2019-10-04T00:00:00.000+02:00",
         "2019-10-04T12:00:00.000+02:00",
         "2019-10-05T00:00:00.000+02:00",
@@ -1418,12 +1424,6 @@ test("date grid and dst summerToWinter (2 cell part)", async () => {
         "2019-10-28T12:00:00.000+01:00",
         "2019-10-29T00:00:00.000+01:00",
         "2019-10-29T12:00:00.000+01:00",
-        "2019-10-30T00:00:00.000+01:00",
-        "2019-10-30T12:00:00.000+01:00",
-        "2019-10-31T00:00:00.000+01:00",
-        "2019-10-31T12:00:00.000+01:00",
-        "2019-11-01T00:00:00.000+01:00",
-        "2019-11-01T12:00:00.000+01:00",
     ]);
 });
 
@@ -1445,12 +1445,12 @@ test("groups_limit attribute (no groupBy)", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 04 (1/2) December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
                     level: 0,
                     title: "Task 5",
                 },
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 1,
                     title: "Task 1",
                 },
@@ -1470,7 +1470,7 @@ test("groups_limit attribute (no groupBy)", async () => {
                     title: "Task 7",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 0,
                     title: "Task 3",
                 },
@@ -1499,11 +1499,18 @@ test("groups_limit attribute (one groupBy)", async () => {
     expect(rows).toEqual([
         {
             title: "todo",
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
         },
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },
@@ -1541,7 +1548,7 @@ test("groups_limit attribute (one groupBy)", async () => {
                     title: "Task 4",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 0,
                     title: "Task 3",
                 },
@@ -1573,15 +1580,28 @@ test("groups_limit attribute (two groupBys)", async () => {
         {
             isGroup: true,
             title: "todo",
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    title: "1",
+                },
+            ],
         },
         {
             title: "Project 2",
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
         },
         {
             isGroup: true,
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     title: "1",
                 },
             ],
@@ -1590,7 +1610,7 @@ test("groups_limit attribute (two groupBys)", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },
@@ -1661,7 +1681,7 @@ test("groups_limit attribute (two groupBys)", async () => {
                     title: "1",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     title: "1",
                 },
             ],
@@ -1675,7 +1695,7 @@ test("groups_limit attribute (two groupBys)", async () => {
                     title: "Task 4",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 0,
                     title: "Task 3",
                 },

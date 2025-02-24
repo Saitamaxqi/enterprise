@@ -2,7 +2,7 @@ import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import { expect, test } from "@odoo/hoot";
 import { queryAll } from "@odoo/hoot-dom";
 import { mockDate } from "@odoo/hoot-mock";
-import { defineModels, fields, models, onRpc } from "@web/../tests/web_test_helpers";
+import { contains, defineModels, fields, models, onRpc } from "@web/../tests/web_test_helpers";
 import { mountGanttView } from "@web_gantt/../tests/web_gantt_test_helpers";
 
 class Task extends models.Model {
@@ -46,6 +46,7 @@ test("Check progress bar values", async () => {
         resModel: "task",
         arch: `<gantt js_class="task_gantt" date_start="start" date_stop="stop" progress="progress"/>`,
     });
+    await contains(".o_content").scroll({ left: 400 });
     const [firstPillFirstSpan, secondPillFirstSpan] = queryAll(".o_gantt_pill span:first-child");
     expect(firstPillFirstSpan).not.toHaveClass("o_gantt_progress");
     expect(secondPillFirstSpan).toHaveClass("o_gantt_progress");

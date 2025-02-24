@@ -699,9 +699,7 @@ test("Copy pill in another row", async () => {
         },
         {
             title: "John Doe",
-            pills: [
-                { title: "Yop", level: 0, colSpan: "Out of bounds (3)  -> 12 (1/2) June 2021" },
-            ],
+            pills: [{ title: "Yop", level: 0, colSpan: "02 June 2021 -> 12 (1/2) June 2021" }],
         },
     ]);
 
@@ -760,9 +758,7 @@ test("Smart scheduling", async () => {
         },
         {
             title: "John Doe",
-            pills: [
-                { title: "Yop", level: 0, colSpan: "Out of bounds (3)  -> 12 (1/2) June 2021" },
-            ],
+            pills: [{ title: "Yop", level: 0, colSpan: "02 June 2021 -> 12 (1/2) June 2021" }],
         },
     ]);
 
@@ -783,9 +779,7 @@ test("Smart scheduling", async () => {
         },
         {
             title: "John Doe",
-            pills: [
-                { title: "Yop", level: 0, colSpan: "Out of bounds (3)  -> 12 (1/2) June 2021" },
-            ],
+            pills: [{ title: "Yop", level: 0, colSpan: "02 June 2021 -> 12 (1/2) June 2021" }],
         },
     ]);
     expect.verifySteps(["schedule_tasks"]);
@@ -874,9 +868,7 @@ test("Schedule a task and verify its display in the gantt view", async () => {
         },
         {
             title: "John Doe",
-            pills: [
-                { title: "Yop", level: 0, colSpan: "Out of bounds (3)  -> 12 (1/2) June 2021" },
-            ],
+            pills: [{ title: "Yop", level: 0, colSpan: "02 June 2021 -> 12 (1/2) June 2021" }],
         },
     ]);
 
@@ -897,9 +889,7 @@ test("Schedule a task and verify its display in the gantt view", async () => {
         },
         {
             title: "John Doe",
-            pills: [
-                { title: "Yop", level: 0, colSpan: "Out of bounds (3)  -> 12 (1/2) June 2021" },
-            ],
+            pills: [{ title: "Yop", level: 0, colSpan: "02 June 2021 -> 12 (1/2) June 2021" }],
         },
     ]);
     expect.verifySteps(["web_gantt_write"]);

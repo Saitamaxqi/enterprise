@@ -23,7 +23,7 @@ test("empty sparse gantt", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([{ title: "" }]);
     expect(SELECTORS.noContentHelper).toHaveCount(0);
 });
@@ -37,12 +37,12 @@ test("sparse gantt", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },
@@ -62,13 +62,13 @@ test("sparse grouped gantt", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([
         {
             isGroup: true,
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     title: "1",
                 },
             ],
@@ -77,7 +77,7 @@ test("sparse grouped gantt", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },
@@ -108,6 +108,10 @@ test("sparse grouped gantt", async () => {
             isGroup: true,
             pills: [
                 {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    title: "1",
+                },
+                {
                     colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018",
                     title: "1",
                 },
@@ -115,6 +119,13 @@ test("sparse grouped gantt", async () => {
             title: "Done",
         },
         {
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
             title: "Task 5",
         },
         {
@@ -135,7 +146,7 @@ test("sparse grouped gantt", async () => {
                     title: "1",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     title: "1",
                 },
             ],
@@ -154,7 +165,7 @@ test("sparse grouped gantt", async () => {
         {
             pills: [
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 0,
                     title: "Task 3",
                 },
@@ -182,13 +193,13 @@ test("sparse gantt with consolidation", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([
         {
             isGroup: true,
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     title: "1",
                 },
             ],
@@ -197,7 +208,7 @@ test("sparse gantt with consolidation", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },
@@ -228,6 +239,10 @@ test("sparse gantt with consolidation", async () => {
             isGroup: true,
             pills: [
                 {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    title: "1",
+                },
+                {
                     colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018",
                     title: "1",
                 },
@@ -235,6 +250,13 @@ test("sparse gantt with consolidation", async () => {
             title: "Done",
         },
         {
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
             title: "Task 5",
         },
         {
@@ -255,7 +277,7 @@ test("sparse gantt with consolidation", async () => {
                     title: "1",
                 },
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     title: "1",
                 },
             ],
@@ -274,7 +296,7 @@ test("sparse gantt with consolidation", async () => {
         {
             pills: [
                 {
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 0,
                     title: "Task 3",
                 },
@@ -323,7 +345,7 @@ test("sparse gantt with a group expand", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([
         {
             isGroup: true,

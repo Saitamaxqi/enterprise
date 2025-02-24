@@ -496,10 +496,7 @@ export class GanttRenderer extends Component {
         );
 
         useEffect(() => {
-            if (this.offHoursState.focusedDate) {
-                this.focusDate(this.offHoursState.focusedDate);
-                delete this.offHoursState.focusedDate;
-            } else if (this.useFocusDate) {
+            if (this.useFocusDate) {
                 this.useFocusDate = false;
                 this.focusDate(this.model.metaData.focusDate);
             }
@@ -1260,26 +1257,26 @@ export class GanttRenderer extends Component {
         return pill;
     }
 
-    focusDate(date, ifInBounds) {
+    focusDate(date, focusGroup = true) {
         const { globalStart, globalStop, scale } = this.model.metaData;
-        const { cellPart } = scale;
-        const diff = date.diff(globalStart);
+        const { cellPart, interval, unit } = scale;
+        const focusedDate = focusGroup ? localStartOf(date, unit) : date;
+        const diff = focusedDate.diff(globalStart);
         const totalDiff = globalStop.diff(globalStart);
-        let factor = diff / totalDiff;
-        if (this.columnCount !== this.foldedGridColumnCount) {
-            const focusedColInTotalGrid = Math.round(factor * cellPart * this.columnCount);
-            const focusedColInFoldedGrid = this.getColNumberInFoldedGrid(focusedColInTotalGrid);
-            factor = focusedColInFoldedGrid / (cellPart * this.foldedGridColumnCount);
-        }
-        if (ifInBounds && (factor < 0 || 1 < factor)) {
+        const factor = diff / totalDiff;
+        if (!focusGroup && (factor < 0 || 1 < factor)) {
             return false;
         }
         const rtlFactor = localization.direction === "rtl" ? -1 : 1;
-        const scrollLeft =
-            factor * this.cellContainerRef.el.clientWidth +
-            this.rowHeaderWidth -
-            (this.contentRefWidth + this.rowHeaderWidth) / 2;
-        this.props.contentRef.el.scrollLeft = rtlFactor * scrollLeft;
+        if (this.columnCount === this.foldedGridColumnCount) {
+            const scrollLeft = factor * this.cellContainerRef.el.clientWidth;
+            this.props.contentRef.el.scrollLeft = rtlFactor * scrollLeft;
+            return true;
+        }
+        const { column, delta } = this.getSubColumnFromDate(focusedDate);
+        const col = 1 + diffColumn(globalStart, column, interval) * cellPart + delta;
+        const { distance } = this.getSubColumnsDistance(1, col, this.cellPartWidth);
+        this.props.contentRef.el.scrollLeft = rtlFactor * distance;
         return true;
     }
 
@@ -1293,7 +1290,7 @@ export class GanttRenderer extends Component {
     }
 
     focusToday() {
-        return this.focusDate(DateTime.local().startOf("day"), true);
+        return this.focusDate(DateTime.local().startOf("day"), false);
     }
 
     generateConnectors() {
@@ -1407,12 +1404,18 @@ export class GanttRenderer extends Component {
             (this.contentRefWidth + this.rowHeaderWidth) / 2;
         let factor = (cellGridMiddleX - this.rowHeaderWidth) / this.cellContainerRef.el.clientWidth;
         if (this.columnCount !== this.foldedGridColumnCount) {
-            const indexInFoldedGrid = Math.max(
-                0,
-                Math.round(this.foldedGridColumnCount * factor) - 1
-            );
-            const indexInTotalGrid = this.getIndexInTotalGrid(indexInFoldedGrid);
-            factor = (indexInTotalGrid + 1) / this.columnCount;
+            let columnWidthSum = 0;
+            for (let i = 0; i < this.foldedGridColumnCount; i++) {
+                if (this.offHoursState.foldedGridColumnSpans[i] > 1) {
+                    columnWidthSum += 36;
+                } else {
+                    columnWidthSum += this.columnWidth;
+                }
+                if (columnWidthSum > cellGridMiddleX - this.rowHeaderWidth) {
+                    factor = (this.getIndexInTotalGrid(i) + 1) / this.columnCount;
+                    break;
+                }
+            }
         }
         const totalDiff = globalStop.diff(globalStart);
         const diff = factor * totalDiff;

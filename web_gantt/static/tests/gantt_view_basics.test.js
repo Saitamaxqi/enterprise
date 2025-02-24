@@ -47,7 +47,7 @@ test("empty ungrouped gantt rendering", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe(null);
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([{}]);
     expect(SELECTORS.noContentHelper).toHaveCount(0);
     expect(queryFirst(".o_gantt_cell").offsetHeight).toBe(35, {
@@ -75,7 +75,7 @@ test("ungrouped gantt rendering", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe(null);
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(SELECTORS.expandCollapseButtons).not.toBeVisible();
     expect(rows).toEqual([
         {
@@ -83,9 +83,9 @@ test("ungrouped gantt rendering", async () => {
                 {
                     title: "Task 5",
                     level: 0,
-                    colSpan: "Out of bounds (1)  -> 04 (1/2) December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
                 },
-                { title: "Task 1", level: 1, colSpan: "Out of bounds (1)  -> 31 December 2018" },
+                { title: "Task 1", level: 1, colSpan: "01 December 2018 -> Out of bounds (63) " },
                 {
                     title: "Task 2",
                     level: 0,
@@ -101,7 +101,7 @@ test("ungrouped gantt rendering", async () => {
                     level: 2,
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
                 },
-                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
     ]);
@@ -136,16 +136,23 @@ test("ordered gantt view", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(SELECTORS.noContentHelper).toHaveCount(0);
     expect(rows).toEqual([
         {
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
             title: "todo",
         },
         {
             title: "in_progress",
             pills: [
-                { level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018", title: "Task 1" },
+                { level: 0, colSpan: "01 December 2018 -> Out of bounds (63) ", title: "Task 1" },
                 {
                     level: 1,
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
@@ -171,7 +178,7 @@ test("ordered gantt view", async () => {
                     colSpan: "20 December 2018 -> 20 (1/2) December 2018",
                     title: "Task 4",
                 },
-                { level: 0, colSpan: "27 December 2018 -> 03 (1/2) January 2019", title: "Task 3" },
+                { level: 0, colSpan: "27 December 2018 -> Out of bounds (68) ", title: "Task 3" },
             ],
         },
     ]);
@@ -187,7 +194,7 @@ test("empty single-level grouped gantt rendering", async () => {
     const { viewTitle, range, columnHeaders, rows } = getGridContent();
     expect(viewTitle).toBe("Gantt View");
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([{ title: "" }]);
     expect(SELECTORS.noContentHelper).toHaveCount(0);
 });
@@ -203,14 +210,14 @@ test("single-level grouped gantt rendering", async () => {
     const { range, viewTitle, columnHeaders, rows } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
     expect(viewTitle).toBe("Tasks");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([
         {
             title: "Project 1",
             pills: [
                 {
                     title: "Task 1",
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                 },
                 {
@@ -225,7 +232,7 @@ test("single-level grouped gantt rendering", async () => {
                 },
                 {
                     title: "Task 3",
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 1,
                 },
             ],
@@ -233,6 +240,11 @@ test("single-level grouped gantt rendering", async () => {
         {
             title: "Project 2",
             pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
                 {
                     title: "Task 7",
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
@@ -282,13 +294,18 @@ test("single-level grouped gantt rendering with group_expand", async () => {
     const { range, viewTitle, columnHeaders, rows } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
     expect(viewTitle).toBe("Tasks");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([
         { title: "Unused Project 1" },
         { title: "Unused Project 2" },
         {
             title: "Project 2",
             pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
                 {
                     title: "Task 7",
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
@@ -302,7 +319,7 @@ test("single-level grouped gantt rendering with group_expand", async () => {
             pills: [
                 {
                     title: "Task 1",
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                 },
                 {
@@ -317,7 +334,7 @@ test("single-level grouped gantt rendering with group_expand", async () => {
                 },
                 {
                     title: "Task 3",
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 1,
                 },
             ],
@@ -337,30 +354,31 @@ test("multi-level grouped gantt rendering", async () => {
     const { range, viewTitle, columnHeaders, rows } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
     expect(viewTitle).toBe("Tasks");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([
         {
             title: "User 1",
             isGroup: true,
             pills: [
-                { title: "1", colSpan: "Out of bounds (8)  -> 19 December 2018" },
+                { title: "2", colSpan: "01 December 2018 -> 04 (1/2) December 2018" },
+                { title: "1", colSpan: "04 (1/2) December 2018 -> 19 December 2018" },
                 { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
-                { title: "1", colSpan: "20 (1/2) December 2018 -> 31 December 2018" },
+                { title: "1", colSpan: "20 (1/2) December 2018 -> Out of bounds (63) " },
             ],
         },
         {
             title: "Project 1",
             isGroup: true,
             pills: [
-                { title: "1", colSpan: "Out of bounds (1)  -> 19 December 2018" },
+                { title: "1", colSpan: "01 December 2018 -> 19 December 2018" },
                 { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
-                { title: "1", colSpan: "20 (1/2) December 2018 -> 31 December 2018" },
+                { title: "1", colSpan: "20 (1/2) December 2018 -> Out of bounds (63) " },
             ],
         },
         {
             title: "To Do",
             pills: [
-                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                { title: "Task 1", colSpan: "01 December 2018 -> Out of bounds (63) ", level: 0 },
             ],
         },
         {
@@ -375,10 +393,23 @@ test("multi-level grouped gantt rendering", async () => {
         },
         {
             title: "Project 2",
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    title: "1",
+                },
+            ],
             isGroup: true,
         },
         {
             title: "Done",
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
         },
         {
             title: "User 2",
@@ -387,7 +418,7 @@ test("multi-level grouped gantt rendering", async () => {
                 { title: "1", colSpan: "17 (1/2) December 2018 -> 20 (1/2) December 2018" },
                 { title: "2", colSpan: "20 (1/2) December 2018 -> 20 December 2018" },
                 { title: "1", colSpan: "21 December 2018 -> 22 (1/2) December 2018" },
-                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "1", colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
         {
@@ -395,7 +426,7 @@ test("multi-level grouped gantt rendering", async () => {
             isGroup: true,
             pills: [
                 { title: "1", colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018" },
-                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "1", colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
         {
@@ -411,7 +442,7 @@ test("multi-level grouped gantt rendering", async () => {
         {
             title: "Cancelled",
             pills: [
-                { title: "Task 3", colSpan: "27 December 2018 -> 03 (1/2) January 2019", level: 0 },
+                { title: "Task 3", colSpan: "27 December 2018 -> Out of bounds (68) ", level: 0 },
             ],
         },
         {
@@ -449,11 +480,16 @@ test("many2many grouped gantt rendering", async () => {
     const { range, viewTitle, columnHeaders, rows } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
     expect(viewTitle).toBe("Tasks");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([
         {
             title: "Undefined Assignees",
             pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
                 {
                     title: "Task 2",
                     colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018",
@@ -469,19 +505,19 @@ test("many2many grouped gantt rendering", async () => {
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
                     level: 1,
                 },
-                { title: "Task 3", colSpan: "27 December 2018 -> 03 (1/2) January 2019", level: 0 },
+                { title: "Task 3", colSpan: "27 December 2018 -> Out of bounds (68) ", level: 0 },
             ],
         },
         {
             title: "User 1",
             pills: [
-                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                { title: "Task 1", colSpan: "01 December 2018 -> Out of bounds (63) ", level: 0 },
             ],
         },
         {
             title: "User 2",
             pills: [
-                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                { title: "Task 1", colSpan: "01 December 2018 -> Out of bounds (63) ", level: 0 },
             ],
         },
     ]);
@@ -502,17 +538,18 @@ test("multi-level grouped with many2many field in gantt view", async () => {
     const { range, viewTitle, columnHeaders, rows } = getGridContent();
     expect(range).toBe("From: 12/01/2018 to: 02/28/2019");
     expect(viewTitle).toBe("Tasks");
-    expect(columnHeaders).toHaveLength(32);
+    expect(columnHeaders).toHaveLength(29);
     expect(rows).toEqual([
         {
             title: "Undefined Assignees",
             isGroup: true,
             pills: [
+                { title: "1", colSpan: "01 December 2018 -> 04 (1/2) December 2018" },
                 { title: "1", colSpan: "17 (1/2) December 2018 -> 19 December 2018" },
                 { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
                 { title: "2", colSpan: "20 (1/2) December 2018 -> 20 December 2018" },
                 { title: "1", colSpan: "21 December 2018 -> 22 (1/2) December 2018" },
-                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "1", colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
         {
@@ -528,12 +565,17 @@ test("multi-level grouped with many2many field in gantt view", async () => {
                     colSpan: "20 December 2018 -> 20 (1/2) December 2018",
                     level: 1,
                 },
-                { title: "Task 3", colSpan: "27 December 2018 -> 03 (1/2) January 2019", level: 0 },
+                { title: "Task 3", colSpan: "27 December 2018 -> Out of bounds (68) ", level: 0 },
             ],
         },
         {
             title: "Project 2",
             pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
                 {
                     title: "Task 7",
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
@@ -544,23 +586,23 @@ test("multi-level grouped with many2many field in gantt view", async () => {
         {
             title: "User 1",
             isGroup: true,
-            pills: [{ title: "1", colSpan: "Out of bounds (1)  -> 31 December 2018" }],
+            pills: [{ title: "1", colSpan: "01 December 2018 -> Out of bounds (63) " }],
         },
         {
             title: "Project 1",
             pills: [
-                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                { title: "Task 1", colSpan: "01 December 2018 -> Out of bounds (63) ", level: 0 },
             ],
         },
         {
             title: "User 2",
             isGroup: true,
-            pills: [{ title: "1", colSpan: "Out of bounds (1)  -> 31 December 2018" }],
+            pills: [{ title: "1", colSpan: "01 December 2018 -> Out of bounds (63) " }],
         },
         {
             title: "Project 1",
             pills: [
-                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                { title: "Task 1", colSpan: "01 December 2018 -> Out of bounds (63) ", level: 0 },
             ],
         },
     ]);
@@ -740,16 +782,16 @@ test("range switching", async () => {
     expect(SELECTORS.expandCollapseButtons).not.toBeVisible();
     let gridContent = getGridContent();
     expect(gridContent.range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(gridContent.columnHeaders).toHaveLength(32);
+    expect(gridContent.columnHeaders).toHaveLength(29);
     expect(gridContent.rows).toEqual([
         {
             pills: [
                 {
                     title: "Task 5",
                     level: 0,
-                    colSpan: "Out of bounds (1)  -> 04 (1/2) December 2018",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
                 },
-                { title: "Task 1", level: 1, colSpan: "Out of bounds (1)  -> 31 December 2018" },
+                { title: "Task 1", level: 1, colSpan: "01 December 2018 -> Out of bounds (63) " },
                 {
                     title: "Task 2",
                     level: 0,
@@ -765,7 +807,7 @@ test("range switching", async () => {
                     level: 2,
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
                 },
-                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
     ]);
@@ -810,7 +852,7 @@ test("range switching", async () => {
     expect(SELECTORS.expandCollapseButtons).not.toBeVisible();
     gridContent = getGridContent();
     expect(gridContent.range).toBe("Week");
-    expect(gridContent.columnHeaders).toHaveLength(10);
+    expect(gridContent.columnHeaders).toHaveLength(9);
     expect(gridContent.rows).toEqual([
         {
             pills: [
@@ -818,7 +860,7 @@ test("range switching", async () => {
                 {
                     title: "Task 2",
                     level: 1,
-                    colSpan: "Monday 17 (1/2) Week 51 of 2018 -> Saturday 22 (1/2) Week 51 of 2018",
+                    colSpan: "Out of bounds (18)  -> Saturday 22 (1/2) Week 51 of 2018",
                 },
                 {
                     title: "Task 4",
@@ -829,6 +871,11 @@ test("range switching", async () => {
                     title: "Task 7",
                     level: 2,
                     colSpan: "Thursday 20 (1/2) Week 51 of 2018 -> Thursday 20 Week 51 of 2018",
+                },
+                {
+                    colSpan: "Thursday 27 Week 52 of 2018 -> Out of bounds (43) ",
+                    level: 1,
+                    title: "Task 3",
                 },
             ],
         },
@@ -845,11 +892,10 @@ test("range switching", async () => {
         {
             pills: [
                 {
-                    title: "Task 5",
-                    level: 0,
-                    colSpan: "Out of bounds (15)  -> 04 (1/2) December 2018",
+                    title: "Task 1",
+                    level: 1,
+                    colSpan: "Out of bounds (60)  -> 31 December 2018",
                 },
-                { title: "Task 1", level: 1, colSpan: "Out of bounds (60)  -> 31 December 2018" },
                 {
                     title: "Task 2",
                     level: 0,
@@ -876,7 +922,7 @@ test("range switching", async () => {
     expect(SELECTORS.expandCollapseButtons).not.toBeVisible();
     gridContent = getGridContent();
     expect(gridContent.range).toBe("Year");
-    expect(gridContent.columnHeaders).toHaveLength(17);
+    expect(gridContent.columnHeaders).toHaveLength(16);
     expect(gridContent.rows).toEqual([
         {
             pills: [
@@ -1011,7 +1057,7 @@ test("group tasks by task_properties", async () => {
             pills: [
                 {
                     title: "Yop",
-                    colSpan: "Out of bounds (3)  -> 12 (1/2) December 2018",
+                    colSpan: "02 December 2018 -> 12 (1/2) December 2018",
                     level: 0,
                 },
                 {
@@ -1055,7 +1101,7 @@ test("group tasks by date", async () => {
             pills: [
                 {
                     title: "Yop",
-                    colSpan: "Out of bounds (3)  -> 12 (1/2) December 2018",
+                    colSpan: "02 December 2018 -> 12 (1/2) December 2018",
                     level: 0,
                 },
                 {
@@ -1143,7 +1189,7 @@ test("initialization with default_start_date and default_stop_date", async (asse
     });
     const { range, groupHeaders } = getGridContent();
     expect(range).toBe("From: 01/29/2017 to: 05/26/2019");
-    expect(groupHeaders.map((h) => h.title)).toEqual(["2018", "2019"]);
+    expect(groupHeaders.map((h) => h.title)).toEqual(["2017", "2018", "2019"]);
     expect(`${SELECTORS.columnHeader}.o_gantt_today`).toHaveCount(1);
 });
 
@@ -1285,10 +1331,10 @@ test("popover-template with a button in the body", async () => {
 
 test("aggregation with half precision", async () => {
     Tasks._records = Tasks._records.slice(0, 2);
-    Tasks._records[0].start = "2018-12-31 07:00:00";
-    Tasks._records[0].stop = "2018-12-31 11:00:00";
-    Tasks._records[1].start = "2018-12-31 07:00:00";
-    Tasks._records[1].stop = "2018-12-31 16:00:00";
+    Tasks._records[0].start = "2018-12-21 07:00:00";
+    Tasks._records[0].stop = "2018-12-21 11:00:00";
+    Tasks._records[1].start = "2018-12-21 07:00:00";
+    Tasks._records[1].stop = "2018-12-21 16:00:00";
     await mountGanttView({
         resModel: "tasks",
         arch: `
@@ -1300,12 +1346,12 @@ test("aggregation with half precision", async () => {
             pills: [
                 {
                     title: "Task 1",
-                    colSpan: "31 December 2018 -> 31 (1/2) December 2018",
+                    colSpan: "21 December 2018 -> 21 (1/2) December 2018",
                     level: 0,
                 },
                 {
                     title: "Task 2",
-                    colSpan: "31 December 2018 -> 31 December 2018",
+                    colSpan: "21 December 2018 -> 21 December 2018",
                     level: 1,
                 },
             ],
@@ -1315,12 +1361,12 @@ test("aggregation with half precision", async () => {
             pills: [
                 {
                     title: "2",
-                    colSpan: "31 December 2018 -> 31 (1/2) December 2018",
+                    colSpan: "21 December 2018 -> 21 (1/2) December 2018",
                     level: 0,
                 },
                 {
                     title: "1",
-                    colSpan: "31 (1/2) December 2018 -> 31 December 2018",
+                    colSpan: "21 (1/2) December 2018 -> 21 December 2018",
                     level: 0,
                 },
             ],

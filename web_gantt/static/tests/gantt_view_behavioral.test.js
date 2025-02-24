@@ -449,11 +449,12 @@ test("open a dialog to create a task when grouped by many2many field", async () 
             title: "Undefined Assignees",
             isGroup: true,
             pills: [
+                { title: "1", colSpan: "01 December 2018 -> 04 (1/2) December 2018" },
                 { title: "1", colSpan: "17 (1/2) December 2018 -> 19 December 2018" },
                 { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
                 { title: "2", colSpan: "20 (1/2) December 2018 -> 20 December 2018" },
                 { title: "1", colSpan: "21 December 2018 -> 22 (1/2) December 2018" },
-                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "1", colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
         {
@@ -471,7 +472,7 @@ test("open a dialog to create a task when grouped by many2many field", async () 
                 },
                 {
                     level: 0,
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     title: "Task 3",
                 },
             ],
@@ -479,6 +480,11 @@ test("open a dialog to create a task when grouped by many2many field", async () 
         {
             title: "Project 2",
             pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
                 {
                     level: 0,
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
@@ -489,23 +495,23 @@ test("open a dialog to create a task when grouped by many2many field", async () 
         {
             title: "User 1",
             isGroup: true,
-            pills: [{ title: "1", colSpan: "Out of bounds (1)  -> 31 December 2018" }],
+            pills: [{ title: "1", colSpan: "01 December 2018 -> Out of bounds (63) " }],
         },
         {
             title: "Project 1",
             pills: [
-                { level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018", title: "Task 1" },
+                { level: 0, colSpan: "01 December 2018 -> Out of bounds (63) ", title: "Task 1" },
             ],
         },
         {
             title: "User 2",
             isGroup: true,
-            pills: [{ title: "1", colSpan: "Out of bounds (1)  -> 31 December 2018" }],
+            pills: [{ title: "1", colSpan: "01 December 2018 -> Out of bounds (63) " }],
         },
         {
             title: "Project 1",
             pills: [
-                { level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018", title: "Task 1" },
+                { level: 0, colSpan: "01 December 2018 -> Out of bounds (63) ", title: "Task 1" },
             ],
         },
     ]);
@@ -523,14 +529,14 @@ test("open a dialog to create a task when grouped by many2many field", async () 
     expect(fifthRow).toEqual({
         title: "Project 1",
         pills: [
-            { level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018", title: "Task 1" },
+            { level: 0, colSpan: "01 December 2018 -> Out of bounds (63) ", title: "Task 1" },
             { level: 1, colSpan: "10 December 2018 -> 10 December 2018", title: "NEW TASK 0" },
         ],
     });
     expect(seventhRow).toEqual({
         title: "Project 1",
         pills: [
-            { level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018", title: "Task 1" },
+            { level: 0, colSpan: "01 December 2018 -> Out of bounds (63) ", title: "Task 1" },
             { level: 1, colSpan: "10 December 2018 -> 10 December 2018", title: "NEW TASK 0" },
         ],
     });
@@ -545,6 +551,11 @@ test("open a dialog to create a task when grouped by many2many field", async () 
     expect(thirdRow).toEqual({
         title: "Project 2",
         pills: [
+            {
+                colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                level: 0,
+                title: "Task 5",
+            },
             {
                 level: 0,
                 colSpan: "20 (1/2) December 2018 -> 20 December 2018",
@@ -902,6 +913,7 @@ test("resize a pill", async () => {
         domain: [["id", "=", 1]],
         context: { initialDate: "2018-12-25" },
     });
+    await contains(".o_content").scroll({ left: 500 });
 
     expect(SELECTORS.pill).toHaveCount(1, { message: "there should be one pill (Task 1)" });
     expect(SELECTORS.resizable).toHaveCount(1);
@@ -1236,6 +1248,7 @@ test("move a pill in another row", async () => {
         groupBy: ["project_id"],
         domain: [["id", "in", [1, 7]]],
     });
+    await contains(".o_content").scroll({ left: 500 });
 
     expect(getGridContent().rows).toEqual([
         {
@@ -1295,6 +1308,8 @@ test("copy a pill in another row", async () => {
         groupBy: ["project_id"],
         domain: [["id", "in", [1, 7, 9]]], // 9 will be the newly created record
     });
+
+    await contains(".o_content").scroll({ left: 500 });
 
     expect(getGridContent().rows).toEqual([
         {
@@ -1405,18 +1420,18 @@ test("move a pill in another row in multi-level grouped", async () => {
             isGroup: true,
             pills: [
                 { title: "1", colSpan: "20 (1/2) December 2018 -> 20 December 2018" },
-                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "1", colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
         {
             title: "Project 1",
             isGroup: true,
-            pills: [{ title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" }],
+            pills: [{ title: "1", colSpan: "27 December 2018 -> Out of bounds (68) " }],
         },
         {
             title: "Cancelled",
             pills: [
-                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
         {
@@ -1490,6 +1505,7 @@ test("move a pill in another row in multi-level grouped (many2many case)", async
             ["project_id", "=", 1],
         ],
     });
+    await contains(".o_content").scroll({ left: 500 });
 
     // sanity check
     expect(queryAllTexts(`${SELECTORS.pillWrapper}${SELECTORS.draggable}`)).toEqual([
@@ -1812,11 +1828,18 @@ test("display mode button", async () => {
     const rowsInSparseMode = [
         {
             title: "Task 5",
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
         },
         {
             title: "Task 1",
             pills: [
-                { title: "Task 1", level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018" },
+                { title: "Task 1", level: 0, colSpan: "01 December 2018 -> Out of bounds (63) " },
             ],
         },
         {
@@ -1852,7 +1875,7 @@ test("display mode button", async () => {
         {
             title: "Task 3",
             pills: [
-                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "Task 3", level: 0, colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
     ];
@@ -1868,8 +1891,13 @@ test("display mode button", async () => {
         {
             pills: [
                 {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+                {
                     title: "Task 1",
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 1,
                 },
                 {
@@ -1889,7 +1917,7 @@ test("display mode button", async () => {
                 },
                 {
                     title: "Task 3",
-                    colSpan: "27 December 2018 -> 03 (1/2) January 2019",
+                    colSpan: "27 December 2018 -> Out of bounds (68) ",
                     level: 0,
                 },
             ],
@@ -1923,15 +1951,16 @@ test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () =
             title: "User 1",
             isGroup: true,
             pills: [
-                { title: "1", colSpan: "Out of bounds (8)  -> 19 December 2018" },
+                { title: "2", colSpan: "01 December 2018 -> 04 (1/2) December 2018" },
+                { title: "1", colSpan: "04 (1/2) December 2018 -> 19 December 2018" },
                 { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
-                { title: "1", colSpan: "20 (1/2) December 2018 -> 31 December 2018" },
+                { title: "1", colSpan: "20 (1/2) December 2018 -> Out of bounds (63) " },
             ],
         },
         {
             title: "Project 1",
             pills: [
-                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                { title: "Task 1", colSpan: "01 December 2018 -> Out of bounds (63) ", level: 0 },
                 {
                     title: "Task 4",
                     colSpan: "20 December 2018 -> 20 (1/2) December 2018",
@@ -1939,7 +1968,16 @@ test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () =
                 },
             ],
         },
-        { title: "Project 2" },
+        {
+            title: "Project 2",
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
+        },
         {
             title: "User 2",
             isGroup: true,
@@ -1947,7 +1985,7 @@ test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () =
                 { title: "1", colSpan: "17 (1/2) December 2018 -> 20 (1/2) December 2018" },
                 { title: "2", colSpan: "20 (1/2) December 2018 -> 20 December 2018" },
                 { title: "1", colSpan: "21 December 2018 -> 22 (1/2) December 2018" },
-                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "1", colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
         {
@@ -1958,7 +1996,7 @@ test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () =
                     colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018",
                     level: 0,
                 },
-                { title: "Task 3", colSpan: "27 December 2018 -> 03 (1/2) January 2019", level: 0 },
+                { title: "Task 3", colSpan: "27 December 2018 -> Out of bounds (68) ", level: 0 },
             ],
         },
         {
@@ -1978,24 +2016,25 @@ test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () =
             title: "User 1",
             isGroup: true,
             pills: [
-                { title: "1", colSpan: "Out of bounds (8)  -> 19 December 2018" },
+                { title: "2", colSpan: "01 December 2018 -> 04 (1/2) December 2018" },
+                { title: "1", colSpan: "04 (1/2) December 2018 -> 19 December 2018" },
                 { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
-                { title: "1", colSpan: "20 (1/2) December 2018 -> 31 December 2018" },
+                { title: "1", colSpan: "20 (1/2) December 2018 -> Out of bounds (63) " },
             ],
         },
         {
             title: "Project 1",
             isGroup: true,
             pills: [
-                { title: "1", colSpan: "Out of bounds (1)  -> 19 December 2018" },
+                { title: "1", colSpan: "01 December 2018 -> 19 December 2018" },
                 { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
-                { title: "1", colSpan: "20 (1/2) December 2018 -> 31 December 2018" },
+                { title: "1", colSpan: "20 (1/2) December 2018 -> Out of bounds (63) " },
             ],
         },
         {
             title: "Task 1",
             pills: [
-                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                { title: "Task 1", colSpan: "01 December 2018 -> Out of bounds (63) ", level: 0 },
             ],
         },
         {
@@ -2008,8 +2047,26 @@ test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () =
                 },
             ],
         },
-        { title: "Project 2", isGroup: true },
-        { title: "Task 5" },
+        {
+            title: "Project 2",
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    title: "1",
+                },
+            ],
+            isGroup: true,
+        },
+        {
+            title: "Task 5",
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
+        },
         {
             title: "User 2",
             isGroup: true,
@@ -2017,7 +2074,7 @@ test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () =
                 { title: "1", colSpan: "17 (1/2) December 2018 -> 20 (1/2) December 2018" },
                 { title: "2", colSpan: "20 (1/2) December 2018 -> 20 December 2018" },
                 { title: "1", colSpan: "21 December 2018 -> 22 (1/2) December 2018" },
-                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "1", colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
         {
@@ -2025,7 +2082,7 @@ test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () =
             isGroup: true,
             pills: [
                 { title: "1", colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018" },
-                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "1", colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
         {
@@ -2041,7 +2098,7 @@ test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () =
         {
             title: "Task 3",
             pills: [
-                { title: "Task 3", colSpan: "27 December 2018 -> 03 (1/2) January 2019", level: 0 },
+                { title: "Task 3", colSpan: "27 December 2018 -> Out of bounds (68) ", level: 0 },
             ],
         },
         {
@@ -2066,9 +2123,10 @@ test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () =
             title: "User 1",
             isGroup: true,
             pills: [
-                { title: "1", colSpan: "Out of bounds (8)  -> 19 December 2018" },
+                { title: "2", colSpan: "01 December 2018 -> 04 (1/2) December 2018" },
+                { title: "1", colSpan: "04 (1/2) December 2018 -> 19 December 2018" },
                 { title: "2", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
-                { title: "1", colSpan: "20 (1/2) December 2018 -> 31 December 2018" },
+                { title: "1", colSpan: "20 (1/2) December 2018 -> Out of bounds (63) " },
             ],
         },
         {
@@ -2078,7 +2136,7 @@ test("display mode button and 'Expand rows'/'Collapse rows' buttons", async () =
                 { title: "1", colSpan: "17 (1/2) December 2018 -> 20 (1/2) December 2018" },
                 { title: "2", colSpan: "20 (1/2) December 2018 -> 20 December 2018" },
                 { title: "1", colSpan: "21 December 2018 -> 22 (1/2) December 2018" },
-                { title: "1", colSpan: "27 December 2018 -> 03 (1/2) January 2019" },
+                { title: "1", colSpan: "27 December 2018 -> Out of bounds (68) " },
             ],
         },
     ];
@@ -2133,19 +2191,18 @@ test("rows expanded after a grouby change", async () => {
             title: "Project 1",
             isGroup: true,
             pills: [
-                { title: "1", colSpan: "Out of bounds (1)  -> 17 (1/2) December 2018" },
+                { title: "1", colSpan: "01 December 2018 -> 17 (1/2) December 2018" },
                 { title: "2", colSpan: "17 (1/2) December 2018 -> 19 December 2018" },
                 { title: "3", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
                 { title: "2", colSpan: "20 (1/2) December 2018 -> 22 (1/2) December 2018" },
                 { title: "1", colSpan: "22 (1/2) December 2018 -> 26 December 2018" },
-                { title: "2", colSpan: "27 December 2018 -> 31 December 2018" },
-                { title: "1", colSpan: "01 January 2019 -> 03 (1/2) January 2019" },
+                { title: "2", colSpan: "27 December 2018 -> Out of bounds (63) " },
             ],
         },
         {
             title: "User 1",
             pills: [
-                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                { title: "Task 1", colSpan: "01 December 2018 -> Out of bounds (63) ", level: 0 },
                 {
                     title: "Task 4",
                     colSpan: "20 December 2018 -> 20 (1/2) December 2018",
@@ -2161,15 +2218,27 @@ test("rows expanded after a grouby change", async () => {
                     colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018",
                     level: 0,
                 },
-                { title: "Task 3", colSpan: "27 December 2018 -> 03 (1/2) January 2019", level: 0 },
+                { title: "Task 3", colSpan: "27 December 2018 -> Out of bounds (68) ", level: 0 },
             ],
         },
         {
             title: "Project 2",
             isGroup: true,
-            pills: [{ title: "1", colSpan: "20 (1/2) December 2018 -> 20 December 2018" }],
+            pills: [
+                { title: "1", colSpan: "01 December 2018 -> 04 (1/2) December 2018" },
+                { title: "1", colSpan: "20 (1/2) December 2018 -> 20 December 2018" },
+            ],
         },
-        { title: "User 1" },
+        {
+            title: "User 1",
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
+        },
         {
             title: "User 2",
             pills: [
@@ -2189,22 +2258,24 @@ test("rows expanded after a grouby change", async () => {
     expect(SELECTORS.collapseButton).toHaveCount(0);
     expect(getGridContent().rows).toEqual([
         {
-            title: "Project 1",
             isGroup: true,
             pills: [
-                { title: "1", colSpan: "Out of bounds (1)  -> 17 (1/2) December 2018" },
-                { title: "2", colSpan: "17 (1/2) December 2018 -> 19 December 2018" },
-                { title: "3", colSpan: "20 December 2018 -> 20 (1/2) December 2018" },
-                { title: "2", colSpan: "20 (1/2) December 2018 -> 22 (1/2) December 2018" },
-                { title: "1", colSpan: "22 (1/2) December 2018 -> 26 December 2018" },
-                { title: "2", colSpan: "27 December 2018 -> 31 December 2018" },
-                { title: "1", colSpan: "01 January 2019 -> 03 (1/2) January 2019" },
+                { colSpan: "01 December 2018 -> 17 (1/2) December 2018", title: "1" },
+                { colSpan: "17 (1/2) December 2018 -> 19 December 2018", title: "2" },
+                { colSpan: "20 December 2018 -> 20 (1/2) December 2018", title: "3" },
+                { colSpan: "20 (1/2) December 2018 -> 22 (1/2) December 2018", title: "2" },
+                { colSpan: "22 (1/2) December 2018 -> 26 December 2018", title: "1" },
+                { colSpan: "27 December 2018 -> Out of bounds (63) ", title: "2" },
             ],
+            title: "Project 1",
         },
         {
-            title: "Project 2",
             isGroup: true,
-            pills: [{ title: "1", colSpan: "20 (1/2) December 2018 -> 20 December 2018" }],
+            pills: [
+                { colSpan: "01 December 2018 -> 04 (1/2) December 2018", title: "1" },
+                { colSpan: "20 (1/2) December 2018 -> 20 December 2018", title: "1" },
+            ],
+            title: "Project 2",
         },
     ]);
 
@@ -2216,31 +2287,36 @@ test("rows expanded after a grouby change", async () => {
     expect(SELECTORS.collapseButton).toHaveCount(1);
     expect(getGridContent().rows).toEqual([
         {
-            title: "Project 1",
             pills: [
-                { title: "Task 1", colSpan: "Out of bounds (1)  -> 31 December 2018", level: 0 },
+                { colSpan: "01 December 2018 -> Out of bounds (63) ", level: 0, title: "Task 1" },
                 {
-                    title: "Task 2",
                     colSpan: "17 (1/2) December 2018 -> 22 (1/2) December 2018",
                     level: 1,
+                    title: "Task 2",
                 },
                 {
-                    title: "Task 4",
                     colSpan: "20 December 2018 -> 20 (1/2) December 2018",
                     level: 2,
+                    title: "Task 4",
                 },
-                { title: "Task 3", colSpan: "27 December 2018 -> 03 (1/2) January 2019", level: 1 },
+                { colSpan: "27 December 2018 -> Out of bounds (68) ", level: 1, title: "Task 3" },
             ],
+            title: "Project 1",
         },
         {
-            title: "Project 2",
             pills: [
                 {
-                    title: "Task 7",
+                    colSpan: "01 December 2018 -> 04 (1/2) December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+                {
                     colSpan: "20 (1/2) December 2018 -> 20 December 2018",
                     level: 0,
+                    title: "Task 7",
                 },
             ],
+            title: "Project 2",
         },
     ]);
 });
@@ -2327,9 +2403,9 @@ test("focus today with scroll (in range & outside)", async () => {
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
     expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20", "December 2018"));
     let { columnHeaders } = getGridContent();
-    expect(columnHeaders).toHaveLength(32);
-    expect(columnHeaders[0].title).toBe("04"); // December
-    expect(columnHeaders.at(-1).title).toBe("04"); // January
+    expect(columnHeaders).toHaveLength(29);
+    expect(columnHeaders[0].title).toBe("01"); // December
+    expect(columnHeaders.at(-1).title).toBe("29"); // December
 
     await scroll(".o_content", { left: 800 });
     await animationFrame();
@@ -2346,8 +2422,8 @@ test("focus today with scroll (in range & outside)", async () => {
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
     columnHeaders = getGridContent().columnHeaders;
     expect(columnHeaders).toHaveLength(32);
-    expect(columnHeaders[0].title).toBe("04"); // December
-    expect(columnHeaders.at(-1).title).toBe("04"); // January
+    expect(columnHeaders[0].title).toBe("17"); // December
+    expect(columnHeaders.at(-1).title).toBe("17"); // January
 
     await scroll(".o_content", { left: 2000 });
     await animationFrame();
@@ -2363,8 +2439,8 @@ test("focus today with scroll (in range & outside)", async () => {
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
     columnHeaders = getGridContent().columnHeaders;
     expect(columnHeaders).toHaveLength(32);
-    expect(columnHeaders[0].title).toBe("04"); // December
-    expect(columnHeaders.at(-1).title).toBe("04"); // January
+    expect(columnHeaders[0].title).toBe("17"); // December
+    expect(columnHeaders.at(-1).title).toBe("17"); // January
 });
 
 test("focus today with range change (in range & outside)", async () => {
@@ -2380,9 +2456,9 @@ test("focus today with range change (in range & outside)", async () => {
     expect(queryOne(".o_gantt_cell.o_gantt_today")).toBe(getCell("20", "December 2018"));
     let gridContent = getGridContent();
     expect(gridContent.range).toBe("From: 12/01/2018 to: 02/28/2019");
-    expect(gridContent.columnHeaders).toHaveLength(32);
-    expect(gridContent.columnHeaders[0].title).toBe("04"); // December
-    expect(gridContent.columnHeaders.at(-1).title).toBe("04"); // January
+    expect(gridContent.columnHeaders).toHaveLength(29);
+    expect(gridContent.columnHeaders[0].title).toBe("01"); // December
+    expect(gridContent.columnHeaders.at(-1).title).toBe("29"); // December
 
     await selectCustomRange({ startDate: "2018-11-15", stopDate: "2019-02-15" });
     expect.verifySteps(["get_gantt_data"]);
@@ -2391,11 +2467,16 @@ test("focus today with range change (in range & outside)", async () => {
     gridContent = getGridContent();
     expect(gridContent.range).toBe("From: 11/15/2018 to: 02/15/2019");
     expect(gridContent.columnHeaders).toHaveLength(32);
-    expect(gridContent.columnHeaders[0].title).toBe("04"); // December
-    expect(gridContent.columnHeaders.at(-1).title).toBe("04"); // January
+    expect(gridContent.columnHeaders[0].title).toBe("28"); // November
+    expect(gridContent.columnHeaders.at(-1).title).toBe("29"); // December
+
     await focusToday();
     await ganttControlsChanges();
-    // nothing happens
+    expect(".o_gantt_cell.o_gantt_today").toBeVisible();
+    gridContent = getGridContent();
+    expect(gridContent.columnHeaders).toHaveLength(32);
+    expect(gridContent.columnHeaders[0].title).toBe("17"); // December
+    expect(gridContent.columnHeaders.at(-1).title).toBe("17"); // January
 
     await selectCustomRange({ startDate: "2019-01-01", stopDate: "2019-02-28" });
     expect(getGridContent().range).toBe("From: 01/01/2019 to: 02/28/2019");
@@ -2777,7 +2858,7 @@ test("gantt popover: on close, reload if record changed", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },
@@ -2804,7 +2885,7 @@ test("gantt popover: on close, reload if record changed", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },
@@ -2814,7 +2895,7 @@ test("gantt popover: on close, reload if record changed", async () => {
         {
             pills: [
                 {
-                    colSpan: "Out of bounds (1)  -> 31 December 2018",
+                    colSpan: "01 December 2018 -> Out of bounds (63) ",
                     level: 0,
                     title: "Task 1",
                 },
