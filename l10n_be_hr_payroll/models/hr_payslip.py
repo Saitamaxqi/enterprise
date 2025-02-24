@@ -700,12 +700,12 @@ class HrPayslip(models.Model):
             withholding_tax_amount = convert_to_month(basic_bareme)
         else:
             # BAREME I: Isolated or spouse with income
-            if employee.marital in ['divorced', 'single', 'widower'] or (employee.marital in ['married', 'cohabitant'] and employee.spouse_fiscal_status != 'without_income'):
+            if employee.marital in ['divorced', 'single', 'widower'] or (employee.marital in ['married', 'cohabitant'] and employee.spouse_fiscal_status not in ('without_income', 'low_income')):
                 basic_bareme = max(compute_basic_bareme(yearly_net_taxable_revenue) - self._rule_parameter('deduct_single_with_income'), 0.0)
                 withholding_tax_amount = convert_to_month(basic_bareme)
 
-            # BAREME II: spouse without income
-            if employee.marital in ['married', 'cohabitant'] and employee.spouse_fiscal_status == 'without_income':
+            # BAREME II: spouse without income or with low income
+            if employee.marital in ['married', 'cohabitant'] and employee.spouse_fiscal_status in ('without_income', 'low_income'):
                 yearly_net_taxable_revenue_for_spouse = min(yearly_net_taxable_revenue * 0.3, self._rule_parameter('max_spouse_income'))
                 basic_bareme_1 = compute_basic_bareme(yearly_net_taxable_revenue_for_spouse)
                 basic_bareme_2 = compute_basic_bareme(yearly_net_taxable_revenue - yearly_net_taxable_revenue_for_spouse)

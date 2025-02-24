@@ -6675,3 +6675,21 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         payslip = self._generate_payslip(datetime.date(2025, 1, 1), datetime.date(2025, 1, 31))
         payslip_results = {'BASIC': 2650.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2659.0, 'ONSS': -347.53, 'EmpBonus.A': 118.22, 'EmpBonus.B': 17.35, 'EmpBonus.1': 135.57, 'ONSSTOTAL': 211.96, 'ATN.CAR': 159.6, 'GROSSIP': 2606.64, 'IP.PART': -662.5, 'GROSS': 1944.14, 'P.P': -159.46, 'P.P.DED': 48.29, 'PPTOTAL': 111.17, 'ATN.CAR.2': -159.6, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -15.39, 'MEAL_V_EMP': -25.07, 'REP.FEES': 150.0, 'IP': 662.5, 'IP.DED': -49.69, 'NET': 2386.73, 'REMUNERATION': 1987.5, 'ONSSEMPLOYERBASIC': 664.75, 'ONSSEMPLOYERFFE': 1.86, 'ONSSEMPLOYERMFFE': 2.66, 'ONSSEMPLOYERCPAE': 6.12, 'ONSSEMPLOYERRESTREINT': 44.94, 'ONSSEMPLOYERUNEMP': 2.66, 'ONSSEMPLOYER': 722.98, 'CO2FEE': 33.22}
         self._validate_payslip(payslip, payslip_results)
+
+    def test_spouse_fiscal_status_witholding_tax(self):
+        self.employee.marital = 'married'
+        self.employee.spouse_fiscal_status = 'without_income'
+        payslip_spouse_no_income = self._generate_payslip(datetime.date(2023, 3, 1), datetime.date(2023, 3, 31))
+        payslip_vals_no_income = payslip_spouse_no_income._get_line_values(['P.P', 'P.P.DED'])
+        pp_no_income = payslip_vals_no_income['P.P'][payslip_spouse_no_income.id]['total']
+        pp_ded_no_income = payslip_vals_no_income['P.P.DED'][payslip_spouse_no_income.id]['total']
+
+        # P.P and P.P.DED should be the same with a spouse with low income
+        self.employee.spouse_fiscal_status = 'low_income'
+        payslip_spouse_low_income = self._generate_payslip(datetime.date(2023, 3, 1), datetime.date(2023, 3, 31))
+        payslip_vals_low_income = payslip_spouse_low_income._get_line_values(['P.P', 'P.P.DED'])
+        pp_low_income = payslip_vals_low_income['P.P'][payslip_spouse_low_income.id]['total']
+        pp_ded_low_income = payslip_vals_low_income['P.P.DED'][payslip_spouse_low_income.id]['total']
+
+        self.assertEqual(pp_no_income, pp_low_income)
+        self.assertEqual(pp_ded_no_income, pp_ded_low_income)
