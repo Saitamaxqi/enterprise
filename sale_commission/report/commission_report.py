@@ -3,7 +3,7 @@
 from datetime import datetime
 
 from odoo import api, models, fields, _
-from odoo.osv.expression import expression
+from odoo.fields import Domain
 from odoo.tools import SQL
 
 from odoo.addons.resource.models.utils import filter_domain_leaf
@@ -103,12 +103,12 @@ class SaleCommissionReport(models.Model):
             # to be sure the domain is still the one extracted in where_calc.
             period_domain = filter_domain_leaf(period_domain, lambda field_name: True, field_name_mapping={'date_to': 'date'})
             if period_domain:
-                result = expression(period_domain, self.env['account.move'], 'am')
-                where_invoices = SQL(" AND %s", result.query.where_clause)
+                am_query = self.env['account.move']._where_calc(period_domain)
+                where_invoices = SQL(" AND %s", am_query.where_clause)
             period_domain = filter_domain_leaf(period_domain, lambda field_name: True, field_name_mapping={'date': 'date_order'})
             if period_domain:
-                result = expression(period_domain, self.env['sale.order'], 'so')
-                where_sales = SQL(" AND %s", result.query.where_clause)
+                so_query = self.env['sale.order']._where_calc(period_domain)
+                where_sales = SQL(" AND %s", so_query.where_clause)
         query = self.with_context(where_invoices=where_invoices,where_sales=where_sales)._query()
         table_query = SQL(query)
         return table_query
