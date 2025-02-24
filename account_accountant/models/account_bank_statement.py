@@ -142,6 +142,13 @@ class AccountBankStatementLine(models.Model):
         # we either already have statement lines to reconcile or compute them
         st_lines, remaining_line_id = (self, None) if self else _compute_st_lines_to_reconcile(configured_company)
 
+        if not st_lines:
+            return
+
+        # The field `cron_last_check` will be written on all processed lines which requires them to be protected against
+        # concurrent update in order to avoid the whole transaction to be rollbacked.
+        self.env.cr.execute("SELECT 1 FROM account_bank_statement_line WHERE id in %s FOR UPDATE", [tuple(st_lines.ids)])
+
         nb_auto_reconciled_lines = 0
         for index, st_line in enumerate(st_lines):
             # we want the cron to run only for limit_time seconds
