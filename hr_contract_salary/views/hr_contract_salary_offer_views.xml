@@ -76,7 +76,10 @@
                         string="Salary Configurator"
                         class="btn btn-secondary"
                         invisible="not id or state in ['refused', 'expired', 'cancelled']"/>
-                    <field name="state" widget="statusbar" statusbar_visible="open,half_signed,full_signed,expired" readonly="1"/>
+                    <field name="state" widget="statusbar" invisible="not is_half_sign_state_required"
+                        statusbar_visible="open,half_signed,full_signed" readonly="1"/>
+                    <field name="state" widget="statusbar" invisible="is_half_sign_state_required"
+                        statusbar_visible="open,full_signed" readonly="1"/>
                 </header>
                 <sheet>
                     <div name="button_box" class="oe_button_box">

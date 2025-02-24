@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from dateutil.relativedelta import relativedelta
@@ -64,6 +63,15 @@ class HrContractSalaryOffer(models.Model):
     offer_end_date = fields.Date('Offer Expiration', readonly=False,
                                  copy=False, tracking=True)
     url = fields.Char('Link', compute='_compute_url')
+    is_half_sign_state_required = fields.Boolean(
+        compute="_compute_is_half_sign_state_required",
+        export_string_translation=False
+    )
+
+    @api.depends('contract_template_id.sign_template_signatories_ids')
+    def _compute_is_half_sign_state_required(self):
+        for offer in self:
+            offer.is_half_sign_state_required = len(offer.contract_template_id.sign_template_signatories_ids) != 1
 
     @api.depends("access_token", "applicant_id")
     def _compute_url(self):
@@ -246,15 +254,7 @@ class HrContractSalaryOffer(models.Model):
     def action_view_signature_request(self):
         self.ensure_one()
         pending_sign_request = self.sign_request_ids.filtered(lambda r: r.state != 'signed')
-        sign_request_id = pending_sign_request[0].id if pending_sign_request else False
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Requested Signature'),
-            'view_mode': 'form',
-            'res_model': 'sign.request',
-            'res_id': sign_request_id,
-            'target': 'new',
-        }
+        return pending_sign_request.go_to_document()
 
     def action_view_contract(self):
         self.ensure_one()

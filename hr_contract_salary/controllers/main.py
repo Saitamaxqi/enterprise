@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import hashlib
@@ -49,9 +48,22 @@ class SignContract(Sign):
             contract.hash_token = False
             if contract.applicant_id:
                 contract.applicant_id.employee_id = contract.employee_id
-            self._create_activity_benefit(contract, 'running')
             contract.wage_on_signature = wage_to_apply
-            offer.state = "half_signed"
+
+            if not request_item.sign_request_id.nb_wait:
+                if contract.employee_id:
+                    contract.employee_id.active = True
+                    if contract.applicant_id:
+                        contract.applicant_id._move_to_hired_stage()
+                    if contract.employee_id.work_contact_id:
+                        contract.employee_id.work_contact_id.active = True
+                self._create_activity_benefit(contract, ('running', 'countersigned'))
+                self._send_benefit_sign_request(contract)
+                offer.state = "full_signed"
+
+            else:
+                self._create_activity_benefit(contract, ('running'))
+                offer.state = "half_signed"
 
         # Both applicant/employee and HR responsible have signed
         if request_item.sign_request_id.nb_closed == 2:
@@ -62,15 +74,15 @@ class SignContract(Sign):
                     contract.applicant_id._move_to_hired_stage()
             if contract.employee_id.work_contact_id:
                 contract.employee_id.work_contact_id.active = True
-            self._create_activity_benefit(contract, 'countersigned')
+            self._create_activity_benefit(contract, ('countersigned'))
             self._send_benefit_sign_request(contract)
             offer.state = "full_signed"
 
-    def _create_activity_benefit(self, contract, contract_state):
+    def _create_activity_benefit(self, contract, contract_states):
         benefits = request.env['hr.contract.salary.benefit'].sudo().search([
             ('structure_type_id', '=', contract.structure_type_id.id),
             ('activity_type_id', '!=', False),
-            ('activity_creation', '=', contract_state)])
+            ('activity_creation', 'in', contract_states)])
         for benefit in benefits:
             field = benefit.res_field_id.name
             value = contract[field]
