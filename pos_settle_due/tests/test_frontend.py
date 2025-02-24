@@ -51,3 +51,31 @@ class TestPoSSettleDueHttpCommon(TestPointOfSaleHttpCommon, TestPoSCommon):
         self.main_pos_config.with_user(self.user).open_ui()
         self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'pos_settle_account_due', login="accountman")
         self.assertEqual(self.partner_test_1.total_due, 0)
+
+    def test_settle_open_invoice(self):
+        """ Test to settle an open invoice from PoS """
+        self.partner_c = self.env["res.partner"].create({"name": "C Partner"})
+        invoice = self.env['account.move'].create({
+            'partner_id': self.partner_c.id,
+            'date': '2025-02-17',
+            'invoice_date': '2025-02-17',
+            'move_type': 'out_invoice',
+            'invoice_line_ids': [
+                (0, 0, {'name': 'test', 'price_unit': 200})
+            ],
+        })
+        invoice.action_post()
+        self.assertEqual(self.partner_c.total_due, 200)
+
+        self.customer_account_payment_method = self.env['pos.payment.method'].create({
+            'name': 'Customer Account',
+            'split_transactions': True,
+        })
+        self.main_pos_config.write({
+            'payment_method_ids': [(4, self.customer_account_payment_method.id, 0)],
+        })
+        self.main_pos_config.settle_invoice_product_id = self.env.ref("pos_settle_due.product_product_settle_invoice")
+        self.main_pos_config.open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'pos_settle_open_invoice', login="accountman")
+        self.main_pos_config.current_session_id.action_pos_session_closing_control()
+        self.assertEqual(self.partner_c.total_due, 195)

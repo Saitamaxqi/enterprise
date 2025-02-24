@@ -8,11 +8,12 @@ class PosOrderLine(models.Model):
     _inherit = 'pos.order.line'
 
     settled_order_id = fields.Many2one('pos.order', string='Settled Order', index='btree_not_null')
+    settled_invoice_id = fields.Many2one('account.move', string='Settled Invoice')
 
     @api.model
     def _load_pos_data_fields(self, config_id):
         params = super()._load_pos_data_fields(config_id)
-        params += ['settled_order_id']
+        params += ['settled_order_id', 'settled_invoice_id']
         return params
 
     def _prepare_tax_base_line_values(self):
@@ -24,4 +25,4 @@ class PosOrderLine(models.Model):
 
     def _is_settle_or_deposit(self):
         self.ensure_one()
-        return self.settled_order_id or self.product_id == self.order_id.config_id.deposit_product_id
+        return self.settled_order_id or self.settled_invoice_id or self.product_id == self.order_id.config_id.deposit_product_id

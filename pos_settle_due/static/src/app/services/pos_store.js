@@ -12,6 +12,8 @@ patch(PosStore.prototype, {
         const order = this.getOrder();
         const partnerInfos = {
             totalDue: 0,
+            posOrdersAmountDue: 0,
+            invoicesAmountDue: 0,
             totalWithCart: order ? order.getTotalWithTax() : 0,
             creditLimit: 0,
             useLimit: false,
@@ -28,7 +30,12 @@ patch(PosStore.prototype, {
             }
         }
 
-        partnerInfos.totalDue = partner.total_due || 0;
+        partnerInfos.totalDue = this.currency.round(partner.total_due);
+        partnerInfos.posOrdersAmountDue = this.currency.round(partner.pos_orders_amount_due);
+        partnerInfos.invoicesAmountDue = this.currency.round(partner.invoices_amount_due);
+        partnerInfos.remainingDue = this.currency.round(
+            partnerInfos.totalDue - partnerInfos.posOrdersAmountDue - partnerInfos.invoicesAmountDue
+        );
         partnerInfos.totalWithCart += partner.total_due || 0;
         partnerInfos.creditLimit = partner.credit_limit || 0;
         partnerInfos.overDue = partnerInfos.totalWithCart > partnerInfos.creditLimit;
@@ -53,6 +60,8 @@ patch(PosStore.prototype, {
             }
         }
         partner.total_due = updatePartner.total_due;
+        partner.pos_orders_amount_due = updatePartner.pos_orders_amount_due;
+        partner.invoices_amount_due = updatePartner.invoices_amount_due;
         return [updatePartner];
     },
     async setAllTotalDueOfPartners(partners) {
@@ -61,20 +70,20 @@ patch(PosStore.prototype, {
             this.config.id,
         ]);
         for (const partner of partners) {
-            partner.total_due = partners_total_due.find(
+            const updatedPartner = partners_total_due.find(
                 (p) => p["res.partner"][0].id == [partner.id]
-            )["res.partner"][0].total_due;
+            )["res.partner"][0];
+            partner.total_due = updatedPartner.total_due;
+            partner.pos_orders_amount_due = updatedPartner.pos_orders_amount_due;
+            partner.invoices_amount_due = updatedPartner.invoices_amount_due;
         }
         return [partners];
     },
-    async getPartnerSettleDetails(partnerId) {
-        return await this.data.call("res.partner", "get_partner_settle_details", [partnerId]);
-    },
-    async onClickSettleDue(orderIds, partner_id, partner_ids) {
+    async onClickSettleDue(orderIds, partnerId, commercialPartnerId) {
         const orders = await this.data.read("pos.order", orderIds);
         const currentOrder = this.getOrder();
-        currentOrder.selectedDuePartnerIds = partner_ids;
-        currentOrder.setPartner(partner_id);
+        currentOrder.commercialPartnerId = commercialPartnerId;
+        currentOrder.setPartner(partnerId);
         for (const order of orders) {
             await this.addLineToCurrentOrder({
                 price_unit: order.customer_due_total,
@@ -82,6 +91,21 @@ patch(PosStore.prototype, {
                 taxes_id: [],
                 product_tmpl_id: this.config.settle_due_product_id,
                 settled_order_id: order,
+            });
+        }
+    },
+    async onClickSettleInvoices(invoiceIds, partnerId, commercialPartnerId) {
+        const invoices = await this.data.read("account.move", invoiceIds);
+        const currentOrder = this.getOrder();
+        currentOrder.setPartner(partnerId);
+        currentOrder.commercialPartnerId = commercialPartnerId;
+        for (const invoice of invoices) {
+            await this.addLineToCurrentOrder({
+                price_unit: invoice.pos_amount_unsettled,
+                qty: 1,
+                taxes_id: [],
+                product_tmpl_id: this.config.settle_invoice_product_id,
+                settled_invoice_id: invoice,
             });
         }
     },

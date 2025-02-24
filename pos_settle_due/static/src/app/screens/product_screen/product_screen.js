@@ -5,7 +5,7 @@ patch(ProductScreen.prototype, {
     getNumpadButtons() {
         const buttons = super.getNumpadButtons();
         const orderline = this.currentOrder.getSelectedOrderline();
-        if (orderline?.isSettleDueLine()) {
+        if (orderline?.isSettleDueLine() || orderline?.isSettleInvoiceLine()) {
             this.pos.numpadMode = "price";
             buttons.forEach((button) => {
                 if (

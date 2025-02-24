@@ -17,11 +17,8 @@ patch(PartnerLine.prototype, {
     },
     async settleCustomerDue() {
         this.props.close();
-        const partner_id = this.props.partner.id;
-        const partnerDetails = await this.pos.getPartnerSettleDetails(partner_id);
-        if (!partnerDetails[1]) {
-            return this.depositMoney(this.props.partner.total_due);
-        }
+        const partnerId = this.props.partner.id;
+        const commercialPartnerId = this.props.partner.commercial_partner_id.id;
         this.dialog.add(CustomSelectCreateDialog, {
             resModel: "pos.order",
             noCreate: true,
@@ -30,7 +27,7 @@ patch(PartnerLine.prototype, {
                 (v) => v.name == "customer_due_pos_order_list_view"
             ).id,
             domain: [
-                ["partner_id", "in", partnerDetails[0]],
+                ["commercial_partner_id", "=", commercialPartnerId],
                 ["customer_due_total", ">", 0],
             ],
             onSelected: async (orderIds) => {
@@ -47,12 +44,32 @@ patch(PartnerLine.prototype, {
                         body: _t("One of the selected orders is already being settled."),
                     });
                 }
-                this.pos.onClickSettleDue(orderIds, partner_id, partnerDetails[0]);
+                this.pos.onClickSettleDue(orderIds, partnerId, commercialPartnerId);
             },
         });
     },
     async depositMoney(amount = 0) {
         this.props.close();
         this.pos.depositMoney(this.props.partner, amount);
+    },
+    async settleCustomerInvoices() {
+        this.props.close();
+        const partnerId = this.props.partner.id;
+        const commercialPartnerId = this.props.partner.commercial_partner_id.id;
+        this.dialog.add(CustomSelectCreateDialog, {
+            resModel: "account.move",
+            noCreate: true,
+            multiSelect: true,
+            listViewId: this.pos.models["ir.ui.view"].find(
+                (v) => v.name == "due_account_move_list_view"
+            ).id,
+            domain: [
+                ["commercial_partner_id", "=", commercialPartnerId],
+                ["pos_amount_unsettled", ">", 0],
+            ],
+            onSelected: async (invoiceIds) => {
+                this.pos.onClickSettleInvoices(invoiceIds, partnerId, commercialPartnerId);
+            },
+        });
     },
 });

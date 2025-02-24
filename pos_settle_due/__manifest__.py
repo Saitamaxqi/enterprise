@@ -15,6 +15,7 @@
     'license': 'OEEL-1',
     'data': [
         'views/pos_order_views.xml',
+        'views/account_move_views.xml',
         'data/pos_settle_due_data.xml',
     ],
     'assets': {

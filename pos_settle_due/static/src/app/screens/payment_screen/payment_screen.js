@@ -15,8 +15,10 @@ patch(PaymentScreen.prototype, {
     setup() {
         super.setup(...arguments);
         const order = this.currentOrder;
-        const settleDueLines = order.lines.filter((line) => line.isSettleDueLine());
-        if (settleDueLines.length || this.props.isDepositOrder) {
+        const settleLines = order.lines.filter(
+            (line) => line.isSettleDueLine() || line.isSettleInvoiceLine()
+        );
+        if (settleLines.length || this.props.isDepositOrder) {
             this.payment_methods_from_config = this.payment_methods_from_config.filter(
                 (pm) => pm.type !== "pay_later"
             );
@@ -64,7 +66,9 @@ patch(PaymentScreen.prototype, {
     async validateOrder(isForceValidate) {
         const order = this.currentOrder;
         const change = order.getChange();
-        const settleDueLines = order.lines.filter((line) => line.isSettleDueLine());
+        const settleLines = order.lines.filter(
+            (line) => line.isSettleDueLine() || line.isSettleInvoiceLine()
+        );
         const paylaterPaymentMethod = this.pos.models["pos.payment.method"].find(
             (pm) =>
                 this.pos.config.payment_method_ids.some((m) => m.id === pm.id) &&
@@ -79,7 +83,7 @@ patch(PaymentScreen.prototype, {
             ((!this.pos.currency.isZero(change) &&
                 order.getOrderlines().length === 0 &&
                 this.props.isDepositOrder) ||
-                settleDueLines.length) &&
+                settleLines.length) &&
             paylaterPaymentMethod &&
             !existingPayLaterPayment
         ) {
@@ -93,8 +97,8 @@ patch(PaymentScreen.prototype, {
             if (!partner) {
                 return;
             }
-            if (settleDueLines.length) {
-                return this.settleOrderDues(order, partner, paylaterPaymentMethod);
+            if (settleLines.length) {
+                return this.settleOrderDues(order, partner, paylaterPaymentMethod, settleLines);
             } else {
                 return this.depositOrder(order, partner, change, paylaterPaymentMethod);
             }
@@ -102,10 +106,10 @@ patch(PaymentScreen.prototype, {
             return super.validateOrder(...arguments);
         }
     },
-    async settleOrderDues(order, partner, paylaterPaymentMethod) {
-        const selectedDuePartnerIds = order.selectedDuePartnerIds;
+    async settleOrderDues(order, partner, paylaterPaymentMethod, settleLines) {
+        const commercialPartnerId = order.commercialPartnerId;
         const amountToSettle = order.getSettleAmount();
-        if (selectedDuePartnerIds && selectedDuePartnerIds.includes(partner.id)) {
+        if (commercialPartnerId && commercialPartnerId == partner.commercial_partner_id.id) {
             const confirmed = await ask(this.dialog, {
                 title: _t("Settle due orderlines"),
                 body: _t(
@@ -118,6 +122,7 @@ patch(PaymentScreen.prototype, {
             if (confirmed) {
                 const paylaterPayment = order.addPaymentline(paylaterPaymentMethod);
                 paylaterPayment.setAmount(-amountToSettle);
+                settleLines.forEach((line) => (line.qty = 0));
                 return super.validateOrder(...arguments);
             }
         } else {
@@ -148,6 +153,8 @@ patch(PaymentScreen.prototype, {
             });
             const paylaterPayment = order.addPaymentline(paylaterPaymentMethod);
             paylaterPayment.setAmount(-change);
+            const depositLines = order.lines.filter((l) => l.isDepositLine());
+            depositLines.forEach((line) => (line.qty = 0));
             return super.validateOrder(...arguments);
         }
     },
@@ -160,5 +167,13 @@ patch(PaymentScreen.prototype, {
         if (hasCustomerAccountAsPaymentMethod && partner.total_due !== undefined) {
             this.pos.refreshTotalDueOfPartner(partner);
         }
+    },
+    getLineToRemove() {
+        return this.currentOrder.lines.filter(
+            (line) =>
+                line.product_id.uom_id.isZero(line.qty) &&
+                !line.isSettleDueLine() &&
+                !line.isSettleInvoiceLine()
+        );
     },
 });

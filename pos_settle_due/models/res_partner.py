@@ -5,11 +5,45 @@ from odoo import fields, models, api
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
+    pos_orders_amount_due = fields.Float(string="Sum of customers PoS orders's due amount", compute="_compute_pos_orders_amount_due")
+    invoices_amount_due = fields.Float(string="Sum of customers's invoice due amount", compute="_compute_invoices_amount_due")
+
+    def _compute_pos_orders_amount_due(self):
+        commercial_partner_ids = {p.id: p.commercial_partner_id.id for p in self}
+        # Fetch the total sum of 'customer_due_total' grouped by 'commercial_partner_id'
+        pos_orders = self.env['pos.order']._read_group(
+            domain=[
+                ('commercial_partner_id', 'in', set(commercial_partner_ids.values())),
+                ('state', 'in', ['paid', 'done'])
+            ],
+            groupby=['commercial_partner_id'],
+            aggregates=['customer_due_total:sum']
+        )
+
+        due_map = {order[0].id: order[1] for order in pos_orders}
+        for partner in self:
+            partner.pos_orders_amount_due = due_map.get(commercial_partner_ids[partner.id], 0.0)
+
+    def _compute_invoices_amount_due(self):
+        commercial_partner_ids = {p.id: p.commercial_partner_id.id for p in self}
+        # Fetch the sum of 'pos_amount_unsettled' of unpaid invoices grouped by 'commercial_partner_id'
+        invoices = self.env['account.move']._read_group(
+            domain=[('commercial_partner_id', 'in', set(commercial_partner_ids.values())),
+                    ('state', '=', 'posted'),
+                    ('payment_state', 'in', ('not_paid', 'partial')),
+                    ('move_type', 'in', self.env['account.move'].get_sale_types())],
+            groupby=['commercial_partner_id'],
+            aggregates=['pos_amount_unsettled:sum']
+        )
+
+        due_map = {inv[0].id: inv[1] for inv in invoices}
+        for partner in self:
+            partner.invoices_amount_due = due_map.get(commercial_partner_ids[partner.id], 0.0)
 
     def get_total_due(self, config_id):
         config = self.env['pos.config'].browse(config_id)
         pos_payments = self.env['pos.order'].search([
-            ('partner_id', 'in', self.get_company_partner_ids()), ('state', '=', 'paid'),
+            ('commercial_partner_id', '=', self.commercial_partner_id.id), ('state', '=', 'paid'),
             ('session_id.state', '!=', 'closed')]).mapped('payment_ids')
         total_settled = sum(pos_payments.filtered_domain(
             [('payment_method_id.type', '=', 'pay_later')]).mapped('amount'))
@@ -30,23 +64,6 @@ class ResPartner(models.Model):
             'res.partner': [partner],
         }
 
-    def get_company_partner_ids(self):
-        self.ensure_one()
-        if self.is_company:
-            return self.child_ids.ids + [self.id]
-        elif self.parent_id:
-            return self.parent_id.child_ids.ids + [self.parent_id.id]
-        else:
-            return [self.id]
-
-    def get_partner_settle_details(self):
-        partner_list = self.get_company_partner_ids()
-        count_order_to_settle = self.env['pos.order'].search_count([
-            ('partner_id', 'in', partner_list),
-            ('customer_due_total', '>', 0)
-        ])
-        return partner_list, count_order_to_settle
-
     def get_all_total_due(self, config_id):
         due_amounts = []
         for partner in self:
@@ -57,7 +74,7 @@ class ResPartner(models.Model):
     def _load_pos_data_fields(self, config_id):
         params = super()._load_pos_data_fields(config_id)
         if self.env.user.has_group('account.group_account_readonly') or self.env.user.has_group('account.group_account_invoice'):
-            params += ['credit_limit', 'total_due', 'use_partner_credit_limit']
+            params += ['credit_limit', 'total_due', 'use_partner_credit_limit', 'pos_orders_amount_due', 'invoices_amount_due', 'commercial_partner_id']
         return params
 
     def _post_read_pos_data(self, data):
