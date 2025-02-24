@@ -287,15 +287,27 @@ def _guess_qweb_variables(tree, report, qcontext):
         if "t-set" in node.attrib and "t-value" in node.attrib:
             new_var = node.get("t-set")
             expr = node.get("t-value")
-            try:
-                evalled = qweb_like_eval(expr, qcontext)
-                if new_var not in qcontext or not isinstance(evalled, type(qcontext[new_var])):
-                    keys_info[new_var] = {"type": "python"}
-                qcontext[new_var] = evalled
-            except OperationalError:
-                raise
-            except Exception: # pylint: disable=W0718,W0703
-                pass
+            tif = node.get("t-if")
+
+            should_set = True
+            if tif:
+                try:
+                    should_set = qweb_like_eval(tif, qcontext)
+                except OperationalError:
+                    raise
+                except Exception: # pylint: disable=W0718,W0703
+                    pass
+
+            if should_set:
+                try:
+                    evalled = qweb_like_eval(expr, qcontext)
+                    if new_var not in qcontext or not isinstance(evalled, type(qcontext[new_var])):
+                        keys_info[new_var] = {"type": "python"}
+                    qcontext[new_var] = evalled
+                except OperationalError:
+                    raise
+                except Exception: # pylint: disable=W0718,W0703
+                    pass
             apply_oe_context(node, qcontext, keys_info)
 
         if "t-attf-class" in node.attrib or "t-att-class" in node.attrib:
