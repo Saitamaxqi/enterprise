@@ -372,6 +372,12 @@ class L10n_Nl_ReportsSbrTaxReportWizard(models.TransientModel):
         report_file = xbrl_data['file_content']
 
         serv_root_cert = self.env.company._l10n_nl_get_server_root_certificate_bytes()
+        if not self.env.company.sudo().l10n_nl_reports_sbr_cert_id.pem_certificate or not self.env.company.sudo().l10n_nl_reports_sbr_cert_id.private_key_id.pem_key:
+            raise RedirectWarning(
+                _("The certificate or the private key is missing. Please upload it in the Accounting Settings first."),
+                self.env.ref('account.action_account_config').id,
+                _("Go to the Accounting Settings"),
+            )
         certificate = base64.b64decode(self.env.company.sudo().l10n_nl_reports_sbr_cert_id.pem_certificate)
         private_key = base64.b64decode(self.env.company.sudo().l10n_nl_reports_sbr_cert_id.private_key_id.pem_key)
         try:
