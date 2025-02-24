@@ -403,6 +403,12 @@ export class DocumentService {
                                 formData.append(key.replace("default_", ""), context[key]);
                             }
                         }
+                        if (context.allowed_company_ids) {
+                            formData.append(
+                                "allowed_company_ids",
+                                JSON.stringify(context.allowed_company_ids)
+                            );
+                        }
                     }
                 },
                 displayErrorNotification: false,

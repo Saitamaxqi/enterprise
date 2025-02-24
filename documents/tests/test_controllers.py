@@ -931,6 +931,54 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.text, '{"jsonrpc": "2.0", "id": null, "result": {}}')
 
+    def test_upload_internal_multi_company_defaults(self):
+        main_company = self.env.ref('base.main_company')
+        comp = self.env['res.company'].create({'name': 'Company 2'})
+        company_field = self.env['ir.model.fields'].search([('model', '=', 'documents.document'), ('name', '=', 'company_id')], limit=1)
+        self.env['ir.default'].create([
+            {
+                'field_id': company_field.id,
+                'company_id': comp.id,
+                'json_value': comp.id,
+            },
+            {
+                'field_id': company_field.id,
+                'company_id': main_company.id,
+                'json_value': main_company.id,
+            }
+        ])
+        
+        self.user_admin.write({'company_ids': [Command.link(comp.id)]})
+        # assert admin has access to both companies
+        self.assertEqual(self.user_admin.company_ids, main_company | comp)
+
+        self.authenticate('admin', 'admin')
+        with RecordCapturer(self.env['documents.document'], []) as record_capture:
+            res = self.url_open(f'/documents/upload',
+                data={
+                    'csrf_token': http.Request.csrf_token(self),
+                    'allowed_company_ids': f'[{comp.id}]',
+                },
+                files={'ufile': ('testingfile.txt', BytesIO(b"Hello"), 'text/plain')},
+                allow_redirects=False,
+            )
+            res.raise_for_status()
+        document1 = record_capture.records.ensure_one()
+        self.assertEqual(document1.company_id, comp)
+        
+        with RecordCapturer(self.env['documents.document'], []) as record_capture:
+            res = self.url_open(f'/documents/upload',
+                data={
+                    'csrf_token': http.Request.csrf_token(self),
+                    'allowed_company_ids': f'[{main_company.id}]',
+                },
+                files={'ufile': ('testingfile2.txt', BytesIO(b"Hello2"), 'text/plain')},
+                allow_redirects=False,
+            )
+            res.raise_for_status()
+        document2 = record_capture.records.ensure_one()
+        self.assertEqual(document2.company_id, main_company)
+
 
 @tagged('post_install', '-at_install')
 class TestCaseSecurityRoutes(HttpCaseWithUserDemo):

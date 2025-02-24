@@ -536,6 +536,7 @@ class ShareRoute(http.Controller):
         partner_id='',
         res_id='',
         res_model='',
+        allowed_company_ids='',
     ):
         """
         Replace an existing document or create new ones.
@@ -549,6 +550,8 @@ class ShareRoute(http.Controller):
         :param owner_id, partner_id, res_id, res_model: field values
             when creating new documents, for internal users only
         """
+        if allowed_company_ids:
+            request.update_context(allowed_company_ids=json.loads(allowed_company_ids))
         is_internal_user = request.env.user._is_internal()
         if is_internal_user and not access_token:
             document_sudo = request.env['documents.document'].sudo()
