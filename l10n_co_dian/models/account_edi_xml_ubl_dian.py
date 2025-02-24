@@ -776,10 +776,7 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
 
     def _dian_uom_code(self, line):
         """ Colombia follows a standard that very much resembles the UNSPSC """
-        if line.product_uom_id != self.env.ref('uom.product_uom_unit'):
-            code = line.product_uom_id.l10n_co_edi_ubl
-        else:
-            code = '94'
+        code = line.product_uom_id.l10n_co_edi_ubl or '94'
         return code
 
     def _dian_tax_totals(self, move, taxes_vals, withholding):

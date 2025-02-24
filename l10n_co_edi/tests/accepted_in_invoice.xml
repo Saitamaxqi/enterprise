@@ -161,7 +161,7 @@
             <ITE>
                     <ITE_1>1</ITE_1>
                     <ITE_2>1.0</ITE_2>
-                    <ITE_3>S7</ITE_3>
+                    <ITE_3>94</ITE_3>
                     <ITE_4>100.00</ITE_4>
                     <ITE_5>COP</ITE_5>
                     <ITE_6>100.00</ITE_6>
@@ -169,7 +169,7 @@
                     <ITE_8>[P0000] product_a</ITE_8>
                     <ITE_9>[P0000] product_a</ITE_9>
                     <ITE_12>1.0</ITE_12>
-                    <ITE_13>S7</ITE_13>
+                    <ITE_13>94</ITE_13>
                     <FCB>
                         <FCB_1>2020-08-27</FCB_1>
                         <FCB_2>1</FCB_2>
@@ -214,7 +214,7 @@
             </ITE><ITE>
                     <ITE_1>2</ITE_1>
                     <ITE_2>1.0</ITE_2>
-                    <ITE_3>S7</ITE_3>
+                    <ITE_3>94</ITE_3>
                     <ITE_4>200.00</ITE_4>
                     <ITE_5>COP</ITE_5>
                     <ITE_6>200.00</ITE_6>
@@ -222,7 +222,7 @@
                     <ITE_8>[P0000] product_a</ITE_8>
                     <ITE_9>[P0000] product_a</ITE_9>
                     <ITE_12>1.0</ITE_12>
-                    <ITE_13>S7</ITE_13>
+                    <ITE_13>94</ITE_13>
                     <FCB>
                         <FCB_1>2020-08-27</FCB_1>
                         <FCB_2>1</FCB_2>
@@ -267,7 +267,7 @@
             </ITE><ITE>
                     <ITE_1>3</ITE_1>
                     <ITE_2>1.0</ITE_2>
-                    <ITE_3>S7</ITE_3>
+                    <ITE_3>94</ITE_3>
                     <ITE_4>200.00</ITE_4>
                     <ITE_5>COP</ITE_5>
                     <ITE_6>200.00</ITE_6>
@@ -275,7 +275,7 @@
                     <ITE_8>[P0000] product_a</ITE_8>
                     <ITE_9>[P0000] product_a</ITE_9>
                     <ITE_12>1.0</ITE_12>
-                    <ITE_13>S7</ITE_13>
+                    <ITE_13>94</ITE_13>
                     <FCB>
                         <FCB_1>2020-08-27</FCB_1>
                         <FCB_2>1</FCB_2>
@@ -340,7 +340,7 @@
             </ITE><ITE>
                     <ITE_1>4</ITE_1>
                     <ITE_2>1.0</ITE_2>
-                    <ITE_3>S7</ITE_3>
+                    <ITE_3>94</ITE_3>
                     <ITE_4>400.00</ITE_4>
                     <ITE_5>COP</ITE_5>
                     <ITE_6>400.00</ITE_6>
@@ -348,7 +348,7 @@
                     <ITE_8>[P0000] product_a</ITE_8>
                     <ITE_9>[P0000] product_a</ITE_9>
                     <ITE_12>1.0</ITE_12>
-                    <ITE_13>S7</ITE_13>
+                    <ITE_13>94</ITE_13>
                     <FCB>
                         <FCB_1>2020-08-27</FCB_1>
                         <FCB_2>1</FCB_2>
@@ -393,7 +393,7 @@
             </ITE><ITE>
                     <ITE_1>5</ITE_1>
                     <ITE_2>1.0</ITE_2>
-                    <ITE_3>S7</ITE_3>
+                    <ITE_3>94</ITE_3>
                     <ITE_4>500.00</ITE_4>
                     <ITE_5>COP</ITE_5>
                     <ITE_6>500.00</ITE_6>
@@ -401,7 +401,7 @@
                     <ITE_8>[P0000] product_a</ITE_8>
                     <ITE_9>[P0000] product_a</ITE_9>
                     <ITE_12>1.0</ITE_12>
-                    <ITE_13>S7</ITE_13>
+                    <ITE_13>94</ITE_13>
                     <FCB>
                         <FCB_1>2020-08-27</FCB_1>
                         <FCB_2>1</FCB_2>

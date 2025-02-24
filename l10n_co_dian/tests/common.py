@@ -136,7 +136,6 @@ class TestCoDianCommon(AccountTestInvoicingCommon):
         # Other
         cls.product_a.barcode = "562438192"
         cls.product_b.default_code = "prod_b"
-        cls.env.ref('uom.product_uom_dozen').l10n_co_edi_ubl = "DPC"
 
     @classmethod
     def _create_move(cls, **kwargs):

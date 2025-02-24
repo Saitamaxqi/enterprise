@@ -18,6 +18,7 @@
         'data/res.city.csv',
         'data/res.country.state.csv',
         'data/res_country_data.xml',
+        'data/uom_data.xml',
         'views/res_company_views.xml',
         'views/account_invoice_views.xml',
         'views/account_tax_views.xml',

@@ -133,7 +133,6 @@ class TestCoEdiCommon(AccountEdiTestCommon):
         })
 
         uom = cls.env.ref('uom.product_uom_unit')
-        uom.l10n_co_edi_ubl = 'S7'
 
         cls.product_a.write({
             'default_code': 'P0000',
