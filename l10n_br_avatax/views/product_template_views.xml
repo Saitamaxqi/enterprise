@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="product.product_template_form_view"/>
             <field name="arch" type="xml">
                 <group name="sale" position="after">
-                    <group name="l10n_br_avatax_summary" string="Brazil Accounting" invisible="'BR' not in fiscal_country_codes or type == 'service'">
+                    <group name="l10n_br_avatax_summary" string="Brazil Accounting" invisible="'BR' not in fiscal_country_codes">
                         <field name="l10n_br_cest_code" invisible="'BR' not in fiscal_country_codes or type == 'service'"/>
                         <field name="l10n_br_ncm_code_id" invisible="'BR' not in fiscal_country_codes"/>
                         <field name="l10n_br_source_origin" invisible="'BR' not in fiscal_country_codes or type == 'service'"/>
