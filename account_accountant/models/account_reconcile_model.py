@@ -570,4 +570,7 @@ class AccountReconcileModel(models.Model):
         # Manual fallback applied for non-POSIX systems where this key is disabled (set to None).
         cron_limit_time = tools.config['limit_time_real_cron'] or -1
         limit_time = cron_limit_time if 0 < cron_limit_time < 180 else 180
-        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines(limit_time=limit_time)
+        # As this is quite an automated action leveraging the reconciliation.model that were setup,
+        # we want the invoice to be marked as paid in the chatter by Odoobot and not by the user clicking on the button
+        odoobot_user = self.env.ref('base.user_root')
+        self.env['account.bank.statement.line'].with_user(odoobot_user)._cron_try_auto_reconcile_statement_lines(limit_time=limit_time)
