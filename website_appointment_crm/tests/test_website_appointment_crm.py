@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.addons.appointment_crm.tests.test_appointment_crm import AppointmentCRMTest
+from odoo.addons.appointment_crm.tests.test_appointment_crm import AppointmentCRMTestCommon
 from odoo.addons.website.tests.test_website_visitor import MockVisitor
 
 
-class WebsiteAppointmentCRMTest(AppointmentCRMTest, MockVisitor):
+class WebsiteAppointmentCRMTest(AppointmentCRMTestCommon, MockVisitor):
     @classmethod
     def setUpClass(cls):
         super(WebsiteAppointmentCRMTest, cls).setUpClass()

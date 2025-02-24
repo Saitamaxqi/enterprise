@@ -8,7 +8,7 @@ from odoo.addons.crm.tests.common import TestCrmCommon
 from odoo.addons.mail.tests.common import mail_new_test_user
 
 
-class AppointmentCRMTest(TestCrmCommon):
+class AppointmentCRMTestCommon(TestCrmCommon):
     @classmethod
     def _create_appointment_type(cls, **kwargs):
         default = {
@@ -24,7 +24,7 @@ class AppointmentCRMTest(TestCrmCommon):
 
     @classmethod
     def setUpClass(cls):
-        super(AppointmentCRMTest, cls).setUpClass()
+        super(AppointmentCRMTestCommon, cls).setUpClass()
         cls.user_employee = mail_new_test_user(
             cls.env, login='user_employee',
             name='Eglantine Employee', email='eglantine.employee@test.example.com',
@@ -54,6 +54,7 @@ class AppointmentCRMTest(TestCrmCommon):
     def _create_meetings_from_appointment_type(self, appointment_type, user, contact, **kwargs):
         return self.env['calendar.event'].create(self._prepare_event_value(appointment_type, user, contact, **kwargs))
 
+class AppointmentCRMTest(AppointmentCRMTestCommon):
     @users('user_employee')
     def test_create_opportunity(self):
         """ Test the creation of a lead based on the creation of an event
