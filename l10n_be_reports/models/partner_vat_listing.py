@@ -58,7 +58,7 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
             'file_export_type': _('XML')
         }]
 
-        self._enable_export_buttons_for_common_vat_groups_in_branches(options)
+        options['enable_export_buttons_for_common_vat_in_branches'] = True
 
     def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
         warning_partners = self._get_warning_partners(report, options)

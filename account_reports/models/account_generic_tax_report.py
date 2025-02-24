@@ -26,7 +26,7 @@ class AccountTaxReportHandler(models.AbstractModel):
         }
 
         options['buttons'].append({'name': _('Closing Entry'), 'action': 'action_periodic_vat_entries', 'sequence': 110, 'always_show': True})
-        self._enable_export_buttons_for_common_vat_groups_in_branches(options)
+        options['enable_export_buttons_for_common_vat_in_branches'] = True
 
         day, month = self.env.company._get_tax_closing_start_date_attributes(report)
         periodicity = self.env.company._get_tax_periodicity(report)
