@@ -258,6 +258,9 @@ export class TypeWidgetProperties extends Component {
         if (property.type === "string") {
             value = JSON.stringify(value);
         }
+        if (property.type === "boolean" && value !== undefined) {
+            value = !!value;
+        }
         if (value === undefined && property.default) {
             value = property.default;
         }
