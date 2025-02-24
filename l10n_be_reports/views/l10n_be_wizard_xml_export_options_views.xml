@@ -10,11 +10,11 @@
                         Choose option(s) before exporting XML:
                     </div>
                     <group>
-                         <group>
-                             <field name="ask_restitution"/>
-                             <field name="client_nihil"/>
-                             <field name="comment"/>
-                         </group>
+                        <group>
+                            <field name="ask_restitution"/>
+                            <field name="client_nihil"/>
+                            <field name="comment"/>
+                        </group>
                     </group>
                     <footer>
                         <button string='Export XML' name="print_xml" type="object" class="btn-primary" data-hotkey="q"/>

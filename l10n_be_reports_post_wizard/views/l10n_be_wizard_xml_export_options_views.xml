@@ -9,7 +9,7 @@
             <field name="mode">primary</field>
             <field name="arch" type="xml">
                 <xpath expr="/form/div" position="replace">
-                    <div>Posting this entry will generate an XML export; please choose option(s)</div>
+                    <div class="mb-4">Posting this entry will generate an XML export; please choose option(s)</div>
                 </xpath>
                 <button name="print_xml" position="attributes">
                     <attribute name="name">action_resume_post</attribute>

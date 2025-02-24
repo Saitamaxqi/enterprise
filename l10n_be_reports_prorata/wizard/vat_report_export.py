@@ -10,7 +10,7 @@ class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
 
     show_prorata = fields.Boolean(compute="_compute_show_prorata")
     is_prorata_necessary = fields.Boolean(string="Prorata")
-    prorata = fields.Integer("Definitive pro rata")
+    prorata = fields.Integer("Definitive Prorata")
     prorata_year = fields.Char(
         string="Prorata Year",
         compute="_compute_prorata_year", store=True, readonly=False,
@@ -19,13 +19,13 @@ class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
     # Currently, only Integer are accepted, but xsd says float are valid, so maybe it will be accepted later
     prorata_at_100 = fields.Float("Actual Use at 100%")
     prorata_at_0 = fields.Float("Actual Use at 0%")
-    special_prorata_deduction = fields.Float("% Special pro rata deduction")
-    special_prorata_1 = fields.Float("Special pro rata 1")
-    special_prorata_2 = fields.Float("Special pro rata 2")
-    special_prorata_3 = fields.Float("Special pro rata 3")
-    special_prorata_4 = fields.Float("Special pro rata 4")
-    special_prorata_5 = fields.Float("Special pro rata 5")
-    submit_more = fields.Boolean("I want to submit more than 5 specific pro rata")
+    special_prorata_deduction = fields.Float("Special Prorata Deduction %")
+    special_prorata_1 = fields.Float("Special Prorata 1")
+    special_prorata_2 = fields.Float("Special Prorata 2")
+    special_prorata_3 = fields.Float("Special Prorata 3")
+    special_prorata_4 = fields.Float("Special Prorata 4")
+    special_prorata_5 = fields.Float("Special Prorata 5")
+    submit_more = fields.Boolean("I want to submit more than 5 specific prorata")
 
     @api.depends('create_date')
     def _compute_show_prorata(self):

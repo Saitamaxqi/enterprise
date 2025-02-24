@@ -47,7 +47,7 @@ msgstr ""
 
 #. module: l10n_be_reports_prorata
 #: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__prorata
-msgid "Definitive pro rata"
+msgid "Definitive Prorata"
 msgstr "Prorata définitif"
 
 #. module: l10n_be_reports_prorata
@@ -86,27 +86,27 @@ msgstr "Montrer le Prorata"
 
 #. module: l10n_be_reports_prorata
 #: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__special_prorata_1
-msgid "Special pro rata 1"
+msgid "Special Prorata 1"
 msgstr "Prorata spécial 1"
 
 #. module: l10n_be_reports_prorata
 #: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__special_prorata_2
-msgid "Special pro rata 2"
+msgid "Special Prorata 2"
 msgstr "Prorata spécial 2"
 
 #. module: l10n_be_reports_prorata
 #: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__special_prorata_3
-msgid "Special pro rata 3"
+msgid "Special Prorata 3"
 msgstr "Prorata spécial 3"
 
 #. module: l10n_be_reports_prorata
 #: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__special_prorata_4
-msgid "Special pro rata 4"
+msgid "Special Prorata 4"
 msgstr "Prorata spécial 4"
 
 #. module: l10n_be_reports_prorata
 #: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__special_prorata_5
-msgid "Special pro rata 5"
+msgid "Special Prorata 5"
 msgstr "Prorata spécial 5"
 
 #. module: l10n_be_reports_prorata
@@ -129,3 +129,13 @@ msgstr "La somme des utilisations réelles doit etre de 100%"
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports_prorata.vat_export_prorata
 msgid "true"
 msgstr "true"
+
+#. module: l10n_be_reports_prorata
+#: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__special_prorata_deduction
+msgid "Special Prorata Deduction %"
+msgstr "Déduction spéciale au prorata %"
+
+#. module: l10n_be_reports_prorata
+#: model:ir.model.fields,field_description:l10n_be_reports_prorata.field_l10n_be_reports_periodic_vat_xml_export__submit_more
+msgid "I want to submit more than 5 specific prorata"
+msgstr "Je souhaite soumettre plus de 5 prorata spécifiques"
