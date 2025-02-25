@@ -59,16 +59,16 @@ export const DocumentsRendererMixin = (component) =>
                 typeof folder.folder_id === "object"
                     ? folder.folder_id
                     : folderData?.length > 1 && typeof folderData[1].id === "number"
-                        ? [folderData[1].id, folderData[1].display_name]
-                        : false;
+                    ? [folderData[1].id, folderData[1].display_name]
+                    : false;
 
             const data = Object.assign({}, folder, {
                 folder_id: folderId,
                 name: folder.display_name,
                 type: "folder",
-                file_size: (this.props.list.model.fileSize || 0) * 1e6, // from MB to B to be precise on single doc.
+                file_size: (this.props.list?.model.fileSize || 0) * 1e6, // from MB to B to be precise on single doc.
             });
-            const config =  {...this.env.model.config, resId: data.id}
+            const config = { ...this.env.model.config, resId: data.id };
             const record = new this.env.model.constructor.Record(this.env.model, config, data);
             record.isContainer = true;
 
@@ -111,6 +111,9 @@ export const DocumentsRendererMixin = (component) =>
          * Number of documents in the current (container) folder
          */
         getNbViewItems() {
+            if (!this.props.list) {
+                return this.props.records.length;
+            }
             return this.props.list.model.useSampleModel ? 0 : this.props.list.count;
         }
 
@@ -120,6 +123,13 @@ export const DocumentsRendererMixin = (component) =>
         get targetRecords() {
             return this.chatterState.previewedDocument
                 ? [this.chatterState.previewedDocument.record]
-                : this.props.list.selection;
+                : this.selection;
+        }
+
+        get selection() {
+            if (!this.props.list) {
+                return this.props.records.filter((r) => r.selected);
+            }
+            return this.props.list.selection;
         }
     };

@@ -77,7 +77,8 @@ export class DocumentService {
             user.hasGroup("base.group_erp_manager"),
             user.hasGroup("base.group_user"),
         ]);
-        const initialState = this.userIsInternal && JSON.parse(localStorage.getItem("documentsChatterVisible"));
+        const initialState =
+            this.userIsInternal && JSON.parse(localStorage.getItem("documentsChatterVisible"));
         this.chatterState = reactive({ visible: initialState }, () => {
             localStorage.setItem("documentsChatterVisible", this.chatterState.visible);
         });
@@ -256,7 +257,7 @@ export class DocumentService {
             if (records.nonMovableRecordIds.length) {
                 this.notification.add(
                     _t("At least one document could not be moved due to access rights."),
-                    { type: "warning" },
+                    { type: "warning" }
                 );
             }
         }
@@ -269,7 +270,7 @@ export class DocumentService {
         if (!records.movableRecordIds.length) {
             return this.notification.add(
                 _t("You can't move this/those folder(s) to the Company root."),
-                { type: "warning" },
+                { type: "warning" }
             );
         }
         await this.orm.call("documents.document", "action_set_as_company_root", [
@@ -280,7 +281,7 @@ export class DocumentService {
                 ? _t("The document/folder has been moved to the Company root.")
                 : _t(
                       "%s documents/folders have been moved to the Company root.",
-                      records.movableRecordIds.length,
+                      records.movableRecordIds.length
                   );
         if (records.nonMovableRecordIds.length) {
             message += _t("<br/>At least one document hasn't been moved.");
@@ -380,7 +381,7 @@ export class DocumentService {
 
         if (this.chatterState.visible) {
             this.observer = new MutationObserver(() => {
-                const chatterContainer = document.querySelector('.o-mail-Thread');
+                const chatterContainer = document.querySelector(".o-mail-Thread");
                 if (chatterContainer && this.env.isSmall) {
                     chatterContainer.scrollIntoView({ behavior: "smooth" });
                     this.observer.disconnect();
@@ -405,7 +406,12 @@ export class DocumentService {
                     this.observer.disconnect();
                 }
             });
-            this.observer.observe(document.querySelector('.o_documents_content'), { childList: true, subtree: true });
+            if (document.querySelector(".o_documents_content")) {
+                this.observer.observe(document.querySelector(".o_documents_content"), {
+                    childList: true,
+                    subtree: true,
+                });
+            }
         }
     }
 
