@@ -5,12 +5,12 @@ from odoo.fields import Command
 class Account_Edi_Proxy_ClientUser(models.Model):
     _inherit = 'account_edi_proxy_client.user'
 
-    def _peppol_import_invoice(self, attachment, partner_endpoint, peppol_state, uuid):
+    def _peppol_import_invoice(self, attachment, partner_endpoint, peppol_state, uuid, journal=None):
         # EXTENDS account_peppol
         """Save new documents in the Documents app, when a folder has been set on the company.
         """
         self.ensure_one()
-        res = super()._peppol_import_invoice(attachment, partner_endpoint, peppol_state, uuid)
+        res = super()._peppol_import_invoice(attachment, partner_endpoint, peppol_state, uuid, journal=journal)
 
         if self.company_id.peppol_reception_mode == 'documents':
             document = self.env['documents.document'].create({
