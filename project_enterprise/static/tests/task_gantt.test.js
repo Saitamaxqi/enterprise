@@ -49,6 +49,7 @@ class Task extends models.Model {
         relation: "stuff",
     });
     active = fields.Boolean({ default: true });
+    is_closed = fields.Boolean();
     project_id = fields.Many2one({
         string: "Project",
         relation: "project",
@@ -893,4 +894,26 @@ test("Schedule a task and verify its display in the gantt view", async () => {
         },
     ]);
     expect.verifySteps(["web_gantt_write"]);
+});
+
+test("Should open the list dialog with 'Open Tasks' filter on Gantt cell click", async () => {
+    Task._records.push(
+        { id: 4, name: "Task 4", is_closed: true },
+        { id: 5, name: "Task 5" },
+    );
+
+    await mountGanttView({
+        ...ganttViewParams,
+        searchViewArch: `
+                <search>
+                    <filter string="Open Tasks" name="open_tasks" domain="[('is_closed', '=', False)]"/>
+                </search>`
+            ,
+        groupBy: ["user_ids"],
+    });
+
+    await clickCell("10", "June 2021", "Jane Doe");
+    expect(".o_dialog").toHaveCount(1);
+    expect(".o_searchview_facet").toHaveCount(1, { message: "Open Tasks filter applied" });
+    expect('.o_data_row').toHaveCount(1, { message: "Only open task should appear" });
 });

@@ -30,7 +30,7 @@ export class TaskGanttModel extends GanttModel {
         if ("user_ids" in context && !context.user_ids) {
             delete context.user_ids;
         }
-        return context;
+        return { ...context, search_default_open_tasks: true };
     }
 
     toggleHighlightPlannedFilter(ids) {
