@@ -10,7 +10,6 @@ import {
 import { loadBundle } from "@web/core/assets";
 import { ensureJQuery } from "@web/core/ensure_jquery";
 import { _t } from "@web/core/l10n/translation";
-import { rpc } from "@web/core/network/rpc";
 import { omit } from "@web/core/utils/objects";
 import { usePopover } from "@web/core/popover/popover_hook";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
@@ -39,6 +38,8 @@ import { QWebTablePlugin } from "./qweb_table_plugin";
 import { visitNode } from "../utils";
 import { TablePlugin } from "@html_editor/main/table/table_plugin";
 import { withSequence } from "@html_editor/utils/resource";
+import { ReportRecordNavigation } from "../report_editor_xml/report_record_navigation";
+import { CheckBox } from "@web/core/checkbox/checkbox";
 
 class __Record extends _Record.components._Record {
     setup() {
@@ -162,6 +163,7 @@ class UndoRedo extends Component {
     static template = "web_studio.ReportEditorWysiwyg.UndoRedo";
     static props = {
         state: Object,
+        className: { type: String, optional: true },
     };
 }
 
@@ -209,6 +211,8 @@ export class ReportEditorWysiwyg extends Component {
         BooleanField,
         UndoRedo,
         ReportEditorIframe,
+        ReportRecordNavigation,
+        CheckBox,
     };
     static props = {
         paperFormatStyle: String,
@@ -331,6 +335,7 @@ export class ReportEditorWysiwyg extends Component {
     onIframeLoaded({ iframeRef }) {
         if (this.editor) {
             this.editor.destroy(true);
+            this.editor = null;
         }
         this.iframeRef = iframeRef;
         const doc = iframeRef.el.contentDocument;
@@ -347,7 +352,7 @@ export class ReportEditorWysiwyg extends Component {
                 });
             });
         }
-        if (!this.reportEditorModel._errorMessage) {
+        if (!this.reportEditorModel._errorMessage && !this.reportEditorModel.inPreview) {
             this.editor = this.instantiateEditor({ editable: doc.querySelector("#wrapwrap") });
         }
         this.reportEditorModel.setInEdition(false);
@@ -679,31 +684,6 @@ export class ReportEditorWysiwyg extends Component {
         });
     }
 
-    async printPreview() {
-        const model = this.reportEditorModel;
-        await this.save();
-        const recordId = model.reportEnv.currentId || model.reportEnv.ids.find((i) => !!i) || false;
-        if (!recordId) {
-            this.notification.add(
-                _t(
-                    "There is no record on which this report can be previewed. Create at least one record to preview the report."
-                ),
-                {
-                    type: "danger",
-                    title: _t("Report preview not available"),
-                }
-            );
-            return;
-        }
-
-        const action = await rpc("/web_studio/print_report", {
-            record_id: recordId,
-            report_id: model.editedReportId,
-        });
-        this.reportEditorModel.renderKey++;
-        return this.action.doAction(action, { clearBreadcrumbs: true });
-    }
-
     async resetReport() {
         const state = reactive({ includeHeaderFooter: true });
         this.addDialog(ResetConfirmationPopup, {
@@ -741,5 +721,15 @@ export class ReportEditorWysiwyg extends Component {
     async editSources() {
         await this.save();
         this.reportEditorModel.mode = "xml";
+    }
+
+    async togglePreview(toValue) {
+        if (toValue) {
+            const saved = await this.save();
+            if (!saved) {
+                await this.reportEditorModel.loadReportHtml();
+            }
+        }
+        this.reportEditorModel.inPreview = toValue;
     }
 }

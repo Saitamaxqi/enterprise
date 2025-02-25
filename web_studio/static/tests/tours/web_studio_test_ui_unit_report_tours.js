@@ -467,7 +467,11 @@ const steps = [];
 registry.category("web_tour.tours").add("web_studio.test_print_preview", {
     steps: () => [
         {
-            trigger: ".o_web_studio_sidebar button[name='report_print_preview']",
+            trigger: ".o-web-studio-report-editor-wysiwyg input[name='preview_mode']",
+            run: "click",
+        },
+        {
+            trigger: ".o-web-studio-report-editor-wysiwyg button[name='report_print_preview']",
             run(helpers) {
                 downloadProm = new Promise((resolve) => {
                     const unpatch = patch(download, {

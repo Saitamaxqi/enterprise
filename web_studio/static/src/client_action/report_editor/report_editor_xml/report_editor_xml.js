@@ -9,6 +9,7 @@ import { ReportEditorIframe } from "../report_editor_iframe";
 import { localization } from "@web/core/l10n/localization";
 import { TranslationDialog } from "@web/views/fields/translation_dialog";
 import { View } from "@web/views/view";
+import { CheckBox } from "@web/core/checkbox/checkbox";
 
 class ReportResourceEditor extends XmlResourceEditor {
     static props = { ...XmlResourceEditor.props, slots: Object };
@@ -85,6 +86,7 @@ export class ReportEditorXml extends Component {
         ReportEditorIframe,
         TranslationButton,
         View: _View,
+        CheckBox,
     };
     static template = "web_studio.ReportEditorXml";
     static props = {
@@ -136,15 +138,17 @@ export class ReportEditorXml extends Component {
     getDefaultResource(resourcesOptions, mainKey) {
         let mainResource;
         if (mainKey) {
-            mainResource = resourcesOptions.find(opt => opt.resource.key === mainKey);
+            mainResource = resourcesOptions.find((opt) => opt.resource.key === mainKey);
         }
         if (mainResource) {
-            const studioExtension = resourcesOptions.find(opt => {
+            const studioExtension = resourcesOptions.find((opt) => {
                 const key = opt.resource.key;
                 const parentId = opt.resource.inherit_id && opt.resource.inherit_id[0];
-                return key.includes("web_studio.report_editor_customization") &&
-                    parentId === mainResource.resource.id;
-            })
+                return (
+                    key.includes("web_studio.report_editor_customization") &&
+                    parentId === mainResource.resource.id
+                );
+            });
             return studioExtension || mainResource;
         }
     }

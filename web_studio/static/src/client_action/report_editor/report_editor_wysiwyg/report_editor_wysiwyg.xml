@@ -3,8 +3,22 @@
 <t t-name="web_studio.ReportEditorWysiwyg">
     <t t-call="web_studio.ReportEditorWysiwyg.Sidebar" />
     <div class="o-web-studio-report-editor-wysiwyg h-100 w-100 position-relative">
-      <UndoRedo state="undoRedoState"/>
-      <ReportEditorIframe iframeKey="reportEditorModel.reportQweb || ''" iframeSource="reportQweb" onIframeLoaded.bind="onIframeLoaded" />
+      <div class="position-absolute start-0 top-0 px-5 mt-4 w-100 d-flex flex-row" style="min-height:40px;">
+
+        <div class="d-flex flex-row gap-3 me-3">
+          <UndoRedo state="undoRedoState" className="reportEditorModel.inPreview ? 'opacity-0 pe-none' : ''"/>
+          <CheckBox onChange.alike="(value) => this.togglePreview(value)" value="reportEditorModel.inPreview" className="'align-content-center z-1'" name="'preview_mode'">
+              Preview
+          </CheckBox>
+        </div>
+
+        <div class="ms-auto z-1" t-if="reportEditorModel.inPreview">
+            <ReportRecordNavigation onWillPrint.bind="this.save" />
+        </div>
+      </div>
+
+      <t t-set="iframeKey" t-value="reportEditorModel.inPreview ? reportEditorModel.reportHtml : reportEditorModel.reportQweb || ''" />
+      <ReportEditorIframe iframeKey="iframeKey" iframeSource="reportEditorModel.inPreview ? reportEditorModel.reportHtml : reportQweb" onIframeLoaded.bind="onIframeLoaded" />
     </div>
 </t>
 
@@ -52,11 +66,6 @@
           <t t-set="printTooltip">
             <t t-if="!reportEditorModel.recordToDisplay">There is no record to preview</t>
           </t>
-          <button class="btn btn-secondary g-col-6 p-2" name="report_print_preview" t-on-click="printPreview" t-att-data-tooltip="printTooltip">
-            <i t-if="!reportEditorModel.recordToDisplay" class="fa fa-exclamation-triangle me-2" />
-            <i t-else="" class="fa fa-print me-2" />
-            Print preview
-          </button>
           <button class="btn btn-secondary g-col-6 p-2" t-if="env.debug" t-on-click="openReportFormView">
             <i class="fa fa-cog me-2" />More
           </button>
@@ -83,7 +92,7 @@
 
 <t t-name="web_studio.ReportEditorWysiwyg.UndoRedo">
   <t t-set="isActive" t-value="props.state.canUndo or props.state.canRedo" />
-  <div class="position-absolute top-0 start-0 ms-5 mt-4 rounded bg-white border border-2 d-flex flex-row o-web-studio-report-editor-undo-redo gap-2 align-items-center" t-att-class="{active: isActive}">
+  <div class="rounded bg-white border border-2 d-flex flex-row o-web-studio-report-editor-undo-redo align-items-center" t-attf-class="{{ isActive ? 'active' : '' }} {{ this.props.className }}">
     <button class="btn o_web_studio_undo_redo_button text-uppercase" t-attf-class="{{ !props.state.canUndo ? 'text-muted' : 'active' }}" t-on-click="props.state.undo">
       <i class="fa fa-undo me-1"/>Undo
     </button>

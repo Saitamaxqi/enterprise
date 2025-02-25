@@ -11,9 +11,20 @@
         </t>
     </XmlResourceEditor>
     <div class="h-100 w-100 position-relative overflow-hidden" t-if="!this.state.viewIdToDiff">
-        <div class="position-absolute top-0 end-0 me-5 mt-4" style="z-index: 1050;" >
-            <ReportRecordNavigation />
+        <div class="position-absolute start-0 top-0 px-5 mt-4 w-100 d-flex flex-row" style="min-height:40px;">
+
+            <div class="d-flex flex-row gap-3 me-3">
+                <div style="width: 180px;" />
+                <CheckBox value="reportEditorModel.inPreview" disabled="true" className="'align-content-center z-1'" name="'preview_mode'">
+                    Preview
+                </CheckBox>
+            </div>
+
+            <div class="ms-auto z-1" t-if="reportEditorModel.inPreview">
+                <ReportRecordNavigation onWillPrint.bind="this.save" />
+            </div>
         </div>
+
         <ReportEditorIframe iframeKey="reportEditorModel.reportHtml" iframeSource="reportEditorModel.reportHtml" onIframeLoaded.bind="onIframeLoaded" />
     </div>
     <div class="w-100 h-100 p-3 overflow-auto" t-if="this.state.viewIdToDiff">

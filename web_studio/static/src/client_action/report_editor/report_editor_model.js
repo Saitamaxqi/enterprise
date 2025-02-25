@@ -29,6 +29,7 @@ export class ReportEditorModel extends Reactive {
         super();
         this.debug = debug;
         this.bus = markRaw(new EventBus());
+        this._inPreview = false;
         this.mode = "wysiwyg";
         this.warningMessage = "";
         this._isDirty = false;
@@ -139,6 +140,14 @@ export class ReportEditorModel extends Reactive {
 
     get isInEdition() {
         return this._isInEdition;
+    }
+
+    get inPreview() {
+        return this._inPreview || this.mode === "xml";
+    }
+
+    set inPreview(bool) {
+        this._inPreview = bool;
     }
 
     get fullErrorDisplay() {
@@ -255,7 +264,7 @@ export class ReportEditorModel extends Reactive {
             );
         }
         if (!hasVerbatimToSave && !hasPartsToSave && !hasDataToSave) {
-            return;
+            return false;
         }
         if (!urgent) {
             this.setInEdition(true);
@@ -376,11 +385,7 @@ export class ReportEditorModel extends Reactive {
 }
 
 export function useReportEditorModel() {
-    const services = Object.fromEntries(
-        ["orm", "ui"].map((name) => {
-            return [name, useService(name)];
-        })
-    );
+    const services = Object.fromEntries(["orm", "ui"].map((name) => [name, useService(name)]));
     const env = useEnv();
     services.studio = { ...env.services.studio };
     services.unProtectedNotification = env.services.notification;
@@ -398,7 +403,7 @@ export function useReportEditorModel() {
     useEditorBreadcrumbs(crumb);
 
     onWillStart(() => reportEditorModel.loadReportEditor());
-    onWillDestroy(() => reportEditorModel.isDestroyed = true);
+    onWillDestroy(() => (reportEditorModel.isDestroyed = true));
 
     return useState(reportEditorModel);
 }
