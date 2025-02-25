@@ -70,8 +70,7 @@ export const preparationDisplayService = {
 registry.category("services").add("preparation_display", preparationDisplayService);
 
 /**
- *
- * @returns {ReturnType<typeof preparationDisplay.start>}
+ * @returns {PreparationDisplay}
  */
 export function usePreparationDisplay() {
     return useService("preparation_display");
