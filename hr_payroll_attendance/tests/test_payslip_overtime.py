@@ -30,6 +30,7 @@ class TestPayslipOvertime(HrWorkEntryAttendanceCommon):
         })
         cls.contract.structure_type_id = cls.struct_type
         cls.contract.hourly_wage = 100
+        cls.contract.overtime_from_attendance = True
         cls.company = cls.payslip.company_id
         
     def test_overtime_outside_period(self):

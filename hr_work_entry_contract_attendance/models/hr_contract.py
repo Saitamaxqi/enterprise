@@ -19,6 +19,7 @@ class HrContract(models.Model):
         selection_add=[('attendance', 'Attendances')],
         ondelete={'attendance': 'set default'},
     )
+    overtime_from_attendance = fields.Boolean("Extra hours", help="Add extra hours from attendances to the working entries")
 
     def _get_more_vals_attendance_interval(self, interval):
         result = super()._get_more_vals_attendance_interval(interval)
@@ -61,7 +62,7 @@ class HrContract(models.Model):
         ##################################
         #   CALENDAR BASED CONTRACTS     #
         ##################################
-        calendar_based_contracts = self.filtered(lambda c: c.work_entry_source == 'calendar')
+        calendar_based_contracts = self.filtered(lambda c: c.work_entry_source == 'calendar' and c.overtime_from_attendance)
         if not calendar_based_contracts:
             return mapped_intervals
 
@@ -84,15 +85,6 @@ class HrContract(models.Model):
             resource_id: WorkIntervals(list(intervals)) for resource_id, intervals in mapped_intervals.items()
         }
 
-        work_intervals_by_resource_day = defaultdict(lambda: defaultdict(list))
-        for resource_id, intervals in mapped_intervals.items():
-            if resource_id not in resource_ids:
-                continue
-            for interval in intervals:
-                start = interval[0]
-                day = (start.year, start.month, start.day)
-                work_intervals_by_resource_day[resource_id][day].append(interval)
-
         lunch_intervals_by_resource = self._get_lunch_intervals(start_dt, end_dt)
 
         for attendance in attendances:
@@ -109,6 +101,9 @@ class HrContract(models.Model):
                 and pl.date_from <= attendance.check_out \
                 and pl.date_to >= attendance.check_in)
             if public_holiday:
+                # Remove public holiday intervals overlapping with overtime attendances
+                # This makes it so the attendance is still counted later at [1]
+                # when we remove the work_intervals from overtimes
                 holiday_start = public_holiday[0].date_from.astimezone(tz)
                 holiday_end = public_holiday[0].date_to.astimezone(tz)
                 new_work_intervals = []
@@ -124,7 +119,7 @@ class HrContract(models.Model):
                             new_work_intervals.append((check_out_tz, end, calendar_attendance))
                 work_intervals = WorkIntervals(new_work_intervals)
             lunch_intervals = lunch_intervals_by_resource.get(resource.id, WorkIntervals([]))
-            overtime_intervals = attendance_intervals - work_intervals - lunch_intervals
+            overtime_intervals = attendance_intervals - work_intervals - lunch_intervals  # [1]
             if self.company_id.overtime_company_threshold:
                 overtime_intervals = WorkIntervals([
                     (start, end, calendar_attendance) \

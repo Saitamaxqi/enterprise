@@ -17,7 +17,7 @@ class HrContract(models.Model):
         ##################################
         mapped_intervals = super()._get_attendance_intervals(start_dt, end_dt)
 
-        planning_based_contracts = self.filtered(lambda c: c.work_entry_source == 'planning')
+        planning_based_contracts = self.filtered(lambda c: c.work_entry_source == 'planning' and c.overtime_from_attendance)
         if not planning_based_contracts:
             return mapped_intervals
 

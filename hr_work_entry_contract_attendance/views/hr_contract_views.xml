@@ -9,6 +9,9 @@
             <xpath expr="//field[@name='work_entry_source']" position="attributes">
                 <attribute name="invisible">0</attribute>
             </xpath>
+            <xpath expr="//field[@name='work_entry_source']" position="after">
+                <field name="overtime_from_attendance" invisible="work_entry_source == 'attendance'"/>
+            </xpath>
         </field>
     </record>
 </odoo>
