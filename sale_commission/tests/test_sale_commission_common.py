@@ -36,7 +36,8 @@ class TestSaleCommissionCommon(TestSaleCommon):
         cls.commission_user_1 = cls.env['res.users'].create({
             'login': "Sales 1",
             'partner_id': cls.env['res.partner'].create({
-                'name': "Sales 1"
+                'name': "Sales 1",
+                'email': "sales1@example.com",
             }).id,
             'group_ids': [Command.set(cls.env.ref('sales_team.group_sale_salesman').ids)],
         })

@@ -14,6 +14,20 @@ from odoo.addons.sale_commission_subscription.tests.common import TestSaleSubscr
 @tagged('post_install', '-at_install')
 class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
 
+    @classmethod
+    def default_env_context(cls):
+        # needed for mail.tracking.value test
+        return {}
+
+    def setUp(self):
+        super().setUp()
+        self.flush_tracking()
+
+    def flush_tracking(self):
+        """ Force the creation of tracking values. """
+        self.env.flush_all()
+        self.cr.flush()
+
     def test_sub_commission_user_achievement(self):
         with freeze_time('2024-02-02'):
             sub = self.subscription.copy()
@@ -208,3 +222,49 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
         self.assertEqual(sum(achievements.mapped('achieved')), 150, 'invoice provide 150: 500*0.1 + 500*0.2')
         self.assertEqual(achievements.related_res_id, inv.id)
         self.assertEqual(sum(commissions.mapped('commission')), 150, "One user has achieved and not the other one")
+
+    def test_effective_date(self):
+        with freeze_time("2024-02-02"):
+            context_mail = {'tracking_disable': False, 'mail_create_nosubscribe': True, 'mail_create_nolog': True, 'mail_notrack': False}
+            sub = self.env['sale.order'].with_context(context_mail).create({
+                'name': 'TestSubscription',
+                'is_subscription': True,
+                'plan_id': self.plan_month.id,
+                'note': "original subscription description",
+                'partner_id': self.user_portal.partner_id.id,
+                'sale_order_template_id': self.subscription_tmpl.id,
+                'user_id': self.commission_user_1.id
+            })
+            sub._onchange_sale_order_template_id()
+            sub.order_line.price_unit = 50
+            sub.start_date = False
+            sub.next_invoice_date = False
+            self.commission_plan_sub.achievement_ids = self.env['sale.commission.plan.achievement'].create([{
+                'type': 'mrr',
+                'rate': 0.1,
+                'plan_id': self.commission_plan_sub.id,
+                'recurring_plan_id': sub.plan_id.id,
+            }])
+            self.flush_tracking()
+            sub.action_confirm()
+            self.flush_tracking()
+            self.commission_plan_sub.action_approve()
+            inv = sub._create_recurring_invoice()
+            self.assertAlmostEqual(inv.amount_untaxed, 100, 2, msg="The untaxed invoiced amount should be equal to 1000")
+            self.assertEqual(sub.recurring_monthly, 100)
+            self.flush_tracking()
+        with freeze_time("2024-02-03"):
+            sub.order_line.product_uom_qty = 5
+            self.flush_tracking()
+            self.assertEqual(sub.recurring_monthly, 500)
+            order_log_ids = sub.order_log_ids.sorted('event_date')
+            sub_data = [(log.event_type, log.event_date, log.subscription_state, log.amount_signed, log.recurring_monthly, log.effective_date) for log in order_log_ids]
+            self.assertEqual(sub_data, [
+                ('0_creation', datetime.date(2024, 2, 2), '1_draft', 100, 100, datetime.date(2024, 2, 2)),
+                ('1_expansion', datetime.date(2024, 2, 3), '3_progress', 400.0, 500.0, False)
+            ])
+            achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
+            self.assertEqual(sum(achievements.mapped('achieved')), 10, 'Regular invoice, 10 percent of 100')
+            self.assertEqual(len(achievements), 1, "Only one achievement because the other log is not effective")
+            self.assertEqual(achievements.related_res_model, 'sale.order')
+            self.assertEqual(achievements.related_res_id, sub.id)

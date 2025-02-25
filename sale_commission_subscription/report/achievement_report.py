@@ -72,7 +72,7 @@ subscription_rules AS (
         {self.env.company.currency_id.id} AS currency_id,
         MAX(log.event_date) AS date,
         MAX(rules.company_id),
-        log.id AS related_res_id
+        log.order_id AS related_res_id
     FROM subscription_rules rules
     CROSS JOIN sale_order_log log
     JOIN currency_rate cr
@@ -108,6 +108,7 @@ subscription_rules AS (
       AND log.user_id = rules.user_id
     {'AND log.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
       AND log.event_date BETWEEN rules.date_from AND rules.date_to
+      AND log.effective_date IS NOT NULL
     GROUP BY
         log.id,
         rules.plan_id,
