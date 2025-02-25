@@ -16,6 +16,11 @@ class Account_FollowupManual_Reminder(models.TransientModel):
         for wizard in self:
             wizard.show_send_button = wizard.show_send_button or wizard.snailmail
 
+    def _get_defaults_from_followup_line(self, followup_line):
+        defaults = super()._get_defaults_from_followup_line(followup_line)
+        defaults['print'] = followup_line.send_letter
+        return defaults
+
     @api.depends('partner_id')
     def _compute_snailmail_cost(self):
         for record in self:
