@@ -8,8 +8,8 @@ from requests.exceptions import RequestException
 from odoo import _
 from odoo.exceptions import UserError
 
-TEST_BASE_URL = 'https://api-cat.usps.com/'
-PROD_BASE_URL = 'https://api.usps.com/'
+TEST_BASE_URL = 'https://apis-tem.usps.com/'
+PROD_BASE_URL = 'https://apis.usps.com/'
 TOKEN_TYPE = 'Bearer'
 API_VERSION = 'v3'
 # This re should match postcodes like 12345 and 12345-6789
