@@ -1,3 +1,5 @@
+/** @odoo-module **/
+
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("shared_sign_request_tour", {
@@ -41,9 +43,8 @@ registry.category("web_tour.tours").add("shared_sign_request_tour", {
             run: "click",
         },
         {
-            content: "Toggle share",
+            content: "Check share toggle",
             trigger: ".o_field_boolean_toggle .form-check-input",
-            run: "click",
         },
         {
             content: "Go on signing page",
@@ -87,12 +88,7 @@ registry.category("web_tour.tours").add("shared_sign_request_tour", {
             run: "click",
         },
         {
-            trigger: '.modal-title:contains("All done!")',
-        },
-        {
-            content: "Download Document",
-            trigger: "button.btn.btn-primary",
-            run: "click",
+            trigger: `.modal-title:contains("It's signed!")`,
         },
     ],
 });
