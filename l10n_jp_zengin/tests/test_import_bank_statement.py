@@ -14,7 +14,7 @@ class TestImportZenginBankStatement(AccountTestInvoicingCommon):
         cls.bank_journal = cls.company_data['default_journal_bank']
 
     def test_zengin_transfer_file_import(self):
-        with self.assertRaisesRegex(UserError, "The following files could not be imported"):
+        with self.assertRaisesRegex(UserError, r"All or part of the following file\(s\) could not be imported"):
             zengin_transfer_utf8_file = (
                 b'10100504050503240503310009\xef\xbe\x90\xef\xbe\x82\xef\xbd\xb2\xef\xbd\xbd\xef\xbe\x90\xef\xbe\x84\xef\xbe\x93        410\xef\xbd\xbb\xef\xbe\x9d\xef\xbe\x89\xef\xbe\x90\xef\xbe\x94          10355368\xef\xbe\x9c\xef\xbd\xb6\xef\xbd\xb8\xef\xbd\xbb\xef\xbd\xbc\xef\xbe\x96\xef\xbd\xb3\xef\xbd\xb6\xef\xbd\xb2                                                                                                                           \r\n'
                 b'203000105032405032400000600000000000000          \xef\xbe\x9c\xef\xbd\xb6\xef\xbd\xb8\xef\xbd\xbb \xef\xbd\xb2\xef\xbe\x81\xef\xbe\x9b\xef\xbd\xb3                                       \xef\xbe\x90\xef\xbe\x82\xef\xbd\xb2\xef\xbd\xbd\xef\xbe\x90\xef\xbe\x84\xef\xbe\x93        \xef\xbd\xbb\xef\xbe\x9d\xef\xbe\x89\xef\xbe\x90\xef\xbe\x94                                                                                  \r\n'

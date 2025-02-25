@@ -22,20 +22,20 @@ class AccountJournal(models.Model):
         rslt.append('CAMT')
         return rslt
 
-    def _check_camt(self, attachment):
+    def _check_camt(self, raw_file):
         try:
-            root = etree.parse(io.BytesIO(attachment.raw)).getroot()
+            root = etree.parse(io.BytesIO(raw_file)).getroot()
         except Exception:
             return None
         if root.tag.find('camt.053') != -1:
             return root
         return None
 
-    def _parse_bank_statement_file(self, attachment):
-        root = self._check_camt(attachment)
+    def _parse_bank_statement_file(self, raw_file):
+        root = self._check_camt(raw_file)
         if root is not None:
             return self._parse_bank_statement_file_camt(root)
-        return super()._parse_bank_statement_file(attachment)
+        return super()._parse_bank_statement_file(raw_file)
 
     def _parse_bank_statement_file_camt(self, root):
         ns = {k or 'ns': v for k, v in root.nsmap.items()}
@@ -172,4 +172,4 @@ class AccountJournal(models.Model):
         if not currency and not statement_list:
             raise UserError(_("Please check the currency on your bank journal.\n"
                             "No statements in currency %s were found in this CAMT file.", journal_currency.name))
-        return currency, account_no, statement_list
+        return [[currency, account_no, statement_list]]

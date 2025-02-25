@@ -98,14 +98,13 @@ class AccountJournal(models.Model):
         rslt.append('OFX')
         return rslt
 
-
-    def _check_ofx(self, attachment):
-        if (attachment.raw or b'').startswith(b"OFXHEADER"):
+    def _check_ofx(self, raw_file):
+        if (raw_file or b'').startswith(b"OFXHEADER"):
             #v1 OFX
             return True
         try:
             #v2 OFX
-            return b"<ofx>" in (attachment.raw or b'').lower()
+            return b"<ofx>" in (raw_file or b'').lower()
         except ElementTree.ParseError:
             return False
 
@@ -121,21 +120,21 @@ class AccountJournal(models.Model):
             'sequence': length_transactions + 1,
         }
 
-    def _parse_bank_statement_file(self, attachment):
-        if not self._check_ofx(attachment):
-            return super()._parse_bank_statement_file(attachment)
+    def _parse_bank_statement_file(self, raw_file):
+        if not self._check_ofx(raw_file):
+            return super()._parse_bank_statement_file(raw_file)
         if OfxParser is None:
             raise UserError(_("The library 'ofxparse' is missing, OFX import cannot proceed."))
 
         try:
-            ofx = PatchedOfxParser.parse(io.BytesIO(attachment.raw))
+            ofx = PatchedOfxParser.parse(io.BytesIO(raw_file))
         except UnicodeDecodeError:
             # Replacing utf-8 chars with ascii equivalent
-            encoding = re.findall(b'encoding="(.*?)"', attachment.raw)
+            encoding = re.findall(rb'encoding="(.*?)"', raw_file)
             encoding = encoding[0] if len(encoding) > 1 else 'utf-8'
             try:
-                attachment = unicodedata.normalize('NFKD', attachment.raw.decode(encoding)).encode('ascii', 'ignore')
-                ofx = PatchedOfxParser.parse(io.BytesIO(attachment))
+                raw_file = unicodedata.normalize('NFKD', raw_file.decode(encoding)).encode('ascii', 'ignore')
+                ofx = PatchedOfxParser.parse(io.BytesIO(raw_file))
             except UnicodeDecodeError:
                 raise UserError(_("There was an issue decoding the file. Please check the file encoding."))
         vals_bank_statement = []
@@ -180,4 +179,4 @@ class AccountJournal(models.Model):
             account_lst = None
             currency_lst = None
 
-        return currency_lst, account_lst, vals_bank_statement
+        return [[currency_lst, account_lst, vals_bank_statement]]

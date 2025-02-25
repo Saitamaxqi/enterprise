@@ -3,6 +3,7 @@
 
 # Copyright (c) 2012 Noviat nv/sa (www.noviat.be). All rights reserved.
 
+import itertools
 import time
 import re
 
@@ -802,31 +803,34 @@ class AccountJournal(models.Model):
             ret_statements.append(statement_data)
         return ret_statements
 
-    def _parse_bank_statement_file(self, attachment):
+    def _parse_bank_statement_file(self, raw_file):
         pattern = re.compile("[\u0020-\u1EFF\u20A0-\u20BF\n\r]+")  # printable characters and currency symbols
 
         # Try different encodings for the file
         for encoding in ('utf_8', 'cp850', 'cp858', 'cp1140', 'cp1252', 'iso8859_15', 'utf_32', 'utf_16', 'windows-1252'):
             try:
-                record_data = attachment.raw.decode(encoding)
+                record_data = raw_file.decode(encoding)
             except UnicodeDecodeError:
                 continue
             if pattern.fullmatch(record_data, re.MULTILINE):
                 break  # We only have printable characters, stick with this one
 
         if not self._check_coda(record_data):
-            return super()._parse_bank_statement_file(attachment)
+            return super()._parse_bank_statement_file(raw_file)
 
-        statements = self._get_coda_file_statements(record_data)
-        ret_statements = self._get_coda_final_statements(statements)
+        file_statements = self._get_coda_file_statements(record_data)
+        result = []
+        for acc_number, statements in itertools.groupby(sorted(file_statements, key=lambda k: k['acc_number']), key=lambda k: k['acc_number']):
+            statements = list(statements)
+            ret_statements = self._get_coda_final_statements(statements)
 
-        # Order the transactions according the newly created statements to ensure valid balances.
-        line_sequence = 1
-        for statement_vals in reversed(ret_statements):
-            for statement_line_vals in reversed(statement_vals.get('transactions', [])):
-                statement_line_vals['sequence'] = line_sequence
-                line_sequence += 1
+            # Order the transactions according the newly created statements to ensure valid balances.
+            line_sequence = 1
+            for statement_vals in reversed(ret_statements):
+                for statement_line_vals in reversed(statement_vals.get('transactions', [])):
+                    statement_line_vals['sequence'] = line_sequence
+                    line_sequence += 1
 
-        currency_code = statements and statements[-1]['currency']
-        acc_number = statements[0] and statements[0]['acc_number'] or False
-        return currency_code, acc_number, ret_statements
+            currency_code = statements and statements[-1]['currency']
+            result.append([currency_code, acc_number, ret_statements])
+        return result

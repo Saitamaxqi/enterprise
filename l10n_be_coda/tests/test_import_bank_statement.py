@@ -2,8 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 # Copyright (c) 2012 Noviat nv/sa (www.noviat.be). All rights reserved.
-import base64
-
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.tests import tagged
 from odoo.tools import file_open
@@ -62,12 +60,7 @@ class TestCodaFile(AccountTestInvoicingCommon):
         encodings = ('utf_8', 'cp850', 'cp858', 'cp1140', 'cp1252', 'iso8859_15', 'utf_32', 'utf_16', 'windows-1252')
 
         for enc in encodings:
-            dummy, dummy, statements = \
-                self.company_data['default_journal_bank']._parse_bank_statement_file(self.env['ir.attachment'].create({
-                    'mimetype': 'application/text',
-                    'name': 'CODA-Test',
-                    'raw': coda_special_chars.encode(enc),
-                }))
+            statements = self.company_data['default_journal_bank']._parse_bank_statement_file(coda_special_chars.encode(enc))[0][2]
             self.assertEqual(statements[0]['transactions'][0]['payment_ref'][:24], "Théâtre d'Hélène à Dümùß")
 
 
@@ -79,11 +72,7 @@ class TestCodaFile(AccountTestInvoicingCommon):
 2300010000BE55173363943144                     ODOO SA                                                                       0 0
 8027BE68539007547034                  EUR0000000000125500000000                                                                0
 9               000005000000000000000000000000025500                                                                           2"""
-        dummy, dummy, statements = self.company_data['default_journal_bank']._parse_bank_statement_file(self.env['ir.attachment'].create({
-            'mimetype': 'application/text',
-            'name': 'CODA-Test',
-            'raw': coda_zero_date.encode('utf-8'),
-        }))
+        statements = self.company_data['default_journal_bank']._parse_bank_statement_file(coda_zero_date.encode('utf-8'))[0][2]
         self.assertEqual(statements[0]['transactions'][0]['date'], '2024-12-01')
 
     def test_coda_import_currency_symbol(self):
@@ -94,11 +83,27 @@ class TestCodaFile(AccountTestInvoicingCommon):
 2300010000BE55173363943144                     ODOO SA                                                                       0 0
 8027BE68539007547034                  EUR0000000000125500000000                                                                0
 9               000005000000000000000000000000025500                                                                           2"""
-        dummy, dummy, statements = self.company_data['default_journal_bank']._parse_bank_statement_file(self.env['ir.attachment'].create({
-            'mimetype': 'application/text',
-            'name': 'CODA-Test',
-            'raw': coda_currency_symbols.encode('utf-8'),
-        }))
+        statements = self.company_data['default_journal_bank']._parse_bank_statement_file(coda_currency_symbols.encode('utf-8'))[0][2]
         # If this fails, the error will probably talk about the date, it's because one of the decoded currency symbols became multiple
         # characters and the index of the date moved (from [115:121] to [117:123] for example)
         self.assertEqual(statements[0]['transactions'][0]['payment_ref'][:23], "Payment Reference €$£¥¢")
+
+    def test_coda_multi_accounts(self):
+        bank_1, bank_2 = self.env['res.partner.bank'].create([
+            {'acc_number': 'BE33737018595246', 'partner_id': self.env.company.partner_id.id},
+            {'acc_number': 'BE33737018595247', 'partner_id': self.env.company.partner_id.id},
+        ])
+        journal_1 = self.bank_journal
+        journal_1.bank_account_id = bank_1
+        journal_2 = journal_1.copy({'bank_account_id': bank_2.id})
+        with file_open('l10n_be_coda/test_coda_file/multi_accounts.COD', 'rb') as coda_file:
+            coda_file = coda_file.read()
+        action = self.company_data['default_journal_bank'].create_document_from_attachment(self.env['ir.attachment'].create({
+            'mimetype': 'application/text',
+            'name': 'multi_accounts.COD',
+            'raw': coda_file,
+        }).ids)
+        self.assertEqual(
+            self.env['account.bank.statement.line'].search(action['domain'])['journal_id'],
+            journal_1 + journal_2,
+        )

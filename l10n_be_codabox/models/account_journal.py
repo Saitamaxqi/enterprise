@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-import re
 import logging
+import re
 import requests
 from dateutil.relativedelta import relativedelta
 
-from odoo import models, _, fields
+from odoo import modules, models, fields, _
 from odoo.exceptions import UserError
+from odoo.addons.base.models.res_bank import sanitize_account_number
 from odoo.addons.l10n_be_codabox.const import get_error_msg, get_iap_endpoint
 
 _logger = logging.getLogger(__name__)
@@ -109,46 +110,50 @@ class AccountJournal(models.Model):
         statement_ids_all = []
         skipped_bank_accounts = set()
         session = requests.Session()
+        acc_journal_map = {
+            # A same account number could be formatted differently in journal.acc_number and
+            # coda statement. Therefor we must match sanitized versions of both.
+            sanitize_account_number(acc_num): journals for acc_num, journals in
+            self._read_group(
+                [("bank_statements_source", "in", ("l10n_be_codabox", "undefined"))],
+                ['bank_acc_number'],
+                ['id:recordset'],
+            )
+        }
         codas = self._l10n_be_codabox_fetch_transactions_from_iap(session, company, "codas", date_from, ibans)
         for coda in codas:
             try:
                 coda_raw_b64, coda_pdf_b64 = coda
-                attachment = self.env["ir.attachment"].create({
-                    "name": "tmp.coda",
-                    'type': 'binary',
-                    'datas': coda_raw_b64,
-                })
-                currency, account_number, stmt_vals = self._parse_bank_statement_file(attachment)
-                journal = self.search([
-                    ("bank_acc_number", "=", account_number),
-                    ("bank_statements_source", "in", ("l10n_be_codabox", "undefined")),
-                    "|",
-                        ("currency_id.name", "=", currency),
-                        "&",
-                            ("currency_id", "=", False),
-                            ("company_id.currency_id.name", "=", currency),
-                ], limit=1)
-                if journal:
-                    journal.bank_statements_source = "l10n_be_codabox"
-                else:
-                    skipped_bank_accounts.add(f"{account_number} ({currency})")
-                    continue
-                stmt_vals = journal._complete_bank_statement_vals(stmt_vals, journal, account_number, attachment)
-                statement_id, __, __ = journal.with_context(skip_pdf_attachment_generation=True)._create_bank_statements(stmt_vals, raise_no_imported_file=False)
-                attachment.sudo().unlink()
-                if statement_id:
-                    statement_ids_all.extend(statement_id)
+                bank_statement_file_data = self._parse_bank_statement_file(coda_raw_b64)
+                statement_ids = []
+                for currency, account_number, stmt_vals in bank_statement_file_data:
+                    journal = next((
+                        journal for
+                        journal in acc_journal_map.get(sanitize_account_number(account_number), []) if
+                        journal.currency_id.name or journal.company_id.currency_id.name == currency
+                    ), False)
+                    if journal:
+                        journal.bank_statements_source = "l10n_be_codabox"
+                    else:
+                        skipped_bank_accounts.add(f"{account_number} ({currency})")
+                        continue
+                    stmt_vals = journal._complete_bank_statement_vals(stmt_vals, journal, account_number, 'tmp.coda')
+                    statement_ids.extend(journal.with_context(skip_pdf_attachment_generation=True)
+                                         ._create_bank_statements(stmt_vals, raise_no_imported_file=False)[0])
+                if statement_ids:
+                    statement_ids_all.extend(statement_ids)
                     pdf = self.env['ir.attachment'].create({
                         'name': _("Original CodaBox Bank Statement.pdf"),
                         'type': 'binary',
                         'mimetype': 'application/pdf',
                         'datas': coda_pdf_b64,
                         'res_model': 'account.bank.statement',
-                        'res_id': statement_id[0],
+                        'res_id': statement_ids[0],
                     })
-                    self.env['account.bank.statement'].browse(statement_id).attachment_ids |= pdf
-                    # We may have a lot of files to import, so we commit after each file so that a later error doesn't discard previous work
-                    self.env.cr.commit()
+                    self.env['account.bank.statement'].browse(statement_ids).attachment_ids |= pdf
+                    # We may have a lot of statements to import, so we commit after each so that a later error doesn't discard previous work
+                    if not modules.module.current_test:
+                        self.env.cr.commit()
             except (UserError, ValueError) as e:
                 _logger.error("L10nBeCodabox: Error while importing CodaBox file: %s", e)
                 # We need to rollback here otherwise the next iteration will still have the error when trying to commit

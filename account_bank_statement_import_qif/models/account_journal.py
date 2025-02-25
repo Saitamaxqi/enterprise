@@ -44,16 +44,16 @@ class AccountJournal(models.Model):
         rslt.append('QIF')
         return rslt
 
-    def _check_qif(self, attachment):
-        return (attachment.raw or b'').strip().startswith(b'!Type:')
+    def _check_qif(self, raw_file):
+        return (raw_file or b'').strip().startswith(b'!Type:')
 
-    def _parse_bank_statement_file(self, attachment):
-        if not self._check_qif(attachment):
-            return super()._parse_bank_statement_file(attachment)
+    def _parse_bank_statement_file(self, raw_file):
+        if not self._check_qif(raw_file):
+            return super()._parse_bank_statement_file(raw_file)
 
         data_list = [
             line.rstrip(b'\r\n')
-            for line in io.BytesIO(attachment.raw.strip())
+            for line in io.BytesIO(raw_file.strip())
         ]
         try:
             header = data_list[0].strip().split(b':')[1]
@@ -110,4 +110,4 @@ class AccountJournal(models.Model):
             'balance_end_real': total,
             'transactions': transactions
         })
-        return None, None, [vals_bank_statement]
+        return [[None, None, [vals_bank_statement]]]

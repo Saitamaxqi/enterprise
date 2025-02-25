@@ -31,13 +31,13 @@ class AccountJournal(models.Model):
         # Match the first 59 characters of the Zengin file, as defined by the zengin specifications
         return re.match(r'10[13]0\d{6}\d{6}\d{6}\d{4}[ \uFF5F-\uFF9F]{15}\d{3}[ \uFF5F-\uFF9F]{15}', zengin_string) is not None
 
-    def _parse_bank_statement_file(self, attachment):
+    def _parse_bank_statement_file(self, raw_file):
         record_data = False
         with contextlib.suppress(UnicodeDecodeError):
-            record_data = attachment.raw.decode('SHIFT_JIS')  # Zengin files are encoded in SHIFT_JIS
+            record_data = raw_file.decode('SHIFT_JIS')  # Zengin files are encoded in SHIFT_JIS
 
         if not record_data or not self._check_zengin(record_data):
-            return super()._parse_bank_statement_file(attachment)
+            return super()._parse_bank_statement_file(raw_file)
         return self._parse_bank_statement_file_zengin(record_data)
 
     def _parse_bank_statement_file_zengin(self, record_data):
@@ -194,4 +194,4 @@ class AccountJournal(models.Model):
                 if balance_end := rmspaces(line[115:129]):
                     statement['balance_end_real'] = float(balance_end)
 
-        return 'JPY', acc_number, [statement]
+        return [['JPY', acc_number, [statement]]]
