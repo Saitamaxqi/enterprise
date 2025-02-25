@@ -59,6 +59,6 @@ def _account_loans_import_loan_demo(env, loan, attachment):
     import_wizard.with_context(default_loan_id=loan.id).execute_import(
         ['date', 'principal', 'interest'],
         [],
-        result["options"],
+        result.get("options", {}),
     )
     loan.action_file_uploaded()
