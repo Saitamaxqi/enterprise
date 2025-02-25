@@ -750,13 +750,14 @@ class AccountFecImportWizard(models.TransientModel):
 
             # Loop over generated records and apply a template if a matching one is found
             for xml_id, record in generator(rows, cache):
-                self._apply_template(model_templates, model, record)
-                records[xml_id].update(record)
+                if self.duplicate_documents_handling != 'ignore' or not self.env['ir.model.data']._xmlid_to_res_model_res_id(xml_id, raise_if_not_found=False)[1]:
+                    self._apply_template(model_templates, model, record)
+                    records[xml_id].update(record)
 
             data[model] = dict(records)
 
         AccountChartTemplate = self.env['account.chart.template']
-        created_vals = self.env['account.chart.template']._load_data(copy.deepcopy(data), ignore_duplicates=self.duplicate_documents_handling == 'ignore')
+        created_vals = self.env['account.chart.template']._load_data(copy.deepcopy(data))
         AccountChartTemplate._load_translations(companies=self.company_id, template_data=data)
 
         moves = created_vals.get("account.move", [])
