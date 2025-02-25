@@ -5,7 +5,11 @@ export function getFieldsInArch(xmlDoc) {
     const isInvisible = ["True", "1", "true"];
     xmlDoc.querySelectorAll("field").forEach((el) => {
         if (!el.parentElement.closest("field,groupby")) {
-            const invisible = el.getAttribute("invisible");
+            const invisible = el.getAttribute("invisible") || el.getAttribute("column_invisible");
+            const dataUsedBy = el.getAttribute("data-used-by");
+            if (dataUsedBy) {
+                return;
+            }
             if (!invisible || !isInvisible.includes(invisible)) {
                 res.push(el.getAttribute("name"));
             }
