@@ -678,7 +678,7 @@ class AccountMove(models.Model):
         ArrayOfCbteAsoc = client.get_type('ns0:ArrayOfCbteAsoc')
         ArrayOfOpcional = client.get_type('ns0:ArrayOfOpcional')
 
-        if self.l10n_latam_document_type_id.code == '6' and (
+        if self.l10n_latam_document_type_id.code in ['6', '7', '8'] and (
             self.commercial_partner_id.l10n_ar_afip_responsibility_type_id == self.env.ref('l10n_ar.res_EXT') or
                 self.commercial_partner_id.country_id.code not in ['AR', False]):
             vat = self.get_vat_country()
