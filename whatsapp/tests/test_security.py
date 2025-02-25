@@ -208,7 +208,10 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                                             "id": self.user_admin.partner_id.id,
                                             "type": "partner",
                                         },
-                                        "body": '<div class="o_mail_notification">joined the channel</div>',
+                                        "body": [
+                                            "markup",
+                                            '<div class="o_mail_notification">joined the channel</div>',
+                                        ],
                                         "create_date": fields.Datetime.to_string(
                                             message.create_date
                                         ),
