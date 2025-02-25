@@ -1,6 +1,6 @@
 import { browser } from "@web/core/browser/browser";
 import { _t } from "@web/core/l10n/translation";
-import { user } from '@web/core/user';
+import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { toggleArchive, openDeleteConfirmationDialog } from "@documents/views/hooks";
 import { serializeDate } from "@web/core/l10n/dates";
@@ -16,7 +16,6 @@ export const DocumentsModelMixin = (component) =>
                 this.originalSelection = params.state?.sharedSelection;
             }
             this.documentService = useService("document.document");
-            this.initialLimit = 40;
         }
 
         exportSelection() {
@@ -40,7 +39,7 @@ export const DocumentsModelMixin = (component) =>
                 return res;
             }
             this.env.searchModel.skipLoadClosePreview
-                ? this.env.searchModel.skipLoadClosePreview = false
+                ? (this.env.searchModel.skipLoadClosePreview = false)
                 : this.env.documentsView.bus.trigger("documents-close-preview");
             this._reapplySelection();
             this._computeFileSize();
@@ -76,7 +75,7 @@ export const DocumentsModelMixin = (component) =>
 
         async _loadShortcutTargetRecords() {
             const shortcuts = this.root.records.filter(
-                (record) => !!record.data.shortcut_document_id,
+                (record) => !!record.data.shortcut_document_id
             );
             if (!shortcuts.length) {
                 return [];
@@ -140,7 +139,7 @@ export const DocumentsModelMixin = (component) =>
         }
 
         get canDeleteRecords() {
-             // Portal user can delete their own documents while internal user can only delete document in the Trash.
+            // Portal user can delete their own documents while internal user can only delete document in the Trash.
             const documents = this.targetRecords.map((r) => r.data);
             if (this.documentService.userIsInternal) {
                 return documents.some((d) => !d.active);
