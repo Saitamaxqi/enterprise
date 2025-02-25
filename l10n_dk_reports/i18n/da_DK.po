@@ -87,7 +87,7 @@ msgstr ""
 
 #. module: l10n_dk_reports
 #: model_terms:ir.ui.view,arch_db:l10n_dk_reports.account_journal_dashboard_kanban_view
-msgid "This bank journal need to have a bank account !"
+msgid "This bank journal needs to have a bank account!"
 msgstr "Denne bankjournal skal have en bankkonto !"
 
 #. module: l10n_dk_reports
