@@ -14,7 +14,7 @@ class L10nBeDoublePayRecoveryWizard(models.TransientModel):
     @api.model
     def default_get(self, fields_list):
         if self.env.company.country_id.code != "BE":
-            raise UserError(_('You must be logged in a Belgian company to use this feature'))
+            raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
         result = super(L10nBeDoublePayRecoveryWizard, self).default_get(fields_list)
         if self.env.context.get('active_id') and self.env.context.get('active_model') == 'hr.payslip':
             payslip_id = self.env.context['active_id']

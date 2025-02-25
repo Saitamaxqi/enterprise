@@ -25,7 +25,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
     @api.model
     def default_get(self, field_list=None):
         if self.env.company.country_id.code != "BE":
-            raise UserError(_('You must be logged in a Belgian company to use this feature'))
+            raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
         return super().default_get(field_list)
 
     # Source: https://www.nbb.be/fr/centrale-des-bilans/etablir/modeles-des-comptes-annuels/bilan-social

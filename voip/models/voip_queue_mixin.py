@@ -87,7 +87,9 @@ class VoipQueueMixin(models.AbstractModel):
             failed_records = self.browse(failed_activities.mapped("res_id"))
             raise UserError(
                 _(
-                    "Some documents cannot be added to the call queue as they do not have a phone number set: %(record_names)s",
+                    "Some leads can’t be added to the call queue since they do not have a phone number set. "
+                    "The fixer-uppers: %(record_names)s.\n"
+                    "Let’s add the missing numbers and start the dialing party!",
                     record_names=_(", ").join(failed_records.mapped("display_name")),
                 )
             )

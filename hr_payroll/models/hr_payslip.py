@@ -606,7 +606,10 @@ class HrPayslip(models.Model):
     @api.ondelete(at_uninstall=False)
     def _unlink_if_draft_or_cancel(self):
         if any(payslip.state not in ('draft', 'cancel') for payslip in self):
-            raise UserError(_('You cannot delete a payslip which is not draft or cancelled!'))
+            raise UserError(_(
+                "Oops! Only draft and cancelled payslips can be deleted without causing any chaos. We can't "
+                "take back our dedicated employees' hard-earned cash!"
+            ))
 
     def compute_sheet(self):
         payslips = self.filtered(lambda slip: slip.state in ['draft', 'verify'])

@@ -161,7 +161,10 @@ class PlanningSlot(models.Model):
     @api.constrains('repeat_until')
     def _check_repeat_until(self):
         if any([slot.repeat_until and slot.repeat_until < slot.start_datetime.date() for slot in self]):
-            raise UserError(_("The recurrence's end date should fall after the shift's start date."))
+            raise UserError(_(
+                "Uh-oh! Let's keep things in the right order: the recurrence end date should always "
+                "come after the shift start date. It's like trying to eat your breakfast before waking up – not possible!"
+            ))
 
     @api.onchange('repeat_until')
     def _onchange_repeat_until(self):

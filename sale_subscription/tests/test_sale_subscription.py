@@ -1204,7 +1204,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         # Subscription cannot be deleted if it was confirmed once before and it is not closed
         subscription_b.action_confirm()
         with self.assertRaisesRegex(UserError,
-            r'You can not delete a confirmed subscription. You must first close and cancel it before you can delete it.'):
+            r"Oops! Before you can delete a confirmed subscription, you'll need to close and cancel it."):
             subscription_b.unlink()
         # Subscription cannot be deleted if it is closed
         subscription_c.action_confirm()

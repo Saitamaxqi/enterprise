@@ -129,7 +129,7 @@ class HelpdeskTeam(models.Model):
     @api.constrains('use_website_helpdesk_form', 'privacy_visibility')
     def _check_website_privacy(self):
         if any(t.use_website_helpdesk_form and t.privacy_visibility != 'portal' for t in self):
-            raise ValidationError(_('The visibility of the team needs to be set as "Invited portal users and all internal users" in order to use the website form.'))
+            raise ValidationError(_('Want to use the website form? Just adjust your team\'s visibility to "Invited portal users and all internal users" and watch the magic happen!'))
 
     @api.depends('auto_close_ticket', 'stage_ids')
     def _compute_assign_stage_id(self):

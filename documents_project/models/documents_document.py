@@ -44,7 +44,7 @@ class DocumentsDocument(models.Model):
         # custom folders assigned to company.documents_project_folder_id are protected by _unlink_except_company_folders
         project_folder = self.env.ref('documents_project.document_project_folder')
         if self._project_folder_or_ancestor_in_self(project_folder):
-            raise UserError(_('The "%s" folder is required by the Project application and cannot be deleted.', project_folder.name))
+            raise UserError(_('Uh-oh! The project app needs the "%s" folder, so you can’t delete it.', project_folder.name))
         projects_with_folder = self.env['project.project'].search([('use_documents', '=', True), ('documents_folder_id', 'child_of', self.ids)])
         if projects_with_folder:
             raise UserError(_(

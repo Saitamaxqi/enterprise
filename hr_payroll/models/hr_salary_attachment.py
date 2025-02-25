@@ -18,7 +18,7 @@ class HrSalaryAttachment(models.Model):
 
     _check_monthly_amount = models.Constraint(
         'CHECK (monthly_amount > 0)',
-        "Payslip amount must be strictly positive.",
+        'Oops! Let’s keep the payslip amount strictly positive. We want to deduct money from our employee’s payslip, not add to it!'
     )
     _check_total_amount = models.Constraint(
         'CHECK ((total_amount > 0 AND total_amount >= monthly_amount) OR no_end_date = True)',
@@ -254,7 +254,9 @@ class HrSalaryAttachment(models.Model):
     @api.ondelete(at_uninstall=False)
     def _unlink_if_not_running(self):
         if any(assignment.state == 'open' for assignment in self):
-            raise UserError(_('You cannot delete a running salary attachment!'))
+            raise UserError(_(
+                "The salary attachment you're trying to remove is still running. You can’t delete unless you change it to completed or cancelled."
+            ))
 
     @api.ondelete(at_uninstall=False)
     def _unlink_if_not_linked_in_payslips(self):

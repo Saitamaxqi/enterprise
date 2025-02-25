@@ -62,7 +62,10 @@ class SocialMedia(models.Model):
         }, timeout=5).text
 
         if iap_add_accounts_url == 'unauthorized':
-            raise UserError(_("You don't have an active subscription. Please buy one here: %s", 'https://www.odoo.com/buy'))
+            raise UserError(_(
+                "Oops! You currently don't have an active subscription. No worries, though! "
+                "You can easily get one here: %s.\n"
+                "Grab a subscription and unlock a world of amazing features!", 'https://www.odoo.com/buy'))
         elif iap_add_accounts_url == 'linkedin_missing_configuration' or iap_add_accounts_url == 'missing_parameters':
             raise UserError(_("The url that this service requested returned an error. Please contact the author of the app."))
 

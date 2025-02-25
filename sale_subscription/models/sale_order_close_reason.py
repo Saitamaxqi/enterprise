@@ -34,4 +34,4 @@ class SaleOrderCloseReason(models.Model):
     def _unlink_close_reasons(self):
         for reason in self:
             if reason.is_protected:
-                raise AccessError(_("The reason %s is required by the Subscription application and cannot be deleted.", reason.name))
+                raise AccessError(_('The reason: "%s" is here for good. It\'s essential for our subscription application like coffee is for a Monday morning!', reason.name))

@@ -22,7 +22,7 @@ class L10n_Be273s(models.Model):
     @api.model
     def default_get(self, field_list=None):
         if self.env.company.country_id.code != "BE":
-            raise UserError(_('You must be logged in a Belgian company to use this feature'))
+            raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
         return super().default_get(field_list)
 
     year = fields.Integer(required=True, default=lambda self: fields.Date.today().year)

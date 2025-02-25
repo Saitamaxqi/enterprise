@@ -133,8 +133,7 @@ class QualityAlertTeam(models.Model):
         if team_id:
             return team_id
         else:
-            raise UserError(_("No quality team found for this company.\n"
-                              "Please go to configuration and create one first."))
+            raise UserError(_("No quality teams found for this company! Head over to the configuration menu to create your first quality team."))
 
     def _alias_get_creation_values(self):
         values = super(QualityAlertTeam, self)._alias_get_creation_values()

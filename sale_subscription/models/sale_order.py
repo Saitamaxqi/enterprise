@@ -619,7 +619,9 @@ class SaleOrder(models.Model):
     def _unlink_except_draft_or_cancel(self):
         for order in self:
             if order.state not in ['draft', 'sent'] and order.subscription_state and order.subscription_state not in SUBSCRIPTION_DRAFT_STATE + SUBSCRIPTION_CLOSED_STATE:
-                raise UserError(_('You can not delete a confirmed subscription. You must first close and cancel it before you can delete it.'))
+                raise UserError(_(
+                    "Oops! Before you can delete a confirmed subscription, you'll need to close and cancel it."
+                ))
         return super(SaleOrder, self)._unlink_except_draft_or_cancel()
 
     def copy_data(self, default=None):
@@ -704,7 +706,10 @@ class SaleOrder(models.Model):
                     )
                 order.subscription_state = False
             elif order.subscription_state in SUBSCRIPTION_PROGRESS_STATE + ['5_renewed']:
-                raise ValidationError(_('You cannot cancel a subscription that has been invoiced.'))
+                raise ValidationError(_(
+                    "Cancelling an invoiced subscription wouldn't be fair to the customer. "
+                    "Once the invoice been created and possibly even paid, it's a done deal. Cancelling the subscription would definitely cause some chaos!"
+                ))
             elif order.subscription_id and order.subscription_state == '6_churn':
                 raise ValidationError(_("You cannot cancel a churned renewed subscription."))
             if order.is_subscription:

@@ -182,8 +182,8 @@ class SignTemplate(models.Model):
     def _unlink_except_existing_signature(self):
         if self.filtered(lambda template: template.has_sign_requests):
             raise UserError(_(
-                "You can't delete a template for which signature requests "
-                "exist but you can archive it instead."))
+                "Oops! You can’t delete a template that has signature requests. It would be like asking "
+                "your users to autograph air! How about archiving it instead?"))
 
     def get_radio_set_info_by_item_id(self, sign_item_ids=None):
         """

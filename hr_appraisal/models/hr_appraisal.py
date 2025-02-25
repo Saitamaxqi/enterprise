@@ -468,7 +468,7 @@ class HrAppraisal(models.Model):
     @api.ondelete(at_uninstall=False)
     def _unlink_if_new_or_cancel(self):
         if any(appraisal.state != '1_new' for appraisal in self):
-            raise UserError(_("You cannot delete appraisal which is not in draft state"))
+            raise UserError(_("Oops! You can only delete draft appraisals."))
 
     def read(self, fields=None, load='_classic_read'):
         fields_set = set(fields) if fields is not None else {}
