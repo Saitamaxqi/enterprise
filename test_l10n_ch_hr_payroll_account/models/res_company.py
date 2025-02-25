@@ -44,7 +44,7 @@ class ResCompany(models.Model):
             admin.write({
                 'name': 'Hans Muster',
                 'email': 'MusterAG@xxxxx.ch',
-                'mobile': '041 218 65 32',
+                'phone': '041 218 65 32',
             })
             admin.company_ids |= self
 
