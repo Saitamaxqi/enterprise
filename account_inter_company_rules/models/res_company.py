@@ -7,8 +7,8 @@ class ResCompany(models.Model):
     intercompany_generate_bills_refund = fields.Boolean(string="Generate Bills and Refunds")
     intercompany_document_state = fields.Selection(
         selection=[
-            ('draft', "Create in draft"),
-            ('posted', "Create and validate"),
+            ('draft', "Draft"),
+            ('posted', "Validated"),
         ],
         string="Automation",
         default='draft',

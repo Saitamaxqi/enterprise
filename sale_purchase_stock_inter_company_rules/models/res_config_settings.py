@@ -16,4 +16,8 @@ class ResConfigSettings(models.TransientModel):
         readonly=False,
         domain=lambda self: [('warehouse_id.company_id', '=', self.env.company.id), ('code', '=', 'incoming')],
     )
-    intercompany_sync_delivery_receipt = fields.Boolean(related='company_id.intercompany_sync_delivery_receipt', readonly=False)
+    intercompany_sync_delivery_receipt = fields.Boolean(
+        related='company_id.intercompany_sync_delivery_receipt',
+        string="Synchronize Stock Moves",
+        readonly=False,
+    )
