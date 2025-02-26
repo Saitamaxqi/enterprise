@@ -9,6 +9,7 @@
 
     <record id="mrp_plm.group_plm_user" model="res.groups">
         <field name="name">User</field>
+        <field name="sequence">10</field>
         <field name="category_id" ref="base.module_category_manufacturing_product_lifecycle_management_(plm)"/>
         <field name="implied_ids" eval="[(4, ref('mrp.group_mrp_user'))]"/>
         <field name="comment">The PLM user uses products lifecycle management</field>
@@ -16,6 +17,7 @@
 
     <record id="mrp_plm.group_plm_manager" model="res.groups">
         <field name="name">Administrator</field>
+        <field name="sequence">20</field>
         <field name="category_id" ref="base.module_category_manufacturing_product_lifecycle_management_(plm)"/>
         <field name="implied_ids" eval="[(4, ref('mrp_plm.group_plm_user'))]"/>
         <field name="comment">The PLM manager manages products lifecycle management</field>

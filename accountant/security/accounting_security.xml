@@ -23,11 +23,13 @@
 
     <record id="account.group_account_readonly" model="res.groups">
         <field name="name">Read-only</field>
+        <field name="sequence">10</field>
         <field name="category_id" ref="base.module_category_accounting_accounting"/>
     </record>
 
     <record id="account.group_account_user" model="res.groups">
         <field name="name">Bookkeeper</field>
+        <field name="sequence">40</field>
         <field name="category_id" ref="base.module_category_accounting_accounting"/>
     </record>
 

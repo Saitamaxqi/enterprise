@@ -3,12 +3,14 @@
 
     <record id="group_hr_recruitment_referral_user" model="res.groups">
         <field name="name">User: Referral only</field>
+        <field name="sequence">5</field>
         <field name="category_id" ref="base.module_category_human_resources_recruitment"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
     <record id="group_hr_referral_reward_responsible_user" model="res.groups">
         <field name="name">Referral Reward Responsible User</field>
+        <field name="sequence">20</field>
         <field name="category_id" ref="base.module_category_hidden"/>
         <field name="implied_ids" eval="[(4, ref('hr_referral.group_hr_recruitment_referral_user'))]"/>
     </record>

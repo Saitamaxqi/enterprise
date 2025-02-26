@@ -9,6 +9,7 @@
 
     <record id="quality.group_quality_user" model="res.groups">
         <field name="name">User</field>
+        <field name="sequence">10</field>
         <field name="category_id" ref="base.module_category_manufacturing_quality"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         <field name="comment">The quality user uses the quality process</field>
@@ -16,6 +17,7 @@
 
     <record id="quality.group_quality_manager" model="res.groups">
         <field name="name">Administrator</field>
+        <field name="sequence">20</field>
         <field name="category_id" ref="base.module_category_manufacturing_quality"/>
         <field name="implied_ids" eval="[(4, ref('quality.group_quality_user'))]"/>
         <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>

@@ -2,12 +2,14 @@
 <odoo>
     <record id="group_helpdesk_user" model="res.groups">
         <field name="name">User</field>
+        <field name="sequence">10</field>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         <field name="category_id" ref="base.module_category_services_helpdesk"/>
     </record>
 
     <record id="group_helpdesk_manager" model="res.groups">
         <field name="name">Administrator</field>
+        <field name="sequence">20</field>
         <field name="category_id" ref="base.module_category_services_helpdesk"/>
         <field name="implied_ids" eval="[(4, ref('group_helpdesk_user')), (4, ref('mail.group_mail_canned_response_admin'))]"/>
         <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>

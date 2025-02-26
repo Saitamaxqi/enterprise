@@ -3,6 +3,7 @@
     <data noupdate="0">
         <record id="group_fsm_user" model="res.groups">
             <field name="name">User</field>
+            <field name="sequence">10</field>
             <field name="category_id" ref="base.module_category_services_field_service"/>
             <field name="implied_ids" eval="[
                 (4, ref('hr_timesheet.group_hr_timesheet_user')),
@@ -14,6 +15,7 @@
         <record id="group_fsm_manager" model="res.groups">
             <field name="category_id" ref="base.module_category_services_field_service"/>
             <field name="name">Administrator</field>
+            <field name="sequence">20</field>
             <field name="implied_ids" eval="[(4, ref('industry_fsm.group_fsm_user')), (4, ref('project.group_project_manager'))]"/>
             <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>

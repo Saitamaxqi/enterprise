@@ -12,6 +12,7 @@
 
     <record id="account.group_account_basic" model="res.groups">
         <field name="name">Invoicing &amp; Banks</field>
+        <field name="sequence">30</field>
         <field name="category_id" ref="base.module_category_accounting_accounting"/>
     </record>
 
