@@ -962,7 +962,7 @@ test("current hour is highlighted'", async () => {
         arch: '<gantt date_start="start" date_stop="stop" default_range="day"/>',
     });
     expect(`.o_gantt_header_cell.o_gantt_today`).toHaveCount(1);
-    expect(`.o_gantt_header_cell.o_gantt_today`).toHaveText("9am");
+    expect(`.o_gantt_header_cell.o_gantt_today`).toHaveText("9\nam");
 });
 
 test("Day scale with 12-hours format", async () => {

@@ -83,13 +83,13 @@
                     t-att-title="!column.isFolded and model.metaData.scale.colHeaderTitle(column.start, env)"
                 >
                     <t t-if="column.isFolded">
-                        <div class="o_gantt_header_cell_title">
-                            <i class="fa fa-caret-left pe-1"/><i class="fa fa-caret-right"/>
+                        <div class="o_gantt_header_cell_title gap-1">
+                            <i class="fa fa-caret-left"/><i class="fa fa-caret-right"/>
                         </div>
                     </t>
                     <t t-else="">
-                        <div class="o_gantt_fold_icons">
-                            <i class="fa fa-caret-right pe-1"/><i class="fa fa-caret-left"/>
+                        <div class="o_gantt_fold_icons gap-1">
+                            <i class="fa fa-caret-right"/><i class="fa fa-caret-left"/>
                         </div>
                         <div class="o_gantt_header_cell_title" t-if="'colHeaderFormatter' in model.metaData.scale">
                             <t t-esc="model.metaData.scale.colHeaderFormatter(column.start, env)"/>

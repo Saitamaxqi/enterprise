@@ -195,6 +195,9 @@
         .o_gantt_fold_icons {
             display: none;
         }
+        .o_gantt_header_cell_title {
+            display: flex;
+        }
         &.o_gantt_foldable_hovered {
             &:not(.o_gantt_foldable_stop) {
                 border-right-color: transparent;
@@ -204,7 +207,7 @@
             }
             &:hover {
                 .o_gantt_fold_icons {
-                    display: block;
+                    display: flex;
                 }
                 .o_gantt_header_cell_title {
                     display: none;
