@@ -19,14 +19,13 @@ export async function shareUrl() {
 }
 
 export function shareUrlMenuItem(env) {
-    const translatedText = _t("Share");
     return {
         type: "item",
         hide: env.isSmall || !isDisplayStandalone(),
         id: "share_url",
         description: markup(
             `<div class="d-flex align-items-center justify-content-between">
-                <span>${escape(translatedText)}</span>
+                <span>${escape(_t("Share"))}</span>
                 <span class="fa fa-share-alt"></span>
             </div>`
         ),
