@@ -23,5 +23,9 @@
         <xpath expr="//div[hasclass('o_cp_pager')]" position="attributes">
             <attribute name="t-if" add="!this.chatterState.visible" separator=" and "/>
         </xpath>
+
+        <xpath expr="//nav[hasclass('o_cp_switch_buttons')]" position="attributes">
+            <attribute name="t-if" add="!documentService.previewedDocument" separator=" and "/>
+        </xpath>
     </t>
 </templates>

@@ -1,5 +1,5 @@
 import { mailModels } from "@mail/../tests/mail_test_helpers";
-import { fields, models, serverState } from "@web/../tests/web_test_helpers";
+import { fields, models, serverState, webModels } from "@web/../tests/web_test_helpers";
 
 export class DocumentsDocument extends models.Model {
     _name = "documents.document";
@@ -24,6 +24,7 @@ export class DocumentsDocument extends models.Model {
     folder_id = fields.Many2one({ string: "Folder", relation: "documents.document" });
     res_model = fields.Char({ string: "Model (technical)" });
     attachment_id = fields.Many2one({ relation: "ir.attachment" });
+    company_id = fields.Many2one({ string: "Company", relation: "res.company" });
     active = fields.Boolean({ default: true, string: "Active" });
     activity_ids = fields.One2many({ relation: "mail.activity" });
     checksum = fields.Char({ string: "Checksum" });
@@ -91,6 +92,10 @@ export class DocumentsDocument extends models.Model {
 
     get_document_max_upload_limit() {
         return 67000000;
+    }
+
+    get_details_panel_res_models() {
+        return ["res.partner"];
     }
 
     action_create_shortcut() {
@@ -242,6 +247,7 @@ export function getDocumentsTestServerData(additionalRecords = []) {
                         folder_id: false,
                         name: "Folder 1",
                         type: "folder",
+                        company_id: false,
                         owner_id: false,
                         partner_id: false,
                     },
@@ -304,6 +310,7 @@ export const DocumentsModels = {
     MailActivityType,
     MailAlias,
     MailAliasDomain,
+    ResCompany: webModels.ResCompany,
     DocumentsDocument,
     DocumentsTag,
 };

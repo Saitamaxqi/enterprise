@@ -90,7 +90,7 @@ export const DocumentsControllerMixin = (component) =>
                     description: _t("Duplicate"),
                     icon: "fa fa-copy",
                     callback: () => this.model.onDuplicate(),
-                    groupNumber: 1
+                    groupNumber: 1,
                 },
                 trash: {
                     isAvailable: () => userIsInternal && editMode && someActive,
@@ -98,7 +98,7 @@ export const DocumentsControllerMixin = (component) =>
                     description: _t("Move to Trash"),
                     icon: "fa fa-trash",
                     callback: () => this.model.onArchive(),
-                    groupNumber: 1
+                    groupNumber: 1,
                 },
                 restore: {
                     isAvailable: () => someArchived,
@@ -106,7 +106,7 @@ export const DocumentsControllerMixin = (component) =>
                     description: _t("Restore"),
                     icon: "fa fa-history",
                     callback: () => this.model.onRestore(),
-                    groupNumber: 1
+                    groupNumber: 1,
                 },
                 delete: {
                     isAvailable: () => this.model.canDeleteRecords,
@@ -114,7 +114,7 @@ export const DocumentsControllerMixin = (component) =>
                     description: _t("Delete"),
                     icon: "fa fa-trash",
                     callback: () => this.model.onDelete(),
-                    groupNumber: 1
+                    groupNumber: 1,
                 },
                 rename: {
                     isAvailable: () => (userIsInternal || editMode) && singleSelection && !isInTrash,
@@ -122,15 +122,15 @@ export const DocumentsControllerMixin = (component) =>
                     description: _t("Rename"),
                     icon: "fa fa-edit",
                     callback: () => this.model.onRename(),
-                    groupNumber: 2
+                    groupNumber: 2,
                 },
                 details: {
-                    isAvailable: () => userIsInternal && singleSelection,
+                    isAvailable: () => userIsInternal,
                     sequence: 75,
                     description: _t("Info & tags"),
                     icon: "fa fa-info-circle",
                     callback: () => this.model.onToggleChatter(),
-                    groupNumber: 2
+                    groupNumber: 2,
                 },
                 shortcut: {
                     isAvailable: () => userIsInternal && singleSelection && !isInTrash,
@@ -138,7 +138,7 @@ export const DocumentsControllerMixin = (component) =>
                     description: _t("Create Shortcut"),
                     icon: "fa fa-external-link-square",
                     callback: () => this.model.onCreateShortcut(),
-                    groupNumber: 2
+                    groupNumber: 2,
                 },
                 version: {
                     isAvailable: () => this.model.canManageVersions,
@@ -146,7 +146,7 @@ export const DocumentsControllerMixin = (component) =>
                     description: _t("Manage Versions"),
                     icon: "fa fa-history",
                     callback: () => this.model.onManageVersions(),
-                    groupNumber: 2
+                    groupNumber: 2,
                 },
                 lock: {
                     isAvailable: () => userIsInternal && singleSelection && !isInTrash,
@@ -154,7 +154,7 @@ export const DocumentsControllerMixin = (component) =>
                     description: singleSelection?.data?.lock_uid ? _t("Unlock") : _t("Lock"),
                     icon: "fa fa-lock",
                     callback: () => this.model.onToggleLock(),
-                    groupNumber: 2
+                    groupNumber: 2,
                 },
                 copy: {
                     isAvailable: () => selectionCount && !isInTrash,
@@ -162,7 +162,7 @@ export const DocumentsControllerMixin = (component) =>
                     description: _t("Copy Links"),
                     icon: "fa fa-link",
                     callback: () => this.model.onCopyLinks(),
-                    groupNumber: 2
+                    groupNumber: 2,
                 },
                 pdf: {
                     isAvailable: () => userIsInternal && selectionCount && this.targetRecords.every((record) => record.isPdf()) && !isInTrash,
@@ -170,7 +170,7 @@ export const DocumentsControllerMixin = (component) =>
                     description: singleSelection ? _t("Split PDF") : _t("Merge PDFs"),
                     icon: "fa fa-scissors",
                     callback: () => this.model.onSplitPDF(),
-                    groupNumber: 2
+                    groupNumber: 2,
                 },
             };
         }

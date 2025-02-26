@@ -1,21 +1,32 @@
 import { _t } from "@web/core/l10n/translation";
+import { ModelSelector } from "@web/core/model_selector/model_selector";
 import { user } from "@web/core/user";
+import { memoize } from "@web/core/utils/functions";
 import { useService } from "@web/core/utils/hooks";
 import { formatFloat } from "@web/core/utils/numbers";
 import { CharField } from "@web/views/fields/char/char_field";
 import { Many2OneAvatarField } from "@web/views/fields/many2one_avatar/many2one_avatar_field";
 import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
+import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
 
-import { DocumentsDetailsMany2ManyTagsField } from "@documents/views/fields/documents_details_many2many_tags"
+import { DocumentsDetailsMany2ManyTagsField } from "@documents/views/fields/documents_details_many2many_tags";
+import { DocumentsTypeIcon } from "@documents/views/fields/documents_type_icon/documents_type_icon";
 
-import { Component, onWillRender, reactive } from "@odoo/owl";
+import { Component, onWillRender, onWillUpdateProps, reactive, useState } from "@odoo/owl";
+
+// Small hack, memoize uses the first argument as cache key, but we need the orm which will not be the same.
+const getDetailsPanelResModels = memoize((_null, orm) =>
+    orm.call("documents.document", "get_details_panel_res_models")
+);
 
 export class DocumentsDetailsPanel extends Component {
     static components = {
         CharField,
         DocumentsDetailsMany2ManyTagsField,
+        DocumentsTypeIcon,
         Many2OneAvatarField,
         Many2OneField,
+        ModelSelector,
     };
     static props = {
         record: { type: Object, optional: true },
@@ -28,6 +39,7 @@ export class DocumentsDetailsPanel extends Component {
         /** @type {import("@documents/core/document_service").DocumentService} */
         this.documentService = useService("document.document");
         this.orm = useService("orm");
+        this.dialog = useService("dialog");
         onWillRender(() => {
             this.record = reactive(this.props.record || {}, async () => {
                 if (this.props.record?.data?.type === "folder") {
@@ -35,6 +47,18 @@ export class DocumentsDetailsPanel extends Component {
                     this.render();
                 }
             });
+        });
+
+        // Use a state for the model to not write on the record the model without record id
+        this.state = useState({
+            resModel: this.props.record.data.res_model,
+            resModelName: this.props.record.data.res_model_name || "",
+            models: [],
+        });
+        getDetailsPanelResModels(null, this.orm).then((models) => (this.state.models = models));
+        onWillUpdateProps((nextProps) => {
+            this.state.resModel = nextProps.record.data.res_model;
+            this.state.resModelName = nextProps.record.data.res_model_name || "";
         });
     }
 
@@ -75,5 +99,51 @@ export class DocumentsDetailsPanel extends Component {
             : this.props.record.data?.owner_id
                 ? _t("Shared with me")
                 : _t("Company");
+    }
+
+    get activeCompanies() {
+        return user.activeCompanies.map((c) => c.id);
+    }
+
+    async onModelSelected(value) {
+        this.state.resModel = value.technical;
+        this.state.resModelName = value.label || "";
+        await this.props.record.update({ res_id: false, res_model: false }, { save: true });
+        if (this.state.resModel) {
+            this.dialog.add(
+                SelectCreateDialog,
+                {
+                    title: _t("Select a Record To Link"),
+                    noCreate: true,
+                    multiSelect: false,
+                    resModel: this.state.resModel,
+                    onSelected: async (resIds) => {
+                        if (resIds.length) {
+                            await this.onResIdUpdate(resIds);
+                        }
+                    },
+                },
+                {
+                    onClose: () => {
+                        if (!this.record.data.res_id) {
+                            this.onRecordReset();
+                        }
+                    },
+                }
+            );
+        }
+    }
+
+    onRecordReset() {
+        return this.onModelSelected({ technical: false, label: false });
+    }
+
+    async onResIdUpdate(value) {
+        if (this.state.resModel) {
+            await this.props.record.update(
+                { res_id: value[0], res_model: this.state.resModel },
+                { save: true }
+            );
+        }
     }
 }

@@ -84,7 +84,7 @@ class DocumentsDocument(models.Model):
     url = fields.Char('Link URL', index=True, size=1024, tracking=True)
     url_preview_image = fields.Char(
         'URL Preview Image', store=True, compute='_compute_name_and_preview', readonly=False)
-    res_model_name = fields.Char(compute='_compute_res_model_name', index=True)
+    res_model_name = fields.Char(compute='_compute_res_model_name')
     type = fields.Selection([('url', 'URL'), ('binary', 'File'), ('folder', 'Folder')],
                             default='binary', string='Type', required=True, readonly=True, index=True)
     shortcut_document_id = fields.Many2one('documents.document', 'Source Document', ondelete='cascade',
@@ -168,6 +168,7 @@ class DocumentsDocument(models.Model):
 
     # Alias
     alias_tag_ids = fields.Many2many('documents.tag', 'document_alias_tag_rel', string="Alias Tags")
+    mail_alias_domain_count = fields.Integer("Mail Alias Domain Count", compute='_compute_mail_alias_domain_count')
 
     # UI fields
     last_access_date_group = fields.Selection(selection=[
@@ -212,7 +213,7 @@ class DocumentsDocument(models.Model):
         (self - to_activate).create_activity_option = False
 
     @api.depends("folder_id", "company_id")
-    @api.depends_context("uid", "allowed_company_ids")
+    @api.depends_context("uid", "allowed_company_ids", "documents_show_parent_name")
     def _compute_display_name(self):
         accessible_records = self._filtered_access('read')
         not_accessible_records = self - accessible_records
@@ -220,7 +221,11 @@ class DocumentsDocument(models.Model):
         folders = accessible_records.filtered(lambda d: d.type == 'folder')
         for record in folders:
             if record.user_permission != 'none':
-                record.display_name = record.name
+                record.display_name = (
+                    record.name
+                    if not self.env.context.get('documents_show_parent_name') or not record.folder_id
+                    else _("%(record)s (in %(parent)s)", record=record.name, parent=record.folder_id.name)
+                )
             else:
                 record.display_name = _("Restricted Folder")
 
@@ -635,6 +640,9 @@ class DocumentsDocument(models.Model):
                  WHERE partner_id = %s
             )
         """, self.env.user.partner_id.id)
+
+    def _compute_mail_alias_domain_count(self):
+        self.mail_alias_domain_count = self.env['mail.alias.domain'].sudo().search_count([])
 
     @api.depends('access_ids')
     def _compute_last_access_date_group(self):
@@ -2091,7 +2099,7 @@ class DocumentsDocument(models.Model):
             enable_counters = kwargs.get('enable_counters', False)
             search_panel_fields = ['access_token', 'company_id', 'description', 'display_name', 'folder_id',
                                    'is_favorited', 'is_company_root_folder', 'owner_id', 'shortcut_document_id',
-                                   'user_permission', 'active']
+                                   'user_permission', 'active', 'mail_alias_domain_count']
             if not self.env.user.share:
                 search_panel_fields += ['alias_name', 'alias_domain_id', 'alias_tag_ids', 'partner_id',
                                         'create_activity_type_id', 'create_activity_user_id']
@@ -2215,6 +2223,22 @@ class DocumentsDocument(models.Model):
             except ValueError:
                 _logger.error("invalid %s: %r", key, value)
         return odoo.http.DEFAULT_MAX_CONTENT_LENGTH
+
+    @api.readonly
+    @api.model
+    def get_details_panel_res_models(self):
+        """Return the list of models that a document can be linked to via the details panel.
+
+        :rtype: list[str]
+        """
+        functional_models = [
+            "account.move", "fleet.vehicle", "hr.expense", "hr.leave", "product.product", "project.project",
+            "project.task", "purchase.order", "sale.order",
+        ]
+        return [
+            model for model in functional_models
+            if (res_model := self.env.get(model)) is not None and res_model.has_access('read')
+        ]
 
     @api.readonly
     @api.model

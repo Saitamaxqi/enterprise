@@ -4,6 +4,7 @@ export const basicDocumentsListArch = /* xml */ `
     <field name="name"/>
     <field name="folder_id"/>
     <field name="owner_id"/>
+    <field name="company_id"/>
     <field name="active"/>
     <field name="partner_id"/>
     <field name="id" invisible="1"/>

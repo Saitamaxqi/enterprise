@@ -27,7 +27,6 @@ export class DocumentsAction extends Component {
                 this.state.topbarActions = Object.values(this.documentService.getSelectionActions().getTopbarActions()).sort((a, b) => b.groupNumber - a.groupNumber)
                 if (this.props.isPreview) {
                     const actionMenuProps = selectionActions.getMenuProps();
-                    actionMenuProps.items.action = actionMenuProps.items.action.filter(e => !["details"].includes(e.key));
                     this.state.actionMenuProps = actionMenuProps;
                 }
             }

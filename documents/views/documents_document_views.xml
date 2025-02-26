@@ -53,6 +53,7 @@
                 <field name="type"/>
                 <field name="shortcut_document_id"/>
                 <field name="create_uid"/>
+                <field name="company_id"/>
                 <field name="url"/>
                 <field name="url_preview_image"/>
                 <field name="checksum"/>
@@ -75,6 +76,7 @@
                 <field name="file_size"/>
                 <field name="alias_name"/>
                 <field name="alias_domain_id"/>
+                <field name="mail_alias_domain_count"/>
                 <field name="create_activity_type_id"/>
                 <field name="create_activity_user_id"/>
                 <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/> <!-- fetch `color` too -->
@@ -379,16 +381,18 @@
                 <field name="attachment_id" column_invisible="1"/>
                 <field name="res_id" column_invisible="1"/>
                 <field name="res_model" column_invisible="1"/>
+                <field name="res_model_name" column_invisible="1"/>
                 <field name="res_name" column_invisible="1"/>
                 <field name="shortcut_document_id" column_invisible="1"/>
                 <field name="mimetype" column_invisible="1"/>
                 <field name="access_url" column_invisible="1"/>
                 <field name="alias_email" optional="hide" widget="email"/>
-                <field name="alias_name" column_invisible="1"/>
-                <field name="alias_domain_id" column_invisible="1"/>
-                <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" column_invisible="1"/> <!-- fetch `color` too -->
-                <field name="create_activity_type_id" column_invisible="1"/>
-                <field name="create_activity_user_id" column_invisible="1"/>
+                <field name="alias_name" optional="hide"/>
+                <field name="alias_domain_id" optional="hide"/>
+                <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/> <!-- fetch `color` too -->
+                <field name="create_activity_type_id" optional="hide"/>
+                <field name="create_activity_user_id" optional="hide"/>
+                <field name="mail_alias_domain_count" optional="hide"/>
             </list>
         </field>
     </record>
@@ -420,12 +424,16 @@
                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <field name="partner_id"/>
                 <field name="owner_id"/>
+                <field name="type"/>
+                <field name="file_size"/>
+                <field name="company_id"/>
                 <field name="id"/>
                 <field name="active"/>
                 <field name="user_permission"/>
                 <field name="attachment_id"/>
                 <field name="res_id"/>
                 <field name="res_model"/>
+                <field name="res_model_name"/>
                 <field name="res_name"/>
                 <field name="shortcut_document_id"/>
                 <field name="mimetype"/>
@@ -434,6 +442,7 @@
                 <field name="alias_name"/>
                 <field name="alias_domain_id"/>
                 <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="mail_alias_domain_count"/>
 
                 <templates>
                     <div t-name="activity-box">

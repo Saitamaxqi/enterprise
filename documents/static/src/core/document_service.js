@@ -36,6 +36,7 @@ export class DocumentService {
         this.userIsDocumentUser = false;
         this.userIsErpManager = false;
         this.userIsInternal = false;
+        this.multiCompany = false;
         // Init data
         const urlSearch = parseSearchQuery(browser.location.search);
         const { documents_init } = session;
@@ -71,11 +72,13 @@ export class DocumentService {
             this.userIsDocumentUser,
             this.userIsErpManager,
             this.userIsInternal,
+            this.multiCompany,
         ] = await Promise.all([
             user.hasGroup("documents.group_documents_manager"),
             user.hasGroup("documents.group_documents_user"),
             user.hasGroup("base.group_erp_manager"),
             user.hasGroup("base.group_user"),
+            user.hasGroup("base.group_multi_company"),
         ]);
         const initialState =
             this.userIsInternal && JSON.parse(localStorage.getItem("documentsChatterVisible"));

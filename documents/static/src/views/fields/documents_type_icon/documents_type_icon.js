@@ -2,8 +2,7 @@ import { Component } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 
-
-class DocumentsTypeIcon extends Component {
+export class DocumentsTypeIcon extends Component {
     static template = "documents.DocumentsTypeIcon";
     static props = { ...standardFieldProps };
 }
