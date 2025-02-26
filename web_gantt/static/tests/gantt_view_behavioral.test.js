@@ -9,6 +9,7 @@ import {
     queryAllTexts,
     queryOne,
     scroll,
+    waitFor,
 } from "@odoo/hoot-dom";
 import { Deferred, advanceTime, animationFrame, mockDate, runAllTimers } from "@odoo/hoot-mock";
 import {
@@ -927,10 +928,9 @@ test("resize a pill", async () => {
 
     // resize to one cell smaller at end (-1 day)
     let drop = await resizePill(getPillWrapper("Task 1"), "end", -1, false);
-    await animationFrame();
-    expect(SELECTORS.startBadge).toHaveText("11/30/2018, 7:30 PM");
-    expect(SELECTORS.stopBadge).toHaveText("12/30/2018, 7:29 PM (-24 hours)");
+    await waitFor(SELECTORS.stopBadge + ":contains(12/30/2018, 7:29 PM (-24 hours))");
     expect(SELECTORS.stopBadge).toHaveClass("text-danger");
+    expect(SELECTORS.startBadge).toHaveText("11/30/2018, 7:30 PM");
     await drop();
 
     await selectCustomRange({ startDate: "2018-11-10", stopDate: "2018-11-30" });
@@ -946,10 +946,9 @@ test("resize a pill", async () => {
 
     // resize to one cell smaller at start (-1 day)
     drop = await resizePill(getPillWrapper("Task 1"), "start", -1, false);
-    await animationFrame();
-    expect(SELECTORS.startBadge).toHaveText("11/29/2018, 7:30 PM (+24 hours)");
-    expect(SELECTORS.stopBadge).toHaveText("12/30/2018, 7:29 PM");
+    await waitFor(SELECTORS.startBadge + ":contains(11/29/2018, 7:30 PM (+24 hours))");
     expect(SELECTORS.startBadge).toHaveClass("text-success");
+    expect(SELECTORS.stopBadge).toHaveText("12/30/2018, 7:29 PM");
     await drop();
 
     expect.verifySteps([
@@ -995,9 +994,9 @@ test("resize a pill (2)", async () => {
 
     // resize to one cell larger
     const drop = await resizePill(getPillWrapper("Task 2"), "end", +1, false);
-    expect(SELECTORS.startBadge).toHaveText("12/17/2018, 12:30 PM");
-    expect(SELECTORS.stopBadge).toHaveText("12/23/2018, 7:29 AM (+24 hours)");
+    await waitFor(SELECTORS.stopBadge + ":contains(12/23/2018, 7:29 AM (+24 hours))");
     expect(SELECTORS.stopBadge).toHaveClass("text-success");
+    expect(SELECTORS.startBadge).toHaveText("12/17/2018, 12:30 PM");
     await drop();
 
     expect(".modal").toHaveCount(0);
