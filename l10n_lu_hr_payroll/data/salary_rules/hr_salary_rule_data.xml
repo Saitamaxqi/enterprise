@@ -595,6 +595,29 @@ result = - ci_co2 / 12 * ceil(payslip.l10n_lu_effective_taxable_days) / payslip.
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
 
+    <record id="l10n_lu_employees_cim" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_lu_hr_payroll.hr_salary_rule_category_tax_credit"/>
+        <field name="name">CIM</field>
+        <field name="code">CIM</field>
+        <field name="sequence">145</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = employee.l10n_lu_tax_id_number and employee.l10n_lu_tax_credit_cim</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+yearly_gross = int(payslip._get_yearly_simulated_gross(categories['GROSS']))
+gross_lower, gross_upper, amount_lower, base_amount_mid, rate_mid, amount_upper = payslip._rule_parameter('l10n_lu_cim')
+cim = 0
+if yearly_gross &lt; gross_lower:
+    cim = amount_lower
+elif gross_lower &lt;= yearly_gross &lt;= gross_upper:
+    cim = base_amount_mid - (yearly_gross - gross_lower) * rate_mid
+else:
+    cim = amount_upper
+result = - cim / 12 * ceil(payslip.l10n_lu_effective_taxable_days) / payslip._rule_parameter('l10n_lu_days_per_month')
+        </field>
+        <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
+    </record>
+
     <record id="l10n_lu_employees_cip" model="hr.salary.rule">
         <field name="category_id" ref="l10n_lu_hr_payroll.hr_salary_rule_category_tax_credit"/>
         <field name="name">CIP</field>
