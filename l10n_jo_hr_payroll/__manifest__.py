@@ -3,9 +3,14 @@
     'name': 'Jordan - Payroll',
     'countries': ['jo'],
     'category': 'Human Resources/Payroll',
+    'author': 'Odoo S.A., Flex Ops',
     'description': """
 Jordan Payroll and Tax Rules
-============================
+========================================
+
+- Supports basic calculation
+- Tax income brackets
+- National contribution tax and social security
     """,
     'depends': ['hr_payroll'],
     'auto_install': ['hr_payroll'],

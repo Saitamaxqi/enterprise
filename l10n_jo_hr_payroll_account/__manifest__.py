@@ -2,6 +2,7 @@
 
 {
     'name': 'Jordan - Payroll with Accounting',
+    'countries': ['jo'],
     'version': '1.0',
     'countries': ['jo'],
     'category': 'Human Resources',
