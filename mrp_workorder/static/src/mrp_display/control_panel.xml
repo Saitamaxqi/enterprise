@@ -13,7 +13,6 @@
                     <span class="overflow-hidden rounded ms-1 py-1 px-2" t-out="count"
                           t-attf-class="o_workcenter_item_color_{{id > 0 ? id % 11 : 0}}"/>
                 </button>
-                <div class="d-inline border-end ps-1 me-1" t-if="id === '0'"></div>
             </t>
         </div>
         <div class="position-sticky top-0 end-0 bg-view" t-att-class="this.props.hideNewWorkcenterButton ? 'invisible' : ''">

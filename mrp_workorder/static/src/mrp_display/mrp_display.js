@@ -24,6 +24,11 @@ import {
     useSubEnv,
 } from "@odoo/owl";
 
+const defaultWorkcenterButtons = [
+    { id: 0, display_name: _t("Overview") },
+    { id: -1, display_name: _t("My WO") },
+];
+
 export class MrpDisplay extends Component {
     static template = "mrp_workorder.MrpDisplay";
     static components = {
@@ -71,7 +76,8 @@ export class MrpDisplay extends Component {
             localStorageName: `mrp_workorder.db_${session.db}.user_${user.userId}.picking_type_${this.pickingTypeId}`,
         });
 
-        const workcenters = JSON.parse(localStorage.getItem(this.env.localStorageName)) || [];
+        const localStoredWC = JSON.parse(localStorage.getItem(this.env.localStorageName)) || [];
+        const workcenters = [...defaultWorkcenterButtons, ...localStoredWC];
         let activeWorkcenter = this.props.context.workcenter_id || false;
         // If no workcenter by default but some WC were already selected, selects the first one.
         if (!activeWorkcenter && workcenters.length) {
@@ -326,10 +332,9 @@ export class MrpDisplay extends Component {
     }
 
     async toggleWorkcenter(workcenters) {
-        const localStorageName = this.env.localStorageName;
-        localStorage.setItem(localStorageName, JSON.stringify(workcenters));
-        this.state.workcenters = workcenters;
-        this.env.searchModel.setWorkcenterFilter(workcenters);
+        localStorage.setItem(this.env.localStorageName, JSON.stringify(workcenters));
+        this.state.workcenters = [...defaultWorkcenterButtons, ...workcenters];
+        this.env.searchModel.setWorkcenterFilter(this.state.workcenters);
     }
 
     toggleEmployeesPanel() {
@@ -453,7 +458,7 @@ export class MrpDisplay extends Component {
 
     toggleWorkcenterDialog(showWarning = true) {
         const params = {
-            title: _t("Select Work Centers for this station"),
+            title: _t("Configure your station"),
             confirm: this.toggleWorkcenter.bind(this),
             disabled: [],
             active: this.state.workcenters.map((wc) => wc.id),
