@@ -9,7 +9,7 @@ When invoicing timesheets, allows invoicing either all timesheets
 linked to an SO, or only the validated timesheets
     """,
 
-    'category': 'Hidden',
+    'category': 'Sales/Sales',
     'version': '0.1',
 
     'depends': ['sale_timesheet', 'timesheet_grid'],

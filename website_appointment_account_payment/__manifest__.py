@@ -3,7 +3,7 @@
 {
     'name': 'Pay to Book on Website',
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Services/Appointment',
     'summary': 'Up-front payment on bookings on website',
     'description': """Add a payment step at the end of appointment and resource bookings, on website""",
     'author': 'Odoo S.A.',

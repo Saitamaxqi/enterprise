@@ -1,6 +1,6 @@
 {
     'name': 'Website Sales Dashboard',
-    'category': 'Hidden',
+    'category': 'Website/Website',
     'sequence': 55,
     'summary': 'Get a new dashboard view in the Website App',
     'version': '1.0',

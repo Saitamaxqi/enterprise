@@ -3,7 +3,7 @@
 {
     'name': "Project Time Off",
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Services/Project',
     'summary': "Project and task integration with holidays",
     'description': """
 Project and task integration with holidays

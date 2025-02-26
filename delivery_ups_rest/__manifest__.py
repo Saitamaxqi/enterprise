@@ -2,7 +2,7 @@
 {
     'name': "UPS Shipping",
     'summary': "Send your shippings through UPS and track them online",
-    'category': 'Inventory/Delivery',
+    'category': 'Shipping Connectors',
     'version': '0.1',
     'application': True,
     'depends': ['stock_delivery', 'mail'],

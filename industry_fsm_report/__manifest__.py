@@ -2,7 +2,7 @@
 
 {
     'name': 'Field Service Reports',
-    'category': 'Hidden',
+    'category': 'Services/Field Service',
     'summary': 'Create Reports for Field service workers',
     'description': """
 Create Reports for Field Service

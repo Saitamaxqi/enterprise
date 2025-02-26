@@ -4,7 +4,7 @@
 {
     'name': "Mrp Accounting",
     'version': "1.0",
-    'category': 'Inventory/Inventory',
+    'category': 'Supply Chain/Inventory',
     'summary': "Bridge between Mrp and Accounting",
     'description': """
 Automatic accounting for MRP

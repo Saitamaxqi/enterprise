@@ -8,7 +8,7 @@
         This bridge module is auto-installed when the modules sale_timesheet_enterprise and project_timesheet_holidays are installed.
     """,
 
-    'category': 'Hidden',
+    'category': 'Sales/Sales',
     'version': '0.1',
 
     'depends': ['sale_timesheet_enterprise', 'project_timesheet_holidays'],

@@ -4,7 +4,7 @@
 {
     'name': "Barcode Quality bridge module",
     'summary': "Allows the usage of quality checks within the barcode views",
-    'category': 'Hidden',
+    'category': 'Supply Chain/Inventory',
     'version': '1.0',
     'description': """
 This bridge module is auto-installed when the modules stock_barcode and quality_control are installed.

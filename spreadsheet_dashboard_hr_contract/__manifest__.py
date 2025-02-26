@@ -3,7 +3,7 @@
 {
     'name': "Spreadsheet dashboard for human resources",
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Productivity/Dashboard',
     'summary': 'Spreadsheet',
     'description': 'Spreadsheet',
     'depends': ['spreadsheet_dashboard', 'hr_contract_reports'],

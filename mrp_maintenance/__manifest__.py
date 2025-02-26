@@ -4,7 +4,7 @@
 {
     'name': 'Maintenance - MRP',
     'version': '1.0',
-    'category': 'Manufacturing/Manufacturing',
+    'category': 'Supply Chain/Manufacturing',
     'summary': 'Schedule and manage maintenance on machine and tools.',
     'website': 'https://www.odoo.com/app/maintenance',
     'description': """

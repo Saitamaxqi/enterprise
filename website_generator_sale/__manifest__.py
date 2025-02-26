@@ -2,7 +2,7 @@
 {
     'name': 'Website Generator Sale',
     'version': '1.0.0',
-    'category': 'Hidden/Tools',
+    'category': 'Website/Website',
     'summary': 'Import products from a pre-existing website',
     'description': """
         Extension of the Website Generator.

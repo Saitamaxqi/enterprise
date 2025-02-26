@@ -2,7 +2,7 @@
 
 {
     'name': 'UPS: Bill My Account',
-    'category': 'Inventory/Delivery',
+    'category': 'Shipping Connectors',
     'summary': 'Bill to your UPS account number',
     'description': """
 This module allows ecommerce users to enter their UPS account number and delivery fees will be charged on that account number.

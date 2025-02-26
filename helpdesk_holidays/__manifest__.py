@@ -4,7 +4,7 @@
 {
     'name': 'Helpdesk Time Off',
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Services/Helpdesk',
     'sequence': 50,
     'summary': 'Helpdesk integration with holidays',
     'depends': ['helpdesk', 'hr_holidays_gantt'],

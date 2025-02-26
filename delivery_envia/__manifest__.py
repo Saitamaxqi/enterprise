@@ -10,7 +10,7 @@ Seamlessly integrating with a large range of couriers and platforms,
 you can streamline every step of your fulfilment process,
 reduce handling time and improve customer experience.
     """,
-    'category': 'Inventory/Delivery',
+    'category': 'Shipping Connectors',
     'version': '1.0',
     'application': True,
     'depends': ['stock_delivery', 'base_address_extended', 'phone_validation'],

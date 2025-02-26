@@ -3,7 +3,7 @@
 
 {
     'name': "MRP Barcode",
-    'category': 'Inventory/Inventory',
+    'category': 'Supply Chain/Inventory',
     'summary': 'Process Manufacturing Orders from the barcode application',
     'version': '1.0',
     'depends': ['stock_barcode', 'mrp'],

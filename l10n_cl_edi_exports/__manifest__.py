@@ -4,7 +4,7 @@
     "name": """Electronic Exports of Goods for Chile""",
     'countries': ['cl'],
     'version': '1.0',
-    'category': 'Localization/Chile',
+    'category': 'Accounting/Localizations/EDI',
     'description': '''
 Even when the quantity of packages is apparently only inherent to stock application, we need a field for this
 in the invoice, because that info could also depend on the DUS declaration.

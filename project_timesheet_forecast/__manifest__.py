@@ -3,7 +3,7 @@
 {
     'name': 'Timesheet and Planning',
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Services/Timesheets',
     'sequence': 50,
     'summary': 'Compare timesheets and plannings',
     'depends': ['timesheet_grid', 'project_forecast'],

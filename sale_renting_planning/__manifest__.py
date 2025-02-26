@@ -2,7 +2,7 @@
 {
     'name': "Rental/Planning Bridge",
     'summary': """This module Integrate Planning with Rental""",
-    'category': 'Hidden',
+    'category': 'Sales/Sales',
     'depends': ['sale_planning', 'sale_renting'],
     'auto_install': True,
     'author': 'Odoo S.A.',

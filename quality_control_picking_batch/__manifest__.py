@@ -4,7 +4,7 @@
 {
     'name': 'Quality - Batch Transfer',
     'version': '1.0',
-    'category': 'Manufacturing/Quality',
+    'category': 'Supply Chain/Quality',
     'summary': 'Support of quality control into batch transfers',
     'depends': [
         'quality_control',

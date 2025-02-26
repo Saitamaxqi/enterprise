@@ -2,7 +2,7 @@
 
 {
     'name': 'Field Service Reports - Sale',
-    'category': 'Hidden',
+    'category': 'Services/Field Service',
     'summary': 'Create Reports for Field service workers',
     'depends': ['industry_fsm_sale', 'industry_fsm_report'],
     'data': [

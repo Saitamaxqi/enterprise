@@ -3,7 +3,7 @@
 
 {
     'name': 'Quality checks with IoT',
-    'category': 'Manufacturing/Internet of Things (IoT)',
+    'category': 'Supply Chain/Internet of Things (IoT)',
     'summary': 'Control the quality of your products with IoT devices',
     'description': """
 Use devices connected to an IoT Box to control the quality of your products.

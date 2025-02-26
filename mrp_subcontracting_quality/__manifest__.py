@@ -4,7 +4,7 @@
 {
     'name': 'MRP Subcontracting Quality',
     'version': '1.0',
-    'category': 'Manufacturing/Quality',
+    'category': 'Supply Chain/Quality',
     'description': """
 Bridge module between MRP subcontracting and Quality
     """,

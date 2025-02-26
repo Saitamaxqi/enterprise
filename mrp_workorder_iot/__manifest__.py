@@ -4,7 +4,7 @@
 {
     'name': 'IoT features for Work Order',
     'version': '1.0',
-    'category': 'Manufacturing/Manufacturing',
+    'category': 'Supply Chain/Manufacturing',
     'sequence': 50,
     'summary': 'Steps in MRP work orders with IoT devices',
     'depends': ['mrp_workorder', 'quality_iot'],

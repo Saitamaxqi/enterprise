@@ -3,7 +3,7 @@
 {
     'name': 'UNSPSC product codes',
     'version': '0.2',
-    'category': 'Hidden',
+    'category': 'Accounting/Accounting',
     'summary': 'UNSPSC product codes',
     'description': """
 Countries like Colombia, Peru, Mexico, Denmark need to be able to use the

@@ -3,7 +3,7 @@
 
 {
     'name': 'Sendcould Locations for Website Delivery',
-    'category': 'Inventory/Delivery',
+    'category': 'Shipping Connectors',
     'summary': 'Allows website customers to choose delivery pick-up points',
     'description': 'This module allows ecommerce users to choose to deliver to Pick-Up points for the Sendcloud connector.',
     'depends': ['delivery_sendcloud', 'website_sale'],

@@ -4,7 +4,7 @@
 {
     'name': 'MRP II - Expiry',
     'version': '1.0',
-    'category': 'Manufacturing/Manufacturing',
+    'category': 'Supply Chain/Manufacturing',
     'summary': 'MRP Workorder Expiry',
     'description': """
 Technical module.

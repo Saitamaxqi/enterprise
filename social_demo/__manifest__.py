@@ -3,7 +3,7 @@
 
 {
     'name': 'Social Demo Module',
-    'category': 'Hidden',
+    'category': 'Marketing/Social Marketing',
     'summary': 'Get demo data for the social module',
     'version': '1.0',
     'description': """Get demo data for the social module.

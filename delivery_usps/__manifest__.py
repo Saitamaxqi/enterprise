@@ -3,7 +3,7 @@
 {
     'name': "United States Postal Service (USPS) Shipping (Legacy)",
     'description': "This is the legacy integration with USPS. Please install the new \"United States Postal Service (USPS) Shipping\" module and uninstall this one as soon as possible.",
-    'category': 'Inventory/Delivery',
+    'category': 'Shipping Connectors',
     'sequence': 305,
     'version': '1.0',
     'application': True,

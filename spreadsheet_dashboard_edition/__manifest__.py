@@ -3,7 +3,7 @@
 {
     'name': "Spreadsheet dashboard edition",
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Productivity/Dashboard',
     'summary': 'Spreadsheet Dashboard edition',
     'description': 'Spreadsheet Dashboard edition',
     'depends': ['spreadsheet_dashboard', 'spreadsheet_edition'],

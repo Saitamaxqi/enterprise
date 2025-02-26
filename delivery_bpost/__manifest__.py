@@ -11,7 +11,7 @@ local Post company.
 
 See: https://www.bpost.be/portal/goHome
     """,
-    'category': 'Inventory/Delivery',
+    'category': 'Shipping Connectors',
     'sequence': 330,
     'version': '1.0',
     'application': True,

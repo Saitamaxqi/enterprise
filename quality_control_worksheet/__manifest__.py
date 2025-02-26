@@ -4,7 +4,7 @@
 {
     'name': 'Worksheet for Quality Control',
     'version': '1.0',
-    'category': 'Manufacturing/Quality',
+    'category': 'Supply Chain/Quality',
     'summary': 'Create custom worksheet for quality control',
     'depends': ['quality_control', 'worksheet'],
     'description': """

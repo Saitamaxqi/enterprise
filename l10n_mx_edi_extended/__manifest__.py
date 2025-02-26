@@ -4,7 +4,7 @@
     'name': 'EDI for Mexico (Advanced Features)',
     'countries': ['mx'],
     'version': '0.1',
-    'category': 'Hidden',
+    'category': 'Accounting/Localizations/EDI',
     'depends': [
         'l10n_mx_edi',
         'base_address_extended',

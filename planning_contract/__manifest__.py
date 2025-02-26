@@ -4,7 +4,7 @@
 {
     'name': 'Planning Contract',
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Human Resources/Planning',
     'sequence': 50,
     'summary': 'Planning integration with contracts',
     'depends': ['planning', 'hr_contract'],

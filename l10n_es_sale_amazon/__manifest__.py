@@ -3,7 +3,7 @@
 {
     'name': 'Spain - Amazon Connector',
     'version': '1.0',
-    'category': 'Localization',
+    'category': 'Sales/Sales',
     'summary': "Bridge module between the Spanish localization and Amazon",
     'depends': ['sale_amazon', 'l10n_es'],
     'auto_install': True,

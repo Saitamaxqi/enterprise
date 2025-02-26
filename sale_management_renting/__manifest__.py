@@ -3,7 +3,7 @@
 {
     'name': "Sale Management for Rental",
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Sales/Sales',
     'description': "This module adds management features to the sale renting app.",
     'depends': ['sale_renting', 'sale_management'],
     'data': [

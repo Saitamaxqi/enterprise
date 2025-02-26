@@ -3,7 +3,7 @@
 
 {
     'name': 'Sale Project Forecast',
-    'category': 'Hidden',
+    'category': 'Sales/Sales',
     'description': """
 This module allows you to schedule your Sales Order based on the product configuration.
 

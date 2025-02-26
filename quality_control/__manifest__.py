@@ -4,7 +4,7 @@
 {
     'name': 'Quality',
     'version': '1.0',
-    'category': 'Manufacturing/Quality',
+    'category': 'Supply Chain/Quality',
     'sequence': 120,
     'summary': 'Control the quality of your products',
     'website': 'https://www.odoo.com/app/quality',

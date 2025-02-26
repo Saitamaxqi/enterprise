@@ -6,7 +6,7 @@
 Bridge between Helpdesk and Industry FSM Sale
     """,
     'summary': 'Project, Helpdesk, FSM, Timesheet and Sale Orders',
-    'category': 'Hidden',
+    'category': 'Services/Helpdesk',
     'depends': ['helpdesk_fsm', 'helpdesk_sale_timesheet', 'industry_fsm_sale'],
     'data': [
         'views/project_project_views.xml',

@@ -2,7 +2,7 @@
 
 {
     'name': 'eCommerce Subscription',
-    'category': 'Hidden',
+    'category': 'Website/Website',
     'summary': 'Sell subscription products on your eCommerce',
     'version': '1.0',
     'description': """

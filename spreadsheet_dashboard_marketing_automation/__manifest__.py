@@ -2,7 +2,7 @@
 {
     'name': "Spreadsheet dashboard for marketing automation",
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Productivity/Dashboard',
     'summary': 'Spreadsheet',
     'description': 'Spreadsheet',
     'depends': ['spreadsheet_dashboard', 'marketing_automation'],

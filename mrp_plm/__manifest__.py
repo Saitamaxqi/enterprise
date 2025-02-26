@@ -4,7 +4,7 @@
 {
     'name': 'Product Lifecycle Management (PLM)',
     'version': '1.0',
-    'category': 'Manufacturing/Product Lifecycle Management (PLM)',
+    'category': 'Supply Chain/Product Lifecycle Management (PLM)',
     'sequence': 155,
     'summary': """Manage engineering change orders on products, bills of material""",
     'website': 'https://www.odoo.com/app/plm',

@@ -1,7 +1,7 @@
 {
     "name": "VoIP OnSIP",
     "description": """Enables VoIP compatibility with OnSIP.""",
-    "category": "Hidden",
+    "category": "Productivity/VOIP",
     "version": "1.0",
     "depends": ["voip"],
     "data": [

@@ -4,7 +4,7 @@
     'name': "UPS Shipping (Legacy)",
     'description': "This is the legacy integration with UPS that is no longer supported. \
         Please install the new \"UPS Shipping\" module and uninstall this one as soon as possible. This integration will stop working in 2024.",
-    'category': 'Inventory/Delivery',
+    'category': 'Shipping Connectors',
     'sequence': 275,
     'version': '1.0',
     'depends': ['stock_delivery', 'mail'],

@@ -3,7 +3,7 @@
 {
     'name': 'CRM Sale Subscription',
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Sales/CRM',
     'description': """
 Bridge module between CRM and Sale subscription.
     """,

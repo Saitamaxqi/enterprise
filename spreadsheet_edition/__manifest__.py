@@ -3,7 +3,7 @@
 {
     'name': "Spreadsheet",
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Productivity/Dashboard',
     'summary': 'Spreadsheet',
     'description': 'Spreadsheet',
     'depends': ['spreadsheet', 'mail', 'web_enterprise'],

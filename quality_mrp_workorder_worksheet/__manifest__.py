@@ -4,7 +4,7 @@
 {
     'name': 'Quality Worksheet for Workorder',
     'version': '1.0',
-    'category': 'Manufacturing/Quality',
+    'category': 'Supply Chain/Quality',
     'summary': 'Quality Worksheet for Workorder',
     'depends': ['quality_control_worksheet', 'quality_mrp_workorder'],
     'description': """

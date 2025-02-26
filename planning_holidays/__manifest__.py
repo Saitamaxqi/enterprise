@@ -4,7 +4,7 @@
 {
     'name': 'Planning Time Off',
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Human Resources/Planning',
     'sequence': 50,
     'summary': 'Planning integration with holidays',
     'depends': ['planning', 'hr_holidays_gantt'],

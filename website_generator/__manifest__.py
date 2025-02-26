@@ -2,7 +2,7 @@
 {
     'name': 'Website Generator',
     'version': '1.0.0',
-    'category': 'Hidden/Tools',
+    'category': 'Website/Website',
     'summary': 'Import a pre-existing website',
     'description': """
         Generates a new website in Odoo, with the goal of recreating an external website as close as possible.

@@ -1,6 +1,6 @@
 {
     'name': 'eCommerce Rental',
-    'category': 'Hidden',
+    'category': 'Website/Website',
     'summary': 'Sell rental products on your eCommerce',
     'version': '1.0',
     'description': """

@@ -2,7 +2,7 @@
 {
     'name': "Shiprocket Shipping",
     'description': "Send your parcels through shiprocket and track them online",
-    'category': 'Inventory/Delivery',
+    'category': 'Shipping Connectors',
     'sequence': 317,
     'version': '1.0',
     'application': True,

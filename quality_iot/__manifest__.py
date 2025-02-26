@@ -4,7 +4,7 @@
 
 {
     'name': 'Quality Steps with IoT',
-    'category': 'Manufacturing/Internet of Things (IoT)',
+    'category': 'Supply Chain/Internet of Things (IoT)',
     'summary': 'Quality steps and IoT devices',
     'description': """
 This module provides the link between quality steps and IoT devices. 

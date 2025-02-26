@@ -2,7 +2,7 @@
 {
     'name': "Spreadsheet dashboard for rental",
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Productivity/Dashboard',
     'summary': 'Spreadsheet',
     'description': 'Spreadsheet',
     'depends': ['spreadsheet_dashboard', 'sale_renting'],

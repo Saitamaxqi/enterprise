@@ -4,7 +4,7 @@
 {
     'name': "Stock enterprise",
     'version': "1.0",
-    'category': 'Inventory/Inventory',
+    'category': 'Supply Chain/Inventory',
     'summary': "Advanced features for Stock",
     'description': """
 Contains the enterprise views for Stock management

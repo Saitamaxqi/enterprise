@@ -4,7 +4,7 @@
     'name': "Fedex Shipping (Legacy)",
     'description': "This is the legacy integration with FedEx that is no longer supported. \
         Please install the new \"Fedex Shipping\" module and uninstall this one as soon as possible. This integration will stop working in 2024.",
-    'category': 'Inventory/Delivery',
+    'category': 'Shipping Connectors',
     'sequence': 295,
     'version': '1.0',
     'application': True,

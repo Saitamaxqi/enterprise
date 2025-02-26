@@ -6,7 +6,7 @@
     'description': """
 This module enables the barcode scanning feature for the warehouse management system.
     """,
-    'category': 'Inventory/Inventory',
+    'category': 'Supply Chain/Inventory',
     'sequence': 255,
     'version': '1.0',
     'depends': ['stock', 'web_tour', 'web_mobile'],

@@ -3,7 +3,7 @@
 
 {
     'name': 'Sell Helpdesk Timesheet',
-    'category': 'Hidden',
+    'category': 'Services/Helpdesk',
     'summary': 'Project, Helpdesk, Timesheet and Sale Orders',
     'depends': ['helpdesk_timesheet', 'sale_timesheet_enterprise', 'helpdesk_sale'],
     'description': """

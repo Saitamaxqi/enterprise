@@ -3,7 +3,7 @@
 
 {
     'name': 'Field Service Stock',
-    'category': 'Hidden',
+    'category': 'Services/Field Service',
     'summary': 'Validate stock moves for product added on sales orders through Field Service Management App',
     'description': """
 Validate stock moves for Field Service

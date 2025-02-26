@@ -2,7 +2,7 @@
 
 {
     'name': 'Employees in Mobile',
-    'category': 'Hidden',
+    'category': 'Human Resources/Employees',
     'summary': 'Employees in Mobile',
     'version': '1.0',
     'description': """ """,

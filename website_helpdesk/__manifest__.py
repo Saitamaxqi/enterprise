@@ -3,7 +3,7 @@
 
 {
     'name': 'Website Helpdesk',
-    'category': 'Hidden',
+    'category': 'Services/Helpdesk',
     'sequence': 57,
     'summary': 'Bridge module for helpdesk modules using the website.',
     'description': 'Bridge module for helpdesk modules using the website.',

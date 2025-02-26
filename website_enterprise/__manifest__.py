@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Website Enterprise',
-    'category': 'Hidden',
+    'category': 'Website/Website',
     'summary': 'Get the enterprise look and feel',
     'description': """
 This module overrides community website features and introduces enterprise look and feel.

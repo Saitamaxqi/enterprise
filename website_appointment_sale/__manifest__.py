@@ -3,7 +3,7 @@
 {
     'name': "Pay to Book with eCommerce",
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Services/Appointment',
     'summary': "eCommerce on appointments",
     'description': """Enable a payment step to your bookings, using the e-commerce features of the website.""",
     'author': 'Odoo S.A.',

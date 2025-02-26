@@ -3,7 +3,7 @@
 
 {
     'name': "Employees cost registration on production",
-    'category': "Hidden",
+    'category': "Supply Chain/Manufacturing",
     'summary': 'Analytic cost of employee work in manufacturing',
 
     'description': """ """,

@@ -3,7 +3,7 @@
 {
     'name': 'Repair features for Quality Control',
     'version': '1.0',
-    'category': 'Repair/Quality',
+    'category': 'Supply Chain/Quality',
     'sequence': 50,
     'summary': 'Quality Management with Repair',
     'depends': ['quality_control', 'repair'],

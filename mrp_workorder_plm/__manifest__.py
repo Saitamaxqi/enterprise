@@ -4,7 +4,7 @@
 {
     'name': 'PLM for workorder',
     'version': '1.0',
-    'category': 'Manufacturing/Product Lifecycle Management (PLM)',
+    'category': 'Supply Chain/Product Lifecycle Management (PLM)',
     'description': """
 PLM for workorder.
 =================================================

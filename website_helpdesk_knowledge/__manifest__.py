@@ -4,7 +4,7 @@
 {
     'name': 'Helpdesk Knowledge',
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Website/Website',
     'summary': 'Helpdesk integration with knowledge',
     'depends': [
         'website_helpdesk',

@@ -4,7 +4,7 @@
 {
     'name': 'Worksheet for Maintenance',
     'version': '1.0',
-    'category': 'Hidden',
+    'category': 'Supply Chain/Maintenance',
     'summary': 'Create custom worksheets for Maintenance',
     'description': """
 Create customizable worksheet templates for Maintenance

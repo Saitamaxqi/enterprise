@@ -3,7 +3,7 @@
 
 {
     'name': 'Employees in Gantt',
-    'category': 'Hidden',
+    'category': 'Human Resources/Employees',
     'summary': 'Employees in Gantt',
     'version': '1.0',
     'description': """ """,

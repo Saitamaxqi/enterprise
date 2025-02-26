@@ -2,7 +2,7 @@
 {
     'name': "United States Postal Service (USPS) Shipping",
     'description': "Send your shippings through USPS and track them online",
-    'category': 'Inventory/Delivery',
+    'category': 'Shipping Connectors',
     'sequence': 305,
     'version': '1.0',
     'application': True,
