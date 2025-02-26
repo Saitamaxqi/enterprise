@@ -14,8 +14,8 @@ patch(CustomFavoriteItem.prototype, {
     isKnowledgeEmbeddedView() {
         return (
             this.env.searchModel &&
-            this.env.searchModel._context &&
-            this.env.searchModel._context.knowledgeEmbeddedViewId
+            this.env.searchModel.context &&
+            this.env.searchModel.context.knowledgeEmbeddedViewId
         );
     },
 });
