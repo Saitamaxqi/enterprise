@@ -81,10 +81,10 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
             employees.all = res.all;
         }
         res.connected.sort(function (emp1, emp2) {
-            if (emp1.workorder.length === 0) {
+            if (emp1.workcenters.length === 0) {
                 return 1;
             }
-            if (emp2.workorder.length === 0) {
+            if (emp2.workcenters.length === 0) {
                 return -1;
             }
             return 0;

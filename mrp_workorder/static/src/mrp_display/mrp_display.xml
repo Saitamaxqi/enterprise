@@ -6,9 +6,6 @@
                 <t t-if="group_mrp_routings" t-set-slot="control-panel-top-middle">
                     <t t-call="{{ constructor.buttonTemplate }}"/>
                 </t>
-                <t t-set-slot="control-panel-additional-actions">
-                    <button class="btn btn-light oi oi-panel-right fa-flip-horizontal" name="employeePanelButton" t-if="group_mrp_routings" t-att-class="state.showEmployeesPanel ? 'active' : ''" t-on-click="toggleEmployeesPanel"/>
-                </t>
                 <t t-set-slot="layout-actions">
                     <t t-if="group_mrp_routings">
                         <ControlPanelButtons
@@ -72,7 +69,7 @@
                         </ul>
                     </div>
                 </t>
-                <MrpDisplayEmployeesPanel t-if="this.group_mrp_routings &amp;&amp; state.showEmployeesPanel" employees="useEmployee.employees"
+                <MrpDisplayEmployeesPanel t-if="this.group_mrp_routings" employees="useEmployee.employees"
                     setSessionOwner.bind="changeAdmin"
                     popupAddEmployee.bind="login"
                     logout.bind="logout"/>

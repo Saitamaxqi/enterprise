@@ -89,7 +89,6 @@ export class MrpDisplay extends Component {
             activeResModel: activeWorkcenter ? "mrp.workorder" : this.props.resModel,
             activeWorkcenter,
             workcenters,
-            showEmployeesPanel: localStorage.getItem("mrp_workorder.show_employees") === "true",
             canLoadSamples: false,
             offset: 0,
             limit: 40,
@@ -338,11 +337,6 @@ export class MrpDisplay extends Component {
         this.env.searchModel.setWorkcenterFilter(this.state.workcenters);
     }
 
-    toggleEmployeesPanel() {
-        this.state.showEmployeesPanel = !this.state.showEmployeesPanel;
-        localStorage.setItem("mrp_workorder.show_employees", String(this.state.showEmployeesPanel));
-    }
-
     getProduction(record) {
         if (record.resModel === "mrp.production") {
             return record;
@@ -415,18 +409,17 @@ export class MrpDisplay extends Component {
     }
 
     get adminWorkorderIds() {
-        const admin_id = this.useEmployee.employees.admin.id;
-        if (!admin_id) {
-            return [];
-        }
-        const admin = this.useEmployee.employees.connected.find((emp) => emp.id === admin_id);
-        const workorderIds = admin ? new Set(admin.workorder.map((wo) => wo.id)) : new Set([]);
-        for (const workorder of this.workorders) {
-            if (workorder.data.employee_assigned_ids.resIds.includes(admin_id)) {
-                workorderIds.add(workorder.resId);
-            }
-        }
-        return [...workorderIds];
+        const adminId = this.useEmployee.employees.admin.id;
+        return !adminId
+            ? []
+            : this.workorders.reduce(
+                  (idList, wo) =>
+                      wo.data.employee_assigned_ids.resIds.includes(adminId) ||
+                      wo.data.employee_ids.resIds.includes(adminId)
+                          ? [...idList, wo.resId]
+                          : idList,
+                  []
+              );
     }
 
     async selectWorkcenter(workcenterId, filterMO = false) {
