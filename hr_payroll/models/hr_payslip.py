@@ -648,6 +648,11 @@ class HrPayslip(models.Model):
         self.ensure_one()
         return self.contract_id.resource_calendar_id.hours_per_day
 
+    def _get_worked_day_lines_hours_per_week(self):
+        self.ensure_one()
+        calendar = self.contract_id.resource_calendar_id or self.employee_id._get_calendars()[self.employee_id.id]
+        return calendar.hours_per_week
+
     def _get_out_of_contract_calendar(self):
         self.ensure_one()
         if self.contract_id.time_credit:
