@@ -1,5 +1,7 @@
 import { defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
 import { describe, expect, test } from "@odoo/hoot";
+import { animationFrame } from "@odoo/hoot-mock";
+
 import { stores } from "@odoo/o-spreadsheet";
 import { addGlobalFilter } from "@spreadsheet/../tests/helpers/commands";
 import { makeStore } from "@spreadsheet/../tests/helpers/stores";
@@ -30,8 +32,9 @@ test("ODOO.FILTER.VALUE", async function () {
         "=ODOO.FILTER.VALUE(fil",
     ]) {
         composer.startEdition(formula);
-        const autoComplete = composer.autocompleteProvider;
-        expect(autoComplete.proposals).toEqual(
+        await animationFrame();
+        const proposals = composer.autoCompleteProposals;
+        expect(proposals).toEqual(
             [
                 {
                     htmlContent: [{ color: "#00a82d", value: '"filter 1"' }],
@@ -44,9 +47,10 @@ test("ODOO.FILTER.VALUE", async function () {
             ],
             { message: `autocomplete proposals for ${formula}` }
         );
-        autoComplete.selectProposal(autoComplete.proposals[0].text);
+        composer.insertAutoCompleteValue(proposals[0].text);
+        await animationFrame();
         expect(composer.currentContent).toBe('=ODOO.FILTER.VALUE("filter 1"');
-        expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+        expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
         composer.cancelEdition();
     }
 });
@@ -60,10 +64,11 @@ test("escape double quotes in filter name", async function () {
         defaultValue: [41],
     });
     composer.startEdition("=ODOO.FILTER.VALUE(");
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals[0]).toEqual({
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals[0]).toEqual({
         htmlContent: [{ color: "#00a82d", value: '"my \\"special\\" filter"' }],
         text: '"my \\"special\\" filter"',
     });
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    composer.insertAutoCompleteValue(proposals[0].text);
 });

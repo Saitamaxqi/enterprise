@@ -20,8 +20,9 @@ test("ODOO.LIST id", async function () {
     await animationFrame();
     for (const formula of ["=ODOO.LIST(", "=ODOO.LIST( ", "=ODOO.LIST.HEADER("]) {
         composer.startEdition(formula);
-        const autoComplete = composer.autocompleteProvider;
-        expect(autoComplete.proposals).toEqual([
+        await animationFrame();
+        const proposals = composer.autoCompleteProposals;
+        expect(proposals).toEqual([
             {
                 description: "List",
                 fuzzySearchKey: "1List",
@@ -42,8 +43,8 @@ test("ODOO.LIST id exact match", async function () {
     });
     await animationFrame();
     composer.startEdition("=ODOO.LIST(1");
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete).toBe(undefined);
+    await animationFrame();
+    expect(composer.isAutoCompleteDisplayed).toBe(false);
 });
 
 test("ODOO.LIST field name", async function () {
@@ -55,22 +56,24 @@ test("ODOO.LIST field name", async function () {
     });
     await animationFrame();
     composer.startEdition("=ODOO.LIST(1,1,");
-    const autoComplete = composer.autocompleteProvider;
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
     const allFields = Object.keys(Partner._fields);
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(
+    expect(proposals.map((p) => p.text)).toEqual(
         allFields.map((field) => `"${field}"`),
         { message: "all fields are proposed, quoted" }
     );
     // check completely only the first one
-    expect(autoComplete.proposals[0]).toEqual({
+    expect(proposals[0]).toEqual({
         description: "Id",
         fuzzySearchKey: 'Id"id"',
         htmlContent: [{ color: "#00a82d", value: '"id"' }],
         text: '"id"',
     });
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    composer.insertAutoCompleteValue(proposals[0].text);
+    await animationFrame();
     expect(composer.currentContent).toBe('=ODOO.LIST(1,1,"id"');
-    expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
 });
 
 test("ODOO.LIST.HEADER field name", async function () {
@@ -82,9 +85,10 @@ test("ODOO.LIST.HEADER field name", async function () {
     });
     await animationFrame();
     composer.startEdition("=ODOO.LIST.HEADER(1,");
-    const autoComplete = composer.autocompleteProvider;
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
     const allFields = Object.keys(Partner._fields);
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(
+    expect(proposals.map((p) => p.text)).toEqual(
         allFields.map((field) => `"${field}"`),
         { message: "all fields are proposed, quoted" }
     );
@@ -99,8 +103,8 @@ test("ODOO.LIST field name with invalid list id", async function () {
     await animationFrame();
     for (const listId of ["", "0", "42"]) {
         composer.startEdition(`=ODOO.LIST(${listId},1,`);
-        const autoComplete = composer.autocompleteProvider;
-        expect(autoComplete).toBe(undefined);
+        await animationFrame();
+        expect(composer.isAutoCompleteDisplayed).toBe(false);
         composer.cancelEdition();
     }
 });

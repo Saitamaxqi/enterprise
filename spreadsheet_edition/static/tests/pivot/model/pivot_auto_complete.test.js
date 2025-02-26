@@ -1,4 +1,6 @@
 import { describe, expect, test } from "@odoo/hoot";
+import { animationFrame } from "@odoo/hoot-mock";
+
 import { stores } from "@odoo/o-spreadsheet";
 import {
     createSpreadsheetWithPivot,
@@ -18,8 +20,9 @@ test("PIVOT.VALUE.* autocomplete pivot id", async function () {
     await insertPivotInSpreadsheet(model, "pivot2", { arch: getBasicPivotArch() });
     for (const func of ["PIVOT", "PIVOT.HEADER", "PIVOT.VALUE"]) {
         composer.startEdition(`=${func}(`);
-        const autoComplete = composer.autocompleteProvider;
-        expect(autoComplete.proposals).toEqual(
+        await animationFrame();
+        const proposals = composer.autoCompleteProposals;
+        expect(proposals).toEqual(
             [
                 {
                     description: "Partner Pivot",
@@ -38,9 +41,10 @@ test("PIVOT.VALUE.* autocomplete pivot id", async function () {
             ],
             { message: `autocomplete proposals for ${func}` }
         );
-        autoComplete.selectProposal(autoComplete.proposals[0].text);
+        composer.insertAutoCompleteValue(proposals[0].text);
+        await animationFrame();
         expect(composer.currentContent).toBe(`=${func}(1`);
-        expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+        expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
         composer.cancelEdition();
     }
 });
@@ -52,12 +56,14 @@ test("do not show autocomplete if pivot id already set", async function () {
     for (const func of ["PIVOT", "PIVOT.HEADER", "PIVOT.VALUE"]) {
         // id as a number
         composer.startEdition(`=${func}(1`);
-        expect(composer.autocompleteProvider).toBe(undefined);
+        await animationFrame();
+        expect(composer.isAutoCompleteDisplayed).toBe(false);
         composer.cancelEdition();
 
         // id as a string
         composer.startEdition(`=${func}("1"`);
-        expect(composer.autocompleteProvider).toBe(undefined);
+        await animationFrame();
+        expect(composer.isAutoCompleteDisplayed).toBe(false);
         composer.cancelEdition();
     }
 });
@@ -72,8 +78,9 @@ test("PIVOT.VALUE measure", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition("=PIVOT.VALUE(1,");
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals).toEqual([
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals).toEqual([
         {
             description: "Probability",
             fuzzySearchKey: 'Probabilityprobability"probability:avg"',
@@ -87,9 +94,10 @@ test("PIVOT.VALUE measure", async function () {
             text: '"__count"',
         },
     ]);
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    composer.insertAutoCompleteValue(proposals[0].text);
+    await animationFrame();
     expect(composer.currentContent).toBe('=PIVOT.VALUE(1,"probability:avg"');
-    expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
 });
 
 test("PIVOT.VALUE measure with the pivot id as a string", async function () {
@@ -101,22 +109,25 @@ test("PIVOT.VALUE measure with the pivot id as a string", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE("1",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(['"probability:avg"']);
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual(['"probability:avg"']);
 });
 
 test("PIVOT.VALUE measure with pivot id that does not exists", async function () {
     const { model } = await createSpreadsheetWithPivot();
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition(`=PIVOT.VALUE(9999,`);
-    expect(composer.autocompleteProvider).toBe(undefined);
+    await animationFrame();
+    expect(composer.isAutoCompleteDisplayed).toBe(false);
 });
 
 test("PIVOT.VALUE measure without any pivot id", async function () {
     const { model } = await createSpreadsheetWithPivot();
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition(`=PIVOT.VALUE(,`);
-    expect(composer.autocompleteProvider).toBe(undefined);
+    await animationFrame();
+    expect(composer.isAutoCompleteDisplayed).toBe(false);
 });
 
 test("PIVOT.VALUE group with a single col group", async function () {
@@ -129,8 +140,9 @@ test("PIVOT.VALUE group with a single col group", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals).toEqual([
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals).toEqual([
         {
             description: "Product",
             fuzzySearchKey: 'Product"product_id"',
@@ -144,9 +156,9 @@ test("PIVOT.VALUE group with a single col group", async function () {
             text: '"#product_id"',
         },
     ]);
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    composer.insertAutoCompleteValue(proposals[0].text);
     expect(composer.currentContent).toBe('=PIVOT.VALUE(1,"probability","product_id"');
-    expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
 });
 
 test("PIVOT.VALUE group with a pivot id as string", async function () {
@@ -159,8 +171,9 @@ test("PIVOT.VALUE group with a pivot id as string", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE("1","probability",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
 });
 
 test("PIVOT.VALUE group with a single row group", async function () {
@@ -173,8 +186,9 @@ test("PIVOT.VALUE group with a single row group", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals).toEqual([
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals).toEqual([
         {
             description: "Product",
             fuzzySearchKey: 'Product"product_id"',
@@ -188,9 +202,10 @@ test("PIVOT.VALUE group with a single row group", async function () {
             text: '"#product_id"',
         },
     ]);
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    composer.insertAutoCompleteValue(proposals[0].text);
+    await animationFrame();
     expect(composer.currentContent).toBe('=PIVOT.VALUE(1,"probability","product_id"');
-    expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
 });
 
 test("ODOO.VALUE group with a single date grouped by day", async function () {
@@ -203,8 +218,9 @@ test("ODOO.VALUE group with a single date grouped by day", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals).toEqual([
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals).toEqual([
         {
             description: "Date",
             fuzzySearchKey: 'Date"date:day"',
@@ -218,9 +234,10 @@ test("ODOO.VALUE group with a single date grouped by day", async function () {
             text: '"#date:day"',
         },
     ]);
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    composer.insertAutoCompleteValue(proposals[0].text);
+    await animationFrame();
     expect(composer.currentContent).toBe('=PIVOT.VALUE(1,"probability","date:day"');
-    expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
 });
 
 test("PIVOT.VALUE group after a positional group", async function () {
@@ -234,8 +251,9 @@ test("PIVOT.VALUE group after a positional group", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability", "#date:month", 1,');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
 });
 
 test("PIVOT.VALUE search field", async function () {
@@ -248,8 +266,9 @@ test("PIVOT.VALUE search field", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability","prod');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
 });
 
 test("PIVOT.VALUE search field with both col and row group", async function () {
@@ -264,8 +283,9 @@ test("PIVOT.VALUE search field with both col and row group", async function () {
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     // (notice the space after the comma)
     composer.startEdition('=PIVOT.VALUE(1,"probability", ');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual([
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual([
         '"product_id"',
         '"date:month"',
         '"#product_id"',
@@ -284,8 +304,9 @@ test("PIVOT.VALUE group with row and col groups for the first group", async func
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual([
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual([
         '"date:month"',
         '"product_id"',
         '"#date:month"',
@@ -304,8 +325,9 @@ test("PIVOT.VALUE group with row and col groups for the col group", async functi
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability","product_id",1,');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(['"date:month"', '"#date:month"']);
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual(['"date:month"', '"#date:month"']);
 });
 
 test("PIVOT.VALUE group with two rows, on the first group", async function () {
@@ -321,8 +343,9 @@ test("PIVOT.VALUE group with two rows, on the first group", async function () {
     composer.startEdition('=PIVOT.VALUE(1,"probability", ,1,"date", "11/2020")');
     //..................................................^ the cursor is here
     composer.changeComposerCursorSelection(29, 29);
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
 });
 
 test("PIVOT.VALUE search a positional group", async function () {
@@ -335,8 +358,9 @@ test("PIVOT.VALUE search a positional group", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability","#pro');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(['"#product_id"']);
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual(['"#product_id"']);
 });
 
 test("PIVOT.VALUE autocomplete relational field for group value", async function () {
@@ -349,8 +373,9 @@ test("PIVOT.VALUE autocomplete relational field for group value", async function
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability","product_id",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals).toEqual([
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals).toEqual([
         {
             description: "xphone",
             fuzzySearchKey: "37xphone",
@@ -364,9 +389,10 @@ test("PIVOT.VALUE autocomplete relational field for group value", async function
             text: "41",
         },
     ]);
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    composer.insertAutoCompleteValue(proposals[0].text);
+    await animationFrame();
     expect(composer.currentContent).toBe('=PIVOT.VALUE(1,"probability","product_id",37');
-    expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
 });
 
 test("PIVOT.VALUE autocomplete date field for group value", async function () {
@@ -379,8 +405,9 @@ test("PIVOT.VALUE autocomplete date field for group value", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability","date:month",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals).toEqual([
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals).toEqual([
         {
             description: "April 2016",
             fuzzySearchKey: '"04/2016"April 2016',
@@ -405,9 +432,10 @@ test("PIVOT.VALUE autocomplete date field for group value", async function () {
             text: '"12/2016"',
         },
     ]);
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    composer.insertAutoCompleteValue(proposals[0].text);
+    await animationFrame();
     expect(composer.currentContent).toBe('=PIVOT.VALUE(1,"probability","date:month","04/2016"');
-    expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
 });
 
 test("PIVOT.VALUE autocomplete date field with no specified granularity for group value", async function () {
@@ -420,8 +448,9 @@ test("PIVOT.VALUE autocomplete date field with no specified granularity for grou
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability","date:month",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals).toEqual([
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals).toEqual([
         {
             description: "April 2016",
             fuzzySearchKey: '"04/2016"April 2016',
@@ -446,9 +475,10 @@ test("PIVOT.VALUE autocomplete date field with no specified granularity for grou
             text: '"12/2016"',
         },
     ]);
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    composer.insertAutoCompleteValue(proposals[0].text);
+    await animationFrame();
     expect(composer.currentContent).toBe('=PIVOT.VALUE(1,"probability","date:month","04/2016"');
-    expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
 });
 
 test("PIVOT.VALUE autocomplete field after a date field", async function () {
@@ -462,8 +492,9 @@ test("PIVOT.VALUE autocomplete field after a date field", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability","date:month","11/2020",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
 });
 
 test("PIVOT.VALUE autocomplete field after a date field with granularity in arch but not in formula", async function () {
@@ -477,7 +508,8 @@ test("PIVOT.VALUE autocomplete field after a date field with granularity in arch
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability","date","11/2020",');
-    expect(composer.autocompleteProvider).toBe(undefined);
+    await animationFrame();
+    expect(composer.isAutoCompleteDisplayed).toBe(false);
 });
 
 test("PIVOT.VALUE autocomplete field after a date field without granularity", async function () {
@@ -491,8 +523,8 @@ test("PIVOT.VALUE autocomplete field after a date field without granularity", as
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability","date","11/2020",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete).toBe(undefined);
+    await animationFrame();
+    expect(composer.isAutoCompleteDisplayed).toBe(false);
 });
 
 test("PIVOT.VALUE no autocomplete for positional group field", async function () {
@@ -505,7 +537,8 @@ test("PIVOT.VALUE no autocomplete for positional group field", async function ()
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.VALUE(1,"probability","#product_id",');
-    expect(composer.autocompleteProvider).toBe(undefined);
+    await animationFrame();
+    expect(composer.isAutoCompleteDisplayed).toBe(false);
 });
 
 test("PIVOT.HEADER first field", async function () {
@@ -518,11 +551,13 @@ test("PIVOT.HEADER first field", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition("=PIVOT.HEADER(1,");
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
+    composer.insertAutoCompleteValue(proposals[0].text);
+    await animationFrame();
     expect(composer.currentContent).toBe('=PIVOT.HEADER(1,"product_id"');
-    expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
 });
 
 test("PIVOT.HEADER search field", async function () {
@@ -535,11 +570,13 @@ test("PIVOT.HEADER search field", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.HEADER(1,"pro');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
+    composer.insertAutoCompleteValue(proposals[0].text);
+    await animationFrame();
     expect(composer.currentContent).toBe('=PIVOT.HEADER(1,"product_id"');
-    expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
 });
 
 test("PIVOT.HEADER group value", async function () {
@@ -552,9 +589,11 @@ test("PIVOT.HEADER group value", async function () {
     });
     const { store: composer } = makeStoreWithModel(model, CellComposerStore);
     composer.startEdition('=PIVOT.HEADER(1,"product_id",');
-    const autoComplete = composer.autocompleteProvider;
-    expect(autoComplete.proposals.map((p) => p.text)).toEqual(["37", "41"]);
-    autoComplete.selectProposal(autoComplete.proposals[0].text);
+    await animationFrame();
+    const proposals = composer.autoCompleteProposals;
+    expect(proposals.map((p) => p.text)).toEqual(["37", "41"]);
+    composer.insertAutoCompleteValue(proposals[0].text);
+    await animationFrame();
     expect(composer.currentContent).toBe('=PIVOT.HEADER(1,"product_id",37');
-    expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
+    expect(composer.isAutoCompleteDisplayed).toBe(false, { message: "autocomplete closed" });
 });
