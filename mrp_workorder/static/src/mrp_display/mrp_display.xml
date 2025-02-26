@@ -43,19 +43,33 @@
                             </div>
                         </t>
                     </MrpDisplaySearchBar>
-                    <div class="flex flex-column">
-                        <div class="flex mb-1">
-                            <button class="btn btn-light fa fa-refresh" t-on-click="onClickRefresh"/>
-                            <button t-if="!pwaService.isScopedApp" class="o_home_menu btn btn-light text-nowrap" t-on-click="close">
-                                <i class="fa fa-lg fa-sign-out me-md-1"/><span class="d-none d-md-inline">Close</span>
-                            </button>
-                        </div>
-                        <Pager
-                            t-if="model.root.count > model.root.limit"
-                            total="model.root.count"
-                            offset="model.root.offset"
-                            limit="model.root.limit"
-                            onUpdate.bind="_onPagerChanged"/>
+                    <Pager
+                        t-if="model.root.count > model.root.limit"
+                        total="model.root.count"
+                        offset="model.root.offset"
+                        limit="model.root.limit"
+                        onUpdate.bind="_onPagerChanged"/>
+                    <div>
+                        <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-lg fa-navicon"/>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <button class="btn btn-light dropdown-item" t-on-click="onClickRefresh">
+                                    <i class="fa fa-lg fa-refresh me-2"/>Reload Data
+                                </button>
+                            </li>
+                            <li>
+                                <a class="btn btn-light dropdown-item" t-attf-href="/scoped_app?app_id=mrp_shop_floor&amp;path=scoped_app/shop-floor&amp;app_name={{appName}}" target="_blank">
+                                    <i class="fa fa-lg fa-arrow-circle-down me-2"/>Install App
+                                </a>
+                            </li>
+                            <li>
+                                <button t-if="!pwaService.isScopedApp" class="btn btn-light dropdown-item" t-on-click="close">
+                                    <i class="fa fa-lg fa-th me-2"/>Close
+                                </button>
+                            </li>
+                        </ul>
                     </div>
                 </t>
                 <MrpDisplayEmployeesPanel t-if="this.group_mrp_routings &amp;&amp; state.showEmployeesPanel" employees="useEmployee.employees"

@@ -59,6 +59,7 @@ export class MrpDisplay extends Component {
         this.dialogService = useService("dialog");
         this.pwaService = useService("pwa");
         this.overlayService = useService("overlay");
+        this.menu = useService("menu");
 
         this.display = {
             ...this.props.display,
@@ -552,6 +553,10 @@ export class MrpDisplay extends Component {
         }
         this.env.reload();
         this.state.canLoadSamples = false;
+    }
+
+    get appName() {
+        return encodeURIComponent(this.menu.getCurrentApp().name);
     }
 
     demoMORecords = [
