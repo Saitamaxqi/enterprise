@@ -20,5 +20,8 @@ fi
 # If the user "odoo" exists since this script is ran under "root" user
 # we need to make sure that Worldline files are owned by the "odoo" user
 if id odoo > /dev/null 2>&1; then
-	sudo chown -R odoo:odoo "${PATH_LIB}"
+	sudo chown -R odoo:odoo "${PATH_ZIP_LIB}"
 fi
+
+sudo mount -o remount,ro /
+sudo mount -o remount,ro /root_bypass_ramdisks
