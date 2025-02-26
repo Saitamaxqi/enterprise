@@ -165,6 +165,7 @@ export class MrpDisplayAction extends Component {
             const searchViews = await this.viewService.loadViews(
                 {
                     resModel: this.resModel,
+                    context: this.props.action.context,
                     views: [[false, "search"]],
                 },
                 {
