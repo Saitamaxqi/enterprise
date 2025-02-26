@@ -231,7 +231,7 @@ test("scales attribute", async () => {
     ]);
 });
 
-test("precision attribute", async () => {
+test("precision attribute ('day': 'hour:quarter')", async () => {
     onRpc("write", ({ args }) => expect.step(args));
     await mountGanttView({
         resModel: "tasks",
@@ -250,17 +250,63 @@ test("precision attribute", async () => {
     });
 
     // resize of a quarter
-    const drop = await resizePill(getPillWrapper("Task 7"), "end", 0.25, false);
+    const dropHandle = await resizePill(getPillWrapper("Task 7"), "end", 0.25, false);
     await animationFrame();
     expect(SELECTORS.startBadge).toHaveText("1:30 PM");
     expect(SELECTORS.stopBadge).toHaveText("7:44 PM (+15 minutes)");
 
     // manually trigger the drop to trigger a write
-    await drop();
+    await dropHandle();
     await animationFrame();
     expect(SELECTORS.startBadge).toHaveCount(0);
     expect(SELECTORS.stopBadge).toHaveCount(0);
     expect.verifySteps([[[7], { stop: "2018-12-20 18:44:59" }]]);
+
+    const { moveTo, drop } = await dragPill("Task 7");
+    await moveTo({ columnHeader: "12pm", groupHeader: "December 20, 2018", part: 4 });
+    expect(SELECTORS.startBadge).toHaveText("12:45 PM");
+    expect(SELECTORS.stopBadge).toHaveText("6:59 PM");
+    expect(SELECTORS.startBadge).toHaveClass("text-danger");
+    expect(SELECTORS.stopBadge).toHaveClass("text-danger");
+    await drop();
+    expect.verifySteps([[[7], { start: "2018-12-20 11:45:12", stop: "2018-12-20 17:59:59" }]]);
+});
+
+test("precision attribute ('month': 'day:full')", async () => {
+    onRpc("write", ({ args }) => expect.step(args));
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt
+                date_start="start"
+                date_stop="stop"
+                precision="{'month': 'day:full'}"
+            />
+        `,
+        domain: [["id", "=", 7]],
+    });
+
+    // resize of a quarter
+    const dropHandle = await resizePill(getPillWrapper("Task 7"), "end", 2, false);
+    await animationFrame();
+    expect(SELECTORS.startBadge).toHaveText("12/20/2018");
+    expect(SELECTORS.stopBadge).toHaveText("12/22/2018 (+48 hours)");
+
+    // manually trigger the drop to trigger a write
+    await dropHandle();
+    await animationFrame();
+    expect(SELECTORS.startBadge).toHaveCount(0);
+    expect(SELECTORS.stopBadge).toHaveCount(0);
+    expect.verifySteps([[[7], { stop: "2018-12-22 18:29:59" }]]);
+
+    const { moveTo, drop } = await dragPill("Task 7");
+    await moveTo({ columnHeader: "23", groupHeader: "December 2018" });
+    expect(SELECTORS.startBadge).toHaveText("12/23/2018");
+    expect(SELECTORS.stopBadge).toHaveText("12/25/2018");
+    expect(SELECTORS.startBadge).toHaveClass("text-success");
+    expect(SELECTORS.stopBadge).toHaveClass("text-success");
+    await drop();
+    expect.verifySteps([[[7], { start: "2018-12-23 12:30:12", stop: "2018-12-25 18:29:59" }]]);
 });
 
 test("progress attribute", async () => {

@@ -265,14 +265,17 @@ function getBadgesPositions(el, rtl) {
     };
 }
 
-function getBadgeText(date, time, unitDescription, diff = 0) {
+function getBadgeText(date, time, unitDescription, precision, diff = 0) {
     let text;
     switch (time) {
         case "minute":
             text = date.toLocaleString(DateTime.TIME_SIMPLE);
             break;
         case "hour":
-            text = date.toLocaleString(DateTime.DATETIME_SHORT);
+            text =
+                precision > 1
+                    ? date.toLocaleString(DateTime.DATETIME_SHORT)
+                    : date.toLocaleString();
             break;
         default:
             text = date.toLocaleString();
@@ -435,7 +438,7 @@ export const useGanttDraggable = makeDraggableHook({
             }
         }
         const { startPosition, stopPosition } = getBadgesPositions(current.element, rtl);
-        const { cellTime, unitDescription, time } = scale;
+        const { cellPart, cellTime, unitDescription, time } = scale;
         const { start, stop } = getBadgesInitialDates();
         const startDate = dateAddFixedOffset(start, {
             [time]: current.diff * cellTime,
@@ -446,12 +449,12 @@ export const useGanttDraggable = makeDraggableHook({
         const badgeClass = current.diff ? (current.diff > 0 ? "text-success" : "text-danger") : "";
         const startBadge = {
             position: startPosition,
-            text: getBadgeText(startDate, time, unitDescription),
+            text: getBadgeText(startDate, time, unitDescription, cellPart),
             class: badgeClass,
         };
         const stopBadge = {
             position: stopPosition,
-            text: getBadgeText(stopDate, time, unitDescription),
+            text: getBadgeText(stopDate, time, unitDescription, cellPart),
             class: badgeClass,
         };
         return { startBadge, stopBadge };
@@ -705,12 +708,12 @@ export const useGanttResizable = makeDraggableHook({
               });
         const startBadge = {
             position: startPosition,
-            text: getBadgeText(startDate, time, unitDescription, startDiff),
+            text: getBadgeText(startDate, time, unitDescription, precision, startDiff),
             class: startDiff ? (startDiff > 0 ? "text-success" : "text-danger") : "",
         };
         const stopBadge = {
             position: stopPosition,
-            text: getBadgeText(stopDate, time, unitDescription, stopDiff),
+            text: getBadgeText(stopDate, time, unitDescription, precision, stopDiff),
             class: stopDiff ? (stopDiff > 0 ? "text-success" : "text-danger") : "",
         };
         return { startBadge, stopBadge };
@@ -832,12 +835,12 @@ export const useGanttSelectable = makeDraggableHook({
                 : initialDate;
         const startBadge = {
             position: startPosition,
-            text: getBadgeText(startDate, time, unitDescription),
+            text: getBadgeText(startDate, time, unitDescription, precision),
             class: "",
         };
         const stopBadge = {
             position: stopPosition,
-            text: getBadgeText(stopDate, time, unitDescription),
+            text: getBadgeText(stopDate, time, unitDescription, precision),
             class: "",
         };
         return { startBadge, stopBadge };
