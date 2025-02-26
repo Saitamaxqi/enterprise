@@ -12,7 +12,7 @@
         >
             <t t-call="{{ constructor.headerTemplate }}"/>
             <t t-if="hasRowHeaders">
-                <div class="o_gantt_row_headers o_gantt_row_sidebar o_gantt_grid_rows border-end position-sticky start-0 bg-view">
+                <div class="o_gantt_row_headers o_gantt_row_sidebar o_gantt_grid_rows position-sticky start-0 bg-view">
                     <t t-foreach="rowsToRender" t-as="row" t-key="row.id">
                         <t t-call="{{ constructor.rowHeaderTemplate }}" />
                     </t>
@@ -125,7 +125,7 @@
 
     <t t-name="web_gantt.GanttRenderer.RowHeader">
         <div
-            class="o_gantt_row_header o_gantt_row_sidebar position-sticky start-0 bg-view align-items-center"
+            class="o_gantt_row_header o_gantt_row_sidebar position-sticky border-end start-0 bg-view align-items-center"
             t-att-class="{
                 o_sample_data_disabled: isDisabled(row),
                 o_gantt_row_sidebar_empty: !row.name,
@@ -235,10 +235,12 @@
 
     <t t-name="web_gantt.GanttRenderer.TotalRow">
         <t t-if="hasRowHeaders">
-            <div class="o_gantt_row_total o_gantt_row_sidebar border-end position-sticky start-0 bg-view d-flex justify-content-end">
+            <div
+                class="o_gantt_row_total o_gantt_row_sidebar border-end position-sticky start-0 bg-view d-flex justify-content-end"
+                t-att-class="{ o_sample_data_disabled: isDisabled() }"
+            >
                 <h4
                     class="o_gantt_row_title d-flex align-items-center pe-3 my-0 fw-bold"
-                    t-att-class="{ o_sample_data_disabled: isDisabled() }"
                     t-att-title="totalRow.name"
                     t-esc="totalRow.name"
                 />
