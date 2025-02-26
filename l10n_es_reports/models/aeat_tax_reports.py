@@ -1392,7 +1392,9 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
         if key:
             domain.append(('move_id.l10n_es_reports_mod349_invoice_type', '=', key))
         else:
-            domain.extend(['|', ('move_id.reversed_entry_id', '=', False),
+            domain.extend([
+                ('move_id.l10n_es_reports_mod349_invoice_type', '!=', False),
+                '|', ('move_id.reversed_entry_id', '=', False),
                 '|', ('move_id.reversed_entry_id.amount_residual', '>', 0), ('move_id.amount_residual', '>', 0)
             ])
 
