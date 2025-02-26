@@ -33,7 +33,7 @@ class TestBankRecWidgetCommon(AccountTestInvoicingCommon):
             .filtered(lambda l: l.account_id.account_type in ('asset_receivable', 'liability_payable'))
 
     @classmethod
-    def _create_st_line(cls, amount, date='2019-01-01', payment_ref='turlututu', **kwargs):
+    def _create_st_line(cls, amount, date='2019-01-01', payment_ref='turlututu', update_create_date=True, **kwargs):
         st_line = cls.env['account.bank.statement.line'].create({
             'amount': amount,
             'date': date,
@@ -41,20 +41,17 @@ class TestBankRecWidgetCommon(AccountTestInvoicingCommon):
             'journal_id': kwargs.get('journal_id', cls.company_data['default_journal_bank'].id),
             **kwargs,
         })
-        # The automatic reconcile cron checks the create_date when considering st_lines to run on.
-        # create_date is a protected field so this is the only way to set it correctly
-        cls.env.cr.execute("UPDATE account_bank_statement_line SET create_date = %s WHERE id=%s",
-                           (st_line.date, st_line.id))
+        if update_create_date:
+            # The automatic reconcile cron checks the create_date when considering st_lines to run on.
+            # create_date is a protected field so this is the only way to set it correctly
+            cls.env.cr.execute("UPDATE account_bank_statement_line SET create_date = %s WHERE id=%s",
+                               (st_line.date, st_line.id))
         return st_line
 
     @classmethod
     def _create_reconcile_model(cls, **kwargs):
         return cls.env['account.reconcile.model'].create({
             'name': "test",
-            'rule_type': 'invoice_matching',
-            'allow_payment_tolerance': True,
-            'payment_tolerance_type': 'percentage',
-            'payment_tolerance_param': 0.0,
             **kwargs,
             'line_ids': [
                 Command.create({

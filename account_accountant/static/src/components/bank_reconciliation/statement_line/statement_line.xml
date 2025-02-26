@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="account_accountant.BankRecStatementLine" t-inherit="web.KanbanRecord" t-inherit-mode="primary">
+        <xpath expr="//article" position="replace">
+            <article
+                    t-att-class="getRecordClasses()"
+                    t-att-data-id="record.id"
+                    t-att-tabindex="record.model.useSampleModel ? -1 : 0"
+                    t-custom-click="onGlobalClick"
+                    t-on-touchstart="onTouchStart"
+                    t-on-touchmove="onTouchMoveOrCancel"
+                    t-on-touchcancel="onTouchMoveOrCancel"
+                    t-on-touchend="onTouchEnd"
+                    t-ref="root">
+                <div class="statement_separator text-center hide-mobile w-100" t-if="!recordData.statement_id">
+                    <button type="button" class="btn btn-secondary btn-sm" t-on-click.stop="openStatementCreate">
+                        Statement
+                    </button>
+                </div>
+                <div name="bank_statement_line" class="o_statement_line" t-on-click="toggleUnfold">
+                    <div class="o_grid_container">
+                        <div class="o_row">
+                            <div class="d-flex gap-3">
+                                <t t-esc="formattedDate"/>
+                                <div t-on-click.stop="toggleChatter">
+                                    <div t-if="activityNumber" class="activity-container">
+                                        <i class="fa fa-lg fa-clock-o" role="img" aria-label="Activities" t-att-class="{'text-info': isChatterOpen}"/>
+                                        <span class="activity-badge badge rounded-pill" t-esc="activityNumber"/>
+                                    </div>
+                                    <i t-elif="hasAttachment and (isUnfolded or isChatterOpen)"
+                                       class="fa fa-lg fa-paperclip"
+                                       t-att-class="{'text-info': isChatterOpen}"
+                                       role="img"
+                                       aria-label="Attachment"
+                                    />
+                                    <i t-elif="isUnfolded or isChatterOpen"
+                                       t-att-class="{'text-info': isChatterOpen}"
+                                       class="fa fa-lg fa-comments-o"
+                                       role="img"
+                                       aria-label="Journal Entry"
+                                    />
+                                </div>
+                            </div>
+                            <div class="hide-mobile o_payment_ref user-select-text" t-att-class="isUnfolded ? 'overflow-wrap' : 'text-truncate'">
+                                <span t-esc="recordData.payment_ref"/>
+                            </div>
+                            <div name="statement_line_partner_name">
+                                <t t-if="isUnfolded and linesToReconcile.length and recordData?.partner_name">
+                                    <span t-esc="recordData.partner_name" class="text-truncate text-muted"/>
+                                </t>
+                                <t t-else="">
+                                    <span t-esc="partner?.display_name or recordData.partner_name" class="text-truncate" t-att-class="{'text-muted': !partner and recordData.partner_name}"/>
+                                </t>
+                            </div>
+                            <!-- Only available on large screen -->
+                            <div class="hide-mobile o_top_button_line text-truncate">
+                                <BankRecButtonList t-props="buttonListProps" isTopLine="true" suspenseAccountLine="suspenseAccountLine" t-if="!recordData.is_reconciled"/>
+                                <span name="reconciled_line_name" class="text-start text-truncate text-muted" t-esc="reconciledLineName" t-if="!isUnfolded"/>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="text-muted w-50 text-end" t-if="recordData.foreign_currency_id">
+                                    <t t-esc="formattedAmountCurrencyInForeign"/>
+                                </span>
+                                <span t-att-class="amountClasses" class="text-end" t-esc="formattedAmount"/>
+                            </div>
+                            <div class="text-end hide-mobile">
+                                <i class="fa-solid fa" t-att-class="{'fa-chevron-up': isUnfolded, 'fa-chevron-down': !isUnfolded}"/>
+                            </div>
+                        </div>
+
+                        <!-- Only available on small screen -->
+                        <div class="hide-desktop o_row">
+                            <span class="text-truncate o_payment_ref" t-esc="recordData.payment_ref"/>
+                            <div class="d-flex justify-content-end">
+                                <BankRecButtonList t-props="buttonListProps" isTopLine="true" suspenseAccountLine="suspenseAccountLine" t-if="!recordData.is_reconciled and !isUnfolded"/>
+                                <span t-if="recordData.is_reconciled" class="text-start text-truncate text-muted" t-esc="reconciledLineName"/>
+                            </div>
+                        </div>
+                        <t t-if="isUnfolded">
+                            <t t-foreach="linesToReconcile" t-as="line" t-key="line_index">
+                                <BankRecLineToReconcile statementLine="record" line="line"/>
+                            </t>
+                            <div class="o_row">
+                                <div class="o_button_line">
+                                    <BankRecButtonList t-if="!recordData.is_reconciled" suspenseAccountLine="suspenseAccountLine" t-props="buttonListProps"/>
+                                </div>
+                                <div t-if="suspenseAccountLine" class="fw-bold text-muted d-flex align-items-center justify-content-end">
+                                    <t t-esc="suspenseAccountLineFormattedAmount"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </article>
+        </xpath>
+    </t>
+</templates>

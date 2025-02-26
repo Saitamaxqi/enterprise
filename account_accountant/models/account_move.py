@@ -378,11 +378,13 @@ class AccountMove(models.Model):
                 'search_default_journal_id': self.statement_line_id.journal_id.id,
                 'search_default_statement_line_id': self.statement_line_id.id,
                 'default_st_line_id': self.statement_line_id.id,
+                'hide_current_balance': True,
             }
         )
 
     def action_open_bank_reconciliation_widget_statement(self):
         return self.statement_line_id._action_open_bank_reconciliation_widget(
+            default_context={'hide_current_balance': True},
             extra_domain=[('statement_id', 'in', self.statement_id.ids)],
         )
 

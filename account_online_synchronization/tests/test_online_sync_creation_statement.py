@@ -22,17 +22,6 @@ class TestSynchStatementCreation(AccountOnlineSynchronizationCommon):
             'account_type': 'asset_fixed',
         })
 
-    def reconcile_st_lines(self, st_lines):
-        for line in st_lines:
-            wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=line.id).new({})
-            line = wizard.line_ids.filtered(lambda x: x.flag == 'auto_balance')
-            wizard._js_action_mount_line_in_edit(line.index)
-            line.name = "toto"
-            wizard._line_value_changed_name(line)
-            line.account_id = self.account
-            wizard._line_value_changed_account_id(line)
-            wizard._action_validate()
-
     # Tests
     def test_creation_initial_sync_statement(self):
         transactions = self._create_online_transactions(['2016-01-01', '2016-01-03'])

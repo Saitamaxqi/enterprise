@@ -79,9 +79,8 @@ class TestPayslipRun(L10nPayrollAccountCommon):
         for st_line in stmnt.line_ids:
             payment_lines = payments.filtered(lambda x: x.partner_id == st_line.partner_id)\
                 .move_id.line_ids.filtered(lambda line: line.account_id == self.aba_ct.payment_account_id)
-            wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
-            wizard._action_add_new_amls(payment_lines, allow_partial=False)
-            wizard._action_validate()
+
+            st_line.set_line_bank_statement_line(payment_lines.ids)
         self.assertTrue(all(p.is_matched for p in payments), "All payments should be Matched with bank statements!")
 
         self.assertEqual(payslip_run.l10n_au_payment_batch_id.state, "reconciled", "Batch Should be in reconciled state!")
@@ -138,7 +137,5 @@ class TestPayslipRun(L10nPayrollAccountCommon):
         })
         for st_line in stmnt.line_ids:
             payment_lines = payment.move_id.line_ids.filtered(lambda line: line.account_id == self.outbound_manual.payment_account_id)
-            wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
-            wizard._action_add_new_amls(payment_lines, allow_partial=False)
-            wizard._action_validate()
+            st_line.set_line_bank_statement_line(payment_lines.ids)
         self.assertTrue(payment.is_matched, 'Payment should be match with a bank statement line!')

@@ -180,8 +180,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
         )
 
     def test_same_currency(self):
-        """ In this test we will do two moves with same currency and a bank statement line to reconcile the first payment.
-            The payment and the move have the same currency (CAD)
+        """ In this test we will do two moves with same currency and a bank statement line to reconcile the first bill.
+            The statement line and the move have the same currency (CAD)
         """
         first_bill = self.create_move_one_line(
             partner_id=self.partner_a.id,
@@ -207,19 +207,17 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
             price_unit=200.0
         )
 
-        bank_statement = self.env['account.bank.statement.line'].create({
+        bank_statement = self.env['account.bank.statement.line'].with_context(auto_statement_processing=False).create({
             'journal_id': self.company_data['default_journal_bank'].id,
             'payment_ref': 'payment_move_line',
             'partner_id': self.partner_a.id,
             'foreign_currency_id': self.other_currency.id,
             'amount': -400,
             'amount_currency': -800,
-            'date': '2023-01-01',
+            'date': '2023-01-21',
         })
 
-        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=bank_statement.id).new({})
-        wizard._action_add_new_amls(first_bill.line_ids.filtered(lambda account: account.account_type == 'liability_payable'))
-        wizard._action_validate()
+        bank_statement.set_line_bank_statement_line(first_bill.line_ids.filtered(lambda line: line.account_type == 'liability_payable').id)
 
         # Test the report in 2023.
         options = self._generate_options(self.report, '2023-01-01', '2023-12-31')
@@ -229,7 +227,7 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
             # pylint: disable=C0326
             self.report._get_lines(options),
             #   Name                       Balance in foreign currency     Balance at op. rate     Balance at curr rate     Adjustment
-            [   0,                                                  1,                      2,                       3,              4],
+            [   0,                                                  1,                     2,                        3,              4],
             [
                 ('Accounts To Adjust',                             '',                    '',                       '',             ''),
                 ('CAD (1 USD = 4.0 CAD)',                      -200.0,                -200.0,                    -50.0,          150.0),
@@ -286,9 +284,7 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
             'date': '2023-01-01',
         })
 
-        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=bank_statement.id).new({})
-        wizard._action_add_new_amls(first_bill.line_ids.filtered(lambda account: account.account_type == 'liability_payable'))
-        wizard._action_validate()
+        bank_statement.set_line_bank_statement_line(first_bill.line_ids.filtered(lambda account: account.account_type == 'liability_payable').id)
 
         # Test the report in 2023.
         options = self._generate_options(self.report, '2023-01-01', '2023-12-31')

@@ -7,18 +7,12 @@
     'category': 'Accounting',
     'summary': 'Allows using Reconciliation with the Batch Payment feature.',
     'depends': ['account_accountant', 'account_batch_payment'],
-    'data': [
-        'views/bank_rec_widget_views.xml',
-    ],
     'auto_install': True,
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [
             'account_accountant_batch_payment/static/src/components/**/*',
-        ],
-        'web.assets_tests': [
-            'account_accountant_batch_payment/static/tests/tours/*.js',
         ],
     }
 }

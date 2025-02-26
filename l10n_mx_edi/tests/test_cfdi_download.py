@@ -80,10 +80,7 @@ class TestCFDIDownload(TestMxEdiCommon, HttpCase):
             'date': '2017-01-01',
         }])
 
-        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=bank_statement.id).new({})
-        wizard._action_add_new_amls(invoice.line_ids.filtered(lambda account: account.account_type == 'asset_receivable'))
-        wizard._action_validate()
-
+        bank_statement.set_line_bank_statement_line(invoice.line_ids.filtered(lambda account: account.account_type == 'asset_receivable').ids)
         with freeze_time('2017-01-01'), self.with_mocked_pac_sign_success():
             invoice.l10n_mx_edi_cfdi_invoice_try_update_payments()
             bank_statement.l10n_mx_edi_payment_document_ids.action_force_payment_cfdi()

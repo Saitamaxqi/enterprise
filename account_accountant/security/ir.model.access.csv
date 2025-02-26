@@ -7,6 +7,3 @@
 access_account_fiscal_year_readonly,account.fiscal.year.user,model_account_fiscal_year,account.group_account_readonly,1,0,0,0
 access_account_fiscal_year_basic,account.fiscal.year.basic,model_account_fiscal_year,account.group_account_basic,1,0,0,0
 access_account_fiscal_year_manager,account.fiscal.year.manager,model_account_fiscal_year,account.group_account_manager,1,1,1,1
-
-access_bank_rec_widget,access.bank.rec.widget,model_bank_rec_widget,account.group_account_basic,1,1,1,1
-access_bank_rec_widget_line,access.bank.rec.widget.line,model_bank_rec_widget_line,account.group_account_basic,1,1,1,1

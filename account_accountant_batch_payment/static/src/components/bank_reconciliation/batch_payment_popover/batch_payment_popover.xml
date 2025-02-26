@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="account_accountant.BatchPaymentPopover">
+        <table class="table table-hover m-0">
+            <tbody>
+                <t t-foreach="props.batchPayments" t-as="batchPayment" t-key="batchPayment.id">
+                    <BatchPaymentPopoverLine batchPayment="batchPayment" onSelect.bind="() => this.onSelected(batchPayment.id)"/>
+                </t>
+            </tbody>
+        </table>
+    </t>
+</templates>

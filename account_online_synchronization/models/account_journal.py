@@ -8,6 +8,7 @@ from requests.exceptions import RequestException, Timeout
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError, ValidationError, RedirectWarning
 from odoo.tools import SQL
+from odoo.tools.misc import formatLang
 
 _logger = logging.getLogger(__name__)
 
@@ -431,3 +432,18 @@ class AccountJournal(models.Model):
         cron = self.env.ref('account_online_synchronization.online_sync_cron_waiting_synchronization', raise_if_not_found=False)
         if cron:
             cron.sudo().toggle(model=self._name, domain=[('account_online_account_id', '!=', False)])
+
+    def get_total_journal_amount(self):
+        # EXTENDS account_accountant
+        info_data = super().get_total_journal_amount()
+
+        available_balance = ''
+        if self.exists() and any(
+                company in self.company_id._accessible_branches() for company in self.env.companies):
+            if self.account_online_account_id.available_balance:
+                available_balance = formatLang(
+                    self.env,
+                    self.account_online_account_id.available_balance,
+                    currency_obj=self.currency_id or self.company_id.sudo().currency_id,
+                )
+        return {**info_data, 'available_balance_amount': available_balance}

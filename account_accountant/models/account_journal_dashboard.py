@@ -1,4 +1,5 @@
 from odoo import models
+from odoo.tools import formatLang
 
 
 class AccountJournal(models.Model):
@@ -53,10 +54,20 @@ class AccountJournal(models.Model):
         if self.type in ('bank', 'cash', 'credit') and not self._context.get('action_name'):
             self.ensure_one()
             return self.env['account.bank.statement.line']._action_open_bank_reconciliation_widget(
-                extra_domain=[('line_ids.account_id', '=', self.default_account_id.id)],
                 default_context={
                     'default_journal_id': self.id,
                     'search_default_journal_id': self.id,
                 },
             )
         return super().open_action()
+
+    def get_total_journal_amount(self):
+        balance = ''
+        if self.exists() and any(
+                company in self.company_id._accessible_branches() for company in self.env.companies):
+            balance = formatLang(
+                self.env,
+                self.current_statement_balance,
+                currency_obj=self.currency_id or self.company_id.sudo().currency_id,
+            )
+        return {'balance_amount': balance}

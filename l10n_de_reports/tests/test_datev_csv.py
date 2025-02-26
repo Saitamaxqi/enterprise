@@ -355,9 +355,7 @@ class TestDatevCSV(AccountTestInvoicingCommon):
         })
 
         receivable_line = move.line_ids.filtered(lambda line: line.account_id.account_type in ('asset_receivable', 'liability_payable'))
-        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=statement.line_ids.id).new({})
-        wizard._action_add_new_amls(receivable_line, allow_partial=False)
-        wizard._action_validate()
+        statement.line_ids.set_line_bank_statement_line(receivable_line.id)
 
         bank_account_code = str(self.env.company.bank_journal_ids.default_account_id.code).ljust(8, '0')
 
@@ -705,11 +703,12 @@ class TestDatevCSV(AccountTestInvoicingCommon):
             })]
         })
 
-        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=statement.line_ids.id).new({})
-        wizard._action_add_new_amls(move_1.line_ids.filtered(lambda x: x.account_id.account_type == 'liability_payable'))
-        wizard._action_add_new_amls(move_2.line_ids.filtered(lambda x: x.account_id.account_type == 'liability_payable'))
-        wizard._action_validate()
-
+        statement.line_ids.set_line_bank_statement_line(
+            (
+                move_1.line_ids.filtered(lambda x: x.account_id.account_type == 'liability_payable') +
+                move_2.line_ids.filtered(lambda x: x.account_id.account_type == 'liability_payable')
+            ).ids
+        )
         payment_move = statement.line_ids.move_id
         f = StringIO(self.env[report.custom_handler_model_name]._l10n_de_datev_get_csv(options, payment_move))
         reader = csv.reader(f, delimiter=';', quotechar='"', quoting=2)

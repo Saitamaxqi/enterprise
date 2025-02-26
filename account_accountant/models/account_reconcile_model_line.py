@@ -39,10 +39,6 @@ class AccountReconcileModelLine(models.Model):
         """ Prepare a dictionary that will be used later to create a new journal item (account.move.line) for the
         given reconcile model line used by the manual reconciliation widget.
 
-        Note: 'journal_id' is added to the returned dictionary even if it is a related readonly field.
-        It's a hack for the manual reconciliation widget. Indeed, a single journal entry will be created for each
-        journal.
-
         :param residual_amount_currency:    The current balance expressed in the account's currency.
         :param partner:                     The partner to be linked to the journal item.
         :param currency:                    The currency set on the account in the manual reconciliation widget.
@@ -63,7 +59,6 @@ class AccountReconcileModelLine(models.Model):
             **self._prepare_aml_vals(partner),
             'currency_id': currency.id,
             'amount_currency': amount_currency,
-            'journal_id': self.journal_id.id,
         }
 
     def _apply_in_bank_widget(self, residual_amount_currency, partner, st_line):
@@ -83,7 +78,7 @@ class AccountReconcileModelLine(models.Model):
         if self.amount_type == 'percentage_st_line':
             transaction_amount, transaction_currency, journal_amount, journal_currency, _company_amount, _company_currency \
                 = st_line._get_accounting_amounts_and_currencies()
-            if self.model_id.rule_type == 'writeoff_button' and self.model_id.counterpart_type in ('sale', 'purchase'):
+            if self.model_id.counterpart_type in ('sale', 'purchase'):
                 # The invoice should be created using the transaction currency.
                 aml_values['amount_currency'] = currency.round(-transaction_amount * self.amount / 100.0)
                 aml_values['percentage_st_line'] = self.amount / 100.0
@@ -114,10 +109,9 @@ class AccountReconcileModelLine(models.Model):
         match = re.search(amount_string, target_field)
         if match:
             sign = 1 if residual_amount_currency > 0.0 else -1
-            decimal_separator = self.model_id.decimal_separator
             try:
-                extracted_match_group = re.sub(r'[^\d' + decimal_separator + ']', '', match.group(1))
-                extracted_balance = float(extracted_match_group.replace(decimal_separator, '.'))
+                extracted_match_group = re.sub(r'[^\d+[,\.]?\d*]', '', match.group(1))
+                extracted_balance = float(extracted_match_group.replace(',', '.'))
                 return copysign(extracted_balance * sign, residual_amount_currency)
             except ValueError:
                 return 0.0

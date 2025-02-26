@@ -63,14 +63,20 @@
                 tooltipPosition: "bottom",
                 run: "click",
             }, {
-                trigger: '.o_kanban_renderer:not(:has(.o_bank_rec_quick_create)) .o_bank_rec_st_line:not(.o_bank_rec_selected_st_line)',
-                content: _t('Click on a fetched bank transaction to start the reconciliation process.'),
+                trigger: '.o_kanban_renderer:not(:has(.o_bank_rec_quick_create))',
+                content: _t('Quick create is closed'),
+            }, {
+                trigger: 'div[name="bank_statement_line"]:first',
+                content: _t('Unfold first statement'),
                 run: "click",
+            }, {
+                trigger: "div.o_button_line",
+                content: "line is unfolded",
             }, {
                 isActive: ['auto'],
                 trigger: '.dropdown-item[data-menu-xmlid="account.menu_board_journal_1"]',
                 content: _t('Let’s go back to the dashboard.'),
                 run: "click",
-            },
+            }
         ]
     });

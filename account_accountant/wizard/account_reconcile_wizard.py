@@ -433,7 +433,6 @@ class AccountReconcileWizard(models.TransientModel):
         """
         for wizard in self:
             domain = [
-                ('rule_type', '=', 'writeoff_button'),
                 ('company_id', '=', wizard.company_id.id),
                 ('counterpart_type', 'not in', ('sale', 'purchase')),
             ]

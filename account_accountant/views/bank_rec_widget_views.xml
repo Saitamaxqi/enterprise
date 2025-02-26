@@ -71,13 +71,10 @@
                            string="Journal Entry"
                            filter_domain="['|', ('move_id.name', 'ilike', self), ('move_id.ref', 'ilike', self)]"/>
                     <field name="statement_line_id" string="Statement Line"/>
+                    <field name="activity_ids"/>
                     <separator/>
                     <filter name="deposits" string="Deposits" domain="[('amount', '>', 0.0)]"/>
                     <filter name="payments" string="Payments" domain="[('amount', '&lt;', 0.0)]"/>
-                    <separator/>
-                    <filter name="posted" string="Posted" domain="[('state', '=', 'posted')]"/>
-                    <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
-                    <filter name="cancelled" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
                     <separator/>
                     <filter name="no_statement" string="No statement" domain="[('statement_id', '=', False)]"/>
                     <filter name="invalid_statement" string="Invalid statements"
@@ -86,7 +83,7 @@
                     <filter name="matched" string="Matched" domain="[('is_reconciled', '=', True)]"/>
                     <filter name="not_matched" string="Not Matched"
                             domain="[('is_reconciled', '=', False), ('checked', '=', True)]"/>
-                    <filter name="to_check" string="To Check" domain="[('checked', '=', False)]"/>
+                    <filter name="with_activities" string="With Activities" domain="[('activity_ids', '!=', False)]"/>
                     <separator/>
                     <filter name="date" string="Date" date="date"/>
                     <separator/>
@@ -117,46 +114,23 @@
                     <field name="is_reconciled"/>
                     <field name="checked"/>
                     <field name="currency_id"/>
+                    <field name="partner_id"/>
+                    <field name="amount"/>
+                    <field name="amount_currency"/>
+                    <field name="date"/>
+                    <field name="payment_ref"/>
+                    <field name="move_id"/>
+                    <field name="line_ids"/>
+                    <field name="account_number"/>
+                    <field name="activity_ids"/>
+                    <field name="company_id"/>
+                    <field name="partner_name"/>
+                    <field name="transaction_details"/>
+                    <field name="foreign_currency_id"/>
                     <templates>
-                        <t t-name="card">
-                            <div t-if="!record.statement_id.raw_value"
-                                 class="statement_separator text-center">
-                                <a role="button" class="btn btn-secondary btn-sm"
-                                   context="{'split_line_id': id, 'default_journal_id': journal_id}"
-                                   tabindex="-1"
-                                   type="action" name="%(account_accountant.action_bank_statement_form_bank_rec_widget)d">
-                                    Statement
-                                </a>
-                            </div>
-
-                            <div t-att-st-line-id="record.id.raw_value"
-                                 t-att-st-line-todo="!record.is_reconciled.raw_value || !record.checked.raw_value"
-                                 style="width:100%">
-
-                                <t t-set="text_amount_class"
-                                   t-value="record.amount.raw_value &lt; 0.0 and 'text-danger'"/>
-
-                                <div class="d-flex">
-                                    <!-- Row 1 -->
-                                    <field name="date" class="fw-bolder text-nowrap" readonly="state in ['cancel', 'posted']"/>
-                                    <field name="partner_id" class="flex-fill text-truncate ms-1 fst-italic ps-2"/>
-                                    <div t-att-class="text_amount_class">
-                                        <field name="amount" class="fw-bolder text-nowrap"/>
-                                    </div>
-                                </div>
-
-                                    <!-- Row 2 -->
-                                <div class="d-flex gap-2 align-items-center">
-                                    <field name="payment_ref" class="text-truncate flex-fill"/>
-                                    <span invisible="state != 'cancel'" class="badge rounded-pill align-middle">Cancelled</span>
-                                    <span invisible="state != 'draft'" class="badge rounded-pill text-bg-info align-middle">Draft</span>
-                                    <span t-if="!record.checked.raw_value" class="badge text-bg-warning">To check</span>
-                                    <div t-if="record.is_reconciled.raw_value" class="badge text-bg-success" title="Matched">
-                                        <i class="fa fa-check"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </t>
+                        <!-- We are overriding the whole kanban record element, but we still need to load the template
+                             card. Look at the bank_reconciliation components to work on the view. -->
+                        <t t-name="card"/>
                     </templates>
                 </kanban>
             </field>
@@ -221,11 +195,7 @@
                                 'st_line_id':id,
                             }"
                            decoration-danger="statement_complete == False or statement_valid == False"
-                           widget="bank_rec_list_many2one_multi_id"
                            readonly="not id"/>
-                    <field name="id"
-                           widget="bank_rec_list_view_switcher"
-                           invisible="not id"/>
                     <field name="state"
                            widget="badge"
                            decoration-info="state == 'draft'"
@@ -294,19 +264,12 @@
                 <form string="New Transaction">
                     <field name="journal_id" invisible="1"/>
                     <field name="currency_id" invisible="1"/>
-                    <group>
-                        <field name="date" readonly="is_reconciled and amount != 0" nolabel="1"/>
-                        <field name="partner_id"
-                            readonly="is_reconciled and amount != 0"
-                            nolabel="1"
-                            placeholder="Partner"/>
-                        <field name="amount" readonly="is_reconciled and amount != 0" nolabel="1"/>
+                    <group class="o_quick_create p-2">
+                        <field name="date" nolabel="1"/>
+                        <field name="payment_ref" class="o_payment_ref" required="1" nolabel="1" placeholder="Write a label ..."/>
+                        <field name="partner_id" class="w-100" nolabel="1" placeholder="Partner"/>
+                        <field name="amount" class="w-100" nolabel="1"/>
                     </group>
-                    <field name="payment_ref"
-                        required="1"
-                        readonly="is_reconciled and amount != 0"
-                        nolabel="1"
-                        placeholder="Memo"/>
                 </form>
             </field>
         </record>
@@ -326,7 +289,7 @@
             The solution of changing the action dict was not useful because the dict view_mode would be erased on page refresh.
         -->
         <record id="action_bank_statement_line_transactions" model="ir.actions.act_window">
-            <field name="name">Bank Reconciliation</field>
+            <field name="name">Bank Matching</field>
             <field name="res_model">account.bank.statement.line</field>
             <field name="view_mode">list,kanban</field>
             <field name="search_view_id" ref="view_bank_statement_line_search_bank_rec_widget"/>
@@ -341,7 +304,7 @@
         </record>
 
         <record id="action_bank_statement_line_transactions_kanban" model="ir.actions.act_window">
-            <field name="name">Bank Reconciliation</field>
+            <field name="name">Bank Matching</field>
             <field name="res_model">account.bank.statement.line</field>
             <field name="view_mode">kanban,list</field>
             <field name="search_view_id" ref="view_bank_statement_line_search_bank_rec_widget"/>
@@ -366,89 +329,42 @@
             </field>
         </record>
 
-        <!-- Search view on aml to be injected inside the form (view_bank_rec_widget_form) -->
-        <record id="view_account_move_line_search_bank_rec_widget" model="ir.ui.view">
-            <field name="name">account.move.line.search.bank_rec_widget</field>
-            <field name="model">account.move.line</field>
-            <field name="priority">999</field>
-            <field name="arch" type="xml">
-                <search>
-                    <field name="name"
-                           string="Journal Item"
-                           filter_domain="['|', '|', '|', '|', '|', ('name', 'ilike', self), ('ref', 'ilike', self), ('partner_id', 'ilike', self), ('amount_residual', 'ilike', self), ('amount_residual_currency', 'ilike', self), ('discount_amount_currency', 'ilike', self)]"/>
-                    <field name="invoice_date"/>
-                    <field name="date"/>
-                    <field name="account_id"/>
-                    <field name="partner_id"/>
-                    <field name="journal_id"/>
-                    <field name="currency_id" groups="base.group_multi_currency"/>
-                    <field name="move_id"
-                           string="Journal Entry"
-                           filter_domain="['|', ('move_id.name', 'ilike', self), ('move_id.ref', 'ilike', self)]"/>
-                    <separator/>
-                    <filter name="amount_received" string="Incoming" domain="[('balance', '>', 0.0)]"/>
-                    <filter name="amount_paid" string="Outgoing" domain="[('balance', '&lt;', 0.0)]"/>
-                    <separator/>
-                    <filter name="posted" string="Posted" domain="[('parent_state', '=', 'posted')]"/>
-                    <filter name="draft" string="Draft" domain="[('parent_state', '=', 'draft')]"/>
-                    <separator name="inject_after"/>
-                    <filter name="date" string="Date" date="date"/>
-                    <filter name="invoice_date" string="Invoice Date" date="invoice_date"/>
-                </search>
-            </field>
-        </record>
-
-        <!-- List view on aml to be injected inside the form (view_bank_rec_widget_form) -->
+        <!-- List view of aml used in the reconcile search more (bank rec widget) -->
         <record id="view_account_move_line_list_bank_rec_widget" model="ir.ui.view">
             <field name="name">account.move.line.list.bank_rec_widget</field>
             <field name="model">account.move.line</field>
             <field name="priority">999</field>
             <field name="arch" type="xml">
-                <list string="Suggestions"
-                      create="false"
-                      edit="false"
-                      limit="40"
-                      count_limit="40"
-                      decoration-info="parent_state == 'draft'"
-                      js_class="bank_rec_amls_list_view">
-                    <!-- Invisible fields -->
-                    <field name="company_id" column_invisible="True"/>
-                    <field name="payment_id" column_invisible="True"/>
-                    <field name="currency_id" column_invisible="True"/>
-                    <field name="company_currency_id" column_invisible="True"/>
-
-                    <field name="account_id"
-                           options="{'no_open': True, 'no_create': True}"
-                           groups="account.group_account_readonly"
-                           optional="show"/>
-                    <field name="journal_id"
-                           optional="hidden"/>
-                    <field name="partner_id"
-                           optional="show"/>
-                    <field name="invoice_date" string="Invoice Date" optional="hide"/>
+                <list string="Journal Items to Match" create="false" edit="false" decoration-info="parent_state == 'draft'">
                     <field name="date"/>
-                    <field name="move_id" string="Document" groups="!account.group_account_readonly"/>
-                    <field name="move_id" groups="account.group_account_readonly"/>
-                    <field name="name"/>
+                    <field name="move_name" string="Journal Entry" optional="show"/>
+                    <field name="account_id" optional="hidden"/>
+                    <field name="journal_id" optional="hidden"/>
+                    <field name="partner_id" optional="show"/>
+                    <field name="invoice_date" string="Invoice Date" optional="hide"/>
+                    <field name="name" optional="show"/>
                     <field name="date_maturity" optional="hidden"/>
-                    <field name="ref"
-                           optional="hidden"/>
-                    <field name="analytic_distribution" widget="analytic_distribution"
-                           groups="analytic.group_analytic_accounting"
-                           optional="hidden"
-                           options="{'account_field': 'account_id', 'business_domain': 'general'}"/>
-                    <field name="amount_residual_currency"
-                           decoration-danger="amount_residual_currency &lt; 0"
-                           groups="base.group_multi_currency"
-                           string="Amount Due (in currency)"/>
-                    <field name="amount_residual"
-                           decoration-danger="amount_residual &lt; 0"
-                           string="Amount Due"/>
+                    <field name="ref" optional="hidden"/>
+                    <field name="analytic_distribution" groups="analytic.group_analytic_accounting" widget="analytic_distribution" optional="hidden" options="{'account_field': 'account_id', 'business_domain': 'general'}"/>
+                    <field name="amount_residual" invisible="currency_id == company_currency_id" decoration-muted="amount_residual &lt; 0" nolabel="1" />
+                    <field name="company_currency_id" column_invisible="True"/>
+                    <field name="amount_residual_currency" decoration-muted="amount_residual_currency &lt; 0" string="Amount Due"/>
+                    <field name="currency_id" column_invisible="True"/>
+                </list>
+            </field>
+        </record>
 
-                    <button name="action_open_business_doc"
-                            type="object"
-                            string="View"
-                            class="btn btn-sm btn-secondary"/>
+        <!-- List view of aml used in the set account search (bank rec widget) -->
+        <record id="view_account_list_bank_rec_widget" model="ir.ui.view">
+            <field name="name">account.account.list.bank.rec.widget</field>
+            <field name="model">account.account</field>
+            <field name="arch" type="xml">
+                <list string="Account" create="false" edit="false">
+                    <field name="code"/>
+                    <field name="name" optional="show"/>
+                    <field name="account_type" optional="hide"/>
+                    <field name="group_id" optional="hide"/>
+                    <field name="reconcile" string="Reconcile" optional="hide"/>
                 </list>
             </field>
         </record>

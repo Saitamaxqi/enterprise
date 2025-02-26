@@ -12,5 +12,5 @@ patch(BaseImportModel.prototype, {
                 template: "/account_bank_statement_import/static/csv/account.bank.statement.csv",
             });
         }
-    }
+    },
 });

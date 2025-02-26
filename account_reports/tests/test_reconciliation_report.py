@@ -102,15 +102,11 @@ class TestReconciliationReport(TestAccountReportsCommon):
 
         st_line = statement_2.line_ids.filtered(lambda line: line.payment_ref == 'line_1')
         payment_line = payment_1.move_id.line_ids.filtered(lambda line: line.account_id == payment_1.payment_method_line_id.payment_account_id)
-        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
-        wizard._action_add_new_amls(payment_line, allow_partial=False)
-        wizard._action_validate()
+        st_line.set_line_bank_statement_line(payment_line.id)
 
         st_line = statement_2.line_ids.filtered(lambda line: line.payment_ref == 'line_3')
         payment_line = payment_2.move_id.line_ids.filtered(lambda line: line.account_id == payment_2.payment_method_line_id.payment_account_id)
-        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
-        wizard._action_add_new_amls(payment_line, allow_partial=False)
-        wizard._action_validate()
+        st_line.set_line_bank_statement_line(payment_line.id)
 
         # ==== Report ====
 
@@ -132,15 +128,17 @@ class TestReconciliationReport(TestAccountReportsCommon):
                 ('Last statement balance',                       '',           -200.0),
                 ('Including Unreconciled Receipts',              '',            200.0),
                 ('BNKKK/2015/00002',                   '01/02/2015',            200.0),
-                ('Including Unreconciled Payments',              '',           -400.0),
+                ('Including Unreconciled Payments',              '',           -450.0),
                 ('BNKKK/2015/00004',                   '01/04/2015',           -400.0),
+                ('BNKKK/2015/00003',                   '01/03/2015',            -50.0),
                 ('Transactions without statement',               '',              0.0),
                 ('Including Unreconciled Receipts',              '',              0.0),
                 ('Including Unreconciled Payments',              '',              0.0),
                 ('Misc. operations',                             '',              0.0),
-                ('Outstanding Receipts/Payments',                '',            100.0),
-                ('(+) Outstanding Receipts',                     '',            450.0),
+                ('Outstanding Receipts/Payments',                '',            150.0),
+                ('(+) Outstanding Receipts',                     '',            500.0),
                 ('PBNKKK/2015/00004',                  '01/04/2015',            450.0),
+                ('PBNKKK/2015/00001',                  '01/01/2015',             50.0),
                 ('(-) Outstanding Payments',                     '',           -350.0),
                 ('PBNKKK/2015/00003',                  '01/03/2015',           -350.0),
             ],
@@ -744,9 +742,7 @@ class TestReconciliationReport(TestAccountReportsCommon):
         payment.action_post()
 
         payment_line = payment.move_id.line_ids.filtered(lambda line: line.account_id == payment.payment_method_line_id.payment_account_id)
-        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=bank_statement_lines[1].id).new({})
-        wizard._action_add_new_amls(payment_line, allow_partial=False)
-        wizard._action_validate()
+        bank_statement_lines[1].set_line_bank_statement_line(payment_line.id)
 
         options = self._generate_options(report, '2019-01-01', '2019-01-12')
         options['all_entries'] = True

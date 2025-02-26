@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="account_accountant.BankRecSelectCreateDialog" t-inherit="web.SelectCreateDialog" t-inherit-mode="primary">
+        <xpath expr="//button[hasclass('o_form_button_cancel')]" position="after">
+            <div class="ms-4 flex-fill d-flex justify-content-between" name="bank_reconciliation_info">
+                <span t-esc="formattedStatementLineDate"/>
+                <div class="text-truncate w-50" t-esc="props.reference"/>
+                <div class="text-end" name="remaining_amount">
+                    <span class="text-muted">Balance: </span>
+                    <t t-esc="remainingAmountFormatted"/>
+                </div>
+            </div>
+        </xpath>
+    </t>
+</templates>

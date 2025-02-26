@@ -1,0 +1,60 @@
+import { BankRecBatchPaymentButton } from "../batch_payment_button/batch_payment_button";
+import { BankRecButtonList } from "@account_accountant/components/bank_reconciliation/button_list/button_list";
+import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
+import { _t } from "@web/core/l10n/translation";
+import { patch } from "@web/core/utils/patch";
+
+patch(BankRecButtonList, {
+    components: {
+        ...BankRecButtonList.components,
+        BankRecBatchPaymentButton,
+    },
+    props: {
+        ...BankRecButtonList.props,
+        availableBatchPayments: { type: Array, optional: true },
+    },
+    defaultProps: {
+        ...BankRecButtonList.defaultProps,
+        availableBatchPayments: [],
+    },
+});
+
+patch(BankRecButtonList.prototype, {
+    selectBatchPayment() {
+        // todo flg: add domain
+        this.addDialog(SelectCreateDialog, {
+            title: _t("Search: Batch Payment"),
+            noCreate: true,
+            multiSelect: false,
+            resModel: "account.batch.payment",
+            onSelected: async (batch) => {
+                await this.onSelectBatchPayment(batch[0]);
+            },
+        });
+    },
+
+    async onSelectBatchPayment(batchPaymentId) {
+        await this.orm.call(
+            "account.bank.statement.line",
+            "set_batch_payment_bank_statement_line",
+            [this.statementLineData.id, batchPaymentId]
+        );
+        this.props.statementLine.load();
+        this.env.updateChatter(this.statementLineData.move_id.id);
+    },
+
+    get buttons() {
+        const buttons = super.buttons;
+        if (this.ui.isSmall) {
+            buttons.batches = {
+                label: _t("Batches"),
+                action: this.selectBatchPayment.bind(this),
+            };
+        }
+        return buttons;
+    },
+
+    get isBatchPaymentsButtonShown() {
+        return !!this.props.availableBatchPayments?.length;
+    },
+});

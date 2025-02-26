@@ -1,0 +1,34 @@
+import { Component, useRef } from "@odoo/owl";
+import { BatchPaymentPopover } from "../batch_payment_popover/batch_payment_popover";
+import { usePopover } from "@web/core/popover/popover_hook";
+
+export class BankRecBatchPaymentButton extends Component {
+    static template = "account_accountant.BankRecBatchPaymentButton";
+    static props = {
+        availableBatchPayments: Array,
+        onSelected: Function,
+    };
+
+    setup() {
+        this.btnRef = useRef("batch-payment-button");
+        this.batchPaymentPopover = usePopover(BatchPaymentPopover, {
+            position: "bottom",
+            closeOnClickAway: true,
+        });
+    }
+
+    openBatchPaymentsPopOver() {
+        if (this.batchPaymentPopover.isOpen) {
+            this.batchPaymentPopover.close();
+        } else {
+            this.batchPaymentPopover.open(this.btnRef.el, {
+                batchPayments: this.props.availableBatchPayments,
+                onSelected: this.onSelected.bind(this),
+            });
+        }
+    }
+
+    onSelected(batchPaymentId) {
+        this.props.onSelected(batchPaymentId);
+    }
+}
