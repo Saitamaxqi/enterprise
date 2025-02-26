@@ -9,7 +9,7 @@ from werkzeug.urls import url_join
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
-TWITTER_IMAGES_UPLOAD_ENDPOINT = "https://upload.twitter.com/1.1/media/upload.json"
+TWITTER_IMAGES_UPLOAD_ENDPOINT = "https://api.x.com/2/media/upload"
 
 
 class SocialAccount(models.Model):
@@ -226,7 +226,7 @@ class SocialAccount(models.Model):
             generic_api_error = result.json().get('error', '')
             raise UserError(_("We could not upload your image, it may be corrupted, it may exceed size limit or API may have send improper response (error: %s).", generic_api_error))
 
-        return result.json().get('media_id_string')
+        return result.json().get('data').get('id')
 
     def _process_twitter_upload(self, image, media_id):
         params = {
