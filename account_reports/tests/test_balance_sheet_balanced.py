@@ -427,7 +427,7 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
         self.env.flush_all()
 
         for coa in installed_coas:
-            with self.env.cr.savepoint(flush=False), self.subTest(CoA=coa):
+            with contextlib.closing(self.env.cr.savepoint(flush=False)), self.subTest(CoA=coa):
                 # === 1. Set-up localization === #
                 available_reports, aml_pairs, accounts_by_aml = self._set_up_localization(coa)
 
