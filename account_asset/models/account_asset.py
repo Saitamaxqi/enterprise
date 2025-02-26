@@ -568,7 +568,7 @@ class AccountAsset(models.Model):
                               days_left_to_depreciated, residual_declining, start_yearly_period=None, total_lifetime_left=None,
                               residual_at_compute=None, start_recompute_date=None):
 
-        def _get_max_between_linear_and_degressive(linear_amount):
+        def _get_max_between_linear_and_degressive(linear_amount, effective_start_date=start_yearly_period):
             """
             Compute the degressive amount that could be depreciated and returns the biggest between it and linear_amount
             The degressive amount corresponds to the difference between what should have been depreciated at the end of
@@ -577,7 +577,7 @@ class AccountAsset(models.Model):
             fiscalyear_dates = self.company_id.compute_fiscalyear_dates(period_end_date)
             days_in_fiscalyear = self._get_delta_days(fiscalyear_dates['date_from'], fiscalyear_dates['date_to'])
 
-            degressive_total_value = residual_declining * (1 - self.method_progress_factor * self._get_delta_days(start_yearly_period, period_end_date) / days_in_fiscalyear)
+            degressive_total_value = residual_declining * (1 - self.method_progress_factor * self._get_delta_days(effective_start_date, period_end_date) / days_in_fiscalyear)
             degressive_amount = residual_amount - degressive_total_value
             return self._degressive_linear_amount(residual_amount, degressive_amount, linear_amount)
 
@@ -602,11 +602,12 @@ class AccountAsset(models.Model):
             # Linear amount
             # We first calculate the total linear amount for the period left from the beginning of the year
             # to get the linear amount for the period in order to avoid big delta at the end of the period
-            days_left_from_beginning_of_year = self._get_delta_days(start_yearly_period, period_start_date - relativedelta(days=1)) + days_left_to_depreciated
-            expected_remaining_value_with_linear = residual_declining - residual_declining * self._get_delta_days(start_yearly_period, period_end_date) / days_left_from_beginning_of_year
+            effective_start_date = max(start_yearly_period, self.paused_prorata_date) if start_yearly_period else self.paused_prorata_date
+            days_left_from_beginning_of_year = self._get_delta_days(effective_start_date, period_start_date - relativedelta(days=1)) + days_left_to_depreciated
+            expected_remaining_value_with_linear = residual_declining - residual_declining * self._get_delta_days(effective_start_date, period_end_date) / days_left_from_beginning_of_year
             linear_amount = residual_amount - expected_remaining_value_with_linear
 
-            amount = _get_max_between_linear_and_degressive(linear_amount)
+            amount = _get_max_between_linear_and_degressive(linear_amount, effective_start_date)
         elif self.method == 'degressive_then_linear':
             if not self.parent_id:
                 linear_amount = self._get_linear_amount(days_before_period, days_until_period_end, self.total_depreciable_value)

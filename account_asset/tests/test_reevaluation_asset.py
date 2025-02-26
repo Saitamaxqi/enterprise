@@ -1641,3 +1641,22 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
             'modify_action': 'dispose',
             'loss_account_id': self.company_data['default_account_expense'].copy().id,
         }).sell_dispose()
+
+    def test_asset_disposal_in_middle_of_fiscal_year(self):
+        self.company_data['company'].fiscalyear_last_month = "3"
+
+        asset = self.create_asset(value=10000, periodicity="monthly", periods=12, method="degressive", acquisition_date="2022-01-01", prorata_computation_type="daily_computation")
+        asset.validate()
+
+        self.env['asset.modify'].create({
+            'asset_id': asset.id,
+            'date':  fields.Date.to_date("2022-02-24"),
+            'modify_action': 'dispose',
+            'loss_account_id': self.company_data['default_account_expense'].copy().id,
+        }).sell_dispose()
+
+        self.assertRecordValues(asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv.id)), [
+            self._get_depreciation_move_values(date='2022-01-31', depreciation_value=849.32, remaining_value=9150.68, depreciated_value=849.32, state='posted'),
+            self._get_depreciation_move_values(date='2022-02-24', depreciation_value=657.53, remaining_value=8493.15, depreciated_value=1506.85, state='posted'),
+            self._get_depreciation_move_values(date='2022-02-24', depreciation_value=8493.15, remaining_value=0, depreciated_value=10000, state='draft'),
+        ])
