@@ -20,7 +20,7 @@ export class KnowledgeArticleController extends ListController {
     getStaticActionMenuItems() {
         const menuItems = super.getStaticActionMenuItems();
         menuItems.duplicate = {
-            isAvailable: () => this.nbSelected && user.isAdmin,
+            isAvailable: () => this.hasSelectedRecords && user.isAdmin,
             sequence: 15,
             icon: "fa fa-clone",
             description: _t("Duplicate"),
