@@ -11,6 +11,8 @@ from odoo.tools.misc import OrderedSet
 # List of models to export (the order ensures that dependencies are satisfied)
 DEFAULT_MODELS_TO_EXPORT = [
     "res.groups",
+    "res.groups.privilege",
+    "ir.module.category",
     "report.paperformat",
     "ir.model",
     "ir.model.fields",
@@ -229,7 +231,9 @@ FIELDS_TO_EXPORT = {
         "subject",
         "use_default_to",
     ],
-    "res.groups": ["color", "comment", "implied_ids", "name", "share"],
+    "res.groups": ["sequence", "privilege_id", "comment", "implied_ids", "name", "share"],
+    "res.groups.privilege": ["sequence", "category_id", "name", "placeholder"],
+    "ir.module.category": ["sequence", "name"],
     "ir.default": ["field_id", "condition", "json_value"],
     "studio.approval.rule": [
         "approver_ids",
@@ -281,7 +285,7 @@ RELATIONS_NOT_TO_EXPORT = {
     "ir.filters": ["user_ids"],
     "mail.template": ["attachment_ids", "mail_server_id"],
     "report.paperformat": ["report_ids"],
-    "res.groups": ["category_id", "user_ids"],
+    "res.groups": ["user_ids"],
 }
 
 

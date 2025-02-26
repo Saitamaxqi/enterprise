@@ -30,12 +30,10 @@ def uninstall_hook(env):
         group_user.write({
             'name': "Show Full Accounting Features",
             'implied_ids': [(3, env.ref('account.group_account_invoice').id)],
-            'category_id': env.ref("base.module_category_hidden").id,
         })
         group_readonly = env.ref("account.group_account_readonly")
         group_readonly.write({
             'name': "Show Full Accounting Features - Readonly",
-            'category_id': env.ref("base.module_category_hidden").id,
         })
     except ValueError as e:
         _logger.warning(e)

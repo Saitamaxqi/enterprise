@@ -3,7 +3,6 @@
     <data noupdate="0">
         <record id="group_commission_forecast" model="res.groups">
             <field name="name">Enable Commission Forecast</field>
-            <field name="category_id" ref="base.module_category_hidden"/>
         </record>
     </data>
 </odoo>

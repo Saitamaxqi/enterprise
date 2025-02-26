@@ -25,7 +25,6 @@
 
         <record id="group_use_helpdesk_timesheet" model="res.groups">
             <field name="name">Timesheets</field>
-            <field name="category_id" ref="base.module_category_hidden"/>
         </record>
 
         <record id="helpdesk.group_helpdesk_user" model="res.groups">

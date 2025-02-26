@@ -1913,15 +1913,15 @@ registry.category("web_tour.tours").add("web_studio_test_negated_groups", {
         },
         {
             trigger: ".o_web_studio_sidebar [name='negated_groups_id'] input",
-            run: "edit Access Rights",
+            run: "edit Role",
         },
         {
-            trigger: "a.dropdown-item:contains(Administration / Access Rights)",
+            trigger: "a.dropdown-item:contains(Role / Administrator)",
             run: "click",
         },
         {
             trigger:
-                ".o_web_studio_sidebar [name='negated_groups_id'] .o_badge:contains(Administration / Access Rights)",
+                ".o_web_studio_sidebar [name='negated_groups_id'] .o_badge:contains(Role / Administrator)",
         },
     ],
 });

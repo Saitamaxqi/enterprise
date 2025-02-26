@@ -3,7 +3,7 @@
     <record id="group_whatsapp_admin" model="res.groups">
         <field name="name">Administrator</field>
         <field name="sequence">10</field>
-        <field name="category_id" ref="base.module_category_marketing_whatsapp"/>
+        <field name="privilege_id" ref="res_groups_privilege_whatsapp"/>
         <field name="user_ids" eval="[Command.link(ref('base.user_admin'))]"/>
     </record>
 </odoo>

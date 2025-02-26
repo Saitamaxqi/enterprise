@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record model="ir.module.category" id="base.module_category_accounting_accounting">
-        <field name="description">Helps you handle your invoices and accounting actions.
-
-        Invoicing: Invoices, payments and basic invoice reporting.
-        Invoicing &amp; Banks: adds the accounting dashboard, bank management and follow-up reports.
-        Administrator: full access including configuration rights.
-        </field>
-    </record>
-
     <record id="account.group_account_basic" model="res.groups">
         <field name="name">Invoicing &amp; Banks</field>
         <field name="sequence">30</field>
-        <field name="category_id" ref="base.module_category_accounting_accounting"/>
+        <field name="comment">adds the accounting dashboard, bank management and follow-up reports.</field>
+        <field name="privilege_id" ref="account.res_groups_privilege_accounting"/>
     </record>
 
     <record id="account.group_account_manager" model="res.groups">
@@ -22,6 +14,5 @@
 
     <record id="group_fiscal_year" model="res.groups">
         <field name="name">Allow to define fiscal years of more or less than a year</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
     </record>
 </odoo>

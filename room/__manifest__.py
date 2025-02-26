@@ -14,7 +14,7 @@
         'views/room_menus.xml',
         'views/room_booking_templates_frontend.xml',
         'views/room_office_views.xml',
-        'data/ir_module_category_data.xml',
+        'data/res_groups_privilege_data.xml',
         'security/ir_rule.xml',
         'security/ir.model.access.csv',
     ],

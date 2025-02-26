@@ -1934,7 +1934,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         assertViewArchEqual(self, studio_view.arch, """
         <data>
             <xpath expr="//form[1]/field[@name='name']" position="attributes">
-                <attribute name="groups">web_studio.studio_test_doesnothavegroup,!base.group_erp_manager</attribute>
+                <attribute name="groups">web_studio.studio_test_doesnothavegroup,!base.group_system</attribute>
             </xpath>
         </data>
         """)
