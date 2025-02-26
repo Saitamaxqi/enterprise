@@ -82,7 +82,7 @@ export class MrpWorkorder extends StockMove {
     }
 
     async clicked() {
-        // Override with an empty body to cancel the behavior of clicked() in the 'StockMove' parent class
+        this.props.selectWorkcenter(this.workcenter[0], this.props.record.data.production_id[1]);
     }
 }
 

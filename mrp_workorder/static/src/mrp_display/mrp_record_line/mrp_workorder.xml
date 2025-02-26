@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.WorkOrder">
-        <li class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center gap-2 flex-wrap"
+        <li class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center gap-2 border-bottom"
             t-att-class="cssClass"
             t-on-click="onClick">
-            <span class="flex-grow-1">
-                <span class="me-1" t-esc="name"/>
-                <span> <t t-esc="checksInfo"/></span>
-            </span>
-
-            <button t-if="!isComplete" class="btn flex-grow-1 flex-basis-0"
-                t-on-click.stop="() => props.selectWorkcenter(workcenter[0], props.record.data.production_id[1])"
-                t-attf-class="o_workcenter_item_color_{{workcenter[0] % 11}}">
-                <span class="text-truncate" t-out="workcenter[1]"/>
-                <i class="oi oi-arrow-right ms-2"/>
-            </button>
-             <button t-else="" class="btn btn-lg pass fa fa-check px-0 text-success"/>
+            <div class="o_mrp_operation_name">
+                <span t-esc="name"/>
+                <button t-if="!isComplete" t-out="workcenter[1]"
+                    class="btn ms-1 py-0 px-2 text-truncate"
+                    t-attf-class="o_workcenter_item_color_{{workcenter[0] % 11}}"/>
+            </div>
+            <i t-attf-class="fa {{isComplete ? 'fa-check text-success pass' : 'fa-chevron-right text-muted'}}"/>
         </li>
     </t>
 </templates>
