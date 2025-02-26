@@ -49,7 +49,7 @@ class HrPayrollStructure(models.Model):
                 ('report_name', 'not ilike', 'l10n')
             ]
 
-    name = fields.Char(required=True)
+    name = fields.Char(required=True, translate=True)
     code = fields.Char()
     active = fields.Boolean(default=True)
     type_id = fields.Many2one(
