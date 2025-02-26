@@ -122,7 +122,16 @@ class DocumentsDocument(models.Model):
 
             invoices |= move
 
+        # When running an action on several documents, this method is called in a
+        # loop (because of the "multi" server action). When it is the case, we try
+        # to redirect to a list of all created invoices instead of just the last
+        # one, using the context.
         context = dict(self._context, default_move_type=move_type)
+        documents_active_ids = context.get('documents_active_ids')
+        if context.get('active_model') != 'documents.document' or not documents_active_ids:
+            invoice_ids = invoices.ids
+        else:
+            invoice_ids = self.browse(documents_active_ids).mapped('res_id')
         action = {
             'type': 'ir.actions.act_window',
             'res_model': 'account.move',
@@ -130,16 +139,16 @@ class DocumentsDocument(models.Model):
             'view_id': False,
             'view_mode': 'list',
             'views': [(False, "list"), (False, "form")],
-            'domain': [('id', 'in', invoices.ids)],
+            'domain': [('id', 'in', invoice_ids)],
             'context': context,
         }
-        if len(invoices) == 1:
+        if len(invoice_ids) == 1:
             record = move or invoices[0]
             view_id = record.get_formview_id() if record else False
             action.update({
                 'view_mode': 'form',
                 'views': [(view_id, "form")],
-                'res_id': invoices[0].id,
+                'res_id': invoice_ids[0],
                 'view_id': view_id,
             })
         return action

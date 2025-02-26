@@ -1212,13 +1212,13 @@ class DocumentsDocument(models.Model):
             raise AccessError(_("You are not allowed to execute embedded actions."))
         if self.env.context.get('active_model') != 'documents.document':
             raise UserError(_("Unavailable action."))
-        ids = self.env.context.get('active_ids', self.env.context.get('active_id'))
+        ids = self.env.context.get('active_ids', [self.env.context['active_id']] if self.env.context.get('active_id') else [])
         if not ids:
             raise UserError(_("Missing documents reference."))
 
         embedded_action = self.env['ir.embedded.actions'].browse([action_id])
         if all(action_id in document.available_embedded_actions_ids.ids for document in self.browse(ids)):
-            return self.env['ir.actions.server'].browse(embedded_action.action_id.id).run()
+            return self.env['ir.actions.server'].with_context(documents_active_ids=ids).browse(embedded_action.action_id.id).run()
 
         raise UserError(_("Unavailable action."))
 
