@@ -1524,7 +1524,7 @@ class ProjectTask(models.Model):
         dependencies_dict = tasks._get_dependencies_dict()
         sorted_tasks = topological_sort(dependencies_dict)
         total_time, task_parent = {}, {}
-        path_last_task = sorted_tasks[0].id
+        path_last_task = next((t.id for t in sorted_tasks if t._is_task_planned()), sorted_tasks[0].id)
 
         for task in sorted_tasks:
             if not task._is_task_planned():
