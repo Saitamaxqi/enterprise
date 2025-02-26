@@ -12,7 +12,9 @@ except ImportError:
     xlsxwriter = None
 
 from odoo import http, fields
+from odoo.addons.hr_payroll.controllers.main import HrPayroll
 from odoo.http import request, content_disposition
+from dateutil.relativedelta import relativedelta
 
 _logger = logging.getLogger(__name__)
 
@@ -195,3 +197,24 @@ class L10nBeHrPayrollWarrantPayslipsController(http.Controller):
             ('Content-Disposition', content_disposition('exported_employees.csv'))
         ]
         return request.make_response(content, headers=headers)
+
+
+class L10nBeHrPayroll(HrPayroll):
+
+    @http.route()
+    def get_payroll_report_print(self, list_ids='', **post):
+        res = super().get_payroll_report_print(list_ids, **post)
+        ids = [int(s) for s in list_ids.split(',') if s.isdigit()]
+
+        if len(ids) == 1:
+            payslip = request.env['hr.payslip'].browse(ids)
+            if payslip.struct_id.code == 'CP200HOLN':
+                res.headers.set(
+                    'Content-Disposition',
+                    content_disposition(f"Holiday {payslip.employee_id.legal_name} - Certificate {payslip.date_from.strftime('%Y')}.pdf"))
+            elif payslip.struct_id.code == 'CP200HOLN1':
+                res.headers.set(
+                    'Content-Disposition',
+                    content_disposition(f"{payslip.employee_id.legal_name} - Holiday Certificate {(payslip.date_from - relativedelta(years=1)).strftime('%Y') }.pdf"))
+
+        return res
