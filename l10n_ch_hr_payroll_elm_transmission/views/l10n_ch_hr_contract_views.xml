@@ -23,8 +23,6 @@
                 <attribute name="invisible">1</attribute>
             </button>
 
-            <field name="contract_type_id" position="replace">
-            </field>
             <field name="contract_type_id" position="after">
                 <field name="l10n_ch_job_type"/>
             </field>
