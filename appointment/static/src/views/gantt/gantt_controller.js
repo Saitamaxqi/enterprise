@@ -23,7 +23,7 @@ export class AppointmentBookingGanttController extends GanttController {
      * If Gantt view accessed through the schedule views, the helper should appear when no Gantt rows are available.
     */
     get showNoContentHelp() {
-        if (this.props.context.active_model === "appointment.type") {
+        if (!this.props.context.hide_no_content_helper && this.props.context.active_model === "appointment.type") {
             return !this.model.data.records.length;
         } else {
             return !this.model.data.rows || (this.model.data.rows.length == 1 && !this.model.data.rows[0].name)

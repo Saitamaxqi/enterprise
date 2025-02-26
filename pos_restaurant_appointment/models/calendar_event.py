@@ -76,6 +76,7 @@ class CalendarEvent(models.Model):
                 'default_partner_ids': [],
                 "search_default_appointment_type_id": self._context.get("appointment_type_id"),
                 "no_breadcrumbs": True,
+                'hide_no_content_helper': True,
             }
         }
 
