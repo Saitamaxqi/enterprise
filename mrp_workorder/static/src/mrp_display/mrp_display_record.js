@@ -55,13 +55,6 @@ export class MrpDisplayRecord extends Component {
         this.record = this.props.record.data;
         this.props.record.component = this;
 
-        // Display a line for the production's registration if there is no QC for it.
-        this.displayRegisterProduction = true;
-        if (this.resModel === "mrp.workorder") {
-            this.displayRegisterProduction = !this.checks.some(
-                (qc) => qc.data.test_type === "register_production"
-            );
-        }
         this.quantityToProduce = this.record.product_qty || this.props.production.data.product_qty;
         this.displayUOM = this.props.groups.uom;
 
@@ -529,11 +522,12 @@ export class MrpDisplayRecord extends Component {
         };
         this.dialog.add(MrpMenuDialog, {
             groups: this.props.groups,
-            title: _t("What do you want to do?"),
+            title: _t("Options"),
             record: this.props.record,
             params,
             reload: this.env.reload.bind(this),
             removeFromCache: this.props.removeFromCache,
+            registerProduction: this.registerProduction.bind(this),
         });
     }
 

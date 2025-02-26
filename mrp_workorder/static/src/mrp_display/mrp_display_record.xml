@@ -63,7 +63,6 @@
                 <t t-foreach="workorders" t-as="workorder" t-key="workorder.data.id">
                     <MrpWorkorder t-if="workorder.data.state !== 'cancel'" t-props="subRecordProps(workorder)"/>
                 </t>
-                <t t-call="mrp_workorder.RegisterProduction" t-if="displayRegisterProduction"/>
                 <t t-foreach="moves" t-as="move" t-key="move.data.id">
                     <StockMove t-props="subRecordProps(move)"/>
                 </t>
