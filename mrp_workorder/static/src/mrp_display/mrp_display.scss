@@ -25,4 +25,9 @@
     .o_control_panel_navigation {
         align-items: center;
     }
+
+    .o_mrp_timer {
+        background-color: $list-group-active-bg;
+        color: $list-group-active-border-color;
+    }
 }

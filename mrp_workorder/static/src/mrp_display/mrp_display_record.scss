@@ -16,10 +16,8 @@
 .o_mrp_display_record {
     break-inside: avoid;
 
-    &.o_active {
-        .card-header {
-            background-color: $list-group-active-bg;
-        }
+    .card-header {
+        background-color: $list-group-bg;
     }
 
     .card-footer {
