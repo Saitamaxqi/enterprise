@@ -363,7 +363,7 @@ export class GanttRenderer extends Component {
             getBadgesInitialDate: () => ({ initialDate: this.badgeInitialStartDate }),
             rtl: () => localization.direction === "rtl",
             onDragStart: ({ initialCol }) => {
-                const { start } = this.getSubColumnFromColNumber(initialCol - 1);
+                const { start } = this.getSubColumnFromColNumber(initialCol);
                 this.badgeInitialStartDate = start;
             },
             onDrag: ({ startBadge, stopBadge }) => {

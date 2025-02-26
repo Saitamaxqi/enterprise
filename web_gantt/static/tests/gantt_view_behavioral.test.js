@@ -176,8 +176,8 @@ test("select cells to create a task", async () => {
     const { drop, moveTo } = await contains(getCell("19", "December 2018")).drag();
     await moveTo(getCell("21", "December 2018"), { position: { x: 30 }, relative: true });
     await animationFrame();
-    expect(SELECTORS.startBadge).toHaveText("12/19/2018, 12:00 AM");
-    expect(SELECTORS.stopBadge).toHaveText("12/21/2018, 12:00 PM");
+    expect(SELECTORS.startBadge).toHaveText("12/19/2018, 12:00 PM");
+    expect(SELECTORS.stopBadge).toHaveText("12/22/2018, 12:00 AM");
     await drop();
 
     expect.verifySteps(["[dialog] Create"]);
@@ -206,8 +206,8 @@ test("drag and drop on the same cell to create a task", async () => {
     });
     const { drop, moveTo } = await contains(getCell("15", "December 2018")).drag();
     await moveTo(getCell("15", "December 2018"));
-    expect(SELECTORS.startBadge).toHaveText("12/15/2018, 12:00 AM");
-    expect(SELECTORS.stopBadge).toHaveText("12/15/2018, 12:00 PM");
+    expect(SELECTORS.startBadge).toHaveText("12/15/2018, 12:00 PM");
+    expect(SELECTORS.stopBadge).toHaveText("12/16/2018, 12:00 AM");
     await drop();
 
     expect.verifySteps(["[dialog] Create"]);
