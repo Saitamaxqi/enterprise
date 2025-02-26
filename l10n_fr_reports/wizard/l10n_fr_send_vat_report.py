@@ -332,12 +332,17 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             'rof': "TVA1",  # "référence obligation fiscale"
         }
         # EDI partner
-        aspone_vals = {
-            'identifier': "9210007",
-            'designation': "ASP-ONE.FR",
-            'address': {'number': 56, 'street': "RUE DE BILLANCOURT", 'postal_code': 92100,
-                        'city': "BOULOGNE-BILLANCOURT", 'country_code': "FR"},
-            'reference': "DEC00001",
+        edi_partner_vals = {
+            'identifier': '4200001',
+            'designation': 'TESSI INFORMATIQUE',
+            'address': {
+                'number': 7,
+                'street': 'PARC METROTECH',
+                'postal_code': 42650,
+                'city': 'SAINT-JEAN-BONNEFONDS',
+                'country_code': 'FR',
+            },
+            'reference': 'DEC00001',
         }
         # T-IDENTIF
         identif_vals = [
@@ -351,14 +356,14 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             {'id': 'CA', 'value': self.date_from.strftime("%Y%m%d")},  # declaration period: yyyymmdd
             {'id': 'CB', 'value': self.date_to.strftime("%Y%m%d")},
         ]
-        return writer_vals, debtor_vals, aspone_vals, identif_vals
+        return writer_vals, debtor_vals, edi_partner_vals, identif_vals
 
     def _prepare_edi_vals(self, options, lines):
         edi_values = self._get_formatted_edi_values(lines)
         if not edi_values:
             raise UserError(_("The tax report is empty."))
 
-        writer_vals, debtor_vals, aspone_vals, identif_vals = self._get_common_edi_vals(options)
+        writer_vals, debtor_vals, edi_partner_vals, identif_vals = self._get_common_edi_vals(options)
 
         identif_vals.extend(self._get_formatted_payment_values())
         is_neutralized = self.env['ir.config_parameter'].sudo().get_param('database.is_neutralized')
@@ -373,7 +378,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
                 'reference': "INFENT000042",  # internal reference to the emitor
                 'writer': writer_vals,
                 'debtor': debtor_vals,
-                'edi_partner': aspone_vals,
+                'edi_partner': edi_partner_vals,
                 'recipients': [{'designation': self.recipient}],
                 # T-IDENTIF form
                 'identif': {
@@ -516,7 +521,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
 
     def _send_reimbursement_xml_to_aspone(self, options):
         """ Create declaration 3519 for each reimbursement asked for a bank account and send it to AspOne"""
-        writer_vals, debtor_vals, aspone_vals, identif_vals = self._get_common_edi_vals(options)
+        writer_vals, debtor_vals, edi_partner_vals, identif_vals = self._get_common_edi_vals(options)
         sender_company = self.report_id._get_sender_company_for_export(options)
 
         is_neutralized = self.env['ir.config_parameter'].sudo().get_param('database.is_neutralized')
@@ -534,7 +539,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
                 'reference': "INFENT000042",  # internal reference to the emitor
                 'writer': writer_vals,
                 'debtor': debtor_vals,
-                'edi_partner': aspone_vals,
+                'edi_partner': edi_partner_vals,
                 'recipients': [{'designation': self.recipient}],
                 # T-IDENTIF form
                 'identif': {
