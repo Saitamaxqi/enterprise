@@ -458,9 +458,9 @@ class CalendarEvent(models.Model):
             return ''
 
         if attendee_descriptions:
-            attendee_descriptions.insert(0, Markup('<span>Contact Details</span>'))
+            attendee_descriptions.insert(0, Markup('<span>{}</span>').format(_("Contact Details")))
         if question_descriptions:
-            question_descriptions.insert(0, Markup('<span>Questions</span>'))
+            question_descriptions.insert(0, Markup('<span>{}</span>').format(_("Questions")))
         complete_description = (
             Markup('<br/>').join([
                 Markup('<div>%s</div>') % Markup('<br/>').join(paragraph)
