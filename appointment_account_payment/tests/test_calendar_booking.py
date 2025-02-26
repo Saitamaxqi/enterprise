@@ -49,7 +49,7 @@ class AppointmentAccountPaymentTest(AppointmentAccountPaymentCommon):
                 'capacity_reserved': new_capacity_reserved,
                 'capacity_used': new_capacity_reserved if resource.shareable and appointment_type.resource_manage_capacity else resource.capacity,
             }
-        self.env['calendar.booking.line'].create(calendar_booking_lines_values.values())
+        self.env['calendar.booking.line'].create(list(calendar_booking_lines_values.values()))
 
         # Assert Booking Lines are not taking capacity
         resources_remaining_capacity = appointment_type._get_resources_remaining_capacity(appointment_type.resource_ids, start, stop)

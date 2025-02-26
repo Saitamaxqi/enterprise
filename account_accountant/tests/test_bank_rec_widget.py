@@ -1759,11 +1759,11 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
     def test_validation_with_taxes(self):
         st_line = self._create_st_line(1000.0)
 
-        tax_tags = self.env['account.account.tag'].create({
+        tax_tags = self.env['account.account.tag'].create([{
             'name': f'tax_tag_{i}',
             'applicability': 'taxes',
             'country_id': self.env.company.account_fiscal_country_id.id,
-        } for i in range(4))
+        } for i in range(4)])
 
         tax_21 = self.env['account.tax'].create({
             'name': "tax_21",
@@ -2790,11 +2790,11 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         ])
 
     def test_early_payment_included_intracomm_bill(self):
-        tax_tags = self.env['account.account.tag'].create({
+        tax_tags = self.env['account.account.tag'].create([{
             'name': f'tax_tag_{i}',
             'applicability': 'taxes',
             'country_id': self.env.company.account_fiscal_country_id.id,
-        } for i in range(6))
+        } for i in range(6)])
 
         intracomm_tax = self.env['account.tax'].create({
             'name': 'tax20',

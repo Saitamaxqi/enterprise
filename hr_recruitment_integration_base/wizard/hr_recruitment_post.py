@@ -1,7 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from collections import deque
-
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
@@ -54,9 +52,9 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
             else:
                 post_job_wizard.post_html = False
 
-    def _pospone_posts(self):
+    def _postpone_posts(self):
         self.ensure_one()
-        posts_to_postpone = deque(
+        posts_to_postpone = [
             {
                 'job_id': self.job_id.id,
                 'post_html': self.post_html,
@@ -72,13 +70,13 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
                 ),
                 'company_id': self.company_id.id,
             } for platform in self.platform_ids
-        )
+        ]
         if self.post_ids:
             if any(post.status in ['success', 'warning'] for post in self.post_ids):
                 raise UserError(_('Can\'t postpone posts that are already posted'))
             grouped_posts = {post.platform_id.id: post for post in self.post_ids}
-            for platform in self.platform_ids:
-                grouped_posts[platform.id].sudo().write(posts_to_postpone.popleft())
+            for platform, vals in zip(self.platform_ids, posts_to_postpone):
+                grouped_posts[platform.id].sudo().write(vals)
             self.post_ids._log_post_modifications(mode=_('updated'))
         else:
             self.env['hr.job.post'].sudo().create(posts_to_postpone)
@@ -95,7 +93,7 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
         if not responses:
             responses = {}
 
-        posts = deque(
+        posts = [
             {
                 'job_id': self.job_id.id,
                 'post_html': self.post_html,
@@ -109,12 +107,12 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
                 'api_data': responses[platform_id].get('data', {}),
                 'company_id': self.company_id.id
             } for platform_id in self.platform_ids.ids
-        )
+        ]
 
         if self.post_ids:
             grouped_posts = {post.platform_id.id: post for post in self.post_ids}
-            for platform in self.platform_ids:
-                grouped_posts[platform.id].write(posts.popleft())
+            for platform, vals in zip(self.platform_ids, posts):
+                grouped_posts[platform.id].write(vals)
             self.post_ids._log_post_modifications(mode=_('updated'))
         else:
             self.env['hr.job.post'].sudo().create(posts)
@@ -143,5 +141,5 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
         self.ensure_one()
         self._check_fields_before_posting()
         if self.campaign_start_date > fields.Date.today():
-            return self._pospone_posts()
+            return self._postpone_posts()
         return self._post_job()
