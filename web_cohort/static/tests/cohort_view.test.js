@@ -757,7 +757,8 @@ test("field with widget attribute", async () => {
     });
 });
 
-test("Scale: scale default is fetched from localStorage", async (assert) => {
+test("Scale: scale default is fetched from localStorage", async () => {
+    let view;
     patchWithCleanup(browser.localStorage, {
         getItem(key) {
             if (String(key).startsWith("scaleOf-viewId")) {
@@ -765,13 +766,13 @@ test("Scale: scale default is fetched from localStorage", async (assert) => {
             }
         },
         setItem(key, value) {
-            if (key === `scaleOf-viewId-${view.env.config.viewId}`) {
+            if (key === `scaleOf-viewId-${view?.env.config.viewId}`) {
                 expect.step(`scale_${value}`);
             }
         },
     });
 
-    const view = await mountView({
+    view = await mountView({
         type: "cohort",
         resModel: "subscription",
         arch: `<cohort date_start="start" date_stop="stop"/>`,

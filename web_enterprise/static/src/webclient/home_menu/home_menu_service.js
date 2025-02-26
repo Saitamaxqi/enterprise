@@ -2,7 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { Mutex } from "@web/core/utils/concurrency";
-import { useService } from "@web/core/utils/hooks";
+import { useBus, useService } from "@web/core/utils/hooks";
 import { computeAppsAndMenuItems, reorderApps } from "@web/webclient/menus/menu_helpers";
 import {
     ControllerNotFoundError,
@@ -10,7 +10,7 @@ import {
 } from "@web/webclient/actions/action_service";
 import { HomeMenu } from "./home_menu";
 
-import { Component, onMounted, onWillUnmount, useState, reactive, xml } from "@odoo/owl";
+import { Component, onMounted, onWillUnmount, reactive, xml } from "@odoo/owl";
 
 export const homeMenuService = {
     dependencies: ["action"],
@@ -30,21 +30,20 @@ export const homeMenuService = {
 
             setup() {
                 this.menus = useService("menu");
+                onMounted(() => this.onMounted());
+                onWillUnmount(this.onWillUnmount);
+                useBus(this.env.bus, "MENUS:APP-CHANGED", () => this.render());
+            }
+            get homeMenuProps() {
                 const homemenuConfig = JSON.parse(user.settings?.homemenu_config || "null");
-                const apps = useState(
-                    computeAppsAndMenuItems(this.menus.getMenuAsTree("root")).apps
-                );
+                const apps = computeAppsAndMenuItems(this.menus.getMenuAsTree("root")).apps;
                 if (homemenuConfig) {
                     reorderApps(apps, homemenuConfig);
                 }
-                this.homeMenuProps = {
-                    apps: apps,
-                    reorderApps: (order) => {
-                        reorderApps(apps, order);
-                    },
+                return {
+                    apps,
+                    reorderApps: (order) => reorderApps(apps, order),
                 };
-                onMounted(() => this.onMounted());
-                onWillUnmount(this.onWillUnmount);
             }
             async onMounted() {
                 const { breadcrumbs } = this.env.config;

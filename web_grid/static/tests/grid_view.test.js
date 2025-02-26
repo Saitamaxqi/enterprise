@@ -1883,7 +1883,9 @@ describe("grid_view_desktop", () => {
         patchWithCleanup(browser, {
             localStorage: {
                 setItem(key, value) {
-                    expect.step(`${key}-${value}`);
+                    if (key === "grid.isWeekendVisible") {
+                      expect.step(`${key}-${value}`);
+                    }
                 },
                 getItem(key) {
                     if (key === "grid.isWeekendVisible") {
@@ -2018,6 +2020,7 @@ describe("grid_view_desktop", () => {
     });
 
     test("Scale: scale default is fetched from localStorage", async () => {
+        let view;
         patchWithCleanup(browser.localStorage, {
             getItem(key) {
                 if (String(key).startsWith("scaleOf-viewId")) {
@@ -2025,13 +2028,13 @@ describe("grid_view_desktop", () => {
                 }
             },
             setItem(key, value) {
-                if (key === `scaleOf-viewId-${view.env.config.viewId}`) {
+                if (key === `scaleOf-viewId-${view?.env.config.viewId}`) {
                     expect.step(`scale_${value}`);
                 }
             },
         });
 
-        const view = await mountView({
+        view = await mountView({
             type: "grid",
             resModel: "analytic.line",
             arch: /* xml */ `

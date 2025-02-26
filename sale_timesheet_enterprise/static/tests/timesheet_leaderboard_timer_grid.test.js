@@ -2,8 +2,7 @@ import { expect, test, beforeEach, describe } from "@odoo/hoot";
 import { queryAllTexts, queryAll, queryOne } from "@odoo/hoot-dom";
 import { mockDate, animationFrame } from "@odoo/hoot-mock";
 
-import { mountView, contains, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
-import { browser } from "@web/core/browser/browser";
+import { mountView, contains, onRpc } from "@web/../tests/web_test_helpers";
 
 import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
 import { defineTimesheetModels } from "./sale_timesheet_models";
@@ -236,20 +235,13 @@ test("Check that '···' is displayed when current emplyee's ranking > 3", asyn
 });
 
 test("Check that employees are sorted accordingly to the ranking criteria.", async () => {
-    const storage = new Map();
-    patchWithCleanup(browser, {
-        localStorage: {
-            getItem: (key) => storage.get(key),
-            setItem: (key, value) => storage.set(key, value),
-        },
-    });
     await initAndOpenView();
     await contains(".o_timesheet_leaderboard div[role='button']").click();
     await animationFrame();
     await contains(".modal-content .dropdown-toggle").click();
     await contains(".modal-content .dropdown-menu :eq(1)").click();
     await animationFrame();
-    expect(storage.get("leaderboardType")).toEqual("total_time");
+    expect(localStorage.getItem("leaderboardType")).toEqual("total_time");
     expect(queryAllTexts(".modal-content .o_employee_name")).toEqual([
         "User 4",
         "User 3",
@@ -260,7 +252,7 @@ test("Check that employees are sorted accordingly to the ranking criteria.", asy
     await contains(".modal-content .dropdown-toggle").click();
     await contains(".modal-content .dropdown-menu :eq(0)").click();
     await animationFrame();
-    expect(storage.get("leaderboardType")).toEqual("billing_rate");
+    expect(localStorage.getItem("leaderboardType")).toEqual("billing_rate");
     expect(queryAllTexts(".modal-content .o_employee_name")).toEqual([
         "Administrator",
         "User 1",
