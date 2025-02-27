@@ -277,6 +277,8 @@
                                     <field name="mobile_phone" widget="phone"/>
                                     <field name="work_phone" widget="phone"/>
                                     <field name="work_email" widget="email"/>
+                                    <field name="private_phone" widget="email"/>
+                                    <field name="private_email" widget="email"/>
                                 </group>
                                 <group name="application_group" string="Application Settings" invisible="1"/>
                                 <group name="managers" string="Approvers" class="hide-group-if-empty">

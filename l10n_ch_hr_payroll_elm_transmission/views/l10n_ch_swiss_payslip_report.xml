@@ -5,7 +5,7 @@
     <t t-set="company" t-value="o.company_id.sudo()"/>
     <t t-call="web.external_layout_standard">
         <div class="page">
-            <h2 id="payslip_name"><span t-field="o.name"/> - <span t-field="o.employee_id"/></h2>
+            <h2 id="payslip_name"><span t-field="o.name"/></h2>
 
             <table class="table table-bordered table-sm o_table_ch o_table_ch_infos">
                 <tbody>
@@ -14,6 +14,17 @@
                     </tr>
                     <tr>
                         <td t-if="o.employee_id.l10n_ch_sv_as_number"><strong>AVS Number: </strong><span t-field="o.employee_id.l10n_ch_sv_as_number"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Address: </strong>
+                            <span t-field="o.employee_id.private_street"/>,
+                            <span t-field="o.employee_id.private_city"/>
+                            <span t-field="o.employee_id.private_zip"/>,
+                            <span t-field="o.employee_id.private_country_id"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><div t-if="o.contract_id.job_id"><strong>Job Position: </strong><span t-field="o.contract_id.job_id"/></div></td>
                     </tr>
                     <tr>
                         <td><strong>Entry Date: </strong><span t-field="o.contract_id.date_start"/></td>
@@ -138,6 +149,11 @@
                     </tr>
                 </tbody>
             </table>
+            <hr/>
+            <div class="center" id="to_pay_ch" t-if="o.employee_id.bank_account_id">
+                <p t-if="o.net_wage &gt;= 0">To pay on <b><span t-field="o.employee_id.bank_account_id"></span></b></p>
+            </div>
+
         </div>
     </t>
 </template>
