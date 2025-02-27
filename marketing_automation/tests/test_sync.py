@@ -176,8 +176,7 @@ class TestSyncing(SyncingCase):
             },
         )
 
-        marketing_campaign.action_start_campaign()
-        marketing_campaign.sync_participants()
+        self._launch_campaign(marketing_campaign)
         with self.mock_datetime_and_now(self.date_reference):
             [trace.action_execute() for trace in parent_activity.trace_ids]
         self.assertEqual(len(child_activity.trace_ids), len(self.test_contacts))

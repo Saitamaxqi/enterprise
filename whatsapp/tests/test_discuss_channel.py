@@ -116,7 +116,6 @@ We're always happy to assist!""",
                     self.assertEqual(len(audio_message.attachment_ids), 1)
                     self.assertEqual(audio_message.attachment_ids.mimetype, 'audio/mpeg')
 
-
     @users('user_wa_admin')
     def test_post_with_outbound(self):
         """ Test automatic whatsapp message creation when posting on a whatsapp

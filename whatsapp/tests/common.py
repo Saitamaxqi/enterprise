@@ -4,8 +4,10 @@ import hashlib
 import hmac
 import json
 import time
+import random
+import werkzeug
 
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from unittest.mock import patch
 
 from odoo.addons.base.models.res_partner import ResPartner
@@ -45,7 +47,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
 
         def _send_whatsapp(number, *, send_vals, **kwargs):
             if send_vals:
-                msg_uid = f'test_wa_{time.time():.9f}'
+                msg_uid = f'test_wa_{time.time() + len(self._wa_msg_sent):.9f}'
                 self._wa_msg_sent.append(msg_uid)
                 self._wa_msg_sent_vals.append(send_vals)
                 return msg_uid
@@ -114,7 +116,8 @@ class MockOutgoingWhatsApp(common.BaseCase):
              patch.object(WhatsAppApi, '_submit_template_new', side_effect=_submit_template_new), \
              patch.object(WhatsAppApi, '_get_header_data_from_handle', side_effect=_get_header_data_from_handle), \
              patch.object(WhatsAppApi, '_get_phone_number', side_effect=_get_phone_number), \
-             patch.object(WhatsappMessage, 'create', autospec=True, wraps=WhatsappMessage, side_effect=_wa_message_create):
+             patch.object(WhatsappMessage, 'create', autospec=True, wraps=WhatsappMessage, side_effect=_wa_message_create) as mock_wa_msg_create:
+            self._mock_wa_msg_create = mock_wa_msg_create
             yield
 
     def _init_wa_mock(self):
@@ -125,6 +128,23 @@ class MockOutgoingWhatsApp(common.BaseCase):
         self._wa_document_store = {}
         self._wa_uploaded_document_count = 0
         self._wa_msg_sent_vals = []
+
+    @contextmanager
+    def patchWhatsappCronTrigger(self):
+        """ Call the cron code immediately in the current thread when whatsapp
+        related crons are triggered. Useful when you care about the result of
+        the actual sending step of a batch of messages. """
+        IrCron = self.registry['ir.cron']
+        trigger_orig = IrCron._trigger
+
+        def mock_trigger(cron, *args, **kwargs):
+            if cron == self.env.ref('whatsapp.ir_cron_send_whatsapp_queue'):
+                cron.sudo().method_direct_trigger(*args, **kwargs)
+                return self.env['ir.cron.trigger']
+            return trigger_orig(cron, *args, **kwargs)
+
+        with patch.object(IrCron, '_trigger', autospec=True, side_effect=mock_trigger):
+            yield
 
 
 class MockIncomingWhatsApp(common.HttpCase):
@@ -209,10 +229,11 @@ class MockIncomingWhatsApp(common.HttpCase):
         additional_message_values=None, content_values=None, sender_name='',
     ):
         body = body or ""
+        cnt = self.env['whatsapp.message'].sudo().search_count([])
         additional_message_values = additional_message_values or {}
         content_values = content_values or {}
         message_vals = {
-            "id": f"test_wa_{time.time():.9f}",
+            "id": f"test_wa_{cnt}_{time.time():.9f}",
             "from": sender_phone_number,
             "timestamp": f"{time.time():.0f}",
             "type": message_type,
@@ -380,9 +401,102 @@ class WhatsAppCase(MockOutgoingWhatsApp):
             wa_msg_count=exp_wa_msg_count,
         )
 
+    def whatsapp_answer_with_records(self, records, body=None, mock=False):
+        # if mock is used -> internal wa_msgs is reset, prepare beforehand
+        wa_msgs = []
+        for record in records:
+            wa_msgs.append(self._find_wa_msg_wrecord(record))
+        with self.mockWhatsappGateway() if mock else nullcontext(), \
+                self.patchWhatsappCronTrigger() if mock else nullcontext():
+            for record, wa_msg in zip(records, wa_msgs):
+                self.assertTrue(wa_msg)
+                self._receive_whatsapp_message(
+                    self.whatsapp_account,
+                    body or "Hello, it's reply",
+                    wa_msg.mobile_number_formatted or wa_msg.mobile_number,
+                    additional_message_values={
+                        'context': {'id': wa_msg.msg_uid},
+                    },
+                )
+
+    def whatsapp_msg_bounce_with_records(self, records, error_code=131026):
+        """ Simulate a 'bounce' message event through webhook """
+        for record in records:
+            wa_msg = self._find_wa_msg_wrecord(record)
+            self.assertTrue(wa_msg)
+            self._receive_message_update(
+                account=self.whatsapp_account,
+                display_phone_number=wa_msg.mobile_number,
+                extra_value={
+                    "statuses": [{
+                        "id": wa_msg.msg_uid,
+                        "status": "failed",
+                        "errors": [{
+                            "code": error_code,
+                            "title": "Message failed to send due to an unknown error."
+                        }],
+                    }],
+                },
+            )
+
+    def whatsapp_msg_click_with_records(self, records, body=False, button_index=None):
+        """ Simulate a 'read' message event through webhook """
+        for record in records:
+            wa_msg = self._find_wa_msg_wrecord(record)
+            self.assertTrue(wa_msg)
+            wa_sent_vals = self._find_sent_wa_wuid(wa_msg.msg_uid)
+            self.assertTrue(wa_sent_vals)
+            btn = next(
+                (c for c in wa_sent_vals['components'] if c['type'] == 'button' and c['index'] == button_index),
+                False
+            )
+            self.assertTrue(btn)
+            parsed_url = werkzeug.urls.url_parse(btn['parameters'][0]['text'])
+            path_items = parsed_url.path.split('/')
+            # FIXME: incoherent, sometimes complete url, sometimes right part of url only ?
+            if len(path_items) == 4:
+                code, wa_msg_id = path_items[1], int(path_items[3])
+            elif len(path_items) == 5:
+                code, wa_msg_id = path_items[2], int(path_items[4])
+            self.env['link.tracker.click'].sudo().add_click(
+                code,
+                ip='100.200.300.%3f' % random.random(),
+                country_code='BE',
+                whatsapp_message_id=wa_msg_id,
+            )
+
+    def whatsapp_msg_read_with_records(self, records):
+        """ Simulate a 'read' message event through webhook """
+        for record in records:
+            wa_msg = self._find_wa_msg_wrecord(record)
+            self.assertTrue(wa_msg)
+            self._receive_message_update(
+                account=self.whatsapp_account,
+                display_phone_number=wa_msg.mobile_number,
+                extra_value={
+                    "statuses": [{
+                        "id": wa_msg.msg_uid,
+                        "status": "read",
+                    }],
+                },
+            )
+
     # ------------------------------------------------------------
     # MESSAGE FIND AND ASSERTS
     # ------------------------------------------------------------
+
+    def _find_sent_wa_wuid(self, msg_uid):
+        """ Find a sent WA message through gateway, based on 'mobile_number' """
+        for wa_sent, wa_sent_msg in zip(self._wa_msg_sent, self._wa_msg_sent_vals, strict=True):
+            if wa_sent == msg_uid:
+                return wa_sent_msg
+        debug_info = '\n'.join(
+            f'UID: {wa_sent})'
+            for wa_sent in self._wa_msg_sent
+        )
+        raise AssertionError(
+            f'Sent whatsapp message not found for msg_uid {msg_uid}\n{debug_info})'
+        )
 
     def _find_wa_msg_wnumber(self, mobile_number):
         """ Find a WA message, based on 'mobile_number' """

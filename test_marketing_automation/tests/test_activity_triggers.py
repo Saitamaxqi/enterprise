@@ -2,7 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import timedelta
-from freezegun import freeze_time
 
 from odoo.addons.test_marketing_automation.tests.common import TestMACommon
 from odoo.fields import Datetime
@@ -88,11 +87,6 @@ for record in records:
 
         cls.env.flush_all()
 
-    def _launch_campaign(self, campaign, date_reference=None):
-        campaign.action_start_campaign()
-        with freeze_time(date_reference or self.date_reference):
-            campaign.sync_participants()
-
 
 @tagged('marketing_automation', 'marketing_activity')
 class TestActivityTriggers(ActivityTriggersCase):
@@ -153,7 +147,7 @@ class TestActivityTriggers(ActivityTriggersCase):
         test_records_ok = self.test_records_ok.with_env(self.env)
         test_records_ko = self.test_records_ko.with_env(self.env)
 
-        self._launch_campaign(campaign)
+        self._launch_campaign(campaign, date_reference=self.date_reference)
         self.assertMarketAutoTraces(
             [{
                 'records': test_records,
@@ -170,7 +164,7 @@ class TestActivityTriggers(ActivityTriggersCase):
         date_send = self.date_reference + timedelta(hours=1)  # ok for send mailing
         date_opened = date_send + timedelta(hours=2)  # simulating opened
         date_noreply = date_send + timedelta(days=1)  # 1 day delay before triggering 'did not reply'
-        with freeze_time(date_send), self.mock_mail_gateway():
+        with self.mock_datetime_and_now(date_send), self.mock_mail_gateway():
             campaign.execute_activities()
 
         self.assertMarketAutoTraces(
@@ -213,7 +207,7 @@ class TestActivityTriggers(ActivityTriggersCase):
         # - open traces should be processed, schedule date updated
         # - not_open traces should be canceled
         to_open = test_records_ok[:5]
-        with freeze_time(date_opened):
+        with self.mock_datetime_and_now(date_opened):
             for record in to_open:
                 self.gateway_mail_trace_open(activity_mailing.mass_mailing_id, record)
         self.assertMarketAutoTraces(
@@ -253,12 +247,12 @@ class TestActivityTriggers(ActivityTriggersCase):
 
     @users('user_marketing_automation')
     def test_triggers(self):
-        self._launch_campaign(self.campaign)
+        self._launch_campaign(self.campaign, date_reference=self.date_reference)
         date_send = self.date_reference + timedelta(hours=1)
         date_not_clicked = date_send + timedelta(hours=0)
         date_not_open = date_send + timedelta(days=1)
 
-        with freeze_time(date_send), self.mock_mail_gateway():
+        with self.mock_datetime_and_now(date_send), self.mock_mail_gateway():
             self.campaign.execute_activities()
 
         for sub_activity, schedule_date in [
@@ -271,7 +265,7 @@ class TestActivityTriggers(ActivityTriggersCase):
                     'status': 'scheduled',
                     'fields_values': {
                         'schedule_date': schedule_date,
-                    }
+                    },
                 }],
                 sub_activity,
             )

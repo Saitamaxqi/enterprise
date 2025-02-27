@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from freezegun import freeze_time
-
 from odoo.addons.test_marketing_automation.tests.common import TestMACommon
 from odoo.tests import tagged, users
-from odoo.exceptions import AccessError
 from odoo.tools import mute_logger
 from odoo.fields import Datetime
 
@@ -31,9 +28,8 @@ class MarketingCampaignTest(TestMACommon):
         })
         self._create_activity_mail(campaign, act_values={'interval_number': 0})
 
-        campaign.action_start_campaign()
+        self._launch_campaign(campaign)
         self.assertEqual(campaign.state, 'running')
-
         campaign.active = False
         self.assertEqual(campaign.state, 'stopped')
 
@@ -63,17 +59,15 @@ class MarketingCampaignTest(TestMACommon):
             'name': 'Test Campaign',
         })
 
-        with freeze_time(self.date_reference):
-            # launch campaign, with responsible language != language terms in campaign domain
-            campaign.action_start_campaign()
-            campaign.sync_participants()
+        # launch campaign, with responsible language != language terms in campaign domain
+        self._launch_campaign(campaign, date_reference=self.date_reference)
 
         self.assertEqual(campaign.running_participant_count, 0)
         self.assertFalse(campaign.participant_ids)
 
         # with responsible language == language terms in campaign domain
         self.env.user.sudo().write({'lang': 'fr_FR'})
-        with freeze_time(self.date_reference):
+        with self.mock_datetime_and_now(self.date_reference):
             campaign.sync_participants()
 
         self.assertEqual(campaign.running_participant_count, len(test_records_init))
@@ -164,9 +158,8 @@ class MarketingCampaignTest(TestMACommon):
             activity
         )
 
-        campaign.action_start_campaign()
+        self._launch_campaign(campaign)
         self.assertEqual(campaign.state, 'running')
-        campaign.sync_participants()
         self.assertEqual(
             activity.trace_ids.mapped('participant_id'),
             campaign.participant_ids,
@@ -258,9 +251,7 @@ class MarketingCampaignTest(TestMACommon):
         mailing = self._create_mailing('marketing.test.sms')
         _activity = self._create_activity(campaign, mailing=mailing)
 
-        campaign.action_start_campaign()
-        campaign.sync_participants()
-
+        self._launch_campaign(campaign)
         self.assertEqual(campaign.running_participant_count, 4)
         self.assertEqual(campaign.participant_ids.mapped('res_id'), test_records[:4].ids)
 
@@ -294,9 +285,7 @@ class MarketingCampaignTest(TestMACommon):
         mailing = self._create_mailing('marketing.test.sms')
         _activity = self._create_activity(campaign, mailing=mailing)
 
-        campaign.action_start_campaign()
-        campaign.sync_participants()
-
+        self._launch_campaign(campaign)
         self.assertEqual(campaign.running_participant_count, 3)
         self.assertEqual(campaign.participant_ids.mapped('res_id'), test_records[0:3].ids)
 
