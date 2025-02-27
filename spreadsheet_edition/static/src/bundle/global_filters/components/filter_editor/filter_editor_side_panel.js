@@ -5,11 +5,10 @@ import * as spreadsheet from "@odoo/o-spreadsheet";
 import { CommandResult } from "@spreadsheet/o_spreadsheet/cancelled_reason";
 import { useService } from "@web/core/utils/hooks";
 import { globalFiltersFieldMatchers } from "@spreadsheet/global_filters/plugins/global_filters_core_plugin";
-import { FilterEditorLabel } from "./filter_editor_label";
 
-import { onWillStart, Component, useRef, useState, toRaw } from "@odoo/owl";
+import { onWillStart, Component, useState, toRaw } from "@odoo/owl";
 
-const { Checkbox, Section, SidePanelCollapsible } = spreadsheet.components;
+const { Checkbox, Section, SidePanelCollapsible, TextInput } = spreadsheet.components;
 const { toNumber } = spreadsheet.helpers;
 const uuidGenerator = new spreadsheet.helpers.UuidGenerator();
 
@@ -30,10 +29,10 @@ const uuidGenerator = new spreadsheet.helpers.UuidGenerator();
 export class AbstractFilterEditorSidePanel extends Component {
     static template = "";
     static components = {
-        FilterEditorLabel,
         SidePanelCollapsible,
         Checkbox,
         Section,
+        TextInput,
     };
     static props = {
         id: { type: String, optional: true },
@@ -53,7 +52,6 @@ export class AbstractFilterEditorSidePanel extends Component {
         this.getters = this.env.model.getters;
         this.orm = useService("orm");
         this.notification = useService("notification");
-        this.labelInput = useRef("labelInput");
 
         /** @type {string[]} */
         this.ALLOWED_FIELD_TYPES = [];
@@ -94,10 +92,10 @@ export class AbstractFilterEditorSidePanel extends Component {
     }
 
     /**
-     * @param {Event & { target: HTMLInputElement }} ev
+     * @param {String} label
      */
-    setLabel(ev) {
-        this.genericState.label = ev.target.value;
+    setLabel(label) {
+        this.genericState.label = label;
     }
 
     shouldDisplayFieldMatching() {

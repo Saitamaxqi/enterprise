@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-
-    <t t-name="spreadsheet_edition.FilterEditorLabel">
-        <div class="o-section-title">Label</div>
-        <div t-att-class="props.inputClass" class="o_required_modifier">
-            <input
-                type="text"
-                class="o-input o_global_filter_label"
-                t-att-value="props.label"
-                t-on-change="props.setLabel"
-                t-ref="labelInput"
-                t-att-placeholder="props.placeholder"/>
-        </div>
-    </t>
-
     <t t-name="spreadsheet_edition.FilterEditorButtons">
         <button t-if="onDelete" t-on-click="onDelete" class="o-button o_global_filter_delete o-button-danger">Remove</button>
         <button t-on-click="onCancel" class="o-button o_global_filter_cancel">Cancel</button>

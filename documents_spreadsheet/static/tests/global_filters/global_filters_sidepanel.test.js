@@ -1,6 +1,4 @@
-import {
-    defineDocumentSpreadsheetModels,
-} from "@documents_spreadsheet/../tests/helpers/data";
+import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheetFromListView } from "@documents_spreadsheet/../tests/helpers/list_helpers";
 import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
@@ -103,7 +101,9 @@ async function saveGlobalFilter() {
 }
 
 async function editGlobalFilterLabel(label) {
-    await contains(".o_global_filter_label").edit(label);
+    const input = await contains(".o_global_filter_label");
+    await input.click();
+    await input.edit(label);
 }
 
 async function editGlobalFilterDefaultValue(defaultValue) {
@@ -1870,8 +1870,8 @@ test("Filter edit side panel is initialized with the correct values", async func
     await openGlobalFilterSidePanel();
     await contains(".o-sidePanel .fa-cog").click();
 
-    expect(".o-sidePanel .o-input:eq(0)").toHaveValue("This month");
-    expect(".o-sidePanel .o-input:eq(1)").toHaveValue("fixedPeriod");
+    expect(".o-sidePanel .o_global_filter_label").toHaveValue("This month");
+    expect(".o-sidePanel .o-input:eq(0)").toHaveValue("fixedPeriod");
 
     const pivotField = ".o-sidePanel .o_spreadsheet_field_matching:eq(0)";
     const pivotFieldValue = `${pivotField} .o_model_field_selector_value span`;
