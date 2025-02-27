@@ -22,13 +22,16 @@
                     <field name="sdd_mandate_id"
                            string="Originating SEPA mandate"
                            domain="[('state', '=', 'active'), ('partner_id', '=', partner_id)]"
+                           groups="account.group_account_invoice"
                            invisible="payment_method_code not in ('sdd', 'sepa_direct_debit')"/>
                 </xpath>
                 <xpath expr="//header" position="after">
                     <div class="alert alert-info text-center"
+                         groups="account.group_account_invoice"
                          invisible="not sdd_mandate_usable or payment_type != 'inbound' or state != 'draft'"
                          role="status">Good news! A valid SEPA Mandate is available.</div>
                     <div class="alert alert-warning text-center"
+                         groups="account.group_account_invoice"
                          invisible="payment_method_code not in ('sdd', 'sepa_direct_debit') or state != 'draft' or sdd_mandate_usable"
                          role="alert">Oops! No valid SEPA mandate for this customer. <a type="action" name="%(account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree_act)d">Create it.</a></div>
                     <div class="alert alert-warning text-center"
@@ -58,7 +61,7 @@
             <field name="inherit_id" ref="account.view_account_payment_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='payment_method_line_id']" position="after">
-                    <field name="sdd_mandate_scheme" optional="hide"/>
+                    <field name="sdd_mandate_scheme" optional="hide" groups="account.group_account_invoice"/>
                 </xpath>
                 <xpath expr="//field[@name='state']" position="before">
                     <field name="sdd_mandate_id" optional="hide"/>
