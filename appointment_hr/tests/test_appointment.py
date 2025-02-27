@@ -9,36 +9,6 @@ from odoo.exceptions import ValidationError
 from odoo.tests import tagged, users
 
 
-class AppointmentHRLeavesTest(AppointmentHrCommon):
-    @users('apt_manager', 'staff_user_bxls')
-    def test_partner_on_leave_with_calendar_leave(self):
-        """Check that resource leaves are correctly reflected in the on_leave_partner_ids field.
-
-        Overlapping times between the leave time of an employee and the meeting should add the partner
-        to the list of unavailable partners.
-        """
-        self.env['calendar.event'].search([('user_id', '=', self.staff_user_bxls.id)]).unlink()
-        self.env['resource.calendar.leaves'].sudo().search([('calendar_id', '=', self.staff_user_bxls.resource_calendar_id.id)]).unlink()
-        [meeting] = self._create_meetings(
-            self.staff_user_bxls,
-            [(self.reference_monday + timedelta(days=1),
-              self.reference_monday + timedelta(days=1, hours=3),
-              False,
-              )],
-            self.apt_type_bxls_2days.id
-        )
-        self.assertFalse(meeting.on_leave_partner_ids)
-        self.env['resource.calendar.leaves'].sudo().create({
-            'calendar_id': self.staff_user_bxls.resource_calendar_id.id,
-            'date_from': self.reference_monday + timedelta(days=1),
-            'date_to': self.reference_monday + timedelta(days=1, minutes=5),
-            'name': 'Tuesday Morning Leave'
-        })
-        # a sane depedency cannot be expressed so it will only be updated when removed from cache
-        meeting.invalidate_recordset()
-        self.assertEqual(meeting.on_leave_partner_ids, self.staff_user_bxls.partner_id)
-
-
 @tagged('appointment_slots')
 class AppointmentHrTest(AppointmentHrCommon):
 

@@ -8,7 +8,7 @@ from pytz import timezone
 
 from odoo import fields, models
 from odoo.addons.hr_work_entry_contract.models.hr_work_intervals import WorkIntervals
-from odoo.addons.resource.models.utils import Intervals
+from odoo.tools.date_intervals import Intervals
 
 
 class HrContract(models.Model):

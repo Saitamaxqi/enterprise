@@ -6,7 +6,7 @@ from pytz import timezone, UTC
 
 from odoo import api, fields, models, _
 from odoo.tools import float_round
-from odoo.addons.resource.models.utils import sum_intervals, HOURS_PER_DAY
+from odoo.tools.date_intervals import sum_intervals, HOURS_PER_DAY
 from odoo.exceptions import UserError
 
 

@@ -10,10 +10,10 @@ from random import randint, shuffle
 from werkzeug.urls import url_encode
 
 from odoo import api, fields, models, _
-from odoo.addons.resource.models.utils import Intervals, sum_intervals
 from odoo.exceptions import UserError, AccessError
 from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_utils, format_datetime, SQL
+from odoo.tools.date_intervals import Intervals, sum_intervals
 from odoo.tools.date_utils import get_timedelta
 
 _logger = logging.getLogger(__name__)

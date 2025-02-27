@@ -1,8 +1,7 @@
 import pytz
 
 from odoo import models
-
-from odoo.addons.resource.models.utils import Intervals
+from odoo.tools.date_intervals import Intervals
 
 
 class ResUsers(models.Model):

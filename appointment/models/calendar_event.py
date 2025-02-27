@@ -7,12 +7,11 @@ from datetime import datetime, timedelta
 from markupsafe import Markup
 
 from odoo import _, api, Command, fields, models, tools, SUPERUSER_ID
+from odoo.addons.calendar.models.utils import interval_from_events
 from odoo.exceptions import ValidationError
+from odoo.tools.date_intervals import Intervals, intervals_overlap, invert_intervals, timezone_datetime
 from odoo.tools.mail import email_normalize, email_split_and_format_normalize, html_sanitize, is_html_empty, plaintext2html
 from odoo.osv import expression
-from odoo.addons.appointment.utils import invert_intervals
-from odoo.addons.resource.models.utils import Intervals, timezone_datetime
-from ..utils import interval_from_events, intervals_overlap
 
 _logger = logging.getLogger(__name__)
 
@@ -90,8 +89,7 @@ class CalendarEvent(models.Model):
     user_id = fields.Many2one('res.users', group_expand="_read_group_user_id")
     videocall_redirection = fields.Char('Meeting redirection URL', compute='_compute_videocall_redirection')
     appointment_booker_id = fields.Many2one('res.partner', string="Person who is booking the appointment", index='btree_not_null')
-    on_leave_partner_ids = fields.Many2many('res.partner', string='Unavailable Partners', compute='_compute_on_leave_partner_ids')
-    on_leave_resource_ids = fields.Many2many('appointment.resource', string='Resources intersecting with leave time', compute="_compute_on_leave_resource_ids")
+    unavailable_resource_ids = fields.Many2many('appointment.resource', string='Resources intersecting with leave time', compute="_compute_unavailable_resource_ids")
 
     @api.constrains('appointment_resource_ids', 'appointment_type_id')
     def _check_resource_and_appointment_type(self):
@@ -124,37 +122,32 @@ class CalendarEvent(models.Model):
         for event in self:
             event.resource_ids = event.booking_line_ids.appointment_resource_id
 
-    @api.depends('start', 'stop', 'partner_ids')
-    def _compute_on_leave_partner_ids(self):
-        self.on_leave_partner_ids = False
-        user_events = self.filtered(lambda event: event.appointment_type_id.schedule_based_on == 'users')
-
-        for start, stop, events in interval_from_events(user_events):
-            events_by_partner_id = events.partner_ids._get_busy_calendar_events(start, stop)
-            for event in events:
-                for partner in event.partner_ids:
-                    if any(
-                        intervals_overlap((event.start, event.stop), (other_event.start, other_event.stop))
-                        for other_event in events_by_partner_id.get(partner._origin.id, []) if other_event != event
-                    ):
-                        event.on_leave_partner_ids += partner
-
     @api.depends('start', 'stop', 'resource_ids')
-    def _compute_on_leave_resource_ids(self):
-        self.on_leave_resource_ids = False
+    def _compute_unavailable_resource_ids(self):
+        self.unavailable_resource_ids = False
         resource_events = self.filtered(lambda event: event.resource_ids)
         if not resource_events:
             return
 
         for start, stop, events in interval_from_events(resource_events):
             group_resources = events.resource_ids
-            unavailabilities = group_resources.sudo().resource_id._get_unavailable_intervals(start, stop)
+            availabilities_values = self.env['appointment.type']._slot_availability_prepare_resources_values(
+                group_resources, start, stop)
+            resource_unavailabilities = availabilities_values['resource_unavailabilities']
+            resource_to_bookings = availabilities_values['resource_to_bookings']
+
+            # Exclude resources that are shareable but not fully occupied
+            events_to_check = self.env['calendar.event'].concat(*[bookings.calendar_event_id for resource, bookings in resource_to_bookings.items()
+                if not resource.shareable or not (sum(bookings.mapped('capacity_reserved')) <= resource.capacity)])
             for event in events:
                 event_resources = event.resource_ids
-                event.on_leave_resource_ids = event_resources.filtered(lambda resource: any(
+                event.unavailable_resource_ids = event_resources.filtered(lambda resource: any(
                     intervals_overlap(interval, (event.start, event.stop)) for interval
-                    in unavailabilities.get(resource.resource_id.id, [])
+                    in resource_unavailabilities.get(resource, [])
                 ))
+                for conflicting_event in events_to_check - event._origin:
+                    if (resources := event_resources._origin & conflicting_event.resource_ids) and intervals_overlap((event.start, event.stop), (conflicting_event.start, conflicting_event.stop)):
+                        event.unavailable_resource_ids += resources
 
     @api.depends('booking_line_ids')
     def _compute_resource_total_capacity(self):
@@ -537,14 +530,23 @@ class CalendarEvent(models.Model):
                 '|', ('company_id', '=', False), ('company_id', 'in', self.env.context['allowed_company_ids'])]
             )
 
-        resource_unavailabilities = appointment_resource_ids.resource_id._get_unavailable_intervals(start, stop)
+        availabilities_values = self.env['appointment.type']._slot_availability_prepare_resources_values(
+            appointment_resource_ids, start, stop)
+        resource_unavailabilities = availabilities_values['resource_unavailabilities']
+        resource_to_bookings = availabilities_values['resource_to_bookings']
+
+        # Exclude resources that are shareable but not fully occupied
+        resource_unavailability_by_bookings = {resource: interval_from_events(bookings.calendar_event_id)
+            for resource, bookings in resource_to_bookings.items() if not resource.shareable or not (sum(bookings.mapped('capacity_reserved')) < resource.capacity)}
 
         result = {}
         for appointment_resource_id in appointment_resource_ids:
-            unavailabilities = Intervals([
+            unavailabilities = Intervals([(start, stop, set()) for start, stop in slots_unavailable_intervals])
+            unavailabilities |= Intervals([
                 (start, stop, set())
-                for start, stop in resource_unavailabilities.get(appointment_resource_id.resource_id.id, [])])
-            unavailabilities |= Intervals([(start, stop, set()) for start, stop in slots_unavailable_intervals])
+                for start, stop in resource_unavailabilities.get(appointment_resource_id, [])])
+            if event_intervals := resource_unavailability_by_bookings.get(appointment_resource_id):
+                unavailabilities |= Intervals([(timezone_datetime(start), timezone_datetime(stop), set()) for start, stop, _ in event_intervals])
             result[appointment_resource_id.id] = [{'start': start, 'stop': stop} for start, stop, _ in unavailabilities]
         return result
 

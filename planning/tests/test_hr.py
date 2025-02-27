@@ -5,8 +5,8 @@ from freezegun import freeze_time
 import pytz
 
 from odoo import fields
+from odoo.tools.date_intervals import Intervals
 
-from odoo.addons.resource.models.utils import Intervals
 from .common import TestCommonPlanning
 
 class TestPlanningHr(TestCommonPlanning):

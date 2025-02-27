@@ -7,8 +7,7 @@ from pytz import timezone, UTC, utc
 from odoo import api, fields, models
 from odoo.osv import expression
 from odoo.tools import float_is_zero
-
-from odoo.addons.resource.models.utils import Intervals, timezone_datetime
+from odoo.tools.date_intervals import Intervals, timezone_datetime
 
 
 class HrAttendance(models.Model):

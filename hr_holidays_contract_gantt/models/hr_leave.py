@@ -6,7 +6,7 @@ from datetime import datetime, time, timedelta
 from pytz import timezone
 
 from odoo import api, fields, models
-from odoo.addons.resource.models.utils import timezone_datetime
+from odoo.tools.date_intervals import timezone_datetime
 
 
 class HrLeave(models.Model):
