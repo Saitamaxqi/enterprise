@@ -75,7 +75,7 @@ class PurchaseOrder(models.Model):
             try:
                 po.button_confirm()
 
-                if po.state in ['purchase', 'done']:
+                if po.state == 'purchase':
                     template.send_mail(po.id)
 
                 auto_commit = not modules.module.current_test

@@ -46,6 +46,6 @@ class PurchaseOrderLine(models.Model):
     def _compute_above_budget(self):
         for line in self:
             uncommitted_amount = 0
-            if line.order_id.state not in ('purchase', 'done'):
+            if line.order_id.state != 'purchase':
                 uncommitted_amount = line.price_unit * (line.product_qty - line.qty_invoiced)
             line.is_above_budget = any(budget.committed_amount + uncommitted_amount > budget.budget_amount for budget in line.budget_line_ids)

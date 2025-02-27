@@ -708,7 +708,7 @@
                             "context": {
                                 "quotation_only": true
                             },
-                            "domain": [["state", "in", ["purchase", "done"]]],
+                            "domain": [["state", "=", "purchase"]],
                             "groupBy": ["user_id"],
                             "orderBy": []
                         },
@@ -1988,7 +1988,7 @@
                 "amount_total",
                 "state"
             ],
-            "domain": "[(\"state\", \"in\", (\"purchase\", \"done\"))]",
+            "domain": [["state", "=", "purchase"]],
             "model": "purchase.order",
             "context": { "quotation_only": true },
             "orderBy": [{ "name": "amount_total", "asc": false }],
