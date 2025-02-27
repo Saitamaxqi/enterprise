@@ -123,4 +123,4 @@ class MailActivity(models.Model):
         return phone_numbers_by_activity
 
     def _to_store_defaults(self):
-        return super()._to_store_defaults() + ["phone"]
+        return super()._to_store_defaults() + ["phone", "user_id"]
