@@ -34,11 +34,8 @@ patch(Navbar.prototype, {
             });
         }
     },
-    get customerFacingDisplayButtonIsShown() {
-        return this.supportDualDisplay || super.customerFacingDisplayButtonIsShown;
-    },
     get supportDualDisplay() {
-        return mobile.methods.getDisplays && this.pos.config.customer_display_type === "local";
+        return mobile.methods.getDisplays;
     },
     openCustomerDisplay() {
         if (!this.supportDualDisplay) {

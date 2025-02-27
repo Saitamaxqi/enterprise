@@ -72,9 +72,3 @@ class PosConfig(models.Model):
         print(decimal_precision.digits)
         if decimal_precision.digits < 3:
             decimal_precision.digits = 3
-
-    @api.constrains('iface_display_id', 'customer_display_type', 'is_posbox')
-    def _check_customer_display_type(self):
-        for config in self:
-            if config.customer_display_type == 'proxy' and (not config.is_posbox or not config.iface_display_id):
-                raise UserError(_("You must set a display device for an IOT-connected screen. You'll find the field under the 'IoT Box' option."))
