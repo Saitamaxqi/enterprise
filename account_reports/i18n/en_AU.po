@@ -2613,7 +2613,7 @@ msgstr ""
 #: model:mail.activity.type,summary:account_reports.tax_closing_activity_type
 #: model_terms:ir.ui.view,arch_db:account_reports.view_move_form_vat_return
 msgid "Tax Report"
-msgstr "BAS Report"
+msgstr ""
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_bank_statement_line__tax_report_control_error
@@ -2630,7 +2630,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
 msgid "Tax Return Periodicity"
-msgstr ""
+msgstr "Tax Report Periodicity"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_tax_unit
