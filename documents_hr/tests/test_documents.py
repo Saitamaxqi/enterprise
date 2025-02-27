@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import http
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests.common import HttpCase, RecordCapturer, tagged
 
 from .test_documents_hr_common import TransactionCaseDocumentsHr
@@ -18,6 +18,61 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
             'user_id': cls.doc_user.id,
             'work_contact_id': cls.doc_user.partner_id.id
         })
+
+    def test_employee_subfolder_generation_renaming_and_access(self):
+        # hr_employee_folder_id should have been created at employee creation
+        self.assertEqual(self.employee.hr_employee_folder_id.name, self.employee.name,
+                         "HR Employee Subfolder should have the same name as the employee.")
+        self.employee.name = "Zator"
+        self.assertEqual(self.employee.hr_employee_folder_id.name, "Zator",
+                         "HR Employee Subfolder should be renamed when renaming the employee.")
+
+        # Test on new Company - HR Employee folder should be created on company create.
+        # and a new employee should generate a subfolder for that employee inside the company's HR Employee folder.
+        new_company = self.env['res.company'].create({
+            'name': 'New Company'
+        })
+        self.assertTrue(new_company.documents_employee_folder_id)
+        new_company_employee = self.env['hr.employee'].create({
+            'name': 'New Company Employee',
+            'user_id': self.doc_user_2.id,
+            'company_id': new_company.id
+        })
+        self.assertTrue(new_company_employee.hr_employee_folder_id)
+        self.assertEqual(new_company_employee.hr_employee_folder_id.folder_id, new_company.documents_employee_folder_id)
+        # Test unconfigured companies: employees should not have a subfolder
+        doc_employee_folder_id = new_company.documents_employee_folder_id.id
+        new_company.documents_employee_folder_id = False
+        new_company_employee_bis = self.env['hr.employee'].create({
+            'name': 'New Company Employee Bis',
+            'company_id': new_company.id
+        })
+        self.assertFalse(new_company_employee_bis.hr_employee_folder_id)
+        # Reconfiguring the company should create employee subfolders for employee that has none
+        new_company.documents_employee_folder_id = doc_employee_folder_id
+        self.assertTrue(new_company_employee_bis.hr_employee_folder_id)
+        self.assertEqual(new_company_employee_bis.hr_employee_folder_id.folder_id, new_company.documents_employee_folder_id)
+
+        # Test changing settings for Documents HR Employee folder. All employee subfolders should follow.
+        new_folder = self.env['documents.document'].create({
+            'name': 'New folder',
+            'type': 'folder'
+        })
+        self.env.company.documents_employee_folder_id = new_folder.id
+        self.assertEqual(self.employee.hr_employee_folder_id.folder_id.id, new_folder.id,
+                         "Changing HR Employee folder target should be propagated to each employee subfolders.")
+
+        # Check access - only used for HR users - even employee should not have access to their "own" subfolder
+        with self.assertRaises(AccessError):
+            self.employee.hr_employee_folder_id.with_user(self.doc_user_2).read(['name'])
+        with self.assertRaises(AccessError):
+            self.employee.hr_employee_folder_id.with_user(self.employee.user_id).read(['name'])
+        with self.assertRaises(AccessError):
+            self.employee.hr_employee_folder_id.with_user(self.employee.user_id).write({'name': "Test"})
+        self.employee.hr_employee_folder_id.with_user(self.hr_user).read(['name'])
+        self.employee.hr_employee_folder_id.with_user(self.hr_manager).read(['name'])
+        self.employee.hr_employee_folder_id.with_user(self.hr_user).write({'name': "Test"})
+        self.employee.hr_employee_folder_id.with_user(self.hr_manager).write({'name': "Test2"})
 
     def test_bridge_hr_settings_on_write(self):
         """
@@ -97,22 +152,12 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
         """ Test that opening the document app from an employee (hr app) is opening it in the right context. """
         action = self.employee.action_open_documents()
         context = action['context']
-        self.assertTrue(context['searchpanel_default_folder_id'])
+        self.assertTrue('searchpanel_default_folder_id' in context)
+        self.assertEqual(context['searchpanel_default_folder_id'], self.employee.hr_employee_folder_id.id)
         self.assertEqual(context['default_res_model'], 'hr.employee')
         self.assertEqual(context['default_res_id'], self.employee.id)
-        self.assertEqual(context['default_partner_id'], self.employee.work_contact_id.id)
-        employee_related_doc, *__ = self.env['documents.document'].create([
-            {'name': 'employee doc', 'partner_id': self.employee.work_contact_id.id},
-            {'name': 'employee doc 2', 'owner_id': self.employee.user_id.id},
-            {'name': 'non employee'},
-        ])
-        filtered_documents = self.env['documents.document'].search(action['domain']).filtered(lambda d: d.type != 'folder')
-        self.assertEqual(
-            len(filtered_documents.filtered(
-                lambda doc: doc.owner_id == self.employee.user_id or doc.partner_id == self.employee.work_contact_id)),
-            1,
-            "Employee related document is visible")
-        self.assertEqual(filtered_documents, employee_related_doc, "Only employee-related document is visible")
+        self.assertFalse('default_partner_id' in context)
+        self.assertFalse('domain' in action)
 
     def test_raise_if_used_folder(self):
         """It shouldn't be possible to archive/delete a folder used by a company (see _unlink_except_company_folders)"""
@@ -146,3 +191,36 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
             folder_parent.with_user(self.doc_user).unlink()
         self.assertTrue(folder_parent.exists())
         self.assertTrue(folder_hr_company2.exists())
+
+        with self.assertRaises(UserError,
+                               msg="It should not be possible to delete an employee subfolder of the 'HR' Employee folder"):
+            self.employee.hr_employee_folder_id.unlink()
+
+    def test_portal_user_own_root_documents(self):
+        """ Portal user (linked to employee!!) should be able to own root
+        documents as they are now allowed to be set as employee related user
+        and employee documents are store in their "my drive", and are,
+        by definition, root documents"""
+        employee_portal_user, normal_portal_user = self.env['res.users'].create([{
+            'name': "Employee Portal User",
+            'login': "employee_portal",
+            'email': "employee_portal@yourcompany.com",
+            'group_ids': [(6, 0, [self.env.ref('base.group_portal').id])]
+        }, {
+            'name': "Normal Portal User",
+            'login': "normal_portal",
+            'email': "normal_portal@yourcompany.com",
+            'group_ids': [(6, 0, [self.env.ref('base.group_portal').id])]
+        }])
+        self.employee.user_id = employee_portal_user
+        self.env['documents.document'].create({
+            'name': 'test',
+            'folder_id': False,
+            'owner_id': employee_portal_user.id
+        })
+        with self.assertRaises(ValidationError, msg="Portal users that are not linked to an employee cannot own root documents."):
+            self.env['documents.document'].create({
+                'name': 'test',
+                'folder_id': False,
+                'owner_id': normal_portal_user.id
+            })

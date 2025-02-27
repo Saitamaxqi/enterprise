@@ -17,13 +17,23 @@
                     <field name="documents_hr_settings"/>
                     <div name="documents_hr_folder" class="content-group" invisible="not documents_hr_settings">
                         <div class="row mt16">
-                            <label class="o_form_label col-lg-3" for="documents_hr_folder" string="Folder"/>
+                            <label class="o_form_label col-lg-3" for="documents_hr_folder" string="Root Folder"/>
                             <field name="documents_hr_folder" required="documents_hr_settings" widget="documents_folder_many2one"
                                 options="{'no_create': True, 'no_create_edit': True}"/>
                         </div>
                     </div>
                     <div id="documents_hr_tags" class="mt-3"/>
                 </setting>
+            </xpath>
+            <xpath expr="//div[@name='documents_hr_folder']" position="after">
+                <div class="content-group" invisible="not documents_hr_settings">
+                    <div class="row mt16">
+                        <label class="o_form_label col-lg-3" for="documents_employee_folder_id" string="Employees Folder"/>
+                        <field name="documents_employee_folder_id" widget="documents_folder_many2one"
+                        options="{'no_create': True, 'no_create_edit': True}"/>
+                    </div>
+                    <widget name="hr_document_setting_permission_widget"/>
+                </div>
             </xpath>
         </field>
     </record>

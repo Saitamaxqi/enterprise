@@ -8,14 +8,6 @@
             <xpath expr="//p[@name='save_warning']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-            <p name="save_warning" position="after">
-                <field name="documents_enabled" invisible="1"/>
-                <div>
-                    <div invisible="documents_enabled">
-                        <p><strong>Warning: </strong>In order to post the 281.10 sheets in the employee portal, you have to Enable "Human Resources" in the <a name="%(documents.configuration_action)d" type="action" class="oe_link">"Documents" app settings</a>.</p>
-                    </div>
-                </div>
-            </p>
         </field>
     </record>
 </odoo>

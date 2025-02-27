@@ -26,5 +26,4 @@ Employee payslips will be automatically integrated to the Document app.
     'auto_install': True,
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
-    'post_init_hook': '_generate_payroll_document_folders',
 }

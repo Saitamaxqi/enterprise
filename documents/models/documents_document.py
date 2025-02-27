@@ -295,12 +295,21 @@ class DocumentsDocument(models.Model):
             raise ValidationError('\n\n'.join(errors))
 
     @api.constrains('owner_id', 'folder_id')
-    def _check_portal_cant_own_root_document(self):
-        wrong_records = self.filtered(lambda d: d.owner_id.sudo().share and not self.folder_id)
-        if wrong_records:
-            raise ValidationError(_(
-                "The following documents/folders can't be owned by a Portal User: \n- %(partners)s",
-                partners="\n-".join(wrong_records.mapped('name'))))
+    def _check_root_documents_owner_id(self):
+        root_documents = self.filtered(lambda d: not d.folder_id)
+        unauthorized_owners_sudo = root_documents._get_unauthorized_root_document_owners_sudo()
+        if unauthorized_owners_sudo:
+            users_documents_list = [
+                (document.owner_id.name, document.name)
+                for document in root_documents
+                if document.owner_id in unauthorized_owners_sudo
+            ]
+            raise ValidationError(_("The following user(s) cannot own root documents/folders: \n- %(lines)s",
+                lines="\n-".join(f'{user_name}: {doc_name}' for user_name, doc_name in users_documents_list)))
+
+    def _get_unauthorized_root_document_owners_sudo(self):
+        """ Return sudo'ed documents records as only used by system process."""
+        return self.mapped('owner_id').sudo().filtered('share')
 
     @api.constrains('type', 'alias_name')
     def _check_alias(self):

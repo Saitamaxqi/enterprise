@@ -17,11 +17,11 @@ class HrPayslip(models.Model):
     def _get_document_partner(self):
         return self.employee_id.user_id.partner_id or self.employee_id.work_contact_id
 
-    def _get_document_folder(self):
-        return self.company_id.documents_payroll_folder_id
+    def _get_document_owner(self):
+        return self.employee_id.user_id or super()._get_document_owner()
 
     def _check_create_documents(self):
-        return self.company_id.documents_hr_settings and super()._check_create_documents()
+        return True
 
     def _get_email_template(self):
         return super()._get_email_template() if self._check_create_documents() else None

@@ -11,7 +11,7 @@ class TransactionCaseDocumentsHr(TransactionCaseDocuments):
     def setUpClass(cls):
         super().setUpClass()
         cls.TEXT = base64.b64encode(bytes("documents_hr", 'utf-8'))
-        cls.doc_user_2, cls.hr_manager = cls.env['res.users'].create([{
+        cls.doc_user_2, cls.hr_manager, cls.hr_user = cls.env['res.users'].create([{
             'name': "documents test basic user",
             'login': "dtbu",
             'email': "dtbu@yourcompany.com",
@@ -21,6 +21,11 @@ class TransactionCaseDocumentsHr(TransactionCaseDocuments):
             'login': "hr_manager_test",
             'email': "hr_manager_test@yourcompany.com",
             'group_ids': [(6, 0, [cls.env.ref('hr.group_hr_manager').id])]
+        }, {
+            'name': "Hr User test",
+            'login': "hr_user_test",
+            'email': "hr_user_test@yourcompany.com",
+            'group_ids': [(6, 0, [cls.env.ref('hr.group_hr_user').id])]
         }])
         cls.hr_folder = cls.env['documents.document'].create({
             'name': 'hr_folder',
@@ -31,6 +36,7 @@ class TransactionCaseDocumentsHr(TransactionCaseDocuments):
         company = cls.env.user.company_id
         company.documents_hr_settings = True
         company.documents_hr_folder = cls.hr_folder.id
+        cls.employees_folder = company.documents_employee_folder_id
 
     def create_hr_related_document(self, related_record, folder, n=2):
         return self.env['documents.document'].create([{

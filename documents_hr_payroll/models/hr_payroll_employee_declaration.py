@@ -2,7 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import Command, models, fields, api, _
-from odoo.exceptions import UserError
 
 
 class HrPayrollEmployeeDeclaration(models.Model):
@@ -41,19 +40,24 @@ class HrPayrollEmployeeDeclaration(models.Model):
             if line.pdf_filename not in posted_documents and line.pdf_file:
                 lines_to_post += line
                 partner_id = self.env[line.res_model]._get_posted_document_owner(line.employee_id).partner_id.id
-                folder = line.company_id.documents_payroll_folder_id
+                folder = self.env["documents.document"] if line.employee_id.user_id else line.company_id.documents_employee_folder_id
+                owner_id = line.employee_id.user_id.id if line.employee_id.user_id else False
                 access_ids = {}
-                if (partner_id
+                if (not owner_id and partner_id and folder
                         and partner_id not in (v['partner_id'] for v in folder._get_inherited_access_ids_vals())):
                     access_ids = {'access_ids': [Command.create({'partner_id': partner_id, 'role': 'view'})]}
                 create_vals.append({
-                    'owner_id': False,
+                    'owner_id': owner_id,
                     **access_ids,
                     'partner_id': partner_id or False,
                     'datas': line.pdf_file,
                     'name': line.pdf_filename,
                     'folder_id': folder.id,
                     'res_model': 'hr.payslip',  # Security Restriction to payroll managers
+                    # allow anyone with the link (to retrieve declaration documents after employee's departure)
+                    'access_via_link': 'view',
+                    'access_internal': 'none',
+                    'is_access_via_link_hidden': True,
                 })
                 if template:
                     template.send_mail(line.employee_id.id, email_layout_xmlid='mail.mail_notification_light')
@@ -76,9 +80,6 @@ class HrPayrollEmployeeDeclaration(models.Model):
         return res
 
     def action_post_in_documents(self):
-        for company in self.company_id:
-            if not company._payroll_documents_enabled():
-                raise UserError(_('You must activate file centralization for human resources in the Documents application settings.'))
         self.write({'pdf_to_post': True})
         self.env.ref('hr_payroll.ir_cron_generate_payslip_pdfs')._trigger()
 

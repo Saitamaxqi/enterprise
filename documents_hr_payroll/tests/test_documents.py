@@ -26,13 +26,6 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
             'user_id': cls.doc_user_2.id,
             'work_contact_id': cls.doc_user_2.partner_id.id
         })
-        cls.payroll_folder = cls.env['documents.document'].create({
-            'name': 'Payroll',
-            'type': 'folder',
-            'access_internal': 'view',
-        })
-        cls.payroll_folder.action_update_access_rights(partners={cls.payroll_manager.partner_id: ('edit', False)})
-        cls.env.user.company_id.documents_payroll_folder_id = cls.payroll_folder.id
         cls.richard_emp.user_id = cls.doc_user
         cls.contract = cls.richard_emp.contract_ids[0]
         cls.contract.state = 'open'
@@ -54,41 +47,25 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
 
         document = self.env['documents.document'].search([('attachment_id', '=', attachment.id)])
         self.assertTrue(document, "There should be a new document created from the attachment")
-        self.assertFalse(document.owner_id)
+        self.assertEqual(document.owner_id, self.richard_emp.user_id)
         self.assertEqual(document.partner_id, self.richard_emp.user_id.partner_id, "The document contact must be the user partner of the employee")
-        self.assertEqual(document.folder_id, self.payroll_folder, "The document should have been created in the configured folder")
+        self.assertFalse(document.folder_id, "The document should have been created in the employee's My Drive")
         self.assertEqual(document.access_via_link, "none")
         self.assertEqual(document.access_internal, "none")
         self.assertTrue(document.is_access_via_link_hidden)
+        # Only one access record, with the owner's partner. No one else than the employee itself should have access to the document.
         self.assertEqual(
             {a.partner_id: a.role for a in document.access_ids},
-            {self.payroll_manager.partner_id: 'edit', self.richard_emp.user_id.partner_id: 'view'},
-            "The payroll manager must have edit right on the payslip and the employee view right"
+            {self.richard_emp.user_id.partner_id: False},  # False because owner (see _prepare_create_values @documents/../documents_document.py)
+            "Only the employee should have access (write)"
         )
-        self.assertEqual(document.with_user(self.richard_emp.user_id).user_permission, 'view')
-        self.assertEqual(document.with_user(self.payroll_manager.user_id).user_permission, 'edit')
+        self.assertEqual(document.with_user(self.richard_emp.user_id).user_permission, 'edit')  # Edit because owner
         self.check_document_no_access(document, self.doc_user_2)
         self.check_document_no_access(document, self.document_manager)
-
-    def test_hr_payslip_document_creation_permission_employee_only(self):
-        """ created hr.payslip documents are only viewable by the employee and editable by payroll managers. """
-        self.check_document_creation_permission(self.payslip, self.payroll_folder, self.payroll_manager)
+        self.check_document_no_access(document, self.payroll_manager)
 
     def test_hr_payroll_employee_declaration_document_creation_simple(self):
-        """Check that the employee and the payroll folder members are given access to the declarations."""
-        self._test_hr_payroll_employee_declaration_document_creation('view')
-
-    def test_hr_payroll_employee_declaration_document_creation_employee_folder_member(self):
-        """Check that the employee can be a member of the payroll folder without errors for duplicate access."""
-        self.env['documents.access'].create({
-            'document_id': self.payroll_folder.id,
-            'partner_id': self.employee.user_partner_id.id,
-            'role': 'edit',
-        })
-        self._test_hr_payroll_employee_declaration_document_creation('edit')
-
-    def _test_hr_payroll_employee_declaration_document_creation(self, employee_role):
-        self.assertFalse(self.payroll_folder.children_ids)
+        """Check that the employee is the owner of the declarations and that nobody else has access."""
         declaration = self.env['hr.payroll.employee.declaration'].create({
             'res_model': 'hr.payslip',
             'res_id': self.payslip.id,
@@ -113,9 +90,17 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
         ):
             declaration._post_pdf()
 
-        document = self.payroll_folder.children_ids
+        document = declaration.document_id
         self.assertEqual(document.name, 'Test Declaration.pdf')
+        self.assertEqual(document.owner_id, self.employee.user_id)
+        self.assertFalse(document.folder_id, "The document should have been created in the employee's My Drive")
         self.assertEqual(
             set(document.access_ids.mapped(lambda a: (a.partner_id, a.role))),
-            {(self.payroll_manager.partner_id, 'edit'), (self.employee.user_partner_id, employee_role)}
+            {(self.employee.user_partner_id, False)}
         )
+        self.assertEqual(document.access_via_link, "view")
+        self.assertEqual(document.access_internal, "none")
+        self.assertTrue(document.is_access_via_link_hidden)
+        self.check_document_no_access(document, self.doc_user)
+        self.check_document_no_access(document, self.document_manager)
+        self.check_document_no_access(document, self.payroll_manager)

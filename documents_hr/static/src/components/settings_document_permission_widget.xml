@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <div t-name="documents_hr.SettingDocumentPermissionWidget">
+        <div><a class="btn btn-link" role="button" t-on-click="_openPermissionPanel"><i class="fa fa-arrow-right"/> Manage Employee Access to employee folder</a></div>
+    </div>
+</templates>

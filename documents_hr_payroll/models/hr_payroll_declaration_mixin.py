@@ -7,12 +7,13 @@ from odoo import api, fields, models, _
 class HrPayrollDeclarationMixin(models.AbstractModel):
     _inherit = 'hr.payroll.declaration.mixin'
 
-    documents_enabled = fields.Boolean(compute='_compute_documents_enabled')
     documents_count = fields.Integer(compute='_compute_documents_count')
 
     def action_see_documents(self):
-        documents = self.line_ids.mapped('pdf_filename')
-        domain = [('name', 'in', documents)]
+        domain = [
+            ('res_id', 'in', self.line_ids.mapped('res_id')),
+            ('res_model', '=', self.line_ids._name),
+        ]
         return {
             'name': _('Documents'),
             'domain': domain,
@@ -20,7 +21,6 @@ class HrPayrollDeclarationMixin(models.AbstractModel):
             'type': 'ir.actions.act_window',
             'views': [(False, 'kanban'), (False, 'list'), (False, 'form')],
             'view_mode': 'list,form',
-            'context': {'searchpanel_default_folder_id': self.company_id.documents_payroll_folder_id.id}
         }
 
     @api.depends('line_ids')
@@ -36,11 +36,6 @@ class HrPayrollDeclarationMixin(models.AbstractModel):
         mapped_data = dict(grouped_data)
         for sheet in self:
             sheet.documents_count = mapped_data.get(sheet.id, 0)
-
-    @api.depends('company_id.documents_payroll_folder_id', 'company_id.documents_hr_settings')
-    def _compute_documents_enabled(self):
-        for sheet in self:
-            sheet.documents_enabled = sheet.company_id._payroll_documents_enabled()
 
     def action_post_in_documents(self):
         self.line_ids.action_post_in_documents()

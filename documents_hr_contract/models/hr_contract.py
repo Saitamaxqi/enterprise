@@ -21,7 +21,3 @@ class HrContract(models.Model):
 
     def _check_create_documents(self):
         return self.company_id.documents_hr_settings and super()._check_create_documents()
-
-    def _get_sign_request_folder(self):
-        self.ensure_one()
-        return self.company_id.documents_hr_folder
