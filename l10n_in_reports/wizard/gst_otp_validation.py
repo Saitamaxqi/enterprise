@@ -72,14 +72,18 @@ class L10n_InGstOtpValidation(models.TransientModel):
         next_gst_action = self._context.get('next_gst_action')
         active_model = self._context.get('active_model')
         if next_gst_action and active_model:
-            return_period = self.env[active_model].browse(self._context.get('active_id'))
-            action_method = {
-                "send_gstr1": return_period.button_send_gstr1,
-                "gstr1_status": return_period.button_check_gstr1_status,
-                "fetch_gstr2b": return_period.action_get_gstr2b_data,
-                "fetch_irn_from_account_move": return_period.l10n_in_update_move_using_irn,
-                "fetch_irn": return_period.action_get_irn_data,
-            }.get(next_gst_action)
-            if action_method and (response_message := action_method()):
+            response_message = False
+            record = self.env[active_model].browse(self._context.get('active_id'))
+            if next_gst_action == "fetch_irn_from_account_move" and active_model == 'account.move':
+                response_message = record.l10n_in_update_move_using_irn()
+            elif active_model == 'l10n_in.gst.return.period':
+                action_method = {
+                    "send_gstr1": record.button_send_gstr1,
+                    "gstr1_status": record.button_check_gstr1_status,
+                    "fetch_gstr2b": record.action_get_gstr2b_data,
+                    "fetch_irn": record.action_get_irn_data,
+                }.get(next_gst_action)
+                response_message = action_method and action_method()
+            if response_message:
                 response['params']['next'] = response_message
         return response
