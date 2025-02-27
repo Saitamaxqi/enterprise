@@ -26,7 +26,7 @@
                 <filter string="Added Products" name="fsm_quantity" domain="[('fsm_quantity', '>', 0)]"/>
                 <separator/>
             </xpath>
-            <xpath expr="//filter[@name='products_in_order']" position="attributes">
+            <xpath expr="//filter[@name='products_in_sale_order']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
         </field>
