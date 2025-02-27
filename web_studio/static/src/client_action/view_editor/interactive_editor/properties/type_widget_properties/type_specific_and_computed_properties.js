@@ -66,7 +66,11 @@ export const FIELD_TYPE_ATTRIBUTES = {
         list: [EDITABLE_FIELD_ATTRIBUTES.aggregate],
     },
     many2many: {
-        common: [EDITABLE_FIELD_ATTRIBUTES.domain, EDITABLE_FIELD_ATTRIBUTES.context],
+        common: [
+            EDITABLE_FIELD_ATTRIBUTES.domain,
+            EDITABLE_FIELD_ATTRIBUTES.context,
+            EDITABLE_FIELD_ATTRIBUTES.placeholder,
+        ],
     },
     many2one: {
         common: [
