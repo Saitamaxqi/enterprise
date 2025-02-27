@@ -154,7 +154,8 @@
 }
 
 .o_sign_sign_item.multi_selected {
-    outline: 2px solid rgb(0, 0, 0) !important;
+    outline: 1px solid rgb(0, 0, 0) !important;
+    border-color: rgb(0, 0, 0) !important;
 }
 
 .o_sign_sign_item img {

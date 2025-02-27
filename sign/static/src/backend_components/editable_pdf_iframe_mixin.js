@@ -389,6 +389,8 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             canvas.style.zIndex = 100;
             ctx.strokeStyle = 'rgb(89, 105, 196, 0.3)';
             ctx.fillStyle = 'rgb(89, 105, 196, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([]);
             ctx.fillRect(this.startPos.x, this.startPos.y, width, height);
             ctx.strokeRect(this.startPos.x, this.startPos.y, width, height);
         }
