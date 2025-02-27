@@ -9,7 +9,8 @@ from odoo.tools import mute_logger
 
 from odoo.addons.mail.tests.common import MockEmail
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
-from odoo.addons.sale.controllers.portal import CustomerPortal as SaleCustomerPortal
+from odoo.addons.sale_subscription.controllers.portal import CustomerPortal
+from odoo.addons.website.tools import MockRequest
 from odoo.addons.sale_subscription.tests.test_sale_subscription import TestSubscriptionCommon
 from odoo.addons.website.tools import MockRequest
 
@@ -242,3 +243,35 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
             'currency_id': self.env.company.currency_id.id,
             'partner_id': portal_partner.id,
         })
+
+    def test_payment_link_renewed(self):
+        self.subscription.write({
+            'partner_id': self.partner.id,
+            'company_id': self.company.id,
+            'sale_order_template_id': self.subscription_tmpl.id,
+            'payment_token_id': self.payment_token.id,
+        })
+        self.subscription._onchange_sale_order_template_id()
+        self.subscription.action_confirm()
+        invoice = self.subscription._create_invoices()
+        invoice._post()
+        payment_context = {'active_model': 'sale.order', 'active_id': self.subscription.id}
+        # payment.link.wizard needs to access request.env when it generates the acces_token.
+        # This pirouette is needed to avoid a
+        with MockRequest(self.subscription.env):
+            wiz = self.env['payment.link.wizard'].with_context(payment_context).create({})
+            pay_url = wiz.link
+        self.assertFalse(wiz.warning_message, "The wizard has no warning message")
+        action = self.subscription.with_context(tracking_disable=False).prepare_renewal_order()
+        renewal_so = self.env['sale.order'].browse(action['res_id'])
+        renewal_so = renewal_so.with_context(tracking_disable=False)
+        renewal_so.order_line.product_uom_qty = 3
+        renewal_so.name = "Renewal"
+        renewal_so.action_confirm()
+        with MockRequest(self.subscription.env):
+            wiz = self.env['payment.link.wizard'].with_context(payment_context).create({})
+            self.assertEqual(wiz.warning_message, "You cannot generate a payment link for a renewed subscription")
+        res = self.url_open(pay_url)
+        self.assertEqual(res.status_code, 200, "Response should = OK")
+        content = res.content.decode("utf-8")
+        self.assertTrue("There is nothing to pay." in content, "There is nothing to pay for payment link of renewed order")

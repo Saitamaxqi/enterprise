@@ -311,8 +311,20 @@ class PaymentPortal(payment_portal.PaymentPortal):
             extra_payment_form_values.update({
                 'sale_order_id': sale_order_id,  # Allow Stripe to check if tokenization is required.
             })
-            if manage_subscription:
+            try:  # Check document access against what could be a portal access token.
                 order_sudo = self._document_check_access('sale.order', sale_order_id, access_token)
+            except AccessError:  # It is a payment access token computed on the payment context.
+                if not payment_utils.check_access_token(
+                    access_token,
+                    kwargs.get('partner_id'),
+                    kwargs.get('amount'),
+                    kwargs.get('currency_id'),
+                ):
+                    raise
+                order_sudo = request.env['sale.order'].sudo().browse(sale_order_id)
+            if order_sudo.subscription_state == '5_renewed':
+                extra_payment_form_values['amount'] = 0
+            if manage_subscription:
                 extra_payment_form_values.update({
                     'subscription': order_sudo,
                     'allow_token_selection': True,

@@ -1549,6 +1549,11 @@ msgid "Future Activities"
 msgstr ""
 
 #. module: sale_subscription
+#: model:ir.model,name:sale_subscription.model_payment_link_wizard
+msgid "Generate Sales Payment Link"
+msgstr ""
+
+#. module: sale_subscription
 #. odoo-javascript
 #: code:addons/sale_subscription/static/src/js/tours/sale_subscription.js:0
 msgid "Go ahead and create a new product"
@@ -3906,6 +3911,12 @@ msgid ""
 "You cannot create an upsell for this subscription because it :\n"
 " - Has not started yet.\n"
 " - Has no invoiced period in the future."
+msgstr ""
+
+#. module: sale_subscription
+#. odoo-python
+#: code:addons/sale_subscription/wizard/payment_link_wizard.py:0
+msgid "You cannot generate a payment link for a renewed subscription"
 msgstr ""
 
 #. module: sale_subscription
