@@ -26,7 +26,6 @@ Supported devices include payment terminals, receipt printers, scales and custom
             'iot/static/src/iot_longpolling.js',
             'iot/static/src/device_controller.js',
             'iot/static/src/iot_report_action.js',
-            'iot/static/src/dialogs/iot_connection_error_dialog.js',
             'iot/static/src/iot_websocket_service.js',
             'iot/static/src/select_printer_wizard.js',
             'iot/static/src/client_action/delete_local_storage.js',

@@ -1,13 +1,13 @@
 import { registry } from '@web/core/registry';
-import { IoTConnectionErrorDialog } from '@iot/dialogs/iot_connection_error_dialog';
+import { _t } from '@web/core/l10n/translation';
 
 export class IoTLongpolling {
-    static serviceDependencies = ["dialog", "orm"];
+    static serviceDependencies = ["notification", "orm"];
     constructor() {
         this.setup(...arguments);
     }
     // setup to allow patching
-    setup({ dialog, orm }) {
+    setup({ notification, orm }) {
         // CONSTANTS
         this.POLL_TIMEOUT = 60000;
         this.POLL_ROUTE = '/hw_drivers/event';
@@ -23,7 +23,7 @@ export class IoTLongpolling {
         this._session_id = this._createUUID();
         this._listeners = {};
         this._delayedStartPolling(this.RPC_DELAY);
-        this.dialogService = dialog;
+        this.notification = notification;
         this.orm = orm;
     }
 
@@ -37,7 +37,7 @@ export class IoTLongpolling {
      * @param {String} iot_ip
      * @param {Array} devices list of devices
      * @param {String} listener_id
-     * @param {Boolean} fallback if true, no `IoTConnectionErrorDialog` popup will be displayed on fail
+     * @param {Boolean} fallback if true, no notification will be displayed on fail
      * @param {Callback} callback
      */
     addListener(iot_ip, devices, listener_id, callback, fallback = false) {
@@ -101,7 +101,7 @@ export class IoTLongpolling {
      * Start a long polling, i.e. it continually opens a long poll
      * connection as long as it is not stopped (@see `stopPolling`)
      * @param {String} iot_ip
-     * @param {Boolean} fallback if true, no `IoTConnectionErrorDialog` popup will be displayed on fail
+     * @param {Boolean} fallback if true, no notification will be displayed on fail
      */
     startPolling(iot_ip, fallback = false) {
         if (iot_ip) {
@@ -136,7 +136,7 @@ export class IoTLongpolling {
     _delayedStartPolling(delay) {
         const self = this;
         setTimeout(function () {
-            self.startPolling(null);
+            self.startPolling(null, true); // true to avoid error notification on longpolling setup
         }, delay);
     }
 
@@ -181,13 +181,17 @@ export class IoTLongpolling {
         if (options.timeout) {
             requestParams.signal = AbortSignal.timeout(options.timeout);
         }
-        const response = await fetch(url + route, requestParams);
-        const result = await response.json();
-        if (this._listeners[iot_ip] && route === '/hw_drivers/event') {
-            this._listeners[iot_ip].rpc = result;
-            return this._listeners[iot_ip].rpc;
-        } else {
-            return result;
+        try {
+            const response = await fetch(url + route, requestParams);
+            const result = await response.json();
+            if (this._listeners[iot_ip] && route === '/hw_drivers/event') {
+                this._listeners[iot_ip].rpc = result;
+                return this._listeners[iot_ip].rpc;
+            } else {
+                return result;
+            }
+        } catch {
+            return this._doWarnFail(iot_ip);
         }
     }
 
@@ -195,7 +199,7 @@ export class IoTLongpolling {
      * Make a request to an IoT Box
      *
      * @param {String} iot_ip
-     * @param {Boolean} fallback if true, no `IoTConnectionErrorDialog` popup will be displayed on fail
+     * @param {Boolean} fallback if true, no notification will be displayed on fail
      */
     _poll(iot_ip, fallback = false) {
         var listener = this._listeners[iot_ip];
@@ -255,7 +259,13 @@ export class IoTLongpolling {
      * @param {string} url
      */
     _doWarnFail(url) {
-        this.dialogService.add(IoTConnectionErrorDialog, { href: url });
+        this.notification.add(
+            _t("Failed to reach IoT Box at %s", url),
+            {
+                title: _t("Connection to IoT Box failed"),
+                type: "danger",
+            }
+        );
     }
 }
 

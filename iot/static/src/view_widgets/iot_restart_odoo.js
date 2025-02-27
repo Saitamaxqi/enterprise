@@ -2,7 +2,6 @@ import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { IoTConnectionErrorDialog } from "@iot/dialogs/iot_connection_error_dialog";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { Component } from "@odoo/owl";
 
@@ -25,6 +24,10 @@ export class IoTRestartOdoo extends Component {
 
     get ip_url() {
         return this.props.record.data.ip_url;
+    }
+
+    get name() {
+        return this.props.record.data.name;
     }
 
     async onClick() {
@@ -60,7 +63,7 @@ export class IoTRestartOdoo extends Component {
             const response = await this.http.get(`${this.ip_url}/hw_posbox_homepage/restart_odoo_service`);
             return response.status;
         } catch (error) {
-            this.doWarnFail(this.ip_url);
+            this.doWarnFail();
             return `${error.name} ${error.message}`;
         }
     }
@@ -103,7 +106,7 @@ export class IoTRestartOdoo extends Component {
                     _t("Restart Failed"),
                     "danger"
                 );
-                this.doWarnFail(this.ip_url);
+                this.doWarnFail();
             }
         }, 600000);
     }
@@ -136,8 +139,8 @@ export class IoTRestartOdoo extends Component {
         }
     }
 
-    doWarnFail(url) {
-        this.dialog.add(IoTConnectionErrorDialog, { href: url });
+    doWarnFail() {
+        this.notification.add(_t("Failed to restart Odoo on %s", this.name), { type: "danger" });
     }
 }
 

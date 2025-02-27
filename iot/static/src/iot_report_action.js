@@ -55,7 +55,7 @@ async function longpolling(env, orm, args, stored_device_ids) {
     ]);
     for (const job of jobs) {
         const [ ip, identifier, name, document ] = job;
-        const longpollingHasFallback = true; // Prevent `IoTConnectionErrorDialog`
+        const longpollingHasFallback = true; // Prevent error notification
         env.services.notification.add(_t("Sending to printer %s...", name), { type: "info" });
 
         const iotDevice = new DeviceController(env.services.iot_longpolling, { iot_ip: ip, identifier });

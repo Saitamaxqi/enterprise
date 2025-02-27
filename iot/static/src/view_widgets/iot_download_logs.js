@@ -1,6 +1,6 @@
 import { registry } from '@web/core/registry';
 import { useService } from '@web/core/utils/hooks';
-import { IoTConnectionErrorDialog } from '@iot/dialogs/iot_connection_error_dialog';
+import { _t } from '@web/core/l10n/translation';
 import { Component } from "@odoo/owl";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 
@@ -10,11 +10,14 @@ export class IoTBoxDownloadLogs extends Component {
 
     setup() {
         super.setup();
-        this.dialog = useService('dialog');
+        this.notification = useService('notification');
         this.http = useService('http');
     }
     get ip_url() {
         return this.props.record.data.ip_url;
+    }
+    get name() {
+        return this.props.record.data.name;
     }
     async downloadLogs() {
         try {
@@ -22,14 +25,14 @@ export class IoTBoxDownloadLogs extends Component {
             if (response == 'ping') {
                 window.location = this.ip_url + '/hw_drivers/download_logs';
             } else {
-                this.doWarnFail(this.ip_url);
+                this.doWarnFail();
             }
         } catch {
-            this.doWarnFail(this.ip_url);
+            this.doWarnFail();
         }
     }
-    doWarnFail(url) {
-        this.dialog.add(IoTConnectionErrorDialog, { href: url });
+    doWarnFail() {
+        this.notification.add(_t('Failed to download logs from %s', this.name), { type: "danger" });
     }
 }
 

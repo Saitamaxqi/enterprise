@@ -1,4 +1,3 @@
-import { WarningDialog } from "@web/core/errors/error_dialogs";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { formView } from "@web/views/form/form_view";
@@ -9,7 +8,7 @@ class IoTDeviceController extends formView.Controller {
     setup() {
         super.setup();
         this.iotLongpollingService = useService("iot_longpolling");
-        this.dialogService = useService("dialog");
+        this.notificationService = useService("notification");
     }
 
     getIotDevice({ iot_ip, identifier }) {
@@ -26,10 +25,13 @@ class IoTDeviceController extends formView.Controller {
         if (["keyboard", "scanner"].includes(record.data.type)) {
             const data = await this.updateKeyboardLayout(record.data);
             if (data.result !== true) {
-                this.dialogService.add(WarningDialog, {
-                    title: _t("Connection to device failed"),
-                    message: _t("Check if the device is still connected"),
-                });
+                this.notificationService.add(
+                    _t("Check if the device is still connected"),
+                    {
+                        title: _t("Connection to device failed"),
+                        type: "warning",
+                    }
+                );
                 // Original logic doesn't call super when reaching this branch.
                 return false;
             }

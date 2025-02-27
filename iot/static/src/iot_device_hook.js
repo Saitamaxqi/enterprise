@@ -12,10 +12,11 @@ import { useEffect } from "@odoo/owl";
  *  onStopListening: (() => void) | undefined,
  * }} param0
  */
-export const useIotDevice = ({ getIotIp, getIdentifier, onValueChange, onStartListening, onStopListening }) => {
+export const useIotDevice = ({ getIotIp, getIdentifier, getLongpollingHasFallback, onValueChange, onStartListening, onStopListening }) => {
     // set default values for the device
     getIotIp = getIotIp || (() => {});
     getIdentifier = getIdentifier || (() => {});
+    getLongpollingHasFallback = getLongpollingHasFallback || (() => false);
     onValueChange = onValueChange || (() => {});
     onStartListening = onStartListening || (() => {});
     onStopListening = onStopListening || (() => {});
@@ -24,7 +25,7 @@ export const useIotDevice = ({ getIotIp, getIdentifier, onValueChange, onStartLi
     let iotDevice = null;
 
     const startListening = () => {
-        iotDevice.addListener((data) => onValueChange(data));
+        iotDevice.addListener((data) => onValueChange(data), getLongpollingHasFallback());
         onStartListening();
     };
 

@@ -17,7 +17,6 @@
         'pos_self_order.assets': [
             'web/static/lib/jquery/jquery.js',
             'iot/static/src/iot_longpolling.js',
-            'iot/static/src/dialogs/iot_connection_error_dialog.*',
             'iot/static/src/device_controller.js',
             'pos_iot/static/src/app/utils/printer/iot_printer.js',
             'point_of_sale/static/src/app/services/hardware_proxy_service.js',

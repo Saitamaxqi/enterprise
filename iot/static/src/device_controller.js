@@ -19,7 +19,7 @@ export class DeviceController {
     /**
      * Send an action to the device.
      * @param data - action to send to the device
-     * @param fallback - if true, no `IoTConnectionErrorDialog` popup will be displayed on fail
+     * @param fallback - if true, no notification will be displayed on fail
      */
     action(data, fallback = false) {
         return this.iotLongpolling.action(this.iotIp, this.identifier, data, fallback);
@@ -28,7 +28,7 @@ export class DeviceController {
     /**
      * Add a listener to the device.
      * @param callback - function to call when the listener is triggered
-     * @param fallback - if true, no `IoTConnectionErrorDialog` popup will be displayed on fail
+     * @param fallback - if true, no notification will be displayed on fail
      */
     addListener(callback, fallback = false) {
         return this.iotLongpolling.addListener(this.iotIp, [this.identifier], this.id, callback, fallback);

@@ -13,6 +13,7 @@ export class IoTDeviceValueDisplay extends Component {
         useIotDevice({
             getIotIp: () => this.props.record.data.iot_ip,
             getIdentifier: () => this.props.record.data.identifier,
+            getLongpollingHasFallback: () => true, // avoid error notification when the longpolling fails
             onValueChange: (data) => {
                 this.state.value = data.value;
             },
