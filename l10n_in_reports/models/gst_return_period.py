@@ -2129,7 +2129,7 @@ class L10n_InGstReturnPeriod(models.Model):
         existing_bills = AccountMove.search([
             ("move_type", "in", AccountMove.get_purchase_types()),
             ("l10n_in_irn_number", "in", list(irn_numbers)),
-            ("company_id", "child_of", self.company_ids.ids or self.company_id.ids),
+            ("company_id", "in", self.company_ids.ids or self.company_id.ids),
         ])
         # Create a mapping of existing bills by IRN number
         existing_bills_dict = {bill.l10n_in_irn_number: bill for bill in existing_bills}
@@ -2144,7 +2144,7 @@ class L10n_InGstReturnPeriod(models.Model):
                     ("move_type", "in", AccountMove.get_purchase_types()),
                     ("ref", "=", bill.get('bill_number')),
                     ("invoice_date", "=", bill.get('bill_date')),
-                    ("company_id", "child_of", self.company_ids.ids or self.company_id.ids),
+                    ("company_id", "in", self.company_ids.ids or self.company_id.ids),
                 ]
                 if bill.get('vat'):
                     domain.append(("partner_id.vat", "=", bill.get('vat')))
