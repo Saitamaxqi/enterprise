@@ -125,8 +125,8 @@ export class MapModel extends Model {
                 const record = this.data.records.find((r) => r.id === resequencedRecord.id);
                 record[fieldName] = resequencedRecord[fieldName];
             }
-            this.notify();
             await this._updatePartnerCoordinate(this.metaData, this.data);
+            this.notify();
         }
     }
 
