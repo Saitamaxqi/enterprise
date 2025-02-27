@@ -101,7 +101,6 @@ class TestHR(AccountTestInvoicingCommon):
         #         ...
         #         allocation.number_of_days = allocation.number_of_days_display
         #         ...
-        allocation_form.number_of_days_display = number_of_days
         # <field name="employee_id" invisible="1" groups="hr_holidays.group_hr_holidays_user"/>
         # @api.depends('employee_ids')
         # def _compute_from_employee_ids(self):
@@ -112,6 +111,12 @@ class TestHR(AccountTestInvoicingCommon):
         allocation_form.date_from = time.strftime('2015-1-1')
         allocation_form.date_to = time.strftime('%Y-12-31')
         allocation_form.holiday_status_id = leave_type
+        if leave_type.request_unit == 'hour':
+            allocation_form.number_of_hours_display = \
+                (number_of_days *
+                 allocation_form.employee_id._get_calendars(allocation_form.date_from)[allocation_form.employee_id.id].hours_per_day)
+        else:
+            allocation_form.number_of_days_display = number_of_days
         allocation_form.name = 'New Request'
         return allocation_form.save()
 
