@@ -26,6 +26,40 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
             'bank_ids': [(6, 0, cls.partner_bank_account.ids)],
         })
 
+    def _create_multi_company_payments_and_context(self, companies_dict, add_company_context=None):
+        payments = self.env['account.payment']
+        companies_context = self.env['res.company']
+        field_record = self.env['ir.model.fields']._get('res.partner', 'property_account_receivable_id')
+        property_account_receivable = self.env['ir.default'].search(
+            [('field_id', '=', field_record.id), ('company_id', '=', self.company_data['company'].id)], limit=1
+        )
+
+        for company, create_property_account_receivable in companies_dict.items():
+            if create_property_account_receivable:
+                # needed for computation of payment.destination_account_id
+                property_account_receivable.copy({'company_id': company.id})
+            payment = self.env['account.payment'].with_company(company).create({
+                'amount': 100.0,
+                'payment_type': 'inbound',
+                'partner_type': 'customer',
+                'partner_id': self.partner_a.id,
+            })
+            payment.action_post()
+            payments += payment
+            companies_context += company
+
+        if add_company_context:
+            companies_context += add_company_context
+
+        context = {
+            **self.env.context,
+            'allowed_company_ids': companies_context.ids,
+            'active_ids': payments.ids,
+            'active_model': 'account.payment',
+        }
+
+        return payments, context
+
     def test_create_batch_payment_from_payment(self):
         payments = self.env['account.payment']
         for _i in range(2):
@@ -116,31 +150,7 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         self.company_data['company'].write({'child_ids': [Command.create({'name': 'Good Company'})]})
         child_comp = self.company_data['company'].child_ids[0]
 
-        # needed for computation of payment.destination_account_id
-        field_record = self.env['ir.model.fields']._get('res.partner', 'property_account_receivable_id')
-        self.env['ir.default'].search(
-            [('field_id', '=', field_record.id), ('company_id', '=', self.company_data['company'].id)], limit=1
-        ).copy({'company_id': child_comp.id})
-
-        self.env.user.write({
-            'company_ids': [Command.set((self.company_data['company'] + child_comp).ids)],
-            'company_id': child_comp.id,
-        })
-
-        payment = self.env['account.payment'].with_company(child_comp).create({
-            'amount': 100.0,
-            'payment_type': 'inbound',
-            'partner_type': 'customer',
-            'partner_id': self.partner_a.id,
-        })
-        payment.action_post()
-
-        context = {
-            **self.env.context,
-            'allowed_company_ids': self.env.company.ids,
-            'active_ids': payment.ids,
-            'active_model': 'account.payment',
-        }
+        payment, context = self._create_multi_company_payments_and_context({child_comp: True})
 
         batch = self.env['account.batch.payment'].with_context(context).create({
             'journal_id': payment.journal_id.id,
