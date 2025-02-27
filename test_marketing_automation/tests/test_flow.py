@@ -535,10 +535,15 @@ for record in records:
 
         self.assertFalse(captured_triggers.records)  # no trigger should be created
 
-        with self.mock_datetime_and_now(date_reference_new), \
-             self.mockSMSGateway(), \
-             self.capture_triggers('marketing_automation.ir_cron_campaign_execute_activities') as captured_triggers:
-            self.env['sms.sms'].sudo()._process_queue()
+        self.env.flush_all()
+        with (
+            self.mock_datetime_and_now(date_reference_new),
+            self.mockSMSGateway(),
+            self.capture_triggers('marketing_automation.ir_cron_campaign_execute_activities') as captured_triggers,
+            self.registry.cursor() as cr,
+        ):
+            self.env(cr=cr)['sms.sms'].sudo()._process_queue()
+            self.env.invalidate_all()
 
         self.assertMarketAutoTraces(
             [{
@@ -577,10 +582,15 @@ for record in records:
 
         self.assertFalse(captured_triggers.records)  # no trigger should be created
 
-        with self.mock_datetime_and_now(date_reference_new), \
-             self.mockSMSGateway(), \
-             self.capture_triggers('marketing_automation.ir_cron_campaign_execute_activities') as captured_triggers:
-            self.env['sms.sms'].sudo()._process_queue()
+        self.env.flush_all()
+        with (
+            self.mock_datetime_and_now(date_reference_new),
+            self.mockSMSGateway(),
+            self.capture_triggers('marketing_automation.ir_cron_campaign_execute_activities') as captured_triggers,
+            self.registry.cursor() as cr,
+        ):
+            self.env(cr=cr)['sms.sms'].sudo()._process_queue()
+            self.env.invalidate_all()
 
         self.assertFalse(captured_triggers.records)  # no trigger should be created
 
