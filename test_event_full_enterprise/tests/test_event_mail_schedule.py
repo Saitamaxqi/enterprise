@@ -30,13 +30,14 @@ class TestEventMailFullCommon(TestEventMailCommon):
         })
 
         # WhatsApp Business Accounts
-        cls.whatsapp_account = cls.env['whatsapp.account'].with_user(cls.user_admin).create([
+        user_admin = cls.env.ref('base.user_admin')
+        cls.whatsapp_account = cls.env['whatsapp.account'].with_user(user_admin).create([
             {
                 'account_uid': 'abcdef123456',
                 'app_secret': '1234567890abcdef',
                 'app_uid': 'contact',
                 'name': 'Test Account',
-                'notify_user_ids': cls.user_admin.ids,
+                'notify_user_ids': user_admin.ids,
                 'phone_uid': '1234567890',
                 'token': 'event_mail_is_great',
             },

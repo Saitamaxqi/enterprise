@@ -4,16 +4,25 @@
 from datetime import datetime
 
 from odoo import exceptions
-from odoo.addons.mail.tests.common import MailCommon, mail_new_test_user
+from odoo.addons.mail.tests.common import MailCase, mail_new_test_user
 from odoo.addons.room.tests.common import RoomCommon
 from odoo.tests.common import tagged, users
 
 @tagged("room_acl")
-class TestRoomSecurity(RoomCommon, MailCommon):
+class TestRoomSecurity(RoomCommon, MailCase):
     """Test ACLs on models"""
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.user_employee = mail_new_test_user(
+            cls.env,
+            country_id=cls.env.ref('base.be').id,
+            groups='base.group_user,base.group_partner_manager',
+            login='employee',
+            name='Ernest Employee',
+            notification_type='inbox',
+            signature='--\nErnest'
+        )
         cls.room_manager = mail_new_test_user(
             cls.env,
             groups='room.group_room_manager',

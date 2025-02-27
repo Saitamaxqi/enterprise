@@ -3,10 +3,10 @@
 from datetime import datetime
 
 from .common import TestCommonPlanning
-from odoo.addons.mail.tests.common import MailCommon
+from odoo.addons.mail.tests.common import MailCase
 
 
-class TestPlanningPublishing(TestCommonPlanning, MailCommon):
+class TestPlanningPublishing(TestCommonPlanning, MailCase):
 
     @classmethod
     def setUpClass(cls):

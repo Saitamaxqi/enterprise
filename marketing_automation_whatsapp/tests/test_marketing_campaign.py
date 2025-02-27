@@ -1,42 +1,16 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.addons.whatsapp.tests.common import WhatsAppCommon, MockIncomingWhatsApp
+from odoo.addons.marketing_automation_whatsapp.tests.common import MarketingAutomationWACase
 
 
-class MarketingCampaign(WhatsAppCommon, MockIncomingWhatsApp):
+class MarketingCampaign(WhatsAppCommon, MockIncomingWhatsApp, MarketingAutomationWACase):
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.setUpWhatsapp()
         cls.phone = '+32499123456'
-        cls.tracked_url = 'https://www.tracked.com'
-        cls.dynamic_url = 'https://www.dynamic.com'
-        cls.template = cls.env['whatsapp.template'].create({
-            'body': 'Hello {{1}}',
-            'name': 'Test-dynamic',
-            'status': 'approved',
-            'wa_account_id': cls.whatsapp_account.id,
-            'button_ids': [
-                        (0, 0, {
-                            'sequence': 0,
-                            'button_type': 'url',
-                            'name': 'tracked url',
-                            'url_type': 'tracked',
-                            'website_url': cls.tracked_url,
-                        }),
-                        (0, 0, {
-                            'sequence': 1,
-                            'button_type': 'url',
-                            'name': 'dynamic url',
-                            'url_type': 'dynamic',
-                            'website_url': cls.dynamic_url,
-                        })
-                ],
-            'variable_ids': [
-                (0, 0, {'name': "{{1}}", 'line_type': "body", 'field_type': 'free_text', 'demo_value': cls.tracked_url}),
-            ],
-        })
-
         cls.whatsapp_test_customer = cls.env['res.partner'].create({
             'name': 'Wa Test Marketing Automation',
             'phone': cls.phone
@@ -51,7 +25,7 @@ class MarketingCampaign(WhatsAppCommon, MockIncomingWhatsApp):
         vals = {
             'name': 'Test Activity',
             'activity_type': 'whatsapp',
-            'whatsapp_template_id': cls.template.id,
+            'whatsapp_template_id': cls.test_wa_template.id,
             'campaign_id': cls.campaign.id,
             'model_id': cls.env['ir.model']._get_id('res.partner')
         }
@@ -77,7 +51,7 @@ class MarketingCampaign(WhatsAppCommon, MockIncomingWhatsApp):
         self.assertEqual(traces.whatsapp_message_id.state, 'replied')
 
     def test_get_template_button_component_tracking(self):
-        button_component = self.template._get_template_button_component()
+        button_component = self.test_wa_template._get_template_button_component()
         button1_url = button_component['buttons'][0]['url']
         button1_example = button_component['buttons'][0]['example']
         host_url = self.env['link.tracker'].get_base_url().strip('/')

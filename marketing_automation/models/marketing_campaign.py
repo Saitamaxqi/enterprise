@@ -384,7 +384,7 @@ class MarketingCampaign(models.Model):
                     participants_to_unlink[index:index+1000].action_set_unlink()
                     # Commit only every 100 operation to avoid committing to often
                     # this mean every 10k record. It should be ok, it takes 1sec second to process 10k
-                    if not index % (BATCH_SIZE * 100):
+                    if auto_commit and not index % (BATCH_SIZE * 100):
                         self.env.cr.commit()
 
         return participants

@@ -1,14 +1,32 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.addons.marketing_automation.tests.common import MarketingAutomationCase, MarketingAutomationCommon
 from odoo.addons.mass_mailing_sms.tests.common import MassSMSCommon
+from odoo.addons.marketing_automation.tests.common import MarketingAutomationCase, MarketingAutomationCommon
+from odoo.addons.whatsapp.tests.common import WhatsAppCommon, MockIncomingWhatsApp
+
 
 class TestMACommon(
     MarketingAutomationCommon,
     MarketingAutomationCase,
+    WhatsAppCommon,
     MassSMSCommon,
+    MockIncomingWhatsApp,
 ):
+
+    @classmethod
+    def setUpClass(cls):
+        """ Note that MailCommon is multi-company by default """
+        super().setUpClass()
+
+        # ensure company / users data for tests, don't rely on demo
+        cls.company_admin.write({
+            'country_id': cls.env.ref('base.be'),
+        })
+
+    # ------------------------------------------------------------
+    # ASSERTS
+    # ------------------------------------------------------------
 
     def assertMarketAutoTraces(self, participants_info, activity, **trace_values):
         super().assertMarketAutoTraces(participants_info, activity, **trace_values)

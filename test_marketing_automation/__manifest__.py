@@ -9,6 +9,7 @@
     'depends': [
         'marketing_automation',
         'marketing_automation_sms',
+        'marketing_automation_whatsapp',
         'test_mail',
         'test_mail_enterprise',
         'test_mail_full',

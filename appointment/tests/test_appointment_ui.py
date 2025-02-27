@@ -355,9 +355,10 @@ class AppointmentUITest(AppointmentUICommon):
     def test_get_appointment_type_page_view(self):
         """ Test if the appointment_type_page always shows available slots if there are some. """
         now = self.reference_monday
+        user_admin = self.env.ref('base.user_admin')
         slot_time = now.replace(hour=9, minute=0, second=0, microsecond=0) + timedelta(days=1)
 
-        staff_users = self.user_employee | self.user_admin
+        staff_users = self.std_user | user_admin
         appointment_type = self.env['appointment.type'].create([{
             'name': 'Type Test Appointment View',
             'schedule_based_on': 'users',
