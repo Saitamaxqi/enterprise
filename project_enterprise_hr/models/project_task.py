@@ -1,0 +1,38 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
+from markupsafe import Markup
+
+from odoo import api, models, _
+
+
+class ProjectTask(models.Model):
+    _inherit = 'project.task'
+
+    @api.model
+    def get_empty_list_help(self, help_message):
+        default_alias = self.env.ref("project_enterprise_hr.mail_alias_todo", raise_if_not_found=False)
+        if default_alias and self.env.company.alias_domain_id and self._context.get('show_todo_mail_helper', False):
+            bounce_mail = default_alias.alias_name + "@" + self.env.company.alias_domain_id.name
+            help_message += Markup("<p>%s</p>") % (
+                _(
+                    "Create new to-dos by sending an email to %s",
+                    Markup("<a href='mailto:{0}'>{0}</a>").format(bounce_mail),
+                )
+            )
+        return super().get_empty_list_help(help_message)
+
+    def _find_internal_users_from_address_mail(self, from_mail):
+        partners = self.env['res.partner']._find_or_create_from_emails([from_mail], no_create=True)
+        users = self.env["res.partner"].concat(*partners).user_ids
+        return users.filtered(lambda l: not l.share).ids
+
+    @api.model
+    def message_new(self, msg, custom_values=None):
+        if custom_values is None:
+            custom_values = {}
+        if not custom_values.get('project_id', True) and msg.get('email_from'):
+            user_ids = self._find_internal_users_from_address_mail(msg.get('email_from'))
+            if user_ids:
+                custom_values['user_ids'] = user_ids
+
+        return super(ProjectTask, self.with_context(create_todo=True)).message_new(msg, custom_values)
