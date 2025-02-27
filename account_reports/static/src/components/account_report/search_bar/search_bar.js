@@ -28,6 +28,8 @@ export class AccountReportSearchBar extends Component {
 
         if (query.length) {
             for (const line of this.controller.lines) {
+                if (!line.name) continue;
+
                 const lineName = line.name.trim().toLowerCase();
                 const match = (lineName.indexOf(query) !== -1);
 
