@@ -144,6 +144,12 @@ msgid "Name"
 msgstr ""
 
 #. module: spreadsheet_sale_management
+#. odoo-python
+#: code:addons/spreadsheet_sale_management/models/sale_order_spreadsheet.py:0
+msgid "Untitled spreadsheet"
+msgstr ""
+
+#. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/action/field_sync_action.js:0
 msgid "New quote calculator created"
