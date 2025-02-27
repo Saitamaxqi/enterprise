@@ -158,13 +158,6 @@ class TestTaxesTaxTotalsSummaryL10nItPos(TestTaxCommonPOS, TestTaxesTaxTotalsSum
             self.start_pos_tour('test_taxes_l10n_it_epson_printer_pos')
             orders = self.env['pos.order'].search([('session_id', '=', session.id)])
             for order, (test_index, document, expected_values) in zip(orders, tests):
-                self.assertRecordValues(order, [{
-                    'amount_tax': expected_values['tax_amount_currency'],
-                    'amount_total': expected_values['total_amount_currency'],
-                    'amount_paid': expected_values['total_amount_currency'],
-                }])
-                self.assertRecordValues(order.account_move, [{
-                    'amount_untaxed': expected_values['base_amount_currency'],
-                    'amount_tax': expected_values['tax_amount_currency'],
-                    'amount_total': expected_values['total_amount_currency'],
-                }])
+                self.assert_pos_order_totals(order, expected_values)
+                if order.account_move:
+                    self.assert_invoice_totals(order.account_move, expected_values)
