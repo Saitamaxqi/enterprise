@@ -135,7 +135,7 @@
                     Return Products
                 </button>
                 <button t-if="env.model.displaySignatureButton"
-                        class="btn-lg btn btn-light text-uppercase o_sign"
+                        class="o_sign btn btn-secondary w-100 fs-4 mb-2 py-2"
                         t-on-click="() => this.env.model.openSignatureDialog()">
                     Sign
                 </button>
