@@ -9,7 +9,7 @@ from .documents import ShareRoute
 
 
 class Home(web_home.Home):
-    def _web_client_readonly(self):
+    def _web_client_readonly(self, rule, args):
         """ Force a read/write cursor for documents.access """
         path = request.httprequest.path
         if (
@@ -18,7 +18,7 @@ class Home(web_home.Home):
             and request.session.uid
         ):
             return False
-        return super()._web_client_readonly()
+        return super()._web_client_readonly(rule, args)
 
     @route(readonly=_web_client_readonly)
     def web_client(self, s_action=None, **kw):
