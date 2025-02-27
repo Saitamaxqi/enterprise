@@ -157,6 +157,38 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         })
         self.assertTrue(batch)
 
+    def test_batch_payment_branches(self):
+        """
+        Test the creation of a batch payment with branches. When all payments are branches of
+        a common head office, a batch payment should be allowed to be created.
+        """
+        main_company = self.company_data['company']
+        main_company.vat = '123'
+        branch_1 = self.env['res.company'].create({'name': "Branch 1", 'parent_id': main_company.id})
+        branch_2 = self.env['res.company'].create({'name': "Branch 2", 'parent_id': main_company.id, 'vat': '456'})
+        branch_2_1 = self.env['res.company'].create({'name': "Branch 2 sub-branch 1", 'parent_id': branch_2.id})
+
+        payments, context = self._create_multi_company_payments_and_context({branch_1: True, branch_2: True, branch_2_1: True})
+
+        batch = self.env['account.batch.payment'].with_context(context).create({
+            'journal_id': payments[0].journal_id.id,
+            'payment_ids': payments.ids,
+        })
+        self.assertTrue(batch)
+
+    def test_batch_payment_different_companies(self):
+        """ Payments from different companies not belonging to the same head company should raise an error. """
+        main_company = self.company_data['company']
+        company_b = self.setup_other_company()['company']
+
+        payments, context = self._create_multi_company_payments_and_context({main_company: False, company_b: False}, main_company)
+
+        with self.assertRaisesRegex(ValidationError, "The journal of the batch payment and of the payments it contains must be the same."):
+            self.env['account.batch.payment'].with_context(context).create({
+                'journal_id': payments[0].journal_id.id,
+                'payment_ids': payments.ids,
+            })
+
     def test_batch_payment_foreign_currency(self):
         """
         Make sure that payments in foreign currency are converted for the total amount to be displayed
