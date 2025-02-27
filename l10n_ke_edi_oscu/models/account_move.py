@@ -205,7 +205,7 @@ class AccountMove(models.Model):
             **tax_rates,
             'totTaxblAmt':      json_float_round(tax_details['base_amount'], 2),
             'totTaxAmt':        json_float_round(tax_details['tax_amount'], 2),
-            'totAmt':           json_float_round(self.amount_total, 2),
+            'totAmt':           json_float_round(abs(self.amount_total_signed), 2),
             'totItemCnt':       len(line_items),                           # Total Item count
             'itemList':         line_items,
             **self.company_id._l10n_ke_get_user_dict(self.create_uid, self.write_uid),
