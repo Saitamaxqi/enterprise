@@ -194,3 +194,48 @@ class TestSaleOrder(TestCommissionsSetup):
         so = form.save()
 
         self.assertEqual(so.commission, 10 + old_commission)  # Confirms that parent rule is applied
+
+    def test_subcontracted_service_po_with_referrer(self):
+        """
+        Test PO behavior when a subcontracted service product is in SO with a referrer.
+        Steps:
+        1. Configure the service product with customer as supplier.
+        2. Create two sale orders (one with a referrer).
+        3. Create sale order lines.
+        4. Confirm both sale orders.
+        5. Validate the generated purchase order and purchase lines.
+        """
+        self.env['product.supplierinfo'].create({
+            'partner_id': self.customer.id,
+            'product_tmpl_id': self.worker.product_tmpl_id.id,
+        })
+        self.worker.write({'type': 'service', 'service_to_purchase': True, 'recurring_invoice': False})
+        sale_orders = self.env['sale.order'].create([
+            {
+                'partner_id': self.customer.id,
+                'order_line': [
+                    Command.create({
+                        'product_id': self.worker.id,
+                        'product_uom_qty': 1,
+                    })
+                ],
+            },
+            {
+                'partner_id': self.customer.id,
+                'referrer_id': self.referrer.id,
+                'order_line': [
+                    Command.create({
+                        'product_id': self.worker.id,
+                        'product_uom_qty': 2,
+                    })
+                ],
+            }
+        ])
+        sale_orders.action_confirm()
+
+        purchase_orders = self.env['purchase.order'].search([
+            ('partner_id', '=', self.customer.id), ('state', '=', 'draft')
+        ])
+
+        self.assertEqual(len(purchase_orders), 1, "Only one PO should be created.")
+        self.assertEqual(len(purchase_orders.order_line), 2, "Two Sale Order line should be linked to a PO line.")
