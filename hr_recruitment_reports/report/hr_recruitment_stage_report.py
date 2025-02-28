@@ -29,8 +29,8 @@ class HrRecruitmentStageReport(models.Model):
     def init(self):
         drop_view_if_exists(self.env.cr, self._table)
         query = """
+WITH application_stage_history AS (
 SELECT
-    ROW_NUMBER() OVER () AS ID,
     ha.id AS applicant_id,
     ha.partner_name AS name,
     ha.job_id AS job_id,
@@ -65,11 +65,9 @@ ON
     mtv.field_id = imf.id
     AND imf.model = 'hr.applicant'
     AND imf.name = 'stage_id'
-
-UNION ALL
-
+),
+current_application_stage AS (
 SELECT
-    ROW_NUMBER() OVER () AS id,
     ha.id AS applicant_id,
     ha.partner_name AS name,
     ha.job_id AS job_id,
@@ -118,5 +116,14 @@ LEFT JOIN LATERAL (
 WHERE
     hrs.hired_stage IS NOT TRUE
     AND ha.job_id IS NOT NULL
+),
+global_cte AS(
+    SELECT applicant_id, name, job_id, company_id, state, date_begin, date_end, days_in_stage, stage_id FROM application_stage_history
+    UNION ALL
+    SELECT applicant_id, name, job_id, company_id, state, date_begin, date_end, days_in_stage, stage_id FROM current_application_stage
+)
+SELECT
+    ROW_NUMBER() OVER (ORDER BY date_begin) AS id, applicant_id, name, job_id, company_id, state, date_begin, date_end, days_in_stage, stage_id
+    FROM global_cte
         """
         self.env.cr.execute(SQL("CREATE OR REPLACE VIEW %s AS (%s)", SQL.identifier(self._table), SQL(query)))
