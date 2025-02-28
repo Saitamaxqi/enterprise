@@ -25,6 +25,7 @@ When you reconcile, simply select the corresponding batch payment to reconcile a
         'views/account_payment_views.xml',
         'views/account_journal_views.xml',
         'wizard/batch_error_views.xml',
+        'wizard/create_batch_error_views.xml',
     ],
     'installable': True,
     'author': 'Odoo S.A.',
