@@ -13,12 +13,12 @@ export class FsmMyTaskKanbanController extends KanbanController {
                 props: {
                     resIds,
                     resModel: this.props.resModel,
-                    additionalContext: root.context,
-                    onClose: async () => {
-                        await root.load();
-                        this.model.useSampleModel = false;
-                        this.render(true);
-                    },
+                },
+                additionalContext: root.context,
+                onClose: async () => {
+                    await root.load();
+                    this.model.useSampleModel = false;
+                    this.render(true);
                 },
             });
             return;
