@@ -257,7 +257,7 @@ if 'SIMPLEDECEMBER' in inputs:
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = payslip._get_onss_restructuring(localdict)
-result = min(abs(result_rules['ONSS']['total']), result)
+result = min(-result_rules['ONSS']['total'], result)
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
     </record>
@@ -276,7 +276,7 @@ result = payslip.date_from >= date(2024, 4, 1) and categories['BASIC'] and wage 
         <field name="amount_python_compute">
 result = payslip._get_employment_bonus_employees_volet_A(localdict)
 onss = result_rules['ONSS']['total'] + result_rules['ONSSRESTRUCTURING']['total']
-result = min(abs(onss), result)
+result = min(-onss, result)
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
     </record>
@@ -294,8 +294,8 @@ result = payslip.date_from >= date(2024, 4, 1) and categories['BASIC'] and wage 
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = payslip._get_employment_bonus_employees_volet_B(localdict)
-onss = result_rules['ONSS']['total'] + result_rules['ONSSRESTRUCTURING']['total'] - result_rules['EmpBonus.A']['total']
-result = min(abs(onss), result)
+onss = result_rules['ONSS']['total'] + result_rules['ONSSRESTRUCTURING']['total'] + result_rules['EmpBonus.A']['total']
+result = min(-onss, result)
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
     </record>

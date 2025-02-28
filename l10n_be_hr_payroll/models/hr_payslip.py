@@ -821,6 +821,7 @@ class HrPayslip(models.Model):
 
     def _get_employment_bonus_employees_volet_A(self, localdict):
         categories = localdict['categories']
+        result_rules = localdict['result_rules']
         if not self.worked_days_line_ids and not self.env.context.get('salary_simulation'):
             return 0
 
@@ -837,7 +838,8 @@ class HrPayslip(models.Model):
             total_hours = sum(worked_days.mapped('number_of_hours'))  # U
 
         # 1. - Détermination du salaire mensuel de référence (S)
-        salary = categories['BRUT'] * total_hours / paid_hours  # S = (W/H) x U
+        basic = categories['BRUT'] - result_rules['HolPayRecN']['total'] - result_rules['HolPayRecN1']['total']
+        salary = basic * total_hours / paid_hours  # S = (W/H) x U
 
         # 2. - Détermination du montant de base de la réduction (R)
         bonus_basic_amount_volet_A = self._rule_parameter('work_bonus_basic_amount_volet_A')
@@ -861,6 +863,7 @@ class HrPayslip(models.Model):
 
     def _get_employment_bonus_employees_volet_B(self, localdict):
         categories = localdict['categories']
+        result_rules = localdict['result_rules']
         if not self.worked_days_line_ids and not self.env.context.get('salary_simulation'):
             return 0
 
@@ -877,7 +880,8 @@ class HrPayslip(models.Model):
             total_hours = sum(worked_days.mapped('number_of_hours'))  # U
 
         # 1. - Détermination du salaire mensuel de référence (S)
-        salary = categories['BRUT'] * total_hours / paid_hours  # S = (W/H) x U
+        basic = categories['BRUT'] - result_rules['HolPayRecN']['total'] - result_rules['HolPayRecN1']['total']
+        salary = basic * total_hours / paid_hours  # S = (W/H) x U
 
         # 2. - Détermination du montant de base de la réduction (R)
         bonus_basic_amount = self._rule_parameter('work_bonus_basic_amount')
@@ -903,6 +907,7 @@ class HrPayslip(models.Model):
     def _get_employment_bonus_employees(self, localdict):
         self.ensure_one()
         categories = localdict['categories']
+        result_rules = localdict['result_rules']
         if self.date_from >= date(2024, 4, 1):
             bonus_volet_A = localdict['result_rules']['EmpBonus.A']['total']
             bonus_volet_B = localdict['result_rules']['EmpBonus.B']['total']
@@ -927,7 +932,8 @@ class HrPayslip(models.Model):
             total_hours = sum(worked_days.mapped('number_of_hours'))  # U
 
         # 1. - Détermination du salaire mensuel de référence (S)
-        salary = categories['BRUT'] * total_hours / paid_hours  # S = (W/H) x U
+        basic = categories['BRUT'] - result_rules['HolPayRecN']['total'] - result_rules['HolPayRecN1']['total']
+        salary = basic * total_hours / paid_hours  # S = (W/H) x U
 
         # 2. - Détermination du montant de base de la réduction (R)
         if self.date_from < date(2023, 7, 1):
