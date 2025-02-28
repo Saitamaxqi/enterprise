@@ -211,14 +211,14 @@ export function startResize(signItem, onResize) {
             direction === "width" || direction === "both"
                 ? Math.round(
                       normalizeDimension(factor.x * signItem.data.width, signItem.data.posX) * 1000
-                    ) / 1000
+                ) / 1000
                 : signItem.data.width;
 
         const height =
             direction === "height" || direction === "both"
                 ? Math.round(
                       normalizeDimension(factor.y * signItem.data.height, signItem.data.posY) * 1000
-                    ) / 1000
+                ) / 1000
                 : signItem.data.height;
 
         return { height, width };

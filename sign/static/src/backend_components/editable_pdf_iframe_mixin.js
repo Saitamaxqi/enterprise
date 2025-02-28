@@ -182,6 +182,12 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                     updated: true,
                 });
                 this.updateSignItemFontSize(signItem);
+
+                if (signItem.data.type === "signature") {
+                    this.setSignatureImage(signItem, signItem.data.roleName);
+                } else if (signItem.data.type === "initial") {
+                    this.setSignatureImage(signItem, this.getInitialsText(signItem.data.roleName));
+                }
             }
             if (end) {
                 this.helperLines.hide();
@@ -450,7 +456,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                 const {id} = element.dataset;
                 const signItem = this.getSignItemById(id);
                 /* Only add elements to selection if they intersect with the selection rectangle
-                and are not already in the selection list*/
+                and are not already in the selection list */
                 if (this.getElementIntersectsSelection(element, selectionRect) &&
                     !this.selectedElements?.some(item => item.data.id === id)) {
                     this.selectedElements.push(signItem);
@@ -563,9 +569,9 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             const boxWidth = bounds.maxX - bounds.minX;
             const boxHeight = bounds.maxY - bounds.minY;
 
-            /*Adjust the base paste positions to ensure all items stay within the page. The
+            /* Adjust the base paste positions to ensure all items stay within the page. The
             center of the bounding box can be at most 1 - boxWidth/2 from the left edge.
-            and at most 1 - boxHeight/2 from the top edge.*/
+            and at most 1 - boxHeight/2 from the top edge. */
             const adjustedBaseX = Math.min(Math.max(baseX, boxWidth/2), 1 - boxWidth/2);
             const adjustedBaseY = Math.min(Math.max(baseY, boxHeight/2), 1 - boxHeight/2);
 
@@ -692,8 +698,8 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             const signElement = e.currentTarget.parentElement.parentElement.parentElement;
             const isSelectedItemDrag = this.selectedElements?.some(item => item.el === signElement);
 
-            /*If the sign element is picked up and there are multiple selected elements,
-            then start multi-drag*/
+            /* If the sign element is picked up and there are multiple selected elements,
+            then start multi-drag */
             if (isSelectedItemDrag && this.selectedElements.length > 1) {
                 this.startMultiDrag(e);
             } else {

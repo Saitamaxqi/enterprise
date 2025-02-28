@@ -108,7 +108,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
         const w2 = signItem2.data.width * page2.clientWidth;
         const h2 = signItem2.data.height * page2.clientHeight;
         const c2 = {x: x2 + w2 / 2, y: y2 + h2 / 2};
-        
+
         if (!(x2 > x1 + w1 || x1 > x2 + w2)) {
             //One vertical line
             let midx = (Math.max(x1, x2) + Math.min(x1 + w1, x2 + w2)) / 2;
@@ -362,6 +362,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
         }
     }
 
+    //Handle copying a single sign item
     onCopyItem(id) {
         const data = this.getSignItemById(id).data;
         const { type, radio_set_id } = data;
@@ -580,6 +581,20 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                 { capture: true }
             );
             this.root.addEventListener("keyup", (e) => this.handleKeyUp(e));
+            this.setupResizeObserver();
+        }
+    }
+
+    /**
+     * Sets up a resize observer to adjust the sign images on page resize (zoom in/out)
+    */
+    setupResizeObserver() {
+        const viewerContainer = this.root.querySelector("#viewerContainer");
+        if (viewerContainer) {
+            const resizeObserver = new ResizeObserver(() => {
+                this.adjustSignImagesOnPageResize();
+            });
+            resizeObserver.observe(viewerContainer);
         }
     }
 
@@ -771,5 +786,21 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
         }
         this.refreshSignItems();
         await this.saveChangesOnBackend();
+    }
+
+    /**
+     * Adjusts the sign images on page resize (zoom in/out)
+    */
+    adjustSignImagesOnPageResize() {
+        for (const page in this.signItems) {
+            for (const id in this.signItems[page]) {
+                const signItem = this.signItems[page][id];
+                if (signItem.data.type === "signature") {
+                    this.setSignatureImage(signItem, signItem.data.roleName);
+                } else if (signItem.data.type === "initial") {
+                    this.setSignatureImage(signItem, this.getInitialsText(signItem.data.roleName));
+                }
+            }
+        }
     }
 }
