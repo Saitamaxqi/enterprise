@@ -14,9 +14,7 @@
                           t-attf-class="o_workcenter_item_color_{{id > 0 ? id % 11 : 0}}"/>
                 </button>
             </t>
-        </div>
-        <div class="position-sticky top-0 end-0 bg-view" t-att-class="this.props.hideNewWorkcenterButton ? 'invisible' : ''">
-            <button class="btn btn-light fa fa-plus" t-on-click="() => {this.props.toggleWorkcenter();}"/>
+            <button t-if="!this.props.hideNewWorkcenterButton" class="btn btn-light fa fa-plus" t-on-click="() => this.props.toggleWorkcenter()"/>
         </div>
     </div>
     </t>
