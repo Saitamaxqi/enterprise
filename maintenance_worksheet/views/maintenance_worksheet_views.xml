@@ -13,6 +13,7 @@
     <record id="maintenance_worksheet_action_settings" model="ir.actions.act_window" >
         <field name="name">Worksheet Templates</field>
         <field name="res_model">worksheet.template</field>
+        <field name="path">maintenance-worksheet-templates</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="domain">[('res_model', '=', 'maintenance.request')]</field>
         <field name="context">{'default_res_model': 'maintenance.request'}</field>
