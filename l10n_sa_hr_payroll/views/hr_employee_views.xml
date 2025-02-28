@@ -8,6 +8,8 @@
             <group name="payroll_group" position="inside">
                 <group string='Saudi Payroll Information' name="l10n_sa_payroll_group" invisible="company_country_code != 'SA'">
                     <field name="l10n_sa_employee_code" />
+                    <field name="l10n_sa_remaining_annual_leave_balance" string="Annual Leave Balance"
+                        help="Number of valid allocated leave days that are annual leave days"/>
 
                     <separator string="Allowances"/>
                     <label for="l10n_sa_housing_allowance" string="Housing"/>
@@ -25,6 +27,9 @@
                         <field class="o_hr_narrow_field" name="l10n_sa_other_allowances"/>
                         <span>/ month</span>
                     </div>
+                    <field name="l10n_sa_iqama_annual_amount" string="Iqama Annual Amount"/>
+                    <field name="l10n_sa_medical_insurance_annual_amount" string="Medical Insurance Annual Amount"/>
+                    <field name="l10n_sa_work_permit_annual_amount" string="Work Permit Annual Amount"/>
 
                     <separator string="End Of Service Provision"/>
                     <field name="l10n_sa_number_of_days" string="Number of Days"/>

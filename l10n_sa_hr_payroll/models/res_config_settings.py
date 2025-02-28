@@ -10,3 +10,5 @@ class ResConfigSettings(models.TransientModel):
     l10n_sa_bank_establishment_code = fields.Char(related="l10n_sa_bank_id.l10n_sa_bank_establishment_code", readonly=False)
     l10n_sa_sarie_code = fields.Char(related="l10n_sa_bank_id.l10n_sa_sarie_code", readonly=False)
     company_partner_id = fields.Many2one(related="company_id.partner_id")
+    l10n_sa_annual_leave_type_id = fields.Many2one(related="company_id.l10n_sa_annual_leave_type_id",
+        readonly=False)

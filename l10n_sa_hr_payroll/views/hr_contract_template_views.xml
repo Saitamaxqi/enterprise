@@ -21,6 +21,9 @@
                     <field class="o_hr_narrow_field" name="l10n_sa_other_allowances"/>
                     <span>/ month</span>
                 </div>
+                <field name="l10n_sa_iqama_annual_amount" invisible="country_code != 'SA'" string="Iqama Annual Amount"/>
+                <field name="l10n_sa_medical_insurance_annual_amount" invisible="country_code != 'SA'" string="Medical Insurance Annual Amount"/>
+                <field name="l10n_sa_work_permit_annual_amount" invisible="country_code != 'SA'" string="Work Permit Annual Amount"/>
             </group>
             <group name="salary_info" position="after">
                 <group>

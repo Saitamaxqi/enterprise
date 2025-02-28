@@ -68,7 +68,8 @@ class HrPayslip(models.Model):
         return super()._get_data_files_to_update() + [(
             'l10n_sa_hr_payroll', [
                 'data/hr_salary_rule_saudi_data.xml',
-                'data/hr_salary_rule_expat_data.xml',
+                'data/hr_payslip_input_type_data.xml',
+                'data/hr_rule_parameter_data.xml',
             ])]
 
     def _l10n_sa_wps_generate_file_reference(self):

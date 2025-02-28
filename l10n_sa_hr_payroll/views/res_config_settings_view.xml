@@ -23,9 +23,11 @@
                     <setting string="MoL Establishment ID" help="Ministry of Labor Establishment ID" id="l10n_sa_mol_establishment_code">
                         <field name="l10n_sa_mol_establishment_code"/>
                     </setting>
+                    <setting string="Annual Leave Time-off Type" help="Set the time off type used as Annual Leave">
+                        <field name="l10n_sa_annual_leave_type_id"/>
+                    </setting>
                 </block>
             </xpath>
         </field>
     </record>
-
 </odoo>

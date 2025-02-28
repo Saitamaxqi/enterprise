@@ -33,10 +33,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'name': 'KSA Local Employee',
             'company_id': cls.env.company.id,
         })
-        cls.expat_work_contact = cls.env['res.partner'].create({
-            'name': 'KSA Expat Employee',
-            'company_id': cls.env.company.id,
-        })
 
         cls.saudi_employee = cls.env['hr.employee'].create({
             'name': 'KSA Local Employee',
@@ -51,48 +47,28 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'l10n_sa_transportation_allowance': 200,
             'l10n_sa_other_allowances': 500,
             'l10n_sa_number_of_days': 21,
+            'l10n_sa_iqama_annual_amount': 6000.0,
+            'l10n_sa_medical_insurance_annual_amount': 4800.0,
+            'l10n_sa_work_permit_annual_amount': 3600.0,
         })
         cls.saudi_contract = cls.saudi_employee.version_id
-
-        cls.expat_employee = cls.env['hr.employee'].create({
-            'name': 'KSA Expat Employee',
-            'address_id': cls.expat_work_contact.id,
-            'company_id': cls.env.company.id,
-            'country_id': cls.env.ref('base.in').id,  # any other nationality
-            'structure_type_id': cls.env.ref('l10n_sa_hr_payroll.ksa_employee_payroll_structure_type').id,
-            'date_version': date(2024, 1, 1),
-            'contract_date_start': date(2024, 1, 1),
-            'wage': 5000,
-            'l10n_sa_housing_allowance': 1000,
-            'l10n_sa_transportation_allowance': 200,
-            'l10n_sa_other_allowances': 300,
-            'l10n_sa_number_of_days': 21,
-        })
-        cls.expat_contract = cls.expat_employee.version_id
 
         cls.compensable_timeoff_type = cls.env['hr.leave.type'].create({
             'name': "KSA Compensable Leaves",
             'company_id': cls.env.company.id,
-            'l10n_sa_is_compensable': True
+        })
+
+        cls.env.company.write({
+            "l10n_sa_annual_leave_type_id": cls.compensable_timeoff_type.id,
         })
 
         cls.env['hr.leave.allocation'].create({
             'employee_id': cls.saudi_employee.id,
             'date_from': date(2024, 1, 1),
             'holiday_status_id': cls.compensable_timeoff_type.id,
-            'number_of_days': 25,
+            'number_of_days': 21,
             'state': 'confirm',
         }).action_approve()
-
-    @classmethod
-    def _lay_off_employee(cls, saudi_or_expat='saudi', reason=None):
-        employee = cls.saudi_employee if saudi_or_expat == 'saudi' else cls.expat_employee
-        employee.write({
-            'active': False,
-            'departure_reason_id': reason,
-            'departure_date': date(2024, 3, 31)
-        })
-        (cls.saudi_contract if saudi_or_expat == 'saudi' else cls.expat_contract).contract_date_end = date(2024, 3, 31)
 
     def test_saudi_payslip(self):
         payslip = self._generate_payslip(
@@ -108,31 +84,22 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'OTALLOW': 500.0,
             'TRAALLOW': 200.0,
             'EOSP': 799.17,
+            'MEDICAL': 400.0,
+            'IQAMA': 500.0,
+            'WORKPER': 300.0,
+            'ANNUALP': 799.17,
             'GROSS': 13700.0,
             'NET': 12432.5,
         }
         self._validate_payslip(payslip, payslip_results)
 
-    def test_expat_payslip(self):
-        payslip = self._generate_payslip(
-            date(2024, 1, 1), date(2024, 1, 31),
-            employee_id=self.expat_employee.id,
-            version_id=self.expat_employee.version_id.id,
-            struct_id=self.env.ref('l10n_sa_hr_payroll.ksa_expat_employee_payroll_structure').id)
-        payslip_results = {
-            'BASIC': 5000.0,
-            'GOSI_COMP': -120.0,
-            'HOUALLOW': 1000.0,
-            'OTALLOW': 300.0,
-            'TRAALLOW': 200.0,
-            'EOSP': 379.17,
-            'GROSS': 6500.0,
-            'NET': 6500.0,
-        }
-        self._validate_payslip(payslip, payslip_results)
-
     def test_saudi_payslip_laid_off(self):
-        self._lay_off_employee('saudi', self.env.ref('l10n_sa_hr_payroll.saudi_departure_clause_77').id)
+        self.saudi_employee.write({
+            'active': False,
+            'departure_reason_id': self.env.ref('l10n_sa_hr_payroll.saudi_departure_clause_77').id,
+            'departure_date': date(2024, 3, 31),
+        })
+        self.saudi_contract.date_end = date(2024, 3, 31)
         payslip = self._generate_payslip(
             date(2024, 3, 1), date(2024, 3, 31),
             employee_id=self.saudi_employee.id,
@@ -147,28 +114,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'TRAALLOW': 200.0,
             'EOSALLOW': 27400.0,
             'EOSB': 13700.0,
-            'ANNUALCOMP': 11416.67,
+            'ANNUALCOMP': 2397.5,
+            'MEDICAL': 400.0,
+            'IQAMA': 500.0,
+            'WORKPER': 300.0,
+            'ANNUALP': 799.17,
             'GROSS': 54800.0,
             'NET': 53532.5,
-        }
-        self._validate_payslip(payslip, payslip_results)
-
-    def test_expat_payslip_laid_off(self):
-        self._lay_off_employee('expat', self.env.ref('l10n_sa_hr_payroll.saudi_departure_end_of_contract').id)
-        payslip = self._generate_payslip(
-            date(2024, 3, 1), date(2024, 3, 31),
-            employee_id=self.expat_employee.id,
-            version_id=self.expat_employee.version_id.id,
-            struct_id=self.env.ref('l10n_sa_hr_payroll.ksa_expat_employee_payroll_structure').id)
-        payslip_results = {
-            'BASIC': 5000.0,
-            'GOSI_COMP': -120.0,
-            'HOUALLOW': 1000.0,
-            'OTALLOW': 300.0,
-            'TRAALLOW': 200.0,
-            'EOSB': 812.5,
-            'GROSS': 7312.5,
-            'NET': 7312.5,
         }
         self._validate_payslip(payslip, payslip_results)
 
@@ -184,7 +136,18 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
         work_entry.action_validate()
         payslip.compute_sheet()
-        payslip_results = {'BASIC': 10000.0, 'GOSI_COMP': -1222.0, 'GOSI_EMP': -1014.0, 'HOUALLOW': 400.0, 'OTALLOW': 150.0, 'TRAALLOW': 200.0, 'EOSP': 597.22, 'GROSS': 10750.0, 'NET': 9736.0}
+        payslip_results = {
+            'BASIC': 10000.0,
+            'GOSI_COMP': -1222.0,
+            'GOSI_EMP': -1014.0,
+            'HOUALLOW': 400.0,
+            'OTALLOW': 150.0,
+            'TRAALLOW': 200.0,
+            'EOSP': 597.22,
+            'ANNUALP': 597.22,
+            'GROSS': 10750.0,
+            'NET': 9736.0
+        }
         self._validate_payslip(payslip, payslip_results)
 
     def test_salary_advance_payslip(self):

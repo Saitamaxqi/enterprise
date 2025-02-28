@@ -1,47 +1,23 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models
-from odoo.tools.float_utils import float_round
 
 
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
-    l10n_sa_leaves_count_compensable = fields.Float(
-        'Number of Time Off Eligible for Compensation',
-        compute='_compute_l10n_sa_leaves_count_compensable',
-        groups="hr.group_hr_user")
-
     l10n_sa_employee_code = fields.Char(string="Saudi National / IQAMA ID", groups="hr.group_hr_user")
+    l10n_sa_remaining_annual_leave_balance = fields.Float(compute="_compute_l10n_sa_remaining_annual_leave_balance")
 
-    def _l10n_sa_get_remaining_leaves_compensable(self):
-        """ Copy of _get_remaining_leaves but filtered only to include compensable leave types
-        """
-        if not self:
-            return {}
-        self.env.cr.execute("""
-            SELECT
-                sum(h.number_of_days) AS days,
-                h.employee_id
-            FROM
-                (
-                    SELECT holiday_status_id, number_of_days,
-                        state, employee_id
-                    FROM hr_leave_allocation
-                    UNION ALL
-                    SELECT holiday_status_id, (number_of_days * -1) as number_of_days,
-                        state, employee_id
-                    FROM hr_leave
-                ) h
-                join hr_leave_type s ON (s.id=h.holiday_status_id AND s.l10n_sa_is_compensable = 'true')
-            WHERE
-                s.active = true AND h.state='validate' AND
-                s.requires_allocation = TRUE AND
-                h.employee_id in %s
-            GROUP BY h.employee_id""", (tuple(self.ids),))
-        return {row['employee_id']: row['days'] for row in self.env.cr.dictfetchall()}
-
-    def _compute_l10n_sa_leaves_count_compensable(self):
-        remaining = self._l10n_sa_get_remaining_leaves_compensable()
+    def _compute_l10n_sa_remaining_annual_leave_balance(self):
+        emp_per_company = self.grouped('company_id')
+        annual_leave_type_allocation_data = ({
+            company.id: company.l10n_sa_annual_leave_type_id.get_allocation_data(emp_per_company[company])
+                for company in self.company_id
+                if company.l10n_sa_annual_leave_type_id
+        })
         for employee in self:
-            employee.l10n_sa_leaves_count_compensable = float_round(remaining.get(employee.id, 0.0), precision_digits=2)
+            company_data = annual_leave_type_allocation_data.get(employee.company_id.id, {})
+            employee_allocation_data = company_data.get(employee, False)
+            employee.l10n_sa_remaining_annual_leave_balance = employee_allocation_data[0][1]['remaining_leaves'] \
+                if employee_allocation_data else 0
