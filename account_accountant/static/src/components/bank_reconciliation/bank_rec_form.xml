@@ -327,19 +327,19 @@
                t-value="data.state === 'reconciled'"/>
 
             <div class="o_group row align-items-start">
-                <div class="o_inner_group grid col-lg-6">
+                <div class="o_inner_group grid col-lg-4">
                     <!-- amount_currency (in journal currency) -->
                     <t t-set="amountFieldReadonly" t-value="reconciled"/>
                     <t t-set="currencyFieldReadonly" t-value="reconciled or ['liquidity', 'tax_line', 'new_aml'].includes(line.data.flag)"/>
                     <div name="amount_currency"
                          t-if="line.data.flag !== 'exchange_diff'"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
                             <label class="o_form_label" t-att-class="{'o_form_label_readonly': amountFieldReadonly}">
                                 Amount
                             </label>
                         </div>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
                             <div class="d-flex gap-2">
                                 <!-- amount -->
                                 <div class="o_field_widget o_field_monetary">
@@ -351,9 +351,9 @@
                                     />
                                 </div>
                                 <!-- in -->
-                                <span t-if="!currencyFieldReadonly">in</span>
+                                <t t-if="!currencyFieldReadonly">in</t>
                                 <!-- currency -->
-                                <div class="o_field_widget o_field_many2one">
+                                <div t-if="!currencyFieldReadonly" class="o_field_widget o_field_many2one w-50">
                                     <Many2OneField
                                         t-if="!currencyFieldReadonly"
                                         name="'currency_id'"
@@ -373,13 +373,13 @@
                        t-value="reconciled || ['tax_line', 'new_aml'].includes(line.data.flag)"/>
                     <div name="amount_transaction_currency"
                          t-if="data.is_multi_currency and line.data.flag === 'liquidity' and (!reconciled || reconciled and line.data.transaction_currency_id[0])"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
                             <label class="o_form_label" t-att-class="{'o_form_label_readonly': amountFieldReadonly}">
-                                Amount (Foreign Currency)
+                                In Foreign Currency
                             </label>
                         </div>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
                             <div class="d-flex gap-2">
                                 <!-- amount -->
                                 <div class="o_field_widget o_field_monetary">
@@ -392,9 +392,9 @@
                                     />
                                 </div>
                                 <!-- in -->
-                                <span>in</span>
+                                <t>in</t>
                                 <!-- currency -->
-                                <div class="o_field_widget o_field_many2one">
+                                <div class="o_field_widget o_field_many2one w-50">
                                     <Many2OneField
                                         name="'transaction_currency_id'"
                                         record="line"
@@ -413,13 +413,13 @@
                     <t t-set="amountFieldReadonly" t-value="reconciled or (line.data.flag === 'liquidity' and line.data.company_currency_id[0] !== line.data.currency_id[0])"/>
                     <div name="balance"
                          t-if="line.data.company_currency_id[0] !== line.data.currency_id[0] and line.data.company_currency_id[0] !== line.data.transaction_currency_id[0]"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
                             <label class="o_form_label" t-att-class="{'o_form_label_readonly': amountFieldReadonly}">
-                                Amount (Company Currency)
+                                In Company Currency
                             </label>
                         </div>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
                             <div class="d-flex">
                                 <!-- amount -->
                                 <div class="o_field_widget o_field_monetary">
@@ -436,70 +436,27 @@
 
                     <!-- suggestion -->
                     <div name="suggestion"
-                         t-if="line.data.suggestion_html"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         t-if="line.data.suggestion_html != ''"
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900"/>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
                             <div t-on-click="handleSuggestionHtmlClicked">
                                 <t t-out="line.data.suggestion_html"/>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="o_inner_group grid col-lg-6">
-                    <!-- date -->
-                    <div name="date"
-                         t-if="line.data.flag === 'liquidity'"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
-                        <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
-                            <label class="o_form_label" t-att-class="{'o_field_invalid': invalidFields.includes('date'), 'o_form_label_readonly': reconciled}">
-                                Date
-                            </label>
-                        </div>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
-                            <div class="o_field_widget o_field_date" t-att-class="{'o_field_invalid': invalidFields.includes('date')}">
-                                <DateTimeField
-                                    name="'date'"
-                                    record="line"
-                                    readonly="reconciled"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <!-- reference -->
-                    <div name="reference"
-                         t-if="line.data.flag === 'liquidity' and line.data.ref"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
-                        <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
-                            <label class="o_form_label" t-att-class="{'o_form_label_readonly': readonly}">
-                                Reference
-                            </label>
-                        </div>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
-                            <div class="o_field_widget o_field_char">
-                                <CharField
-                                    name="'ref'"
-                                    record="line"
-                                    readonly="readonly"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="o_group row align-items-start">
-                <div class="o_inner_group grid col-lg-6">
+
                     <!-- account_id -->
                     <t t-set="readonly"
                        t-value="reconciled || ['liquidity', 'new_aml', 'exchange_diff'].includes(line.data.flag)"/>
                     <div name="account_id"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
                             <label class="o_form_label" t-att-class="{'o_field_invalid': invalidFields.includes('account_id'), 'o_form_label_readonly': readonly}">
                                 Account
                             </label>
                         </div>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
                             <div class="o_field_widget o_field_many2one"
                                  t-att-class="{'o_field_invalid': invalidFields.includes('account_id')}">
                                 <Many2OneField
@@ -517,7 +474,7 @@
                     <t t-set="readonly"
                        t-value="reconciled || ['tax_line', 'new_aml', 'exchange_diff'].includes(line.data.flag)"/>
                     <div name="partner_id"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
                             <label class="o_form_label" t-att-class="{'o_form_label_readonly': readonly}">
                                 Partner
@@ -538,23 +495,23 @@
                     <div t-if="['auto_balance', 'manual'].includes(line.data.flag)
                                 and line.data.partner_receivable_account_id
                                 and line.data.partner_payable_account_id"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell flex-grow-1 flex-sm-grow-0 o_wrap_label w-100 text-break text-900"/>
                         <div class="o_cell flex-grow-1 flex-sm-grow-0 w-100">
-                            <div class="d-flex gap-2 align-items-center">
+                            <div class="d-flex gap-1 align-items-center">
                                 <button class="btn btn-link text-nowrap" t-on-click="actionSetPartnerReceivableAccount">
                                     Receivable:
+                                    <div class="o_field_widget o_readonly_modifier o_field_monetary text-muted">
+                                        <span t-out="formatMonetaryField(line.data.partner_receivable_amount, line.data.partner_currency_id[0])"/>
+                                    </div>
                                 </button>
-                                <div class="o_field_widget o_readonly_modifier o_field_monetary">
-                                    <span t-out="formatMonetaryField(line.data.partner_receivable_amount, line.data.partner_currency_id[0])"/>
-                                </div>
                                 <span>-</span>
                                 <button class="btn btn-link text-nowrap" t-on-click="actionSetPartnerPayableAccount">
                                     Payable:
+                                    <div class="o_field_widget o_readonly_modifier o_field_monetary text-muted">
+                                        <span t-out="formatMonetaryField(line.data.partner_payable_amount, line.data.partner_currency_id[0])"/>
+                                    </div>
                                 </button>
-                                <div class="o_field_widget o_readonly_modifier o_field_monetary">
-                                    <span t-out="formatMonetaryField(line.data.partner_payable_amount, line.data.partner_currency_id[0])"/>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -562,13 +519,13 @@
                     <!-- analytic_distribution -->
                     <div name="analytic_distribution"
                          t-if="hasGroupAnalyticAccounting"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
                             <label class="o_form_label" t-att-class="{'o_form_label_readonly': reconciled}">
                                 Analytic
                             </label>
                         </div>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
                             <div class="o_field_widget o_field_analytic_distribution">
                                 <!-- t-key is needed to force component rerender and avoid synchronization issue on record change -->
                                 <AnalyticDistribution
@@ -584,17 +541,56 @@
                         </div>
                     </div>
                 </div>
-                <div class="o_inner_group grid col-lg-6">
+                <div class="o_inner_group grid col-lg-4">
+                    <!-- date -->
+                    <div name="date"
+                         t-if="line.data.flag === 'liquidity'"
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
+                        <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
+                            <label class="o_form_label" t-att-class="{'o_field_invalid': invalidFields.includes('date'), 'o_form_label_readonly': reconciled}">
+                                Date
+                            </label>
+                        </div>
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
+                            <div class="o_field_widget o_field_date" t-att-class="{'o_field_invalid': invalidFields.includes('date')}">
+                                <DateTimeField
+                                    name="'date'"
+                                    record="line"
+                                    readonly="reconciled"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- reference -->
+                    <div name="reference"
+                         t-if="line.data.flag === 'liquidity' and line.data.ref"
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
+                        <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
+                            <label class="o_form_label" t-att-class="{'o_form_label_readonly': readonly}">
+                                Reference
+                            </label>
+                        </div>
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
+                            <div class="o_field_widget o_field_char">
+                                <CharField
+                                    name="'ref'"
+                                    record="line"
+                                    readonly="readonly"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- bank_account -->
                     <div name="bank_account"
                          t-if="line.data.flag === 'liquidity' and line.data.bank_account"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
                             <label class="o_form_label o_form_label_readonly">
                                 Bank Account
                             </label>
                         </div>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
                             <div class="o_field_widget o_field_many2one">
                                 <t t-out="line.data.bank_account"/>
                             </div>
@@ -604,13 +600,13 @@
                     <!-- tax_ids -->
                     <div name="tax_ids"
                          t-if="['manual', 'auto_balance'].includes(line.data.flag)"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
                             <label class="o_form_label" t-att-class="{'o_form_label_readonly': reconciled}">
                                 Taxes
                             </label>
                         </div>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
                             <div class="o_field_widget o_field_many2many_tags">
                                 <Many2ManyTagsField
                                     name="'tax_ids'"
@@ -625,18 +621,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="o_inner_group grid col-lg-4"/>
             </div>
             <div class="o_group row align-items-start">
                 <div class="o_inner_group grid">
                     <!-- name -->
                     <div name="name"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
                             <label class="o_form_label" t-att-class="{'o_form_label_readonly': readonly}">
                                 Label
                             </label>
                         </div>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
                             <div class="o_field_widget o_field_char">
                                 <CharField
                                     name="'name'"
@@ -649,13 +646,13 @@
                     <!-- notes/narration -->
                     <div name="narration"
                          t-if="line.data.flag === 'liquidity' and (!reconciled || (reconciled and line.data.narration))"
-                         class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
+                         class="o_wrap_field d-flex d-sm-contents flex-column">
                         <div class="o_cell o_wrap_label flex-grow-1 flex-sm-grow-0 w-100 text-break text-900">
                             <label class="o_form_label" t-att-class="{'o_form_label_readonly': reconciled}">
                                 Notes
                             </label>
                         </div>
-                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100 mb-1">
+                        <div class="o_cell o_wrap_input flex-grow-1 flex-sm-grow-0 w-100">
                             <div class="o_field_widget o_field_char">
                                 <HtmlField
                                     name="'narration'"
