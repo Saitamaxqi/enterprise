@@ -46,6 +46,7 @@
             'hr_referral/static/src/scss/hr_referral.scss',
             'hr_referral/static/src/scss/hr_onboarding.scss',
             'hr_referral/static/src/scss/progress_bar.scss',
+            'hr_referral/static/src/scss/many2one_avatar_field.scss',
             'hr_referral/static/src/**/*.xml',
         ],
         "web.assets_web_dark": [

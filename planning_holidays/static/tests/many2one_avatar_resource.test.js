@@ -132,7 +132,7 @@ test("many2one_avatar_resource widget in list view with time-off idle", async ()
     });
 
     // 1. Clicking on human resource's avatar with no user associated (status: presence_holiday_present)
-    await contains(".o_m2o_avatar").click();
+    await contains(".o_m2o_avatar > img").click();
     await animationFrame();
     expect(".o_card_user_infos span").toHaveText("Dorothea");
     expect(".o_employee_presence_status .fa-plane.text-success").toHaveCount(1, {
@@ -140,7 +140,7 @@ test("many2one_avatar_resource widget in list view with time-off idle", async ()
     });
 
     // 2. Clicking on human resource's avatar with no user associated (status: presence_holiday_absent)
-    await contains(".o_m2o_avatar:eq(1)").click();
+    await contains(".o_m2o_avatar:eq(1) > img").click();
     await animationFrame();
     expect(".o_card_user_infos span").toHaveText("Fernando");
     expect(".o_employee_presence_status .fa-plane.text-warning").toHaveCount(1, {
@@ -148,7 +148,7 @@ test("many2one_avatar_resource widget in list view with time-off idle", async ()
     });
 
     // 3. Clicking on human resource's avatar with a user associated (status: leave_online)
-    await contains(".o_m2o_avatar:eq(2)").click();
+    await contains(".o_m2o_avatar:eq(2) > img").click();
     await animationFrame();
     expect(".o_card_user_infos span").toHaveText("Lucinda");
     expect(".o_user_im_status .fa-plane.text-success").toHaveCount(1, {
@@ -156,7 +156,7 @@ test("many2one_avatar_resource widget in list view with time-off idle", async ()
     });
 
     // 4. Clicking on human resource's avatar with a user associated (status: leave_away)
-    await contains(".o_m2o_avatar:eq(3)").click();
+    await contains(".o_m2o_avatar:eq(3) > img").click();
     await animationFrame();
     expect(".o_card_user_infos span").toHaveText("Cardenio");
     expect(".o_user_im_status .fa-plane.text-warning").toHaveCount(1, {

@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <t t-name="mail.ReferralKanbanMany2OneAvatarUserField" t-inherit="mail.KanbanMany2OneAvatarUserField" t-inherit-mode="primary">
-        <xpath expr="//span[hasclass('o_m2o_avatar')]" position="attributes">
-            <attribute name="style" add="justify-content: flex-end;" separator=" "/>
-        </xpath>
-        <xpath expr="//img[hasclass('rounded')]" position="attributes">
-            <attribute name="class" add="h-50 w-50 m-0" separator=" "/>
-        </xpath>
+    <t t-name="hr_referral.ReferralKanbanMany2OneAvatarUserField">
+        <t t-set="relation" t-value="props.record.fields[props.name].relation"/>
+        <KanbanMany2One t-props="m2oProps">
+            <t t-set-slot="avatar">
+                <Avatar resModel="relation" resId="props.record.data[props.name][0]" noSpacing="true"/>
+            </t>
+            <t t-set-slot="autoCompleteItem" t-slot-scope="autoCompleteItemScope">
+                <span class="o_avatar_many2x_autocomplete o_avatar d-flex align-items-center">
+                    <img class="rounded me-1" t-attf-src="/web/image/{{relation}}/{{autoCompleteItemScope.record.id}}/avatar_128"/>
+                    <t t-esc="autoCompleteItemScope.record.display_name"/>
+                </span>
+            </t>
+        </KanbanMany2One>
     </t>
 
 </templates>
