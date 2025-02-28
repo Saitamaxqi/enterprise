@@ -53,3 +53,21 @@ class AccountPayment(models.Model):
             'view_mode': 'form',
             'res_id': self.batch_payment_id.id,
         }
+
+    def write(self, vals):
+        old_batch_payments = {payment: payment.batch_payment_id for payment in self}
+        result = super().write(vals)
+        batch_payment_id = vals.get('batch_payment_id')
+        batch_payment = self.env['account.batch.payment'].browse(batch_payment_id) if batch_payment_id else None
+        for payment in self:
+            if batch_payment:
+                payment.message_post(
+                    body=_('Payment added in batch %s', batch_payment._get_html_link(title=batch_payment.name)),
+                    message_type='comment',
+                )
+            elif old_batch_payments.get(payment):
+                payment.message_post(
+                    body=_('Payment removed from batch %s', old_batch_payments[payment]._get_html_link(title=old_batch_payments[payment].name)),
+                    message_type='comment',
+                )
+        return result

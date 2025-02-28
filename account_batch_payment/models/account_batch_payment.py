@@ -243,6 +243,14 @@ class AccountBatchPayment(models.Model):
 
         return rslt
 
+    def unlink(self):
+        for payment in self.payment_ids:
+            payment.message_post(
+                body=_('Payment removed from batch %s', self._get_html_link(title=self.name)),
+                message_type='comment',
+            )
+        return super().unlink()
+
     @api.model
     def _get_batch_name(self, batch_type, sequence_date, vals):
         if not vals.get('name'):
