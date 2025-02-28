@@ -144,8 +144,8 @@ class AccountAnalyticLine(models.Model):
 
     def _update_last_validated_timesheet_date(self):
         max_date_per_employee = {
-            employee: employee.sudo().last_validated_timesheet_date
-            for employee in self.employee_id
+            employee: employee.last_validated_timesheet_date
+            for employee in self.employee_id.sudo()
         }
         for timesheet in self:
             max_date = max_date_per_employee[timesheet.employee_id]
@@ -213,7 +213,7 @@ class AccountAnalyticLine(models.Model):
             ('is_timer_running', '=', True),
         ])
         running_analytic_lines.filtered(
-            lambda aal: aal.date < aal.employee_id.last_validated_timesheet_date)._stop_all_users_timer()
+            lambda aal: aal.date < aal.employee_id.sudo().last_validated_timesheet_date)._stop_all_users_timer()
         if self.env.context.get('use_notification', True):
             notification['params'].update({
                 'message': _("The timesheets have successfully been validated."),

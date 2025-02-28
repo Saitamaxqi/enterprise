@@ -497,7 +497,7 @@ class HrContractSalary(http.Controller):
             field_value = values[field_name]
 
             target = targets[personal_info.applies_on]
-            if field_name in target and isinstance(target[field_name], models.BaseModel):
+            if field_name in target and target._fields[field_name].relational:
                 field_value = int(field_value) if field_value else False
             return field_value
 
@@ -518,11 +518,6 @@ class HrContractSalary(http.Controller):
         job = request.env['hr.job'].sudo().browse(employee_infos['employee_job_id'])
         if not employee_infos['job_title']:
             employee_infos['job_title'] = job.name
-
-        if employee.department_id.parent_path:
-            employee_department = employee.department_id.id if str(employee_infos['department_id']) in employee.department_id.parent_path.split('/') else employee_infos['department_id']
-        else:
-            employee_department = employee_infos['department_id']
 
         employee_vals = {}
         work_contact_vals = {}

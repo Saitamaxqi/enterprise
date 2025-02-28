@@ -210,7 +210,7 @@ class ProjectTask(models.Model):
 
     @api.depends('sale_line_id')
     def _compute_warning_message(self):
-        employee_rate_fsm_tasks = self.filtered(lambda task:
+        employee_rate_fsm_tasks = self.sudo().filtered(lambda task:
             task.pricing_type == 'employee_rate'
             and task.sale_line_id
             and task.timesheet_ids

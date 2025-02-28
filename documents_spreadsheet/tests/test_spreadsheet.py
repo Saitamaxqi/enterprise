@@ -698,7 +698,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         spreadsheet.invalidate_recordset()
         copy_non_admin = spreadsheet.with_user(user).copy()
         self.assertEqual(
-            len(copy_non_admin.spreadsheet_revision_ids),
+            len(copy_non_admin.sudo().spreadsheet_revision_ids),
             1,
             "The revision should be copied with non-admin access right",
         )

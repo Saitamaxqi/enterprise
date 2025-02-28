@@ -276,7 +276,7 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         spreadsheet = self.env["spreadsheet.test"].with_user(user).create({})
         spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
         spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
-        revisions = spreadsheet.spreadsheet_revision_ids
+        revisions = spreadsheet.sudo().spreadsheet_revision_ids
         rev1 = revisions[0]
         rev2 = revisions[1]
 
@@ -434,4 +434,4 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         self.assertEqual(revisions[1].author_id, test_user_2)
         self.assertEqual(revisions[2].author_id, test_user_3)
         spreadsheet.with_user(self.env.ref("base.user_admin")).dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
-        self.assertEqual(spreadsheet.spreadsheet_revision_ids[-1].author_id, self.env.ref("base.user_admin"))
+        self.assertEqual(spreadsheet.sudo().spreadsheet_revision_ids[-1].author_id, self.env.ref("base.user_admin"))
