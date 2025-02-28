@@ -53,13 +53,7 @@ class AccountBatchErrorWizardLine(models.TransientModel):
             record.show_remove_button = record.error_wizard_id.show_remove_options or record.warning_wizard_id.show_remove_options
 
     def open_payments(self):
-        return {
-            'name': _('Payments in Error'),
-            'type': 'ir.actions.act_window',
-            'view_mode': 'list,form',
-            'res_model': 'account.payment',
-            'domain': [('id', 'in', self.payment_ids.ids)],
-        }
+        return self.payment_ids._get_records_action(name=_('Payments in Error'))
 
     def remove_payments_from_batch(self):
         for payment in self.payment_ids:

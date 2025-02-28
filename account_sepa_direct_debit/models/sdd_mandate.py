@@ -4,7 +4,7 @@ from datetime import datetime
 
 from odoo import Command, api, fields, models, _
 from odoo.exceptions import RedirectWarning, UserError
-from odoo.tools import date_utils
+from odoo.tools import date_utils, SQL
 
 SDD_MIN_PRENOT_PERIOD = 2
 SDD_FIRST_MIN_PRENOT_PERIOD = 5

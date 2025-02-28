@@ -3,7 +3,7 @@
 import base64
 
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError, UserError
+from odoo.exceptions import RedirectWarning, ValidationError, UserError
 
 
 class AccountBatchPayment(models.Model):
@@ -270,7 +270,9 @@ class AccountBatchPayment(models.Model):
         """ Verifies the content of a batch and proceeds to its sending if possible.
         If not, opens a wizard listing the errors and/or warnings encountered.
         """
-        self._check_batch_validity()
+        validate_action = self._check_batch_validity()
+        if validate_action:
+            return validate_action
         return self._send_after_validation()
 
     def _check_batch_validity(self):
@@ -278,13 +280,15 @@ class AccountBatchPayment(models.Model):
         if not self.payment_ids:
             raise UserError(_("Cannot validate an empty batch. Please add some payments to it first."))
 
-        valid_payment_states = self._valid_payment_states()
-        if self.payment_ids.filtered(lambda p: p.state not in valid_payment_states):
-            raise ValidationError(_("All payments must be posted to validate the batch."))
-
         errors = not self.export_file and self.check_payments_for_errors() or []  # We don't re-check for errors if we are regenerating the file (we know there aren't any)
         warnings = self.check_payments_for_warnings()
         if errors or warnings:
+            if len(errors) == 1 and not warnings:
+                raise RedirectWarning(
+                    message=errors[0]['title'] + '\n' + errors[0].get('help', ''),
+                    action=errors[0].get('records', self.env['account.payment'])._get_records_action(name=_('Payments in Error')),
+                    button_text=_('Check Payments')
+                )
             return {
                 'type': 'ir.actions.act_window',
                 'view_mode': 'form',
@@ -348,9 +352,9 @@ class AccountBatchPayment(models.Model):
 
         if wrong_state_payments:
             rslt.append({
-                'title': _("Payments must be posted to be added to a batch."),
+                'title': _("To validate the batch, payments must be in process. But some are already matched with a bank statement."),
                 'records': wrong_state_payments,
-                'help': _("Set payments state to \"In Process\".")
+                'help': _("Remove the payments from the batch or change their state.")
             })
 
         if self.batch_type == 'outbound':
@@ -368,19 +372,6 @@ class AccountBatchPayment(models.Model):
             rslt.append({
                 'title': _("Some payments have already been sent."),
                 'records': sent_payments,
-            })
-
-        if self.batch_type == 'inbound':
-            pmls = self.journal_id.inbound_payment_method_line_ids
-        else:
-            pmls = self.journal_id.outbound_payment_method_line_ids
-        pmls = pmls.filtered(lambda x: x.payment_method_id == self.payment_method_id)
-        no_statement_reconciliation = self.journal_id.default_account_id == pmls.payment_account_id[:1]
-        bank_reconciled_payments = self.payment_ids.filtered(lambda x: x.is_matched)
-        if bank_reconciled_payments and not no_statement_reconciliation:
-            rslt.append({
-                'title': _("Some payments have already been matched with a bank statement."),
-                'records': bank_reconciled_payments,
             })
 
         return rslt

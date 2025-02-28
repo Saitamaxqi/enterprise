@@ -2,7 +2,7 @@
 from odoo import Command
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.tests import tagged
-from odoo.exceptions import ValidationError
+from odoo.exceptions import RedirectWarning, ValidationError
 
 @tagged('post_install', '-at_install')
 class TestAccountBatchPayment(AccountTestInvoicingCommon):
@@ -10,7 +10,7 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
         cls.other_currency = cls.setup_other_currency('EUR')
 
         cls.payment_debit_account_id = cls.copy_account(cls.inbound_payment_method_line.payment_account_id)
@@ -19,11 +19,8 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         cls.partner_bank_account = cls.env['res.partner.bank'].create({
             'acc_number': 'BE32707171912447',
             'partner_id': cls.partner_a.id,
+            'allow_out_payment': True,
             'acc_type': 'bank',
-        })
-
-        cls.partner_a.write({
-            'bank_ids': [(6, 0, cls.partner_bank_account.ids)],
         })
 
     def _create_multi_company_payments_and_context(self, companies_dict, add_company_context=None):
@@ -113,7 +110,7 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
 
     def test_validate_batch(self):
         """
-        Check that we can only validate a batch if all the payments are posted
+        Check that we can only validate a batch if all the payments are in progress
         """
         payments = self.env['account.payment']
         for _ in range(2):
@@ -134,16 +131,15 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
                 'payment_ids': [Command.set(payments.ids)]
             }
         )
+        payments[0].action_validate()
 
-        payments[0].move_id.button_draft()
-        payments[0].action_cancel()
-        payments[0].action_draft()
-
-        with self.assertRaisesRegex(ValidationError, "All payments must be posted to validate the batch"):
+        with self.assertRaisesRegex(RedirectWarning, "To validate the batch, payments must be in process"):
             batch_payment.validate_batch()
 
+        payments[0].action_draft()
         payments[0].action_post()
-        batch_payment.validate_batch()
+        action = batch_payment.validate_batch()
+        self.assertFalse(action)
 
     def test_batch_payment_sub_company(self):
         """Test the creation of a batch payment from a sub company"""
