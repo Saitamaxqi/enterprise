@@ -28,7 +28,7 @@ class QualityPoint(models.Model):
         ('periodical', 'Periodically'),
         ('on_demand', 'On-demand')], string="Control Frequency",
         default='all', required=True)
-    measure_frequency_value = fields.Float('Percentage')  # TDE RENAME ?
+    measure_frequency_value = fields.Float('Percentage', help="The probability of each quality check being generated")  # TDE RENAME ?
     measure_frequency_unit_value = fields.Integer('Frequency Unit Value')  # TDE RENAME ?
     measure_frequency_unit = fields.Selection([
         ('day', 'Days'),

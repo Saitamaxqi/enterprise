@@ -808,10 +808,8 @@
                 <field name="measure_frequency_type" string="Control Frequency"/>
                 <label for="measure_frequency_value" string="" invisible="measure_frequency_type in ('all', 'on_demand')"/>
                 <div class="o_row" invisible="measure_frequency_type in ('all', 'on_demand')">
-                    <span invisible="measure_frequency_type in ('all', 'on_demand')">Every </span>
                     <field name="measure_frequency_value" nolabel="1" invisible="measure_frequency_type != 'random'"/>
-                    <label for="measure_frequency_value" string="% of Operations" invisible="measure_on == 'move_line' or measure_frequency_type != 'random'"/>
-                    <label for="measure_frequency_value" string="% of Transfers" invisible="measure_on != 'move_line' or measure_frequency_type != 'random'"/>
+                    <label for="measure_frequency_value" string="% of the time" invisible="measure_frequency_type != 'random'"/>
                     <field name="measure_frequency_unit_value" string="Frequency" nolabel="1" invisible="measure_frequency_type != 'periodical'"/>
                     <field name="measure_frequency_unit" invisible="measure_frequency_type != 'periodical'" required="measure_frequency_type == 'periodical'"/>
                 </div>
