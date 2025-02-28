@@ -29,6 +29,7 @@
         <record id="monster_industry_0" model="res.partner.industry">
             <field name="monster_id">0</field>
             <field name="name">All</field>
+            <field name="active">False</field>  <!-- we don't wan't to see it as a choice for jobs by default  -->
         </record>
 
         <record id="monster_industry_30" model="res.partner.industry">
