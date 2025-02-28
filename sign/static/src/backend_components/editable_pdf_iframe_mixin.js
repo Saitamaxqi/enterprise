@@ -477,7 +477,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
          * @returns the document page which contain the (x, y) position
          * and the ratio of the (x, y) position inside the page.
          */
-        getPositionData(x, y) {
+        getPositionData(x, y, itemWidth = 0, itemHeight = 0) {
             const viewerContainer = this.viewerContainer || this.root.querySelector("#viewerContainer");
 
             for (let page = 1; page <= this.pageCount; page++) {
@@ -491,7 +491,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                 const pageRight = pageLeft + pageRect.width;
                 const pageBottom = pageTop + pageRect.height;
 
-                if (pageLeft <= x && x <= pageRight && pageTop <= y && y <= pageBottom) {
+                if (pageLeft <= x && x+itemWidth <= pageRight && pageTop <= y && y+itemHeight <= pageBottom) {
                     const width = pageRect.width;
                     const height = pageRect.height;
                     const x1 = x - pageLeft;
@@ -923,15 +923,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                 this.refreshSignItems();
 
             } else if (e.dataTransfer.getData("isMultiDrag") == "true") {
-                const dropContext = {
-                    targetPage,
-                    page,
-                    left,
-                    top,
-                    width,
-                    height
-                };
-                this.handleMultiItemDrop(e, dropContext);
+                this.handleMultiItemDrop(e);
 
             } else if (e.dataTransfer.getData("page") && e.dataTransfer.getData("id")) {
                 const initialPage = Number(e.dataTransfer.getData("page"));
@@ -956,38 +948,58 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             this.refreshSignItems();
         }
 
-
         /**
          * Handles the multi-item drop event
          * @param {MouseEvent} e - The mouse event
-         * @param {Object} dropContext - The context data for the multi-item drop
-         * @param {number} dropContext.targetPage - The target page number
-         * @param {HTMLElement} dropContext.page - The target page element
-         * @param {number} dropContext.left - The left offset of the text layer
-         * @param {number} dropContext.top - The top offset of the text layer
-         * @param {number} dropContext.width - The width of the text layer
-         * @param {number} dropContext.height - The height of the text layer
          */
-        handleMultiItemDrop(event, dropContext) {
-            const { targetPage, page, left, top, width, height } = dropContext;
-
+        handleMultiItemDrop(event) {
             if (!this.multiDragState) return;
 
+            // First check if all items can be properly dropped
+            const dropPositions = [];
+            let allItemsCanBeDropped = true;
+
             this.multiDragState.items.forEach(item => {
-                const signItem = item.signItem;
-                const initialPage = item.pageNumber;
-                const posX = Math.round(
-                    normalizePosition((event.pageX - left - item.offsetX) / width, signItem.data.width) * 1000
-                ) / 1000;
+                const viewerRect = this.viewerContainer.getBoundingClientRect();
+                const mouseX = event.clientX - viewerRect.left + this.viewerContainer.scrollLeft;
+                const mouseY = event.clientY - viewerRect.top + this.viewerContainer.scrollTop;
 
-                const posY = Math.round(
-                    normalizePosition((event.pageY - top - item.offsetY) / height, signItem.data.height) * 1000
-                ) / 1000;
+                const {width, height} = item.signItem.el.getBoundingClientRect();
+                const itemX = mouseX - item.offsetX;
+                const itemY = mouseY - item.offsetY;
 
-                const positionContext = { posX, posY, targetPage, initialPage, page };
-                this.updateSignItemPosition(signItem, positionContext);
+                // Determine exact page and position
+                const positionData = this.getPositionData(itemX, itemY, width, height);
 
+                // If any item would be dropped outside a valid page area, no drop is allowed
+                if (positionData.page === -1) {
+                    allItemsCanBeDropped = false;
+                }
+
+                dropPositions.push({
+                    item: item,
+                    positionData: positionData
+                });
             });
+
+            if (allItemsCanBeDropped) {
+                // Update all items' positions
+                dropPositions.forEach(({item, positionData}) => {
+                    const signItem = item.signItem;
+                    const initialPage = item.pageNumber;
+                    const actualTargetPage = positionData.page;
+                    const actualPage = this.getPageContainer(actualTargetPage);
+
+                    const positionContext = {
+                        posX: positionData.posX,
+                        posY: positionData.posY,
+                        targetPage: actualTargetPage,
+                        initialPage,
+                        page: actualPage
+                    };
+                    this.updateSignItemPosition(signItem, positionContext);
+                });
+            }
 
             this.multiDragState = null;
             this.helperLines?.hide();

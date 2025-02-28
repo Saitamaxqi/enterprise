@@ -587,7 +587,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
 
     /**
      * Sets up a resize observer to adjust the sign images on page resize (zoom in/out)
-    */
+     */
     setupResizeObserver() {
         const viewerContainer = this.root.querySelector("#viewerContainer");
         if (viewerContainer) {
@@ -790,7 +790,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
 
     /**
      * Adjusts the sign images on page resize (zoom in/out)
-    */
+     */
     adjustSignImagesOnPageResize() {
         for (const page in this.signItems) {
             for (const id in this.signItems[page]) {
