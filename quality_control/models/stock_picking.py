@@ -60,6 +60,7 @@ class StockPicking(models.Model):
         else:
             checkable_lines = self.move_line_ids.filtered(
             lambda ml: (
+                ml.move_id.picked and
                 not float_is_zero(ml.quantity, precision_rounding=ml.product_uom_id.rounding)
             ))
         checkable_products = checkable_lines.product_id
