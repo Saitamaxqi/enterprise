@@ -50,16 +50,3 @@ def get_veta_p_vals(sender_company):
         'company_type': "F" if sender_company.partner_id.company_type == 'person' else "P",
         'company_name': sender_company.name,
     }
-
-
-def build_query_clauses(groupby_clause, current_groupby):
-    """builds groupby and orderby clauses for a query"""
-    if current_groupby:
-        current_groupby = f'account_move_line.{current_groupby}'
-
-    # only put a comma if the 2 strings are nonempty
-    groupby_clause = ','.join(filter(None, [groupby_clause, current_groupby]))
-    if groupby_clause:
-        return f'GROUP BY {groupby_clause}', f'ORDER BY {groupby_clause}'
-    else:
-        return '', ''
