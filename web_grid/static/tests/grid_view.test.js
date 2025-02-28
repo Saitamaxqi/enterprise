@@ -2147,4 +2147,65 @@ describe("grid_view_mobile", () => {
             message: "The default active range should be the first one define in the grid view",
         });
     });
+
+    test("virtual scroll loads next records on mobile", async () => {
+        // Inspired by the test `Only relevant grid rows are rendered with larger recordsets`
+
+        // Setup: generates 100 new tasks and related analytic lines distributed
+        // in all available projects, deterministically based on their ID.
+        const { _fields: alFields, _records: analyticLines } = Line;
+        const { _records: tasks } = Task;
+        const { _records: projects } = Project;
+        const selectionValues = alFields.selection_field.selection;
+        const today = luxon.DateTime.local().toFormat("yyyy-MM-dd");
+        for (let id = 100; id < 200; id++) {
+            const projectId = projects[id % projects.length].id;
+            tasks.push({
+                id,
+                name: `BS task #${id}`,
+                project_id: projectId,
+            });
+            analyticLines.push({
+                id,
+                project_id: projectId,
+                task_id: id,
+                selection_field: selectionValues[id % selectionValues.length][0],
+                date: today,
+                unit_amount: (id % 10) + 1, // 1 to 10
+            });
+        }
+
+        await mountView({
+            type: "grid",
+            resModel: "analytic.line",
+            arch: `
+                <grid>
+                    <field name="project_id" type="row"/>
+                    <field name="task_id" type="row"/>
+                    <field name="date" type="col">
+                        <range name="week" string="Week" span="week" step="day"/>
+                        <range name="day" string="Day" span="day" step="day"/>
+                    </field>
+                    <field name="unit_amount" type="measure"/>
+                </grid>`,
+        });
+
+        const content = queryOne(".o_content");
+        content.style = "height: 600px; overflow: scroll;";
+
+        // This is to ensure that the virtual rows will not be impacted by
+        // sub-pixel calculations.
+        await scroll(content, { top: 0 });
+        await animationFrame();
+
+        // Scroll to the middle of the grid
+        await scroll(content, { top: content.scrollHeight / 2 });
+        await animationFrame();
+        expect(`a[href="/odoo/m-task/101"]`).toHaveCount(1);
+
+        // Scroll to the end of the grid
+        await scroll(content, { top: content.scrollHeight });
+        await animationFrame();
+        expect(`a[href="/odoo/m-task/199"]`).toHaveCount(1);
+    });
 });

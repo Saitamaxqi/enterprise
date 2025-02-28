@@ -3,7 +3,7 @@
     <t t-name="web_grid.Renderer">
         <div class="o_grid_renderer position-relative z-0" t-ref="renderer">
             <div class="o_grid_grid d-grid gap-0 border-bottom bg-100"
-                 t-attf-style="grid-template-rows: {{ isMobile ? 'auto' : gridTemplateRows }}; grid-template-columns: {{ gridTemplateColumns }}"
+                 t-attf-style="grid-template-rows: {{ gridTemplateRows }}; grid-template-columns: {{ gridTemplateColumns }}"
                  t-on-mouseover.stop="onMouseOver"
                  t-on-mouseout.stop="onMouseOut"
             >
