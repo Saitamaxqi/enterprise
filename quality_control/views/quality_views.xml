@@ -171,6 +171,7 @@
     <record id="quality_alert_action_check" model="ir.actions.act_window">
         <field name="name">Quality Alerts</field>
         <field name="res_model">quality.alert</field>
+        <field name="path">quality-alerts</field>
         <field name="view_mode">kanban,list,form,pivot,graph,calendar,activity</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -180,8 +181,9 @@
     </record>
 
     <record id="quality_alert_action_report" model="ir.actions.act_window">
-        <field name="name">Quality Alerts</field>
+        <field name="name">Quality Alerts Analysis</field>
         <field name="res_model">quality.alert</field>
+        <field name="path">quality-alerts-analysis</field>
         <field name="view_mode">graph,pivot,kanban,list,form,calendar</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -424,6 +426,7 @@
     <record id="quality_check_action_main" model="ir.actions.act_window">
         <field name="name">Quality Checks</field>
         <field name="res_model">quality.check</field>
+        <field name="path">quality-checks</field>
         <field name="view_mode">list,kanban,form,pivot,graph,activity</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -436,8 +439,9 @@
     </record>
 
     <record model="ir.actions.act_window" id="quality_check_action_report">
-        <field name="name">Quality Checks</field>
+        <field name="name">Quality Check Analysis</field>
         <field name="res_model">quality.check</field>
+        <field name="path">quality-checks-analysis</field>
         <field name="view_mode">graph,pivot,kanban,list,form</field>
         <field name="context">{'search_default_state': 1}</field>
         <field name="help" type="html">
@@ -614,6 +618,7 @@
     <record id="quality_alert_team_action_config" model="ir.actions.act_window">
         <field name="name">Quality Teams</field>
         <field name="res_model">quality.alert.team</field>
+        <field name="path">quality-teams</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'list', 'view_id': ref('quality_alert_team_view_tree')}),
@@ -624,6 +629,7 @@
     <record id="quality_spreadsheet_template_action_config" model="ir.actions.act_window">
         <field name="name">Quality Spreadsheet Templates</field>
         <field name="res_model">quality.spreadsheet.template</field>
+        <field name="path">quality-spreadsheet-templates</field>
         <field name="view_mode">list</field>
     </record>
 
@@ -664,6 +670,7 @@
     <record id="quality_tag_action" model="ir.actions.act_window">
         <field name="name">Quality Tags</field>
         <field name="res_model">quality.tag</field>
+        <field name="path">quality-tags</field>
         <field name="view_mode">list,form</field>
         <field name="help" type="html">
           <p class="o_view_nocontent_smiling_face">
@@ -704,6 +711,7 @@
     <record id="quality_alert_stage_action" model="ir.actions.act_window">
         <field name="name">Quality Alert Stages</field>
         <field name="res_model">quality.alert.stage</field>
+        <field name="path">quality-alert-stages</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -843,8 +851,9 @@
     </record>
 
     <record model="ir.actions.act_window" id="quality_point_action">
-        <field name="name">Quality Control Points</field>
+        <field name="name">Control Points</field>
         <field name="res_model">quality.point</field>
+        <field name="path">control-points</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="search_view_id" ref="quality_point_view_search"/>
         <field name="help" type="html">
