@@ -191,6 +191,7 @@
     <record id="mrp_eco_type_action_form" model="ir.actions.act_window">
         <field name="name">ECO Types</field>
         <field name="res_model">mrp.eco.type</field>
+        <field name="path">eco-types</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'list', 'view_id': ref('mrp_eco_type_view_tree')}),
@@ -538,6 +539,7 @@
     <record id="mrp_eco_action_main" model="ir.actions.act_window">
         <field name="name">Engineering Change Orders</field>
         <field name="res_model">mrp.eco</field>
+        <field name="path">ecos</field>
         <field name="view_mode">kanban,list,calendar,pivot,graph,form,activity</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -551,8 +553,9 @@
     </record>
 
     <record id="mrp_eco_action_report" model="ir.actions.act_window">
-        <field name="name">Engineering Change Orders</field>
+        <field name="name">ECOs Analysis</field>
         <field name="res_model">mrp.eco</field>
+        <field name="path">ecos-analysis</field>
         <field name="view_mode">graph,pivot</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -652,6 +655,7 @@
     <record id="mrp_eco_stage_action" model="ir.actions.act_window">
         <field name="name">ECO Stages</field>
         <field name="res_model">mrp.eco.stage</field>
+        <field name="path">eco-stages</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -686,6 +690,7 @@
     <record id="mrp_eco_tag_action" model="ir.actions.act_window">
         <field name="name">ECO Tags</field>
         <field name="res_model">mrp.eco.tag</field>
+        <field name="path">eco-tags</field>
         <field name="view_mode">list,form</field>
         <field name="help" type="html">
           <p class="o_view_nocontent_smiling_face">
