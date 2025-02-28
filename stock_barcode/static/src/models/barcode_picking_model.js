@@ -1969,14 +1969,6 @@ export default class BarcodePickingModel extends BarcodeModel {
 
     _updateLineQty(line, args) {
         if (args.qty_done) {
-            if (args.uom) {
-                const lineUOM = line.product_uom_id;
-                if (args.uom.factor !== lineUOM.factor) {
-                    // Convert the scanned qty into the product UoM.
-                    args.qty_done = args.qty_done * (args.uom.factor / lineUOM.factor);
-                    args.uom = lineUOM;
-                }
-            }
             if (line.product_id.tracking === "serial") {
                 const nextQty = line.qty_done + args.qty_done;
                 if (nextQty > 1 && (this.record.use_create_lots || this.record.use_existing_lots)) {

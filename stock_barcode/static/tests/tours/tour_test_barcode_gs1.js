@@ -699,7 +699,7 @@ registry.category("web_tour.tours").add("test_gs1_delivery_ambiguous_lot_number"
                 helper.assertLinesCount(1);
                 const line = helper.getLine({ barcode: "22222220" });
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "1 Units");
+                helper.assertLineQty(line, "1 Packaging - Product A x1");
                 helper.assertLineTrackingNumber(line, "12345");
             },
         },
@@ -1251,7 +1251,7 @@ registry.category("web_tour.tours").add("test_gs1_receipt_quantity_with_uom", {
                 helper.assertLinesCount(1);
                 const line = helper.getLine({ barcode: "15264329" });
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "5 Units");
+                helper.assertLineQty(line, "5 kg");
             },
         },
         // Scans 4 units for the "Product by Units".
@@ -1260,12 +1260,12 @@ registry.category("web_tour.tours").add("test_gs1_receipt_quantity_with_uom", {
             run: "scan 01000000152643293700000004",
         },
         {
-            trigger: ".o_barcode_line .qty-done:contains(9)",
+            trigger: ".o_barcode_line .qty-done:contains(4)",
             run: function () {
-                helper.assertLinesCount(1);
-                const line = helper.getLine({ barcode: "15264329" });
+                helper.assertLinesCount(2);
+                const line = helper.getLines({ barcode: "15264329" })[1];
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "9 Units");
+                helper.assertLineQty(line, "4 Units");
             },
         },
         // Scans 5 kg for the "Product by Units" => Update qty from 9 to 14 Units.
@@ -1274,12 +1274,12 @@ registry.category("web_tour.tours").add("test_gs1_receipt_quantity_with_uom", {
             run: "scan 01000000152643293100000005",
         },
         {
-            trigger: ".o_barcode_line .qty-done:contains(14)",
+            trigger: ".o_barcode_line .qty-done:contains(10)",
             run: function () {
-                helper.assertLinesCount(1);
-                const line = helper.getLine({ barcode: "15264329" });
+                helper.assertLinesCount(2);
+                const line = helper.getLines({ barcode: "15264329" })[0];
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "14 Units");
+                helper.assertLineQty(line, "10 kg");
             },
         },
 
@@ -1291,7 +1291,7 @@ registry.category("web_tour.tours").add("test_gs1_receipt_quantity_with_uom", {
         {
             trigger: '.o_barcode_line:contains("Product by kg")',
             run: function () {
-                helper.assertLinesCount(2);
+                helper.assertLinesCount(3);
                 const line = helper.getLine({ barcode: "15264879" });
                 helper.assertLineIsHighlighted(line, true);
                 helper.assertLineQty(line, "5 kg");
@@ -1303,12 +1303,12 @@ registry.category("web_tour.tours").add("test_gs1_receipt_quantity_with_uom", {
             run: "scan 01000000152648793700000006",
         },
         {
-            trigger: ".o_barcode_line.o_selected .qty-done:contains(11)",
+            trigger: ".o_barcode_line.o_selected .qty-done:contains(6)",
             run: function () {
-                helper.assertLinesCount(2);
-                const line = helper.getLine({ barcode: "15264879" });
+                helper.assertLinesCount(4);
+                const line = helper.getLines({ barcode: "15264879" })[1];
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "11 kg");
+                helper.assertLineQty(line, "6 Units");
             },
         },
 
@@ -1320,21 +1320,21 @@ registry.category("web_tour.tours").add("test_gs1_receipt_quantity_with_uom", {
         {
             trigger: '.o_barcode_line:contains("Product by g")',
             run: function () {
-                helper.assertLinesCount(3);
+                helper.assertLinesCount(5);
                 const line = helper.getLine({ barcode: "15264893" });
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "1250 g");
+                helper.assertLineQty(line, "1.25 kg");
             },
         },
         // Clicks on the edit button to trigger a save.
         {
-            trigger: ".o_barcode_line:nth-child(3) .o_edit",
+            trigger: ".o_barcode_line:nth-child(5) .o_edit",
             run: "click",
         },
         {
             trigger: "[name=qty_done] input",
             run: function () {
-                helper.assertFormQuantity("1250");
+                helper.assertFormQuantity("4");
             },
         },
         ...stepUtils.discardBarcodeForm(),
@@ -1375,7 +1375,7 @@ registry.category("web_tour.tours").add("test_gs1_receipt_packaging", {
                 helper.assertLinesCount(1);
                 const line = helper.getLine({ barcode: "1113" });
                 helper.assertLineIsHighlighted(line, true);
-                helper.assertLineQty(line, "12 Units");
+                helper.assertLineQty(line, "1 Dozens");
             },
         },
         // Scans 4 packaging
@@ -1384,11 +1384,11 @@ registry.category("web_tour.tours").add("test_gs1_receipt_packaging", {
             run: "scan 01000000000022263700000004",
         },
         {
-            trigger: '.o_barcode_line [name=quantity]:contains("60")',
+            trigger: '.o_barcode_line [name=quantity]:contains("5")',
             run: function () {
                 helper.assertLinesCount(1);
                 helper.assertLineIsHighlighted(0, true);
-                helper.assertLineQty(0, "60 Units");
+                helper.assertLineQty(0, "5 Dozens");
             },
         },
         // Clicks on the edit button to trigger a save.
@@ -1399,7 +1399,7 @@ registry.category("web_tour.tours").add("test_gs1_receipt_packaging", {
         {
             trigger: '[name="qty_done"] input',
             run: function () {
-                helper.assertFormQuantity("60");
+                helper.assertFormQuantity("5");
             },
         },
         ...stepUtils.discardBarcodeForm(),
@@ -1415,7 +1415,7 @@ registry.category("web_tour.tours").add("test_gs1_tracked_packaging", {
             trigger: ".o_barcode_line",
             run: () => {
                 helper.assertLinesCount(1);
-                helper.assertLineQty(0, "12 Units", "Scanned packaging has quantity of 12");
+                helper.assertLineQty(0, "1 Dozens", "Scanned packaging has quantity of 1");
                 helper.assertLineProduct(0, "productlot1");
                 helper.assertLineTrackingNumber(0, "lot-001");
             },
@@ -1429,7 +1429,7 @@ registry.category("web_tour.tours").add("test_gs1_tracked_packaging", {
             trigger: ".o_barcode_line",
             run: () => {
                 helper.assertLinesCount(1);
-                helper.assertLineQty(0, "12 Units", "Scanned packaging has quantity of 12");
+                helper.assertLineQty(0, "1 Dozens", "Scanned packaging has quantity of 1");
                 helper.assertLineProduct(0, "productlot1");
                 helper.assertLineTrackingNumber(0, "lot-001");
             },

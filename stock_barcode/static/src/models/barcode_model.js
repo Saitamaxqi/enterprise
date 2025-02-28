@@ -516,7 +516,7 @@ export default class BarcodeModel extends EventBus {
         }
         if (!line.product_id && args.product_id) {
             line.product_id = args.product_id;
-            line.product_uom_id = this.cache.getRecord("uom.uom", args.product_id.uom_id);
+            line.product_uom_id = this.cache.getRecord("uom.uom", args.uom?.id || args.product_id.uom_id);
         }
         if (location_id) {
             if (typeof location_id === "number") {
@@ -1691,7 +1691,7 @@ export default class BarcodeModel extends EventBus {
 
     _findLine(barcodeData) {
         let foundLine = false;
-        const { lot, lotName, product } = barcodeData;
+        const { lot, lotName, product, uom } = barcodeData;
         const quantPackage = barcodeData.package;
         const dataLotName = lotName || (lot && lot.name) || false;
         const pageLines = [...this.pageLines];
@@ -1709,6 +1709,9 @@ export default class BarcodeModel extends EventBus {
             const lineLotName = this.getlotName(line);
             if (line.product_id.id !== product.id) {
                 continue; // Not the same product.
+            }
+            if (uom ? (line.product_uom_id.id !== uom.id) : (line.product_uom_id.id !== product.uom_id)) { // If uom is not set on barcodeData, it means that the new line is in product base unit
+                continue; // Not the same UoM.
             }
             if (quantPackage && (!line.package_id || line.package_id.id !== quantPackage.id)) {
                 continue; // Not the expected package.

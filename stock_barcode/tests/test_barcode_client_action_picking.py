@@ -2115,39 +2115,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             {'product_id': self.productlot1.id, 'location_dest_id': self.shelf1.id, 'qty_done': 1, 'lot_id': lot2.id},
         ])
 
-    def test_picking_type_mandatory_scan_product_packaging(self):
-        """ Check a product's packaging can also be scanned when the scan of a product is mandatory.
-        """
-        self.env.user.write({'group_ids': [Command.link(self.env.ref('uom.group_uom').id)]})
-        self.picking_type_in.restrict_scan_product = True
-        pack_10 = self.env['uom.uom'].create({
-            'name': "product1 x10",
-            'relative_factor': 10,
-            'relative_uom_id': self.product1.uom_id.id,
-        })
-        self.product1.uom_ids = pack_10
-        self.env['product.uom'].create({
-            'product_id': self.product1.id,
-            'uom_id': pack_10.id,
-            'barcode': 'product1x10',
-        })
-        receipt = self.env['stock.picking'].create({
-            'location_id': self.supplier_location.id,
-            'location_dest_id': self.stock_location.id,
-            'picking_type_id': self.picking_type_in.id,
-            'move_ids': [Command.create({
-                'name': 'product1 x 10',
-                'location_id': self.supplier_location.id,
-                'location_dest_id': self.stock_location.id,
-                'product_id': self.product1.id,
-                'product_uom': self.product1.uom_id.id,
-                'product_uom_qty': 10,
-            })],
-        })
-        receipt.action_confirm()
-        url = self._get_client_action_url(receipt.id)
-        self.start_tour(url, 'test_picking_type_mandatory_scan_product_packaging', login='admin')
-
     def test_picking_type_mandatory_scan_complete_flux(self):
         """ From the receipt to the delivery, make a complete flux with each
         picking types having their own barcode's settings:
@@ -3738,9 +3705,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_gs1_receipt_quantity_with_uom', login='admin', timeout=180)
         # Checks the moves' quantities and UoM.
         self.assertRecordValues(receipt.move_ids, [
-            {'picked': True, 'product_id': product_by_units.id, 'product_uom': uom_unit.id, 'quantity': 14},
+            {'picked': True, 'product_id': product_by_units.id, 'product_uom': uom_kg.id, 'quantity': 14},
             {'picked': True, 'product_id': product_by_kg.id, 'product_uom': uom_kg.id, 'quantity': 11},
-            {'picked': True, 'product_id': product_by_g.id, 'product_uom': uom_g.id, 'quantity': 1250},
+            {'picked': True, 'product_id': product_by_g.id, 'product_uom': uom_kg.id, 'quantity': 1.25},
         ])
 
     def test_gs1_receipt_scan_not_gs1_multi_barcode(self):
@@ -3830,7 +3797,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         move = receipt.move_ids
         self.assertEqual(move.product_id, product)
-        self.assertEqual(move.quantity, 60)
+        self.assertEqual(move.quantity, 5)
         self.assertEqual(move.picked, True)
 
     def test_gs1_tracked_packaging(self):
@@ -3856,8 +3823,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         lot = self.env['stock.lot'].search([('name', '=', 'lot-001')])
         move_lines = self.env['stock.move.line'].search([('product_id', '=', self.productlot1.id)])
         self.assertRecordValues(move_lines, [
-            {'quantity': 12, 'lot_id': lot.id, 'location_id': self.supplier_location.id, 'location_dest_id': self.stock_location.id},
-            {'quantity': 12, 'lot_id': lot.id, 'location_id': self.stock_location.id, 'location_dest_id': self.customer_location.id},
+            {'quantity': 1, 'lot_id': lot.id, 'location_id': self.supplier_location.id, 'location_dest_id': self.stock_location.id},
+            {'quantity': 1, 'lot_id': lot.id, 'location_id': self.stock_location.id, 'location_dest_id': self.customer_location.id},
         ])
 
     def test_serial_product_packaging(self):

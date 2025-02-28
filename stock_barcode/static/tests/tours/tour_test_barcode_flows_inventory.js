@@ -921,7 +921,7 @@ registry.category("web_tour.tours").add("test_inventory_packaging", {
             trigger: ".o_barcode_line",
             run: function () {
                 const line = helper.getLine({ barcode: "product1" });
-                helper.assertLineQty(line, "15 Units");
+                helper.assertLineQty(line, "1 Pack of 15");
             },
         },
         {
@@ -946,11 +946,11 @@ registry.category("web_tour.tours").add("test_inventory_packaging", {
             trigger: ".o_barcode_line",
             run: function () {
                 const line = helper.getLine({ barcode: "product1" });
-                helper.assertLineQty(line, "15/15 Units");
+                helper.assertLineQty(line, "1/1 Pack of 15");
             },
         },
         {
-            trigger: ".o_barcode_line .qty-done:contains(15)",
+            trigger: ".o_barcode_line .qty-done:contains(1)",
         },
         {
             trigger: ".o_apply_page",
