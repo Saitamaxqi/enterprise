@@ -1,100 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-    <t t-name="spreadsheet_edition.DateFilterEditorFieldMatching" t-inherit="spreadsheet_edition.FilterEditorFieldMatching">
-        <xpath expr="//ModelFieldSelector" position="before">
-            <span class="text-muted w-50">Date field</span>
-        </xpath>
-        <xpath expr="//div[@name='field-match']" position="after">
-            <FilterFieldOffset
-                active="!!props.fieldMatchings[object_index].fieldMatch.chain"
-                onOffsetSelected="(value) => props.onOffsetSelected(object_index, value)"
-                selectedOffset="object.fieldMatch and object.fieldMatch.offset || 0"
-            />
-        </xpath>
-    </t>
 
     <div t-name="spreadsheet_edition.DateFilterEditorSidePanel" class="o_spreadsheet_filter_editor_side_panel">
         <Section title.translate="Label">
             <TextInput
-                placeholder="placeholder"
-                class="'o_global_filter_label' + (missingLabel ? ' o_field_invalid' : '')"
-                value="genericState.label || ''"
+                placeholder="store.labelPlaceholder"
+                class="'o_global_filter_label' + (store.missingLabelError ? ' o_field_invalid' : '')"
+                value="store.filter.label"
                 onChange.bind="setLabel"
                 autofocus="true"
             />
         </Section>
         <div class="o-section">
             <div class="o-section-title">Time range</div>
-            <select
-                t-model="dateState.type"
-                t-on-change="onDateOptionChange"
-                class="o-input o-filter-range-type">
-                <t t-foreach="dateRangeTypes" t-as="range" t-key="range.type">
-                    <option t-att-selected="isDateTypeSelected(range.type) ? 1 : 0" t-att-value="range.type">
-                        <t t-esc="range.description" />
-                    </option>
-                </t>
-            </select>
+            <Select
+                class="'o-filter-range-type'"
+                value="store.filter.rangeType"
+                options="store.availableRangeTypes"
+                onOptionSelected.bind="onRangeTypeSelected"
+            />
         </div>
-        <div class="o-section"
-             t-if="dateState.type !== 'from_to'">
-            <div class="o-section-title">Default value</div>
-            <t t-if="dateState.type !== 'relative'" class="d-flex align-items-center mt-2">
+        <Section t-if="store.filter.rangeType !== 'from_to'" title.translate="Default value">
+            <t t-if="store.filter.rangeType !== 'relative'" class="d-flex align-items-center mt-2">
                 <Checkbox
                     name="'date_automatic_filter'"
                     label.translate="Automatically filter on the current period"
-                    value="!!dateState.defaultValue"
-                    onChange.bind="toggleDateDefaultValue"
+                    value="!!store.filter.defaultValue"
+                    onChange.bind="store.toggleDateDefaultValue"
                     className="'me-2'"
                 />
             </t>
-            <select
+            <Select
                 t-else="1"
-                t-model="dateState.defaultValue"
-                class="o-input o_relative_date_selection">
-                <option value="" />
-                <t t-foreach="relativeDateRangesTypes" t-as="range" t-key="range.type">
-                    <option t-att-selected="range.type === dateState.defaultValue ? 1 : 0" t-att-value="range.type">
-                        <t t-esc="range.description" />
-                    </option>
-                </t>
-            </select>
-            <div class="pt-3" t-if="dateState.defaultValue and dateState.type !== 'relative'">
-                <select t-model="dateState.defaultValue" class="o-input date_filter_automatic_value">
-                    <option
-                        t-foreach="allowedAutomaticValues"
-                        t-as="val"
-                        t-key="val.value"
-                        t-att-value="val.value"
-                        t-esc="val.label"/>
-                </select>
+                class="'o_relative_date_selection'"
+                value="store.evaluatedDefaultValue || ''"
+                options="store.relativeOptions"
+                onOptionSelected.bind="updateDefaultValue"
+            />
+            <div class="pt-3" t-if="store.filter.defaultValue and store.filter.rangeType !== 'relative'">
+                <Select
+                    class="'date_filter_automatic_value'"
+                    value="store.evaluatedDefaultValue || ''"
+                    options="store.fixedPeriodOptions"
+                    onOptionSelected.bind="updateDefaultValue"
+                />
             </div>
-        </div>
-        <div class="o-section" t-if="dateState.type === 'fixedPeriod'">
-            <div class="o-section-title">Value options</div>
-            <t t-set="monthLabel">Months</t>
-            <div class="d-flex flex-row gap-3">
+        </Section>
+        <Section t-if="store.filter.rangeType === 'fixedPeriod'" title.translate="Value Options">
+            <div class="d-flex gap-3">
                 <Checkbox
                     name="'month'"
                     label.translate="Months"
-                    value="!dateState.disabledPeriods.includes('month')"
-                    onChange="() => this.toggleAllowedPeriod('month')"
+                    value="!store.filter.disabledPeriods?.includes('month')"
+                    onChange="() => this.store.toggleAllowedPeriod('month')"
                 />
                 <Checkbox
                     name="'quarter'"
                     label.translate="Quarters"
-                    value="!dateState.disabledPeriods.includes('quarter')"
-                    onChange="() => this.toggleAllowedPeriod('quarter')"
+                    value="!store.filter.disabledPeriods?.includes('quarter')"
+                    onChange="() => this.store.toggleAllowedPeriod('quarter')"
                 />
             </div>
-        </div>
-        <t t-if="shouldDisplayFieldMatching()">
-            <SidePanelCollapsible collapsedAtInit="!isNewFilter" title.translate="Field matching">
+        </Section>
+        <t t-if="store.shouldDisplayFieldMatching">
+            <SidePanelCollapsible collapsedAtInit="!store.isNew" title.translate="Field matching">
                 <t t-set-slot="content">
                     <Section class="'pt-0'">
-                        <DateFilterEditorFieldMatching
-                            fieldMatchings="fieldMatchings"
-                            wrongFieldMatchings="wrongFieldMatchings"
+                        <FilterEditorFieldMatching
+                            fieldMatchings="store.fieldsMatching"
                             selectField.bind="onSelectedField"
                             filterModelFieldSelectorField.bind="filterModelFieldSelectorField"
                             onOffsetSelected.bind="onOffsetSelected"

@@ -3,76 +3,73 @@
     <div t-name="spreadsheet_edition.RelationFilterEditorSidePanel" class="o_spreadsheet_filter_editor_side_panel">
         <Section title.translate="Label">
             <TextInput
-                placeholder="placeholder"
-                class="'o_global_filter_label' + (missingLabel ? ' o_field_invalid' : '')"
-                value="genericState.label || ''"
+                placeholder="store.labelPlaceholder"
+                class="'o_global_filter_label' + (store.missingLabelError ? ' o_field_invalid' : '')"
+                value="store.filter.label"
                 onChange.bind="setLabel"
                 autofocus="true"
             />
         </Section>
-        <t t-if="isValid">
+        <t t-if="store.isValid">
             <div class="o-section o_side_panel_related_model">
                 <div class="o-section-title">Related model</div>
                 <div t-att-class="missingModel ? 'o_field_invalid' : ''" class="mb-2">
                     <ModelSelector
-                        value="relationState.relatedModel.label"
+                        value="store.relationModelLabel"
                         onModelSelected.bind="onModelSelected"
                     />
                 </div>
                 <Checkbox
-                    t-if="relationState.relatedModel.hasParentRelation"
+                    t-if="store.canUseChildOf"
                     name="'includeChildren'"
                     label.translate="Include children"
-                    value="relationState.includeChildren"
-                    onChange="(value) => this.relationState.includeChildren = value"
+                    value="store.filter.includeChildren"
+                    onChange="(includeChildren) => this.store.update({ includeChildren })"
                 />
             </div>
-            <div class="o-section" t-if="relationState.relatedModel.technical">
+            <div class="o-section" t-if="store.filter.modelName">
                 <div class="o-section-title">Default value</div>
-                <div class="pivot_filter_input" t-if="!(relationState.relatedModel.technical === 'res.users' and relationState.defaultValue === 'current_user')">
+                <div class="pivot_filter_input" t-if="store.filter.defaultValue !== 'current_user'">
                     <MultiRecordSelector
-                        resModel="relationState.relatedModel.technical"
-                        resIds="relationState.defaultValue || []"
-                        t-key="relationState.relatedModel.technical"
+                        resModel="store.filter.modelName"
+                        resIds="store.evaluatedDefaultValue"
+                        t-key="store.filter.modelName"
                         placeholder="''"
-                        domain="getEvaluatedDomain()"
+                        domain="store.evaluatedDomain"
                         update.bind="onValuesSelected"
                     />
                 </div>
-                <div t-if="relationState.relatedModel.technical === 'res.users'" class="o-checkbox mt-2">
-                    <input
-                        type="checkbox"
-                        class="me-2"
-                        id="user_automatic_filter"
-                        t-att-checked="relationState.defaultValue === 'current_user'"
-                        t-on-change="toggleDefaultsToCurrentUser"
+                <div t-if="store.isResUserRelation" class="o-checkbox mt-2">
+                    <Checkbox
+                        name="'user_automatic_filter'"
+                        label.translate="Automatically filter on the current user"
+                        value="store.filter.defaultValue === 'current_user'"
+                        onChange.bind="toggleDefaultsToCurrentUser"
                     />
-                    <label for="user_automatic_filter">Automatically filter on the current user</label>
                 </div>
             </div>
-            <Section t-if="relationState.relatedModel.technical" title.translate="Possible values">
+            <Section t-if="store.filter.modelName" title.translate="Possible values">
                 <Checkbox
                     className="'mb-1'"
                     label.translate="Restrict values with a domain"
                     onChange.bind="toggleDomainRestriction"
-                    value="!!relationState.restrictValuesToDomain"
+                    value="state.domainRestriction"
                 />
                 <SidePanelDomain
-                    t-if="this.relationState.restrictValuesToDomain"
-                    resModel="relationState.relatedModel.technical"
-                    domain="relationState.domainOfAllowedValues or '[]'"
+                    t-if="state.domainRestriction"
+                    resModel="store.filter.modelName"
+                    domain="store.filter.domainOfAllowedValues or '[]'"
                     onUpdate.bind="onDomainUpdate"
                 />
             </Section>
-            <t t-if="shouldDisplayFieldMatching()">
-                <SidePanelCollapsible collapsedAtInit="!isNewFilter" title.translate="Field matching">
+            <t t-if="store.shouldDisplayFieldMatching">
+                <SidePanelCollapsible collapsedAtInit="!store.isNew" title.translate="Field matching">
                     <t t-set-slot="content">
                         <Section class="'pt-0'">
                             <FilterEditorFieldMatching
-                                fieldMatchings="fieldMatchings"
-                                wrongFieldMatchings="wrongFieldMatchings"
-                                selectField.bind="onSelectedField"
-                                filterModelFieldSelectorField="(field, path) => this.filterModelFieldSelectorField(field, path, relationState.relatedModel.technical)"
+                                fieldMatchings="store.fieldsMatching"
+                                selectField.bind="store.updateFieldMatching"
+                                filterModelFieldSelectorField="(field, path) => this.filterModelFieldSelectorField(field, path, store.filter.modelName)"
                             />
                         </Section>
                     </t>

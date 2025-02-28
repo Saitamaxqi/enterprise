@@ -147,7 +147,6 @@ test("Display with an existing 'Date' global filter", async function () {
         type: "date",
         rangeType: "fixedPeriod",
         label,
-        defaultValue: {},
     });
     await openGlobalFilterSidePanel();
     const sections = target.querySelectorAll(".o_spreadsheet_global_filters_side_panel .o-section");
@@ -168,7 +167,6 @@ test("Pivot display name is displayed in field matching", async function () {
         type: "date",
         rangeType: "fixedPeriod",
         label: "This year",
-        defaultValue: {},
     });
 
     await openGlobalFilterSidePanel();
@@ -186,7 +184,6 @@ test("List display name is displayed in field matching", async function () {
         type: "date",
         rangeType: "fixedPeriod",
         label: "This year",
-        defaultValue: {},
     });
 
     await openGlobalFilterSidePanel();
@@ -241,6 +238,7 @@ test("Create a new text global filter with a range", async function () {
     selectCell(model, "B1");
     await animationFrame();
     expect(".o-selection-input input").toHaveValue("B1");
+    await contains(".o-selection-ok").click();
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.rangeOfAllowedValues.zone).toEqual(toZone("B1"));
@@ -256,6 +254,7 @@ test("Create a new text global filter with a default value from a range", async 
     selectCell(model, "B1");
     await animationFrame();
     await animationFrame(); // SelectionInput component needs an extra tick to update
+    await contains(".o-selection-ok").click();
     expect(queryAllTexts("select option")).toEqual(["Choose a value...", "hello"]);
     await contains("select").select("hello");
     await saveGlobalFilter();
@@ -274,6 +273,7 @@ test("Create a new text global filter, set a default value ,then restrict values
     selectCell(model, "B1");
     await animationFrame();
     await animationFrame(); // SelectionInput component needs an extra tick to update
+    await contains(".o-selection-ok").click();
     expect(queryAllTexts("select option")).toEqual(["Choose a value...", "hello", "hi"]);
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
@@ -295,6 +295,7 @@ test("edit a text global filter with a default value not from the range", async 
     await openGlobalFilterSidePanel();
     // open edition panel
     await contains(".pivot_filter_input .fa-cog").click();
+
     expect("select").toHaveValue("Hi");
     expect(queryAllTexts("select option")).toEqual(["Choose a value...", "hello", "Hi"]);
     await saveGlobalFilter(); // save without changing anything
@@ -747,7 +748,7 @@ test("Trying to duplicate a filter label will trigger a toaster", async function
     await editGlobalFilterDefaultValue("Default Value");
     await selectFieldMatching("name");
     await saveGlobalFilter();
-    expect(".o_notification:has(.o_notification_bar.bg-danger)").toHaveText("Duplicated Label");
+    expect(".modal-dialog .text-prewrap").toHaveText("Duplicated filter label");
 });
 
 test("Create a new relational global filter with a pivot", async function () {
@@ -833,7 +834,7 @@ test("Create a new relational global filter of users will shows the checkbox", a
     await openGlobalFilterSidePanel();
     await clickCreateFilter("relation");
     await selectModelForRelation("res\\.users");
-    const defaultUserOption = document.querySelector("#user_automatic_filter");
+    const defaultUserOption = document.querySelector("[name=user_automatic_filter]");
     expect(defaultUserOption).not.toBe(null);
     expect(defaultUserOption).not.toBeChecked();
     await contains(defaultUserOption).click();
@@ -1890,7 +1891,7 @@ test("Filter edit side panel is initialized with the correct values", async func
     await contains(".o-sidePanel .fa-cog").click();
 
     expect(".o-sidePanel .o_global_filter_label").toHaveValue("This month");
-    expect(".o-sidePanel .o-input:eq(0)").toHaveValue("fixedPeriod");
+    expect(".o-sidePanel .o-filter-range-type").toHaveValue("fixedPeriod");
 
     const pivotField = ".o-sidePanel .o_spreadsheet_field_matching:eq(0)";
     const pivotFieldValue = `${pivotField} .o_model_field_selector_value span`;
@@ -1927,7 +1928,7 @@ test("Can save with an empty field", async function () {
     await openGlobalFilterSidePanel();
     await contains("i.o_side_panel_filter_icon.fa-cog").click();
     await saveGlobalFilter();
-    expect(model.getters.getPivotFieldMatching(pivotId, "42")).toEqual({});
+    expect(model.getters.getPivotFieldMatching(pivotId, "42")).toBe(undefined);
 });
 
 test("Can reorder filters with drag & drop", async function () {
@@ -2042,8 +2043,9 @@ test("invalid fixed period automatic value is removed when changing disabledPeri
 
     // Disable "month" period
     await contains(".o-sidePanelBody input[name='month']").click();
-    expect(".date_filter_automatic_value").toHaveValue("this_year");
+    expect(".date_filter_automatic_value").toHaveValue("");
     expect(queryAllValues(".date_filter_automatic_value option")).toEqual([
+        "",
         "this_year",
         "this_quarter",
     ]);

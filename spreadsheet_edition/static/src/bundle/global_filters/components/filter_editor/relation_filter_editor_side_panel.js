@@ -5,27 +5,17 @@ import { AbstractFilterEditorSidePanel } from "./filter_editor_side_panel";
 import { FilterEditorFieldMatching } from "./filter_editor_field_matching";
 import { useService } from "@web/core/utils/hooks";
 import { MultiRecordSelector } from "@web/core/record_selectors/multi_record_selector";
-import { Domain } from "@web/core/domain";
-import { user } from "@web/core/user";
 import { components } from "@odoo/o-spreadsheet";
 import { _t } from "@web/core/l10n/translation";
 
-import { useState } from "@odoo/owl";
+import { useState, onWillStart } from "@odoo/owl";
 import { SidePanelDomain } from "../../../components/side_panel_domain/side_panel_domain";
-import { ModelNotFoundError } from "@spreadsheet/data_sources/data_source";
 
 const { ValidationMessages } = components;
 
 /**
  * @typedef {import("@spreadsheet").OdooField} OdooField
  * @typedef {import("@spreadsheet").GlobalFilter} GlobalFilter
-
- *
- * @typedef RelationState
- * @property {GlobalFilter["defaultValue"]} defaultValue
- * @property {Array} displayNames
- * @property {{label?: string, technical?: string}} relatedModel
- * @property {boolean} [includeChildren]
  */
 
 /**
@@ -44,80 +34,28 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
     setup() {
         super.setup();
 
-        this.type = "relation";
-        /** @type {RelationState} */
-        this.relationState = useState({
-            defaultValue: [],
-            displayNames: [],
-            includeChildren: undefined,
-            relatedModel: {
-                label: undefined,
-                technical: undefined,
-            },
+        this.state = useState({
+            domainRestriction: this.store.filter.domainOfAllowedValues?.length > 0,
         });
+
         this.nameService = useService("name");
         this.modelDisplayName = useService("modelDisplayName");
+        this.orm = useService("orm");
+        onWillStart(this.onWillStart);
+    }
 
-        this.ALLOWED_FIELD_TYPES = ["many2one", "many2many", "one2many"];
+    get type() {
+        return "relation";
     }
 
     get missingModel() {
-        return this.genericState.saved && !this.relationState.relatedModel.technical;
-    }
-
-    get missingRequired() {
-        return super.missingRequired || this.missingModel;
-    }
-
-    /**
-     * @override
-     */
-    get filterValues() {
-        const values = super.filterValues;
-        return {
-            ...values,
-            defaultValue: this.relationState.defaultValue,
-            defaultValueDisplayNames: this.relationState.displayNames,
-            modelName: this.relationState.relatedModel.technical,
-            includeChildren: this.relationState.includeChildren,
-            domainOfAllowedValues: this.relationState.domainOfAllowedValues,
-        };
-    }
-
-    shouldDisplayFieldMatching() {
-        return this.fieldMatchings.length && this.relationState.relatedModel.technical;
-    }
-
-    /**
-     * @override
-     * @param {GlobalFilter} globalFilter
-     */
-    loadSpecificFilterValues(globalFilter) {
-        this.relationState.defaultValue = globalFilter.defaultValue;
-        this.relationState.relatedModel.technical = globalFilter.modelName;
-        this.relationState.includeChildren = globalFilter.includeChildren;
-        this.relationState.restrictValuesToDomain = !!globalFilter.domainOfAllowedValues?.length;
-        this.relationState.domainOfAllowedValues = globalFilter.domainOfAllowedValues;
+        return !this.store.filter.modelName;
     }
 
     async onWillStart() {
-        this.isValid = true;
-        try {
-            await super.onWillStart();
-        } catch (e) {
-            if (e instanceof ModelNotFoundError) {
-                console.error(e);
-                this.isValid = false;
-                return;
-            } else {
-                throw e;
-            }
-        }
-        const promises = [this.fetchModelFromName()];
-        if (this.relationState.includeChildren) {
-            this.relationState.relatedModel.hasParentRelation = true;
-        } else {
-            promises.push(this.fetchModelRelation());
+        const promises = [this.fetchRelationModelLabel()];
+        if (!this.store.canUseChildOf) {
+            promises.push(this.computeCanUseChildOf());
         }
         await Promise.all(promises);
     }
@@ -128,82 +66,34 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
         );
     }
 
-    /**
-     * Get the first field which could be a relation of the current related
-     * model
-     *
-     * @param {string} model
-     * @param {Object.<string, OdooField>} fields Fields to look in
-     * @returns {field|undefined}
-     */
-    _findRelation(model, fields) {
-        if (this.relationState.relatedModel.technical === model) {
-            return Object.values(fields).find((field) => field.name === "id");
-        }
-        const field = Object.values(fields).find(
-            (field) =>
-                field.searchable && field.relation === this.relationState.relatedModel.technical
-        );
-        return field;
-    }
-
     async onModelSelected({ technical, label }) {
-        if (!this.genericState.label) {
-            this.genericState.label = label;
-        }
-        if (this.relationState.relatedModel.technical !== technical) {
-            this.relationState.defaultValue = [];
-        }
-        this.relationState.relatedModel.technical = technical;
-        this.relationState.relatedModel.label = label;
-        this.relationState.domainOfAllowedValues = [];
-
-        this.fieldMatchings.forEach((object, index) => {
-            const field = this._findRelation(object.model(), object.fields());
-            this.onSelectedField(index, field ? field.name : undefined, field);
-        });
-        await this.fetchModelRelation();
-        this.relationState.includeChildren = this.relationState.relatedModel.hasParentRelation;
+        this.store.selectRelatedModel(technical, label);
+        await this.computeCanUseChildOf();
+        this.store.update({ includeChildren: this.store.canUseChildOf });
     }
 
-    async fetchModelFromName() {
-        if (!this.relationState.relatedModel.technical) {
+    async fetchRelationModelLabel() {
+        if (!this.store.filter.modelName) {
             return;
         }
-        this.relationState.relatedModel.label = await this.modelDisplayName.getModelDisplayName(
-            this.relationState.relatedModel.technical
-        );
-        if (!this.genericState.label) {
-            this.genericState.label = this.relationState.relatedModel.label;
+        const label = await this.modelDisplayName.getModelDisplayName(this.store.filter.modelName);
+        this.store.updateRelationModelLabel(label);
+        if (!this.store.filter.label) {
+            this.store.update({ label });
         }
     }
 
-    async fetchModelRelation() {
-        const technicalName = this.relationState.relatedModel.technical;
+    async computeCanUseChildOf() {
+        if (!this.store.filter.modelName) {
+            this.store.updateCanUseChildOf(false);
+            return;
+        }
         const hasParentRelation = await this.orm.call(
             "ir.model",
             "has_searchable_parent_relation",
-            [technicalName]
+            [this.store.filter.modelName]
         );
-        this.relationState.relatedModel.hasParentRelation = hasParentRelation;
-    }
-
-    /**
-     * @param {OdooField} field
-     * @returns {boolean}
-     */
-    isFieldValid(field) {
-        const relatedModel = this.relationState.relatedModel.technical;
-        return super.isFieldValid(field) && (!relatedModel || field.relation === relatedModel);
-    }
-
-    /**
-     * @override
-     * @param {OdooField} field
-     * @returns {boolean}
-     */
-    matchingRelation(field) {
-        return field.relation === this.relationState.relatedModel.technical;
+        this.store.updateCanUseChildOf(hasParentRelation);
     }
 
     /**
@@ -211,31 +101,30 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
      */
     async onValuesSelected(resIds) {
         const displayNames = await this.nameService.loadDisplayNames(
-            this.relationState.relatedModel.technical,
+            this.store.filter.modelName,
             resIds
         );
-        this.relationState.defaultValue = resIds;
-        this.relationState.displayNames = Object.values(displayNames);
+        this.store.update({
+            defaultValue: resIds,
+            displayNames: Object.values(displayNames),
+        });
     }
 
-    toggleDefaultsToCurrentUser(ev) {
-        this.relationState.defaultValue = ev.target.checked ? "current_user" : undefined;
-    }
-
-    toggleDomainRestriction(isChecked) {
-        this.relationState.restrictValuesToDomain = isChecked;
-        this.relationState.domainOfAllowedValues = [];
-    }
-
-    onDomainUpdate(domain) {
-        this.relationState.domainOfAllowedValues = domain;
-    }
-
-    getEvaluatedDomain() {
-        const domain = this.relationState.domainOfAllowedValues;
-        if (domain) {
-            return new Domain(domain).toList(user.context);
+    toggleDefaultsToCurrentUser(checked) {
+        if (checked) {
+            this.store.update({ defaultValue: "current_user" });
+        } else {
+            this.store.update({ defaultValue: [] });
         }
-        return [];
+    }
+    toggleDomainRestriction(isChecked) {
+        if (!isChecked) {
+            this.onDomainUpdate([]);
+        }
+        this.state.domainRestriction = isChecked;
+    }
+
+    onDomainUpdate(domainOfAllowedValues) {
+        this.store.update({ domainOfAllowedValues });
     }
 }

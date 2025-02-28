@@ -3,9 +3,9 @@
     <div t-name="spreadsheet_edition.TextFilterEditorSidePanel" class="o_spreadsheet_filter_editor_side_panel">
         <Section title.translate="Label">
             <TextInput
-                placeholder="placeholder"
-                class="'o_global_filter_label' + (missingLabel ? ' o_field_invalid' : '')"
-                value="genericState.label || ''"
+                placeholder="store.labelPlaceholder"
+                class="'o_global_filter_label' + (store.missingLabelError ? ' o_field_invalid' : '')"
+                value="store.filter.label"
                 onChange.bind="setLabel"
                 autofocus="true"
             />
@@ -13,35 +13,33 @@
         <Section title.translate="Filter value">
             <div class="o-section-subtitle">Default value</div>
             <TextFilterValue
-                value="textState.defaultValue"
-                options="textOptionsFromRange"
-                onValueChanged="(value) => (this.textState.defaultValue = value)"
+                value="store.evaluatedDefaultValue"
+                options="store.textOptions"
+                onValueChanged.bind="updateDefaultValue"
             />
             <div class="o-section-subtitle mt-4">Possible values</div>
             <Checkbox
                 className="'restrict_to_range mb-1'"
                 label.translate="Restrict values to a range"
-                onChange="(value) => (this.textState.restrictValuesToRange = value)"
-                value="!!textState.restrictValuesToRange"
+                onChange.bind="toggleRangeRestriction"
+                value="state.rangeRestriction"
             />
             <SelectionInput
-                t-if="textState.restrictValuesToRange"
-                ranges="this.rangesForSelectionInput"
+                t-if="state.rangeRestriction"
+                ranges="store.rangesForSelectionInput"
                 hasSingleRange="true"
                 required="true"
-                onSelectionChanged.bind="this.onRangeChanged"
-                onSelectionConfirmed.bind="this.onRangeConfirmed"
+                onSelectionChanged.bind="onRangeChanged"
+                onSelectionConfirmed.bind="onRangeConfirmed"
             />
-
         </Section>
-        <t t-if="shouldDisplayFieldMatching()">
-            <SidePanelCollapsible collapsedAtInit="!isNewFilter" title.translate="Field matching">
+        <t t-if="store.shouldDisplayFieldMatching">
+            <SidePanelCollapsible collapsedAtInit="!store.isNew" title.translate="Field matching">
                 <t t-set-slot="content">
                     <Section class="'pt-0'">
                         <FilterEditorFieldMatching
-                            fieldMatchings="fieldMatchings"
-                            wrongFieldMatchings="wrongFieldMatchings"
-                            selectField.bind="onSelectedField"
+                            fieldMatchings="store.fieldsMatching"
+                            selectField.bind="store.updateFieldMatching"
                             filterModelFieldSelectorField.bind="filterModelFieldSelectorField"
                         />
                     </Section>

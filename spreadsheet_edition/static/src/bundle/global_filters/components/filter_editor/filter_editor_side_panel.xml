@@ -12,29 +12,36 @@
         </div>
 
         <div t-foreach="props.fieldMatchings"
-                t-as="object"
-                t-key="object_index"
-                t-att-class="object.fieldMatch.chain ? '' : 'o_missing_field'"
+                t-as="match"
+                t-key="match.id"
+                t-att-class="match.fieldMatch.chain ? '' : 'o_missing_field'"
                 class="o_spreadsheet_field_matching o_required_field">
             <div>
-                <span class="fw-medium" t-esc="object.name"/>
-                <span class="o_spreadsheet_model_technical_name text-muted"> (<t t-esc="object.tag"/>)</span>
+                <span class="fw-medium" t-esc="match.name"/>
+                <span class="o_spreadsheet_model_technical_name text-muted"> (<t t-esc="match.tag"/>)</span>
             </div>
             <div class="d-flex justify-content-between flex-column">
-                <div t-att-class="props.wrongFieldMatchings.includes(object_index) ? 'o_field_invalid' : ''"
+                <div t-att-class="match.isValid ? '' : 'o_field_invalid'"
                     class="d-flex flex-row justify-content-start"
                     name="field-match"
                 >
+                    <span class="text-muted w-50">Field</span>
                     <ModelFieldSelector
-                            path="getModelField(object.fieldMatch)"
-                            resModel="object.model()"
+                            path="getModelField(match.fieldMatch)"
+                            resModel="match.model()"
                             readonly="false"
                             allowEmpty="true"
                             isDebugMode="!!env.debug"
-                            update="(path, fieldInfo) => props.selectField(object_index, path, fieldInfo.fieldDef)"
+                            update="(path, fieldInfo) => props.selectField(match.id, path, fieldInfo.fieldDef)"
                             filter.bind="props.filterModelFieldSelectorField"
-                            t-key="object_index"/>
+                            t-key="match.id"/>
                 </div>
+                <FilterFieldOffset
+                    t-if="props.onOffsetSelected"
+                    active="!!match.fieldMatch.chain"
+                    onOffsetSelected="(value) => props.onOffsetSelected(match.id, value)"
+                    selectedOffset="match.fieldMatch and match.fieldMatch.offset || 0"
+                />
             </div>
         </div>
     </t>

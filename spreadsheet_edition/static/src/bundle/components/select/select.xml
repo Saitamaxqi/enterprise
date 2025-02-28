@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="spreadsheet_edition.Select">
+        <select class="o_input" t-att-class="props.class" t-on-change="(ev) => this.props.onOptionSelected(ev.target.value)">
+            <option t-foreach="props.options"
+                    t-as="option"
+                    t-key="option.value"
+                    t-att-selected="option.value === props.value"
+                    t-att-value="option.value"
+                    t-esc="option.description"
+            />
+        </select>
+    </t>
+</templates>
