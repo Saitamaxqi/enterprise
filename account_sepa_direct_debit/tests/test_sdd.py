@@ -12,13 +12,23 @@ from odoo.addons.account_sepa_direct_debit.tests.common import SDDTestCommon
 @tagged('post_install', '-at_install')
 class SDDTest(SDDTestCommon):
     def test_sdd(self):
-        # The invoices should have been paid thanks to the mandate
-        self.assertEqual(self.invoice_agrolait.payment_state, self.env['account.move']._get_invoice_in_payment_state(), 'This invoice should have been paid thanks to the mandate')
+        # The invoices should have payments and in payment state thanks to the mandate
+        self.assertEqual(self.invoice_agrolait.payment_state, self.env['account.move']._get_invoice_in_payment_state(), 'This invoice should have payments and in payment state thanks to the mandate')
         self.assertEqual(self.invoice_agrolait.matched_payment_ids.sdd_mandate_id, self.mandate_agrolait)
-        self.assertEqual(self.invoice_china_export.payment_state, self.env['account.move']._get_invoice_in_payment_state(), 'This invoice should have been paid thanks to the mandate')
+        self.assertEqual(self.mandate_agrolait.payment_ids, self.invoice_agrolait.matched_payment_ids, 'The mandate should be linked to the payment')
+        self.assertEqual(self.invoice_china_export.payment_state, self.env['account.move']._get_invoice_in_payment_state(), 'This invoice should have have payments and in payment state thanks to the mandate')
         self.assertEqual(self.invoice_china_export.matched_payment_ids.sdd_mandate_id, self.mandate_china_export)
-        self.assertEqual(self.invoice_no_bic.payment_state, self.env['account.move']._get_invoice_in_payment_state(), 'This invoice should have been paid thanks to the mandate')
+        self.assertEqual(self.mandate_china_export.payment_ids, self.invoice_china_export.matched_payment_ids, 'The mandate should be linked to the payment')
+        self.assertEqual(self.invoice_no_bic.payment_state, self.env['account.move']._get_invoice_in_payment_state(), 'This invoice should have payments and in payment state thanks to the mandate')
         self.assertEqual(self.invoice_no_bic.matched_payment_ids.sdd_mandate_id, self.mandate_no_bic)
+        self.assertEqual(self.mandate_no_bic.payment_ids, self.invoice_no_bic.matched_payment_ids, 'The mandate should be linked to the payment')
+        # Reconcile the payments, to have the invoices fully paid
+        payments = (self.invoice_agrolait + self.invoice_china_export + self.invoice_no_bic).matched_payment_ids
+        self.reconcile_payments(payments)
+        self.env.invalidate_all()  # Since field is used only in UI, Invalidate the cache for field recomputation, simulating UI view change
+        self.assertEqual(self.mandate_agrolait.paid_invoice_ids, self.invoice_agrolait, 'The mandate should be linked to the paid invoice')
+        self.assertEqual(self.mandate_china_export.paid_invoice_ids, self.invoice_china_export, 'The mandate should be linked to the paid invoice')
+        self.assertEqual(self.mandate_no_bic.paid_invoice_ids, self.invoice_no_bic, 'The mandate should be linked to the paid invoice')
 
         # The 'one-off' mandate should now be closed
         self.assertEqual(self.mandate_agrolait.state, 'active', 'A recurrent mandate should stay confirmed after accepting a payment')
@@ -202,17 +212,7 @@ class SDDTest(SDDTestCommon):
         # It's now possible to have batches collected 2 days in the future.
 
         # Reconcile the previous payment with a bank statement line
-        bank_statement_line = self.env['account.bank.statement.line'].create({
-            'amount': payment.amount,
-            'date': fields.Date.context_today(mandate),
-            'payment_ref': 'test',
-            'journal_id': self.company_data['default_journal_bank'].id,
-        })
-
-        st_suspense_lines = bank_statement_line._seek_for_lines()[1]
-        liquidity_line = payment._seek_for_lines()[0]
-        st_suspense_lines.account_id = liquidity_line.account_id
-        (st_suspense_lines + liquidity_line).reconcile()
+        self.reconcile_payments(payment)
         self.assertTrue(payment.is_matched)
 
         new_invoice = self.create_invoice(partner)

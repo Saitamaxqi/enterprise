@@ -101,12 +101,10 @@ class SddMandate(models.Model):
         help="Number of invoices paid with this mandate.")
     payment_ids = fields.One2many(string='Payments', comodel_name='account.payment',
         compute='_compute_from_moves',
-        help="Payments generated thanks to this mandate.")
+        help="In-process and completed payments generated under this mandate.")
     payments_to_collect_nber = fields.Integer(string='Direct Debit Payments to Collect',
         compute='_compute_from_moves',
-        help="Number of Direct Debit payments to be collected for this mandate, that is, the number of payments that "
-             "have been generated and posted thanks to this mandate and still needs their XML file to be generated and "
-             "sent to the bank to debit the customer's account.")
+        help="Number of in-process and completed payments generated under this mandate.")
     mandate_pdf_file = fields.Binary(
         string="Mandate Form PDF",
         attachment=True,
@@ -147,15 +145,26 @@ class SddMandate(models.Model):
             self.payment_ids = False
             return
 
-        results = dict(
-            self.env['account.move']._read_group([
-                ('sdd_mandate_id', 'in', self.ids),
-                ('move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund'))
-            ], groupby=['sdd_mandate_id'], aggregates=['id:array_agg'])
-        )
+        self._cr.execute(SQL(
+            """
+            SELECT payment.sdd_mandate_id,
+                   ARRAY_AGG(DISTINCT move.id) AS invoice_ids
+              FROM account_payment payment
+              JOIN account_move__account_payment rel ON payment.id = rel.payment_id
+              JOIN account_move move ON rel.invoice_id = move.id
+             WHERE payment.sdd_mandate_id = ANY(%s)
+               AND move.move_type IN %s
+               AND move.state = 'posted'
+               AND move.payment_state = 'paid'
+          GROUP BY payment.sdd_mandate_id;
+            """,
+            self.ids,
+            tuple(self.env['account.move'].get_invoice_types()),
+        ))
+        results = dict(self._cr.fetchall())
 
         for mandate in self:
-            invoice_ids = results.get(mandate, [])
+            invoice_ids = results.get(mandate.id, [])
             mandate.paid_invoice_ids = [Command.set(invoice_ids)]
             mandate.paid_invoices_nber = len(invoice_ids)
 
@@ -163,7 +172,7 @@ class SddMandate(models.Model):
             self.env['account.payment']._read_group([
                 ('sdd_mandate_id', 'in', self.ids),
                 ('payment_method_code', 'in', self.env['account.payment.method']._get_sdd_payment_method_code()),
-                ('move_id.state', '=', 'posted'),
+                ('state', 'in', ('in_process', 'paid')),
             ], groupby=['sdd_mandate_id'], aggregates=['id:array_agg'])
         )
 
@@ -296,22 +305,10 @@ class SddMandate(models.Model):
                 record.state = 'closed'
 
     def action_view_paid_invoices(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Paid Invoices'),
-            'res_model': 'account.move',
-            'view_mode': 'list,form',
-            'domain': [('id', 'in', self.mapped('paid_invoice_ids').ids)],
-        }
+        return self.paid_invoice_ids._get_records_action(name=_('Paid Invoices'))
 
     def action_view_payments_to_collect(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': _('Payments to Collect'),
-            'res_model': 'account.payment',
-            'view_mode': 'list,form',
-            'domain': [('id', 'in', self.mapped('payment_ids').ids), ('state', '=', 'posted')],
-        }
+        return self.payment_ids._get_records_action(name=_('Payments to Collect'))
 
     @api.constrains('end_date', 'start_date')
     def _validate_end_date(self):

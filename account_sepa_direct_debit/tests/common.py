@@ -101,3 +101,17 @@ class SDDTestCommon(AccountTestInvoicingCommon):
             'journal_id': journal.id,
             'payment_method_line_id': sdd_method_line.id,
         })._create_payments()
+
+    @classmethod
+    def reconcile_payments(cls, payments):
+        for payment in payments:
+            st_line = cls.env['account.bank.statement.line'].create({
+                'amount': payment.amount,
+                'date': fields.Date.context_today(payment.sdd_mandate_id),
+                'payment_ref': 'test',
+                'journal_id': cls.company_data['default_journal_bank'].id,
+            })
+            st_suspense_lines = st_line._seek_for_lines()[1]
+            liquidity_line = payment._seek_for_lines()[0]
+            st_suspense_lines.account_id = liquidity_line.account_id
+            (st_suspense_lines + liquidity_line).reconcile()
