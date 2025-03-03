@@ -142,3 +142,41 @@ class TestSubscriptionTask(TestSubscriptionCommon, TestCommonSaleTimesheet):
             # We need to run the cron once in order to update the next_invoice_date of the subscription
             self.env['sale.order']._cron_recurring_create_invoice()
             self.assertEqual(subscription_timesheet.order_line.qty_delivered, 2, "2 hours delivered for the February period")
+
+    @freeze_time("2025-03-03")
+    def test_sub_invoice_timesheet(self):
+        self.subscription_timesheet.action_confirm()
+        task = self.subscription_timesheet.tasks_ids
+        _, present_timesheet = self.env['account.analytic.line'].create([
+            {
+                'name': 'Test Line',
+                'date': '2025-02-01',
+                'project_id': task.project_id.id,
+                'task_id': task.id,
+                'unit_amount': 3,
+                'employee_id': self.employee_user.id,
+            },
+            {
+                'name': 'Test Line',
+                'date': '2025-03-03',
+                'project_id': task.project_id.id,
+                'task_id': task.id,
+                'unit_amount': 4,
+                'employee_id': self.employee_user.id,
+            },
+        ])
+        self.subscription_timesheet._create_recurring_invoice()
+
+        self.assertTrue(self.subscription_timesheet.last_invoice_date)
+        moves = self.env['sale.advance.payment.inv'].with_context({
+            'active_model': 'sale.order',
+            'active_ids': [self.subscription_timesheet.id],
+            'active_id': self.subscription_timesheet.id,
+        }).create({
+            'advance_payment_method': 'delivered'
+        }).create_invoices()
+
+        invoice = self.env['account.move'].browse(moves['res_id'])
+        self.assertEqual(len(invoice.timesheet_ids), 1)
+        self.assertEqual(invoice.invoice_line_ids.quantity, present_timesheet.unit_amount)
+        self.assertEqual(invoice.timesheet_ids.id, present_timesheet.id)
