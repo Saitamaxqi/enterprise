@@ -11,7 +11,7 @@
 <t t-name="web_studio.ReportEditorWysiwyg.Sidebar" >
     <div class="o_web_studio_sidebar h-100 overflow-auto flex-grow-0 flex-shrink-0">
       <div class="o_web_studio_sidebar_content d-flex flex-column gap-3 mt-3">
-        <Record t-props="reportRecordProps" t-slot-scope="scope" onRecordChanged.alike="(rec) => this.reportEditorModel.reportData = rec.data">
+        <Record t-props="reportRecordProps" hooks="reportRecordHooks" t-slot-scope="scope">
           <t t-set="record" t-value="scope.record" />
 
           <div class="o_web_studio_sidebar_text">

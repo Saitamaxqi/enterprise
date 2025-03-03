@@ -33,7 +33,7 @@
 
             <div class="card-body content overflow-hidden">
                 <div class="o_hr_payroll_todo_value overflow-auto h-100">
-                    <Record t-if="state.activeNoteId" resModel="recordInfo.model" fieldNames="['note']" resId="state.activeNoteId" t-slot-scope="data" mode="'edit'" onRecordChanged.bind="onRecordChanged">
+                    <Record t-if="state.activeNoteId" resModel="recordInfo.model" fieldNames="['note']" resId="state.activeNoteId" t-slot-scope="data" mode="'edit'" hooks="recordHooks">
                         <Field name="'note'" record="data.record" class="'h-100'" isCollaborative="true"/>
                     </Record>
                 </div>

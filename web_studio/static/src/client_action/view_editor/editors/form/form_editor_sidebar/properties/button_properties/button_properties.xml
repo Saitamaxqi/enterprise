@@ -41,7 +41,7 @@
 </t>
 
 <div t-name="web_studio.ViewEditorSidebar.ApprovalRule" class="o_studio_sidebar_approval_rule position-relative border-start border-secondary ps-2 mb-3">
-    <Record t-props="recordProps" onRecordChanged="(r, c) => this.onChangeApprovalRecord(r, c, rule.id)" values="rule" t-slot-scope="data">
+    <Record t-props="recordProps" hooks="{ onRecordChanged: (r, c) => this.onChangeApprovalRecord(r, c, rule.id) }" values="rule" t-slot-scope="data">
         <t t-set="record" t-value="data.record" />
         <div>
             <div>

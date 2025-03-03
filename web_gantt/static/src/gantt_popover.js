@@ -56,7 +56,9 @@ export class GanttPopover extends Component {
                 resId,
                 activeFields,
                 fields,
-                onRecordSaved: this.props.reloadOnClose,
+                hooks: {
+                    onRecordSaved: this.props.reloadOnClose,
+                },
             };
             this.kanbanRecordProps = { archInfo };
         }

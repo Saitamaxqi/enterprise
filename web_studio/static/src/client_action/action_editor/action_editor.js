@@ -107,8 +107,8 @@ class ActionEditor extends Component {
             mode: "edit",
             values,
             activeFields: getActionActiveFields(),
-            onRecordChanged: (record, changes) => {
-                return this.editAction(changes);
+            hooks: {
+                onRecordChanged: (record, changes) => this.editAction(changes),
             },
         };
     }
@@ -120,22 +120,18 @@ class ActionEditor extends Component {
     getOrderedViewTypes(viewTypes) {
         const activeViews = this.activeViews;
         const currentDefaultView = activeViews[0];
-        const viewInfos = viewTypes.map((viewType) => {
-            return {
-                name: viewType,
-                title: viewTypeToString(viewType),
-                isActive: activeViews.includes(viewType),
-                isDefault: currentDefaultView === viewType,
-                imgUrl: `/web_studio/static/src/img/view_type/${viewType}.png`,
-                canBeDefault: !["form", "search"].includes(viewType),
-                canBeDisabled: viewType !== "search",
-            };
-        });
+        const viewInfos = viewTypes.map((viewType) => ({
+            name: viewType,
+            title: viewTypeToString(viewType),
+            isActive: activeViews.includes(viewType),
+            isDefault: currentDefaultView === viewType,
+            imgUrl: `/web_studio/static/src/img/view_type/${viewType}.png`,
+            canBeDefault: !["form", "search"].includes(viewType),
+            canBeDisabled: viewType !== "search",
+        }));
         return sortBy(
             viewInfos,
-            ({ isDefault, isActive }) => {
-                return isDefault ? 2 : isActive ? 1 : 0;
-            },
+            ({ isDefault, isActive }) => (isDefault ? 2 : isActive ? 1 : 0),
             "desc"
         );
     }

@@ -32,6 +32,9 @@ export class PayrollDashboardTodo extends Component {
             model: "hr.payroll.note",
             specification: { name: {} },
         };
+        this.recordHooks = {
+            onRecordChanged: this.onRecordChanged.bind(this),
+        };
         this.autofocusInput = useAutofocus({selectAll: true});
         useSetupAction({
             beforeLeave: () => this.saveNote(),

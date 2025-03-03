@@ -125,12 +125,10 @@ class FieldDynamicPlaceholder extends Component {
             return score;
         };
 
-        const mapFn = ([k, v]) => {
-            return {
-                value: k,
-                label: `${k} (${v.name})`,
-            };
-        };
+        const mapFn = ([k, v]) => ({
+            value: k,
+            label: `${k} (${v.name})`,
+        });
         return sortBy(entries, sortFn, "desc").map((e) => mapFn(e));
     }
 
@@ -150,9 +148,7 @@ class FieldDynamicPlaceholder extends Component {
             return companyVar && companyVar[0];
         }
 
-        let defaultVar = this.sortedVariables.find((v) => {
-            return ["doc", "o"].includes(v.value);
-        });
+        let defaultVar = this.sortedVariables.find((v) => ["doc", "o"].includes(v.value));
         defaultVar =
             defaultVar ||
             this.sortedVariables.find(
@@ -233,6 +229,9 @@ export class ReportEditorWysiwyg extends Component {
         });
 
         const reportEditorModel = (this.reportEditorModel = useState(this.env.reportEditorModel));
+        this.reportRecordHooks = {
+            onRecordChanged: (rec) => (this.reportEditorModel.reportData = rec.data),
+        };
 
         this.fieldPopover = usePopover(FieldDynamicPlaceholder);
         useEditorMenuItem({

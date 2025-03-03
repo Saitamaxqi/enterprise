@@ -65,8 +65,10 @@ export class SignTemplateAccessRights extends Component {
     get recordProps() {
         return {
             mode: this.props.hasSignRequests ? "readonly" : "edit",
-            onRecordChanged: (record, changes) => {
-                this.saveChanges(record, changes);
+            hooks: {
+                onRecordChanged: (record, changes) => {
+                    this.saveChanges(record, changes);
+                },
             },
             resModel: "sign.template",
             resId: this.props.signTemplate.id,

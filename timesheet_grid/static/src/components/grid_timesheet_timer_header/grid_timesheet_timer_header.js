@@ -33,6 +33,9 @@ export class GridTimesheetTimerHeader extends Component {
         this.timesheetUOMService = useService("timesheet_uom");
         this.timerService = useService("timer");
         this.timerReactive = this.timerService.createTimer();
+        this.recordHooks = {
+            onRecordChanged: this.onTimesheetChanged.bind(this),
+        };
         onWillStart(this.onWillStart);
     }
 
