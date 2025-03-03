@@ -274,3 +274,20 @@ class TestBarcodeClientAction(HttpCase):
 
         action = self.env['stock.picking'].with_context(active_id=warehouse.out_type_id.id).filter_on_barcode(lot.name)
         self.assertEqual(action['action']['context']['search_default_lot_id'], lot.id)
+
+    def test_add_and_remove_barcode_in_product(self):
+        """
+        Tests product creation with default GS1 nomenclature, ensuring barcode is saved,
+        and removed correctly.
+        """
+        company = self.env.company
+        company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
+
+        product = self.env['product.product'].create({
+            'name': 'Test Product',
+            'barcode': '0101234567890128',
+        })
+        self.assertEqual(product.barcode, '0101234567890128', "The barcode should be saved correctly.")
+
+        product.write({'barcode': False})
+        self.assertFalse(product.barcode)
