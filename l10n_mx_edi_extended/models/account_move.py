@@ -191,25 +191,28 @@ class AccountMove(models.Model):
 
             # Details per product.
             product_values_map = defaultdict(lambda: {
-                'quantity': 0.0,
-                'price_unit': 0.0,
+                'quantity_list': [],
+                'price_unit_list': [],
                 'total': 0.0,
             })
             for line_vals in cfdi_values['conceptos_list']:
                 line = line_vals['line']['record']
-                product_values_map[line.product_id]['quantity'] += line.l10n_mx_edi_qty_umt
-                product_values_map[line.product_id]['price_unit'] += line.l10n_mx_edi_price_unit_umt
+                product_values_map[line.product_id]['quantity_list'].append(line.l10n_mx_edi_qty_umt)
+                product_values_map[line.product_id]['price_unit_list'].append(line.l10n_mx_edi_price_unit_umt)
                 product_values_map[line.product_id]['total'] += line_vals['importe']
             ext_trade_values['total_usd'] = 0.0
             ext_trade_values['mercancia_list'] = []
             for product, product_values in product_values_map.items():
                 total_usd = float_round(product_values['total'] * to_usd_rate, precision_digits=4)
+                weighted_prices = sum(price_unit * qty for (price_unit, qty) in zip(product_values['price_unit_list'], product_values['quantity_list']))
+                weights = sum(product_values['quantity_list'])
+                amount = weighted_prices / weights
                 ext_trade_values['mercancia_list'].append({
                     'no_identificacion': product.default_code,
                     'fraccion_arancelaria': product.l10n_mx_edi_tariff_fraction_id.code,
-                    'cantidad_aduana': product_values['quantity'],
+                    'cantidad_aduana': sum(product_values['quantity_list']),
                     'unidad_aduana': product.l10n_mx_edi_umt_aduana_id.l10n_mx_edi_code_aduana,
-                    'valor_unitario_udana': float_round(product_values['price_unit'] * to_usd_rate, precision_digits=6),
+                    'valor_unitario_udana': float_round(amount * to_usd_rate, precision_digits=6),
                     'valor_dolares': total_usd,
                 })
                 ext_trade_values['total_usd'] += total_usd
