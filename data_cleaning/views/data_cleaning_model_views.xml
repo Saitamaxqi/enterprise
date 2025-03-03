@@ -14,7 +14,7 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_data_merge_model_form">
+        <record model="ir.ui.view" id="view_data_cleaning_model_form">
             <field name="name">Field Cleaning Model Form</field>
             <field name="model">data_cleaning.model</field>
             <field name="arch" type="xml">
