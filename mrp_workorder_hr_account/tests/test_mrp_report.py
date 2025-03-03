@@ -51,3 +51,52 @@ class TestMrpReportEmployeeCost(TestMrpCommon):
         self.assertEqual(report["unit_duration"], 0)
         self.assertEqual(report["unit_component_cost"], 20)
         self.assertEqual(report["unit_cost"], 20)
+
+    def test_mrp_report_expected_cost_fields(self):
+        self.workcenter_2.write({
+            'default_capacity': 2,
+            'costs_hour': 20,
+            'employee_costs_hour': 30,
+        })
+        comp_product = self.product_1
+        comp_product.standard_price = 100
+        bom_1_comp = self.bom_4
+        bom_2_comp = self.bom_4.copy()
+        bom_2_comp.product_qty = 2
+        bom_2_comp.bom_line_ids.product_qty = 2
+
+        mo_1 = self.env['mrp.production'].create({
+            'product_qty': 1,
+            'bom_id': bom_1_comp.id,
+        })
+        mo_1.action_assign()
+        mo_1.button_plan()
+        wo = mo_1.workorder_ids[0]
+        wo.button_start()
+        wo.record_production()
+        mo_1.move_raw_ids.quantity = 1
+        mo_1.move_raw_ids.picked = True
+        mo_1.button_mark_done()
+        mo_2 = self.env['mrp.production'].create({
+            'product_qty': 2,
+            'bom_id': bom_2_comp.id,
+        })
+        mo_2.action_assign()
+        mo_2.button_plan()
+        wo = mo_2.workorder_ids[0]
+        wo.button_start()
+        wo.record_production()
+        mo_2.move_raw_ids.quantity = 2
+        mo_2.move_raw_ids.picked = True
+        mo_2.button_mark_done()
+        # second report record not created without flush
+        self.env.flush_all()
+        self.assertRecordValues(
+            self.env['mrp.report'].search([('production_id', 'in', (mo_1.id, mo_2.id))]),
+            [{
+                'expected_component_cost_unit':   100.0,
+                'expected_employee_cost_unit':    30.0,
+                'expected_operation_cost_unit':   20.0,
+                'expected_total_cost_unit':       150.0
+            } for _ in range(2)]
+        )
