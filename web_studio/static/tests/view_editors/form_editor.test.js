@@ -4254,3 +4254,18 @@ test("x2many list with virtual record", async () => {
     expect(".o_view_controller.o_list_view").toHaveCount(1);
     expect(".o_data_row").toHaveCount(0);
 });
+
+test("Add tooltip support on the button", async () => {
+    await mountViewEditor({
+        type: "form",
+        resModel: "coucou",
+        arch: `<form>
+        <header>
+            <button string="Test" type="object" class="oe_highlight" title="Test"/>
+        </header>
+    </form>
+    `,
+    });
+    await contains(".o_statusbar_buttons button").click();
+    expect(".o_web_studio_sidebar .o_web_studio_property #title").toHaveValue("Test");
+});

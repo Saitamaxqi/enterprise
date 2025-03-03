@@ -39,6 +39,14 @@
             onChange.bind="onChangeAttribute"
         />
         <Property
+            name="'title'"
+            type="'string'"
+            value="this.props.node.attrs.title"
+            onChange.bind="onChangeAttribute"
+        >
+            Help Tooltip
+        </Property>
+        <Property
             name="'type'"
             type="'selection'"
             value="this.props.node.attrs.type"
