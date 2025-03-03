@@ -95,6 +95,11 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
             trigger: "a.active[name='amls_tab']",
         },
         {
+            content: "'line 2' has no partner set, the 'Posted' filter should be activated by default",
+            trigger:
+                "div.bank_rec_widget_form_amls_list_anchor .o_searchview_facet:nth-child(1) .o_facet_value:contains('Posted')",
+        },
+        {
             content: "Search for INV/2019/00001",
             trigger: "div.bank_rec_widget_form_amls_list_anchor .o_searchview_input",
             run: "edit INV/2019/00001",
@@ -139,7 +144,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
         },
         {
             trigger:
-                "div.bank_rec_widget_form_amls_list_anchor .o_searchview_facet:nth-child(1) .o_facet_value:contains('INV/2019/00001')",
+                "div.bank_rec_widget_form_amls_list_anchor .o_searchview_facet:nth-child(2) .o_facet_value:contains('INV/2019/00001')",
         },
         {
             content: "AMLs list contains the search facet, and one invoice - select it",
@@ -171,7 +176,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
         },
         {
             trigger:
-                "div.bank_rec_widget_form_amls_list_anchor .o_searchview_facet:nth-child(1) .o_facet_value:contains('INV/2019/00001')",
+                "div.bank_rec_widget_form_amls_list_anchor .o_searchview_facet:nth-child(2) .o_facet_value:contains('INV/2019/00001')",
         },
         {
             content: "Check INV/2019/00001 is selected and still contains the search facet",
@@ -201,7 +206,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
         },
         {
             trigger:
-                "div.bank_rec_widget_form_amls_list_anchor .o_searchview_facet:nth-child(1) .o_facet_value:contains('INV/2019/00001')",
+                "div.bank_rec_widget_form_amls_list_anchor .o_searchview_facet:nth-child(2) .o_facet_value:contains('INV/2019/00001')",
         },
         {
             content:
@@ -232,7 +237,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
         },
         {
             trigger:
-                "div.bank_rec_widget_form_amls_list_anchor .o_searchview_facet:nth-child(1) .o_facet_value:contains('INV/2019/00001')",
+                "div.bank_rec_widget_form_amls_list_anchor .o_searchview_facet:nth-child(2) .o_facet_value:contains('INV/2019/00001')",
         },
         {
             content:
@@ -266,7 +271,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
         },
         {
             content: "AML Search Filter has been reset",
-            trigger: ".o_list_view .o_searchview_input_container:not(:has(.o_searchview_facet))",
+            trigger: ".o_list_view .o_searchview_input_container:not(:has(.o_searchview_facet:contains('INV/2019/00001')))",
         },
         // Test statement line selection when using the pager
         {

@@ -1210,6 +1210,9 @@ class BankRecWidget(models.Model):
         if self.partner_id:
             context['search_default_partner_id'] = self.partner_id.id
 
+        if not st_line.partner_id:
+            context['search_default_posted'] = True
+
         dynamic_filters = []
 
         # == Dynamic Customer/Vendor filter ==

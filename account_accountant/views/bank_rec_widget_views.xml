@@ -388,6 +388,9 @@
                     <separator/>
                     <filter name="amount_received" string="Incoming" domain="[('balance', '>', 0.0)]"/>
                     <filter name="amount_paid" string="Outgoing" domain="[('balance', '&lt;', 0.0)]"/>
+                    <separator/>
+                    <filter name="posted" string="Posted" domain="[('parent_state', '=', 'posted')]"/>
+                    <filter name="draft" string="Draft" domain="[('parent_state', '=', 'draft')]"/>
                     <separator name="inject_after"/>
                     <filter name="date" string="Date" date="date"/>
                     <filter name="invoice_date" string="Invoice Date" date="invoice_date"/>
