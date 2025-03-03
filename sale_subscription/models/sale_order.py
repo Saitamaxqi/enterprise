@@ -1147,7 +1147,7 @@ class SaleOrder(models.Model):
             # renewal
             start_date = self.next_invoice_date
             next_invoice_date = self.next_invoice_date # the next invoice date is the start_date for new contract
-        return {
+        values = {
             'is_subscription': is_subscription,
             'subscription_id': subscription.id,
             'pricelist_id': subscription.pricelist_id.id,
@@ -1170,6 +1170,9 @@ class SaleOrder(models.Model):
             'next_invoice_date': next_invoice_date,
             'plan_id': subscription.plan_id.id,
         }
+        if subscription_state == '2_renewal':
+            values.update({'tag_ids': subscription.tag_ids.ids})
+        return values
 
     def _compute_kpi(self):
         for subscription in self:
