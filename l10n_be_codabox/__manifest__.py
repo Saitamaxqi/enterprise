@@ -20,6 +20,7 @@ and automatically imports CODA and SODA statements in Odoo.
         'views/res_config_settings_views.xml',
         'views/account_journal_views.xml',
         'wizard/change_password_wizard.xml',
+        'wizard/revoke_wizard.xml',
         'wizard/connection_wizard.xml',
         'wizard/validation_wizard.xml',
     ],

@@ -30,7 +30,7 @@ class ResCompany(models.Model):
             if codabox_contract_sys_param:
                 company.l10n_be_codabox_fiduciary_vat = codabox_contract_sys_param
             elif company.account_representative_id:
-                company.l10n_be_codabox_fiduciary_vat = company.account_representative_id.vat
+                company.l10n_be_codabox_fiduciary_vat = company.account_representative_id.vat or company.company_registry
             else:
                 company.l10n_be_codabox_fiduciary_vat = self.vat or self.company_registry
 

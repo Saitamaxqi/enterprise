@@ -1,4 +1,5 @@
 import requests
+import re
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 from odoo.addons.l10n_be_codabox.const import get_error_msg
@@ -38,7 +39,7 @@ class L10n_Be_CodaboxConnectionWizard(models.TransientModel):
 
     def _compute_company_vat(self):
         for wizard in self:
-            wizard.company_vat = wizard.company_id.vat or wizard.company_id.company_registry
+            wizard.company_vat = re.sub(r'[^0-9]', '', wizard.company_id.vat or wizard.company_id.company_registry)
 
     def _compute_show_fidu_password(self):
         for wizard in self:
@@ -101,25 +102,17 @@ class L10n_Be_CodaboxConnectionWizard(models.TransientModel):
         self.company_id._l10n_be_codabox_refresh_connection_status()
         return self.do_nothing()
 
-    def l10n_be_codabox_revoke(self):
-        self.company_id._l10n_be_codabox_verify_prerequisites()
-        try:
-            params = self.company_id._l10n_be_codabox_get_iap_common_params()
-            params["iap_token"] = self.company_id.l10n_be_codabox_iap_token
-            self.company_id._l10_be_codabox_call_iap_route("revoke", params)
-            self.company_id.l10n_be_codabox_iap_token = False
-            self.company_id.l10n_be_codabox_is_connected = False
-            return {
-                'type': 'ir.actions.client',
-                'tag': 'display_notification',
-                'params': {
-                    'type': 'info',
-                    'title': _('Information'),
-                    'message': _('CodaBox connection revoked.'),
-                    'next': {
-                        'type': 'ir.actions.act_window_close'
-                    },
-                }
-            }
-        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
-            raise UserError(get_error_msg({"type": "error_connecting_iap"}))
+    def l10n_be_codabox_open_revoke_wizard(self):
+        self.ensure_one()
+        wizard = self.env['l10n_be_codabox.revoke.wizard'].create({
+            'company_id': self.company_id.id,
+            'company_vat': self.company_vat,
+            'fiduciary_vat': self.fiduciary_vat,
+            'nb_connections': self.nb_connections,
+        })
+        return self.company_id._l10n_be_codabox_return_wizard(
+            name=_('Revoke Connection'),
+            view_id=self.env.ref('l10n_be_codabox.revoke_wizard_view').id,
+            res_model='l10n_be_codabox.revoke.wizard',
+            res_id=wizard.id,
+        )

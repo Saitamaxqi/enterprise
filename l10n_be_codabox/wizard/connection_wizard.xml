@@ -48,10 +48,7 @@
                 <footer>
                     <button name="l10n_be_codabox_create_connection" string="Create connection" type="object" class="btn-primary" invisible="l10n_be_codabox_is_connected"/>
                     <button name="l10n_be_codabox_open_change_password_wizard" string="Change password" type="object" class="btn-secondary" invisible="not connection_exists"/>
-                    <button name="l10n_be_codabox_revoke" string="Revoke" type="object" class="btn-secondary"
-                            confirm="Are you sure you want to revoke this connection ?" invisible="nb_connections == 1 or not connection_exists"/>
-                    <button name="l10n_be_codabox_revoke" string="Revoke" type="object" class="btn-secondary" invisible="nb_connections > 1 or not connection_exists"
-                            confirm="This is the last connection for this account. Are you sure you want to revoke it ?"/>
+                    <button name="l10n_be_codabox_open_revoke_wizard" string="Revoke" type="object" class="btn-secondary" invisible="not connection_exists"/>
                     <button string="Close" class="btn-secondary" special="cancel" data-hotkey="x"/>
                 </footer>
             </form>
