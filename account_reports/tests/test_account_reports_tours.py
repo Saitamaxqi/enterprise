@@ -29,9 +29,15 @@ class TestAccountReportsTours(AccountTestInvoicingHttpCommon):
 
         cls.account_101404 = cls.env['account.account'].search([
             ('company_ids', '=', cls.company_data['company'].id),
-            ('code', '=', 'OSTR00')
+            ('code', '=', 101404)
         ])
-        cls.account_101404.code = '101404'
+        if not cls.account_101404:
+            # additional outstanding accounts are created when accounting is not installed
+            cls.account_101404 = cls.env['account.account'].search([
+                ('company_ids', '=', cls.company_data['company'].id),
+                ('code', '=', 'OSTR00')
+            ])
+            cls.account_101404.code = '101404'
 
         cls.account_121000 = cls.env['account.account'].search([
             ('company_ids', '=', cls.company_data['company'].id),
