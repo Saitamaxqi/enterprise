@@ -208,3 +208,46 @@ class TestDocumentsMulticompany(TransactionCaseDocuments):
 
         self.assertEqual(document.user_permission, 'none')
         self.assertFalse(Documents_with_ctx.search([('id', '=', document.id)]))
+
+    def test_folder_company_inheritance(self):
+        folder_a_child_vals = {'name': 'doc', 'folder_id': self.folder_a.id}
+        self.assertFalse(self.folder_a.company_id)
+        self.assertFalse(self.env['documents.document'].create(folder_a_child_vals).company_id)
+        self.folder_a.company_id = self.company_allowed
+        self.assertEqual(self.env['documents.document'].create(folder_a_child_vals).company_id,
+                         self.company_allowed)
+        self.assertEqual(
+            self.env['documents.document'].with_context(default_company_id=self.company_disabled.id)
+            .create({'name': 'doc without folder'}).company_id,
+            self.company_disabled)
+        self.assertEqual(
+            self.env['documents.document'].with_context(default_company_id=self.company_disabled.id)
+            .create(folder_a_child_vals).company_id,
+            self.company_allowed)
+        self.assertEqual(self.env['documents.document'].create(
+            folder_a_child_vals | {'company_id': self.company_disabled.id}).company_id,
+            self.company_disabled)
+        self.folder_b.folder_id = self.folder_a
+        self.folder_b.company_id = self.company_allowed
+        self.folder_b.children_ids.company_id = self.company_allowed
+        shortcut = self.folder_b.with_user(self.doc_user).action_create_shortcut(False)
+        self.folder_a.company_id = False
+        self.assertFalse((self.folder_b | self.folder_b.children_ids).company_id)
+        self.assertEqual(
+            shortcut.company_id,
+            self.company_allowed,
+            'shortcut with company keeps company when cleared on target'
+        )
+        restricted_document = self.env['documents.document'].create(
+            folder_a_child_vals
+            | {'owner_id': self.internal_user.id, 'access_ids': False, 'access_internal': 'none'},
+        )
+        self.assertEqual(restricted_document.with_user(self.doc_user).user_permission, 'none')
+        self.assertEqual(self.folder_a.with_user(self.doc_user).user_permission, 'edit')
+        self.folder_a.with_user(self.doc_user).company_id = self.company_allowed
+        self.assertFalse(restricted_document.company_id, "Inaccessible document shouldn't have been updated")
+        self.assertEqual(
+            shortcut.company_id,
+            self.company_allowed,
+            "shortcut with(out) company is updated when set on target"
+        )
