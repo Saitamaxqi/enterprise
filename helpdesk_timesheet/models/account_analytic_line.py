@@ -112,6 +112,20 @@ class AccountAnalyticLine(models.Model):
                     vals.update(vals_update)
         return super().create(vals_list)
 
+    def _update_existing_timers(self, vals):
+        # if the ticket changed to set a ticket or remove ticket and no task is set instead
+        if 'helpdesk_ticket_id' in vals and (self.helpdesk_ticket_id or not self.task_id):
+            # Check if there are some running timers linked to the timesheets to also update them.
+            timers = self.env['timer.timer'].search([('res_model', '=', self._name), ('res_id', 'in', self.ids)])
+            if timers:
+                helpdesk_ticket_id = vals['helpdesk_ticket_id']
+                timers.write({
+                    'parent_res_model': 'helpdesk.ticket' if helpdesk_ticket_id else None,
+                    'parent_res_id': helpdesk_ticket_id
+                })
+            return
+        super()._update_existing_timers(vals)
+
     def _get_timesheet_field_and_model_name(self):
         if self._context.get('default_helpdesk_ticket_id', False):
             return 'helpdesk_ticket_id', 'helpdesk.ticket'
@@ -157,3 +171,10 @@ class AccountAnalyticLine(models.Model):
         if 'other_company' not in timesheet_timer_data:
             timesheet_timer_data['helpdesk_ticket_id'] = self.helpdesk_ticket_id.id
         return timesheet_timer_data
+
+    def _get_timer_vals(self):
+        vals = super()._get_timer_vals()
+        if self.helpdesk_ticket_id:
+            vals['parent_res_model'] = 'helpdesk.ticket'
+            vals['parent_res_id'] = self.helpdesk_ticket_id.id
+        return vals

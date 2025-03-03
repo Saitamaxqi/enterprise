@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from . import account_analytic_line
 from . import res_company
 from . import res_partner
 from . import project_project

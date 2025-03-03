@@ -5,49 +5,43 @@ from odoo import models, fields, api, _
 
 class ProjectTask(models.Model):
     _name = 'project.task'
-    _inherit = ["project.task", "timer.mixin", "timesheet.grid.mixin"]
+    _inherit = ["project.task", "timer.parent.mixin", "timesheet.grid.mixin"]
 
+    timesheet_unit_amount = fields.Float(compute='_compute_timesheet_unit_amount')
     display_timesheet_timer = fields.Boolean("Display Timesheet Time", compute='_compute_display_timesheet_timer', export_string_translation=False)
 
-    display_timer_start_secondary = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
-
-    @api.depends_context('uid')
-    @api.depends('display_timesheet_timer', 'timer_start', 'timer_pause', 'total_hours_spent')
-    def _compute_display_timer_buttons(self):
-        user_has_employee_or_only_one = None
+    @api.depends('user_timer_id')
+    def _compute_timesheet_unit_amount(self):
+        if not any(self._ids):
+            for task in self:
+                unit_amount = 0.0
+                if task.user_timer_id:
+                    unit_amount = task.filtered(lambda t: (t.id or t.origin.id) == task.user_timer_id.id).unit_amount or 0.0
+                task.timesheet_unit_amount = unit_amount
+            return
+        timesheet_read = self.env['account.analytic.line'].search_read(
+            [('id', 'in', self.user_timer_id.mapped('res_id'))],
+            ['unit_amount'],
+        )
+        unit_amount_per_timesheet_id = {res['id']: res['unit_amount'] for res in timesheet_read}
         for task in self:
-            if not task.display_timesheet_timer:
-                task.update({
-                    'display_timer_start_primary': False,
-                    'display_timer_start_secondary': False,
-                    'display_timer_stop': False,
-                    'display_timer_pause': False,
-                    'display_timer_resume': False,
-                })
+            timesheet_id = task.user_timer_id.res_id
+            if timesheet_id:
+                task.timesheet_unit_amount = unit_amount_per_timesheet_id.get(timesheet_id, 0.0)
             else:
-                super(ProjectTask, task)._compute_display_timer_buttons()
-                task.display_timer_start_secondary = task.display_timer_start_primary
-                if not task.timer_start:
-                    task.update({
-                        'display_timer_stop': False,
-                        'display_timer_pause': False,
-                        'display_timer_resume': False,
-                    })
-                    if user_has_employee_or_only_one is None:
-                        user_has_employee_or_only_one = bool(self.env.user.employee_id)\
-                                                     or self.env['hr.employee'].sudo().search_count([('user_id', '=', self.env.uid)]) == 1
-                    if not user_has_employee_or_only_one:
-                        task.display_timer_start_primary = False
-                        task.display_timer_start_secondary = False
-                    elif not task.total_hours_spent:
-                        task.display_timer_start_secondary = False
-                    else:
-                        task.display_timer_start_primary = False
+                task.timesheet_unit_amount = 0.0
 
     @api.depends('allow_timesheets', 'analytic_account_active')
     def _compute_display_timesheet_timer(self):
+        user_has_employee_or_only_one = None
         for task in self:
-            task.display_timesheet_timer = task.allow_timesheets and task.analytic_account_active
+            display_timesheet_timer = task.allow_timesheets and task.analytic_account_active and not task.encode_uom_in_days
+            if display_timesheet_timer:
+                if user_has_employee_or_only_one is None:
+                    user_has_employee_or_only_one = bool(self.env.user.employee_id) \
+                        or self.env['hr.employee'].sudo().search_count([('user_id', '=', self.env.uid)]) == 1
+                display_timesheet_timer = user_has_employee_or_only_one
+            task.display_timesheet_timer = display_timesheet_timer
 
     def _compute_allocated_hours(self):
         # Only change values when creating a new record from the gantt view
@@ -67,6 +61,21 @@ class ProjectTask(models.Model):
                     'type': "notification",
                 },
             }
+
+    def write(self, vals):
+        res = super().write(vals)
+        if vals.get('project_id') and not self.project_id.sudo().allow_timesheets:
+            timers = self.env['timer.timer'].sudo().search([
+                ('parent_res_model', '=', 'project.task'),
+                ('parent_res_id', 'in', self.ids),
+                ('res_model', '=', 'account.analytic.line'),
+            ])
+            if timers:
+                timesheets = self.env['account.analytic.line'].browse(timers.mapped('res_id')).sudo()
+                timers.unlink()
+                if timesheets_to_remove := timesheets.filtered(lambda t: t.unit_amount == 0):
+                    timesheets_to_remove.unlink()
+        return res
 
     def _set_allocated_hours_for_tasks(self):
         super(ProjectTask, self.filtered(lambda task: not task.allow_timesheets))._set_allocated_hours_for_tasks()
@@ -103,37 +112,28 @@ class ProjectTask(models.Model):
         return action
 
     def action_timer_start(self):
-        if not self.user_timer_id.timer_start and self.display_timesheet_timer:
+        if self.display_timesheet_timer:
             super().action_timer_start()
 
     def action_timer_stop(self):
         # timer was either running or paused
-        if self.user_timer_id.timer_start and self.display_timesheet_timer:
-            rounded_hours = self._get_rounded_hours(self.user_timer_id._get_minutes_spent())
-            return self._action_open_new_timesheet(rounded_hours)
+        if self.display_timesheet_timer and self.user_timer_id:
+            timesheet = self._get_record_with_timer_running()
+            if timesheet:
+                return {
+                    "name": _("Confirm Time Spent"),
+                    "type": "ir.actions.act_window",
+                    "res_model": 'hr.timesheet.stop.timer.confirmation.wizard',
+                    'context': {
+                        'default_timesheet_id': timesheet.id,
+                        'dialog_size': 'medium',
+                    },
+                    "views": [[self.env.ref('timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form').id, "form"]],
+                    "target": 'new',
+                }
+            else:
+                return super().action_timer_stop()
         return False
-
-    def _get_rounded_hours(self, minutes):
-        minimum_duration = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_min_duration', 0))
-        rounding = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_rounding', 0))
-        rounded_minutes = self._timer_rounding(minutes, minimum_duration, rounding)
-        return rounded_minutes / 60
-
-    def _action_open_new_timesheet(self, time_spent):
-        return {
-            "name": _("Confirm Time Spent"),
-            "type": 'ir.actions.act_window',
-            "res_model": 'project.task.create.timesheet',
-            "views": [[False, "form"]],
-            "target": 'new',
-            "context": {
-                **self.env.context,
-                'active_id': self.id,
-                'active_model': self._name,
-                'default_time_spent': time_spent,
-                'dialog_size': 'medium',
-            },
-        }
 
     def get_allocated_hours_field(self):
         return 'allocated_hours'
@@ -143,3 +143,19 @@ class ProjectTask(models.Model):
 
     def _get_hours_to_plan(self):
         return self.remaining_hours
+
+    def _create_record_to_start_timer(self):
+        """ Create a timesheet to launch a timer """
+        return self.env['account.analytic.line'].create({
+            'task_id': self.id,
+            'project_id': self.project_id.id,
+            'date': fields.Date.context_today(self),
+            'name': '/',
+            'user_id': self.env.uid,
+        })
+
+    def _action_interrupt_user_timers(self):
+        """ Call action interrupt user timers to launch a new one
+            Stop the existing runnning timer before launching a new one.
+        """
+        self.action_timer_stop()

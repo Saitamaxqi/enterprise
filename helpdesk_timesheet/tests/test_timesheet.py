@@ -59,11 +59,7 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
 
     def test_helpdesk_timesheet_wizard_timezones(self):
         user = self.user_employee
-        wizard = self.env['helpdesk.ticket.create.timesheet'].with_user(user).create({
-            'description': 'Create timesheet wizard',
-            'ticket_id': self.helpdesk_ticket.id,
-            'time_spent': 1.0,
-        })
+        ticket = self.helpdesk_ticket.with_user(user)
         timezones = [
             'Pacific/Niue',        # UTC-11,
             'Europe/Brussels',     # UTC+1
@@ -81,7 +77,15 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
                 expected = (date(2024, 1, day + diff) for diff in day_diffs)
                 for tz, local_date in zip(timezones, expected):
                     user.tz = tz
-                    timesheet = wizard.action_generate_timesheet()
+                    self.assertTrue(ticket.display_timesheet_timer, "The timer should be available in that ticket")
+                    ticket.action_timer_start()
+                    action = ticket.action_timer_stop()
+                    wizard = self.env['hr.timesheet.stop.timer.confirmation.wizard'] \
+                        .with_context(action['context']) \
+                        .with_user(user) \
+                        .new({})
+                    timesheet = wizard.timesheet_id
+                    wizard.action_save_timesheet()
                     self.assertEqual(
                         timesheet.date,
                         local_date,
@@ -350,3 +354,34 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
         self.assertTrue(timesheet_3.exists(), 'Timesheet 2 should have been merged into 3')
         self.assertAlmostEqual(timesheet_1.unit_amount, 0.25, 2)
         self.assertAlmostEqual(timesheet_3.unit_amount, 0.5, 2)
+
+    def test_change_helpdesk_team_on_ticket_with_timer_running(self):
+        """ Test that changing the helpdesk team of a ticket with a running timer does not stop the timer """
+        timesheet = self.env['account.analytic.line'].with_user(self.user_employee).create({
+            'name': '/',
+            'project_id': self.project.id,
+            'date': date.today(),
+            'helpdesk_ticket_id': self.helpdesk_ticket.id,
+        })
+
+        timesheet.action_timer_start()
+
+        helpdesk_team_with_timesheet, helpdesk_team_without_timesheet = self.env['helpdesk.team'].create([{
+            'name': 'Helpdesk with timesheet',
+            'use_helpdesk_timesheet': True,
+            'project_id': self.project.id,
+        }, {
+            'name': 'Helpdesk without timesheet',
+            'use_helpdesk_timesheet': False,
+        }])
+        self.helpdesk_ticket.team_id = helpdesk_team_with_timesheet
+        self.assertTrue(timesheet.is_timer_running, 'The timer should still be running after changing the helpdesk team')
+        self.assertEqual(timesheet.user_timer_id.parent_res_model, 'helpdesk.ticket', 'The timer should still be linked to the ticket')
+        self.assertEqual(timesheet.user_timer_id.parent_res_id, self.helpdesk_ticket.id, 'The timer should still be linked to the ticket')
+
+        ticket = self.helpdesk_ticket.with_user(self.user_employee)
+        self.assertTrue(ticket.is_timer_running)
+
+        ticket.team_id = helpdesk_team_without_timesheet
+        self.assertFalse(ticket.is_timer_running, 'The timer should have been stopped after changing the helpdesk team since the timesheet feature is disabled on that team')
+        self.assertFalse(timesheet.exists(), 'The timesheet should have been deleted after the timer was stopped since the unit_amount is 0')

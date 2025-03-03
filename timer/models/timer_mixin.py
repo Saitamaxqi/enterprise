@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
-from math import ceil
+
 
 
 class TimerMixin(models.AbstractModel):
@@ -13,11 +12,6 @@ class TimerMixin(models.AbstractModel):
     timer_pause = fields.Datetime(related='user_timer_id.timer_pause', export_string_translation=False)
     is_timer_running = fields.Boolean(related='user_timer_id.is_timer_running', search="_search_is_timer_running", export_string_translation=False)
     user_timer_id = fields.One2many('timer.timer', compute='_compute_user_timer_id', search='_search_user_timer_id', export_string_translation=False)
-
-    display_timer_start_primary = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
-    display_timer_stop = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
-    display_timer_pause = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
-    display_timer_resume = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
 
     def _search_is_timer_running(self, operator, value):
         if operator not in ['=', '!='] or not isinstance(value, bool):
@@ -70,12 +64,29 @@ class TimerMixin(models.AbstractModel):
     def unlink(self):
         if not self:
             return True
-        timers = self.env['timer.timer'].search([
-            ('res_model', '=', self._name), ('res_id', 'in', self.ids), ('user_id', '!=', self.env.user.id)])
+        timers = self._get_timers_from_other_users()
         if timers:
             self.check_access('unlink')
             timers.sudo().unlink()
         return super().unlink()
+
+    def _get_timer_vals(self):
+        return {
+            'timer_start': False,
+            'timer_pause': False,
+            'is_timer_running': False,
+            'res_model': self._name,
+            'res_id': self.id,
+            'user_id': self.env.user.id,
+        }
+
+    def _create_timer(self, vals=None):
+        if not vals:
+            vals = {}
+        return self.env['timer.timer'].create({
+            **self._get_timer_vals(),
+            **vals,
+        })
 
     def action_timer_start(self):
         """ Start the timer of the current record
@@ -87,14 +98,7 @@ class TimerMixin(models.AbstractModel):
         self._stop_timer_in_progress()
         timer = self.user_timer_id
         if not timer:
-            timer = self.env['timer.timer'].create({
-                'timer_start': False,
-                'timer_pause': False,
-                'is_timer_running': False,
-                'res_model': self._name,
-                'res_id': self.id,
-                'user_id': self.env.user.id,
-            })
+            timer = self._create_timer()
             timer.action_timer_start()
         else:
             # Check if it is in pause then resume it or start it
@@ -126,6 +130,13 @@ class TimerMixin(models.AbstractModel):
         timer = self.user_timer_id
         timer.action_timer_resume()
 
+    def _get_timers_from_other_users(self):
+        return self.env['timer.timer'].search([
+            ('res_model', '=', self._name),
+            ('res_id', 'in', self.ids),
+            ('user_id', '!=', self.env.user.id),
+        ])
+
     def _action_interrupt_user_timers(self):
         # Interruption is the action called when the timer is stoped by the start of another one
         self.action_timer_pause()
@@ -140,27 +151,3 @@ class TimerMixin(models.AbstractModel):
         if timer:
             model = self.env[timer.res_model].browse(timer.res_id)
             model._action_interrupt_user_timers()
-
-    @api.depends('timer_start', 'timer_pause')
-    def _compute_display_timer_buttons(self):
-        for record in self:
-            start_p, stop, pause, resume = True, True, True, True
-            if record.timer_start:
-                start_p = False
-                if record.timer_pause:
-                    pause = False
-                else:
-                    resume = False
-            record.update({
-                'display_timer_start_primary': start_p,
-                'display_timer_stop': stop,
-                'display_timer_pause': pause,
-                'display_timer_resume': resume,
-            })
-
-    @api.model
-    def _timer_rounding(self, minutes_spent, minimum, rounding):
-        minutes_spent = max(minimum, minutes_spent)
-        if rounding and ceil(minutes_spent % rounding) != 0:
-            minutes_spent = ceil(minutes_spent / rounding) * rounding
-        return minutes_spent

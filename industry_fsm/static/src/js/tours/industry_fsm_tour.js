@@ -62,7 +62,7 @@ registry.category("web_tour.tours").add("industry_fsm_tour", {
             run: "click",
         },
         {
-    trigger: 'button[name="save_timesheet"]',
+            trigger: 'button[name="action_save_timesheet"]',
     content: markup(_t('Confirm the <b>time spent</b> on your task. <i>Tip: note that the duration has automatically been rounded to 15 minutes.</i>')),
     tooltipPosition: 'bottom',
             id: "fsm_save_timesheet",

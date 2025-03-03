@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 class HelpdeskTicket(models.Model):
     _name = 'helpdesk.ticket'
-    _inherit = ['helpdesk.ticket', 'timer.mixin']
+    _inherit = ['helpdesk.ticket', 'timer.parent.mixin']
 
     project_id = fields.Many2one(
         "project.project", related="team_id.project_id", readonly=True, store=True)
@@ -14,9 +14,8 @@ class HelpdeskTicket(models.Model):
              "Remove the sales order item to make your timesheet entries non billable.")
     use_helpdesk_timesheet = fields.Boolean('Timesheet activated on Team', related='team_id.use_helpdesk_timesheet', readonly=True)
     display_timesheet_timer = fields.Boolean("Display Timesheet Time", compute='_compute_display_timesheet_timer')
+    timesheet_unit_amount = fields.Float(compute='_compute_timesheet_unit_amount')
     total_hours_spent = fields.Float("Time Spent", compute='_compute_total_hours_spent', default=0, compute_sudo=True, store=True, aggregator="avg")
-    display_timer_start_secondary = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
-    display_timer = fields.Boolean(compute='_compute_display_timer', export_string_translation=False)
     encode_uom_in_days = fields.Boolean(compute='_compute_encode_uom_in_days', export_string_translation=False)
     analytic_account_id = fields.Many2one('account.analytic.account',
         compute='_compute_analytic_account_id', store=True, readonly=False,
@@ -25,41 +24,32 @@ class HelpdeskTicket(models.Model):
     def _compute_encode_uom_in_days(self):
         self.encode_uom_in_days = self.env.company.timesheet_encode_uom_id == self.env.ref('uom.product_uom_day')
 
-    @api.depends('display_timesheet_timer', 'timer_start', 'timer_pause', 'total_hours_spent')
-    def _compute_display_timer_buttons(self):
-        for ticket in self:
-            if not ticket.display_timesheet_timer:
-                ticket.update({
-                    'display_timer_start_primary': False,
-                    'display_timer_start_secondary': False,
-                    'display_timer_stop': False,
-                    'display_timer_pause': False,
-                    'display_timer_resume': False,
-                })
-            else:
-                super(HelpdeskTicket, ticket)._compute_display_timer_buttons()
-                ticket.display_timer_start_secondary = ticket.display_timer_start_primary
-                if not ticket.timer_start:
-                    ticket.update({
-                        'display_timer_stop': False,
-                        'display_timer_pause': False,
-                        'display_timer_resume': False,
-                    })
-                    if not ticket.total_hours_spent:
-                        ticket.display_timer_start_secondary = False
-                    else:
-                        ticket.display_timer_start_primary = False
-
-    def _compute_display_timer(self):
-        if self.env.user.has_group('helpdesk.group_helpdesk_user') and self.env.user.has_group('hr_timesheet.group_hr_timesheet_user'):
-            self.display_timer = True
-        else:
-            self.display_timer = False
-
     @api.depends('use_helpdesk_timesheet', 'timesheet_ids', 'encode_uom_in_days')
     def _compute_display_timesheet_timer(self):
         for ticket in self:
             ticket.display_timesheet_timer = ticket.use_helpdesk_timesheet and not ticket.encode_uom_in_days
+
+    @api.depends('user_timer_id')
+    def _compute_timesheet_unit_amount(self):
+        if not any(self._ids):
+            for ticket in self:
+                unit_amount = 0.0
+                if ticket.user_timer_id:
+                    unit_amount = ticket.filtered(lambda t: (t.id or t.origin.id) == ticket.user_timer_id.id).unit_amount or 0.0
+                ticket.timesheet_unit_amount = unit_amount
+            return
+        timesheet_id_per_timer_id = {ticket.user_timer_id.id: ticket.user_timer_id.res_id for ticket in self}
+        timesheet_read = self.env['account.analytic.line'].search_read(
+            [('id', 'in', list(timesheet_id_per_timer_id.values()))],
+            ['unit_amount'],
+        )
+        unit_amount_per_timesheet_id = {res['id']: res['unit_amount'] for res in timesheet_read}
+        for ticket in self:
+            timesheet_id = ticket.user_timer_id.id or timesheet_id_per_timer_id.get(ticket.user_timer_id.id, False)
+            if timesheet_id:
+                ticket.timesheet_unit_amount = unit_amount_per_timesheet_id.get(timesheet_id, 0.0)
+            else:
+                ticket.timesheet_unit_amount = 0.0
 
     @api.depends('timesheet_ids.unit_amount')
     def _compute_total_hours_spent(self):
@@ -107,32 +97,57 @@ class HelpdeskTicket(models.Model):
         else:
             super()._compute_display_extra_info()
 
+    def write(self, vals):
+        res = super().write(vals)
+        if vals.get('team_id') and not self.team_id.use_helpdesk_timesheet:
+            timers = self.env['timer.timer'].search([
+                ('parent_res_model', '=', 'helpdesk.ticket'),
+                ('parent_res_id', 'in', self.ids),
+                ('res_model', '=', 'account.analytic.line'),
+            ])
+            if timers:
+                timesheets = self.env['account.analytic.line'].browse(timers.mapped('res_id')).sudo()
+                timers.unlink()
+                if timesheets_to_remove := timesheets.filtered(lambda t: t.unit_amount == 0):
+                    timesheets_to_remove.unlink()
+        return res
+
     def action_timer_start(self):
-        if not self.user_timer_id.timer_start and self.display_timesheet_timer:
+        if self.display_timesheet_timer:
             super().action_timer_start()
 
     def action_timer_stop(self):
         # timer was either running or paused
-        if self.user_timer_id.timer_start and self.display_timesheet_timer:
-            minutes_spent = self.user_timer_id._get_minutes_spent()
-            minimum_duration = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_min_duration', 0))
-            rounding = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_rounding', 0))
-            minutes_spent = self._timer_rounding(minutes_spent, minimum_duration, rounding)
-            return self._action_open_new_timesheet(minutes_spent * 60 / 3600)
+        if self.display_timesheet_timer and self.user_timer_id:
+            timesheet = self._get_record_with_timer_running()
+            if timesheet:
+                return {
+                    "name": _("Confirm Time Spent"),
+                    "type": "ir.actions.act_window",
+                    "res_model": 'hr.timesheet.stop.timer.confirmation.wizard',
+                    'context': {
+                        'default_timesheet_id': timesheet.id,
+                        'dialog_size': 'medium',
+                    },
+                    "views": [[self.env.ref('timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form').id, "form"]],
+                    "target": 'new',
+                }
+            else:
+                return super().action_timer_stop()
         return False
 
-    def _action_open_new_timesheet(self, time_spent):
-        return {
-            "name": _("Confirm Time Spent"),
-            "type": 'ir.actions.act_window',
-            "res_model": 'helpdesk.ticket.create.timesheet',
-            "views": [[False, "form"]],
-            "target": 'new',
-            "context": {
-                **self.env.context,
-                'active_id': self.id,
-                'active_model': self._name,
-                'default_time_spent': time_spent,
-                'dialog_size': 'medium',
-            },
-        }
+    def _create_record_to_start_timer(self):
+        """ Create a timesheet to launch a timer """
+        return self.env['account.analytic.line'].create({
+            'helpdesk_ticket_id': self.id,
+            'project_id': self.project_id.id,
+            'date': fields.Date.context_today(self),
+            'name': '/',
+            'user_id': self.env.uid,
+        })
+
+    def _action_interrupt_user_timers(self):
+        """ Call action interrupt user timers to launch a new one
+            Stop the existing runnning timer before launching a new one.
+        """
+        self.action_timer_stop()

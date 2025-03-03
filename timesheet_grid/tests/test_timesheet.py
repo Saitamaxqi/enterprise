@@ -229,14 +229,6 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
 
         self.env.company.timesheet_encode_uom_id = current_timesheet_uom
 
-    def test_add_time_from_wizard(self):
-        wizard = self.env['project.task.create.timesheet'].create({
-            'time_spent': 0.15,
-            'task_id': self.task1.id,
-        })
-        wizard.with_user(self.user_employee).save_timesheet()
-        self.assertEqual(self.task1.timesheet_ids[0].unit_amount, 0.15)
-
     def test_action_add_time_to_timer_multi_company(self):
         company = self.env['res.company'].create({'name': 'My_Company'})
         self.env['hr.employee'].with_company(company).create({
@@ -354,18 +346,29 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
             "timesheet_rounding": 0,
         }).execute()
 
-        self.task1.action_timer_start()
-        act_window_action = self.task1.action_timer_stop()
+        task = self.task1.with_user(self.user_employee)
+        with freeze_time(datetime.now() - relativedelta(minutes=2)):
+            task.action_timer_start()
+        act_window_action = task.action_timer_stop()
         wizard = self.env[act_window_action['res_model']].with_context(act_window_action['context']).new()
         self.assertEqual(float_compare(wizard.time_spent, 0.38, 0), 0)
         self.env["res.config.settings"].create({
             "timesheet_rounding": 30,
         }).execute()
 
-        self.task1.action_timer_start()
-        act_window_action = self.task1.action_timer_stop()
-        wizard = self.env[act_window_action['res_model']].with_context(act_window_action['context']).new()
-        self.assertEqual(wizard.time_spent, 0.5)
+        with freeze_time(datetime.now() - relativedelta(minutes=2)):
+            task.action_timer_start()
+        act_window_action = task.action_timer_stop()
+        timesheet = task.user_timer_id._get_related_document()
+        wizard = self.env[act_window_action['res_model']].with_user(self.user_employee).with_context(act_window_action['context']).new()
+        self.assertEqual(float_compare(wizard.time_spent, 0.5, 0), 0)
+        self.assertEqual(timesheet.unit_amount, 0.0, 'The timer is not yet stopped since the wizard has not been validated')
+        self.assertTrue(task.user_timer_id)
+        self.assertTrue(timesheet.user_timer_id)
+        wizard.action_save_timesheet()
+        self.assertEqual(timesheet.unit_amount, 0.5)
+        self.assertFalse(task.user_timer_id)
+        self.assertFalse(timesheet.user_timer_id)
 
     def test_grid_update_cell(self):
         """ Test updating timesheet grid cells.
