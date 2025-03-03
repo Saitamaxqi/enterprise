@@ -1,18 +1,3 @@
-@keyframes fadeout {
-    0% {
-        display: block;
-        opacity: 0.8;
-    }
-    99% {
-        display: block;
-        opacity: 0;
-    }
-    100% {
-        display: none;
-        opacity: 0;
-    }
-}
-
 .o_mrp_display_record {
     break-inside: avoid;
 
@@ -26,11 +11,6 @@
 
     .list-group-item {
         cursor: pointer;
-    }
-
-    &.o_fadeout_animation {
-        animation: fadeout 5s ease-out;
-        animation-fill-mode: forwards;
     }
 
     &.o_disabled {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.MrpDisplayEmployeesPanel">
-        <div class="o_search_panel o_mrp_employees_panel position-absolute position-md-sticky top-0 z-1 bottom-0 flex-grow-0 flex-shrink-0 h-100 bg-view border-end"
+        <div class="o_search_panel o_mrp_employees_panel position-relative position-md-sticky top-0 z-1 bottom-0 flex-grow-0 flex-shrink-0 h-md-100 bg-view border-end"
              t-att-class="env.searchModel.searchPanelInfo.className" t-ref="root">
             <ul class="list-group h-100 overflow-auto pb-5">
                 <li t-foreach="props.employees.connected" t-as="employee" t-key="employee.id"
@@ -15,8 +15,7 @@
                         <div class="d-flex justify-content-between">
                             <div class="fw-bold"
                              t-att-class="{'opacity-50': !employee.workcenters.length and employee.id !== props.employees.admin.id}"
-                             t-esc="employee.name"
-                             readonly="1"/>
+                             t-esc="employee.name"/>
                             <i class="fa fa-unlock-alt" t-if="employee.id === props.employees.admin.id"/>
                         </div>
                         <div t-foreach="employee.workcenters" t-as="wc" t-key="wc.id" class="d-flex justify-content-between">
@@ -29,7 +28,7 @@
                     </div>
                 </li>
             </ul>
-            <div class=" position-fixed position-lg-absolute bottom-0 p-3 w-100">
+            <div class="position-absolute bottom-0 p-3 w-100">
                 <button class="btn btn-secondary text-center w-100 py-2"
                 t-on-click="props.popupAddEmployee">
                 <span>Edit Operators</span>
