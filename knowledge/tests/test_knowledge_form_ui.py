@@ -24,6 +24,10 @@ class TestKnowledgeUICommon(HttpCaseWithUserDemo, MailCase):
 
         cls.user_portal = cls._create_portal_user()
 
+        # Ensure we can send emails from tours using admin user
+        cls.env.ref('base.user_admin').write({
+            'email': 'test.admin@test.example.com'
+        })
 
 @tagged('post_install', '-at_install', 'knowledge', 'knowledge_tour')
 class TestKnowledgeUI(TestKnowledgeUICommon):
