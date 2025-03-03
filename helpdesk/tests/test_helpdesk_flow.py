@@ -769,3 +769,16 @@ Content-Transfer-Encoding: quoted-printable
 
         self.assertFalse(ticket1.user_id)
         self.assertFalse(ticket2.user_id)
+
+    def test_copy_first_and_avg_response_time(self):
+        helpdesk_ticket = self.env['helpdesk.ticket'].create({
+            'name': 'Test ticket',
+            'first_response_hours': '1.5',
+            'avg_response_hours': '2.33',
+            'total_response_hours': '4.5',
+        })
+
+        ticket_copy = helpdesk_ticket.copy()
+        self.assertEqual(ticket_copy.first_response_hours, 0.0)
+        self.assertEqual(ticket_copy.avg_response_hours, 0.0)
+        self.assertEqual(ticket_copy.total_response_hours, 0.0)
