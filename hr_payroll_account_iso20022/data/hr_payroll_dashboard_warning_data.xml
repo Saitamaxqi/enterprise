@@ -3,7 +3,7 @@
     <data noupdate="1">
 
         <record id="hr_payroll_dashboard_warning_employee_invalid_bank_account" model="hr.payroll.dashboard.warning">
-            <field name="name">Employees With Invalid Bank Accounts</field>
+            <field name="name">Employees With Invalid IBAN Bank Accounts</field>
             <field name="country_id" eval="False"/>
             <field name="evaluation_code">
 employee_bank_data = self.env['hr.employee']._get_account_holder_employees_data()
