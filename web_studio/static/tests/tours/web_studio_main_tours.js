@@ -341,7 +341,7 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         {
             // select Activity as model
             trigger:
-                '.modal:not(.o_inactive_modal) [name="relation_id"] .o-autocomplete--dropdown-menu li a:not(:has(.fa-spin)):contains(Activity)',
+                '.modal:not(.o_inactive_modal) [name="relation_id"] .o-autocomplete--dropdown-menu li a:not(:has(.fa-spin)):contains(Activity):not(:contains("Activity "))',
             run: "click",
         },
         {
