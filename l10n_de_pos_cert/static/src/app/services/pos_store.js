@@ -68,7 +68,7 @@ patch(PosStore.prototype, {
                     throw new TaxError(productTmpl);
                 }
             }
-            if (!productTmpl.taxes_id.length) {
+            if (!productTmpl.taxes_id.length && productTmpl.type !== "combo") {
                 throw new TaxError(productTmpl);
             }
         }
