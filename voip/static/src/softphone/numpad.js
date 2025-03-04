@@ -43,9 +43,13 @@ export class Numpad extends Component {
     onClickBackspace(ev) {
         const value = this.softphone.numpad.value.trim();
         const { selectionStart, selectionEnd } = this.input.el;
-        const cursorPosition = selectionStart === selectionEnd && selectionStart !== 0 ? selectionStart - 1 : selectionStart;
+        const cursorPosition =
+            selectionStart === selectionEnd && selectionStart !== 0
+                ? selectionStart - 1
+                : selectionStart;
         if (selectionStart !== 0) {
-            this.softphone.numpad.value = value.slice(0, cursorPosition) + value.slice(selectionEnd);
+            this.softphone.numpad.value =
+                value.slice(0, cursorPosition) + value.slice(selectionEnd);
             this.updateCountryCode();
         }
         this.selection.moveCursor(cursorPosition);
@@ -56,7 +60,8 @@ export class Numpad extends Component {
         this.userAgentService.session?.sipSession?.sessionDescriptionHandler.sendDtmf(key);
         const value = this.softphone.numpad.value.trim();
         const { selectionStart, selectionEnd } = this.input.el;
-        this.softphone.numpad.value = value.slice(0, selectionStart) + key + value.slice(selectionEnd);
+        this.softphone.numpad.value =
+            value.slice(0, selectionStart) + key + value.slice(selectionEnd);
         this.updateCountryCode();
         this.selection.moveCursor(selectionStart + 1);
         this.softphone.shouldFocus = true;
