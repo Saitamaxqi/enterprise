@@ -18,6 +18,8 @@ class SignContract(Sign):
         if request_item.sign_request_id.nb_closed == 1 and contract.car_id:
             if contract.car_id and contract.driver_id != contract.employee_id.work_contact_id:
                 contract.car_id.future_driver_id = contract.employee_id.work_contact_id
+            if contract.bike_id and contract.bike_id.driver_id != contract.employee_id.work_contact_id:
+                contract.bike_id.future_driver_id = contract.employee_id.work_contact_id
         # Both applicant/employee and HR responsible have signed
         if request_item.sign_request_id.nb_closed == 2:
             state_new_request = request.env.ref('fleet.fleet_vehicle_state_new_request', raise_if_not_found=False)
