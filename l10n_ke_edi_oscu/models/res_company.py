@@ -354,14 +354,16 @@ class ResCompany(models.Model):
 
         try:
             if self.l10n_ke_server_mode != 'demo':
-                response = session.post(url, json=content, timeout=45)  # Long timeout because eTIMS can often have congestion
+                response = session.post(url, json=content, timeout=120)  # Long timeout because eTIMS can often have congestion
             else:
                 response = self._l10n_ke_get_demo_response(urlext, content)
             _logger.debug(response.text)
         except Timeout:
             msg = _("Timeout Error: KRA is currently unable to process your document. Please try again later. Thank you for your patience.")
+            _logger.warning('Timeout when calling: %s', url)
             return {'code': 'TIM', 'message': msg}, {}, 'timeout_error'
         except (ValueError, RequestException) as e:
+            _logger.warning('Connection error when calling: %s', url)
             return {'code': 'CON', 'message': _("Connection Error: %s\n", e)}, {}, 'connection_error'
 
         try:
