@@ -69,7 +69,7 @@
                 @include o-position-absolute(0, 0, 0, 0);
                 transition: all 0.2s ease 0s;
                 &:hover {
-                    background-color: rgba(white, 0.4);
+                    background-color: rgba(#4e4d55, 0.4);
                 }
             }
         }
