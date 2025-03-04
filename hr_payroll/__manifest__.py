@@ -24,6 +24,7 @@
         'views/hr_salary_rule_category_views.xml',
         'views/hr_salary_rule_views.xml',
         'views/hr_payslip_line_views.xml',
+        'views/hr_payslip_worked_days_views.xml',
         'views/hr_payslip_views.xml',
         'views/hr_payslip_run_views.xml',
         'views/hr_payslip_input_type_views.xml',

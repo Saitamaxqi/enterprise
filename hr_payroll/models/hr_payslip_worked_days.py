@@ -11,6 +11,8 @@ class HrPayslipWorkedDays(models.Model):
 
     name = fields.Char(compute='_compute_name', store=True, string='Description', readonly=False)
     payslip_id = fields.Many2one('hr.payslip', string='Pay Slip', required=True, ondelete='cascade', index=True)
+    date_from = fields.Date(string='From', related="payslip_id.date_from", store=True)
+    employee_id = fields.Many2one('hr.employee', string='Employee', related='payslip_id.employee_id', store=True)
     sequence = fields.Integer(required=True, index=True, default=10)
     code = fields.Char(string='Code', related='work_entry_type_id.code')
     work_entry_type_id = fields.Many2one('hr.work.entry.type', string='Type', required=True, help="The code that can be used in the salary rules")

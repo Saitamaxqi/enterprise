@@ -90,6 +90,20 @@
         action="hr_payroll_headcount_action"
         sequence="11"
         parent="menu_hr_payroll_report"/>
+    
+    <menuitem
+        id="menu_hr_payslip_line_action_report"
+        name="Payslip Lines"
+        action="hr_payslip_line_action_report"
+        sequence="12"
+        parent="menu_hr_payroll_report"/>
+    
+    <menuitem
+        id="menu_hr_payslip_work_days_action_report"
+        name="Payslip Work Days Lines"
+        action="hr_payslip_work_days_action_report"
+        sequence="13"
+        parent="menu_hr_payroll_report"/>
 
     <menuitem
         id="menu_hr_work_entry_report"
