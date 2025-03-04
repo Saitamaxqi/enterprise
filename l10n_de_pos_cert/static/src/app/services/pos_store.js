@@ -384,7 +384,7 @@ patch(PosStore.prototype, {
         if (sentToFiskaly.length > 0) {
             for (const orderJson of sentToFiskaly) {
                 if (ordersToUpdate[orderJson["id"]]) {
-                    orderJson["data"] = orderObjectMap[orderJson["id"]].serialize();
+                    orderJson["data"] = orderObjectMap[orderJson["id"]].raw;
                 }
             }
             try {
@@ -393,13 +393,13 @@ patch(PosStore.prototype, {
                 odooError = error;
             }
         }
-        if (result && fiskalyFailure.length === 0) {
+        if (fiskalyFailure.length === 0 && !odooError) {
             return result;
         } else {
             if (Object.keys(ordersToUpdate).length) {
                 for (const orderJson of fiskalyFailure) {
                     if (ordersToUpdate[orderJson["id"]]) {
-                        orderJson["data"] = orderObjectMap[orderJson["id"]].serialize();
+                        orderJson["data"] = orderObjectMap[orderJson["id"]].raw;
                     }
                 }
             }

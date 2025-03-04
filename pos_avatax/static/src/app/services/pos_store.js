@@ -17,7 +17,7 @@ patch(PosStore.prototype, {
                 this.env.services.ui.block({ message: _t("Updating Avatax taxes...") });
             }
 
-            const serialized = order.serialize({ orm: true });
+            const serialized = order.serializeForORM();
             const data = await this.data.call("pos.order", "get_order_tax_details", [[serialized]]);
             const modelToAdd = {};
             for (const [model, records] of Object.entries(data)) {
@@ -31,7 +31,7 @@ patch(PosStore.prototype, {
                 this.models.replaceDataByKey(modelKey, { [model]: records });
             }
 
-            this.models.loadData(modelToAdd);
+            this.models.connectNewData(modelToAdd);
         } catch {
             this.dialog.add(AlertDialog, {
                 title: _t("Error while loading Avatax taxes"),

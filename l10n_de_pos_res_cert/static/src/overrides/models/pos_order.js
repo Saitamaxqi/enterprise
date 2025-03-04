@@ -3,8 +3,8 @@ import { patch } from "@web/core/utils/patch";
 
 patch(PosOrder.prototype, {
     // @Override
-    setup() {
-        super.setup(...arguments);
+    initState() {
+        super.initState();
         this.uiState = {
             ...this.uiState,
             fiskalyLinesSent: false,

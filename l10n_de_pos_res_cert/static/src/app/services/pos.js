@@ -33,7 +33,7 @@ patch(PosStore.prototype, {
     },
     async retrieveAndSendLineDifference(order) {
         const data = await this.data.call("pos.order", "retrieve_line_difference", [
-            [order.serialize({ orm: true })],
+            [order.serializeForORM()],
         ]);
         if (data[order.uuid].length > 0) {
             await this.sendLineDifference(order, data[order.uuid]);
@@ -127,7 +127,7 @@ patch(PosStore.prototype, {
 
         const ordersCheckDifference = orders
             .filter((o) => !o.uiState.fiskalyLinesSent)
-            .map((elem) => elem.serialize({ orm: true }));
+            .map((elem) => elem.serializeForORM());
 
         let differences = {};
         if (ordersCheckDifference.length > 0) {

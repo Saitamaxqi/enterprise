@@ -33,6 +33,7 @@ patch(PosStore.prototype, {
                 } else {
                     await this.syncAllOrders({
                         orders: [o],
+                        force: true,
                         context: {
                             preparation: {
                                 process_order_options,

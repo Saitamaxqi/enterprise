@@ -10,7 +10,7 @@ patch(PosStore.prototype, {
                 return;
             }
             if (command === "ADDED") {
-                this.models.loadData({ "calendar.event": [event] });
+                this.models.connectNewData({ "calendar.event": [event] });
                 this.data.synchronizeServerDataInIndexedDB({ "calendar.event": [event] });
             } else if (command === "REMOVED") {
                 this.models["calendar.event"].get(event.id)?.delete?.();

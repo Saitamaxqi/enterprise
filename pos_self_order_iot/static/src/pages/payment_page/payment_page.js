@@ -82,7 +82,7 @@ patch(PaymentPage.prototype, {
 
         try {
             const orderResult = await rpc(`/kiosk/payment/${this.selfOrder.config.id}/kiosk`, {
-                order: this.selfOrder.currentOrder.serialize({ orm: true }),
+                order: this.selfOrder.currentOrder.serializeForORM(),
                 access_token: this.selfOrder.access_token,
                 payment_method_id: paymentMethod.id,
             });
