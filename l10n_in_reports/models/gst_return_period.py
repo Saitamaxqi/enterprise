@@ -529,8 +529,8 @@ class L10n_InGstReturnPeriod(models.Model):
         # TO OVERRIDE on Point of sale for get details by product
         """
             This method is return hsn json as below
-            Here inovice line is group by product hsn code and product unit code and gst tax rate
-            {'data': [{
+            Here invoice lines are grouped by GST treatment type, product HSN code, product unit code and GST tax rate.
+            {'data/hsn_b2b/hsn_b2c': [{
                 'num': 1,
                 'hsn_sc': '94038900',
                 'uqc': 'UNT',
@@ -547,10 +547,20 @@ class L10n_InGstReturnPeriod(models.Model):
         uoms = self.env['uom.uom'].browse(journal_items.product_uom_id.ids)
         uoms.fetch(['l10n_in_code'])
         hsn_json = {}
+        if self.start_date < date(2025, 4, 1):
+            hsn_json = {'data': {}}
+        else:
+            hsn_json = {'hsn_b2b': {}, 'hsn_b2c': {}}
         for move_id in journal_items.mapped('move_id'):
             # We sum value of invoice and credit note
             # so we need positive value for invoice and nagative for credit note
             tax_details = tax_details_by_move.get(move_id, {})
+            if 'data' in hsn_json:
+                hsn_section = 'data'
+            elif move_id.l10n_in_gst_treatment in {'regular', 'composition', 'deemed_export', 'uin_holders'}:
+                hsn_section = 'hsn_b2b'
+            else:
+                hsn_section = 'hsn_b2c'
             for line, line_tax_details in tax_details.items():
                 tax_rate = line_tax_details['gst_tax_rate']
                 if tax_rate.is_integer():
@@ -561,21 +571,22 @@ class L10n_InGstReturnPeriod(models.Model):
                     uqc = "NA"
                 group_key = "%s-%s-%s" %(
                     tax_rate, line.l10n_in_hsn_code, uqc)
-                hsn_json.setdefault(group_key, {
+                hsn_json[hsn_section].setdefault(group_key, {
                     "hsn_sc": self.env["account.move"]._l10n_in_extract_digits(line.l10n_in_hsn_code),
                     "uqc": uqc,
                     "rt": tax_rate,
                     "qty": 0.00, "txval": 0.00, "iamt": 0.00, "samt": 0.00, "camt": 0.00, "csamt": 0.00})
+                hsn_data = hsn_json[hsn_section][group_key]
                 if line.product_id.type != 'service':
                     if move_id.move_type in ('in_refund', 'out_refund'):
-                        hsn_json[group_key]['qty'] -= line.quantity
+                        hsn_data['qty'] -= line.quantity
                     else:
-                        hsn_json[group_key]['qty'] += line.quantity
-                hsn_json[group_key]['txval'] += line_tax_details.get('base_amount', 0.00) * -1
-                hsn_json[group_key]['iamt'] += line_tax_details.get('igst', 0.00) * -1
-                hsn_json[group_key]['samt'] += line_tax_details.get('cgst', 0.00) * -1
-                hsn_json[group_key]['camt'] += line_tax_details.get('sgst', 0.00) * -1
-                hsn_json[group_key]['csamt'] += line_tax_details.get('cess', 0.00) * -1
+                        hsn_data['qty'] += line.quantity
+                hsn_data['txval'] += line_tax_details.get('base_amount', 0.00) * -1
+                hsn_data['iamt'] += line_tax_details.get('igst', 0.00) * -1
+                hsn_data['samt'] += line_tax_details.get('cgst', 0.00) * -1
+                hsn_data['camt'] += line_tax_details.get('sgst', 0.00) * -1
+                hsn_data['csamt'] += line_tax_details.get('cess', 0.00) * -1
         return hsn_json
 
     def is_einvoice_skippable(self, move_id):
@@ -583,6 +594,16 @@ class L10n_InGstReturnPeriod(models.Model):
         pass
 
     def _get_gstr1_json(self):
+
+        def _process_hsn_data(hsn_data):
+            """Helper function to process HSN data with rounding."""
+            return [
+                {**hsn_dict, 'num': index, **{
+                    key: AccountMove._l10n_in_round_value(hsn_dict.get(key, 0))
+                    for key in ('txval', 'iamt', 'camt', 'samt', 'csamt', 'qty')
+                }}
+                for index, hsn_dict in enumerate(hsn_data.values(), start=1)
+            ]
 
         def _get_b2b_json(journal_items):
             """
@@ -1147,15 +1168,11 @@ class L10n_InGstReturnPeriod(models.Model):
         if nil_json:
             return_json.update({'nil': nil_json})
         if hsn_json:
-            return_json.update({'hsn':
-                {'data': [{**hsn_dict, 'num': index,
-                    'txval': AccountMove._l10n_in_round_value(hsn_dict.get('txval')),
-                    'iamt': AccountMove._l10n_in_round_value(hsn_dict.get('iamt')),
-                    'camt': AccountMove._l10n_in_round_value(hsn_dict.get('camt')),
-                    'samt': AccountMove._l10n_in_round_value(hsn_dict.get('samt')),
-                    'csamt': AccountMove._l10n_in_round_value(hsn_dict.get('csamt')),
-                    'qty': AccountMove._l10n_in_round_value(hsn_dict.get('qty')),
-                    } for index, hsn_dict in enumerate(hsn_json.values(), start=1)]}})
+            return_json['hsn'] = {
+                hsn_section: _process_hsn_data(hsn_json[hsn_section])
+                for hsn_section in hsn_json
+                if hsn_json.get(hsn_section)
+            }
         return return_json
 
     def button_send_gstr1(self):

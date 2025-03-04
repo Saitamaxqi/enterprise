@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models
+from datetime import date
+from odoo import models
 
 
 class L10n_InGstReturnPeriod(models.Model):
@@ -96,6 +97,8 @@ class L10n_InGstReturnPeriod(models.Model):
         pos_order_lines = self.env['pos.order.line'].browse(pos_orders.lines.ids)
         pos_order_lines.fetch(['product_id', 'product_uom_id'])
         details_pos_lines_by_move = _set_details_pos_lines(pos_order_lines)
+        hsn_section = 'data' if self.start_date < date(2025, 4, 1) else 'hsn_b2c'
+        hsn_json.setdefault(hsn_section, {})
         for move_id in pos_journal_items.mapped("move_id"):
             tax_details = tax_details_by_move.get(move_id)
             details_pos_lines = details_pos_lines_by_move.get(move_id.id)
@@ -120,25 +123,26 @@ class L10n_InGstReturnPeriod(models.Model):
                     product_uom_code = details_pos_line['product_uom_code']
                     product_hsn_code = details_pos_line['product_hsn_code']
                     group_key = "%s-%s-%s" % (tax_rate, product_hsn_code, product_uom_code)
-                    hsn_json.setdefault(group_key, {
+                    hsn_json[hsn_section].setdefault(group_key, {
                         "hsn_sc": product_hsn_code,
                         "uqc": product_uom_code,
                         "rt": tax_rate,
                         "qty": 0.00, "txval": 0.00, "iamt": 0.00, "samt": 0.00, "camt": 0.00, "csamt": 0.00})
-                    hsn_json[group_key]['qty'] += details_pos_line['qty']
+                    hsn_data = hsn_json[hsn_section][group_key]
+                    hsn_data['qty'] += details_pos_line['qty']
                     # check is last in loop
                     if index == len(pos_matched_lines):
-                        hsn_json[group_key]['txval'] += remaining_values['txval']
-                        hsn_json[group_key]['iamt'] += remaining_values['iamt']
-                        hsn_json[group_key]['samt'] += remaining_values['samt']
-                        hsn_json[group_key]['camt'] += remaining_values['camt']
-                        hsn_json[group_key]['csamt'] += remaining_values['csamt']
+                        hsn_data['txval'] += remaining_values['txval']
+                        hsn_data['iamt'] += remaining_values['iamt']
+                        hsn_data['samt'] += remaining_values['samt']
+                        hsn_data['camt'] += remaining_values['camt']
+                        hsn_data['csamt'] += remaining_values['csamt']
                     else:
-                        hsn_json[group_key]['txval'] += line_tax_details.get('base_amount', 0.00) * pos_ratio * -1
-                        hsn_json[group_key]['iamt'] += line_tax_details.get('igst', 0.00) * pos_ratio * -1
-                        hsn_json[group_key]['samt'] += line_tax_details.get('cgst', 0.00) * pos_ratio * -1
-                        hsn_json[group_key]['camt'] += line_tax_details.get('sgst', 0.00) * pos_ratio * -1
-                        hsn_json[group_key]['csamt'] += line_tax_details.get('cess', 0.00) * pos_ratio * -1
+                        hsn_data['txval'] += line_tax_details.get('base_amount', 0.00) * pos_ratio * -1
+                        hsn_data['iamt'] += line_tax_details.get('igst', 0.00) * pos_ratio * -1
+                        hsn_data['samt'] += line_tax_details.get('cgst', 0.00) * pos_ratio * -1
+                        hsn_data['camt'] += line_tax_details.get('sgst', 0.00) * pos_ratio * -1
+                        hsn_data['csamt'] += line_tax_details.get('cess', 0.00) * pos_ratio * -1
 
                         remaining_values['txval'] -= line_tax_details.get('base_amount', 0.00) * pos_ratio * -1
                         remaining_values['iamt'] -= line_tax_details.get('igst', 0.00) * pos_ratio * -1

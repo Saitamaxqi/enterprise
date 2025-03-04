@@ -23,7 +23,12 @@ class GSTR1SpreadsheetGenerator:
         self._prepare_cdnur_sheet(self.gstr1_json.get('cdnur', {}), workbook, cell_formats)
         self._prepare_exp_sheet(self.gstr1_json.get('exp', {}), workbook, cell_formats)
         self._prepare_nil_sheet(self.gstr1_json.get('nil', {}), workbook, cell_formats)
-        self._prepare_hsn_sheet(self.gstr1_json.get('hsn', {}), workbook, cell_formats)
+        hsn_json = self.gstr1_json.get('hsn', {})
+        if 'data' in hsn_json:
+            self._prepare_hsn_sheet(hsn_json, workbook, cell_formats)
+        else:
+            self._prepare_hsn_sheet(hsn_json, workbook, cell_formats, 'hsn_b2b')
+            self._prepare_hsn_sheet(hsn_json, workbook, cell_formats, 'hsn_b2c')
         # self._prepare_supeco_sheet(gstr1_json.get('supeco', {}), 'clttx', workbook, cell_formats) # Table 14(a) u/s 52(TCS)
         # self._prepare_supeco_sheet(gstr1_json.get('supeco', {}), 'paytx', workbook, cell_formats) # Table 14 (b) u/s 9(5)
         workbook.close()
@@ -433,13 +438,14 @@ class GSTR1SpreadsheetGenerator:
             row_count += 1
         self._set_spreadsheet_row(worksheet, totals_row_data, totals_val_row, cell_formats.get('regular'))
 
-    def _prepare_hsn_sheet(self, hsn_json, workbook, cell_formats):
+    def _prepare_hsn_sheet(self, hsn_json, workbook, cell_formats, hsn_section='data'):
         primary_header_row = 2
         secondary_header_row = 4
         totals_val_row = 3
         row_count = 5
-        worksheet = workbook.add_worksheet('hsn')
-        worksheet.write('A1', 'Summary For HSN(12)', cell_formats.get('primary_header'))
+        summary_hsn_label = 'HSN' if hsn_section == 'data' else hsn_section
+        worksheet = workbook.add_worksheet(summary_hsn_label)
+        worksheet.write('A1', f'Summary For {summary_hsn_label.replace("_", " ").upper()}(12)', cell_formats.get('primary_header'))
         primary_headers = [
            {'val': 'No. of HSN', 'column': 'A'},
            {'val': 'Total Value', 'column': 'D'},
@@ -476,7 +482,7 @@ class GSTR1SpreadsheetGenerator:
         worksheet.set_row(secondary_header_row - 1, None, cell_formats.get('secondary_header'))
         worksheet.set_column('A:A', 30)
         worksheet.set_column('B:J', 20)
-        for item in hsn_json.get('data', {}):
+        for item in hsn_json.get(hsn_section, {}):
             total_val = item['txval'] + item['iamt'] + item['samt'] + item['camt'] + item['csamt']
             row_data = [
                 {'val': item['hsn_sc'], 'column': 'A'},
