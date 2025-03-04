@@ -99,9 +99,8 @@
                             colorField="'color'"
                         />
                     </div>
-
                     <i class="oi oi-odoo text-primary mx-1 my-2"/>
-                    <div t-if="this.record.data.res_id and state.resModel !== 'documents.document'" class="o_documents_details_panel_record d-flex flex-row align-items-center">
+                    <div t-if="this.record.data.res_id and state.resModel" class="o_documents_details_panel_record d-flex flex-row align-items-center">
                         <a href="#" t-on-click.stop="openLinkedRecord" t-out="record.data.res_name" class="text-truncate"/>
                         <button t-on-click="() => this.onRecordReset()" class="btn fa fa-close"/>
                     </div>
@@ -109,7 +108,7 @@
                     <div t-else="" class="o_field_widget o_field_many2one">
                         <div class="o_input_dropdown">
                             <ModelSelector
-                                value="state.resModel === 'documents.document' ? '' : state.resModelName"
+                                value="state.resModel ? state.resModelName : ''"
                                 onModelSelected.bind="onModelSelected"
                                 models="this.state.models"
                                 placeholder.translate="No linked model"

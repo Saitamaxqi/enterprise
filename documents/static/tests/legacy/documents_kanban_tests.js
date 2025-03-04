@@ -226,7 +226,7 @@ QUnit.module("documents", {}, function () {
                     { name: "fake2" },
                 ]);
                 const irAttachmentId1 = mockServer.mockCreate("ir.attachment", {})[0];
-                const [documentsDocumentId1, documentsDocumentId2] = mockServer.mockCreate(
+                mockServer.mockCreate(
                     "documents.document",
                     [
                         {
@@ -270,8 +270,8 @@ QUnit.module("documents", {}, function () {
                         name: "gnap",
                         owner_id: resUsersIds[1],
                         partner_id: resPartnerIds[0],
-                        res_id: documentsDocumentId2,
-                        res_model: "documents.document",
+                        res_id: false,
+                        res_model: false,
                         res_model_name: "Task",
                         tag_ids: [documentsTagIds[0], documentsTagIds[1], documentsTagIds[2]],
                     },
@@ -304,8 +304,8 @@ QUnit.module("documents", {}, function () {
                         name: "pom",
                         owner_id: resUsersIds[0],
                         partner_id: resPartnerIds[2],
-                        res_id: documentsDocumentId1,
-                        res_model: "documents.document",
+                        res_id: false,
+                        res_model: false,
                         res_model_name: "Document",
                     },
                     {

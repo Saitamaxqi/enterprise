@@ -140,8 +140,8 @@ export class DocumentsDetailsPanel extends Component {
         }
     }
 
-    onRecordReset() {
-        return this.onModelSelected({ technical: false, label: false });
+    async onRecordReset() {
+        await this.onModelSelected({ technical: false, label: false });
     }
 
     async onResIdUpdate(value) {

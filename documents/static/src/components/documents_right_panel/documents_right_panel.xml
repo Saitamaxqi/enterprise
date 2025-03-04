@@ -9,7 +9,7 @@
             <t t-if="panelDisabled" t-call="documents.DocumentsViews.ChatterOverlay"/>
             <DocumentsDetailsPanel t-if="!panelDisabled" record="state.previewedDocument?.record || state.focusedRecord" nbViewItems="props.nbViewItems" />
             <Chatter t-if="state.focusedRecord?.data and documentService.userIsInternal"
-                has_activities="!state.focusedRecord.data.res_model || state.focusedRecord.data.res_model === 'documents.document'"
+                has_activities="!state.focusedRecord.data.res_model"
                 threadId="typeof state.focusedRecord.data.id === 'number' and state.focusedRecord.data.id"
                 threadModel="'documents.document'"
                 isChatterAside="!isMobile"/>

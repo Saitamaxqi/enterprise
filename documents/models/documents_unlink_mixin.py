@@ -10,17 +10,13 @@ class DocumentsUnlinkMixin(models.AbstractModel):
 
     def unlink(self):
         """Prevent deletion of the attachments / documents and send them to the trash instead."""
-        documents = self.env['documents.document'].search([
+        self.env['documents.document'].search([
             ('res_model', '=', self._name),
             ('res_id', 'in', self.ids),
             ('active', '=', True),
-        ])
-
-        for document in documents:
-            document.write({
-                'res_model': 'documents.document',
-                'res_id': document.id,
-                'active': False,
-            })
-
+        ]).write({
+            'res_model': False,
+            'res_id': False,
+            'active': False,
+        })
         return super().unlink()

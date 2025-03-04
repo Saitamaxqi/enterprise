@@ -497,10 +497,6 @@ class DocumentsDocument(models.Model):
         attachment._post_add_create()
         return attachment
 
-    @api.autovacuum
-    def _gc_spreadsheet(self):
-        """TODO: remove in master"""
-
     def action_open_spreadsheet(self):
         self.ensure_one()
         return {

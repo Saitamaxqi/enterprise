@@ -58,9 +58,7 @@ class DocumentsDocument(models.Model):
         })
 
         for document in self:
-            if ((document.res_model or document.res_id)
-                and document.res_model != 'documents.document'
-            ):
+            if document.res_model or document.res_id:
                 att_copy = document.attachment_id.with_context(no_document=True).copy()
                 document = document.copy({'attachment_id': att_copy.id})
             document.write({

@@ -33,16 +33,18 @@ class TestCaseDocumentsBridgeExpense(TransactionCase):
             'group_ids': [Command.set([self.env.ref('documents.group_documents_user').id])],
         })
         documents_user.action_create_employee()  # Employee is mandatory in expense
-        attachment_txt = self.env['documents.document'].with_user(documents_user).create({
+        document_txt = self.env['documents.document'].with_user(documents_user).create({
             'datas': 'JVBERi0gRmFrZSBQREYgY29udGVudA==',
             'name': 'file.pdf',
             'mimetype': 'application/pdf',
             'folder_id': folder_internal.id,
         })
 
-        self.assertEqual(attachment_txt.res_model, 'documents.document', "The default res model of an attachment is documents.document.")
-        attachment_txt.with_user(documents_user).document_hr_expense_create_hr_expense()
-        self.assertEqual(attachment_txt.res_model, 'hr.expense', "The attachment model is updated.")
-        expense = self.env['hr.expense'].search([('id', '=', attachment_txt.res_id)])
+        self.assertFalse(document_txt.res_model, "The default res model of a document is False.")
+        self.assertEqual(document_txt.attachment_id.res_model, 'documents.document', "The default res model of an attachment is documents.document.")
+        document_txt.with_user(documents_user).document_hr_expense_create_hr_expense()
+        self.assertEqual(document_txt.res_model, 'hr.expense', "The document model is updated.")
+        self.assertEqual(document_txt.attachment_id.res_model, 'hr.expense', "The attachment model is updated.")
+        expense = self.env['hr.expense'].search([('id', '=', document_txt.res_id)])
         self.assertTrue(expense.exists(), 'expense sholud be created.')
-        self.assertEqual(attachment_txt.res_id, expense.id, "Expense should be linked to attachment")
+        self.assertEqual(document_txt.res_id, expense.id, "Expense should be linked to document")

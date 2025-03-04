@@ -148,7 +148,7 @@
                                         </div>
                                     </div>
                                     <div class="o_kanban_record_body text-truncate">
-                                        <t t-if="record.res_model_name.raw_value &amp;&amp; record.res_model.raw_value !== 'documents.document'">
+                                        <t t-if="record.res_model_name.raw_value">
                                             <t t-if="record.res_name.raw_value">
                                                 <field name="res_name" class="text-muted"/>
                                             </t>
@@ -247,7 +247,7 @@
                 <field name="write_date" optional="show"/>
                 <field name="file_extension" optional="hide"/>
                 <field name="file_size" optional="show" widget="document_size"/>
-                <field name="res_id" string="Link to" optional="hide" widget="documents_many2one_reference"/>
+                <field name="res_id" string="Link to" optional="hide"/>
                 <field name="id" column_invisible="1"/>
                 <field name="access_token" column_invisible="1"/>
                 <field name="active" column_invisible="1"/>

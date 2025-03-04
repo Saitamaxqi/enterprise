@@ -809,6 +809,30 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             self.folder_b.write({'access_internal': 'none', 'access_via_link': 'none'})
             self.folder_b.access_ids.unlink()
 
+    def test_access_documents_and_attachment(self):
+        self.document_gif.action_update_access_rights(access_internal='none', access_via_link='none')
+        gif_as_internal = self.document_gif.with_user(self.internal_user)
+
+        self.assertFalse(self.document_gif.res_id)
+        self.assertFalse(self.document_gif.res_model)
+
+        self.assertEqual(self.document_gif.attachment_id.res_id, self.document_gif.id)
+        self.assertEqual(self.document_gif.attachment_id.res_model, 'documents.document')
+
+        self._assert_raises_check_access_rule(gif_as_internal, 'read')
+
+        # Check that the user can not read the attachment
+        self.assertFalse(self.document_gif.res_model)
+        with self.assertRaises(AccessError):
+            self.assertEqual(self.document_gif.attachment_id.with_user(self.internal_user).name, 'file.gif')
+
+        # If we give access to the document, the user should be able to read both the document and the attachment
+        self.document_gif.access_internal = 'view'
+        self.assertEqual(gif_as_internal.with_user(self.internal_user).name, 'file.gif')
+        self.assertFalse(gif_as_internal.res_model)
+        self.env.invalidate_all()
+        self.assertEqual(self.document_gif.attachment_id.with_user(self.internal_user).name, 'file.gif')
+
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_access_rights_shortcuts_and_discoverability(self):
         """Check access rights related to shortcuts:

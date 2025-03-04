@@ -530,7 +530,7 @@ class ShareRoute(http.Controller):
         owner_id='',
         partner_id='',
         res_id='',
-        res_model='',
+        res_model=False,
         allowed_company_ids='',
     ):
         """
@@ -570,15 +570,14 @@ class ShareRoute(http.Controller):
             with replace_exceptions(ValueError, by=BadRequest):
                 owner_id = int(owner_id) if owner_id else request.env.user.id
                 partner_id = int(partner_id) if partner_id else None
-                res_model = res_model or 'documents.document'
                 res_id = int(res_id) if res_id else False
         elif owner_id or partner_id or res_id or res_model:
             raise Forbidden("only internal users can provide field values")
         else:
             owner_id = document_sudo.owner_id.id if request.env.user.is_public else request.env.user.id
             partner_id = None
-            res_model = 'documents.document'
-            res_id = False  # replaced by the document's id
+            res_model = False
+            res_id = False
 
         document_ids = self._documents_upload(
             document_sudo, files, owner_id, partner_id, res_id, res_model)
@@ -604,8 +603,8 @@ class ShareRoute(http.Controller):
             attachment_sudo = AttachmentSudo._from_request_file(
                 files[0], mimetype='TRUST' if is_internal_user else 'GUESS'
             )
-            attachment_sudo.res_model = document_sudo.res_model
-            attachment_sudo.res_id = document_sudo.res_id
+            attachment_sudo.res_model = document_sudo.res_model or 'documents.document'
+            attachment_sudo.res_id = document_sudo.res_id if document_sudo.res_model else document_sudo.id
             values = {'attachment_id': attachment_sudo.id}
             if not document_sudo.attachment_id:  # is a request
                 if document_sudo.access_via_link == 'edit':
@@ -623,7 +622,7 @@ class ShareRoute(http.Controller):
                     'access_via_link': 'none' if folder_sudo.access_via_link in (False, 'none') else 'view',
                     'folder_id': folder_sudo.id,
                     'owner_id': owner_id,
-                    'res_model': res_model,
+                    'res_model': res_model or False,
                     'res_id': res_id,
                 } | (
                     {'partner_id': partner_id} if partner_id is not None else {}
@@ -647,13 +646,6 @@ class ShareRoute(http.Controller):
         else:
             vals.setdefault('folder_id', document_sudo.id)
             document_sudo = document_sudo.create(vals)
-        if not document_sudo.res_model:
-            document_sudo.res_model = 'documents.document'
-        if (
-            document_sudo.res_model == 'documents.document'
-            and not document_sudo.res_id
-        ):
-            document_sudo.res_id = document_sudo.id
         if (any(field_name in vals for field_name in [
                 'raw', 'datas', 'attachment_id'])):
             document_sudo.message_post(body=_(

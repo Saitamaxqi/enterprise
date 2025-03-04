@@ -47,8 +47,8 @@ class TestCaseDocuments(TransactionCaseDocuments):
                 self.assertEqual(shortcut[field_name], self.document_gif[field_name])
         attachment = self.env['ir.attachment'].create({
             **file_a,
-            'res_model': 'documents.document',
-            'res_id': 0,
+            'res_model': False,
+            'res_id': False,
         })
         self.document_gif.attachment_id = attachment
         self.assertNotEqual(self.document_gif.file_size, original_file_size)
@@ -106,10 +106,50 @@ class TestCaseDocuments(TransactionCaseDocuments):
                          'the attachment should be the attachment given in the create values')
         self.assertEqual(document_a.name, 'new name',
                          'the name given should be used')
-        self.assertEqual(document_a.res_model, 'documents.document',
-                         'the res_model should be set as document by default')
-        self.assertEqual(document_a.res_id, document_a.id,
-                         'the res_id should be set as its own id by default to allow access right inheritance')
+        self.assertFalse(document_a.res_model)
+        self.assertFalse(document_a.res_id)
+
+    def test_documents_create_res_model(self):
+        """Test the model set on a document and its attachment."""
+        attachment = self.env['ir.attachment'].create({'name': 'test', 'res_model': 'documents.document'})
+        doc = self.env['documents.document'].create({'attachment_id': attachment.id})
+        self.assertEqual(attachment.res_model, 'documents.document')
+        self.assertEqual(attachment.res_id, doc.id)
+
+        attachment = self.env['ir.attachment'].create({'name': 'test', 'res_model': 'documents.document'})
+        partner = self.env['res.partner'].create({'name': 'partner'})
+        doc = self.env['documents.document'].create({'attachment_id': attachment.id, 'res_model': 'res.partner', 'res_id': partner.id})
+        self.assertEqual(attachment.res_model, 'res.partner')
+        self.assertEqual(attachment.res_id, partner.id)
+        self.assertEqual(doc.res_model, 'res.partner')
+        self.assertEqual(doc.res_id, partner.id)
+
+        user = self.portal_user
+        attachment = self.env['ir.attachment'].create({'name': 'test', 'res_model': 'res.users', 'res_id': user.id})
+        doc = self.env['documents.document'].create({'attachment_id': attachment.id})
+        self.assertEqual(attachment.res_model, 'res.users')
+        self.assertEqual(attachment.res_id, user.id)
+        self.assertEqual(doc.res_model, 'res.users')
+        self.assertEqual(doc.res_id, user.id)
+
+        doc.attachment_id = False
+        doc.name = 'test'
+        doc.datas = 'ZGF0YQ=='
+        self.assertEqual(doc.attachment_id.res_model, 'res.users')
+        self.assertEqual(doc.attachment_id.res_id, user.id)
+        self.assertEqual(doc.attachment_id.name, 'test')
+
+        doc.write({'attachment_id': False, 'res_model': False, 'res_id': False})
+        doc.datas = 'ZGF0YQ=='
+        self.assertEqual(doc.attachment_id.res_model, 'documents.document')
+        self.assertEqual(doc.attachment_id.res_id, doc.id)
+        self.assertEqual(doc.attachment_id.name, 'test')
+
+        doc = self.env['documents.document'].create({'datas': 'ZGF0YQ=='})
+        self.assertFalse(doc.res_model)
+        self.assertFalse(doc.res_id)
+        self.assertEqual(doc.attachment_id.res_model, 'documents.document')
+        self.assertEqual(doc.attachment_id.res_id, doc.id)
 
     @users('documents@example.com')
     def test_documents_create_write(self):
@@ -122,10 +162,12 @@ class TestCaseDocuments(TransactionCaseDocuments):
             'datas': GIF,
             'folder_id': self.folder_b.id,
         })
-        self.assertEqual(document_a.res_model, 'documents.document',
+        self.assertFalse(document_a.res_model)
+        self.assertFalse(document_a.res_id)
+        self.assertEqual(document_a.attachment_id.res_model, 'documents.document',
                          'the res_model should be set as document by default')
-        self.assertEqual(document_a.res_id, document_a.id,
-                         'the res_id should be set as its own id by default to allow access right inheritance')
+        self.assertEqual(document_a.attachment_id.res_id, document_a.id,
+                         'the res_id should be set as the document id by default to allow access right inheritance')
         self.assertEqual(document_a.attachment_id.datas, GIF, 'the document should have a GIF data')
         document_no_attachment = self.env['documents.document'].create({
             'name': 'Test mimetype gif',
@@ -349,9 +391,11 @@ class TestCaseDocuments(TransactionCaseDocuments):
                 'datas': GIF,
                 'folder_id': self.folder_b.id,
                 'res_model': res_model,
-            } for res_model in ('res.partner', 'documents.document', False)
+                'res_id': res_id,
+            } for res_model, res_id in (('res.partner', self.internal_user.partner_id.id), (False, False))
         ])
-        documents[2].res_model = False
+        self.assertFalse(documents[1].res_model)
+        self.assertEqual(documents[1].attachment_id.res_model, 'documents.document')
         for document in documents:
             with self.subTest(res_model=document.res_model):
                 self.assertTrue(document.attachment_id.exists())
@@ -438,18 +482,22 @@ class TestCaseDocuments(TransactionCaseDocuments):
         copied_documents = (self.document_txt | document_txt_copy).with_user(self.internal_user).copy()
         self.document_txt.unlink()
         for copied_document in copied_documents:
-            self.assertEqual(copied_document.res_id, copied_document.id)
-            self.assertEqual(copied_document.res_model, "documents.document")
+            self.assertFalse(copied_document.res_id)
+            self.assertFalse(copied_document.res_model)
+            self.assertEqual(copied_document.attachment_id.res_id, copied_document.id)
+            self.assertEqual(copied_document.attachment_id.res_model, "documents.document")
             self.assertTrue(copied_document.exists())
 
         self.document_gif.write({
             "res_model": "res.partner",
             "res_id": self.env.user.partner_id.id,
         })
-        with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+        with mute_logger('odoo.addons.documents.models.documents_document'):
             copied_document = self.document_gif.copy()
-        self.assertEqual(copied_document.res_id, copied_document.id)
-        self.assertEqual(copied_document.res_model, "documents.document")
+        self.assertFalse(copied_document.res_id, copied_document.id)
+        self.assertFalse(copied_document.res_model)
+        self.assertEqual(copied_document.attachment_id.res_id, copied_document.id)
+        self.assertEqual(copied_document.attachment_id.res_model, "documents.document")
 
     def test_embedding_actions(self):
         """Check that embedded actions name is translated."""
@@ -634,7 +682,7 @@ class TestCaseDocuments(TransactionCaseDocuments):
             'datas': GIF,
             'name': 'TestAttachment.gif',
             'res_model': 'documents.document',
-            'res_id':folder.id
+            'res_id': folder.id,
         })
         self.assertNotEqual(attachment.name, folder.name,'the folder name should not change')
 

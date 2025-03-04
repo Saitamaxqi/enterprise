@@ -59,9 +59,9 @@ class DocumentsDocument(models.Model):
     checksum = fields.Char(related='attachment_id.checksum')
     mimetype = fields.Char(related='attachment_id.mimetype')
     res_model = fields.Char('Resource Model', compute="_compute_res_record", recursive=True,
-                            inverse="_inverse_res_model", store=True)
+                            inverse="_inverse_res_record", store=True)
     res_id = fields.Many2oneReference('Resource ID', compute="_compute_res_record", recursive=True,
-                                      inverse="_inverse_res_model", store=True, model_field="res_model")
+                                      inverse="_inverse_res_record", store=True, model_field="res_model")
     res_name = fields.Char('Resource Name', compute="_compute_res_name", compute_sudo=True)
     index_content = fields.Text(related='attachment_id.index_content')
     description = fields.Text('Attachment Description', related='attachment_id.description', readonly=False)
@@ -318,6 +318,11 @@ class DocumentsDocument(models.Model):
                 "The following documents can't have alias: \n- %(records)s",
                 records="\n-".join(wrong_records.mapped('name'))))
 
+    @api.constrains('res_model')
+    def _check_res_model(self):
+        if self.filtered(lambda d: d.res_model == 'documents.document'):
+            raise ValidationError(_('A document can not be linked to itself or another document.'))
+
     @api.depends('folder_id', 'owner_id', 'type')
     def _compute_is_company_root_folder(self):
         for document in self:
@@ -515,8 +520,8 @@ class DocumentsDocument(models.Model):
         for record in self:
             attachment = record.attachment_id
             if attachment:
-                record.res_model = attachment.res_model
-                record.res_id = attachment.res_id
+                record.res_model = (attachment.res_model != 'documents.document' and attachment.res_model) or False
+                record.res_id = (attachment.res_model != 'documents.document' and attachment.res_id) or False
             if record.shortcut_document_id:
                 record.res_model = record.shortcut_document_id.res_model
                 record.res_id = record.shortcut_document_id.res_id
@@ -531,14 +536,22 @@ class DocumentsDocument(models.Model):
             else:
                 record.res_name = False
 
-    def _inverse_res_model(self):
+    def _inverse_res_record(self):
         for record in self:
             attachment = record.attachment_id.with_context(no_document=True)
-            if attachment and (attachment.res_model, attachment.res_id) != (record.res_model, record.res_id):
+
+            # If no linked record, link the attachment to the document
+            # (so users see the attachment in the technical view if they have access to the document)
+            res_model, res_id = record.res_model, record.res_id
+            if not res_model:
+                res_model = 'documents.document'
+                res_id = record.id
+
+            if attachment and (attachment.res_model, attachment.res_id) != (res_model, res_id):
                 # Avoid inconsistency in the data, write both at the same time.
                 # In case a check_access is done between res_id and res_model modification,
                 # an access error can be received. (Mail causes this check_access)
-                attachment.sudo().write({'res_model': record.res_model, 'res_id': record.res_id})
+                attachment.sudo().write({'res_model': res_model, 'res_id': res_id})
 
     @api.depends('checksum', 'shortcut_document_id.thumbnail', 'shortcut_document_id.thumbnail_status',
                  'shortcut_document_id.user_permission')
@@ -1251,7 +1264,7 @@ class DocumentsDocument(models.Model):
             'default_model_ref': False,
         }
 
-        if documents_link_record := self.filtered(lambda d: d.res_model != 'documents.document'):
+        if documents_link_record := self.filtered('res_model'):
             return {
                 'type': 'ir.actions.client',
                 'tag': 'display_notification',
@@ -1626,8 +1639,8 @@ class DocumentsDocument(models.Model):
                             # Avoid recompute based on attachment_id
                             'name': new_binary_sudo.name,
                             'url_preview_image': False,
-                            'res_id': new_binary_sudo.id,
-                            'res_model': 'documents.document',
+                            'res_id': False,
+                            'res_model': False,
                         })
 
         return self.browse([new_document.id for new_document in new_documents])
@@ -1813,7 +1826,8 @@ class DocumentsDocument(models.Model):
                     not attachment.res_model or attachment.res_model == 'documents.document'):
                 attachment.with_context(no_document=True).write({
                     'res_model': 'documents.document',
-                    'res_id': document.id})
+                    'res_id': document.id,
+                })
         return documents
 
     def _prepare_create_values(self, vals_list):
@@ -1882,8 +1896,9 @@ class DocumentsDocument(models.Model):
                 [vals['attachment_id'] for vals in vals_list_to_update_linked_record]).grouped('id')
             for vals in vals_list_to_update_linked_record:
                 attachment = attachment_by_id[vals['attachment_id']]
-                vals['res_model'] = attachment.res_model
-                vals['res_id'] = attachment.res_id
+                vals['res_model'] = False if attachment.res_model == 'documents.document' else attachment.res_model
+                vals['res_id'] = False if attachment.res_model == 'documents.document' else attachment.res_id
+
         # Delegate vals_list update to _prepare_create_values_for_model to add values depending on related record
         updated_vals_list = []
         for res_model, model_vals_tuple_list in groupby(zip(vals_list, old_vals_list), lambda v: v[0].get('res_model')):
@@ -1986,7 +2001,8 @@ class DocumentsDocument(models.Model):
                             "res_model": record.res_model or "documents.document",
                             "res_id": record.res_id if record.res_model else record.id,
                         })
-                    related_record = self.env[record.res_model].browse(record.res_id)
+
+                    related_record = record.res_model and self.env[record.res_model].browse(record.res_id)
                     if (
                         not hasattr(related_record, "message_main_attachment_id")
                         or related_record.message_main_attachment_id
@@ -2007,15 +2023,16 @@ class DocumentsDocument(models.Model):
                     })
                     record.previous_attachment_ids = [(4, old_attachment.id, False)]
             elif vals.get('datas') and not vals.get('attachment_id'):
-                res_model = vals.get('res_model', record.res_model or 'documents.document')
-                res_id = vals.get('res_id') if vals.get('res_model') else record.res_id if record.res_model else record.id
-                if res_model and res_model != 'documents.document' and not self.env[res_model].browse(res_id).exists():
-                    record.res_model = res_model = 'documents.document'
-                    record.res_id = res_id = record.id
+                res_model = vals.get('res_model', record.res_model)
+                res_id = vals.get('res_id', record.res_id)
+                if res_model and not self.env[res_model].browse(res_id).exists():
+                    record.res_model = False
+                    record.res_id = False
+
                 attachment = self.env['ir.attachment'].with_context(no_document=True).create({
                     'name': vals.get('name', record.name),
-                    'res_model': res_model,
-                    'res_id': res_id
+                    'res_model': record.res_model or 'documents.document',
+                    'res_id': record.res_id if record.res_model else record.id,
                 })
                 record.attachment_id = attachment.id
 
@@ -2257,7 +2274,7 @@ class DocumentsDocument(models.Model):
         to_delete = self.sudo().with_context(active_test=False).search([('id', 'child_of', self.ids)]).sudo(False)
         removable_parent_folders = self.with_context(active_test=False).folder_id.filtered(
             lambda folder: len(folder.children_ids - self) == 0 and not folder.active and folder.id not in self.ids)
-        removable_attachments = self.filtered(lambda d: d.res_model != d._name).attachment_id
+        removable_attachments = self.attachment_id.filtered(lambda a: a.res_model != 'documents.document')
 
         res = super(DocumentsDocument, to_delete).unlink()
 

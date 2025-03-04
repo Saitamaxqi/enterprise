@@ -145,3 +145,22 @@ class TestCaseDocumentsBridgeFleet(TransactionCase):
         self.assertEqual(new_company.documents_fleet_folder,
                          self.fleet_folder,
                          "The default folder should have been re-used")
+
+    def test_unlink_fleet_vehicle(self):
+        doc = self.env['documents.document'].create({
+            'name': 'doc',
+            'res_model': 'fleet.vehicle',
+            'res_id': self.fleet_vehicle.id,
+            'datas': 'ZGF0YQ==',
+        })
+        self.assertEqual(doc.attachment_id.res_id, self.fleet_vehicle.id)
+        self.assertEqual(doc.attachment_id.res_model, 'fleet.vehicle')
+
+        self.env['fleet.vehicle.assignation.log'].search([]).unlink()
+        self.fleet_vehicle.unlink()
+
+        self.assertFalse(doc.active)
+        self.assertFalse(doc.res_id)
+        self.assertFalse(doc.res_model)
+        self.assertEqual(doc.attachment_id.res_id, doc.id)
+        self.assertEqual(doc.attachment_id.res_model, 'documents.document')

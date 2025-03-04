@@ -58,7 +58,7 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
         tests the create new business model (vendor bill & credit note).
 
         """
-        self.assertEqual(self.document_txt.res_model, 'documents.document', "failed at default res model")
+        self.assertFalse(self.document_txt.res_model, "failed at default res model")
         account_moves_count_pre = self.env['account.move'].sudo().search_count([])
         multi_return = (self.document_txt | self.document_gif).account_create_account_move('in_invoice')
         account_moves_count_post = self.env['account.move'].sudo().search_count([])

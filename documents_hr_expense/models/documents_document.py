@@ -18,7 +18,7 @@ class DocumentsDocument(models.Model):
             'product_id': category_id,
         } for document in self])
         for document, expense in zip(self, expenses):
-            if (document.res_model or document.res_id) and document.res_model != 'documents.document':
+            if document.res_model or document.res_id:
                 # Create new attachment
                 attachment = document.attachment_id.with_context(no_document=True).copy({
                     "res_model": expense._name,

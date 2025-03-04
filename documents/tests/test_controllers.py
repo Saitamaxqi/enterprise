@@ -652,8 +652,10 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
         self.assertEqual(document.name, 'hello.txt')
         self.assertEqual(document.mimetype, 'text/plain')
         self.assertEqual(document.owner_id, self.user_demo)
-        self.assertEqual(document.res_id, document.id)
-        self.assertEqual(document.res_model, 'documents.document')
+        self.assertFalse(document.res_id)
+        self.assertFalse(document.res_model)
+        self.assertEqual(document.attachment_id.res_id, document.id)
+        self.assertEqual(document.attachment_id.res_model, 'documents.document')
         self.assertEqual(document.message_ids.mapped('body'), [
             "<p>Document uploaded by Marc Demo</p>",
             "<p>Document created</p>",
@@ -684,6 +686,8 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             "the mimetype must not have been neutralized")
         self.assertEqual(document.res_id, self.user_demo.partner_id.id)
         self.assertEqual(document.res_model, 'res.partner')
+        self.assertEqual(document.attachment_id.res_id, self.user_demo.partner_id.id)
+        self.assertEqual(document.attachment_id.res_model, 'res.partner')
 
     def test_doc_upload_request_user(self):
         self.authenticate('demo', 'demo')
@@ -702,8 +706,10 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
 
         self.assertEqual(self.internal_request.name, 'hello.txt')
         self.assertEqual(self.internal_request.mimetype, 'text/plain')
-        self.assertEqual(self.internal_request.res_id, self.internal_request.id)
-        self.assertEqual(self.internal_request.res_model, 'documents.document')
+        self.assertFalse(self.internal_request.res_id)
+        self.assertFalse(self.internal_request.res_model)
+        self.assertEqual(self.internal_request.attachment_id.res_id, self.internal_request.id)
+        self.assertEqual(self.internal_request.attachment_id.res_model, 'documents.document')
         self.assertEqual(self.internal_request.raw, b"Hello")
         self.assertEqual(self.internal_request.message_ids.mapped('body'), [
             "<p>Document uploaded by Marc Demo</p>",
@@ -775,8 +781,10 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
         self.assertEqual(self.internal_file.access_via_link, 'edit')
         self.assertEqual(self.internal_file.name, 'hello.txt')
         self.assertEqual(self.internal_file.mimetype, 'text/plain')
-        self.assertEqual(self.internal_file.res_id, self.internal_file.id)
-        self.assertEqual(self.internal_file.res_model, 'documents.document')
+        self.assertFalse(self.internal_file.res_id)
+        self.assertFalse(self.internal_file.res_model)
+        self.assertEqual(self.internal_file.attachment_id.res_id, self.internal_file.id)
+        self.assertEqual(self.internal_file.attachment_id.res_model, 'documents.document')
         self.assertEqual(self.internal_file.raw, b"Hello")
         self.assertEqual(self.internal_file.message_ids.mapped('body'), [
             "<p>Document uploaded by Public user</p>",
@@ -1031,28 +1039,28 @@ class TestCaseSecurityRoutes(HttpCaseWithUserDemo):
             {
                 'datas': self.raw_gif,
                 'name': 'attachmentGif_A.gif',
-                'res_model': 'documents.document',
-                'res_id': 0,
+                'res_model': False,
+                'res_id': False,
             },
             {
                 'datas': self.raw_gif,
                 'name': 'attachmentGif_B.gif',
-                'res_model': 'documents.document',
-                'res_id': 0,
+                'res_model': False,
+                'res_id': False,
             },
             {
                 'datas': self.raw_pdf,
                 'name': 'attachmentPdf_A.pdf',
                 'mimetype': 'application/pdf',
-                'res_model': 'documents.document',
-                'res_id': 0,
+                'res_model': False,
+                'res_id': False,
             },
             {
                 'datas': self.raw_pdf,
                 'name': 'attachmentPdf_B.pdf',
                 'mimetype': 'application/pdf',
-                'res_model': 'documents.document',
-                'res_id': 0,
+                'res_model': False,
+                'res_id': False,
             }
         ])
         self.user_document_gif, self.admin_document_gif, \

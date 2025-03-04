@@ -16,7 +16,7 @@ class DocumentsDocument(models.Model):
             })
             applicants |= applicant
             this_document = document
-            if (document.res_model or document.res_id) and document.res_model != 'documents.document':
+            if document.res_model or document.res_id:
                 this_document = document.copy()
                 attachment_id_copy = document.attachment_id.with_context(no_document=True).copy()
                 this_document.write({'attachment_id': attachment_id_copy.id})

@@ -42,7 +42,7 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
         """
         tests the create new business model (sign).
         """
-        self.assertEqual(self.document_pdf_0.res_model, 'documents.document', "failed at default res model")
+        self.assertFalse(self.document_pdf_0.res_model)
         self.documents.document_sign_create_sign_template(self.folder_a.id)
         self.assertEqual(self.document_pdf_0.res_model, 'sign.document',
                             "failed at workflow_bridge_dms_sign new res_model")
