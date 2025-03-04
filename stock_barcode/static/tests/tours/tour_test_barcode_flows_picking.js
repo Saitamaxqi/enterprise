@@ -297,6 +297,78 @@ registry.category("web_tour.tours").add("test_split_line_on_exit_for_delivery_wi
     ],
 });
 
+registry
+    .category("web_tour.tours")
+    .add("test_split_uncomplete_moves_on_exit_with_neutral_changes", {
+        steps: () => [
+            {
+                trigger: ".o_stock_barcode_main_menu",
+                run: "scan SUMOEWNC",
+            },
+            {
+                trigger: ".o_barcode_line .o_toggle_sublines",
+                run: "click",
+            },
+            {
+                trigger: ".o_barcode_line",
+                run: () => {
+                    helper.assertLinesCount(1);
+                    helper.assertLineQty(0, "0/2");
+                    const [subLine1, subLine2] = helper.getSublines();
+                    helper.assert(subLine1.querySelector(".o_line_lot_name").innerText, "SN001");
+                    helper.assertLineQty(subLine1, "0/1");
+                    helper.assert(subLine2.querySelector(".o_line_lot_name").innerText, "SN002");
+                    helper.assertLineQty(subLine2, "0/1");
+                },
+            },
+            // Scans SN01 and remove it
+            { trigger: ".o_barcode_client_action", run: "scan SN001" },
+            {
+                trigger: ".o_barcode_line.o_line_completed .o_edit",
+                run: "click",
+            },
+            {
+                trigger: ".o_field_widget[name='qty_done'] input",
+                run: "edit 0",
+            },
+            {
+                trigger: ".o_save",
+                run: "click",
+            },
+            {
+                trigger: ".o_barcode_line",
+                run: () => {
+                    helper.assertLinesCount(1);
+                    helper.assertLineQty(0, "0/2");
+                    const [subLine1, subLine2] = helper.getSublines();
+                    helper.assert(subLine1.querySelector(".o_line_lot_name").innerText, "SN001");
+                    helper.assertLineQty(subLine1, "0/1");
+                    helper.assert(subLine2.querySelector(".o_line_lot_name").innerText, "SN002");
+                    helper.assertLineQty(subLine2, "0/1");
+                },
+            },
+            // Leave and re-open the picking it directly
+            { trigger: "button.o_exit", run: "click" },
+            { trigger: ".o_stock_barcode_main_menu", run: "scan SUMOEWNC" },
+            {
+                trigger: ".o_barcode_line  .o_line_button.o_toggle_sublines",
+                run: "click",
+            },
+            {
+                trigger: ".o_barcode_line",
+                run: () => {
+                    helper.assertLinesCount(1);
+                    helper.assertLineQty(0, "0/2");
+                    const [subLine1, subLine2] = helper.getSublines();
+                    helper.assert(subLine1.querySelector(".o_line_lot_name").innerText, "SN001");
+                    helper.assertLineQty(subLine1, "0/1");
+                    helper.assert(subLine2.querySelector(".o_line_lot_name").innerText, "SN002");
+                    helper.assertLineQty(subLine2, "0/1");
+                },
+            },
+        ],
+    });
+
 registry.category("web_tour.tours").add("test_internal_picking_from_scratch_with_package", {
     steps: () => [
         // Creates a first internal transfert (Section 1 -> Section 2).
