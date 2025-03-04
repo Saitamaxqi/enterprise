@@ -16,8 +16,8 @@ class TestUi(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
             "l10n_mx_edi_usage": "I01",
         })
 
-    def test_mx_pos_invoice_order(self):
-        self.start_tour("/odoo", "l10n_mx_edi_pos.tour_invoice_order", login=self.env.user.login)
+    def test_mx_pos_invoice_order_and_refund(self):
+        self.start_tour("/odoo", "l10n_mx_edi_pos.test_mx_pos_invoice_order_and_refund", login=self.env.user.login)
 
     def test_mx_pos_invoice_order_default_usage(self):
         self.start_tour("/odoo", "l10n_mx_edi_pos.tour_invoice_order_default_usage", login=self.env.user.login)
