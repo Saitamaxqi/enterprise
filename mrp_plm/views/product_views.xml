@@ -47,7 +47,10 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="model">product.template</field>
         <field name="arch" type="xml">
-            <group name="group_lots_and_weight" position="inside">
+            <group name="traceability" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </group>
+            <group name="traceability" position="inside">
                 <label for="version" class="oe_inline fw-bold" style="width: 20% !important; margin: 0;"/>
                 <field name="version" nolabel="1" class="oe_inline" style="width: 20% !important;"/>
             </group>
