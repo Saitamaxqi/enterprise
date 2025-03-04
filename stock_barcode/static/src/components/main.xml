@@ -131,7 +131,9 @@
                     <span class="fs-5 fw-bold text-center text-muted mt-1 px-2">Operations</span>
                     <hr class="flex-grow-1"/>
                 </div>
-                <button t-on-click="returnProducts" class="o_create_return btn btn-secondary w-100 fs-4 mb-2 py-2">
+                <button t-if="env.model.displayReturnButton"
+                        t-on-click="returnProducts"
+                        class="o_create_return btn btn-secondary w-100 fs-4 mb-2 py-2">
                     Return Products
                 </button>
                 <button t-if="env.model.displaySignatureButton"
@@ -174,7 +176,7 @@
                 </span>
             </button>
         </footer>
-        <footer t-if="env.model.resModel === 'stock.picking' &amp;&amp; state.view === 'barcodeLines' &amp;&amp; env.model.isDone"
+        <footer t-if="env.model.displayReturnButton and state.view === 'barcodeLines'"
             class="o_barcode_control o_action_buttons d-flex mt-auto">
             <button t-on-click="returnProducts" class="o_create_return btn btn-secondary">
                 Return Products

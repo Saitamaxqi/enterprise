@@ -579,7 +579,7 @@ class MainComponent extends Component {
 
     get displayOperationButtons() {
         const { model } = this.env;
-        return model.canScrap || model.displayCancelButton || model.displaySignatureButton;
+        return model.canScrap || model.displayCancelButton || model.displaySignatureButton || model.displayReturnButton;
     }
 
     get scrapViewProps() {
