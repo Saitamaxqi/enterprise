@@ -2,13 +2,13 @@
 
 from datetime import timedelta
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    def _get_cart_and_free_qty(self, product, line=None):
+    def _get_cart_and_free_qty(self, product):
         """ Override to take the rental product specificity into account
 
         For rental lines or product, the cart quantity is the maximum amount of the same product
@@ -18,17 +18,16 @@ class SaleOrder(models.Model):
         Note: self.ensure_one()
         """
         if not product.rent_ok:
-            return super()._get_cart_and_free_qty(product, line=line)
+            return super()._get_cart_and_free_qty(product)
+        warehouse_id = self._get_shop_warehouse_id()
         from_date = self.rental_start_date and (
             self.rental_start_date - timedelta(hours=product.preparation_time))
         to_date = self.rental_return_date
-        common_lines = self._get_common_product_lines(line=line, product=product)
+        common_lines = self._get_common_product_lines(product.id)
         qty_available = product.with_context(
-            from_date=from_date, to_date=to_date, warehouse_id=self.website_id.warehouse_id.id
+            from_date=from_date, to_date=to_date, warehouse_id=warehouse_id
         ).qty_available
-        qty_available += product.with_context(
-            warehouse_id=self.website_id.warehouse_id.id
-        ).qty_in_rent
+        qty_available += product.with_context(warehouse_id=warehouse_id).qty_in_rent
         product_rented_qties, product_key_dates = product._get_rented_quantities(
             from_date, to_date, domain=[('order_id', '!=', self.id)]
         )
@@ -49,36 +48,26 @@ class SaleOrder(models.Model):
         return max_cart_qty, max_cart_qty + min_available_qty
 
     def _build_warning_renting(self, product):
-        """ Override to add the message regarding the preparation time
-        """
+        """Override to add the message regarding the preparation time."""
         message = super()._build_warning_renting(product)
         reservation_begin = self.rental_start_date - timedelta(hours=product.preparation_time)
         if reservation_begin < fields.Datetime.now() <= self.rental_start_date:
-            message += _("""Your rental product cannot be prepared on time, please rent later.""")
+            message += self.env._("""Your rental product cannot be prepared on time, please rent later.""")
 
         return message
 
-    def _verify_updated_quantity(self, order_line, product_id, new_qty, **kwargs):
-        """ Override to ensure the cart has dates before checking the stock validity. """
-        product = self.env['product.product'].browse(product_id)
-        if product.rent_ok and not self.has_rented_products:
-            if kwargs.get('start_date') and kwargs.get('end_date'):
-                self.update({
-                    'rental_start_date': kwargs.get('start_date'),
-                    'rental_return_date': kwargs.get('end_date'),
-                })
-            else:
-                self._rental_set_dates()
-        return super()._verify_updated_quantity(order_line, product_id, new_qty, **kwargs)
-
     def _is_valid_renting_dates(self):
-        """ Override to take into account the preparation time."""
+        """Consider the product preparation times."""
         res = super()._is_valid_renting_dates()
-        rental_order_lines = self.order_line.filtered('reservation_begin')
-        if not rental_order_lines or not res:
+        if not res:
             return res
+
+        if not (rental_order_lines := self.order_line.filtered('is_rental')):
+            return res
+
         max_padding_time = max(rental_order_lines.product_id.mapped('preparation_time'), default=0)
         initial_time = self.rental_start_date - timedelta(hours=max_padding_time)
+
         # 15 minutes of allowed time between adding the product to cart and paying it.
         return initial_time >= fields.Datetime.now() - timedelta(minutes=15)
 
@@ -89,16 +78,8 @@ class SaleOrder(models.Model):
         ))._all_product_available()
 
     def _available_dates_for_renting(self):
-        """Override to take into account the stock availability.
-        """
-        res = super()._available_dates_for_renting()
-        if not res:
-            return False
-        for line in self.order_line:
-            product = line.product_id
-            if product.rent_ok and product.is_storable and not product.allow_out_of_stock_order:
-                cart_qty, avl_qty = self._get_cart_and_free_qty(product, line=line)
-                if cart_qty > avl_qty:
-                    line._set_shop_warning_stock(cart_qty, max(avl_qty, 0))
-                    return False
-        return True
+        """Consider the stock availability."""
+        return (
+            super()._available_dates_for_renting()
+            and all(line._check_availability() for line in self.order_line.filtered('is_rental'))
+        )

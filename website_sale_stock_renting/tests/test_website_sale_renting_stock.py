@@ -318,15 +318,6 @@ class TestWebsiteSaleStockRenting(TestWebsiteSaleRentingCommon):
         )
         self.assertTrue(filtered_products_after_rental)
 
-    def test_cart_and_free_qty_with_line(self):
-        with freeze_time(self.now):
-            cart_qty, free_qty = self.so._get_cart_and_free_qty(
-                product=self.env['product.product'], line=self.sol
-            )
-
-        self.assertEqual(cart_qty, 3)
-        self.assertEqual(free_qty, 5)
-
     def _assert_rented_quantities(
         self, from_date, to_date, expected_rented_quantities, expected_key_dates
     ):

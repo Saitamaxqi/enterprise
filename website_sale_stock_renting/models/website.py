@@ -6,11 +6,10 @@ from odoo import models
 class Website(models.Model):
     _inherit = 'website'
 
-    def _get_product_available_qty(self, product, **kwargs):
-        stock_quantity = super()._get_product_available_qty(product, **kwargs)
+    def _get_product_available_qty(self, product, start_date=None, end_date=None, **kwargs):
         if product.rent_ok and not product.allow_out_of_stock_order:
-            start_date = kwargs.get('start_date') or product.env.context.get('start_date')
-            end_date = kwargs.get('end_date') or product.env.context.get('end_date')
+            start_date = start_date or product.env.context.get('start_date')
+            end_date = end_date or product.env.context.get('end_date')
             if end_date and start_date:
                 return min(
                     avail['quantity_available']
@@ -18,4 +17,4 @@ class Website(models.Model):
                         start_date, end_date, self.warehouse_id.id
                     )
                 )
-        return stock_quantity
+        return super()._get_product_available_qty(product, **kwargs)

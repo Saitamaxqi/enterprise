@@ -67,9 +67,9 @@ class ProductProduct(models.Model):
         rented_quantities, key_dates = self._get_rented_quantities(
             from_date, to_date, domain=wh_domain
         )
-        cart = with_cart and request and request.cart or self.env['sale.order']
+        cart = (with_cart and request and request.cart) or self.env['sale.order']
         if cart:
-            common_lines = cart._get_common_product_lines(product=self)
+            common_lines = cart._get_common_product_lines(self.id)
             so_rented_qties, so_key_dates = common_lines._get_rented_quantities(
                 [from_date, to_date]
             )
