@@ -10,7 +10,7 @@ const BLANK_SPREADSHEET_TEMPLATE = {
 };
 
 export class SpreadsheetSelectorGrid extends Component {
-    static template = "documents_spreadsheet.SpreadsheetSelectorGrid";
+    static template = "spreadsheet_edition.SpreadsheetSelectorGrid";
     static defaultProps = {
         displayBlank: true,
     };

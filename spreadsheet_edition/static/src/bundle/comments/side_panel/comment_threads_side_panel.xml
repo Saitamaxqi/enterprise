@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
-  <t t-name="documents_spreadsheet.CommentThreadsSidePanel">
+  <t t-name="spreadsheet_edition.CommentThreadsSidePanel">
     <div
       class="o-threads-side-panel"
       tabindex="0"

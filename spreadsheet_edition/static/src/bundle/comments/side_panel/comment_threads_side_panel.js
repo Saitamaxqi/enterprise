@@ -9,7 +9,7 @@ const { useStore } = stores;
 const { Menu, Section } = components;
 
 export class CommentThreadsSidePanel extends Component {
-    static template = "documents_spreadsheet.CommentThreadsSidePanel";
+    static template = "spreadsheet_edition.CommentThreadsSidePanel";
     static props = { onCloseSidePanel: Function };
     static components = { CellThread, Menu, Section };
 

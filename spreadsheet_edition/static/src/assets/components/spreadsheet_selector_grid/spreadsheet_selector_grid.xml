@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <t t-name="documents_spreadsheet.SpreadsheetSelectorGrid">
+    <t t-name="spreadsheet_edition.SpreadsheetSelectorGrid">
         <div class="o-spreadsheets-grid-container">
             <div
                 t-foreach="spreadsheets"

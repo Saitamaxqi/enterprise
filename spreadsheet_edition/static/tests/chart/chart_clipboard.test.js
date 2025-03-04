@@ -26,7 +26,7 @@ const serverData = {
             id: 1,
             children: [],
             name: "test menu 1",
-            xmlid: "documents_spreadsheet.test.menu",
+            xmlid: "spreadsheet_edition.test.menu",
             appID: 1,
             actionID: "menuAction",
         },
