@@ -1056,7 +1056,7 @@ class L10n_Mx_EdiDocument(models.Model):
         if currency.round(delta_discount):
             biggest_line = max([x for x in line_values_list if x['descuento']], key=lambda x: -x['importe'])
             if biggest_line:
-                biggest_line['descuento'] = currency.round(biggest_line['descuento']) + delta_discount
+                biggest_line['descuento'] = biggest_line['descuento'] + delta_discount
                 cfdi_values['descuento'] += delta_discount
                 cfdi_values['subtotal'] += delta_discount
 
