@@ -541,6 +541,8 @@ class TestDatevCSV(AccountTestInvoicingCommon):
             {'name': 'partner2'},
             {'name': 'partner3', 'vat': 'US12345671'},
             {'name': 'partner4', 'vat': ''},
+            {'name': 'partner5', 'vat': 'NA'},
+            {'name': 'partner6', 'vat': '1234567890'},
         ]
         partners = self.env['res.partner'].create(partners_list)
 
@@ -569,10 +571,12 @@ class TestDatevCSV(AccountTestInvoicingCommon):
             self.assertEqual(
                 data,
                 [
-                    ["", "partner1", "", "", "1", "", "", "BE0897223670"],
+                    ["", "partner1", "", "", "1", "", "BE", "0897223670"],
                     ["", "partner2", "", "", "1", "", "", ""],
-                    ["", "partner3", "", "", "1", "", "", "US12345671"],
+                    ["", "partner3", "", "", "1", "", "US", "12345671"],
                     ["", "partner4", "", "", "1", "", "", ""],
+                    ["", "partner5", "", "", "1", "", "", "NA"],
+                    ["", "partner6", "", "", "1", "", "", "1234567890"],
                 ],
             )
 
