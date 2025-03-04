@@ -7,9 +7,7 @@ from odoo.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    def _cart_add(self, product_id, quantity=1.0, *, plan_id=None, **kwargs):
-        self.ensure_one()
-        self = self.with_company(self.company_id)  # noqa: PLW0642
+    def _cart_add(self, product_id, *args, plan_id=None, **kwargs):
         product = self.env['product.product'].browse(product_id)
         if product.recurring_invoice and not kwargs.get('allow_one_time_sale'):
             if plan_id and self.plan_id and self.plan_id.id != plan_id:
@@ -27,7 +25,7 @@ class SaleOrder(models.Model):
                 ):
                     raise UserError(_("No suitable subscription pricing found for this product."))
 
-        return super()._cart_add(product_id, quantity=quantity, plan_id=plan_id, **kwargs)
+        return super()._cart_add(product_id, *args, plan_id=plan_id, **kwargs)
 
     def _verify_cart_after_update(self, *args, **kwargs):
         super()._verify_cart_after_update(*args, **kwargs)

@@ -28,9 +28,9 @@ class SaleOrder(models.Model):
             ))
         return super()._check_cart_is_ready_to_be_paid()
 
-    def _verify_updated_quantity(self, order_line, product_id, new_qty, **kwargs):
+    def _verify_updated_quantity(self, order_line, product_id, new_qty, uom_id, **kwargs):
         new_qty, warning = super()._verify_updated_quantity(
-            order_line, product_id, new_qty, **kwargs
+            order_line, product_id, new_qty, uom_id, **kwargs
         )
         product = self.env['product.product'].browse(product_id)
         # FIXME doesn't make sense to check the cart config here
@@ -76,7 +76,7 @@ class SaleOrder(models.Model):
             and self._get_renting_duration() >= self.company_id.renting_minimal_time_duration
         )
 
-    def _cart_add(self, product_id, quantity=1.0, *, start_date=None, end_date=None, **kwargs):
+    def _cart_add(self, product_id, *args, start_date=None, end_date=None, **kwargs):
         product = self.env['product.product'].browse(product_id)
         if product.rent_ok:
             if start_date and end_date:
@@ -94,7 +94,7 @@ class SaleOrder(models.Model):
                 self._rental_set_dates()
 
         return super()._cart_add(
-            product_id, quantity, start_date=start_date, end_date=end_date, **kwargs
+            product_id, *args, start_date=start_date, end_date=end_date, **kwargs
         )
 
     def _create_new_cart_line(self, *args, **kwargs):

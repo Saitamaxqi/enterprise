@@ -267,3 +267,9 @@ class ProductTemplate(models.Model):
             any_plan=True,
         )
         return self.env['product.pricelist.item'].search(domain, order=order, limit=1)
+
+    def _has_multiple_uoms(self):
+        # multi-uoms doesn't work with subscription (for now)
+        if self.recurring_invoice:
+            return False
+        return super()._has_multiple_uoms()

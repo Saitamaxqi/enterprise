@@ -24,7 +24,7 @@ registry
             },
             {
                 content: "Verify the subscription plan in the cart",
-                trigger: 'h6[name="website_sale_cart_line_price"]:contains(per week)',
+                trigger: 'div[name="recurring_info"]:contains(per week)',
             },
         ],
    });

@@ -224,3 +224,9 @@ class ProductTemplate(models.Model):
                     unit=pricing.recurrence_id._get_unit_label(rental_duration),
                 )
         return data
+
+    def _has_multiple_uoms(self):
+        # multi-uoms doesn't work with rental (for now)
+        if self.rent_ok:
+            return False
+        return super()._has_multiple_uoms()

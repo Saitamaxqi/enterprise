@@ -43,8 +43,8 @@ class ProductTemplate(models.Model):
             and not request.cart.plan_id
         )
 
-    def _get_additionnal_combination_info(self, product_or_template, quantity, date, website):
-        res = super()._get_additionnal_combination_info(product_or_template, quantity, date, website)
+    def _get_additionnal_combination_info(self, product_or_template, quantity, uom, date, website):
+        res = super()._get_additionnal_combination_info(product_or_template, quantity, uom, date, website)
 
         if not product_or_template.recurring_invoice:
             return res
