@@ -186,30 +186,38 @@ class WebsiteAppointmentTest(AppointmentCommon, MockVisitor):
                 self.assertIn(appointment_usa, available_appointments,
                               "US visitor should have access to an Appointment Type restricted to the US.")
 
+    @tagged("security", "-at_install", "post_install")
     def test_visitor_appointment_booker(self):
-        """ Check that the calendar events created by a visitor have the
-        same appointment_booker_id. """
-        visitor = self.env['website.visitor'].create(
-            {'access_token': 'c8d20bd006c3bf46b875451defb59911'}
-        )
-        with self.mock_visitor_from_request(force_visitor=visitor):
-            self.authenticate(None, None)
-            event_values = {
-                'csrf_token': http.Request.csrf_token(self),
-                'duration_str': '1.0',
-                'email': 'visitor@test.example.com',
-                'name': 'Visitor',
-                'phone': '+1 555-555-5555',
-                'staff_user_id': self.staff_user_bxls.id,
-            }
+        """Check that the calendar events created by a visitor have the same appointment_booker_id.
 
-            for datetime_str in ['2022-02-14 10:00:00', '2022-02-15 10:00:00']:
-                event_values['datetime_str'] = datetime_str
-                self.url_open(f'/appointment/{self.apt_type_bxls_2days.id}/submit', event_values)
+        This should not be the case when CSRF token is unchecked, such as when used in an iframe.
+        """
+        visitors = self.env['website.visitor'].create([
+            {'access_token': '11111111111111111111111111111111'},
+            {'access_token': '22222222222222222222222222222222'},
+        ])
+        for with_csrf, visitor in zip([True, False], visitors):
+            with self.subTest(with_csrf=with_csrf), self.mock_visitor_from_request(force_visitor=visitor):
+                self.authenticate(None, None)
+                event_values = {
+                    'duration_str': '1.0',
+                    'email': 'visitor@test.example.com',
+                    'name': 'Visitor',
+                    'phone': '+1 555-555-5555',
+                    'staff_user_id': self.staff_user_bxls.id,
+                } | ({'csrf_token': http.Request.csrf_token(self)} if with_csrf else {})
 
-            # Check that visitor has been linked to the new events.
-            self.assertEqual(len(visitor.calendar_event_ids), 2)
+                for datetime_str in ['2022-02-14 10:00:00', '2022-02-15 10:00:00']:
+                    event_values['datetime_str'] = datetime_str
+                    self.url_open(f'/appointment/{self.apt_type_bxls_2days.id}/submit', event_values)
 
-            # Check that the new events have the same appointment_booker_id.
-            self.assertTrue(all(event.appointment_booker_id for event in visitor.calendar_event_ids))
-            self.assertEqual(len(visitor.calendar_event_ids.appointment_booker_id), 1)
+                events = self.env['calendar.event'].search([], order='id DESC', limit=2)
+
+                # Check that visitor has been linked to the new events.
+                self.assertEqual(len(visitor.calendar_event_ids), 2)
+                self.assertEqual(visitor.calendar_event_ids, events)
+
+                # Check that the new events have the same appointment_booker_id.
+                self.assertTrue(all(event.appointment_booker_id for event in events))
+                self.assertEqual(len(events.appointment_booker_id), 1 if with_csrf else 2)
+                events.unlink()

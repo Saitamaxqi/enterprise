@@ -5,6 +5,7 @@ import pytz
 import re
 
 from pytz.exceptions import UnknownTimeZoneError
+from werkzeug.exceptions import BadRequest
 
 from babel.dates import format_datetime, format_date, format_time
 from datetime import datetime, date
@@ -622,7 +623,7 @@ class AppointmentController(http.Controller):
         return appointment_type._check_appointment_is_valid_slot(staff_user, resources, asked_capacity, session_tz, start_dt_utc, duration)
 
     @http.route(['/appointment/<int:appointment_type_id>/submit'],
-                type='http', auth="public", website=True, methods=["POST"])
+                type='http', auth="public", website=True, methods=["POST"], csrf=False)
     def appointment_form_submit(self, appointment_type_id, datetime_str, duration_str, name, phone, email, staff_user_id=None, available_resource_ids=None, asked_capacity=1,
                                 guest_emails_str=None, **kwargs):
         """
@@ -640,6 +641,14 @@ class AppointmentController(http.Controller):
         :param str guest_emails: optional line-separated guest emails. It will
           fetch or create partners to add them as event attendees;
         """
+        # Partial CSRF check, only performed when session is authenticated, as there
+        # is no real risk for unauthenticated sessions here. It's a common case for
+        # embedded forms now: SameSite policy rejects the cookies, so the session
+        # is lost, and the CSRF check fails, breaking the post for no good reason.
+        csrf_token = request.params.pop('csrf_token', None)
+        if request.session.uid and not request.validate_csrf(csrf_token):
+            raise BadRequest('Session expired (invalid CSRF token)')
+
         domain = self._appointments_base_domain(
             filter_appointment_type_ids=kwargs.get('filter_appointment_type_ids'),
             search=kwargs.get('search'),
@@ -692,7 +701,8 @@ class AppointmentController(http.Controller):
             if guest_emails_str:
                 guests = request.env['calendar.event'].sudo()._find_or_create_partners(guest_emails_str)
 
-        customer = self._get_customer_partner()
+        # avoid doing anything based on visitor if csrf isn't checked to avoid leaking last-login info
+        customer = self._get_customer_partner() if csrf_token else self.env['res.partner']
 
         # email is mandatory
         new_customer = not customer.email

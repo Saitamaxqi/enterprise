@@ -69,7 +69,7 @@
                                             <img src="/appointment/static/src/img/outlook-calendar.svg" alt="Outlook"/>
                                             <small>Add to iCal/Outlook</small>
                                         </a>
-                                        <a role="button" class="o_google_calendar btn btn-block bg-white" t-att-href="google_url">
+                                        <a role="button" class="o_google_calendar btn btn-block bg-white" t-att-href="google_url" target="_top">
                                             <img src="/appointment/static/src/img/google-calendar.svg" alt="Google Agenda"/>
                                             <small>Add to Google Agenda</small>
                                         </a>
