@@ -2090,6 +2090,10 @@ class DocumentsDocument(models.Model):
                 ])
                 domain_image = self._search_panel_domain_image(field_name, model_domain, enable_counters)
 
+            # Read the targets in batch
+            targets = self.browse(r['shortcut_document_id'][0] for r in records if r['shortcut_document_id'])
+            targets_user_permission = {t.id: t.user_permission for t in targets}
+
             values_range = OrderedDict()
             shared_root_id = "SHARED" if not self.env.user.share else False
             for record in records:
@@ -2099,6 +2103,8 @@ class DocumentsDocument(models.Model):
                 if enable_counters:
                     image_element = domain_image.get(record_id)
                     record['__count'] = image_element['__count'] if image_element else 0
+                if record['shortcut_document_id']:
+                    record['target_user_permission'] = targets_user_permission[record['shortcut_document_id'][0]]
                 folder_id = record['folder_id']
                 if folder_id:
                     folder_id = folder_id[0]

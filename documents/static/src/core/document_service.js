@@ -134,9 +134,10 @@ export class DocumentService {
     }
 
     canUploadInFolder(folder) {
+        const userPermission = folder.target_user_permission || folder.user_permission;
         return (
             folder &&
-            ((typeof folder.id === "number" && folder.user_permission === "edit") ||
+            ((typeof folder.id === "number" && userPermission === "edit") ||
                 (this.userIsInternal && ["MY", "RECENT", false].includes(folder.id)) ||
                 (this.userIsDocumentManager && folder.id === "COMPANY"))
         );
