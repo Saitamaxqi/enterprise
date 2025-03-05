@@ -188,6 +188,7 @@ export class GanttModel extends Model {
                 callback(result[0]);
             }
             this.fetchData();
+            return result[0];
         });
     }
 

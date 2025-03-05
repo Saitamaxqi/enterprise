@@ -4,6 +4,7 @@ import {
     onWillRender,
     onWillStart,
     onWillUpdateProps,
+    onWillUnmount,
     reactive,
     useEffect,
     useExternalListener,
@@ -487,6 +488,7 @@ export class GanttRenderer extends Component {
         });
 
         onWillRender(this.onWillRender);
+        onWillUnmount(this.onWillUnmount);
 
         useEffect(
             (content) => {
@@ -1194,11 +1196,12 @@ export class GanttRenderer extends Component {
     /**
      * @param {Object} params
      * @param {Element} params.pill
-     * @param {Element} params.cell
+     * @param {Element} params.cellSrc
+     * @param {Element} params.cellDst
      * @param {number} params.diff
      */
-    async dragPillDrop({ pill, cell, diff }) {
-        const { rowId } = cell.dataset;
+    async dragPillDrop({ pill, cellSrc, cellDst, diff }) {
+        const { rowId } = cellDst.dataset;
         const { dateStartField, dateStopField, scale } = this.model.metaData;
         const { cellTime, time } = scale;
         const { record } = this.pills[pill.dataset.pillId];
@@ -1215,16 +1218,106 @@ export class GanttRenderer extends Component {
 
         const schedule = this.model.getSchedule(params);
 
+        let copyResId;
+        let fallbackSchedule;
         if (isCopyMode) {
-            await this.model.copy(record.id, schedule, this.openPlanDialogCallback);
+            copyResId = await this.model.copy(record.id, schedule, this.openPlanDialogCallback);
         } else {
+            const fallbackParams = {
+                ...this.getUndoAfterDragRecordData(record),
+                rowId: cellSrc.dataset.rowId,
+            };
+            fallbackSchedule = this.model.getSchedule(fallbackParams);
             await this.model.reschedule(record.id, schedule, this.openPlanDialogCallback);
         }
 
         // If the pill lands on a closed group -> open it
-        if (cell.classList.contains("o_gantt_group") && this.model.isClosed(rowId)) {
+        if (cellDst.classList.contains("o_gantt_group") && this.model.isClosed(rowId)) {
             this.model.toggleRow(rowId);
         }
+
+        this.displayUndoNotificationAfterDrag(
+            copyResId || record.id,
+            this.interaction.dragAction,
+            fallbackSchedule
+        );
+    }
+
+    /**
+     * @param {number} resId
+     * @param {string} dragAction
+     * @param {Object} [fallbackData]
+     */
+    displayUndoNotificationAfterDrag(resId, dragAction, fallbackData = {}) {
+        if (!(dragAction === "copy" || dragAction === "reschedule")) {
+            return;
+        }
+        const messages = this.getUndoAfterDragMessages(dragAction);
+        this.closeNotificationFn?.();
+        this.closeNotificationFn = this.notificationService.add(
+            markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${messages.success}</span>`,
+            {
+                type: "success",
+                buttons: [
+                    {
+                        name: "Undo",
+                        icon: "fa-undo",
+                        onClick: async () => {
+                            // Undo the last drag & drop action
+                            const result = await this.model.orm.call(
+                                this.model.metaData.resModel,
+                                "gantt_undo_drag_drop",
+                                [resId, dragAction, fallbackData]
+                            );
+                            this.closeNotificationFn?.();
+                            if (result) {
+                                this.closeNotificationFn = this.notificationService.add(
+                                    markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${messages.undo}</span>`,
+                                    { type: "success" }
+                                );
+                            } else {
+                                this.closeNotificationFn = this.notificationService.add(
+                                    markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${messages.failure}</span>`,
+                                    { type: "danger" }
+                                );
+                            }
+                            this.model.fetchData();
+                        },
+                    },
+                ],
+            }
+        );
+    }
+
+    /**
+     * @param {string} dragAction
+     * @returns {Object}
+     */
+    getUndoAfterDragMessages(dragAction) {
+        if (dragAction === "copy") {
+            return {
+                success: _t("Record duplicated"),
+                undo: _t("Record removed"),
+                failure: _t("Record could not be removed"),
+            };
+        }
+        return {
+            success: _t("Record rescheduled"),
+            undo: _t("Record reschedule undone"),
+            failure: _t("Failed to undo reschedule"),
+        };
+    }
+
+    /**
+     * @param {Object} record
+     * @returns {Object}
+     */
+    getUndoAfterDragRecordData(record) {
+        const { dateStartField, dateStopField } = this.model.metaData;
+        return {
+            start: record[dateStartField],
+            stop: record[dateStopField],
+        };
     }
 
     /**
@@ -2151,6 +2244,10 @@ export class GanttRenderer extends Component {
         delete this.shouldComputeGridRows;
     }
 
+    onWillUnmount() {
+        this.closeNotificationFn?.();
+    }
+
     pushGridRows(gridRows) {
         for (const key of ["t0", "t1", "t2"]) {
             if (key in gridRows) {
@@ -2400,8 +2497,15 @@ export class GanttRenderer extends Component {
             }
         }
         const schedule = this.model.getSchedule(params);
+        const fallbackParams = this.getUndoAfterDragRecordData(record);
+        const fallbackSchedule = this.model.getSchedule(fallbackParams);
 
         await this.model.reschedule(record.id, schedule, this.openPlanDialogCallback);
+        this.displayUndoNotificationAfterDrag(
+            record.id,
+            this.interaction.dragAction,
+            fallbackSchedule
+        );
     }
 
     /**
@@ -2873,9 +2977,9 @@ export class GanttRenderer extends Component {
                 Object.keys(result["old_vals_per_pill_id"]).map(Number)
             );
         }
-        this.notificationFn?.();
+        this.closeNotificationFn?.();
         const icon = isWarning ? "fa-warning" : "fa-check";
-        this.notificationFn = this.notificationService.add(
+        this.closeNotificationFn = this.notificationService.add(
             markup(
                 `<i class="fa ${icon}"></i><span class="ms-1">${escape(result["message"])}</span>`
             ),
@@ -2898,7 +3002,7 @@ export class GanttRenderer extends Component {
                                           "action_rollback_scheduling",
                                           [ids, result["old_vals_per_pill_id"]]
                                       );
-                                      this.notificationFn();
+                                      this.closeNotificationFn();
                                       await this.model.fetchData();
                                   },
                               },

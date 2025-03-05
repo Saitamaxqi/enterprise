@@ -463,11 +463,12 @@ export const useGanttDraggable = makeDraggableHook({
         return { pill: ctx.current.element };
     },
     onDrop({ ctx }) {
-        const { cell, element, initialCol } = ctx.current;
+        const { cellSrc, cell, element, initialCol } = ctx.current;
         if (cell.col !== null) {
             return {
                 pill: element,
-                cell: cell.el,
+                cellSrc: cellSrc,
+                cellDst: cell.el,
                 diff: cell.col - initialCol,
             };
         }
@@ -480,6 +481,7 @@ export const useGanttDraggable = makeDraggableHook({
         current.cellGhost = document.createElement("div");
         current.cellGhost.className = ctx.cellDragClassName;
         current.cell = { el: null, index: null, part: 0 };
+        current.cellSrc = cell;
 
         const gridStyle = getComputedStyle(cell.parentElement);
         const pillStyle = getComputedStyle(current.element);

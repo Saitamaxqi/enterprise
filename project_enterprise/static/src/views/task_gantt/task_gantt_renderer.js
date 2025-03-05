@@ -1,7 +1,7 @@
 import { SelectCreateAutoPlanDialog } from "@project_enterprise/views/view_dialogs/select_auto_plan_create_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { Avatar } from "@mail/views/web/fields/avatar/avatar";
-import { markup, onWillStart, onWillUnmount, useEffect } from "@odoo/owl";
+import { markup, onWillStart, useEffect } from "@odoo/owl";
 import { localization } from "@web/core/l10n/localization";
 import { usePopover } from "@web/core/popover/popover_hook";
 import { user } from "@web/core/user";
@@ -35,9 +35,6 @@ export class TaskGanttRenderer extends GanttRenderer {
         const position = localization.direction === "rtl" ? "bottom" : "right";
         this.milestonePopover = usePopover(MilestonesPopover, { position });
         this.criticalPathAvailable = false;
-        onWillUnmount(() => {
-            this.notificationFn?.();
-        });
         onWillStart(async () => {
             const taskDependenciesEnabled = await user.hasGroup(
                 "project.group_project_task_dependencies"
@@ -236,8 +233,8 @@ export class TaskGanttRenderer extends GanttRenderer {
     }
 
     getNotificationOnSmartSchedule(warningString, old_vals_per_task_id) {
-        this.notificationFn?.();
-        this.notificationFn = this.notificationService.add(
+        this.closeNotificationFn?.();
+        this.closeNotificationFn = this.notificationService.add(
             markup(
                 `<i class="fa btn-link fa-check"></i><span class="ms-1">${escape(
                     warningString
@@ -257,7 +254,7 @@ export class TaskGanttRenderer extends GanttRenderer {
                                 old_vals_per_task_id,
                             ]);
                             this.model.toggleHighlightPlannedFilter(false);
-                            this.notificationFn();
+                            this.closeNotificationFn();
                             await this.model.fetchData();
                         },
                     },
@@ -310,6 +307,21 @@ export class TaskGanttRenderer extends GanttRenderer {
             SelectCreateAutoPlanDialog,
             this.getSelectCreateDialogProps({ rowId, start, stop, withDefault: true })
         );
+    }
+
+    getUndoAfterDragMessages(dragAction) {
+        if (dragAction === "copy") {
+            return {
+                success: _t("Task duplicated"),
+                undo: _t("Task removed"),
+                failure: _t("Task could not be removed"),
+            };
+        }
+        return {
+            success: _t("Task rescheduled"),
+            undo: _t("Task reschedule undone"),
+            failure: _t("Failed to undo reschedule"),
+        };
     }
 
     //--------------------------------------------------------------------------

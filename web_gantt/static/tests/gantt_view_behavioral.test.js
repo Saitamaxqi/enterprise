@@ -959,6 +959,63 @@ test("resize a pill", async () => {
     ]);
 });
 
+test("action undo: resize a pill", async () => {
+    expect.assertions(8);
+
+    onRpc("gantt_undo_drag_drop", function ({ model, args }) {
+        expect(args[0]).toEqual(1);
+        expect(args[1]).toEqual("reschedule");
+        expect(args[2]).toEqual(
+            {
+                start: "2018-11-30 18:30:00",
+                stop: "2018-12-31 18:29:59",
+            },
+            { message: "all modified fields should be correctly set back to their initial values" }
+        );
+        return this.env[model].write([args[0]], args[2]);
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: '<gantt date_start="start" date_stop="stop" />',
+        domain: [["id", "=", 1]],
+        context: { initialDate: "2018-12-25" },
+    });
+    await contains(".o_content").scroll({ left: 500 });
+
+    const initialGridContent = [
+        {
+            pills: [
+                { title: "Task 1", level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018" },
+            ],
+        },
+    ];
+    expect(getGridContent().rows).toEqual(initialGridContent);
+
+    await contains(getPillWrapper("Task 1")).hover();
+    // resize to one cell smaller at end (-1 day)
+    const drop = await resizePill(getPillWrapper("Task 1"), "end", -1, false);
+    await drop();
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "Out of bounds (1)  -> 30 December 2018",
+                    level: 0,
+                    title: "Task 1",
+                },
+            ],
+        },
+    ]);
+    expect(".o_notification_content").toHaveText("Record rescheduled");
+
+    // undo the rescheduling of the pill
+    await contains(".o_notification_buttons button i[title='Undo']").click();
+    expect(getGridContent().rows).toEqual(initialGridContent, {
+        message: "the pill should be back to its initial state",
+    });
+    expect(".o_notification_content").toHaveText("Record reschedule undone");
+});
+
 test("resize pill in year mode", async () => {
     onRpc("write", ({ args }) => {
         expect.step(args);
@@ -1290,6 +1347,78 @@ test("move a pill in another row", async () => {
     ]);
 });
 
+test("undo action: move a pill in another row", async () => {
+    expect.assertions(8);
+
+    onRpc("gantt_undo_drag_drop", function ({ model, args }) {
+        expect(args[0]).toEqual(7);
+        expect(args[1]).toEqual("reschedule");
+        expect(args[2]).toEqual(
+            {
+                project_id: 2,
+                start: "2018-12-20 12:30:12",
+                stop: "2018-12-20 18:29:59",
+            },
+            { message: "all modified fields should be correctly set back to their initial values" }
+        );
+        return this.env[model].write([args[0]], args[2]);
+    });
+
+    await mountGanttView({
+        resModel: "tasks",
+        arch: '<gantt date_start="start" date_stop="stop" />',
+        groupBy: ["project_id"],
+        domain: [["id", "in", [1, 7]]],
+    });
+    await contains(".o_content").scroll({ left: 500 });
+
+    const initialGridContent = [
+        {
+            title: "Project 1",
+            pills: [
+                { title: "Task 1", level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018" },
+            ],
+        },
+        {
+            title: "Project 2",
+            pills: [
+                {
+                    title: "Task 7",
+                    level: 0,
+                    colSpan: "20 (1/2) December 2018 -> 20 December 2018",
+                },
+            ],
+        },
+    ];
+    expect(getGridContent().rows).toEqual(initialGridContent);
+
+    // move a pill (task 7) in the other row and in the the next cell (+1 day)
+    const { drop } = await dragPill("Task 7");
+    await drop({ columnHeader: "21", groupHeader: "December 2018", part: 2 });
+
+    expect(getGridContent().rows).toEqual([
+        {
+            title: "Project 1",
+            pills: [
+                { title: "Task 1", level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018" },
+                {
+                    title: "Task 7",
+                    level: 1,
+                    colSpan: "21 (1/2) December 2018 -> 21 December 2018",
+                },
+            ],
+        },
+    ]);
+    expect(".o_notification_content").toHaveText("Record rescheduled");
+
+    // undo the rescheduling of the pill
+    await contains(".o_notification_buttons button i[title='Undo']").click();
+    expect(getGridContent().rows).toEqual(initialGridContent, {
+        message: "the pill should be back to its initial state",
+    });
+    expect(".o_notification_content").toHaveText("Record reschedule undone");
+});
+
 test("copy a pill in another row", async () => {
     expect.assertions(10);
     onRpc("copy", ({ args, kwargs }) => {
@@ -1374,6 +1503,83 @@ test("copy a pill in another row", async () => {
             ],
         },
     ]);
+});
+
+test("undo action: copy a pill in another row", async () => {
+    expect.assertions(8);
+
+    onRpc("gantt_undo_drag_drop", function ({ model, args }) {
+        expect(args[0]).toEqual(9);
+        expect(args[1]).toEqual("copy");
+        expect(args[2]).toEqual({}, { message: "no fallback data is needed to undo the copy" });
+        return this.env[model].unlink([args[0]]);
+    });
+
+    await mountGanttView({
+        resModel: "tasks",
+        arch: '<gantt date_start="start" date_stop="stop" />',
+        groupBy: ["project_id"],
+        domain: [["id", "in", [1, 7, 9]]], // 9 will be the newly created record
+    });
+
+    await contains(".o_content").scroll({ left: 500 });
+
+    const initialGridContent = [
+        {
+            title: "Project 1",
+            pills: [
+                { title: "Task 1", level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018" },
+            ],
+        },
+        {
+            title: "Project 2",
+            pills: [
+                {
+                    title: "Task 7",
+                    level: 0,
+                    colSpan: "20 (1/2) December 2018 -> 20 December 2018",
+                },
+            ],
+        },
+    ];
+    expect(getGridContent().rows).toEqual(initialGridContent);
+
+    // move a pill (task 7) in the other row and in the the next cell (+1 day)
+    await keyDown("Control");
+    const { drop } = await dragPill("Task 7");
+    await drop({ columnHeader: "21", groupHeader: "December 2018", part: 2 });
+
+    expect(getGridContent().rows).toEqual([
+        {
+            title: "Project 1",
+            pills: [
+                { title: "Task 1", level: 0, colSpan: "Out of bounds (1)  -> 31 December 2018" },
+                {
+                    title: "Task 7 (copy)",
+                    level: 1,
+                    colSpan: "21 (1/2) December 2018 -> 21 December 2018",
+                },
+            ],
+        },
+        {
+            title: "Project 2",
+            pills: [
+                {
+                    title: "Task 7",
+                    level: 0,
+                    colSpan: "20 (1/2) December 2018 -> 20 December 2018",
+                },
+            ],
+        },
+    ]);
+    expect(".o_notification_content").toHaveText("Record duplicated");
+
+    // undo the copy of the pill
+    await contains(".o_notification_buttons button i[title='Undo']").click();
+    expect(getGridContent().rows).toEqual(initialGridContent, {
+        message: "the pill should be back to its initial state",
+    });
+    expect(".o_notification_content").toHaveText("Record removed");
 });
 
 test("copy a pill in another row, but in the same column", async () => {

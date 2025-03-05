@@ -229,6 +229,15 @@ class Base(models.AbstractModel):
             if vals:
                 record.write(vals)
 
+    def gantt_undo_drag_drop(self, drag_action, data=None):
+        if not self.exists():
+            return False
+        if drag_action == "copy":
+            return self.unlink()
+        elif drag_action == "reschedule" and data:
+            return self.write(data)
+        return False
+
     @api.model
     def _gantt_progress_bar(self, field: str, res_ids: list[int], start: str, stop: str):
         """ Get progress bar value per record.

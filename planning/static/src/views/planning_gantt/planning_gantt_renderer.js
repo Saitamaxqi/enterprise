@@ -5,11 +5,10 @@ import { getColumnStart, getUnionOfIntersections } from "@web_gantt/gantt_helper
 import { PlanningEmployeeAvatar } from "./planning_employee_avatar";
 import { PlanningMaterialRole } from "./planning_material_role";
 import { PlanningGanttRowProgressBar } from "./planning_gantt_row_progress_bar";
-import { useEffect, onWillStart, reactive, onWillUnmount, markup, useState } from "@odoo/owl";
+import { useEffect, onWillStart, reactive, markup, useState } from "@odoo/owl";
 import { serializeDateTime } from "@web/core/l10n/dates";
 import { planningAskRecurrenceUpdate } from "../planning_calendar/planning_ask_recurrence_update/planning_ask_recurrence_update_hook";
 import { PlanningGanttRendererControls } from "./planning_gantt_renderer_controls";
-import { escape } from "@web/core/utils/strings";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
 import { usePlanningRecurringDeleteAction } from "../planning_hooks";
@@ -48,15 +47,10 @@ export class PlanningGanttRenderer extends GanttRenderer {
         this.isPlanningManager = false;
         this.notificationService = useService("notification");
         onWillStart(this.onWillStart);
-        onWillUnmount(this.onWillUnmount);
     }
 
     async onWillStart() {
         this.isPlanningManager = await user.hasGroup('planning.group_planning_manager');
-    }
-
-    async onWillUnmount() {
-        this.closePillSplitToolNotifications();
     }
 
     /**
@@ -575,13 +569,11 @@ export class PlanningGanttRenderer extends GanttRenderer {
         }
 
         // Close the last split notification if any and show a new split notification with an Undo button
-        this.notificationSplit?.();
-        this.notificationSplit = this.notificationService.add(
-            markup(
-                `<i class="fa fa-fw fa-check"></i><span class="ms-1">${escape(_t(
-                    "Shift divided into two"
-                ))}</span>`
-            ),
+        this.closeNotificationFn?.();
+        this.closeNotificationFn = this.notificationService.add(
+            markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${_t(
+                "Shift divided into two"
+            )}</span>`,
             {
                 type: "success",
                 className: "planning_notification",
@@ -600,24 +592,20 @@ export class PlanningGanttRenderer extends GanttRenderer {
                                 !pill.record.resource_id ? false : pill.record.resource_id.id,
                             ],
                         );
-                        this.closePillSplitToolNotifications();
+                        this.closeNotificationFn?.();
                         if (!result) {
-                            this.notificationFail = this.notificationService.add(
-                                markup(
-                                    `<i class="fa fa-fw fa-check"></i><span class="ms-1">${escape(_t(
-                                        "Shifts could not be merged back"
-                                    ))}</span>`
-                                ),
+                            this.closeNotificationFn = this.notificationService.add(
+                                markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${_t(
+                                    "Shifts could not be merged back"
+                                )}</span>`,
                                 { type: 'danger' },
                             );
                         } else {
                             this.model.fetchData();
-                            this.notificationMerge = this.notificationService.add(
-                                markup(
-                                    `<i class="fa fa-fw fa-check"></i><span class="ms-1">${escape(_t(
-                                        "Shifts merged back"
-                                    ))}</span>`
-                                ),
+                            this.closeNotificationFn = this.notificationService.add(
+                                markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${_t(
+                                    "Shifts merged back"
+                                )}</span>`,
                                 { type: 'success' },
                             );
                         }
@@ -627,10 +615,26 @@ export class PlanningGanttRenderer extends GanttRenderer {
         );
     }
 
-    closePillSplitToolNotifications() {
-        this.notificationFail?.();
-        this.notificationMerge?.();
-        this.notificationSplit?.();
+    getUndoAfterDragMessages(dragAction) {
+        if (dragAction === "copy") {
+            return {
+                success: _t("Shift duplicated"),
+                undo: _t("Shift removed"),
+                failure: _t("Shift could not be removed"),
+            };
+        }
+        return {
+            success: _t("Shift rescheduled"),
+            undo: _t("Shift reschedule undone"),
+            failure: _t("Failed to undo reschedule"),
+        };
+    }
+
+    getUndoAfterDragRecordData(record) {
+        return {
+            ...super.getUndoAfterDragRecordData(...arguments),
+            recurrence_update: record.recurrence_update,
+        };
     }
 
     /**
