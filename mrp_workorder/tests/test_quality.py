@@ -85,3 +85,41 @@ class TestQuality(TransactionCase):
         move.unlink()
         self.assertFalse(move.exists())
         self.assertFalse(qc.exists())
+
+    def test_label_printed_qty(self):
+        """
+        Check that the label printing instructions print the expected quantities.
+        """
+        super_product = self.env['product.product'].create({
+            'name': 'Super Product',
+            'type': 'consu',
+            'is_storable': True,
+            'tracking': 'lot',
+        })
+        bom = self.env['mrp.bom'].create({
+            'product_id': super_product.id,
+            'product_tmpl_id': super_product.product_tmpl_id.id,
+            'product_uom_id': super_product.uom_id.id,
+            'product_qty': 1.0,
+            'operation_ids': [
+                Command.create({'name': 'print label', 'workcenter_id': self.workcenter_1.id})
+            ],
+            'type': 'normal',
+        })
+
+        self.env['quality.point'].create({
+            'title': 'Print Label',
+            'product_ids': [Command.link(super_product.id)],
+            'operation_id': bom.operation_ids.id,
+            'test_type_id': self.ref('mrp_workorder.test_type_print_label')
+        })
+        mo_form = Form(self.env['mrp.production'])
+        mo_form.bom_id = bom
+        mo_form.product_qty = 10
+        mo = mo_form.save()
+        mo.action_confirm()
+
+        self.assertEqual(mo.workorder_ids.current_quality_check_id._get_print_qty(), 10)
+        with Form(mo) as mo_form:
+            mo_form.qty_producing = 7.0
+        self.assertEqual(mo.workorder_ids.current_quality_check_id._get_print_qty(), 7)
