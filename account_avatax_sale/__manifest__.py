@@ -7,6 +7,7 @@
     'depends': ['sale_external_tax', 'account_avatax', 'sale'],
     'data': [
         'views/sale_order_views.xml',
+        'views/sale_portal_templates.xml',
         'reports/sale_order.xml',
     ],
     'auto_install': True,
