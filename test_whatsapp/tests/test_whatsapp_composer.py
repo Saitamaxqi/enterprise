@@ -359,18 +359,37 @@ class WhatsAppComposerRendering(WhatsAppComposerCase, WhatsAppFullCase, CronMixi
                 {},
                 {},
                 # image
-                {'name': self.image_attachment.name, 'datas': self.image_attachment.datas},
+                {
+                    'name': self.image_attachment.name,
+                    'datas': self.image_attachment.datas,
+                    'res_model': self.test_base_records._name,
+                    'res_id': self.test_base_records[0].id,
+                },
                 # video
-                {'name': self.video_attachment.name, 'datas': self.video_attachment.datas},
+                {
+                    'name': self.video_attachment.name,
+                    'datas': self.video_attachment.datas,
+                    'res_model': self.test_base_records._name,
+                    'res_id': self.test_base_records[0].id,
+                },
                 # document
-                {'name': self.document_attachment.name, 'datas': self.document_attachment.datas},
+                {
+                    'name': self.document_attachment.name,
+                    'datas': self.document_attachment.datas,
+                    'res_model': self.test_base_records._name,
+                    'res_id': self.test_base_records[0].id,
+                },
                 {
                     'name': f'TestReport for {self.test_base_records[0].name}.html',
                     'raw': b'<div><p>External report for %s</p></div>' % self.test_base_records[0].name.encode(),
+                    'res_model': self.test_base_records._name,
+                    'res_id': self.test_base_records[0].id,
                 },
                 {
                     'name': f'TestReport for {self.test_base_records[0].name}.html',
                     'raw': b'<div><p>External report for %s</p></div>' % self.test_base_records[0].name.encode("utf-8"),
+                    'res_model': self.test_base_records._name,
+                    'res_id': self.test_base_records[0].id,
                 },
                 # location
                 {},

@@ -295,7 +295,9 @@ class WhatsappMessage(models.Model):
                         else:
                             is_duplicate = True
                     if attachment and attachment not in whatsapp_message.mail_message_id.attachment_ids:
-                        whatsapp_message.mail_message_id.attachment_ids = [(4, attachment.id)]
+                        # Clone the attachment to ensure the template's attachment is not affected by message changes
+                        cloned_attachment = attachment.copy({'res_model': whatsapp_message.mail_message_id.model, 'res_id': whatsapp_message.mail_message_id.res_id})
+                        whatsapp_message.mail_message_id.attachment_ids = [(4, cloned_attachment.id)]
                 # no template
                 elif whatsapp_message.mail_message_id.attachment_ids:
                     attachment_vals = whatsapp_message._prepare_attachment_vals(whatsapp_message.mail_message_id.attachment_ids[0], wa_account_id=whatsapp_message.wa_account_id)
