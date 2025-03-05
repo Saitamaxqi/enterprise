@@ -17,6 +17,7 @@ class TestHelpdeskKnowledgeCrossModuleFeatures(HttpCase):
     def setUpClass(cls):
         super(TestHelpdeskKnowledgeCrossModuleFeatures, cls).setUpClass()
         cls.admin = cls.env.ref('base.user_admin')
+        cls.admin.signature = Markup("<span>-- <br/>Mitchell Admin</span>")
 
         with mute_logger('odoo.models.unlink'):
             cls.env['knowledge.article'].search([]).unlink()
