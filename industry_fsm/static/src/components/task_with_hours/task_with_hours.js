@@ -15,7 +15,7 @@ patch(TaskWithHours.prototype, {
         if (projectIds !== undefined) {
             return (
                 Boolean(this.props.context.default_project_id) &&
-                !projectIds.includes(this.props.record.data.project_id[0])
+                !projectIds.includes(this.props.record.data.project_id.id)
             );
         }
         return super.canCreate();

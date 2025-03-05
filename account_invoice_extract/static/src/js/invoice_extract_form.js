@@ -42,7 +42,7 @@ export class InvoiceExtractFormRenderer extends ExtractMixinFormRenderer(Account
                 ),
                 title: _t("Create"),
                 onRecordSaved: (record) => {
-                    this.props.record.update({ partner_id: [record.resId] });
+                    this.props.record.update({ partner_id: { id: record.resId } });
                 },
             }
         );
@@ -64,7 +64,7 @@ export class InvoiceExtractFormRenderer extends ExtractMixinFormRenderer(Account
     async getSupplierChanges(newFieldValue) {
         // (Partial) matching partner found, its id has been returned
         if (Number.isFinite(newFieldValue) && newFieldValue !== 0) {
-            return { partner_id: [newFieldValue] };
+            return { partner_id: { id: newFieldValue } };
         }
         // No partner found, 0 is returned -> open the create partner dialog
         await this.openCreatePartnerDialog({
@@ -97,7 +97,7 @@ export class InvoiceExtractFormRenderer extends ExtractMixinFormRenderer(Account
                 changes =  ['out_invoice', 'out_refund'].includes(this.props.record.context.default_move_type) ? { name: newFieldValue } : { ref: newFieldValue };
                 break;
             case 'currency':
-                changes = { currency_id: [newFieldValue] };
+                changes = { currency_id: { id: newFieldValue } };
                 break;
             case 'total':
                 changes = { quick_edit_total_amount: Number(newFieldValue) };

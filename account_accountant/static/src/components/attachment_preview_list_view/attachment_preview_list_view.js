@@ -70,7 +70,7 @@ export class AttachmentPreviewListController extends ListController {
                 id: attachment.resId,
                 mimetype: attachment.data.mimetype,
             })),
-            id: lineData.data[modelField][0],
+            id: lineData.data[modelField].id,
             model: lineData.fields[modelField].relation,
         });
         if (!thread.message_main_attachment_id && thread.attachmentsInWebClientView.length > 0) {

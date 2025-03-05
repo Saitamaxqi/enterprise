@@ -43,7 +43,7 @@ export class ControlPanelButtons extends Component {
             if (workorder.data.state === "cancel") {
                 continue;
             }
-            const button = workcenterButtons[workorder.data.workcenter_id[0]];
+            const button = workcenterButtons[workorder.data.workcenter_id.id];
             if (button) {
                 button.count++;
             }

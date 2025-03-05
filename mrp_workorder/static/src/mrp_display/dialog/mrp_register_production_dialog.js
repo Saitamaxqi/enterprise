@@ -55,15 +55,15 @@ export class MrpRegisterProductionDialog extends ConfirmationDialog {
             record: this.props.record,
             canQuickCreate: false,
             context: {
-                default_product_id: product_id[0],
-                default_company_id: company_id[0],
+                default_product_id: product_id.id,
+                default_company_id: company_id.id,
             },
             domain: [
                 "&",
-                ["product_id", "=", product_id[0]],
+                ["product_id", "=", product_id.id],
                 "|",
                 ["company_id", "=", false],
-                ["company_id", "=", company_id[0]],
+                ["company_id", "=", company_id.id],
             ],
         };
     }

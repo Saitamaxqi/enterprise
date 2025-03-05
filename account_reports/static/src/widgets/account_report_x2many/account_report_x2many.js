@@ -82,15 +82,15 @@ export class AccountReportListRenderer extends ListRenderer {
 
             idToIndexMap[line.id] = index;
 
-            if (line.parent_id?.[0]) {
-                let parentLine = lines[idToIndexMap[line.parent_id[0]]];
+            if (line.parent_id?.id) {
+                let parentLine = lines[idToIndexMap[line.parent_id.id]];
 
                 if (parentLine) {
                     parentLine?.children.push(line);
 
                     while (parentLine) {
                         parentLine.descendants_count += 1;
-                        parentLine = lines[idToIndexMap[parentLine.parent_id?.[0]]];
+                        parentLine = lines[idToIndexMap[parentLine.parent_id?.id]];
                     }
                 } else {
                     // Since the parentLine doesn't exist yet. It means that this line is out of sequence.
@@ -151,10 +151,10 @@ export class AccountReportListRenderer extends ListRenderer {
 
         // parentRecordIndex is a string. It should be true with '0'.
         if (parentRecordIndex) {
-            parent = [
-                this.props.list.records[parentRecordIndex].data.id,
-                this.props.list.records[parentRecordIndex].data.name,
-            ];
+            parent = {
+                id: this.props.list.records[parentRecordIndex].data.id,
+                display_name: this.props.list.records[parentRecordIndex].data.name,
+            };
         }
 
         await this.props.list.records[currentRecordIndex].update({'parent_id': parent});
@@ -174,12 +174,12 @@ export class AccountReportListRenderer extends ListRenderer {
 
         for (let index = currentRecordIndex; index < this.props.list.records.length; index++) {
             const record = this.props.list.records[index];
-            const parentId = (record.data.parent_id) ? record.data.parent_id[0] : false;
+            const parentId = (record.data.parent_id) ? record.data.parent_id.id : false;
 
             if (ancestors.size && !ancestors.has(parentId))
                 break;
 
-            let parentHierarchyLevel = (record.data.parent_id) ? hierarchyLevels[record.data.parent_id[0]] : null;
+            let parentHierarchyLevel = (record.data.parent_id) ? hierarchyLevels[record.data.parent_id.id] : null;
 
             if (parentHierarchyLevel != null) {
                 parentHierarchyLevel = (parentHierarchyLevel === 0) ? 1 : parentHierarchyLevel;
@@ -252,7 +252,7 @@ export class AccountReportListRenderer extends ListRenderer {
     //------------------------------------------------------------------------------------------------------------------
     onDeleteRecord(recordIndex) {
         const currentRecordId = this.props.list.records[recordIndex].data.id
-        const nextRecordParentId = this.props.list.records[recordIndex + 1]?.data.parent_id[0]
+        const nextRecordParentId = this.props.list.records[recordIndex + 1]?.data.parent_id.id
 
         // We check if the next line is a children of the current one
         if (nextRecordParentId === currentRecordId)
@@ -276,7 +276,7 @@ export class AccountReportListRenderer extends ListRenderer {
         for (let index = recordIndex + 1; index < this.props.list.records.length; index++) {
             const record = this.props.list.records[index];
 
-            if (!ancestors.has(record.data.parent_id[0]))
+            if (!ancestors.has(record.data.parent_id.id))
                 break;
 
             recordsToDelete.push(record);

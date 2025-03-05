@@ -518,7 +518,7 @@ test("sparse gantt with a group expand and unavailabilities", async () => {
                     display_name: "Task 4",
                     id: 4,
                     progress: 0,
-                    user_id: 1,
+                    user_id: { id: 1 },
                     start: "2018-12-20 02:30:00",
                     stop: "2018-12-20 06:29:59",
                 },

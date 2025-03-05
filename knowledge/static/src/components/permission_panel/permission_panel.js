@@ -69,8 +69,8 @@ export class PermissionPanel extends Component {
 
     get inheritedPermissionParent() {
         return {
-            id: this.data.inherited_permission_parent_id[0],
-            name: this.data.inherited_permission_parent_id[1] || _t("Untitled"),
+            id: this.data.inherited_permission_parent_id.id,
+            name: this.data.inherited_permission_parent_id.display_name || _t("Untitled"),
         };
     }
 
@@ -80,8 +80,8 @@ export class PermissionPanel extends Component {
 
     get parentArticle() {
         return {
-            id: this.data.parent_id[0],
-            name: this.data.parent_id[1],
+            id: this.data.parent_id.id,
+            name: this.data.parent_id.display_name,
         };
     }
 

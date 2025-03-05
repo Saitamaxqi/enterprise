@@ -153,7 +153,7 @@ test("Add/Remove Cover", async () => {
         expect(params.orientation).toBe("landscape");
         expect(params.query).toBe("Bloups");
         asyncStep("add random cover");
-        return { cover_id: [mockServer.env["knowledge.cover"].create({})] };
+        return { cover_id: mockServer.env["knowledge.cover"].create({}) };
     });
     await mountTopbar(articleId);
     await openOptionsDropdown();

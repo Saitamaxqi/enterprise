@@ -228,7 +228,7 @@ export class HierarchyKanbanRenderer extends KanbanRenderer {
      */
     deleteRecord(record) {
         const directChildren = this.props.list.records.filter(
-            (listRecord) => listRecord.data.parent_id && listRecord.data.parent_id[0] == record.resId
+            (listRecord) => listRecord.data.parent_id && listRecord.data.parent_id.id == record.resId
         );
 
         if (directChildren.length !== 0) {
@@ -271,7 +271,7 @@ export class HierarchyKanbanRenderer extends KanbanRenderer {
         records.forEach((activityRecord) => {
             const parentId = activityRecord.data.parent_id;
             if (parentId) {
-                parentMap[activityRecord.resId] = parentId[0];
+                parentMap[activityRecord.resId] = parentId.id;
             }
         });
 
@@ -287,7 +287,7 @@ export class HierarchyKanbanRenderer extends KanbanRenderer {
                 return []
             } else if (!record.data.parent_id && parentId) {
                 return [];
-            } else if (record.data.parent_id && record.data.parent_id[0] !== parentId) {
+            } else if (record.data.parent_id && record.data.parent_id.id !== parentId) {
                 return [];
             }
 

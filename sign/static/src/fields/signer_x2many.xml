@@ -7,7 +7,7 @@
                     <IntegerField name="'mail_sent_order'" record="record"/>
                 </div>
                 <t t-set="labelId" t-value="record.id + partnerIdFieldInfo.name"/>
-                <label t-att-for="labelId" t-out="record.data['role_id'][1]" class="o_form_label"/>
+                <label t-att-for="labelId" t-out="record.data['role_id'].display_name" class="o_form_label"/>
             </div>
             <div class="o_field_wrap">
                 <Many2OneField id="labelId" name="partnerIdFieldInfo.name" record="record" t-props="partnerIdFieldInfo.additionalProps"/>

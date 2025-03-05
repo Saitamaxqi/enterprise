@@ -24,7 +24,7 @@ function patchFieldComponent(o) {
                 return;
             }
             this.materialPopover.open(target, {
-                id: this.props.record.data[this.props.name][0],
+                id: this.props.record.data[this.props.name].id,
                 recordModel: this.props.record.fields[this.props.name].relation,
             });
         },

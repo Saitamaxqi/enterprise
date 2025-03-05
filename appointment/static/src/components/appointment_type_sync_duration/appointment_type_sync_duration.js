@@ -13,7 +13,7 @@ export class AppointmentTypeSyncDuration extends Component {
     setup() {
         this.orm = useService("orm");
 
-        this.appointmentTypeId = this.props.record.data.appointment_type_id[0];
+        this.appointmentTypeId = this.props.record.data.appointment_type_id.id;
         this.isDefaultDuration = false;
 
         onWillStart(async () => {
@@ -26,8 +26,8 @@ export class AppointmentTypeSyncDuration extends Component {
         });
 
         useRecordObserver(async (record) => {
-            if (record.data.appointment_type_id[0] !== this.appointmentTypeId && this.isDefaultDuration) {
-                this.appointmentTypeId = record.data.appointment_type_id[0];
+            if (record.data.appointment_type_id.id !== this.appointmentTypeId && this.isDefaultDuration) {
+                this.appointmentTypeId = record.data.appointment_type_id.id;
                 if (this.appointmentTypeId) {
                     const appointmentDuration = await this.orm.read(
                         "appointment.type", [this.appointmentTypeId], ['appointment_duration']

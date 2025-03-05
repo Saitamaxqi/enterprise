@@ -38,9 +38,9 @@ export class KnowledgeArticleFormRenderer extends FormRenderer {
 
     openCoverSelector() {
         this.dialog.add(KnowledgeCoverDialog, {
-            articleCoverId: this.props.record.data.cover_image_id[0],
+            articleCoverId: this.props.record.data.cover_image_id.id,
             articleName: this.props.record.data.name || "",
-            save: (id) => this.props.record.update({cover_image_id: [id]})
+            save: (id) => this.props.record.update({ cover_image_id: { id } })
         });
     }
 

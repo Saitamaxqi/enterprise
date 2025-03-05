@@ -82,7 +82,7 @@ export class AppointmentBookingGanttRenderer extends GanttRenderer {
         if (!isGroup && this.model.metaData.groupedBy.includes("partner_ids")) {
             const { partner_ids } = Object.assign({}, ...JSON.parse(rowId));
             for (const pill of this.rowPills[rowId]) {
-                if (partner_ids[0] !== pill.record.partner_id[0]) {
+                if (partner_ids[0] !== pill.record.partner_id.id) {
                     pill.className += " o_appointment_booking_gantt_color_grey";
                 }
             }

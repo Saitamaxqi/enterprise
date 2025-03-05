@@ -357,12 +357,12 @@ export class GanttModel extends Model {
             if (Array.isArray(newValue)) {
                 [newValue] = newValue;
             }
-            if (Array.isArray(recordValue)) {
-                if (type === "many2many") {
-                    return recordValue.includes(newValue);
-                } else {
-                    return recordValue[0] === newValue;
-                }
+            if (type === "many2one") {
+                return recordValue.id === newValue;
+            } else if (type === "one2many") {
+                return recordValue[0] === newValue;
+            } else if (type === "many2many") {
+                return recordValue.includes(newValue);
             } else if (type === "date") {
                 return serializeDate(recordValue) === newValue;
             } else if (type === "datetime") {

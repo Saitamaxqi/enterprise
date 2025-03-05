@@ -135,7 +135,7 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
                 this.props.record.data.extract_state
             ) &&
             this.props.record.data.extract_attachment_id &&
-            thread.message_main_attachment_id.id === this.props.record.data.extract_attachment_id[0]
+            thread.message_main_attachment_id.id === this.props.record.data.extract_attachment_id.id
         );
     }
 

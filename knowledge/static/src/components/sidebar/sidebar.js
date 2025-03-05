@@ -55,7 +55,7 @@ export class KnowledgeSidebar extends Component {
         KnowledgeSidebarSharedSection,
         KnowledgeSidebarWorkspaceSection,
     };
-    
+
     setup() {
         super.setup();
         // In case a portal user loads a hidden website_published article,
@@ -238,7 +238,7 @@ export class KnowledgeSidebar extends Component {
         });
 
         useRecordObserver(async (record) => {
-            const nextDataParentId = record.data.parent_id ? record.data.parent_id[0] : false;
+            const nextDataParentId = record.data.parent_id ? record.data.parent_id.id : false;
             // During the first load, `loadArticles` is still pending and the component is in its
             // loading state. However, because of OWL reactive implementation (uses a Proxy),
             // record data still has to be read in order to subscribe to later changes, even if
@@ -443,7 +443,7 @@ export class KnowledgeSidebar extends Component {
 
     /**
      * Get the article stored in the state given its id.
-     * @param {integer} articleId - Id of the article 
+     * @param {integer} articleId - Id of the article
      * @returns {Object} article
      */
     getArticle(articleId) {
@@ -467,7 +467,7 @@ export class KnowledgeSidebar extends Component {
      * @param {integer} position.beforeArticleId
      * @param {String} position.category
      * @param {integer} position.parentId
-     *  
+     *
      */
     async insertArticle(article, position) {
         if (position.parentId) {
@@ -524,7 +524,7 @@ export class KnowledgeSidebar extends Component {
      * Load the articles to show in the sidebar and store them in the state.
      * One loops through the articles fetched to create a mapping id:article
      * that allows easy access of the articles, add the articles in their correct categories
-     * and add their children. One uses the parent_id field to fill the 
+     * and add their children. One uses the parent_id field to fill the
      * child_ids arrays because a simple read of the child_ids field would
      * return items (which should not be included in the sidebar), and the
      * articles would not be sorted correctly.
@@ -622,11 +622,11 @@ export class KnowledgeSidebar extends Component {
      * confirmation dialog.
      * @param {Object} article
      * @param {Object} currentPosition
-     * @param {integer} position.beforeArticleId 
+     * @param {integer} position.beforeArticleId
      * @param {String} position.category
      * @param {integer} position.parentId
      * @param {Object} newPosition
-     * @param {integer} newPosition.beforeArticleId 
+     * @param {integer} newPosition.beforeArticleId
      * @param {String} newPosition.category
      * @param {integer} newPosition.parentId
      */
@@ -663,7 +663,7 @@ export class KnowledgeSidebar extends Component {
             confirmMove(article, newPosition);
         } else {
             // Show confirmation dialog, and move article back to its original
-            // position if the user cancels the move 
+            // position if the user cancels the move
             const emoji = article.icon || '';
             const name = article.name;
             let message;
@@ -709,7 +709,7 @@ export class KnowledgeSidebar extends Component {
                     this.repositionArticle(article, currentPosition);
                 },
             });
-        } 
+        }
     }
 
     /**
@@ -844,7 +844,7 @@ export class KnowledgeSidebar extends Component {
      * Change the position of an article in the sidebar.
      * @param {Object} article
      * @param {Object} position
-     * @param {integer} position.beforeArticleId 
+     * @param {integer} position.beforeArticleId
      * @param {String} position.category
      * @param {integer} position.parentId
      */
@@ -886,7 +886,7 @@ export class KnowledgeSidebar extends Component {
      * not shown in its sidebar anymore (trashed, converted to items, hidden,
      * permission change). This method will reset the list of ids in the local
      * storage using only the articles that are shown to the user, so that we
-     * do not load the articles using a list containing a lot of useless ids. 
+     * do not load the articles using a list containing a lot of useless ids.
      */
     resetUnfoldedArticles() {
         this.unfoldedArticlesIds.forEach(id => {
@@ -944,7 +944,7 @@ export class KnowledgeSidebar extends Component {
     /** Unfold an article.
      * @param {integer} articleId: id of article
      * @param {boolean} isFavorite: whether to unfold in favorite tree
-     */        
+     */
     async unfold(articleId, isFavorite) {
         const article = this.getArticle(articleId);
         // Load the children of the article if it has not been unfolded yet

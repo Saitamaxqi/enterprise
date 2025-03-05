@@ -58,7 +58,7 @@ export class StockMove extends QualityCheck {
 
     get uom() {
         if (this.props.displayUOM) {
-            return this.props.record.data.product_uom[1];
+            return this.props.record.data.product_uom.display_name;
         }
         return this.toConsumeQuantity === 1 ? _t("Unit") : _t("Units");
     }

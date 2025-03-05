@@ -86,7 +86,7 @@ export const DocumentsModelMixin = (component) =>
             const shortcutTargetRecords = [];
             const targetRecords = await this._loadRecords({
                 ...this.config,
-                resIds: shortcuts.map((record) => record.data.shortcut_document_id[0]),
+                resIds: shortcuts.map((record) => record.data.shortcut_document_id.id),
             });
             for (const targetRecord of targetRecords) {
                 shortcutTargetRecords.push(this._createRecordDatapoint(targetRecord));
@@ -150,10 +150,10 @@ export const DocumentsModelMixin = (component) =>
             }
             return documents.every(
                 (r) =>
-                    r.owner_id?.[0] === user.userId &&
+                    r.owner_id?.id === user.userId &&
                     ["binary", "url"].includes(r.type) &&
-                    typeof r.folder_id?.[0] === "number" &&
-                    this.env.searchModel.getFolderById(r.folder_id[0]).user_permission === "edit"
+                    typeof r.folder_id?.id === "number" &&
+                    this.env.searchModel.getFolderById(r.folder_id.id).user_permission === "edit"
             );
         }
 
@@ -270,7 +270,7 @@ export const DocumentsModelMixin = (component) =>
             const copiedInMyDrive = records.filter(
                 (r) =>
                     (r.data.folder_id &&
-                        this.env.searchModel.getFolderById(r.data.folder_id[0]).user_permission !==
+                        this.env.searchModel.getFolderById(r.data.folder_id.id).user_permission !==
                             "edit") ||
                     (!r.data.folder_id && !this.documentService.userIsDocumentManager)
             );
@@ -430,9 +430,9 @@ export const DocumentsRecordMixin = (component) => class extends component {
             this.model.multiEdit = false;
             movedRecordsIds = [this.resId];
         }
-        const originalFolderId = this.data.folder_id[0];
+        const originalFolderId = this.data.folder_id.id;
         const ret = await super.update(changes, options);
-        if (this.data.folder_id && this.data.folder_id[0] !== originalFolderId) {
+        if (this.data.folder_id && this.data.folder_id.id !== originalFolderId) {
             this.model.root._removeRecords(movedRecordsIds);
             // Same as moving when not in preview
             this.model.env.documentsView.bus.trigger("documents-close-preview");
@@ -465,7 +465,7 @@ export const DocumentsRecordMixin = (component) => class extends component {
             return this;
         }
         return this.model.shortcutTargetRecords.find(
-            (rec) => rec.resId === this.data.shortcut_document_id[0],
+            (rec) => rec.resId === this.data.shortcut_document_id.id,
         ) || this;
     }
 
@@ -513,9 +513,9 @@ export const DocumentsRecordMixin = (component) => class extends component {
             ev.preventDefault();
             const folder = this.model.env.searchModel
                 .getFolders()
-                .filter((folder) => folder.id === this.data.folder_id[0]);
+                .filter((folder) => folder.id === this.data.folder_id.id);
             const hasPdfSplit =
-                (!this.data.lock_uid || this.data.lock_uid[0] === user.userId) &&
+                (!this.data.lock_uid || this.data.lock_uid.id === user.userId) &&
                 folder.user_permission === "edit";
             const selection = this.model.root.selection;
             const documents = selection.length > 1 && selection.find(rec => rec === this) && selection.filter(rec => rec.isViewable()) || [this];
@@ -554,12 +554,12 @@ export const DocumentsRecordMixin = (component) => class extends component {
             folderId = "TRASH";
         } else if (this.shortcutTarget.data.type === "folder") {
             // Using doc data shortcut_document_id because isContainer record does not (need to) load shortcutTarget.
-            folderId = this.data.shortcut_document_id?.[0] || this.shortcutTarget.data.id;
+            folderId = this.data.shortcut_document_id?.id || this.shortcutTarget.data.id;
         } else if (this.shortcutTarget.data.folder_id) {
-            folderId = this.shortcutTarget.data.folder_id[0];
-        } else if (!this.shortcutTarget.data.owner_id[0]) {
+            folderId = this.shortcutTarget.data.folder_id.id;
+        } else if (!this.shortcutTarget.data.owner_id.id) {
             folderId = "COMPANY";
-        } else if (this.shortcutTarget.data.owner_id[0] === user.userId) {
+        } else if (this.shortcutTarget.data.owner_id.id === user.userId) {
             folderId = "MY";
         }
         if (!folderId || !this.model.env.searchModel.getFolderById(folderId)) {

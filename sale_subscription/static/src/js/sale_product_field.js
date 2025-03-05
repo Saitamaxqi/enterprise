@@ -6,7 +6,7 @@ patch(SaleOrderLineProductField.prototype, {
         const params = super._getAdditionalRpcParams();
         const saleOrder = this.props.record.model.root;
         if (saleOrder.data.is_subscription) {
-            params.plan_id = saleOrder.data.plan_id[0];
+            params.plan_id = saleOrder.data.plan_id.id;
         }
         return params;
     },
@@ -15,7 +15,7 @@ patch(SaleOrderLineProductField.prototype, {
         const props = super._getAdditionalDialogProps();
         const saleOrder = this.props.record.model.root;
         if (saleOrder.data.is_subscription) {
-            props.plan_id = saleOrder.data.plan_id[0];
+            props.plan_id = saleOrder.data.plan_id.id;
         }
         return props;
     },

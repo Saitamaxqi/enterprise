@@ -26,7 +26,7 @@ export class Many2OneSpreadsheetField extends Component {
         const action = await this.orm.call(relation, "action_open_new_spreadsheet", [], {
             context,
         });
-        this.props.record.update({ [this.props.name]: [action.params.spreadsheet_id] });
+        this.props.record.update({ [this.props.name]: { id: action.params.spreadsheet_id } });
         await this.env.model.root.save();
         await this.action.doAction(action);
     }

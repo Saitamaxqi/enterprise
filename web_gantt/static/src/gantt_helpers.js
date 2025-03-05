@@ -4,7 +4,7 @@ import { makePopover, usePopover } from "@web/core/popover/popover_hook";
 import { makeDraggableHook } from "@web/core/utils/draggable_hook_builder_owl";
 import { useService } from "@web/core/utils/hooks";
 import { clamp } from "@web/core/utils/numbers";
-import { pick } from "@web/core/utils/objects";
+import { isObject, pick } from "@web/core/utils/objects";
 import { GanttPopoverInDialog } from "./gantt_popover_in_dialog";
 const { DateTime } = luxon;
 
@@ -109,8 +109,8 @@ export function getCellPartColor(availability, isToday) {
 export function getColorIndex(value) {
     if (typeof value === "number") {
         return Math.round(value) % NB_GANTT_RECORD_COLORS;
-    } else if (Array.isArray(value)) {
-        return value[0] % NB_GANTT_RECORD_COLORS;
+    } else if (isObject(value)) {
+        return value.id % NB_GANTT_RECORD_COLORS;
     }
     return 0;
 }

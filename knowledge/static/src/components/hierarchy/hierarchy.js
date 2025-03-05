@@ -46,19 +46,19 @@ export default class KnowledgeHierarchy extends Component {
     }
 
     get parentId() {
-        return this.props.record.data.parent_id?.[0];
+        return this.props.record.data.parent_id?.id;
     }
 
     get parentName() {
-        return this.props.record.data.parent_id?.[1];
+        return this.props.record.data.parent_id?.display_name;
     }
 
     get rootId() {
-        return this.props.record.data.root_article_id[0];
+        return this.props.record.data.root_article_id.id;
     }
 
     get rootName() {
-        return this.props.record.data.root_article_id[1];
+        return this.props.record.data.root_article_id.display_name;
     }
 
     /**

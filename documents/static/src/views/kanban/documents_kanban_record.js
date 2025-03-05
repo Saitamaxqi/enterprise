@@ -71,9 +71,9 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         context.encodeURIComponent = encodeURIComponent;
 
         if ([false, "TRASH", "RECENT"].includes(this.env.searchModel.getSelectedFolderId())) {
-            context.inFolder = this.props.record.data.folder_id?.[1] ||
+            context.inFolder = this.props.record.data.folder_id?.display_name ||
                 (
-                    this.props.record.data?.owner_id?.[0] === user.userId
+                    this.props.record.data?.owner_id?.id === user.userId
                     ? _t("My Drive")
                     : this.props.record.data?.owner_id
                         ? _t("Shared with me")

@@ -370,8 +370,8 @@ function useDocumentsViewFilePreviewer({
                 const getRecordAttachment = (rec) => {
                     rec = rec.shortcutTarget;
                     return {
-                        id: rec.data.attachment_id[0],
-                        name: rec.data.attachment_id[1],
+                        id: rec.data.attachment_id.id,
+                        name: rec.data.attachment_id.display_name,
                         mimetype: rec.data.mimetype,
                         url: rec.data.url,
                         documentId: rec.resId,

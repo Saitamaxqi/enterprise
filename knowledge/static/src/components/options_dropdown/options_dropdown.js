@@ -42,11 +42,11 @@ export class OptionsDropdown extends Component {
     }
 
     get creator() {
-        return this.data.create_uid[1];
+        return this.data.create_uid.display_name;
     }
 
     get creatorAvatarUrl() {
-        return `/web/image?model=res.users&field=avatar_128&id=${this.data.create_uid[0]}`;
+        return `/web/image?model=res.users&field=avatar_128&id=${this.data.create_uid.id}`;
     }
 
     get data() {
@@ -58,11 +58,11 @@ export class OptionsDropdown extends Component {
     }
 
     get lastEditor() {
-        return this.data.last_edition_uid[1];
+        return this.data.last_edition_uid.display_name;
     }
 
     get lastEditorAvatarUrl() {
-        return `/web/image?model=res.users&field=avatar_128&id=${this.data.last_edition_uid[0]}`;
+        return `/web/image?model=res.users&field=avatar_128&id=${this.data.last_edition_uid.id}`;
     }
 
     async addCover() {
@@ -76,7 +76,7 @@ export class OptionsDropdown extends Component {
             console.error(e);
         }
         if (res?.cover_id) {
-            await this.props.record.update({ cover_image_id: res.cover_id });
+            await this.props.record.update({ cover_image_id: { id: res.cover_id } });
         } else {
             this.env.openCoverSelector();
         }
@@ -109,11 +109,11 @@ export class OptionsDropdown extends Component {
     }
 
     onCreatorClick() {
-        this.openChat(this.data.create_uid[0]);
+        this.openChat(this.data.create_uid.id);
     }
 
     onLastEditorClick() {
-        this.openChat(this.data.last_edition_uid[0]);
+        this.openChat(this.data.last_edition_uid.id);
     }
 
     async openHistory() {

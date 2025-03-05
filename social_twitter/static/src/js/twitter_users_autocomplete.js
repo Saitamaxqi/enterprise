@@ -38,7 +38,7 @@ export class TwitterUsersAutocompleteField extends CharField {
         );
 
         await this.props.record.update({
-            twitter_followed_account_id: [twitterAccountId, twitterUser.name]
+            twitter_followed_account_id: { id: twitterAccountId, display_name: twitterUser.name },
         });
     }
 
@@ -49,7 +49,7 @@ export class TwitterUsersAutocompleteField extends CharField {
                 if(request.length < 2) {
                     return [];
                 }
-                const accountId = this.props.record.data.account_id[0];
+                const accountId = this.props.record.data.account_id.id;
                 const userInfo = await this.orm.call(
                     'social.account',
                     'twitter_get_user_by_username',

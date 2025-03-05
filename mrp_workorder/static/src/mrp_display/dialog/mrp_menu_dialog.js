@@ -78,7 +78,7 @@ export class MrpMenuDialog extends Component {
         const workcenters = await this.orm.searchRead("mrp.workcenter", [], ["display_name"]);
         function _moveToWorkcenter(workcenters) {
             const workcenter = workcenters[0];
-            this.props.record.update({ workcenter_id: [workcenter.id, workcenter.display_name] });
+            this.props.record.update({ workcenter_id: workcenter });
             this.props.record.save().then((succeeded) => {
                 if (succeeded) {
                     this.notification.add(
@@ -95,7 +95,7 @@ export class MrpMenuDialog extends Component {
             confirm: _moveToWorkcenter.bind(this),
             radioMode: true,
             workcenters: workcenters.filter(
-                (w) => w.id !== this.props.record.data.workcenter_id[0]
+                (w) => w.id !== this.props.record.data.workcenter_id.id
             ),
         };
         this.dialogService.add(MrpWorkcenterDialog, params);
@@ -108,12 +108,12 @@ export class MrpMenuDialog extends Component {
         const id =
             this.props.record.resModel === "mrp.production"
                 ? this.props.record.resId
-                : this.props.record.data.production_id[0];
+                : this.props.record.data.production_id.id;
 
         if (this.props.record.resModel === "mrp.workorder") {
             this.action.currentController.action.context.workcenter_id = this.props.params.isMyWO
                 ? -1
-                : this.props.record.data.workcenter_id[0];
+                : this.props.record.data.workcenter_id.id;
         }
 
         await this.action.doAction({
@@ -128,7 +128,7 @@ export class MrpMenuDialog extends Component {
 
     async block() {
         const options = {
-            additionalContext: { default_workcenter_id: this.props.record.data.workcenter_id[0] },
+            additionalContext: { default_workcenter_id: this.props.record.data.workcenter_id.id },
             onClose: async () => {
                 await this.props.reload();
             },
@@ -140,7 +140,7 @@ export class MrpMenuDialog extends Component {
     async unblock() {
         await this.action.doActionButton({
             type: "object",
-            resId: this.props.record.data.workcenter_id[0],
+            resId: this.props.record.data.workcenter_id.id,
             name: "unblock",
             resModel: "mrp.workcenter",
             onClose: async () => {

@@ -31,15 +31,15 @@ export class StockBarcodeSmlFormController extends FormController {
                 data.qty_done > 0
             ) {
                 const context = {
-                    location: data.location_id[0],
-                    lot_id: data.lot_id ? data.lot_id[0] : false,
-                    package_id: data.package_id ? data.package_id[0] : false,
-                    owner_id: data.owner_id ? data.owner_id[0] : false,
+                    location: data.location_id.id,
+                    lot_id: data.lot_id ? data.lot_id.id : false,
+                    package_id: data.package_id ? data.package_id.id : false,
+                    owner_id: data.owner_id ? data.owner_id.id : false,
                     strict: true,
                 };
                 const [{ qty_available }] = await this.orm.searchRead(
                     "product.product",
-                    [["id", "=", data.product_id[0]]],
+                    [["id", "=", data.product_id.id]],
                     ["qty_available"],
                     { context, limit: 1 }
                 );
@@ -48,7 +48,7 @@ export class StockBarcodeSmlFormController extends FormController {
                         this.dialogService.add(ConfirmationDialog, {
                             body: _t(
                                 "Oops! It seems that this product is not located in %(location)s.\nDo you confirm you picked from there?",
-                                { location: data.location_id[1] }
+                                { location: data.location_id.display_name }
                             ),
                             confirmLabel: _t("Confirm"),
                             confirm: () => resolve(true),

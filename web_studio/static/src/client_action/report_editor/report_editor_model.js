@@ -103,6 +103,9 @@ export class ReportEditorModel extends Reactive {
         const data = { ..._data };
         for (const [fName, value] of Object.entries(data)) {
             const field = fields[fName];
+            if (field.type === "many2one") {
+                data[fName] = value && [value.id, value.display_name];
+            }
             if (field.type === "many2many") {
                 data[fName] = [...value.currentIds];
             }

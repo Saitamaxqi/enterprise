@@ -88,7 +88,7 @@ export class QualityCheck extends MrpWorkorder {
     get showQty() {
         const { lot_id } = this.check;
         if (this.type === "register_production" && this.passed) {
-            return lot_id ? lot_id[1] : this.props.qtyProducing;
+            return lot_id ? lot_id.id : this.props.qtyProducing;
         }
         return false;
     }

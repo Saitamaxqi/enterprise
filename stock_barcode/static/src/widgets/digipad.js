@@ -26,13 +26,13 @@ export class Digipad extends Component {
         }
         const field = this.props.record.model.config.fields[this.props.fieldToEdit];
         this.precision = field.digits[1];
-        this.productId = this.props.record.data.product_id[0];
+        this.productId = this.props.record.data.product_id.id;
         this.state = useState({
             packagingButtons: [],
         });
         useRecordObserver(async (record) => {
-            if (this.productId != record.data.product_id[0]) {
-                this.productId = record.data.product_id[0];
+            if (this.productId != record.data.product_id.id) {
+                this.productId = record.data.product_id.id;
                 await this._fetchPackagingButtons();
             }
         });
@@ -112,8 +112,8 @@ export class Digipad extends Component {
      */
     async _fetchPackagingButtons() {
         const record = this.props.record.data;
-        if (record.product_id[0]) {
-            let domain = [["id", "=", record.product_id[0]]];
+        if (record.product_id.id) {
+            let domain = [["id", "=", record.product_id.id]];
             const product_uoms = await this.orm.searchRead(
                 "product.product",
                 domain,

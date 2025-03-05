@@ -37,7 +37,7 @@
                             <ul class="ps-1 mb-0 list-unstyled">
                                 <li>
                                     <strong>Organizer: </strong>
-                                    <t t-out="organizer_id[1]"/>
+                                    <t t-out="organizer_id.display_name"/>
                                 </li>
                                 <li class="o_gantt_popover_content_item mt-2">
                                     <t t-out="start_datetime.toFormat('f ')"/>

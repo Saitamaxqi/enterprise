@@ -28,7 +28,7 @@ export class DocumentsFolderMany2One extends Component {
         await this.action.doAction("documents.document_action_preference", {
             additionalContext: {
                 no_documents_unique_folder_id: true,
-                searchpanel_default_folder_id: value && value[0],
+                searchpanel_default_folder_id: value && value.id,
             },
         });
     }

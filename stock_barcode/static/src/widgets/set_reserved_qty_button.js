@@ -17,7 +17,7 @@ export class SetReservedQuantityButton extends Component {
     }
 
     get uom() {
-        const [id, name] = this.props.record.data.product_uom_id || [];
+        const { id, display_name: name } = this.props.record.data.product_uom_id || {};
         return { id, name };
     }
 

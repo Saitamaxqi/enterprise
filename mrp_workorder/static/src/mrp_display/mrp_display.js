@@ -237,8 +237,8 @@ export class MrpDisplay extends Component {
                 for (const move of record._parentRecord.data.move_byproduct_ids.records) {
                     if (
                         move.data.product_barcode === barcode &&
-                        (move.data.operation_id[0] === undefined ||
-                            move.data.operation_id[0] === record.data.operation_id[0])
+                        (move.data.operation_id.id === undefined ||
+                            move.data.operation_id.id === record.data.operation_id.id)
                     ) {
                         return move.component.onClick();
                     }
@@ -327,7 +327,7 @@ export class MrpDisplay extends Component {
         if (record.resModel === "mrp.production") {
             return record;
         }
-        return this.model.root.records.find((mo) => mo.resId === record.data.production_id[0]);
+        return this.model.root.records.find((mo) => mo.resId === record.data.production_id.id);
     }
 
     /**
@@ -341,7 +341,7 @@ export class MrpDisplay extends Component {
         const myWorkordersFilter = (wo) =>
             this.adminWorkorderIds.includes(wo.resId) && wo.data.state !== "cancel";
         const workcenterFilter = (wo) =>
-            wo.data.workcenter_id[0] === this.state.activeWorkcenter && wo.data.state !== "cancel";
+            wo.data.workcenter_id.id === this.state.activeWorkcenter && wo.data.state !== "cancel";
         const showMOs = this.state.activeResModel === "mrp.production";
         const filteredRecords = showMOs
             ? this.productions
@@ -535,10 +535,10 @@ export class MrpDisplay extends Component {
             id: 1,
             resModel: "mrp.production",
             data: {
-                product_id: [0, "[FURN_8522] Table Top"],
+                product_id: { id: 0, display_name: "[FURN_8522] Table Top" },
                 product_tracking: "serial",
                 product_qty: 4,
-                product_uom_id: [1, "Units"],
+                product_uom_id: { id: 1, display_name: "Units" },
                 qty_producing: 4,
                 state: "progress",
                 move_raw_ids: {
@@ -546,9 +546,9 @@ export class MrpDisplay extends Component {
                         {
                             resModel: "stock.move",
                             data: {
-                                product_id: [0, "[FURN_7023] Wood Panel"],
+                                product_id: { id: 0, display_name: "[FURN_7023] Wood Panel" },
                                 product_uom_qty: 8,
-                                product_uom: [1, "Units"],
+                                product_uom: { id: 1, display_name: "Units" },
                                 move_line_ids: {
                                     records: [],
                                 },
@@ -567,7 +567,7 @@ export class MrpDisplay extends Component {
                             data: {
                                 id: 1,
                                 name: "Manual Assembly",
-                                workcenter_id: [1, "Assembly 1"],
+                                workcenter_id: { id: 1, display_name: "Assembly 1" },
                                 check_ids: {
                                     records: [],
                                 },
@@ -599,10 +599,10 @@ export class MrpDisplay extends Component {
             id: 2,
             resModel: "mrp.production",
             data: {
-                product_id: [0, "[D_0045_B] Stool (Dark Blue)"],
+                product_id: { id: 0, display_name: "[D_0045_B] Stool (Dark Blue)" },
                 product_tracking: "serial",
                 product_qty: 1,
-                product_uom_id: [1, "Units"],
+                product_uom_id: { id: 1, display_name: "Units" },
                 qty_producing: 1,
                 state: "confirmed",
                 move_raw_ids: { records: [] },
@@ -614,7 +614,7 @@ export class MrpDisplay extends Component {
                             data: {
                                 id: 1,
                                 name: "Assembly  0/6",
-                                workcenter_id: [2, "Assembly 2"],
+                                workcenter_id: { id: 2, display_name: "Assembly 2" },
                                 check_ids: {
                                     records: [],
                                 },

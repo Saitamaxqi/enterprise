@@ -70,7 +70,7 @@ export class MrpDisplayRecord extends Component {
         if (!this.props.production.data.qty_producing) {
             this.props.production.update({ qty_producing: this.props.production.data.product_qty });
         }
-        const title = _t("Register Production: %s", this.props.production.data.product_id[1]);
+        const title = _t("Register Production: %s", this.props.production.data.product_id.display_name);
         const params = {
             record: this.props.production,
             reload: this.env.reload.bind(this),
@@ -112,7 +112,7 @@ export class MrpDisplayRecord extends Component {
     }
 
     getByproductLabel(record) {
-        return _t("Register %s", record.data.product_id[1]);
+        return _t("Register %s", record.data.product_id.display_name);
     }
 
     get cssClass() {
@@ -131,15 +131,15 @@ export class MrpDisplayRecord extends Component {
             const checks = this.props.record.data.check_ids.records;
             const checked_byproducts = checks.reduce((result, current) => {
                 if (current.data.test_type === "register_byproducts") {
-                    return [...result, current.data.component_id[0]];
+                    return [...result, current.data.component_id.id];
                 }
                 return result;
             }, []);
             return this.props.production.data.move_byproduct_ids.records.filter(
                 (bp) =>
-                    !checked_byproducts.includes(bp.data.product_id[0]) &&
-                    (bp.data.operation_id[0] === undefined ||
-                        bp.data.operation_id[0] === this.props.record.data.operation_id[0])
+                    !checked_byproducts.includes(bp.data.product_id.id) &&
+                    (bp.data.operation_id.id === undefined ||
+                        bp.data.operation_id.id === this.props.record.data.operation_id.id)
             );
         }
         return this.props.record.data.move_byproduct_ids.records;
@@ -156,7 +156,7 @@ export class MrpDisplayRecord extends Component {
             let check = checks.find((qc) => !qc.data.previous_check_id);
             sortedChecks.push(check);
             while (check.data.next_check_id) {
-                check = checks.find((qc) => qc.resId === check.data.next_check_id[0]);
+                check = checks.find((qc) => qc.resId === check.data.next_check_id.id);
                 sortedChecks.push(check);
             }
         }
@@ -197,7 +197,7 @@ export class MrpDisplayRecord extends Component {
         ) {
             props.check = subRecord;
             props.isCurrent =
-                subRecord.resId === this.props.record.data.current_quality_check_id[0];
+                subRecord.resId === this.props.record.data.current_quality_check_id.id;
             const moves =
                 subRecord.data.test_type === "register_consumed_materials"
                     ? this.props.production.data.move_raw_ids
@@ -212,7 +212,7 @@ export class MrpDisplayRecord extends Component {
 
         if (subRecord.resModel === "quality.check") {
             props.isCurrent =
-                subRecord.resId === this.props.record.data.current_quality_check_id[0];
+                subRecord.resId === this.props.record.data.current_quality_check_id.id;
             if (subRecord.data.test_type === "register_production") {
                 props.registerProduction = this.registerProduction.bind(this);
                 props.qtyProducing = `${this.quantityProducing} / ${this.quantityToProduce} ${this.uom}`;
@@ -221,7 +221,7 @@ export class MrpDisplayRecord extends Component {
             props.selectWorkcenter = this.props.selectWorkcenter;
             props.clickable =
                 subRecord.data.state !== "done" &&
-                this.props.workcenters.map((wc) => wc.id).includes(subRecord.data.workcenter_id[0]);
+                this.props.workcenters.map((wc) => wc.id).includes(subRecord.data.workcenter_id.id);
         }
         return props;
     }
@@ -382,7 +382,7 @@ export class MrpDisplayRecord extends Component {
 
     get uom() {
         if (this.displayUOM) {
-            return this.record.product_uom_id?.[1];
+            return this.record.product_uom_id?.display_name;
         }
         return this.quantityToProduce === 1 ? _t("Unit") : _t("Units");
     }

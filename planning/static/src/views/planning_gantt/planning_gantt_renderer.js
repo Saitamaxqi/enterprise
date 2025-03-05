@@ -155,7 +155,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
         const { record } = pill;
 
         if (record.employee_id && !this.model.metaData.groupedBy.includes("resource_id")) {
-            const [resId, displayName] = record.employee_id;
+            const { id: resId, display_name: displayName } = record.employee_id;
             pill.hasAvatar = true;
             pill.avatarProps = {
                 resModel: "hr.employee.public",
@@ -177,7 +177,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
             return pill;
         }
         const resource = record.resource_id;
-        const resourceId = resource && resource[0];
+        const resourceId = resource && resource.id;
         if (this.isOpenShift(record) || this.isFlexibleHours(resourceId)) {
             for (let col = this.getFirstGridCol(pill); col < this.getLastGridCol(pill); col++) {
                 const subColumn = this.getSubColumnFromColNumber(col);
@@ -311,8 +311,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
      * @returns {any[]}
      */
     getRecordIntervals(record) {
-        const val = record.resource_id;
-        const resourceId = Array.isArray(val) ? val[0] : false;
+        const resourceId = record.resource_id && record.resource_id.id;
         const startTime = record.start_datetime;
         const endTime = record.end_datetime;
         if (!this.model.data.workIntervals) {
@@ -542,7 +541,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
      * @param {number} startColumnId - column where to split the pill
      */
     async onPillSplitToolClicked(pill, startColumnId) {
-        const resourceId = pill.record.resource_id[0] || false;
+        const resourceId = pill.record.resource_id.id || false;
         const splitRightPill = this.getColumnStartStop(startColumnId, startColumnId);
         const splitLeftPill = this.getColumnStartStop(startColumnId - 1, startColumnId - 1);
         let copiedShiftId;
@@ -595,7 +594,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
                                 [pill.record.id, copiedShiftId],
                                 serializeDateTime(pill.record.start_datetime),
                                 serializeDateTime(pill.record.end_datetime),
-                                !pill.record.resource_id ? false : pill.record.resource_id[0],
+                                !pill.record.resource_id ? false : pill.record.resource_id.id,
                             ],
                         );
                         this.closePillSplitToolNotifications();

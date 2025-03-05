@@ -88,9 +88,8 @@ export class PlanningGanttModel extends GanttModel {
         const { startDate, scale, stopDate } = this.metaData;
         const defaultEmployeeIds = new Set();
         for (const record of records) {
-            const val = record.employee_id;
-            if (val) {
-                defaultEmployeeIds.add(val[0]);
+            if (record.employee_id) {
+                defaultEmployeeIds.add(record.employee_id.id);
             }
         }
         return {

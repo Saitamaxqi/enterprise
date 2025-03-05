@@ -20,7 +20,7 @@ class WorksheetValidationController extends FormController {
             const action = await this.orm.call(
                 "quality.check",
                 "action_worksheet_check",
-                [record.x_quality_check_id[0]],
+                [record.x_quality_check_id.id],
                 { context }
             );
             if (action) {
@@ -37,7 +37,7 @@ class WorksheetValidationController extends FormController {
         const action = await this.orm.call(
             "quality.check",
             "action_worksheet_discard",
-            [record.x_quality_check_id[0]],
+            [record.x_quality_check_id.id],
             { context }
         );
         this.model.action.doAction(action);

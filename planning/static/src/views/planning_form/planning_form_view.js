@@ -105,7 +105,7 @@ export class PlanningFormController extends FormController {
                     this.dialogService.add(FormViewDialog, {
                         title: "Add Work Email",
                         resModel: "hr.employee",
-                        resId: shift.data.employee_id[0],
+                        resId: shift.data.employee_id.id,
                         context: {
                             form_view_ref: 'planning.hr_employee_view_form_email',
                             force_email: true,

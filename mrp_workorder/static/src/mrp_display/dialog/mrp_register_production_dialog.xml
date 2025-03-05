@@ -18,7 +18,7 @@
                     <span>
                         /<span name="product_qty" class="mx-2"
                             t-esc="formatFloat(quantityToProduce)"/>
-                        <span t-esc="props.record.data.product_uom_id[1]"/>
+                        <span t-esc="props.record.data.product_uom_id.display_name"/>
                     </span>
                 </div>
                 <t t-if="props.record.data.product_tracking &amp;&amp; props.record.data.product_tracking !== 'none'" class="">

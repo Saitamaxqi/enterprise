@@ -34,7 +34,7 @@ export class AppointmentBookingGanttModel extends GanttModel {
             .filter(
                 (record) =>
                     ids.includes(record.id) &&
-                    ((record.partner_id?.length && schedule.originId === record.partner_id[0]) ||
+                    ((record.partner_id?.length && schedule.originId === record.partner_id.id) ||
                         !record.partner_id?.length),
             )
             .map((record) => record.id);
