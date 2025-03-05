@@ -4,6 +4,7 @@ import { browser } from "@web/core/browser/browser";
 import { PinPopup } from "@mrp_workorder/components/pin_popup";
 import { DialogWrapper } from "@mrp_workorder/components/dialog_wrapper";
 import { useState } from "@odoo/owl";
+import { MrpEmployeeDialog } from "@mrp_workorder/mrp_display/dialog/mrp_employee_dialog";
 
 export function useConnectedEmployee(controllerType, context, actionService, dialogService) {
     const orm = useService("orm");
@@ -168,11 +169,19 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
     };
 
     const popupAddEmployee = () => {
-        actionService.doAction("mrp_workorder.action_open_employee_list", {
-            props: {
-                selectEmployee: (id) => selectEmployee(id),
-            },
+        dialog.add(MrpEmployeeDialog, {
+            title: _t("Configure your station"),
+            setConnectedEmployees,
+            employees: employees,
         });
+    };
+
+    const setConnectedEmployees = async (ids) => {
+        if (employees.admin) {
+            await orm.call("hr.employee", "logout", [employees.admin.id, false, true]);
+        }
+        await orm.call("hr.employee", "set_employees_connected", [null, ids]);
+        await getConnectedEmployees();
     };
 
     const pinValidation = async (employeeId, pin) =>

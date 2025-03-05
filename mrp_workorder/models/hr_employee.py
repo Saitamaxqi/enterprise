@@ -130,6 +130,9 @@ class HrEmployee(models.Model):
             # Test cases
             return [self.env.user.employee_id.id]
 
+    def set_employees_connected(self, ids):
+        request.session[EMPLOYEES_CONNECTED] = self.browse(ids).ids
+
     def get_session_owner(self):
         if request:
             return request.session.get(SESSION_OWNER, [])
