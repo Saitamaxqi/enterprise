@@ -19,12 +19,14 @@ class PosConfig(models.Model):
                 if tax.type_tax_use == 'sale' and tax.tax_group_id.with_context(lang="en_US").name == 'GST':
                     product = pos_products.filtered(lambda p: tax.id in p.taxes_id.ids)
                     tax_lines = tax.flatten_taxes_hierarchy()
+                    sgst_group = self.env['account.chart.template'].with_company(self.company_id).ref("sgst_group")
+                    cgst_group = self.env['account.chart.template'].with_company(self.company_id).ref("cgst_group")
                     for tax in tax_lines:
-                        if tax.tax_group_id.name in ['SGST', 'CGST']:
+                        if tax.tax_group_id in [sgst_group, cgst_group]:
                             tax_lst.append(
                                 {
                                     'code': f'{tax.tax_group_id.with_context(lang="en_US").name}_P',
-                                    'title': tax.tax_group_id.with_context(lang="en_US").name,
+                                    'title': 'CGST' if tax.tax_group_id == cgst_group else 'SGST',
                                     'description': f'{tax.amount}% {tax.tax_group_id.with_context(lang="en_US").name} on product price.',
                                     'active': True,
                                     'structure': {
