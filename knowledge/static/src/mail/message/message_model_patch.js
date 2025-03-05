@@ -23,5 +23,8 @@ const messagePatch = {
             return super.copyLink(...arguments);
         }
     },
+    canForward(thread) {
+        return thread?.model != "knowledge.article.thread" && super.canForward(thread);
+    },
 };
 patch(Message.prototype, messagePatch);
