@@ -41,7 +41,7 @@ test(`empty grouped gantt with sample="1"`, async () => {
     await animationFrame();
 
     expect(SELECTORS.viewContent).toHaveClass("o_view_sample_data");
-    expect(queryAll(SELECTORS.pill).length).toBeWithin(0, 16);
+    expect(queryAll(SELECTORS.pill)).toHaveLength(0);
     expect(SELECTORS.noContentHelper).toHaveCount(1);
 
     const content = queryFirst(SELECTORS.viewContent).innerHTML;
@@ -72,7 +72,7 @@ test("empty gantt with sample data and default_group_by", async () => {
     await animationFrame();
 
     expect(SELECTORS.viewContent).toHaveClass("o_view_sample_data");
-    expect(queryAll(SELECTORS.pill).length).toBeWithin(0, 16);
+    expect(queryAll(SELECTORS.pill)).toHaveLength(0);
     expect(SELECTORS.noContentHelper).toHaveCount(1);
 
     const content = queryFirst(SELECTORS.viewContent).innerHTML;
@@ -105,7 +105,7 @@ test("empty gantt with sample data and default_group_by (switch view)", async ()
 
     // the gantt view should be in sample mode
     expect(SELECTORS.viewContent).toHaveClass("o_view_sample_data");
-    expect(queryAll(SELECTORS.pill).length).toBeWithin(0, 16);
+    expect(queryAll(SELECTORS.pill)).toHaveLength(0);
     expect(SELECTORS.noContentHelper).toHaveCount(1);
     expect(`.o_searchview_facet`).toHaveCount(1);
     expect(`.o_searchview_facet`).toHaveText("Project");
@@ -149,7 +149,7 @@ test(`empty gantt with sample="1"`, async () => {
     });
     await animationFrame();
     expect(SELECTORS.viewContent).toHaveClass("o_view_sample_data");
-    expect(queryAll(SELECTORS.pill).length).toBeWithin(0, 16);
+    expect(queryAll(SELECTORS.pill)).toHaveLength(0);
     expect(SELECTORS.noContentHelper).toHaveCount(1);
 
     const content = queryFirst(SELECTORS.viewContent).innerHTML;

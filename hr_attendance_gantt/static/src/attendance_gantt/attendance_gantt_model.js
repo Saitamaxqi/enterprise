@@ -54,7 +54,7 @@ export class AttendanceGanttModel extends GanttModel {
             const parsedRecord = parseServerValues(fields, record);
             const dateStart = parsedRecord[dateStartField];
             const dateStop = parsedRecord[dateStopField];
-            if (!this.orm.isSample && dateStart && !dateStop) {
+            if (dateStart && !dateStop) {
                 parsedRecord[dateStopField] = luxon.DateTime.now();
                 parsedRecords.push(parsedRecord);
             }

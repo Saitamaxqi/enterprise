@@ -13,18 +13,6 @@ function _mockGetGanttData(params) {
     }
     groups.forEach((g) => (g["id:array_agg"] = g.id)); // the sample server does not use the key id:array_agg
 
-    const recordIds = [];
-    for (const group of groups) {
-        recordIds.push(...(group["id:array_agg"] || []));
-    }
-
-    const { records } = this._mockWebSearchReadUnity({
-        model: params.model,
-        domain: [["id", "in", recordIds]],
-        context: params.context,
-        specification: params.read_specification,
-    });
-
     const unavailabilities = {};
     for (const fieldName of params.unavailability_fields || []) {
         unavailabilities[fieldName] = {};
@@ -35,7 +23,7 @@ function _mockGetGanttData(params) {
         progress_bars[fieldName] = {};
     }
 
-    return { groups, length, records, unavailabilities, progress_bars };
+    return { groups, length, records: [], unavailabilities, progress_bars };
 }
 
 registry.category("sample_server").add("get_gantt_data", _mockGetGanttData);

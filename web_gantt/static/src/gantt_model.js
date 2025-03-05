@@ -1005,30 +1005,14 @@ export class GanttModel extends Model {
      * @returns {Record<string, any>[]}
      */
     _parseServerData(metaData, records) {
-        const { dateStartField, dateStopField, fields, globalStart, globalStop } = metaData;
+        const { dateStartField, dateStopField, fields } = metaData;
         /** @type {Record<string, any>[]} */
         const parsedRecords = [];
         for (const record of records) {
             const parsedRecord = parseServerValues(fields, record);
             const dateStart = parsedRecord[dateStartField];
             const dateStop = parsedRecord[dateStopField];
-            if (this.orm.isSample) {
-                // In sample mode, we want enough data to be displayed, so we
-                // swap the dates as the records are randomly generated anyway.
-                if (dateStart > dateStop) {
-                    parsedRecord[dateStartField] = dateStop;
-                    parsedRecord[dateStopField] = dateStart;
-                }
-                // Record could also be outside the displayed range since the
-                // sample server doesn't take the domain into account
-                if (parsedRecord[dateStopField] < globalStart) {
-                    parsedRecord[dateStopField] = globalStart;
-                }
-                if (parsedRecord[dateStartField] > globalStop) {
-                    parsedRecord[dateStartField] = globalStop;
-                }
-                parsedRecords.push(parsedRecord);
-            } else if (dateStart <= dateStop) {
+            if (dateStart <= dateStop) {
                 parsedRecords.push(parsedRecord);
             }
         }
