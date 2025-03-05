@@ -136,3 +136,19 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         work_entries = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
         attendance.unlink()
         self.assertFalse(work_entries.active)
+
+    def test_work_entries_exclude_refused_overtime(self):
+        self.env['hr.attendance'].create({
+            'employee_id': self.employee.id,
+            'check_in': datetime(2021, 1, 4, 9, 0),
+            'check_out': datetime(2021, 1, 4, 12, 0),
+        })
+        attendance = self.env['hr.attendance'].create({
+            'employee_id': self.employee.id,
+            'check_in': datetime(2021, 1, 4, 13, 0),
+            'check_out': datetime(2021, 1, 4, 20, 0),
+        })
+        attendance.action_refuse_overtime()
+        work_entries = self.contract.generate_work_entries(date(2021, 1, 4), date(2021, 1, 4))
+        total_work_entry_duration = sum(work_entry.duration for work_entry in work_entries)
+        self.assertEqual(total_work_entry_duration, self.employee.resource_calendar_id.hours_per_day)

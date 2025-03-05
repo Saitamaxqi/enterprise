@@ -5,6 +5,7 @@ from collections import defaultdict
 import pytz
 
 from pytz import timezone
+from datetime import timedelta
 
 from odoo import fields, models
 from odoo.addons.hr_work_entry_contract.models.hr_work_intervals import WorkIntervals
@@ -45,6 +46,8 @@ class HrContract(models.Model):
             tz = timezone(emp_cal.tz or resource.tz)    # refer to resource's tz if fully flexible resource (calendar is False)
             check_in_tz = attendance.check_in.astimezone(tz)
             check_out_tz = attendance.check_out.astimezone(tz)
+            if attendance.overtime_status == 'refused':
+                check_out_tz -= timedelta(hours=attendance.validated_overtime_hours)
             attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)])
             for interval in attendance_intervals:
                 intervals[attendance.employee_id.resource_id.id].append((
