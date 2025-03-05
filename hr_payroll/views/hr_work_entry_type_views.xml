@@ -14,6 +14,7 @@
                     </group>
                     <group string="Unpaid" class="o_form_fw_labels">
                         <field name="unpaid_structure_ids" widget="many2many_tags"/>
+                        <field name="is_work"/>
                     </group>
                 </group>
             </xpath>
@@ -22,7 +23,7 @@
     <record id="payroll_hr_work_entry_type_view_form_inherit_contract" model="ir.ui.view">
         <field name="name">payroll.hr.work.entry.type.view.form.inherit.contract</field>
         <field name="model">hr.work.entry.type</field>
-        <field name="inherit_id" ref="hr_work_entry_contract.hr_work_entry_contract_type_view_form_inherit"/>
+        <field name="inherit_id" ref="hr_work_entry.hr_work_entry_type_view_form"/>
         <field name="arch" type="xml">
             <group name="time_off" position="after">
                 <group string="Reporting" class="o_form_fw_labels">

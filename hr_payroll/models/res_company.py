@@ -44,7 +44,12 @@ class ResCompany(models.Model):
                 ))
 
     def _create_dashboard_notes(self):
-        note = self.env['ir.qweb']._render('hr_payroll.hr_payroll_note_demo_content', {'date_today': fields.Date.today().strftime(self.env['res.lang']._get_data(code=self.env.user.lang).date_format)})
+        action = self.env.ref('hr_payroll.action_hr_payroll_dashboard_warning')
+        warning_url = f"{action.get_base_url()}/odoo/action-{action.id}"
+        note = self.env['ir.qweb']._render('hr_payroll.hr_payroll_note_demo_content', {
+            'date_today': fields.Date.today().strftime(self.env['res.lang']._get_data(code=self.env.user.lang).date_format),
+            'warning_url': warning_url,
+        })
         self.env['hr.payroll.note'].sudo().create([{
             'company_id': company.id,
             'name': self.env._('Note'),
