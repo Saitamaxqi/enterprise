@@ -49,6 +49,7 @@ export class PlanningGanttController extends GanttController {
                 const focusDate = this.getCurrentFocusDate();
                 return localStartOf(focusDate, scale.unit);
             },
+            getStopDate: () => this.model.metaData.stopDate,
             toggleHighlightPlannedFilter: (highlightPlannedIds) => this.env.searchModel.toggleHighlightPlannedFilter(highlightPlannedIds),
             reload: () => this.model.fetchData(),
         });

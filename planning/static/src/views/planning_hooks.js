@@ -21,6 +21,7 @@ export class PlanningControllerActions {
         getRecords,
         getResModel,
         getStartDate,
+        getStopDate,
         toggleHighlightPlannedFilter,
         reload,
     }) {
@@ -29,6 +30,7 @@ export class PlanningControllerActions {
         this.getRecords = getRecords;
         this.getResModel = getResModel;
         this.getStartDate = getStartDate;
+        this.getStopDate = getStopDate;
         this.toggleHighlightPlannedFilter = toggleHighlightPlannedFilter;
         this.reload = reload;
         this.actionService = useService("action");
@@ -103,8 +105,13 @@ export class PlanningControllerActions {
                 { type: "danger" }
             );
         }
+        const additionalContext = this.getAdditionalContext();
+        const adjustedEndDate = this.getStopDate();
+        if (adjustedEndDate) {
+            additionalContext.default_end_datetime = serializeDateTime(adjustedEndDate.plus({ day: 1 }).minus({ minute: 1 }))
+        }
         return this.actionService.doAction("planning.planning_send_action", {
-            additionalContext: this.getAdditionalContext(),
+            additionalContext,
             onClose: this.reload,
         });
     }

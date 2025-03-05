@@ -24,6 +24,7 @@ export class PlanningCalendarController extends CalendarController {
         this.planningControllerActions = usePlanningControllerActions({
             getDomain,
             getStartDate: () => this.model.rangeStart,
+            getStopDate: () => false,
             getRecords: () => Object.values(this.model.records),
             getResModel: () => this.model.resModel,
             getAdditionalContext: () => ({
