@@ -5,11 +5,16 @@ import base64
 from .sign_request_common import SignRequestCommon
 import odoo.tests
 
-from odoo.tools.misc import mute_logger, file_open
+from odoo.tools.misc import file_open
 
 
 @odoo.tests.tagged('-at_install', 'post_install')
 class TestUi(odoo.tests.HttpCase, SignRequestCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env.ref('base.user_admin').email = "admin@yourcompany.example.com"
+
     def test_ui(self):
         # If not enabled (like in demo data), landing on res.config will try
         # to disable module_sale_quotation_builder and raise an issue
