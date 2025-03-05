@@ -152,3 +152,37 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         work_entries = self.contract.generate_work_entries(date(2021, 1, 4), date(2021, 1, 4))
         total_work_entry_duration = sum(work_entry.duration for work_entry in work_entries)
         self.assertEqual(total_work_entry_duration, self.employee.resource_calendar_id.hours_per_day)
+
+    def test_fully_flexible_working_schedule_work_entries(self):
+        """ Test employee with fully flexible working schedule with attendance as work entry source """
+        employee = self.env['hr.employee'].create({'name': 'Test'})
+
+        self.env['hr.contract'].create({
+            'employee_id': employee.id,
+            'date_start': datetime(2024, 9, 1),
+            'date_end': datetime(2024, 9, 30),
+            'name': 'Contract',
+            'wage': 5000.0,
+            'work_entry_source': 'attendance',
+            'state': 'open',
+            'resource_calendar_id': False
+        })
+
+        self.env['resource.calendar.leaves'].sudo().create({
+            'resource_id': employee.resource_id.id,
+            'date_from': datetime(2024, 9, 2),
+            'date_to': datetime(2024, 9, 3)
+        })
+
+        employee.generate_work_entries(datetime(2024, 9, 1), datetime(2024, 9, 30))
+        result_entries = self.env['hr.work.entry'].search([('employee_id', '=', employee.id)])
+        self.assertEqual(len(result_entries), 1, 'One work entries should be generated')
+
+        self.env['hr.attendance'].create({
+            'employee_id': employee.id,
+            'check_in': datetime(2024, 9, 14, 14, 0, 0),
+            'check_out': datetime(2024, 9, 14, 17, 0, 0),
+        })
+        employee.generate_work_entries(datetime(2024, 9, 1), datetime(2024, 9, 30))
+        result_entries = self.env['hr.work.entry'].search([('employee_id', '=', employee.id)])
+        self.assertEqual(len(result_entries), 2, 'Two work entry should be generated')
