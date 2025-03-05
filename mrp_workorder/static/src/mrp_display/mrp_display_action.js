@@ -51,7 +51,6 @@ export class MrpDisplayAction extends Component {
                 "move_raw_ids",
                 "name",
                 "operation_id",
-                "has_operation_note",
                 "product_id",
                 "production_id",
                 "qty_producing",
@@ -60,7 +59,6 @@ export class MrpDisplayAction extends Component {
                 "workcenter_id",
                 "working_state",
                 "worksheet",
-                "worksheet_google_slide",
                 "check_ids",
                 "employee_ids",
                 "product_uom_id",
@@ -104,14 +102,11 @@ export class MrpDisplayAction extends Component {
                 "product_tracking",
                 "production_id",
                 "quality_state",
-                "source_document",
                 "test_type",
                 "title",
                 "workcenter_id",
                 "workorder_id",
                 "worksheet_document",
-                "worksheet_url",
-                "worksheet_page",
                 "write_date",
                 "measure",
                 "norm_unit",
@@ -119,12 +114,6 @@ export class MrpDisplayAction extends Component {
                 "next_check_id",
                 "component_barcode",
             ],
-        };
-    }
-
-    get fieldsManuallyFetched() {
-        return {
-            "mrp.workorder": [{ operation_note: "html" }],
         };
     }
 
@@ -150,14 +139,6 @@ export class MrpDisplayAction extends Component {
                 for (const [fName, fInfo] of Object.entries(fields)) {
                     fields[fName] = { ...defaultActiveField, ...fInfo };
                     delete fields[fName].context;
-                }
-
-                if (this.fieldsManuallyFetched[resModel]) {
-                    this.fieldsManuallyFetched[resModel].forEach((field) => {
-                        for (const [fieldName, fieldType] of Object.entries(field)) {
-                            fields[fieldName] = { type: fieldType };
-                        }
-                    });
                 }
 
                 this.models.push({ fields, resModel });

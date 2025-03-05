@@ -45,7 +45,6 @@ class QualityCheck(models.Model):
             'company_id': self.company_id.id,
             'test_type_id': self.test_type_id.id,
             'picking_type_ids': [Command.link(self.workorder_id.production_id.picking_type_id.id)],
-            'source_document': 'step',
             'note': self.note,
             'worksheet_document': self.worksheet_document,
         }

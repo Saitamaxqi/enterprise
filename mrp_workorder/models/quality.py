@@ -76,17 +76,6 @@ class MrpRoutingWorkcenter(models.Model):
         action.update({'context': ctx, 'domain': [('operation_id', '=', self.id)]})
         return action
 
-    def _get_fields_for_tablet(self):
-        """ List of fields on the operation object that are needed by the tablet
-        client action. The purpose of this function is to be overridden in order
-        to inject new fields to the client action.
-        """
-        return [
-            'worksheet',
-            'worksheet_google_slide',
-            'id',
-        ]
-
 
 class QualityPoint(models.Model):
     _inherit = "quality.point"
@@ -112,13 +101,7 @@ class QualityPoint(models.Model):
         'quality.point.test_type',
         domain="[('allow_registration', '=', operation_id and is_workorder_step)]")
     test_report_type = fields.Selection([('pdf', 'PDF'), ('zpl', 'ZPL')], string="Report Type", default="pdf", required=True)
-    source_document = fields.Selection(
-        selection=[('operation', 'Specific Page of Operation Worksheet'), ('step', 'Custom')],
-        string="Step Document",
-        default='operation')
-    worksheet_page = fields.Integer('Worksheet Page', default=1)
     worksheet_document = fields.Binary('Image/PDF')
-    worksheet_url = fields.Char('Google doc URL', tracking=True)
     # Used with type register_consumed_materials the product raw to encode.
     component_id = fields.Many2one('product.product', 'Product To Register', check_company=True)
 
@@ -233,9 +216,6 @@ class QualityCheck(models.Model):
     # We use a float because it is actually filled in by the produced quantity at the step creation.
     finished_product_sequence = fields.Float('Finished Product Sequence Number')
     worksheet_document = fields.Binary('Image/PDF')
-    worksheet_url = fields.Char(related='point_id.worksheet_url')
-    worksheet_page = fields.Integer(related='point_id.worksheet_page')
-    source_document = fields.Selection(related='point_id.source_document')
 
     # Employees
     employee_id = fields.Many2one('hr.employee', string="Employee")
@@ -345,8 +325,6 @@ class QualityCheck(models.Model):
             attachments = []
             if self.worksheet_document:
                 attachments = [('document', base64.b64decode(self.worksheet_document))]
-            if self.worksheet_url:
-                body += Markup("<br/><a href='%s'>%s</a>") % (self.worksheet_url, _("Google Doc"))
             self.workorder_id.production_id.bom_id.message_post(body=body, attachments=attachments)
 
     def action_generate_serial(self):

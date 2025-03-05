@@ -118,13 +118,6 @@ class ProposeChange(models.TransientModel):
         if existing_text and not is_html_empty(existing_text):
             self.step_id.note = existing_text
             existing_text = True
-        # unfortunately source_document is not a field in step_id so we have to put the image in the note to ensure it shows in the WO
-        if self.step_id.point_id.source_document != 'step':
-            image = Markup('<img style="max-width: 75%%" class="img-fluid" src="%s"/>') % self.image_url(self, 'picture')
-            if existing_text:
-                self.step_id.note += image
-            else:
-                self.step_id.note = image
         self.step_id.worksheet_document = self.picture
         bom = self.step_id.workorder_id.production_id.bom_id
         if notify_bom and bom:

@@ -132,7 +132,6 @@
         <field name="inherit_id" ref="quality_control.quality_check_view_pivot"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='product_id']" position="after">
-                <field name="worksheet_page" invisible="1"/>
                 <field name="finished_product_sequence" invisible="1"/>
             </xpath>
         </field>
@@ -144,7 +143,6 @@
         <field name="inherit_id" ref="quality_control.quality_check_view_graph"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='quality_state']" position="after">
-                <field name="worksheet_page" invisible="1"/>
                 <field name="finished_product_sequence" invisible="1"/>
             </xpath>
         </field>

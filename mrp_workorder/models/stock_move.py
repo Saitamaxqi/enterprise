@@ -10,17 +10,15 @@ class StockMove(models.Model):
     check_id = fields.One2many('quality.check', 'move_id')
     note = fields.Html('Note', related='check_id.note')
     worksheet_document = fields.Binary('Worksheet Image/PDF', compute='_compute_worksheet_document')
-    worksheet_note = fields.Html('Worksheet description', related='check_id.workorder_id.operation_id.note')
     product_barcode = fields.Char(related='product_id.barcode')
     move_line_ids_picked = fields.One2many('stock.move.line', 'move_id', domain=[('picked', '=', True)])
     picking_type_prefill_shop_floor_lots = fields.Boolean(related='picking_type_id.prefill_shop_floor_lots')
 
-
-    @api.depends('check_id.worksheet_document', 'check_id.source_document', 'check_id.workorder_id.operation_id.worksheet')
+    @api.depends('check_id.worksheet_document')
     def _compute_worksheet_document(self):
         for record in self:
             if record.check_id:
-                record.worksheet_document = record.check_id.worksheet_document if record.check_id.source_document == "step" else record.check_id.workorder_id.operation_id.worksheet
+                record.worksheet_document = record.check_id.worksheet_document
             else:
                 record.worksheet_document = None
 

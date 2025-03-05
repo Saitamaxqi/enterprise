@@ -28,8 +28,6 @@
             <t t-if="props.worksheetData">
                 <DocumentViewer t-props="props.worksheetData"/>
             </t>
-            <div t-if="props.checkInstruction" class="o_tablet_instruction_note"
-                 t-out="props.checkInstruction"/>
             <t t-set-slot="footer">
                 <div class="d-flex justify-content-between w-100">
                     <div>

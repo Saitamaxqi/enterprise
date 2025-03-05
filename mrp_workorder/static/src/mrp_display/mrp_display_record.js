@@ -4,7 +4,7 @@ import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
 import { Component, onWillUpdateProps, useState } from "@odoo/owl";
 import { Field } from "@web/views/fields/field";
 import { StockMove } from "./mrp_record_line/stock_move";
-import { fetchOperationNote, MrpWorkorder } from "./mrp_record_line/mrp_workorder";
+import { MrpWorkorder } from "./mrp_record_line/mrp_workorder";
 import { QualityCheck } from "./mrp_record_line/quality_check";
 import { mrpTimerField } from "@mrp/widgets/timer";
 import { PriorityField } from "@web/views/fields/priority/priority_field";
@@ -309,38 +309,6 @@ export class MrpDisplayRecord extends Component {
                 page: 1,
             };
         }
-        if (recordData.worksheet_url) {
-            return {
-                resModel: "quality.check",
-                resId: recordData.id,
-                resField: "worksheet_url",
-                value: recordData.worksheet_url,
-                page: 1,
-            };
-        }
-        if (this.record.worksheet) {
-            const sheet = await this.props.record.model.orm.read(
-                "mrp.workorder",
-                [this.record.id],
-                ["worksheet"]
-            );
-            return {
-                resModel: "mrp.workorder",
-                resId: this.record.id,
-                resField: "worksheet",
-                value: sheet[0].worksheet,
-                page: recordData.worksheet_page,
-            };
-        }
-        if (this.record.worksheet_google_slide) {
-            return {
-                resModel: "mrp.workorder",
-                resId: this.record.id,
-                resField: "worksheet_google_slide",
-                value: this.record.worksheet_google_slide,
-                page: recordData.worksheet_page,
-            };
-        }
     }
 
     async openWorksheet() {
@@ -428,16 +396,12 @@ export class MrpDisplayRecord extends Component {
             await this.openWorksheet();
             return;
         }
-        if (this.record.has_operation_note && !this.record.operation_note) {
-            this.record.operation_note = await fetchOperationNote(this);
-        }
         const params = {
             body: record.data.note,
             record,
             reload: this.env.reload.bind(this),
             title: record.data.title,
             worksheetData,
-            checkInstruction: this.record.operation_note,
             qualityCheckDone: this.qualityCheckDone.bind(this),
             openNextCheck: nextQC && this.displayInstruction.bind(this, nextQC),
             openPreviousCheck: previousQC && this.displayInstruction.bind(this, previousQC),
@@ -676,10 +640,7 @@ export class MrpDisplayRecord extends Component {
         if (this.props.record.resModel !== "mrp.workorder") {
             return false;
         }
-        const hasPDF = this.record.worksheet;
-        const hasSlide = this.record.worksheet_google_slide;
-        const hasNote = this.record.has_operation_note;
-        return hasPDF || hasSlide || hasNote;
+        return this.record.worksheet;
     }
 
     async openNextQC() {

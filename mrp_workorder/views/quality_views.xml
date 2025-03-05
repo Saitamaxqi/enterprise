@@ -15,17 +15,11 @@
                 <field string="Work Order Operation" name="operation_id" invisible="not is_workorder_step" groups="mrp.group_mrp_routings" options="{'no_create': True}"/>
                 <field name="is_workorder_step" invisible="1"/>
             </field>
-            <field name="user_id" position="after">
-                <field name="operation_id" invisible="1"/>
-                <field name="source_document" widget="radio" invisible="not operation_id"/>
-                <field name="worksheet_page" invisible="not is_workorder_step or not operation_id or source_document == 'step'"/>
-            </field>
             <field name="product_category_ids" position="attributes">
                 <attribute name="invisible">is_workorder_step and operation_id</attribute>
             </field>
             <xpath expr="//field[@name='note']" position="after">
-                <field name="worksheet_document" help="Upload your PDF file." widget="pdf_viewer" invisible="source_document == 'operation'"/>
-                <field name="worksheet_url" placeholder="Google Slide Link" widget="google_slide_viewer" invisible="source_document == 'operation'"/>
+                <field name="worksheet_document" help="Upload your PDF file." widget="pdf_viewer"/>
             </xpath>
         </field>
     </record>

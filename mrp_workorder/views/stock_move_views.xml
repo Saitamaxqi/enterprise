@@ -29,9 +29,6 @@
                 <group>
                     <field name="worksheet_document" string="" widget="pdf_viewer" invisible="not worksheet_document" readonly="1"/>
                 </group>
-                <group>
-                    <field name="worksheet_note" string="" invisible="not worksheet_note" readonly="1"/>
-                </group>
             </xpath>
         </field>
     </record>

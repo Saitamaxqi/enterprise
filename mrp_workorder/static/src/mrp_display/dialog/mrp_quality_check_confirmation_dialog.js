@@ -15,7 +15,6 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
         reload: { type: Function, optional: true },
         qualityCheckDone: { type: Function, optional: true },
         worksheetData: { type: Object, optional: true },
-        checkInstruction: { type: Object, optional: true },
         openPreviousCheck: { type: Function, optional: true },
         openNextCheck: { type: Function, optional: true },
     };
