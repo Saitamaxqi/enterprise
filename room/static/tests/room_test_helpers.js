@@ -1,4 +1,6 @@
-import { animationFrame } from "@odoo/hoot-mock";
+import { busModels, waitNotifications, waitUntilSubscribe } from "@bus/../tests/bus_test_helpers";
+import { mailModels } from "@mail/../tests/mail_test_helpers";
+import { animationFrame } from "@odoo/hoot-dom";
 import {
     defineModels,
     getMockEnv,
@@ -8,11 +10,9 @@ import {
     mountWithCleanup,
     webModels,
 } from "@web/../tests/web_test_helpers";
-import { busModels, waitNotifications, waitUntilSubscribe } from "@bus/../tests/bus_test_helpers";
-import { mailModels } from "@mail/../tests/mail_test_helpers";
 
-import { registry } from "@web/core/registry";
 import { RoomBookingView } from "@room/room_booking/room_booking_view/room_booking_view";
+import { registry } from "@web/core/registry";
 
 const serviceRegistry = registry.category("services");
 

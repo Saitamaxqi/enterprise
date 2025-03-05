@@ -1,22 +1,26 @@
-import { expect, test, describe } from "@odoo/hoot";
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { describe, expect, test } from "@odoo/hoot";
 import { edit, press } from "@odoo/hoot-dom";
 import { animationFrame, Deferred } from "@odoo/hoot-mock";
+import { onMounted } from "@odoo/owl";
 import {
     contains,
+    defineModels,
+    editAce,
     fields,
+    mockService,
+    models,
     onRpc,
     patchWithCleanup,
     serverState,
-    editAce,
-    mockService,
     stepAllNetworkCalls,
-    models,
-    defineModels,
 } from "@web/../tests/web_test_helpers";
-import { createMockViewResult, handleDefaultStudioRoutes, mountViewEditor } from "../view_editor_tests_utils";
 import { CodeEditor } from "@web/core/code_editor/code_editor";
-import { onMounted } from "@odoo/owl";
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import {
+    createMockViewResult,
+    handleDefaultStudioRoutes,
+    mountViewEditor,
+} from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
 

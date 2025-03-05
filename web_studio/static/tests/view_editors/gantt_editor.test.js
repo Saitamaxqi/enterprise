@@ -1,4 +1,6 @@
-import { expect, test, describe } from "@odoo/hoot";
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { describe, expect, test } from "@odoo/hoot";
+import { queryAllTexts } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import {
     contains,
@@ -9,10 +11,8 @@ import {
     mountWithCleanup,
     onRpc,
 } from "@web/../tests/web_test_helpers";
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 import { handleDefaultStudioRoutes } from "../view_editor_tests_utils";
-import { queryAllTexts } from "@odoo/hoot-dom";
 
 describe.current.tags("desktop");
 
@@ -52,7 +52,7 @@ test("empty gantt editor", async () => {
         const { params } = await request.json();
         expect(params.operations[0].new_attrs.precision).toBe(`{"day":"hour:quarter"}`);
         return true;
-    })
+    });
 
     await getService("action").doAction({
         name: "Timeshift",
@@ -69,7 +69,9 @@ test("empty gantt editor", async () => {
     await contains(".o_web_studio_navbar_item").click();
 
     expect(".o_web_studio_view_renderer .o_gantt_renderer").toHaveCount(1);
-    expect(".o_web_studio_sidebar .o_web_studio_property_precision_day .o_select_menu").toHaveCount(1);
+    expect(".o_web_studio_sidebar .o_web_studio_property_precision_day .o_select_menu").toHaveCount(
+        1
+    );
 
     await contains(".o_web_studio_property_precision_day button").click();
     await contains(".o_select_menu_item:contains('Quarter Hour')").click();
@@ -94,4 +96,4 @@ test("only show allowed scales as default scale", async () => {
     await contains(".o_web_studio_navbar_item").click();
     await contains(".o_web_studio_property_default_range .dropdown-toggle").click();
     expect(queryAllTexts(".o_select_menu_menu .dropdown-item")).toEqual(["Day", "Month"]);
-})
+});

@@ -1,18 +1,9 @@
-import { expect, test, describe } from "@odoo/hoot";
-import { animationFrame } from "@odoo/hoot-mock";
-import {
-    contains,
-    models,
-    fields,
-    defineModels,
-    onRpc,
-} from "@web/../tests/web_test_helpers";
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import {
-    createMockViewResult,
-    mountViewEditor,
-} from "../view_editor_tests_utils";
+import { describe, expect, test } from "@odoo/hoot";
+import { animationFrame } from "@odoo/hoot-mock";
+import { contains, defineModels, fields, models, onRpc } from "@web/../tests/web_test_helpers";
 import { pick } from "@web/core/utils/objects";
+import { createMockViewResult, mountViewEditor } from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
 

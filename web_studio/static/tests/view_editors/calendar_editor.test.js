@@ -1,18 +1,18 @@
-import { expect, test, describe } from "@odoo/hoot";
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { describe, expect, test } from "@odoo/hoot";
+import { queryAllTexts } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import {
-    mountWithCleanup,
     contains,
-    models,
-    fields,
     defineModels,
+    fields,
     getService,
+    models,
+    mountWithCleanup,
     onRpc,
 } from "@web/../tests/web_test_helpers";
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { handleDefaultStudioRoutes } from "../view_editor_tests_utils";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
-import { queryAllTexts } from "@odoo/hoot-dom";
+import { handleDefaultStudioRoutes } from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
 
@@ -81,5 +81,10 @@ test("available periods without scale attribute", async () => {
 
     await contains(".o_web_studio_navbar_item").click();
     await contains(".o_web_studio_sidebar .o_web_studio_property_mode .dropdown-toggle").click();
-    expect(queryAllTexts(".o-dropdown--menu .dropdown-item")).toEqual(["Day", "Month", "Week", "Year"]);
-})
+    expect(queryAllTexts(".o-dropdown--menu .dropdown-item")).toEqual([
+        "Day",
+        "Month",
+        "Week",
+        "Year",
+    ]);
+});

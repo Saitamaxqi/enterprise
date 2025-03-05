@@ -1,15 +1,15 @@
-import { expect, test, describe } from "@odoo/hoot";
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import {
-    mountWithCleanup,
     contains,
-    models,
-    fields,
     defineModels,
+    fields,
     getService,
+    models,
+    mountWithCleanup,
     onRpc,
 } from "@web/../tests/web_test_helpers";
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 import { createMockViewResult, handleDefaultStudioRoutes } from "../view_editor_tests_utils";
 
@@ -51,12 +51,14 @@ class Task extends models.Model {
     m2m_field = fields.Many2many({ relation: "partner" });
     binary_field = fields.Binary();
 
-    _records = [{
-        id: 1,
-        name: "first record",
-        description: "first description",
-        partner_id: 1,
-    }];
+    _records = [
+        {
+            id: 1,
+            name: "first record",
+            description: "first description",
+            partner_id: 1,
+        },
+    ];
 
     _views = {
         "map,1": `
@@ -65,7 +67,7 @@ class Task extends models.Model {
                 <field name='description' string='Description'/>
             </map>`,
         search: "<search/>",
-    }
+    };
 }
 
 defineModels([Partner, Task]);
@@ -112,10 +114,18 @@ test("marker popup fields in editor sidebar", async () => {
 
     await contains("div.leaflet-marker-icon").click();
 
-    expect(".o-map-renderer--popup-table tbody tr:first .o-map-renderer--popup-table-content-name").toHaveText("Name");
-    expect(".o-map-renderer--popup-table tbody tr:first .o-map-renderer--popup-table-content-value").toHaveText("first record");
-    expect(".o-map-renderer--popup-table tbody tr:last .o-map-renderer--popup-table-content-name").toHaveText("Description");
-    expect(".o-map-renderer--popup-table tbody tr:last .o-map-renderer--popup-table-content-value").toHaveText("first description");
+    expect(
+        ".o-map-renderer--popup-table tbody tr:first .o-map-renderer--popup-table-content-name"
+    ).toHaveText("Name");
+    expect(
+        ".o-map-renderer--popup-table tbody tr:first .o-map-renderer--popup-table-content-value"
+    ).toHaveText("first record");
+    expect(
+        ".o-map-renderer--popup-table tbody tr:last .o-map-renderer--popup-table-content-name"
+    ).toHaveText("Description");
+    expect(
+        ".o-map-renderer--popup-table tbody tr:last .o-map-renderer--popup-table-content-value"
+    ).toHaveText("first description");
 
     await contains(".o_web_studio_sidebar .o_map_popup_fields .badge .o_delete").click();
     expect.verifySteps(["edit_view"]);
@@ -123,7 +133,9 @@ test("marker popup fields in editor sidebar", async () => {
 
     await contains("div.leaflet-marker-icon").click();
     expect(".o-map-renderer--popup-table tbody tr").toHaveCount(1);
-    expect(".o-map-renderer--popup-table tbody tr .o-map-renderer--popup-table-content-value").toHaveText("first description");
+    expect(
+        ".o-map-renderer--popup-table tbody tr .o-map-renderer--popup-table-content-value"
+    ).toHaveText("first description");
 });
 
 test("map additional fields domain", async () => {

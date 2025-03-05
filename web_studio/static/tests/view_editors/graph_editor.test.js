@@ -1,22 +1,22 @@
-import { expect, test, describe } from "@odoo/hoot";
-import { animationFrame } from "@odoo/hoot-mock";
-import {
-    mountWithCleanup,
-    contains,
-    models,
-    fields,
-    defineModels,
-    getService,
-    onRpc,
-    serverState,
-    patchWithCleanup,
-} from "@web/../tests/web_test_helpers";
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
+import { describe, expect, test } from "@odoo/hoot";
 import { Deferred } from "@odoo/hoot-dom";
-import { createMockViewResult, handleDefaultStudioRoutes } from "../view_editor_tests_utils";
-import { CodeEditor } from "@web/core/code_editor/code_editor";
+import { animationFrame } from "@odoo/hoot-mock";
 import { onMounted } from "@odoo/owl";
+import {
+    contains,
+    defineModels,
+    fields,
+    getService,
+    models,
+    mountWithCleanup,
+    onRpc,
+    patchWithCleanup,
+    serverState,
+} from "@web/../tests/web_test_helpers";
+import { CodeEditor } from "@web/core/code_editor/code_editor";
+import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
+import { createMockViewResult, handleDefaultStudioRoutes } from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
 
@@ -28,15 +28,12 @@ class Stage extends models.Model {
     name = fields.Char();
     char_field = fields.Char();
 
-    _records = [
-        { name: "stage1" },
-        { name: "stage2" },
-    ]
+    _records = [{ name: "stage1" }, { name: "stage2" }];
 
     _views = {
         "graph,1": `<graph/>`,
         search: `<search/>`,
-    }
+    };
 }
 
 defineModels([Stage]);
@@ -63,7 +60,9 @@ test("empty graph editor", async () => {
 
     expect(".o_graph_view").toHaveCount(1);
     expect(".o_web_studio_view_renderer .o_graph_renderer").toHaveCount(1);
-    expect(".o_web_studio_view_renderer .o_graph_renderer .o_graph_canvas_container canvas").toHaveCount(1);
+    expect(
+        ".o_web_studio_view_renderer .o_graph_renderer .o_graph_canvas_container canvas"
+    ).toHaveCount(1);
 });
 
 test("switching chart types in graph editor", async () => {
@@ -142,7 +141,7 @@ test("open xml editor of graph component view and close it", async () => {
         setup() {
             super.setup();
             onMounted(() => xmlEditorDef.resolve());
-        }
+        },
     });
 
     onRpc("/web_studio/get_xml_editor_resources", () => {
@@ -192,7 +191,9 @@ test("open xml editor of graph component view and close it", async () => {
     expect(".o_web_studio_code_editor.ace_editor").toHaveCount(1);
     expect(".o_web_studio_sidebar").toHaveCount(0);
 
-    await contains(".o_web_studio_xml_resource_selector .btn-secondary:not(.dropdown-toggle)").click();
+    await contains(
+        ".o_web_studio_xml_resource_selector .btn-secondary:not(.dropdown-toggle)"
+    ).click();
 
     expect(".o_ace_view_editor").toHaveCount(0);
     expect(".o_web_studio_sidebar").toHaveCount(1);

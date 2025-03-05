@@ -1,34 +1,34 @@
 import { describe, expect, test } from "@odoo/hoot";
-import { animationFrame } from "@odoo/hoot-mock";
 import { queryAll, queryAllTexts, waitFor, waitForNone } from "@odoo/hoot-dom";
+import { animationFrame } from "@odoo/hoot-mock";
 import { Component, onMounted, xml } from "@odoo/owl";
 
+import { mailModels } from "@mail/../tests/mail_test_helpers";
 import {
     contains,
+    defineActions,
     defineModels,
     fields,
     getService,
     makeMockServer,
-    defineActions,
     models,
     mountWithCleanup,
     onRpc,
     patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
 import { registry } from "@web/core/registry";
-import { ImageField } from "@web/views/fields/image/image_field";
 import { charField } from "@web/views/fields/char/char_field";
-import { COMPUTED_DISPLAY_OPTIONS } from "@web_studio/client_action/view_editor/interactive_editor/properties/type_widget_properties/type_specific_and_computed_properties";
-import { mailModels } from "@mail/../tests/mail_test_helpers";
+import { ImageField } from "@web/views/fields/image/image_field";
 import { WebClient } from "@web/webclient/webclient";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
+import { COMPUTED_DISPLAY_OPTIONS } from "@web_studio/client_action/view_editor/interactive_editor/properties/type_widget_properties/type_specific_and_computed_properties";
 
 import {
-    mountViewEditor,
     createMockViewResult,
     disableHookAnimation,
-    openStudio,
     handleDefaultStudioRoutes,
+    mountViewEditor,
+    openStudio,
 } from "@web_studio/../tests/view_editor_tests_utils";
 import { formEditor } from "@web_studio/client_action/view_editor/editors/form/form_editor";
 

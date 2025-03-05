@@ -1,4 +1,6 @@
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import { before, expect, test } from "@odoo/hoot";
+import { animationFrame } from "@odoo/hoot-mock";
 import {
     contains,
     defineModels,
@@ -8,8 +10,6 @@ import {
     mountView,
     onRpc,
 } from "@web/../tests/web_test_helpers";
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { animationFrame } from "@odoo/hoot-mock";
 
 class ApprovalModel extends models.Model {
     async get_views() {
@@ -221,7 +221,7 @@ test("don't reload model when setting approval in error", async () => {
     await contains(".o_web_studio_approval").click();
     await contains(".o_web_approval_approve").click();
     await animationFrame();
-    expect.verifyErrors(['Crash']);
+    expect.verifyErrors(["Crash"]);
     expect.verifySteps([
         {
             approved: true,

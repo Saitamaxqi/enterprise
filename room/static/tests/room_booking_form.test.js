@@ -1,8 +1,8 @@
 import { expect, test } from "@odoo/hoot";
-import { mockDate } from "@odoo/hoot-mock";
 import { queryAll } from "@odoo/hoot-dom";
-import { contains, onRpc } from "@web/../tests/web_test_helpers";
+import { mockDate } from "@odoo/hoot-mock";
 import { defineRoomModels, mountRoomBookingView } from "@room/../tests/room_test_helpers";
+import { contains, onRpc } from "@web/../tests/web_test_helpers";
 
 const SCHEDULE_SEL = ".btn.rounded-pill i.fa-calendar-plus-o";
 const DAY_SEL = ".o_room_scheduler > div > div:last-child";
@@ -311,6 +311,7 @@ test("Room Booking Form - Receiving new booking", async () => {
             stop_datetime: "2023-06-17 13:00:00",
         },
     ]);
+    await contains(SCHEDULE_SEL).click();
     assertSlots({ bookedSlots: ["1200", "1230"] });
     expect(".col > .bg-success").toHaveCount(25);
 });
@@ -330,6 +331,7 @@ test("Room Booking Form - Receiving deleted booking", async () => {
     await contains(SCHEDULE_SEL).click();
     assertSlots({ bookedSlots: ["1200", "1230"] });
     await notifyView("booking/delete", [{ id: 1 }]);
+    await contains(SCHEDULE_SEL).click();
     assertSlots({ freeSlots: ["1200", "1230"] });
 });
 
@@ -355,6 +357,7 @@ test("Room Booking Form - Receiving updated booking", async () => {
             name: "Booking 1",
         },
     ]);
+    await contains(SCHEDULE_SEL).click();
     assertSlots({ bookedSlots: ["1300", "1330"], freeSlots: ["1200", "1230"] });
 });
 

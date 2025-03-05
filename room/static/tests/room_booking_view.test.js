@@ -1,49 +1,52 @@
 import { expect, test } from "@odoo/hoot";
-import { freezeTime, advanceTime, runAllTimers, mockDate } from "@odoo/hoot-mock";
 import { press } from "@odoo/hoot-dom";
-import { asyncStep, contains, onRpc, waitForSteps } from "@web/../tests/web_test_helpers";
+import { advanceTime, freezeTime, mockDate, runAllTimers } from "@odoo/hoot-mock";
 import { defineRoomModels, mountRoomBookingView } from "@room/../tests/room_test_helpers";
+import { asyncStep, contains, onRpc, waitForSteps } from "@web/../tests/web_test_helpers";
 
 import {
     INACTIVITY_TIMEOUT,
     REFRESH_INTERVAL,
 } from "@room/room_booking/room_booking_view/room_booking_view";
 
-const QUICK_BOOK_SEL = ".btn-dark i.fa-rocket";
-
-defineRoomModels();
+const { DateTime, Duration } = luxon;
 
 function assertDisplayedTime(expectedTime) {
-    expect(".o_room_top").toHaveText(luxon.DateTime.fromSQL(expectedTime).toFormat("T\nDDDD"));
+    expect(".o_room_top").toHaveText(DateTime.fromSQL(expectedTime).toFormat("T\nDDDD"));
 }
 
 /**
  * Assert that the room status is the expected one (right background color, right "busy" or "free"
  * status (icon), expected remaining time if there is an ongoing booking, and correct number of
  * bookings in the sidebar)
- * @param {Object|boolean} remainingTime: remaining time of the current booking or false if no booking
+ *
+ * @param {Object | false} remainingTime: remaining time of the current booking or false if no booking
  * @param {number} nbBookings: number of bookings in the sidebar
  */
 function assertRoomStatus(remainingTime, nbBookings) {
     if (remainingTime) {
-        expect(".o_room_remaining_time").toHaveText(
-            luxon.Duration.fromObject(remainingTime).toFormat("hh:mm:ss")
-        );
-        expect(".o_room_booking_main > div").toHaveAttribute(
-            "style",
-            "background-image: linear-gradient(#FF0000DD, #FF0000DD)"
+        const time = Duration.fromObject(remainingTime).toFormat("hh:mm:ss");
+        // Ignore last second digit as it will be affected by mocked time being advanced
+        expect(".o_room_remaining_time").toHaveText(new RegExp(`^${time.slice(0, -1)}\\d$`));
+        expect(".o_room_booking_main > div").toHaveStyle(
+            "background-image: linear-gradient(#FF0000DD, #FF0000DD)",
+            { inline: true }
         );
         expect("i.fa-calendar-times-o.fa-3x").toHaveCount(1);
     } else {
         expect(".o_room_remaining_time").toHaveCount(0);
-        expect(".o_room_booking_main > div").toHaveAttribute(
-            "style",
-            "background-image: linear-gradient(#00FF00DD, #00FF00DD)"
+        expect(".o_room_booking_main > div").toHaveStyle(
+            "background-image: linear-gradient(#00FF00DD, #00FF00DD)",
+            { inline: true }
         );
         expect("i.fa-check-circle.fa-3x").toHaveCount(1);
     }
     expect(".o_room_sidebar .list-group-item").toHaveCount(nbBookings);
 }
+
+const QUICK_BOOK_SEL = ".btn-dark i.fa-rocket";
+
+defineRoomModels();
 
 test("Room Booking View - no meeting scheduled", async () => {
     onRpc("/room/room_test/get_existing_bookings", () => []);
@@ -108,6 +111,7 @@ test("Room Booking View - Quick Booking", async () => {
     await contains(`${buttonsSelector}:last-child`).click();
     await contains(".o_room_sidebar .list-group-item:first-child .fa-trash").click();
     await contains(".modal-footer button:contains('Delete')").click();
+    await runAllTimers();
     await waitForSteps(["delete_booking"]);
 
     mockDate("2023-06-17 10:25:00", 0);
@@ -369,7 +373,7 @@ test("Room Booking View - Receiving booking update through bus", async () => {
             stop_datetime: "2023-06-17 09:30:00",
         },
     ]);
-    advanceTime(REFRESH_INTERVAL);
+    await advanceTime(REFRESH_INTERVAL);
     assertRoomStatus({ minutes: 59, seconds: 59 }, 1);
 });
 

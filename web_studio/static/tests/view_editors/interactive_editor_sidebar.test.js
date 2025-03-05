@@ -1,20 +1,20 @@
-import { expect, test, describe } from "@odoo/hoot";
-import { queryAllTexts, edit, press } from "@odoo/hoot-dom";
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { describe, expect, test } from "@odoo/hoot";
+import { edit, press, queryAllTexts } from "@odoo/hoot-dom";
 import { animationFrame, Deferred } from "@odoo/hoot-mock";
+import { onMounted } from "@odoo/owl";
 import {
     contains,
+    defineModels,
     fields,
+    models,
     onRpc,
     patchWithCleanup,
     serverState,
-    models,
-    defineModels,
 } from "@web/../tests/web_test_helpers";
+import { CodeEditor } from "@web/core/code_editor/code_editor";
 import { PivotEditorSidebar } from "@web_studio/client_action/view_editor/editors/pivot/pivot_editor";
 import { createMockViewResult, mountViewEditor } from "../view_editor_tests_utils";
-import { CodeEditor } from "@web/core/code_editor/code_editor";
-import { onMounted } from "@odoo/owl";
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 
 describe.current.tags("desktop");
 class Partner extends models.Model {
@@ -409,7 +409,7 @@ test("open xml editor of component view", async () => {
             views: [
                 {
                     active: true,
-                    arch: '<form/>',
+                    arch: "<form/>",
                     id: 1,
                     inherit_id: false,
                     name: "base view",

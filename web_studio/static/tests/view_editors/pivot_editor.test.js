@@ -1,17 +1,17 @@
-import { expect, test, describe } from "@odoo/hoot";
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { describe, expect, test } from "@odoo/hoot";
+import { queryAllTexts } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import {
-    mountWithCleanup,
     contains,
-    models,
-    fields,
     defineModels,
+    fields,
     getService,
+    models,
+    mountWithCleanup,
     onRpc,
 } from "@web/../tests/web_test_helpers";
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
-import { queryAllTexts } from "@odoo/hoot-dom";
 import { createMockViewResult, handleDefaultStudioRoutes } from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
@@ -23,10 +23,7 @@ class Partner extends models.Model {
 
     name = fields.Char();
 
-    _records = [
-        { name: "jean" },
-        { name: "jacques" },
-    ]
+    _records = [{ name: "jean" }, { name: "jacques" }];
 }
 
 class Product extends models.Model {
@@ -34,10 +31,7 @@ class Product extends models.Model {
 
     name = fields.Char();
 
-    _records = [
-        { name: "xpad" },
-        { name: "xpod" },
-    ]
+    _records = [{ name: "xpad" }, { name: "xpod" }];
 }
 
 class Stage extends models.Model {
@@ -46,15 +40,17 @@ class Stage extends models.Model {
     name = fields.Char();
     partner_id = fields.Many2one({ relation: "partner", string: "partner_id" });
     product_id = fields.Many2one({ relation: "product", string: "product_id" });
-    toughness = fields.Selection({ selection: [
-        ["0", "Hard"],
-        ["1", "Harder"],
-    ]});
+    toughness = fields.Selection({
+        selection: [
+            ["0", "Hard"],
+            ["1", "Harder"],
+        ],
+    });
 
     _records = [
         { name: "stage1", partner_id: 1, product_id: 1 },
         { name: "stage2", partner_id: 2, product_id: 2 },
-    ]
+    ];
 
     _views = {
         "pivot,1": `<pivot/>`,
@@ -63,7 +59,7 @@ class Stage extends models.Model {
                 <field name='partner_id' type='row'/>
             </pivot>`,
         search: `<search/>`,
-    }
+    };
 }
 
 defineModels([Stage, Partner, Product]);
@@ -149,7 +145,9 @@ test("switching column and row groupby fields in pivot editor", async () => {
     await contains(".o_web_studio_navbar_item").click();
 
     expect(".o_web_studio_sidebar [name='column_groupby'] .o_select_menu").toHaveText("product_id");
-    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText("partner_id");
+    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText(
+        "partner_id"
+    );
 
     // set the Row-Second level field value
     await contains(".o_web_studio_sidebar [name='second_row_groupby'] button").click();
@@ -157,8 +155,12 @@ test("switching column and row groupby fields in pivot editor", async () => {
 
     expect.verifySteps(["edit_view"]);
     expect(".o_web_studio_sidebar [name='column_groupby'] .o_select_menu").toHaveText("product_id");
-    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText("partner_id");
-    expect(".o_web_studio_sidebar [name='second_row_groupby'] .o_select_menu").toHaveText("Toughness");
+    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText(
+        "partner_id"
+    );
+    expect(".o_web_studio_sidebar [name='second_row_groupby'] .o_select_menu").toHaveText(
+        "Toughness"
+    );
     expect(queryAllTexts(".o_web_studio_view_renderer th")).toEqual([
         "",
         "Total",
@@ -181,8 +183,12 @@ test("switching column and row groupby fields in pivot editor", async () => {
 
     expect.verifySteps(["edit_view"]);
     expect(".o_web_studio_sidebar [name='column_groupby'] .o_select_menu").toHaveText("Name");
-    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText("partner_id");
-    expect(".o_web_studio_sidebar [name='second_row_groupby'] .o_select_menu").toHaveText("Toughness");
+    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText(
+        "partner_id"
+    );
+    expect(".o_web_studio_sidebar [name='second_row_groupby'] .o_select_menu").toHaveText(
+        "Toughness"
+    );
 
     expect(queryAllTexts(".o_web_studio_view_renderer th")).toEqual([
         "",
@@ -206,7 +212,9 @@ test("switching column and row groupby fields in pivot editor", async () => {
 
     expect.verifySteps(["edit_view"]);
     expect(".o_web_studio_sidebar [name='column_groupby'] .o_select_menu").toHaveText("Name");
-    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText("product_id");
+    expect(".o_web_studio_sidebar [name='first_row_groupby'] .o_select_menu").toHaveText(
+        "product_id"
+    );
     expect(".o_web_studio_sidebar [name='second_row_groupby'] .o_select_menu").toHaveText("");
 
     expect(queryAllTexts(".o_web_studio_view_renderer th")).toEqual([
@@ -257,4 +265,4 @@ test("pivot measure fields domain", async () => {
     await contains(".o_web_studio_navbar_item").click();
     await contains(".o_field_many2many_tags input").click();
     expect.verifySteps(["name_search"]);
-})
+});

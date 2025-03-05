@@ -1,33 +1,32 @@
-import { expect, test, describe } from "@odoo/hoot";
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { describe, expect, test } from "@odoo/hoot";
 import { Deferred, edit } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import {
-    mountWithCleanup,
     contains,
-    models,
-    fields,
     defineModels,
+    fields,
     getService,
-    onRpc,
+    models,
     mountView,
+    mountWithCleanup,
+    onRpc,
     patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 import { user } from "@web/core/user";
+import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 
 describe.current.tags("desktop");
 
 defineMailModels();
 
 class Partner extends models.Model {
-    _name = "partner"
+    _name = "partner";
 
     int_field = fields.Integer({ string: "int_field" });
     bar = fields.Boolean();
 
     _records = [
-
         {
             display_name: "first record",
             int_field: 42,
@@ -191,7 +190,7 @@ test("approval check: method button", async () => {
         resModel: "partner",
         type: "form",
         resId: 2,
-        arch:`
+        arch: `
         <form string="Partners">
             <sheet>
                 <header>
@@ -207,7 +206,7 @@ test("approval check: method button", async () => {
                 </group>
             </sheet>
         </form>`,
-    })
+    });
 
     await contains("#mainButton").click();
     expect.verifySteps(["get_approval_spec", "someMethod", "get_approval_spec"]);
@@ -235,7 +234,7 @@ test("approval check: action button", async () => {
         resModel: "partner",
         type: "form",
         resId: 2,
-        arch:`
+        arch: `
         <form string="Partners">
             <sheet>
                 <header>
@@ -251,7 +250,7 @@ test("approval check: action button", async () => {
                     </group>
                 </group>
             </sheet>
-        </form>`
+        </form>`,
     });
 
     await contains("#mainButton").click();
@@ -274,7 +273,7 @@ test("approval check: rpc is batched", async () => {
         resModel: "partner",
         type: "form",
         resId: 2,
-        arch:`
+        arch: `
         <form string="Partners">
             <sheet>
                 <header>
@@ -339,7 +338,7 @@ test("approval widget basic flow", async () => {
         resModel: "partner",
         type: "form",
         resId: 2,
-        arch:`
+        arch: `
         <form string="Partners">
             <sheet>
                 <header>
@@ -411,10 +410,7 @@ test("approval on new record: save before check", async () => {
         return {
             all_rules: defaultRules,
             partner: [
-                [
-                    [params.args[0][0].res_id, false, "someMethod"],
-                    { rules: [1], entries: [] },
-                ],
+                [[params.args[0][0].res_id, false, "someMethod"], { rules: [1], entries: [] }],
             ],
         };
     });
@@ -427,14 +423,16 @@ test("approval on new record: save before check", async () => {
         expect.step(`check_approval: ${JSON.stringify(params.args)}`);
         return Promise.resolve({
             approved: false,
-            rules: [{
-                id: 1,
-                group_id: [1, "Internal User"],
-                domain: false,
-                can_validate: true,
-                message: false,
-                exclusive_user: false,
-            }],
+            rules: [
+                {
+                    id: 1,
+                    group_id: [1, "Internal User"],
+                    domain: false,
+                    can_validate: true,
+                    message: false,
+                    exclusive_user: false,
+                },
+            ],
             entries: [],
         });
     });
@@ -442,16 +440,15 @@ test("approval on new record: save before check", async () => {
     await mountView({
         resModel: "partner",
         type: "form",
-        arch:`
+        arch: `
         <form>
             <button type="action" name="someMethod" string="Apply Method"/>
         </form>`,
     });
 
-
     expect.verifySteps([
         'get_approval_spec: [[{"model":"partner","method":false,"action_id":"someMethod","res_id":false}]]',
-    ])
+    ]);
     await contains("button[name='someMethod']").click();
     expect.verifySteps([
         "web_save",
@@ -466,10 +463,7 @@ test("approval on existing record: save before check", async () => {
         return {
             all_rules: defaultRules,
             partner: [
-                [
-                    [params.args[0][0].res_id, false, "someaction"],
-                    { rules: [1], entries: [] },
-                ],
+                [[params.args[0][0].res_id, false, "someaction"], { rules: [1], entries: [] }],
             ],
         };
     });
@@ -482,14 +476,16 @@ test("approval on existing record: save before check", async () => {
         expect.step(`check_approval: ${JSON.stringify(params.args)}`);
         return Promise.resolve({
             approved: false,
-            rules: [{
-                id: 1,
-                group_id: [1, "Internal User"],
-                domain: false,
-                can_validate: true,
-                message: false,
-                exclusive_user: false,
-            }],
+            rules: [
+                {
+                    id: 1,
+                    group_id: [1, "Internal User"],
+                    domain: false,
+                    can_validate: true,
+                    message: false,
+                    exclusive_user: false,
+                },
+            ],
             entries: [],
         });
     });
@@ -498,7 +494,7 @@ test("approval on existing record: save before check", async () => {
         resModel: "partner",
         type: "form",
         resId: 1,
-        arch:`
+        arch: `
         <form>
             <button type="action" name="someaction" string="Apply Method"/>
             <field name="int_field"/>
@@ -561,7 +557,7 @@ test("approval continues to sync after a component has been destroyed", async ()
         resModel: "partner",
         type: "form",
         resId: 1,
-        arch:`
+        arch: `
         <form>
             <button type="object" name="someMethod" string="Apply Method" invisible="int_field == 1"/>
             <button type="object" name="otherMethod" string="Other Method" invisible="int_field != 1"/>
@@ -576,8 +572,12 @@ test("approval continues to sync after a component has been destroyed", async ()
     expect.verifySteps([
         `get_approval_spec: [[{"model":"partner","method":"otherMethod","action_id":false,"res_id":1}]]`,
     ]);
-    expect("button[name='otherMethod'] .o_web_studio_approval .fa-circle-o-notch.fa-spin").toHaveCount(0);
-    expect("button[name='otherMethod'] .o_web_studio_approval .o_web_studio_approval_avatar").toHaveCount(1);
+    expect(
+        "button[name='otherMethod'] .o_web_studio_approval .fa-circle-o-notch.fa-spin"
+    ).toHaveCount(0);
+    expect(
+        "button[name='otherMethod'] .o_web_studio_approval .o_web_studio_approval_avatar"
+    ).toHaveCount(1);
 });
 
 test("approval with domain: pager", async () => {
@@ -607,7 +607,7 @@ test("approval with domain: pager", async () => {
         type: "form",
         resId: 1,
         resIds: [1, 2],
-        arch:`
+        arch: `
         <form>
             <button type="object" name="someMethod" string="Apply Method"/>
             <field name="int_field"/>
@@ -615,13 +615,13 @@ test("approval with domain: pager", async () => {
     });
 
     expect.verifySteps(["get_approval_spec: 1"]);
-    expect(".o_web_studio_approval_avatar").toHaveCount(1)
+    expect(".o_web_studio_approval_avatar").toHaveCount(1);
     await contains(".o_pager_next").click();
     expect.verifySteps(["get_approval_spec: 2"]);
-    expect(".o_web_studio_approval_avatar").toHaveCount(0)
+    expect(".o_web_studio_approval_avatar").toHaveCount(0);
     await contains(".o_pager_previous").click();
     expect.verifySteps(["get_approval_spec: 1"]);
-    expect(".o_web_studio_approval_avatar").toHaveCount(1)
+    expect(".o_web_studio_approval_avatar").toHaveCount(1);
 });
 
 test("approval save a record", async () => {
@@ -656,7 +656,7 @@ test("approval save a record", async () => {
     await mountView({
         resModel: "partner",
         type: "form",
-        arch:`
+        arch: `
         <form>
             <button type="object" name="someMethod" string="Apply Method"/>
             <field name="int_field"/>
