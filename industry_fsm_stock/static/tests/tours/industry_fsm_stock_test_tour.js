@@ -19,7 +19,7 @@ const StepToFSMProductsKanbanWithFavoritesFilterSteps = [
     },
     {
         content: 'Open Task Form',
-        trigger: ".o_data_row span:contains(Fsm task)",
+        trigger: ".o_data_row:has(span:contains(Fsm task)) td.o_list_record_open_form_view button",
         run: "click",
     },
     {
