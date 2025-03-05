@@ -129,7 +129,7 @@
 
     <record model="sign.item.type" id="sign_item_type_date">
         <field name="name">Date</field>
-        <field name="placeholder">DD-MM-YYYY</field>
+        <field name="placeholder">Date</field>
         <field name="default_width" type="float">0.18</field>
         <field name="default_height" type="float">0.015</field>
         <field name="icon">fa-calendar</field>

@@ -388,7 +388,12 @@ export class SignablePDFIframe extends PDFIframe {
      * @returns {Object}
      */
     getContext(signItem) {
-        return super.getContext(signItem);
+        const context = super.getContext(signItem);
+        const type = this.signItemTypesById[signItem.type_id];
+        if (type.name === _t("Date")) {
+            context.placeholder = this.signInfo.get('dateFormat')?.toUpperCase();
+        }
+        return context;
     }
 
     /**

@@ -42,6 +42,7 @@ export class SignRequest extends Component {
             requestItemStates: context.request_item_states,
             needToSign: context.need_to_sign,
             todayFormattedDate: context.today_formatted_date,
+            dateFormat: context.date_format,
         });
 
         if (this.signInfo) {

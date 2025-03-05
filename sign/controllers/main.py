@@ -10,7 +10,8 @@ import re
 
 from odoo import http, models, tools, Command, _, fields
 from odoo.http import request, content_disposition
-from odoo.tools import consteq, format_date
+from odoo.tools import consteq, format_date, posix_to_ldml
+from odoo.tools.misc import babel_locale_parse
 from odoo.tools.pdf import PdfFileReader
 from odoo.addons.iap.tools import iap_tools
 from odoo.exceptions import UserError
@@ -83,6 +84,11 @@ class Sign(http.Controller):
                 'action': 'open',
             })
 
+        lang_code = sign_request.communication_company_id.partner_id.lang
+        lang = request.env['res.lang']._lang_get(lang_code)
+        locale = babel_locale_parse(lang_code)
+        date_format = posix_to_ldml(lang.date_format, locale=locale)
+
         return {
             'sign_request': sign_request,
             'current_request_item': current_request_item,
@@ -103,7 +109,8 @@ class Sign(http.Controller):
             'sign_item_select_options': sign_request.template_id.sign_item_ids.mapped('option_ids'),
             'portal': post.get('portal'),
             'company_id': (sign_request.communication_company_id or sign_request.create_uid.company_id).id,
-            'today_formatted_date': format_date(http.request.env, fields.Date.today(), lang_code=sign_request.communication_company_id.partner_id.lang),
+            'today_formatted_date': format_date(http.request.env, fields.Date.today(), lang_code=lang_code),
+            'date_format': date_format.lower(),
         }
 
     # -------------
