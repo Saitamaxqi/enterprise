@@ -111,7 +111,7 @@ export class VoipCall extends models.ServerModel {
         }
         const [call] = records;
         const [partnerId] = ResPartner.search(
-            ["|", ["phone", "=", call.phone_number], ["mobile", "=", call.phone_number]],
+            [["phone", "=", call.phone_number]],
             makeKwArgs({ limit: 1 })
         );
         if (!partnerId) {

@@ -35,13 +35,12 @@ export class Softphone {
             (activity) =>
                 activity.activity_category === "phonecall" &&
                 ["today", "overdue"].includes(activity.state) &&
-                ["phone", "mobile"].some((field) => activity[field]) &&
+                activity.phone &&
                 activity.user_id[0] === this.store.self.userId &&
                 (!searchBarInputValue ||
                     [
                         activity.partner.name,
                         activity.partner.displayName,
-                        activity.mobile,
                         activity.phone,
                         activity.name,
                     ].some((x) => isSubstring(x, searchBarInputValue)))

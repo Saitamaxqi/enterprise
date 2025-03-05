@@ -125,7 +125,7 @@ class VoipCall(models.Model):
         # phone_mobile_search doesn't handle numbers that short: do a regular
         # search for the exact match:
         if len(number) < 3:
-            domain = ["|", ("phone", "=", number), ("mobile", "=", number)]
+            domain = [("phone", "=", number)]
         # 00 and + both denote an international prefix. phone_mobile_search will
         # match both indifferently.
         elif number.startswith(("+", "00")):

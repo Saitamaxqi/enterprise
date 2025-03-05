@@ -11,7 +11,7 @@ import { setupVoipTests } from "@voip/../tests/voip_test_helpers";
 describe.current.tags("desktop");
 setupVoipTests();
 
-test("Landline number is displayed in activity info.", async () => {
+test("Phone number is displayed in activity info.", async () => {
     const pyEnv = await startServer();
     const partnerId = pyEnv["res.partner"].create({});
     pyEnv["mail.activity"].create({
@@ -21,10 +21,10 @@ test("Landline number is displayed in activity info.", async () => {
     });
     await start();
     await openFormView("res.partner", partnerId);
-    await contains(".o-mail-Activity-voip-landline-number", { text: "+1-202-555-0182" });
+    await contains(".o-mail-Activity-voip-phoneNumber", { text: "+1-202-555-0182" });
 });
 
-test("Click on landline number from activity info triggers a call.", async () => {
+test("Click on phone number from activity info triggers a call.", async () => {
     const pyEnv = await startServer();
     const partnerId = pyEnv["res.partner"].create({});
     pyEnv["mail.activity"].create({
@@ -34,6 +34,6 @@ test("Click on landline number from activity info triggers a call.", async () =>
     });
     await start();
     await openFormView("res.partner", partnerId);
-    await click(".o-mail-Activity-voip-landline-number > a");
+    await click(".o-mail-Activity-voip-phoneNumber > a");
     expect(pyEnv["voip.call"].search_count([["phone_number", "=", "+1-202-555-0182"]])).toBe(1);
 });

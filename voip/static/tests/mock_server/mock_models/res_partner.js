@@ -12,9 +12,7 @@ export class ResPartner extends mailModels.ResPartner {
     }
 
     get_contacts() {
-        return this._format_contacts(
-            this.search(["|", ["mobile", "!=", false], ["phone", "!=", false]])
-        );
+        return this._format_contacts(this.search([["phone", "!=", false]]));
     }
 
     /** @param {number[]} ids */
