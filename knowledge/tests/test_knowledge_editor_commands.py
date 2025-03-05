@@ -16,6 +16,7 @@ class TestKnowledgeEditorCommands(HttpCaseWithUserDemo):
     @classmethod
     def setUpClass(cls):
         super(TestKnowledgeEditorCommands, cls).setUpClass()
+        cls.env.ref('base.user_admin').email = "admin@yourcompany.example.com"
         # remove existing articles to ease tour management
         cls.env['knowledge.article'].search([]).unlink()
 
