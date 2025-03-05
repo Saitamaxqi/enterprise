@@ -59,7 +59,19 @@ result = payslip.paid_amount
         <field name="amount_python_compute">
 result = categories['BASIC'] + categories['ALW']
         </field>
+        <field name="bold" eval="True"/>
         <field name="struct_id" ref="hr_payroll_structure_us_employee_salary"/>
+    </record>
+
+    <record id="l10n_us_employee_salary_pre_tax_deduction" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_pre_tax_benefits"/>
+        <field name="name">Pre-tax Deductions</field>
+        <field name="code">PRETAXDEDUCTION</field>
+        <field name="sequence">109</field>
+        <field name="bold" eval="True"/>
+        <field name="underline" eval="True"/>
+        <field name="title" eval="True"/>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
     </record>
 
     <record id="l10n_us_employee_salary_pre_tax_401" model="hr.salary.rule">
@@ -239,6 +251,18 @@ result = - contract.l10n_us_commuter_benefits
         <field name="amount_python_compute">
 result = GROSS + categories['PRETAX']
         </field>
+        <field name="bold" eval="True"/>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+    </record>
+
+    <record id="l10n_us_employee_salary_taxes" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_taxes"/>
+        <field name="name">Taxes</field>
+        <field name="code">TAXES</field>
+        <field name="sequence">159</field>
+        <field name="bold" eval="True"/>
+        <field name="underline" eval="True"/>
+        <field name="title" eval="True"/>
         <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
     </record>
 
@@ -1055,6 +1079,17 @@ result_rate = - payslip._rule_parameter('l10n_us_wa_cares_fund_rate')
         <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
     </record>
 
+    <record id="l10n_us_employee_salary_post_tax_deduction" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_post_tax_deductions"/>
+        <field name="name">Post-tax Deductions</field>
+        <field name="code">POSTTAXDEDUCTION</field>
+        <field name="sequence">169</field>
+        <field name="bold" eval="True"/>
+        <field name="underline" eval="True"/>
+        <field name="title" eval="True"/>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+    </record>
+
     <record id="l10n_us_employee_salary_roth_401k" model="hr.salary.rule">
         <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_post_tax_deductions"/>
         <field name="name">Roth 401(k)</field>
@@ -1558,6 +1593,7 @@ result_name = inputs['REIMBURSEMENT'].name
         <field name="amount_python_compute">
 result = categories['BASIC'] + categories['ALW'] + categories['DED']
         </field>
+        <field name="bold" eval="True"/>
         <field name="struct_id" ref="hr_payroll_structure_us_employee_salary"/>
     </record>
 </odoo>
