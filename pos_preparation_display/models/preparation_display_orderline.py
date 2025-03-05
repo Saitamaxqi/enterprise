@@ -67,7 +67,7 @@ class Pos_Preparation_DisplayOrderline(models.Model):
             record.preparation_display_order_id = new_order.id
             category_ids.update(record.product_id.pos_categ_ids.ids)
 
-        for p_dis in self.env['pos_preparation_display.display'].get_displays_by_orders(order):
+        for p_dis in self.env['pos_preparation_display.display'].get_displays_by_orders(order.pos_order_id):
             p_dis._send_load_orders_message()
 
         return new_order.id
