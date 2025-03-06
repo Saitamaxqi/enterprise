@@ -11,7 +11,8 @@
                 <page string="VoIP" name="voip" invisible="share">
                     <group>
                         <group string="Credentials" name="voip_credentials">
-                            <field name="voip_provider_id" options="{'no_open': 1, 'no_create': 1, 'no_edit':1}"/>
+                            <field colspan="2" name="voip_provider_id" options="{'no_open': 1, 'no_create': 1, 'no_edit':1}"/>
+                            <button colspan="2" name="%(voip.action_voip_provider_view)d" icon="oi-arrow-right" type="action" string="Manage Providers" class="btn-link"/>
                             <field name="voip_username" readonly="not voip_provider_id"/>
                             <field name="voip_secret" password="True" readonly="not voip_provider_id"/>
                         </group>
@@ -36,7 +37,8 @@
                 <page string="VoIP" name="voip">
                     <group>
                         <group string="Credentials" name="voip_credentials">
-                            <field name="voip_provider_id" options="{'no_open': 1, 'no_create': 1, 'no_edit':1}"/>
+                            <field colspan="2" name="voip_provider_id" options="{'no_open': 1, 'no_create': 1, 'no_edit':1}"/>
+                            <button colspan="2" name="%(voip.action_voip_provider_view)d" icon="oi-arrow-right" type="action" string="Manage Providers" class="btn-link"/>
                             <field name="voip_username" readonly="not voip_provider_id"/>
                             <field name="voip_secret" password="True" readonly="not voip_provider_id"/>
                         </group>

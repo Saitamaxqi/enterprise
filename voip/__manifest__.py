@@ -11,10 +11,10 @@
         "security/ir.model.access.csv",
         "security/voip_security.xml",
         "views/res_partner_views.xml",
+        "views/voip_provider_views.xml",   # load before res_config_settings_views.xml
         "views/res_users_views.xml",
         "views/res_users_settings_views.xml",
         "views/voip_call_views.xml",
-        "views/voip_provider_views.xml",   # load before res_config_settings_views.xml
         "views/res_config_settings_views.xml",
     ],
     "application": True,
