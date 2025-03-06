@@ -58,7 +58,7 @@ class CalendarEvent(models.Model):
                     })
 
         for item in event_list:
-            session.config_id._notify(("TABLE_BOOKING", {
+            item['session'].config_id._notify(("TABLE_BOOKING", {
                 "command": command,
                 "event": item['event'],
             }))
