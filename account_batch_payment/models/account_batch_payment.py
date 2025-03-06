@@ -138,7 +138,7 @@ class AccountBatchPayment(models.Model):
             amount = 0.0
             amount_residual = 0.0
             amount_residual_currency = 0.0
-            for payment in batch.payment_ids.filtered(lambda p: p.state in valid_payment_states):
+            for payment in batch.payment_ids:
                 if payment.move_id:
                     liquidity_lines, _counterpart_lines, _writeoff_lines = payment._seek_for_lines()
                     for line in liquidity_lines:
@@ -148,8 +148,9 @@ class AccountBatchPayment(models.Model):
                             company=line.company_id,
                             date=line.date,
                         )
-                        amount_residual += line.amount_residual
-                        amount_residual_currency += line.amount_residual_currency
+                        if payment.state in valid_payment_states:
+                            amount_residual += line.amount_residual
+                            amount_residual_currency += line.amount_residual_currency
                 else:
                     converted_amount = payment.currency_id._convert(
                         from_amount=payment.amount_signed,
@@ -158,8 +159,9 @@ class AccountBatchPayment(models.Model):
                         date=payment.date,
                     )
                     amount += converted_amount
-                    amount_residual += converted_amount
-                    amount_residual_currency += payment.amount_signed
+                    if payment.state in valid_payment_states:
+                        amount_residual += converted_amount
+                        amount_residual_currency += payment.amount_signed
 
             batch.amount_residual = amount_residual
             batch.amount = amount

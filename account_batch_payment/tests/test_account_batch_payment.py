@@ -280,3 +280,42 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         batch_payment_id.validate_batch()
         with self.assertRaises(ValidationError):
             payment.create_batch_payment()
+
+    def test_amount_in_paid_state(self):
+        """
+            Verify that the batch payment amount is correctly computed when the payment state is 'paid'.
+        """
+        payments = self.env['account.payment']
+
+        # Create two inbound payments of 100€ each
+        for _ in range(2):
+            payments += self.env['account.payment'].create({
+                'amount': 100.0,
+                'payment_type': 'inbound',
+                'partner_type': 'supplier',
+                'partner_id': self.partner_a.id,
+                'destination_account_id': self.partner_a.property_account_payable_id.id,
+                'partner_bank_id': self.partner_bank_account.id,
+            })
+        # Post the payments to validate them
+        payments.action_post()
+
+         # Update payment states to 'paid'
+        payments.write({'state': 'paid'})
+
+        # Ensure all payments are now in the 'paid' state
+        self.assertTrue(all(payment.state == 'paid' for payment in payments), "Payments should be in 'paid' state")
+
+        # Create a batch payment including the two payments
+        batch_payment = self.env['account.batch.payment'].create(
+            {
+                'journal_id': payments.journal_id.id,
+                'payment_method_id': payments.payment_method_id.id,
+                'payment_ids': [Command.set(payments.ids)],
+            }
+        )
+
+        # Ensure the amount remains correct after recomputation
+        self.assertEqual(batch_payment.amount_residual, 0)
+        self.assertEqual(batch_payment.amount_residual_currency, 0)
+        self.assertEqual(batch_payment.amount, 200)
