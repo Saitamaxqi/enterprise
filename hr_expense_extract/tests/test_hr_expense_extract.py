@@ -1,4 +1,5 @@
 from freezegun import freeze_time
+import datetime
 
 from odoo import fields
 from odoo.addons.hr_expense.tests.common import TestExpenseCommon
@@ -344,3 +345,15 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         ]).ensure_one()
         author_name = message.author_id.complete_name
         self.assertEqual(author_name, 'OdooBot')
+
+    def test_action_create_sample_expense(self):
+        receipt_values = {
+            'name': 'Test Receipt',
+            'amount': 2000,
+            'date': datetime.date(2025, 3, 10)
+        }
+
+        self.env['expense.sample.receipt']._action_create_expense(receipt_values)
+        expense = self.env['hr.expense'].search([('name', '=', f"Sample Receipt: {receipt_values['name']}")], limit=1)
+        self.assertTrue(expense)
+        self.assertEqual(expense.total_amount, receipt_values['amount'])

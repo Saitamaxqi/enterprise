@@ -48,7 +48,7 @@ class ExpenseSampleReceipt(models.Model):
         }
 
         # 4/ Ensure we have a journal
-        if not self.env['hr.expense']._default_journal_id():
+        if not self.env['hr.expense.post.wizard']._default_journal_id():
             self.env['account.journal'].create({
                 'type': 'purchase',
                 'company_id': self.env.company.id,
