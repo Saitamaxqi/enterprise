@@ -7,6 +7,7 @@ from collections import defaultdict
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 from lxml import etree
+from re import sub
 
 from odoo import api, fields, models, _
 from odoo.tools import date_utils
@@ -18,9 +19,11 @@ def format_amount(amount, width=11, hundredth=True):
     """
     Fill a constant 11 characters string with 0
     """
+    if isinstance(amount, str):
+        amount = int(sub(r'\D', '', amount or '0'))
     if hundredth:
         amount = round(amount * 100)
-    return str(int(amount)).zfill(width)
+    return str(amount).zfill(width)
 
 
 def round_eurocent(amount):
