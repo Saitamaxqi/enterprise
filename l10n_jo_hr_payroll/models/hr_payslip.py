@@ -22,3 +22,8 @@ class HrPayslip(models.Model):
             total_tax += min((taxable_amount - lower, float(upper) - lower)) * rate
             lower, upper, rate = next(rates)
         return total_tax
+
+    def _l10n_jo_get_gross_wage(self):
+        self.ensure_one()
+        return self._get_contract_wage() + self.version_id.l10n_jo_housing_allowance + \
+            self.version_id.l10n_jo_transportation_allowance + self.version_id.l10n_jo_other_allowances

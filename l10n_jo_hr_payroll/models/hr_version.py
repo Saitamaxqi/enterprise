@@ -6,7 +6,14 @@ from odoo import models, fields
 class HrVersion(models.Model):
     _inherit = 'hr.version'
 
-    l10n_jo_housing_allowance = fields.Monetary(string='Jordan Housing Allowance', groups="hr.group_hr_user")
-    l10n_jo_transportation_allowance = fields.Monetary(string='Jordan Transportation Allowance', groups="hr.group_hr_user")
-    l10n_jo_other_allowances = fields.Monetary(string='Jordan Other Allowances', groups="hr.group_hr_user")
-    l10n_jo_tax_exemption = fields.Monetary(string='Jordan Tax Exemption Amount', groups="hr.group_hr_user")
+    l10n_jo_housing_allowance = fields.Monetary(string='Jordan Housing Allowance', groups="hr_payroll.group_hr_payroll_user")
+    l10n_jo_transportation_allowance = fields.Monetary(string='Jordan Transportation Allowance', groups="hr_payroll.group_hr_payroll_user")
+    l10n_jo_other_allowances = fields.Monetary(string='Jordan Other Allowances', groups="hr_payroll.group_hr_payroll_user")
+    l10n_jo_tax_exemption = fields.Monetary(string='Jordan Tax Exemption Amount', groups="hr_payroll.group_hr_payroll_user")
+    l10n_jo_number_of_leave_days = fields.Float(default=14, string='Jordan Number of Leave Days', groups="hr_payroll.group_hr_payroll_user")
+    l10n_jo_is_commission_based = fields.Boolean(string='Is Commission based', groups="hr_payroll.group_hr_payroll_user")
+    l10n_jo_is_blind = fields.Boolean(string="Is Blind", groups="hr_payroll.group_hr_payroll_user",
+        help="Used to determine if the employee qualifies for the annual disability tax exemption due to blindness.")
+    l10n_jo_has_dependants = fields.Boolean(string="Has Dependants", groups="hr_payroll.group_hr_payroll_user",
+        help="Used to determine if the employee qualifies for dependent-related tax exemptions (e.g., spouse, children).")
+    l10n_jo_is_eligible_for_eos = fields.Boolean(default=True, groups="hr_payroll.group_hr_payroll_user", string="Eligible for EOS")
