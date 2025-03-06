@@ -312,8 +312,7 @@ class Sign(http.Controller):
         if not allowed or signature_type not in ['sign_signature', 'sign_initials'] or not user:
             return False
         user[signature_type] = datas[datas.find(',') + 1:]
-        if frame_datas:
-            user[signature_type+'_frame'] = frame_datas[frame_datas.find(',') + 1:]
+        user[signature_type+'_frame'] = frame_datas[frame_datas.find(',') + 1:] if frame_datas else False
         return True
 
     @http.route(['/sign/send_public/<int:request_id>/<token>'], type='jsonrpc', auth='public')
