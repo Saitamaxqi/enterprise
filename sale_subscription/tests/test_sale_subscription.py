@@ -2356,3 +2356,55 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             inv = renewal_so._create_recurring_invoice()
             details = renewal_so._next_billing_details()
             self.assertAlmostEqual(details["next_invoice_amount"], 666.6, 2, "Only the recurring product is invoiced")
+
+    def test_churn_discount_removal(self):
+        """ Test the following flow:
+                Sub with first year discount -> Renew -> Discount is removed on original sub -> Cancel the renewal -> Churn the original sub
+            This flow was causing an issue where the churn log amount was set as the full amount instead of the discounted amount which resulted negative MRR.
+        """
+        # create new subscription with discount
+        self.product2.list_price = -1
+        sub = self.env['sale.order'].create({
+            'partner_id': self.partner.id,
+            'plan_id': self.plan_year.id,
+            'order_line': [
+                    (0, 0, {
+                        'name': self.product.name,
+                        'product_id': self.product.id,
+                        'product_uom_qty': 10.0,
+                    }),
+                    (0, 0, {
+                        'name': self.product2.name,
+                        'product_id': self.product2.id,
+                        'product_uom_qty': 1.0,
+                    }),
+                ],
+        })
+        self.flush_tracking()
+        sub.action_confirm()
+        self.flush_tracking()
+        new_log = sub.order_log_ids
+        self.assertEqual([new_log.event_type, new_log.amount_signed], ['0_creation', 83.25])
+        sub._create_recurring_invoice()
+
+        # renew the subscription without discount
+        action = sub.prepare_renewal_order()
+        renewal_so = self.env['sale.order'].browse(action['res_id'])
+        renewal_so.order_line.filtered(lambda l: l.product_id == self.product2).unlink()
+        self.flush_tracking()
+        renewal_so.action_confirm()
+        self.flush_tracking()
+
+        # remove first year discount on original subscription
+        # shoudln't be doable normally but this simulate first year discount removal via cron
+        sub.order_line.filtered(lambda l: l.product_id == self.product2).unlink()
+
+        # cancel renewal
+        self.flush_tracking()
+        renewal_so._action_cancel()
+        self.flush_tracking()
+
+        # churn
+        sub.set_close()
+        self.flush_tracking()
+        self.assertEqual(sum(sub.order_log_ids.mapped('amount_signed')), 0)

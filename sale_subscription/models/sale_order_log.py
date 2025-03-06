@@ -184,7 +184,7 @@ class SaleOrderLog(models.Model):
         return self.create({
             'order_id': order.id,
             'event_type': '2_churn',
-            'amount_signed': -initial_values.get('recurring_monthly', order.recurring_monthly),
+            'amount_signed': -sum(order.order_log_ids.mapped('amount_signed')),
             'recurring_monthly': 0,
             'subscription_state': initial_values.get('subscription_state', order.subscription_state),
             'effective_date': order.next_invoice_date,
