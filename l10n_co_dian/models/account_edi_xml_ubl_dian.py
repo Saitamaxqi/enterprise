@@ -514,13 +514,12 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
 
     def _get_invoice_payment_exchange_rate_vals(self, invoice):
         if invoice.currency_id.name != "COP":
-            rate = invoice.amount_total_signed / (invoice.amount_total or 1)
             return {
                 'source_currency_code': "COP",
-                'source_currency_base_rate': self.format_float(rate, 6),  # 6 decimals are allowed
+                'source_currency_base_rate': self.format_float(1 / invoice.invoice_currency_rate, 6),  # 6 decimals are allowed
                 'target_currency_code': invoice.currency_id.name,
                 'target_currency_base_rate': "1.00",
-                'calculation_rate': self.format_float(rate, 6),  # 6 decimals are allowed
+                'calculation_rate': self.format_float(1 / invoice.invoice_currency_rate, 6),  # 6 decimals are allowed
                 'date': invoice.invoice_date,
             }
         return {}

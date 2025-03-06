@@ -367,3 +367,22 @@ class TestDianMoves(TestCoDianCommon):
         self.env['l10n_co_dian.document']._create_document(xml, invoice, state='invoice_accepted')
         self._mock_get_status_zip(invoice, 'GetStatusZip_pending.xml')
         self.assertEqual(invoice.l10n_co_dian_state, 'invoice_pending')
+
+    def test_credit_note_foreign_currency(self):
+        self.env['res.currency.rate'].create({
+            'name': '2025-01-01',
+            'rate': 1.5,
+            'currency_id': self.env.ref('base.USD').id,
+            'company_id': self.company.id
+        })
+        credit_note = self._create_move(
+            move_type='out_refund',
+            ref="broken product",
+            l10n_co_edi_type=L10N_CO_EDI_TYPE['Credit Note'],
+            l10n_co_edi_operation_type='22',
+            l10n_co_edi_description_code_credit='6',
+            currency_id=self.env.ref('base.USD').id,
+        )
+        xml = self.env['account.edi.xml.ubl_dian']._export_invoice(credit_note)[0]
+        self.env['l10n_co_dian.document']._create_document(xml, credit_note, state='invoice_accepted')
+        self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/credit_note_foreign_currency.xml")

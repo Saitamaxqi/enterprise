@@ -154,10 +154,10 @@
     </cac:PrepaidPayment>
     <cac:PaymentExchangeRate>
         <cbc:SourceCurrencyCode>COP</cbc:SourceCurrencyCode>
-        <cbc:SourceCurrencyBaseRate>3919.109581</cbc:SourceCurrencyBaseRate>
+        <cbc:SourceCurrencyBaseRate>3919.109578</cbc:SourceCurrencyBaseRate>
         <cbc:TargetCurrencyCode>USD</cbc:TargetCurrencyCode>
         <cbc:TargetCurrencyBaseRate>1.00</cbc:TargetCurrencyBaseRate>
-        <cbc:CalculationRate>3919.109581</cbc:CalculationRate>
+        <cbc:CalculationRate>3919.109578</cbc:CalculationRate>
         <cbc:Date>2024-01-30</cbc:Date>
     </cac:PaymentExchangeRate>
     <cac:TaxTotal>
