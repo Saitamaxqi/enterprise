@@ -1,0 +1,47 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
+from odoo import api, fields, models
+from odoo.exceptions import ValidationError
+from odoo.tools import _
+
+
+class IrActionsServer(models.Model):
+    _inherit = "ir.actions.server"
+
+    evaluation_type = fields.Selection(
+        selection_add=[("ai_computed", "Update with AI")],
+    )
+    ai_prompt = fields.Text("AI Prompt")
+    update_field_name = fields.Char(related='update_field_id.name')
+    update_field_relation = fields.Char(related="update_field_id.relation")
+    update_field_type = fields.Selection(related='update_field_id.ttype')
+
+    @api.constrains('evaluation_type', 'update_field_id')
+    def _check_ai_evaluation_type(self):
+        for action in self:
+            if action.evaluation_type == 'ai_computed' and not action.update_field_id.store:
+                raise ValidationError(_("This field can not be computed with AI (not stored)."))
+
+    def _generate_action_name(self):
+        self.ensure_one()
+        if self.state == 'object_write' and self.evaluation_type == 'ai_computed':
+            _field_chain, field_chain_str = self._get_relation_chain("update_path")
+            if field_chain_str:
+                return _("Update %(field_chain_str)s with AI", field_chain_str=field_chain_str)
+            return _("Update with AI")
+        return super()._generate_action_name()
+
+    def _run_action_object_write(self, eval_context=None):
+        ai_actions = self.filtered(lambda a: a.evaluation_type == "ai_computed")
+        if self - ai_actions:
+            super(IrActionsServer, self - ai_actions)._run_action_object_write(eval_context)
+
+        if self._context.get("onchange_self"):
+            records = self._context["onchange_self"]
+        else:
+            records = eval_context.get("record") or eval_context["model"]
+            records |= eval_context.get("records") or eval_context["model"]
+
+        for action in ai_actions:
+            field = action.update_field_id
+            records._fill_ai_field(self.env[field.model]._fields.get(field.name), action.ai_prompt)
