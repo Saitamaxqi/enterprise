@@ -1305,3 +1305,19 @@ class TestMpsMps(common.TransactionCase):
         domain_moves = mps_record_table_cc._get_moves_domain(self.mps_dates_month[0][0], self.mps_dates_month[0][1], 'incoming')
         mps_picking_cc_in = mps_record_table_cc._get_moves_and_date(domain_moves)[0][0].picking_id
         self.assertEqual(mps_picking_cc_in, cc_transit_picking, 'It should be the transit picking for CC')
+
+    def test_isolated_access(self):
+        dummy = self.env['res.users'].create({
+            'name': 'mps user',
+            'login': 'mps',
+            'email': 'test@test.test',
+            # no 'Admin / Access Rights' group
+            'group_ids': [Command.set((
+                self.env.ref('mrp.group_mrp_manager').id,
+            ))],
+        })
+        for fname in self.env.company._fields:
+            if self.env.company._is_field_mps_display_group(fname):
+                self.env.company.with_user(dummy).write({fname: not self.env.company[fname]})
+        # no access errors
+        self.assertTrue(True)

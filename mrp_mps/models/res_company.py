@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools.date_utils import start_of, end_of, add, subtract
 from odoo.tools.misc import format_date
@@ -45,6 +45,13 @@ class ResCompany(models.Model):
         'Display Actual Demand Last Year', default=False)
     mrp_mps_show_actual_demand_year_minus_2 = fields.Boolean(
         'Display Actual Demand Before Year', default=False)
+
+    @api.model
+    def _is_field_mps_display_group(self, fname):
+        return (
+            self._fields[fname].type == 'boolean' and
+            fname.startswith(('mrp_mps', 'x_mrp_mps', 'x_studio_mrp_mps'))
+        )
 
     def _get_date_range(self, years=False, force_period=False):
         """ Return the date range for a production schedude depending the
@@ -90,6 +97,10 @@ class ResCompany(models.Model):
                 or ('manufacturing_period_to_display_week' in vals and vals['manufacturing_period_to_display_week'] <= 0)
                 or ('manufacturing_period_to_display_day' in vals and vals['manufacturing_period_to_display_day'] <= 0)):
             raise UserError(_("Manufacturing Settings: Your Master Production Schedule must always display at least 1 period."))
+        if len(vals) == 1:
+            fname, = vals.keys()
+            if self._is_field_mps_display_group(fname) and self.env.user.has_group('mrp.group_mrp_manager'):
+                return super(ResCompany, self.sudo()).write(vals)
         return super().write(vals)
 
     def save_company_settings(self, vals):
