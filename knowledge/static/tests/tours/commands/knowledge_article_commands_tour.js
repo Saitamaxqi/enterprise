@@ -650,7 +650,7 @@ const clipboardUsageSteps = [{ // open the chatter
     trigger: '.o_breadcrumb a:contains(EditorCommandsArticle)',
     run: 'click',
 }, {
-    trigger: "[data-embedded='clipboard'] button:first:contains(Copy)",
+    trigger: "[data-embedded='clipboard'] button:contains(Copy)",
 }, { // open the chatter again
     trigger: '.btn-chatter',
     run: 'click',
