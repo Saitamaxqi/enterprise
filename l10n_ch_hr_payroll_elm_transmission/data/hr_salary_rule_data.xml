@@ -4554,7 +4554,7 @@ result_rate = payslip.l10n_ch_social_insurance_id._get_avs_rates(rate_date)[1]
         <field name="condition_python">result = payslip.l10n_ch_social_insurance_id</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = result_rules['AVS']['total'] + result_rules['AVS.COMP']['total']
+result = -result_rules['AVS']['total'] + result_rules['AVS.COMP']['total']
 rate_date = payslip.date_from
 if payslip.l10n_ch_after_departure_payment:
     previous_non_departure_slips = previous_payslips.filtered(lambda p: not p.l10n_ch_after_departure_payment)
