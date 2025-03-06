@@ -5,7 +5,7 @@ patch(AttachmentUploader.prototype, {
     /**
      * @override
      */
-    async uploadData() {
+    async uploadFile() {
         if (!this.thread.id && this.thread.model === "knowledge.article.thread") {
             this.thread = await this.thread.store.env.services["knowledge.comments"].createThread();
             this.composer = this.thread.composer;
@@ -14,6 +14,6 @@ patch(AttachmentUploader.prototype, {
             commentsState.shouldOpenActiveThread = true;
             commentsState.activeThreadId = this.thread.id.toString();
         }
-        return super.uploadData(...arguments);
+        return super.uploadFile(...arguments);
     },
 });
