@@ -501,18 +501,6 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         This test asserts the logging of the creartion and removal of purchase orders to the chatter
         of the approval request.
         """
-        vendor_1 = self.env['product.supplierinfo'].create({
-                    'partner_id': self.partner_seller_1.id,
-                    'min_qty': 1,
-                    'price': 8,
-                    'product_uom_id': self.uom_fortnight.id,
-        })
-        vendor_2 = self.env['product.supplierinfo'].create({
-                    'partner_id': self.partner_seller_2.id,
-                    'min_qty': 1,
-                    'price': 8,
-                    'product_uom_id': self.uom_unit.id,
-        })
         approval_request = self.env['approval.request'].create({
             'name': 'test_approval_request',
             'category_id': self.purchase_category.id,
@@ -521,12 +509,24 @@ class TestApprovalsPurchase(TestApprovalsCommon):
                 (0, 0, {
                     'product_id':  self.product_earphone.id,
                     'quantity': 30.0,
-                    'seller_id': vendor_1.id
+                    'seller_id': self.env['product.supplierinfo'].create({
+                        'product_id': self.product_earphone.id,
+                        'partner_id': self.partner_seller_1.id,
+                        'min_qty': 1,
+                        'price': 8,
+                        'product_uom_id': self.uom_fortnight.id,
+                    }).id
                 }),
                 (0, 0, {
                     'product_id':  self.product_computer.id,
                     'quantity': 10.0,
-                    'seller_id': vendor_2.id
+                    'seller_id': self.env['product.supplierinfo'].create({
+                        'product_id': self.product_computer.id,
+                        'partner_id': self.partner_seller_2.id,
+                        'min_qty': 1,
+                        'price': 8,
+                        'product_uom_id': self.uom_unit.id,
+                    }).id
                 })
             ],
         })
@@ -587,10 +587,9 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         with self.assertRaises(UserError):  # No vendor on the product should block the RFQ generation
             request_purchase.action_create_purchase_orders()
 
-        seller = self.env['product.supplierinfo'].create({
+        product_without_vendor.seller_ids = [Command.create({
             'partner_id': self.partner_seller_1.id,
             'min_qty': 5,
             'price': 250,
-        })
-        product_without_vendor.seller_ids = [(6, 0, [seller.id])]
+        })]
         request_purchase.action_create_purchase_orders()  # Should not raise any error as we added a vendor

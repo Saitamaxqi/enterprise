@@ -236,12 +236,12 @@ class TestMpsMps(common.TransactionCase):
         partner = self.env['res.partner'].create({
             'name': 'Jhon'
         })
-        seller = self.env['product.supplierinfo'].create({
+        self.env['product.supplierinfo'].create({
+            'product_id': self.screw.id,
             'partner_id': partner.id,
             'price': 12.0,
             'delay': 0
         })
-        self.screw.seller_ids = [(6, 0, [seller.id])]
         self.mps_screw.action_replenish()
         purchase_order_line = self.env['purchase.order.line'].search([('product_id', '=', self.screw.id)])
         self.assertTrue(purchase_order_line)
@@ -294,11 +294,11 @@ class TestMpsMps(common.TransactionCase):
             'name': 'Jhon'
         })
         seller = self.env['product.supplierinfo'].create({
+            'product_id': self.screw.id,
             'partner_id': partner.id,
             'price': 12.0,
             'delay': 7,
         })
-        self.screw.seller_ids = [(6, 0, [seller.id])]
 
         self.mps_screw.replenish_trigger = 'manual'
         mps_dates_week = self.env.company._get_date_range()
@@ -771,11 +771,11 @@ class TestMpsMps(common.TransactionCase):
 
         partner = self.env['res.partner'].create({'name': 'Bob Palindrome MacScam'})
         seller = self.env['product.supplierinfo'].create({
+            'product_id': self.screw.id,
             'partner_id': partner.id,
             'price': 2,
             'delay': 3
         })
-        self.screw.seller_ids = [(6, 0, [seller.id])]
         self.mps_screw.write({
             'replenish_trigger': 'automated',
             'supplier_id': seller.id
@@ -1163,12 +1163,12 @@ class TestMpsMps(common.TransactionCase):
          - PO for 24 units (2 dozen) of screw
          - RFQ for 12 units (1 dozen) of screw """
         partner = self.env['res.partner'].create({'name': 'Bob Palindrome MacScam'})
-        seller = self.env['product.supplierinfo'].create({
+        self.env['product.supplierinfo'].create({
+            'product_id': self.screw.id,
             'partner_id': partner.id,
             'price': 12.0,
             'delay': 0
         })
-        self.screw.seller_ids = [Command.set([seller.id])]
         self.mps_screw.replenish_trigger = 'manual'
         self.table.route_ids = [Command.set([self.ref('mrp.route_warehouse0_manufacture')])]
 
