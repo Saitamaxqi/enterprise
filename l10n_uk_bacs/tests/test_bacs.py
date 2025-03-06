@@ -260,6 +260,13 @@ class TestBACS(AccountTestInvoicingCommon):
         self.assertEqual(invoice_boundagani.payment_state, self.env['account.move']._get_invoice_in_payment_state(), 'This invoice should have been paid thanks to the mandate')
         self.assertEqual(invoice_boundagani.bacs_ddi_id, ddi_boundagani, 'The invoice should have the right mandate')
 
+        # test compute_from_moves
+        ddi_boundagani._compute_from_moves()
+        self.assertEqual(ddi_boundagani.paid_invoices_len, 1)
+        self.assertEqual(ddi_boundagani.paid_invoice_ids, invoice_boundagani)
+        self.assertEqual(ddi_boundagani.payments_len, 1)
+        self.assertEqual(ddi_boundagani.payment_ids, payment_boundagani)
+
         # test single payment
         batch = self.env['account.batch.payment'].create({
             'bacs_processing_date': fields.Date.today(),
