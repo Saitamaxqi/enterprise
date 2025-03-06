@@ -50,7 +50,7 @@ class AppointmentController(http.Controller):
 
     @route(['/book/<string:short_code>'],
             type='http', auth="public", website=True)
-    def appointment_invite(self, short_code):
+    def appointment_invite(self, short_code, **kwargs):
         """
         Invitation link that simplify the URL sent or shared to partners.
         This will redirect to a correct URL with the params selected with the
@@ -59,7 +59,10 @@ class AppointmentController(http.Controller):
         invitation = request.env['appointment.invite'].sudo().search([('short_code', '=', short_code)])
         if not invitation:
             raise NotFound()
-        return request.redirect(invitation.redirect_url)
+        return request.redirect('{redirect_url}&{params}'.format(
+            redirect_url=invitation.redirect_url,
+            params=url_encode(kwargs),
+        ))
 
     # ------------------------------------------------------------
     # APPOINTMENT INDEX PAGE
@@ -761,14 +764,19 @@ class AppointmentController(http.Controller):
 
         return self._handle_appointment_form_submission(
             appointment_type, date_start, date_end, duration, answer_input_values, name,
-            customer, appointment_invite, guests, staff_user, asked_capacity, booking_line_values
+            customer, appointment_invite, guests, staff_user, asked_capacity, booking_line_values,
+            self._get_extra_calendar_event_params(**kwargs),
         )
+
+    def _get_extra_calendar_event_params(self, **kwargs):
+        return {}
 
     def _handle_appointment_form_submission(
         self, appointment_type,
         date_start, date_end, duration,  # appointment boundaries
         answer_input_values, name, customer, appointment_invite, guests=None,  # customer info
-        staff_user=None, asked_capacity=1, booking_line_values=None  # appointment staff / resources
+        staff_user=None, asked_capacity=1, booking_line_values=None,  # appointment staff / resources
+        extra_calendar_event_params=None,  # misc params for use in bridges
     ):
         """ This method takes the output of the processing of appointment's form submission and
             creates the event corresponding to those values. Meant for overrides to set values
@@ -786,7 +794,8 @@ class AppointmentController(http.Controller):
             **appointment_type._prepare_calendar_event_values(
                 asked_capacity, booking_line_values, duration,
                 appointment_invite, guests, name, customer, staff_user, date_start, date_end
-            )
+            ),
+            **(extra_calendar_event_params or {}),
         })
         return request.redirect(f"/calendar/view/{event.access_token}?partner_id={customer.id}&{keep_query('*', state='new')}")
 

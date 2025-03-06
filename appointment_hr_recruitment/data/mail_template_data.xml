@@ -19,7 +19,7 @@
         You can book a slot in our agenda by cliking on the button below.<br/>
     </div>
     <br/>
-    <a t-att-href="env['ir.config_parameter'].sudo().get_param('web.base.url') + '/book/interview'"
+    <a t-att-href="object._get_interview_invite_url()"
         t-attf-style="background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; padding: 8px 16px 8px 16px; border-radius: 5px;">Schedule my interview</a><br/>
     <br/>
     Best regards,

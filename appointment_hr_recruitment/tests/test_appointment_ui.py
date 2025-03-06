@@ -58,4 +58,3 @@ class AppointmentCrmUITest(AppointmentCommon, common.HttpCase):
         self.assertEqual(appointment_type.assign_method, 'resource_time')
         # The default_opportunity_id should be propagated as the field is whitelisted
         appointment_invite = self.env['appointment.invite'].search([('appointment_type_ids', 'in', appointment_type.ids)])
-        self.assertEqual(appointment_invite.applicant_id, applicant)

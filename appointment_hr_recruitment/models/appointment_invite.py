@@ -1,12 +1,19 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+from werkzeug.urls import url_encode
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class AppointmentInvite(models.Model):
-    _inherit = "appointment.invite"
+    _inherit = 'appointment.invite'
 
-    applicant_id = fields.Many2one('hr.applicant', "Applicant",
-        help="Link an applicant to the appointment invite created.\n"
-            "Used when creating an invitation from the Meeting action in the applicant form view.")
+    def _get_url_params(self):
+        applicant_code = self.env.context.get('applicant_code')
+        return {
+            **super()._get_url_params(),
+            **({'applicant_code': applicant_code} if applicant_code else {})
+        }
+
+    @api.depends_context('applicant_code')
+    def _compute_book_url_params(self):
+        return super()._compute_book_url_params()

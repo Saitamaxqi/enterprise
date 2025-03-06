@@ -94,6 +94,7 @@
                         <label for="base_book_url" string="Link URL" class="opacity-100 fw-bold text-900"/><br/>
                         <field name="base_book_url" nolabel="1" readonly="1" class="me-1 oe_inline"/>
                         <field name="short_code" nolabel="1" required="1" class="oe_inline o_input" onchange_on_keydown="True" keydown_debounce_delay="500"/>
+                        <field name="book_url_params" readonly="1"/>
                     </div>
                     <field name="book_url" class="d-none o_appointment_book_url" readonly="1" nolabel="1"/>
                 </sheet>

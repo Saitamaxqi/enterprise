@@ -63,7 +63,8 @@ class AppointmentAccountPayment(AppointmentController):
         self, appointment_type,
         date_start, date_end, duration,
         answer_input_values, name, customer, appointment_invite, guests=None,
-        staff_user=None, asked_capacity=1, booking_line_values=None
+        staff_user=None, asked_capacity=1, booking_line_values=None,
+        extra_calendar_event_params={},
     ):
         """ Override: when a payment step is necessary, we create the calendar booking model to store all relevant information
             instead of creating an calendar.event. This prevents synchronizing calendars with non-confirmed events. It will
@@ -88,7 +89,8 @@ class AppointmentAccountPayment(AppointmentController):
 
         return super()._handle_appointment_form_submission(
             appointment_type, date_start, date_end, duration, answer_input_values, name,
-            customer, appointment_invite, guests, staff_user, asked_capacity, booking_line_values
+            customer, appointment_invite, guests, staff_user, asked_capacity, booking_line_values,
+            extra_calendar_event_params,
         )
 
     def _redirect_to_payment(self, calendar_booking):

@@ -8,8 +8,9 @@ from odoo.osv.expression import AND
 
 class AppointmentCrmCalendarView(AppointmentCalendarView):
 
-    def _get_staff_user_appointment_invite_domain(self, appointment_type):
-        domain = super()._get_staff_user_appointment_invite_domain(appointment_type)
+    @classmethod
+    def _get_staff_user_appointment_invite_domain(cls, appointment_type, user):
+        domain = super()._get_staff_user_appointment_invite_domain(appointment_type, user)
         if 'default_opportunity_id' in request.env.context:
             domain = AND([domain, [('opportunity_id', '=', request.env.context['default_opportunity_id'])]])
         return domain

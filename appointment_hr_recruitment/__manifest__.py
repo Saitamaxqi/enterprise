@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -18,8 +17,10 @@ Keeps track of all appointments related to applicants.
             'appointment_hr_recruitment/static/tests/tours/**/*',
         ],
     },
+    'data': [
+        'data/mail_template_data.xml',
+    ],
     'demo': [
-        'data/mail_template_demo.xml',
         'data/appointment_hr_recruitment_demo.xml',
     ],
 }

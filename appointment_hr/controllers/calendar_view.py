@@ -9,7 +9,8 @@ class AppointmentHRCalendarView(AppointmentCalendarView):
     # Utility Methods
     # ----------------------------------------------------------
 
-    def _prepare_appointment_type_anytime_values(self):
-        appt_type_vals = super()._prepare_appointment_type_anytime_values()
+    @classmethod
+    def _prepare_appointment_type_anytime_values(cls, user):
+        appt_type_vals = super()._prepare_appointment_type_anytime_values(user)
         appt_type_vals.update(work_hours_activated=True)
         return appt_type_vals
