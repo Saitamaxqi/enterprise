@@ -45,25 +45,6 @@ class StockMove(models.Model):
                 check.write(workorder._defaults_from_move(check.move_id))
         return res
 
-    def action_show_details_quality_check(self):
-        self.ensure_one()
-        view = self.env.ref('mrp_workorder.view_stock_move_operations_quality_check')
-        return {
-            'name': (self.check_id.title or _('Detailed Operations')) + f' - {self.product_id.name}, {self.product_uom_qty} {self.product_uom.name}',
-            'type': 'ir.actions.act_window',
-            'view_mode': 'form',
-            'res_model': 'stock.move',
-            'views': [(view.id, 'form')],
-            'view_id': view.id,
-            'target': 'new',
-            'res_id': self.id,
-            'context': dict(
-                self.env.context,
-                dialog_size='extra-large',
-                active_mo_id=self.raw_material_production_id.id
-            ),
-        }
-
     @api.ondelete(at_uninstall=False)
     def _unlink_quality_check(self):
         self.env['quality.check'].search([('move_id', 'in', self.ids)]).unlink()
@@ -84,41 +65,22 @@ class StockMove(models.Model):
             self.picked = True
         return True
 
-    def add_lot_from_barcode(self, barcode):
+    def get_quant_from_barcode(self, barcode):
         self.ensure_one()
-        lot_id = self.env['stock.lot']
-        if barcode != self.product_barcode: # Only search/create lot when not scanning the product barcode
-            if self.product_id.tracking != 'none':
-                lot_id = self.env['stock.lot'].search([('name', '=', barcode), ('product_id', '=', self.product_id.id)], limit=1)
-                if not lot_id: # Create a new lot and create a sml with qty 1
-                    lot_id = self.env['stock.lot'].with_context(active_mo_id=self.raw_material_production_id.id).create([{'name': barcode, 'product_id': self.product_id.id}])
-                    self.env['stock.move.line'].create([{**self._prepare_move_line_vals(
-                        quantity=self.product_id.uom_id._compute_quantity(1, self.product_uom)
-                    ), 'lot_id': lot_id.id, 'picked': True}])
-                    return # tracked product, new lot created
-            else:
-                return # untracked product but unknown barcode -> bail
-        elif self.product_id.tracking != 'none':
-            return # tracked product but non-lot barcode -> bail (as we don't know which lot/sn to update
-        hide_unpicked = self.product_id.tracking != 'none' and not self.picking_type_prefill_shop_floor_lots
-        if hide_unpicked:
-            move_line = next((sml for sml in self.move_line_ids if sml.lot_id == lot_id and not sml.picked), False)
-            if move_line:  # Set hidden reservation sml to picked to make it visible
-                move_line.picked = True
-                return
-        move_line = next((sml for sml in self.move_line_ids if sml.lot_id == lot_id), False)
-        if move_line and self.product_id.tracking == 'serial':
-            return # Do not increase the qty of a serial move line as it can only be == 1
-        available_qty = self.env['stock.quant']._get_available_quantity(self.product_id, self.location_id, lot_id)
-        remaining_qty = self.product_qty - sum(sml.quantity_product_uom for sml in self.move_line_ids if not hide_unpicked or sml.picked)
-        # Try to fill maximally with available, otherwise increase by 1
-        qty_to_take = 1 if self.product_id.tracking == 'serial' else max(min(remaining_qty, available_qty), 1)
-        if move_line:
-            move_line.quantity += self.product_id.uom_id._compute_quantity(qty_to_take, self.product_uom)
-        elif lot_id or self.product_id.tracking == 'none':
-            self.env['stock.move.line'].create([{**self._prepare_move_line_vals(
-                quantity=self.product_id.uom_id._compute_quantity(qty_to_take, self.product_uom)
-            ), 'lot_id': lot_id.id if lot_id else False, 'picked': True}])
+        if self.product_id.tracking == 'none':
+            return False
+        lot_id = self.env['stock.lot'].search([('name', '=', barcode), ('product_id', '=', self.product_id.id)], limit=1)
+        if not lot_id:
+            lot_id = self.env['stock.lot'].with_context(active_mo_id=self.raw_material_production_id.id).create([{
+                'name': barcode,
+                'product_id': self.product_id.id
+            }])
+            return self.env['stock.quant'].create([{
+                'lot_id': lot_id.id,
+                'product_id': self.product_id.id,
+                'location_id': self.warehouse_id.lot_stock_id.id
+            }]).id
+        return self.env['stock.quant'].search([('lot_id', '=', lot_id.id)], limit=1).id
 
     def _visible_quantity(self):
         self.ensure_one()
@@ -128,3 +90,39 @@ class StockMove(models.Model):
                 for sml in self.move_line_ids_picked
             )
         return super()._visible_quantity()
+
+    def _add_from_quant(self, quant):
+        hide_unpicked = self.product_id.tracking != 'none' and not self.picking_type_prefill_shop_floor_lots
+        if hide_unpicked:
+            move_line = next((sml for sml in self.move_line_ids if sml._takes_from_quant(quant) and not sml.picked), False)
+            if move_line:  # Quant already has hidden sml -> make visible
+                move_line.picked = True
+                return
+        remaining_qty = self.product_qty - sum(sml.quantity_product_uom for sml in self.move_line_ids if not hide_unpicked or sml.picked)
+        qty_to_take = 1 if self.product_id.tracking == 'serial' else max(min(remaining_qty, quant.available_quantity), 1)
+        move_line = next((sml for sml in self.move_line_ids if sml._takes_from_quant(quant)), False)
+        if move_line:  # Quant already has visible sml -> increase existing sml's quantity
+            move_line.quantity += self.product_id.uom_id._compute_quantity(qty_to_take, self.product_uom)
+        else:  # No sml exists for quant -> make new sml
+            move_line_vals = self._prepare_move_line_vals(
+                quantity=self.product_id.uom_id._compute_quantity(qty_to_take, self.product_uom),
+                reserved_quant=quant)
+            self.env['stock.move.line'].create([{**move_line_vals, 'picked': True}])
+
+    def action_add_from_quant(self, quant_id):
+        self._add_from_quant(self.env['stock.quant'].browse(quant_id))
+
+        if self.product_id.tracking != 'none' and not self.picking_type_prefill_shop_floor_lots:
+            self.move_line_ids.filtered(lambda ml: not ml.picked).unlink()
+
+        if self.check_id:
+            self.check_id.action_next()
+
+
+class StockMoveLine(models.Model):
+    _inherit = 'stock.move.line'
+
+    def _takes_from_quant(self, quant):
+        self.ensure_one()
+        fields_to_match = ('location_id', 'product_id', 'owner_id', 'package_id', 'lot_id')
+        return all(self[field] == quant[field] for field in fields_to_match)

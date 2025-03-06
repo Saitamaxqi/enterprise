@@ -86,7 +86,11 @@ export class MrpDisplayAction extends Component {
                 "workorder_id",
                 "check_id",
                 "product_barcode",
+                "has_tracking",
+                "move_line_ids",
+                "picking_type_prefill_shop_floor_lots",
             ],
+            "stock.move.line": ["id", "lot_id", "location_id", "quantity", "picked"],
             "quality.check": [
                 "id",
                 "display_name",

@@ -192,6 +192,7 @@ class MrpWorkorder(models.Model):
                 and self.is_first_started_wo,
             'current_quality_check_id': check.id,
         })
+        return check.id
 
     def action_menu(self):
         return {

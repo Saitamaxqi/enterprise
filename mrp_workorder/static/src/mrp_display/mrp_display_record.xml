@@ -54,12 +54,13 @@
             </div>
             <ul class="list-group list-group-flush border-0">
                 <li t-if="logNote"
-                    class="o_mrp_display list-group-item d-flex justify-content-between align-items-center"
+                    class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center"
                     t-on-click="() => this.editLogNote()">
                         <div class="text-truncate" t-out="logNote" />
-                        <button class="btn fa fa-pencil-square-o" title="Display Log Note"></button>
+                        <button class="btn btn-outline-secondary" title="Display Log Note">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </button>
                 </li>
-                <MrpWorksheet t-if="showWorksheetCheck" record="props.record" clickable="true"/>
                 <t t-foreach="workorders" t-as="workorder" t-key="workorder.data.id">
                     <MrpWorkorder t-if="workorder.data.state !== 'cancel'" t-props="subRecordProps(workorder)"/>
                 </t>
@@ -68,7 +69,6 @@
                 </t>
                 <t t-foreach="checks" t-as="check" t-key="check.data.id">
                     <StockMove t-if="['register_consumed_materials', 'register_byproducts'].includes(check.data.test_type)" t-props="subRecordProps(check)"/>
-                    <t t-elif="check.data.test_type === 'register_production'" t-call="mrp_workorder.RegisterProduction"/>
                     <QualityCheck t-else="" t-props="subRecordProps(check)"/>
                 </t>
                 <!-- Display a line to register each byproduct who isn't linked to a workorder.
@@ -104,27 +104,5 @@
             <t t-if="_close_production">Close Production</t>
             <t t-else="">Mark as Done</t>
         </button>
-    </t>
-    <t t-name="mrp_workorder.RegisterProduction">
-        <li t-on-click="() => {this.registerProduction(check)}"
-            class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center"
-            t-attf-class="{{(productionComplete || state.underValidation ) ? 'text-muted' : ''}}">
-            <span class="btn-link" t-attf-class="{{(productionComplete || state.underValidation ) ? 'text-decoration-line-through' : ''}}">
-                Register Production
-            </span>
-            <t t-if="['lot', 'serial', 'mass_produce'].includes(trackingMode)">
-                <button t-if="!props.production.data.lot_producing_id" class="btn btn-info fa fa-plus"
-                        t-on-click.stop="() => {this.generateSerialNumber(check)}"/>
-                <span t-else="" t-out="props.production.data.lot_producing_id[1]"/>
-            </t>
-            <button t-else="" t-on-click.stop="() => { this.quickRegisterProduction(check) }" class="btn btn-secondary btn-sm text-nowrap"
-                    t-att-class="productionComplete ? 'opacity-50 bg-transparent text-black' : ''">
-                    <span t-if="quantityProducing &amp;&amp; quantityProducing !== quantityToProduce">
-                        <t t-out="quantityProducing"/> /
-                    </span>
-                <t t-out="quantityToProduce"/>
-                <span class="ms-1" t-esc="uom"/>
-            </button>
-        </li>
     </t>
 </templates>

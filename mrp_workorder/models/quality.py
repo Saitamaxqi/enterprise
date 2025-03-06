@@ -273,7 +273,7 @@ class QualityCheck(models.Model):
                                 'the final product'))
 
         # The button goes immediately to the next step
-        self._next()
+        res['next_check_id'] = self._next()
         return res
 
     def _get_print_qty(self):
@@ -307,7 +307,7 @@ class QualityCheck(models.Model):
 
     def action_next(self):
         self.ensure_one()
-        return self._next()
+        return {'next_check_id': self._next()}
 
     def add_check_in_chain(self, notify_bom=True):
         self.ensure_one()
@@ -327,14 +327,15 @@ class QualityCheck(models.Model):
                 attachments = [('document', base64.b64decode(self.worksheet_document))]
             self.workorder_id.production_id.bom_id.message_post(body=body, attachments=attachments)
 
-    def action_generate_serial(self):
+    def action_register_production(self):
         self.ensure_one()
-        self.production_id.action_generate_serial()
-        self.lot_id = self.production_id.lot_producing_id
-
-    def action_generate_serial_number_and_pass(self):
-        self.action_generate_serial()
-        return self._next()
+        if self.product_tracking in ('lot', 'serial'):
+            self.production_id.action_generate_serial()
+            self.lot_id = self.production_id.lot_producing_id
+        else:
+            self.production_id.qty_producing = self.production_id.product_qty
+            self.production_id._set_qty_producing(False)
+        return {'next_check_id': self._next()}
 
     def _next(self):
         """ This function:
@@ -352,7 +353,7 @@ class QualityCheck(models.Model):
         if self.quality_state == 'none':
             self.do_pass()
 
-        self.workorder_id._change_quality_check(position='next')
+        return self.workorder_id._change_quality_check(position='next')
 
     def _insert_in_chain(self, position, relative):
         """Insert the quality check `self` in a chain of quality checks.

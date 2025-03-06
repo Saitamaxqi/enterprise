@@ -25,7 +25,6 @@
         'views/mrp_production_views.xml',
         'views/mrp_workcenter_views.xml',
         'views/stock_picking_type_views.xml',
-        'views/stock_move_views.xml',
         'views/res_config_settings_view.xml',
         'views/mrp_workorder_views_menus.xml',
         'wizard/additional_workorder_views.xml',

@@ -189,7 +189,13 @@ export class MrpDisplay extends Component {
     }
 
     async _onBarcodeScanned(barcode) {
-        if (barcode.startsWith("OBT") || barcode.startsWith("OCD")) {
+        if (
+            barcode.startsWith("OBT") ||
+            barcode.startsWith("OCD") ||
+            Object.values(this.overlayService.overlays).find(
+                (o) => o.component.name === "DialogWrapper"
+            )
+        ) {
             return;
         }
         const production = this.productions.find((mo) => mo.data.name === barcode);
@@ -206,13 +212,7 @@ export class MrpDisplay extends Component {
         if (employee) {
             return this.useEmployee.setSessionOwner(employee, undefined);
         }
-        if (
-            !Object.values(this.overlayService.overlays).filter(
-                (o) => o.component.name === "DialogWrapper"
-            ).length
-        ) {
-            this._onProductBarcodeScanned(barcode);
-        }
+        return this._onProductBarcodeScanned(barcode);
     }
 
     _onProductBarcodeScanned(barcode) {
@@ -221,7 +221,7 @@ export class MrpDisplay extends Component {
                 // 1. Check if there is a quality check with this product (WO only)
                 for (const check of record.data.check_ids.records) {
                     if (check.data.component_barcode === barcode) {
-                        return record.component.displayInstruction(check);
+                        return check.component.onClick();
                     }
                 }
             }
@@ -232,7 +232,7 @@ export class MrpDisplay extends Component {
                     move.data.manual_consumption &&
                     !move.data.scrapped
                 ) {
-                    return record.component.displayRegisterConsumedComponent(move);
+                    return move.component.onClick();
                 }
             }
             if (this.state.activeResModel === "mrp.workorder") {
@@ -245,7 +245,7 @@ export class MrpDisplay extends Component {
                         !move.data.operation_id &&
                         move.data.workorder_id[0] !== record.data.id
                     ) {
-                        return record.component.displayRegisterConsumedComponent(move);
+                        return move.component.onClick();
                     }
                 }
                 // 4. Check if there is a byproduct move on this WO or on the MO but not any WO with this product
@@ -255,14 +255,14 @@ export class MrpDisplay extends Component {
                         (move.data.operation_id[0] === undefined ||
                             move.data.operation_id[0] === record.data.operation_id[0])
                     ) {
-                        return record.component.displayRegisterConsumedComponent(move);
+                        return move.component.onClick();
                     }
                 }
             } else {
                 // 5. Check if there is a byproduct move with this product (MO only)
                 for (const move of record.data.move_byproduct_ids.records) {
                     if (move.data.product_barcode === barcode) {
-                        return record.component.displayRegisterConsumedComponent(move);
+                        return move.component.onClick();
                     }
                 }
             }
@@ -485,6 +485,13 @@ export class MrpDisplay extends Component {
             fields: moveFields,
             activeFields: moveFields,
         };
+        const moveLineFields = this.props.models.find(
+            (m) => m.resModel === "stock.move.line"
+        ).fields;
+        moveFieldsRelated.activeFields.move_line_ids.related = {
+            fields: moveLineFields,
+            activeFields: moveLineFields,
+        };
         params.config.activeFields.move_raw_ids.related = moveFieldsRelated;
         params.config.activeFields.move_byproduct_ids.related = moveFieldsRelated;
         params.config.activeFields.move_finished_ids.related = moveFieldsRelated;
@@ -572,6 +579,12 @@ export class MrpDisplay extends Component {
                                 product_uom_qty: 8,
                                 product_uom: [1, "Units"],
                                 manual_consumption: true,
+                                move_line_ids: {
+                                    records: [],
+                                },
+                            },
+                            _parentRecord: {
+                                data: {},
                             },
                         },
                     ],

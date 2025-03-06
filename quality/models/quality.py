@@ -248,9 +248,13 @@ class QualityCheck(models.Model):
                 vals['test_type_id'] = self.env['quality.point'].browse(vals['point_id']).test_type_id.id
             if 'point_id' in vals and not vals.get('note'):
                 vals['note'] = self.env['quality.point'].browse(vals['point_id']).note
+            if vals.get('note', False) == '<p data-oe-version="1.1"><br></p>':
+                vals['note'] = False
         return super().create(vals_list)
 
     def write(self, vals):
+        if vals.get('note', False) == '<p data-oe-version="1.1"><br></p>':
+            vals['note'] = False
         res = super().write(vals)
         if 'quality_state' in vals and not vals.get('user_id') or not vals.get('control_date'):
             if vals.get('quality_state') == 'pass':

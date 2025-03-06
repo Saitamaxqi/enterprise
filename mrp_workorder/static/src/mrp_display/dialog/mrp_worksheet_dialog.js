@@ -6,6 +6,7 @@ export class MrpWorksheetDialog extends ConfirmationDialog {
         ...ConfirmationDialog.props,
         body: { optional: true },
         worksheetData: [Object, Boolean],
+        worksheetText: [Object, Boolean],
     };
     static template = "mrp_workorder.MrpWorksheetDialog";
     static components = {

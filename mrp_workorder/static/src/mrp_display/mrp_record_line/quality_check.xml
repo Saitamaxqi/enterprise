@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.QualityCheck">
-        <li class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center"
-            t-att-class="cssClass"
-            t-on-click="onClick">
-            <span class="text-truncate" t-att-class="isComplete ? 'text-decoration-line-through opacity-25' : ''" t-esc="name"/>
-            <span t-if="props.record.data.duration" t-att-class="active ? '' : 'text-muted'">
-                <MrpTimer value="props.record.data.duration" ongoing="active"/>
-            </span>
-            <button class="btn btn-lg px-0" t-on-click.stop="pass"
-                    t-attf-class="#{props.record.data.quality_state === 'none' and icon}"
-                    t-att-class="{
-                    'pass fa fa-check text-success' : shouldDisplayCheckmark,
-                    'fail fa fa-times text-danger' : failed}">
-                <span t-if="showMeasure" t-out="props.record.data.measure + ' ' + props.record.data.norm_unit"/>
-            </button>
+        <li class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center">
+            <span class="text-truncate" t-att-class="isComplete ? 'text-decoration-line-through opacity-25' : ''"
+                  t-out="label"/>
+            <div>
+                <span t-if="showQty" t-out="showQty" class="me-1 fw-bold"/>
+                <button t-if="hasInstruction" t-on-click.stop="showWorksheet" class="btn btn-lg btn-outline-secondary fa fa-info me-1"/>
+                <button class="btn" t-on-click="onClick" t-att-class="showImage ? 'p-0' : ''" t-attf-class="{{isActive ? activeClass : 'btn-outline-secondary'}}">
+                    <i t-if="!showImage" t-att-class="icon"/>
+                    <img t-else="" style="max-width: 35px; max-height: 35px;" t-att-src="imageUrl"/>
+                    <!-- CLPI: maybe better to use bg image with contain on the button instead -->
+                </button>
+            </div>
         </li>
+        <FileUploader t-if="props.record.data.test_type === 'picture'"
+                      acceptedFileExtensions="'image/*'"
+                      t-key="props.record.resId"
+                      onUploaded.bind="onFileUploaded">
+            <t t-set-slot="toggler"><span t-ref="fileUploaderToggle" class="d-none"/></t>
+        </FileUploader>
     </t>
 </templates>

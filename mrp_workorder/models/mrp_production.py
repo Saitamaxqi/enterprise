@@ -107,16 +107,6 @@ class MrpProduction(models.Model):
             })
         return values
 
-    def set_qty_producing(self, check_id=False):
-        super().set_qty_producing()
-        if check_id:
-            self.workorder_ids.check_ids.filtered(lambda c: c.id == check_id and c.test_type == 'register_production').do_pass()
-
-    def action_generate_serial(self, check_id=False):
-        super().action_generate_serial()
-        if check_id:
-            self.workorder_ids.check_ids.filtered(lambda c: c.id == check_id and c.test_type == 'register_production').do_pass()
-
     def can_load_samples(self):
         return self.sudo().env['mrp.production'].search_count([]) == 0
 

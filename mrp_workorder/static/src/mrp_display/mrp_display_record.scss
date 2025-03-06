@@ -9,10 +9,6 @@
         background-color: $list-group-bg;
     }
 
-    .list-group-item {
-        cursor: pointer;
-    }
-
     &.o_disabled {
         opacity: 0.1;
     }
