@@ -5,8 +5,12 @@ import { Component } from "@odoo/owl";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 
 export class IoTBoxDownloadLogs extends Component {
-    static template = `iot.IoTBoxDownloadLogs`;
-    static props = {...standardWidgetProps};
+    static template = `iot.HeaderButton`;
+    static props = {
+        ...standardWidgetProps,
+        btn_name: { type: String },
+        btn_class: { type: String },
+    };
 
     setup() {
         super.setup();
@@ -38,5 +42,11 @@ export class IoTBoxDownloadLogs extends Component {
 
 export const ioTBoxDownloadLogs = {
     component: IoTBoxDownloadLogs,
+    extractProps: ({ attrs }) => {
+        return {
+            btn_name: attrs.btn_name,
+            btn_class: attrs.btn_class
+        };
+    },
 };
 registry.category("view_widgets").add("iot_download_logs", ioTBoxDownloadLogs);

@@ -81,8 +81,9 @@ export class IoTLongpolling {
      * @param {String} iot_ip
      * @param {String} device_identifier
      * @param {Object} data contains the information needed to perform an action on this device_identifier
+     * @param {String} route endpoint to call on the IoT Box (default: /hw_drivers/action)
      */
-    action(iot_ip, device_identifier, data) {
+    action(iot_ip, device_identifier, data, route = null) {
         this.protocol = window.location.protocol;
         var data = {
             params: {
@@ -94,7 +95,7 @@ export class IoTLongpolling {
         var options = {
             timeout: this.ACTION_TIMEOUT,
         };
-        return this._rpcIoT(iot_ip, this.ACTION_ROUTE, data, options);
+        return this._rpcIoT(iot_ip, route || this.ACTION_ROUTE, data, options);
     }
 
     /**

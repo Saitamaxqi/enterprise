@@ -16,8 +16,9 @@
         <field name="arch" type="xml">
             <form create="false">
                 <header groups="base.group_no_one">
-                    <widget name="iot_download_logs"/>
-                    <widget name="iot_restart_odoo_or_reboot" btn_name="Restart Odoo" action="restart_odoo"/>
+                    <widget name="iot_download_logs" btn_name="Download Logs" btn_class="primary"/>
+                    <widget name="iot_restart_odoo" btn_name="Restart Odoo" btn_class="secondary"/>
+                    <widget name="iot_reset_password" btn_name="Reset Password" btn_class="secondary"/>
                 </header>
                 <sheet>
                     <div class="oe_title">

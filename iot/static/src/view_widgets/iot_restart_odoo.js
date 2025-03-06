@@ -8,11 +8,11 @@ import { Component } from "@odoo/owl";
 let restarting = false;
 
 export class IoTRestartOdoo extends Component {
-    static template = `iot.IoTRestartOdooOrReboot`;
+    static template = `iot.HeaderButton`;
     static props = {
         ...standardWidgetProps,
         btn_name: { type: String },
-        action: { type: String },
+        btn_class: { type: String },
     };
 
     setup() {
@@ -149,8 +149,8 @@ export const ioTRestartOdoo = {
     extractProps: ({ attrs }) => {
         return {
             btn_name: attrs.btn_name,
-            action: attrs.action,
+            btn_class: attrs.btn_class,
         };
     },
 };
-registry.category("view_widgets").add("iot_restart_odoo_or_reboot", ioTRestartOdoo);
+registry.category("view_widgets").add("iot_restart_odoo", ioTRestartOdoo);
