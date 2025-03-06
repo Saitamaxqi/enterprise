@@ -5,17 +5,15 @@ from odoo.exceptions import UserError
 class AccountPaymentRegister(models.TransientModel):
     _inherit = 'account.payment.register'
 
-    sdd_mandate_usable = fields.Boolean(string="Could a SDD mandate be used?",
-        compute='_compute_usable_mandate')
+    no_sdd_mandate_partner_ids = fields.Many2many(comodel_name='res.partner', compute='_compute_no_sdd_mandate_partner_ids')
 
-    @api.depends('payment_date', 'partner_id', 'company_id')
-    def _compute_usable_mandate(self):
-        """ returns the first mandate found that can be used for this payment,
-        or none if there is no such mandate.
+    @api.depends('payment_date', 'partner_id', 'company_id', 'line_ids.partner_id')
+    def _compute_no_sdd_mandate_partner_ids(self):
+        """ returns the partners that don't have a valid SDD mandate for this payment.
         """
         for wizard in self:
-            partners_with_valid_mandates = self._get_partner_ids_with_valid_mandates()
-            wizard.sdd_mandate_usable = all(partner.id in partners_with_valid_mandates for partner in wizard.line_ids.partner_id)
+            partners_with_valid_mandates = wizard._get_partner_ids_with_valid_mandates()
+            wizard.no_sdd_mandate_partner_ids = wizard.line_ids.partner_id - self.env['res.partner'].browse(partners_with_valid_mandates)
 
     def _get_partner_ids_with_valid_mandates(self):
         """
