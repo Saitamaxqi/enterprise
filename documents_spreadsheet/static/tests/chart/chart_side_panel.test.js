@@ -10,9 +10,16 @@ import { registries } from "@odoo/o-spreadsheet";
 import { createBasicChart } from "@spreadsheet/../tests/helpers/commands";
 import { patchGraphSpreadsheet } from "@spreadsheet_edition/assets/graph_view/graph_view";
 import * as dsHelpers from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
-import { contains, makeServerError, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
+import {
+    contains,
+    makeServerError,
+    onRpc,
+    patchWithCleanup,
+    fields,
+} from "@web/../tests/web_test_helpers";
 import { GraphRenderer } from "@web/views/graph/graph_renderer";
 import { LoadableDataSource } from "@spreadsheet/data_sources/data_source";
+import { Partner } from "@spreadsheet/../tests/helpers/data";
 
 defineDocumentSpreadsheetModels();
 describe.current.tags("desktop");
@@ -41,7 +48,7 @@ test("From an Odoo chart, can only change to an Odoo chart", async () => {
     await contains(".o-type-selector").click();
     const odooChartTypes = chartSubtypeRegistry
         .getKeys()
-        .filter((key) => key.startsWith("odoo_"))
+        .filter((key) => key.startsWith("odoo_") && key !== "odoo_geo")
         .sort();
     /** @type {NodeListOf<HTMLDivElement>} */
     const options = target.querySelectorAll(".o-chart-type-item");
@@ -309,6 +316,42 @@ test("scatter chart", async () => {
     const runtime = model.getters.getChartRuntime(chartId);
     expect(runtime.chartJsConfig.type).toBe("line");
     expect(runtime.chartJsConfig.data.datasets[0].showLine).toBe(false);
+});
+
+test("geo chart", async () => {
+    const country_id = fields.Many2one({ string: "Country", relation: "res.country" });
+    Partner._fields = { ...Partner._fields, country_id };
+
+    const mockGeoJson = {
+        type: "FeatureCollection",
+        features: [{ type: "Feature", id: "BE", properties: { name: "Belgium" }, geometry: {} }],
+    };
+    onRpc("/spreadsheet/static/topojson/world.topo.json", () => mockGeoJson, { pure: true });
+    onRpc("/spreadsheet/static/topojson/europe.topo.json", () => mockGeoJson, { pure: true });
+
+    const { model, env } = await createSpreadsheetFromGraphView({
+        additionalContext: {
+            graph_groupbys: ["country_id"],
+            graph_measure: ["probability"],
+        },
+    });
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_geo");
+
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_geo");
+    expect(model.getters.getChartRuntime(chartId).chartJsConfig.type).toBe("choropleth");
+
+    await contains(".o-geo-region select").select("europe");
+    expect(model.getters.getChartDefinition(chartId).region).toBe("europe");
+});
+
+test("cannot change chart type to geo chart for a chart not grouped by country", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView({});
+    await openChartSidePanel(model, env);
+    await contains(".o-type-selector").click();
+    expect(".o-chart-type-item[data-id='odoo_geo']").toHaveCount(0);
 });
 
 test("combo chart", async () => {

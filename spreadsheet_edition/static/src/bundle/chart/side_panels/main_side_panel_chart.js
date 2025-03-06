@@ -5,6 +5,8 @@ import { onWillUpdateProps } from "@odoo/owl";
 const { chartSubtypeRegistry } = spreadsheet.registries;
 const { ChartTypePicker } = spreadsheet.components;
 
+const GEO_RES_MODELS = ["res.country", "res.country.state"];
+
 /**
  * This patch is necessary to ensure that the chart type cannot be changed
  * between odoo charts and spreadsheet charts.
@@ -15,19 +17,6 @@ patch(ChartTypePicker.prototype, {
         super.setup();
         this.updateChartTypeByCategories(this.props);
         onWillUpdateProps((nexProps) => this.updateChartTypeByCategories(nexProps));
-    },
-
-    /**
-     * @param {boolean} isOdoo
-     */
-    getChartTypes(isOdoo) {
-        const result = {};
-        for (const key of chartSubtypeRegistry.getKeys()) {
-            if ((isOdoo && key.startsWith("odoo_")) || (!isOdoo && !key.startsWith("odoo_"))) {
-                result[key] = chartSubtypeRegistry.get(key).name;
-            }
-        }
-        return result;
     },
 
     onTypeChange(type) {
@@ -53,6 +42,9 @@ patch(ChartTypePicker.prototype, {
         const definition = this.env.model.getters.getChartDefinition(props.figureId);
         const isOdoo = definition.type.startsWith("odoo_");
         const registryItems = chartSubtypeRegistry.getAll().filter((item) => {
+            if (isOdoo && item.chartType === "odoo_geo") {
+                return this.isGeoChartTypeAvailable(props.figureId);
+            }
             return isOdoo
                 ? item.chartType.startsWith("odoo_")
                 : !item.chartType.startsWith("odoo_");
@@ -66,5 +58,14 @@ patch(ChartTypePicker.prototype, {
                 this.chartTypeByCategories[chartInfo.category] = [chartInfo];
             }
         }
+    },
+    isGeoChartTypeAvailable(figureId) {
+        const chart = this.env.model.getters.getChart(figureId);
+        const groupBy = chart.getDefinition().metaData.groupBy;
+        if (!groupBy || groupBy.length !== 1 || !chart.dataSource.isValid()) {
+            return false;
+        }
+        const field = chart.dataSource.getField(groupBy[0]);
+        return field && field.type === "many2one" && GEO_RES_MODELS.includes(field.relation);
     },
 });

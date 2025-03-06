@@ -155,32 +155,6 @@ export class IrUIMenu extends SpreadsheetModels.IrUIMenu {
     };
 }
 
-export class ResCountries extends models.Model {
-    _name = "res.country";
-    name = fields.Char({ string: "Name" });
-    code = fields.Char({ string: "Code" });
-
-    _records = [
-        { id: 1, name: "Belgium", code: "BE" },
-        { id: 2, name: "France", code: "FR" },
-        { id: 3, name: "United States", code: "US" },
-    ];
-}
-
-export class ResCountryState extends models.Model {
-    _name = "res.country.state";
-    name = fields.Char({ string: "Name" });
-    code = fields.Char({ string: "Code" });
-    country_id = fields.Many2one({ relation: "res.country" });
-    display_name = fields.Char({ string: "Display Name" });
-
-    _records = [
-        { id: 1, name: "California", code: "CA", country_id: 3, display_name: "California (US)" },
-        { id: 2, name: "New York", code: "NY", country_id: 3, display_name: "New York (US)" },
-        { id: 3, name: "Texas", code: "TX", country_id: 3, display_name: "Texas (US)" },
-    ];
-}
-
 onRpc(
     "/spreadsheet/data/documents.document/*",
     function (request) {
@@ -208,8 +182,6 @@ export function defineDocumentSpreadsheetModels() {
         SpreadsheetTemplate,
         IrEmbeddedActions,
         IrUIMenu,
-        ResCountries,
-        ResCountryState,
     };
     Object.assign(SpreadsheetModels, SpreadsheetDocumentModels);
     defineSpreadsheetModels();

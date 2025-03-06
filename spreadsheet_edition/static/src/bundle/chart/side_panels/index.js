@@ -2,6 +2,7 @@ import * as spreadsheet from "@odoo/o-spreadsheet";
 import { CommonOdooChartConfigPanel } from "./common/config_panel";
 import { OdooBarChartConfigPanel } from "./odoo_bar/odoo_bar_config_panel";
 import { OdooLineChartConfigPanel } from "./odoo_line/odoo_line_config_panel";
+import { OdooGeoChartConfigPanel } from "./odoo_geo/odoo_geo_config_panel";
 import { _t } from "@web/core/l10n/translation";
 
 const { chartSidePanelComponentRegistry, chartSubtypeRegistry } = spreadsheet.registries;
@@ -11,6 +12,7 @@ const {
     ChartWithAxisDesignPanel,
     RadarChartDesignPanel,
     WaterfallChartDesignPanel,
+    GeoChartDesignPanel,
 } = spreadsheet.components;
 
 chartSidePanelComponentRegistry
@@ -45,6 +47,10 @@ chartSidePanelComponentRegistry
     .add("odoo_combo", {
         configuration: CommonOdooChartConfigPanel,
         design: ComboChartDesignPanel,
+    })
+    .add("odoo_geo", {
+        configuration: OdooGeoChartConfigPanel,
+        design: GeoChartDesignPanel,
     });
 
 chartSubtypeRegistry.add("odoo_line", {
@@ -190,4 +196,11 @@ chartSubtypeRegistry.add("odoo_filled_radar", {
     subtypeDefinition: { fillArea: true },
     category: "misc",
     preview: "o-spreadsheet-ChartPreview.FILLED_RADAR_CHART",
+});
+chartSubtypeRegistry.add("odoo_geo", {
+    displayName: _t("Geo chart"),
+    chartType: "odoo_geo",
+    chartSubtype: "odoo_geo",
+    category: "misc",
+    preview: "o-spreadsheet-ChartPreview.GEO_CHART",
 });
