@@ -1,8 +1,7 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models, fields, api, _
-from odoo.exceptions import UserError
 import re
 
+from odoo import _, fields, models
+from odoo.exceptions import UserError
 
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
@@ -23,6 +22,11 @@ class ResConfigSettings(models.TransientModel):
             raise UserError(_('The company country must be defined before this action'))
         if not self.company_id.partner_id.l10n_ar_vat:
             raise UserError(_('The company CUIT must be defined before this action'))
+
+        if not self.l10n_ar_afip_ws_key_id:
+            private_key_sudo = self.env['certificate.key'].sudo()._generate_rsa_private_key(self.company_id, name='afip_id_rsa_%s' % fields.Datetime.now().strftime("%Y%m%d_%H%M%S"))
+            self.l10n_ar_afip_ws_key_id = private_key_sudo
+
         return {'type': 'ir.actions.act_url', 'url': '/l10n_ar_edi/download_csr/' + str(self.company_id.id), 'target': 'new'}
 
     def l10n_ar_connection_test(self):
