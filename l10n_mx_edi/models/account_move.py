@@ -334,7 +334,7 @@ class AccountMove(models.Model):
         amount_d = round(amount_d, 2)
         amount_d = int(round(amount_d * 100, 2))
 
-        words = self.currency_id.with_context(lang=self.partner_id.lang or 'es_ES').amount_to_text(amount_i).upper()
+        words = self.currency_id.with_context(lang=self.partner_id.lang).amount_to_text(amount_i).upper()
         return '%(words)s %(amount_d)02d/100 %(currency_type)s' % {
             'words': words,
             'amount_d': amount_d,
