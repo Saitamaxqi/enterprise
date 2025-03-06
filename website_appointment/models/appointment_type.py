@@ -90,11 +90,11 @@ class AppointmentType(models.Model):
         return action
 
     def _prepare_calendar_event_values(
-            self, asked_capacity, booking_line_values, duration,
+            self, asked_capacity, booking_line_values, duration, allday,
             appointment_invite, guests, name, customer, staff_user, start, stop
     ):
         values = super()._prepare_calendar_event_values(
-            asked_capacity, booking_line_values, duration,
+            asked_capacity, booking_line_values, duration, allday,
             appointment_invite, guests, name, customer, staff_user, start, stop
         )
         if self.env.user._is_public() and (visitor := self.env['website.visitor']._get_visitor_from_request()):

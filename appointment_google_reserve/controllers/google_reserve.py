@@ -223,6 +223,7 @@ class GoogleReserveController(Controller):
                 asked_capacity=party_size,
                 booking_line_values=booking_lines,
                 duration=duration_sec / 3600,
+                allday=False,
                 appointment_invite=request.env['appointment.invite'],
                 guests=None,
                 name=customer.name,
@@ -379,6 +380,7 @@ class GoogleReserveController(Controller):
                     timezone='UTC',
                     start_dt=calendar_event_vals['start'].astimezone(pytz.utc),
                     duration=calendar_event_vals['duration'],
+                    allday=calendar_event.allday,
                 ):
                     if resources_booking and not modifying_party_size:
                         # the same resources are not available with the new dates

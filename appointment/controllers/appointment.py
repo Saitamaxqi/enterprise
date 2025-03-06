@@ -540,6 +540,7 @@ class AppointmentController(http.Controller):
 
         partner = self._get_customer_partner()
         partner_data = partner.read(fields=['name', 'phone', 'email'])[0] if partner else {}
+        allday = bool(int(kwargs.get('allday', 0)))
         date_time = unquote_plus(date_time)
         date_time_object = datetime.strptime(date_time, dtf)
         day_name = format_datetime(date_time_object, 'EEE', locale=get_lang(request.env).code)
@@ -557,6 +558,7 @@ class AppointmentController(http.Controller):
         )
         return request.render("appointment.appointment_form", {
             'partner_data': partner_data,
+            'allday': allday,
             'appointment_type': appointment_type,
             'available_appointments': available_appointments,
             'is_html_empty': is_html_empty,
@@ -588,7 +590,9 @@ class AppointmentController(http.Controller):
         :param str(int) resource_selected_id: resource chosen by the customer;
         :param str(list) available_resource_ids: list of resources ids available for the slots
         :param datetime start_dt: appointment slot starting datetime that will be
-          localized in customer timezone;
+          localized in customer timezone. In case of an allday slot, the datetime will be localized
+          in the appointment type timezone. This is done to be sure to keep the intended day selected
+          by the staff user;
         :param str(float) duration: the duration of the appointment;
         :param str(int) asked_capacity: the capacity asked by the customer;
         """
@@ -602,6 +606,7 @@ class AppointmentController(http.Controller):
         staff_user = None
         resources = None
         try:
+            allday = bool(int(kwargs.get('allday', 0)))
             duration = float(duration)
             asked_capacity = int(asked_capacity)
             staff_user_id = int(staff_user_id) if staff_user_id else False
@@ -615,7 +620,10 @@ class AppointmentController(http.Controller):
 
         try:
             session_tz = request.session.get('timezone', appointment_type.appointment_tz)
-            tz_info = pytz.timezone(session_tz)
+            if not allday:
+                tz_info = pytz.timezone(session_tz)
+            else:
+                tz_info = pytz.timezone(appointment_type.appointment_tz)
             start_dt_utc = tz_info.localize(fields.Datetime.from_string(start_dt)).astimezone(pytz.utc)
         except (ValueError, UnknownTimeZoneError):
             # ValueError: the datetime may be ill-formatted
@@ -635,7 +643,7 @@ class AppointmentController(http.Controller):
                 if not resource or resource not in resources:
                     return False
 
-        return appointment_type._check_appointment_is_valid_slot(staff_user, resources, asked_capacity, session_tz, start_dt_utc, duration)
+        return appointment_type._check_appointment_is_valid_slot(staff_user, resources, asked_capacity, session_tz, start_dt_utc, duration, allday)
 
     @http.route(['/appointment/<int:appointment_type_id>/submit'],
                 type='http', auth="public", website=True, methods=["POST"], csrf=False)
@@ -682,8 +690,15 @@ class AppointmentController(http.Controller):
             raise NotFound()
         timezone = request.session.get('timezone') or appointment_type.appointment_tz
         tz_session = pytz.timezone(timezone)
+        allday = bool(int(kwargs.get('allday', 0)))
         datetime_str = unquote_plus(datetime_str)
-        date_start = tz_session.localize(fields.Datetime.from_string(datetime_str)).astimezone(pytz.utc).replace(tzinfo=None)
+        start_dt = fields.Datetime.from_string(datetime_str)
+        if allday:
+            # If it's an allday slot we ignore the session tz and use the timezone of the appointment type.
+            # This is done to be sure to keep the intended day selected by the staff user.
+            date_start = pytz.timezone(appointment_type.appointment_tz).localize(start_dt).astimezone(pytz.utc).replace(tzinfo=None)
+        else:
+            date_start = tz_session.localize(start_dt).astimezone(pytz.utc).replace(tzinfo=None)
         duration = float(duration_str)
         date_end = date_start + relativedelta(hours=duration)
         invite_token = kwargs.get('invite_token')
@@ -817,7 +832,7 @@ class AppointmentController(http.Controller):
             appointment_invite = request.env['appointment.invite']
 
         return self._handle_appointment_form_submission(
-            appointment_type, date_start, date_end, duration, answer_input_values, name,
+            appointment_type, date_start, date_end, duration, allday, answer_input_values, name,
             customer, appointment_invite, guests, staff_user, asked_capacity, booking_line_values,
             self._get_extra_calendar_event_params(**kwargs),
         )
@@ -827,7 +842,7 @@ class AppointmentController(http.Controller):
 
     def _handle_appointment_form_submission(
         self, appointment_type,
-        date_start, date_end, duration,  # appointment boundaries
+        date_start, date_end, duration, allday,  # appointment boundaries
         answer_input_values, name, customer, appointment_invite, guests=None,  # customer info
         staff_user=None, asked_capacity=1, booking_line_values=None,  # appointment staff / resources
         extra_calendar_event_params=None,  # misc params for use in bridges
@@ -846,7 +861,7 @@ class AppointmentController(http.Controller):
         ).sudo().create({
             'appointment_answer_input_ids': [Command.create(vals) for vals in answer_input_values],
             **appointment_type._prepare_calendar_event_values(
-                asked_capacity, booking_line_values, duration,
+                asked_capacity, booking_line_values, duration, allday,
                 appointment_invite, guests, name, customer, staff_user, date_start, date_end
             ),
             **(extra_calendar_event_params or {}),

@@ -203,6 +203,7 @@ class WebsiteAppointmentTest(AppointmentCommon, MockVisitor):
             with self.subTest(with_csrf=with_csrf), self.mock_visitor_from_request(force_visitor=visitor):
                 self.authenticate(None, None)
                 event_values = {
+                    'allday': 0,
                     'duration_str': '1.0',
                     'email': 'visitor@test.example.com',
                     'name': 'Visitor',

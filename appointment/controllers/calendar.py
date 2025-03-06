@@ -62,21 +62,20 @@ class AppointmentCalendarController(CalendarController):
             request.session['timezone'] = timezone
         tz_session = pytz.timezone(timezone)
 
-        date_start_suffix = ""
         format_func = format_datetime
         if not event.allday:
             url_date_start = fields.Datetime.from_string(event.start).strftime('%Y%m%dT%H%M%SZ')
             url_date_stop = fields.Datetime.from_string(event.stop).strftime('%Y%m%dT%H%M%SZ')
             date_start = fields.Datetime.from_string(event.start).replace(tzinfo=pytz.utc).astimezone(tz_session)
         else:
-            url_date_start = url_date_stop = fields.Date.from_string(event.start_date).strftime('%Y%m%d')
+            url_date_start = fields.Date.from_string(event.start_date).strftime('%Y%m%d')
+            url_date_stop = fields.Date.from_string(event.stop_date).strftime('%Y%m%d')
             date_start = fields.Date.from_string(event.start_date)
             format_func = format_date
-            date_start_suffix = _(', All Day')
 
         locale = get_lang(request.env).code
         day_name = format_func(date_start, 'EEE', locale=locale)
-        date_start = f'{day_name} {format_func(date_start, locale=locale)}{date_start_suffix}'
+        date_start = f'{day_name} {format_func(date_start, locale=locale)}'
         params = {
             'action': 'TEMPLATE',
             'text': event._get_customer_summary(),

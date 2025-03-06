@@ -198,7 +198,8 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
                 0,
                 'UTC',
                 datetime(2023, 1, 9, 8, 0, tzinfo=timezone.utc),  # First monday in the future
-                duration=hour_fifty_float_repr_B
+                duration=hour_fifty_float_repr_B,
+                allday=False,
             ),
             "Small imprecision on float value for duration should not impact slot validity"
         )
@@ -220,7 +221,8 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
                     0,
                     'UTC',
                     unique_slot['start_datetime'],
-                    duration
+                    duration,
+                    allday=False,
                 ),
                 is_available
             )
@@ -1341,6 +1343,67 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
              'slots_startdate': self.reference_monday.date(),  # first Monday after reference_now
              'slots_weekdays_nowork': range(2, 7)  # working hours only on Monday/Tuesday (0, 1)
             }
+        )
+
+    @users('apt_manager')
+    def test_unique_allday_slots_availabilities(self):
+        reference_monday = self.reference_monday.replace(hour=0, minute=0, microsecond=0)
+        unique_slots = [{
+            'allday': True,
+            'end_datetime': reference_monday,
+            'start_datetime': reference_monday,
+        }, {
+            'allday': True,
+            'end_datetime': reference_monday + timedelta(days=2),
+            'start_datetime': reference_monday + timedelta(days=1),
+        }]
+        apt_type = self.env['appointment.type'].create({
+            'appointment_tz': 'UTC',
+            'category': 'custom',
+            'name': 'Custom with allday slots',
+            'slot_ids': [(0, 0, {
+                'allday': slot['allday'],
+                'end_datetime': slot['end_datetime'],
+                'slot_type': 'unique',
+                'start_datetime': slot['start_datetime'],
+            }) for slot in unique_slots],
+        })
+
+        with freeze_time(self.reference_now):
+            slots = apt_type._get_appointment_slots('Europe/Brussels')
+        # get all monday slots where apt_manager is available
+        available_unique_slots = self._filter_appointment_slots(
+            slots,
+            filter_months=[(2, 2022)],
+            filter_users=self.apt_manager)
+        self.assertEqual(len(available_unique_slots), 2)
+
+        # Create an all day meeting before the first slot and another
+        # at the start of the second slot.
+        self._create_meetings(self.apt_manager, [(
+            reference_monday - timedelta(days=1),
+            reference_monday - timedelta(days=1),
+            True,
+        ), (
+            reference_monday + timedelta(days=1),
+            reference_monday + timedelta(days=1, hours=1),
+            False,
+        ), (
+            reference_monday + timedelta(days=2),
+            reference_monday + timedelta(days=2, hours=1),
+            False,
+        )])
+
+        with freeze_time(self.reference_now):
+            slots = apt_type._get_appointment_slots('Europe/Brussels')
+        available_unique_slots = self._filter_appointment_slots(
+            slots,
+            filter_months=[(2, 2022)],
+            filter_users=self.apt_manager)
+        self.assertEqual(len(available_unique_slots), 1)
+        self.assertEqual(
+            available_unique_slots[0]['datetime'],
+            unique_slots[0]['start_datetime'].strftime('%Y-%m-%d %H:%M:%S'),
         )
 
     @users('apt_manager')

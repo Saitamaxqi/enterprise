@@ -61,7 +61,7 @@ class AppointmentAccountPayment(AppointmentController):
 
     def _handle_appointment_form_submission(
         self, appointment_type,
-        date_start, date_end, duration,
+        date_start, date_end, duration, allday,
         answer_input_values, name, customer, appointment_invite, guests=None,
         staff_user=None, asked_capacity=1, booking_line_values=None,
         extra_calendar_event_params={},
@@ -72,6 +72,7 @@ class AppointmentAccountPayment(AppointmentController):
             Redirects to payment if needed. See _redirect_to_payment"""
         if appointment_type.has_payment_step and appointment_type.product_id.lst_price:
             calendar_booking = request.env['calendar.booking'].sudo().create([{
+                'allday': bool(allday),
                 'appointment_answer_input_ids': [Command.create(vals) for vals in answer_input_values],
                 'appointment_invite_id': appointment_invite.id,
                 'appointment_type_id': appointment_type.id,
@@ -88,7 +89,7 @@ class AppointmentAccountPayment(AppointmentController):
             return self._redirect_to_payment(calendar_booking)
 
         return super()._handle_appointment_form_submission(
-            appointment_type, date_start, date_end, duration, answer_input_values, name,
+            appointment_type, date_start, date_end, duration, allday, answer_input_values, name,
             customer, appointment_invite, guests, staff_user, asked_capacity, booking_line_values,
             extra_calendar_event_params,
         )

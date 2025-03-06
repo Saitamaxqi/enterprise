@@ -122,6 +122,7 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
         now_str = self.reference_now.strftime(DTF)
         with self.mock_mail_gateway(), self.mock_mail_app():
             apt_data = {
+                "allday": 0,
                 "asked_capacity": 1,
                 "available_resource_ids": None,
                 "csrf_token": http.Request.csrf_token(self),

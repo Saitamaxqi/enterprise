@@ -70,7 +70,7 @@ patch(AttendeeCalendarController.prototype, {
     _getSlots() {
         return Object.values(this.model.data.slots).map(slot => ({
             start: serializeDateTime(slot.start),
-            end: serializeDateTime(slot.start === slot.end ? slot.end.plus({ days: 1 }) : slot.end), //TODO: check if necessary
+            end: serializeDateTime(slot.end),
             allday: slot.isAllDay,
         }));
     },

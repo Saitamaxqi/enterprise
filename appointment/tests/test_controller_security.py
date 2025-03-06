@@ -27,6 +27,7 @@ class AppointmentControllerSecurity(AppointmentUICommon):
         self.assertTrue(phone_question)
 
         base_appointment_data = {
+            "allday": 0,
             "csrf_token": False,
             "duration_str": "1.0",
             "datetime_str": "2022-07-04 12:30:00",

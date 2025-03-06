@@ -253,6 +253,7 @@ class AppointmentUITest(AppointmentUICommon):
         self.assertEqual(phone_question, appointment_without_videocall_source._get_main_phone_question())
 
         online_meeting = {
+            'allday': 0,
             'duration_str': '1.0',
             'datetime_str': '2022-07-04 12:30:00',
             'staff_user_id': self.staff_user_bxls.id,
@@ -262,6 +263,7 @@ class AppointmentUITest(AppointmentUICommon):
             'csrf_token': http.Request.csrf_token(self)
         }
         meeting_with_location = {
+            'allday': 0,
             'duration_str': '1.0',
             'datetime_str': '2022-07-05 10:30:00',
             'staff_user_id': self.staff_user_bxls.id,
@@ -301,6 +303,54 @@ class AppointmentUITest(AppointmentUICommon):
 
     @freeze_time('2022-02-13')
     @users('apt_manager')
+    def test_appointment_allday_slot(self):
+        self.authenticate(self.env.user.login, self.env.user.login)
+        reference_monday = self.reference_monday.replace(hour=0, minute=0, microsecond=0)
+        unique_slots = [{
+            'allday': True,
+            'end_datetime': reference_monday,
+            'start_datetime': reference_monday,
+        }, {
+            'allday': True,
+            'end_datetime': reference_monday + timedelta(days=2),
+            'start_datetime': reference_monday + timedelta(days=1),
+        }]
+        apt_type = self.env['appointment.type'].create({
+            'appointment_tz': 'UTC',
+            'category': 'custom',
+            'name': 'Custom with allday slots',
+            'slot_ids': [(0, 0, {
+                'allday': slot['allday'],
+                'end_datetime': slot['end_datetime'],
+                'slot_type': 'unique',
+                'start_datetime': slot['start_datetime'],
+            }) for slot in unique_slots],
+        })
+        phone_question = apt_type._get_main_phone_question()
+        appointment_data = {
+            "allday": 1,
+            "appointment_type_id": apt_type.id,
+            "csrf_token": http.Request.csrf_token(self),
+            "datetime_str": "2022-02-15 00:00:00",
+            "duration_str": "48.0",
+            "email": "test@test.example.com",
+            "name": "Online Meeting",
+            f"question_{phone_question.id}": "2025550999",
+            "staff_user_id": self.apt_manager.id,
+        }
+
+        url = f"/appointment/{apt_type.id}/submit"
+        res = self.url_open(url, data=appointment_data)
+        self.assertEqual(res.status_code, 200, "Response should = OK")
+
+        meeting = self.env["calendar.event"].search([("appointment_type_id", "=", apt_type.id)])
+        self.assertTrue(meeting)
+        self.assertTrue(meeting.allday)
+        self.assertEqual(meeting.start_date, unique_slots[1]['start_datetime'].date())
+        self.assertEqual(meeting.stop_date, unique_slots[1]['end_datetime'].date())
+
+    @freeze_time('2022-02-13')
+    @users('apt_manager')
     def test_appointment_crossing_manual_confirmation_treshold(self):
         """ Test that when crossing over the manual confirmation treshold, the attendees are not confirmed """
         self.assertFalse(self.apt_type_resource.meeting_ids)  # Assert initial data
@@ -317,6 +367,7 @@ class AppointmentUITest(AppointmentUICommon):
         self.apt_type_resource.sudo().manual_confirmation_percentage = 0.5  # Set Manual Confirmation at 50%
 
         appointment_data = {
+            "allday": 0,
             "asked_capacity": 4,
             "available_resource_ids": [resource.id],
             "csrf_token": http.Request.csrf_token(self),
@@ -406,6 +457,7 @@ class AppointmentUITest(AppointmentUICommon):
         phone_question = self.apt_type_resource._get_main_phone_question()
         self.assertTrue(phone_question)
         event_values = {
+            'allday': 0,
             'csrf_token': http.Request.csrf_token(self),
             'datetime_str': '2022-02-14 11:00:00',
             'duration_str': '1.0',

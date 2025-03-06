@@ -29,6 +29,7 @@ class CalendarBooking(models.Model):
     guest_ids = fields.Many2many('res.partner', string="Guests")
     name = fields.Char('Customer Name')  # Could differ from partner
     partner_id = fields.Many2one('res.partner', 'Contact')
+    allday = fields.Boolean('Allday')
     start = fields.Datetime('Start', required=True)
     stop = fields.Datetime('Stop', required=True)
     # Resources
@@ -168,7 +169,7 @@ class CalendarBooking(models.Model):
             } for line in booking.booking_line_ids]
 
             calendar_event_values = booking.appointment_type_id._prepare_calendar_event_values(
-                booking.asked_capacity, booking_line_values, booking.duration, booking.appointment_invite_id,
+                booking.asked_capacity, booking_line_values, booking.duration, booking.allday, booking.appointment_invite_id,
                 booking.guest_ids, booking.name, booking.partner_id, booking.staff_user_id, booking.start, booking.stop
             )
             calendar_event_values['appointment_answer_input_ids'] = [Command.set(booking.appointment_answer_input_ids.ids)]

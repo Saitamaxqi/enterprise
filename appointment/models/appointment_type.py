@@ -962,17 +962,27 @@ class AppointmentType(models.Model):
                     if day.month != start.month:
                         mute_cls = 'd-none'
                     else:
+                        tz = self.appointment_tz if slots and slots[0]['slot'].allday else timezone
                         # slots are ordered, so check all unprocessed slots from until > day
-                        while slots and (slots[0][timezone][0].date() <= day):
-                            if (slots[0][timezone][0].date() == day) and (slot_field_label in slots[0]):
-                                slot_start_dt_tz = slots[0][timezone][0].strftime('%Y-%m-%d %H:%M:%S')
+                        while slots and (slots[0][tz][0].date() <= day):
+                            is_allday = slots[0]['slot'].allday
+                            tz = self.appointment_tz if is_allday else timezone
+                            if (slots[0][tz][0].date() == day) and (slot_field_label in slots[0]):
+                                slot_start_dt_tz, slot_end_dt_tz = slots[0][tz]
+                                slot_start_dt_tz_formatted = slot_start_dt_tz.strftime('%Y-%m-%d %H:%M:%S')
+                                slot_duration = slots[0]['slot'].duration or str((slot_end_dt_tz - slot_start_dt_tz).total_seconds() / 3600)
+                                # Remove one second in case the end time slot reached midnight of the next day
+                                # e.g. 6PM (June 1st) to 12AM (June 2nd) should not be considered as a multi day slot
+                                is_multi_day = (
+                                    slot_start_dt_tz.date() != (slot_end_dt_tz - timedelta(seconds=1)).date()
+                                ) if not is_allday else slot_duration > 24
                                 slot = {
-                                    'datetime': slot_start_dt_tz,
                                     'available_resources': [{
                                         'id': resource.id,
                                         'name': resource.name,
                                         'capacity': resource.capacity,
                                     } for resource in slots[0]['available_resource_ids']] if self.schedule_based_on == 'resources' else False,
+                                    'datetime': slot_start_dt_tz_formatted,
                                 }
                                 if self.schedule_based_on == 'users' and not self.is_auto_assign and self.is_date_first:
                                     slot.update({'available_staff_users': [{
@@ -981,23 +991,33 @@ class AppointmentType(models.Model):
                                     } for staff in slots[0]['available_staff_users']]})
                                 elif self.schedule_based_on == 'users':
                                     slot.update({'staff_user_id': slots[0]['staff_user_id'].id})
-                                if slots[0]['slot'].allday:
-                                    slot_duration = 24
-                                    slot.update({
-                                        'hours': _("All day"),
-                                        'slot_duration': slot_duration,
-                                    })
+
+                                start_date = format_datetime(slot_start_dt_tz, format='EEE d', locale=locale)
+                                end_date = format_datetime(slot_end_dt_tz, format='EEE d', locale=locale)
+                                start_hour = format_time(slot_start_dt_tz.time(), format='short', locale=locale)
+                                end_hour = format_time(slot_end_dt_tz.time(), format='short', locale=locale)
+                                if is_multi_day:
+                                    slot_start_formatted = start_date
+                                    slot_end_formatted = end_date
+                                    if not is_allday:
+                                        slot_start_formatted = f"{slot_start_formatted} - {start_hour}"
+                                        slot_end_formatted = f"{slot_end_formatted} - {end_hour}"
+                                elif is_allday:
+                                    slot_start_formatted = _("All day")
+                                    slot_end_formatted = False
                                 else:
-                                    start_hour = format_time(slots[0][timezone][0].time(), format='short', locale=locale)
-                                    end_hour = format_time(slots[0][timezone][1].time(), format='short', locale=locale) if self.category == 'custom' else False
-                                    slot_duration = str((slots[0][timezone][1] - slots[0][timezone][0]).total_seconds() / 3600)
-                                    slot.update({
-                                        'start_hour': start_hour,
-                                        'end_hour': end_hour,
-                                        'slot_duration': slot_duration,
-                                    })
+                                    slot_start_formatted = start_hour
+                                    slot_end_formatted = end_hour if self.category == 'custom' else False
+                                slot.update({
+                                    'end_hour': slot_end_formatted,
+                                    'is_long_duration': is_multi_day or is_allday,
+                                    'slot_duration': slot_duration,
+                                    'start_hour': slot_start_formatted,
+                                })
+
                                 url_parameters = {
-                                    'date_time': slot_start_dt_tz,
+                                    'allday': int(is_allday),
+                                    'date_time': slot_start_dt_tz_formatted,
                                     'duration': slot_duration,
                                 }
                                 if self.schedule_based_on == 'users' and not (self.is_date_first and not self.is_auto_assign):
@@ -1007,7 +1027,7 @@ class AppointmentType(models.Model):
                                 slot['url_parameters'] = url_encode(url_parameters)
                                 today_slots.append(slot)
                             slots.pop(0)
-                    today_slots = sorted(today_slots, key=lambda d: d['datetime'])
+                    today_slots = sorted(today_slots, key=lambda d: (not d['is_long_duration'], d['datetime']))
                     dates[week_index][day_index] = {
                         'day': day,
                         'slots': today_slots,
@@ -1027,7 +1047,7 @@ class AppointmentType(models.Model):
             start = start + relativedelta(months=1)
         return months
 
-    def _check_appointment_is_valid_slot(self, staff_user, resources, asked_capacity, timezone, start_dt, duration):
+    def _check_appointment_is_valid_slot(self, staff_user, resources, asked_capacity, timezone, start_dt, duration, allday):
         """
         Given slot parameters check if it is still valid, based on employee
         availability, slot boundaries, ...
@@ -1037,11 +1057,15 @@ class AppointmentType(models.Model):
         :param str timezone: visitor's timezone
         :param datetime start_dt: start datetime of the appointment (UTC)
         :param float duration: the duration of the appointment in hours
+        :param int allday: if the slot is for allday
         :return: True if at least one slot is available, False if no slots were found
         """
         # the user can be a public/portal user that doesn't have read access to the appointment_type.
         self_sudo = self.sudo()
         end_dt = start_dt + relativedelta(hours=duration)
+        if allday:
+            # Remove a day if allday to have the same settings of dates as meetings for allday
+            end_dt -= relativedelta(days=1)
         slots = self_sudo._slots_generate(start_dt, end_dt, timezone)
         slots = [slot for slot in slots if slot['UTC'] == (start_dt.replace(tzinfo=None), end_dt.replace(tzinfo=None))]
         if slots and self_sudo.schedule_based_on == 'users' and (not staff_user or staff_user in self_sudo.staff_user_ids):
@@ -1089,12 +1113,21 @@ class AppointmentType(models.Model):
         return []
 
     def _prepare_calendar_event_values(
-        self, asked_capacity, booking_line_values, duration,
+        self, asked_capacity, booking_line_values, duration, allday,
         appointment_invite, guests, name, customer, staff_user, start, stop
     ):
         """ Returns all values needed to create the calendar event from the values outputed
             by the form submission and its processing. This should be used with values of format
             matching appointment_form_submit controller's ones.
+
+            In case of an allday event, we need to remove a day to the end time to compensate the
+            duration that was added during flow and to then match the date consensus of calendar events.
+            For example:
+                for an allday slot on the 4th May, we should have the 4th May 00:00 for both start and stop
+                date instead of 4th May 00:00 -> 5th May 00:00 which would refer to an allday slot of a duration
+                of 2 days.
+            Also allday slot makes sense only in the timezone of the appointment type to keep the
+            specific day that was selected by the staff user.
             ...
             :param list<dict> booking_line_values: create values of booking lines
             :param str name: name filled in form
@@ -1110,9 +1143,13 @@ class AppointmentType(models.Model):
         appointment_status = self._get_default_appointment_status(start, stop, asked_capacity)
         attendee_values = [Command.create({'partner_id': pid, 'state': 'accepted'}) for pid in partners.ids] + \
             [Command.create({'partner_id': guest.id}) for guest in guests - partners if guest]
+        if allday:
+            stop -= relativedelta(days=1)
+            start = start.astimezone(pytz.timezone(self.appointment_tz)).replace(tzinfo=None)
+            stop = stop.astimezone(pytz.timezone(self.appointment_tz)).replace(tzinfo=None)
         return {
             'alarm_ids': [Command.set(self.reminder_ids.ids)],
-            'allday': False,
+            'allday': allday,
             'appointment_booker_id': customer.id,
             'appointment_invite_id': appointment_invite.id,
             'appointment_status': appointment_status,
@@ -1127,6 +1164,7 @@ class AppointmentType(models.Model):
             'start': fields.Datetime.to_string(start),
             'start_date': fields.Datetime.to_string(start),
             'stop': fields.Datetime.to_string(stop),
+            'stop_date': fields.Datetime.to_string(stop),
             'user_id': staff_user.id if self.schedule_based_on == 'users' else self.create_uid.id,
         }
 
@@ -1208,6 +1246,9 @@ class AppointmentType(models.Model):
 
         if slot['slot'].restrict_to_user_ids and staff_user not in slot['slot'].restrict_to_user_ids:
             return False
+
+        if slot['slot'].allday:
+            slot_end_dt_utc += relativedelta(days=1)
 
         users_remaining_capacity = self._get_users_remaining_capacity(staff_user, slot['UTC'][0], slot['UTC'][1],
             users_to_bookings=availability_values.get('users_to_bookings'))

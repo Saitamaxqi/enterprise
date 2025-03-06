@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
@@ -64,11 +63,17 @@ class AppointmentSlot(models.Model):
         "The unique slot end datetime must be later than the start datetime.",
     )
 
-    @api.depends('start_datetime', 'end_datetime')
+    @api.depends('allday', 'start_datetime', 'end_datetime')
     def _compute_duration(self):
         for slot in self:
             if slot.start_datetime and slot.end_datetime:
-                duration = (slot.end_datetime - slot.start_datetime).total_seconds() / 3600
+                start_datetime = slot.start_datetime
+                end_datetime = slot.end_datetime
+                if slot.allday:
+                    # when "allday" is True, the end date is stored as "that day at midnight"
+                    # we add 1 full day to have a proper duration computation
+                    end_datetime += relativedelta(days=1)
+                duration = (end_datetime - start_datetime).total_seconds() / 3600
                 slot.duration = round(duration, 2)
             else:
                 slot.duration = 0

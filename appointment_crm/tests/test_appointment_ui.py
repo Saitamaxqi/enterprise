@@ -43,6 +43,7 @@ class AppointmentCrmUITest(AppointmentCommon, MailCommon, common.HttpCase):
         phone_question = apt._get_main_phone_question()
         self.assertTrue(phone_question)
         data = {
+            "allday": 0,
             "csrf_token": http.Request.csrf_token(self),
             "datetime_str": date_str,
             "duration_str": "1.0",

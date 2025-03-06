@@ -37,6 +37,9 @@ patch(AttendeeCalendarModel.prototype, {
         }
         if (!record.isAllDay) {
             record.title = "";
+            if (record.end.diff(record.start, "hours").hours >= 24) {
+                record.title = record.start.toFormat("EEE d, t") + " - " + record.end.toFormat("EEE d, t");
+            }
             if (record.start && record.end) {
                 const datesInterval = luxon.Interval.fromDateTimes(record.start, record.end);
                 this.defaultSlotDurationMinutes = datesInterval.length('minutes');
