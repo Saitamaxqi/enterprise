@@ -77,6 +77,10 @@
         <field name="dmfa_code">1</field>   <!-- YTI: 1 as it is paid, would be 70 otherwise -->
     </record>
 
+    <record id="hr_work_entry.l10n_be_work_entry_type_small_unemployment_birth" model="hr.work.entry.type">
+        <field name="dmfa_code">1</field>
+    </record>
+
     <record id="hr_work_entry.l10n_be_work_entry_type_economic_unemployment" model="hr.work.entry.type">
         <field name="dmfa_code">71</field>
     </record>
