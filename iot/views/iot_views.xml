@@ -228,12 +228,13 @@
         id="view_iot_selected_printer_local_action"
         name="Configuration"
         parent="iot_menu_root"
-        sequence="3"/>
+        sequence="3"
+        groups="base.group_no_one"/>
 
-    <!-- Reports submenu -->
+    <!-- Cache submenu -->
     <menuitem
         id="iot_settings_menu_action"
-        name="Reports"
+        name="Cache"
         parent="view_iot_selected_printer_local_action"
         sequence="4"/>
     <menuitem
