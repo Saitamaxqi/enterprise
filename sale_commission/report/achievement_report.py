@@ -210,34 +210,55 @@ JOIN sale_commission_plan_target era
         """
         return _where
 
-    def _achievement_lines(self, users=None, teams=None):
+    def _achievement_lines_add(self, users=None, teams=None):
+        # Adjustement added to a salesperson
         return f"""
-achievement_commission_lines AS (
+achievement_commission_lines_add AS (
     SELECT
-        sca.user_id,
-        sca.team_id,
+        scpu.user_id AS user_id,
+        scp.team_id AS team_id,
         scp.id AS plan_id,
-        sca.currency_rate * sca.amount * scpa.rate * cr.rate AS achieved,
+        sca.currency_rate * sca.achieved * cr.rate AS achieved,
         {self.env.company.currency_id.id} AS currency_id,
-        sca.date,
-        scp.company_id,
+        sca.date AS date,
+        sca.company_id,
         sca.id AS related_res_id,
         'sale.commission.achievement' AS related_res_model
     FROM sale_commission_achievement sca
-    JOIN sale_commission_plan scp ON scp.company_id = sca.company_id
-    JOIN sale_commission_plan_achievement scpa ON scpa.plan_id = scp.id
-    JOIN sale_commission_plan_user scpu ON scpu.plan_id = scp.id
+    JOIN sale_commission_plan_user scpu ON scpu.id = sca.add_user_id
+    JOIN sale_commission_plan scp ON scpu.plan_id = scp.id
     JOIN currency_rate cr ON cr.company_id=scp.company_id
     WHERE scp.active
       AND scp.state = 'approved'
-      AND sca.type = scpa.type
-      AND CASE
-            WHEN scp.user_type = 'person' THEN sca.user_id = scpu.user_id
-            ELSE sca.team_id = scp.team_id
-      END
-    {'AND sca.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
-    {'AND sca.team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
-)""", 'achievement_commission_lines'
+      {'AND scpu.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
+    GROUP BY scpu.user_id,scp.team_id,scp.id,sca.currency_rate,sca.achieved,cr.rate,sca.date,scp.company_id,sca.id
+)
+""", "achievement_commission_lines_add"
+
+    def _achievement_lines_rem(self, users=None, teams=None):
+        # Adjustement removed to a salesperson
+        return f"""
+achievement_commission_lines_rem AS (
+    SELECT
+        scpu.user_id AS user_id,
+        scp.team_id AS team_id,
+        scp.id AS plan_id,
+        - sca.currency_rate * sca.achieved * cr.rate AS achieved,
+        {self.env.company.currency_id.id} AS currency_id,
+        sca.date AS date,
+        sca.company_id,
+        sca.id AS related_res_id,
+        'sale.commission.achievement' AS related_res_model
+    FROM sale_commission_achievement sca
+    JOIN sale_commission_plan_user scpu ON scpu.id = sca.reduce_user_id
+    JOIN sale_commission_plan scp ON scpu.plan_id = scp.id
+    JOIN currency_rate cr ON cr.company_id=scp.company_id
+    WHERE scp.active
+      AND scp.state = 'approved'
+      {'AND scpu.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
+    GROUP BY scpu.user_id,scp.team_id,scp.id,sca.currency_rate,sca.achieved,cr.rate,sca.date,scp.company_id,sca.id
+)
+""", "achievement_commission_lines_rem"
 
     def _invoices_lines(self, users=None, teams=None):
         return f"""
@@ -379,7 +400,8 @@ sale_rules AS (
 )""", 'sale_commission_lines'
 
     def _commission_lines_cte(self, users=None, teams=None):
-        return [self._achievement_lines(users, teams),
+        return [self._achievement_lines_add(users, teams),
+                self._achievement_lines_rem(users, teams),
                 self._sale_lines(users, teams),
                 self._invoices_lines(users, teams)]
 

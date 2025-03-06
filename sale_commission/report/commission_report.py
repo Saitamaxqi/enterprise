@@ -18,8 +18,6 @@ class SaleCommissionReport(models.Model):
     target_amount = fields.Monetary("Target Amount", readonly=True, currency_field='currency_id')
     plan_id = fields.Many2one('sale.commission.plan', "Commission Plan", readonly=True)
     user_id = fields.Many2one('res.users', "Sales Person", readonly=True)
-    # TODO master: remove
-    team_id = fields.Many2one('crm.team', "Sales Team", readonly=True)
     achieved = fields.Monetary("Achieved", readonly=True, currency_field='currency_id')
     achieved_rate = fields.Float("Achieved Rate", readonly=True, aggregator='avg')
     commission = fields.Monetary("Commission", readonly=True, currency_field='currency_id')
@@ -52,9 +50,7 @@ class SaleCommissionReport(models.Model):
                        ('date', '>=', self.target_id.date_from),
                        ('date', '<=', self.target_id.date_to),
                 ]
-        context = {'commission_user_ids': self.user_id.ids,
-                   'commission_team_ids': self.team_id.ids,
-        }
+        context = {'commission_user_ids': self.user_id.ids}
         return {
             "type": "ir.actions.act_window",
             "res_model": "sale.commission.achievement.report",
@@ -111,7 +107,6 @@ achievement AS (
         era.id AS target_id,
         era.plan_id AS plan_id,
         u.user_id AS user_id,
-        MIN(cl.team_id) AS team_id,
         COALESCE(cl.company_id, MAX(scp.company_id)) AS company_id,
         SUM(achieved) AS achieved,
         CASE
@@ -158,7 +153,6 @@ achievement AS (
         min(a.target_id) as target_id,
         a.plan_id,
         a.user_id,
-        a.team_id,
         a.company_id,
         {self.env.company.currency_id.id} AS currency_id,
         MIN(a.forecast_id) as forecast_id,
@@ -172,7 +166,7 @@ achievement AS (
     LEFT JOIN currency_rate cr
         ON cr.company_id = a.company_id
     GROUP BY
-        a.plan_id, a.user_id, a.team_id, a.company_id, a.currency_id, cr.rate, {self._get_date_range()}
+        a.plan_id, a.user_id, a.company_id, a.currency_id, cr.rate, {self._get_date_range()}
 )
 SELECT
     a.*,

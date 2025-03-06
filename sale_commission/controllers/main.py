@@ -1,9 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import csv
 import io
-import json
-
 import xlsxwriter
 
 from odoo import _
@@ -39,7 +36,7 @@ class SaleCommissionTargetExportController(Controller):
         if x1 is None or x2 is None or x2 == x1:
             return 0
         # y = b + ax
-        amount = y1 + (y2-y1)/(x2-x1) * (target_rate - x1)
+        amount = y1 + (y2 - y1) / (x2 - x1) * (target_rate - x1)
         return amount
 
     def _generate_rows(self, target_ids):
@@ -58,7 +55,7 @@ class SaleCommissionTargetExportController(Controller):
             sorted_rates.append(target.target_rate)
             rows.append(row)
         target_max = target.target_rate + 0.1
-        all_rate = [x/100 for x in range(0, int(target_max*100), 10) if x/100 <= target.target_rate] + sorted_rates
+        all_rate = [x / 100 for x in range(0, int(target_max * 100), 10) if x / 100 <= target.target_rate] + sorted_rates
         all_rate = set(all_rate)
         all_rate = sorted(all_rate)
         all_rows = []
