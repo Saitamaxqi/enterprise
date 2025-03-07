@@ -134,7 +134,7 @@ class AccountMove(models.Model):
 
     def unlink(self):
         # Prevent deferred moves under audit trail restriction from being unlinked
-        deferral_moves = self.filtered(lambda move: move.company_id.check_account_audit_trail and move.deferred_original_move_ids)
+        deferral_moves = self.filtered(lambda move: move._is_protected_by_audit_trail() and move.deferred_original_move_ids)
         deferral_moves.deferred_original_move_ids.deferred_move_ids = False
         deferral_moves._reverse_moves()
         return super(AccountMove, self - deferral_moves).unlink()

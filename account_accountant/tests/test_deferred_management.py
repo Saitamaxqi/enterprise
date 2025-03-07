@@ -200,6 +200,24 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
         move.action_post()
         self.assertEqual(len(move.deferred_move_ids), 2 + 5)
 
+    @freeze_time('2023-03-15')
+    def test_deferred_invoice_reset_to_draft_with_audit_trail(self):
+        """
+        Test that the deferred entries are deleted when the invoice is reset to draft.
+        """
+        invoice = self.create_invoice('out_invoice', [(self.revenue_accounts[0], 1680, '2023-03-1', '2023-04-30')], date='2023-03-15')
+        draft_deferred_move_ids = invoice.deferred_move_ids.filtered(lambda move: move.state =="draft")
+        self.assertEqual(len(draft_deferred_move_ids), 2)
+
+        # Set the company's audit trail to True
+        self.env.company.check_account_audit_trail = True
+
+        invoice.button_draft()
+
+        # Assert that the draft moves no longer exist
+        remaining_draft_moves = self.env['account.move'].search([('id', 'in', draft_deferred_move_ids.ids)])
+        self.assertFalse(remaining_draft_moves)
+
     def assert_invoice_lines(self, move, expected_values, source_account, deferred_account):
         deferred_moves = move.deferred_move_ids.sorted('date')
         for deferred_move, expected_value in zip(deferred_moves, expected_values):
