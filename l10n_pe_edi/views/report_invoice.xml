@@ -29,7 +29,7 @@
             </t>
 
             <xpath expr="//t[@t-set='layout_document_title']/span[@t-field='o.name']" position="replace">
-                <span t-if="o.name != '/'" t-out="o.name.replace(' ', '')"/>
+                <span t-if="o.name" t-out="o.name.replace(' ', '')"/>
             </xpath>
             <!-- QR-code -->
             <xpath expr="//div[@id='qrcode']" position="after">
