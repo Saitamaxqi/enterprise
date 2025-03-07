@@ -1216,6 +1216,36 @@ class TestDocumentsAccess(TransactionCaseDocuments):
                 active_id=doc.id
             ).with_user(self.internal_user).action_execute_embedded_action(embedded_action.id)
 
+    @mute_logger('odoo.addons.base.models.ir_rule')
+    def test_embedded_action_shortcut_folder(self):
+        """Test embedding and running actions on the right records"""
+        self.folder_a.action_update_access_rights(
+            access_internal="edit",
+            partners={self.portal_user.partner_id: ('edit', False)}
+        )
+        doc = self.env['documents.document'].create({'name': 'A request', 'folder_id': self.folder_a.id})
+        self.assertFalse(doc.available_embedded_actions_ids)
+        folder_a_shortcut = self.folder_a.action_create_shortcut()
+        self.assertFalse(self.folder_a._get_folder_embedded_actions([self.folder_a.id]).get(self.folder_a.id))
+        self.assertFalse(self.folder_a._get_folder_embedded_actions([folder_a_shortcut.id]).get(folder_a_shortcut.id))
+
+        # From here, same as `test_embedded_action` but using the shortcut instead
+        with self.assertRaises(AccessError):
+            self.env['documents.document'].with_user(self.internal_user).action_folder_embed_action(
+                folder_a_shortcut.id, self.server_action.id)
+        self.server_action.group_ids = self.env.ref('documents.group_documents_manager')
+        with self.assertRaises(UserError):
+            self.env['documents.document'].with_user(self.doc_user).action_folder_embed_action(
+                folder_a_shortcut.id, self.server_action.id)
+        self.server_action.group_ids = self.env.ref('base.group_user')
+        self.env['documents.document'].with_user(self.doc_user).action_folder_embed_action(
+            folder_a_shortcut.id, self.server_action.id)
+
+        self.assertEqual(len(doc.available_embedded_actions_ids), 1)
+        self.assertTrue(self.folder_a._get_folder_embedded_actions([self.folder_a.id])[self.folder_a.id])
+        self.assertEqual(self.folder_a._get_folder_embedded_actions([folder_a_shortcut.id])[folder_a_shortcut.id],
+                         self.folder_a._get_folder_embedded_actions([self.folder_a.id])[self.folder_a.id])
+
     def test_groupless_embedded_action_availability(self):
         """ Ensure that an embedded action which should otherwise be visible to a given document
         record remains visible in the case where it has `groups_ids=[]`.

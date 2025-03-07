@@ -580,12 +580,13 @@ class DocumentsDocument(models.Model):
 
     def _get_folder_embedded_actions(self, folder_ids):
         """Return the enabled actions for the given folder."""
+        folders = self.env['documents.document'].browse(folder_ids)
         all_embedded_actions_sudo = self.env['ir.embedded.actions'].sudo().search(
             domain=[
                 ('parent_action_id', '=', self.env.ref("documents.document_action").id),
                 ('action_id.type', '=', 'ir.actions.server'),
                 ('parent_res_model', '=', 'documents.document'),
-                ('parent_res_id', 'in', folder_ids),
+                ('parent_res_id', 'in', (folders + folders.shortcut_document_id).ids),
             ],
             order='sequence',
         )
@@ -599,7 +600,15 @@ class DocumentsDocument(models.Model):
         embedded_actions = all_embedded_actions_sudo.filtered(
             lambda e: e.action_id.id in accessible_server_actions_ids).sudo(False)
         # group after ordering by `ir.embedded.actions` sequence
-        return embedded_actions.grouped('parent_res_id')
+        actions_per_folder = embedded_actions.grouped('parent_res_id')
+        targets_to_shortcuts = folders.grouped('shortcut_document_id')
+        actions_per_shortcut_folder = {
+            shortcut.id: actions
+            for target, shortcuts in targets_to_shortcuts.items()
+            for shortcut in shortcuts
+            if (actions := actions_per_folder.get(target.id))
+        }
+        return actions_per_folder | actions_per_shortcut_folder
 
     @api.depends_context('uid')
     @api.depends('folder_id')
@@ -1105,10 +1114,12 @@ class DocumentsDocument(models.Model):
         if not action:
             raise UserError(_('This action does not exist.'))
         if action.type != 'ir.actions.server':
-            raise UserError(_('You can not ping that type of action.'))
+            raise UserError(_('You cannot pin that type of action.'))
         folder = self.env['documents.document'].browse(folder_id).sudo().exists()
-        if not folder or folder.type != 'folder' or folder.shortcut_document_id:
-            raise UserError(_('You can not ping an action on that document.'))
+        if not folder or folder.type != 'folder':
+            raise UserError(_('You cannot pin an action on that document.'))
+        if folder.shortcut_document_id:
+            return self.action_folder_embed_action(folder.shortcut_document_id.id, action_id, groups_ids)
 
         all_embedded_actions_sudo = self.env['ir.embedded.actions'].sudo().search([
             ('parent_action_id', '=', self.env.ref("documents.document_action").id),
