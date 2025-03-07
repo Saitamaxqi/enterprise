@@ -142,4 +142,11 @@
         <field name="image_128" type="base64" file="pos_urban_piper/static/img/Ninja.svg"/>
         <field name="available_country_ids" eval="[Command.set([ref('base.qa'), ref('base.bh'), ref('base.kw'), ref('base.sa'), ref('base.ae')])]"/>
     </record>
+    <record id="pos_delivery_provider_rappi" model="pos.delivery.provider">
+        <field name="name">Rappi</field>
+        <field name="technical_name">rappi</field>
+        <field name="journal_code">RPI</field>
+        <field name="image_128" type="base64" file="pos_urban_piper/static/img/Rappi.svg"/>
+        <field name="available_country_ids" eval="[Command.set([ref('base.ar'), ref('base.br'), ref('base.cl'), ref('base.co'), ref('base.cr'), ref('base.ec'),ref('base.mx'), ref('base.pe'), ref('base.uy')])]"/>
+    </record>
 </odoo>
