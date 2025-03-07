@@ -90,8 +90,7 @@ patch(PosOrder.prototype, {
         const amountPerPaymentTypeArray = [];
         this.payment_ids.forEach((line) => {
             amountPerPaymentTypeArray.push({
-                payment_type:
-                    line.payment_method_id.name.toLowerCase() === "cash" ? "CASH" : "NON_CASH",
+                payment_type: line.payment_method_id.type === "cash" ? "CASH" : "NON_CASH",
                 amount: roundCurrency(line.amount, this.currency).toFixed(2),
             });
         });

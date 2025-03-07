@@ -7,6 +7,39 @@ from odoo.addons.point_of_sale.controllers.main import PosController
 
 @tagged('post_install', '-at_install', 'post_install_l10n')
 class TestFiskalyPoS(TestFrontend):
+    def setUp(self):
+        super().setUp()
+        self.install_fiskalyhook()
+        self.env['ir.config_parameter'].sudo().set_param('l10n_de_fiskaly_kassensichv_url', 'http://127.0.0.1:8069/fake_fiskaly')
+        self.env['ir.config_parameter'].sudo().set_param('l10n_de_fiskaly_dsfinvk_url', 'http://127.0.0.1:8069/fake_fiskaly')
+
+        self.company.write({
+            "country_id": self.env.ref('base.de'),
+            "l10n_de_fiskaly_organization_id": "12345679",
+            "l10n_de_fiskaly_api_secret": "123456789",
+            "l10n_de_fiskaly_api_key": "123456789",
+        })
+        self.main_pos_config.write({
+            "l10n_de_fiskaly_tss_id": "123456798",
+            "l10n_de_fiskaly_client_id": "123456798",
+        })
+        self.env['res.partner'].create({
+            "name": "AA Test Partner",
+        })
+        self.env['pos.printer'].search([]).write({
+            "product_categories_ids": [Command.clear()],
+        })
+        self.env['pos_preparation_display.display'].create({
+            'name': 'Preparation Display',
+        })
+        # Create a valid tax for fiskaly
+        self.normal_tax = self.env['account.tax'].create({
+            "name": "NORMAL",
+            "amount": 19,
+        })
+        cola = self.env['product.product'].search([('name', '=', 'Coca-Cola')])
+        cola.taxes_id = self.normal_tax
+
     def install_fiskalyhook(self):
         def auth_hook(self):
             return {}
@@ -38,35 +71,11 @@ class TestFiskalyPoS(TestFrontend):
             self.env.registry.clear_cache('routing')
 
     def test_fiskaly_basic_order(self):
-        self.install_fiskalyhook()
-        self.env['ir.config_parameter'].sudo().set_param('l10n_de_fiskaly_kassensichv_url', 'http://127.0.0.1:8069/fake_fiskaly')
-        self.env['ir.config_parameter'].sudo().set_param('l10n_de_fiskaly_dsfinvk_url', 'http://127.0.0.1:8069/fake_fiskaly')
-
-        self.company.write({
-            "country_id": self.env.ref('base.de'),
-            "l10n_de_fiskaly_organization_id": "12345679",
-            "l10n_de_fiskaly_api_secret": "123456789",
-            "l10n_de_fiskaly_api_key": "123456789",
-        })
-        self.main_pos_config.write({
-            "l10n_de_fiskaly_tss_id": "123456798",
-            "l10n_de_fiskaly_client_id": "123456798",
-        })
-        self.env['res.partner'].create({
-            "name": "AA Test Partner",
-        })
-        self.env['pos.printer'].search([]).write({
-            "product_categories_ids": [Command.clear()],
-        })
-        self.env['pos_preparation_display.display'].create({
-            'name': 'Preparation Display',
-        })
-        # Create a valid tax for fiskaly
-        normal_tax = self.env['account.tax'].create({
-            "name": "NORMAL",
-            "amount": 19,
-        })
-        desk = self.env['product.product'].search([('name', '=', 'Coca-Cola')])
-        desk.taxes_id = normal_tax
         self.main_pos_config.with_user(self.pos_user).open_ui()
         self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'FiskalyTour', login="pos_user")
+
+    def test_fiskaly_tss_payload(self):
+        # Change the payment method name to anything else than "Cash"
+        self.main_pos_config.payment_method_ids.filtered(lambda p: p.type == 'cash').name = "Random Name"
+        self.main_pos_config.with_user(self.pos_user).open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_fiskaly_tss_payload', login="pos_user")
