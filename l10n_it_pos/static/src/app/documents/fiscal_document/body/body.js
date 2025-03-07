@@ -69,19 +69,24 @@ export class Body extends Component {
             const department = line.tax_ids.map((tax) => tax.tax_group_id.pos_receipt_label)[0];
             const isRefund = line.qty < 0;
             const isReward = line.is_reward_line;
+            const unitPrice = isRefund
+                ? line.getAllPrices(1).priceWithTax
+                : line.getAllPrices(1).priceWithTaxBeforeDiscount;
+            const isGlobalDiscount = this.order.currency.isNegative(unitPrice);
+            const unitPriceFormatted = this._itFormatCurrency(
+                isGlobalDiscount ? -unitPrice : unitPrice
+            );
+
             return {
                 isRefund,
                 isReward,
+                isGlobalDiscount,
                 description: isRefund ? _t("%s (refund)", productName) : productName,
                 customer_note: line.getCustomerNote(),
                 quantity: this._itFormatQty(Math.abs(line.qty)),
                 // DISCOUNT: Use price before discount because the discounted amount is specified in the printRecItemAdjustment.
                 // REFUND: Use the price with tax because there is no adjustment for printRecRefund.
-                unitPrice: this._itFormatCurrency(
-                    isRefund
-                        ? line.getAllPrices(1).priceWithTax
-                        : line.getAllPrices(1).priceWithTaxBeforeDiscount
-                ),
+                unitPrice: unitPriceFormatted,
                 department,
                 index,
                 discount: (comp(line.discount, 0, { precision: 1 }) !== EQ || isReward) && {
