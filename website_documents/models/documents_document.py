@@ -21,7 +21,6 @@ class DocumentsDocument(models.Model):
         for document in self.filtered(lambda d: not d.website_id or d.website_id.company_id != d.company_id):
             document.website_id = document.company_id.website_id or self.env.company.website_id
 
-    @api.constrains('website_id')
     def _check_website_id(self):
         invalid_docs = []
         for doc in self.filtered('website_id'):
@@ -29,3 +28,16 @@ class DocumentsDocument(models.Model):
                 invalid_docs.append(doc.name)
         if invalid_docs:
             raise AccessError(_("You can't set this website for the following documents:\n- ") + '\n- '.join(invalid_docs))
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
+        if not self.env.is_superuser():
+            res._check_website_id()
+        return res
+
+    def write(self, vals):
+        res = super().write(vals)
+        if not self.env.is_superuser() and vals.keys() & {'website_id', 'company_id'}:
+            self._check_website_id()
+        return res

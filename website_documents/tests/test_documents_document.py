@@ -83,6 +83,11 @@ class TestDocumentsShare(TransactionCase):
                 'name': 'test2.txt',
                 'website_id': self.website_company_3.id,
             })
+        # don't raise AccessError in sudo mode
+        self.env['documents.document'].with_user(self.user).sudo().create({
+            'name': 'test2.txt',
+            'website_id': self.website_company_3.id,
+        })
         self.document_1 = self.env['documents.document'].with_user(self.user).create({
             'name': 'doc1.txt',
             'company_id': self.company_1.id,
