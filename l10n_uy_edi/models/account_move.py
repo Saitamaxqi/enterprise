@@ -293,13 +293,12 @@ class AccountMove(models.Model):
 
             invoice_ind = self._get_invoice_indicator(line, tax_details)
 
-            item_description = self._l10n_uy_edi_get_line_desc(line)
-            nom_item = (line.product_id.display_name or item_description or "-")[:80]
+            nom_item, item_description = self._l10n_uy_edi_get_line_nom_and_desc(line)
             temp = {
                 "NroLinDet": k,  # B1
                 "IndFact": invoice_ind,  # B4
                 "NomItem": nom_item,  # B7
-                "DscItem": item_description if item_description and item_description != nom_item else None,  # B8
+                "DscItem": item_description if item_description else None,  # B8
                 "Cantidad": abs(line.quantity) if invoice_ind == 7 else line.quantity,  # B9
                 "UniMed": line.product_uom_id.name[:4] if line.product_uom_id else "N/A",  # B10
                 "PrecioUnitario": line.price_unit,  # B11
@@ -362,15 +361,11 @@ class AccountMove(models.Model):
 
             invoice_ind = self._get_invoice_indicator(line, tax_details)
 
-            glosa_dr = line.product_id.display_name or line.name or _('Discount')
-            if line.product_id.display_name and line.name and line.name.startswith(line.product_id.display_name):
-                glosa_dr = line.name
-
             res.append({
                 "NroLinDR": k,  # D1
                 "TpoMovDR": "D",  # D2
                 "TpoDR": 1,  # D3
-                "GlosaDR": glosa_dr[:50],  # D5
+                "GlosaDR": line.name[:50] if line.name else _('Discount'),  # D5
                 "ValorDR": abs(line.price_unit),  # D6
                 "IndFactDR": invoice_ind,  # D7
             })
@@ -515,7 +510,7 @@ class AccountMove(models.Model):
         # When I create an invoice with Anticipo directly, the line is not downpayment so we have an error -
         # All lines should have a VAT tax -
         for line in lines.filtered(lambda x: not x.move_id._is_downpayment() and x.quantity > 0):
-            errors += edi_model._check_field_size("B8_DscItem", self._l10n_uy_edi_get_line_desc(line), 1000)
+            errors += edi_model._check_field_size("B8_DscItem", self._l10n_uy_edi_get_line_nom_and_desc(line)[1], 1000)
             # We check that there is one and o nly one vat tax per line
             vat_taxes = line.tax_ids.filtered(lambda x: x.l10n_uy_tax_category == "vat")
             if len(vat_taxes) != 1:
@@ -670,14 +665,40 @@ class AccountMove(models.Model):
             return ''.join(char for char in text if (ord(char) <= 127) or unicodedata.category(char) == 'Ll' or unicodedata.category(char) == 'Lu')
         return text 
 
-    def _l10n_uy_edi_get_line_desc(self, aml):
-        # B8 DscItem
-        item_description = ["{ %s }" % addenda.content if addenda.is_legend else addenda.content
-                            for addenda in aml.l10n_uy_edi_addenda_ids]
-        if aml.name and aml.product_id.display_name != aml.name:
-            item_description.append(aml.name)
-        item_description = "\n".join(item_description)
-        return item_description
+    def _l10n_uy_edi_get_line_nom_and_desc(self, aml):
+        """
+        Generate the item name and description for a given account move line (aml).
+
+        This method extracts and formats the name and description of a product or
+        account move line based on the provided data. It handles cases where the
+        product is not defined, includes multilingual support, and appends additional
+        information from addenda if present.
+        Returns a tuple containing:
+                - nom_item (str): The formatted name of the item (up to 80 characters).
+                - description (str): The description of the item, including any
+                  additional addenda content if applicable.
+        """
+        # B7 NomItem, B8 DscItem
+        # NomItem is a mandatory field, so if there is no product_id, we use
+        # the description of the line (aml.name).
+        if not aml.product_id:
+            nom_item = aml and aml.name[:80] or '-'
+            description = aml and aml.name[80:] or ''
+        else:
+            # If the product is defined, we use its name as the item name
+            # and the line name as the description.
+            display_name = aml.with_context(lang=aml.partner_id.lang).product_id.display_name \
+                if aml.partner_id.lang else aml.product_id.display_name
+            nom_item = display_name[:80]
+
+            # The description has the product name, so we do not include that part
+            description = display_name[80:] + aml.name.replace(display_name, '').replace('\n', '')
+
+        if aml.l10n_uy_edi_addenda_ids:
+            adenda = [" {%s}" % addenda.content if addenda.is_legend else " " + addenda.content for addenda in aml.l10n_uy_edi_addenda_ids]
+            description += str(*adenda)
+
+        return nom_item, description
 
     def _l10n_uy_edi_get_pdf(self):
         """ Call endpoint to get PDF file from Uruware (Standard Representation)
