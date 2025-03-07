@@ -2,16 +2,16 @@ import { decodeDataBehaviorProps, getPropNameNode } from "@knowledge/editor/html
 import { getOrigin } from "@web/core/utils/urls";
 import { _t } from "@web/core/l10n/translation";
 
-export function upgrade(container, env) {
+export function migrate(container, env) {
     for (const [key, selector] of Object.entries(selectors)) {
         const elements = container.querySelectorAll(selector);
         if (elements.length) {
-            upgrades[key](elements, env);
+            migrations[key](elements, env);
         }
     }
 }
 
-function upgradeSearchModelState(searchModelState) {
+function migrateSearchModelState(searchModelState) {
     searchModelState = JSON.parse(searchModelState);
     const dfOptMap = {
         this_year: "year",
@@ -68,7 +68,7 @@ const selectors = {
     viewLinkBehavior: ".o_knowledge_behavior_type_view_link",
 };
 
-const upgrades = {
+const migrations = {
     articleBehavior: (elements) => {
         for (const el of elements) {
             const oldProps = decodeDataBehaviorProps(el.dataset.behaviorProps);
@@ -253,7 +253,7 @@ const upgrades = {
                 }
             }
             if (viewProps.context.knowledge_search_model_state) {
-                viewProps.context.knowledge_search_model_state = upgradeSearchModelState(
+                viewProps.context.knowledge_search_model_state = migrateSearchModelState(
                     viewProps.context.knowledge_search_model_state
                 );
             }
@@ -388,7 +388,7 @@ const upgrades = {
                 viewProps.actionXmlId = oldProps.action_xml_id;
             }
             if (viewProps.context.knowledge_search_model_state) {
-                viewProps.context.knowledge_search_model_state = upgradeSearchModelState(
+                viewProps.context.knowledge_search_model_state = migrateSearchModelState(
                     viewProps.context.knowledge_search_model_state
                 );
             }

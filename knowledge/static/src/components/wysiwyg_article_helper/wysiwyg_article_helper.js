@@ -7,7 +7,7 @@ import { PromptEmbeddedViewNameDialog } from "@knowledge/components/prompt_embed
 import { _t } from "@web/core/l10n/translation";
 import { renderToFragment } from "@web/core/utils/render";
 import { useService } from "@web/core/utils/hooks";
-import { HtmlUpgradeManager } from "@knowledge/editor/html_migrations/html_upgrade_manager";
+import { HtmlUpgradeManager } from "@html_editor/html_migrations/html_upgrade_manager";
 
 export class WysiwygArticleHelper extends Component {
     static template = "knowledge.WysiwygArticleHelper";
