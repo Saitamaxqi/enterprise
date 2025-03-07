@@ -171,12 +171,12 @@
                                 <label for="lpp_employee_amount"/>
                                 <div class="o_row mw-50" name="lpp_employee_amount">
                                     <field name="lpp_employee_amount" required="l10n_ch_lpp_solutions" class="o_hr_narrow_field" nolabel="1"/>
-                                    <span>CFH / Month</span>
+                                    <span>CHF / Month</span>
                                 </div>
                                 <label for="lpp_company_amount"/>
                                 <div class="o_row mw-50" name="lpp_company_amount">
                                     <field name="lpp_company_amount" required="l10n_ch_lpp_solutions" class="o_hr_narrow_field" nolabel="1"/>
-                                    <span>CFH / Month</span>
+                                    <span>CHF / Month</span>
                                 </div>
                             </group>
                             <group string="Mutations" invisible="not l10n_ch_lpp_insurance_id or l10n_ch_lpp_not_insured">
