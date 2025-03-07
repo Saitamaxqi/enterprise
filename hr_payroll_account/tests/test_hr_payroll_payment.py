@@ -12,7 +12,7 @@ class TestHrPayrollPayment(TestHrPayrollAccountCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        credit_account = cls.env['account.account'].create({
+        cls.credit_account = cls.env['account.account'].create({
             'name': 'Salary Payble',
             'code': '2300',
             'reconcile': True,
@@ -25,7 +25,7 @@ class TestHrPayrollPayment(TestHrPayrollAccountCommon):
             'code': 'NET',
             'category_id': cls.env.ref('hr_payroll.NET').id,
             'sequence': 10,
-            'account_credit': credit_account.id,
+            'account_credit': cls.credit_account.id,
             'struct_id': cls.hr_structure_softwaredeveloper.id,
         })
 
@@ -66,14 +66,18 @@ class TestHrPayrollPayment(TestHrPayrollAccountCommon):
 
     def test_hr_payslip_payment_reverse(self):
         payslip = self.hr_payslip_john
-        asset_cash = self.env['account.account'].search([('code', '=', '101501')], limit=1)
-        salary_account = self.env['account.account'].search([('code', '=', '230000')], limit=1)
-        salary_journal = self.env['account.journal'].search([
-            ('code', '=', 'SLR'),
-            ('company_id', '=', self.env.company.id)],
-            limit=1
-        )
-
+        payslip.journal_id.write({'default_account_id': self.credit_account.id})
+        asset_cash =  self.env['account.account'].create({
+            'code': '1015101',
+            'name': 'asset cash',
+            'account_type': 'asset_cash',
+        })
+        salary_journal = self.env['account.journal'].create({
+            'code': 'SLRS',
+            'name': 'salary journal',
+            'company_id': self.env.company.id,
+            'type': 'general',
+        })
         payslip.compute_sheet()
         payslip.action_payslip_done()
 
@@ -94,7 +98,7 @@ class TestHrPayrollPayment(TestHrPayrollAccountCommon):
                 (0, 0, {
                     'debit': 0.0,
                     'credit': 1200.0,
-                    'account_id': salary_account.id,
+                    'account_id': self.credit_account.id,
                 }),
             ],
         })
@@ -130,7 +134,7 @@ class TestHrPayrollPayment(TestHrPayrollAccountCommon):
                 'credit': 1200.0,
             },
             {
-                'account_id': salary_account.id,
+                'account_id': self.credit_account.id,
                 'debit': 1200.0,
                 'credit':0.0,
             }
