@@ -21,6 +21,7 @@ class TestUyEdi(AccountTestInvoicingCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.frozen_today = "2024-06-15T10:00:00"
+        cls.env.ref("base.lang_es_UY").active = True
 
         cls.company_data["company"].write({
             "name": "(UY) Uruguay Company (Unit Tests)",
@@ -43,6 +44,7 @@ class TestUyEdi(AccountTestInvoicingCommon):
             "state_id": cls.env.ref("base.state_uy_02").id,
             "country_id": cls.env.ref("base.uy").id,
             "email": "rut@example.com",
+            "lang": "es_UY",
         })
         cls.partner_local = cls.env["res.partner"].create({
             "name": "IEB Internacional",

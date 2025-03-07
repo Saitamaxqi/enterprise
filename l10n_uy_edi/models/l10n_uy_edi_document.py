@@ -2,6 +2,7 @@ import logging
 from lxml import etree
 import re
 from requests.exceptions import Timeout, ConnectionError, HTTPError
+import textwrap
 
 from odoo import _, api, fields, models, tools
 
@@ -257,9 +258,51 @@ class L10n_Uy_EdiDocument(models.Model):
         return res
 
     def _get_report_params(self):
-        """ Print the default representation of the PDF report, extra params not needed.
-        This has been implemented in a separate method to be inheritable for some
-        partner and customer custom reports """
+        """ Print the default representation of the PDF report with extra params when applicable.
+        Extra params available:
+        1. ("adenda", "true") to print the adenda in a separate sheet if it is longer than 6 lines.
+        2. ("reporte", "ingles") In case document is an e-ticket or e-factura expo or their respective CN and DN,
+        if the partner's configured language is not Spanish it will print the report both in spanish and english.
+        """
+
+        available_doc_types = (
+            self.env.ref('l10n_uy.dc_e_ticket') |
+            self.env.ref('l10n_uy.dc_cn_e_ticket') |
+            self.env.ref('l10n_uy.dc_dn_e_ticket') |
+            self.env.ref('l10n_uy.dc_e_inv_exp') |
+            self.env.ref('l10n_uy.dc_cn_e_inv_exp') |
+            self.env.ref('l10n_uy.dc_dn_e_inv_exp')
+        )
+        addenda = self.move_id._l10n_uy_edi_get_addenda()
+        parameters = {}
+
+        if addenda:
+            # The addenda (e.g. terms and conditions) is added in a small box at the bottom of the standard PDF report.
+            # This can only accommodate roughly 6 lines of 140 characters.If the addenda exceeds that, the remainder is
+            # cut off, which is problematic for mandatory disclosures etc.
+            max_chars_per_line = 140
+            max_lines_without_addenda = 6
+            wrapped = textwrap.wrap(addenda, width=max_chars_per_line, replace_whitespace=False)
+
+            # The resulting list will preserve newlines from the addenda because of replace_whitespace=False, join to
+            # create the final string. Count the lines of the final string and request a dedicated addenda page if
+            # needed, adding the parameter to the report.
+            if len("\n".join(wrapped).splitlines()) > max_lines_without_addenda:
+                parameters["adenda"] = "true"
+
+        if (
+            self.l10n_latam_document_type_id.code in available_doc_types.mapped('code')
+            and self.partner_id.lang
+            and not self.partner_id.lang.startswith("es_")
+        ):
+            parameters["reporte"] = "ingles"
+
+        if parameters:
+            return "ObtenerPdfConParametros", {
+                "nombreParametros": {"string": list(parameters.keys())},
+                "valoresParametros": {"string": list(parameters.values())}
+            }
+
         return "ObtenerPdf", {}
 
     def _get_ucfe_username(self, company):

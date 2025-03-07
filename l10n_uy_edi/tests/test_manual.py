@@ -328,3 +328,38 @@ class TestManual(common.TestUyEdi):
         self.assertEqual(new_bill.invoice_date.strftime('%Y-%m-%d'), "2024-05-31")
         self.assertEqual(new_bill.invoice_date_due.strftime('%Y-%m-%d'), "2024-06-25")
         self.assertEqual(new_bill.invoice_partner_display_name, "Administración Nacional de Telecomunicaciones")
+
+    def test_190_dedicated_addenda_page(self):
+        """ Verify that a dedicated addenda page is requested when the addenda are too long. """
+
+        def assert_narration_extra_params(invoice, narration, dedicated_addenda):
+            expected_extra_params = {}
+            if dedicated_addenda:
+                expected_extra_params = {
+                    'nombreParametros': {'string': ['adenda']},
+                    'valoresParametros': {'string': ['true']}
+                }
+
+            invoice.narration = narration
+            _, extra_params = invoice.l10n_uy_edi_document_id._get_report_params()
+            self.assertEqual(extra_params, expected_extra_params)
+
+        invoice = self._create_move(
+            invoice_line_ids=[
+                Command.create({
+                    'product_id': self.service_vat_22.id,
+                    'price_unit': 100.0,
+                }),
+            ],
+        )
+        invoice.action_post()
+        self._send_and_print(invoice)  # to generate the l10n_uy_edi.document
+
+        line_length = 140
+        max_lines = 6
+
+        # Test narration with exactly the maximum allowed lines (no dedicated page required)
+        assert_narration_extra_params(invoice, 'A' * line_length * max_lines, False)  # 6 lines
+        # Test narration exceeding the maximum allowed lines (dedicated page required)
+        assert_narration_extra_params(invoice, 'A' * (line_length * max_lines + 10), True)  # 6 lines and 10 chars
+        assert_narration_extra_params(invoice, 'A\nA\nA' + 'A' * line_length * 4, True)  # 7 lines
