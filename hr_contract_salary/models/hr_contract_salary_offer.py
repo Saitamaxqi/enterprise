@@ -253,12 +253,13 @@ class HrContractSalaryOffer(models.Model):
 
     def action_view_contract(self):
         self.ensure_one()
+        contract_id = self.employee_contract_id.id or self.env['hr.contract'].search([("applicant_id", "=", self.applicant_id.id)], limit=1).id
         return {
             'type': 'ir.actions.act_window',
             'name': _('Contract'),
             'view_mode': 'form',
             'res_model': 'hr.contract',
-            'res_id': self.employee_contract_id.id,
+            'res_id': contract_id,
             'target': 'current',
         }
 
