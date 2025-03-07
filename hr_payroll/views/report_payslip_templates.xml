@@ -164,7 +164,7 @@
                             <t t-set="line_class" t-value="line_styling['line_class']"/>
                             <t t-set="o_title" t-value="line_styling['o_title']"/>
                             <tr id="line_display">
-                                <td id="payslip_line_name" t-att-class="line_class" t-att-style="line_style">
+                                <td id="payslip_line_name" t-att-class="line_class" t-att-style="line_style" t-att-colspan="99 if line.salary_rule_id.title else 1">
                                     <span t-field="line.name" class="d-block"/>
                                     <span t-field="line.salary_rule_id.note" t-attf-class="#{line_class} d-inline-block text-truncate pb-0 mb-0 ps-1" style="max-width: 500px; font-size: 0.875em;"/>
                                 </td>
