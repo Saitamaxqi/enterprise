@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="sale_commission_plan_user_view_list" model="ir.ui.view">
+        <field name="name">sale.commission.plan.user.view.list</field>
+        <field name="model">sale.commission.plan.user</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1">
+                <field name="user_id"/>
+                <field name="plan_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sale_commission_plan_user_view_search" model="ir.ui.view">
+        <field name="name">sale.commission.plan.user.view.search</field>
+        <field name="model">sale.commission.plan.user</field>
+        <field name="arch" type="xml">
+            <search string="Commission Plan User">
+                <field name="user_id" string="User"/>
+                <separator/>
+                 <field name="plan_id"/>
+                <group expand="1" string="Group By">
+                    <filter string="User" name="user" context="{'group_by':'user_id'}"/>
+                    <filter string="Plan" name="plan" context="{'group_by':'plan_id'}"/>
+                    <filter string="Date From" name="date_from" context="{'group_by':'date_from'}"/>
+                    <filter string="Date To" name="date_to" context="{'group_by':'date_to'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="sale_commission_plan_view_form" model="ir.ui.view">
         <field name="name">sale.commission.plan.view.form</field>
         <field name="model">sale.commission.plan</field>

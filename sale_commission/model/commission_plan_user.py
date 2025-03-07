@@ -8,6 +8,8 @@ from odoo import Command, models, fields, exceptions, _, api
 class SaleCommissionPlanUser(models.Model):
     _name = 'sale.commission.plan.user'
     _description = 'Commission Plan User'
+    _rec_name = 'user_id'
+    _rec_names_search = ['user_id', 'plan_id']
     _order = 'id'
 
     plan_id = fields.Many2one('sale.commission.plan', required=True, ondelete='cascade')
