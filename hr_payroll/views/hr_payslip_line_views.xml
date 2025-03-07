@@ -146,12 +146,31 @@
             <field name="name">hr.payslip.line.pivot</field>
             <field name="model">hr.payslip.line</field>
             <field name="arch" type="xml">
-                <pivot string="Payroll Analysis" sample="1" js_class="hr_payroll_report_pivot">
+                <pivot string="Payroll Analysis" sample="1">
                     <field name="salary_rule_id" type="row"/>
                     <field name="date_from" interval="month" type="col"/>
                     <field name="amount" type="measure"/>
 
                 </pivot>
+            </field>
+    </record>
+
+    <record id="hr_payslip_line_view_list_report" model="ir.ui.view">
+            <field name="name">hr.payslip.line.list.report</field>
+            <field name="model">hr.payslip.line</field>
+            <field name="arch" type="xml">
+                <list string="Payslip Lines">
+                    <field name="employee_id" widget="many2one_avatar_employee"/>
+                    <field name="name"/>
+                    <field name="code" optional="show"/>
+                    <field name="category_id" optional="show"/>
+                    <field name="sequence" optional="hide"/>
+                    <field name="quantity" optional="show"/>
+                    <field name="rate" optional="show"/>
+                    <field name="amount" optional="show"/>
+                    <field name="total"/>
+                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" optional="show"/>
+                </list>
             </field>
     </record>
 
@@ -175,7 +194,7 @@
     <record id="hr_payslip_line_action_report" model="ir.actions.act_window">
         <field name="name">Payslip Lines Report</field>
         <field name="res_model">hr.payslip.line</field>
-        <field name="view_mode">pivot</field>
+        <field name="view_mode">pivot,list</field>
         <field name="search_view_id" ref="hr_payslip_line_view_search_report"/>
         <field name="context">{
             'search_default_is_paid': 1, 
@@ -188,6 +207,13 @@
         <field name="sequence" eval="1"/>
         <field name="view_mode">pivot</field>
         <field name="view_id" ref="hr_payslip_line_view_pivot"/>
+        <field name="act_window_id" ref="hr_payslip_line_action_report"/>
+    </record>
+
+    <record id="hr_payslip_line_action_report_view_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="hr_payslip_line_view_list_report"/>
         <field name="act_window_id" ref="hr_payslip_line_action_report"/>
     </record>
 </odoo>
