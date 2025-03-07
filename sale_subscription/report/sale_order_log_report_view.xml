@@ -43,6 +43,7 @@
                 <field name="id" groups="base.group_no_one"/>
                 <field name="order_id"/>
                 <field name="event_date" optional="show"/>
+                <field name="effective_date" optional="hide"/>
                 <field name="user_id" optional="show" widget="many2one_avatar_user"/>
                 <field name="event_type" optional="show"/>
                 <field name="partner_id" optional="hide"/>
@@ -134,6 +135,7 @@
                 <filter name="filter_end_date" date="end_date"/>
                 <separator/>
                 <filter name="filter_effective_date" string="Invoiced" domain="[('effective_date','!=', False)]"/>
+                <filter name="filter_effective_date" string="Not Invoiced" domain="[('effective_date','=', False)]"/>
                 <separator/>
                 <group expand="1" string="Group By">
                     <filter string="Event Date" name="group_by_event_date" domain="[]"

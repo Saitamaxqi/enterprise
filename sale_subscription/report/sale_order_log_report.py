@@ -31,7 +31,7 @@ class SaleOrderLogReport(models.Model):
         readonly=True
     )
     event_date = fields.Date(readonly=True)
-    effective_date = fields.Date(readonly=True)
+    effective_date = fields.Date(readonly=True, help="Date the MRR change was first billed.")
     contract_number = fields.Integer("Active Subscriptions Change", readonly=True)
     pricelist_id = fields.Many2one('product.pricelist', 'Pricelist', readonly=True)
     amount_signed = fields.Monetary("MRR Change", readonly=True, currency_field='log_currency_id')
