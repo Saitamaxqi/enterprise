@@ -12,7 +12,6 @@
                     <field name="account_number"/>
                     <field name="amount"/>
                     <field name="amount_currency" optional="hide"/>
-                    <field name="transaction_details" optional="hide" groups="base.group_no_one"/>
                     <field name="online_transaction_identifier" optional="hide"/>
                     <field name="state" widget="badge" decoration-muted="state == 'pending'" decoration-success="state == 'posted'"/>
                 </list>

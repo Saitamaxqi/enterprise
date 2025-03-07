@@ -1,9 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import json
-
-from odoo import api, fields, models, _
+from odoo import fields, models, _
 from odoo.exceptions import UserError
-from odoo.tools import html2plaintext
 
 
 class AccountBankStatementLineTransient(models.TransientModel):
@@ -18,7 +15,7 @@ class AccountBankStatementLineTransient(models.TransientModel):
     payment_ref = fields.Char(readonly=True)
     account_number = fields.Char(readonly=True)
     partner_name = fields.Char(readonly=True)
-    transaction_details = fields.Html(readonly=True)
+    transaction_details = fields.Json(readonly=True)
     state = fields.Selection(
         [
             ('pending', 'Pending'),
@@ -53,13 +50,6 @@ class AccountBankStatementLineTransient(models.TransientModel):
         currency_field='foreign_currency_id',
     )
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if isinstance(vals.get('transaction_details'), dict):
-                vals['transaction_details'] = json.dumps(vals['transaction_details'])
-        return super().create(vals_list)
-
     def action_import_transactions(self):
         # This action could be call on multiple lines.
         if not self:
@@ -85,13 +75,3 @@ class AccountBankStatementLineTransient(models.TransientModel):
         transactions_to_import = self.read(fields=fields_to_read, load=None)
         self.env['account.bank.statement.line']._online_sync_bank_statement(transactions_to_import, self.online_account_id)
         return self.env["ir.actions.act_window"]._for_xml_id('account.open_account_journal_dashboard_kanban')
-
-    def read(self, fields=None, load='_classic_read'):
-        transactions = super().read(fields=fields, load=load)
-
-        # Clean eventual <p>...</p> encapsulation for the 'transaction_details' field to be decoded as a JSON later.
-        for transaction in transactions:
-            if 'transaction_details' in transaction:
-                transaction['transaction_details'] = json.loads(html2plaintext(transaction['transaction_details']))
-
-        return transactions
