@@ -29,12 +29,12 @@
             </xpath>
 
             <xpath expr="//block[@name='online_posting_setting_container']//setting[@id='publish_available_jobs_setting']" position="after">
-                 <setting string="Job Board" help="Post jobs on external job boards" id="job_board">
+                 <setting string="Job Board" help="Post jobs on Monster" id="job_board">
                     <div class="mt8" id="job_board_text">
                         <button name="%(ir_module_module_action_open_job_board_modules)d"
                                 icon="oi-arrow-right"
                                 type="action"
-                                string="Choose a Job Board"
+                                string="Activate Job Board"
                                 class="btn-link"/>
                     </div>
                 </setting>
