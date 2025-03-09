@@ -51,7 +51,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
             }),
             withSequence(60, {
                 id: "knowledge_image",
-                namespace: "image",
+                namespaces: ["image"],
             }),
         ],
         toolbar_items: [
@@ -59,14 +59,14 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 id: "comments",
                 groupId: "knowledge",
                 commandId: "addComments",
-                title: _t("Add a comment to selection"),
+                description: _t("Add a comment to selection"),
                 text: _t("Comment"),
             },
             {
                 id: "comments_image",
                 groupId: "knowledge_image",
                 commandId: "addComments",
-                title: _t("Add a comment to an image"),
+                description: _t("Add a comment to an image"),
                 text: _t("Comment"),
             },
         ],

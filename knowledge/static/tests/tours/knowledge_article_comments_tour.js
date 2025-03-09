@@ -55,6 +55,9 @@ registry.category('web_tour.tours').add('knowledge_article_comments', {
                 setSelection(...boundariesIn(this.anchor));
             },
         }, { // Trigger comment creation with the editor toolbar
+            trigger: '.o-we-toolbar button[name="expand_toolbar"]',
+            run: "click",
+        }, {
             trigger: '.o-we-toolbar button[name="comments"]',
             run: "click",
         }, {
