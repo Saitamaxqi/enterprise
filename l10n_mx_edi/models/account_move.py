@@ -215,6 +215,7 @@ class AccountMove(models.Model):
         store=True,
         readonly=False,
         help="Send the CFDI with recipient 'publico en general'",
+        tracking=True,
     )
     l10n_mx_edi_addenda_ids = fields.Many2many(
         comodel_name='l10n_mx_edi.addenda',
