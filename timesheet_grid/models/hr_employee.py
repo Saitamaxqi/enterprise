@@ -100,20 +100,30 @@ class HrEmployee(models.Model):
 
         for employee in self:
             working_hours = resource_work_intervals[employee.resource_id.id]
-            hours_per_day = employee.resource_calendar_id.hours_per_day or employee.company_id.resource_calendar_id.hours_per_day or HOURS_PER_DAY
+            calendar = employee.resource_calendar_id
+            if not calendar:
+                # the employee without any resource calendar is supposed to work h24
+                continue
+            is_flexible_hours = False
+            hours_per_day = HOURS_PER_DAY
+            if calendar.flexible_hours:
+                is_flexible_hours = True
+                if not calendar:
+                    calendar = employee.company_id.resource_calendar_id
+                full_time_required_hours = calendar.full_time_required_hours
+                if full_time_required_hours and delta.days > 0:
+                   result[employee.id]['full_time_required_hours'] = round(full_time_required_hours / 7 * (delta.days + 1), 2)
+                hours_per_day = calendar.hours_per_day or HOURS_PER_DAY
             for day_count in range(delta.days + 1):
                 date = date_start_date + timedelta(days=day_count)
-                if employee.resource_calendar_id:
-                    if employee.resource_calendar_id.flexible_hours:
-                        value = hours_per_day
-                    else:
-                        value = sum(
-                            (stop - start).total_seconds() / 3600
-                            for start, stop, meta in working_hours
-                            if start.date() == date
-                        )
+                if is_flexible_hours:
+                    value = hours_per_day
                 else:
-                    value = employee.company_id.resource_calendar_id.hours_per_day or HOURS_PER_DAY
+                    value = sum(
+                        (stop - start).total_seconds() / 3600
+                        for start, stop, meta in working_hours
+                        if start.date() == date
+                    )
                 result[employee.id][fields.Date.to_string(date)] = value
 
         return result

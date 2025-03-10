@@ -141,6 +141,23 @@ export class TimesheetGridRenderer extends GridRenderer {
         if (workingHours == null) {
             return null;
         }
+        if (workingHours.full_time_required_hours) {
+            let isToday = false;
+            let hoursWorked = 0;
+            const isTodayColumn = this.props.columns.some((column) => column.isToday);
+            for (const cell of Object.values(section.cells)) {
+                if (isTodayColumn) {
+                    if (isToday && !cell.column.isToday) {
+                        // we don't count after today
+                        break;
+                    } else if (!isToday && cell.column.isToday) {
+                        isToday = true;
+                    }
+                }
+                hoursWorked += cell.value;
+            }
+            return hoursWorked - workingHours.full_time_required_hours;
+        }
 
         return Object.values(section.cells).reduce((overtime, cell) => overtime + this.getSectionDailyOvertime(cell, workingHours), 0);
     }
