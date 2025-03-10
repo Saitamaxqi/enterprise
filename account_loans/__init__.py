@@ -10,7 +10,7 @@ from . import wizard
 
 def _account_loans_post_init(env):
     # If in demo, import the demo amortization schedule in the loan
-    if env.ref('base.module_account').demo:
+    if env.ref('base.module_account_loans').demo:
         _account_loans_import_loan_demo(
             env,
             env.ref('account_loans.account_loans_loan_demo1'),
