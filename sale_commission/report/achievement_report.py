@@ -26,18 +26,6 @@ class SaleCommissionAchievementReport(models.Model):
     related_res_model = fields.Char(readonly=True)
     related_res_id = fields.Many2oneReference("Related", model_field='related_res_model', readonly=True)
 
-    def _where_calc(self, domain, active_test = True):
-        if self.env.context.get('period_domain'):
-            # make sure the period_domain is only given by this method and not in another way
-            self = self.with_context(period_domain=None)
-        if domain:
-            period_domain = filter_domain_leaf(domain, lambda field_name: field_name == 'date')
-            if period_domain:
-                domain = filter_domain_leaf(domain, lambda field_name: field_name != 'date')
-                self = self.with_context(period_domain=period_domain)
-        return super()._where_calc(domain, active_test)
-
-
     @api.model
     def _search(self, domain, offset=0, limit=None, order=None):
         """ Extract the currency conversion date form the date_to field.
@@ -82,18 +70,7 @@ class SaleCommissionAchievementReport(models.Model):
         teams = self.env.context.get('commission_team_ids', [])
         if teams:
             teams = self.env['crm.team'].browse(teams).exists()
-        where_invoices = where_sales = SQL()
-        if period_domain := self.env.context.get('period_domain'):
-            # to be sure the domain is still the one extracted in where_calc.
-            period_domain = filter_domain_leaf(period_domain, lambda field_name: field_name == 'date')
-            if period_domain:
-                am_query = self.env['account.move']._where_calc(period_domain)
-                where_invoices = SQL(" AND %s", am_query.where_clause)
-            period_domain = filter_domain_leaf(period_domain, lambda field_name: True, field_name_mapping={'date': 'date_order'})
-            if period_domain:
-                so_query = self.env['sale.order']._where_calc(period_domain)
-                where_sales = SQL(" AND %s", so_query.where_clause)
-        query = self.with_context(achievement_report=True, where_sales=where_sales, where_invoices=where_invoices)._query(users=users, teams=teams)
+        query = self.with_context(achievement_report=True)._query(users=users, teams=teams)
         table_query = SQL(
             query
         )
@@ -165,7 +142,7 @@ JOIN sale_commission_plan_target era
     @api.model
     def _select_invoices(self):
         return f"""
-          rules.user_id AS user_id,
+          rules.user_id AS user_id, -- rule user to work with team commission
           MAX(account_move.team_id) AS team_id,
           rules.plan_id,
           SUM({self._get_invoice_rates_product()}) AS achieved,
@@ -191,17 +168,13 @@ JOIN sale_commission_plan_target era
 
     @api.model
     def _where_invoices(self):
-        where_invoices = self.env.context.get('where_invoices', SQL(""))
         _where =  f"""
           aml.display_type = 'product'
           AND account_move.move_type in ('out_invoice', 'out_refund')
           AND account_move.state = 'posted'
           {self._get_company_condition('account_move')}
-          %(where_invoices)s
         """
-        res = SQL(_where, where_invoices=where_invoices)
-        params = [f"'{p}'" for p in res.params]
-        return res.code % tuple(params)
+        return _where
 
     @api.model
     def _select_rules(self):
@@ -225,7 +198,6 @@ JOIN sale_commission_plan_target era
 
     @api.model
     def _where_sales(self):
-        where_sales = self.env.context.get('where_sales', SQL(""))
         _where = f"""
           AND sol.display_type IS NULL
           AND (sale_order.date_order BETWEEN rules.date_from AND rules.date_to)
@@ -235,11 +207,8 @@ JOIN sale_commission_plan_target era
           AND COALESCE(is_expense, false) = false
           AND COALESCE(is_downpayment, false) = false
           {self._get_company_condition('sale_order')}
-          %(where_sales)s
         """
-        res = SQL(_where, where_sales=where_sales)
-        params = [f"'{p}'" for p in res.params]
-        return res.code % tuple(params)
+        return _where
 
     def _achievement_lines(self, users=None, teams=None):
         return f"""

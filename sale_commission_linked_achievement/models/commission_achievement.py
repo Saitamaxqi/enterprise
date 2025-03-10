@@ -19,10 +19,10 @@ class SaleCommissionAchievement(models.Model):
     def _constraint_unique(self):
         res = self._read_group(
             domain=[],
-            groupby=['add_user_id', 'reduce_user_id', 'company_id', 'date:month'],
+            groupby=['add_user_id', 'reduce_user_id', 'company_id', 'date:month', 'achieved'],
             aggregates=['__count']
         )
         for val in res:
             count = val[-1]
             if count > 1:
-                raise ValidationError(_("The adjustments must be unique by user, team, company, achievement and date (month)"))
+                raise ValidationError(_("The adjustments must be unique by user, achieved, company and date (month)"))

@@ -30,17 +30,6 @@ class SaleCommissionReport(models.Model):
     forecast = fields.Monetary("Forecast", readonly=True, currency_field='currency_id')
     date_to = fields.Date(related='target_id.date_to')
 
-    def _where_calc(self, domain, active_test=True):
-        if self.env.context.get('period_domain'):
-            # make sure the period_domain is only given by this method and not in another way
-            self = self.with_context(period_domain=None)
-        if domain:
-            period_domain = filter_domain_leaf(domain, lambda field_name: field_name == 'date_to')
-            if period_domain:
-                domain = filter_domain_leaf(domain, lambda field_name: field_name != 'date_to')
-                self = self.with_context(period_domain=period_domain)
-        return super()._where_calc(domain, active_test)
-
     @api.model
     def _search(self, domain, offset=0, limit=None, order=None):
         """ Extract the currency conversion date form the date_to field.
@@ -58,17 +47,19 @@ class SaleCommissionReport(models.Model):
 
     def action_achievement_detail(self):
         self.ensure_one()
+        domain = [('plan_id', '=', self.plan_id.id),
+                       ('user_id', '=', self.user_id.id),
+                       ('date', '>=', self.target_id.date_from),
+                       ('date', '<=', self.target_id.date_to),
+                ]
+        context = {'commission_user_ids': self.user_id.ids, 'commission_team_ids': self.team_id.ids}
         return {
             "type": "ir.actions.act_window",
             "res_model": "sale.commission.achievement.report",
             "name": _('Commission Detail: %(name)s', name=self.target_id.name),
             "views": [[self.env.ref('sale_commission.sale_achievement_report_view_list').id, "list"]],
-            "context": {'commission_user_ids': self.user_id.ids, 'commission_team_ids': self.team_id.ids},
-            "domain": [('plan_id', '=', self.plan_id.id),
-                       ('user_id', '=', self.user_id.id),
-                       ('date', '>=', self.target_id.date_from),
-                       ('date', '<=', self.target_id.date_to),
-                    ], # FP TODO: add date filter based on context
+            "context": context,
+            "domain": domain,
         }
 
     def write(self, values):
@@ -98,18 +89,7 @@ class SaleCommissionReport(models.Model):
 
     @property
     def _table_query(self):
-        where_invoices = where_sales = SQL()
-        if period_domain := self.env.context.get('period_domain'):
-            # to be sure the domain is still the one extracted in where_calc.
-            period_domain = filter_domain_leaf(period_domain, lambda field_name: True, field_name_mapping={'date_to': 'date'})
-            if period_domain:
-                am_query = self.env['account.move']._where_calc(period_domain)
-                where_invoices = SQL(" AND %s", am_query.where_clause)
-            period_domain = filter_domain_leaf(period_domain, lambda field_name: True, field_name_mapping={'date': 'date_order'})
-            if period_domain:
-                so_query = self.env['sale.order']._where_calc(period_domain)
-                where_sales = SQL(" AND %s", so_query.where_clause)
-        query = self.with_context(where_invoices=where_invoices,where_sales=where_sales)._query()
+        query = self._query()
         table_query = SQL(query)
         return table_query
 

@@ -11,7 +11,7 @@ from odoo.addons.resource.models.utils import filter_domain_leaf
 class SaleCommissionAchievementReport(models.Model):
     _inherit = 'sale.commission.achievement.report'
 
-    def _achievement_lines_add(self):
+    def _achievement_lines_add(self, users=None, teams=None):
         # Adjustement added to a salesperson
         return f"""
 achievement_commission_lines_add AS (
@@ -31,11 +31,12 @@ achievement_commission_lines_add AS (
     JOIN currency_rate cr ON cr.company_id=scp.company_id
     WHERE scp.active
       AND scp.state = 'approved'
+    {'AND scpu.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
     GROUP BY scpu.user_id,scp.team_id,scp.id,sca.currency_rate,sca.achieved,cr.rate,sca.date,scp.company_id,sca.id
 )
 """, "achievement_commission_lines_add"
 
-    def _achievement_lines_rem(self):
+    def _achievement_lines_rem(self, users=None, teams=None):
         # Adjustement removed to a salesperson
         return f"""
 achievement_commission_lines_rem AS (
@@ -55,12 +56,13 @@ achievement_commission_lines_rem AS (
     JOIN currency_rate cr ON cr.company_id=scp.company_id
     WHERE scp.active
       AND scp.state = 'approved'
+    {'AND scpu.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
     GROUP BY scpu.user_id,scp.team_id,scp.id,sca.currency_rate,sca.achieved,cr.rate,sca.date,scp.company_id,sca.id
 )
 """, "achievement_commission_lines_rem"
 
     def _commission_lines_cte(self, users=None, teams=None):
-        return [self._achievement_lines_add(),
-                self._achievement_lines_rem(),
+        return [self._achievement_lines_add(users, teams),
+                self._achievement_lines_rem(users, teams),
                 self._sale_lines(users, teams),
                 self._invoices_lines(users, teams)]
