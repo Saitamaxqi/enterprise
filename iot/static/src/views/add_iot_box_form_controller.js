@@ -19,7 +19,7 @@ export class AddIoTBoxFormController extends FormController {
         useSubEnv({ onClickViewButton: this.onClickButtonAddIoT.bind(this) });
 
         onMounted(async () => {
-            this.pairButtonRef = this.rootRef.el.querySelector("#pair_button");
+            this.pairButtonRef = document.querySelector("#pair_button");
             await this.initializeIoTConnection();
         });
 
