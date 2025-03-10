@@ -381,6 +381,168 @@ class TestRentalWizard(TestRentalCommon):
             1
         )
 
+    def test_rental_forecast_with_rental_transfers(self):
+        """
+            With rental transfers enable, we check if the forecast rentable quantity takes
+            incoming and outgoing moves happening prior to the rental period and other
+            rental orders in its computation.
+        """
+        # Enable "rental transfers" and rely on the qty_in_rent fot the forecast
+        self.env['res.config.settings'].create({'group_rental_stock_picking': True}).execute()
+        self.assertTrue(self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'))
+        product = self.env['product.product'].create({
+            'name': 'Lovely Product',
+            'is_storable': True,
+            'rent_ok': True,
+        })
+        # Put 100 units in stock
+        self.env['stock.quant']._update_available_quantity(product, self.warehouse_id.lot_stock_id, 100)
+
+        delivery = self.env['stock.picking'].create({
+            'name': "Lovely Delivery",
+            'location_id': self.warehouse_id.lot_stock_id.id,
+            'location_dest_id': self.ref('stock.stock_location_customers'),
+            'picking_type_id': self.warehouse_id.out_type_id.id,
+            'scheduled_date': Datetime.today() + timedelta(days=3),
+            'move_ids': [Command.create({
+                'location_id': self.warehouse_id.lot_stock_id.id,
+                'location_dest_id':  self.ref('stock.stock_location_customers'),
+                'name': 'Lovely product move',
+                'product_id': product.id,
+                'product_uom_qty': 20,
+            })]
+        })
+        delivery.action_confirm()
+        # Create 2 rental orders: one to confirmed
+        so1, so2 = self.env['sale.order'].create([
+            {
+                'partner_id': self.cust1.id,
+                'rental_start_date': Datetime.today() + timedelta(days=1),
+                'rental_return_date': Datetime.today() + timedelta(days=2),
+                'order_line': [Command.create({
+                    'product_id': product.id,
+                    'product_uom_qty': 5.0,
+                    'is_rental': True,
+                })],
+            },
+            {
+                'partner_id': self.cust1.id,
+                'rental_start_date': Datetime.today() + timedelta(days=5),
+                'rental_return_date': Datetime.today() + timedelta(days=6),
+                'order_line': [Command.create({
+                    'product_id': product.id,
+                    'product_uom_qty': 10.0,
+                    'is_rental': True,
+                })],
+            },
+        ])
+
+        so2.action_confirm()
+        self.assertEqual(so1.order_line.virtual_available_at_date, 100)
+        so1.write({
+            'rental_start_date': Datetime.today() + timedelta(days=3),
+            'rental_return_date': Datetime.today() + timedelta(days=4),
+        })
+        # We need to invalidate the cache after each change since the qty_in_rent does not have
+        # any dependence and hence will only be recomputed if it was not already set in cache
+        product.invalidate_recordset()
+        self.assertEqual(so1.order_line.virtual_available_at_date, 80)
+        so1.write({
+            'rental_start_date': Datetime.today() + timedelta(days=5),
+            'rental_return_date': Datetime.today() + timedelta(days=6),
+        })
+        product.invalidate_recordset()
+        self.assertEqual(so1.order_line.virtual_available_at_date, 70)
+        so2.picking_ids.filtered(lambda p: p.picking_type_id== self.warehouse_id.out_type_id).button_validate()
+        product.invalidate_recordset()
+        self.assertEqual(so1.order_line.virtual_available_at_date, 70)
+        so1.write({
+            'rental_start_date': Datetime.today() + timedelta(days=7),
+            'rental_return_date': Datetime.today() + timedelta(days=8),
+        })
+        product.invalidate_recordset()
+        self.assertEqual(so1.order_line.virtual_available_at_date, 80)
+
+    def test_rental_forecast_without_rental_transfers(self):
+        """
+            With rental transfers disabled, we check if the forecast rentable quantity takes
+            incoming and outgoing moves happening prior to the rental period and other
+            rental orders in its computation.
+        """
+        # Disable "rental transfers" and rely on the qty_in_rent fot the forecast
+        self.env['res.config.settings'].create({'group_rental_stock_picking': False}).execute()
+        self.assertFalse(self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'))
+        product = self.env['product.product'].create({
+            'name': 'Lovely Product',
+            'is_storable': True,
+            'rent_ok': True,
+        })
+        # Put 100 units in stock
+        self.env['stock.quant']._update_available_quantity(product, self.warehouse_id.lot_stock_id, 100)
+
+        delivery = self.env['stock.picking'].create({
+            'name': "Lovely Delivery",
+            'location_id': self.warehouse_id.lot_stock_id.id,
+            'location_dest_id': self.ref('stock.stock_location_customers'),
+            'picking_type_id': self.warehouse_id.out_type_id.id,
+            'scheduled_date': Datetime.today() + timedelta(days=3),
+            'move_ids': [Command.create({
+                'location_id': self.warehouse_id.lot_stock_id.id,
+                'location_dest_id':  self.ref('stock.stock_location_customers'),
+                'name': 'Lovely product move',
+                'product_id': product.id,
+                'product_uom_qty': 20,
+            })]
+        })
+        delivery.action_confirm()
+        # Create 2 rental orders: one to confirmed
+        so1, so2 = self.env['sale.order'].create([
+            {
+                'partner_id': self.cust1.id,
+                'rental_start_date': Datetime.today() + timedelta(days=1),
+                'rental_return_date': Datetime.today() + timedelta(days=2),
+                'order_line': [Command.create({
+                    'product_id': product.id,
+                    'product_uom_qty': 5.0,
+                    'is_rental': True,
+                })],
+            },
+            {
+                'partner_id': self.cust1.id,
+                'rental_start_date': Datetime.today() + timedelta(days=5),
+                'rental_return_date': Datetime.today() + timedelta(days=6),
+                'order_line': [Command.create({
+                    'product_id': product.id,
+                    'product_uom_qty': 10.0,
+                    'is_rental': True,
+                })],
+            },
+        ])
+
+        so2.action_confirm()
+        self.assertFalse(so2.picking_ids)
+        self.assertEqual(so1.order_line.virtual_available_at_date, 100)
+        so1.write({
+            'rental_start_date': Datetime.today() + timedelta(days=3),
+            'rental_return_date': Datetime.today() + timedelta(days=4),
+        })
+        # We need to invalidate the cache after each change since the qty_in_rent does not have
+        # any dependence and hence will only be recomputed if it was not already set in cache
+        product.invalidate_recordset()
+        self.assertEqual(so1.order_line.virtual_available_at_date, 80)
+        so1.write({
+            'rental_start_date': Datetime.today() + timedelta(days=5),
+            'rental_return_date': Datetime.today() + timedelta(days=6),
+        })
+        product.invalidate_recordset()
+        self.assertEqual(so1.order_line.virtual_available_at_date, 70)
+        so1.write({
+            'rental_start_date': Datetime.today() + timedelta(days=7),
+            'rental_return_date': Datetime.today() + timedelta(days=8),
+        })
+        product.invalidate_recordset()
+        self.assertEqual(so1.order_line.virtual_available_at_date, 80)
+
     ###############################
     #       PRIVATE METHODS       #
     ###############################
