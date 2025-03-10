@@ -24,7 +24,7 @@
                         </div>
                         <div>
                             /
-                            <div class="o_field_widget o_field_char ms-2 w-60">
+                            <div class="o_field_widget o_field_char ms-2 w-75">
                                 <CharField name="'name'" record="record"/>
                             </div>
                         </div>
