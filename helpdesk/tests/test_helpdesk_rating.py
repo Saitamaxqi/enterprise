@@ -2,12 +2,15 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import date
+from typing import Mapping
 from dateutil.relativedelta import relativedelta
 from unittest.mock import patch
+from freezegun import freeze_time
 
 from .common import HelpdeskCommon
 from odoo.tests.common import HttpCase
 from odoo.addons.mail.tests.common import MailCase
+from odoo import fields, Command
 from odoo.addons.mail.tests.common import mail_new_test_user
 
 
@@ -50,6 +53,21 @@ class TestHelpdeskRating(HelpdeskCommon, HttpCase, MailCase):
             'partner_id': cls.partner_1.id,
             'consumed': True,
         }
+
+        # for retrieve_dashboard
+        cls.team_sla = cls.test_team.copy({'use_sla': True})
+        cls.stage_done.team_ids = [Command.link(cls.team_sla.id)]
+
+        cls.user_sla = cls.env['res.users'].create({
+            'name': 'SLA user',
+            'login': 'sj@test.com',
+            'tz': 'Asia/Singapore', # UTC +8
+            'group_ids': [
+                Command.link(cls.env.ref('helpdesk.group_use_sla').id),
+                Command.link(cls.env.ref('helpdesk.group_helpdesk_manager').id)
+            ],
+        })
+        cls.team_sla.member_ids = [Command.link(cls.user_sla.id)]
 
     def test_rating_notification(self):
         self.env['rating.rating'].create({
@@ -132,6 +150,28 @@ class TestHelpdeskRating(HelpdeskCommon, HttpCase, MailCase):
         data = HelpdeskTeam.with_user(self.helpdesk_user).retrieve_dashboard()
         self.assertEqual(data['today']['rating'], 1, 'The average rating should be equal to 1 / 5.')
         self.assertEqual(data['7days']['rating'], 3, 'The average rating should be equal to 3 / 5.')
+
+    def test_helpdesk_dashboard_user_timing(self):
+        """ Test that the dashboard properly uses the user's timezone when calculating 'today' and '7days' values """
+        HelpdeskTeam = self.team_sla.with_user(self.user_sla)
+        HelpdeskTicket = self.env['helpdesk.ticket'].with_user(self.user_sla)
+        context_today = HelpdeskTeam._local_midnight_as_utc()
+
+        with freeze_time(fields.Datetime.to_string(context_today)):
+            HelpdeskTicket.create({
+                'name': 'Ticket 1',
+                'team_id': HelpdeskTeam.id,
+            }).write({'user_id': self.user_sla.id, 'stage_id': self.stage_done.id})
+
+        dashboard = HelpdeskTeam.retrieve_dashboard()
+        self.assertEqual(dashboard['today']['count'], 1, 'today should include ticket')
+        self.assertEqual(dashboard['7days']['count'], 1, '7days should include ticket')
+
+        tomorrow = context_today + relativedelta(days=1)
+        with freeze_time(fields.Datetime.to_string(tomorrow)):
+            dashboard = HelpdeskTeam.retrieve_dashboard()
+        self.assertEqual(dashboard['today']['count'], 0, 'today should NOT include ticket')
+        self.assertEqual(dashboard['7days']['count'], 1, '7days should include ticket')
 
     def test_email_rating_template(self):
         self.stage_done.template_id = self.env.ref('helpdesk.rating_ticket_request_email_template')
