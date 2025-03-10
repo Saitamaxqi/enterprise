@@ -3,7 +3,7 @@ import datetime
 from odoo import Command, fields
 from odoo.addons.documents.tests.test_documents_common import TransactionCaseDocuments
 from odoo.exceptions import AccessError, UserError, ValidationError
-from odoo.tests import freeze_time
+from odoo.tests import freeze_time, users
 from odoo.tools import mute_logger
 
 
@@ -1185,12 +1185,16 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             access_internal="edit",
             partners={self.portal_user.partner_id: ('edit', False)}
         )
-        server_action = self.env.ref('documents.ir_actions_server_tag_add_validated')
         with self.assertRaises(AccessError):
             self.env['documents.document'].with_user(self.internal_user).action_folder_embed_action(
-                self.folder_a.id, server_action.id)
+                self.folder_a.id, self.server_action.id)
+        self.server_action.group_ids = self.env.ref('documents.group_documents_manager')
+        with self.assertRaises(UserError):
+            self.env['documents.document'].with_user(self.doc_user).action_folder_embed_action(
+                self.folder_a.id, self.server_action.id)
+        self.server_action.group_ids = self.env.ref('base.group_user')
         self.env['documents.document'].with_user(self.doc_user).action_folder_embed_action(
-            self.folder_a.id, server_action.id)
+            self.folder_a.id, self.server_action.id)
         doc = self.env['documents.document'].create({'name': 'A request', 'folder_id': self.folder_a.id})
         embedded_action = doc.available_embedded_actions_ids
         self.assertEqual(len(embedded_action), 1)
@@ -1212,6 +1216,36 @@ class TestDocumentsAccess(TransactionCaseDocuments):
                 active_id=doc.id
             ).with_user(self.internal_user).action_execute_embedded_action(embedded_action.id)
 
+    @mute_logger('odoo.addons.base.models.ir_rule')
+    def test_embedded_action_shortcut_folder(self):
+        """Test embedding and running actions on the right records"""
+        self.folder_a.action_update_access_rights(
+            access_internal="edit",
+            partners={self.portal_user.partner_id: ('edit', False)}
+        )
+        doc = self.env['documents.document'].create({'name': 'A request', 'folder_id': self.folder_a.id})
+        self.assertFalse(doc.available_embedded_actions_ids)
+        folder_a_shortcut = self.folder_a.action_create_shortcut()
+        self.assertFalse(self.folder_a._get_folder_embedded_actions([self.folder_a.id]).get(self.folder_a.id))
+        self.assertFalse(self.folder_a._get_folder_embedded_actions([folder_a_shortcut.id]).get(folder_a_shortcut.id))
+
+        # From here, same as `test_embedded_action` but using the shortcut instead
+        with self.assertRaises(AccessError):
+            self.env['documents.document'].with_user(self.internal_user).action_folder_embed_action(
+                folder_a_shortcut.id, self.server_action.id)
+        self.server_action.group_ids = self.env.ref('documents.group_documents_manager')
+        with self.assertRaises(UserError):
+            self.env['documents.document'].with_user(self.doc_user).action_folder_embed_action(
+                folder_a_shortcut.id, self.server_action.id)
+        self.server_action.group_ids = self.env.ref('base.group_user')
+        self.env['documents.document'].with_user(self.doc_user).action_folder_embed_action(
+            folder_a_shortcut.id, self.server_action.id)
+
+        self.assertEqual(len(doc.available_embedded_actions_ids), 1)
+        self.assertTrue(self.folder_a._get_folder_embedded_actions([self.folder_a.id])[self.folder_a.id])
+        self.assertEqual(self.folder_a._get_folder_embedded_actions([folder_a_shortcut.id])[folder_a_shortcut.id],
+                         self.folder_a._get_folder_embedded_actions([self.folder_a.id])[self.folder_a.id])
+
     def test_groupless_embedded_action_availability(self):
         """ Ensure that an embedded action which should otherwise be visible to a given document
         record remains visible in the case where it has `groups_ids=[]`.
@@ -1219,9 +1253,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         embedded_action = self.env['ir.embedded.actions'].create({
             'name': 'public action',
             'parent_action_id': self.env.ref('documents.document_action').id,
-            'action_id': self.env['ir.actions.actions'].search([
-                ('type', '=', 'ir.actions.server'),
-            ], limit=1).id,
+            'action_id': self.server_action.id,
             'parent_res_model': 'documents.document',
             'groups_ids': [Command.clear()],
             'parent_res_id': self.document_txt.folder_id.id,
@@ -1265,3 +1297,51 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.assertEqual([a['partner_id']['id'] for a in doc.permission_panel_data()['record']['access_ids']],
                          [],
                          "Owner, and logs shouldn't be shown")
+
+    @users('documents@example.com')
+    def test_embedded_actions_unembed(self):
+        """Check that actions can be un-embedded as records may exist with/without these groups.
+
+        Groups defined on embedded actions are not supported while those on the server actions
+        are (tested in test_embedded_action)."""
+        folder = self.document_txt.folder_id
+        self.assertFalse(self.document_txt.available_embedded_actions_ids)
+        self.document_txt.invalidate_recordset(['available_embedded_actions_ids'])
+        embedded_action_vals = {
+            'name': 'public action',
+            'parent_action_id': self.env.ref('documents.document_action').id,
+            'action_id': self.server_action.id,
+            'parent_res_model': 'documents.document',
+            'parent_res_id': folder.id,
+        }
+        embedded_action_with_group = self.env['ir.embedded.actions'].create({
+            **embedded_action_vals,
+            'groups_ids': [self.env.ref('documents.group_documents_manager').id],
+        })
+        self.assertIn(embedded_action_with_group, self.document_txt.available_embedded_actions_ids)
+        self.document_txt.invalidate_recordset(['available_embedded_actions_ids'])
+        self.env['documents.document'].action_folder_embed_action(folder.id, self.server_action.id)
+        self.assertFalse(self.document_txt.available_embedded_actions_ids,
+                         "Embedded action with group should have been removed.")
+        self.document_txt.invalidate_recordset(['available_embedded_actions_ids'])
+        self.env['documents.document'].action_folder_embed_action(folder.id, self.server_action.id)
+        self.assertTrue(self.document_txt.available_embedded_actions_ids,
+                        "Embedded action should have been created.")
+        self.document_txt.available_embedded_actions_ids.groups_ids = False
+        self.env['documents.document'].action_folder_embed_action(folder.id, self.server_action.id)
+        self.assertFalse(self.document_txt.available_embedded_actions_ids,
+                         "Embedded action without group should have been removed.")
+        self.document_txt.invalidate_recordset(['available_embedded_actions_ids'])
+
+        self.env['ir.embedded.actions'].create([{
+            **embedded_action_vals,
+            'groups_ids': [self.env.ref('documents.group_documents_manager').id],
+        },
+            embedded_action_vals
+        ])
+        self.assertTrue(self.document_txt.available_embedded_actions_ids)
+        self.document_txt.invalidate_recordset(['available_embedded_actions_ids'])
+
+        self.env['documents.document'].action_folder_embed_action(folder.id, self.server_action.id)
+        self.assertFalse(self.document_txt.available_embedded_actions_ids,
+                         "Embedded action with and without group should have been removed.")
