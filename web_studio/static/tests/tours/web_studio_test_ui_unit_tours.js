@@ -1,6 +1,7 @@
 import { registry } from "@web/core/registry";
-import { stepNotInStudio, assertEqual, nextTick } from "@web_studio/../tests/tours/tour_helpers";
+import { stepNotInStudio, assertEqual } from "@web_studio/../tests/tours/tour_helpers";
 import { queryAll, queryFirst, queryOne, drag, waitFor } from "@odoo/hoot-dom";
+import { rpcBus } from "@web/core/network/rpc";
 
 registry
     .category("web_tour.tours")
@@ -2086,14 +2087,25 @@ registry.category("web_tour.tours").add("web_studio_test_default_value_company",
                 // in this flow, only the input's value is changing
                 // We want to wait for the RPC to return. That will
                 // "commit" the value in the input.
-                await helpers.edit("from studio", this.anchor);
-                await helpers.click("body");
-                await nextTick();
-                this.anchor.value = "";
+                // Since when the value of an input changes, there are no DOM
+                // mutations, we need to use the waitFor from Hoot
+                // instead of the macro.js machinery to assert that the value has changed
+                // as a consequence of the RPC
+                this.anchor.scrollIntoView();
+                const cb = ({ detail }) => {
+                    if (detail.url === "/web_studio/set_default_value") {
+                        this.anchor.value = "";
+                        rpcBus.removeEventListener("RPC:REQUEST", cb);
+                    }
+                };
+                rpcBus.addEventListener("RPC:REQUEST", cb);
+                await helpers.edit("from studio");
+                await helpers.press("ENTER");
+                return waitFor(
+                    ".o_web_studio_sidebar input[id='default_value']:value(from studio)",
+                    { timeout: 5000 }
+                );
             },
-        },
-        {
-            trigger: ".o_web_studio_sidebar input[id='default_value']:value(from studio)",
         },
     ],
 });
