@@ -1724,3 +1724,33 @@ registry.category("web_tour.tours").add("test_inventory_setting_count_entire_loc
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_inventory_adjustment_with_no_internal_location_quant", {
+    steps: () => [
+    {
+        trigger: ".o_button_inventory",
+        run: "click",
+    },
+    {
+        trigger: ".o_barcode_client_action",
+        run: "scan product1",
+    },
+    {
+        trigger: ".o_barcode_line",
+        run: () => {
+            helper.assertLineSourceLocation(0, "WH/Stock");
+            helper.assertLineProduct(0, "product1");
+            helper.assertLineQty(0, "1");
+        }
+    },
+    {
+        trigger: ".o_apply_page.btn-primary",
+        run: "click",
+    },
+    {
+        trigger: ".o_notification_bar.bg-success",
+        run: function () {
+            helper.assertErrorMessage("The inventory count has been updated");
+        },
+    },
+]});

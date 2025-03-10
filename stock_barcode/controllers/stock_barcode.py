@@ -207,7 +207,10 @@ class StockBarcodeController(http.Controller):
                 result[f_model_name] = result[f_model_name] + fetched_data[f_model_name]
 
         if fetch_quant and product_ids:
-            quants = request.env['stock.quant'].search([('product_id', 'in', product_ids)])
+            quants = request.env['stock.quant'].search([
+                ('product_id', 'in', product_ids),
+                ('location_id.usage', '=', 'internal'),
+            ])
             fetched_data = self._get_records_fields_stock_barcode(quants)
 
             for f_model_name in fetched_data:

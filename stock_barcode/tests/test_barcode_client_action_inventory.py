@@ -600,6 +600,41 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(productlot1_quant.lot_id.name, 'toto-42')
         self.assertEqual(productlot1_quant.location_id.id, self.stock_location.id)
 
+    def test_inventory_adjustment_with_no_internal_location_quant(self):
+        self.clean_access_rights()
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id)]})
+
+        # Simulate moving 1 unit of product1 from Customer Location to Inventory Adjustment Location
+        self.env['stock.quant'].create({
+            'product_id': self.product1.id,
+            'location_id': self.env.ref('stock.stock_location_customers').id,
+            'quantity': -1,
+        })
+
+        # Create a quant in Inventory adjustment location
+        self.env['stock.quant'].create({
+            'product_id': self.product1.id,
+            'location_id': self.product1.property_stock_inventory.id,
+            'quantity': 1,
+        })
+
+        self.start_tour("/odoo/barcode", 'test_inventory_adjustment_with_no_internal_location_quant', login='admin')
+
+        inventory_moves = self.env['stock.move'].search([('product_id', '=', self.product1.id),
+                                                         ('is_inventory', '=', True)])
+        self.assertEqual(len(inventory_moves), 1)
+        self.assertEqual(inventory_moves.quantity, 1.0)
+        self.assertEqual(inventory_moves.state, 'done')
+        self.assertEqual(inventory_moves.location_id.name, 'Inventory adjustment')
+        self.assertEqual(inventory_moves.location_dest_id.name, 'Stock')
+
+        quants = self.env['stock.quant'].search([('product_id', '=', self.product1.id),
+                                                 ('location_id.usage', '=', 'internal')])
+        self.assertEqual(quants.quantity, 1.0)
+        self.assertEqual(quants.inventory_quantity, 0)
+        self.assertEqual(quants.inventory_diff_quantity, 0)
+
     # === RFID TESTS ===#
     def test_rfid_inventory_scan_sgtin(self):
         """ Checks multiple products can be scanned at once for an Inventory
