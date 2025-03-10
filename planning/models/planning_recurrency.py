@@ -101,7 +101,7 @@ class PlanningRecurrency(models.Model):
                 end_duration = range_limit.replace(tzinfo=pytz.utc)
 
                 # get the company's work intervals as well as the public holidays
-                company_calendar_working_days = self.company_id.resource_calendar_id._work_intervals_batch(start_duration, end_duration)[False]
+                company_calendar_working_days = recurrency.company_id.resource_calendar_id._work_intervals_batch(start_duration, end_duration)[False]
 
                 # get the resource of the recurring shift
                 resource = recurrency.slot_ids.resource_id[-1:]

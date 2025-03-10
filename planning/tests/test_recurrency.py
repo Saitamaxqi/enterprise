@@ -540,6 +540,43 @@ class TestRecurrencySlotGeneration(TestCommonPlanning):
         recurrencies = self.env['planning.recurrency'].search([])
         self.assertFalse(len(list(filter(lambda recu: len(recu.slot_ids) == 0, recurrencies))), 'cron with no slot gets deleted (there is no original slot to copy from)')
 
+    @freeze_time('2025-01-01 8:00:00')
+    def test_recurrency_slot_deletion(self):
+        """ Check cron on existing slots after auto deletion of other recurrence """
+
+        slot_a, slot_b = self.env['planning.slot'].create([
+            {
+                'start_datetime': datetime(2025, 1, 1, 8, 0, 0),
+                'end_datetime': datetime(2025, 1, 1, 17, 0, 0),
+                'resource_id': self.resource_bert.id,
+                'repeat': True,
+                'repeat_type': 'until',
+                'repeat_interval': 1,
+                'repeat_unit': 'day',
+                'repeat_until': datetime(2025, 1, 10, 8, 0, 0),
+            },
+            {
+                'start_datetime': datetime(2025, 1, 1, 8, 0, 0),
+                'end_datetime': datetime(2025, 1, 1, 17, 0, 0),
+                'resource_id': self.resource_joseph.id,
+                'repeat': True,
+                'repeat_type': 'until',
+                'repeat_interval': 1,
+                'repeat_unit': 'day',
+                'repeat_until': datetime(2025, 1, 10, 8, 0, 0),
+            },
+        ])
+
+        # delete all slots on first recurrency
+        slot_a.recurrency_id.slot_ids.unlink()
+
+        # delete last slot on second recurrency
+        slot_b.recurrency_id.slot_ids.filtered(lambda s: s.start_datetime == datetime(2025, 1, 10, 8, 0, 0)).unlink()
+
+        self.env['planning.recurrency']._cron_schedule_next()
+
+        self.assertTrue(slot_b.recurrency_id.slot_ids.filtered(lambda s: s.start_datetime == datetime(2025, 1, 10, 8, 0, 0)), "Recurrency cron should have re-created the deleted slot")
+
     @freeze_time('2020-01-01 08:00:00')
     def test_recurrency_change_date(self):
         slot = self.env['planning.slot'].create({
