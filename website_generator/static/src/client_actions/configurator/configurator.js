@@ -61,3 +61,12 @@ patch(Configurator, {
         WebsiteGeneratorScreen,
     },
 });
+
+patch(Configurator.prototype, {
+    get currentComponent() {
+        if (this.state.currentStep === ROUTES.websiteGenerator) {
+            return WebsiteGeneratorScreen;
+        }
+        return super.currentComponent;
+    },
+});

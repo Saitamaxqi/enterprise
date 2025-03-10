@@ -46,10 +46,4 @@
     </div>
 </t>
 
-<t t-name="website_generator.Configurator.Configurator" t-inherit="website.Configurator.Configurator" t-inherit-mode="extension">
-    <xpath expr="//WelcomeScreen" position="before">
-        <WebsiteGeneratorScreen t-elif="state.currentStep === 6" navigate.bind="navigate" skip.bind="skipConfigurator"/>
-    </xpath>
-</t>
-
 </templates>
