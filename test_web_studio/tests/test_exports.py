@@ -5,17 +5,6 @@ from odoo.addons.sale.tests.common import SaleCommon
 
 from .common_exports import StudioExportCase
 
-IR_MODEL_INFO_FIELD = """<field name="info"><![CDATA[ Main super-class for regular database-persisted Odoo models.
-
-    Odoo models are created by inheriting from this class::
-
-        class ResUsers(Model):
-            ...
-
-    The system will later instantiate the class once per database (on
-    which the class' module is installed).
-    ]]></field>"""
-
 
 class TestStudioExports(StudioExportCase):
     def test_export_customizations(self):
@@ -90,7 +79,7 @@ class TestStudioExports(StudioExportCase):
             "data/ir_model.xml",
             f"""<odoo>
             <record id="{self.get_xmlid(custom_model)}" model="ir.model" context="{{'studio': True}}">
-                {IR_MODEL_INFO_FIELD}
+                <field name="info"><![CDATA[{custom_model.info}]]></field>
                 <field name="model">x_furnace_types</field>
                 <field name="name">Furnace Types</field>
             </record>
