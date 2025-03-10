@@ -1345,3 +1345,16 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.env['documents.document'].action_folder_embed_action(folder.id, self.server_action.id)
         self.assertFalse(self.document_txt.available_embedded_actions_ids,
                          "Embedded action with and without group should have been removed.")
+
+    def test_restricted_folder_dependant_fields(self):
+        """Check that reading fields depending on restricted folder doesn't raise (access) error."""
+        self.folder_b.access_internal = 'none'
+        self.assertEqual(self.folder_b.with_user(self.internal_user).user_permission, 'none')
+        self.document_gif.access_internal = 'view'
+        self.assertEqual(self.document_gif.with_user(self.internal_user).user_permission, 'view')
+
+        self.document_gif.invalidate_recordset()  # cache pollution
+        self.assertFalse(self.document_gif.with_user(self.internal_user).available_embedded_actions_ids)
+
+        with self.assertRaises(UserError):
+            self.env['documents.document'].with_user(self.internal_user).get_documents_actions(self.folder_b.id)

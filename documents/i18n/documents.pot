@@ -3322,6 +3322,12 @@ msgid "This folder does not exist."
 msgstr ""
 
 #. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "This folder does not exist or is not accessible."
+msgstr ""
+
+#. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_kanban
 msgid "This is a folder"
 msgstr ""

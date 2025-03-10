@@ -580,7 +580,9 @@ class DocumentsDocument(models.Model):
 
     def _get_folder_embedded_actions(self, folder_ids):
         """Return the enabled actions for the given folder."""
-        folders = self.env['documents.document'].browse(folder_ids)
+        folders = self.env['documents.document'].browse(folder_ids)._filtered_access('read')
+        if not folders:
+            return {}
         all_embedded_actions_sudo = self.env['ir.embedded.actions'].sudo().search(
             domain=[
                 ('parent_action_id', '=', self.env.ref("documents.document_action").id),
@@ -1074,9 +1076,11 @@ class DocumentsDocument(models.Model):
     @api.model
     def get_documents_actions(self, folder_id):
         """Return the available actions and a key to know if the action is embedded on the folder."""
-        folder = self.env['documents.document'].browse(folder_id).exists()
+        if not isinstance(folder_id, int):
+            raise ValueError("Invalid folder_id")
+        folder = self.env['documents.document'].search([('id', '=', folder_id)])
         if not folder:
-            raise UserError(_('This folder does not exist.'))
+            raise UserError(_('This folder does not exist or is not accessible.'))
 
         embedded_actions = self._get_folder_embedded_actions(folder.ids)
         embedded_actions = embedded_actions[folder.id].action_id.ids if embedded_actions else []
