@@ -125,7 +125,7 @@ class HrEmployee(models.Model):
         return """
             SELECT aal.employee_id as employee_id, COALESCE(SUM(aal.unit_amount), 0) as worked_hours
             FROM account_analytic_line aal
-            WHERE aal.employee_id IN %s AND date >= %s AND date <= %s
+            WHERE aal.employee_id IN %s AND date >= %s AND date <= %s AND project_id IS NOT NULL
             GROUP BY aal.employee_id
         """
 
