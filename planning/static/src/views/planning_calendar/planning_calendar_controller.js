@@ -1,24 +1,23 @@
-import { onWillStart } from "@odoo/owl";
 import { serializeDateTime } from "@web/core/l10n/dates";
-import { user } from "@web/core/user";
 import { CalendarController } from "@web/views/calendar/calendar_controller";
 import { PlanningCalendarFilterPanel } from "./planning_filter_panel/planning_calendar_filter_panel";
 import { usePlanningControllerActions } from "../planning_hooks";
 import { _t } from "@web/core/l10n/translation";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { sprintf } from "@web/core/utils/strings";
+import {
+    PlanningCalendarSidePanel
+} from "./planning_calendar_side_panel/planning_calendar_side_panel";
 
 export class PlanningCalendarController extends CalendarController {
-    static template = "planning.PlanningCalendarController";
     static components = {
         ...CalendarController.components,
         FilterPanel: PlanningCalendarFilterPanel,
+        CalendarSidePanel: PlanningCalendarSidePanel,
     };
 
     setup() {
         super.setup(...arguments);
-
-        onWillStart(this.onWillStart);
 
         const getDomain = () => this.model.computeDomain(this.model.data);
         this.planningControllerActions = usePlanningControllerActions({
@@ -41,10 +40,6 @@ export class PlanningCalendarController extends CalendarController {
 
     get editRecordDefaultDisplayText() {
         return _t("New Shift");
-    }
-
-    async onWillStart() {
-        this.isManager = await user.hasGroup("planning.group_planning_manager");
     }
 
     /**

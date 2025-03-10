@@ -1,5 +1,4 @@
-import { onWillStart, useState } from "@odoo/owl";
-import { user } from "@web/core/user";
+import { useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { CalendarCommonPopover } from "@web/views/calendar/calendar_common/calendar_common_popover";
 import { formatFloatTime } from "@web/views/fields/formatters";
@@ -20,11 +19,6 @@ export class PlanningCalendarCommonPopover extends CalendarCommonPopover {
             recurrenceUpdate: "this",
         });
         this.planningRecurrenceDeletion = usePlanningRecurringDeleteAction();
-        onWillStart(this.onWillStart);
-    }
-
-    async onWillStart() {
-        this.isManager = await user.hasGroup("planning.group_planning_manager");
     }
 
     onDeleteEvent() {
@@ -48,7 +42,7 @@ export class PlanningCalendarCommonPopover extends CalendarCommonPopover {
     }
 
     get isEventEditable() {
-        return this.isManager && super.isEventEditable;
+        return this.props.model.isManager && super.isEventEditable;
     }
 
     get data() {
@@ -67,7 +61,7 @@ export class PlanningCalendarCommonPopover extends CalendarCommonPopover {
      * @override
      */
     get hasFooter() {
-        return this.isManager && super.hasFooter;
+        return this.props.model.isManager && super.hasFooter;
     }
 
     isSet(fieldName) {

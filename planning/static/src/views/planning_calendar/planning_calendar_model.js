@@ -1,3 +1,4 @@
+import { user } from "@web/core/user";
 import { CalendarModel } from "@web/views/calendar/calendar_model";
 import { usePlanningModelActions } from "../planning_hooks";
 import { planningAskRecurrenceUpdate} from "./planning_ask_recurrence_update/planning_ask_recurrence_update_hook";
@@ -14,6 +15,15 @@ export class PlanningCalendarModel extends CalendarModel {
             getContext: () => this.env.searchModel._context,
         }).getHighlightIds;
         this.meta.scale = this.env.isSmall? "day" : this.meta.scale;
+        this.isManager = null;
+    }
+
+    async load() {
+        let groupProm;
+        if (this.isManager === null) {
+            groupProm = user.hasGroup("planning.group_planning_manager").then(result => this.isManager = result);
+        }
+        return Promise.all([super.load(...arguments), groupProm]);
     }
 
     get defaultFilterLabel() {
