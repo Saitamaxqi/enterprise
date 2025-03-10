@@ -62,6 +62,7 @@ class ProductTemplate(models.Model):
 
 
 class ProductCode(models.Model):
+    _name = 'product.unspsc.code'
     _inherit = 'product.unspsc.code'
 
     def _load_pos_data(self, data):
@@ -73,3 +74,10 @@ class ProductCode(models.Model):
     @api.model
     def _load_pos_data_fields(self, config_id):
         return ['code']
+
+    def _post_read_pos_data(self, data):
+        return data
+
+    def _read_pos_record(self, ids, config_id):
+        fields = self._load_pos_data_fields(self.id)
+        return self.browse(ids).read(fields, load=False)

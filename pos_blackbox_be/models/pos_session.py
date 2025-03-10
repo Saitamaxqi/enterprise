@@ -40,22 +40,23 @@ class PosSession(models.Model):
         help="Sum of the amount of the corrections during the session"
     )
 
-    def _load_pos_data(self, data):
-        response = super()._load_pos_data(data)
-        if self.config_id.certified_blackbox_identifier:
-            response[0]["_product_product_work_in"] = self.env.ref("pos_blackbox_be.product_product_work_in").id
-            response[0]["_product_product_work_out"] = self.env.ref("pos_blackbox_be.product_product_work_out").id
-            response[0]["_users_clocked_ids"] = self.users_clocked_ids.ids
-            response[0]["_employees_clocked_ids"] = self.employees_clocked_ids.ids
-        return response
+    def _post_read_pos_data(self, data):
+        if self.config_id.certified_blackbox_identifier or \
+            (self.env.context.get("config_id") and self.env['pos.config'].browse(self.env.context.get("config_id")).certified_blackbox_identifier):
+            data[0]["_product_product_work_in"] = self.env.ref("pos_blackbox_be.product_product_work_in").id
+            data[0]["_product_product_work_out"] = self.env.ref("pos_blackbox_be.product_product_work_out").id
+            data[0]["_users_clocked_ids"] = self.users_clocked_ids.ids
+            data[0]["_employees_clocked_ids"] = self.employees_clocked_ids.ids
+        return super()._post_read_pos_data(data)
 
-    def _load_pos_self_data(self, data):
-        res = super()._load_pos_self_data(data)
-        if data['pos.config'][0]['certified_blackbox_identifier'] and len(res) > 0:
-            res[0]['_server_version'] = exp_version()
-            res[0]['_product_product_work_in'] = self.env.ref('pos_blackbox_be.product_product_work_in').id
-            res[0]['_product_product_work_out'] = self.env.ref('pos_blackbox_be.product_product_work_out').id
-        return res
+    def _post_read_pos_self_data(self, data):
+        if (self.config_id.certified_blackbox_identifier or
+            (self.env.context.get("config_id") and self.env['pos.config'].browse(self.env.context.get("config_id")).certified_blackbox_identifier)) and \
+                len(data) > 0:
+            data[0]['_server_version'] = exp_version()
+            data[0]["_product_product_work_in"] = self.env.ref("pos_blackbox_be.product_product_work_in").id
+            data[0]["_product_product_work_out"] = self.env.ref("pos_blackbox_be.product_product_work_out").id
+        return super()._post_read_pos_self_data(data)
 
     def load_data(self, models_to_load):
         response = super().load_data(models_to_load)

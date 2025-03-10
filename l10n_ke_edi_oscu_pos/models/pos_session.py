@@ -8,7 +8,3 @@ class PosSession(models.Model):
         data = super()._load_pos_data_models(config_id)
         data += ['l10n_ke_edi_oscu.code', 'product.unspsc.code']
         return data
-
-    def _load_pos_data(self, data):
-        data = super()._load_pos_data(data)
-        return data
