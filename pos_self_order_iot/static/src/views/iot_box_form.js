@@ -11,7 +11,7 @@ class IoTBoxController extends formView.Controller {
     }
 
     async onWillSaveRecord(record) {
-        if (!record.data.screen_orientation) {
+        if (!record.data.can_be_kiosk) {
             return;
         }
 
