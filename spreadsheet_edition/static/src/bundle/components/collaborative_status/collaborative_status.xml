@@ -13,8 +13,8 @@
         <div t-if="connectedUsers.length > 0"
             class="o_spreadsheet_number_users ps-2"
             t-att-class="connectedUsers.length > 1 ? 'text-info' : ''"
-            t-att-data-tooltip-template="connectedUsers.length > 1 and 'spreadsheet_edition.SpreadsheetUsersTooltip'"
-            t-att-data-tooltip-info="tooltipInfo"
+            t-on-mouseenter="openPopover"
+            t-on-mouseleave="closePopover"
         >
             <t t-if="connectedUsers.length === 1">
                 <i class="fa fa-user"/> 1
@@ -26,13 +26,22 @@
     </div>
 
     <t t-name="spreadsheet_edition.SpreadsheetUsersTooltip">
-        <div t-foreach="users" t-as="user" t-key="user_index">
-            <span class="o_spreadsheet_user d-inline-flex">
-                <img t-att-src="user.avatar" class="p-1 rounded" />
-                <span class="pt-1">
-                    <t t-esc="user.name" />
-                </span>
-            </span>
+        <div class="d-print-none text-start"
+            t-on-mouseenter="this.props.onMouseEnter"
+            t-on-mouseleave="this.props.onMouseLeave"
+            >
+            <div t-foreach="this.props.users" t-as="user" t-key="user_index">
+                <div class="o_spreadsheet_user d-flex justify-content-between align-items-center px-1" style="cursor:pointer;"
+                    t-on-click="() => this.props.onClick(user)"
+                    data-tooltip="Focus user" data-tooltip-position="right"
+                >
+                    <img t-att-src="user.avatar" class="p-1 rounded"/>
+                    <span class="flex-grow-1">
+                        <t t-esc="user.name"/>
+                    </span>
+                    <i class="fa fa-lg fa-fw fa-bullseye" t-att-style="'color:' + user.color"/>
+                </div>
+            </div>
         </div>
     </t>
 
