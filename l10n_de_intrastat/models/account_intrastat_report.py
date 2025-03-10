@@ -36,6 +36,7 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
             'goods_description': query_res['goods_description'],
             'system': result_dict['system'][0:2],
             'quantity': query_res['quantity'],
+            'supplementary_units_code': query_res['supplementary_units_code'],
         })
         return result_dict
 
