@@ -54,7 +54,6 @@ class AccountMove(models.Model):
 
     def _filtered_external_tax_moves(self):
         return self.filtered(lambda move: move.is_tax_computed_externally and
-                                          move.move_type in ('out_invoice', 'out_refund') and
                                           not move._is_downpayment())
 
     def _get_and_set_external_taxes_on_eligible_records(self):

@@ -82,7 +82,10 @@ class AccountExternalTaxMixin(models.AbstractModel):
         for record in self:
             record.l10n_br_goods_operation_type_id = self.env.ref("l10n_br_avatax.operation_type_1") if record._l10n_br_is_avatax() else False
 
-    @api.depends('country_code', 'fiscal_position_id')
+    def _compute_l10n_br_is_avatax_depends(self):
+        return ['country_code', 'fiscal_position_id']
+
+    @api.depends(lambda self: self._compute_l10n_br_is_avatax_depends())
     def _compute_l10n_br_is_avatax(self):
         for record in self:
             record.l10n_br_is_avatax = record._l10n_br_is_avatax()

@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class AccountMove(models.Model):
@@ -11,10 +11,18 @@ class AccountMove(models.Model):
              "If not specified it will use the Invoice Date.",
     )
 
+    @api.depends('fiscal_position_id', 'move_type')
+    def _compute_is_tax_computed_externally(self):
+        # EXTENDS 'account_external_tax' to enable external taxes on sale documents.
+        super()._compute_is_tax_computed_externally()
+        for move in self:
+            if move.is_avatax:
+                move.is_tax_computed_externally = move.is_sale_document()
+
     def _post(self, soft=True):
         res = super()._post(soft=soft)
         self.filtered(
-            lambda move: move.is_avatax and move.move_type in ('out_invoice', 'out_refund') and not move._is_downpayment()
+            lambda move: move.is_avatax and move.is_tax_computed_externally and not move._is_downpayment()
         )._commit_avatax_taxes()
         return res
 

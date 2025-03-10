@@ -146,13 +146,19 @@ class AccountMove(models.Model):
         super()._compute_show_reset_to_draft_button()
         self.filtered(lambda move: move.l10n_br_last_edi_status == "pending").show_reset_to_draft_button = False
 
-    @api.depends("l10n_br_last_edi_status", "country_code", "company_currency_id", "move_type", "fiscal_position_id")
+    @api.depends("l10n_br_last_edi_status", "country_code", "company_currency_id", "move_type", "fiscal_position_id", "journal_id.l10n_br_invoice_serial")
     def _compute_l10n_br_edi_is_needed(self):
         for move in self:
             move.l10n_br_edi_is_needed = (
                 not move.l10n_br_last_edi_status
                 and move.country_code == "BR"
-                and move.move_type in ("out_invoice", "out_refund")
+                and (
+                    move.move_type in ("out_invoice", "out_refund")
+                    or (
+                        move.move_type in ("in_invoice", "in_refund")
+                        and move.journal_id.l10n_br_invoice_serial
+                    )
+                )
                 and move.fiscal_position_id.l10n_br_is_avatax
             )
 
@@ -160,6 +166,31 @@ class AccountMove(models.Model):
     def _compute_need_cancel_request(self):
         # EXTENDS 'account' to add dependencies
         super()._compute_need_cancel_request()
+
+    @api.depends('l10n_br_edi_is_needed')
+    def _compute_display_send_button(self):
+        # EXTENDS 'account' to display the "Send" button on unsent vendor bills
+        super()._compute_display_send_button()
+        for move in self:
+            # l10n_br_edi_is_needed filters the right move_types
+            if move.l10n_br_edi_is_needed:
+                move.display_send_button |= move.state == 'posted'
+
+    @api.depends('l10n_br_edi_is_needed')
+    def _compute_highlight_send_button(self):
+        # EXTENDS 'account' to highlight the "Send" button on unsent vendor bills
+        super()._compute_highlight_send_button()
+        for move in self:
+            # l10n_br_edi_is_needed filters the right move_types
+            if move.l10n_br_edi_is_needed:
+                move.highlight_send_button |= move.state == 'posted'
+
+    def _is_manual_document_number(self):
+        # EXTENDS 'l10n_latam_invoice_document' to automatically number purchase EDI journals
+        journal = self.journal_id
+        if journal.company_id.account_fiscal_country_id.code == 'BR' and journal.type == 'purchase' and journal.l10n_br_invoice_serial:
+            return False
+        return super()._is_manual_document_number()
 
     def _l10n_br_edi_check_calculated_tax(self):
         if self.state != "posted" or self.l10n_br_last_edi_status:
@@ -431,7 +462,7 @@ class AccountMove(models.Model):
         """Returns the appropriate (finNFe, goal) tuple for the goods section in the header."""
         if self.debit_origin_id:
             return 2, "Complementary"
-        elif self.move_type == "out_refund":
+        elif self.move_type in ("out_refund", "in_refund"):
             return 4, "Return"
         else:
             return 1, "Normal"

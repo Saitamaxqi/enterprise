@@ -25,7 +25,8 @@ class AccountExternalTaxMixin(models.AbstractModel):
     # ====================================================================
     @api.depends('fiscal_position_id')
     def _compute_is_tax_computed_externally(self):
-        """ When True external taxes will be calculated at the appropriate times. """
+        """ When True external taxes will be calculated at the appropriate times. This should be overridden
+        so the field is set for eligible records (e.g., sale and/or purchase documents). """
         self.is_tax_computed_externally = False
 
     def _get_external_taxes(self):

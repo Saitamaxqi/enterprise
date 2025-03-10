@@ -11,28 +11,26 @@
                         <field name="l10n_br_avatax_warnings" class="o_field_html" widget="actionable_errors"/>
                     </div>
                 </header>
-                <group name="sale_info_group" position="inside">
+                <group name="accounting_info_group" position="inside">
                     <field name="l10n_br_cnae_code_id"
-                           invisible="country_code != 'BR' or move_type not in ('out_invoice', 'out_refund') or not l10n_br_is_avatax"
+                           invisible="country_code != 'BR' or not l10n_br_is_avatax"
                            readonly="state in ['cancel', 'posted']"
                     />
                     <field name="l10n_br_use_type"
-                           invisible="country_code != 'BR' or move_type not in ('out_invoice', 'out_refund') or not l10n_br_is_avatax"
+                           invisible="country_code != 'BR' or not l10n_br_is_avatax"
                            readonly="state in ['cancel', 'posted']"
                     />
                 </group>
                 <div name="journal_div" position="after">
                     <field name="l10n_br_goods_operation_type_id"
                            required="True"
-                           invisible="country_code != 'BR' or move_type not in ('out_invoice', 'out_refund') or
-                                      not l10n_br_is_avatax or l10n_br_is_service_transaction"
+                           invisible="country_code != 'BR' or not l10n_br_is_avatax or l10n_br_is_service_transaction"
                            readonly="state in ['cancel', 'posted']"
                     />
                 </div>
                 <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='tax_ids']" position="before">
                     <field name="l10n_br_goods_operation_type_id"
-                           column_invisible="parent.country_code != 'BR' or parent.move_type not in ('out_invoice', 'out_refund') or
-                                             not parent.l10n_br_is_avatax or parent.l10n_br_is_service_transaction"
+                           column_invisible="parent.country_code != 'BR' or not parent.l10n_br_is_avatax or parent.l10n_br_is_service_transaction"
                            readonly="parent.state in ['cancel', 'posted']"
                     />
                 </xpath>

@@ -144,7 +144,7 @@ class TestAvalaraBrCommon(AccountTestInvoicingCommon):
             yield mocked
 
     @classmethod
-    def _create_invoice_01_and_expected_response(cls):
+    def _create_invoice_01_and_expected_response(cls, move_type='out_invoice'):
         products = (
             cls.product_user,
             cls.product_accounting,
@@ -152,7 +152,7 @@ class TestAvalaraBrCommon(AccountTestInvoicingCommon):
             cls.product_invoicing,
         )
         invoice = cls.env['account.move'].create({
-            'move_type': 'out_invoice',
+            'move_type': move_type,
             'partner_id': cls.partner.id,
             'fiscal_position_id': cls.fp_avatax.id,
             'invoice_date': '2021-01-01',
@@ -378,6 +378,26 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
         operation_types = [line['operationType'] for line in payload['lines']]
         expected_operation_types = ['standardSales', 'complementary', 'standardSales', 'standardSales']
         self.assertEqual(operation_types, expected_operation_types, 'The expected operation types are not properly set.')
+
+    def test_08_vendor_bill(self):
+        """ Verify the differences between sending an invoice and a bill. """
+        bill, response = self._create_invoice_01_and_expected_response(move_type='in_invoice')
+        bill.l10n_latam_document_number = '1'
+        self.assertEqual(
+            bill.l10n_br_goods_operation_type_id,
+            self.env.ref('l10n_br_avatax.operation_type_59'),
+            "Default operation type for bills should be standardPurchase."
+        )
+
+        with self._capture_request_br(return_value=response) as patched:
+            bill.action_post()
+
+        payload = patched.call_args.args[1]
+        self.assertEqual(
+            payload['header']['operationType'],
+            'standardPurchase',
+            'The operationType for vendor bills should be standardPurchase.'
+        )
 
 
 @tagged('post_install_l10n', '-at_install', 'post_install')

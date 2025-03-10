@@ -16,17 +16,30 @@ class AccountMove(models.Model):
             res[i]['operation_type'] = line.l10n_br_goods_operation_type_id or self.l10n_br_goods_operation_type_id
         return res
 
+    def _compute_l10n_br_is_avatax_depends(self):
+        # EXTENDS account.external.tax.mixin
+        return super()._compute_l10n_br_is_avatax_depends() + ["move_type"]
+
+    def _l10n_br_is_avatax(self):
+        # EXTENDS account.external.tax.mixin to restrict to sales and purchase documents
+        return super()._l10n_br_is_avatax() and (self.is_sale_document() or self.is_purchase_document())
+
     @api.depends("l10n_br_is_avatax", "move_type", "debit_origin_id")
     def _compute_l10n_br_goods_operation_type_id(self):
         """Override."""
+        move_type_to_operation_type = {
+            "out_invoice": "l10n_br_avatax.operation_type_1",  # standardSales
+            "out_refund": "l10n_br_avatax.operation_type_60",  # salesReturn
+            "in_invoice": "l10n_br_avatax.operation_type_59",  # standardPurchase
+            "in_refund": "l10n_br_avatax.operation_type_31",  # standardPurchaseReturnShippingOutbound
+        }
+
         self.l10n_br_goods_operation_type_id = False
         for move in self.filtered("l10n_br_is_avatax"):
             if move.debit_origin_id:
                 move.l10n_br_goods_operation_type_id = self.env.ref("l10n_br_avatax.operation_type_3")  # amountComplementary
-            elif move.move_type == "out_refund":
-                move.l10n_br_goods_operation_type_id = self.env.ref("l10n_br_avatax.operation_type_60")  # salesReturn
             else:
-                move.l10n_br_goods_operation_type_id = self.env.ref("l10n_br_avatax.operation_type_1")  # standardSales
+                move.l10n_br_goods_operation_type_id = self.env.ref(move_type_to_operation_type.get(move.move_type), raise_if_not_found=False)
 
     @api.depends("l10n_latam_document_type_id")
     def _compute_l10n_br_is_service_transaction(self):

@@ -411,7 +411,7 @@
             <field name="name">Standard purchase</field>
             <field name="name@pt_BR">Compra padrão</field>
             <field name="technical_name">standardPurchase</field>
-            <field name="active" eval="False"/>
+            <field name="active" eval="True"/>
         </record>
 
         <record id="operation_type_60" model="l10n_br.operation.type">

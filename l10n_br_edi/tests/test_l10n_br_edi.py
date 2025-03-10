@@ -80,10 +80,9 @@ class TestL10nBREDICommon(TestAccountMoveSendCommon):
 
         cls.avatax_fp = cls.env["account.fiscal.position"].create({"name": "Avatax Brazil", "l10n_br_is_avatax": True})
 
-        cls.invoice = cls.env["account.move"].create(
-            {
+        def create_move(extra_vals):
+            move = cls.env["account.move"].create({
                 "partner_id": cls.partner_customer.id,
-                "move_type": "out_invoice",
                 "invoice_date": "2023-10-05",
                 "currency_id": cls.env.ref("base.BRL").id,
                 "fiscal_position_id": cls.avatax_fp.id,
@@ -106,11 +105,15 @@ class TestL10nBREDICommon(TestAccountMoveSendCommon):
                         {"product_id": cls.product_cabinet.product_variant_id.id},
                     ),
                 ],
-            }
-        )
-        cls.invoice.is_tax_computed_externally = False  # FIXME hack to fix the fact the invoice was not posted before
-        cls.invoice.action_post()
-        cls.invoice.is_tax_computed_externally = True
+                **extra_vals,
+            })
+            move.is_tax_computed_externally = False  # FIXME hack to fix the fact the invoice was not posted before
+            move.action_post()
+            move.is_tax_computed_externally = True
+            return move
+
+        cls.invoice = create_move({"move_type": "out_invoice"})
+        cls.bill = create_move({"move_type": "in_invoice", "l10n_latam_document_number": "1"})
 
     @contextmanager
     def with_patched_account_move(self, method_name, mocked_response=None):
@@ -209,6 +212,20 @@ class TestL10nBREDI(TestL10nBREDICommon):
                     single_wizard.action_send_and_print()
                 finally:
                     self.invoice.l10n_br_last_edi_status = False
+
+    def test_bill_1_success(self):
+        self.bill.journal_id.l10n_br_invoice_serial = '1'
+        single_wizard = self.env['account.move.send.wizard'].create({'move_id': self.bill.id})
+        with self.with_patched_account_move("_l10n_br_iap_request", invoice_1_submit_success_response):
+            single_wizard.action_send_and_print()
+
+        self.assertEqual(self.bill.l10n_br_last_edi_status, "accepted", "The EDI document should be accepted.")
+
+    def test_bill_2_without_series_number(self):
+        """ If no series number is configured, we consider it to be a non-electronic journal. """
+        self.bill.journal_id.l10n_br_invoice_serial = False
+        single_wizard = self.env['account.move.send.wizard'].create({'move_id': self.bill.id})
+        self.assertNotIn('br_edi', single_wizard.extra_edis or [])
 
     def test_prepare_tax_data(self):
         to_include, header = self.invoice._l10n_br_edi_get_tax_data()

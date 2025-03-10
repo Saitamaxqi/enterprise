@@ -6,7 +6,7 @@
         <field name="taxes_id" eval="False"/>
         <field name="l10n_br_ncm_code_id" ref="l10n_br_avatax.49011000"/>
         <field name="l10n_br_source_origin">0</field>
-        <field name="l10n_br_sped_type">FOR PRODUCT</field>
+        <field name="l10n_br_sped_type">FOR MERCHANDISE</field>
         <field name="l10n_br_use_type">resale</field>
     </record>
 
