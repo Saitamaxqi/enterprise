@@ -34,6 +34,16 @@ registry.category("web_tour.tours").add("FiskalyTour", {
             PaymentScreen.clickPaymentMethod("Cash"),
             PaymentScreen.clickInvoiceButton(),
             PaymentScreen.clickValidate(),
+            {
+                content: "Check that the receipt contains all tss info",
+                trigger: ".pos-receipt",
+                run: () => {
+                    const tssInfoCount = document.querySelectorAll(".tss-info").length;
+                    if (tssInfoCount !== 10) {
+                        throw new Error("Expected 10 TSS info, found " + tssInfoCount);
+                    }
+                },
+            },
             ReceiptScreen.clickNextOrder(),
         ].flat(),
 });
