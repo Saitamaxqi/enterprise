@@ -1097,6 +1097,13 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
         """
         return {'count': 0, 'total': 0}
 
+    def _get_invoice_types_xmlids(self):
+        return {
+            'l10n_es_reports.mod_347_operations_insurance_bought': 'insurance',
+            'l10n_es_reports.mod_347_operations_regular_sold': 'regular',
+            'l10n_es_reports.mod_347_operations_regular_bought': 'regular',
+        }
+
     def _write_type2_partner_record(self, options, report_data, year, current_company, operation_key, manual_parameters_map, insurance=False, local_negocio=False):
         currency_id = current_company.currency_id
         line_partner = self.env['res.partner'].browse(self.env['account.report']._get_model_info_from_id(report_data['line_data']['id'])[1])
@@ -1133,11 +1140,7 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
         rslt += self._l10n_es_boe_format_string(local_negocio and 'X' or ' ')
 
         # En metálico
-        invoice_types_by_xmlid = {
-            'l10n_es_reports.mod_347_operations_insurance_bought': 'insurance',
-            'l10n_es_reports.mod_347_operations_regular_sold': 'regular',
-            'l10n_es_reports.mod_347_operations_regular_bought': 'regular'
-        }
+        invoice_types_by_xmlid = self._get_invoice_types_xmlids()
         current_invoice_type = invoice_types_by_xmlid[report_data['line_xml_id']]
 
         account_type = operation_key == 'B' and 'asset_receivable' or 'liability_payable'

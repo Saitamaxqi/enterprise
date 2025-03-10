@@ -13,6 +13,14 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
         total = currency_id.round(self._retrieve_report_expression(boe_report_options, 'l10n_es_real_estates.mod_347_real_estates_balance'))
         return {'count': count, 'total': total}
 
+    def _get_invoice_types_xmlids(self):
+        invoice_types_by_xmlid = super()._get_invoice_types_xmlids()
+        invoice_types_by_xmlid.update({
+            'l10n_es_real_estates.mod_347_operations_real_estates_sold': 'real_estates',
+            'l10n_es_real_estates.mod_347_operations_real_estates_bought': 'real_estates',
+        })
+        return invoice_types_by_xmlid
+
     def export_boe(self, options):
         """ Overridden from l10n_es_reports to append the real estates record at
         the end of the generated BOE file.
@@ -26,10 +34,10 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
         boe_wizard = self._retrieve_boe_manual_wizard(options, 347)
         manual_params = boe_wizard.l10n_es_get_partners_manual_parameters_map()
         negocio_required_a = self._get_required_partner_ids_for_boe('real_estates', year + '-01-01', year + '-12-31', boe_wizard, 'A', 'local_negocio')
-        file_content += self._call_on_partner_sublines(boe_report_options, 'l10n_es_real_estates.mod_347_operations_real_estates_sold', lambda report_data: self._write_type2_partner_record(report_data, year, current_company, 'A', manual_parameters_map=manual_params, local_negocio=True), required_ids_set=negocio_required_a)
+        file_content += self._call_on_partner_sublines(boe_report_options, 'l10n_es_real_estates.mod_347_operations_real_estates_sold', lambda report_data: self._write_type2_partner_record(boe_report_options, report_data, year, current_company, 'A', manual_parameters_map=manual_params, local_negocio=True), required_ids_set=negocio_required_a)
 
         negocio_required_b = self._get_required_partner_ids_for_boe('real_estates', year + '-01-01', year + '-12-31', boe_wizard, 'B', 'local_negocio')
-        file_content += self._call_on_partner_sublines(boe_report_options, 'l10n_es_real_estates.mod_347_operations_real_estates_bought', lambda report_data: self._write_type2_partner_record(report_data, year, current_company, 'B', manual_parameters_map=manual_params, local_negocio=True), required_ids_set=negocio_required_b)
+        file_content += self._call_on_partner_sublines(boe_report_options, 'l10n_es_real_estates.mod_347_operations_real_estates_bought', lambda report_data: self._write_type2_partner_record(boe_report_options, report_data, year, current_company, 'B', manual_parameters_map=manual_params, local_negocio=True), required_ids_set=negocio_required_b)
 
         file_content += self._call_on_partner_sublines(boe_report_options, 'l10n_es_real_estates.mod_347_real_estates', lambda report_data: self._write_type2_real_estates_records(report_data, year, current_company))
 
