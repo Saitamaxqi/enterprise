@@ -13,6 +13,9 @@ class ApprovalRequest(models.Model):
 
     _check_company_auto = True
 
+    def _get_request_owner_id_domain(self):
+        return [('share', '=', False), ('company_ids', 'in', self.env.companies.ids)]
+
     name = fields.Char(string="Approval Subject", tracking=True)
     category_id = fields.Many2one('approval.category', string="Category", required=True)
     category_image = fields.Binary(related='category_id.image')
@@ -43,7 +46,7 @@ class ApprovalRequest(models.Model):
         store=True, index=True, tracking=True,
         group_expand=True)
     request_owner_id = fields.Many2one('res.users', string="Request Owner",
-        check_company=True, domain="[('company_ids', 'in', company_id)]",
+        check_company=True, domain=_get_request_owner_id_domain,
         default=lambda self: self.env.user)
     user_status = fields.Selection([
         ('new', 'New'),

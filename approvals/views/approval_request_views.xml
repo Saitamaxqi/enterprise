@@ -149,7 +149,7 @@
                     </div>
                     <group>
                         <group name="request_main">
-                            <field name="request_owner_id" domain="[('share', '=', False), ('company_ids', 'in', company_id)]" readonly="not change_request_owner or request_status != 'new'" widget="many2one_avatar_user"/>
+                            <field name="request_owner_id" readonly="not change_request_owner or request_status != 'new'" widget="many2one_avatar_user"/>
                             <field name="category_id" readonly="request_status != 'new'" force_save="1"/>
                             <field name="date_confirmed" groups="base.group_no_one" readonly="1"/>
                             <label for="date" string="Date" invisible="has_date == 'no'"/>
