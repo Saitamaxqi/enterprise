@@ -9,7 +9,7 @@ from odoo.tools import float_is_zero
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    task_id = fields.Many2one('project.task', string="Task", help="Task from which this quotation have been created")
+    task_id = fields.Many2one('project.task', string="Source Task", help="Task from which this quotation have been created")
 
     @api.model_create_multi
     def create(self, vals):
