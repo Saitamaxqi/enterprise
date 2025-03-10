@@ -44,7 +44,7 @@ export class TwitterUsersAutocompleteField extends CharField {
 
     get sources() {
         return [{
-            optionTemplate: "social_twitter.users_autocomplete_element",
+            optionSlot: "option",
             options: async (request) => {
                 if(request.length < 2) {
                     return [];

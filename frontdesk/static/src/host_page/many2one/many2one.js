@@ -65,7 +65,7 @@ export class Many2One extends Component {
         return {
             placeholder: _t("Loading..."),
             options: this.loadOptionsSource.bind(this),
-            optionTemplate: "avatarAutoComplete",
+            optionSlot: "option",
         };
     }
 }

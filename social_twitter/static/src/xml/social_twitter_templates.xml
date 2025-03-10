@@ -102,19 +102,6 @@
 
     <!--Old-->
 
-    <t t-name="social_twitter.users_autocomplete_element">
-        <div t-attf-class="o_social_twitter_users_autocomplete_suggestion clearfix#{suggestion_index == 0 and ' active' or ''}">
-            <img t-att-src="option['profile_image_url']" alt="X Profile Image"/>
-            <div class="o_twitter_users_autocomplete_info">
-                <strong><span class="o_twitter_users_autocomplete_info_name">
-                    <t t-esc="option['name']" /> - @<t t-esc="option['username']" />
-                </span></strong>
-                <br/>
-                <span><small t-esc="option['description']" /></span>
-            </div>
-        </div>
-    </t>
-
     <t t-name="social_twitter.TwitterUsersAutocompleteField" t-inherit="web.CharField">
         <xpath expr="//t[@t-else='']" position="replace">
             <AutoComplete
@@ -122,7 +109,20 @@
                 value="value"
                 sources="sources"
                 onSelect.bind="selectTwitterUser"
-            />
+            >
+                <t t-set-slot="option" t-slot-scope="optionScope">
+                    <div t-attf-class="o_social_twitter_users_autocomplete_suggestion clearfix#{suggestion_index == 0 and ' active' or ''}">
+                        <img t-att-src="optionScope.option['profile_image_url']" alt="X Profile Image"/>
+                        <div class="o_twitter_users_autocomplete_info">
+                            <strong><span class="o_twitter_users_autocomplete_info_name">
+                                <t t-esc="optionScope.option['name']" /> - @<t t-esc="optionScope.option['username']" />
+                            </span></strong>
+                            <br/>
+                            <span><small t-esc="optionScope.option['description']" /></span>
+                        </div>
+                    </div>
+                </t>
+            </AutoComplete>
         </xpath>
     </t>
 </odoo>
