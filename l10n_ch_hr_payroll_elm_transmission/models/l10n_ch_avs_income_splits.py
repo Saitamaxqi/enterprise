@@ -26,13 +26,11 @@ class L10nChAvsIncomeSplits(models.Model):
     avs_split_lines = fields.One2many("l10n.ch.avs.split.lines", "avs_split_id")
 
     def action_confirm(self):
-        self.ensure_one()
         self.write({
             "state": "confirmed"
         })
 
     def action_cancel(self):
-        self.ensure_one()
         self.write({
             "state": "draft"
         })
