@@ -160,6 +160,10 @@ export default class BarcodePickingBatchModel extends BarcodePickingModel {
         return super.displayLineQtyDemand(line);
     }
 
+    get displaySignatureButton() {
+        return false;
+    }
+
     groupLines() {
         const groupedLines = super.groupLines();
         if (!this.config.group_lines_by_product) {
@@ -221,6 +225,10 @@ export default class BarcodePickingBatchModel extends BarcodePickingModel {
             }
             this.trigger("update");
         }
+    }
+
+    get shouldOpenSignatureModal() {
+        return false;
     }
 
     get useExistingLots() {
