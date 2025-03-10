@@ -172,7 +172,10 @@ export class TimesheetTimerRendererHook {
                 this.timerState.timesheetId,
             ]);
         }
-        this.propsList._removeRecords([this.timesheet.id]);
+        const timesheetId = this.timesheet?.id;
+        if (timesheetId) {
+            this.propsList._removeRecords([timesheetId]);
+        }
         this.timesheet = undefined;
         this._resetTimerState();
         this.propsList.model.load();
