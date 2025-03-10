@@ -1,17 +1,12 @@
 import { registry } from "@web/core/registry";
 import { assert } from "@stock/../tests/tours/tour_helper";
 import { stepUtils } from "./tour_step_utils";
+import * as helper from "./running_tour_action_helper";
 
 registry.category("web_tour.tours").add("test_shop_floor", {
     steps: () => [
-        {
-            content: "Select the workcenter the first time we enter in shopfloor",
-            trigger: '.form-check:has(input[name="Jungle"])',
-            run: "click",
-        },
-        {
-            trigger: '.form-check:has(input[name="Jungle"]:checked)',
-        },
+        // Select the workcenter the first time we enter in shopfloor.
+        ...stepUtils.addWorkcenterToDisplay("Jungle"),
         {
             trigger: "footer.modal-footer button.btn-primary",
             run: "click",
@@ -19,37 +14,25 @@ registry.category("web_tour.tours").add("test_shop_floor", {
         {
             trigger: '.o_control_panel_actions button:contains("Jungle")',
         },
-        {
-            content: "Open the employee panel",
-            trigger: 'button[name="employeePanelButton"]',
-            run: "click",
-        },
-        {
-            content: "Add operator button",
-            trigger: 'button:contains("Operator")',
-            run: "click",
-        },
+        // Select two employees: one by scanning her badge ID and one by clicking on him.
+        ...stepUtils.openEmployeesList(),
         {
             content: "Scan Abbie Seedy's badge",
-            trigger: ".modal-body .o_mrp_employee_tree_view",
+            trigger: ".modal-body .o_mrp_operatos_dialog",
             run: "scan 659898105101",
         },
-        {
-            trigger: ".o_mrp_employees_panel li.o_admin_user:contains(Abbie Seedy)",
-        },
-        {
-            content: "Add operator button",
-            trigger: "button:contains('Operator')",
-            run: "click",
-        },
+        { trigger: ".o_mrp_operatos_dialog li[name='Abbie Seedy'].active" },
         {
             content: "Select the Billy Demo employee",
-            trigger: ".modal-body .o_mrp_employee_tree_view .o_data_row td:contains('Billy Demo')",
+            trigger: ".modal-body .o_mrp_operatos_dialog li[name='Billy Demo']:not(.active)",
             run: "click",
         },
-        {
-            trigger: ".o_mrp_employees_panel li.o_admin_user:contains(Billy Demo)",
-        },
+        { trigger: ".o_mrp_operatos_dialog li[name='Billy Demo'].active" },
+        // Confirm the employees' selection.
+        { trigger: ".modal-footer button.btn-primary", run: "click" },
+        { trigger: ".o_mrp_employees_panel li:contains(Billy Demo)", run: "click" },
+        { trigger: ".o_mrp_employees_panel li:contains(Abbie Seedy):not(.o_admin_user)" },
+        { trigger: ".o_mrp_employees_panel li:contains(Billy Demo).o_admin_user" },
         {
             content: "Go to workcenter Savannah from MO card",
             trigger: '.o_mrp_record_line button span:contains("Savannah")',
@@ -543,14 +526,8 @@ registry.category("web_tour.tours").add("test_generate_serials_in_shopfloor", {
 
 registry.category("web_tour.tours").add("test_canceled_wo", {
     steps: () => [
-        {
-            content: "Make sure workcenter is available",
-            trigger: '.form-check:has(input[name="Assembly Line"])',
-            run: "click",
-        },
-        {
-            trigger: '.form-check:has(input[name="Assembly Line"]:checked)',
-        },
+        // Make sure workcenter is available.
+        ...stepUtils.addWorkcenterToDisplay("Assembly Line"),
         {
             content: "Confirm workcenter",
             trigger: 'button:contains("Confirm")',
@@ -560,9 +537,8 @@ registry.category("web_tour.tours").add("test_canceled_wo", {
             content: "Check MO",
             trigger: 'button.btn-light:contains("Assembly Line")',
             run: () => {
-                if (document.querySelectorAll("ul button:not(.btn-secondary)").length > 1) {
-                    console.error("Multiple Workorders");
-                }
+                const mo = helper.getRecord();
+                helper.assertProductionWorkorderCount(mo, 1);
             },
         },
     ],
@@ -570,15 +546,7 @@ registry.category("web_tour.tours").add("test_canceled_wo", {
 
 registry.category("web_tour.tours").add("test_change_qty_produced", {
     steps: () => [
-        {
-            content: "Make sure workcenter is available",
-            trigger: '.form-check:has(input[name="WorkCenter"])',
-            run: "click",
-        },
-        {
-            content: "Make sure that Workcenter was checked",
-            trigger: '.form-check:has(input[name="WorkCenter"]:checked)',
-        },
+        ...stepUtils.addWorkcenterToDisplay("WorkCenter"),
         {
             content: "Confirm workcenter",
             trigger: 'button:contains("Confirm")',
@@ -666,14 +634,7 @@ registry.category("web_tour.tours").add("test_mrp_manual_consumption_in_shopfloo
 
 registry.category("web_tour.tours").add("test_component_registration_on_split_productions", {
     steps: () => [
-        {
-            trigger: ".form-check:has(input[name='Lovely Workcenter'])",
-            run: "click",
-        },
-        {
-            trigger: ".form-check:has(input[name='Lovely Workcenter']:checked)",
-            run() {},
-        },
+        ...stepUtils.addWorkcenterToDisplay("Lovely Workcenter"),
         {
             trigger: "button:contains('Confirm')",
             run: "click",
