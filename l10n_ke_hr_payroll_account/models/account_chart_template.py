@@ -48,6 +48,9 @@ class AccountChartTemplate(models.AbstractModel):
         nhif_amount = self.env.ref('l10n_ke_hr_payroll.l10n_ke_employees_salary_nhif_amount')
         rules_mapping[nhif_amount]['credit'] = '2231'
 
+        shif_amount = self.env.ref('l10n_ke_hr_payroll.l10n_ke_employees_salary_shif_amount')
+        rules_mapping[shif_amount]['credit'] = '2231'
+
         helb = self.env.ref('l10n_ke_hr_payroll.l10n_ke_employees_helb')
         rules_mapping[helb]['credit'] = '2232'
 
