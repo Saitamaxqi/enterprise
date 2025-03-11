@@ -760,7 +760,7 @@ class AccountOnlineLink(models.Model):
 
         if accounts:
             self.has_unlinked_accounts = True
-            return self.env['account.online.account'].create(accounts.values()), swift_code
+            return self.env['account.online.account'].create(list(accounts.values())), swift_code
         return False, False
 
     def _pre_check_fetch_transactions(self):
