@@ -1782,6 +1782,12 @@ registry.category("web_tour.tours").add("web_studio_test_kanban_menu_ribbon", {
             run: "click",
         },
         {
+            trigger: ".nav .o_web_studio_new.active",
+            run() {
+                return waitFor(".o_web_studio_component.o_web_studio_field_menu", { timeout: 3000 })
+            }
+        },
+        {
             trigger: ".o_web_studio_view_renderer .o_web_studio_hook[data-type='t']",
         },
         {
