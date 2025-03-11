@@ -15,10 +15,13 @@
         <field name="model">iot.box</field>
         <field name="arch" type="xml">
             <form create="false">
-                <header groups="base.group_no_one">
-                    <widget name="iot_download_logs" btn_name="Download Logs" btn_class="primary"/>
-                    <widget name="iot_restart_odoo" btn_name="Restart Odoo" btn_class="secondary"/>
-                    <widget name="iot_reset_password" btn_name="Reset Password" btn_class="secondary"/>
+                <header>
+                    <button name="open_homepage" type="object" string="Homepage" class="btn btn-secondary"/>
+                    <t groups="base.group_no_one">
+                        <widget name="iot_download_logs" btn_name="Download Logs" btn_class="primary"/>
+                        <widget name="iot_restart_odoo" btn_name="Restart Odoo" btn_class="secondary"/>
+                        <widget name="iot_reset_password" btn_name="Reset Password" btn_class="secondary"/>
+                    </t>
                 </header>
                 <sheet>
                     <div class="oe_title">
@@ -28,7 +31,6 @@
                     </div>
                     <group>
                         <group>
-                            <field name="ip_url" widget="url"/>
                             <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" placeholder="Visible to all"/>
                         </group>
                     </group>
@@ -110,6 +112,10 @@
         <field name="model">iot.device</field>
         <field name="arch" type="xml">
             <form create="false" js_class="iot_device_form">
+                <header>
+                    <button name="test_printer" string="Test" class="btn btn-primary" invisible="type != 'printer'"/>
+                    <field name="connected_status" widget="statusbar"/>
+                </header>
                 <sheet>
                     <div class="oe_title">
                         <h1>
@@ -121,20 +127,21 @@
                             <field name="iot_id" readonly="type != 'printer' or connection != 'network'"/>
                             <field name="iot_ip" invisible="True"/>
                             <field name="identifier" readonly="True"/>
-                            <field name="type"/>
-                            <field name="subtype" invisible= "type != 'printer'"/>
                             <field name="is_scanner" invisible="type not in ['keyboard', 'scanner']" widget="boolean_toggle"/>
                             <field name="manufacturer" invisible="manufacturer == ''"/>
-                            <field name="connection"/>
-                            <field name="connected"/>
                             <field name="keyboard_layout" invisible="type not in ['keyboard', 'scanner']"/>
                             <field name="display_url" invisible="type != 'display'"/>
                             <div class='fw-bold' groups="base.group_no_one">Last Sent Value</div>
                             <widget name="iot_device_value_display" groups="base.group_no_one"/>
                         </group>
+                        <group>
+                            <field name="type"/>
+                            <field name="subtype" invisible= "type != 'printer'"/>
+                            <field name="connection"/>
+                        </group>
                     </group>
                     <notebook>
-                        <page string="Printer Reports" name="reports" invisible="type != 'printer'">
+                        <page string="Reports to Auto-Print" name="reports" invisible="type != 'printer'">
                             <field name="report_ids" widget="many2many" context="{'list_view_ref': 'iot.act_report_xml_view_tree_iot'}"/>
                         </page>
                     </notebook>

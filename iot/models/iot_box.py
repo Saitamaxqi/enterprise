@@ -69,3 +69,11 @@ class IotBox(models.Model):
     def _compute_device_count(self):
         for box in self:
             box.device_count = len(box.device_ids)
+
+    def open_homepage(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_url',
+            'url': self.ip_url,
+            'target': 'new',
+        }
