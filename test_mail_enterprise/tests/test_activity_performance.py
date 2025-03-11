@@ -77,7 +77,7 @@ class TestActivityPerformance(BaseMailPerformance):
         enabled. No computed fields are involved. """
         ActivityModel = self.env['mail.test.sms.bl.activity']
 
-        with self.assertQueryCount(employee=9):
+        with self.assertQueryCount(employee=8):
             record = ActivityModel.create({
                 'name': 'Test',
             })
@@ -94,7 +94,7 @@ class TestActivityPerformance(BaseMailPerformance):
         enabled. No computed fields are involved. """
         test_record = self.test_record.with_env(self.env)
 
-        with self.assertQueryCount(employee=28):
+        with self.assertQueryCount(employee=27):
             activity = test_record.activity_schedule(
                 'mail.mail_activity_data_call',
                 summary='Call Activity',
@@ -112,7 +112,7 @@ class TestActivityPerformance(BaseMailPerformance):
         enabled. No computed fields are involved. """
         test_records = self.test_records_voip.with_env(self.env)
 
-        with self.assertQueryCount(employee=127):
+        with self.assertQueryCount(employee=117):
             activities = test_records.activity_schedule(
                 'mail.mail_activity_data_call',
                 summary='Call Activity',
@@ -131,7 +131,7 @@ class TestActivityPerformance(BaseMailPerformance):
         enabled. No computed fields are involved. """
         test_record_voip = self.test_record_voip.with_env(self.env)
 
-        with self.assertQueryCount(employee=49):  # tme 47
+        with self.assertQueryCount(employee=46):  # tme 47
             activity = test_record_voip.activity_schedule(
                 'mail.mail_activity_data_upload_document',
                 summary='Upload Activity',
@@ -217,7 +217,7 @@ class TestActivityPerformance(BaseMailPerformance):
         # check business information (to benefits from this test)
         self.assertEqual(activities.activity_type_id, self.phonecall_activity)
 
-        with self.assertQueryCount(employee=85):
+        with self.assertQueryCount(employee=81):
             activities[:3].write({'user_id': self.user_root.id})
             activities[3:6].write({'user_id': self.env.uid})
             activities[6:].write({'user_id': self.user_admin.id})

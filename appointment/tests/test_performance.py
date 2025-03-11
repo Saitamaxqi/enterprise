@@ -21,6 +21,8 @@ class AppointmentPerformanceCase(AppointmentCommon):
         super(AppointmentPerformanceCase, self).setUp()
         # patch registry to simulate a ready environment
         self.patch(self.env.registry, 'ready', True)
+        # we don't use mock_mail_gateway thus want to mock smtp to test the stack
+        self._mock_smtplib_connection()
 
 
 class AppointmentUIPerformanceCase(AppointmentPerformanceCase):

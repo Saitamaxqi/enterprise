@@ -13,6 +13,8 @@ class KnowledgePerformanceCase(KnowledgeCommonWData):
         super().setUp()
         # patch registry to simulate a ready environment
         self.patch(self.env.registry, 'ready', True)
+        # we don't use mock_mail_gateway thus want to mock smtp to test the stack
+        self._mock_smtplib_connection()
 
     @users('admin')
     @warmup
@@ -21,7 +23,7 @@ class KnowledgePerformanceCase(KnowledgeCommonWData):
         a descendants checks which might be costly.
 
         Done as admin as only admin has access to Duplicate button currently."""
-        with self.assertQueryCount(admin=49):
+        with self.assertQueryCount(admin=45):
             workspace_children = self.workspace_children.with_env(self.env)
             shared = self.article_shared.with_env(self.env)
             _duplicates = (workspace_children + shared).copy_batch()
@@ -31,7 +33,7 @@ class KnowledgePerformanceCase(KnowledgeCommonWData):
     @warmup
     def test_article_creation_single_shared_grandchild(self):
         """ Test with 2 levels of hierarchy in a private/shared environment """
-        with self.assertQueryCount(employee=21):
+        with self.assertQueryCount(employee=20):
             _article = self.env['knowledge.article'].create({
                 'body': '<p>Hello</p>',
                 'name': 'Article in shared',
@@ -43,7 +45,7 @@ class KnowledgePerformanceCase(KnowledgeCommonWData):
     @users('employee')
     @warmup
     def test_article_creation_single_workspace(self):
-        with self.assertQueryCount(employee=19):
+        with self.assertQueryCount(employee=18):
             _article = self.env['knowledge.article'].create({
                 'body': '<p>Hello</p>',
                 'name': 'Article in workspace',
@@ -55,7 +57,7 @@ class KnowledgePerformanceCase(KnowledgeCommonWData):
     @users('employee')
     @warmup
     def test_article_creation_multi_roots(self):
-        with self.assertQueryCount(employee=15):
+        with self.assertQueryCount(employee=14):
             _article = self.env['knowledge.article'].create([
                 {'body': '<p>Hello</p>',
                  'internal_permission': 'write',
@@ -67,7 +69,7 @@ class KnowledgePerformanceCase(KnowledgeCommonWData):
     @users('employee')
     @warmup
     def test_article_creation_multi_shared_grandchild(self):
-        with self.assertQueryCount(employee=21):
+        with self.assertQueryCount(employee=20):
             _article = self.env['knowledge.article'].create([
                 {'body': '<p>Hello</p>',
                  'name': f'Article {index} in workspace',
@@ -101,7 +103,7 @@ class KnowledgePerformanceCase(KnowledgeCommonWData):
     @users('employee')
     @warmup
     def test_article_invite_members(self):
-        with self.assertQueryCount(employee=78):
+        with self.assertQueryCount(employee=75):
             shared_article = self.shared_children[0].with_env(self.env)
             partners = (self.customer + self.partner_employee_manager + self.partner_employee2).with_env(self.env)
             shared_article.invite_members(partners, 'write')
@@ -122,6 +124,13 @@ class KnowledgePerformanceCase(KnowledgeCommonWData):
 
 @tagged('knowledge_performance', 'post_install', '-at_install')
 class KnowledgePerformancePermissionCase(KnowledgeArticlePermissionsCase):
+
+    def setUp(self):
+        super().setUp()
+        # patch registry to simulate a ready environment
+        self.patch(self.env.registry, 'ready', True)
+        # we don't use mock_mail_gateway thus want to mock smtp to test the stack
+        self._mock_smtplib_connection()
 
     @users('employee')
     @warmup
@@ -170,6 +179,13 @@ class KnowledgePerformanceSidebarCase(KnowledgeCommonWData):
             'name': 'Workspace Grand-Child',
             'parent_id': cls.workspace_children[0].id,
         }] * 2)
+
+    def setUp(self):
+        super().setUp()
+        # patch registry to simulate a ready environment
+        self.patch(self.env.registry, 'ready', True)
+        # we don't use mock_mail_gateway thus want to mock smtp to test the stack
+        self._mock_smtplib_connection()
 
     @users('employee')
     @warmup
