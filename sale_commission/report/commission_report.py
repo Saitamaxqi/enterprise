@@ -133,7 +133,7 @@ achievement AS (
         AND cl.user_id = u.user_id
     LEFT JOIN sale_commission_plan_target_forecast scpf
         ON (scpf.target_id = era.id AND u.user_id = scpf.user_id)
-    LEFT JOIN sale_commission_plan scp ON scp.id = scpf.plan_id
+    LEFT JOIN sale_commission_plan scp ON scp.id = u.plan_id
     GROUP BY
         era.id,
         era.plan_id,
