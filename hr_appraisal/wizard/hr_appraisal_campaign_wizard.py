@@ -93,7 +93,7 @@ class HrAppraisalCampaignWizard(models.TransientModel):
     def action_generate_appraisals(self):
         employees = self._get_employees_from_mode()
         appraisals = self._create_employees_appraisals(employees)
-        action = self.env['ir.actions.act_window']._for_xml_id('hr_appraisal.hr_appraisal_action_mutliple_appraisals')
+        action = self.env['ir.actions.act_window']._for_xml_id('hr_appraisal.hr_appraisal_action_multiple_appraisals')
         action["domain"] = [('id', 'in', appraisals.ids)]
         action["context"] = self.env.context
         return action
