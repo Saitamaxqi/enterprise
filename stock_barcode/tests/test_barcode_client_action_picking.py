@@ -3751,6 +3751,37 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = self._get_client_action_url(picking.id)
         self.start_tour(url, 'test_remove_sublines_and_scan_serial_again', login='admin')
 
+    def test_split_line_preserve_package(self):
+        """
+        This test ensures that move lines, when assigned a new destination
+        while scanning, properly preserve package source info after scanning
+        a package destination when the move line moves partial quantity
+        """
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'group_ids': [Command.link(grp_pack.id), Command.link(grp_multi_loc.id)]})
+        self.picking_type_out.restrict_scan_source_location = 'no'
+
+        # Create two empty packs
+        pack1, pack2 = self.env['stock.package'].create([{
+            'name': name,
+        } for name in ['THEPACK1', 'THEPACK2']])
+
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, quantity=100, package_id=pack1)
+        delivery_form = Form(self.env['stock.picking'])
+        delivery_form.picking_type_id = self.picking_type_out
+        with delivery_form.move_ids.new() as move:
+            move.product_id = self.product1
+            move.product_uom_qty = 50
+        delivery_with_move = delivery_form.save()
+        delivery_with_move.action_confirm()
+        delivery_with_move.action_assign()
+        url = self._get_client_action_url(delivery_with_move.id)
+        self.start_tour(url, 'test_split_line_preserve_package', login='admin')
+        self.assertEqual(delivery_with_move.move_line_ids[0].package_id, pack1)
+        self.assertEqual(delivery_with_move.move_line_ids[1].result_package_id, pack2)
+        self.assertEqual(delivery_with_move.move_line_ids[1].package_id, pack1)
+
     # === GS1 TESTS ===#
     def test_gs1_delivery_ambiguous_lot_number(self):
         """

@@ -7203,6 +7203,44 @@ registry.category("web_tour.tours").add("test_no_validate_no_dest_package", {
     ],
 });
 
+registry.category("web_tour.tours").add("test_split_line_preserve_package", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_line",
+            run: function () {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "0/50");
+                helper.assertLinePackage(0, "THEPACK1");
+            },
+        },
+        { trigger: ".o_barcode_line .o_edit", run: "click" },
+        {
+            trigger: "div[name='qty_done'] input",
+            run() {
+                // Input type number not supported by tour helpers.
+                // It would work if the clipboard was mocked in tours the same way it is in unit tests.
+                this.anchor.value = "25";
+                this.anchor.dispatchEvent(new InputEvent("input", { bubbles: true }));
+            },
+        },
+        { trigger: "div[name='qty_done'] input:value('25')" },
+        { trigger: ".o_save", run: "click" },
+        // Scan a destination package so the split line function will
+        // split the source line into two different lines.
+        { trigger: ".o_barcode_line.o_selected", run: "scan THEPACK2" },
+        // Assert that the two lines have the source package of the origin line.
+        {
+            trigger: ".o_barcode_line .result-package:contains('THEPACK2')",
+            run: () => {
+                helper.assertLinesCount(2);
+                helper.assertLinePackage(0, "THEPACK1");
+                helper.assertLinePackage(1, "THEPACK1");
+            },
+        },
+        { trigger: "button.o_exit", run: "click" },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_qty_after_uom_update_picking_tour", {
     steps: () => [
         {

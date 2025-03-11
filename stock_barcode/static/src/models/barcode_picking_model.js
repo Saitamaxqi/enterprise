@@ -683,6 +683,7 @@ export default class BarcodePickingModel extends BarcodeModel {
         const fieldsParams = {
             location_id: line.location_id.id,
             location_dest_id: line.location_dest_id.id,
+            package_id: line.package_id?.id,
         };
         const newLine = await this._createNewLine({ copyOf: line, fieldsParams });
         delete newLine.parentLine;
