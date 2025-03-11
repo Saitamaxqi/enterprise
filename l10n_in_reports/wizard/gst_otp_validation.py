@@ -24,8 +24,30 @@ class L10n_InGstOtpValidation(models.TransientModel):
             }
             raise RedirectWarning(_("Please enter a GST number in company."), action, _('Go to Company'))
 
+    def _l10n_in_reports_gstr_check_gst_token(self):
+        """Check if another company with the same GST number has a valid GST token.
+
+        If found, raises a RedirectWarning to guide the user to the Tax Units view.
+        """
+
+        count = self.env['res.company'].sudo().search_count([
+            ('id', '!=', self.company_id.id),
+            ('vat', '=', self.company_id.vat),
+            ('l10n_in_gstr_gst_token_validity', '>', fields.Datetime.now()),
+        ], limit=1)
+        if count < 1:
+            return
+        message = _(
+            "Another company is already using this GST number with "
+            "a valid GST token. To proceed, make sure this company is "
+            "part of a Tax Unit.",
+        )
+        action = self.env.ref('account_reports.action_view_tax_units')
+        raise RedirectWarning(message, action.id, _('Go to Tax units'))
+
     def gst_send_otp(self):
         self.check_gst_number()
+        self._l10n_in_reports_gstr_check_gst_token()
         response = self.env["l10n_in.gst.return.period"]._otp_request(self.company_id)
         if response.get('error'):
             error_message = "\n".join(["[%s] %s" % (error.get('code'), error.get('message')) for error in response.get("error", {})])
