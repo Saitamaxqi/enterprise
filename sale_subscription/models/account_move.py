@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from functools import partial
 from odoo import models, _
 from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_PROGRESS_STATE
 from dateutil.relativedelta import relativedelta
@@ -76,7 +77,7 @@ class AccountMove(models.Model):
         if not automatic_invoice:
             all_subscriptions._post_invoice_hook()
 
-        self.env['sale.order.log']._update_effective_date(log_date_values)
+        self.env.cr.precommit.add(partial(self.env['sale.order.log']._update_effective_date, log_date_values))
         return posted_moves
 
     def _message_auto_subscribe_followers(self, updated_values, subtype_ids):

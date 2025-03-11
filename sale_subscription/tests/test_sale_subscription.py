@@ -2155,6 +2155,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             upsell_logs = subscription.order_log_ids - previous_logs
             inv = upsell_so._create_invoices()
             inv._post()
+            self.flush_tracking() #make sure to launch _update_effective_date
             self.assertEqual(upsell_logs.effective_date, datetime.date(2025, 1, 15))
             self.assertFalse(second_manual_logs.effective_date, "last manual update is not invoiced")
 
@@ -2198,6 +2199,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         log1 = subscription.order_log_ids
         self.assertFalse(log1.effective_date)
         subscription._create_invoices()._post()
+        self.flush_tracking() # make sure to launch _update_effective_date
         self.assertEqual(log1.effective_date, datetime.date(2025, 1, 1))
 
         # Test upselling with after a manual change
@@ -2217,6 +2219,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertEqual(round(log3.amount_signed, 2), 16.66)
         self.assertFalse(log3.effective_date)
         upsell_so._create_invoices()._post()
+        self.flush_tracking() # make sure to launch _update_effective_date
         self.assertFalse(log2.effective_date)
         self.assertEqual(log3.effective_date, datetime.date(2025, 4, 1))
 
@@ -2408,3 +2411,33 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         sub.set_close()
         self.flush_tracking()
         self.assertEqual(sum(sub.order_log_ids.mapped('amount_signed')), 0)
+
+    def test_proper_effective_date(self):
+        """ Make sure that the effective date is correct when the order is confirmed
+        and the first account.move are performed in the same transaction
+        (no flush between confirm and _post).
+        This flow can be done by paying/confirming a SO on the portal.
+        """
+        self.subscription_tmpl.plan_id = self.plan_year.id
+        subscription = self.env['sale.order'].create({
+            'name': 'Parent Sub',
+            'is_subscription': True,
+            'note': "original subscription description",
+            'partner_id': self.user_portal.partner_id.id,
+            'sale_order_template_id': self.subscription_tmpl.id,
+            'start_date': '2025-01-01',
+            'order_line': [(0, 0, {
+                'name': 'TestRecurringLine',
+                'product_id': self.product.id,
+                'product_uom_qty': 1,
+            })],
+        })
+        self.flush_tracking()
+        subscription.action_confirm()
+        log = subscription.order_log_ids
+        self.assertFalse(log.effective_date)
+        inv = subscription._create_invoices()
+        inv._post()
+        self.flush_tracking()
+        log = subscription.order_log_ids
+        self.assertEqual(log.effective_date, datetime.date(2025, 1, 1))
