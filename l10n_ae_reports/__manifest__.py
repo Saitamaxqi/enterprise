@@ -2,7 +2,6 @@
 
 {
     'name': 'United Arab Emirates - Accounting Reports',
-    'countries': ['ae'],
     'version': '1.0',
     'category': 'Accounting/Localizations/Reporting',
     'description': """

@@ -1,6 +1,5 @@
 {
     'name': 'United Arab Emirates - Corporate Tax Report',
-    'countries': ['ae'],
     'version': '1.0',
     'icon': '/account/static/description/l10n.png',
     'category': 'Accounting/Localizations/Account Charts',

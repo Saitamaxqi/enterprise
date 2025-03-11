@@ -2,7 +2,6 @@
 
 {
     'name': 'Denmark - Intrastat',
-    'countries': ['dk'],
     'version': '1.0',
     'category': 'Accounting/Localizations/Reporting',
     'description': """

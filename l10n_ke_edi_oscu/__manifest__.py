@@ -2,7 +2,6 @@
 
 {
     'name': "Kenya eTIMS EDI Integration",
-    'countries': ['ke'],
     'summary': """
             Kenya eTIMS Device EDI Integration
         """,

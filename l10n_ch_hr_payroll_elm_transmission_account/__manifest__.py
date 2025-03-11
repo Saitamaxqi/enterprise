@@ -4,7 +4,6 @@
 {
     'name': 'Switzerland - Payroll with Accounting',
     'icon': '/account/static/description/l10n.png',
-    'countries': ['ch'],
     'author': 'Odoo',
     'version': '1.0',
     'category': 'Human Resources',

@@ -1,6 +1,5 @@
 {
     'name': 'Estonia Intrastat Declaration',
-    'countries': ['ee'],
     'version': '1.0',
     'category': 'Accounting/Localizations/Reporting',
     'description': "Generates Intrastat XML report for declaration.",

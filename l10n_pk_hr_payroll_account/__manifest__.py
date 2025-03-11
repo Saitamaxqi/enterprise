@@ -3,7 +3,6 @@
 {
     'name': 'Pakistan - Payroll with Accounting',
     'author': 'Odoo S.A.',
-    'countries': ['pk'],
     'version': '1.0',
     'category': 'Human Resources',
     'description': """

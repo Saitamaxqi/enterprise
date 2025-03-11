@@ -2,7 +2,6 @@
 {
     'name': 'Egypt - Payroll with Accounting',
     'author': 'Odoo S.A.',
-    'countries': ['eg'],
     'version': '1.0',
     'category': 'Human Resources',
     'description': """

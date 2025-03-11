@@ -2,7 +2,6 @@
 {
     'name': 'Saudi Arabia - Payroll with Accounting',
     'author': 'Odoo S.A.',
-    'countries': ['sa'],
     'version': '1.0',
     'category': 'Human Resources',
     'description': """

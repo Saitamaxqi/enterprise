@@ -2,7 +2,6 @@
 {
     'name': 'United Arab Emirates - Payroll with Accounting',
     'author': 'Odoo S.A.',
-    'countries': ['ae'],
     'category': 'Human Resources',
     'description': """
 Accounting Data for UAE Payroll Rules.

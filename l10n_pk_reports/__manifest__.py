@@ -4,7 +4,6 @@
 
 {
     'name': 'Pakistan - Accounting Reports',
-    'countries': ['pk'],
     'version': '1.0',
     'description': """
 Accounting Reports for Pakistan (Profit and Loss report and Balance Sheet)

@@ -2,7 +2,6 @@
 
 {
     'name': 'Sweden - SIE 4 Export',
-    'countries': ['se'],
     'summary': 'Export Accounting Data to SIE 4 files',
     'version': '1.0',
     'description': """

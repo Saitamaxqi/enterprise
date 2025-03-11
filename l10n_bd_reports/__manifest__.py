@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': 'Bangladesh - Accounting Reports',
-    'countries': ['bd'],
     'version': '1.0.0',
     'description': """
 Accounting reports for Bangladesh
