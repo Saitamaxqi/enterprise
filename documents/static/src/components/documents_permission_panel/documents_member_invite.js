@@ -52,7 +52,7 @@ export class DocumentsMemberInvite extends Component {
             config: {
                 content: `<p placeholder="${wysiwygPlaceholder}"><br/></p>`,
                 placeholder: wysiwygPlaceholder,
-                disableVideo: true,
+                allowMediaDialogVideo: false,
             },
             editor: undefined,
             message: "",

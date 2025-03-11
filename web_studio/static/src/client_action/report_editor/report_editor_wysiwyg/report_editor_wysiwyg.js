@@ -321,7 +321,7 @@ export class ReportEditorWysiwyg extends Component {
                         node.nodeType === Node.ELEMENT_NODE &&
                         node.matches(".page, .header, .footer"),
                 },
-                disableVideo: true,
+                allowMediaDialogVideo: false,
             },
             this.env.services
         );
