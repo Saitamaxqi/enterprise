@@ -246,7 +246,7 @@ msgstr ""
 #. module: hr_recruitment_integration_monster
 #: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_company__hr_recruitment_monster_username
 #: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_config_settings__hr_recruitment_monster_username
-msgid "Identifier"
+msgid "Monster Identifier"
 msgstr ""
 
 #. module: hr_recruitment_integration_monster
@@ -353,7 +353,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_company__hr_recruitment_monster_password
 #: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_config_settings__hr_recruitment_monster_password
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_monster.res_config_settings_view_form
-msgid "Password"
+msgid "Monster Password"
 msgstr ""
 
 #. module: hr_recruitment_integration_monster
