@@ -34,7 +34,11 @@ export class ThankYouDialog extends Component {
         reference: {
             type: String,
             optional: true
-        }
+        },
+        isRefused: {
+            type: Boolean,
+            optional: true
+        },
     };
 
     setup() {
@@ -79,7 +83,7 @@ export class ThankYouDialog extends Component {
             const closeContext = result.custom_action ? {} : { clearBreadcrumbs: true };
             this.closeContext = closeContext;
         }
-        if (!this.suggestSignUp && !session.is_website_user) {
+        if (!this.suggestSignUp && !session.is_website_user && !this.props.isRefused) {
             const result = await rpc("/sign/sign_request_items", {
                 request_id: this.signInfo.get("documentId"),
                 token: this.signInfo.get("signRequestToken"),

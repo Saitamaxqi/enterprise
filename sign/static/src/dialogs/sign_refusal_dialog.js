@@ -66,5 +66,6 @@ export class SignRefusalDialogTitle extends ThankYouDialog {
         super.setup();
         this.message = this.props.message || _t("Document refusal submitted.");
         this.dialog = useService("dialog");
+        this.props.isRefused = true;
     }
 }
