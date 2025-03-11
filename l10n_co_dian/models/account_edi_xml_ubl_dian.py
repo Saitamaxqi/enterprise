@@ -658,7 +658,7 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
         vals['vals']['note_vals'].append({'note': cufe_cude_cuds_vals})
         return vals
 
-    def _export_invoice(self, invoice):
+    def _export_invoice(self, invoice, convert_fixed_taxes=True):
         # EXTENDS account.edi.xml.ubl_20
         xml, errors = super()._export_invoice(invoice, convert_fixed_taxes=False)
         if errors:
@@ -690,11 +690,11 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
             if move.l10n_co_dian_identifier_type in ('cude', 'cuds') and not operation_mode.dian_software_security_code:
                 constraints['l10n_co_dian_identifier_type'] = _("The software PIN is required to compute the CUDE/CUDS.")
         # required fields on journal
-        if move.move_type == 'out_invoice' and not move.journal_id.l10n_co_dian_technical_key:
+        if move.move_type == 'out_invoice' and not move.journal_id.l10n_co_dian_technical_key and not move.company_id.l10n_co_dian_demo_mode:
             constraints['l10n_co_dian_technical_key'] = _("A technical key on the journal is required to compute the CUFE.")
-        for field in ('l10n_co_edi_dian_authorization_number', 'l10n_co_edi_dian_authorization_date',
+        for field in (['l10n_co_edi_dian_authorization_number', 'l10n_co_edi_dian_authorization_date',
                       'l10n_co_edi_dian_authorization_end_date', 'l10n_co_edi_min_range_number',
-                      'l10n_co_edi_max_range_number', 'l10n_co_dian_technical_key'):
+                      'l10n_co_edi_max_range_number'] + ['l10n_co_dian_technical_key'] if not move.company_id.l10n_co_dian_demo_mode else []):
             constraints[f"dian_{field}"] = self._check_required_fields(move.journal_id, field)
         # fields on partners
         for role in ('customer', 'supplier'):

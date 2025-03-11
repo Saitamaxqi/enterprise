@@ -34,3 +34,9 @@ class ResConfigSettings(models.TransientModel):
         readonly=False,
         required=True,
     )
+    l10n_co_dian_demo_mode = fields.Boolean(
+        string="DIAN Demo Mode",
+        related='company_id.l10n_co_dian_demo_mode',
+        readonly=False,
+        help="Activate this checkbox if you’re testing elecronic invoice flows with internal validation.",
+    )

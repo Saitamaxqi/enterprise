@@ -1,4 +1,5 @@
 from odoo import api, models, fields
+from odoo.tools.misc import str2bool
 
 
 class ResCompany(models.Model):
@@ -12,6 +13,7 @@ class ResCompany(models.Model):
     l10n_co_dian_certificate_ids = fields.One2many(comodel_name='certificate.certificate', inverse_name='company_id')
     l10n_co_dian_test_environment = fields.Boolean(
         string="Test environment",
+        inverse='_inverse_l10n_co_dian_test_environment',
         default=True,
     )
     l10n_co_dian_certification_process = fields.Boolean(
@@ -26,6 +28,10 @@ class ResCompany(models.Model):
             ('carvajal', "Carvajal")
         ],
         default=lambda self: self._default_l10n_co_dian_provider(),
+    )
+    l10n_co_dian_demo_mode = fields.Boolean(
+        compute='_compute_l10n_co_dian_demo_mode',
+        inverse='_inverse_l10n_co_dian_demo_mode',
     )
 
     @api.depends('l10n_co_dian_test_environment')
@@ -47,3 +53,18 @@ class ResCompany(models.Model):
             return 'carvajal'
         else:
             return 'dian'
+
+    def _compute_l10n_co_dian_demo_mode(self):
+        for company in self:
+            company.l10n_co_dian_demo_mode = str2bool(
+                self.env['ir.config_parameter'].sudo().get_param(f"l10n_co_dian_demo_mode_{company.id}")
+            )
+
+    def _inverse_l10n_co_dian_demo_mode(self):
+        for company in self:
+            self.env['ir.config_parameter'].sudo().set_param(f"l10n_co_dian_demo_mode_{company.id}", str(company.l10n_co_dian_demo_mode))
+
+    def _inverse_l10n_co_dian_test_environment(self):
+        for company in self:
+            if company.l10n_co_dian_test_environment:
+                company.l10n_co_dian_demo_mode = False

@@ -199,9 +199,19 @@ msgid ""
 msgstr ""
 
 #. module: l10n_co_dian
+#: model:ir.model.fields,help:l10n_co_dian.field_res_config_settings__l10n_co_dian_demo_mode
+msgid "Activate this checkbox if you’re testing elecronic invoice flows with internal validation."
+msgstr ""
+
+#. module: l10n_co_dian
 #: model:ir.model.fields,help:l10n_co_dian.field_res_config_settings__l10n_co_dian_test_environment
 msgid ""
 "Activate this checkbox if you’re testing workflows for electronic invoicing."
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
+msgid "Activate this mode to be able to test electronic invoicing only with internal validations, but no responce from the DIAN environment."
 msgstr ""
 
 #. module: l10n_co_dian
@@ -929,7 +939,12 @@ msgstr ""
 
 #. module: l10n_co_dian
 #. odoo-python
-#: code:addons/l10n_co_dian/models/account_journal.py:0
+#: code:addons/l10n_co_dian/models/account_move.py:0
+msgid "The %s was validated locally in Demo Mode."
+msgstr ""
+
+#. module: l10n_co_dian
+#. odoo-python
 #: code:addons/l10n_co_dian/models/l10n_co_dian_document.py:0
 msgid "The DIAN server did not respond."
 msgstr ""

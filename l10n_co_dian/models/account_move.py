@@ -288,6 +288,9 @@ class AccountMove(models.Model):
                 body=_(
                     "The %s was accepted by the DIAN.",
                     dict(document.move_id._fields['move_type'].selection)[document.move_id.move_type],
+                ) if not document.move_id.company_id.l10n_co_dian_demo_mode else _(
+                    "The %s was validated locally in Demo Mode.",
+                    dict(document.move_id._fields['move_type'].selection)[document.move_id.move_type],
                 ),
                 attachment_ids=document.attachment_id.copy().ids,
             )

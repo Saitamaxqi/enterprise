@@ -35,6 +35,10 @@
                                  help="Send test electronic documents with your certificate to achieve the 'Enabled' status in the DIAN portal for 'in house software' operation mode">
                             <field name="l10n_co_dian_certification_process"/>
                         </setting>
+                        <setting class="col-lg-12" invisible="l10n_co_dian_test_environment"
+                                help="Activate this mode to be able to test electronic invoicing only with internal validations, but no responce from the DIAN environment.">
+                            <field name="l10n_co_dian_demo_mode"/>
+                        </setting>
                     </t>
                 </t>
             </field>

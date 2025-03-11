@@ -94,10 +94,10 @@ class L10n_Co_DianDocument(models.Model):
         # create document
         doc = self.create({
             'move_id': move.id,
-            'identifier': root.find('.//{*}UUID').text,
+            'identifier': 'DEMO' if move.company_id.l10n_co_dian_demo_mode else root.find('.//{*}UUID').text,
             'state': state,
             # naive local colombian datetime
-            'datetime': datetime.fromisoformat(root.find('.//{*}SigningTime').text).replace(tzinfo=None),
+            'datetime': datetime.fromisoformat(root.find('.//{*}SigningTime').text).replace(tzinfo=None) if not move.company_id.l10n_co_dian_demo_mode else datetime.now(),
             'test_environment': move.company_id.l10n_co_dian_test_environment,
             'certification_process': move.company_id.l10n_co_dian_certification_process,
             **kwargs,
@@ -155,6 +155,13 @@ class L10n_Co_DianDocument(models.Model):
     @api.model
     def _send_bill_sync(self, zipped_content, move):
         """ Send the document to the 'SendBillSync' (synchronous) webservice. """
+
+        if move.company_id.l10n_co_dian_demo_mode:
+            return {
+                'state': 'invoice_accepted',
+                'message_json': {'status': _("Demo mode response")},
+            }
+
         response = xml_utils._build_and_send_request(
             self,
             payload={
@@ -244,27 +251,60 @@ class L10n_Co_DianDocument(models.Model):
             },
         }
 
+    def _demo_get_attached_document_values(self, original_xml_etree):
+        # Demo mode version: use all values that do not require a DIAN response
+        return {
+            'profile_execution_id': original_xml_etree.findtext('./{*}ProfileExecutionID'),
+            'id': original_xml_etree.findtext('./{*}ID'),
+            'uuid': self.identifier,
+            'uuid_attrs': {
+                'scheme_name': self.move_id.l10n_co_dian_identifier_type.upper() + "-SHA384",
+            },
+            'issue_date': original_xml_etree.findtext('./{*}IssueDate'),
+            'issue_time': original_xml_etree.findtext('./{*}IssueTime'),
+            'document_type': "Contenedor de Factura Electrónica",
+            'parent_document_id': original_xml_etree.findtext('./{*}ID'),
+            'parent_document': {
+                'id': original_xml_etree.findtext('./{*}ID'),
+                'uuid': self.identifier,
+                'uuid_attrs': {
+                    'scheme_name': self.move_id.l10n_co_dian_identifier_type.upper() + "-SHA384",
+                },
+                'issue_date': 'Demo',
+                'issue_time': 'Demo',
+                'response_code': 'Demo',
+                'validation_date': 'Demo',
+                'validation_time': 'Demo',
+            },
+        }
+
     def _get_attached_document(self):
         """ Return a tuple: (the attached document xml, an error message) """
         self.ensure_one()
-
-        # call to GetStatus to get the ApplicationResponse
-        status_response = self._get_status()
-        if status_response['status_code'] != 200:
-            return "", _(
-                "Error %(code)s when calling the DIAN server: %(response)s",
-                code=status_response['status_code'],
-                response=status_response['response'],
-            )
-        status_etree = etree.fromstring(status_response['response'])
-        application_response = b64decode(status_etree.findtext(".//{*}XmlBase64Bytes"))
         original_xml_etree = etree.fromstring(self.attachment_id.raw)
 
-        # render the Attached Document
-        vals = self._get_attached_document_values(
-            original_xml_etree=original_xml_etree,
-            application_response_etree=etree.fromstring(application_response),
-        )
+        if self.move_id.company_id.l10n_co_dian_demo_mode:
+            application_response = b''
+            vals = self._demo_get_attached_document_values(original_xml_etree=original_xml_etree)
+        else:
+            # call to GetStatus to get the ApplicationResponse
+            status_response = self._get_status()
+            if status_response['status_code'] != 200:
+                return "", _(
+                    "Error %(code)s when calling the DIAN server: %(response)s",
+                    code=status_response['status_code'],
+                    response=status_response['response'],
+                )
+            status_etree = etree.fromstring(status_response['response'])
+            application_response = b64decode(status_etree.findtext(".//{*}XmlBase64Bytes"))
+            original_xml_etree = etree.fromstring(self.attachment_id.raw)
+
+            # render the Attached Document
+            vals = self._get_attached_document_values(
+                original_xml_etree=original_xml_etree,
+                application_response_etree=etree.fromstring(application_response),
+            )
+
         attached_document = self.env['ir.qweb']._render('l10n_co_dian.attached_document', vals)
         attached_doc_etree = etree.fromstring(attached_document)
 
