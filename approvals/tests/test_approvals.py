@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import Command, fields
-from odoo.tests import common, Form
+from odoo.tests import common, Form, new_test_user
 from odoo.exceptions import UserError
 
 
@@ -195,8 +195,37 @@ class TestRequest(common.TransactionCase):
             'automated_sequence': True,
             'sequence_code': '1234',
         })
-        
+
         request_form = Form(self.env['approval.request'])
         request_form.category_id = approval_category
         approval_request = request_form.save()
         self.assertEqual( approval_request.name, '123400001')
+
+    def test_approval_request_change_category(self):
+        user1 = new_test_user(self.env, login='user1')
+        user2 = new_test_user(self.env, login='user2')
+        category1 = self.env['approval.category'].create({
+            'name': 'Test category 1',
+            'approver_ids': [
+                Command.create({'user_id': user1.id}),
+                Command.create({'user_id': user2.id}),
+            ]
+        })
+        category2 = self.env['approval.category'].create({
+            'name': 'Test category 2',
+            'approver_ids': [
+                Command.create({'user_id': user1.id})
+            ]
+        })
+        approval = self.env['approval.request'].create({
+            'name': 'Test request',
+            'category_id': category1.id,
+            'date_start': fields.Datetime.now(),
+            'date_end': fields.Datetime.now(),
+            'location': 'testland'
+        })
+        self.assertEqual(approval.approver_ids.user_id, (user1 + user2))
+        approval.write({
+            'category_id': category2.id
+        })
+        self.assertEqual(approval.approver_ids.user_id, user1)
