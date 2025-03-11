@@ -12,6 +12,7 @@
             </field>
             <field name="l10n_co_edi_dian_authorization_number" position="before">
                 <button name="button_l10n_co_dian_fetch_numbering_range"
+                        colspan="2"
                         icon="fa-refresh"
                         class="btn btn-secondary"
                         type="object"
