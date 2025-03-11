@@ -75,6 +75,6 @@ class HrAppraisalGoal(models.Model):
         vals_list = super().copy_data(default)
         for goal, vals in zip(self, vals_list):
             vals['name'] = _('%s (copy)', goal.name)
-            if goal.deadline < fields.Date.today():
+            if goal.deadline and goal.deadline < fields.Date.today():
                 vals['deadline'] = False
         return vals_list
