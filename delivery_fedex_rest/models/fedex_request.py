@@ -36,6 +36,40 @@ FEDEX_CURR_MATCH = {
     # 'IDR': 'RPA',
 }
 
+FEDEX_MX_STATE_MATCH = {
+    'AGU': 'AG',
+    'BCN': 'BC',
+    'BCS': 'BS',
+    'CAM': 'CM',
+    'CHH': 'CH',
+    'CHP': 'CS',
+    'CMX': 'DF',
+    'COA': 'CO',
+    'COL': 'CL',
+    'DUR': 'DG',
+    'GRO': 'GR',
+    'GUA': 'GT',
+    'HID': 'HG',
+    'JAL': 'JA',
+    'MEX': 'EM',
+    'MIC': 'MI',
+    'MOR': 'MO',
+    'NAY': 'NA',
+    'NLE': 'NL',
+    'OAX': 'OA',
+    'PUE': 'PU',
+    'QUE': 'QE',
+    'ROO': 'QR',
+    'SIN': 'SI',
+    'SLP': 'SL',
+    'SON': 'SO',
+    'TAB': 'TB',
+    'TAM': 'TM',
+    'TLA': 'TL',
+    'VER': 'VE',
+    'YUC': 'YU',
+    'ZAC': 'ZA'
+}
 
 class FedexRequest:
     def __init__(self, carrier):
@@ -153,7 +187,13 @@ class FedexRequest:
         if partner.zip:
             res['postalCode'] = partner.zip
         if partner.state_id:
-            res['stateOrProvinceCode'] = partner.state_id.code
+            state_code = partner.state_id.code
+        # need to adhere to two character length state code
+            if partner.country_id.code == 'MX':
+                state_code = FEDEX_MX_STATE_MATCH[state_code]
+            if partner.country_id.code == 'IN' and partner.state_id.code == 'UK':
+                state_code = 'UT'
+            res['stateOrProvinceCode'] = state_code
         if check_residential:
             setting = self.check_residential
             if setting == 'always' or (setting == 'check' and self._check_residential_address({**res, 'streetLines': [partner.street, partner.street2]})):
@@ -182,15 +222,15 @@ class FedexRequest:
             res['phoneNumber'] = company_partner.phone
         if company_partner:
             # Always put the name of the company, if the partner is a WH
-            res['companyName'] = partner.name
-            res['personName'] = partner.name
+            res['companyName'] = partner.name[:35]
+            res['personName'] = partner.name[:70]
         elif partner.is_company:
-            res['companyName'] = partner.name
-            res['personName'] = partner.name
+            res['companyName'] = partner.name[:35]
+            res['personName'] = partner.name[:70]
         else:
-            res['personName'] = partner.name
+            res['personName'] = partner.name[:70]
             if partner.parent_id:
-                res['companyName'] = partner.parent_id.name
+                res['companyName'] = partner.parent_id.name[:35]
         if partner.email:
             res['emailAddress'] = partner.email
         elif company_partner and company_partner.email:
@@ -225,7 +265,7 @@ class FedexRequest:
         if customPackaging:
             res['subPackagingType'] = 'PACKAGE'
         description = ', '.join([c.product_id.name for c in package.commodities])
-        res['itemDescription'] = description
+        res['itemDescription'] = description[:50]
         res['itemDescriptionForClearance'] = description
         if order_no:
             res['customerReferences'] = [{
@@ -236,7 +276,7 @@ class FedexRequest:
 
     def _get_commodities_info(self, commodity, currency):
         res = {
-            'description': commodity.product_id.name,
+            'description': commodity.product_id.name[:450],
             'customsValue': ({'amount': commodity.monetary_value * commodity.qty, 'currency': currency}),
             'unitPrice': ({'amount': commodity.monetary_value, 'currency': currency}),
             'countryOfManufacture': commodity.country_of_origin,
