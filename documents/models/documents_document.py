@@ -142,10 +142,8 @@ class DocumentsDocument(models.Model):
                                     help="Delay after permanent deletion of the document in the trash (days)")
     company_id = fields.Many2one('res.company', string='Company', store=True, readonly=False, index=True)
 
-    is_company_root_folder = fields.Boolean("Pinned to Company roots", compute='_compute_is_company_root_folder', search='_search_is_company_root_folder')
-
-    # Stat buttons
-    document_count = fields.Integer('Document Count', compute='_compute_document_count')
+    is_company_root_folder = fields.Boolean("Pinned to Company roots", compute='_compute_is_company_root_folder',
+                                            search='_search_is_company_root_folder')
 
     # Activity
     create_activity_option = fields.Boolean(string='Create a new activity', compute='_compute_create_activity_option',
@@ -565,20 +563,6 @@ class DocumentsDocument(models.Model):
         folders = self.filtered(lambda d: d.type == 'folder')
         folders.deletion_delay = self.get_deletion_delay()
         (self - folders).deletion_delay = False
-
-    @api.depends_context('uid')
-    @api.depends('type', 'children_ids', 'shortcut_document_id')
-    def _compute_document_count(self):
-        folders = (self | self.shortcut_document_id).filtered(
-            lambda d: d.type == 'folder' and not d.shortcut_document_id)
-
-        children_counts = Counter(dict(self._read_group(
-            [('folder_id', 'in', folders.ids)],
-            groupby=['folder_id'],
-            aggregates=['__count'])))
-
-        for doc in self:
-            doc.document_count = children_counts[doc.shortcut_document_id or doc]
 
     def _get_folder_embedded_actions(self, folder_ids):
         """Return the enabled actions for the given folder."""

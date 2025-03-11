@@ -84,7 +84,7 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
      * Called when a keydown event is triggered.
      */
     onGlobalKeydown(ev) {
-        if (ev.key !== "Enter" && ev.key !== " " || this.editedRecord) {
+        if ((ev.key !== "Enter" && ev.key !== " ") || this.editedRecord) {
             return;
         }
         const row = ev.target.closest(".o_data_row");
@@ -120,15 +120,18 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
      */
     onCellClicked(record, column, ev) {
         ev.stopPropagation();
+        const isIcon = ev.target.closest(".o_field_documents_type_icon");
         const isSelectionKeyPressed = ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey;
         if (isSelectionKeyPressed) {
             this.toggleRecordSelection(record, ev);
+        } else if (isIcon) {
+            if (record.data.type === "folder") {
+                record.openFolder();
+            } else {
+                record.onClickPreview(ev);
+            }
         } else if (record.selected && this.editableColumns.includes(column.name)) {
             super.onCellClicked(...arguments);
-        } else if (record.data.type !== "folder") {
-            record.onClickPreview(ev);
-        } else {
-            record.openFolder();
         }
     }
 

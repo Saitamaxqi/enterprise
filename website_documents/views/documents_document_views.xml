@@ -16,7 +16,7 @@
         <field name="model">documents.document</field>
         <field name="inherit_id" ref="documents.documents_view_list"/>
         <field name="arch" type="xml">
-            <field name="document_count" position="after">
+            <field name="write_date" position="after">
                 <field name="website_id" groups="website.group_multi_website" optional="hide"/>
             </field>
         </field>
