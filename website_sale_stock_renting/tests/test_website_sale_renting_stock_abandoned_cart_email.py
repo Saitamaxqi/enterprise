@@ -16,8 +16,17 @@ class TestWebsiteSaleStockRentingAbandonedCartEmail(TestWebsiteSaleCartAbandoned
     def test_website_sale_stock_renting_abandoned_cart_email(self):
         """Make sure the send_abandoned_cart_email method sends the correct emails."""
 
+        now = fields.Datetime.now()
         website = self.env['website'].get_current_website()
         website.send_abandoned_cart_email = True
+        website.write(
+            {
+                "send_abandoned_cart_email_activation_time": (
+                    now - relativedelta(hours=website.cart_abandoned_delay)
+                )
+                - relativedelta(minutes=10)
+            }
+        )
 
         renting_product_template = self.env['product.template'].create({
             'name': 'renting_product_template',
@@ -26,7 +35,6 @@ class TestWebsiteSaleStockRentingAbandonedCartEmail(TestWebsiteSaleCartAbandoned
             'allow_out_of_stock_order': False
         })
         renting_product_product = renting_product_template.product_variant_id
-        now = fields.Datetime.now()
         order_line = [[0, 0, {
             'product_id': renting_product_product.id,
             'product_uom_qty': 1,
