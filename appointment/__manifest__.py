@@ -49,8 +49,6 @@ Allow clients to Schedule Appointments through the Portal
     'license': 'OEEL-1',
     'assets': {
         'web.assets_frontend': [
-            'mail/static/src/utils/common/html.js',
-            'mail/static/src/utils/common/format.js',
             'appointment/static/src/js/utils.js',
             'appointment/static/src/scss/appointment.scss',
             'appointment/static/src/js/appointment_select_appointment_type.js',
