@@ -2718,6 +2718,8 @@ class AccountReport(models.Model):
                     continue
                 elif column_dict.get('is_zero') and column_dict.get('blank_if_zero'):
                     rslt = ''
+                elif options.get('export_mode') == 'file':
+                    rslt = column_dict.get('no_format', '')
                 else:
                     rslt = self.format_value(
                         options,

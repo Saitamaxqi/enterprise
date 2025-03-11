@@ -59,11 +59,8 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         report = self.env['account.report'].browse(options['report_id'])
         with tempfile.NamedTemporaryFile(mode='w+b', delete=True) as buf:
             with zipfile.ZipFile(buf, mode="w", compression=zipfile.ZIP_DEFLATED, allowZip64=False) as zf:
-                move_line_ids = []
-                for line in report._get_lines({**options, 'export_mode': 'print', 'unfold_all': True}):
-                    model, model_id = report._get_model_info_from_id(line['id'])
-                    if model == 'account.move.line':
-                        move_line_ids.append(model_id)
+                domain = report._get_options_domain(options, 'strict_range')
+                move_line_ids = self.env['account.move.line'].search(domain).ids
 
                 domain = [
                     ('line_ids', 'in', move_line_ids),
