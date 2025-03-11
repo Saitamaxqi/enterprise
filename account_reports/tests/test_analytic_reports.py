@@ -599,3 +599,45 @@ class TestAnalyticReport(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_analytic_groupby_with_analytic_simulations(self):
+        """
+        Create an analytic simulation (analytic line without a move line)
+        and check that it is taken into account in the report
+        """
+
+        self.env['account.analytic.line'].create({
+            'name': 'Simulation',
+            'date': '2019-05-01',
+            'amount': 100.0,
+            'unit_amount': 1.0,
+            'company_id': self.env.company.id,
+            self.analytic_plan_parent._column_name(): self.analytic_account_parent.id,
+            'general_account_id': self.company_data['default_account_revenue'].id,
+        })
+
+        options = self._generate_options(
+            self.report,
+            '2019-01-01',
+            '2019-12-31',
+            default_options={
+                'analytic_plans_groupby': [self.analytic_plan_parent.id, self.analytic_plan_child.id],
+                'include_analytic_without_aml': True,
+            }
+        )
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            [   0,                                     1,          2],
+            [
+                ('Revenue',                       100.00,       0.00),
+                ('Less Costs of Revenue',           0.00,       0.00),
+                ('Gross Profit',                  100.00,       0.00),
+                ('Less Operating Expenses',         0.00,       0.00),
+                ('Operating Income (or Loss)',    100.00,       0.00),
+                ('Plus Other Income',               0.00,       0.00),
+                ('Less Other Expenses',             0.00,       0.00),
+                ('Net Profit',                    100.00,       0.00),
+            ],
+            options,
+        )

@@ -128,6 +128,8 @@ class AccountReport(models.AbstractModel):
             'debit': SQL("CASE WHEN (amount < 0) THEN -amount else 0 END"),
             'credit': SQL("CASE WHEN (amount > 0) THEN amount else 0 END"),
             'analytic_distribution': analytic_distribution_equivalent,
+            'date': SQL("account_analytic_line.date"),
+            'company_id': SQL("account_analytic_line.company_id"),
         }
 
         all_stored_aml_fields = {
