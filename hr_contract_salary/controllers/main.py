@@ -939,6 +939,7 @@ class HrContractSalary(http.Controller):
             'request_item_ids': signatories_command,
             'reference': _('Signature Request - %s', new_contract.name),
             'subject': _('Signature Request - %s', new_contract.name),
+            'reference_doc': f'hr.contract.salary.offer,{offer.id}'
         })
         sign_request_sudo.toggle_favorited()
 
