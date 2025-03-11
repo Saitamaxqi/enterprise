@@ -14,5 +14,6 @@ from . import test_payslips_validation
 from . import test_performance
 from . import test_declarations_validation
 from . import test_employee_job_change
+from . import test_hr_contract_no_onss
 from . import test_eco_vouchers
 from . import test_salary_advance

@@ -1,8 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo.tests import tagged
 
-from .common import TestPayrollCommon
-from ..models.hr_contract import EMPLOYER_ONSS
+from odoo.addons.l10n_be_hr_payroll.tests.common import TestPayrollCommon
+from odoo.addons.l10n_be_hr_payroll.models.hr_contract import EMPLOYER_ONSS
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
