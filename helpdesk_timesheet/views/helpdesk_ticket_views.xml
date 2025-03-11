@@ -41,7 +41,7 @@
                     invisible="not project_id or not use_helpdesk_timesheet"
                     groups="hr_timesheet.group_hr_timesheet_user">
                     <field name='timesheet_ids' widget="timesheets_one2many" mode="list,kanban" context="{'default_project_id': project_id}">
-                        <list editable="bottom" string="Timesheet Activities" default_order="date" decoration-muted="readonly_timesheet == True">
+                        <list editable="top" string="Timesheet Activities" decoration-muted="readonly_timesheet == True">
                             <field name="readonly_timesheet" column_invisible="True"/>
                             <field name="date" readonly="readonly_timesheet"/>
                             <field name="user_id" column_invisible="True"/>
