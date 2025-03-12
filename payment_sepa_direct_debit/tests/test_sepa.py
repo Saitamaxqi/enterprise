@@ -25,6 +25,7 @@ class TestSepaDirectDebit(SepaDirectDebitCommon):
             'amount_currency': tx.amount,
             'foreign_currency_id': tx.currency_id.id,
             'payment_ref': tx.reference,
+            'account_number': self.partner_bank_number
         })
         AccountBankStatementLine._cron_confirm_sepa_transactions()
         self.assertEqual(tx.state, 'done')

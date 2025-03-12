@@ -56,7 +56,7 @@ class AccountBankStatementLine(models.Model):
                     and line.partner_id == tx.partner_id.commercial_partner_id
                     and (
                         not line.account_number
-                        or line.account_number == tx.mandate_id.partner_bank_id.acc_number
+                        or line.account_number == tx.mandate_id.partner_bank_id.sanitized_acc_number
                     )
                     and (
                         (

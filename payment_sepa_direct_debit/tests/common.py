@@ -30,8 +30,10 @@ class SepaDirectDebitCommon(AccountPaymentCommon, PaymentCustomCommon):
         cls.sepa_journal.bank_account_id = cls.sepa_bank_account
 
         # create the partner bank account
+        cls.partner_bank_number = 'BE17412614919710'
+        # IBAN detection will rewrite the number as 'BE17 4126 1491 9710'
         cls.partner_bank = cls.env['res.partner.bank'].create({
-            'acc_number': 'BE17412614919710',
+            'acc_number': cls.partner_bank_number,
             'partner_id': cls.partner.id,
             'company_id': cls.company.id,
         })
