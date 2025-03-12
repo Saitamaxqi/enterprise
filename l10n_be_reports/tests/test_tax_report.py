@@ -333,11 +333,16 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
 
     @freeze_time('2025-01-18')
     def test_generate_ec_sales_list_activity(self):
+        fiscal_position = self.env['account.fiscal.position'].search([
+            *self.env['account.fiscal.position']._check_company_domain(self.company),
+            ('name', '=', 'Intra-Community'),
+        ], limit=1)
+
         test_partner = self.env['res.partner'].create({
             'name': 'Test Partner',
             'country_id': self.env.ref('base.fr').id,
             'vat': 'FR51306138900',
-            'property_account_position_id': self.env['account.fiscal.position'].search([('name', '=', 'Intra-Community')], limit=1).id,
+            'property_account_position_id': fiscal_position.id,
         })
 
         invoice = self.env['account.move'].create({
@@ -359,7 +364,7 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
         })
         invoice.action_post()
 
-        report =  self.env.ref('l10n_be.tax_report_vat')
+        report = self.env.ref('l10n_be.tax_report_vat')
 
         closing_entry = (
             self.env['account.generic.tax.report.handler']
