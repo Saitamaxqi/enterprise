@@ -253,6 +253,7 @@ class L10n_Be281_10(models.Model):
         holiday_n_structure = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_departure_n_holidays')
         holiday_n1_structure = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_departure_n1_holidays')
         termination_fees_structure = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_termination_fees')
+        cct90_structure = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_structure_cct90')
 
         count = 0
         for employee in employee_payslips:
@@ -270,7 +271,8 @@ class L10n_Be281_10(models.Model):
             warrant_gross = sum(all_line_values['GROSS'][p.id]['total'] for p in payslips if p.struct_id == warrant_structure)
             holiday_gross = sum(all_line_values['GROSS'][p.id]['total'] for p in payslips if p.struct_id in holiday_n_structure + holiday_n1_structure)
             termination_gross = sum(all_line_values['GROSS'][p.id]['total'] for p in payslips if p.struct_id == termination_fees_structure)
-            common_gross = total_gross - warrant_gross - holiday_gross - termination_gross
+            cct90_gross = sum(all_line_values['GROSS'][p.id]['total'] for p in payslips if p.struct_id == cct90_structure)
+            common_gross = total_gross - warrant_gross - holiday_gross - termination_gross - cct90_gross
 
             postcode = employee.private_zip.strip() if is_belgium else '0'
             if len(postcode) > 4 or not postcode.isdecimal():
@@ -428,7 +430,7 @@ class L10n_Be281_10(models.Model):
                 'f10_2113_forfaitrsz': 0,
                 'f10_2115_bonus': _to_eurocent(round(total_volet_A, 2)),
                 'f10_2116_badweatherstamps': 0,
-                'f10_2117_nonrecurrentadvantages': 0,
+                'f10_2117_nonrecurrentadvantages': _to_eurocent(round(cct90_gross, 2)),
                 'f10_2118_overtimehours180': 0,
                 'f10_2119_sportremuneration': 0,
                 'f10_2120_sportvacancysavings': 0,

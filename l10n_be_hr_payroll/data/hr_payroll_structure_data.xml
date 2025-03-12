@@ -143,6 +143,17 @@
         <field name="rule_ids" eval="[]"/>
     </record>
 
+    <record id="hr_payroll_structure_cp200_structure_cct90" model="hr.payroll.structure">
+        <field name="name">CP200: CCT90</field>
+        <field name="code">CP200CCT90</field>
+        <field name="type_id" ref="hr_contract.structure_type_employee_cp200"/>
+        <field name="country_id" ref="base.be"/>
+        <field name="report_id" ref="l10n_be_hr_payroll.action_report_bonus_month"/>
+        <field name="use_worked_day_lines" eval="False"/>
+        <field name="payslip_name">Bonus CCT90</field>
+        <field name="rule_ids" eval="[]"/>
+    </record>
+
     <record id="hr_payroll_structure_student_regular_pay" model="hr.payroll.structure">
         <field name="name">Student: Regular Pay</field>
         <field name="code">BESTUDENT</field>

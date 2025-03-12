@@ -7,8 +7,8 @@ from collections import defaultdict, Counter
 from datetime import date, datetime, timedelta
 from itertools import chain
 
-from odoo import api, models, fields, _
-from odoo.tools import SQL, date_utils, float_is_zero, float_round, ormcache
+from odoo import api, Command, models, fields, _
+from odoo.tools import SQL, float_round, float_is_zero, ormcache
 
 
 class HrPayslip(models.Model):
@@ -74,6 +74,16 @@ class HrPayslip(models.Model):
                     'name': _('Salary Advance Recovery'),
                     'amount': balance,
                     'input_type_id': sal_adv_rec_type.id,
+                })]
+                slip.write({'input_line_ids': to_remove_vals + to_add_vals})
+            elif slip.struct_id.code == 'CP200CCT90':
+                cct90_input_type = self.env.ref('l10n_be_hr_payroll.input_cct90_bonus_plan')
+                lines_to_remove = slip.input_line_ids.filtered(lambda x: x.input_type_id == cct90_input_type)
+                to_remove_vals = [Command.unlink(line.id) for line in lines_to_remove]
+                to_add_vals = [Command.create({
+                    'name': _('CCT90 Bonus Plan'),
+                    'amount': 0,
+                    'input_type_id': cct90_input_type.id,
                 })]
                 slip.write({'input_line_ids': to_remove_vals + to_add_vals})
         return res
@@ -572,6 +582,10 @@ class HrPayslip(models.Model):
                 )._get_last_year_average_variable_revenues()
         return fixed_salary + avg_variable_revenues
 
+    def _get_paid_amount_cct90_bonus_plan(self):
+        self.ensure_one()
+        return self._get_input_line_amount('CCT90BONUSPLAN')
+
     def _get_paid_amount(self):
         self.ensure_one()
         belgian_payslip = self.struct_id.country_id.code == "BE"
@@ -582,6 +596,8 @@ class HrPayslip(models.Model):
                 return self._get_paid_amount_warrant()
             if self.struct_id.code == 'CP200DOUBLE':
                 return self._get_paid_double_holiday()
+            if self.struct_id.code == 'CP200CCT90':
+                return self._get_paid_amount_cct90_bonus_plan()
         return super()._get_paid_amount()
 
     def _is_active_belgian_languages(self):

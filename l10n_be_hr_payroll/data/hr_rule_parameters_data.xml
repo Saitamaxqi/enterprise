@@ -2331,5 +2331,37 @@ covered for the company (teleworking costs, mobile phone, internet, etc., namely
         </record>
 
 
+        <record id="rule_parameter_l10n_be_cct90_employer_onss_threshold" model="hr.rule.parameter">
+            <field name="name">CP200: CCT90 Employer ONSS Threshold</field>
+            <field name="code">cct90_employer_onss_threshold</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_l10n_be_cct90_employer_onss_threshold_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">4164</field>
+            <field name="rule_parameter_id" ref="rule_parameter_l10n_be_cct90_employer_onss_threshold"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
+
+        <record id="rule_parameter_l10n_be_cct90_employer_onss_rate" model="hr.rule.parameter">
+            <field name="name">CP200: CCT90 Employer ONSS Rate</field>
+            <field name="code">cct90_employer_onss_rate</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_l10n_be_cct90_employer_onss_rate_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">33.0</field>
+            <field name="rule_parameter_id" ref="rule_parameter_l10n_be_cct90_employer_onss_rate"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
+
+        <record id="rule_parameter_l10n_be_cct90_employee_pp_threshold" model="hr.rule.parameter">
+            <field name="name">CP200: CCT90 Employee Withholding Tax Threshold</field>
+            <field name="code">cct90_employee_pp_threshold</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_l10n_be_cct90_employee_pp_threshold_2025" model="hr.rule.parameter.value">
+            <field name="parameter_value">3622</field>
+            <field name="rule_parameter_id" ref="rule_parameter_l10n_be_cct90_employee_pp_threshold"/>
+            <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
+        </record>
     </data>
 </odoo>

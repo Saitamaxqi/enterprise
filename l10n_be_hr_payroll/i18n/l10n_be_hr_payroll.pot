@@ -261,6 +261,13 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
+#: code:addons/l10n_be_hr_payroll/models/l10n_be_281_10.py:0
+#: code:addons/l10n_be_hr_payroll/models/l10n_be_281_45.py:0
+msgid "- Test"
+msgstr ""
+
+#. module: l10n_be_hr_payroll
+#. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/hr_employee.py:0
 msgid ""
 "- Without Income: The spouse of the income recipient has no professional income or below %(no_income_threshold)s€.\n"
@@ -2091,6 +2098,7 @@ msgid "Accident insurance organization"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_onss_employer
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_onss_employer
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_termination_ONSS
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n1_pay_onss_employer
@@ -2101,6 +2109,7 @@ msgid "Accounting: ONSS (Employer)"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_onss_employer_basic
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_onss_employer_basic
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_onss_employer_basic
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n1_pay_onss_employer_basic
@@ -2424,6 +2433,7 @@ msgid "April"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_assignment
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_asignment_salary
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n1_asignment_salary
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n_asignment_salary
@@ -2443,6 +2453,7 @@ msgid "At the end of the exercise"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_attachment
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_attachment_salary
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n1_attachment_salary
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n_attachment_salary
@@ -2677,6 +2688,11 @@ msgid "Bicycle to work"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.payroll.structure,payslip_name:l10n_be_hr_payroll.hr_payroll_structure_cp200_structure_cct90
+msgid "Bonus CCT90"
+msgstr ""
+
+#. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_termination_holidays_n1
 msgid "Boulevard de Waterloo"
 msgstr ""
@@ -2751,6 +2767,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_balance_sheet.py:0
 msgid "By reason for termination of the contract"
+msgstr ""
+
+#. module: l10n_be_hr_payroll
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll/models/hr_payslip.py:0
+msgid "CCT90 Bonus Plan"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
@@ -2934,6 +2956,7 @@ msgid "Child Allowance Belgium"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_child_support
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_child_support
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n1_child_support
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n_child_support
@@ -3539,6 +3562,7 @@ msgid "Deducted Amount 34"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_ded
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_deduction
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n1_deduction
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n_deduction
@@ -3757,20 +3781,6 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_274_XX_view_form
 msgid "Doctors / Civil Engineers"
-msgstr ""
-
-#. module: l10n_be_hr_payroll
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_281_10__documents_count
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_281_45__documents_count
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_individual_account__documents_count
-msgid "Documents Count"
-msgstr ""
-
-#. module: l10n_be_hr_payroll
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_281_10__documents_enabled
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_281_45__documents_enabled
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_individual_account__documents_enabled
-msgid "Documents Enabled"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
@@ -4744,6 +4754,7 @@ msgid "Gross Double December Pay Salary"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_gross_salary
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_double_holiday_gross_salary
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_gross_salary
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_thirteen_month_gross_salary
@@ -5845,6 +5856,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_net
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.l10n_be_hr_payroll_structure_cp200_cct90_net_salary
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.l10n_be_hr_payroll_structure_cp200_double_holiday_net_salary
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.l10n_be_hr_payroll_structure_cp200_employee_salary_net_salary
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.l10n_be_hr_payroll_structure_cp200_pfi_net_salary
@@ -5974,6 +5986,11 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_termination_non_respect_motivation
 msgid "Non respect motivation (= 2 weeks)"
+msgstr ""
+
+#. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.l10n_be_hr_payroll_structure_cp200_cct90_basic_salary_rule
+msgid "Non-recurring performance-related benefits"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
@@ -7047,6 +7064,7 @@ msgid "Reimbursed Expenses (Representation Fees)"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_reimbursment
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_reimbursement
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n1_reimbursement
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n_reimbursement
@@ -7451,6 +7469,7 @@ msgid "Social Security Filename Xlsx"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_onss_rule
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_double_holiday_onss_rule
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_double_december_onss
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_onss_rule
@@ -7743,6 +7762,7 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_gross
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.l10n_be_hr_payroll_structure_cp200_cct90_gross_salary_rule
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.l10n_be_hr_payroll_structure_cp200_double_holiday_gross_salary_rule
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.l10n_be_hr_payroll_structure_cp200_employee_salary_gross_salary_rule
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.l10n_be_hr_payroll_structure_cp200_pfi_gross_salary_rule
@@ -8639,6 +8659,7 @@ msgid "Withdrawal not retained"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_p_p
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_double_holiday_pay_p_p
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_atn_warrant_p_p
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_withholding_taxes
@@ -8664,6 +8685,7 @@ msgid "Withholding Taxes"
 msgstr ""
 
 #. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_pp_total
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_double_holiday_pay_pp_total
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_withholding_taxes_total
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_withholding_taxes_total
