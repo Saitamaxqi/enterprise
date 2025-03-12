@@ -1429,6 +1429,10 @@ class TestFsmFlowStock(TestFsmFlowSaleCommon):
         if not warehouse_B:
             warehouse_B = self.env['stock.warehouse'].sudo().create({'name': 'WH', 'code': 'WH-B', 'company_id': company_B.id})
         self.env.user.write({'company_ids': [(6, 0, [company_A.id, company_B.id])], 'company_id': company_A.id})
+        warehouse_B = self.env.user.with_company(company_B)._get_default_warehouse_id()
+        if not warehouse_B:
+            warehouse_B = self.env['stock.warehouse'].sudo().create({'name': 'WH', 'code': 'WH-B', 'company_id': company_B.id})
+            self.assertEqual(self.env.user.with_company(company_B)._get_default_warehouse_id(), warehouse_B)
 
         # customer belongs to company B
         customer = self.env['res.partner'].create({'name': 'Customer', 'company_id': company_B.id})
