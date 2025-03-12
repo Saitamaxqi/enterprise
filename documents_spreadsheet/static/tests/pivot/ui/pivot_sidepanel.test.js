@@ -813,3 +813,22 @@ test("Can change measure display as from the side panel", async function () {
         },
     });
 });
+
+test("Pivot side panel becomes non-interactive and grayed out in read-only mode", async function () {
+    const { model, env } = await createSpreadsheetFromPivotView();
+
+    const pivotId = model.getters.getPivotIds()[0];
+    env.openSidePanel("PivotSidePanel", { pivotId });
+    await animationFrame();
+
+    const sidePanel = target.querySelector(".o-sidePanelBody > div");
+    expect(sidePanel).not.toHaveClass("pe-none");
+    expect(sidePanel).not.toHaveClass("opacity-50");
+
+    model.updateMode("readonly");
+    await animationFrame();
+
+    expect(sidePanel).toHaveClass("pe-none");
+    expect(sidePanel).toHaveClass("opacity-50");
+    expect(sidePanel).toHaveAttribute("inert", "1");
+});
