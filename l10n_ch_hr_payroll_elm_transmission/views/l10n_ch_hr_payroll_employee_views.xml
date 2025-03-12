@@ -238,7 +238,7 @@
                                 </group>
                             </group>
                             <group string="Source Tax Entry / Withdrawal / Mutations"
-                               invisible="not l10n_ch_is_mutations and not l10n_ch_has_withholding_tax">
+                               invisible="not l10n_ch_is_mutations and not l10n_ch_has_withholding_tax" groups="hr_payroll.group_hr_payroll_user">
                                 <field name="l10n_ch_is_mutations" nolabel="1" colspan="2">
                                     <list editable="bottom">
                                         <field name="reason" required="1"/>
