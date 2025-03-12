@@ -21,7 +21,18 @@ patch(BarcodePickingModel.prototype, {
         ]);
         if (typeof res === "object" && res !== null) {
             return this.action.doAction(res, {
-                onClose: () => this.trigger("refresh", { recordId: this.record.id }),
+                onClose: async () => {
+                    this.trigger("refresh", { recordId: this.record.id });
+                    // update lines demand just split to their quantity done to mark them
+                    // validated
+                    for (const line of this.pageLines) {
+                        if (["pass", "fail"].includes(line.check_state)) {
+                            line.reserved_uom_qty = line.quantity;
+                        }
+                    }
+                    this.groupLines();
+                    this.trigger("update");
+                },
             });
         } else {
             this.notification.add(_t("All the quality checks have been done"));

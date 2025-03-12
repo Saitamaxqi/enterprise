@@ -459,7 +459,18 @@ class QualityCheck(models.Model):
                         move_line.location_dest_id = dest_location
                         if move_line.quantity == move.quantity:
                             move.location_dest_id = dest_location
+                        else:
+                            move.with_context(do_not_unreserve=True).product_uom_qty -= failed_qty
+                            move.copy({
+                                'location_dest_id': dest_location,
+                                'move_orig_ids': move.move_orig_ids,
+                                'product_uom_qty': failed_qty,
+                                'state': 'assigned',
+                                'move_line_ids': [Command.link(move_line.id)],
+                            })
+                        check.failure_location_id = dest_location
                         return
+                    move.with_context(do_not_unreserve=True).product_uom_qty -= min(failed_qty, move_line.quantity)
                     move_line.quantity -= min(failed_qty, move_line.quantity)
                     failed_move_line = move_line.with_context(default_check_ids=None, no_checks=True).copy({
                         'location_dest_id': dest_location,
@@ -467,9 +478,8 @@ class QualityCheck(models.Model):
                     })
                     move.copy({
                         'location_dest_id': dest_location,
-                        'move_dest_ids': move.move_dest_ids,
                         'move_orig_ids': move.move_orig_ids,
-                        'product_uom_qty': 0,
+                        'product_uom_qty': min(failed_qty, move_line.quantity),
                         'state': 'assigned',
                         'move_line_ids': [Command.link(failed_move_line.id)],
                     })

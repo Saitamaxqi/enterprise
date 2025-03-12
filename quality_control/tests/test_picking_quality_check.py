@@ -893,6 +893,88 @@ class TestQualityCheck(TestQualityCommon):
             {'quality_state': 'fail', 'product_id': False, 'picking_id': self.receipt.id, 'failure_location_id': self.failure_location.id},
         ])
 
+    def test_failure_location_lot(self):
+        """ Quality point per quantity with failure locations list, a picking with 2 products / moves,
+            fail one move with qty less than total move qty, a new move with the failing quantity is created,
+            moving it to the chosen failure location.
+        """
+        product_lot = self.env['product.product'].create({
+            'name': 'product lot',
+            'is_storable': True,
+            'tracking': 'lot',
+        })
+        self.env['quality.point'].create({
+            'picking_type_ids': [Command.link(self.picking_type_id)],
+            'measure_on': 'move_line',
+            'product_ids': [Command.link(product_lot.id)],
+            'test_type_id': self.env.ref('quality_control.test_type_passfail').id,
+            'failure_location_ids': [Command.link(self.failure_location.id)],
+        })
+        receipt = self.env['stock.picking'].create({
+            'picking_type_id': self.picking_type_id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id,
+        })
+        move = self.env['stock.move'].create({
+            'product_id': product_lot.id,
+            'product_uom_qty': 4,
+            'picking_id': receipt.id,
+            'location_id': receipt.location_id.id,
+            'location_dest_id': receipt.location_dest_id.id,
+        })
+
+        receipt.action_confirm()
+        self.assertEqual(len(receipt.check_ids), 1)
+        move.quantity = 0
+        move.move_line_ids = [Command.create({
+            'product_id': product_lot.id,
+            'product_uom_id': product_lot.uom_id.id,
+            'quantity': 2,
+            'picking_id': receipt.id,
+            'lot_name': 'lot1',
+        }), Command.create({
+            'product_id': product_lot.id,
+            'product_uom_id': product_lot.uom_id.id,
+            'quantity': 2,
+            'picking_id': receipt.id,
+            'lot_name': 'lot2',
+        })]
+
+        # open the wizard to do the checks
+        self.assertEqual(len(receipt.check_ids), 2)
+        action = receipt.check_ids.action_open_quality_check_wizard()
+        wizard = Form.from_action(self.env, receipt.check_ids.action_open_quality_check_wizard()).save()
+        self.assertEqual(len(wizard.check_ids), 2)
+        self.assertEqual(wizard.current_check_id.move_line_id, move.move_line_ids[0])
+        # pass the first quantity
+        action = wizard.do_pass()
+        wizard = self.env[action['res_model']].with_context(action['context']).create({})
+        self.assertEqual(wizard.current_check_id.move_line_id, move.move_line_ids[1])
+        action = wizard.do_fail()
+        wizard = self.env[action['res_model']].with_context(action['context']).browse(action['res_id'])
+
+        self.assertEqual(wizard.qty_failed, 2)
+        wizard.failure_location_id = self.failure_location.id
+        wizard.confirm_fail()
+        self.assertEqual(len(receipt.check_ids), 2)
+        # there should be a move for the passed quantity and a move for the failed quantity
+        self.assertEqual(len(receipt.move_ids), 2)
+        self.assertRecordValues(receipt.move_ids, [
+            {'product_id': product_lot.id, 'product_uom_qty': 2, 'quantity': 2, 'location_dest_id': receipt.location_dest_id.id},
+            {'product_id': product_lot.id, 'product_uom_qty': 2, 'quantity': 2, 'location_dest_id': self.failure_location.id},
+        ])
+        self.assertRecordValues(receipt.check_ids, [
+            {'quality_state': 'pass', 'product_id': product_lot.id, 'qty_line': 2, 'failure_location_id': False},
+            {'quality_state': 'fail', 'product_id': product_lot.id, 'qty_line': 2, 'failure_location_id': self.failure_location.id},
+        ])
+        self.assertRecordValues(receipt.move_ids, [
+            {'picked': False, 'product_id': product_lot.id, 'quantity': 2, 'location_dest_id': receipt.location_dest_id.id},
+            {'picked': False, 'product_id': product_lot.id, 'quantity': 2, 'location_dest_id': self.failure_location.id},
+        ])
+        receipt.button_validate()
+        self.assertEqual(receipt.state, 'done')
+        self.assertEqual(receipt.move_ids.mapped('state'), ['done', 'done'])
+
     def test_qp_with_product_ctg(self):
         """
         Test that the quality check is created based on the product category of product and quality point.

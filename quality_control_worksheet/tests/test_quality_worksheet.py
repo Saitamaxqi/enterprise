@@ -22,6 +22,7 @@ class TestQualityWorksheet(HttpCase, TestQualityCommon):
         """ Have a receipt for two product, to trigger quality checks for each product.
             the two worksheet should be opened back to back for completion
         """
+        self.env['res.users'].search([('login', '=', 'admin')]).email = 'administrator@example.com'
         self.env['quality.point'].create({
             'name': 'QP1',
             'measure_on': 'move_line',
