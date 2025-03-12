@@ -2409,123 +2409,132 @@ class KnowledgeArticle(models.Model):
         self.env['knowledge.article'].flush_model()
         self.env['knowledge.article.member'].flush_model()
 
-        add_where_clause = ''
-        args = []
+        if not additional_fields:
+            additional_fields = {}
+
+        article_ids_clause = SQL()
         if self.ids:
-            args = [tuple(self.ids)]
-            add_where_clause += " AND article_id in %s"
+            article_ids_clause = SQL('WHERE id IN %s', tuple(self.ids))
 
-        additional_select_fields = ''
-        join_clause = ''
-        additional_fields = additional_fields or {}
+        alias = 'ef'
+        select_fields_clause = SQL()
+        join_clauses = SQL()
         if additional_fields:
-            supported_additional_models = [
-                'res.partner',
-                'knowledge.article',
-                'knowledge.article.member',
-            ]
-
-            # 1. build the join clause based on the given models (additional_fields keys)
-            join_clauses = []
-            for model in additional_fields.keys():
-                if model not in supported_additional_models:
-                    continue
-
-                table_name = self.env[model]._table
-                join_condition = ''
-                if model == 'res.partner':
-                    join_condition = f'{table_name}.id = partner_id'
-                elif model == 'knowledge.article':
-                    join_condition = f'{table_name}.id = origin_id'
-                elif model == 'knowledge.article.member':
-                    join_condition = f'{table_name}.id = member_id'
-
-                join_clauses.append(f'LEFT OUTER JOIN {table_name} ON {join_condition}')
-
-            join_clause = ' '.join(join_clauses)
-
-            # 2. build the select clause based on the given fields/aliases pairs
-            # (additional_fields values)
+            # model -> join key
+            supported_models = {
+                'res.partner': 'partner_id',
+                'knowledge.article': 'source_article_id',
+                'knowledge.article.member': 'member_id',
+            }
             select_fields = []
-            for model, fields_list in additional_fields.items():
-                if model not in supported_additional_models:
+            joins = {}
+            for model_name, fields_list in additional_fields.items():
+                if model_name not in supported_models:
                     continue
 
-                table_name = self.env[model]._table
-                for (field, field_alias) in fields_list:
-                    recordset = self.env[model]
-                    if field not in recordset or not recordset._fields[field].store:
-                        continue
-                    select_fields.append(f'{table_name}.{field} as {field_alias}')
+                model = self.env[model_name]
+                table_name = self.env[model_name]._table
 
-            additional_select_fields = ', %s' % ', '.join(select_fields)
+                # add missing join clauses
+                if model_name not in joins:
+                    joins[model_name] = SQL(
+                        'JOIN %(table_name)s ON %(table_pkey)s = %(effective_membership_fkey)s',
+                        table_name=SQL.identifier(table_name),
+                        table_pkey=SQL.identifier(table_name, 'id'),
+                        effective_membership_fkey=SQL.identifier(alias, supported_models[model_name]),
+                    )
 
-        sql = f'''
-    WITH article_permission as (
-        WITH RECURSIVE article_perms as (
-            SELECT a.id, a.parent_id, a.is_desynchronized, m.id as member_id,
-                   m.partner_id, m.permission
-              FROM knowledge_article a
-         LEFT JOIN knowledge_article_member m
-                ON a.id = m.article_id
-        ), article_rec as (
-            SELECT perms1.id, perms1.id as article_id, perms1.parent_id,
-                   perms1.member_id, perms1.partner_id, perms1.permission,
-                   perms1.id as origin_id, 0 as level,
-                   perms1.is_desynchronized
-              FROM article_perms as perms1
-             UNION
-            SELECT perms2.id, perms_rec.article_id, perms2.parent_id,
-                   perms2.member_id, perms2.partner_id, perms2.permission,
-                   perms2.id as origin_id, perms_rec.level + 1,
-                   perms2.is_desynchronized
-              FROM article_perms as perms2
-        INNER JOIN article_rec perms_rec
-                ON perms_rec.parent_id=perms2.id
-                   AND perms_rec.is_desynchronized is not true
+                # add selected fields
+                for field_name, field_alias in fields_list:
+                    field = model._fields.get(field_name)
+                    has_column = bool(field and field.store and field.column_type)
+                    select_key = SQL('%(table_column)s AS %(field_alias)s',
+                                     table_column=SQL.identifier(table_name, field_name),
+                                     field_alias=SQL.identifier(field_alias))
+                    if has_column and select_key not in select_fields:
+                        select_fields.append(select_key)
+
+            if select_fields:
+                select_fields_clause = SQL(', %s', SQL(', ').join(field for field in select_fields))
+            if joins:
+                join_clauses = SQL('\n').join(joins.values())
+
+        query = SQL("""
+            WITH RECURSIVE
+                article_hierarchy     AS (
+                    SELECT id,
+                           id AS ancestor_id,
+                           parent_id,
+                           is_desynchronized,
+                           0  AS inheritance_level
+                      FROM knowledge_article
+                      %(article_ids_clause)s
+
+                     UNION ALL
+
+                    SELECT child.id,
+                           parent.id AS ancestor_id,
+                           parent.parent_id,
+                           parent.is_desynchronized,
+                           child.inheritance_level + 1
+                      FROM article_hierarchy AS child
+                      JOIN knowledge_article AS parent ON parent.id = child.parent_id
+                     WHERE child.is_desynchronized IS NOT TRUE
+                ),
+                article_memberships   AS (
+                    SELECT h.id          AS target_article_id,
+                           h.ancestor_id AS source_article_id,
+                           m.id          AS member_id,
+                           m.permission,
+                           m.partner_id,
+                           h.inheritance_level
+                      FROM article_hierarchy h
+                      JOIN knowledge_article_member m ON m.article_id = h.ancestor_id
+                ),
+                effective_memberships AS (
+                    SELECT target_article_id,
+                           source_article_id,
+                           member_id,
+                           permission,
+                           partner_id
+                      FROM (
+                          SELECT *,
+                                 RANK() OVER (
+                                     PARTITION BY target_article_id, partner_id
+                                     ORDER BY inheritance_level ASC
+                                     ) AS priority_rank
+                            FROM article_memberships
+                      ) ranked_memberships
+                     WHERE priority_rank = 1
+                )
+            SELECT %(alias)s.*
+                   %(select_fields_clause)s
+              FROM effective_memberships AS %(alias)s
+                   %(join_clauses)s
+            """,
+            alias=SQL(alias),
+            article_ids_clause=article_ids_clause,
+            select_fields_clause=select_fields_clause,
+            join_clauses=join_clauses,
         )
-        SELECT article_id, origin_id, member_id, partner_id,
-               permission, min(level) as min_level
-          FROM article_rec
-         WHERE partner_id is not null
-               {add_where_clause}
-      GROUP BY article_id, origin_id, member_id, partner_id, permission
-    )
-    SELECT article_id, origin_id, member_id, partner_id, permission, min_level
-           {additional_select_fields}
-    FROM article_permission
-    {join_clause}
-        '''
+        results = self.env.execute_query_dict(query)
 
-        self._cr.execute(sql, args)
-        results = self._cr.dictfetchall()
-
-        # Now that we have, for each article, all the members found on themselves and their parents.
-        # We need to keep only the first partners found (lowest level) for each article
         article_members = defaultdict(dict)
-        min_level_dict = defaultdict(dict)
-
-        _nolevel = -1
         for result in results:
-            article_id = result['article_id']
-            origin_id = result['origin_id']
+            article_id = result['target_article_id']
+            origin_id = result['source_article_id']
             partner_id = result['partner_id']
-            level = result['min_level']
-            min_level = min_level_dict[article_id].get(partner_id, _nolevel)
-            if min_level == _nolevel or level < min_level:
-                article_members[article_id][partner_id] = {
-                    'member_id': result['member_id'],
-                    'based_on': origin_id if origin_id != article_id else False,
-                    'permission': result['permission']
-                }
-                min_level_dict[article_id][partner_id] = level
-
-                # update our resulting dict based on additional fields
-                article_members[article_id][partner_id].update({
+            article_members[article_id][partner_id] = {
+                'member_id': result['member_id'],
+                'based_on': origin_id if origin_id != article_id else False,
+                'permission': result['permission'],
+                **{
                     field_alias: result[field_alias] if model != 'knowledge.article' or origin_id != article_id else False
                     for model, fields_list in additional_fields.items()
-                    for (field, field_alias) in fields_list
-                })
+                    for field, field_alias in fields_list
+                }
+            }
+
         # add empty member for each article that doesn't have any.
         empty_member = {
             'based_on': False, 'member_id': False, 'permission': None,
