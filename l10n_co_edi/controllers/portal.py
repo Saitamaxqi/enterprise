@@ -12,7 +12,7 @@ class L10nCOPortalAccount(L10nLatamBasePortalAccount):
         if form_data.get('l10n_co_edi_obligation_type_ids'):
             form_data['l10n_co_edi_obligation_type_ids'] = request.httprequest.form.getlist('l10n_co_edi_obligation_type_ids')
         # Set default values for fiscal regimen and obligation types when identification type is not NIT
-        nit_id_type = request.env['l10n_latam.identification.type'].sudo().search([('name', '=', 'NIT')])
+        nit_id_type = request.env['l10n_latam.identification.type'].sudo().search([('name', '=', 'NIT'), ('country_id.code', '=', 'CO')], limit=1)
         id_type_id = form_data.get('l10n_latam_identification_type_id')
         if id_type_id and nit_id_type and int(id_type_id) != nit_id_type.id:
             default_obligations = ['R-99-PN']
