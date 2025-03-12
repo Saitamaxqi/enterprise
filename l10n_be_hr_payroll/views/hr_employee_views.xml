@@ -198,7 +198,6 @@
                         <span>%</span>
                     </div>
                 </group>
-                <group name="external_codes" string="External Codes" invisible="1"/>
             </group>
             <xpath expr="//sheet" position="before">
                 <div role="alert" class="alert alert-danger text-center" invisible="not l10n_be_is_below_scale or country_code != 'BE'" groups="hr.group_hr_user">

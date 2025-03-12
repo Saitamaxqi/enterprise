@@ -80,6 +80,9 @@
             <page name="payroll_information" position="attributes">
                 <attribute name="groups">hr_payroll.group_hr_payroll_user</attribute>
             </page>
+            <group name="payroll_group" position="inside">
+                <group name="external_codes" string="External Codes" invisible="1"/>
+            </group>
         </field>
     </record>
 

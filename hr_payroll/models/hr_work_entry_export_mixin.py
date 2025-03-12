@@ -198,9 +198,10 @@ class HrWorkEntryExportEmployeeMixin(models.AbstractModel):
     _description = 'Work Entry Export Employee'
 
     export_id = fields.Many2one('hr.work.entry.export.mixin', required=True, index=True, ondelete='cascade')
-    employee_id = fields.Many2one('hr.employee', required=True, ondelete='cascade')
+    employee_id = fields.Many2one('hr.employee', required=True, ondelete='cascade', check_company=True)
     version_ids = fields.Many2many('hr.version', compute="_compute_contract_ids", store=True, required=True, ondelete='cascade', readonly=False)
     work_entry_ids = fields.Many2many('hr.work.entry', compute='_compute_work_entry_ids')
+    company_id = fields.Many2one(related='export_id.company_id', store=True, readonly=True)
 
     @api.depends('employee_id')
     def _compute_contract_ids(self):
