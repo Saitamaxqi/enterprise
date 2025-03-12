@@ -5,7 +5,7 @@ import { useSetupAction } from "@web/search/action_hook";
 import { downloadFile } from "@web/core/network/download";
 import { user } from "@web/core/user";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
-
+import { browser } from "@web/core/browser/browser";
 import { UNTITLED_SPREADSHEET_NAME, DEFAULT_LINES_NUMBER } from "@spreadsheet/helpers/constants";
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { initCallbackRegistry } from "@spreadsheet/o_spreadsheet/init_callbacks";
@@ -17,7 +17,6 @@ import { OdooDataProvider } from "@spreadsheet/data_sources/odoo_data_provider";
 import { CommentsStore } from "../comments/comments_store";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
 import { createDefaultCurrency } from "@spreadsheet/currency/helpers";
-
 import { SpreadsheetNavbar } from "@spreadsheet_edition/bundle/components/spreadsheet_navbar/spreadsheet_navbar";
 import { SpreadsheetComponent } from "@spreadsheet/actions/spreadsheet_component";
 
@@ -76,6 +75,7 @@ export class AbstractSpreadsheetAction extends Component {
         this.spreadsheetService = useService("spreadsheet_collaborative");
         this.stores = useStoreProvider();
         this.threadId = this.params?.thread_id;
+        this.dataFetched = false;
         useSetupAction({
             beforeLeave: this._leaveSpreadsheet.bind(this),
             beforeUnload: this._leaveSpreadsheet.bind(this),
@@ -104,6 +104,7 @@ export class AbstractSpreadsheetAction extends Component {
 
         onWillStart(async () => {
             if (this.props.state?.model && this.props.state?.data) {
+                this.dataFetched = true;
                 this._initializeWith(this.props.state.data);
                 this.model = this.props.state.model;
                 this.model.joinSession();
@@ -151,6 +152,18 @@ export class AbstractSpreadsheetAction extends Component {
             await this._setupPreProcessingCallbacks();
         }
         const data = await this._fetchData();
+        if (!data) {
+            this.actionService.doAction("menu");
+            this.notifications.add(
+                "The spreadsheet you’re trying to access doesn’t exist, has been deleted, or you don’t have the necessary permissions to view it.",
+                {
+                    type: "info",
+                    sticky: true,
+                }
+            );
+            return;
+        }
+        this.dataFetched = true;
         this._initializeWith(data);
     }
 
@@ -168,6 +181,9 @@ export class AbstractSpreadsheetAction extends Component {
     }
 
     getModelConfig() {
+        if (!this.dataFetched) {
+            return {};
+        }
         const transportService = this.spreadsheetService.makeCollaborativeChannel(
             this.resModel,
             this.resId,
@@ -309,7 +325,13 @@ export class AbstractSpreadsheetAction extends Component {
      * @returns {Promise<SpreadsheetData>}
      */
     async _fetchData() {
-        return this.http.get(`/spreadsheet/data/${this.resModel}/${this.resId}`);
+        const response = await browser.fetch(`/spreadsheet/data/${this.resModel}/${this.resId}`, {
+            method: "GET",
+        });
+        if ([403, 404].includes(response.status)) {
+            return;
+        }
+        return response.json();
     }
 
     /**

@@ -20,6 +20,7 @@ import {
     mountWithCleanup,
     patchWithCleanup,
     onRpc,
+    mockService,
 } from "@web/../tests/web_test_helpers";
 import { downloadFile } from "@web/core/network/download";
 import { WebClient } from "@web/webclient/webclient";
@@ -83,6 +84,68 @@ test("open spreadsheet with deprecated `active_id` params", async function () {
         message: "It should have opened the spreadsheet",
     });
     expect.verifySteps(["spreadsheet-loaded"]);
+});
+
+test("should redirect to home menu when spreadsheet is not found", async function () {
+    onRpc(
+        "/spreadsheet/data/documents.document/2",
+        () => {
+            expect.step("try-open-spreadsheet");
+            return new Response("{}", { status: 404 });
+        },
+        {
+            pure: true,
+        }
+    );
+    mockService("action", {
+        doAction(actionRequest) {
+            if (actionRequest === "menu") {
+                expect.step("redirect-to-home-menu");
+            } else {
+                return super.doAction(...arguments);
+            }
+        },
+    });
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction({
+        type: "ir.actions.client",
+        tag: "action_open_spreadsheet",
+        params: {
+            spreadsheet_id: 2,
+        },
+    });
+    expect.verifySteps(["try-open-spreadsheet", "redirect-to-home-menu"]);
+});
+
+test("should redirect to home menu when spreadsheet access is denied", async function () {
+    onRpc(
+        "/spreadsheet/data/documents.document/2",
+        () => {
+            expect.step("try-open-spreadsheet");
+            return new Response("{}", { status: 403 });
+        },
+        {
+            pure: true,
+        }
+    );
+    mockService("action", {
+        doAction(actionRequest) {
+            if (actionRequest === "menu") {
+                expect.step("redirect-to-home-menu");
+            } else {
+                return super.doAction(...arguments);
+            }
+        },
+    });
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction({
+        type: "ir.actions.client",
+        tag: "action_open_spreadsheet",
+        params: {
+            spreadsheet_id: 2,
+        },
+    });
+    expect.verifySteps(["try-open-spreadsheet", "redirect-to-home-menu"]);
 });
 
 test("breadcrumb is rendered the navbar", async function () {
