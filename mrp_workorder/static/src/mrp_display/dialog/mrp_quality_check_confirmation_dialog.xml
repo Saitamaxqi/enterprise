@@ -20,7 +20,7 @@
                 <span id="measure" name="measure" class="o_field_widget text-end pe-2">
                     <FloatField t-props="measureInfo"/>
                 </span>
-                <span t-esc="recordData.norm_unit" class="text-lowercase"/>
+                <span t-esc="recordData.norm_unit"/>
             </div>
             <div t-elif="recordData.test_type === 'picture'" class="workorder_picture">
                 <TabletImageField t-props="picInfo"/>
