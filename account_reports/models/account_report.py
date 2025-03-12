@@ -5197,6 +5197,7 @@ class AccountReport(models.Model):
         return a dictionary of information that will be consumed by the AccountReport component.
         """
         self.ensure_one()
+        self.env.flush_all()
 
         warnings = {}
         self._init_currency_table(options)
