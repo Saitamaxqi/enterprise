@@ -4,7 +4,7 @@
     <record id="hr_contract_salary_payroll_resume_gross_cp200" model="hr.contract.salary.resume">
         <field name="name">Gross</field>
         <field name="value_type">contract</field>
-        <field name="code">wage_with_holidays</field>
+        <field name="code">l10n_be_wage_with_mobility_budget</field>
         <field name="category_id" ref="hr_contract_salary.hr_contract_salary_resume_category_monthly_salary"/>
         <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>
         <field name="impacts_monthly_total" eval="False"/>
@@ -60,6 +60,7 @@
             (4, ref('l10n_be_hr_contract_salary.l10n_be_fuel_card')),
             (4, ref('l10n_be_hr_contract_salary.l10n_be_yearly_commission')),
             (4, ref('l10n_be_hr_contract_salary.l10n_be_meal_vouchers')),
+            (4, ref('l10n_be_hr_contract_salary.l10n_be_mobility_budget_amount')),
         ]"/>
         <field name="category_id" ref="hr_contract_salary.hr_contract_salary_resume_category_monthly_benefits"/>
         <field name="structure_type_id" ref="hr_contract.structure_type_employee_cp200"/>

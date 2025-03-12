@@ -35,6 +35,14 @@
             <group name="transportation_right" position="inside">
                 <field name="has_bicycle"/>
             </group>
+
+            <label name="label_wage_with_holidays" position="before">
+                <label name="l10n_be_wage_with_mobility_budget" for="l10n_be_wage_with_mobility_budget" invisible="not l10n_be_mobility_budget"/>
+                <div class="o_row o_hr_narrow_field" name="div_wage_with_mobility_budget" invisible="not l10n_be_mobility_budget">
+                    <field name="l10n_be_wage_with_mobility_budget" nolabel="1"/>
+                    <span>/ Month</span>
+                </div>
+            </label>
         </field>
     </record>
 </odoo>

@@ -18,7 +18,7 @@ hrContractSalary.include({
         "change input[name='fold_l10n_be_ambulatory_insured_spouse']": "onchangeAmbulatory",
         "change input[name='children']": "onchangeChildren",
         "change input[name='fold_wishlist_car_total_depreciated_cost']": "onchangeWishlistCar",
-        "change input[name='other_dependent_people']": "onchangeOtherDependentPeople",
+        "change input[name='fold_l10n_be_mobility_budget_amount_monthly']": "onchangeMobility",
     }),
 
     getBenefits() {
@@ -50,6 +50,7 @@ hrContractSalary.include({
         if ($submit_button.length) {
             $submit_button.prop('disabled', !!data["configurator_warning"]);
         }
+        $("input[name='l10n_be_mobility_budget_amount_monthly']").val(data['l10n_be_mobility_budget_amount_monthly']);
     },
 
     onchangeCompanyCar: function(event) {
@@ -123,6 +124,54 @@ hrContractSalary.include({
             return this._super.apply(this, arguments);
         }
     },
+
+    onchangeMobility: function(event) {
+        const hasMobility = this.el.querySelector(`input[name='fold_l10n_be_mobility_budget_amount_monthly']`)?.checked;
+        const transportRelatedFields = [
+            "fold_company_car_total_depreciated_cost",
+            "fold_private_car_reimbursed_amount",
+            "fold_l10n_be_bicyle_cost",
+            "fold_wishlist_car_total_depreciated_cost",
+            "fold_public_transport_reimbursed_amount",
+            "fold_train_transport_reimbursed_amount",
+        ];
+        if (hasMobility) {
+            for (const fieldName of transportRelatedFields) {
+                const element = this.el.querySelector(`input[name='${fieldName}']`);
+                if (element && element.checked) {
+                    element.click();
+                }
+            }
+
+            const fuelCardSliderEl = this.el.querySelector("input[name='fuel_card_slider']");
+            const fuelCardEl = this.el.querySelector("input[name='fuel_card']");
+            if (fuelCardSliderEl) {
+                fuelCardEl.value = 0;
+                fuelCardEl.disabled = true;
+            }
+            if (fuelCardEl) {
+                fuelCardEl.value = 0;
+            }
+
+            this.el.querySelector("label[for='company_car_total_depreciated_cost']")?.removeAttribute('checked');
+            this.el.querySelector("label[for='company_car_total_depreciated_cost']")?.parentElement.classList.add("o_disabled");
+            this.el.querySelector("label[for='wishlist_car_total_depreciated_cost']")?.parentElement.classList.add("o_disabled");
+            this.el.querySelector("label[for='public_transport_reimbursed_amount']")?.parentElement.classList.add("o_disabled");
+            this.el.querySelector("label[for='train_transport_reimbursed_amount']")?.parentElement.classList.add("o_disabled");
+            this.el.querySelector("label[for='private_car_reimbursed_amount']")?.parentElement.classList.add("o_disabled");
+            this.el.querySelector("label[for='l10n_be_bicyle_cost']")?.parentElement.classList.add("o_disabled");
+            this.el.querySelector("label[for='fuel_card']")?.parentElement.classList.add("o_disabled");
+        } else {
+            this.el.querySelector("label[for='company_car_total_depreciated_cost']")?.parentElement.classList.remove("o_disabled");
+            this.el.querySelector("label[for='wishlist_car_total_depreciated_cost']")?.parentElement.classList.remove("o_disabled");
+            this.el.querySelector("label[for='public_transport_reimbursed_amount']")?.parentElement.classList.remove("o_disabled");
+            this.el.querySelector("label[for='train_transport_reimbursed_amount']")?.parentElement.classList.remove("o_disabled");
+            this.el.querySelector("label[for='private_car_reimbursed_amount']")?.parentElement.classList.remove("o_disabled");
+            this.el.querySelector("label[for='l10n_be_bicyle_cost']")?.parentElement.classList.remove("o_disabled");
+            this.el.querySelector("label[for='fuel_card']")?.parentElement.classList.remove("o_disabled");
+        }
+    },
+
 
     start: async function () {
         const res = await this._super(...arguments);
@@ -200,6 +249,7 @@ hrContractSalary.include({
         ambulatoryInsuranceEl?.parentNode.insertBefore(
             insuranceNoteStrongEl.cloneNode(true), ambulatoryInsuranceEl
         );
+        this.onchangeMobility();
         return res;
     },
 
@@ -365,28 +415,6 @@ hrContractSalary.include({
             disabledChildrenEl?.parentElement.classList.add("d-none");
         } else {
             disabledChildrenEl?.parentElement.classList.remove("d-none");
-        }
-    },
-
-    onchangeOtherDependentPeople(event) {
-        const otherDependentChecked = parseInt(event && event.currentTarget && event.currentTarget.checked);
-        if (!otherDependentChecked) {
-            const seniorDependentEl = this.el.querySelector(
-                "input[name='other_senior_dependent']"
-            );
-            const disabledSeniorDependentEl = this.el.querySelector(
-                "input[name='other_disabled_senior_dependent']"
-            );
-            const juniorDependentEl = this.el.querySelector(
-                "input[name='other_juniors_dependent']"
-            );
-            const disabledJuniorDependentEl = this.el.querySelector(
-                "input[name='other_disabled_juniors_dependent']"
-            );
-            seniorDependentEl.value = 0
-            disabledSeniorDependentEl.value = 0
-            juniorDependentEl.value = 0
-            disabledJuniorDependentEl.value = 0
         }
     },
 });

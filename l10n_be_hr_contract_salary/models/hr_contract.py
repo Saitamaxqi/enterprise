@@ -28,6 +28,18 @@ class HrContract(models.Model):
                                                                          raise_if_not_found=False) if self.env.company.country_id.code == "BE" else self.env['hr.contract.type'])
     l10n_be_bicyle_cost = fields.Float(compute='_compute_l10n_be_bicyle_cost')
 
+    l10n_be_mobility_budget_amount = fields.Monetary(
+        string="Mobility Budget Amount",
+        store=True,
+        compute="_compute_l10n_be_mobility_budget_amount"
+    )
+
+    l10n_be_wage_with_mobility_budget = fields.Monetary(
+        tracking=True, string="Wage with Mobility Budget",
+        compute="_compute_l10n_be_wage_with_mobility_budget",
+        store=True
+    )
+
     @api.depends('has_bicycle')
     def _compute_l10n_be_bicyle_cost(self):
         for contract in self:
@@ -35,6 +47,45 @@ class HrContract(models.Model):
                 contract.l10n_be_bicyle_cost = 0
             else:
                 contract.l10n_be_bicyle_cost = self._get_private_bicycle_cost(contract.employee_id.km_home_work)
+
+    @api.depends('l10n_be_mobility_budget', 'wage_with_holidays')
+    def _compute_l10n_be_mobility_budget_amount(self):
+        mobility_budget_max = self.env['hr.rule.parameter']._get_parameter_from_code("mobility_budget_max", fields.Date.today(), raise_if_not_found=False) or 16875
+        mobility_budget_min = self.env['hr.rule.parameter']._get_parameter_from_code("mobility_budget_min", fields.Date.today(), raise_if_not_found=False) or 3164
+
+        minimum_wage = self.env['hr.rule.parameter']._get_parameter_from_code('cp200_min_gross_wage', fields.Date.today(), raise_if_not_found=False)
+        for contract in self:
+            if contract.l10n_be_mobility_budget:
+                base = contract.wage_with_holidays
+                raw_mb = min(mobility_budget_max, base * 13.0 / 5.0)
+
+                # Iteratively find the right budget to not get under the minimum wage
+                current_yearly_cost = contract._get_yearly_cost_from_wage_with_holidays() if contract._is_salary_sacrifice() else contract.final_yearly_costs
+                wage_with_mobility_budget = contract._get_gross_from_employer_costs(current_yearly_cost - raw_mb)
+                while wage_with_mobility_budget < minimum_wage and minimum_wage:
+                    raw_mb -= 10
+                    wage_with_mobility_budget = contract._get_gross_from_employer_costs(current_yearly_cost - raw_mb)
+
+                raw_mb = max(raw_mb, mobility_budget_min)
+                contract.l10n_be_mobility_budget_amount = raw_mb
+            else:
+                contract.l10n_be_mobility_budget_amount = 0.0
+
+    @api.depends('l10n_be_mobility_budget', 'l10n_be_mobility_budget_amount', 'wage_with_holidays')
+    def _compute_l10n_be_wage_with_mobility_budget(self):
+        for contract in self:
+            if contract._is_salary_sacrifice():
+                yearly_cost = contract._get_yearly_cost_from_wage_with_holidays()
+                contract.l10n_be_wage_with_mobility_budget = contract._get_gross_from_employer_costs(yearly_cost - contract.l10n_be_mobility_budget_amount)
+            else:
+                contract.l10n_be_wage_with_mobility_budget = contract._get_gross_from_employer_costs(contract.final_yearly_costs - contract.l10n_be_mobility_budget_amount)
+
+    @api.model
+    def _get_wage_to_apply(self):
+        self.ensure_one()
+        if self.l10n_be_mobility_budget:
+            return self.l10n_be_wage_with_mobility_budget
+        return super()._get_wage_to_apply()
 
     @api.model
     def _get_private_bicycle_cost(self, distance):

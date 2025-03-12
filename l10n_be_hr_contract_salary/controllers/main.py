@@ -407,7 +407,7 @@ class HrContractSalary(main.HrContractSalary):
         return new_contract, contract_diff
 
     def _get_wage_to_apply(self):
-        return "wage_with_holidays"
+        return "l10n_be_wage_with_mobility_budget"
 
     def _get_compute_results(self, new_contract):
         result = super()._get_compute_results(new_contract)
@@ -431,6 +431,9 @@ class HrContractSalary(main.HrContractSalary):
         else:
             ordered_fields = [wage_to_apply, 'NET']
         result['resume_lines_mapped']['Monthly Salary'] = {field: resume.get(field, 0) for field in ordered_fields}
+        result['l10n_be_mobility_budget_amount_monthly'] = new_contract.l10n_be_mobility_budget_amount_monthly
+        result['l10n_be_wage_with_mobility_budget'] = new_contract.l10n_be_wage_with_mobility_budget
+
         return result
 
     @route('/salary_package/update_salary', type="jsonrpc")

@@ -143,6 +143,17 @@ class HrContract(models.Model):
         groups="hr_contract.group_hr_contract_employee_manager")
     l10n_be_ambulatory_insurance_notes = fields.Text(string="Ambulatory Insurance: Additional Info")
 
+    l10n_be_mobility_budget = fields.Boolean(string="Mobility Budget")
+    l10n_be_mobility_budget_amount = fields.Monetary(
+        string="Mobility Budget Amount",
+    )
+    l10n_be_mobility_budget_amount_monthly = fields.Monetary(
+        string="Mobility Budget Monthly Amount",
+        compute="_compute_l10n_be_mobility_budget_amount_monthly"
+    )
+    l10n_be_wage_with_mobility_budget = fields.Monetary(
+        tracking=True, string="Wage with Mobility Budget",
+    )
 
     l10n_be_is_below_scale = fields.Boolean(
         string="Is below CP200 salary scale", compute='_compute_l10n_be_is_below_scale', search='_search_l10n_be_is_below_scale', compute_sudo=True)
@@ -421,6 +432,11 @@ class HrContract(models.Model):
                 contract.l10n_be_ambulatory_insured_children,
                 contract.l10n_be_ambulatory_amount_per_adult,
                 contract.l10n_be_ambulatory_insured_adults_total)
+
+    @api.depends('l10n_be_mobility_budget_amount')
+    def _compute_l10n_be_mobility_budget_amount_monthly(self):
+        for contract in self:
+            contract.l10n_be_mobility_budget_amount_monthly = contract.l10n_be_mobility_budget_amount / 12
 
     @api.model
     def _get_private_car_reimbursed_amount(self, distance):

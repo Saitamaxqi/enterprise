@@ -65,6 +65,11 @@
             <span t-out="round(ecovouchers, 2)"/>€<span class="me-2"/>
             (= <span t-out="int(ecovouchers // 10)"/>*10€ + 1*<span t-out="round(ecovouchers % 10, 2)"/>€)
         </div>
+        <t t-set="mobility_budget" t-value="o.contract_id.l10n_be_mobility_budget_amount_monthly"/>
+        <div id="employee_mobility_budget" t-if="mobility_budget">
+            <strong class="me-2">Mobility Budget (Monthly):</strong>
+            <span t-out="mobility_budget"/> €
+        </div>
     </div>
 </template>
 
