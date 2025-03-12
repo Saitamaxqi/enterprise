@@ -11,7 +11,6 @@ export class VoipSystrayItem extends Component {
         this.voip = useState(useService("voip"));
         this.ringtoneService = useService("voip.ringtone");
         this.userAgent = useState(useService("voip.user_agent"));
-        this.multiTabService = useService("multi_tab");
         this.softphone = this.voip.softphone;
     }
 
@@ -63,7 +62,7 @@ export class VoipSystrayItem extends Component {
         } else {
             this.softphone.show();
             this.voip.resetMissedCalls();
-            if (this.userAgent.hasCallInvitation && this.multiTabService.isOnMainTab()) {
+            if (this.userAgent.shouldPlayIncomingCallRingtone) {
                 this.ringtoneService.incoming.play();
             }
         }

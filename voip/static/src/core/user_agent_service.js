@@ -133,6 +133,13 @@ export class UserAgent {
         };
     }
 
+    /** @returns {boolean} */
+    get shouldPlayIncomingCallRingtone() {
+        const dndUntil = this.voip.store.settings.do_not_disturb_until_dt;
+        const doNotDisturb = Boolean(dndUntil) && dndUntil > luxon.DateTime.now();
+        return this.hasCallInvitation && !doNotDisturb && this.multiTabService.isOnMainTab();
+    }
+
     async acceptIncomingCall() {
         this.ringtoneService.stopPlaying();
         this.session.sipSession.accept({
@@ -478,7 +485,7 @@ export class UserAgent {
             sipSession: inviteSession,
         };
         this.softphone.show();
-        if (this.multiTabService.isOnMainTab() && !this.voip.store.settings.do_not_disturb_until_dt) {
+        if (this.shouldPlayIncomingCallRingtone) {
             this.ringtoneService.incoming.play();
         }
         // TODO send notification
