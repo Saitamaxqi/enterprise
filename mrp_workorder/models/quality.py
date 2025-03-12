@@ -145,10 +145,11 @@ class QualityPoint(models.Model):
             quality_point.is_workorder_step = quality_point.picking_type_ids and\
                 all(pt.code == 'mrp_operation' for pt in quality_point.picking_type_ids)
 
+    @api.depends('operation_id')
     def _compute_show_failure_location(self):
         super()._compute_show_failure_location()
         for point in self:
-            point.show_failure_location = point.show_failure_location and not point.is_workorder_step
+            point.show_failure_location = point.show_failure_location and not point.operation_id
 
     def _change_product_ids_for_bom(self, bom_id):
         products = bom_id.product_id or bom_id.product_tmpl_id.product_variant_ids

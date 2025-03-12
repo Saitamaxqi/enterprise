@@ -81,9 +81,10 @@ class QualityPoint(models.Model):
         for point in self:
             point.check_count = result.get(point.id, 0)
 
+    @api.depends('test_type')
     def _compute_show_failure_location(self):
         for point in self:
-            point.show_failure_location = point.test_type not in ["instruction", "picture"]
+            point.show_failure_location = point.test_type not in ["instructions", "picture"]
 
     @api.model_create_multi
     def create(self, vals_list):

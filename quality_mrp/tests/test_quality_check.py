@@ -201,6 +201,30 @@ class TestQualityCheck(TestQualityMrpCommon):
         bo = mo.procurement_group_id.mrp_production_ids[-1]
         self.assertEqual(len(bo.check_ids), 1)
 
+    def test_failure_quality_point_location(self):
+        """ test the failure location is hidden in case of manufacturing quality point """
+        quality_point = self.env['quality.point'].create({
+            'measure_on': 'product',
+            'picking_type_ids': [Command.link(self.picking_type_id)],
+            'test_type_id': self.env.ref('quality_control.test_type_passfail').id,
+        })
+        self.assertTrue(quality_point.show_failure_location)
+        quality_point.test_type_id = self.env.ref('quality.test_type_instructions')
+        self.assertFalse(quality_point.show_failure_location)
+        quality_point.test_type_id = self.env.ref('quality_control.test_type_passfail')
+        workcenter = self.env['mrp.workcenter'].create({
+            'name': 'Test workcenter',
+        })
+
+        operation = self.env['mrp.routing.workcenter'].create({
+            'name': 'Test order',
+            'workcenter_id': workcenter.id,
+            'bom_id': self.bom.id,
+            'time_cycle_manual': 30,
+        })
+        quality_point.operation_id = operation
+        self.assertFalse(quality_point.show_failure_location)
+
     def test_production_product_control_point(self):
         """Test quality control point on production order."""
 
