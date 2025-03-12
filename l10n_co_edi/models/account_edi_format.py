@@ -152,7 +152,7 @@ class AccountEdiFormat(models.Model):
             tim['type_code'] = type_code
 
             if type_code == '05':
-                imp2 = abs(amount * 100 / 15)
+                imp2 = abs(values[tax_amount_field] * 100 / 15)
             elif type_code == '34':
                 base_line_x_taxes_data = values['base_line_x_taxes_data']
                 imp2 = sum(

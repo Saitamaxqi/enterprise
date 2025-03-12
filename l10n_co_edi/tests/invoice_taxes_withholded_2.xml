@@ -11,7 +11,7 @@
         <ENC_8>19:00:00-05:00</ENC_8>
         <ENC_9>01</ENC_9>
         <ENC_10>COP</ENC_10>
-        <ENC_15>2</ENC_15>
+        <ENC_15>1</ENC_15>
         <ENC_16>2020-09-30</ENC_16>
         <ENC_20>2</ENC_20>
         <ENC_21>10</ENC_21>
@@ -117,24 +117,24 @@
         </GTA>
     </ADQ>
     <TOT>
-        <TOT_1>201.90</TOT_1>
+        <TOT_1>500000.00</TOT_1>
         <TOT_2>COP</TOT_2>
-        <TOT_3>201.90</TOT_3>
+        <TOT_3>500000.00</TOT_3>
         <TOT_4>COP</TOT_4>
-        <TOT_5>201.90</TOT_5>
+        <TOT_5>595000.00</TOT_5>
         <TOT_6>COP</TOT_6>
-        <TOT_7>201.90</TOT_7>
+        <TOT_7>595000.00</TOT_7>
         <TOT_8>COP</TOT_8>
     </TOT>
     <TIM>
         <TIM_1>true</TIM_1>
-        <TIM_2>3.64</TIM_2>
+        <TIM_2>14250.00</TIM_2>
         <TIM_3>COP</TIM_3>
         <IMP>
             <IMP_1>05</IMP_1>
-            <IMP_2>19.20</IMP_2>
+            <IMP_2>95000.00</IMP_2>
             <IMP_3>COP</IMP_3>
-            <IMP_4>2.88</IMP_4>
+            <IMP_4>14250.00</IMP_4>
             <IMP_5>COP</IMP_5>
             <IMP_6>15.00</IMP_6>
             <IMP_7></IMP_7>
@@ -143,18 +143,23 @@
             <IMP_10></IMP_10>
             <IMP_11>ReteIVA</IMP_11>
         </IMP>
+    </TIM>
+    <TIM>
+        <TIM_1>false</TIM_1>
+        <TIM_2>95000.00</TIM_2>
+        <TIM_3>COP</TIM_3>
         <IMP>
-            <IMP_1>05</IMP_1>
-            <IMP_2>5.07</IMP_2>
+            <IMP_1>01</IMP_1>
+            <IMP_2>500000.00</IMP_2>
             <IMP_3>COP</IMP_3>
-            <IMP_4>0.76</IMP_4>
+            <IMP_4>95000.00</IMP_4>
             <IMP_5>COP</IMP_5>
-            <IMP_6>15.00</IMP_6>
+            <IMP_6>19.00</IMP_6>
             <IMP_7></IMP_7>
             <IMP_8></IMP_8>
             <IMP_9></IMP_9>
             <IMP_10></IMP_10>
-            <IMP_11>ReteIVA</IMP_11>
+            <IMP_11>IVA</IMP_11>
         </IMP>
     </TIM>
     <DRF>
@@ -166,31 +171,24 @@
         <DRF_6>0</DRF_6>
     </DRF>
     <ITD>
-        <ITD_5>198.26</ITD_5>
+        <ITD_5>580750.00</ITD_5>
         <ITD_6>COP</ITD_6>
     </ITD>
     <NOT>
         <NOT_1>1.-GRANDES CONTRIBUYENTES SHD Res. DDI-042065 13-10-17|GRANDES CONTRIBUYENTES SHD Res. DDI-042065 13-10-17|GRANDES CONTRIBUYENTES SHD Res. DDI-042065 13-10-17|GRANDES CONTRIBUYENTES SHD Res. DDI-042065 13-10-17|GRANDES CONTRIBUYENTES SHD Res. DDI-042065 13-10-17|GRANDES CONTRIBUYENTES SHD Res. DDI-042065 13-10-17</NOT_1>
-    </NOT>
-    <NOT>
+        </NOT><NOT>
         <NOT_1>2.-GRANDES CONTRIBUYENTES SHD Res. DDI-042065 13-10-17</NOT_1>
-    </NOT>
-    <NOT>
+        </NOT><NOT>
         <NOT_1>3.- N/A</NOT_1>
-    </NOT>
-    <NOT>
-        <NOT_1>6.- Payment terms: End of Following Month|Two Hundred And One Peso and Ninety Centavos</NOT_1>
-    </NOT>
-    <NOT>
+        </NOT><NOT>
+        <NOT_1>6.- Payment terms: End of Following Month|Five Hundred And Ninety-Five Thousand Peso</NOT_1>
+        </NOT><NOT>
         <NOT_1>7.- http://www.example.com</NOT_1>
-    </NOT>
-    <NOT>
+        </NOT><NOT>
         <NOT_1>8.-213123432|+57 123 4567890 123|</NOT_1>
-    </NOT>
-    <NOT>
+        </NOT><NOT>
         <NOT_1>10.- | | | |N/A</NOT_1>
-    </NOT>
-    <NOT>
+        </NOT><NOT>
         <NOT_1>11.- |0| |0|0</NOT_1>
     </NOT>
     <ORC>
@@ -229,8 +227,8 @@
             <ITT_6>1</ITT_6>
         </ITT>
         <DFT>
-            <DFT_1>05</DFT_1>
-            <DFT_2>ReteIVA</DFT_2>
+            <DFT_1>01</DFT_1>
+            <DFT_2>IVA</DFT_2>
             <DFT_3>CO</DFT_3>
             <DFT_4>05</DFT_4>
             <DFT_5>1234</DFT_5>
@@ -255,15 +253,15 @@
         <ITE_2></ITE_2>
         <ITE_3>1.0</ITE_3>
         <ITE_4>94</ITE_4>
-        <ITE_5>100.90</ITE_5>
+        <ITE_5>500000.00</ITE_5>
         <ITE_6>COP</ITE_6>
-        <ITE_7>100.90</ITE_7>
+        <ITE_7>500000.00</ITE_7>
         <ITE_8>COP</ITE_8>
         <ITE_10>Line 1</ITE_10>
         <ITE_11>Line 1</ITE_11>
-        <ITE_19>100.90</ITE_19>
+        <ITE_19>500000.00</ITE_19>
         <ITE_20>COP</ITE_20>
-        <ITE_21>100.90</ITE_21>
+        <ITE_21>500000.00</ITE_21>
         <ITE_22>COP</ITE_22>
         <ITE_27>1.0</ITE_27>
         <ITE_28>94</ITE_28>
@@ -279,76 +277,36 @@
             <IDE_2>0.00</IDE_2>
             <IDE_3>COP</IDE_3>
             <IDE_6>0.0</IDE_6>
-            <IDE_7>100.90</IDE_7>
+            <IDE_7>500000.00</IDE_7>
             <IDE_8>COP</IDE_8>
             <IDE_10>1</IDE_10>
         </IDE>
         <TII>
-            <TII_1>2.88</TII_1>
+            <TII_1>95000.00</TII_1>
             <TII_2>COP</TII_2>
-            <TII_3>true</TII_3>
+            <TII_3>false</TII_3>
             <IIM>
-                <IIM_1>05</IIM_1>
-                <IIM_2>2.88</IIM_2>
+                <IIM_1>01</IIM_1>
+                <IIM_2>95000.00</IIM_2>
                 <IIM_3>COP</IIM_3>
-                <IIM_4>19.17</IIM_4>
+                <IIM_4>500000.00</IIM_4>
                 <IIM_5>COP</IIM_5>
-                <IIM_6>15.0</IIM_6>
+                <IIM_6>19.0</IIM_6>
                 <IIM_7></IIM_7>
                 <IIM_8></IIM_8>
                 <IIM_9></IIM_9>
                 <IIM_10></IIM_10>
-                <IIM_11>ReteIVA</IIM_11>
+                <IIM_11>IVA</IIM_11>
             </IIM>
-        </TII>
-        <IAE>
-            <IAE_1>1010101</IAE_1>
-            <IAE_2>001</IAE_2>
-            <IAE_4></IAE_4>
-        </IAE>
-    </ITE>
-    <ITE>
-        <ITE_1>2</ITE_1>
-        <ITE_2></ITE_2>
-        <ITE_3>1.0</ITE_3>
-        <ITE_4>94</ITE_4>
-        <ITE_5>101.00</ITE_5>
-        <ITE_6>COP</ITE_6>
-        <ITE_7>101.00</ITE_7>
-        <ITE_8>COP</ITE_8>
-        <ITE_10>Line 2</ITE_10>
-        <ITE_11>Line 2</ITE_11>
-        <ITE_19>101.00</ITE_19>
-        <ITE_20>COP</ITE_20>
-        <ITE_21>101.00</ITE_21>
-        <ITE_22>COP</ITE_22>
-        <ITE_27>1.0</ITE_27>
-        <ITE_28>94</ITE_28>
-        <IRF>
-            <IRF_1>IV</IRF_1>
-            <IRF_2>INV/2020/00001</IRF_2>
-            <IRF_3>2</IRF_3>
-        </IRF>
-        <MYM>
-        </MYM>
-        <IDE>
-            <IDE_1>false</IDE_1>
-            <IDE_2>0.00</IDE_2>
-            <IDE_3>COP</IDE_3>
-            <IDE_6>0.0</IDE_6>
-            <IDE_7>101.00</IDE_7>
-            <IDE_8>COP</IDE_8>
-            <IDE_10>1</IDE_10>
-        </IDE>
-        <TII>
-            <TII_1>0.76</TII_1>
+            </TII><TII>
+            <TII_1>14250.00</TII_1>
             <TII_2>COP</TII_2>
             <TII_3>true</TII_3>
             <IIM>
                 <IIM_1>05</IIM_1>
-                <IIM_2>0.76</IIM_2>
+                <IIM_2>14250.00</IIM_2>
                 <IIM_3>COP</IIM_3>
-                <IIM_4>5.05</IIM_4>
+                <IIM_4>95000.00</IIM_4>
                 <IIM_5>COP</IIM_5>
                 <IIM_6>15.0</IIM_6>
                 <IIM_7></IIM_7>

@@ -157,6 +157,32 @@ class TestColombianInvoice(TestCoEdiCommon):
         with self.mock_carvajal():
             self.l10n_co_assert_generated_file_equal(invoice, expected_invoice_taxes_withholded)
 
+    def test_invoice_withholded_taxes_2(self):
+        company = self.company_data['company']
+
+        tax_19 = self.env.ref(f'account.{company.id}_l10n_co_tax_1')
+        withholded_15_on_19 = self.env.ref(f'account.{company.id}_l10n_co_tax_56')
+
+        invoice = self.env['account.move'].create({
+            'partner_id': company.partner_id.id,
+            'move_type': 'out_invoice',
+            'ref': 'reference',
+            'invoice_payment_term_id': self.env.ref('account.account_payment_term_end_following_month').id,
+            'invoice_line_ids': [
+                Command.create({
+                    'quantity': 1,
+                    'price_unit': 500000.00,
+                    'name': 'Line 1',
+                    'tax_ids': [Command.set(tax_19.ids + withholded_15_on_19.ids)],
+                }),
+            ]
+        })
+
+        expected_invoice_taxes_withholded = misc.file_open('l10n_co_edi/tests/invoice_taxes_withholded_2.xml', 'rb').read()
+
+        with self.mock_carvajal():
+            self.l10n_co_assert_generated_file_equal(invoice, expected_invoice_taxes_withholded)
+
     def test_vendor_bill(self):
         with self.mock_carvajal():
             self.l10n_co_assert_generated_file_equal(self.in_invoice, self.expected_in_invoice_xml)
