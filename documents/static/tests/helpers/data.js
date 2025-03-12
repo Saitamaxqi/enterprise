@@ -153,6 +153,9 @@ export class DocumentsDocument extends models.Model {
 
 export class DocumentsTag extends models.Model {
     _name = "documents.tag";
+
+    name = fields.Char({ string: "Tag Name" });
+    color = fields.Integer({ default: 1 });
 }
 
 export class MailActivityType extends models.Model {
@@ -202,6 +205,20 @@ export function getDocumentsTestServerData(additionalRecords = []) {
                         type: "folder",
                     },
                     ...additionalRecords,
+                ],
+            },
+            "documents.tag": {
+                records: [
+                    {
+                        id: 1,
+                        name: "Colorless",
+                        color: 0,
+                    },
+                    {
+                        id: 2,
+                        name: "Colorful",
+                        color: 1,
+                    },
                 ],
             },
         },

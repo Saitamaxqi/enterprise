@@ -1,3 +1,6 @@
+import { getEnrichedSearchArch } from "@documents/../tests/helpers/views/search";
+import { mountView } from "@web/../tests/web_test_helpers";
+
 export const basicDocumentsKanbanArch = /* xml */ `
 <kanban js_class="documents_kanban">
     <templates>
@@ -20,3 +23,17 @@ export const basicDocumentsKanbanArch = /* xml */ `
     </templates>
 </kanban>
 `;
+
+
+export async function mountDocumentsKanbanView(params = {}, target=null) {
+    return mountView(
+        {
+            type: "kanban",
+            resModel: "documents.document",
+            arch: basicDocumentsKanbanArch,
+            searchViewArch: getEnrichedSearchArch(),
+            ...params,
+        },
+        target
+    );
+}
