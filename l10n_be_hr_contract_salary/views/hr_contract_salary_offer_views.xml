@@ -6,21 +6,21 @@
         <field name="inherit_id" ref="hr_contract_salary.hr_contract_salary_offer_view_form"/>
         <field name="arch" type="xml">
             <field name="final_yearly_costs" position="after">
-                <field name="contract_type_id" groups="hr.group_hr_user" readonly="state == 'cancelled'"/>
+                <field name="contract_type_id" groups="hr.group_hr_user" readonly="state in ['cancelled', 'full_signed']"/>
                 <field name="contract_type_id" readonly="1" options="{'no_open': True}" groups="!hr.group_hr_user"/>
             </field>
             <group name="group_offer_to" position="after">
                 <group name="group_car" string="Car" invisible="country_code != 'BE'">
                     <field name="country_code" invisible="1"/>
-                    <field name="new_car"/>
+                    <field name="new_car" readonly="state in ['cancelled', 'full_signed']"/>
                     <field name="wishlist_car_warning" class="alert text-center alert-warning"
                        role="alert" colspan="2" nolabel="1"
                        invisible="not wishlist_car_warning or not new_car"/>
-                    <field name="car_id" widget="many2one_avatar_user"/>
+                    <field name="car_id" widget="many2one_avatar_user" readonly="state in ['cancelled', 'full_signed']"/>
                     <field name="assigned_car_warning" class="alert alert-warning center"
                         role="alert" colspan="2" nolabel="1"
                         invisible="not assigned_car_warning or country_code != 'BE'"/>
-                    <field name="additional_car_ids" widget="many2many_avatar_user"/>
+                    <field name="additional_car_ids" widget="many2many_avatar_user" readonly="state in ['cancelled', 'full_signed']"/>
                     <field name="l10n_be_canteen_cost" invisible="1"/>
                 </group>
             </group>
