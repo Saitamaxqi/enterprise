@@ -1422,3 +1422,70 @@ registry.category("web_tour.tours").add("test_add_product_with_different_uom", {
         ...stepUtils.validateBarcodeOperation(),
     ],
 });
+
+registry.category("web_tour.tours").add("test_not_allowing_component_lot_creation", {
+    steps: () => [
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan TNACLC",
+        },
+        {
+            trigger: ".o_barcode_line:contains(productserial1)",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line:contains(productserial1).o_selected",
+            run: "scan 91834319",
+        },
+        {
+            content: "The scan should not have worked",
+            trigger: ".o_notification_bar.bg-danger",
+            run() {},
+        },
+        {
+            trigger: ".o_barcode_line:contains(productserial1)",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line:contains(productserial1).o_selected",
+            run: "scan SN008",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(1)",
+            run() {},
+        },
+        {
+            trigger: "button.o_by_products",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan byproduct",
+        },
+        {
+            trigger: ".modal-content .btn:contains(Ok)",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line:contains(By Product).o_selected",
+            run: "scan 77734319",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(1)",
+            run() {},
+        },
+        // exit the barcode app to save the barcode data's
+        {
+            trigger: "button.o_exit",
+            run: "click",
+        },
+        {
+            trigger: "button.o_exit",
+            run: "click",
+        },
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run() {},
+        },
+    ],
+});

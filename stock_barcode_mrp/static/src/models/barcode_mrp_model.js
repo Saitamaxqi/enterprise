@@ -138,7 +138,21 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
     }
 
     get canCreateNewLot() {
-        return true;
+        const currentLine =
+            this.selectedLine && this.selectedLine.product_id.tracking !== "none"
+                ? this.selectedLine
+                : this.lastScannedLine && this.lastScannedLine.product_id.tracking !== "none"
+                ? this.lastScannedLine
+                : this.selectedLine || this.lastScannedLine;
+        if (
+            currentLine &&
+            currentLine.product_id != this.record.product_id &&
+            !currentLine.byProduct
+        ) {
+            return this.record.use_create_components_lots;
+        } else {
+            return true;
+        }
     }
 
     get scrapContext() {

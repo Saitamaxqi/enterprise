@@ -850,3 +850,51 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_add_product_with_different_uom', login='admin')
         self.assertEqual(mo.move_raw_ids.product_uom, mo.move_raw_ids.product_id.uom_id)
         self.assertEqual(mo.state, "done")
+
+    def test_not_allowing_component_lot_creation(self):
+        """
+        Check that you can not assign nonexistent lots to components of an MO
+        if the option is disabled.
+        """
+        self.clean_access_rights()
+        self.env.ref('base.user_admin').group_ids |= self.env.ref('stock.group_production_lot') |  self.env.ref('mrp.group_mrp_byproducts')
+        # disable "Create New Lots/Serial Numbers for Components"
+        self.env.ref('stock.warehouse0').manu_type_id.use_create_components_lots = False
+        product = self.final_product
+        bom = self.env['mrp.bom'].create({
+            'product_tmpl_id': product.product_tmpl_id.id,
+            'product_qty': 1.0,
+            'bom_line_ids': [Command.create({
+                'product_id': self.productserial1.id, 'product_qty': 1.0
+            })]
+        })
+        mo = self.env['mrp.production'].create({
+            'name': 'TNACLC',
+            'product_id': self.final_product.id,
+            'product_qty': 1.0,
+            'bom_id': bom.id,
+        })
+        # put 2 units of productserial1 in stock
+        lots = self.env['stock.lot'].create([
+            {
+                'name': 'SN005',
+                'product_id': self.productserial1.id,
+                'company_id': self.env.company.id,
+            },
+            {
+                'name': 'SN008',
+                'product_id': self.productserial1.id,
+                'company_id': self.env.company.id,
+            }
+        ])
+        for lot in lots:
+            self.env['stock.quant']._update_available_quantity(self.productserial1, self.stock_location, 1, lot_id=lot)
+        mo.action_confirm()
+        self.assertEqual(mo.move_raw_line_ids.lot_id, lots[0])
+        # add a tracked by product to add too. You should be able to create an SN for it.
+        self.by_product.tracking = 'serial'
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = f"/web#action={action_id.id}"
+        self.start_tour(url, 'test_not_allowing_component_lot_creation', login='admin')
+        self.assertEqual(mo.move_raw_line_ids.lot_id, lots[1])
+        self.assertEqual(mo.move_byproduct_ids.move_line_ids.lot_name, '77734319')
