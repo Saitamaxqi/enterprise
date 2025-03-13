@@ -227,13 +227,13 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
             line_vals.update({
                 'total_amount': line_vals['total_amount'] + tax_amount,
                 'surcharge_type': abs(tax.amount),
-                'surcharge_fee': tax_amount,
+                'surcharge_fee': line_vals['surcharge_fee'] + tax_amount,
             })
         elif tax.l10n_es_type == 'retencion':
             line_vals.update({
                 'total_amount': line_vals['total_amount'] + tax_amount,
                 'withholding_type': abs(tax.amount),
-                'withholding_amount': -tax_amount,
+                'withholding_amount': line_vals['withholding_amount'] - tax_amount,
             })
         elif tax.l10n_es_type == 'ignore':
             return
