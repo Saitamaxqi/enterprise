@@ -355,8 +355,8 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         self.assertEqual(plan_a_line.achieved_amount, 300)
 
         # Product A have 2 PO lines, one for line[0] with 10 order and 1 received and one for line[1] with 10 order and 3 received with account analytic_account_partner_a
-        # Committed = ((order - received) * price) + achieved = ((10-1) + (10-3)) * 100 + 300 = 1900
-        self.assertEqual(plan_a_line.committed_amount, 1900.0)
+        # Committed = ((order - received) * price) + achieved = ((10-1) + (10-3)) * -100 + 300 = -1300
+        self.assertEqual(plan_a_line.committed_amount, -1300)
 
         # 3 Negative and 3 Positive analytic lines positive with account analytic_account_partner_a:
         # Bill line[2]: -600, line[3]: -500, Out Invoice line[2]: 700, line[3]: 600, aal 2: 200, aal 4: -100
@@ -364,8 +364,8 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         self.assertEqual(plan_b_line.achieved_amount, 300)
 
         # Product B have 2 PO lines, one for line[2] with 10 order and 6 received and one for line[3] with 10 order and 5 received with account analytic_account_partner_b
-        # Committed = ((order - received) * price) + achieved = ((10-6) + (10-5)) * 100 + 300 = 1200
-        self.assertEqual(plan_b_line.committed_amount, 1200)
+        # Committed = ((order - received) * price) + achieved = ((10-6) + (10-5)) * -100 + 300 = -600
+        self.assertEqual(plan_b_line.committed_amount, -600)
 
         # 1 Negative and 1 Positive lines with accounts analytic_account_partner_b and analytic_account_administratif
         # Bill line[3]: -500 Out Bill line[3]: 600
@@ -373,8 +373,8 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         self.assertEqual(plan_b_admin_line.achieved_amount, 100)
 
         # Product B have 1 PO line line[3] with 10 order and 5 received with analytic_account_partner_b and analytic_account_administratif
-        # Committed = ((order - received) * price) + achieved = ((10-5) * 100 + 100 = 600
-        self.assertEqual(plan_b_admin_line.committed_amount, 600)
+        # Committed = ((order - received) * price) + achieved = ((10-5) * -100 + 100 = -400
+        self.assertEqual(plan_b_admin_line.committed_amount, -400)
 
     def test_budget_analytic_misc_entry(self):
         """ Even if an analytic distribution is set, only the accounts with type 'income'/'expense' should be taken
@@ -467,3 +467,23 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         purchase_order.button_confirm()
 
         self.assertBudgetLine(plan_a_line, committed=2000, achieved=0)
+
+    def test_budget_report_with_purchase_order(self):
+        """ Test PO linked to analytic budget with budget_type = 'both' """
+        # Draft the test purchase order.
+        self.purchase_order.button_draft()
+        # Create a new purchase order
+        purchase_order = self.env['purchase.order'].create({
+            'partner_id': self.partner_a.id,
+            'date_order': '2019-01-10',
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'product_qty': 10,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                }),
+            ]
+        })
+        purchase_order.button_confirm()
+        plan_a_line = self.budget_analytic_both.budget_line_ids[0]
+        self.assertBudgetLine(plan_a_line, committed=-1000, achieved=0)

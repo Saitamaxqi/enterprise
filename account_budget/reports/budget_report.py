@@ -142,7 +142,8 @@ class BudgetReport(models.Model):
                         / pol.product_qty
                         * (pol.product_qty - COALESCE(qty_invoiced_table.qty_invoiced, 0))
                         / po.currency_rate
-                        * (a.rate) AS committed,
+                        * (a.rate)
+                        * CASE WHEN ba.budget_type = 'both' THEN -1 ELSE 1 END AS committed,
                    0 AS achieved,
                    0 AS theoretical,
                    %(analytic_fields)s
