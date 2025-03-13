@@ -168,15 +168,14 @@ class TestDianFlows(TestCoDianCommon):
             self._mock_send_and_print(move=self.invoice, response_file='SendBillSync_duplicated.xml')
         except UserError as e:
             error_raised = True
-            self.assertEqual(e.args[0], "Error(s) when sending the document to the DIAN:\n"
-                                        "- Regla: 90, Rechazo: Documento procesado anteriormente.")
 
-        self.assertTrue(error_raised)
+        self.assertFalse(error_raised)
+        self.assertTrue(self.invoice.l10n_co_dian_attachment_id)
         self.assertRecordValues(self.invoice.l10n_co_dian_document_ids, [{
             'zip_key': False,
-            'state': 'invoice_rejected',
-            'message': "<p>Validación contiene errores en campos mandatorios.</p>"
-                       "<ul><li>Regla: 90, Rechazo: Documento procesado anteriormente.</li></ul>",
+            'state': 'invoice_accepted',
+            'message': ("<p>Validación contiene errores en campos mandatorios.</p>"
+                        "<ul><li>Regla: 90, Rechazo: Documento procesado anteriormente.</li></ul>"),
         }])
 
     def test_send_bill_sync_second_attempt(self):

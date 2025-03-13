@@ -183,10 +183,26 @@ class L10n_Co_DianDocument(models.Model):
                 'state': 'invoice_sending_failed',
                 'message_json': self._build_message(root),
             }
-        return {
-            'state': 'invoice_accepted' if root.findtext('.//{*}IsValid') == 'true' else 'invoice_rejected',
+
+        is_valid = root.findtext('.//{*}IsValid') == 'true'
+        response_status_code = root.findtext('.//{*}StatusCode')
+
+        document_vals = {
+            'state': 'invoice_accepted' if is_valid else 'invoice_rejected',
             'message_json': self._build_message(root),
         }
+
+        if not is_valid and response_status_code == '99':
+            errors = root.findall(".//{*}ErrorMessage/{*}string")
+
+            if len(errors) == 1 and errors[0].text == 'Regla: 90, Rechazo: Documento procesado anteriormente.' and (identifier := root.findtext('.//{*}XmlDocumentKey')):
+                # Document has already been processed by DIAN -> correctly set the identifier and state so GetStatus is called correctly
+                document_vals |= {
+                    'state': 'invoice_accepted',
+                    'identifier': identifier,
+                }
+
+        return document_vals
 
     def _get_status_zip(self):
         """ Fetch the status of a document sent to 'SendTestSetAsync' using the 'GetStatusZip' webservice. """
