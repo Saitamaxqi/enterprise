@@ -50,7 +50,7 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
         self.assertEqual(document.owner_id, self.richard_emp.user_id)
         self.assertEqual(document.partner_id, self.richard_emp.user_id.partner_id, "The document contact must be the user partner of the employee")
         self.assertFalse(document.folder_id, "The document should have been created in the employee's My Drive")
-        self.assertEqual(document.access_via_link, "none")
+        self.assertEqual(document.access_via_link, "view")
         self.assertEqual(document.access_internal, "none")
         self.assertTrue(document.is_access_via_link_hidden)
         # Only one access record, with the owner's partner. No one else than the employee itself should have access to the document.
@@ -102,5 +102,39 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
         self.assertEqual(document.access_internal, "none")
         self.assertTrue(document.is_access_via_link_hidden)
         self.check_document_no_access(document, self.doc_user)
+        self.check_document_no_access(document, self.document_manager)
+        self.check_document_no_access(document, self.payroll_manager)
+
+    def test_hr_payroll_documents_employee_without_user(self):
+        employee_partner = self.env['res.partner'].create({
+            'name': 'partner'
+        })
+        self.richard_emp.user_id = False
+        self.richard_emp.work_contact_id = employee_partner.id
+
+        self.payslip.compute_sheet()
+        self.payslip.with_context(payslip_generate_pdf=True, payslip_generate_pdf_direct=True).action_payslip_done()
+
+        attachment = self.env['ir.attachment'].search(
+            [('res_model', '=', self.payslip._name), ('res_id', '=', self.payslip.id)])
+        self.assertTrue(attachment, "Validating a payslip should have created an attachment")
+
+        document = self.env['documents.document'].search([('attachment_id', '=', attachment.id)])
+        self.assertTrue(document, "There should be a new document created from the attachment")
+        self.assertFalse(document.owner_id)
+        self.assertEqual(document.partner_id, self.richard_emp.work_contact_id,
+                         "The document contact must be the user partner of the employee")
+        self.assertEqual(document.folder_id, self.richard_emp.company_id.worker_payroll_folder_id, "The document should have been created in the company Workers Payroll folder")
+        self.assertEqual(document.access_via_link, "view")
+        self.assertEqual(document.access_internal, "none")
+        self.assertTrue(document.is_access_via_link_hidden)
+        # Only one access record, with the owner's partner. No one else than the employee itself should have access to the document.
+        self.assertEqual(
+            {a.partner_id: a.role for a in document.access_ids},
+            {self.richard_emp.work_contact_id: 'view'},
+            "Only the super admin should have access"
+        )
+        self.assertEqual(document.with_user(self.richard_emp.user_id).user_permission, 'edit')  # Edit because owner
+        self.check_document_no_access(document, self.doc_user_2)
         self.check_document_no_access(document, self.document_manager)
         self.check_document_no_access(document, self.payroll_manager)

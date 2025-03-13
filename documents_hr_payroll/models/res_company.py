@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import _, fields, models
 from odoo.osv import expression
 
 
@@ -10,6 +10,12 @@ class ResCompany(models.Model):
 
     documents_hr_payslips_tags = fields.Many2many(
         'documents.tag', 'payslip_tags_table')
+
+    worker_payroll_folder_id = fields.Many2one(
+        'documents.document', string="Worker Payroll Folder", check_company=True,
+        domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)],
+        help="Folder used when an employee with no user exists in the company, "
+             "to store their payroll documents in a centralized place.")
 
     def _generate_employee_documents_folders(self):
         """ Override from documents_hr module to add payslips related tags and permissions on the
@@ -26,3 +32,18 @@ class ResCompany(models.Model):
                 access_internal='none', access_via_link='none', is_access_via_link_hidden=True,
                 partners={partner.id: ('edit', False) for partner in payroll_users.partner_id})
         return folders
+
+    def _get_used_folder_ids_domain(self, folder_ids):
+        return expression.OR([
+            super()._get_used_folder_ids_domain(folder_ids),
+            [('worker_payroll_folder_id', 'in', folder_ids)]
+        ])
+
+    def _get_or_create_worker_payroll_folder(self):
+        if not self.worker_payroll_folder_id:
+            self.worker_payroll_folder_id = self.env['documents.document'].sudo().create({
+                'name': _("Workers Payroll"),
+                'type': 'folder',
+                'owner_id': False,
+            }).id
+        return self.worker_payroll_folder_id

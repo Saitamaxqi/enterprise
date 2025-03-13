@@ -463,10 +463,14 @@ class HrPayslip(models.Model):
                     'res_model': payslip._name,
                     'res_id': payslip.id
                 })
-                # Send email to employees
-                if template:
-                    template.send_mail(payslip.id, email_layout_xmlid='mail.mail_notification_light')
+
         self.env['ir.attachment'].sudo().create(attachments_vals_list)
+        if not template:
+            return
+        # Send email to employees (after attachment is created to include it in the mail by other bridge module)
+        for payslips in mapped_reports.values():
+            for payslip in payslips:
+                template.send_mail(payslip.id, email_layout_xmlid='mail.mail_notification_light')
 
     def _filter_out_of_contracts_payslips(self):
         return self.filtered(lambda p: p.contract_id and (p.contract_id.date_start > p.date_to or (p.contract_id.date_end and p.contract_id.date_end < p.date_from)))

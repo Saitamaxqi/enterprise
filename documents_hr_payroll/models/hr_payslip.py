@@ -8,6 +8,15 @@ class HrPayslip(models.Model):
     _name = 'hr.payslip'
     _inherit = ['hr.payslip', 'documents.mixin']
 
+    def _get_document_vals_access_rights(self):
+        """ All payslips should be accessible in 'Anyone with the link' to make the link permanent.
+        The document must be still accessible even if the employee and its user (if any) are archived."""
+        return {
+            'access_via_link': 'view',
+            'access_internal': 'none',
+            'is_access_via_link_hidden': True,
+        }
+
     def _get_document_access_ids(self):
         return [(self._get_document_partner(), ('view', False))]
 
@@ -20,11 +29,25 @@ class HrPayslip(models.Model):
     def _get_document_owner(self):
         return self.employee_id.user_id or super()._get_document_owner()
 
+    def _get_document_folder(self):
+        return super()._get_document_folder() if self.employee_id.user_id else self.company_id._get_or_create_worker_payroll_folder()
+
     def _check_create_documents(self):
-        return True
+        return bool(self.employee_id.user_id) or self.company_id.documents_hr_settings
 
     def _get_email_template(self):
-        return super()._get_email_template() if self._check_create_documents() else None
+        return self.env.ref(
+            'documents_hr_payroll.mail_template_new_payslip', raise_if_not_found=False
+        ) if self._check_create_documents() else None
+
+    def _get_document_link(self):
+        self.ensure_one()
+        document = self.env["documents.document"].sudo().search(
+            [('res_model', '=', self._name), ('res_id', '=', self.id)],
+            order='id desc',
+            limit=1 # need the last one created. (if payslip [canceled and] regenerated)
+        )
+        return document.access_url if document else False
 
     @api.model
     def _cron_generate_pdf(self, batch_size=False):

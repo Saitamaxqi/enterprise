@@ -40,7 +40,9 @@ class HrPayrollEmployeeDeclaration(models.Model):
             if line.pdf_filename not in posted_documents and line.pdf_file:
                 lines_to_post += line
                 partner_id = self.env[line.res_model]._get_posted_document_owner(line.employee_id).partner_id.id
-                folder = self.env["documents.document"] if line.employee_id.user_id else line.company_id.documents_employee_folder_id
+                folder = self.env["documents.document"] \
+                    if line.employee_id.user_id \
+                    else line.company_id._get_or_create_worker_payroll_folder()
                 owner_id = line.employee_id.user_id.id if line.employee_id.user_id else False
                 access_ids = {}
                 if (not owner_id and partner_id and folder
