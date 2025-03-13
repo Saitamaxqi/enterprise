@@ -64,7 +64,7 @@ class L10n_CoReportHandler(models.AbstractModel):
                 'name': list(partner_values.values())[0]['partner_name'],
                 'level': 2,
                 'unfoldable': True,
-                'unfolded': line_id in options.get('unfolded_lines'),
+                'unfolded': line_id in options.get('unfolded_lines') or options.get('unfold_all'),
                 'expand_function': expand_function,
                 'columns': self._get_column_values(report, options, partner_values)
             }))
