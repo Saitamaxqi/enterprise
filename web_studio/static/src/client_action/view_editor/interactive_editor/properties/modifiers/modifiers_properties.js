@@ -67,10 +67,8 @@ export class ModifiersProperties extends Component {
         this.env.viewEditorModel.doOperation(operation);
     }
 
-    getCheckboxClassName(value) {
-        if (value && !this.isBooleanExpression(value)) {
-            return "o_web_studio_checkbox_indeterminate";
-        }
+    isIndeterminate(value) {
+        return value && !this.isBooleanExpression(value);
     }
 
     isBooleanExpression(expression) {

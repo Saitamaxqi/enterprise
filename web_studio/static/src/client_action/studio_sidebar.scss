@@ -215,15 +215,15 @@ $o-web-studio-sidebar-margin: $grid-gutter-width * 0.5;
                     > input {
                       padding: 6px 6px;
                       margin-top: 6px;
-                      &:not(:checked) {
-                        border: 1px solid $o-web-studio-text-light;
-                      }
+                      border: 1px solid $o-web-studio-text-light;
                       &:checked {
                         background-image: url("/web_studio/static/src/img/ui/checkbox_active.svg");
+                        border: none;
                       }
-                    }
-                    &.o_web_studio_checkbox_indeterminate > input {
-                      background-image: url("/web_studio/static/src/img/ui/checkbox_indeterminate.svg");
+                      &:indeterminate {
+                        background-image: url("/web_studio/static/src/img/ui/checkbox_indeterminate.svg");
+                        border: none;
+                      }
                     }
                   }
                 & + .o_web_studio_sidebar_checkbox {
