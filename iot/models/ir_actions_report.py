@@ -32,7 +32,7 @@ class IrActionsReport(models.Model):
                 for device in devices
             ]
 
-        self._send_websocket({
+        self.env['iot.channel']._send_message({
             "iotDevice": {
                 "iotIdentifiers": list(iot_identifiers),
                 "identifiers": [{
@@ -44,13 +44,6 @@ class IrActionsReport(models.Model):
             "document": data_base64
         })
         return print_id
-
-    def _send_websocket(self, message):
-        """
-            Send the dictionnary in message to the iot_box via websocket and return True.
-        """
-        self.env['bus.bus']._sendone(self.env['iot.channel'].get_iot_channel(), 'iot_action', message)
-        return True
 
     def report_action(self, docids, data=None, config=True):
         result = super().report_action(docids, data, config)

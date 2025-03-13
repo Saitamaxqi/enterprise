@@ -94,12 +94,6 @@ class IotDevice(models.Model):
         for device in self:
             device.manual_measurement = device.manufacturer == 'Adam'
 
-    def write(self, vals):
-        return_value = super().write(vals)
-        if 'report_ids' in vals:
-            self.env['iot.channel'].update_is_open()
-        return return_value
-
     @api.depends('connected')
     def _compute_connected_status(self):
         for device in self:

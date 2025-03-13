@@ -20,7 +20,6 @@ class IotBox(models.Model):
     ip_url = fields.Char('IoT Box Home Page', readonly=True, compute='_compute_ip_url')
     drivers_auto_update = fields.Boolean('Automatic drivers update', help='Automatically update drivers when the IoT Box boots', default=True)
     version = fields.Char('Image Version', readonly=True)
-    is_websocket_active = fields.Boolean("Is Websocket active?", readonly=True, default=False)
     company_id = fields.Many2one('res.company', 'Company')
 
     def _default_token(self):

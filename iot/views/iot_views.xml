@@ -51,7 +51,6 @@
                                 <field name="ip"/>
                                 <field name="version"/>
                                 <field name="drivers_auto_update"/>
-                                <field name="is_websocket_active"/>
                             </group>
                         </page>
                     </notebook>

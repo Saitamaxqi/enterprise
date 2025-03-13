@@ -81,9 +81,10 @@ export class IoTLongpolling {
      * @param {String} iot_ip
      * @param {String} device_identifier
      * @param {Object} data contains the information needed to perform an action on this device_identifier
+     * @param {Boolean} fallback if true, no notification will be displayed on fail
      * @param {String} route endpoint to call on the IoT Box (default: /hw_drivers/action)
      */
-    action(iot_ip, device_identifier, data, route = null) {
+    action(iot_ip, device_identifier, data, fallback = false, route = null) {
         this.protocol = window.location.protocol;
         var data = {
             params: {
@@ -95,7 +96,7 @@ export class IoTLongpolling {
         var options = {
             timeout: this.ACTION_TIMEOUT,
         };
-        return this._rpcIoT(iot_ip, route || this.ACTION_ROUTE, data, options);
+        return this._rpcIoT(iot_ip, route || this.ACTION_ROUTE, data, options, fallback);
     }
 
     /**
@@ -161,8 +162,9 @@ export class IoTLongpolling {
      * @param {String} route endpoint to call on the IoT Box
      * @param {Object} data information needed to perform an action or the listener for the polling
      * @param {Object} options additional options for the request (e.g. timeout)
+     * @param {Boolean} fallback if true, no notification will be displayed on fail
      */
-    async _rpcIoT(iot_ip, route, data, options) {
+    async _rpcIoT(iot_ip, route, data, options, fallback = false) {
         this.protocol = window.location.protocol;
         var port = this.protocol === 'http:' ? ':8069' : '';
         var url = this.protocol + '//' + iot_ip + port;
@@ -191,7 +193,10 @@ export class IoTLongpolling {
                 return result;
             }
         } catch {
-            return this._doWarnFail(iot_ip);
+            if (!fallback) {
+                this._doWarnFail(iot_ip);
+            }
+            throw new Error("Longpolling action failed");
         }
     }
 
