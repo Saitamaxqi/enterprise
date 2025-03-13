@@ -4739,7 +4739,7 @@ result = result_rules['ACBASE']['total'] - result_rules['ACSALARY']['total'] - r
         <field name="l10n_ch_code">5030</field>
         <field name="sequence">174</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = not payslip.l10n_ch_avs_status and payslip.l10n_ch_social_insurance_id and payslip.l10n_ch_social_insurance_id._get_additional_ac_rates(rate_date)[0]</field>
+        <field name="condition_python">result = not payslip.l10n_ch_avs_status and payslip.l10n_ch_social_insurance_id and payslip.l10n_ch_social_insurance_id._get_additional_ac_rates(payslip.date_from)[0]</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = result_rules['ACCSALARY']['total']
@@ -4763,7 +4763,7 @@ result_rate = -payslip.l10n_ch_social_insurance_id._get_additional_ac_rates(rate
         <field name="sequence">175</field>
         <field name="l10n_ch_code">7030</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = not payslip.l10n_ch_avs_status and payslip.l10n_ch_social_insurance_id and payslip.l10n_ch_social_insurance_id._get_additional_ac_rates(rate_date)[1]</field>
+        <field name="condition_python">result = not payslip.l10n_ch_avs_status and payslip.l10n_ch_social_insurance_id and payslip.l10n_ch_social_insurance_id._get_additional_ac_rates(payslip.date_from)[1]</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result = result_rules['ACCSALARY']['total']

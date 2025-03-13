@@ -250,7 +250,7 @@
                             </group>
 
                         </page>
-                        <page string="Wage Statement" groups="hr.group_hr_user">
+                        <page string="Wage Statement" groups="hr_payroll.group_hr_payroll_user">
                             <field name="l10n_ch_salary_certificate_profiles">
                                 <list>
                                     <field name="l10n_ch_certificate_type"/>
