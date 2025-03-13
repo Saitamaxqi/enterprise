@@ -317,7 +317,7 @@ export class DocumentsSearchModel extends SearchModel {
             ];
         }
         if (this.sections.get(1).activeValueId === false) {
-            order.push({ name: "last_access_date_group", asc: false });
+            order.push({ name: "write_date", asc: false });
         }
         return order;
     }

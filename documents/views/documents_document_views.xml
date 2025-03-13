@@ -5,7 +5,10 @@
         <field name="model">documents.document</field>
         <field name="arch" type="xml">
             <search string="Documents">
-                <field name="name" string="Name / Extension"/>
+                <field name="name"
+                       filter_domain="['|', ('name', 'ilike', self), ('tag_ids.name', 'ilike', self)]"
+                       string="Document"/>
+                <field name="name"/>
                 <field name="tag_ids"/>
                 <field name="owner_id"/>
                 <field name="partner_id" string="Contact"/>
@@ -80,6 +83,7 @@
                 <field name="create_activity_type_id"/>
                 <field name="create_activity_user_id"/>
                 <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/> <!-- fetch `color` too -->
+                <field name="write_date"/>
                 <templates>
                     <t t-name="card">
                         <div class="d-flex flex-column o_kanban_attachment o_documents_attachment h-100 pb-2"
