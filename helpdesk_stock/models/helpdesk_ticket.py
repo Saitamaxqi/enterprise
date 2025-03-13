@@ -73,10 +73,9 @@ class HelpdeskTicket(models.Model):
                     for partner, picking_ids in picking_data:
                         product_lists = [move_lines[pick] for pick in picking_ids if pick in move_lines]
                         outgoing_product[partner.id] = list(itertools.chain(*product_lists))
-            partners_in_sale = dict(zip(order_data.keys(), self.env['res.partner'].browse(order_data.keys())))
             product_ids = {item for partner_id in suitable_partner_ids for item in order_data.get(partner_id, []) + outgoing_product.get(partner_id, [])}
             tickets.suitable_product_ids = [fields.Command.set(product_ids)]
-            tickets.has_partner_picking = any((partner_id in outgoing_product) or (partner_id in partners_in_sale) for partner_id in suitable_partner_ids)
+            tickets.has_partner_picking = any((partner_id in outgoing_product) for partner_id in suitable_partner_ids)
 
     @api.onchange('suitable_product_ids')
     def onchange_product_id(self):

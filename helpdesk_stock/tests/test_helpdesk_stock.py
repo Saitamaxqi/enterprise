@@ -207,3 +207,57 @@ class TestHelpdeskStock(common.HelpdeskCommon):
         for partner in partners:
             ticket.partner_id = partner
             self.assertEqual(ticket.suitable_product_ids, products, 'Products from all children of the parent company should be visible')
+
+    def test_ensure_has_partner_picking(self):
+        """
+        It is possible to return some products from a ticket. To do so, the user
+        clicks on the Return button. That button will only be displayed in a
+        condition strongly based on the field `has_partner_picking` (tldr: the
+        client must have an outgoing done picking). This test ensures the field
+        value is correct in several cases.
+        """
+        product, service = self.env['product.product'].create([
+            {'name': 'Amazing Product', 'type': 'consu'},
+            {'name': 'Amazing Service', 'type': 'service'},
+        ])
+
+        partners = self.env['res.partner'].create([{
+            'name': name,
+        } for name in [
+            'No SO',
+            'SO with service',
+            'Draft SO',
+            'Confirmed SO',
+            'Cancelled SO',
+            'Done SO',
+        ]])
+
+        service_sale_order = self.env['sale.order'].create([{
+            'partner_id': partners[1].id,
+            'order_line': [(0, 0, {'product_id': service.id})]
+        }])
+
+        _draft_so, confirmed_so, canceled_so, done_so = self.env['sale.order'].create([{
+            'partner_id': partner.id,
+            'order_line': [(0, 0, {'product_id': product.id})]
+        } for partner in partners[2:]])
+
+        (confirmed_so | canceled_so | done_so | service_sale_order).action_confirm()
+
+        canceled_so.with_context(disable_cancel_warning=True).action_cancel()
+        self.assertEqual(canceled_so.state, 'cancel')
+
+        done_so.picking_ids.move_ids.quantity = 1
+        done_so.picking_ids.button_validate()
+        self.assertEqual(done_so.picking_ids.state, 'done')
+
+        tickets = self.env['helpdesk.ticket'].create([{
+            'name': 'Amazing ticket',
+            'partner_id': partner.id,
+        } for partner in partners])
+
+        done_so_ticket = tickets.filtered(lambda t: t.partner_id == done_so.partner_id)
+        other_tickets = tickets - done_so_ticket
+
+        self.assertTrue(done_so_ticket.has_partner_picking)
+        self.assertEqual(other_tickets.mapped('has_partner_picking'), [False] * 5)
