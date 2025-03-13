@@ -15,19 +15,4 @@
             </div>
         </field>
     </record>
-
-    <record id="crm_team_view_kanban_dashboard_hide" model="ir.ui.view">
-        <field name="name">crm.team.view.kanban.dashboard.inherit.sale</field>
-        <field name="model">crm.team</field>
-        <field name="inherit_id" ref="sales_team.crm_team_view_kanban_dashboard"/>
-        <field name="arch" type="xml">
-            <field name="invoiced_target" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
-
-            <field name="invoiced" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
-        </field>
-    </record>
 </odoo>
