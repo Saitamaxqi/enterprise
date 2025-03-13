@@ -237,10 +237,11 @@ class AccountFollowupReport(models.AbstractModel):
         partner = self.env['res.partner'].browse(options.get('partner_id'))
         followup_line = options.get('followup_line', partner.followup_line_id)
         sms_template = options.get('sms_template') or followup_line.sms_template_id
-        template_src = sms_template.body
+        template_src = sms_template.with_context(lang=partner.lang or self.env.user.lang).body
 
         partner_followup_responsible_id = partner._get_followup_responsible()
         responsible_signature = html2plaintext(partner_followup_responsible_id.signature or partner_followup_responsible_id.name)
+        self = self.with_context(lang=partner.lang or self.env.user.lang)
         default_body = _("Dear client, we kindly remind you that you still have unpaid invoices. Please check them and take appropriate action. %s", responsible_signature)
 
         return self._get_rendered_body(partner.id, template_src, default_body, options={'post_process': True})
