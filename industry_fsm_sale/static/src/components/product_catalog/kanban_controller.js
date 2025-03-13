@@ -18,7 +18,7 @@ export class FSMProductCatalogKanbanController extends ProductCatalogKanbanContr
      * overriding useless method to prevent wrong orm call
      *
      * **/
-    async _defineButtonContent() {}
+    onWillStart() {}
 
     async backToTask() {
         // Restore the last form view from the breadcrumbs if breadcrumbs are available.
