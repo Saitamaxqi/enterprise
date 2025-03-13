@@ -292,6 +292,19 @@ class TestShopFloor(HttpCase):
             {'product_id': product_comp1.id, 'product_uom_qty': 1, 'quantity': 1, 'picked': False},
             {'product_id': product_comp2.id, 'product_uom_qty': 2, 'quantity': 2, 'picked': False},
         ])
+        # starts the MO and simulate adding more quantity from the Shop Floor.
+        mo.action_start()
+        self.assertEqual(mo.state, 'progress')
+        mo._update_order_line_info(product_comp2.id, 3, 'move_raw_ids', **kwargs)
+        self.assertEqual(len(mo.picking_ids), 2, "No other picking should have been created")
+        self.assertEqual(mo.components_availability_state, 'available', "MO should still be ready")
+        self.assertRecordValues(second_picking.move_ids, [
+            {'product_id': product_comp2.id, 'product_uom_qty': 3, 'picked': False},
+        ])
+        self.assertRecordValues(mo.move_raw_ids, [
+            {'product_id': product_comp1.id, 'product_uom_qty': 1, 'quantity': 1, 'picked': False},
+            {'product_id': product_comp2.id, 'product_uom_qty': 3, 'quantity': 3, 'picked': False},
+        ])
 
     def test_shop_floor_my_wo_filter_with_pin_user(self):
         """Checks the shown Work Orders (in "My WO" section) are correctly
