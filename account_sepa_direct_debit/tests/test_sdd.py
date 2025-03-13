@@ -305,6 +305,28 @@ class SDDTest(SDDTestCommon):
         with self.assertRaises(UserError, msg="As there is no payment that can be generated, we raise an error when trying to do so"):
             wizard.action_create_payments()
 
+    def test_batch_payment_group(self):
+        """
+        Tests that whenever we group_payments, they are indeed grouped
+        Two invoices with Partner A -> valid mandate
+        One invoice with Partner B -> valid mandate
+        Select the three invoices and created a grouped sepa payment
+        -> there should be two payments
+        """
+        mandate_china_export = self.create_mandate(self.partner_china_export, self.partner_bank_china_export, False, self.sdd_company)
+        mandate_china_export.action_validate_mandate()
+
+        invoices = self.create_invoice(self.partner_agrolait) + self.create_invoice(self.partner_agrolait) + self.create_invoice(self.partner_china_export)
+        journal = self.sdd_company_bank_journal
+        wizard = self.env['account.payment.register'].with_context({'active_ids': invoices.line_ids.ids, 'active_model': 'account.move.line'}).create({
+            'journal_id': journal.id,
+            'payment_method_line_id': journal.inbound_payment_method_line_ids.filtered(lambda l: l.code == 'sdd').id,
+            'group_payment': True,
+        })
+        res = wizard.action_create_payments()
+        payments = self.env['account.payment'].search(res.get('domain', []))
+        self.assertEqual(len(payments), 2, "There should be two payments")
+
     def test_register_payment_other_journal(self):
         """ Test payment from a different journal than the default one """
         bank_journal_copy = self.sdd_company_bank_journal.copy()

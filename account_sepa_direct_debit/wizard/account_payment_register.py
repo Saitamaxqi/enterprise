@@ -43,11 +43,13 @@ class AccountPaymentRegister(models.TransientModel):
 
         for wizard in self.filtered(lambda wiz: wiz.payment_method_code in sdd_codes):
             valid_partner_ids = wizard._get_partner_ids_with_valid_mandates()
-            wizard.write({
-                'line_ids': [Command.set(wizard.line_ids.filtered(lambda line: line.partner_id.id in valid_partner_ids).ids)],
-                # Avoid re-computation of this field that depend on line_ids
-                'payment_method_line_id': wizard.payment_method_line_id.id,
-            })
+            if set(wizard.line_ids.partner_id.ids) != valid_partner_ids:
+                wizard.write({
+                    'line_ids': [Command.set(wizard.line_ids.filtered(lambda line: line.partner_id.id in valid_partner_ids).ids)],
+                    # Avoid re-computation of these fields that depend on line_ids or sub compute triggered by line_ids
+                    'payment_method_line_id': wizard.payment_method_line_id.id,
+                    'group_payment': wizard.group_payment,
+                })
             if not wizard.line_ids:
                 raise UserError(_(
                     "You can't pay any of the selected invoices using the SEPA Direct Debit method, as no valid mandate is available"
