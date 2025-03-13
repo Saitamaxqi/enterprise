@@ -5937,6 +5937,23 @@ registry.category("web_tour.tours").add("test_fetch_archived_records_in_lazy_bar
     ],
 });
 
+registry.category("web_tour.tours").add("test_validate_uncomplete_return", {
+    steps: () => [
+        // Open and process the receipt.
+        { trigger: ".o_stock_barcode_main_menu", run: "scan TEST/IN/0001" },
+        { trigger: ".o_barcode_client_action", run: "scan product1" },
+        { trigger: ".o_barcode_line", run: "scan product1" },
+        ...stepUtils.validateBarcodeOperation(".o_barcode_line.o_line_completed"),
+        // Re-open the receipt and create a return.
+        { trigger: ".o_stock_barcode_main_menu", run: "scan TEST/IN/0001" },
+        { trigger: "button.o_create_return", run: "click" },
+        { trigger: ".o_barcode_line", run: "scan product1" },
+        ...stepUtils.validateBarcodeOperation(".o_barcode_line.o_selected"),
+        { trigger: ".o_stock_barcode_main_menu" },
+        { trigger: ".o_web_client:not(.modal-open)" },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_select_with_same_product_and_lot", {
     steps: () => [
         {

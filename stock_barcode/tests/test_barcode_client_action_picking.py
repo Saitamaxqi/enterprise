@@ -3404,6 +3404,26 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_fetch_archived_records_in_lazy_barcode_cache', login='admin')
         self.assertEqual(transfer.state, 'done')
 
+    def test_validate_uncomplete_return(self):
+        """ Ensures we can validate a return created in the Barcode app without any issue.
+        """
+        self.clean_access_rights()
+        self.env['stock.picking'].create({
+            'name': 'TEST/IN/0001',
+            'location_id': self.supplier_location.id,
+            'location_dest_id': self.stock_location.id,
+            'picking_type_id': self.picking_type_in.id,
+            'move_ids': [Command.create({
+                'name': 'test_receipt_1',
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.stock_location.id,
+                'product_id': self.product1.id,
+                'product_uom': self.product1.uom_id.id,
+                'product_uom_qty': 2,
+            })]
+        }).action_confirm()
+        self.start_tour('/odoo/barcode', 'test_validate_uncomplete_return', login='admin')
+
     # === GS1 TESTS ===#
     def test_gs1_delivery_ambiguous_lot_number(self):
         """

@@ -19,7 +19,7 @@ class StockMove(models.Model):
         """ Creates a new move for every uncompleted move in order to get one picked move
         with the picked quantity, and one not picked move with the remaining quantity."""
         moves_to_reset = self.filtered(lambda m: m.picked and m.quantity == 0)
-        moves_to_backorder = (self - moves_to_reset).filtered('picked')
+        moves_to_backorder = (self - moves_to_reset).filtered(lambda move: move.picked and move.state not in ['done', 'cancel'])
         for move in moves_to_reset:
             move.move_line_ids.unlink()
             move.quantity = move.product_uom_qty

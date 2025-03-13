@@ -1625,6 +1625,10 @@ export default class BarcodePickingModel extends BarcodeModel {
     }
 
     _onExit() {
+        if (["done", "cancel"].includes(this.record.state) || this.moveIds?.length === 0) {
+            // No need to all post process if operation is closed or have no move.
+            return;
+        }
         const quantitiesByMove = this.initialState.lines.reduce((res, line) => {
             const moveId = this._getLineMoveId(line);
             if (res[moveId]) {
@@ -1638,7 +1642,7 @@ export default class BarcodePickingModel extends BarcodeModel {
             }
             return res;
         }, {});
-        this.orm.call("stock.move", "post_barcode_process", [this.moveIds, quantitiesByMove]);
+        return this.orm.call("stock.move", "post_barcode_process", [this.moveIds, quantitiesByMove]);
     }
 
     async _processLocationDestination(barcodeData) {
