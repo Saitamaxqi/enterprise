@@ -27,7 +27,6 @@ import {
     useState,
     useSubEnv,
 } from "@odoo/owl";
-import { ImportBlockUI } from "@base_import/import_block_ui";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 import { BarcodeInput } from "@barcodes/components/manual_barcode";
@@ -54,6 +53,18 @@ class StockBarcodeUnlinkButton extends Component {
 registry.category("view_widgets").add("stock_barcode_unlink_button", {
     component: StockBarcodeUnlinkButton,
 });
+
+
+/**
+ * TODO: stock_barcode should not depend on base_import.
+ */
+export class ImportBlockUI extends Component {
+	static props = {
+		message: { type: String, optional: true },
+		blockComponent: { type: Object, optional: true },
+	};
+	static template = "stock_barcode.BlockUI";
+}
 
 /**
  * Main Component
