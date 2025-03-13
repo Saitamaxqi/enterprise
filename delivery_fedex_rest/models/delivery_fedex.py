@@ -198,7 +198,10 @@ class ProviderFedex(models.Model):
             res.append({'exact_price': response.get('price'), 'tracking_number': response.get('tracking_numbers')})
 
             if self.return_label_on_delivery:
-                self.get_return_label(picking, tracking_number=response.get('tracking_numbers').split(',')[0], origin_date=response.get('date'))
+                if len(packages) > 1:
+                    picking.message_post(body=_("Automated return label generation is not supported by FedEx for multi-package shipments. Please generate the return labels manually."))
+                else:
+                    self.get_return_label(picking, tracking_number=response.get('tracking_numbers').split(',')[0], origin_date=response.get('date'))
 
         return res
 

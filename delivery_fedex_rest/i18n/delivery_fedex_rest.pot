@@ -78,6 +78,15 @@ msgid "Always"
 msgstr ""
 
 #. module: delivery_fedex_rest
+#. odoo-python
+#: code:addons/delivery_fedex_rest/models/delivery_fedex.py:0
+#, python-format
+msgid ""
+"Automated return label generation is not supported by FedEx for multi-"
+"package shipments. Please generate the return labels manually."
+msgstr ""
+
+#. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_stock_package_type__package_carrier_type
 msgid "Carrier"
 msgstr ""
