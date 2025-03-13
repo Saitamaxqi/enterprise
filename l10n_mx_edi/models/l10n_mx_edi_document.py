@@ -900,7 +900,7 @@ class L10n_Mx_EdiDocument(models.Model):
                 if grouping_key['tipo_factor'] == 'Tasa':
                     tax_values['tasa_o_cuota'] = abs(grouping_key['tax_amount_field'] / 100.0)
                 elif grouping_key['tipo_factor'] == 'Cuota':
-                    tax_values['tasa_o_cuota'] = grouping_key['importe'] / tax_values['base']
+                    tax_values['tasa_o_cuota'] = tax_values['importe'] / tax_values['base']
                 else:
                     tax_values['tasa_o_cuota'] = None
 

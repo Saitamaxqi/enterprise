@@ -2030,3 +2030,28 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
 
         self.assertFalse(payment1.move_id)
         self.assertEqual(payment1.state, 'canceled')
+
+    @freeze_time('2017-01-01')
+    def test_invoice_with_cuota_tax(self):
+        cuota_tax = self.env['account.tax'].create({
+            'name': 'Cuota Tax',
+            'type_tax_use': 'sale',
+            'amount_type': 'percent',
+            'amount': 10,
+            'l10n_mx_factor_type': 'Cuota'
+        })
+
+        invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 100,
+                        'quantity': 1,
+                        'tax_ids': [Command.set(cuota_tax.ids)],
+                    }),
+                ],
+            )
+
+        with self.with_mocked_pac_sign_success():
+            invoice._l10n_mx_edi_cfdi_global_invoice_try_send()
+        self.assertRecordValues(invoice, [{'l10n_mx_edi_cfdi_state': 'global_sent'}])
