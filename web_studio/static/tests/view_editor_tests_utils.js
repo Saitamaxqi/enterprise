@@ -136,7 +136,7 @@ export async function mountViewEditor(params) {
 function prepareRegistry(filterRegistry) {
     registry.category("main_components").remove("mail.ChatHub");
     registry.category("main_components").remove("discuss.CallInvitations");
-    registry.category("main_components").remove("bus.connection_alert");
+    registry.category("main_components").remove("bus.ConnectionAlert");
     serviceRegistry.add("messaging", makeFakeMessagingService());
     if (!filterRegistry) {
         return;

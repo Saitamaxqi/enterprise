@@ -14,7 +14,7 @@ before(() => {
         if (
             name.startsWith("mail.") ||
             name.startsWith("discuss.") ||
-            name === "bus.monitoring_service"
+            ["bus.connection_alert", "bus.monitoring_service"].includes(name)
         ) {
             services.remove(name);
         }
