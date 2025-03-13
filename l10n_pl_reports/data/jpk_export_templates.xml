@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <template id="jpk_export_monthly_template">
-        <JPK t-attf-xmlns="#{xmlns}">
+        <JPK xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2021/06/08/eD/DefinicjeTypy/" t-attf-xmlns="#{xmlns}">
             <Naglowek>
                 <KodFormularza kodSystemowy="JPK_V7M (2)" wersjaSchemy="1-0E">JPK_VAT</KodFormularza>
                 <WariantFormularza t-out="2"/>
@@ -14,12 +14,16 @@
             </Naglowek>
             <Podmiot1 rola="Podatnik">
                 <OsobaFizyczna t-if="not company.partner_id.is_company">
-                    <NIP t-if="company.vat[:2].isdecimal()" t-out="company.vat.replace(' ', '')"/>
-                    <NIP t-else="" t-out="company.vat[2:].replace(' ', '')"/>
-                    <ImiePierwsze t-out="company.display_name.split()[0]"/>
-                    <Nazwisko t-if="len(company.display_name.split()) > 1" t-out="' '.join(company.display_name.split()[1:])"/>
-                    <Nazwisko t-else="" t-out=""/>
-                    <DataUrodzenia t-out="options.get('l10n_pl_birthdate')"/>
+                    <!-- OsobaFizyczna (Natural person) and OsobaNiefizyczna (Non-natural person)
+                        share some tag names, but these are defined in different namespaces.
+                        Hence the specific etd namespace.
+                   -->
+                    <etd:NIP t-if="company.vat[:2].isdecimal()" t-out="company.vat.replace(' ', '')"/>
+                    <etd:NIP t-else="" t-out="company.vat[2:].replace(' ', '')"/>
+                    <etd:ImiePierwsze t-out="company.display_name.split()[0]"/>
+                    <etd:Nazwisko t-if="len(company.display_name.split()) > 1" t-out="' '.join(company.display_name.split()[1:])"/>
+                    <etd:Nazwisko t-else="" t-out=""/>
+                    <etd:DataUrodzenia t-out="options.get('l10n_pl_birthdate')"/>
                     <Email t-if="company.email" t-out="company.email"/>
                     <Email t-else="" t-out=""/>
                     <Telefon t-if="company.phone" t-out="company.phone"/>
@@ -115,7 +119,7 @@
             <Ewidencja>
                 <SprzedazWiersz t-foreach="output_tax_moves" t-as="i">
                     <LpSprzedazy t-out="i_index+1"/>
-                    <KodKrajuNadaniaTIN t-if="i.get('vat')" t-out="i.get('vat')[:2].isdecimal() and i.get('vat')[:2] or i.get('country_code')"/>
+                    <KodKrajuNadaniaTIN t-if="i.get('vat')" t-out="not i.get('vat')[:2].isdecimal() and i.get('vat')[:2] or i.get('country_code')"/>
                     <NrKontrahenta t-if="i.get('vat')" t-out="not i.get('vat')[:2].isdecimal() and i.get('vat')[2:].replace(' ', '') or i.get('vat').replace(' ', '')"/>
                     <NrKontrahenta t-else="" t-out="'BRAK'"/>
                     <NazwaKontrahenta t-if="i.get('partner_complete_name')" t-out="i['partner_complete_name']"/>
