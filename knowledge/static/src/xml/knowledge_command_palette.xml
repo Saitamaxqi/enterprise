@@ -7,7 +7,7 @@
                 <span class="pe-2 text-ellipsis">
                     <t t-slot="name"/>
                 </span>
-                <icon t-if="props.isFavorite" class="fa fa-star o_favorite pe-2 position-static"/>
+                <i t-if="props.isFavorite" class="fa fa-star o_favorite pe-2 position-static"/>
                 <span t-if="props.subjectName" class="text-muted small pe-2">—</span>
                 <span t-if="props.subjectName" class="o_command_name text-ellipsis text-muted small">
                     <t t-foreach="props.splitSubjectName" t-as="name" t-key="name_index">
@@ -39,7 +39,7 @@
     <t t-name="KnowledgeExtraCommandTemplate">
         <div class="o_command_hotkey">
             <span>
-                <icon class="fa fa-arrows-alt pe-2" />
+                <i class="fa fa-arrows-alt pe-2" />
                 <t t-if="props.name" t-out="props.name"/>
                 <t t-else="">Untitled</t>
             </span>
