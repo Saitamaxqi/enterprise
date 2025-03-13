@@ -100,9 +100,9 @@ patch(PosStore.prototype, {
         if (!deliveryOrder) {
             return;
         }
-        if (deliveryOrder.delivery_status === "acknowledged") {
+        if (deliveryOrder.delivery_status === "acknowledged" && deliveryOrder.state != "cancel") {
             if (!deliveryOrder.isFutureOrder()) {
-                this.sendOrderInPreparationUpdateLastChange(deliveryOrder);
+                await this.sendOrderInPreparationUpdateLastChange(deliveryOrder);
             }
         } else if (deliveryOrder.delivery_status === "placed") {
             this.sound.play("notification");
@@ -140,5 +140,18 @@ patch(PosStore.prototype, {
                 });
             }
         }
+    },
+
+    getOrderData(order, reprint) {
+        let orderData = super.getOrderData(order, reprint);
+        if (order.delivery_provider_id) {
+            orderData = {
+                ...orderData,
+                delivery_provider_id: order.delivery_provider_id,
+                order_otp: JSON.parse(order.delivery_json)?.order?.details?.ext_platforms?.[0].id,
+                prep_time: order.prep_time,
+            };
+        }
+        return orderData;
     },
 });

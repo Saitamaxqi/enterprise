@@ -96,26 +96,11 @@ patch(TicketScreen.prototype, {
             this._updateScreenState(syncedOrder, "ACTIVE_ORDERS");
             syncedOrder.uiState.orderAcceptTime = luxon.DateTime.now().ts;
         }
-        if (!syncedOrder.isFutureOrder()) {
-            try {
-                await this.pos.sendOrderInPreparation(syncedOrder);
-            } catch {
-                this.pos.notification.add(
-                    _t("Error to send delivery order in preparation display."),
-                    {
-                        type: "warning",
-                        sticky: false,
-                    }
-                );
-            }
-        }
     },
 
     async _rejectOrder(order) {
         if (
-            ["deliveroo", "justeat", "hungerstation"].includes(
-                order.delivery_provider_id.technical_name
-            )
+            ["deliveroo", "", "hungerstation"].includes(order.delivery_provider_id.technical_name)
         ) {
             return this.dialog.add(AlertDialog, {
                 title: _t("Error"),
@@ -141,20 +126,29 @@ patch(TicketScreen.prototype, {
             ],
             getPayload: async (code) => {
                 const last_order_status = order.delivery_status;
+                order.state = "cancel";
                 const response = await this._updateOrderStatus(order, "Cancelled", code);
                 const status = await this._handleResponse(response, order, "cancelled");
                 if (status) {
-                    this._updateScreenState(order, "ACTIVE_ORDERS");
-                    if (last_order_status !== "placed") {
-                        await this.pos.sendOrderInPreparation(order, { cancelled: true });
+                    if (
+                        Object.keys(order.last_order_preparation_change.lines).length == 0 &&
+                        last_order_status !== "placed"
+                    ) {
+                        if (order.general_customer_note) {
+                            order.last_order_preparation_change.general_customer_note =
+                                order.general_customer_note;
+                        }
+                        await this.pos.sendOrderInPreparation(order, true);
                     }
+                    await this._updateScreenState(order, "ACTIVE_ORDERS");
+                    await this._updateScreenState(order, "ACTIVE_ORDERS");
                     order.uiState.displayed = false;
                     if (order.id === this.pos.getOrder()?.id) {
                         const orderList = this._getOrderList();
                         if (orderList.length == 1) {
                             this.pos.addNewOrder();
                         } else {
-                            this._selectNextOrder(order);
+                            this.pos.selectNextOrder();
                         }
                     }
                     await this.pos.deleteOrders([order]);
