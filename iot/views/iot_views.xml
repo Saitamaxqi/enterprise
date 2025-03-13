@@ -5,7 +5,7 @@
         id="iot_menu_root"
         name="IoT"
         web_icon="iot,static/description/icon.png"
-        groups="base.group_system"
+        groups="iot.group_iot_user"
         sequence="265"
     />
 
@@ -20,7 +20,7 @@
                     <t groups="base.group_no_one">
                         <widget name="iot_download_logs" btn_name="Download Logs" btn_class="primary"/>
                         <widget name="iot_restart_odoo" btn_name="Restart Odoo" btn_class="secondary"/>
-                        <widget name="iot_reset_password" btn_name="Reset Password" btn_class="secondary"/>
+                        <widget groups="iot.group_iot_admin" name="iot_reset_password" btn_name="Reset Password" btn_class="secondary"/>
                     </t>
                 </header>
                 <sheet>
@@ -64,7 +64,7 @@
         <field name="arch" type="xml">
             <kanban create="false">
                 <header>
-                    <button name="%(iot.action_add_iot_box)d" type="action" string="Connect" class="btn-primary o-kanban-button-new"  display="always"/>
+                    <button groups="iot.group_iot_admin" name="%(iot.action_add_iot_box)d" type="action" string="Connect" class="btn-primary o-kanban-button-new"  display="always"/>
                 </header>
                 <templates>
                     <t t-name="card" class="p-0">
