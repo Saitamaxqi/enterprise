@@ -2008,7 +2008,7 @@ class SaleOrder(models.Model):
     def _upsell_activity_line(self):
         self.ensure_one()
         return Markup('&nbsp;<br>').join(
-            escape(_('- You delivered %(delivered)s %(name)s and invoiced %(invoiced)s', delivered=line.qty_delivered, name=line.name, invoiced=line.qty_invoiced))
+            escape(self.env._('- You delivered %(delivered)s %(name)s and invoiced %(invoiced)s', delivered=line.qty_delivered, name=line.name, invoiced=line.qty_invoiced))
             for line in self.order_line if line.invoice_status == 'upselling'
         )
 
