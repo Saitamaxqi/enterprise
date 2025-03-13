@@ -13,7 +13,7 @@ registry.category("web_tour.tours").add("OrderLotsRentalTour", {
             Dialog.confirm("Open Register"),
             PosSale.settleNthOrder(1),
             ProductScreen.clickLotIcon(),
-            ProductScreen.enterLotNumber("123456789"),
+            ProductScreen.selectNthLotNumber(1),
             ProductScreen.clickPayButton(),
             PaymentScreen.clickPaymentMethod("Cash"),
             PaymentScreen.clickValidate(),
