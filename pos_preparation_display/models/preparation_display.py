@@ -37,7 +37,21 @@ class Pos_Preparation_DisplayDisplay(models.Model):
 
     @api.model
     def _load_pos_data_domain(self, data):
-        return ['|', ('pos_config_ids', '=', data['pos.config'][0]['id']), ('pos_config_ids', '=', False)]
+        return [
+            (
+                "id",
+                "in",
+                [
+                    display.id
+                    for display in self.env["pos_preparation_display.display"]
+                    .search([])
+                    .filtered(
+                        lambda d: not d.pos_config_ids
+                        or data["pos.config"][0]["id"] in d.pos_config_ids.ids
+                    )
+                ],
+            )
+        ]
 
     @api.model_create_multi
     def create(self, vals_list):
