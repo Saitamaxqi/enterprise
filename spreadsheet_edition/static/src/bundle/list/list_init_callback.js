@@ -5,8 +5,7 @@ import { _t } from "@web/core/l10n/translation";
 const { SidePanelStore } = stores;
 
 const uuidGenerator = new helpers.UuidGenerator();
-const {  sanitizeSheetName } = helpers;
-
+const { sanitizeSheetName } = helpers;
 
 /**
  * Get the function that have to be executed to insert the given list in the
@@ -86,6 +85,12 @@ export function insertList({ list, threshold, fields, name }) {
             columns.push(col);
         }
         model.dispatch("AUTORESIZE_COLUMNS", { sheetId, cols: columns });
+        const rows = [];
+        for (let row = 0; row < threshold + 1; row++) {
+            rows.push(row);
+        }
+        model.dispatch("AUTORESIZE_ROWS", { sheetId, rows });
+
         const sidePanel = stores.get(SidePanelStore);
         sidePanel.open("LIST_PROPERTIES_PANEL", { listId });
     };

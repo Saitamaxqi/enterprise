@@ -10,7 +10,7 @@ import {
 import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_action";
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
-import { Partner } from "@spreadsheet/../tests/helpers/data";
+import { Partner, Product } from "@spreadsheet/../tests/helpers/data";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
 import { getSpreadsheetActionModel } from "@spreadsheet_edition/../tests/helpers/webclient_helpers";
 import {
@@ -196,4 +196,26 @@ test("Grouped list: we take the number of elements not the number of groups", as
 
     await invokeInsertListInSpreadsheetDialog(env);
     expect("input#threshold").toHaveValue(Partner._records.length);
+});
+
+test("Rows of list multi-lines fields are auto-resized", async function () {
+    let spreadsheetAction;
+    patchWithCleanup(SpreadsheetAction.prototype, {
+        setup() {
+            super.setup();
+            spreadsheetAction = this;
+        },
+    });
+    Product._records[0].display_name = "This \n has \n multiple \n lines";
+    await spawnListViewForSpreadsheet();
+    await animationFrame();
+    await toggleActionMenu(target);
+    await toggleCogMenuSpreadsheet(target);
+    await contains(".o_insert_list_spreadsheet_menu").click();
+    await contains(".modal button.btn-primary").click();
+    await animationFrame();
+
+    const model = getSpreadsheetActionModel(spreadsheetAction);
+    const sheetId = model.getters.getActiveSheetId();
+    expect(model.getters.getRowSize(sheetId, 1)).toBe(70);
 });
