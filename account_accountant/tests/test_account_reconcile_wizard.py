@@ -173,6 +173,66 @@ class TestAccountReconcileWizard(AccountTestInvoicingCommon):
         ]
         self.assertWizardReconcileValues(line_1 + line_2, wizard_input_values, expected_values)
 
+    def test_write_off_one_foreign_currency_rounding(self):
+        """ Reconciliation of two lines with one of the two using foreign currency should reconcile in foreign currency."""
+        foreign_currency = self.setup_other_currency('CAD', rounding=0.01, rates=[('2016-01-01', 0.052972554919), ('2017-01-01', 4.0)])
+
+        # Check that the reconciliation works independently of
+        # - whether the foreign amount is debit or credit
+        # - the account type (payable / receivable)
+        self.assertFalse(self.payable_account_2.account_type in ('asset_receivable', 'liability_payable'))
+        self.assertTrue(self.receivable_account.account_type in ('asset_receivable', 'liability_payable'))
+        for foreign_amount_sign, account in [
+            (-1, self.payable_account_2),
+            (1, self.payable_account_2),
+            (-1, self.receivable_account),
+            (1, self.receivable_account),
+        ]:
+            with self.subTest(sub_test_name=f'sign: {foreign_amount_sign}, account: {account.name}'):
+                line_1 = self.create_line_for_reconciliation(
+                    -foreign_amount_sign * 372239.38, -foreign_amount_sign * 372239.38, self.company_currency,
+                    '2016-01-01', account_1=account,
+                )
+                line_2 = self.create_line_for_reconciliation(
+                    foreign_amount_sign * 377554.0, foreign_amount_sign * 20000.0, foreign_currency,
+                    '2016-01-01', account_1=account,
+                )
+                lines = line_1 + line_2
+
+                # Test the opening of the wizard without input values
+                wizard = self.env['account.reconcile.wizard'].with_context(
+                    active_model='account.move.line',
+                    active_ids=lines.ids,
+                ).new()
+                self.assertRecordValues(wizard, [{
+                    'is_write_off_required': True,
+                    'amount': foreign_amount_sign * 5314.62,
+                    'amount_currency': foreign_amount_sign * 281.53,
+                    'reco_currency_id': foreign_currency.id,
+                }])
+
+                # Check the created write-off move and that there is no residual
+                wizard_input_values = {
+                    'journal_id': self.misc_journal.id,
+                    'account_id': self.write_off_account.id,
+                    'label': 'Write-Off Test Label',
+                    'allow_partials': False,
+                    'date': self.test_date,
+                }
+                # We sort the expected values the same way as `assertWizardReconcileValues` sorts the lines
+                expected_values = sorted([
+                    {'account_id': account.id, 'name': 'Write-Off Test Label',
+                     'balance': -foreign_amount_sign * 5314.62,
+                     'amount_currency': -foreign_amount_sign * 281.53, 'currency_id': foreign_currency.id},
+                    {'account_id': self.write_off_account.id, 'name': 'Write-Off Test Label',
+                     'balance': foreign_amount_sign * 5314.62,
+                     'amount_currency': foreign_amount_sign * 281.53, 'currency_id': foreign_currency.id},
+                ], key=lambda vals: vals['balance'])
+                self.assertWizardReconcileValues(lines, wizard_input_values, expected_values)
+
+                full_reconcile = lines.full_reconcile_id
+                self.assertTrue(full_reconcile)
+
     def test_write_off_mixed_foreign_currencies(self):
         """ Write off with multiple currencies should reconcile in company currency."""
         line_1 = self.create_line_for_reconciliation(1000.0, 1000.0, self.company_currency, '2016-01-01')
