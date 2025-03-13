@@ -52,7 +52,11 @@ export class Body extends Component {
             digits: [0, decimal_places],
         });
     }
-
+    get isFullDiscounted() {
+        return (
+            this.order.lines.length > 0 && this.order.currency.isZero(this.order.getTotalWithTax())
+        );
+    }
     get lines() {
         const calculateDiscountAmount = (line) => {
             const { priceWithTaxBeforeDiscount, priceWithTax: priceWithTaxAfterDiscount } =
