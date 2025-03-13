@@ -1,7 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': "United States Postal Service (USPS) Shipping",
-    'description': "Send your shippings through USPS and track them online",
+    'description': "Send your shippings through USPS and track them online.  This version of the USPS connector is"
+                   "compatible with the new USPS REST API available at https://developers.usps.com/.",
     'category': 'Shipping Connectors',
     'sequence': 305,
     'version': '1.0',

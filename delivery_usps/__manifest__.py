@@ -6,13 +6,11 @@
     'category': 'Shipping Connectors',
     'sequence': 305,
     'version': '1.0',
-    'application': True,
     'depends': ['stock_delivery', 'mail'],
     'data': [
         'data/delivery_usps_data.xml',
         'views/delivery_usps_view.xml',
         'views/delivery_usps_template.xml',
-        'views/res_config_settings_views.xml',
     ],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

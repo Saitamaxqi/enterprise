@@ -10,7 +10,6 @@ This module allows ecommerce users to enter their UPS account number and deliver
     'depends': ['delivery_ups', 'website_sale'],
     'data': [
         'views/delivery_ups_templates.xml',
-        'views/res_config_settings_views.xml',
     ],
     'auto_install': True,
     'author': 'Odoo S.A.',

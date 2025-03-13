@@ -7,12 +7,10 @@
     'category': 'Shipping Connectors',
     'sequence': 295,
     'version': '1.0',
-    'application': True,
     'depends': ['stock_delivery', 'mail'],
     'data': [
         'data/delivery_fedex.xml',
         'views/delivery_fedex.xml',
-        'views/res_config_settings_views.xml',
     ],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

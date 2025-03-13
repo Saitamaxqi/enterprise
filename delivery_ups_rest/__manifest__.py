@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 {
     'name': "UPS Shipping",
-    'summary': "Send your shippings through UPS and track them online",
+    'summary': "Send your shippings through UPS and track them online. This new version of the UPS connector is compatible"
+               "with the newest version of the UPS REST APIs available at https://developer.ups.com/",
     'category': 'Shipping Connectors',
     'version': '0.1',
     'application': True,
