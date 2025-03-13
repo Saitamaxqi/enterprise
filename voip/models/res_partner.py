@@ -10,12 +10,11 @@ class ResPartner(models.Model):
     def get_contacts(self, offset, limit, search_terms):
         domain = [("phone", "!=", False)]
         if search_terms:
-            search_domain = [
-                "|", "|", "|",
-                ("phone", "like", search_terms),
-                ("complete_name", "ilike", search_terms),
-                ("email", "ilike", search_terms),
-            ]
+            search_domain = expression.OR([
+                [("phone", "like", search_terms)],
+                [("complete_name", "ilike", search_terms)],
+                [("email", "ilike", search_terms)],
+            ])
             domain = expression.AND([domain, search_domain])
         return self.search(domain, offset=offset, limit=limit)._format_contacts()
 
