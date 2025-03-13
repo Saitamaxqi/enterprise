@@ -496,7 +496,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 '''
                 SELECT
                     account_move_line.id,
-                    account_move_line.date_maturity,
+                    COALESCE(account_move_line.date_maturity, account_move_line.date) AS date_maturity,
                     account_move_line.name,
                     account_move_line.ref,
                     account_move_line.parent_state,
@@ -551,7 +551,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 '''
                 SELECT
                     account_move_line.id,
-                    account_move_line.date_maturity,
+                    COALESCE(account_move_line.date_maturity, account_move_line.date) AS date_maturity,
                     account_move_line.name,
                     account_move_line.ref,
                     account_move_line.parent_state,

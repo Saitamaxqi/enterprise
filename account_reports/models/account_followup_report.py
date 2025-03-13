@@ -9,7 +9,6 @@ class AccountFollowupCustomHandler(models.AbstractModel):
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)
-        report._init_options_journals(options, previous_options=previous_options, additional_journals_domain=[('type', '=', 'sale')])
 
         options['hide_initial_balance'] = True
         if len(options['partner_ids']) == 1:
@@ -18,6 +17,11 @@ class AccountFollowupCustomHandler(models.AbstractModel):
 
         if options['report_id'] != previous_options.get('report_id'):
             options['unreconciled'] = True
+            # by default, select only the 'sales' journals
+            for journal in options['journals']:
+                journal['selected'] = journal.get('type') == 'sale' # dividers don't get a type
+            # Since we forced the selection of some journal, we need to recompute the filter label
+            report._init_options_journals_names(options, previous_options=previous_options)
 
     def _get_partner_aml_report_lines(self, report, options, partner_line_id, aml_results, progress, offset=0, level_shift=0):
 

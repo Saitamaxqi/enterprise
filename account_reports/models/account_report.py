@@ -387,19 +387,25 @@ class AccountReport(models.Model):
         else:
             options['journals'].extend(next(iter(company_journals_map.values()), []))
 
-        # 7 Compute the name to display on the widget
+
+    def _init_options_journals_names(self, options, previous_options, additional_journals_domain=None):
+        all_journals = [
+            journal for journal in options.get('journals', [])
+            if journal['model'] == 'account.journal'
+        ]
+        journals_selected = [j for j in all_journals if j.get('selected')]
+        # 1. Compute the name to display on the widget
         if options.get('selected_journal_groups'):
             names_to_display = [options['selected_journal_groups']['name']]
         elif len(all_journals) == len(journals_selected) or not journals_selected:
             names_to_display = [_("All Journals")]
         else:
             names_to_display = []
-
             for journal in options['journals']:
                 if journal.get('model') == 'account.journal' and journal['selected']:
                     names_to_display += [journal['name']]
 
-        # 8. Abbreviate the name
+        # 2. Abbreviate the name
         max_nb_journals_displayed = 5
         nb_remaining = len(names_to_display) - max_nb_journals_displayed
         displayed_names = ', '.join(names_to_display[:max_nb_journals_displayed])
@@ -2064,6 +2070,8 @@ class AccountReport(models.Model):
             self._init_options_comparison: 50,
             self._init_options_export_mode: 60,
             self._init_options_integer_rounding: 70,
+            self._init_options_journals: 80,
+            self._init_options_journals_names: 90,
 
             'default': 200,
 
