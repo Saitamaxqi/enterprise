@@ -128,7 +128,7 @@
     }
 
     .o_sign_sidebar {
-        max-width: 280px;
+        max-width: 320px;
         z-index: 1030;
         flex-shrink: 0;
         overflow-y: auto;
@@ -178,7 +178,7 @@
 
     .o_sign_sidebar_item_grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 4px; /* Small gap between buttons */
     }
 
@@ -186,7 +186,7 @@
         &:hover {
             cursor: move;
             transition: transform 200ms ease 0s;
-            transform: translateX(1px) translateY(-1px) scale(1.05) rotate(1deg);
+            transform: translateX(1px) translateY(-1px) scale(1.02) rotate(1deg);
         }
     }
 

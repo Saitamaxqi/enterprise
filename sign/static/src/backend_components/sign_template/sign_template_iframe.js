@@ -298,9 +298,9 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
         const display = signItem.el.querySelector(".o_sign_item_display");
         display.addEventListener("click", () => this.openSignItemPopup(signItem));
 
-        /* Open selection items on first drop. */
-        if (signItem.data?.type === "selection" && signItem.data?.updated && signItem.data?.option_ids?.length === 0)
+        if (signItem.data?.type === "selection" && signItem.data?.updated && signItem.data?.option_ids?.length === 0){
             display.click();
+        }
     }
 
     /**
@@ -360,6 +360,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                 signItem,
             };
         }
+
     }
 
     //Handle copying a single sign item

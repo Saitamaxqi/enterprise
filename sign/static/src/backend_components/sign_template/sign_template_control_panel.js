@@ -25,6 +25,7 @@ export class SignTemplateControlPanel extends Component {
         signStatus: { type: Object },
         manageTemplateAccess: { type: Boolean },
         onTemplateSaveClick: { type: Function },
+        hasSignersWithoutItems: { type: Boolean },
     };
 
     setup() {
@@ -62,6 +63,7 @@ export class SignTemplateControlPanel extends Component {
                 active_id: this.props.signTemplate.id,
                 sign_directly_without_mail: false,
                 show_email: true,
+                has_signers_without_items: this.props.hasSignersWithoutItems,
             },
         });
     }
@@ -78,6 +80,7 @@ export class SignTemplateControlPanel extends Component {
             additionalContext: {
                 active_id: this.props.signTemplate.id,
                 sign_directly_without_mail: true,
+                has_signers_without_items: this.props.hasSignersWithoutItems,
             },
         });
     }

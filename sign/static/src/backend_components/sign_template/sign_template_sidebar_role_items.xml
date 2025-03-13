@@ -8,7 +8,7 @@
                     <div class="o_sign_sidebar_role_input_container w-100">
                         <input type="text"
                             t-att-value="state.roleName"
-                            t-attf-class="o_input form-control bg-transparent rounded-0 pe-1 {{ props.isInputFocused ? '' : 'o_sign_sidebar_role_muted_input' }}"
+                            t-attf-class="o_input form-control bg-transparent rounded-0 pe-1 {{ props.isInputFocused ? '' : 'o_sign_sidebar_role_muted_input' }} {{ !props.isCollapsed ? 'fw-bold' : '' }}"
                             t-att-readonly="!props.isInputFocused"
                             t-on-click="() => this.onFocusRoleInput(this.props.id)"
                             t-on-change="ev => this.onChangeRoleName(ev.target.value)"
@@ -56,7 +56,7 @@
                                 t-att-data-signer-id="props.id"
                                 t-att-data-role-name="state.roleName"
                                 title="Drag and Drop a field in the PDF">
-                                <span class="o_sign_field_type_button_content d-flex flex-column gap-1">
+                                <span class="o_sign_field_type_button_content d-flex align-items-center justify-content-start gap-1">
                                     <i t-attf-class="fa fa-fw #{itemType.icon ? itemType.icon : icon_type[itemType.item_type]} me-2" role="img"/>
                                     <span class="text-start"><t t-esc="itemType.name"/></span>
                                 </span>

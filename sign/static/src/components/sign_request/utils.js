@@ -266,7 +266,7 @@ export function buildPDFViewerURL(attachmentLocation, isSmall) {
         .replace(/'/g, "%27")
         .replace(/"/g, "%22");
     const zoom = isSmall ? "page-fit" : "page-width";
-    return `${baseURL}?unique=${date}&file=${attachmentLocation}#page=1&zoom=${zoom}&pagemode=thumbs`;
+    return `${baseURL}?unique=${date}&file=${attachmentLocation}#page=1&zoom=${zoom}&pagemode=none`;
 }
 
 export function injectPDFCustomStyles(iframeDoc) {

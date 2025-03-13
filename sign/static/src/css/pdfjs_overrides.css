@@ -63,10 +63,7 @@ aim to deliver a cleaner and more intuitive user interface.
 }
 
 #toolbarViewerRight {
-    position: absolute;
-    left: 0;
-    display: flex;
-    flex-direction: row-reverse;
+    display: none !important;
 }
 
 #secondaryToolbarToggleButton::before {

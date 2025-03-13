@@ -58,6 +58,14 @@ export class SignTemplate extends Component {
         return !this.hasSignRequests && !this.env.isSmall;
     }
 
+    /**
+     * Checks if there are signers without sign items in the template
+     * @returns {Boolean}
+     */
+    get hasSignersWithoutItems() {
+        return this.state.signers.some(signer => signer.itemsCount === 0);
+    }
+
     get signTemplateSidebarProps() {
         return {
             signItemTypes: this.signItemTypes,

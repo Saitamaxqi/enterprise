@@ -1,6 +1,6 @@
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
-import { Component, useState, useExternalListener, onWillStart } from "@odoo/owl";
+import { Component, useState, useExternalListener, onWillStart, onMounted } from "@odoo/owl";
 
 export class SignItemCustomPopover extends Component {
     static template = "sign.SignItemCustomPopover";
@@ -46,6 +46,19 @@ export class SignItemCustomPopover extends Component {
             );
             this.state.selectionOptionsText = options.map(option => option.value).join('\n');
         });
+
+        /**
+         * Focuses the selection options textarea when the popover is rendered
+         */
+        onMounted(() => {
+            if (this.props.type === "selection") {
+                const textarea = document.querySelector('.o_sign_selection_input_option textarea');
+                if (textarea) {
+                    textarea.focus();
+                }
+            }
+        });
+
         this.notification = useService("notification");
         this.typesWithAlignment = new Set(["text", "textarea"]);
         useExternalListener(window, "keydown", this.onGlobalKeyDown, { capture: true });
@@ -72,8 +85,15 @@ export class SignItemCustomPopover extends Component {
     }
 
     async onValidate() {
+        if (this.props.type === "selection" && !this.state.selectionOptionsText) {
+            this.notification.add(_t("Selection field cannot be empty. Please add at least one option."), {
+                type: "warning",
+            });
+            return;
+        }
+
         const options = this.state.selectionOptionsText.split('\n').map(opt => opt.trim()).filter(opt => opt);
-        this.state.option_ids = await this.orm.call('sign.item.option', 'get_selection_ids_from_value', [null, options]); 
+        this.state.option_ids = await this.orm.call('sign.item.option', 'get_selection_ids_from_value', [null, options]);
         this.props.onValidate(this.state);
     }
 

@@ -49,8 +49,8 @@
         <field name="placeholder">Name</field>
         <field name="model_id" ref="model_res_partner"/>
         <field name="auto_field">name</field>
-        <field name="default_width" type="float">0.2</field>
-        <field name="default_height" type="float">0.02</field>
+        <field name="default_width" type="float">0.18</field>
+        <field name="default_height" type="float">0.015</field>
         <field name="icon">fa-user</field>
     </record>
 
@@ -59,8 +59,8 @@
         <field name="placeholder">Email</field>
         <field name="model_id" ref="model_res_partner"/>
         <field name="auto_field">email</field>
-        <field name="default_width" type="float">0.2</field>
-        <field name="default_height" type="float">0.02</field>
+        <field name="default_width" type="float">0.18</field>
+        <field name="default_height" type="float">0.015</field>
         <field name="icon">fa-envelope-o</field>
     </record>
 
@@ -69,24 +69,24 @@
         <field name="placeholder">Phone</field>
         <field name="model_id" ref="model_res_partner"/>
         <field name="auto_field">phone</field>
-        <field name="default_width" type="float">0.2</field>
-        <field name="default_height" type="float">0.02</field>
+        <field name="default_width" type="float">0.18</field>
+        <field name="default_height" type="float">0.015</field>
         <field name="icon">fa-phone</field>
     </record>
 
     <record model="sign.item.type" id="sign_item_type_company">
         <field name="name">Company</field>
         <field name="placeholder">Company</field>
-        <field name="default_width" type="float">0.2</field>
-        <field name="default_height" type="float">0.02</field>
+        <field name="default_width" type="float">0.18</field>
+        <field name="default_height" type="float">0.015</field>
         <field name="icon">fa-building-o</field>
     </record>
 
     <record model="sign.item.type" id="sign_item_type_text">
         <field name="name">Text</field> <!-- default: type 'text', tip 'fill in', empty placeholder, default_width and default_height, no auto_field -->
         <field name="placeholder">Text</field>
-        <field name="default_width" type="float">0.2</field>
-        <field name="default_height" type="float">0.02</field>
+        <field name="default_width" type="float">0.18</field>
+        <field name="default_height" type="float">0.015</field>
         <field name="icon">fa-font</field>
     </record>
 
@@ -101,19 +101,19 @@
 
     <record model="sign.item.type" id="sign_item_type_checkbox">
         <field name="name">Checkbox</field>
-        <field name="placeholder">✅</field>
+        <field name="placeholder">&#9745;</field>
         <field name="item_type">checkbox</field>
-        <field name="default_width" type="float">0.04</field>
-        <field name="default_height" type="float">0.03</field>
+        <field name="default_width" type="float">0.02</field>
+        <field name="default_height" type="float">0.018</field>
         <field name="icon">fa-check-square-o</field>
     </record>
 
     <record model="sign.item.type" id="sign_item_type_radio">
         <field name="name">Radio</field>
-        <field name="placeholder">🔘</field>
+        <field name="placeholder">&#9673;</field>
         <field name="item_type">radio</field>
-        <field name="default_width" type="float">0.04</field>
-        <field name="default_height" type="float">0.03</field>
+        <field name="default_width" type="float">0.02</field>
+        <field name="default_height" type="float">0.018</field>
         <field name="icon">fa-dot-circle-o</field>
     </record>
 
@@ -122,16 +122,16 @@
         <field name="item_type">selection</field>
         <field name="placeholder">Selection</field>
         <field name="tip">Select an option</field>
-        <field name="default_width" type="float">0.2</field>
-        <field name="default_height" type="float">0.03</field>
+        <field name="default_width" type="float">0.18</field>
+        <field name="default_height" type="float">0.015</field>
         <field name="icon">fa-angle-down</field>
     </record>
 
     <record model="sign.item.type" id="sign_item_type_date">
         <field name="name">Date</field>
         <field name="placeholder">DD-MM-YYYY</field>
-        <field name="default_width" type="float">0.2</field>
-        <field name="default_height" type="float">0.02</field>
+        <field name="default_width" type="float">0.18</field>
+        <field name="default_height" type="float">0.015</field>
         <field name="icon">fa-calendar</field>
     </record>
 
@@ -140,8 +140,8 @@
         <field name="item_type">strikethrough</field>
         <field name="placeholder">Strikethrough</field>
         <field name="tip">Strikethrough the highlighted area</field>
-        <field name="default_width" type="float">0.2</field>
-        <field name="default_height" type="float">0.02</field>
+        <field name="default_width" type="float">0.18</field>
+        <field name="default_height" type="float">0.015</field>
         <field name="icon">fa-strikethrough</field>
     </record>
 
