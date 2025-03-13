@@ -2,6 +2,7 @@ import { Component, useState, useRef, onWillDestroy } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { DateTimeInput } from "@web/core/datetime/datetime_input";
 import { AnnotationPopoverLine } from "@account_reports/components/account_report/line_name/popover_line/annotation_popover_line";
+import { removeTaxGroupingFromLineId } from "@account_reports/js/util";
 
 const { DateTime } = luxon;
 
@@ -26,7 +27,7 @@ export class AccountReportAnnotationsPopover extends Component {
             value: this.props.isAddingAnnotation ? this._getNewAnnotation() : {},
         });
 
-        this.annotations = useState(this.props.controller.visibleAnnotations[this.props.lineID]);
+        this.annotations = useState(this.props.controller.visibleAnnotations[removeTaxGroupingFromLineId(this.props.lineID)]);
 
         this.popoverTable = useRef("popoverTable");
         this.currentPromise = null;
@@ -45,7 +46,7 @@ export class AccountReportAnnotationsPopover extends Component {
     async refreshAnnotations() {
         this.currentPromise = null;
         await this.props.controller.refreshAnnotations();
-        this.annotations = this.props.controller.visibleAnnotations[this.props.lineID];
+        this.annotations = this.props.controller.visibleAnnotations[removeTaxGroupingFromLineId(this.props.lineID)];
         if (this.isAddingAnnotation) {
             this.cleanNewAnnotation();
         }
