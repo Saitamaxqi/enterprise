@@ -10,6 +10,10 @@
 import { endKnowledgeTour } from '@knowledge/../tests/tours/knowledge_tour_utils';
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { htmlEditorVersions } from "@html_editor/html_migrations/html_migrations_utils";
+
+const VERSIONS = htmlEditorVersions();
+const CURRENT_VERSION = VERSIONS.at(-1);
 
 const testArticleName = 'Test history Article';
 function changeArticleContentAndSave(newContent) {
@@ -99,7 +103,7 @@ registry.category("web_tour.tours").add('knowledge_history_tour', {
         trigger: '.history-container .tab-pane',
         run: function () {
             const comparisonHtml = document.querySelector('.history-container .tab-pane .o_readonly').innerHTML;
-            const correctHtml = '<h1 class="oe-hint" data-oe-version="1.1"><added>' + testArticleName + '</added><removed>Modified Title 03</removed></h1>';;
+            const correctHtml = `<h1 class="oe-hint" data-oe-version="${CURRENT_VERSION}"><added>` + testArticleName + '</added><removed>Modified Title 03</removed></h1>';
             if (comparisonHtml !== correctHtml) {
                 throw new Error('Expect comparison to be ' + correctHtml + ', got ' + comparisonHtml);
             }
