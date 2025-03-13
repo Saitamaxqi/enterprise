@@ -232,7 +232,7 @@ class StockPicking(models.Model):
         if self.env.user.has_group('stock.group_production_lot') and (barcode_type == 'lot' or (not barcode_type and not picking_nums)):
             lot = self.env['stock.lot'].search([
                 ('name', '=', barcode),
-                ('company_id', '=', picking_type.company_id.id),
+                '|', ('company_id', '=', False), ('company_id', '=', picking_type.company_id.id),
             ], limit=1)
             if lot:
                 lot_domain = [('move_line_ids.lot_id', '=', lot.id)]

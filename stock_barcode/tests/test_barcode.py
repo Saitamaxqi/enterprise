@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from odoo import Command
 from odoo.tests import HttpCase, tagged
 
 
@@ -237,3 +238,38 @@ class TestBarcodeClientAction(HttpCase):
             self.assertFalse(lot2 in lots, "lot2 shouldn't be found due to unpadding of the barcode implied in the search")
             lots = self.env['stock.lot'].search([('name', operator, '10lot2300005')])
             self.assertTrue(lot1 in lots and lot2 in lots, "Lot lenght is variable so we can't trim it")
+
+    def test_filter_on_barcode(self):
+        product = self.env['product.product'].create({
+            'name': 'product1',
+            'barcode': '01304510',
+            'is_storable': True,
+            'tracking': 'lot',
+        })
+        lot = self.env['stock.lot'].create({
+            'name': 'lot1',
+            'product_id': product.id,
+        })
+        warehouse = self.env['stock.warehouse'].search([], limit=1)
+        customer_loc = self.env['stock.location'].search([('usage', '=', 'customer')], limit=1)
+        self.env['stock.quant']._update_available_quantity(product, warehouse.lot_stock_id, 10, lot_id=lot)
+
+        picking = self.env['stock.picking'].create({
+            'picking_type_id': warehouse.out_type_id.id,
+            'location_id': warehouse.lot_stock_id.id,
+            'location_dest_id': customer_loc.id,
+            'move_ids': [Command.create({
+                'picking_type_id': warehouse.out_type_id.id,
+                'location_id': warehouse.lot_stock_id.id,
+                'location_dest_id': customer_loc.id,
+                'name': 'Test lot filter',
+                'product_id': product.id,
+                'product_uom_qty': 1,
+                'product_uom': product.uom_id.id,
+            })],
+            'state': 'draft',
+        })
+        picking.action_confirm()
+
+        action = self.env['stock.picking'].with_context(active_id=warehouse.out_type_id.id).filter_on_barcode(lot.name)
+        self.assertEqual(action['action']['context']['search_default_lot_id'], lot.id)
