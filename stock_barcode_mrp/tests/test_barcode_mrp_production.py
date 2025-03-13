@@ -947,3 +947,23 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         action = self.env.ref('stock_barcode_mrp.stock_barcode_mo_client_action')
         url = f'/web#action={action.id}&active_id={mo.id}'
         self.start_tour(url, 'test_mo_barcode_byproduct_destination_location', login='admin')
+
+    def test_select_mo_component_line_scan_package_type(self):
+        self.env.user.group_ids += self.env.ref('stock.group_tracking_lot')
+        self.env['stock.package.type'].create({
+            'name': 'stock package type 1',
+            'barcode': '000555555555555555555555'
+        })
+        manufacturing_order = self.env['mrp.production'].create({
+            'name': 'tsmclspt MO',
+            'product_id': self.final_product.id,
+            'move_raw_ids': [Command.create({
+                'product_id': self.component01.id,
+                'product_uom_qty': 2,
+            })],
+        })
+        manufacturing_order.action_confirm()
+        action = self.env.ref('stock_barcode_mrp.stock_barcode_mo_client_action')
+        url = '/web#action=%s&active_id=%s' % (action.id, manufacturing_order.id)
+        self.start_tour(url, 'test_select_mo_component_line_scan_package_type', login='admin')
+        self.assertEqual(manufacturing_order.state, 'done')

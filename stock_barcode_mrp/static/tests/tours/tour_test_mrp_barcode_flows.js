@@ -1546,3 +1546,11 @@ registry.category("web_tour.tours").add("test_mo_barcode_byproduct_destination_l
         { trigger: ".o_barcode_line" },
     ],
 });
+
+registry.category("web_tour.tours").add("test_select_mo_component_line_scan_package_type", {
+    steps: () => [
+        { trigger: ".o_barcode_client_action", run: "scan compo01" },
+        { trigger: ".o_selected:contains('Compo')", run: "scan 000555555555555555555555" },
+        ...stepUtils.validateBarcodeOperation(".o_notification_bar.bg-danger"),
+    ],
+});

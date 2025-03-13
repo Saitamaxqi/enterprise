@@ -637,4 +637,10 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
         const userCompanyId = user.defaultCompany.id;
         return defaultCompanyId || userCompanyId;
     }
+
+    async _putInPack(additionalContext = {}) {
+        const message = _t("You are expected to scan one or more products.");
+        this.notification(message, { type: "danger" });
+    }
+
 }
