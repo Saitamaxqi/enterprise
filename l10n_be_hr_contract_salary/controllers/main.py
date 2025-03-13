@@ -439,7 +439,11 @@ class HrContractSalary(main.HrContractSalary):
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)
         minimum_gross_wage = request.env['hr.rule.parameter'].sudo()._get_parameter_from_code(
             'cp200_min_gross_wage', offer.contract_start_date, raise_if_not_found=False)
-        gross_to_compare = result['new_gross']
+
+        if result.get('l10n_be_wage_with_mobility_budget', False):
+            gross_to_compare = result['l10n_be_wage_with_mobility_budget']
+        else:
+            gross_to_compare = result['new_gross']
 
         if minimum_gross_wage and gross_to_compare < minimum_gross_wage:
             result['configurator_warning'] = _("Your monthly gross wage is below the minimum legal amount %(min_gross)s €", min_gross=minimum_gross_wage)

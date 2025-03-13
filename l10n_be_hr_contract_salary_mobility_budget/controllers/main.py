@@ -12,4 +12,5 @@ class HrContractSalary(main.HrContractSalary):
     def _get_compute_results(self, new_contract):
         result = super()._get_compute_results(new_contract)
         result['l10n_be_mobility_budget_amount_monthly'] = new_contract.l10n_be_mobility_budget_amount_monthly
+        result['l10n_be_wage_with_mobility_budget'] = new_contract.l10n_be_wage_with_mobility_budget
         return result

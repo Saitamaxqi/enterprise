@@ -32,12 +32,25 @@ class HrContract(models.Model):
 
     @api.depends('l10n_be_mobility_budget', 'wage_with_holidays')
     def _compute_l10n_be_mobility_budget_amount(self):
-        mobility_budget_max = self.env['hr.rule.parameter']._get_parameter_from_code("mobility_budget_max", fields.Date.today(), raise_if_not_found=False) or 0
+        mobility_budget_max = self.env['hr.rule.parameter']._get_parameter_from_code("mobility_budget_max", fields.Date.today(), raise_if_not_found=False) or 16875
+        mobility_budget_min = self.env['hr.rule.parameter']._get_parameter_from_code("mobility_budget_min", fields.Date.today(), raise_if_not_found=False) or 3164
+
+        minimum_wage = self.env['hr.rule.parameter']._get_parameter_from_code('cp200_min_gross_wage', fields.Date.today(), raise_if_not_found=False)
+
         for contract in self:
             if contract.l10n_be_mobility_budget:
                 base = contract.wage_with_holidays
-                raw_mb = base * 13.0 / 5.0
-                contract.l10n_be_mobility_budget_amount = min(mobility_budget_max, raw_mb)
+                raw_mb = min(mobility_budget_max, base * 13.0 / 5.0)
+
+                # Iteratively find the right budget to not get under the minimum wage
+                current_yearly_cost = contract._get_yearly_cost_from_wage_with_holidays() if contract._is_salary_sacrifice() else contract.final_yearly_costs
+                wage_with_mobility_budget = contract._get_gross_from_employer_costs(current_yearly_cost - raw_mb)
+                while wage_with_mobility_budget < minimum_wage and minimum_wage:
+                    raw_mb -= 10
+                    wage_with_mobility_budget = contract._get_gross_from_employer_costs(current_yearly_cost - raw_mb)
+
+                raw_mb = max(raw_mb, mobility_budget_min)
+                contract.l10n_be_mobility_budget_amount = raw_mb
             else:
                 contract.l10n_be_mobility_budget_amount = 0.0
 
