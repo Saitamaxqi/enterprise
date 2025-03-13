@@ -20,7 +20,7 @@
                             <div class="fs-5">
                                 <field name="product_id" placeholder="Product"
                                     context="{'default_is_storable': True}"
-                                    domain="[('is_storable', '=', True), '|', ('company_id', '=', False), ('company_id', '=', company_id)]"
+                                    domain="[('is_storable', '=', True), '|', ('company_id', '=', False), ('company_id', 'parent_of', company_id)]"
                                     required="1"
                                     readonly="id and product_id" nolabel="1"/>
                             </div>
