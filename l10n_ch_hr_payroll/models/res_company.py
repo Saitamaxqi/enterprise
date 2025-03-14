@@ -20,7 +20,7 @@ class ResCompany(models.Model):
         multipliers = [5, 4, 3, 2, 7, 6, 5, 4]
         digits = [int(char) for char in string if char.isdigit()]
         result = sum(digit * multiplier for digit, multiplier in zip(digits[:control_number_index], multipliers))
-        checksum_result = 11 - (result % 11)
+        checksum_result = (11 - (result % 11)) % 11
 
         return digits[-1] == checksum_result
 
