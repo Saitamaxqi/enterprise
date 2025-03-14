@@ -61,6 +61,8 @@ class HrEmployee(models.Model):
         invalid_employees = self.filtered(lambda e: not (e.private_email and e.user_id))
         if invalid_employees:
             raise UserError(_('Employee\'s related user and private email must be set to use \"Send Access Link\" function:\n%s', '\n'.join(invalid_employees.mapped('name'))))
+        if not self.company_id.documents_hr_folder:
+            raise UserError(_('You must set a Human Resources Documents Workspace in your Settings to use this feature.'))
         template = self.env.ref('documents_hr.mail_template_document_folder_link', raise_if_not_found=False)
         for employee in self:
             if template:
