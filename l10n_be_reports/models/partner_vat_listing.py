@@ -118,12 +118,10 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
         new_options = {**options, 'forced_domain': []} if remove_forced_domain else options
         excluded_tax_ids = self._get_excluded_taxes().ids
 
-        query = report._get_report_query(new_options, 'strict_range')
         return {
             'options': new_options,
             'excluded_tax_ids': excluded_tax_ids,
-            'table_references': query.from_clause,
-            'search_condition': query.where_clause,
+            'query': report._get_report_query(new_options, 'strict_range'),
         }
 
     def _report_custom_engine_partner_vat_listing(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
@@ -161,14 +159,14 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
 
         tail_query = report._get_engine_query_tail(offset, limit)
 
+        query_fun_params = self._get_query_fun_params(report, options) | {'partner_ids': partner_ids}
+
         if current_groupby == 'partner_id':
             grouping_key_param = SQL.identifier('res_partner', 'id')
         elif current_groupby:
-            grouping_key_param = SQL.identifier('account_move_line', current_groupby)
+            grouping_key_param = self.env['account.move.line']._field_to_sql('account_move_line', current_groupby, query_fun_params['query'])
         else:
             grouping_key_param = None
-
-        query_fun_params = self._get_query_fun_params(report, options) | {'partner_ids': partner_ids}
 
         turnover_from, turnover_where = self._get_turnover_query(**query_fun_params)
         refund_base_from, refund_base_where = self._get_refund_base_query(**query_fun_params)
@@ -357,7 +355,7 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
         self._cr.execute(query)
         return [r[0] for r in self._cr.fetchall()]
 
-    def _get_turnover_query(self, options, excluded_tax_ids, table_references, search_condition, partner_ids=None) -> tuple[SQL, SQL]:
+    def _get_turnover_query(self, options, excluded_tax_ids, query, partner_ids=None) -> tuple[SQL, SQL]:
         turnover_from = SQL(
             """
             %(table_references)s
@@ -368,7 +366,7 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
             LEFT JOIN res_partner
                 ON COALESCE(account_move_line.partner_id, account_move.partner_id) = res_partner.id
             """,
-            table_references=table_references,
+            table_references=query.from_clause,
         )
 
         partner_id_constraint = SQL('AND res_partner.id IN %s', tuple(partner_ids)) if partner_ids else SQL()
@@ -395,7 +393,7 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
             %(partner_id_constraint)s
             %(excluded_tax_ids_constraint)s
             """,
-            search_condition=search_condition,
+            search_condition=query.where_clause,
             account_tag_ids=tuple(options['partner_vat_listing_operations_tag_ids']),
             partner_id_constraint=partner_id_constraint,
             excluded_tax_ids_constraint=excluded_tax_ids_constraint,
@@ -403,7 +401,7 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
 
         return turnover_from, turnover_where
 
-    def _get_refund_base_query(self, options, excluded_tax_ids, table_references, search_condition, partner_ids=None) -> tuple[SQL, SQL]:
+    def _get_refund_base_query(self, options, excluded_tax_ids, query, partner_ids=None) -> tuple[SQL, SQL]:
         refund_base_from = SQL(
             """
             %(table_references)s
@@ -414,7 +412,7 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
             JOIN res_partner
                 ON COALESCE(account_move_line.partner_id, account_move.partner_id) = res_partner.id
             """,
-            table_references=table_references,
+            table_references=query.from_clause,
         )
 
         partner_id_constraint = SQL('AND res_partner.id IN %s', tuple(partner_ids)) if partner_ids else SQL()
@@ -441,7 +439,7 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
             %(partner_id_constraint)s
             %(excluded_tax_ids_constraint)s
             """,
-            search_condition=search_condition,
+            search_condition=query.where_clause,
             account_tag_ids=tuple(options['partner_vat_listing_operations_tag_ids']),
             partner_id_constraint=partner_id_constraint,
             excluded_tax_ids_constraint=excluded_tax_ids_constraint,
@@ -449,7 +447,7 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
 
         return refund_base_from, refund_base_where
 
-    def _get_vat_amounts_query(self, options, excluded_tax_ids, table_references, search_condition, partner_ids=None) -> tuple[SQL, SQL]:
+    def _get_vat_amounts_query(self, options, excluded_tax_ids, query, partner_ids=None) -> tuple[SQL, SQL]:
         vat_amounts_from = SQL(
            """
            %(table_references)s
@@ -460,7 +458,7 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
            JOIN res_partner
                ON COALESCE(account_move_line.partner_id, account_move.partner_id) = res_partner.id
            """,
-           table_references=table_references,
+           table_references=query.from_clause,
         )
 
         partner_id_constraint = SQL('AND res_partner.id IN %s', tuple(partner_ids)) if partner_ids else SQL()
@@ -480,7 +478,7 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
            %(partner_id_constraint)s
            %(excluded_tax_ids_constraint)s
            """,
-           search_condition=search_condition,
+           search_condition=query.where_clause,
            account_tag_ids=tuple(options['partner_vat_listing_taxes_tag_ids']),
            partner_id_constraint=partner_id_constraint,
            excluded_tax_ids_constraint=excluded_tax_ids_constraint,

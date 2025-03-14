@@ -371,11 +371,12 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
             # At the lowest level, we want to group invoice lines by the tax (excluding 0%) and by whether it
             # is under one of the two types of special procedure. So we combine the lines of the same tax and type
             # under the same move_line_id as a grouping key.
-            select_from_groupby = "MIN(account_move_line.id) AS grouping_key,"
-            groupby_clause = ''
+            select_from_groupby = SQL("MIN(%s) AS grouping_key,", SQL.identifier("account_move_line", "id"))
+            groupby_clause = SQL()
         elif current_groupby:
-            select_from_groupby = f"account_move_line.{current_groupby} AS grouping_key,"
-            groupby_clause = f", account_move_line.{current_groupby}"
+            groupby_field_sql = self.env['account.move.line']._field_to_sql('account_move_line', current_groupby, query)
+            select_from_groupby = SQL("%s AS grouping_key,", groupby_field_sql)
+            groupby_clause = SQL(", %s", groupby_field_sql)
         else:
             select_from_groupby = SQL()
             groupby_clause = SQL()
@@ -451,12 +452,12 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
                     l10n_ee_kmd_inf_code
                     %(groupby_clause)s
             """,
-                select_from_groupby=SQL(select_from_groupby),
+                select_from_groupby=select_from_groupby,
                 tag_ids=self._get_tag_ids_from_report_lines(xmlids),
                 table_references=query.from_clause,
                 search_condition=query.where_clause,
                 country_code='EE%',
-                groupby_clause=SQL(groupby_clause),
+                groupby_clause=groupby_clause,
         )
         else:
             # In part B, the invoice total with VAT and the input VAT amount presented in the field 5 of Form KMD are
@@ -500,12 +501,12 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
                 HAVING
                     SUM(CASE WHEN account_move_line.display_type = 'tax' AND tag.id = ANY(%(tag_ids)s) THEN account_move_line.balance ELSE 0 END) != 0
             """,
-                select_from_groupby=SQL(select_from_groupby),
+                select_from_groupby=select_from_groupby,
                 tag_ids=self._get_tag_ids_from_report_lines(xmlids),
                 table_references=query.from_clause,
                 search_condition=query.where_clause,
                 country_code='EE%',
-                groupby_clause=SQL(groupby_clause),
+                groupby_clause=groupby_clause,
             )
 
         self.env.cr.execute(sql_query)

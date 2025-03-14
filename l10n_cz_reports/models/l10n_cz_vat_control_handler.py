@@ -199,8 +199,9 @@ class CzechVATControlReportCustomHandler(models.AbstractModel):
                 select_clauses.append(SQL('account_move_line__move_id.l10n_cz_scheme_code AS supplies_code'))
                 groupby_clauses.append(SQL('account_move_line__move_id.l10n_cz_scheme_code'))
 
-        if current_groupby:
-            groupby_clauses.append(SQL.identifier('account_move_line', current_groupby))
+        groupby_field_sql = self.env['account.move.line']._field_to_sql('account_move_line', current_groupby, query) if current_groupby else SQL()
+        if groupby_field_sql:
+            groupby_clauses.append(groupby_field_sql)
 
         tail_query = report._get_engine_query_tail(offset, limit)
         query = SQL(
@@ -243,7 +244,7 @@ class CzechVATControlReportCustomHandler(models.AbstractModel):
                 %(orderby_clause)s
                 %(tail_query)s
             """,
-            select_from_groupby=SQL('%s AS grouping_key,', SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL(''),
+            select_from_groupby=SQL('%s AS grouping_key,', groupby_field_sql) if groupby_field_sql else SQL(''),
             select_clause=SQL("%s,", SQL(", ").join(select_clauses)) if select_clauses else SQL(),
             tax_group_12=tax_group_12.id if tax_group_12 else 0,
             table_references=query.from_clause,

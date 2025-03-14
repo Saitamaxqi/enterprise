@@ -222,6 +222,7 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
         )
 
         query = report._get_report_query(options, 'strict_range')
+        groupby_field_sql = self.env['account.move.line']._field_to_sql("account_move_line", current_groupby, query)
         tail_query = report._get_engine_query_tail(offset, limit)
         full_query = SQL(
             """
@@ -241,7 +242,7 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
               FROM (
                 -- Get moves that have at least one partial at a certain date and are not fully paid at that date
                 SELECT
-                       """ + (f"account_move_line.{current_groupby} AS grouping_key," if current_groupby else '') + f"""
+                       %(groupby_field_sql)s AS grouping_key,
                        ROUND(account_move_line.balance - SUM(ara.amount_debit) + SUM(ara.amount_credit), aml_comp_currency.decimal_places) AS balance_operation,
                        ROUND(account_move_line.amount_currency - SUM(ara.amount_debit_currency) + SUM(ara.amount_credit_currency), aml_currency.decimal_places) AS balance_currency,
                        ROUND(account_move_line.amount_currency - SUM(ara.amount_debit_currency) + SUM(ara.amount_credit_currency), aml_currency.decimal_places) / custom_currency_table.rate AS balance_current,
@@ -310,21 +311,21 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
                             AND (account_move_line.currency_id != account_move_line.company_currency_id)
                         )
                    )
-                   AND {'NOT EXISTS' if line_code == 'to_adjust' else 'EXISTS'} (
+                   AND %(exist_condition)s (
                         SELECT 1
                           FROM account_account_exclude_res_currency_provision
                          WHERE account_account_id = account_move_line.account_id
                            AND res_currency_id = account_move_line.currency_id
                    )
                    AND (%(select_part_not_an_exchange_move_id)s)
-              GROUP BY account_move_line.id, aml_comp_currency.decimal_places,  aml_currency.decimal_places, custom_currency_table.rate
+              GROUP BY account_move_line.id, grouping_key, aml_comp_currency.decimal_places,  aml_currency.decimal_places, custom_currency_table.rate
                 HAVING ROUND(account_move_line.balance - SUM(ara.amount_debit) + SUM(ara.amount_credit), aml_comp_currency.decimal_places) != 0
                     OR ROUND(account_move_line.amount_currency - SUM(ara.amount_debit_currency) + SUM(ara.amount_credit_currency), aml_currency.decimal_places) != 0.0
 
                 UNION
                 -- Moves that don't have a payment yet at a certain date
                 SELECT
-                       """ + (f"account_move_line.{current_groupby} AS grouping_key," if current_groupby else '') + f"""
+                       %(groupby_field_sql)s AS grouping_key,
                        account_move_line.balance AS balance_operation,
                        account_move_line.amount_currency AS balance_currency,
                        account_move_line.amount_currency / custom_currency_table.rate AS balance_current,
@@ -343,7 +344,7 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
                             AND (account_move_line.currency_id != account_move_line.company_currency_id)
                         )
                    )
-                   AND {'NOT EXISTS' if line_code == 'to_adjust' else 'EXISTS'} (
+                   AND %(exist_condition)s (
                         SELECT 1
                           FROM account_account_exclude_res_currency_provision
                          WHERE account_account_id = account_id
@@ -363,7 +364,9 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
             ORDER BY grouping_key
             %(tail_query)s
             """,
+            groupby_field_sql=groupby_field_sql,
             custom_currency_table_query=custom_currency_table_query,
+            exist_condition=SQL('NOT EXISTS') if line_code == 'to_adjust' else SQL('EXISTS'),
             table_references=query.from_clause,
             date_to=date_to,
             tail_query=tail_query,

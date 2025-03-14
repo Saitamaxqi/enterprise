@@ -94,12 +94,34 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
 
         bank_miscellaneous_domain = self._get_bank_miscellaneous_move_lines_domain(options, journal)
 
-        misc_operations_amount = self.env["account.move.line"]._read_group(
-            domain=bank_miscellaneous_domain or [],
-            groupby=current_groupby or [],
-            aggregates=['balance:sum']
-        )[-1][0]  # Needed to get the balance from the tuples given by the read group
-        return self._build_custom_engine_result(amount=misc_operations_amount or 0, amount_currency_id=journal_currency.id)
+        base_query = report._get_report_query(options, 'strict_range', domain=bank_miscellaneous_domain or [])
+
+        groupby_field_sql = self.env['account.move.line']._field_to_sql("account_move_line", current_groupby, base_query) if current_groupby else None
+        query_sql = SQL(
+            """
+            SELECT
+                %(select_from_groupby)s,
+                COALESCE(SUM(account_move_line.balance), 0)
+            FROM %(table_references)s
+            WHERE %(search_condition)s
+            %(groupby_sql)s
+            """,
+            select_from_groupby=groupby_field_sql,
+            table_references=base_query.from_clause,
+            search_condition=base_query.where_clause,
+            groupby_sql=SQL("GROUP BY %s", groupby_field_sql) if groupby_field_sql else SQL(),
+        )
+
+        self._cr.execute(query_sql)
+        query_res_lines = self._cr.fetchall()
+
+        if not current_groupby:
+            return self._build_custom_engine_result(amount=query_res_lines[-1][1], amount_currency_id=journal_currency.id)
+        else:
+            return [
+                (grouping_key, self._build_custom_engine_result(amount=amount, amount_currency_id=journal_currency.id))
+                for grouping_key, amount in query_res_lines
+            ]
 
     def _report_custom_engine_last_statement_balance_amount(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
         if current_groupby:
@@ -194,6 +216,7 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
             # For the Transaction without statement, the internal type is 'all'
             st_line_amount_condition = SQL("")
 
+        groupby_field_sql = self.env['account.move.line']._field_to_sql("account_move_line", current_groupby, query) if current_groupby else SQL('NULL')
         # Build query
         query = SQL(
             """
@@ -218,14 +241,14 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
                   st_line.id,
                   move.id
             """,
-            select_from_groupby=SQL("%s AS grouping_key", SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL('null'),
+            select_from_groupby=SQL("%s AS grouping_key", groupby_field_sql),
             table_references=query.from_clause,
             search_condition=query.where_clause,
             is_receipt=SQL("st_line.amount > 0") if internal_type == "receipts" else SQL("st_line.amount < 0"),
             is_unreconciled=SQL("AND st_line.is_reconciled IS NOT TRUE") if unreconciled else SQL(""),
             st_line_amount_condition=st_line_amount_condition,
             last_statement_id_condition=last_statement_id_condition,
-            group_by=SQL.identifier('account_move_line', current_groupby) if current_groupby else SQL('st_line.id'),  # Same key in the groupby because we can't put a null key in a group by
+            group_by=groupby_field_sql if current_groupby else SQL('st_line.id'),  # Same key in the groupby because we can't put a null key in a group by
         )
 
         self._cr.execute(query)
@@ -288,6 +311,7 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
         ])
 
         # Build query
+        groupby_field_sql = self.env['account.move.line']._field_to_sql("account_move_line", current_groupby, query) if current_groupby else SQL('NULL')
         query = SQL(
             """
            SELECT %(select_from_groupby)s,
@@ -317,11 +341,11 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
                   account_move_line.date,
                   account.reconcile
            """,
-            select_from_groupby=SQL("%s AS grouping_key", SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL('null'),
+            select_from_groupby=SQL("%s AS grouping_key", groupby_field_sql),
             table_references=query.from_clause,
             search_condition=query.where_clause,
             is_receipt=SQL("account_move_line.balance > 0") if internal_type == "receipts" else SQL("account_move_line.balance < 0"),
-            group_by=SQL.identifier('account_move_line', current_groupby) if current_groupby else SQL('account_move_line.account_id'),  # Same key in the groupby because we can't put a null key in a group by
+            group_by=groupby_field_sql if current_groupby else SQL('account_move_line.account_id'),  # Same key in the groupby because we can't put a null key in a group by
         )
         self._cr.execute(query)
         query_res_lines = self._cr.dictfetchall()

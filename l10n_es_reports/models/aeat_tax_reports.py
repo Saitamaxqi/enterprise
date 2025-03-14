@@ -1400,9 +1400,10 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
 
         # Build query
         query = report._get_report_query(options, 'strict_range', domain=domain)
+        groupby_field_sql = self.env['account.move.line']._field_to_sql('account_move_line', current_groupby, query) if current_groupby else SQL()
 
         query = SQL("""
-            SELECT %(select_from_groupby)s,
+            SELECT %(select_from_groupby)s
                 account_move.l10n_es_reports_mod349_invoice_type AS invoice_type,
                 account_move.move_type AS move_type,
                 account_move.reversed_entry_id AS reversed_entry_id,
@@ -1415,10 +1416,10 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
             GROUP BY %(group_by)s
             account_move.id
         """,
-                    select_from_groupby=SQL("%s AS grouping_key", SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL('null'),
+                    select_from_groupby=SQL("%s AS grouping_key,", groupby_field_sql) if groupby_field_sql else SQL(),
                     tables=query.from_clause,
                     where_clause=query.where_clause,
-                    group_by=SQL("%s,", SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL('')
+                    group_by=SQL("%s,", groupby_field_sql) if groupby_field_sql else SQL(),
                     )
 
         self._cr.execute(query)

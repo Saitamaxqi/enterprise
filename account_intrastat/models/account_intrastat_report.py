@@ -270,10 +270,13 @@ class AccountIntrastatReportHandler(models.AbstractModel):
             'commodity_code': SQL('code.code'),
             **query_params,
         }
-        select_from_groupby = SQL() if not current_groupby or current_groupby == 'intrastat_grouping' else SQL.identifier('account_move_line', current_groupby)
+        report_query = report._get_report_query(options, 'strict_range')
+        select_from_groupby = (
+            SQL() if not current_groupby or current_groupby == 'intrastat_grouping'
+            else self.env['account.move.line']._field_to_sql('account_move_line', current_groupby, report_query)
+        )
         lang = self.env.user.lang or get_lang(self.env).code
         self_lang = self.with_context(lang=lang)
-        report_query = report._get_report_query(options, 'strict_range')
         query = SQL("""
             SELECT
                 %(select_from_groupby)s AS grouping_key,

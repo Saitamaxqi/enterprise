@@ -159,8 +159,9 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
 
         always_present_groupby = SQL("period_table.period_index")
         if current_groupby:
-            select_from_groupby = SQL("%s AS grouping_key,", SQL.identifier("account_move_line", current_groupby))
-            groupby_clause = SQL("%s, %s", SQL.identifier("account_move_line", current_groupby), always_present_groupby)
+            groupby_field_sql = self.env['account.move.line']._field_to_sql("account_move_line", current_groupby, query)
+            select_from_groupby = SQL("%s AS grouping_key,", groupby_field_sql)
+            groupby_clause = SQL("%s, %s", groupby_field_sql, always_present_groupby)
         else:
             select_from_groupby = SQL()
             groupby_clause = always_present_groupby

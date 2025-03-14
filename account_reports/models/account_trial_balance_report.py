@@ -352,7 +352,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
             else:
                 field = 'account_id'
 
-        return SQL.identifier('account_move_line', field)
+        return self.env['account.move.line']._field_to_sql("account_move_line", field, query)
 
     def _get_unaffected_earnings_accounts_per_company(self, options):
         """ Return the unaffected earnings accounts for the report's companies. """

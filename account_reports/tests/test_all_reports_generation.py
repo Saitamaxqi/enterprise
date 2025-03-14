@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collections import defaultdict
 from unittest.mock import patch
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
@@ -134,3 +135,32 @@ class TestAllReportsGeneration(AccountTestInvoicingCommon):
                 field_name: None
                 for field_name in partner_test_values.get(report.country_id.code, {}).keys()
             })
+
+    def test_custom_engines_related_groupby(self):
+        blacklist_xmlids = [
+            'account_reports.account_financial_report_executivesummary_avdebt0_ndays',
+            'account_reports.account_financial_report_executivesummary_avgcre0_ndays',
+            'account_reports.last_statement_balance_amount',
+            'account_reports.last_statement_balance_forced_currency_amount',
+        ]
+
+        custom_engine_expressions = self.env['account.report.expression'].search([
+            ('engine', '=', 'custom'),
+            ('id', 'not in', tuple(self.env['ir.model.data']._xmlid_to_res_id(xmlid) for xmlid in blacklist_xmlids)),
+        ])
+
+        expressions_per_engine = defaultdict(lambda: self.env['account.report.expression'])
+        for expression in custom_engine_expressions:
+            expressions_per_engine[(expression.report_line_id.report_id, expression.formula)] += expression
+
+        for (report, _formula), expressions in expressions_per_engine.items():
+            with self.subTest(report=report.name):
+                options = report.get_options({})
+
+                # Remove aggregations from those report lines, so that we still can set a groupby on the line
+                (expressions.report_line_id.expression_ids.filtered(lambda x: x.engine == 'aggregation')).unlink()
+
+                expressions.report_line_id.user_groupby = 'account_code' # account_code is a  non-stored related field on aml
+                self.env.flush_all()
+                report._compute_expression_totals_for_each_column_group(expressions, options, groupby_to_expand='account_code')
+                # This computation fill fail if the custom engine forgot to handle such groupby, typically via a call to _field_to_sql
