@@ -30,7 +30,9 @@ export class PDFIframe {
             return obj;
         }, {});
         this.radioSets = this.props.radioSets;
-        this.waitForPagesToLoad();
+        if (this.root) {
+            this.waitForPagesToLoad();
+        }
     }
 
     waitForPagesToLoad() {
@@ -140,11 +142,11 @@ export class PDFIframe {
     startPinchService() {
         const pinchTarget = this.root.querySelector("#viewerContainer #viewer");
         const handleTouchMove = (e) => {
-            if(e.touches.length == 2) {
+            if (e.touches.length == 2) {
                 // To allow zooming in pdf only.
                 e.preventDefault();
             }
-        }
+        };
         pinchTarget.addEventListener("touchmove", handleTouchMove);
         this.cleanupFns.push(() => {
             pinchTarget.removeEventListener("touchmove", handleTouchMove);
@@ -225,6 +227,11 @@ export class PDFIframe {
             for (const id in this.signItems[page]) {
                 const signItem = this.signItems[page][id].el;
                 signItem.classList.remove("d-none");
+                if (signItem && signItem.hasAttribute("data-signature")) {
+                    signItem.addEventListener("dragstart", (event) => {
+                        event.preventDefault();
+                    });
+                }
                 if (!signItem.parentElement || !signItem.parentElement.classList.contains("page")) {
                     pageContainer.append(signItem);
                 }
