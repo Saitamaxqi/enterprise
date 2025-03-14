@@ -40,16 +40,6 @@
     }
 }
 
-@mixin o-gantt-ribbon-decoration($color) {
-    content: "";
-    width: 20px;
-    height: 16px;
-    @include o-position-absolute(-11px, $left: -13px);
-    box-shadow: 1px 1px 0 white;
-    background: $color;
-    transform: rotate(45deg);
-}
-
 @mixin o-gantt-cell {
     &.o_gantt_today {
         background-color: $gantt-highlight-today-bg;

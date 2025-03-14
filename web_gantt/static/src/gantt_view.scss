@@ -403,12 +403,15 @@
 			}
 		}
 
+		.o_gantt_pill[class*="o_gantt_color_"] .o_gantt_progress {
+			opacity: 0.2;
+		}
+
 		// used for `color` attribute on <gantt>
 		@for $index from 1 through length($o-colors-complete) {
 			$color: nth($o-colors-complete, $index);
 
 			.o_gantt_pill.o_gantt_color_#{$index - 1} .o_gantt_progress {
-				opacity: 0.2;
 				background-color: darken($color, 30%);
 			}
 		}
@@ -442,6 +445,10 @@
 			@include o-gantt-gradient-decorations(nth($o-colors-complete, 1));
 		}
 
+		&[class*="o_gantt_color_"] .o_gantt_progress {
+			opacity: 0.2;
+		}
+
 		// used for `color` attribute on <gantt>
 		@for $index from 1 through length($o-colors-complete) {
 			&.o_gantt_color_#{$index - 1} {
@@ -454,15 +461,23 @@
 				}
 
 				.o_gantt_progress {
-					opacity: 0.2;
 					background-color: darken($gantt-color, 30%);
 				}
 			}
 		}
 
+		&[class*="decoration-"]:before {
+			content: "";
+			width: 20px;
+			height: 16px;
+			@include o-position-absolute(-11px, $left: -13px);
+			box-shadow: 1px 1px 0 white;
+			transform: rotate(45deg);
+		}
+
 		@each $color, $value in $theme-colors {
 			&.decoration-#{$color}:before {
-				@include o-gantt-ribbon-decoration($value);
+				background: $value;
 			}
 		}
 	}
