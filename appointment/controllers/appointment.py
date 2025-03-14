@@ -327,6 +327,7 @@ class AppointmentController(http.Controller):
         filter_staff_user_ids = json.loads(kwargs.get('filter_staff_user_ids') or '[]')
         filter_resource_ids = json.loads(kwargs.get('filter_resource_ids') or '[]')
         users_possible = self._get_possible_staff_users(appointment_type, filter_staff_user_ids)
+        user_forced = self._get_forced_staff_user(appointment_type, users_possible)
         resources_possible = self._get_possible_resources(appointment_type, filter_resource_ids)
         user_default = user_selected = request.env['res.users']
         resource_default = resource_selected = request.env['appointment.resource']
@@ -361,6 +362,7 @@ class AppointmentController(http.Controller):
             'resource_selected': resource_selected,
             'resources_possible': resources_possible,
             'user_default': user_default,
+            'user_forced': user_forced,
             'user_selected': user_selected,
             'users_possible': users_possible,
         }
@@ -399,18 +401,25 @@ class AppointmentController(http.Controller):
             return appointment_type.resource_ids
         return appointment_type.resource_ids.filtered(lambda resource: resource.id in filter_resource_ids)
 
+    def _get_forced_staff_user(self, appointment_type, possible_staff_users):
+        """ This method is meant to be overridden to force the selection of the staff user for the appointment_type. """
+        return self.env['res.users']
+
     def _get_possible_staff_users(self, appointment_type, filter_staff_user_ids):
         """
-        This method filters the staff members of given appointment_type using filter_staff_user_ids that are possible to pick.
-        If no filter exist and assign method is different than 'time_auto_assign', we allow all users existing on the appointment type.
+        This method get all the possible staff users of a given appointment_type according filter_staff_user_ids
+        if this filter exists. If there is no specific staff user required among all the possibilities,
+        those are returned.
 
-        :param appointment_type_id: the appointment_type_id of the appointment type that we want to access
+        :param appointment_type_id: the appointment_type_id of the appointment type that we want to access.
         :param filter_staff_user_ids: list of user ids used to filter the ones of the appointment_type.
-        :return: a res.users recordset containing all possible staff users to choose from.
+        :return: a specific record or a recordset of res.users containing all possible staff users to choose from.
         """
         if not filter_staff_user_ids:
-            return appointment_type.staff_user_ids
-        return appointment_type.staff_user_ids.filtered(lambda staff_user: staff_user.id in filter_staff_user_ids)
+            possible_staff_users = appointment_type.staff_user_ids
+        else:
+            possible_staff_users = appointment_type.staff_user_ids.filtered(lambda staff_user: staff_user.id in filter_staff_user_ids)
+        return self._get_forced_staff_user(appointment_type, possible_staff_users) or possible_staff_users
 
     # Resource tools
     # ------------------------------------------------------------

@@ -113,9 +113,14 @@
                                             Please, select another date.
                                         </p>
                                     </div>
-                                    <div t-if="state == 'cancel'" role="alert" class="o_appointment_cancelled pb-4">
-                                        <i class="fa fa-times text-danger me-2"/><strong>Appointment cancelled!</strong>
+                                    <div t-if="state == 'cancel'" role="alert" class="o_appointment_cancelled alert alert-danger">
+                                        <strong>Appointment cancelled!</strong>
                                         You can now choose a different schedule that suits you better.
+                                    </div>
+                                    <div t-if="user_forced and state != 'cancel'" role="alert" class="o_appointment_forced_staff_user_assigned alert alert-info">
+                                        We will book you with
+                                        <span class="fw-bold" t-out="user_forced.name"/>
+                                        as you are already in touch with them.
                                     </div>
                                     <div class="clearfix"/>
                                     <t t-set="based_on_users" t-value="appointment_type.schedule_based_on == 'users'"/>

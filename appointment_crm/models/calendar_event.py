@@ -22,10 +22,17 @@ class CalendarEvent(models.Model):
         events = super().create(vals_list)
         # We want only event with the right appointment type and another attendee than the employee
         events.filtered(
-            lambda e: e.appointment_type_id.lead_create and e.partner_ids - e.user_id.partner_id
+            lambda e: e.appointment_type_id.lead_create and e.partner_ids - e.user_id.partner_id and not e.opportunity_id
         ).sudo()._create_lead_from_appointment()
         opportunity_field = self.env['ir.model.fields']._get("calendar.event", "opportunity_id")
         for meeting in events.filtered('opportunity_id'):
+            meeting.opportunity_id.sudo().activity_schedule(
+                act_type_xmlid='mail.mail_activity_data_meeting',
+                date_deadline=meeting.start_date,
+                summary=meeting.name,
+                user_id=meeting.user_id.id,
+                calendar_event_id=meeting.id
+            )
             meeting._message_log(
                 body=Markup("<p>%s</p>") % _(
                     "Meeting linked to Lead/Opportunity %s",
@@ -48,13 +55,6 @@ class CalendarEvent(models.Model):
             .with_company(self.user_id.company_id).create(lead_values)
         for event, lead in zip(self, leads):
             event._link_with_lead(lead)
-            lead.activity_schedule(
-                act_type_xmlid='mail.mail_activity_data_meeting',
-                date_deadline=event.start_date,
-                summary=event.name,
-                user_id=event.user_id.id,
-                calendar_event_id=event.id
-            )
         return leads
 
     def _get_lead_values(self, partner):

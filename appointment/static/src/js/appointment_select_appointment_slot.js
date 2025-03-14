@@ -134,6 +134,7 @@ publicWidget.registry.appointmentSlotSelect = publicWidget.Widget.extend({
         const ignoreUpcomingEventUntil = localStorage.getItem('appointment.upcoming_events_ignore_until');
         if (
             !this.el.querySelector('.o_appointment_cancelled') &&
+            !this.el.querySelector('.o_appointment_forced_staff_user_assigned') &&
             (!ignoreUpcomingEventUntil || deserializeDateTime(ignoreUpcomingEventUntil) < DateTime.utc()) &&
             (allAppointmentsToken.length !== 0 || user.userId !== false)
         ) {
@@ -459,3 +460,5 @@ publicWidget.registry.appointmentSlotSelect = publicWidget.Widget.extend({
         localStorage.setItem('appointment.hide_upcoming_appointment_alert', true);
     },
 });
+
+export default publicWidget.registry.appointmentSlotSelect;

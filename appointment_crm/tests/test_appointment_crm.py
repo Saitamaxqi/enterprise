@@ -4,57 +4,13 @@ from datetime import datetime, timedelta
 
 from odoo.tests import users
 from odoo.tools import html2plaintext
-from odoo.addons.crm.tests.common import TestCrmCommon
-from odoo.addons.mail.tests.common import mail_new_test_user
+from odoo.addons.appointment_crm.tests.common import TestAppointmentCrmCommon
+from odoo.addons.base.tests.common import HttpCaseWithUserPortal
+from odoo.tests import common
 
 
-class AppointmentCRMTestCommon(TestCrmCommon):
-    @classmethod
-    def _create_appointment_type(cls, **kwargs):
-        default = {
-            "name": "Test Appointment",
-            "appointment_duration": 1,
-            "appointment_tz": "Europe/Brussels",
-            "assign_method": "time_auto_assign",
-            "max_schedule_days": 15,
-            "min_cancellation_hours": 1,
-            "min_schedule_hours": 1,
-        }
-        return cls.env['appointment.type'].create(dict(default, **kwargs))
+class AppointmentCRMTest(TestAppointmentCrmCommon):
 
-    @classmethod
-    def setUpClass(cls):
-        super(AppointmentCRMTestCommon, cls).setUpClass()
-        cls.user_employee = mail_new_test_user(
-            cls.env, login='user_employee',
-            name='Eglantine Employee', email='eglantine.employee@test.example.com',
-            tz='Europe/Brussels', notification_type='inbox',
-            company_id=cls.env.ref("base.main_company").id,
-            groups='base.group_user',
-        )
-        cls.appointment_type_nocreate = cls._create_appointment_type(name="No Create")
-        cls.appointment_type_create = cls._create_appointment_type(name="Create", lead_create=True)
-
-    def _prepare_event_value(self, appointment_type, user, contact, **kwargs):
-        partner_ids = (user.partner_id | contact).ids
-        default = {
-            'name': '%s with %s' % (appointment_type.name, contact.name),
-            'start': datetime.now(),
-            'start_date': datetime.now(),
-            'stop': datetime.now() + timedelta(hours=1),
-            'allday': False,
-            'duration': appointment_type.appointment_duration,
-            'location': appointment_type.location,
-            'partner_ids': [(4, pid, False) for pid in partner_ids],
-            'appointment_type_id': appointment_type.id,
-            'user_id': user.id,
-        }
-        return dict(default, **kwargs)
-
-    def _create_meetings_from_appointment_type(self, appointment_type, user, contact, **kwargs):
-        return self.env['calendar.event'].create(self._prepare_event_value(appointment_type, user, contact, **kwargs))
-
-class AppointmentCRMTest(AppointmentCRMTestCommon):
     @users('user_employee')
     def test_create_opportunity(self):
         """ Test the creation of a lead based on the creation of an event
@@ -181,3 +137,25 @@ class AppointmentCRMTest(AppointmentCRMTestCommon):
             self.env['appointment.type'], self.user_sales_leads, self.contact_1
         )
         self.assertFalse(event.opportunity_id)
+
+
+@common.tagged('post_install', '-at_install')
+class AppointmentCRMHttpTest(TestAppointmentCrmCommon, HttpCaseWithUserPortal):
+
+    @users("portal")
+    def test_appointment_forced_staff_user_tour(self):
+        """ Check that the lead of the last appointment is used to force the staff
+        user of the next appointment and that it is linked to this one when it is
+        created. """
+        self.start_tour('/appointment', 'appointment_crm_forced_staff_user_tour', login='portal')
+
+        created_lead = self.env['crm.lead'].sudo().search([
+            ('partner_id', '=', self.env.user.partner_id.id),
+            ('user_id', '=', self.user_sales_leads.id)
+        ])
+        # Check the reuse of the lead of the first appointment by the second one.
+        self.assertEqual(len(created_lead), 1)
+        self.assertEqual(len(created_lead.calendar_event_ids), 2)
+
+        # Check the reassignment of the staff user to each event.
+        self.assertTrue(all(staff_user == self.user_sales_leads for staff_user in created_lead.calendar_event_ids.user_id))
