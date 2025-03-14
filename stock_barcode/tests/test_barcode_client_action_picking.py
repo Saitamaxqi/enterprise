@@ -3102,6 +3102,14 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             "location_dest_id": location_dest.id,
         }])
 
+    def test_scan_product_when_in_form_view(self):
+        """ Ensure nothing happens when in `stock.move.line` for view."""
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id)]})
+        self.picking_type_internal.active = True
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf3, 5)
+        self.start_tour('/odoo/barcode', 'test_scan_product_when_in_form_view', login='admin')
+
     def test_split_uncomplete_moves_on_exit(self):
         """
         Check that the uncompleted moves are splitted in the backend when you exit
