@@ -382,9 +382,9 @@ Best Regards,
                 self = self.with_context(lang=partner.lang or self.env.user.lang)
                 body_html = self.with_context(mail=True).get_followup_report_html(options)
 
-                attachment_ids = options.get('attachment_ids', partner._get_invoices_to_print(options).message_main_attachment_id.ids)
-                followup_report = self.env.ref('account_reports.followup_report')
-                attachment_ids.append(partner._get_partner_account_report_attachment(followup_report).id)
+                # Should contain the followup report and invoice attachments if join_invoices is True.
+                attachment_ids = options.get('attachment_ids')
+
                 # If the follow-up was executed manually, the author_id will be set to the ID of the current logged-in user.
                 # Otherwise, if the follow-up is automatic, the author_id will be the followup responsible or OdooBot.
                 author_id = options.get('author_id', partner._get_followup_responsible().partner_id.id)

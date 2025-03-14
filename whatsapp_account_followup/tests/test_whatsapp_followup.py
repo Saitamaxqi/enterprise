@@ -49,6 +49,10 @@ class TestWhatsAppFollowup(WhatsAppCommon, TestAccountFollowupReports):
 
     @users('admin')
     def test_whatsapp_followup_manual(self):
+        def _run_wkhtmltopdf(*args, **kwargs):
+            return bytes("0", "utf-8")
+        self.patch(self.env.registry['ir.actions.report'], "_run_wkhtmltopdf", _run_wkhtmltopdf)
+
         reminder = self.env['account_followup.manual_reminder'].with_context(
             active_model='res.partner',
             active_ids=self.partner_a.ids,

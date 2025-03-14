@@ -145,13 +145,34 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
             invoice._message_set_main_attachment_id(invoice_attachment)
 
         self.partner_a._compute_unpaid_invoices()
-        options['attachment_ids'] = invoice_attachments.ids
+        options.update(
+            attachment_ids=invoice_attachments.ids,
+            email=True,
+            manual_followup=True,
+            join_invoices=True,
+        )
         with patch.object(type(self.env['mail.mail']), 'unlink', lambda self: None):
             with patch.object(self.env.registry['account.report'], 'export_to_pdf', autospec=True, side_effect=lambda *args, **kwargs: {'file_name': 'fake_partner_ledger.pdf', 'file_content': b'', 'file_type': 'pdf'}):
-                self.env['account.followup.report']._send_email(options)
+                self.partner_a.execute_followup(options)
         sent_attachments = self.env['mail.message'].search([('partner_ids', '=', self.partner_a.id)]).attachment_ids
-
         self.assertEqual(sent_attachments.mapped('name'), ['some_attachment.pdf', 'some_attachment.pdf', f'{self.partner_a.name} - fake_partner_ledger.pdf'])
+
+        options.update(
+            attachment_ids=[],
+            email=False,
+            join_invoices=False,
+        )
+        with (
+            patch.object(self.env.registry['mail.mail'], 'unlink', lambda self: None),
+            patch.object(
+                self.env.registry['res.partner'],
+                '_get_partner_account_report_attachment',
+                autospec=True,
+                side_effect=lambda *args, **kwargs: invoice_attachments[0],
+            ),
+        ):
+            self.partner_a.execute_followup(options)
+        self.assertEqual(options['attachment_ids'], [invoice_attachments.ids[0]], "The report attachment should be included regardless of join_invoices and email checkboxes.")
 
         attachaments_domain = [('attachment_ids', '=', attachment.id) for attachment in invoice_attachments]
         mail = self.env['mail.mail'].search([('recipient_ids', '=', self.partner_a.id)] + attachaments_domain)

@@ -468,7 +468,8 @@ class ResPartner(models.Model):
             self._update_next_followup_action_date(followup_line)
 
             if not options.get('join_invoices', followup_line.join_invoices):
-                options['attachment_ids'] = []
+                report_attachment_id = options.get('report_attachment_id')
+                options['attachment_ids'] = [report_attachment_id] if report_attachment_id else []
 
             self._send_followup(options={'followup_line': followup_line, **options})
 
@@ -492,6 +493,13 @@ class ResPartner(models.Model):
             - 'manual_followup': boolean to indicate whether this followup is triggered via the manual reminder wizard
         """
         self.ensure_one()
+        attachment_ids = options.get('attachment_ids', self._get_invoices_to_print(options).message_main_attachment_id.ids)
+        followup_report = self.env.ref('account_reports.followup_report')
+        options['report_attachment_id'] = self._get_partner_account_report_attachment(followup_report).id
+        attachment_ids.append(options['report_attachment_id'])
+        if 'attachment_ids' not in options:
+            options['attachment_ids'] = attachment_ids
+
         to_print = self._execute_followup_partner(options=options)
         if options.get('print') and to_print:
             return self.env['account.followup.report']._print_followup_letter(self, options)

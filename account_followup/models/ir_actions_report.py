@@ -26,7 +26,7 @@ class IrActionsReport(models.Model):
         for partner_id in res_ids:
             partner = self.env['res.partner'].browse(partner_id)
             join_invoices = options.get('join_invoices', partner.followup_line_id.join_invoices)
-            if not join_invoices:
+            if not join_invoices and not options.get('report_attachment_id'):
                 continue
 
             if options.get('attachment_ids'):
