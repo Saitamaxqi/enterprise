@@ -259,14 +259,14 @@
                         class="oe_stat_button"
                         icon="fa-dollar"
                         groups="industry_fsm.group_fsm_manager"
-                        invisible="not allow_quotations or quotation_count == 0">
+                        invisible="not allow_quotations or quotation_count == 0 or has_template_ancestor">
                         <field string="Quotations" name="quotation_count" widget="statinfo"/>
                     </button>
                 </t>
             </xpath>
             <xpath expr="//button[@name='action_view_so']" position="after">
                 <t groups="sales_team.group_sale_salesman,industry_fsm.group_fsm_quotation_from_task">
-                    <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-pencil-square-o" invisible="not allow_billable or invoice_count == 0">
+                    <button name="action_view_invoices" type="object" class="oe_stat_button" icon="fa-pencil-square-o" invisible="not allow_billable or invoice_count == 0 or has_template_ancestor">
                         <field name="invoice_count" widget="statinfo" string="Invoices"/>
                     </button>
                 </t>
@@ -279,20 +279,20 @@
             </field>
             <xpath expr="//button[@name='action_fsm_validate'][hasclass('btn-primary')]" position="before">
                 <button class="btn-primary" name="action_create_invoice" type="object" string="Create Invoice" data-hotkey="l"
-                    invisible="not display_create_invoice_primary" groups="sales_team.group_sale_salesman,account.group_account_invoice"/>
+                    invisible="not display_create_invoice_primary or has_template_ancestor" groups="sales_team.group_sale_salesman,account.group_account_invoice"/>
             </xpath>
             <xpath expr="//button[@name='action_fsm_validate'][hasclass('btn-secondary')]" position="before">
                 <button class="btn-secondary" name="action_create_invoice" type="object" string="Create Invoice" data-hotkey="l"
-                        invisible="not display_create_invoice_secondary" groups="sales_team.group_sale_salesman,account.group_account_invoice"/>
+                        invisible="not display_create_invoice_secondary or has_template_ancestor" groups="sales_team.group_sale_salesman,account.group_account_invoice"/>
             </xpath>
             <xpath expr="//button[@name='action_timer_stop']" position='after'>
                 <button class="btn-secondary" name="action_fsm_create_quotation" type="object" string="New Quotation"
-                        invisible="not allow_quotations" groups="sales_team.group_sale_salesman"
+                        invisible="not allow_quotations or has_template_ancestor" groups="sales_team.group_sale_salesman"
                         data-hotkey="c"/>
             </xpath>
             <xpath expr="//span[@id='button_products']" position="replace">
                 <button class="oe_stat_button" name="action_fsm_view_material" groups="sales_team.group_sale_salesman,industry_fsm.group_fsm_quotation_from_task"
-                    type="object" icon="fa-cart-plus" invisible="not partner_id and not is_fsm or not allow_material">
+                    type="object" icon="fa-cart-plus" invisible="not partner_id and not is_fsm or not allow_material or has_template_ancestor">
                     <div class="o_stat_info">
                         <span class="o_stat_text d-flex align-items-baseline gap-1">
                             <field name="material_line_product_count" widget="statinfo" string="Products" nolabel="1" class="oe_inline"/>
@@ -306,16 +306,16 @@
                 </button>
             </xpath>
             <field name="partner_id" position="attributes">
-                <attribute name="invisible">not allow_billable and not is_fsm</attribute>
+                <attribute name="invisible">not allow_billable and not is_fsm or has_template_ancestor</attribute>
                 <attribute name="required">is_fsm</attribute>
             </field>
             <xpath expr="//field[@name='child_ids']/list/field[@name='partner_id']" position="attributes">
-                <attribute name="column_invisible">parent.is_fsm and not parent.partner_id or not parent.allow_billable and not parent.is_fsm</attribute>
+                <attribute name="column_invisible">parent.is_fsm and not parent.partner_id or not parent.allow_billable and not parent.is_fsm or has_template_ancestor</attribute>
                 <attribute name="invisible">not allow_billable and not is_fsm</attribute>
                 <attribute name="required">is_fsm and parent.partner_id</attribute>
             </xpath>
             <xpath expr="//field[@name='depend_on_ids']/list/field[@name='partner_id']" position="attributes">
-                <attribute name="column_invisible">not parent.allow_billable and not parent.is_fsm</attribute>
+                <attribute name="column_invisible">not parent.allow_billable and not parent.is_fsm or has_template_ancestor</attribute>
                 <attribute name="invisible">not allow_billable and not is_fsm</attribute>
                 <attribute name="required">is_fsm</attribute>
             </xpath>

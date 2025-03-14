@@ -17,7 +17,7 @@
             </field>
             <xpath expr="//button[@name='action_project_sharing_view_parent_task']" position="before">
                 <button class="oe_stat_button pe-none" name="action_fsm_view_material" type="object" icon="fa-cart-plus" special="cancel"
-                        invisible="not partner_id or not allow_material or material_line_product_count == 0">
+                        invisible="not partner_id or not allow_material or material_line_product_count == 0 or has_template_ancestor">
                     <div class="o_stat_info">
                         <span class="o_stat_value">
                             <field name="material_line_product_count" nolabel="1" class="me-1"/>
@@ -38,7 +38,7 @@
                     type="object"
                     class="oe_stat_button"
                     icon="fa-dollar"
-                    invisible="not allow_quotations or portal_quotation_count == 0">
+                    invisible="not allow_quotations or portal_quotation_count == 0 or has_template_ancestor">
                     <field string="Quotations" name="portal_quotation_count" widget="statinfo"/>
                 </button>
             </xpath>

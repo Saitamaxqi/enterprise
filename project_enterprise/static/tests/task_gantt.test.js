@@ -26,7 +26,7 @@ onRpc("get_all_deadlines", () => ({ milestone_id: [], project_id: [] }));
 
 const ganttViewParams = {
     arch: '<gantt js_class="task_gantt" date_start="start" date_stop="stop"/>',
-    resModel: "task",
+    resModel: "project.task",
     groupBy: [],
 };
 
@@ -34,6 +34,8 @@ beforeEach(() => {
     mockDate("2021-06-22 08:00:00");
 });
 class Task extends models.Model {
+    _name = "project.task";
+
     id = fields.Integer();
     name = fields.Char();
     start = fields.Datetime({ string: "Start Date" });
@@ -52,13 +54,14 @@ class Task extends models.Model {
     is_closed = fields.Boolean();
     project_id = fields.Many2one({
         string: "Project",
-        relation: "project",
+        relation: "project.project",
         falsy_value_label: "🔒 Private",
     });
     milestone_id = fields.Many2one({
         string: "Milestone",
-        relation: "milestone",
+        relation: "project.milestone",
     });
+    is_template = fields.Boolean({ string: "Is Template", default: false });
 
     _records = [
         {
@@ -82,6 +85,7 @@ class Task extends models.Model {
     ];
     _views = {
         list: '<list><field name="name"/></list>',
+        form: '<form><field name="name"/></form>',
     };
 }
 
@@ -93,21 +97,35 @@ class Stuff extends models.Model {
 }
 
 class Project extends models.Model {
+    _name = "project.project";
+
     id = fields.Integer();
     name = fields.Char();
     date = fields.Date();
     date_start = fields.Date();
 
+    get_template_tasks(projectId) {
+        return this.env["project.task"].search_read(
+            [
+                ["project_id", "=", projectId],
+                ["is_template", "=", true],
+            ],
+            ["id", "name"]
+        );
+    }
+
     _records = [{ id: 1, name: "My Project" }];
 }
 
 class Milestone extends models.Model {
+    _name = "project.milestone";
+
     id = fields.Integer();
     name = fields.Char();
     deadline = fields.Date();
     is_deadline_exceeded = fields.Boolean({ string: "Is Deadline Exceeded" });
     is_reached = fields.Boolean({ string: "Is Reached" });
-    project_id = fields.Many2one({ string: "Project", relation: "project" });
+    project_id = fields.Many2one({ string: "Project", relation: "project.project" });
 
     _records = [
         {
@@ -146,7 +164,7 @@ test("not user_ids grouped: empty groups are displayed first and user avatar is 
 
 test("Unschedule button is displayed", async () => {
     onRpc(({ method, model }) => {
-        if (model === "task" && method == "action_unschedule_task") {
+        if (model === "project.task" && method == "action_unschedule_task") {
             expect.step("unschedule task");
             return false;
         }
@@ -164,7 +182,7 @@ test("Unschedule button is displayed", async () => {
                 </templates>
             </gantt>
         `,
-        resModel: "task",
+        resModel: "project.task",
     });
     await contains(".o_gantt_pill").click();
     expect(".btn.btn-sm.btn-secondary").toHaveCount(1);
@@ -246,7 +264,7 @@ test("progress bar has the correct unit", async () => {
     });
     await mountGanttView({
         arch: '<gantt js_class="task_gantt" date_start="start" date_stop="stop" progress_bar="user_ids"/>',
-        resModel: "task",
+        resModel: "project.task",
         type: "gantt",
         groupBy: ["user_ids"],
     });
@@ -276,7 +294,7 @@ test("open a dialog to schedule task", async () => {
     });
     await mountGanttView({
         arch: '<gantt date_start="start" date_stop="stop" js_class="task_gantt" />',
-        resModel: "task",
+        resModel: "project.task",
         type: "gantt",
     });
     await clickCell("10", "June 2021");
@@ -412,7 +430,7 @@ test("Display project deadline in the gantt view of task", async () => {
     onRpc("get_all_deadlines", function () {
         return {
             milestone_id: [],
-            project_id: this.env["project"].search_read(),
+            project_id: this.env["project.project"].search_read(),
         };
     });
     await mountGanttView({
@@ -473,7 +491,7 @@ test("Display project and milestones deadline in the gantt view of task", async 
                     project_id: [1, "My Project"],
                 },
             ],
-            project_id: this.env["project"].search_read(),
+            project_id: this.env["project.project"].search_read(),
         };
     });
     await mountGanttView({ ...ganttViewParams, groupBy: ["user_ids"] });
@@ -538,7 +556,7 @@ test("Display project deadline and milestone date in the same date", async () =>
                     project_id: [1, "My Project"],
                 },
             ],
-            project_id: this.env["project"].search_read(),
+            project_id: this.env["project.project"].search_read(),
         };
     });
     await mountGanttView({ ...ganttViewParams, groupBy: ["user_ids"] });
@@ -623,7 +641,7 @@ test("Display project deadline of 2 projects with the same deadline", async () =
     onRpc("get_all_deadlines", function () {
         return {
             milestone_id: [],
-            project_id: this.env["project"].search_read(),
+            project_id: this.env["project.project"].search_read(),
         };
     });
 
@@ -662,7 +680,7 @@ test("Display project deadline one day before the start date of the other projec
     onRpc("get_all_deadlines", function () {
         return {
             milestone_id: [],
-            project_id: this.env["project"].search_read(),
+            project_id: this.env["project.project"].search_read(),
         };
     });
 
@@ -741,7 +759,7 @@ test("Smart scheduling", async () => {
 
     onRpc("schedule_tasks", function (request) {
         expect.step("schedule_tasks");
-        return this.env["task"].write(...request.args);
+        return this.env["project.task"].write(...request.args);
     });
 
     await mountGanttView({
@@ -897,23 +915,78 @@ test("Schedule a task and verify its display in the gantt view", async () => {
 });
 
 test("Should open the list dialog with 'Open Tasks' filter on Gantt cell click", async () => {
-    Task._records.push(
-        { id: 4, name: "Task 4", is_closed: true },
-        { id: 5, name: "Task 5" },
-    );
+    Task._records.push({ id: 4, name: "Task 4", is_closed: true }, { id: 5, name: "Task 5" });
 
     await mountGanttView({
         ...ganttViewParams,
         searchViewArch: `
                 <search>
                     <filter string="Open Tasks" name="open_tasks" domain="[('is_closed', '=', False)]"/>
-                </search>`
-            ,
+                </search>`,
         groupBy: ["user_ids"],
     });
 
     await clickCell("10", "June 2021", "Jane Doe");
     expect(".o_dialog").toHaveCount(1);
     expect(".o_searchview_facet").toHaveCount(1, { message: "Open Tasks filter applied" });
-    expect('.o_data_row').toHaveCount(1, { message: "Only open task should appear" });
+    expect(".o_data_row").toHaveCount(1, { message: "Only open task should appear" });
+});
+
+test("template dropdown in gantt view of a project with no template", async () => {
+    await mountGanttView({
+        ...ganttViewParams,
+        context: {
+            default_project_id: 1,
+        },
+    });
+    expect(".o_gantt_button_add").toHaveCount(1, {
+        message: "The “New” button should be displayed",
+    });
+    expect(".o_gantt_button_add").not.toHaveClass("dropdown-toggle", {
+        message: "The “New” button should not be a dropdown since there is no template",
+    });
+
+    // Test that we can create a new record without errors
+    await contains(".o_gantt_button_add").click();
+});
+
+test("template dropdown in gantt view of a project with one template", async () => {
+    Task._records.push(
+        {
+            id: 3,
+            name: "Template Task 1",
+            project_id: 1,
+            is_template: true,
+            start: "2021-06-02 08:00:00",
+            stop: "2021-06-12 08:00:00",
+        },
+        {
+            id: 4,
+            name: "Template Task 2",
+            project_id: 1,
+            is_template: true,
+            start: "2021-06-02 08:00:00",
+            stop: "2021-06-12 08:00:00",
+        }
+    );
+    await mountGanttView({
+        ...ganttViewParams,
+        context: {
+            default_project_id: 1,
+        },
+    });
+    expect(".o_gantt_button_add").toHaveCount(1, {
+        message: "The “New” button should be displayed",
+    });
+    expect(".o_gantt_button_add").toHaveClass("dropdown-toggle", {
+        message: "The “New” button should be a dropdown since there is a template",
+    });
+
+    await contains(".o_gantt_button_add").click();
+    expect("button.dropdown-item:contains('New Task')").toHaveCount(1, {
+        message: "The “New Task” button should be in the dropdown",
+    });
+    expect("button.dropdown-item:contains('Template Task 1')").toHaveCount(1, {
+        message: "There should be a button named after the task template",
+    });
 });

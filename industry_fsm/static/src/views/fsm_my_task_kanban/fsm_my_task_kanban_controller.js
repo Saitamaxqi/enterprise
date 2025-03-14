@@ -1,6 +1,14 @@
 import { KanbanController } from "@web/views/kanban/kanban_controller";
 
+import { ProjectTaskTemplateDropdown } from "@project/views/components/project_task_template_dropdown";
+
 export class FsmMyTaskKanbanController extends KanbanController {
+    static template = "project.ProjectTaskKanbanView";
+    static components = {
+        ...KanbanController.components,
+        ProjectTaskTemplateDropdown,
+    };
+
     async createRecord() {
         const { onCreate } = this.props.archInfo;
         const { root } = this.model;

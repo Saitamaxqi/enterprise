@@ -1550,3 +1550,10 @@ class ProjectTask(models.Model):
             path_last_task = task_parent[path_last_task]
 
         return list(reversed(path))
+
+    def _get_template_default_context_whitelist(self):
+        return [
+            *super()._get_template_default_context_whitelist(),
+            "planned_date_begin",
+            "date_deadline",
+        ]

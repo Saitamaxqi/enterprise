@@ -45,9 +45,10 @@ export class GanttController extends Component {
         this.model = useModelWithSampleData(this.props.Model, this.props.modelParams);
         useSetupAction({
             rootRef,
-            getLocalState: () => {
-                return { metaData: this.model.metaData, displayParams: this.model.displayParams };
-            },
+            getLocalState: () => ({
+                metaData: this.model.metaData,
+                displayParams: this.model.displayParams,
+            }),
         });
 
         onWillUnmount(() => this.closeDialog?.());
@@ -137,8 +138,8 @@ export class GanttController extends Component {
 
         let removeRecord;
         if (canDelete && props.resId) {
-            removeRecord = () => {
-                return new Promise((resolve) => {
+            removeRecord = () =>
+                new Promise((resolve) => {
                     this.dialogService.add(ConfirmationDialog, {
                         title: _t("Bye-bye, record!"),
                         body: deleteConfirmationMessage,
@@ -151,7 +152,6 @@ export class GanttController extends Component {
                         cancelLabel: _t("No, keep it"),
                     });
                 });
-            };
         }
 
         this.closeDialog = this.dialogService.add(
@@ -181,12 +181,16 @@ export class GanttController extends Component {
     //--------------------------------------------------------------------------
 
     onAddClicked() {
+        const context = this.getAdditionalContext();
+        this.create(context);
+    }
+
+    getAdditionalContext() {
         const { scale } = this.model.metaData;
         const focusDate = this.getCurrentFocusDate();
         const start = focusDate.startOf(scale.unit);
         const stop = focusDate.endOf(scale.unit).plus({ millisecond: 1 });
-        const context = this.model.getDialogContext({ start, stop, withDefault: true });
-        this.create(context);
+        return this.model.getDialogContext({ start, stop, withDefault: true });
     }
 
     getCurrentFocusDate() {
