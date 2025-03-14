@@ -6,7 +6,7 @@ from unittest.mock import patch
 from odoo import Command
 from odoo.tests import tagged, freeze_time
 from odoo.tools import mute_logger
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
 
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 
@@ -817,3 +817,39 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
         inv = self.env['sale.order']._cron_recurring_create_invoice()
         new_invoice = inv.copy()
         self.assertEqual(sub.invoice_ids, inv | new_invoice)
+
+    def test_invoicing_access_rights(self):
+        """Ensure a salesman can get amount invoiced for subscriptions with others' invoices."""
+        sales_user = self.company_data['default_user_salesman']
+        self.product_a.write({
+            'name': "Non-recurring product",
+            'recurring_invoice': False,
+        })
+        self.subscription.write({
+            'user_id': sales_user.id,
+            'order_line': [Command.create({
+                'product_id': self.product_a.id,
+                'tax_ids': False,
+            })],
+        })
+        self.subscription.action_confirm()
+        self.assertAlmostEqual(
+            self.subscription.with_user(sales_user).amount_to_invoice,
+            sum(self.subscription.order_line.mapped('price_total')),
+            msg="All lines should still need to be invoiced",
+        )
+
+        # assign a different user to the invoice
+        invoice = self.subscription._create_recurring_invoice()
+        invoice.user_id = self.env.ref('base.user_admin')
+
+        # ensure salesman doesn't have access to just any invoice
+        invoice.invalidate_recordset(['name'])
+        with self.assertRaises(AccessError):
+            invoice.with_user(sales_user).user_id = sales_user
+
+        self.assertAlmostEqual(
+            self.subscription.with_user(sales_user).amount_invoiced,
+            self.product_a.list_price,
+            msg="We should get the amount invoiced for non-recurring products",
+        )
