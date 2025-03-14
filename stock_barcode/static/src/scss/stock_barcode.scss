@@ -170,26 +170,3 @@
         }
     }
 }
-
-// Defines animation for highlighting flash.
-$highlighting-colors: (
-    "primary": theme-color("primary"),
-    "white": white
-);
-
-@each $c-name, $c-value in $highlighting-colors {
-    @keyframes highlighting-flash-#{$c-name} {
-        0% {
-            background-color: #{$c-value};
-        }
-        20% {
-            background-color: transparent;
-        }
-        21% {
-            background-color: #{$c-value};
-        }
-        100% {
-            background-color: transparent;
-        }
-    }
-}

@@ -46,15 +46,6 @@ $o-barcode-completed-color: #befdcc;
         }
     }
 
-    .o_barcode_scanner_qty {
-        .qty-done, .inventory_quantity {
-            &.o_flash {
-                animation-name: highlighting-flash-primary;
-                animation-duration: 0.5s;
-            }
-        }
-    }
-
     @keyframes o-barcode-btn-click {
         from {
             background-color: $o-component-active-border;
