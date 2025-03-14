@@ -364,19 +364,21 @@ class AccountReport(models.Model):
         # 6. Build journals options
         if len(company_journals_map) > 1 or all_journal_groups:
             for company, journals in company_journals_map.items():
+                # users may not have full access to the parent company in case they are in a branch, yet they have to see the company name
+                company_name = company.sudo().display_name
 
                 # if not is_opening_report, then gets the unfolded attribute of the company from the previous options
                 unfolded = False if is_opening_report else next(
                     (entry.get('unfolded') for entry in previous_journals
-                     if entry['model'] == 'res.company' and entry['name'] == company.name), False)
+                     if entry['model'] == 'res.company' and entry['name'] == company_name), False)
 
                 for journal in journals:
                     journal['visible'] = unfolded
 
                 options['journals'].append({
                     'id': 'divider',
-                    'model': company._name,
-                    'name': company.display_name,
+                    'model': 'res.company',
+                    'name': company_name,
                     'unfolded': unfolded,
                 })
 
