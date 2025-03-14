@@ -18,6 +18,12 @@
             <field name="name@nl">Geldboeten, verbeurdverklaringen en straffen van alle aard</field>
             <field name="name@fr">Amendes, pénalités et confiscations de toute nature</field>
             <field name="code">1203</field>
+            <field name="rate_ids">
+                <record id="1203_2_rate_1" model="account.disallowed.expenses.rate">
+                    <field name="rate">0</field>
+                    <field name="date_from" eval="datetime.now()"/>
+                </record>
+            </field>
         </record>
         <record id="demo_disallowed_expenses_category_1204" model="account.disallowed.expenses.category">
             <field name="name">Non-deductible pensions, capital, employer contributions and premiums</field>
@@ -30,6 +36,30 @@
             <field name="name@nl">Niet-aftrekbare autokosten en minderwaarden op autovoertuigen</field>
             <field name="name@fr">Frais de voiture et moins-values sur véhicules automobiles non déductibles</field>
             <field name="code">1205</field>
+        </record>
+        <record id="demo_disallowed_expenses_category_1205_1" model="account.disallowed.expenses.category">
+            <field name="name">Car expenses and capital losses on non-deductible motor vehicles</field>
+            <field name="name@nl">Niet-aftrekbare autokosten en minderwaarden op autovoertuigen</field>
+            <field name="name@fr">Frais de voiture et moins-values sur véhicules automobiles non déductibles</field>
+            <field name="code">1205.1</field>
+            <field name="rate_ids">
+                <record id="1205_1_rate_1" model="account.disallowed.expenses.rate">
+                    <field name="rate">0</field>
+                    <field name="date_from" eval="datetime.now()"/>
+                </record>
+            </field>
+        </record>
+        <record id="demo_disallowed_expenses_category_1205_2" model="account.disallowed.expenses.category">
+            <field name="name">Car expenses and capital losses on non-deductible motor vehicles</field>
+            <field name="name@nl">Niet-aftrekbare autokosten en minderwaarden op autovoertuigen</field>
+            <field name="name@fr">Frais de voiture et moins-values sur véhicules automobiles non déductibles</field>
+            <field name="code">1205.2</field>
+            <field name="rate_ids">
+                <record id="1205_2_rate_1" model="account.disallowed.expenses.rate">
+                    <field name="rate">75</field>
+                    <field name="date_from" eval="datetime.now()"/>
+                </record>
+            </field>
         </record>
         <record id="demo_disallowed_expenses_category_1234" model="account.disallowed.expenses.category">
             <field name="name">Non-deductible mobility allowances</field>
@@ -54,12 +84,36 @@
             <field name="name@nl">Niet-aftrekbare receptiekosten en kosten voor relatiegeschenken</field>
             <field name="name@fr">Frais de réception et de cadeaux d'affaires non déductibles</field>
             <field name="code">1207</field>
+            <field name="rate_ids">
+                <record id="1207_rate_1" model="account.disallowed.expenses.rate">
+                    <field name="rate">50</field>
+                    <field name="date_from" eval="datetime.now()"/>
+                </record>
+            </field>
         </record>
         <record id="demo_disallowed_expenses_category_1208" model="account.disallowed.expenses.category">
             <field name="name">Non-deductible restaurant expenses</field>
             <field name="name@nl">Niet-aftrekbare restaurantkosten</field>
             <field name="name@fr">Frais de restaurant non déductibles</field>
             <field name="code">1208</field>
+            <field name="rate_ids">
+                <record id="1208_rate_1" model="account.disallowed.expenses.rate">
+                    <field name="rate">69</field>
+                    <field name="date_from" eval="datetime.now()"/>
+                </record>
+            </field>
+        </record>
+        <record id="demo_disallowed_expenses_category_1208_1" model="account.disallowed.expenses.category">
+            <field name="name">Non-deductible restaurant expenses</field>
+            <field name="name@nl">Niet-aftrekbare restaurantkosten</field>
+            <field name="name@fr">Frais de restaurant non déductibles</field>
+            <field name="code">1208.1</field>
+            <field name="rate_ids">
+                <record id="1208_1_rate_1" model="account.disallowed.expenses.rate">
+                    <field name="rate">50</field>
+                    <field name="date_from" eval="datetime.now()"/>
+                </record>
+            </field>
         </record>
         <record id="demo_disallowed_expenses_category_1209" model="account.disallowed.expenses.category">
             <field name="name">Non-specific professional clothing expenses</field>
@@ -102,6 +156,18 @@
             <field name="name@nl">Liberaliteiten</field>
             <field name="name@fr">Libéralités</field>
             <field name="code">1216</field>
+        </record>
+        <record id="demo_disallowed_expenses_category_1216_1" model="account.disallowed.expenses.category">
+            <field name="name">Liberalities</field>
+            <field name="name@nl">Liberaliteiten</field>
+            <field name="name@fr">Libéralités</field>
+            <field name="code">1216.1</field>
+            <field name="rate_ids">
+                <record id="1216_1_rate_1" model="account.disallowed.expenses.rate">
+                    <field name="rate">120</field>
+                    <field name="date_from" eval="datetime.now()"/>
+                </record>
+            </field>
         </record>
         <record id="demo_disallowed_expenses_category_1217" model="account.disallowed.expenses.category">
             <field name="name">Reductions in value and losses on shares or parts</field>
