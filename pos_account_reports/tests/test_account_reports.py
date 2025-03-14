@@ -141,6 +141,29 @@ class POSTestTaxReport(TestAccountReportsCommon):
     def test_pos_tax_report(self):
         self._check_tax_report_content()
 
+    def test_pos_tax_report_caba(self):
+        """
+        Test that cash-based (caba) taxes behave as expected on the tax report..
+        For PoS session closing moves we do not use caba accounts or create caba entries.
+        So caba taxes should behave the "same" as other taxes.
+        """
+        self.company_data['company'].tax_exigibility = True
+        caba_transition_account = self.env['account.account'].create({
+            'name': 'POS caba transition tax account',
+            'code': 'POSCaba',
+            'account_type': 'asset_current',
+        })
+        self.pos_tax.write({
+            'tax_exigibility': 'on_payment',
+            'cash_basis_transition_account_id': caba_transition_account.id,
+        })
+
+        self._check_tax_report_content()
+
+        closing_move = self.pos_config.session_ids.move_id
+        self.assertTrue(closing_move.always_tax_exigible)
+        self.assertFalse(caba_transition_account in closing_move.line_ids.account_id)
+
     @freeze_time("2020-01-01")
     def _check_tax_report_content(self):
         today = fields.Date.today()
