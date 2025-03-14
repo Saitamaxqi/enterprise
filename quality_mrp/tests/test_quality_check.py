@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from odoo.exceptions import UserError
 from odoo.tests import Form
 from odoo.fields import Command
 
@@ -299,6 +300,14 @@ class TestQualityCheck(TestQualityMrpCommon):
 
         # Now check that no new quality check are created.
         self.assertEqual(len(self.mrp_production_qc_test1.check_ids), 1)
+
+    def test_quantity_control_point_with_production(self):
+        """Test that it's not possible to create a Quantity quality check type with a manufacturing operation type."""
+        with self.assertRaises(UserError):
+            self.qality_point_test1 = self.env['quality.point'].create({
+                'picking_type_ids': [Command.link(self.picking_type_id)],
+                'measure_on': 'move_line',
+            })
 
     def test_manufacture_picking_type_with_product_categ_in_qp(self):
         """Create a quality point of type measure on'operation' with the manufacturing

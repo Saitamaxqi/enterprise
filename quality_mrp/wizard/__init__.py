@@ -2,3 +2,4 @@
 
 
 from . import on_demand_quality_check_wizard
+from . import quality_check_wizard

@@ -12,7 +12,12 @@ class QualityPoint(models.Model):
     def _get_domain_for_production(self, quality_points_domain):
         return quality_points_domain
 
-    @api.constrains('measure_on', 'picking_type_ids')
+    @api.onchange('measure_on', 'picking_type_ids')
+    def _onchange_measure_on(self):
+        # to remove in Master
+        pass
+
+    @api.constrains('measure_on', 'picking_type_ids', 'operation_id')
     def _check_measure_on(self):
         for point in self:
             if point.measure_on == 'move_line' and any(pt.code == 'mrp_operation' for pt in point.picking_type_ids):
@@ -24,6 +29,13 @@ class QualityCheck(models.Model):
 
     production_id = fields.Many2one(
         'mrp.production', 'Production Order', check_company=True)
+
+    def do_fail(self):
+        self.ensure_one()
+        res = super().do_fail()
+        if self.production_id and self.production_id.product_id.tracking == 'serial' and self.move_line_id:
+            self.move_line_id.move_id.picked = False
+        return res
 
     @api.depends("production_id.qty_producing")
     def _compute_qty_line(self):

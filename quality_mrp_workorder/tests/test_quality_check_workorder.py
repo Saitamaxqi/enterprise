@@ -348,12 +348,3 @@ class TestPickingWorkorderClientActionQuality(test_tablet_client_action.TestWork
 
         self.assertEqual(mo.workorder_ids.check_ids.filtered(lambda x: x.test_type == 'measure').quality_state, 'fail', 'The measure quality check should have failed')
         self.assertEqual(res_action.get('res_model'), 'quality.check.wizard', 'The action should return a wizard when failing')
-
-    def test_quantity_control_point_with_production(self):
-        """Test that it's not possible to create a Quantity quality check type with a manufacturing operation type."""
-        with self.assertRaises(UserError):
-            self.qality_point_test1 = self.env['quality.point'].create({
-                'picking_type_ids': [Command.link(self.picking_type_manu.id)],
-                'operation_id': self.wizard_op_1.id,
-                'measure_on': 'move_line',
-            })
