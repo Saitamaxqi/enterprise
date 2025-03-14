@@ -112,6 +112,25 @@ class TestSaleCommissionUser(TestSaleCommissionCommon):
         self.assertEqual(len(commissions), 24)
         self.assertEqual(sum(commissions.mapped('commission')), 600)
 
+        # Check that a refund invoice creates a negative achievement
+        refund_wizard = self.env['account.move.reversal'].with_context(active_model="account.move", active_ids=AM.ids).create({
+            'journal_id': AM.journal_id.id,
+        })
+        refund_result = refund_wizard.reverse_moves()
+        refund_move_id = refund_result['res_id']
+        self.env["account.move"].browse(refund_move_id)._post()
+        self.env.invalidate_all()
+
+        refund_achievement = self.env['sale.commission.achievement.report'].search([
+            ('plan_id', '=', self.commission_plan_user.id),
+            ('related_res_id', '=', refund_move_id),
+            ('related_res_model', '=', 'account.move')
+        ])
+
+        self.assertEqual(len(refund_achievement), 1)
+        self.assertEqual(refund_achievement['achieved'], -120, '-0.06 * 2000 = -120')
+        self.assertEqual(sum(commissions.mapped('commission')), 480, '600 - 120 = 480')
+
     @freeze_time('2024-02-02')
     def test_commission_user_target2(self):
         self.commission_plan_user.write({
