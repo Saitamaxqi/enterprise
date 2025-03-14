@@ -885,9 +885,16 @@ class PlanningSlot(models.Model):
     def copy_data(self, default=None):
         default = dict(default or {})
         vals_list = super().copy_data(default=default)
-        if self._context.get('planning_split_tool'):
-            for planning, vals in zip(self, vals_list):
+        active_resources = self.env['resource.resource']
+        planning_split_tool = self.env.context.get('planning_split_tool')
+        check_resource_active = not((default and 'resource_id' in default) or planning_split_tool)
+        if check_resource_active:
+            active_resources = self.resource_id.filtered('active')
+        for planning, vals in zip(self, vals_list):
+            if planning_split_tool:
                 vals['state'] = planning.state
+            if check_resource_active and planning.resource_id and planning.resource_id not in active_resources:
+                vals['resource_id'] = False
         return vals_list
 
     def copy(self, default=None):

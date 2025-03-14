@@ -1195,3 +1195,13 @@ class TestRecurrencySlotGeneration(TestCommonPlanning):
             for original_end_date, modified_end_date
             in zip(original_end_dates, slot.recurrency_id.slot_ids.mapped('end_datetime'))
         ))
+
+    def test_recurrent_shifts_without_archive_resource(self):
+        shift=self.env['planning.slot'].create({
+            'start_datetime': datetime(2024, 12, 25, 8, 0, 0),
+            'end_datetime': datetime(2024, 12, 25, 17, 0, 0),
+            'resource_id': self.resource_joseph.id,
+        })
+        self.resource_joseph.action_archive()
+        shift.write({'repeat': True, 'repeat_interval': 1, 'repeat_type': 'forever'})
+        self.assertFalse((shift.recurrency_id.slot_ids - shift).resource_id)

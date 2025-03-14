@@ -820,3 +820,21 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         slot = PlanningSlot.default_get(['resource_id', 'start_datetime', 'end_datetime'])
         self.assertEqual(slot.get('start_datetime'), datetime(2024, 7, 4, 10, 0, 0), "The slot start datetime should be matched to the resource's timezone")
         self.assertEqual(slot.get('end_datetime'), datetime(2024, 7, 4, 10, 59, 59), "The slot end datetime should be matched to the resource's timezone")
+
+    def test_copy_shift_without_archive_resource(self):
+        self.slot.resource_id = self.resource_joseph
+        self.slot2.resource_id = self.resource_bert
+        self.resource_joseph.action_archive()
+        slots = self.slot + self.slot2
+        slot, slot2 = slots.copy()
+        self.assertFalse(slot.resource_id)
+        self.assertEqual(slot2.resource_id, self.resource_bert)
+
+        # Exception we keep the archived resource if it is given in parameter of copy method
+        slot, slot2 = slots.copy({'resource_id': self.resource_joseph.id})
+        self.assertEqual(slot.resource_id, self.resource_joseph)
+        self.assertEqual(slot2.resource_id, self.resource_joseph)
+
+        # Exception we keep the archived resource if the shift is split
+        slot = self.slot.with_context(planning_split_tool=True).copy()
+        self.assertEqual(slot.resource_id, self.resource_joseph)
