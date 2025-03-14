@@ -76,6 +76,7 @@ topbarMenuRegistry.addChild("data_sources_data", ["data"], (env) => {
             id: `item_list_${listId}`,
             name: env.model.getters.getListDisplayName(listId),
             sequence: sequence++,
+            isReadonlyAllowed: true,
             execute: (env) => {
                 env.openSidePanel("LIST_PROPERTIES_PANEL", { listId });
             },
@@ -89,19 +90,17 @@ topbarMenuRegistry.addChild("data_sources_data", ["data"], (env) => {
                     : undefined,
         };
     });
-    const charts_items = env.model.getters.getOdooChartIds().map((chartId, index) => {
-        return {
-            id: `item_chart_${chartId}`,
-            name: env.model.getters.getOdooChartDisplayName(chartId),
-            sequence: sequence++,
-            execute: (env) => {
-                env.model.dispatch("SELECT_FIGURE", { id: chartId });
-                env.openSidePanel("ChartPanel");
-            },
-            icon: "o-spreadsheet-Icon.INSERT_CHART",
-            separator: index === env.model.getters.getOdooChartIds().length - 1,
-        };
-    });
+    const charts_items = env.model.getters.getOdooChartIds().map((chartId, index) => ({
+        id: `item_chart_${chartId}`,
+        name: env.model.getters.getOdooChartDisplayName(chartId),
+        sequence: sequence++,
+        execute: (env) => {
+            env.model.dispatch("SELECT_FIGURE", { id: chartId });
+            env.openSidePanel("ChartPanel");
+        },
+        icon: "o-spreadsheet-Icon.INSERT_CHART",
+        separator: index === env.model.getters.getOdooChartIds().length - 1,
+    }));
     return lists_items.concat(charts_items).concat([
         {
             id: "refresh_all_data",

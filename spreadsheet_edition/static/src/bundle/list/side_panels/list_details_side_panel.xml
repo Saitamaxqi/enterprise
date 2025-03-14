@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-    <div t-name="spreadsheet_edition.ListDetailsSidePanel" class="o-listing-details-side-panel">
+    <div
+        t-name="spreadsheet_edition.ListDetailsSidePanel"
+        class="o-listing-details-side-panel"
+        t-att="env.model.getters.isReadonly() ? ['inert', 1] : []"
+        t-att-class="{ 'pe-none opacity-50': env.model.getters.isReadonly() }">
         <Section class="'o-section'">
             <t t-set-slot="title">
                 <div class="d-flex flex-row justify-content-between align-items-center">

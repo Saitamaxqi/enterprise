@@ -1150,3 +1150,14 @@ test("Middle-click on 'See record' opens the record in a new tab", async functio
     await root.execute(env, true);
     expect.verifySteps(["doAction"]);
 });
+
+test("readonly list side panel", async function () {
+    const { model, env } = await createSpreadsheetFromListView();
+    await doMenuAction(topbarMenuRegistry, ["data", "item_list_1"], env);
+    await animationFrame();
+    expect(".o-sidePanelBody > div.pe-none.opacity-50").toHaveCount(0);
+    model.updateMode("readonly");
+    await animationFrame();
+    expect(".o-sidePanelBody > div.pe-none.opacity-50").toHaveCount(1);
+    expect(".o-sidePanelBody > div.pe-none.opacity-50").toHaveAttribute("inert");
+});
