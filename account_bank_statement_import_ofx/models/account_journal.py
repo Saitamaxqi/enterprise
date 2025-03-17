@@ -133,8 +133,11 @@ class AccountJournal(models.Model):
             # Replacing utf-8 chars with ascii equivalent
             encoding = re.findall(b'encoding="(.*?)"', attachment.raw)
             encoding = encoding[0] if len(encoding) > 1 else 'utf-8'
-            attachment = unicodedata.normalize('NFKD', attachment.raw.decode(encoding)).encode('ascii', 'ignore')
-            ofx = PatchedOfxParser.parse(io.BytesIO(attachment))
+            try:
+                attachment = unicodedata.normalize('NFKD', attachment.raw.decode(encoding)).encode('ascii', 'ignore')
+                ofx = PatchedOfxParser.parse(io.BytesIO(attachment))
+            except UnicodeDecodeError:
+                raise UserError(_("There was an issue decoding the file. Please check the file encoding."))
         vals_bank_statement = []
         account_lst = set()
         currency_lst = set()

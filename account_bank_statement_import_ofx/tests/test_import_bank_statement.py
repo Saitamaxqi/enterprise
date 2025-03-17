@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.exceptions import UserError
 from odoo.tests import tagged
 from odoo.tools import file_open
 
@@ -70,3 +71,26 @@ class TestAccountBankStatementImportOFX(AccountTestInvoicingCommon):
                 'account_number': partner_bank_norbert.acc_number,
             },
         ])
+
+    def test_ofx_file_import_error(self):
+        """
+        Check if a UserError is triggered when importing a file that contains characters that cannot be decoded with the default encoding
+        """
+        bank_journal = self.env['account.journal'].create({
+            'name': 'Bank 123456',
+            'code': 'BNK67',
+            'type': 'bank',
+            'bank_acc_number': '123456',
+            'currency_id': self.env.ref('base.USD').id,
+        })
+
+        # Get OFX file content
+        # This file contains characters that cannot be decoded with the default encoding - PLEASE DO NOT UPDATE THIS FILE
+        ofx_file_path = 'account_bank_statement_import_ofx/static/ofx/test_ofx_unicode_error.ofx'
+        with self.assertRaises(UserError, msg="There was an issue decoding the file. Please check the file encoding."):
+            with file_open(ofx_file_path, 'rb') as ofx_file:
+                bank_journal.create_document_from_attachment(self.env['ir.attachment'].create({
+                    'mimetype': 'application/xml',
+                    'name': 'test_ofx.ofx',
+                    'raw': ofx_file.read(),
+                }).ids)
