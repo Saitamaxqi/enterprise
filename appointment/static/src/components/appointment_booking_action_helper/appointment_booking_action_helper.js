@@ -10,18 +10,26 @@ export class AppointmentBookingActionHelper extends Component {
     }
 
     async openShareDialog() {
-        const appointmentName = await this.orm.searchRead("appointment.type", [["id", "=", this.props.context.default_appointment_type_id]], ["name"]);
+        const context = {
+            'dialog_size': 'medium',
+        };
+        const appointmentId = this.props.context.default_appointment_type_id;
+        if (appointmentId) {
+            const appointment = await this.orm.searchRead("appointment.type", [["id", "=", appointmentId]], ["name"]);
+            const shortCode = appointment[0].name.trim().toLowerCase().replaceAll(" ", "-");
+            const isAlreadyUsed = await this.orm.searchCount("appointment.invite", [["short_code", "=", shortCode]]) !== 0;
+            context['default_appointment_type_ids'] = [appointmentId];
+            if (!isAlreadyUsed) {
+                context['default_short_code'] = shortCode;
+            }
+        }
         this.action.doAction({
             name: 'Create a Share Link',
             type: 'ir.actions.act_window',
             res_model: 'appointment.invite',
             views: [[false, 'form']],
             target: 'new',
-            context: {
-                'default_appointment_type_ids': [this.props.context.default_appointment_type_id],
-                'dialog_size': 'medium',
-                'default_short_code': appointmentName[0].name.toLowerCase().replace(" ", "_"),
-            },
+            context: context,
         });
     }
 };
