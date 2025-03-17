@@ -9,14 +9,15 @@ export class PlanningCalendarCommonRenderer extends CalendarCommonRenderer {
     /**
      * @override
      */
-    onEventRender(info) {
-        super.onEventRender(info);
-        const { el, event } = info;
+    eventClassNames(info) {
+        const classesToAdd = super.eventClassNames(info);
+        const { event } = info;
         const model = this.props.model;
         const record = model.records[event.id];
 
         if (record && model.highlightIds && !model.highlightIds.includes(record.id)) {
-            el.classList.add("opacity-25");
+            classesToAdd.push("opacity-25");
         }
+        return classesToAdd;
     }
 }
