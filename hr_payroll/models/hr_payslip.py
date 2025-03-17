@@ -231,8 +231,7 @@ class HrPayslip(models.Model):
 
     @api.depends('employee_id', 'contract_id', 'struct_id', 'date_from', 'date_to', 'struct_id')
     def _compute_input_line_ids(self):
-        attachment_types = self._get_attachment_types()
-        attachment_type_ids = [f.id for f in attachment_types.values()]
+        attachment_type_ids = self.env['hr.payslip.input.type'].search([('available_in_attachments', '=', True)]).ids
         for slip in self:
             if not slip.employee_id or not slip.employee_id.salary_attachment_ids or not slip.struct_id:
                 lines_to_remove = slip.input_line_ids.filtered(lambda x: x.input_type_id.id in attachment_type_ids)
@@ -247,33 +246,28 @@ class HrPayslip(models.Model):
                         and (not a.date_end or a.date_end >= slip.date_from)
                 )
                 # Only take deduction types present in structure
-                deduction_types = list(set(valid_attachments.other_input_type_id.mapped('code')))
-                for deduction_type in deduction_types:
-                    attachments = valid_attachments.filtered(lambda a: a.other_input_type_id.code == deduction_type)
+                for input_type_id, attachments in valid_attachments.grouped("other_input_type_id").items():
                     amount = attachments._get_active_amount()
                     name = ', '.join(attachments.mapped('description'))
-                    input_type_id = attachment_types[deduction_type].id
                     input_line_vals.append(Command.create({
                         'name': name,
                         'amount': amount if not slip.credit_note else -amount,
-                        'input_type_id': input_type_id,
+                        'input_type_id': input_type_id.id,
                     }))
                 slip.update({'input_line_ids': input_line_vals})
 
     @api.depends('input_line_ids.input_type_id', 'input_line_ids')
     def _compute_salary_attachment_ids(self):
-        attachment_types = self._get_attachment_types()
         for slip in self:
             if not slip.input_line_ids and not slip.salary_attachment_ids:
                 continue
             attachments = self.env['hr.salary.attachment']
             if slip.employee_id and slip.input_line_ids and slip.date_to:
-                input_line_type_ids = slip.input_line_ids.mapped('input_type_id.id')
-                deduction_types = [f for f in attachment_types if attachment_types[f].id in input_line_type_ids]
+                deduction_types = slip.input_line_ids.input_type_id.filtered("available_in_attachments").ids
                 attachments = slip.employee_id.salary_attachment_ids.filtered(
                     lambda a: (
                         a.state == 'open'
-                        and a.other_input_type_id.code in deduction_types
+                        and a.other_input_type_id.id in deduction_types
                         and a.date_start <= slip.date_to
                     )
                 )
@@ -412,7 +406,7 @@ class HrPayslip(models.Model):
     def _record_attachment_payment(self, attachments, slip_lines):
         self.ensure_one()
         sign = -1 if self.credit_note else 1
-        amount = sum(sl.total for sl in slip_lines) if not attachments.other_input_type_id.is_quantity else sum(sl.quantity for sl in slip_lines)
+        amount = sum(sl.total for sl in slip_lines) if not all(attachments.other_input_type_id.mapped("is_quantity")) else sum(sl.quantity for sl in slip_lines)
         attachments.record_payment(sign * abs(amount))
 
     def write(self, vals):
@@ -422,13 +416,10 @@ class HrPayslip(models.Model):
             # Register payment in Salary Attachments
             # NOTE: Since we combine multiple attachments on one input line, it's not possible to compute
             #  how much per attachment needs to be taken record_payment will consume monthly payments (child_support) before other attachments
-            attachment_types = self._get_attachment_types()
             for slip in self.filtered(lambda r: r.salary_attachment_ids):
-                for deduction_type, input_type_id in attachment_types.items():
-                    attachments = slip.salary_attachment_ids.filtered(lambda r: r.other_input_type_id.code == deduction_type)
-                    input_lines = slip.input_line_ids.filtered(lambda r: r.input_type_id.id == input_type_id.id)
+                for deduction_codes, attachments in slip.salary_attachment_ids.grouped(lambda x: x.other_input_type_id.code).items():
                     # Use the amount from the computed value in the payslip lines not the input
-                    salary_lines = slip.line_ids.filtered(lambda r: r.code in input_lines.mapped('code'))
+                    salary_lines = slip.line_ids.filtered(lambda r: r.code in deduction_codes)
                     if not attachments or not salary_lines:
                         continue
                     slip._record_attachment_payment(attachments, salary_lines)
@@ -827,7 +818,7 @@ class HrPayslip(models.Model):
         # Check for multiple inputs of the same type and keep a copy of
         # them because otherwise they are lost when building the dict
         same_type_input_lines = defaultdict(lambda x: self.env['hr.payslip.input'])
-        input_line_ids_by_code = self.input_line_ids.grouped('code') 
+        input_line_ids_by_code = self.input_line_ids.grouped('code')
         for code, input_lines in input_line_ids_by_code.items():
             if len(input_lines) > 1:
                 same_type_input_lines[code] = input_lines

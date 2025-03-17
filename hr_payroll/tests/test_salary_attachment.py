@@ -192,3 +192,66 @@ class TestSalaryAttachment(TestPayslipBase):
         self.assertEqual(fixed_B.paid_amount, 400)
         self.assertEqual(monthly_A.paid_amount, 100)
         self.assertEqual(monthly_B.paid_amount, 200)
+
+    def test_attachment_inputs_with_same_code(self):
+        # 3rd attachment should be ignored even though it comes last
+        att_1, att_2, _ = self.env["hr.payslip.input.type"].create([{
+            "name": "Allowance 1",
+            "code": "ALW.ATT",
+            "available_in_attachments": True,
+            "default_no_end_date": True
+        }, {
+            "name": "Allowance 2",
+            "code": "ALW.ATT",
+            "available_in_attachments": True,
+            "default_no_end_date": True
+        }, {
+            "name": "Allowance 3",
+            "code": "ALW.ATT",
+            "available_in_attachments": True,
+            "default_no_end_date": True
+        }])
+
+        self.env['hr.salary.rule'].create({
+            'name': 'Allowance Attachment',
+            'sequence': 99,
+            'amount_select': 'code',
+            'amount_python_compute': "result = inputs['ALW.ATT'].amount",
+            'quantity': "'WORK100' in worked_days and worked_days['WORK100'].number_of_days",
+            'code': "ALW.ATT",
+            'category_id': self.env.ref('hr_payroll.ALW').id,
+            'struct_id': self.developer_pay_structure.id,
+        })
+
+        self.env['hr.salary.attachment'].create([{
+            'employee_ids': [self.toto.id],
+            'description': 'Test Attachment',
+            'other_input_type_id': att_1.id,
+            'date_start': date(self.current_year, 1, 1),
+            'monthly_amount': 100,
+            'total_amount': 1000,
+        }, {
+            'employee_ids': [self.toto.id],
+            'description': 'Test Attachment',
+            'other_input_type_id': att_2.id,
+            'date_start': date(self.current_year, 1, 1),
+            'monthly_amount': 50,
+            'total_amount': 1000,
+        }])
+
+        payslip = self.env['hr.payslip'].create({
+            'name': 'Payslip',
+            'employee_id': self.toto.id
+        })
+        payslip.compute_sheet()
+        payslip.action_payslip_done()
+        payslip.action_payslip_paid()
+
+        self.assertRecordValues(payslip.input_line_ids, [
+            {"code": "ALW.ATT", "input_type_id": att_1.id, "amount": 100},
+            {"code": "ALW.ATT", "input_type_id": att_2.id, "amount": 50},
+        ])
+        self.assertRecordValues(payslip.salary_attachment_ids, [
+            {"other_input_type_id": att_1.id, "paid_amount": 100},
+            {"other_input_type_id": att_2.id, "paid_amount": 50},
+        ])
