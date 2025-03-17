@@ -872,7 +872,6 @@ class L10n_Mx_EdiDocument(models.Model):
                 'clave_unidad': uom_unspsc_code,
                 'unidad': (uom.name or '').upper(),
                 'description': description,
-                'importe': line['gross_price_subtotal'],
                 'traslados_list': [],
                 'retenciones_list': [],
             }
@@ -892,7 +891,8 @@ class L10n_Mx_EdiDocument(models.Model):
 
                 tax_values = {
                     'base': values['raw_base_amount_currency'],
-                    'importe': values['raw_tax_amount_currency'] * (-1 if is_withholding else 1),
+                    'raw_importe': values['raw_tax_amount_currency'] * (-1 if is_withholding else 1),
+                    'importe': values['tax_amount_currency'] * (-1 if is_withholding else 1),
                     'impuesto': grouping_key['impuesto'],
                     'tipo_factor': grouping_key['tipo_factor'],
                 }
@@ -905,17 +905,33 @@ class L10n_Mx_EdiDocument(models.Model):
                     tax_values['tasa_o_cuota'] = None
 
                 if is_withholding:
-                    if line['objeto_imp'] == '02':
-                        cfdi_line_values['retenciones_list'].append(tax_values)
-                    else:
-                        cfdi_line_values['importe'] -= tax_values['importe']
+                    cfdi_line_values['retenciones_list'].append(tax_values)
                 else:
-                    if line['objeto_imp'] == '02':
-                        cfdi_line_values['traslados_list'].append(tax_values)
-                    else:
-                        cfdi_line_values['importe'] += tax_values['importe']
+                    cfdi_line_values['traslados_list'].append(tax_values)
 
-            # Misc.
+            # Manage 'objeto_imp'.
+            # In case of tax breakdown, the taxes are squashed into the price without tax ('importe').
+            has_tax_breakdown = cfdi_line_values['objeto_imp'] != '02'
+            if has_tax_breakdown:
+                cfdi_line_values['importe'] = (
+                    line['currency_id'].round(line['gross_price_subtotal'])
+                    + line['tax_details']['delta_total_excluded_currency']
+                )
+                for tax_values in cfdi_line_values['retenciones_list']:
+                    cfdi_line_values['importe'] -= tax_values['importe']
+                    tax_values.pop('raw_importe')
+                cfdi_line_values['retenciones_list'] = []
+                for tax_values in cfdi_line_values['traslados_list']:
+                    cfdi_line_values['importe'] += tax_values['importe']
+                    tax_values.pop('raw_importe')
+                cfdi_line_values['traslados_list'] = []
+            else:
+                cfdi_line_values['importe'] = line['gross_price_subtotal']
+                for tax_values_key in ('retenciones_list', 'traslados_list'):
+                    for tax_values in cfdi_line_values[tax_values_key]:
+                        tax_values['importe'] = tax_values.pop('raw_importe')
+
+            # Manage 'valor_unitario'.
             if cfdi_line_values['cantidad']:
                 cfdi_line_values['valor_unitario'] = cfdi_line_values['importe'] / cfdi_line_values['cantidad']
             else:
@@ -1054,11 +1070,13 @@ class L10n_Mx_EdiDocument(models.Model):
         # the amounts HALF-UP.
         delta_discount = currency.round(sum(x['importe'] for x in line_values_list)) - cfdi_values['subtotal']
         if currency.round(delta_discount):
-            biggest_line = max([x for x in line_values_list if x['descuento']], key=lambda x: -x['importe'])
-            if biggest_line:
-                biggest_line['descuento'] = biggest_line['descuento'] + delta_discount
-                cfdi_values['descuento'] += delta_discount
-                cfdi_values['subtotal'] += delta_discount
+            discount_lines = [x for x in line_values_list if x['descuento']]
+            if discount_lines:
+                biggest_line = max(discount_lines, key=lambda x: -x['importe'])
+                if biggest_line:
+                    biggest_line['descuento'] = biggest_line['descuento'] + delta_discount
+                    cfdi_values['descuento'] += delta_discount
+                    cfdi_values['subtotal'] += delta_discount
 
         if currency.is_zero(cfdi_values['descuento']):
             cfdi_values['descuento'] = None

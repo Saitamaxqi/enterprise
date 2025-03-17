@@ -119,6 +119,7 @@ class TestMxEdiCommon(AccountTestInvoicingCommon):
         cls.tax_10_ret_isr.type_tax_use = 'sale'
         cls.tax_10_67_ret = cls.env["account.chart.template"].ref('tax8')
         cls.tax_10_67_ret.type_tax_use = 'sale'
+        cls.tax_1_25_sale_withholding = cls.env["account.chart.template"].ref('mx_wh_1_25_sale')
         cls.local_tax_group = cls.env['account.tax.group'].create({'name': "Local VAT"})
         cls.local_tax_16_transferred = cls.tax_16.copy(default={
             'name': 'local 16%',

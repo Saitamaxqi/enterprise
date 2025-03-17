@@ -1752,6 +1752,61 @@ class TestCFDIInvoice(TestMxEdiCommon):
                 invoice._l10n_mx_edi_cfdi_invoice_try_send()
             self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_17_inv')
 
+    def test_cfdi_rounding_18(self):
+        with self.mx_external_setup(self.frozen_today):
+            self.partner_mx.l10n_mx_edi_no_tax_breakdown = True
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 50.00,
+                        'tax_ids': [Command.set(self.tax_1_25_sale_withholding.ids)],
+                    }),
+                ])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_18_inv')
+    
+    def test_cfdi_rounding_19(self):
+        with self.mx_external_setup(self.frozen_today):
+            self.partner_mx.l10n_mx_edi_no_tax_breakdown = True
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 7.00,
+                        'tax_ids': [Command.set(self.tax_1_25_sale_withholding.ids)],
+                    }),
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 43.00,
+                        'tax_ids': [Command.set(self.tax_1_25_sale_withholding.ids)],
+                    }),
+                ])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_19_inv')
+
+    def test_cfdi_rounding_20(self):
+        with self.mx_external_setup(self.frozen_today):
+            self.partner_mx.l10n_mx_edi_no_tax_breakdown = True
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 17.00,
+                        'tax_ids': [Command.set(self.tax_1_25_sale_withholding.ids)],
+                    }),
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 33.00,
+                        'tax_ids': [Command.set(self.tax_1_25_sale_withholding.ids)],
+                    }),
+                ])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_20_inv')
+
     def test_partial_payment_1(self):
         date1 = self.frozen_today - relativedelta(days=2)
         date2 = self.frozen_today - relativedelta(days=1)
