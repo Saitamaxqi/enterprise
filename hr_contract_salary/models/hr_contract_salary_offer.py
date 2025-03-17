@@ -45,8 +45,10 @@ class HrContractSalaryOffer(models.Model):
     offer_create_date = fields.Date("Offer Create Date", compute="_compute_offer_create_date", readonly=True)
     refusal_date = fields.Date("Refusal Date")
     sign_request_ids = fields.Many2many('sign.request', string='Requested Signatures')
-    employee_contract_id = fields.Many2one('hr.contract', tracking=True, index='btree_not_null')
-    employee_id = fields.Many2one(related="employee_contract_id.employee_id", store=True, tracking=True)
+    employee_contract_id = fields.Many2one('hr.contract', tracking=True,
+        store=True, compute="_compute_employee_contract_id", inverse='_inverse_employee_contract_id',
+        index='btree_not_null')
+    employee_id = fields.Many2one('hr.employee', tracking=True, domain=[('contract_ids', '!=', False)])
     applicant_id = fields.Many2one('hr.applicant', index=True, tracking=True)
     applicant_name = fields.Char(related='applicant_id.partner_name')
     final_yearly_costs = fields.Monetary("Employer Budget", aggregator="avg", tracking=True)
@@ -112,6 +114,33 @@ class HrContractSalaryOffer(models.Model):
         for offer in self:
             offer.validity_days_count = (offer.offer_end_date - offer.offer_create_date).days \
                 if offer.offer_end_date else False
+
+    @api.depends('employee_id')
+    def _compute_employee_contract_id(self):
+        for offer in self:
+            if offer.employee_id:
+                contracts = offer.employee_id.contract_ids.sorted("create_date")
+
+                if len(contracts) == 1:
+                    offer.employee_contract_id = contracts[0]
+                    continue
+
+                # Filter active contracts based on offer's creation date
+                active_contracts = contracts.filtered(
+                    lambda c: c.date_start <= offer.offer_create_date and
+                    (not c.date_end or c.date_end >= offer.offer_create_date)
+                )
+
+                if active_contracts:
+                    running_contracts = active_contracts.filtered(lambda c: c.state == "open")
+                    offer.employee_contract_id = running_contracts[0] if running_contracts else active_contracts[0]
+                else:
+                    # No active or running contract, so pick the first created contract
+                    offer.employee_contract_id = contracts[0]
+
+    def _inverse_employee_contract_id(self):
+        for offer in self:
+            offer.employee_id = offer.employee_contract_id.employee_id
 
     @api.onchange('employee_job_id')
     def _onchange_employee_job_id(self):

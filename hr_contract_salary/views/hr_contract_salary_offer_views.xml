@@ -128,8 +128,10 @@
                         <group name="group_offer_to">
                             <field name="employee_id" invisible="applicant_id or not context.get('is_hr_payroll', True)"
                                 readonly="not context.get('is_hr_payroll', False)" placeholder="Select an employee..."/>
-                            <field name="employee_contract_id" invisible="applicant_id or not context.get('is_hr_payroll', True)"
+                            <field name="employee_contract_id" invisible="applicant_id or not context.get('is_hr_payroll', True) or employee_id"
                                 readonly="not context.get('is_hr_payroll', False)"/>
+                            <field name="employee_contract_id" invisible="applicant_id or not context.get('is_hr_payroll', True) or not employee_id"
+                                readonly="not context.get('is_hr_payroll', False)" domain="[('employee_id', '=', employee_id)]"/>
                             <field name="applicant_id" invisible="employee_contract_id or context.get('is_hr_payroll', False)"
                                 readonly="context.get('is_hr_payroll', True)"
                                 context="{'show_partner_name': True}" placeholder="Select an applicant..."/>
