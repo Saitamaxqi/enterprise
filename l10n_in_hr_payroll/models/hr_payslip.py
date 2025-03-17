@@ -49,3 +49,15 @@ class HrPayslip(models.Model):
 
     def _get_employee_timeoff_data(self):
         return self.env['hr.leave.type'].with_company(self.company_id).with_context(employee_id=self.employee_id.id).get_allocation_data_request()
+
+    def get_month(self):
+        res = {
+               'from_name': '', 'to_name': ''
+               }
+
+        from_date = min(self.mapped('date_from'))
+        to_date = max(self.mapped('date_to'))
+        res['from_name'] = from_date.strftime('%d') + '-' + from_date.strftime('%B') + '-' + from_date.strftime('%Y')
+        res['to_name'] = to_date.strftime('%d') + '-' + to_date.strftime('%B') + '-' + to_date.strftime('%Y')
+
+        return res

@@ -22,8 +22,8 @@
                                     <span t-if="o.l10n_in_cheque_date">
                                         (<span t-out="o.l10n_in_cheque_date.strftime('%d-%m-%Y')"/>)
                                     </span>
-                                </t> from <span t-out="get_month(current_date)['from_name']"/> to 
-                                <span t-out="get_month(current_date)['to_name']"/>
+                                </t> from <span t-out="o.payslip_ids.get_month()['from_name']"/> to 
+                                <span t-out="o.payslip_ids.get_month()['to_name']"/>
                             </strong>
                         </p>
                     <p class="text-start">
