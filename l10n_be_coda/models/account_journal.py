@@ -803,7 +803,7 @@ class AccountJournal(models.Model):
         return ret_statements
 
     def _parse_bank_statement_file(self, attachment):
-        pattern = re.compile("[\u0020-\u1EFF\n\r]+")  # printable characters
+        pattern = re.compile("[\u0020-\u1EFF\u20A0-\u20BF\n\r]+")  # printable characters and currency symbols
 
         # Try different encodings for the file
         for encoding in ('utf_8', 'cp850', 'cp858', 'cp1140', 'cp1252', 'iso8859_15', 'utf_32', 'utf_16', 'windows-1252'):

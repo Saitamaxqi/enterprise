@@ -85,3 +85,20 @@ class TestCodaFile(AccountTestInvoicingCommon):
             'raw': coda_zero_date.encode('utf-8'),
         }))
         self.assertEqual(statements[0]['transactions'][0]['date'], '2024-12-01')
+
+    def test_coda_import_currency_symbol(self):
+        coda_currency_symbols = """0000001122472505        0123456789JOHN DOE                  KREDBEBB   00477472701 00000                                       2
+12001BE68539007547034                  EUR0000000000100000310123DEMO COMPANY              KBC Business Account               027
+2100010000ABCDEFG123456789000010000000000025500010223001500000Payment Reference €$£¥¢                              00000002701 0
+2200010000                                                                                        GEBABEBB                   1 0
+2300010000BE55173363943144                     ODOO SA                                                                       0 0
+8027BE68539007547034                  EUR0000000000125500000000                                                                0
+9               000005000000000000000000000000025500                                                                           2"""
+        dummy, dummy, statements = self.company_data['default_journal_bank']._parse_bank_statement_file(self.env['ir.attachment'].create({
+            'mimetype': 'application/text',
+            'name': 'CODA-Test',
+            'raw': coda_currency_symbols.encode('utf-8'),
+        }))
+        # If this fails, the error will probably talk about the date, it's because one of the decoded currency symbols became multiple
+        # characters and the index of the date moved (from [115:121] to [117:123] for example)
+        self.assertEqual(statements[0]['transactions'][0]['payment_ref'][:23], "Payment Reference €$£¥¢")
