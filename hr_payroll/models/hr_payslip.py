@@ -1105,8 +1105,9 @@ class HrPayslip(models.Model):
                 'dates': slip._get_period_name(formated_date_cache),
             }
 
-    @api.depends('date_from', 'date_to', 'struct_id')
+    @api.depends('date_from', 'date_to', 'struct_id', 'employee_id')
     def _compute_warning_message(self):
+        similar_payslips = self._get_similar_payslips()
         for slip in self:
             slip.warning_message = False
             if not slip.date_from or not slip.date_to:
@@ -1128,6 +1129,15 @@ class HrPayslip(models.Model):
                     and (slip.version_id.schedule_pay or slip.version_id.structure_type_id.default_schedule_pay) \
                     and slip.date_from + slip._get_schedule_timedelta() != slip.date_to:
                 warnings.append(_("The duration of the payslip is not accurate according to the structure type."))
+
+            if slip.employee_id and slip.struct_id and slip.date_from and slip.date_to:
+                key = (slip.employee_id.id, slip.struct_id.id, slip.date_from, slip.date_to)
+                duplicates = [
+                    p for p in similar_payslips.get(key, [])
+                    if not slip.id or p.id != slip.id
+                ]
+                if duplicates:
+                    warnings.append(_("Duplicate payslip creation detected. Please verify the details before proceeding."))
 
             if warnings:
                 warnings = [_("This payslip can be erroneous :")] + warnings
@@ -1188,6 +1198,25 @@ class HrPayslip(models.Model):
         for line_vals in lines_vals:
             line_vals['is_credit_time'] = True
         return lines_vals
+
+    def _get_similar_payslips(self):
+        done_payslips = self.filtered(lambda p: p.employee_id and p.struct_id and p.date_from and p.date_to)
+        search_domain = [
+            ('employee_id', 'in', done_payslips.employee_id.ids),
+            ('struct_id', 'in', done_payslips.struct_id.ids),
+            ('date_from', 'in', done_payslips.mapped('date_from')),
+            ('date_to', 'in', done_payslips.mapped('date_to')),
+            ('state', 'in', ['done', 'paid'])
+        ]
+        all_existing_payslips = self.env['hr.payslip'].search(search_domain)
+
+        # Group existing slips for easy lookup
+        existing_payslip_map = defaultdict(list)
+        for slip in all_existing_payslips:
+            key = (slip.employee_id.id, slip.struct_id.id, slip.date_from, slip.date_to)
+            existing_payslip_map[key].append(slip)
+
+        return existing_payslip_map
 
     def _get_new_worked_days_lines(self):
         if self.struct_id.use_worked_day_lines:
