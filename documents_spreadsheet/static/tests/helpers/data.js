@@ -238,16 +238,6 @@ export class SpreadsheetTemplate extends models.Model {
     };
 }
 
-export class IrModel extends SpreadsheetModels.IrModel {
-    has_searchable_parent_relation() {
-        return false;
-    }
-
-    get_available_models() {
-        return this.env["ir.model"].search_read([],  ["display_name", "model"])
-    }
-}
-
 export class IrUIMenu extends SpreadsheetModels.IrUIMenu {
     _views = {
         search: /* xml */ `<search/>`,
@@ -327,7 +317,6 @@ export function defineDocumentSpreadsheetModels() {
         DocumentsTag,
         DocumentsWorkflowRule,
         SpreadsheetTemplate,
-        IrModel,
         IrUIMenu,
         ResCountries,
         ResCountryState,
