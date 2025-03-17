@@ -638,6 +638,7 @@ test("Today style of group rows", async () => {
         groupBy: ["user_id", "project_id"],
     });
     expect.verifySteps(["get_gantt_data"]);
+    await contains(".o_gantt_header_folded").click();
 
     // Normal group cell: open
     let cell4 = getCell("Wednesday 19", "Week 51 of 2018");
@@ -894,6 +895,64 @@ test(`Fold unavailabilities ("day": "hours:quarter")`, async () => {
     expect(queryFirst(".o_gantt_cell").offsetWidth).toBe(36, {
         message: "Folded cells have a fixed width of 36px",
     });
+});
+
+test(`Fold unavailabilities ("week": "day:half")`, async () => {
+    Tasks._records = [Tasks._records[3]]; // id: 4
+    const unavailabilities = [
+        // in utc
+        {
+            start: "2018-12-14 16:00:00",
+            stop: "2018-12-17 07:00:00",
+        },
+        {
+            start: "2018-12-18 16:15:00",
+            stop: "2018-12-20 08:00:00",
+        },
+    ];
+    onRpc("get_gantt_data", ({ kwargs, parent }) => {
+        expect(kwargs.unavailability_fields).toEqual([]);
+        const result = parent();
+        result.unavailabilities = { __default: { false: unavailabilities } };
+        return result;
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_range="week" scales="week" precision="{'week': 'day:half'}"/>`,
+    });
+    const { columnHeaders, groupHeaders } = getGridContent({ setTitleAttrOnHeaders: true });
+    expect(columnHeaders).toHaveLength(11);
+    expect(groupHeaders).toEqual([
+        {
+            range: [1, 15],
+            title: "Week 50 of 2018",
+            titleAttr: "Week 50 of 2018",
+        },
+        {
+            range: [15, 29],
+            title: "Week 51 of 2018",
+            titleAttr: "Week 51 of 2018",
+        },
+        {
+            range: [29, 43],
+            title: "Week 52 of 2018",
+            titleAttr: "Week 52 of 2018",
+        },
+    ]);
+    expect(columnHeaders).toEqual([
+        { range: [11, 13], title: "Friday 14", titleAttr: "Friday, December 14, 2018" },
+        { range: [13, 17], title: "", titleAttr: "" },
+        { range: [17, 19], title: "Monday 17", titleAttr: "Monday, December 17, 2018" },
+        { range: [19, 21], title: "Tuesday 18", titleAttr: "Tuesday, December 18, 2018" },
+        { range: [21, 23], title: "", titleAttr: "" }, // Single unavailability columns are folded in week scale
+        { range: [23, 25], title: "Thursday 20", titleAttr: "Thursday, December 20, 2018" },
+        { range: [25, 27], title: "Friday 21", titleAttr: "Friday, December 21, 2018" },
+        { range: [27, 29], title: "Saturday 22", titleAttr: "Saturday, December 22, 2018" },
+        { range: [29, 31], title: "Sunday 23", titleAttr: "Sunday, December 23, 2018" },
+        { range: [31, 33], title: "Monday 24", titleAttr: "Monday, December 24, 2018" },
+        { range: [33, 35], title: "Tuesday 25", titleAttr: "Tuesday, December 25, 2018" },
+    ]);
+    expect(".o_gantt_header_cell .fa-caret-left:visible").toHaveCount(2);
 });
 
 test(`Fold unavailabilities ("month": "day:half")`, async () => {

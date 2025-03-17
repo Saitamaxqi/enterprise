@@ -246,6 +246,12 @@ function findColumnFromHeader(columnHeader, groupHeader) {
     ).range[0];
 }
 
+export async function unfoldAllColumns() {
+    for (const foldedHeader of queryAll(".o_gantt_header_folded")) {
+        await contains(foldedHeader).click();
+    }
+}
+
 /** @type {CellHelper<HTMLElement>} */
 export function getCell(columnHeader, groupHeader, rowHeader = null, options) {
     const columnIndex = findColumnFromHeader(columnHeader, groupHeader);

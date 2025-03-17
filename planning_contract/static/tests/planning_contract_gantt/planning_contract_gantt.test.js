@@ -1,7 +1,7 @@
 import { expect, test, beforeEach, describe } from "@odoo/hoot";
 import { mockDate } from "@odoo/hoot-mock";
-
-import { contains, defineModels, mountView, onRpc } from "@web/../tests/web_test_helpers";
+import { defineModels, mountView, onRpc } from "@web/../tests/web_test_helpers";
+import { unfoldAllColumns } from "@web_gantt/../tests/web_gantt_test_helpers";
 
 import { mailModels } from "@mail/../tests/mail_test_helpers";
 
@@ -109,6 +109,7 @@ onRpc(async ({ args, method, model, parent }) => {
         return result;
     }
 });
+
 /*
     The following cases are to be checked/tested.
 ╔══════════╦══════════╦══════════════════╦══════════════════════════════════════════════════════╗
@@ -142,7 +143,7 @@ onRpc(async ({ args, method, model, parent }) => {
 */
 test("check gantt shading for employee without contract (case-1)", async () => {
     await mountView(ganttViewParams);
-    await contains(".o_gantt_header_folded").click();
+    await unfoldAllColumns();
     expect(".o_gantt_cell[data-row-id*='Pig-1'][style*='Gantt__DayOff']").toHaveCount(3);
     expect(".o_gantt_cell[data-row-id*='Pig-1']:not([style*='Gantt__DayOff'])").toHaveCount(4);
 });
@@ -155,7 +156,7 @@ test("check gantt shading for employee without contract (case-2)", async () => {
         kanban_state: "normal",
     });
     await mountView(ganttViewParams);
-    await contains(".o_gantt_header_folded").click();
+    await unfoldAllColumns();
     expect(".o_gantt_cell[data-row-id*='Pig-1'][style*='Gantt__DayOff']").toHaveCount(3);
     expect(".o_gantt_cell[data-row-id*='Pig-1']:not([style*='Gantt__DayOff'])").toHaveCount(4);
 });
@@ -168,7 +169,7 @@ test("check gantt shading for employee without contract (case-3)", async () => {
         kanban_state: "blocked",
     });
     await mountView(ganttViewParams);
-    await contains(".o_gantt_header_folded").click();
+    await unfoldAllColumns();
     expect(".o_gantt_cell[data-row-id*='Pig-1'][style*='Gantt__DayOff']").toHaveCount(3);
     expect(".o_gantt_cell[data-row-id*='Pig-1']:not([style*='Gantt__DayOff'])").toHaveCount(4);
 });
@@ -181,7 +182,7 @@ test("check gantt shading for employee without contract (case-4)", async () => {
         kanban_state: "done",
     });
     await mountView(ganttViewParams);
-    await contains(".o_gantt_header_folded").click();
+    await unfoldAllColumns();
     expect(".o_gantt_cell[data-row-id*='Pig-1'][style*='Gantt__DayOff']").toHaveCount(3);
     expect(".o_gantt_cell[data-row-id*='Pig-1']:not([style*='Gantt__DayOff'])").toHaveCount(4);
 });
@@ -194,7 +195,7 @@ test("check gantt shading for employee without contract (case-5)", async () => {
         kanban_state: "done",
     });
     await mountView(ganttViewParams);
-    await contains(".o_gantt_header_folded").click();
+    await unfoldAllColumns();
     expect(".o_resource_has_no_working_periods").toHaveCount(3);
     expect(
         ".o_gantt_cell[data-row-id*='Pig-1'][style*='Gantt__DayOff']:not(.o_resource_has_no_working_periods)"
@@ -212,7 +213,7 @@ test("check gantt shading for employee without contract (case-6)", async () => {
         kanban_state: "done",
     });
     await mountView(ganttViewParams);
-    await contains(".o_gantt_header_folded").click();
+    await unfoldAllColumns();
     expect(".o_resource_has_no_working_periods").toHaveCount(3);
     expect(
         ".o_gantt_cell[data-row-id*='Pig-1'][style*='Gantt__DayOff']:not(.o_resource_has_no_working_periods)"
@@ -230,7 +231,7 @@ test("check gantt shading for employee without contract (case-7)", async () => {
         kanban_state: "normal",
     });
     await mountView(ganttViewParams);
-    await contains(".o_gantt_header_folded").click();
+    await unfoldAllColumns();
     expect(".o_resource_has_no_working_periods").toHaveCount(0);
     expect(
         ".o_gantt_cell[data-row-id*='Pig-1'][style*='Gantt__DayOff']:not(.o_resource_has_no_working_periods)"

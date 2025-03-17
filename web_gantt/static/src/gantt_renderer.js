@@ -745,7 +745,7 @@ export class GanttRenderer extends Component {
             if (isToday) {
                 column.isToday = true;
             }
-            if (span > 1) {
+            if (this.offHoursState.foldedColumns?.[columnIndex]) {
                 column.stop = this.getColumnFromColNumber(col + (span - 1) * cellPart).stop;
                 column.isFolded = true;
                 column.grid.column[1] = col + span * cellPart;
@@ -975,7 +975,11 @@ export class GanttRenderer extends Component {
             let distance = 0;
             let flexible = true;
             for (let j = X; j < Y; j++) {
-                if (this.offHoursState.foldedGridColumnSpans[Math.floor((j - 1) / cellPart)] > 1) {
+                if (
+                    this.offHoursState.foldedColumns[
+                        this.getIndexInTotalGrid(Math.floor((j - 1) / cellPart))
+                    ]
+                ) {
                     distance += 36 / cellPart;
                     if (this.offHoursState.foldedGridColumnSpans.length > 1) {
                         flexible = false;
@@ -1023,8 +1027,8 @@ export class GanttRenderer extends Component {
         }
         const visibleCellContainerWidth = this.contentRefWidth - this.rowHeaderWidth;
         const foldedColumnsCount =
-            this.offHoursState.foldedGridColumnSpans?.reduce(
-                (sum, span) => (span > 1 ? sum + 1 : sum),
+            this.offHoursState.foldedColumns?.reduce(
+                (sum, folded) => (folded ? sum + 1 : sum),
                 0
             ) || 0;
         const columnWidth = Math.floor(
@@ -1034,10 +1038,23 @@ export class GanttRenderer extends Component {
         const rectifiedColumnWidth = Math.max(columnWidth, minimalColumnWidth);
         this.cellPartWidth = Math.floor(rectifiedColumnWidth / cellPart);
         this.columnWidth = this.cellPartWidth * cellPart;
-        const columnWidths = this.offHoursState.foldedGridColumnSpans
-            ? this.offHoursState.foldedGridColumnSpans.map((val) =>
-                  val > 1 ? 36 : this.columnWidth
-              )
+        let offPeriod = 0;
+        const columnWidths = this.offHoursState.foldedColumns
+            ? this.offHoursState.foldedColumns?.reduce((res, val, index) => {
+                  if (val === 1) {
+                      offPeriod++;
+                  } else {
+                      if (offPeriod > 0) {
+                          res.push(36);
+                      }
+                      res.push(this.columnWidth);
+                      offPeriod = 0;
+                  }
+                  if (index === this.offHoursState.foldedColumns.length - 1 && offPeriod > 0) {
+                      res.push(36);
+                  }
+                  return res;
+              }, [])
             : new Array(this.foldedGridColumnCount).fill(this.columnWidth);
         this.virtualGrid.setColumnsWidths(columnWidths);
         if (columnWidth <= minimalColumnWidth) {
@@ -1407,7 +1424,7 @@ export class GanttRenderer extends Component {
         if (this.columnCount !== this.foldedGridColumnCount) {
             let columnWidthSum = 0;
             for (let i = 0; i < this.foldedGridColumnCount; i++) {
-                if (this.offHoursState.foldedGridColumnSpans[i] > 1) {
+                if (this.offHoursState.foldedColumns[this.getIndexInTotalGrid(i)]) {
                     columnWidthSum += 36;
                 } else {
                     columnWidthSum += this.columnWidth;
@@ -2475,7 +2492,7 @@ export class GanttRenderer extends Component {
     }
 
     computeUnavailabilityPeriods() {
-        const { cellPart } = this.model.metaData.scale;
+        const { cellPart, unit } = this.model.metaData.scale;
         const columns = [...Array(this.columnCount).keys()].map((i) =>
             this.getColumnFromColNumber(i * cellPart + 1)
         );
@@ -2529,22 +2546,22 @@ export class GanttRenderer extends Component {
         }
 
         this.foldableColumnsMapping = {};
-        let foldableGroupIndex = 0;
+        let foldableGroupNum = 0;
         let foldableSubSet;
         for (let i = 0; i < this.foldableColumns.length; i++) {
             if (this.foldableColumns[i]) {
                 const next = this.foldableColumns[i + 1];
                 const previous = this.foldableColumns[i - 1];
+                if (!previous) {
+                    foldableSubSet = { foldableGroupNum };
+                    foldableGroupNum++;
+                    foldableSubSet.startIndex = i;
+                }
                 if (next === 1) {
-                    if (!previous) {
-                        foldableSubSet = { foldableGroupIndex };
-                        foldableGroupIndex++;
-                        foldableSubSet.startIndex = i;
-                    }
                     this.foldableColumnsMapping[i] = foldableSubSet;
                     continue;
                 }
-                if (!previous) {
+                if (!previous && unit !== "week") {
                     this.foldableColumns[i] = 0;
                     continue;
                 }
@@ -2586,7 +2603,7 @@ export class GanttRenderer extends Component {
             }
             return res;
         }, []);
-        const { cellPart } = this.model.metaData.scale;
+        const { cellPart, unit } = this.model.metaData.scale;
         this.offHoursState.mappingTotalGridToFoldedGridSubColumns = new Map();
         this.offHoursState.foldedColumns = [];
         const halfCut = Math.floor(cellPart / 2);
@@ -2617,8 +2634,12 @@ export class GanttRenderer extends Component {
                         index * cellPart + i
                     );
                 }
+                if (foldedColumns[count] && unit === "week") {
+                    this.offHoursState.foldedColumns.push(1);
+                } else {
+                    this.offHoursState.foldedColumns.push(0);
+                }
                 count++;
-                this.offHoursState.foldedColumns.push(0);
             }
         }
         this.offHoursState.mappingTotalGridToFoldedGridSubColumns.set(
@@ -2661,7 +2682,7 @@ export class GanttRenderer extends Component {
         for (const columnHeader of columnHeaders) {
             const columnIndex = +columnHeader.dataset.columnIndex;
             const currentGroup = this.foldableColumnsMapping[columnIndex];
-            if (foldableColumnsGroup.foldableGroupIndex === currentGroup.foldableGroupIndex) {
+            if (foldableColumnsGroup.foldableGroupNum === currentGroup.foldableGroupNum) {
                 columnHeader.classList.add("o_gantt_foldable_hovered");
             } else {
                 columnHeader.classList.remove("o_gantt_foldable_hovered");
