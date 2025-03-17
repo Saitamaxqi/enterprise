@@ -3034,3 +3034,35 @@ class TestAccountAsset(TestAccountReportsCommon):
                 asset = self.env['account.asset'].create(asset_vals)
                 asset.compute_depreciation_board()
                 self.assertEqual(asset.depreciation_move_ids.mapped('company_id'), expected)
+
+    def test_multiple_asset_models_with_branches(self):
+        """Check that asset models are not shared between siblings, only with ancestors."""
+
+        branch_a = self.setup_other_company(name='Test Branch A', parent_id=self.company_data['company'].id)
+        asset_model_a = self.account_asset_model_fixedassets.copy()
+        asset_model_a.company_id = branch_a['company']
+
+        branch_b = self.setup_other_company(name='Test Branch B', parent_id=self.company_data['company'].id)
+        asset_model_b = self.account_asset_model_fixedassets.copy()
+        asset_model_b.company_id = branch_b['company']
+
+        # We need to set both branch's asset models on the parent company's asset account.
+        self.company_data['default_account_assets'].asset_model_ids = asset_model_a + asset_model_b
+        self.company_data['default_account_assets'].create_asset = 'draft'
+
+        vendor_bill = self.env['account.move'].with_company(branch_a['company']).create({
+            'move_type': 'in_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': fields.Date.today(),
+            'invoice_line_ids': [Command.create({
+                'name': 'Very little red car',
+                # Make sure the bill uses the asset account with both asset models.
+                'account_id': self.company_data['default_account_assets'].id,
+                'price_unit': 1000,
+                'quantity': 1,
+            })],
+        })
+        vendor_bill.action_post()
+
+        self.assertEqual(len(vendor_bill.asset_ids), 1, "Only one asset should have been created.")
+        self.assertEqual(vendor_bill.asset_ids.company_id, branch_a['company'], f"The asset should have been created on company: {branch_a['company'].name}")

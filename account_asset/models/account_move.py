@@ -225,7 +225,7 @@ class AccountMove(models.Model):
                     else:
                         units_quantity = 1
 
-                    model_ids = move_line.account_id.asset_model_ids
+                    model_ids = move_line.account_id.asset_model_ids.filtered(lambda model: model.company_id in move_line.company_id.parent_ids)
                     vals = {
                         'name': move_line.name,
                         'company_id': move_line.company_id.id,
