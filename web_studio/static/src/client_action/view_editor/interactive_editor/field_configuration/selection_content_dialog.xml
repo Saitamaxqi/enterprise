@@ -45,7 +45,7 @@
         <attribute name="t-esc">item.label</attribute>
     </xpath>
     <xpath expr="//span[hasclass('o-web-studio-interactive-list-item-label')]" position="after" >
-        <input t-if="item.isInEdition" class="form-control o-web-studio-interactive-list-item-input" placeholder="Add new value" t-on-input="(ev) => this.setItemValue(item, ev.target.value)" t-att-value="item.id === 'new' ? item.name : item.label" t-on-keypress="(ev) => this.onKeyPressed(item, ev.key)" />
+        <input t-if="item.isInEdition" class="form-control o-web-studio-interactive-list-item-input" placeholder="Add new value" t-on-input="(ev) => this.setItemValue(item, ev.target.value)" t-att-value="item.id === 'new' ? item.name : item.label" t-on-keydown="(ev) => this.onKeyPressed(item, ev.key)" />
     </xpath>
 
     <xpath expr="//button[hasclass('o-web-studio-interactive-list-edit-item')]" position="attributes">
