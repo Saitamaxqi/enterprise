@@ -305,7 +305,7 @@
 
     <record id="project.action_view_my_task" model="ir.actions.act_window">
         <field name="res_model">project.task</field>
-        <field name="view_mode">kanban,list,form,gantt,calendar,map,pivot,graph,activity</field>
+        <field name="view_mode">kanban,list,form,gantt,calendar,map,activity,pivot,graph</field>
     </record>
 
     <record id="open_view_my_task_list_gantt" model="ir.actions.act_window.view">
@@ -317,7 +317,7 @@
 
     <record id="project.action_view_all_task" model="ir.actions.act_window">
         <field name="res_model">project.task</field>
-        <field name="view_mode">kanban,list,form,gantt,calendar,map,pivot,graph,activity</field>
+        <field name="view_mode">kanban,list,form,gantt,calendar,map,activity,pivot,graph</field>
     </record>
 
     <record id="open_view_all_task_list_gantt" model="ir.actions.act_window.view">
