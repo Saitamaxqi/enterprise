@@ -5,6 +5,7 @@ import * as Chrome from "@point_of_sale/../tests/pos/tours/utils/chrome_util";
 import * as FloorScreen from "@pos_restaurant/../tests/tours/utils/floor_screen_util";
 import * as ProductScreenPos from "@point_of_sale/../tests/pos/tours/utils/product_screen_util";
 import * as ProductScreenResto from "@pos_restaurant/../tests/tours/utils/product_screen_util";
+import { delay } from "@odoo/hoot-dom";
 
 const ProductScreen = { ...ProductScreenPos, ...ProductScreenResto };
 
@@ -19,6 +20,15 @@ registry.category("web_tour.tours").add("RestaurantAppointmentTour", {
             ProductScreen.clickDisplayedProduct("Coca-Cola", true),
 
             // Check that the booking gantt view is shown.
+            {
+                content:
+                    "Wait few ms before clicking on Booking to ensure gantt view will be shown",
+                isActive: ["auto"],
+                trigger: "body",
+                async run() {
+                    await delay(1000);
+                },
+            },
             {
                 trigger: ".pos-leftheader button:contains('Booking')",
                 run: "click",
