@@ -1298,7 +1298,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         filter_record = self.env['ir.filters'].create({
             'model_id': 'account.move.line',
-            'user_id': self.uid,
+            'user_ids': [self.uid],
             'name': 'To Check',
             'domain': '[("move_id.checked", "=", False)]',
         })

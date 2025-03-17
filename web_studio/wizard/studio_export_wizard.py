@@ -278,7 +278,7 @@ MODELS_WITH_NOUPDATE = [
 RELATIONS_NOT_TO_EXPORT = {
     "base.automation": ["trg_date_calendar_id"],
     "ir.actions.server": ["partner_ids"],
-    "ir.filters": ["user_id"],
+    "ir.filters": ["user_ids"],
     "mail.template": ["attachment_ids", "mail_server_id"],
     "report.paperformat": ["report_ids"],
     "res.groups": ["category_id", "user_ids"],
