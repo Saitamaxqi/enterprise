@@ -116,6 +116,7 @@
         <field name="model">project.task</field>
         <field name="arch" type="xml">
             <calendar date_start="planned_date_start" date_stop="date_deadline" string="Tasks" mode="month" color="project_id" event_open_popup="1" form_view_id="%(project.view_task_form2)d" quick_create="0" show_unusual_days="True" js_class="fsm_task_calendar">
+                <field name="is_closed" invisible="1"/>
                 <field name="name"/>
                 <field name="project_id" filters="1"/>
                 <field name="user_ids" widget="many2many_avatar_user" invisible="not user_ids"/>

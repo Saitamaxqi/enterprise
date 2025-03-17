@@ -1,6 +1,7 @@
-import { CalendarCommonRenderer } from "@web/views/calendar/calendar_common/calendar_common_renderer";
+import { patch } from "@web/core/utils/patch";
+import { ProjectTaskCalendarCommonRenderer } from "@project/views/project_task_calendar/project_task_calendar_common/project_task_calendar_common_renderer";
 
-export class ProjectTaskCalendarCommonRenderer extends CalendarCommonRenderer {
+patch(ProjectTaskCalendarCommonRenderer.prototype, {
     /**
      * @override
      */
@@ -14,5 +15,5 @@ export class ProjectTaskCalendarCommonRenderer extends CalendarCommonRenderer {
             classesToAdd.push("opacity-25");
         }
         return classesToAdd;
-    }
-}
+    },
+});
