@@ -1,11 +1,39 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from datetime import datetime
 
-from odoo import models, api
+from odoo import api, fields, models
 
 
 class SaleCommissionAchievementReport(models.Model):
     _inherit = "sale.commission.achievement.report"
+
+    @api.model
+    def _get_subscription_currency_rates(self):
+        """ Get a query to be able to convert the MRR log amount (in SO currency) to the currency of the current company.
+        This method uses the same logic than sale.order.log.report.
+        """
+        conversion_date = fields.Date.today()
+        if self.env.context.get('conversion_date'):
+            conversion_date = datetime.strptime(self.env.context['conversion_date'], '%Y-%m-%d')
+        query =  f"""
+            sub_rate_query AS(
+                SELECT
+                        rc.id AS currency_id,
+                        rc.name,
+                        rcr.company_id,
+                        (array_agg(rcr.name order by rcr.name desc))[1] as date,
+                        (array_agg(rcr.rate order by rcr.name desc))[1] as rate
+                  FROM res_currency rc
+                  JOIN res_currency_rate rcr
+                    ON rcr.currency_id = rc.id
+                 WHERE rc.active
+                   AND rcr.name <= '{conversion_date}'
+              GROUP BY rc.id, rc.name, rcr.company_id
+        ),
+        """
+        return query
+
 
     @api.model
     def _get_sale_order_log_rates(self):
@@ -15,7 +43,7 @@ class SaleCommissionAchievementReport(models.Model):
     def _get_sale_order_log_product(self):
         # TODO BIG CURRENCY CHANGES 0_0
         return """
-            rules.mrr_rate * log.amount_signed * cr.rate
+            rules.mrr_rate * log.amount_signed * cr.rate / log_rate.rate
         """
 
     @api.model
@@ -45,6 +73,7 @@ class SaleCommissionAchievementReport(models.Model):
 
     def _subscription_lines(self, users=None, teams=None):
         return f"""
+{self._get_subscription_currency_rates()}
 subscription_rules AS (
     SELECT
         COALESCE(scpu.date_from, scp.date_from) AS date_from,
@@ -65,18 +94,19 @@ subscription_rules AS (
     {'AND scpu.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
 ), subscription_commission_lines_team AS (
     SELECT
-        MAX(rules.user_id),
-        MAX(log.team_id),
+        rules.user_id,
+        MAX(log.team_id) AS team_id,
         rules.plan_id,
         SUM({self._get_sale_order_log_product()}) AS achieved,
         {self.env.company.currency_id.id} AS currency_id,
         MAX(log.event_date) AS date,
-        MAX(rules.company_id),
+        MAX(rules.company_id) AS company_id,
         log.order_id AS related_res_id
     FROM subscription_rules rules
     CROSS JOIN sale_order_log log
+    JOIN sub_rate_query log_rate ON log_rate.currency_id=log.currency_id AND log_rate.company_id=log.company_id
     JOIN currency_rate cr
-        ON cr.company_id = log.company_id
+      ON cr.company_id=log.company_id
     WHERE rules.team_rule
       AND log.event_type != '3_transfer'
       AND (rules.recurring_plan_id IS NULL OR log.plan_id = rules.recurring_plan_id)
@@ -87,21 +117,22 @@ subscription_rules AS (
     GROUP BY
         log.id,
         rules.plan_id,
-        cr.rate
+        rules.user_id
 ), subscription_commission_lines_user AS (
     SELECT
-        MAX(rules.user_id),
-        MAX(log.team_id),
+        rules.user_id,
+        MAX(log.team_id) AS team_id,
         rules.plan_id,
-        SUM({self._get_sale_order_log_product()}) * cr.rate AS achieved,
+        SUM({self._get_sale_order_log_product()}) AS achieved,
         {self.env.company.currency_id.id} AS currency_id,
         MAX(log.event_date) AS date,
-        MAX(rules.company_id),
+        MAX(rules.company_id) AS company_id,
         log.order_id AS related_res_id
     FROM subscription_rules rules
     CROSS JOIN sale_order_log log
+    JOIN sub_rate_query log_rate ON log_rate.currency_id=log.currency_id AND log_rate.company_id=log.company_id
     JOIN currency_rate cr
-        ON cr.company_id = log.company_id
+      ON cr.company_id=log.company_id
     WHERE NOT rules.team_rule
       AND log.event_type != '3_transfer'
       AND (rules.recurring_plan_id IS NULL OR log.plan_id = rules.recurring_plan_id)
@@ -112,7 +143,7 @@ subscription_rules AS (
     GROUP BY
         log.id,
         rules.plan_id,
-        cr.rate
+        rules.user_id
 ), subscription_commission_lines AS (
     (SELECT *, 'sale.order' AS related_res_model FROM subscription_commission_lines_team)
     UNION ALL

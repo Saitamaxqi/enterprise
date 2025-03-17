@@ -32,4 +32,3 @@ class TestSaleSubscriptionCommissionCommon(TestSaleCommissionCommon, TestSubscri
             'user_id': cls.commission_user_2.id,
             'plan_id': cls.commission_plan_sub.id,
         }])
-

@@ -52,7 +52,9 @@ class SaleCommissionReport(models.Model):
                        ('date', '>=', self.target_id.date_from),
                        ('date', '<=', self.target_id.date_to),
                 ]
-        context = {'commission_user_ids': self.user_id.ids, 'commission_team_ids': self.team_id.ids}
+        context = {'commission_user_ids': self.user_id.ids,
+                   'commission_team_ids': self.team_id.ids,
+        }
         return {
             "type": "ir.actions.act_window",
             "res_model": "sale.commission.achievement.report",

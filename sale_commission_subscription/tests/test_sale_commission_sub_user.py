@@ -2,7 +2,7 @@
 
 import datetime
 from freezegun import freeze_time
-
+from unittest.mock import patch
 
 from odoo import Command, fields
 from odoo.tests import tagged
@@ -268,3 +268,72 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
             self.assertEqual(len(achievements), 1, "Only one achievement because the other log is not effective")
             self.assertEqual(achievements.related_res_model, 'sale.order')
             self.assertEqual(achievements.related_res_id, sub.id)
+
+    def test_sub_commission_currency(self):
+        """ Test that MRR log are converted in the currency of the current company.
+        We need to use the currency of the log and not the company currency
+        """
+        self.original_get_subscription_currency_rates = self.env['sale.commission.achievement.report']._get_subscription_currency_rates
+        currency_inr = self.env.ref('base.INR')
+        currency_inr.active = True
+        # créer pricelist INR
+        # créer SO INR alors que company en USD
+        # créer plan etc
+        # vérifier les achievements
+        inr_pricelist = self.env['product.pricelist'].create({
+            'name': 'Rupee',
+            'currency_id': currency_inr.id
+        })
+        (self.product | self.product2).product_subscription_pricing_ids = False
+        self.product.lst_price = 50
+        self.product2.lst_price = 100
+        context_mail = {'tracking_disable': False, 'mail_create_nosubscribe': True, 'mail_create_nolog': True, 'mail_notrack': False}
+        with freeze_time("2024-02-02"):
+            self.env['res.currency.rate'].create([{
+                'rate': 60,
+                'currency_id': currency_inr.id,
+            },{
+                'rate': 57,
+                'name': '2023-01-07',
+                'currency_id': currency_inr.id,
+            }, {
+                'rate': 55,
+                'name': '2022-01-07',
+                'currency_id': currency_inr.id,
+            }])
+            self.env['res.currency.rate'].flush_model()
+            self.env['res.currency'].flush_model()
+            sub = self.env['sale.order'].with_context(context_mail).create({
+                'name': 'TestSubscription',
+                'is_subscription': True,
+                'plan_id': self.plan_month.id,
+                'note': "original subscription description",
+                'partner_id': self.user_portal.partner_id.id,
+                'sale_order_template_id': self.subscription_tmpl.id,
+                'user_id': self.commission_user_1.id,
+                'pricelist_id': inr_pricelist.id,
+            })
+            sub._onchange_sale_order_template_id()
+            self.commission_plan_sub.achievement_ids = self.env['sale.commission.plan.achievement'].create([{
+                'type': 'mrr',
+                'rate': 1, # to ease computation of currency rates, 100%
+                'plan_id': self.commission_plan_sub.id,
+                'recurring_plan_id': sub.plan_id.id,
+            }])
+            self.flush_tracking()
+            self.commission_plan_sub.action_approve()
+            sub.action_confirm()
+            self.flush_tracking()
+            self.assertEqual(sub.recurring_monthly, 9000, "150 USD * 60 (currency rate)")
+            self.assertEqual(sub.currency_id, inr_pricelist.currency_id)
+            inv = sub._create_recurring_invoice()
+            self.assertEqual(inv.currency_id, inr_pricelist.currency_id)
+            self.assertAlmostEqual(inv.amount_untaxed, 9000, 2, msg="The untaxed invoiced amount should be equal to 9000")
+            self.assertEqual(sub.order_log_ids.effective_date, datetime.date(2024, 2, 2))
+            self.flush_tracking()
+            achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
+            commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
+            self.assertEqual(len(commissions), 24, "24 commissions for two users")
+            self.assertEqual(sum(achievements.mapped('achieved')), 150, 'Regular invoice, 100 percent of 9000 conveted to USD = 150')
+            self.assertEqual(sum(commissions.mapped('achieved')), 150, 'Regular invoice, 100 percent of 9000 conveted to USD = 150')
+            self.assertEqual(sum(commissions.mapped('commission')), 150, 'Regular invoice, 100 percent of 9000 conveted to USD = 150')
