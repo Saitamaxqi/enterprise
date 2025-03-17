@@ -967,7 +967,8 @@ test("resize pill in year mode", async () => {
         resModel: "tasks",
         arch: '<gantt date_start="start" date_stop="stop" default_range="year" />',
     });
-
+    // Make sure Task 5 is around the center of the screen to avoid side-scrolling
+    await contains(".o_content").scroll({ left: 1550 });
     expect(getPillWrapper("Task 5")).toHaveClass(CLASSES.resizable);
 
     const drop = await resizePill(getPillWrapper("Task 5"), "end", { x: 200 }, false);
