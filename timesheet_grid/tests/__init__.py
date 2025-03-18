@@ -8,3 +8,4 @@ from . import test_project_gantt
 from . import test_project_task_quick_create
 from . import test_record_time
 from . import test_timesheet_timer
+from . import test_project_task_allocated_hours

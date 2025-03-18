@@ -308,6 +308,7 @@ class ProjectEnterpriseGanttRescheduleCommon(TestProjectCommon):
         cls.project2_task_10.write({
             'depend_on_ids': [Command.link(cls.project2_task_9.id)],
         })
+        cls.is_module_timesheet_grid_installed = hasattr(cls.env['project.task'], 'allow_timesheets')
 
     def setUp(self):
         super().setUp()

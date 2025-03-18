@@ -365,7 +365,7 @@ class TestTaskFlow(TransactionCase):
         })
         self.assertListEqual(
             [get_hours(task) for task in tasks],
-            [(16, 17), (16, 19), (16, 17)],
+            [(16, 19), (16, 19), (16, 19)],
             "Batched tasks should be planned using schedule",
         )
 

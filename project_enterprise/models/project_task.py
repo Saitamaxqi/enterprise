@@ -449,6 +449,19 @@ class ProjectTask(models.Model):
         if not vals.get('date_deadline', True):
             vals['planned_date_begin'] = False
 
+        if compute_default_planned_dates:
+            # Take the default planned dates
+            planned_date_begin = vals.get('planned_date_begin', False)
+            date_deadline = vals.get('date_deadline', False)
+
+            # Then sort the tasks by resource_calendar and finally compute the planned dates
+            tasks_by_resource_calendar_dict = compute_default_planned_dates.sudo()._get_tasks_by_resource_calendar_dict()
+            for (calendar, tasks) in tasks_by_resource_calendar_dict.items():
+                date_start, date_stop = self._calculate_planned_dates(planned_date_begin, date_deadline,
+                                                                      calendar=calendar)
+                vals['planned_date_begin'] = date_start
+                vals['date_deadline'] = date_stop
+
         res = super().write(vals)
 
         # Get the tasks which are either not linked to a project or their project has not timesheet tracking
@@ -459,20 +472,6 @@ class ProjectTask(models.Model):
         ))
         if tasks_without_timesheets_track:
             tasks_without_timesheets_track._set_allocated_hours_for_tasks()
-
-        if compute_default_planned_dates:
-            # Take the default planned dates
-            planned_date_begin = vals.get('planned_date_begin', False)
-            date_deadline = vals.get('date_deadline', False)
-
-            # Then sort the tasks by resource_calendar and finally compute the planned dates
-            tasks_by_resource_calendar_dict = compute_default_planned_dates.sudo()._get_tasks_by_resource_calendar_dict()
-            for (calendar, tasks) in tasks_by_resource_calendar_dict.items():
-                date_start, date_stop = self._calculate_planned_dates(planned_date_begin, date_deadline, calendar=calendar)
-                super(ProjectTask, tasks).write({
-                    'planned_date_begin': date_start,
-                    'date_deadline': date_stop,
-                })
 
         if compute_allocated_hours:
             # 1) Calculate capacity for selected period
@@ -508,7 +507,7 @@ class ProjectTask(models.Model):
 
             if compute_allocated_hours: # this recordset could be empty, and we don't want to divide by 0 when checking the length of it
                 # 3) Remove the already set allocated hours from the capacity
-                capacity -= sum(self.filtered(lambda task: task.allocated_hours and task.user_ids).mapped('allocated_hours'))
+                capacity -= sum((self - compute_allocated_hours).filtered(lambda task: task.allocated_hours and task.user_ids).mapped('allocated_hours'))
 
                 # 4) Split capacity for every task and plan them
                 if capacity > 0:
