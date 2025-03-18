@@ -5,7 +5,6 @@ import {
     createDocumentsViewWithMessaging,
     loadServices,
 } from "./documents_test_utils";
-import * as dsHelpers from "@web/../tests/core/domain_selector_tests";
 import { setupViewRegistries } from "@web/../tests/views/helpers";
 import { patchUserWithCleanup } from "@web/../tests/helpers/mock_services";
 
@@ -3950,7 +3949,7 @@ QUnit.module("documents", {}, function () {
 
                     await toggleSearchBarMenu(target);
                     await click(".o_filter_menu .dropdown-item");
-                    await contains(dsHelpers.SELECTORS.condition);
+                    await contains(".o_tree_editor_condition");
                     await contains(".form-switch label", { count: 0, text: "Include archived" });
                 }
             );
