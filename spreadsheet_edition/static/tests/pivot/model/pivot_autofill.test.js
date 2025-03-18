@@ -325,21 +325,21 @@ test("Autofill pivot values with date in cols", async function () {
                 </pivot>`,
         pivotType: "static",
     });
-    expect(getCellFormula(model, "B1")).toBe('=PIVOT.HEADER(1,"date:day","04/14/2016")');
+    expect(getCellFormula(model, "B1")).toBe('=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 14))');
     expect(getPivotAutofillValue(model, "B1", { direction: "right", steps: 1 })).toBe(
-        '=PIVOT.HEADER(1,"date:day","04/15/2016")'
+        '=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 15))'
     );
     expect(getCellFormula(model, "B2")).toBe(
-        '=PIVOT.HEADER(1,"date:day","04/14/2016","measure","probability:avg")'
+        '=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 14),"measure","probability:avg")'
     );
     expect(getPivotAutofillValue(model, "B2", { direction: "right", steps: 1 })).toBe(
-        '=PIVOT.HEADER(1,"date:day","04/15/2016","measure","probability:avg")'
+        '=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 15),"measure","probability:avg")'
     );
     expect(getCellFormula(model, "B3")).toBe(
-        '=PIVOT.VALUE(1,"probability:avg","foo",1,"date:day","04/14/2016")'
+        '=PIVOT.VALUE(1,"probability:avg","foo",1,"date:day",DATE(2016, 4, 14))'
     );
     expect(getPivotAutofillValue(model, "B3", { direction: "right", steps: 1 })).toBe(
-        '=PIVOT.VALUE(1,"probability:avg","foo",1,"date:day","04/15/2016")'
+        '=PIVOT.VALUE(1,"probability:avg","foo",1,"date:day",DATE(2016, 4, 15))'
     );
 });
 
@@ -353,12 +353,12 @@ test("Autofill pivot values with date (day)", async function () {
                 </pivot>`,
         pivotType: "static",
     });
-    expect(getCellFormula(model, "A3")).toBe('=PIVOT.HEADER(1,"date:day","04/14/2016")');
+    expect(getCellFormula(model, "A3")).toBe('=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 14))');
     expect(model.getters.getTooltipFormula(getCellFormula(model, "A3"))).toEqual([
         { value: "14 Apr 2016" },
     ]);
     expect(getPivotAutofillValue(model, "A3", { direction: "bottom", steps: 1 })).toBe(
-        '=PIVOT.HEADER(1,"date:day","04/15/2016")'
+        '=PIVOT.HEADER(1,"date:day",DATE(2016, 4, 15))'
     );
 });
 
