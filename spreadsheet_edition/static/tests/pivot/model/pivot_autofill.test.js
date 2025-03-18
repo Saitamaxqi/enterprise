@@ -768,6 +768,58 @@ test("Can autofill row headers vertically", async () => {
     expect(tooltipContent[tooltipContent.length - 1].value).toBe("Probability");
 });
 
+test("Can autofill with DATE parent group header and value", async () => {
+    const { model } = await createSpreadsheetWithPivot({
+        arch: /*xml*/ `
+            <pivot>
+                <field name="date" interval="month" type="row"/>
+                <field name="product_id"  type="row"/>
+                <field name="probability" type="measure"/>
+            </pivot>`,
+    });
+    let tooltipContent;
+    setCellContent(model, "A1", '=PIVOT.HEADER(1,"date:month",DATE(2016,4,1),"product_id",37)');
+    model.dispatch("AUTOFILL_SELECT", { col: 0, row: 1 });
+    tooltipContent = model.getters.getAutofillTooltip().props.content;
+    expect(tooltipContent[tooltipContent.length - 1].value).toBe("October 2016");
+    model.dispatch("AUTOFILL");
+    expect(getCell(model, "A2").content).toBe('=PIVOT.HEADER(1,"date:month","10/2016")')
+
+    setCellContent(model, "A1", '=PIVOT.VALUE(1,"probability:avg","date:month",DATE(2016,4,1),"product_id",37)');
+    selectCell(model, "A1");
+    model.dispatch("AUTOFILL_SELECT", { col: 0, row: 1 });
+    tooltipContent = model.getters.getAutofillTooltip().props.content;
+    expect(tooltipContent[tooltipContent.length - 1].value).toBe("October 2016");
+    model.dispatch("AUTOFILL");
+    expect(getCell(model, "A2").content).toBe('=PIVOT.VALUE(1,"probability:avg","date:month","10/2016")')
+});
+
+test("Cannot autofill with invalid parent group header and value", async () => {
+    const { model } = await createSpreadsheetWithPivot({
+        arch: /*xml*/ `
+            <pivot>
+                <field name="date" interval="month" type="row"/>
+                <field name="product_id"  type="row"/>
+                <field name="probability" type="measure"/>
+            </pivot>`,
+    });
+    setCellContent(model, "A1", '=PIVOT.HEADER(1,"date:month",TRUE,"product_id",37)');
+    model.dispatch("AUTOFILL_SELECT", { col: 0, row: 1 });
+    expect(model.getters.getAutofillTooltip()).toBe(undefined);
+    model.dispatch("AUTOFILL");
+    expect(getCell(model, "A2")).toBe(undefined);
+
+    setCellContent(
+        model,
+        "A1",
+        '=PIVOT.VALUE(1,"probability:avg","date:month",TRUE,"product_id",37)'
+    );
+    model.dispatch("AUTOFILL_SELECT", { col: 0, row: 1 });
+    expect(model.getters.getAutofillTooltip()).toBe(undefined);
+    model.dispatch("AUTOFILL");
+    expect(getCell(model, "A2")).toBe(undefined);
+});
+
 test("Autofill pivot keeps format but neither style nor border", async function () {
     const { model } = await createSpreadsheetWithPivot({
         arch: /*xml*/ `
