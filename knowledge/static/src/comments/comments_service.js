@@ -92,9 +92,9 @@ export const knowledgeCommentsService = {
             articleId: this.commentsState.articleId,
         });
         this.commentsState.threads[record.id] = thread;
-        const composerData = this.commentsState.threads["undefined"].composer.toData();
-        composerData.thread = thread.toIdData();
-        thread.composer.update(composerData);
+        const { Composer } = this.commentsState.threads["undefined"].composer.toData();
+        Composer[0].thread = thread;
+        thread.composer = Composer[0];
         clearThreadComposer(this.commentsState.threads["undefined"].composer);
         return thread;
     },
