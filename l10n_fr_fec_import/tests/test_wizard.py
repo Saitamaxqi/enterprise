@@ -92,6 +92,15 @@ class AccountTestFecImport(AccountTestInvoicingCommon):
     # ----------------------------------------
     # 2:: Test methods
     # ----------------------------------------
+    def test_fec_import_ignores_empty_partner_refs(self):
+        """ Ensure that FEC import does not assign a partner when no reference is provided. """
+        self.env['res.partner'].create({'name': 'Partner A', 'ref': '', 'company_id': self.company.id})
+
+        self._import_fec_file('fec_lf_tab_utf8.json')
+        move = self.env['account.move'].search([('company_id', '=', self.company.id), ('name', '=', 'ACH000001')])
+        self.assertFalse(move.mapped('line_ids.partner_id'))
+        self.assertFalse(move.partner_id)
+
     def test_import_fec_partners_no_duplicate(self):
         """
         Test that the partners are not imported from the FEC file if already existing
