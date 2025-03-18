@@ -1328,3 +1328,36 @@ class TestIntrastatReport(TestAccountReportsCommon):
         action = credit_note_wizard.reverse_moves()
         credit_note = self.env['account.move'].browse(action['res_id'])
         self.assertEqual(credit_note.line_ids.intrastat_transaction_id, self.intrastat_codes['transaction'])
+
+    @freeze_time('2022-02-01')
+    def test_weight_decimal_separator_depending_on_language(self):
+        self.product_3.weight = 1230.5
+        self._create_invoices(code_type='transaction')
+        options = self._generate_options(self.report, '2022-01-01', '2022-01-31', {'intrastat_grouped': True})
+        self.assertLinesValues(
+            # pylint: disable=C0326
+            self.report._get_lines(options),
+            # 10/weight
+            [10],
+            [
+                ('',),
+                ('1230.5',),
+                ('1.5',),
+            ],
+            options,
+        )
+        self.env['res.lang']._activate_lang('fr_BE')
+        self.env.user.lang = 'fr_BE'
+        report_fr = self.report.with_context(lang='fr_BE')
+        self.assertLinesValues(
+            # pylint: disable=C0326
+            report_fr._get_lines(options),
+            # 10/weight
+            [10],
+            [
+                ('',),
+                ('1230,5',),
+                ('1,5',),
+            ],
+            options,
+        )

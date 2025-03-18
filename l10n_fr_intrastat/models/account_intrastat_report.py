@@ -310,7 +310,7 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
                 item_group_key = tuple(item[prop] for prop in grouping_key)
                 grouped_items[item_group_key]['value'] += item['value']
                 if is_weight_required:
-                    grouped_items[item_group_key]['weight'] += item['weight']
+                    grouped_items[item_group_key]['weight'] += float(item['weight'])
 
             # Convert the grouped_items dictionary back to a list of dictionaries
             items[regime] = [dict(zip(grouping_key, grouped_item_key)) | grouped_item_values

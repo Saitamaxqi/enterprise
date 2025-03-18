@@ -113,7 +113,7 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
     @api.model
     def _prepare_values_for_export(self, vals_list):
         for count, vals in enumerate(vals_list, start=1):
-            vals['weight'] = f'{round(vals["weight"]*1000):>06}'
+            vals['weight'] = f'{round(float(vals["weight"]) * 1000):>06}'
             vals['value'] = round(vals['value'])
             vals['itemNumber'] = count
         return vals_list

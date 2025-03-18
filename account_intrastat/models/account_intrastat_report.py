@@ -6,7 +6,7 @@ from json import dumps, loads
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.osv import expression
-from odoo.tools import get_lang, SQL
+from odoo.tools import get_lang, SQL, formatLang
 
 _merchandise_export_code = {
     'BE': '29',
@@ -165,6 +165,9 @@ class AccountIntrastatReportHandler(models.AbstractModel):
 
                 if res['supplementary_units']:
                     supplementary_units = f"{sum(line.get('supplementary_units', 0) for line in query_res_lines)}"
+                    # To remove trailing zeros
+                    digit = 1 if int(float(supplementary_units) * 100 % 10) == 0 else 2
+                    supplementary_units = formatLang(self.env, float(supplementary_units), digits=digit, grouping=False)
                 else:
                     supplementary_units = None
                 value = res['value'] or None if current_groupby == 'intrastat_grouping' else sum(line['value'] for line in query_res_lines if not line['missing_product'])
@@ -229,8 +232,9 @@ class AccountIntrastatReportHandler(models.AbstractModel):
         query_res_lines = self._fill_missing_values(query_res_lines)
 
         all_res_per_grouping_key = {}
-
         for line in query_res_lines:
+            if line['weight']:
+                line['weight'] = formatLang(self.env, line['weight'], digits=1, grouping=False)
             if warnings is not None:
                 for key, value in line.items():
                     if key.startswith('warning_') and value:
