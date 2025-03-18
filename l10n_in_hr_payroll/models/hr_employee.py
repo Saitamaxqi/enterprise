@@ -29,4 +29,4 @@ class HrEmployee(models.Model):
     )
 
     def _get_employees_with_invalid_ifsc(self):
-        return self.filtered(lambda emp: not bool(re.match("^[A-Z]{4}0[A-Z0-9]{6}$", emp.bank_account_id.bank_bic)))
+        return self.filtered(lambda emp: not bool(re.match(r"^[A-Z]{4}0[A-Z0-9]{6}$", emp.bank_account_id.bank_bic or '')))
