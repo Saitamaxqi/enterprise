@@ -2293,7 +2293,7 @@ QUnit.module("View Editors", (hooks) => {
             window.console = _console;
         });
         patchWithCleanup(odoo, {
-            debug: true,
+            debug: "1",
         });
         await createViewEditor({
             serverData,
@@ -3441,7 +3441,7 @@ QUnit.module("View Editors", (hooks) => {
 
     QUnit.test("edit one2many list view", async function (assert) {
         // the 'More' button is only available in debug mode
-        patchWithCleanup(odoo, { debug: true });
+        patchWithCleanup(odoo, { debug: "1" });
 
         const changeArch = makeArchChanger();
 

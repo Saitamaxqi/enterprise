@@ -644,7 +644,7 @@ QUnit.module(
         QUnit.test(
             "field widgets correctly displayed and whitelisted in the sidebar (debug=false)",
             async function (assert) {
-                patchWithCleanup(odoo, { debug: false });
+                patchWithCleanup(odoo, { debug: "" });
 
                 const wowlFieldRegistry = registry.category("fields");
                 const charField = wowlFieldRegistry.get("char");
@@ -697,7 +697,7 @@ QUnit.module(
         QUnit.test(
             "field widgets correctly displayed and whitelisted in the sidebar (debug=true)",
             async function (assert) {
-                patchWithCleanup(odoo, { debug: true });
+                patchWithCleanup(odoo, { debug: "1" });
 
                 const wowlFieldRegistry = registry.category("fields");
                 const charField = wowlFieldRegistry.get("char");
@@ -1048,7 +1048,7 @@ QUnit.module(
             async function (assert) {
                 assert.expect(2);
 
-                patchWithCleanup(odoo, { debug: false });
+                patchWithCleanup(odoo, { debug: "" });
 
                 const wowlFieldRegistry = registry.category("fields");
                 const charField = wowlFieldRegistry.get("char");
@@ -1088,7 +1088,7 @@ QUnit.module(
             async function (assert) {
                 assert.expect(2);
 
-                patchWithCleanup(odoo, { debug: false });
+                patchWithCleanup(odoo, { debug: "" });
 
                 const wowlFieldRegistry = registry.category("fields");
                 const charField = wowlFieldRegistry.get("char");
@@ -1272,7 +1272,7 @@ QUnit.module(
             assert.expect(9);
 
             // Inline edition of selection values is only available in non debug mode
-            patchWithCleanup(odoo, { debug: false });
+            patchWithCleanup(odoo, { debug: "" });
             const arch = "<list><field name='display_name'/></list>";
             await createViewEditor({
                 serverData,
@@ -1366,7 +1366,7 @@ QUnit.module(
             assert.expect(15);
 
             // Advanced edition of selection values is only available in debug mode
-            patchWithCleanup(odoo, { debug: true });
+            patchWithCleanup(odoo, { debug: "1" });
             const arch = "<list><field name='display_name'/></list>";
             await createViewEditor({
                 serverData,
