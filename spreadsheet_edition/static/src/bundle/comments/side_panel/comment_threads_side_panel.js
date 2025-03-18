@@ -86,9 +86,8 @@ export class CommentThreadsSidePanel extends Component {
 
     openMenu(ev, threadId) {
         this.selectThread(threadId);
-        const { x, y, height } = ev.target.getBoundingClientRect();
         this.menuState.isOpen = true;
-        this.menuState.position = { x, y: y + height };
+        this.menuState.anchorRect = ev.target.getBoundingClientRect();
         this.menuState.threadId = threadId;
     }
 
