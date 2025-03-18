@@ -11,6 +11,8 @@ import {
     FilterPartner,
 } from "./appointment_tests_common";
 
+import { session } from "@web/session";
+
 describe.current.tags("desktop");
 defineAppointmentModels();
 

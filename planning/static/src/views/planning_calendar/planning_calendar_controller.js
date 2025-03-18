@@ -1,6 +1,5 @@
 import { serializeDateTime } from "@web/core/l10n/dates";
 import { CalendarController } from "@web/views/calendar/calendar_controller";
-import { PlanningCalendarFilterPanel } from "./planning_filter_panel/planning_calendar_filter_panel";
 import { usePlanningControllerActions } from "../planning_hooks";
 import { _t } from "@web/core/l10n/translation";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
@@ -12,7 +11,6 @@ import {
 export class PlanningCalendarController extends CalendarController {
     static components = {
         ...CalendarController.components,
-        FilterPanel: PlanningCalendarFilterPanel,
         CalendarSidePanel: PlanningCalendarSidePanel,
     };
 

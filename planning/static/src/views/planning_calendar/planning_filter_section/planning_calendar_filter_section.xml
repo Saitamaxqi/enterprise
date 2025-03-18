@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <t t-name="planning.PlanningCalendarFilterPanel.filter" t-inherit="web.CalendarFilterPanel.filter" t-inherit-mode="primary">
+    <t t-name="planning.PlanningCalendarFilterSection.filter" t-inherit="web.CalendarFilterSection.filter" t-inherit-mode="primary">
         <xpath expr="//input[@class='o_cw_filter_input_bg form-check-input']" position="attributes">
             <attribute name="t-attf-class">{{ getNoColor(filter) }}</attribute>
         </xpath>
