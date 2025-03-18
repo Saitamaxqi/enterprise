@@ -57,3 +57,7 @@ class TestHrAppraisalFeedback(TransactionCase):
 
         survey_input = self.env['survey.user_input'].search([('appraisal_id', '=', self.appraisal.id)])
         self.assertEqual(feedback['deadline'], survey_input['deadline'].date())
+
+        # by the way, check that completed_survey_count is computed correctly
+        survey_input._mark_done()
+        self.assertEqual(self.appraisal.completed_survey_count, 1)
