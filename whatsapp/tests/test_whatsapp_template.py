@@ -83,6 +83,38 @@ class WhatsAppTemplate(WhatsAppTemplateCommon):
             ('Update 2', 'button', 'free_text', {'demo_value': 'https://www.example.com/new2???', 'display_name': 'Button - Update 2'}),
         ])
 
+    def test_template_create_existing_name_no_account(self):
+        """Check that account-linked templates do not prevent base data creation.
+        
+        Base data is linked to an existing account for convenience by default.
+        We should not use that default if it would result in a unique constraint error. 
+        """
+        common_template_name = 'test_template_create_existing_name_no_account'
+        first_template = self.env['whatsapp.template'].create({
+            'template_name': common_template_name,
+        })
+        self.assertTrue(first_template.wa_account_id, 'Expected a default account.')
+        self.assertEqual(
+            first_template.wa_account_id.id,
+            self.env['whatsapp.template']._get_default_wa_account_id(),
+            'Expected the default account.'
+        )
+        second_template = self.env['whatsapp.template'].create({
+            'template_name': common_template_name,
+        })
+        self.assertFalse(
+            second_template.wa_account_id,
+            'Expected fall-back on no account when name already exists for default account'
+        )
+        # Because NULL != NULL in postgres by default, we can have multiple templates with different names but no account
+        third_template = self.env['whatsapp.template'].create({
+            'template_name': common_template_name,
+        })
+        self.assertFalse(
+            third_template.wa_account_id,
+            'Expected fall-back on no account when name already exists for default account'
+        )
+
     @users('user_wa_admin')
     def test_template_content_dynamic(self):
         """ Test body with multiple variables """
