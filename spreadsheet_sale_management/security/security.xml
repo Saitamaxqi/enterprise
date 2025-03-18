@@ -15,6 +15,17 @@
             <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
         </record>
 
+        <record id="sale_order_spreadsheet_rule_salesman_template" model="ir.rule">
+            <field name="name">Order Spreadsheet Templates</field>
+            <field ref="model_sale_order_spreadsheet" name="model_id"/>
+            <field name="domain_force">[('order_id','=',False)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+
         <record id="sale_order_spreadsheet_rule_salesman" model="ir.rule">
             <field name="name">Personal Order Spreadsheets</field>
             <field ref="model_sale_order_spreadsheet" name="model_id"/>
@@ -22,7 +33,6 @@
                 ('order_id','!=',False),
                 '|',('order_id.user_id','=',user.id),('order_id.user_id','=',False)
             ]</field>
-            <field name="perm_read" eval="False"/>
             <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
         </record>
 
@@ -30,7 +40,6 @@
             <field name="name">All Orders Spreadsheets</field>
             <field ref="model_sale_order_spreadsheet" name="model_id"/>
             <field name="domain_force">[('order_id','!=',False)]</field>
-            <field name="perm_read" eval="False"/>
             <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads'))]"/>
         </record>
 

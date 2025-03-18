@@ -61,3 +61,44 @@ class SaleOrderSpreadsheet(TransactionCase):
         sale_order.unlink()
         self.assertFalse(so_spreadsheet.exists(), "spreadsheet should be deleted with the related order")
         self.assertTrue(spreadsheet.exists(), "Original spreadsheet should be unaltered")
+
+    def test_access(self):
+        salesman = new_test_user(self.env, login="Alice", groups="sales_team.group_sale_salesman")
+        other_salesman = new_test_user(self.env, login="Bob", groups="sales_team.group_sale_salesman")
+        template_spreadsheet = self.env["sale.order.spreadsheet"].create({"name": "spreadsheet"})
+        quotation_template = self.env["sale.order.template"].create({
+            "name": "Test template",
+            "spreadsheet_template_id": template_spreadsheet.id
+        })
+        sale_order = self.env["sale.order"].with_user(salesman).create({
+            "partner_id": self.env.user.partner_id.id,
+            "sale_order_template_id": quotation_template.id,
+            "user_id": salesman.id
+        })
+        sale_order.action_open_sale_order_spreadsheet()
+        spreadsheet = sale_order.spreadsheet_id
+
+        # user access for his own sale order
+        self.assertTrue(sale_order.has_access("read"))
+        self.assertTrue(sale_order.has_access("write"))
+        self.assertFalse(sale_order.has_access("unlink"))
+        self.assertTrue(spreadsheet.has_access("read"))
+        self.assertTrue(spreadsheet.has_access("write"))
+        self.assertTrue(spreadsheet.has_access("unlink"))
+
+        # other users don't have access by default
+        self.assertFalse(sale_order.with_user(other_salesman).has_access("read"))
+        self.assertFalse(sale_order.with_user(other_salesman).has_access("write"))
+        self.assertFalse(sale_order.with_user(other_salesman).has_access("unlink"))
+        self.assertFalse(spreadsheet.with_user(other_salesman).has_access("read"))
+        self.assertFalse(spreadsheet.with_user(other_salesman).has_access("write"))
+        self.assertFalse(spreadsheet.with_user(other_salesman).has_access("unlink"))
+
+        # add access to all orders
+        other_salesman.group_ids |= self.env.ref("sales_team.group_sale_salesman_all_leads")
+        self.assertTrue(sale_order.with_user(other_salesman).has_access("read"))
+        self.assertTrue(sale_order.with_user(other_salesman).has_access("write"))
+        self.assertFalse(sale_order.with_user(other_salesman).has_access("unlink"))
+        self.assertTrue(spreadsheet.with_user(other_salesman).has_access("read"))
+        self.assertTrue(spreadsheet.with_user(other_salesman).has_access("write"))
+        self.assertTrue(spreadsheet.with_user(other_salesman).has_access("unlink"))
