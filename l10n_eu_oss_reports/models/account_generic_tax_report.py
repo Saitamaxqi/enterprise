@@ -82,11 +82,10 @@ class L10n_Eu_OssTaxReportHandler(models.AbstractModel):
             markup, model, model_id = report._parse_line_id(line['id'])[-1]
 
             if markup in tax_type_markups:
-                last_tax_type_line = line
-
                 # Then it's a type_tax_use_section
                 # If there were tax lines for the previous section, append them to rslt; the previous section is over
-                append_country_and_taxes_lines(line, rslt, tax_lines_by_country)
+                append_country_and_taxes_lines(last_tax_type_line, rslt, tax_lines_by_country)
+                last_tax_type_line = line
 
                 # Start next section
                 rslt.append((0, line))
