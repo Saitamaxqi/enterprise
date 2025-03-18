@@ -1127,7 +1127,7 @@ registry.category("web_tour.tours").add("test_multi_company_record_access_in_mrp
         { trigger: ".btn.o_add_line", run: "click" },
         { trigger: 'div[name="product_id"]', run: "click" },
         { trigger: 'div[name="product_id"] .o_input', run: "edit second company product" },
-        { trigger: ".o_m2o_dropdown_option_create:first-child" },
+        { trigger: ".o_m2o_dropdown_option_create" },
         { trigger: ".btn.o_discard", run: "click" },
         { trigger: ".btn.o_exit", run: "click" },
         { trigger: ".o_stock_barcode_main_menu" },
