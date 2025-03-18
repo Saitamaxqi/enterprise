@@ -226,6 +226,7 @@ test("Keep applying filter when pivot is re-inserted", async function () {
                         <field name="product_id" type="row"/>
                         <field name="probability" type="measure"/>
                     </pivot>`,
+        pivotType: "static",
     });
     await addGlobalFilter(
         model,
@@ -279,7 +280,7 @@ test("undo pivot reinsert", async function () {
 });
 
 test("reinsert pivot with anchor on merge but not top left", async function () {
-    const { model, env } = await createSpreadsheetWithPivot();
+    const { model, env } = await createSpreadsheetWithPivot({ pivotType: "static" });
     const sheetId = model.getters.getActiveSheetId();
     const [pivotId] = model.getters.getPivotIds();
     const pivotZone = getZoneOfInsertedDataSource(model, "pivot", pivotId);
@@ -428,7 +429,7 @@ test("See records is visible even if the formula is lowercase", async function (
 });
 
 test("See records is not visible if the formula is in error", async function () {
-    const { env, model } = await createSpreadsheetWithPivot();
+    const { env, model } = await createSpreadsheetWithPivot({ pivotType: "static" });
     selectCell(model, "B4");
     await animationFrame();
     const root = cellMenuRegistry.getAll().find((item) => item.id === "pivot_see_records");
