@@ -57,8 +57,11 @@ class TestAustraliaTparReport(TestAccountReportsCommon):
                 'journal_id': self.company_data['default_journal_bank'].id,
                 'amount': bill.amount_total,
             })._create_payments()
+            if self.env['ir.module.module']._get('accountant').state == 'installed':
+                self.assertEqual(bill.payment_state, 'in_payment')
+            else:
+                self.assertEqual(bill.payment_state, 'paid')
 
-            self.assertEqual(bill.payment_state, 'in_payment')
         tpar_report = self.env.ref('l10n_au_reports.tpar_report')
 
         options = self._generate_options(tpar_report, fields.Date.from_string('2023-01-01'), fields.Date.from_string('2023-12-31'))
