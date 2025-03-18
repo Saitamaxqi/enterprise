@@ -9,7 +9,7 @@ from odoo.addons.whatsapp.tests.common import MockIncomingWhatsApp
 from odoo.tests import tagged, users
 
 
-@tagged('wa_message')
+@tagged('wa_message', 'discuss_channel')
 class DiscussChannel(WhatsAppFullCase, MockIncomingWhatsApp):
 
     def test_channel_info_link(self):

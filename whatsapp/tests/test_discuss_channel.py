@@ -7,7 +7,7 @@ from odoo.addons.whatsapp.tests.common import WhatsAppCommon, MockIncomingWhatsA
 from odoo.tests import tagged, users
 
 
-@tagged('wa_message')
+@tagged('wa_message', 'discuss_channel')
 class DiscussChannel(WhatsAppCommon, MockIncomingWhatsApp):
 
     @classmethod
@@ -35,6 +35,18 @@ class DiscussChannel(WhatsAppCommon, MockIncomingWhatsApp):
                 'name': 'Dummy Test Channel',
             }
         ])
+        cls.channel_template = cls.env['whatsapp.template'].create({
+            "body": """Hello there,
+Just a quick note to let you know that we're here to help with anything you might need. If you have any questions, please don't hesitate to send us a message.
+We're always happy to assist!""",
+            "footer_text": "Write 'stop' to stop receiving messages",
+            "lang_code": "en",
+            "model_id": cls.env['ir.model']._get_id('discuss.channel'),
+            "phone_field": "whatsapp_number",
+            "status": "approved",
+            "template_name": "conversation_reviver",
+            "template_type": "marketing",
+        })
 
     def test_gc_whatsapp_inactive(self):
         for test_record, delay_days, mark_read in ((self.test_channel_wa, 2, True), (self.test_channel_wa2, 6, False)):  # 2 days - 6 days
@@ -138,6 +150,39 @@ class DiscussChannel(WhatsAppCommon, MockIncomingWhatsApp):
                 self.assertFalse(new_msg.wa_message_ids)
 
     @users('user_wa_admin')
+    def test_post_reviver_template(self):
+        """ Test usage of reviver template - composer creates message on a channel
+        and we should not have twice the same message due to _send_message creating
+        messages """
+        template = self.channel_template.with_env(self.env)
+        channel = self.test_channel_wa.with_env(self.env)
+        composer = self._instanciate_wa_composer_from_records(
+            template, from_records=channel,
+        )
+        with self.mock_mail_app(), self.mockWhatsappGateway():
+            composer.action_send_whatsapp_template()
+        self.assertWAMessageFromRecord(
+            channel,
+            fields_values={
+                'mobile_number': '911234567891',
+            },
+            mail_message_values={
+                'subtype_id': self.env.ref('mail.mt_note'),
+            },
+        )
+        # created mail.message: one due to post, one additional log (FIXME) because
+        # he does the post on 'original business document' and create the message on
+        # discussion channel, even when both are the same
+        self.assertEqual(len(self._new_msgs), 2)
+        for msg in self._new_msgs:
+            self.assertEqual(msg.model, 'discuss.channel')
+            self.assertEqual(msg.res_id, channel.id)
+            self.assertEqual(
+                msg.body,
+                "<p>Hello there,<br>Just a quick note to let you know that we're here to help with anything you might need. "
+                "If you have any questions, please don't hesitate to send us a message.<br>We're always happy to assist!</p>")
+
+    @users('user_wa_admin')
     def test_post_with_whatsapp_inbound_msg_uid(self):
         """ Test automatic whatsapp message creation when posting from whatsapp
         specific controller """
@@ -169,7 +214,7 @@ class DiscussChannel(WhatsAppCommon, MockIncomingWhatsApp):
                         whatsapp_inbound_msg_uid='msg.uid.123456789',
                     )
 
-    def test_parent_msg_reciever(self):
+    def test_parent_msg_receiver(self):
         template = self.env['whatsapp.template'].create({
             'body': 'Hello World',
             'model_id': self.env['ir.model']._get_id('res.partner'),
