@@ -166,6 +166,15 @@ export class DocumentsMemberInvite extends Component {
     }
 
     /**
+     * Passed to SelectMenu in order to match found partners on display_name *and/or* email.
+     * @param {{display_name: string, email: string}} partner
+     * @return {string}
+     */
+    matchPartners(partner) {
+        return `${partner.display_name} ${partner.email}`;
+    }
+
+    /**
      * @param {Event} event
      */
     onChangeRoleForMemberToInvite(event) {

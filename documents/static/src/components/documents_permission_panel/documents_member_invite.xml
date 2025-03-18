@@ -16,6 +16,7 @@
                 searchPlaceholder.translate="Search people"
                 togglerClass="props.invitePage ? 'o_documents_permission_panel_select_invite' : ''"
                 value="state.selectedPartners"
+                fuzzyLookupFn="this.matchPartners"
             >
                 <t t-set-slot="choice" t-slot-scope="choice">
                     <span class="o_documents_permission_panel_avatar o_avatar d-flex align-items-center">
