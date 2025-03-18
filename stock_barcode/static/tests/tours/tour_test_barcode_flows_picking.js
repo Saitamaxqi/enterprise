@@ -4553,6 +4553,28 @@ registry.category("web_tour.tours").add("test_scan_aggregate_barcode", {
     ],
 });
 
+registry.category("web_tour.tours").add("test_scrap_change_source_location", {
+     steps: () => [
+        { trigger: ".o_barcode_actions", run: "click" },
+        { trigger: "input#manual_barcode", run: "edit LOC-01-01-00" },
+        { trigger: "button:contains('Apply')", run: "click" },
+        { trigger: ".o_barcode_actions", run: "click" },
+        { trigger: "input#manual_barcode", run: "edit Lot1" },
+        { trigger: "button:contains('Apply')", run: "click" },
+        { trigger: ".o_line_button:contains('+9')", run: "click" },
+        { trigger: ".o_barcode_actions", run: "click" },
+        { trigger: ".o_scrap", run: "click" },
+        { trigger: "input#product_id_0", run: "edit product1" },
+        { trigger: ".ui-menu-item > a:contains('product1')", run: "click" },
+        { trigger: "input#scrap_qty_0", run: "edit 15" },
+        { trigger: "input#location_id_0", run: "edit WH/Stock/Section 1" },
+        { trigger: ".ui-menu-item > a:contains('WH/Stock/Section 1')", run: "click" },
+        { trigger: "input#lot_id_0", run: "edit lot1" },
+        { trigger: ".ui-menu-item > a:contains('lot1')", run: "click" },
+        { trigger: "button.o_save", run: "click" },
+        ...stepUtils.validateBarcodeOperation(),
+]});
+
 registry.category("web_tour.tours").add("test_scrap", {
     steps: () => [
         // Opens the receipt and checks we can't scrap if not done.

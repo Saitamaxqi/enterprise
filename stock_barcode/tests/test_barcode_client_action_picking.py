@@ -2392,6 +2392,46 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Opens the barcode main menu to be able to open the pickings by scanning their name.
         self.start_tour("/odoo/barcode", "test_scrap", login="admin", timeout=180)
 
+    def test_scrap_change_source_location(self):
+        self.env.user.group_ids += self.env.ref('stock.group_stock_multi_locations')
+        self.product1.tracking = 'lot'
+        lot1 = self.env['stock.lot'].create({
+            'name': 'Lot1',
+            'product_id': self.product1.id,
+        })
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 25, lot_id=lot1)
+        picking = self.env['stock.picking'].create({
+            'name': self.product1.name,
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.env.ref('stock.stock_location_output').id,
+            'picking_type_id': self.picking_type_internal.id,
+        })
+        self.env['stock.move'].create({
+            'name': self.product1.name,
+            'product_id': self.product1.id,
+            'lot_ids': lot1.id,
+            'product_uom_qty': 10.00,
+            'quantity': 10.00,
+            'picking_id': picking.id,
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.env.ref('stock.stock_location_output').id,
+        })
+        picking.action_confirm()
+        url = self._get_client_action_url(picking.id)
+        self.start_tour(url, 'test_scrap_change_source_location', login='admin')
+        scrap_location = self.env['stock.location'].search([
+            ('scrap_location', '=', 'True'),
+            ('company_id', '=', self.env.company.id),
+        ])
+        self.assertRecordValues(
+            lot1.quant_ids,
+            [
+                {'location_id': self.shelf1.id, 'quantity': 0},
+                {'location_id': scrap_location.id, 'quantity': 15},
+                {'location_id': self.ref('stock.stock_location_output'), 'quantity': 10},
+            ]
+        )
+
     def test_show_entire_package(self):
         """ Enables 'Move Entire Packages' for delivery and then creates two deliveries:
           - One where we use package level;
