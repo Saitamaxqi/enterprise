@@ -77,6 +77,7 @@ test("verify appointment links button are displayed", async () => {
 test("create/search anytime appointment type", async () => {
     expect.assertions(6);
 
+    patchWithCleanup(session, { "web.base.url": "http://amazing.odoo.com" });
     patchWithCleanup(navigator, {
         clipboard: {
             writeText: (value) => {
@@ -103,9 +104,6 @@ test("create/search anytime appointment type", async () => {
                     <field name="name"/>
                     <field name="partner_ids" write_model="filter.partner" write_field="partner_id"/>
                 </calendar>`,
-        session: {
-            "web.base.url": "http://amazing.odoo.com",
-        },
     });
     await contains(".dropdownAppointmentLink").click();
 
