@@ -27,8 +27,8 @@ patch(PlanningGanttModel.prototype, {
                 context: {
                     ...this.searchParams.context,
                     scale: metaData.scale,
-                    default_start_datetime: serializeDateTime(metaData.startDate),
-                    default_end_datetime: serializeDateTime(metaData.stopDate),
+                    default_start_datetime: serializeDateTime(metaData.globalStart),
+                    default_end_datetime: serializeDateTime(metaData.globalStop),
                 },
             }
         );
