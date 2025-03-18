@@ -1,51 +1,40 @@
-import { renderToElement } from "@web/core/utils/render";
-import publicWidget from "@web/legacy/js/public/public_widget";
-import { debounce } from "@web/core/utils/timing";
+import { Interaction } from "@web/public/interaction";
+import { registry } from "@web/core/registry";
 import { rpc } from "@web/core/network/rpc";
 
-publicWidget.registry.appointmentTypeSelect = publicWidget.Widget.extend({
-    selector: '.o_appointment_choice',
-    events: {
-        'change select[id="appointment_type_id"]': '_onAppointmentTypeChange',
-        'click .o_appointment_select_button': '_onAppointmentTypeSelected',
-    },
+export class AppointmentTypeSelect extends Interaction {
+    static selector = ".o_appointment_choice";
+    dynamicContent = {
+        ".o_appointment_select_button": {
+            "t-on-click.prevent.stop": this.onAppointmentTypeSelected,
+        },
+        "select[id='appointment_type_id']": {
+            "t-on-change": this.debounced(this.onAppointmentTypeChange, 250),
+        },
+        ".o_appointment_not_found > div": {
+            "t-att-class": () => ({
+                "d-none": false,
+            }),
+        },
+    };
 
-    /**
-     * @constructor
-     */
-    init: function () {
-        this._super.apply(this, arguments);
-        // Check if we cannot replace this by a async handler once the related
-        // task is merged in master
-        this._onAppointmentTypeChange = debounce(this._onAppointmentTypeChange, 250);
-    },
-
-    /**
-     * @override
-     */
-    start: function () {
-        return this._super(...arguments).then(() => {
-            // Load an image when no appointment types are found
-            this.el.querySelector(".o_appointment_svg i")?.replaceWith(renderToElement('Appointment.appointment_svg', {}));
-            this.el
-                .querySelectorAll(".o_appointment_not_found div")
-                .forEach((el) => el.classList.remove("d-none"));
-        });
-    },
-
-    //--------------------------------------------------------------------------
-    // Handlers
-    //--------------------------------------------------------------------------
+    start() {
+        // Load an image when no appointment types are found
+        // TODO: maybe define a "replace" position in renderAt
+        const el = this.el.querySelector(".o_appointment_svg i");
+        if (el) {
+            this.renderAt("Appointment.appointment_svg", {}, el, "afterend");
+            el.remove();
+        }
+    }
 
     /**
      * On appointment type change: adapt appointment intro text and available
      * users. (if option enabled)
      *
-     * @override
      * @param {Event} ev
      */
-    _onAppointmentTypeChange: function (ev) {
-        var self = this;
+    async onAppointmentTypeChange(ev) {
         const appointmentTypeID = ev.target.value;
         const filterAppointmentTypeIds = this.el.querySelector(
             "input[name='filter_appointment_type_ids']"
@@ -54,21 +43,32 @@ publicWidget.registry.appointmentTypeSelect = publicWidget.Widget.extend({
         const filterResourceIds = this.el.querySelector("input[name='filter_resource_ids']").value;
         const inviteToken = this.el.querySelector("input[name='invite_token']").value;
 
-        rpc(`/appointment/${appointmentTypeID}/get_message_intro`, {
-            invite_token: inviteToken,
-            filter_appointment_type_ids: filterAppointmentTypeIds,
-            filter_staff_user_ids: filterUserIds,
-            filter_resource_ids: filterResourceIds,
-        }).then(function (message_intro) {
-            const parsedElements = new DOMParser().parseFromString(message_intro, 'text/html').body.childNodes;
-            self.el.querySelector(".o_appointment_intro")?.replaceChildren(...parsedElements);
-        });
-    },
+        const messageIntro = await this.waitFor(
+            rpc(`/appointment/${appointmentTypeID}/get_message_intro`, {
+                invite_token: inviteToken,
+                filter_appointment_type_ids: filterAppointmentTypeIds,
+                filter_staff_user_ids: filterUserIds,
+                filter_resource_ids: filterResourceIds,
+            })
+        );
+        this.protectSyncAfterAsync(() => {
+            const parsedElements = new DOMParser().parseFromString(messageIntro, "text/html").body
+                .childNodes;
+            this.el.querySelector(".o_appointment_intro")?.replaceChildren(...parsedElements);
+        })();
+    }
 
-    _onAppointmentTypeSelected: function (ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        const optionSelected = this.el.querySelector('select').selectedOptions[0];
+    /**
+     * On appointment type selected: redirect to the selected appointment type.
+     *
+     * @param {Event} ev
+     */
+    onAppointmentTypeSelected(ev) {
+        const optionSelected = this.el.querySelector("select").selectedOptions[0];
         window.location = optionSelected.dataset.appointmentUrl;
-    },
-});
+    }
+}
+
+registry
+    .category("public.interactions")
+    .add("appointment.appointment_type_select", AppointmentTypeSelect);
