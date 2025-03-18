@@ -89,7 +89,7 @@
             'search_default_progress': 1,
             'search_default_paused': 1,
         }</field>
-        <field name="domain">[('subscription_state', 'not in', ['2_renewal', '5_renewed', '7_upsell', False])]</field>
+        <field name="domain">[('subscription_state', 'in', ['1_draft', '3_progress', '4_paused', '6_churn'])]</field>
         <field name="search_view_id" ref="sale_subscription.sale_subscription_view_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_subscription_graph">
