@@ -472,7 +472,7 @@
                 plan="false"
                 string="Schedule"
                 total_row="True"
-                scales="day,week,month,year"
+                scales="day,week,month,quarter,year"
                 precision="{'day': 'hour:full', 'week': 'day:full', 'month': 'day:full', 'year': 'day:full'}"
                 decoration-info="state == 'draft'"
                 decoration-warning="publication_warning or (request_to_switch and not is_past and not allow_self_unassign)"

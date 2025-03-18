@@ -8,7 +8,7 @@
             <gantt date_start="date_start"
                 date_stop="date"
                 default_scale="month"
-                scales="week,month,year"
+                scales="week,month,quarter,year"
                 string="Planning"
                 display_unavailability="1"
                 js_class="project_gantt"

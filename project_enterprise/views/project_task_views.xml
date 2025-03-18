@@ -121,7 +121,7 @@
                 form_view_id="%(project_task_view_form_in_gantt)d"
                 date_stop="date_deadline"
                 default_scale="month"
-                scales="day,week,month,year"
+                scales="day,week,month,quarter,year"
                 color="project_id"
                 string="Planning"
                 js_class="task_gantt"
