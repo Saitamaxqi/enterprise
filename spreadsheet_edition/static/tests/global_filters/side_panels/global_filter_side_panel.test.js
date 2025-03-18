@@ -281,7 +281,7 @@ test("Choose any year in a year picker by clicking the picker", async function (
         message: "The picker should be displaying the years",
     });
 
-    await contains("button.o_date_item_cell:contains(2024)").click();
+    await contains(".o_date_item_cell:contains(2024)").click();
 
     expect(year).toHaveValue("2024");
     expect(model.getters.getGlobalFilterValue(THIS_YEAR_GLOBAL_FILTER.id)).toEqual({
