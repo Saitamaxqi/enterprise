@@ -11,6 +11,7 @@
         <field name="sequence">20</field>
         <field name="category_id" ref="base.module_category_human_resources_frontdesk"/>
         <field name="implied_ids" eval="[(4, ref('frontdesk.frontdesk_group_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
 
     <record id="frontdesk_frontdesk_company_rule" model="ir.rule">

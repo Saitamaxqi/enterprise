@@ -4,6 +4,7 @@
         id="frontdesk_menu_root"
         name="Frontdesk"
         web_icon="frontdesk,static/description/icon.png"
+        groups="frontdesk.frontdesk_group_user"
         sequence="20"/>
 
     <menuitem
@@ -24,7 +25,6 @@
         id="frontdesk_menu_report"
         name="Reporting"
         parent="frontdesk_menu_root"
-        groups="frontdesk.frontdesk_group_user"
         sequence="3"/>
 
     <menuitem
