@@ -24,8 +24,13 @@ class StockMoveLine(models.Model):
         for line in self:
             # if component
             if line.production_id:
-                line.parent_location_id = line.production_id.location_src_id
-                line.parent_location_dest_id = line.production_id.production_location_id
+                if self.env.context.get('newByProduct', False):
+                    # For byproducts
+                    line.parent_location_id = line.production_id.production_location_id
+                    line.parent_location_dest_id = line.production_id.location_src_id
+                else:
+                    line.parent_location_id = line.production_id.location_src_id
+                    line.parent_location_dest_id = line.production_id.production_location_id
             # if final product
             elif line.move_id.production_id:
                 line.parent_location_id = line.move_id.production_id.production_location_id

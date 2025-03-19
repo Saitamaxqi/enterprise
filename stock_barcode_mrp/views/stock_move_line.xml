@@ -30,6 +30,9 @@
             <xpath expr="//div[@name='location_src']" position="attributes">
                 <attribute name="invisible">context.get('newByProduct') or picking_code == 'incoming'</attribute>
             </xpath>
+            <xpath expr="//div[@name='location_dest']" position="attributes">
+                <attribute name="invisible">not context.get('newByProduct')</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

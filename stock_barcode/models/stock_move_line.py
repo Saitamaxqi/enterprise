@@ -48,7 +48,7 @@ class StockMoveLine(models.Model):
             ('company_id', 'in', self.env.companies.ids),
             ('location_id.usage', '=', 'internal'),
             ('quantity', '>', '0'),
-            ('location_id', 'child_of', self.picking_id.location_id.ids),
+            ('location_id', 'child_of', self.parent_location_id.ids),
         ]
         quant_ids = dict(self.env['stock.quant']._read_group(domain, groupby=['product_id'], aggregates=['id:recordset']))
         for line in self:

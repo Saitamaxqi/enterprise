@@ -17,6 +17,16 @@ export class StockBarcodeSmlFormController extends FormController {
         });
     }
 
+    mustCheckQuantityAvailableInLocation(data) {
+        return (
+            data.product_id &&
+            this.locationsEnabled &&
+            data.qty_done > 0 &&
+            data.picking_code &&
+            data.picking_code !== "incoming"
+        );
+    }
+
     /**
      * @override
      */
@@ -24,12 +34,7 @@ export class StockBarcodeSmlFormController extends FormController {
         let proceed = true;
         if (clickParams.special && clickParams.special === "save") {
             const { data } = this.model.root;
-            if (
-                data.product_id &&
-                this.locationsEnabled &&
-                data.picking_code !== "incoming" &&
-                data.qty_done > 0
-            ) {
+            if (this.mustCheckQuantityAvailableInLocation(data)) {
                 const context = {
                     location: data.location_id.id,
                     lot_id: data.lot_id ? data.lot_id.id : false,

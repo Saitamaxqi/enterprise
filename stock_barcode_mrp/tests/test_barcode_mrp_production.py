@@ -1006,3 +1006,43 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(store_final_transfer.move_ids[0].product_qty, 1)
         self.assertEqual(store_final_transfer.move_ids[1].product_id, self.by_product)
         self.assertEqual(store_final_transfer.move_ids[1].product_qty, 2)
+
+    def test_quant_selection_mrp(self):
+        """ Ensures the stock move's location, package and owner can be updated by clicking on a
+        quant card in the Barcode move line form view accordingly to the selected quant values."""
+        self.env.user.write({
+            'group_ids': [
+                Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref('stock.group_tracking_lot').id),
+            ],
+        })
+
+        package = self.env['stock.quant.package'].create({'name': 'package001'})
+        self.env['stock.quant']._update_available_quantity(self.component01, self.stock_location, 10)
+        self.env['stock.quant']._update_available_quantity(self.component01, self.stock_location, 20, package_id=package)
+
+        lot1, lot2 = self.env['stock.lot'].create([{
+            'name': f'lot{i}',
+            'product_id': self.component_lot.id,
+        } for i in range(1, 3)])
+        self.env['stock.quant']._update_available_quantity(self.component_lot, self.stock_location, 10, lot_id=lot1)
+        self.env['stock.quant']._update_available_quantity(self.component_lot, self.shelf1, 10, lot_id=lot2)
+
+        mo = self.env['mrp.production'].create({
+            'product_id': self.final_product.id,
+            'product_qty': 1,
+            'move_raw_ids': [Command.create({
+                'product_id': self.component01.id,
+                'product_uom_qty': 2
+            })]
+        })
+        mo.action_confirm()
+
+        url = f'/odoo/{mo.id}/action-stock_barcode_mrp.stock_barcode_mo_client_action'
+        self.start_tour(url, 'test_quant_selection_mrp', login='admin')
+
+        self.assertRecordValues(mo.move_raw_ids.move_line_ids, [
+            {'product_id': self.component01.id, 'qty_done': 2, 'location_id': self.stock_location.id, 'lot_id': False, 'package_id': package.id, 'state': 'done'},
+            {'product_id': self.component_lot.id, 'qty_done': 2, 'location_id': self.shelf1.id, 'lot_id': lot2.id, 'package_id': False, 'state': 'done'},
+        ])

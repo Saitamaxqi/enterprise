@@ -1566,3 +1566,133 @@ registry.category("web_tour.tours").add("test_create_all_transfers_for_3_step_ma
     { trigger: "button.o_validate_page:enabled", run: "click" },
     { trigger: ".o_notification_bar.bg-success", run() {} },
 ]});
+
+registry.category("web_tour.tours").add("test_quant_selection_mrp", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_line",
+            run: function () {
+                helper.assertLinesCount(2);
+                helper.assertLineProduct(0, "Final Product");
+                helper.assertLineQty(0, "0/1");
+                helper.assertLineProduct(1, "Compo 01");
+                helper.assertLineQty(1, "0/2");
+            },
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan LOC-01-00-00",
+        },
+        {
+            trigger: ".o_barcode_line:not(.o_selected)",
+            run: "scan compo01",
+        },
+        {
+            trigger: ".o_barcode_line[data-barcode='compo01'].o_selected .o_edit",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_view_container",
+            run: function () {
+                helper.assertFormLocationSrc("WH/Stock");
+                helper.assertFormQuantity("1");
+                helper.assert(
+                    document.querySelector("div[name='result_package_id'] input").value,
+                    ""
+                );
+                helper.assertKanbanRecordsCount(2);
+            },
+        },
+        /**
+         * Select the quant having,
+         * Location: WH/Stock
+         * Quantity: 10
+         * Package: 'package001'
+         */
+        {
+            trigger: ".o_field_stock_barcode_quant_one2many .o_kanban_record:nth-child(2)",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_view_container",
+            run: function () {
+                helper.assertFormLocationSrc("WH/Stock");
+                helper.assertFormQuantity("1");
+                helper.assert(
+                    document.querySelector("div[name='result_package_id'] input").value,
+                    ""
+                );
+                helper.assertKanbanRecordsCount(2);
+            },
+        },
+        { trigger: ".o_save", run: "click" },
+        { trigger: "button.o_add_remaining_quantity", run: "click" },
+
+        // Add Component
+        { trigger: ".btn.o_add_line", run: "click" },
+        { trigger: "div[name='product_id']", run: "click" },
+        { trigger: "div[name='product_id'] .o_input", run: "edit Compo Lot" },
+        { trigger: ".dropdown-item:contains('Compo Lot')", run: "click" },
+        { trigger: "[name='formatted_product_barcode']:contains('[compo_lot]')" },
+        { trigger: ".o_field_widget[name=qty_done] input", run: "clear" },
+        { trigger: ".o_field_widget[name=qty_done] input", run: "edit 2" },
+        {
+            trigger: ".o_form_view_container",
+            run: function () {
+                helper.assertFormLocationSrc("WH/Stock");
+                helper.assertFormQuantity("2");
+                helper.assert(document.querySelector("div[name='lot_id'] input").value, "");
+                helper.assert(
+                    document.querySelector("div[name='result_package_id'] input").value,
+                    ""
+                );
+                helper.assertKanbanRecordsCount(2);
+            },
+        },
+        /**
+         * Select the quant having,
+         * Location: WH/Stock/Section 1
+         * Quantity: 10
+         */
+        {
+            trigger: ".o_field_stock_barcode_quant_one2many .o_kanban_record:nth-child(2)",
+            run: "click",
+        },
+        {
+            trigger: "div[name='location_id'] input:value('WH/Stock/Section 1')",
+            run: function () {
+                helper.assertFormLocationSrc("WH/Stock/Section 1");
+                helper.assertFormQuantity("2");
+                helper.assert(document.querySelector("div[name='lot_id'] input").value, "lot2");
+                helper.assert(
+                    document.querySelector("div[name='result_package_id'] input").value,
+                    ""
+                );
+                helper.assertKanbanRecordsCount(2);
+            },
+        },
+        { trigger: ".o_save", run: "click" },
+        // Scans the final product
+        { trigger: ".o_header .o_barcode_line_title:contains('Final Product')", run: "scan final" },
+        {
+            trigger: ".o_barcode_line.o_header_completed .qty-done:contains('1')",
+            run: function () {
+                helper.assertLinesCount(3);
+                const [line1, line2, line3] = helper.getLines();
+                helper.assertLineProduct(line1, "Final Product");
+                helper.assertLineProduct(line2, "Compo 01");
+                helper.assertLineProduct(line3, "Compo Lot");
+                helper.assertLineIsHighlighted(line1, false);
+                helper.assertLineIsHighlighted(line2, false);
+                helper.assertLineIsHighlighted(line3, false);
+                helper.assertLineQty(line1, "1/1");
+                helper.assertLineQty(line2, "2/2");
+                helper.assertLineQty(line3, "2");
+                helper.assert(line2.querySelector(".package").innerText, "package001");
+                helper.assertLineSourceLocation(line2, "WH/Stock");
+                helper.assertLineSourceLocation(line3, "WH/Stock/Section 1");
+            },
+        },
+        ...stepUtils.validateBarcodeOperation(),
+    ],
+});

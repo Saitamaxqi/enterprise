@@ -7,6 +7,8 @@
     <field name="priority">1000</field>
     <field name="arch" type="xml">
         <form string="Select a Product" class="o_barcode_line_form flex-column" js_class="stock_barcode_sml_form">
+            <field name="id" invisible="1"/>
+            <field name="location_id" invisible="1"/>
             <field name="company_id" force_save="1" invisible="1"/>
             <field name="move_id" invisible="1"/>
             <field name="picked" invisible="1"/>
@@ -115,15 +117,17 @@
                 <div class="col-12 d-flex mt-2 ms-0 justify-contents-center">
                     <hr class="flex-grow-1"/>
                     <div class="d-flex flex-column">
-                        <label for="product_stock_quant_ids" string="Quantity in stock"
-                           class="fs-5 fw-bold text-center text-black-50 mt-1 px-2"/>
-                        <p class="fs-5 fw-bold text-center text-black-25 mt-1 px-2" groups="stock.group_stock_multi_locations">
+                        <p class="fw-bold text-center text-black-25 m-0">
+                           Quantity in Stock
+                        </p>
+                        <p class="fw-bold text-center text-black-25 px-1"
+                            groups="stock.group_stock_multi_locations,stock.group_production_lot,stock.group_tracking_owner">
                             Select where else to pick the product from
                         </p>
                     </div>
                     <hr class="flex-grow-1"/>
                 </div>
-                <div class="col-12 my-2 d-flex">
+                <div class="col-12 mb-5 d-flex">
                     <field name="product_stock_quant_ids" widget="stock_barcode_quant_one2many" mode="kanban" context="{
                             'kanban_view_ref': 'stock_barcode.stock_quant_barcode_kanban_2',
                             'list_view_ref': 'stock_barcode.view_stock_quant_tree'}"/>
