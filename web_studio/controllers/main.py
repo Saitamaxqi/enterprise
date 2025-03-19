@@ -26,10 +26,6 @@ OPERATIONS_WHITELIST = [
     'kanban_colorpicker',
     'kanban_menu',
     'kanban_wrap_main',
-    'kanban_dropdown',  # deprecated
-    'kanban_image',  # deprecated
-    'kanban_priority',  # deprecated
-    'kanban_set_cover',  # deprecated
     'map_popup_fields',
     'pivot_measures_fields',
     'graph_pivot_groupbys_fields',
