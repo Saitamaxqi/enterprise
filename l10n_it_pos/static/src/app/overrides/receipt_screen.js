@@ -9,35 +9,9 @@ patch(ReceiptScreen.prototype, {
         onMounted(async () => {
             const order = this.pos.getOrder();
             if (isFiscalPrinterActive(this.pos.config) && !order.nb_print) {
-                //make sure we only print the first time around
-                await this.printReceipt();
-                if (this.pos.config.it_fiscal_cash_drawer) {
-                    await this.pos.fiscalPrinter.openCashDrawer();
-                }
+                //make sure we print the fiscal receipt
+                await this.pos.printReceipt({ order });
             }
         });
-    },
-
-    async printReceipt() {
-        if (!isFiscalPrinterActive(this.pos.config)) {
-            return super.printReceipt(...arguments);
-        }
-
-        const order = this.pos.getOrder();
-
-        const result = order.to_invoice
-            ? await this.pos.fiscalPrinter.printFiscalInvoice()
-            : await this.pos.fiscalPrinter.printFiscalReceipt();
-
-        if (result.success) {
-            this.pos.data.write("pos.order", [order.id], {
-                it_fiscal_receipt_number: result.addInfo.fiscalReceiptNumber,
-                it_fiscal_receipt_date: result.addInfo.fiscalReceiptDate,
-                it_z_rep_number: result.addInfo.zRepNumber,
-                //update the number of times the order got printed, handling undefined
-                nb_print: order.nb_print ? order.nb_print + 1 : 1,
-            });
-            return true;
-        }
     },
 });
