@@ -6,6 +6,6 @@ class ResConfigSettings(models.TransientModel):
 
     pos_urbanpiper_minimum_preparation_time = fields.Integer(
         related='pos_config_id.urbanpiper_minimum_preparation_time',
-        string='Minimum Preparation Time (Seconds)',
+        string='Minimum Preparation Time (Minutes)',
         help='The minimum amount of time the customer must wait for the order to be prepared.',
     )

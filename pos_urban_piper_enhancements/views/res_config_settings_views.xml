@@ -9,7 +9,7 @@
                 <div class="row">
                     <label string="Preparation Time" for="pos_urbanpiper_minimum_preparation_time" class="col-lg-5 o_light_label"/>
                     <field name="pos_urbanpiper_minimum_preparation_time" readonly="pos_has_active_session" class="col-lg-2 w-25"/>
-                    <label for="pos_urbanpiper_minimum_preparation_time" string="seconds" class="col-lg-2 o_light_label mt-1"/>
+                    <label for="pos_urbanpiper_minimum_preparation_time" string="minutes" class="col-lg-2 o_light_label mt-1"/>
                 </div>
             </xpath>
         </field>

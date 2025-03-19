@@ -6,9 +6,9 @@ class PosConfig(models.Model):
     _inherit = 'pos.config'
 
     urbanpiper_minimum_preparation_time = fields.Integer(
-        string='Minimum Preparation Time (Seconds)',
+        string='Minimum Preparation Time (Minutes)',
         help='The minimum amount of time the customer must wait for the order to be prepared.',
-        default=2700,
+        default=45,
         required=True,
     )
 
@@ -29,5 +29,5 @@ class PosConfig(models.Model):
         ]
         if timings:
             data['stores'][0]['timings'] = timings
-        data['stores'][0]['min_pickup_time'] = self.urbanpiper_minimum_preparation_time
+        data['stores'][0]['min_pickup_time'] = self.urbanpiper_minimum_preparation_time * 60
         return data
