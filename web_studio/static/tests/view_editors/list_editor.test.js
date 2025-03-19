@@ -11,6 +11,7 @@ import {
     mockService,
     serverState,
     patchWithCleanup,
+    MockServer,
 } from "@web/../tests/web_test_helpers";
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import {
@@ -110,7 +111,7 @@ test("list editor", async () => {
 
     expect("thead th").toHaveCount(3);
     expect("tbody tr").toHaveCount(4);
-    expect("tbody td.o_data_cell").toHaveCount(Partner._records.length);
+    expect("tbody td.o_data_cell").toHaveCount(MockServer.env["partner"].length);
     expect("tbody tr:not(.o_data_row) td").toHaveAttribute("colspan", "3");
     expect("tfoot td").toHaveCount(3);
 });
@@ -140,6 +141,7 @@ test("optional field in list editor", async () => {
 });
 
 test("new field should come with 'show' as default value of optional", async () => {
+    expect.assertions(1);
     const arch = `<list><field name='display_name'/></list>`;
 
     await mountViewEditor({
@@ -160,6 +162,7 @@ test("new field should come with 'show' as default value of optional", async () 
 });
 
 test("new field before a button_group", async () => {
+    expect.assertions(3);
     const arch = `
         <list>
             <button name="action_1" type="object"/>
@@ -204,6 +207,7 @@ test("new field before a button_group", async () => {
 });
 
 test("new field after a button_group", async () => {
+    expect.assertions(3);
     const arch = `
         <list>
             <field name='display_name'/>
@@ -311,6 +315,7 @@ test("column invisible field in list editor", async () => {
 });
 
 test("invisible toggle field in list editor", async () => {
+    expect.assertions(2);
     const operations = [
         {
             type: "attributes",
@@ -623,6 +628,7 @@ test("already selected widget wihtout supportingTypes should be shown in sidebar
 });
 
 test("editing selection field of list of form view", async () => {
+    expect.assertions(3);
     class Product extends models.Model {
         _name = "product";
 
@@ -765,7 +771,9 @@ test("add a selection field in non debug", async () => {
     expect(".modal .o_web_studio_selection_editor > li input").toHaveCount(1);
     expect(".modal .o_web_studio_selection_editor > li input:eq(0)").toHaveValue("Value 1");
 
-    await contains(".modal .o_web_studio_selection_editor ul:first-child input").edit("Miramar", { confirm: false });
+    await contains(".modal .o_web_studio_selection_editor ul:first-child input").edit("Miramar", {
+        confirm: false,
+    });
     await contains(".modal .o_web_studio_selection_editor ul:first-child button.fa-check").click();
     expect(".modal .o_web_studio_selection_editor ul:first-child li").toHaveText("Miramar");
 
@@ -805,7 +813,9 @@ test("add a selection field in debug", async () => {
     expect(".modal .o_web_studio_selection_editor > li").toHaveCount(1);
     expect(".modal .o_web_studio_selection_editor > li span:contains(Value 1)").toHaveCount(1);
 
-    await contains(".modal #new .o-web-studio-interactive-list-item-input").edit("Value 2", { confirm: false });
+    await contains(".modal #new .o-web-studio-interactive-list-item-input").edit("Value 2", {
+        confirm: false,
+    });
     await contains(".modal #new button.fa-check").click();
     expect(".modal .o_web_studio_selection_editor > li").toHaveCount(2);
 
@@ -815,12 +825,18 @@ test("add a selection field in debug", async () => {
     expect(".modal .o_web_studio_selection_full_edit").toHaveCount(1);
     expect(".o_web_studio_selection_full_edit label:nth-child(2) input").toHaveValue("Value 1");
 
-    await contains(".o_web_studio_selection_full_edit label:nth-child(2) input").edit("My Value", { confirm: false });
+    await contains(".o_web_studio_selection_full_edit label:nth-child(2) input").edit("My Value", {
+        confirm: false,
+    });
     await contains(".o_web_studio_selection_full_edit .fa-check").click();
     expect(".o_web_studio_selection_full_edit").toHaveCount(0);
-    expect(".modal .o_web_studio_selection_editor ul li:first-child .o-web-studio-interactive-list-item-label").toHaveText("My Value");
+    expect(
+        ".modal .o_web_studio_selection_editor ul li:first-child .o-web-studio-interactive-list-item-label"
+    ).toHaveText("My Value");
 
-    await contains(".modal #new .o-web-studio-interactive-list-item-input").edit("Value 3", { confirm: false });
+    await contains(".modal #new .o-web-studio-interactive-list-item-input").edit("Value 3", {
+        confirm: false,
+    });
     await contains(".modal #new button.fa-check").click();
     expect(".modal .o_web_studio_selection_editor > li").toHaveCount(3);
 
@@ -830,7 +846,9 @@ test("add a selection field in debug", async () => {
     await contains(
         ".modal .o_web_studio_selection_editor > li:nth-child(2) .o-draggable-handle"
     ).dragAndDrop(".modal .o_web_studio_selection_editor > li:first-child");
-    expect(".modal .o_web_studio_selection_editor ul li:first-child .o-web-studio-interactive-list-item-label").toHaveText("Value 2");
+    expect(
+        ".modal .o_web_studio_selection_editor ul li:first-child .o-web-studio-interactive-list-item-label"
+    ).toHaveText("Value 2");
 
     await contains(".modal .o-web-studio-interactive-list-item-input").edit("Sulochan");
     await contains(".modal .btn-primary").click();
@@ -1066,7 +1084,7 @@ test("add group to field", async () => {
 
     await contains(".o_web_studio_list_view_editor [data-studio-xpath]").click();
     await contains(".o_field_widget[name='group_ids'] input").click();
-    press("ArrowDown");
+    await press("ArrowDown");
     await animationFrame();
     await contains(".dropdown-item").click();
     expect.verifySteps(["edit_view"]);
@@ -1201,8 +1219,8 @@ test("list editor field with aggregate function", async () => {
 
     Partner._fields.integer_field = fields.Integer();
     Partner._fields.float_field = fields.Float();
-    (Partner._fields.currency_id = fields.Many2one({ relation: "res.currency" })),
-        (Partner._fields.money_field = fields.Monetary({ currency_field: "currency_id" }));
+    Partner._fields.currency_id = fields.Many2one({ relation: "res.currency" });
+    Partner._fields.money_field = fields.Monetary({ currency_field: "currency_id" });
     Partner._records = [
         {
             integer_field: 3,
@@ -1227,7 +1245,7 @@ test("list editor field with aggregate function", async () => {
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
         expect.step("edit_view");
-        let op = params.operations[params.operations.length - 1];
+        const op = params.operations[params.operations.length - 1];
         if (op.new_attrs.sum !== "") {
             expect(op.new_attrs.sum).toBe("Sum of Integer field");
             arch = `<list><field name="display_name"/><field name="float_field"/><field name="money_field"/><field name="integer_field" sum="Sum of Integer field"/></list>`;
@@ -1488,6 +1506,7 @@ test("invisible relational are fetched", async () => {
 });
 
 test("List readonly attribute should not set force_save", async () => {
+    expect.assertions(2);
     const arch = '<list><field name="display_name"/></list>';
 
     await mountViewEditor({

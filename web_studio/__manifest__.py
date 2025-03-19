@@ -113,11 +113,8 @@ Note: Only the admin user is allowed to make those customizations.
             'web_studio/static/src/client_action/report_editor/qweb_table_plugin.scss',
         ],
         'web.qunit_suite_tests': [
-            # In tests we don't want to lazy load this
-            # And we don't want to push them into any other test suite either
-            # as web.tests_assets would
-            ('include', 'web_studio.studio_assets_minimal'),
-            'web_studio/static/tests/legacy/**/*.js',
+            # File to remove once all the legacy tests have been converted
+            'web_studio/static/tests/legacy/disable_patch.js',
         ],
         'web.assets_unit_tests': [
             ('include', 'web_studio.studio_assets_minimal'),

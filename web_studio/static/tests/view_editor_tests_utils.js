@@ -117,13 +117,10 @@ export async function mountViewEditor(params) {
     prepareRegistry(params.filterRegistry ?? true);
     const env = params.env || getMockEnv() || (await makeMockEnv({ config }));
 
-    if (params.type && params.arch) {
-        parseViewProps(params);
-        actionToEdit.views = [[params.viewId, params.type]];
-    }
+    params = parseViewProps(params);
+    actionToEdit.views = [[params.viewId, params.type]];
 
     handleDefaultStudioRoutes();
-
     env.services.studio.setParams({
         viewType: params.type,
         editorTab: "views",
@@ -152,6 +149,7 @@ function prepareRegistry(filterRegistry) {
         "orm",
         "field",
         "name",
+        "http",
         "home_menu",
         "menu",
         "action",

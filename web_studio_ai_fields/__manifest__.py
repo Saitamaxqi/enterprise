@@ -20,8 +20,5 @@
         'web.assets_unit_tests': [
             'web_studio_ai_fields/static/tests/**/*',
         ],
-        'web.qunit_suite_tests': [
-            ('remove', 'web_studio_ai_fields/static/src/**/*'),
-        ],
     },
 }
