@@ -98,7 +98,7 @@ class TestSmartSchedule(TestSmartScheduleCommon):
         # user_projectmanager is off till 10
         # the first possible time for both of them is starting from 11
         self.assertEqual(self.task_project_pigs_with_allocated_hours_manager.planned_date_begin, datetime(2023, 1, 11, 7))
-        self.assertEqual(self.task_project_pigs_with_allocated_hours_manager.date_deadline, datetime(2023, 1, 12, 9))
+        self.assertEqual(self.task_project_pigs_with_allocated_hours_manager.date_deadline, datetime(2023, 1, 12, 9 if self.is_module_timesheet_grid_installed else 11))
 
         # even that task_project_pigs_with_allocated_hours_manager was planned first as it has a deadline
         # smart scheduling is optimizing resources so
@@ -108,8 +108,8 @@ class TestSmartSchedule(TestSmartScheduleCommon):
 
         # should not be planned after the old deadline of its parent, as its parent will be planned again
         # if the new deadline is before the old one, no need to block the task and plan it ASAP
-        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.planned_date_begin, datetime(2023, 1, 12, 9))
-        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.date_deadline, datetime(2023, 1, 13, 14))
+        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.planned_date_begin, datetime(2023, 1, 12, 9 if self.is_module_timesheet_grid_installed else 12))
+        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.date_deadline, datetime(2023, 1, 13, 14 if self.is_module_timesheet_grid_installed else 16))
 
     def test_tasks_allocated_hours_no_user(self):
         result = (
@@ -462,9 +462,7 @@ class TestSmartSchedule(TestSmartScheduleCommon):
         # the project will automatically be timesheetable since the default value is true and so the allocated_hours will
         # not be recomputed when the project is timesheetable since we assume the user will manually set the allocated
         # hours on his tasks to correctly timesheets.
-        allocated_hours = 12
-        if hasattr(self.env['project.task'], 'allow_timesheets'):
-            allocated_hours = 0
+        allocated_hours = 0 if self.is_module_timesheet_grid_installed else 12
         self.assertEqual(
             tasks.sorted('planned_date_begin').mapped(lambda t: (t.name, t.allocated_hours, t.planned_date_begin, t.date_deadline)),
             [
@@ -526,7 +524,7 @@ class TestSmartSchedule(TestSmartScheduleCommon):
         self.assertEqual(
             tasks.sorted('planned_date_begin').mapped(lambda t: (t.allocated_hours, t.planned_date_begin, t.date_deadline)),
             [
-                (16.0, datetime(2023, 10, 16, 6, 0), datetime(2023, 10, 18, 15, 0)),
+                (16.0 if self.is_module_timesheet_grid_installed else 24.0, datetime(2023, 10, 16, 6, 0), datetime(2023, 10, 18, 15, 0)),
                 (8.0, datetime(2023, 10, 19, 6, 0), datetime(2023, 10, 19, 15, 0)),
             ],
         )

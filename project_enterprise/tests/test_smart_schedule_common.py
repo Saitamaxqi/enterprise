@@ -85,3 +85,4 @@ class TestSmartScheduleCommon(TestProjectCommon):
         cls.end_date_view = cls.start_date_view + relativedelta(days=31)
         cls.start_date_view_str = cls.start_date_view.strftime('%Y-%m-%d %H:%M:%S')
         cls.end_date_view_str = cls.end_date_view.strftime('%Y-%m-%d %H:%M:%S')
+        cls.is_module_timesheet_grid_installed = hasattr(cls.env['project.task'], 'allow_timesheets')
