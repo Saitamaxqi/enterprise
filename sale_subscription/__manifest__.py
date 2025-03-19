@@ -71,7 +71,7 @@ Features:
         ],
         'web.assets_frontend': [
             'sale_subscription/static/src/js/payment_form.js',
-            'sale_subscription/static/src/js/portal_subscription.js',
+            'sale_subscription/static/src/interactions/**/*',
             'sale_subscription/static/src/xml/*.xml',
         ],
         'web.assets_tests': [
