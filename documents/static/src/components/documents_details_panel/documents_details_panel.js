@@ -41,12 +41,15 @@ export class DocumentsDetailsPanel extends Component {
         this.orm = useService("orm");
         this.dialog = useService("dialog");
         onWillRender(() => {
-            this.record = reactive(this.props.record || {}, async () => {
-                if (this.props.record?.data?.type === "folder") {
-                    await this.env.searchModel._reloadSearchPanel();
-                    this.render();
-                }
-            });
+            this.record = new Proxy(
+                reactive(this.props.record || {}, async () => {
+                    if (this.props.record?.data?.type === "folder") {
+                        await this.env.searchModel._reloadSearchPanel();
+                        this.render();
+                    }
+                }),
+                isDetailsPanelRecordHandler
+            );
         });
 
         // Use a state for the model to not write on the record the model without record id
@@ -147,3 +150,14 @@ export class DocumentsDetailsPanel extends Component {
         }
     }
 }
+
+/**
+ * Return isDetailsPanelRecord = true to prevent multi edit when editing a focused record from the
+ * details panel but not from the list rows.
+ * @type ProxyHandler
+ */
+const isDetailsPanelRecordHandler = {
+    get(target, prop, receiver) {
+        return prop === "isDetailsPanelRecord" || Reflect.get(...arguments);
+    },
+};

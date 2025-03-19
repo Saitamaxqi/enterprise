@@ -1,7 +1,7 @@
 import { useCommand } from "@web/core/commands/command_hook";
 import { _t } from "@web/core/l10n/translation";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { useComponent, useState, useEffect } from "@odoo/owl";
+import { onWillUpdateProps, useComponent, useState, useEffect } from "@odoo/owl";
 
 export const DocumentsRendererMixin = (component) =>
     class extends component {
@@ -10,6 +10,9 @@ export const DocumentsRendererMixin = (component) =>
             this.documentService = useService("document.document");
 
             this.documentService.chatterState.previewedDocument = null;
+            this.documentsState = useState({
+                focusedRecord: this.selection?.[0] || this.getContainerRecord(),
+            });
             this.chatterState = useState(this.documentService.chatterState);
             this.component = useComponent();
 
@@ -25,7 +28,7 @@ export const DocumentsRendererMixin = (component) =>
                     isAvailable: () =>
                         this.documentService.userIsInternal &&
                         this.recordsToArchive &&
-                        this.targetRecords.every((r) => r.data.user_permission === "edit")
+                        this.selection.every((r) => r.data.user_permission === "edit")
                 }
             );
             useCommand(
@@ -42,12 +45,18 @@ export const DocumentsRendererMixin = (component) =>
             useEffect(
                 () => {
                     this.recordsToDelete = !this.documentService.userIsInternal
-                        ? this.targetRecords
-                        : this.targetRecords.some((r) => !r.data.active);
-                    this.recordsToArchive = this.targetRecords.some((r) => r.data.active);
+                        ? this.selection
+                        : this.selection.some((r) => !r.data.active);
+                    this.recordsToArchive = this.selection.some((r) => r.data.active);
                 },
-                () => [this.targetRecords]
+                () => [this.selection]
             );
+
+            onWillUpdateProps((nextProps) => {
+                if (nextProps.list !== this.props.list) {
+                    this.documentsState.focusedRecord = this.getContainerRecord();
+                }
+            });
         }
         /**
          * Record for showing/modifying details of containing folder
@@ -120,10 +129,13 @@ export const DocumentsRendererMixin = (component) =>
         /**
          * Records on which we will execute the actions / see the chatter.
          */
-        get targetRecords() {
-            return this.chatterState.previewedDocument
-                ? [this.chatterState.previewedDocument.record]
-                : this.selection;
+        get detailsRecord() {
+            const focusedRecord = this.documentsState.focusedRecord
+                ? this.documentsState.focusedRecord
+                : null;
+            return this.documentService.previewedDocument
+                ? this.documentService.previewedDocument.record
+                : focusedRecord;
         }
 
         get selection() {

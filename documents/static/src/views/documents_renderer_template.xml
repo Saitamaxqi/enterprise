@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <t t-name="documents.DocumentsViews.RightPanel">
-        <t t-set="chatterRecord" t-value="targetRecords.length === 0  ? this.getContainerRecord() : targetRecords[0]"/>
-        <t t-set="multipleSelection" t-value="targetRecords.length &gt; 1"/>
-        <t t-set="chatterDisabled" t-value="multipleSelection || !chatterRecord.data || typeof chatterRecord.data.id !== 'number'"/>
+        <t t-set="chatterRecord" t-value="detailsRecord || this.getContainerRecord()"/>
+        <t t-set="multipleSelection" t-value="selection.length &gt; 1"/>
+        <t t-set="chatterDisabled" t-value="!detailsRecord || !chatterRecord.data || typeof chatterRecord.data.id !== 'number'"/>
         <div t-if="this.chatterState.visible"
             class="o_document_chatter_container o-mail-ChatterContainer"
             t-att-class="{'mt-2': isMobile, 'h-100 o-aside': !isMobile, 'd-flex flex-column' : !chatterDisabled}"
             t-ref="chatterContainer">
             <t t-if="chatterDisabled" t-call="documents.DocumentsViews.ChatterOverlay">
-                <t t-if="multipleSelection" t-set="itemsNumber" t-value="targetRecords.length"/>
+                <t t-if="multipleSelection" t-set="itemsNumber" t-value="selection.length"/>
             </t>
             <DocumentsDetailsPanel t-if="!chatterDisabled" record="chatterRecord" nbViewItems="getNbViewItems()" />
             <Chatter t-if="chatterRecord.data and documentService.userIsInternal"

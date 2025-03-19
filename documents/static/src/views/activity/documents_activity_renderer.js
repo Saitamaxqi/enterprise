@@ -5,7 +5,7 @@ import { DocumentsDetailsPanel } from "@documents/components/documents_details_p
 import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
 import { DocumentsFileViewer } from "@documents/views/helper/documents_file_viewer";
 
-import { useRef } from "@odoo/owl";
+import { onWillUpdateProps, useRef } from "@odoo/owl";
 
 export class DocumentsActivityRenderer extends DocumentsRendererMixin(ActivityRenderer) {
     static props = {
@@ -23,6 +23,13 @@ export class DocumentsActivityRenderer extends DocumentsRendererMixin(ActivityRe
     setup() {
         super.setup();
         this.root = useRef("root");
+
+        onWillUpdateProps(nextProps => {
+            const selectedRecord = nextProps.records.find((r) => r.selected);
+            if (selectedRecord) {
+                this.documentsState.focusedRecord = selectedRecord;
+            }
+        })
     }
 
     getDocumentsAttachmentViewerProps() {

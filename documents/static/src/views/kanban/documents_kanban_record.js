@@ -111,7 +111,8 @@ export class DocumentsKanbanRecord extends KanbanRecord {
             this.props.toggleSelection(this.props.record, ev.shiftKey);
         } else if (this.env.searchModel.getSelectedFolderId() === "TRASH" || this.props.record.data.type !== "folder") {
             // Select only one document record
-            this.props.getSelection().forEach(r => r.toggleSelection(false));
+            this.props.getSelection().forEach((r) => r.toggleSelection(false));
+            this.rootRef.el.focus();
             this.props.toggleSelection(this.props.record);
         } else {
             this.props.record.openFolder();

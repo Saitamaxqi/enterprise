@@ -202,11 +202,9 @@ export const DocumentsModelMixin = (component) =>
             if (this.targetRecords.length !== 1) {
                 return;
             }
-            await this.orm.call(
-                "documents.document",
-                "action_create_shortcut",
-                [this.targetRecords[0].data.id],
-            );
+            await this.orm.call("documents.document", "action_create_shortcut", [
+                this.targetRecords[0].data.id,
+            ]);
             await this._notifyChange();
         }
 
@@ -399,12 +397,13 @@ export const DocumentsRecordMixin = (component) => class extends component {
     async update(changes, options = {}) {
         const modelMultiEdit = this.model.multiEdit;
         let movedRecordsIds = this.model.root.selection.map((rec) => rec.id);
-        if (this.resId === this.model.documentService.previewedDocument?.record.resId) {
-            // As previewed documents are not selected, force `save=true` to save any changes as the record is updated
+        if (this.isDetailsPanelRecord) {
+            // As previewed/focused documents are not necessarily selected,
+            // force `save=true` to save any changes as the record is updated
             options.save = true;
-            // Prevent multiEditing/moving the selection as it is not what we intend to modify when previewing.
+            // Prevent multiEditing/moving the (whole) selection as it is not what we intend to modify when previewing.
             this.model.multiEdit = false;
-            movedRecordsIds = [this.model.root.records.find((rec)=> rec.data.id === this.resId).id];
+            movedRecordsIds = [this.resId];
         }
         const originalFolderId = this.data.folder_id[0];
         const ret = await super.update(changes, options);

@@ -4,30 +4,42 @@ import { Many2ManyTagsField } from "@web/views/fields/many2many_tags/many2many_t
  * @override update, quickCreate (also called with create&Edit), and deleteTag
  * to save the record in db immediately. This is necessary to edit records
  * that are not "selected" as when they are inspected on the details panel when
- * in "preview" mode.
+ * in "preview" mode or focused only.
  */
 export class DocumentsDetailsMany2ManyTagsField extends Many2ManyTagsField {
-
     setup() {
         super.setup();
         const superUpdate = this.update;
-        this.update = (recordlist) => {
+        this.update = async (recordlist) => {
             const ret = superUpdate(recordlist);
-            this.props.record.save();
+            await this._preventMultiEdit(async () => this.props.record.save());
             return ret;
         };
         if (this.quickCreate) {
             const superQuickCreate = this.quickCreate;
             this.quickCreate = async (name) => {
                 const ret = await superQuickCreate(name);
-                this.props.record.save();
+                await this._preventMultiEdit(async () => this.props.record.save());
                 return ret;
             };
         }
     }
 
     async deleteTag(id) {
-        await super.deleteTag(id);
-        await this.props.record.save();
+        await this._preventMultiEdit(async () => {
+            await super.deleteTag(id);
+            await this.props.record.save();
+        });
+    }
+
+    async _preventMultiEdit(callable) {
+        if (this.props.record.isDetailsPanelRecord && this.env.model.multiEdit) {
+            const modelMultiEdit = this.env.model.multiEdit;
+            this.env.model.multiEdit = false;
+            await callable();
+            this.env.model.multiEdit = modelMultiEdit;
+        } else {
+            await callable();
+        }
     }
 }

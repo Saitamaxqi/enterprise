@@ -1,19 +1,20 @@
-import { _t } from "@web/core/l10n/translation";
-import { ListRenderer } from "@web/views/list/list_renderer";
-
-import { useService } from "@web/core/utils/hooks";
+import { Chatter } from "@mail/chatter/web_portal/chatter";
+import { useCommand } from "@web/core/commands/command_hook";
+import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
 import { FileUploadProgressContainer } from "@web/core/file_upload/file_upload_progress_container";
 import { FileUploadProgressDataRow } from "@web/core/file_upload/file_upload_progress_record";
-import { DocumentsDropZone } from "../helper/documents_drop_zone";
-import { DocumentsActionHelper } from "../helper/documents_action_helper";
-import { DocumentsFileViewer } from "../helper/documents_file_viewer";
+import { _t } from "@web/core/l10n/translation";
+import { useService } from "@web/core/utils/hooks";
+import { ListRenderer } from "@web/views/list/list_renderer";
+
 import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
+import { DocumentsActionHelper } from "@documents/views/helper/documents_action_helper";
+import { useDraggableDocuments } from "@documents/views/helper/documents_draggable";
+import { DocumentsDropZone } from "@documents/views/helper/documents_drop_zone";
+import { DocumentsFileViewer } from "@documents/views/helper/documents_file_viewer";
 import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
-import { useCommand } from "@web/core/commands/command_hook";
-import { useDraggableDocuments } from "../helper/documents_draggable";
+
 import { useExternalListener, useRef } from "@odoo/owl";
-import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
-import { Chatter } from "@mail/chatter/web_portal/chatter";
 
 export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) {
     static props = [...ListRenderer.props, "previewStore"];
@@ -121,16 +122,20 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
     onCellClicked(record, column, ev) {
         ev.stopPropagation();
         const isIcon = ev.target.closest(".o_field_documents_type_icon");
-        const isSelectionKeyPressed = ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey;
-        if (isSelectionKeyPressed) {
+        if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.altKey) {
             this.toggleRecordSelection(record, ev);
-        } else if (isIcon) {
+            return;
+        }
+        if (isIcon) {
             if (record.data.type === "folder") {
                 record.openFolder();
             } else {
                 record.onClickPreview(ev);
             }
-        } else if (record.selected && this.editableColumns.includes(column.name)) {
+            return;
+        }
+        this.documentsState.focusedRecord = record;
+        if (record.selected && this.editableColumns.includes(column.name)) {
             super.onCellClicked(...arguments);
         }
     }
@@ -151,6 +156,7 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
         if (ev.target.closest(".o_documents_view thead")) {
             return; // We then have to check that we are not clicking on the header
         }
+        this.documentsState.focusedRecord = null;
         this.props.list.selection.forEach((el) => el.toggleSelection(false));
     }
 
@@ -159,6 +165,20 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
             count: this.props.list.model.useSampleModel ? 0 : this.props.list.count,
             fileSize: this.props.list.model.fileSize,
         };
+    }
+
+    /**
+     * @override to update focusedRecord when navigating with arrow keys
+     */
+    findFocusFutureCell(cell, cellIsInGroupRow, direction) {
+        const futureCell = super.findFocusFutureCell(cell, cellIsInGroupRow, direction);
+        if (futureCell) {
+            const dataPointId = futureCell.closest("tr").dataset.id;
+            this.documentsState.focusedRecord = this.props.list.records.filter(
+                (x) => x.id === dataPointId
+            )[0];
+        }
+        return futureCell;
     }
 
     onCellKeydown(ev, group = null, record = null) {
@@ -175,5 +195,12 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
 
     get isMobile() {
         return this.env.isSmall;
+    }
+
+    toggleRecordSelection(record) {
+        if (!record.selected) {
+            this.documentsState.focusedRecord = record;
+        }
+        super.toggleRecordSelection(record);
     }
 }

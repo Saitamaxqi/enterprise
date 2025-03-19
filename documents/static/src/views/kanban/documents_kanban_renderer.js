@@ -1,19 +1,20 @@
-import { _t } from "@web/core/l10n/translation";
-import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
-
-import { useService } from "@web/core/utils/hooks";
-import { DocumentsDropZone } from "../helper/documents_drop_zone";
+import { Chatter } from "@mail/chatter/web_portal/chatter";
+import { useCommand } from "@web/core/commands/command_hook";
 import { FileUploadProgressContainer } from "@web/core/file_upload/file_upload_progress_container";
 import { FileUploadProgressKanbanRecord } from "@web/core/file_upload/file_upload_progress_record";
-import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
-import { DocumentsKanbanRecord } from "./documents_kanban_record";
-import { DocumentsActionHelper } from "../helper/documents_action_helper";
-import { DocumentsFileViewer } from "../helper/documents_file_viewer";
+import { _t } from "@web/core/l10n/translation";
+import { useService } from "@web/core/utils/hooks";
+import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
+
 import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
-import { useDraggableDocuments } from "../helper/documents_draggable";
-import { useCommand } from "@web/core/commands/command_hook";
+import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
+import { DocumentsActionHelper } from "@documents/views/helper/documents_action_helper";
+import { useDraggableDocuments } from "@documents/views/helper/documents_draggable";
+import { DocumentsDropZone } from "@documents/views/helper/documents_drop_zone";
+import { DocumentsFileViewer } from "@documents/views/helper/documents_file_viewer";
+import { DocumentsKanbanRecord } from "@documents/views/kanban/documents_kanban_record";
+
 import { useExternalListener, useRef } from "@odoo/owl";
-import { Chatter } from "@mail/chatter/web_portal/chatter";
 
 export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRenderer) {
     static props = [...KanbanRenderer.props, "previewStore"];
@@ -90,6 +91,7 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
         if (ev.target.closest(".o_kanban_record:not(.o_kanban_ghost)")) {
             return;
         }
+        this.documentsState.focusedRecord = null;
         this.props.list.selection.forEach((el) => el.toggleSelection(false));
     }
 
@@ -149,7 +151,12 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
             newIdx += 1; // right
         }
         if (newIdx >= 0 && newIdx < cards.length && cards[newIdx] instanceof HTMLElement) {
-            cards[newIdx].focus();
+            const focusedCard = cards[newIdx];
+            focusedCard.focus();
+            const record = this.props.list.records.find((e) => e.id === focusedCard.dataset.id);
+            if (record) {
+                this.documentsState.focusedRecord = record;
+            }
             return true;
         }
     }
@@ -233,5 +240,10 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
         if (ev.key === "Control") {
             this.root.el.classList.remove("o_documents_dnd_shortcut");
         }
+    }
+
+    toggleSelection(record) {
+        this.documentsState.focusedRecord = record;
+        super.toggleSelection(...arguments);
     }
 }
