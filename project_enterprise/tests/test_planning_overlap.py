@@ -82,11 +82,10 @@ class TestPlanningOverlap(TestProjectCommon):
             'planned_date_begin': self.today + relativedelta(hour=9),
             'date_deadline': self.today + relativedelta(hour=17),
         })
-        self.task_2.allocated_hours = 2
-
         (self.task_1 + self.task_2).write({
             'user_ids': self.user_projectuser,
         })
+        self.task_2.allocated_hours = 2
 
         self.assertFalse(self.task_1.planning_overlap, "planning_overlap should be set to False, as the 2 tasks overlap\
                         but the sum of their allocated hours is less than the workable hours of the employee of the period\

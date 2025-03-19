@@ -120,79 +120,57 @@ class ProjectTask(models.Model):
         ])
         if additional_domain:
             domain &= Domain(additional_domain)
-        ProjectTask = self.env['project.task']
-        domain = domain.optimize(ProjectTask)
-        planning_overlap_query = ProjectTask._where_calc(domain & Domain('id', 'in', self.ids))
-        tu1_alias = planning_overlap_query.join(ProjectTask._table, 'id', 'project_task_user_rel', 'task_id', 'TU1')
-        task2_alias = planning_overlap_query.make_alias(ProjectTask._table, 'T2')
-        task2_query = Query(ProjectTask.env, task2_alias, ProjectTask._table_sql)
-        task2_query.add_where(domain.optimize(ProjectTask, full=True)._to_sql(ProjectTask, task2_alias, task2_query))
+        domain = domain.optimize(self, full=True)
 
-        # add additional condition to join with the main query
-        task2_query.add_where(
-            SQL(
-                "%s != %s",
-                SQL.identifier(task2_alias, 'id'),
-                SQL.identifier(self._table, 'id')
-            )
-        )
-        task2_query.add_where(
-            SQL(
-                "(%s::TIMESTAMP, %s::TIMESTAMP) OVERLAPS (%s::TIMESTAMP, %s::TIMESTAMP)",
-                SQL.identifier(ProjectTask._table, 'planned_date_begin'),
-                SQL.identifier(ProjectTask._table, 'date_deadline'),
-                SQL.identifier(task2_alias, 'planned_date_begin'),
-                SQL.identifier(task2_alias, 'date_deadline')
-            )
-        )
+        task1 = self._table
+        query = self._where_calc(domain & Domain('id', 'in', self.ids))
 
-        # join task2 query with the main query
-        planning_overlap_query.add_join(
-            'JOIN',
-            task2_alias,
-            ProjectTask._table,
-            task2_query.where_clause
-        )
-        tu2_alias = planning_overlap_query.join(task2_alias, 'id', 'project_task_user_rel', 'task_id', 'TU2')
-        planning_overlap_query.add_where(
-            SQL(
-                "%s = %s",
-                SQL.identifier(tu1_alias, 'user_id'),
-                SQL.identifier(tu2_alias, 'user_id')
-            )
-        )
-        user_alias = planning_overlap_query.join(tu1_alias, 'user_id', 'res_users', 'id', 'U')
-        partner_alias = planning_overlap_query.join(user_alias, 'partner_id', 'res_partner', 'id', 'P')
-        query_str = planning_overlap_query.select(
-            SQL.identifier(ProjectTask._table, 'id'),
-            SQL.identifier(ProjectTask._table, 'planned_date_begin'),
-            SQL.identifier(ProjectTask._table, 'date_deadline'),
-            SQL("ARRAY_AGG(%s) AS task_ids", SQL.identifier(task2_alias, 'id')),
-            SQL("MIN(%s)", SQL.identifier(task2_alias, 'planned_date_begin')),
-            SQL("MAX(%s)", SQL.identifier(task2_alias, 'date_deadline')),
-            SQL("%s AS user_id", SQL.identifier(user_alias, 'id')),
-            SQL("%s AS partner_name", SQL.identifier(partner_alias, 'name')),
-            SQL("%s", SQL.identifier(ProjectTask._table, 'allocated_hours')),
-            SQL("SUM(%s)", SQL.identifier(task2_alias, 'allocated_hours')),
-        )
+        # join for overlapping tasks (task2)
+        task2 = query.make_alias(task1, 'T2')
+        query.add_join('JOIN', task2, self._table_sql, SQL(
+            "%s != %s AND (%s::TIMESTAMP, %s::TIMESTAMP) OVERLAPS (%s::TIMESTAMP, %s::TIMESTAMP)",
+            SQL.identifier(task1, 'id'),
+            SQL.identifier(task2, 'id'),
+            SQL.identifier(task1, 'planned_date_begin'),
+            SQL.identifier(task1, 'date_deadline'),
+            SQL.identifier(task2, 'planned_date_begin'),
+            SQL.identifier(task2, 'date_deadline'),
+        ))
+        query.add_where(domain._to_sql(self, task2, query))
 
-        self.env.cr.execute(
-            SQL(
-                """
-                    %s
-                    GROUP BY %s
-                    ORDER BY %s
-                """,
-                query_str,
-                SQL(", ").join([
-                    SQL.identifier(ProjectTask._table, 'id'),
-                    SQL.identifier(user_alias, 'id'),
-                    SQL.identifier(partner_alias, 'name'),
-                ]),
-                SQL.identifier(partner_alias, 'name'),
-            )
+        # overlapping tasks must be for the same user
+        task1_user_rel = query.join(task1, 'id', 'project_task_user_rel', 'task_id', 'TU1')
+        task2_user_rel = query.join(task2, 'id', 'project_task_user_rel', 'task_id', 'TU2')
+        query.add_where(SQL(
+            "%s = %s",
+            SQL.identifier(task1_user_rel, 'user_id'),
+            SQL.identifier(task2_user_rel, 'user_id'),
+        ))
+
+        # group by task, user, partner name, and order by partner name
+        task1_user = query.join(task1_user_rel, 'user_id', 'res_users', 'id', 'U')
+        task1_partner = query.join(task1_user, 'partner_id', 'res_partner', 'id', 'P')
+        task1_partner_name = self.env['res.partner']._field_to_sql(task1_partner, 'name', query)
+        query.groupby = SQL(", ").join([
+            SQL.identifier(task1, 'id'),
+            SQL.identifier(task1_user, 'id'),
+            task1_partner_name,
+        ])
+        query.order = task1_partner_name
+
+        sql = query.select(
+            SQL.identifier(task1, 'id'),
+            SQL.identifier(task1, 'planned_date_begin'),
+            SQL.identifier(task1, 'date_deadline'),
+            SQL("ARRAY_AGG(%s) AS task_ids", SQL.identifier(task2, 'id')),
+            SQL("MIN(%s)", SQL.identifier(task2, 'planned_date_begin')),
+            SQL("MAX(%s)", SQL.identifier(task2, 'date_deadline')),
+            SQL("%s AS user_id", SQL.identifier(task1_user, 'id')),
+            SQL("%s AS partner_name", task1_partner_name),
+            SQL("%s", self._field_to_sql(task1, 'allocated_hours', query)),
+            SQL("SUM(%s)", self._field_to_sql(task2, 'allocated_hours', query)),
         )
-        return self.env.cr.dictfetchall()
+        return self.env.execute_query_dict(sql)
 
     def _get_planning_overlap_per_task(self):
         if not self.ids:
