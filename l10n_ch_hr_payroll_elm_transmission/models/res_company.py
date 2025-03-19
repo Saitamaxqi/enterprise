@@ -106,11 +106,18 @@ class ResCompany(models.Model):
                 params['split_files'] = kwargs.get('split_files')
 
         response = iap_jsonrpc(url, params=params, timeout=120)
-        result = response.get('result', False)
-        if result and result['result'] == 'success':
-            return result['data']
-        else:
-            raise ValidationError(result['message'])
+        result = response.get('result')
+
+        if result and result.get('result') == 'success':
+            return result.get('data')
+
+        message = result.get('message') if result else None
+        if message:
+            raise ValidationError(message)
+
+        error = response.get('error') if response else None
+        if error == 'not_enterprise':
+            raise ValidationError(_("This feature is only allowed in production environments."))
 
     def l10n_ch_hr_payroll_action_ping(self):
         result = self._l10n_ch_swissdec_request('ping')
@@ -120,41 +127,3 @@ class ResCompany(models.Model):
         validate_second_operand(second_operand)
         result = self._l10n_ch_swissdec_request('check_interoperability',  second_operand=second_operand)
         return result
-
-    """
-    def _initialize_insurances(self):
-        for company in self:
-            if not company.l10n_ch_laa_institution_ids and not company.l10n_ch_avs_institution_ids and not company.l10n_ch_lpp_institution_ids:
-                laa_insurance = self.env['l10n.ch.accident.insurance'].create({
-                    "name": "LAA Insurance",
-                    "insurance_code": "S1000",
-                    "customer_number": "1",
-                    "contract_number": "1",
-                    "company_id": company.id
-                })
-                lpp_insurance = self.env['l10n.ch.lpp.insurance'].create({
-                    "name": "LPP Insurance",
-                    "insurance_code": "S1000",
-                    "customer_number": "1",
-                    "contract_number": "1",
-                    "company_id": company.id
-                })
-                avs_insurance = self.env['l10n.ch.social.insurance'].create({
-                    "name": "AVS Insurance",
-                    "insurance_code": "999.999",
-                    "member_number": "1",
-                    "company_id": company.id,
-                    "laa_insurance_id": laa_insurance.id,
-                    "lpp_insurance_id": lpp_insurance.id
-                })
-            if not company.l10n_ch_work_location_ids:
-                work_location = self.env['l10n.ch.location.unit'].create({
-                    "company_id": company.id,
-                    "partner_id": company.partner_id.id,
-                })
-            if not company.l10n_ch_salary_certificate_profiles:
-                self.env["l10n.ch.salary.certificate.profile"].create({
-                    "l10n_ch_cs_name": _("%s - Wage profile", company.name),
-                    "company_id": company.id
-                })  
-    """

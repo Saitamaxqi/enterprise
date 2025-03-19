@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-24 12:13+0000\n"
-"PO-Revision-Date: 2025-03-24 12:13+0000\n"
+"POT-Creation-Date: 2025-04-09 11:56+0000\n"
+"PO-Revision-Date: 2025-04-09 11:56+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -7357,6 +7357,11 @@ msgid "Source-Tax (%s)"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5060_manual
+msgid "Source-Tax : Manual Correction"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5061
 msgid "Source-Tax Adjustment"
 msgstr ""
@@ -8295,6 +8300,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll_elm_transmission/models/l10n_ch_salary_certificate_profile.py:0
 msgid "This action can only be performed on templates"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll_elm_transmission
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll_elm_transmission/models/res_company.py:0
+#, python-format
+msgid "This feature is only allowed in production environments."
 msgstr ""
 
 #. module: l10n_ch_hr_payroll_elm_transmission

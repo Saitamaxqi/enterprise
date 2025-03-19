@@ -1116,7 +1116,14 @@
         <field name="country_id" ref="base.ch"/>
         <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm'))]"/>
     </record>
-    
+
+    <record id="l10n_ch_elm_input_WT_5060" model="hr.payslip.input.type">
+        <field name="name">(5060) Source-Tax : Manual Correction</field>
+        <field name="code">IS_MANUAL_CORR</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
     <record id="l10n_ch_elm_input_WT_5080" model="hr.payslip.input.type">
         <field name="name">(5080) Deduction Private portion of company car</field>
         <field name="code">WT_5080</field>

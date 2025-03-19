@@ -411,6 +411,10 @@ class AccountChartTemplate(models.AbstractModel):
         rules_mapping[rule]['debit'] = '2279'
         rules_mapping[rule]['credit'] = '1090'
 
+        rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5060_manual')
+        rules_mapping[rule]['debit'] = '2279'
+        rules_mapping[rule]['credit'] = '1090'
+
         rule = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_rule_5070')
         rules_mapping[rule]['debit'] = '2272'
         rules_mapping[rule]['credit'] = '1090'

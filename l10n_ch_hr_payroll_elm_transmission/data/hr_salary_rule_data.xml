@@ -4904,7 +4904,7 @@ result = result_rules['LAASALARY']['total']
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
     </record>
-    
+
     <record id="l10n_ch_elm_rule_laac_base" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_technical_category"/>
         <field name="name">LAAC Base</field>
@@ -5626,7 +5626,7 @@ result = sum(result_rules[rule.code]['total'] for rule in periodic_rules)
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
     </record>
-    
+
     <record id="l10n_ch_elm_rule_ISSALARYDATP" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_technical_category"/>
         <field name="name">Source-Tax Determinant Aperiodic Salary</field>
@@ -5641,7 +5641,7 @@ result = sum(result_rules[rule.code]['total'] for rule in periodic_rules)
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
     </record>
-    
+
     <record id="l10n_ch_elm_rule_9070" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ch_hr_payroll_elm_transmission.l10n_ch_elm_technical_category"/>
         <field name="name">Source-Tax Salary</field>
@@ -5948,6 +5948,25 @@ if payslip.l10n_ch_is_code and not payslip.l10n_ch_after_departure_payment == 'N
         result = total_is
 else:
     result = 0
+        </field>
+        <field name="l10n_ch_salary_certificate">12</field>
+        <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
+    </record>
+
+    <record id="l10n_ch_elm_rule_5060_manual" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Source-Tax : Manual Correction</field>
+        <field name="code">IS_MANUAL_CORR</field>
+        <field name="l10n_ch_code">5061</field>
+        <field name="sequence">446</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = payslip.l10n_ch_is_code and 'IS_MANUAL_CORR' in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+canton, code, municipality = payslip.l10n_ch_is_code.split('-')
+source_tax_amount = inputs['IS_MANUAL_CORR'].amount
+result = -source_tax_amount
+payslip._log_is_line(is_canton=canton, municipality=municipality, is_code=code, code='IS', amount=source_tax_amount)
         </field>
         <field name="l10n_ch_salary_certificate">12</field>
         <field name="struct_id" ref="l10n_ch_hr_payroll_elm_transmission.hr_payroll_structure_ch_elm"/>
