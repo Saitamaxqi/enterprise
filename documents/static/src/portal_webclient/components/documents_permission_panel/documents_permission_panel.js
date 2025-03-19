@@ -2,8 +2,11 @@ import { DocumentsPermissionPanel } from "@documents/components/documents_permis
 import { patch } from "@web/core/utils/patch";
 
 patch(DocumentsPermissionPanel.prototype, {
-    get warningMessage() {
-        return null;
+    get membersAccessExtended() {
+        return false;
+    },
+    get anyMembersWithoutAccess() {
+        return false;
     },
     get partnersRoleIsDirty() {
         return null;

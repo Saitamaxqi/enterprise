@@ -27,9 +27,6 @@
                 <footer>
                     <button string="Share"
                         type="object" name="action_invite_members" class="btn-primary"/>
-                    <field name="document_id" invisible="1"/> <!-- To force the computation of the access_url related field -->
-                    <field name="access_url" widget="CopyClipboardButton" string="Copy Link"
-                        options="{'btn_class': 'secondary'}"/>
                     <button string="Discard" special="cancel" class="btn-secondary"/>
                 </footer>
             </form>

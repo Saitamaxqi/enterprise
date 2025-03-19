@@ -75,27 +75,6 @@ export class DocumentsPermissionPanel extends Component {
         return this.pendingSave ? _t("Save or discard changes first") : _t("Copy Link");
     }
 
-    /**
-     * Check whether there is an alert message to display, and which one
-     *
-     * @returns {string|null}
-     */
-    get warningMessage() {
-        if (
-            this.state.access.access_via_link === "edit" &&
-            (this.state.access.access_internal === "view" ||
-                this.state.access.access_ids.some((a) => a.role === "view"))
-        ) {
-            const documentType =
-                this.state.access.type === "folder" ? _t("folder") : _t("document");
-            return _t(
-                "All users with access to this %(documentType)s or its parent will have edit permissions.",
-                { documentType }
-            );
-        }
-        return null;
-    }
-
     get partnersRoleIsDirty() {
         return this.state.access.access_ids.some((a) => a.role !== this.basePartnersRole[a.id]);
     }
@@ -104,6 +83,25 @@ export class DocumentsPermissionPanel extends Component {
         return this.state.access.access_ids.some(
             (a) => a.expiration_date !== this.basePartnersAccessExpDate[a.id]
         );
+    }
+
+    get membersAccessExtended() {
+        return (
+            this.state.access.access_via_link === "edit" &&
+            (this.state.access.access_internal === "view" ||
+                this.state.access.access_ids.some((a) => a.role === "view"))
+        );
+    }
+
+    get anyMembersWithoutAccess() {
+        return (
+            this.state.access.access_via_link === "none" &&
+            this.state.access.access_ids.some((a) => !a.partner_id.user_ids.length)
+        );
+    }
+
+    allowAccessViaLink(ev) {
+        this.state.access.access_via_link = "view";
     }
 
     revertChanges() {
@@ -224,14 +222,10 @@ export class DocumentsPermissionPanel extends Component {
                     dialog_size: "medium",
                 },
                 onClose: async (closeInfo) => {
-                    if (closeInfo?.special || closeInfo?.dismiss) {
-                        this.state.loading = true;
-                        this.state.hidden = false;
-                        await this.loadMainPage();
-                        this.state.loading = false;
-                    } else {
-                        this.close();
-                    }
+                    this.state.loading = true;
+                    this.state.hidden = false;
+                    await this.loadMainPage();
+                    this.state.loading = false;
                 },
             }
         );

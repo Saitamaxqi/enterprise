@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, _
 
 
 class DocumentsAccessInvite(models.TransientModel):
@@ -26,3 +26,19 @@ class DocumentsAccessInvite(models.TransientModel):
             share_template.with_context(message=self.notify_message).send_mail_batch(
                 self.document_id.access_ids.filtered(lambda acc: acc.partner_id in self.partner_ids).ids
             )
+
+        message = (
+            _('%s members added successfully.', len(self.partner_ids))
+            if len(self.partner_ids) > 1
+            else _('Member added successfully.')
+        )
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Successfully Shared'),
+                'message': message,
+                'type': 'success',
+                'next': {'type': 'ir.actions.act_window_close'},
+            }
+        }

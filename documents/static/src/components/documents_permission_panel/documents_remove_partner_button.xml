@@ -9,7 +9,7 @@
                 <i class="fa fa-fw fa-sign-out"/>
             </button>
             <button t-else=""
-                class="o_documents_remove_partner_btn btn btn-danger me-2"
+                t-attf-class="o_documents_remove_partner_btn btn btn-danger {{ props.accessPartner.partner_id.user_ids.length ? 'me-2' : 'ms-auto'}}"
                 t-att-disabled="props.disabled"
                 title="Remove Member"
                 t-on-click.prevent="() => props.removeAccess(props.accessPartner)">

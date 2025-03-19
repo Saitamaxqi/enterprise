@@ -12,13 +12,14 @@
         </div>
         <!-- Partners with access -->
         <t t-foreach="props.accessPartners" t-as="accessPartner" t-key="accessPartner_index">
-            <div t-if="accessPartner.role" class="o_documents_access_partner d-flex m-0 px-3 py-1">
+            <div t-if="accessPartner.role" class="o_documents_access_partner d-flex m-0 px-3 py-1 align-items-center"
+                 t-att-class="{'bg-danger-subtle': props.access.access_via_link === 'none' and !accessPartner.partner_id.user_ids.length}">
                 <t t-call="documents.PartnerAccess.info">
                     <t t-set="partner" t-value="accessPartner"/>
                 </t>
                 <div class="col-5 col-sm-5 pe-0">
                     <div class="input-group">
-                       <DocumentsAccessExpirationDateBtn
+                       <DocumentsAccessExpirationDateBtn t-if="accessPartner.partner_id.user_ids.length"
                             accessPartner="accessPartner"
                             disabled="props.disabled"
                             editionMode="true"
@@ -29,9 +30,8 @@
                             isInternalUser="props.isInternalUser"
                             isCurrentUser.bind="props.isCurrentUser"
                             removeAccess.bind="props.removeDocumentAccess"/>
-                        <DocumentsPermissionSelect
+                        <DocumentsPermissionSelect t-if="accessPartner.partner_id.user_ids.length"
                             ariaLabel.translate="User Access Role"
-                            selectClass="'mt-2'"
                             disabled="props.disabled"
                             onChange.bind="(e) => props.onChangePartnerRole(e, accessPartner)"
                             options="props.selections"

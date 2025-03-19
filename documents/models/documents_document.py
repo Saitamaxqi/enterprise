@@ -2383,7 +2383,7 @@ class DocumentsDocument(models.Model):
         return {'record': record, 'selections': selections}
 
     def _permission_specification(self):
-        partner_id_spec = {'fields': {'email': {}, 'name': {}, 'user_id': {}}}
+        partner_id_spec = {'fields': {'email': {}, 'name': {}, 'user_ids': {}}}
         return {
             'access_internal': {},
             'access_via_link': {},

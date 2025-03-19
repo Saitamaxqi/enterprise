@@ -28,10 +28,17 @@
                     </div>
                 </div>
             </t>
-            <div t-if="state.mainPage and warningMessage"
+            <div t-if="anyMembersWithoutAccess or membersAccessExtended"
                 class="alert alert-warning py-1 mb-1"
-                role="alert"
-                t-out="warningMessage"/>
+                role="alert">
+                <t t-if="membersAccessExtended">
+                    All users with access to this <t t-out="state.access.type === 'folder' and 'folder' or 'document'"/> or its parent will have edit permissions.
+                </t>
+                <t t-else="">
+                    You've added external users, but external sharing is disabled.
+                    <a class="btn-link cursor-pointer" t-on-click="allowAccessViaLink">Enable access</a>
+                </t>
+            </div>
             <t t-if="state.mainPage">
                 <div t-if="state.access.user_permission === 'edit' and state.access.active"
                     class="d-flex align-items-center px-3 py-1 position-relative mb-3">
