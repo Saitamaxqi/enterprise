@@ -86,7 +86,7 @@ class ProjectTask(models.Model):
         for task in self:
             if not task.date_deadline or not task.planned_date_begin:
                 task.allocated_hours = 0
-                return
+                continue
             date_begin, date_end = task._calculate_planned_dates(
                 task.planned_date_begin,
                 task.date_deadline,
