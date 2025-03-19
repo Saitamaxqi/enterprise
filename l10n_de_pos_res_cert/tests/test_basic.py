@@ -39,8 +39,10 @@ class TestFiskalyPoS(TestFrontend):
         })
         cola = self.env['product.product'].search([('name', '=', 'Coca-Cola')])
         cola.taxes_id = self.normal_tax
+        self.received_receipt_count = 0
 
     def install_fiskalyhook(self):
+        test_object = self
         def auth_hook(self):
             return {}
 
@@ -56,11 +58,15 @@ class TestFiskalyPoS(TestFrontend):
                 content_type="application/json",
             )
 
+        def fake_receipt_printer(self, devid, **kwargs):
+            test_object.received_receipt_count += 1
+
         self.env.registry.clear_cache('routing')
         PosController.auth_hook_v0 = http.route("/fake_fiskaly/api/v0/auth", type="jsonrpc", methods=["POST"], csrf=False)(auth_hook)
         PosController.auth_hook_v1 = http.route("/fake_fiskaly/api/v1/auth", type="jsonrpc", methods=["POST"], csrf=False)(auth_hook)
         PosController.tss_hook = http.route(["/fake_fiskaly/api/v1/tss/<int:tss_id>/tx/<string:tx_id>"], methods=["PUT"], type="http", csrf=False)(tss_hook)
         PosController.vat_definition_hook = http.route(["/fake_fiskaly/api/v0/vat_definitions"], type="http")(vat_definition_hook)
+        PosController.fake_receipt_printer = http.route(["/receipt_receiver/cgi-bin/epos/service.cgi"], type='http', csrf=False, methods=["POST"])(fake_receipt_printer)
 
         @self.addCleanup
         def _cleanup():
@@ -68,6 +74,7 @@ class TestFiskalyPoS(TestFrontend):
             del PosController.auth_hook_v1
             del PosController.tss_hook
             del PosController.vat_definition_hook
+            del PosController.fake_receipt_printer
             self.env.registry.clear_cache('routing')
 
     def test_fiskaly_basic_order(self):
@@ -79,3 +86,15 @@ class TestFiskalyPoS(TestFrontend):
         self.main_pos_config.payment_method_ids.filtered(lambda p: p.type == 'cash').name = "Random Name"
         self.main_pos_config.with_user(self.pos_user).open_ui()
         self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_fiskaly_tss_payload', login="pos_user")
+
+    def test_fiskaly_receipt_printer(self):
+        """This test make sure that the receipt is printed only once.
+           We use a route that will receive all the receipts and increment a counter."""
+        self.main_pos_config.write({
+            "iface_print_auto": True,
+            "other_devices": True,
+            "epson_printer_ip": "127.0.0.1:8069/receipt_receiver",
+        })
+        self.main_pos_config.with_user(self.pos_user).open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_fiskaly_receipt_printer', login="pos_user")
+        self.assertEqual(self.received_receipt_count, 1)

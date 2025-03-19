@@ -70,3 +70,19 @@ registry.category("web_tour.tours").add("test_fiskaly_tss_payload", {
             },
         ].flat(),
 });
+
+registry.category("web_tour.tours").add("test_fiskaly_receipt_printer", {
+    checkDelay: 50,
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+            FloorScreen.clickTable("5"),
+            ProductScreen.addOrderline("Coca-Cola", "1", "3"),
+            ProductScreen.clickPayButton(),
+            PaymentScreen.clickPaymentMethod("Cash"),
+            PaymentScreen.clickValidate(),
+            Dialog.is({ title: "Connection to the printer failed" }),
+            Dialog.cancel(),
+        ].flat(),
+});
