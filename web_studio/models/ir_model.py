@@ -594,6 +594,17 @@ class IrModel(models.Model):
         })
         return action
 
+    @api.model
+    def studio_model_infos(self, model_name):
+        irModel = self._get(model_name)
+        res = irModel.read(["id", "name", "state", "is_mail_thread", "is_mail_activity", "model"])[0]
+        domain = []
+        if model_name == "account.move":
+            domain = [["move_type", "!=", "entry"]]
+        res["record_ids"] = self.env[model_name].search(domain, limit=10).ids
+        res["domain"] = domain
+        return res
+
 
 class IrModelFields(models.Model):
     _name = 'ir.model.fields'

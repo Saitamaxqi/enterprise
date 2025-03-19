@@ -1,4 +1,3 @@
-import { rpc } from "@web/core/network/rpc";
 import { registry } from "@web/core/registry";
 import { resetViewCompilerCache } from "@web/views/view_compiler";
 import { _t } from "@web/core/l10n/translation";
@@ -6,6 +5,8 @@ import { _t } from "@web/core/l10n/translation";
 import { EventBus, onWillUnmount, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { router, routerBus } from "@web/core/browser/router";
+import { Cache } from "@web/core/utils/cache";
+import { user } from "@web/core/user";
 
 const URL_VIEW_KEY = "_view_type";
 const URL_TAB_KEY = "_tab";
@@ -119,11 +120,13 @@ function getStateToLoad(state) {
 }
 
 export const studioService = {
-    dependencies: ["action", "home_menu", "menu", "notification"],
-    async start(env, { menu, notification }) {
+    dependencies: ["action", "home_menu", "menu", "notification", "orm"],
+    async start(env, { menu, notification, orm }) {
         function _getCurrentAction() {
             const currentController = env.services.action.currentController;
-            return currentController && !currentController.virtual ? currentController.action : null;
+            return currentController && !currentController.virtual
+                ? currentController.action
+                : null;
         }
         async function loadState(state) {
             router.pushState(getStateToLoad(state), { sync: true, replace: true });
@@ -323,6 +326,7 @@ export const studioService = {
                 throw new Error("leave when not in studio???");
             }
             env.bus.trigger("CLEAR-CACHES");
+            IrModelInfo.invalidate();
             // since odoo/odoo@2e891626b071a04d1a5dd3d3c40cc24a12dcb1fb
             // template cache key is composed with the name of the compiler
             // which, in studio are *usually* different.
@@ -487,24 +491,13 @@ export const studioService = {
             inStudio = action.tag === "studio";
         });
 
-        const isAllowedCache = {
-            activity: {},
-            chatter: {},
-        };
-
-        function isAllowed(type, resModel) {
-            if (!Object.keys(isAllowedCache).includes(type)) {
-                return;
-            }
-            let val;
-            if (resModel in isAllowedCache[type]) {
-                val = isAllowedCache[type][resModel];
-            } else {
-                val = rpc(`/web_studio/${type}_allowed`, { model: resModel });
-                isAllowedCache[type][resModel] = val;
-            }
-            return val;
-        }
+        const IrModelInfo = new Cache(
+            async (model) =>
+                await orm.call("ir.model", "studio_model_infos", [model], {
+                    context: user.context,
+                }),
+            (model) => model
+        );
 
         return {
             MODES,
@@ -540,7 +533,7 @@ export const studioService = {
             get editorTab() {
                 return state.editorTab;
             },
-            isAllowed,
+            IrModelInfo,
         };
     },
 };

@@ -2,7 +2,7 @@ import json
 from psycopg2.extras import Json
 from lxml import etree
 
-from odoo import Command
+from odoo import Command, api
 from odoo.addons.base.models.ir_actions_report import IrActionsReport
 from odoo.addons.web_studio.controllers.main import WebStudioController
 from odoo.addons.web_studio.controllers.report import WebStudioReportController, get_report_view_copy, _get_and_write_studio_view
@@ -781,14 +781,14 @@ class TestReportEditorUIUnit(HttpCase):
         p1 = ResPartner.create({'name': "partner_1"})
         p2 = ResPartner.create({'name': "partner_2"})
 
-        original_search = ResPartner.search
+        super_studio_model_infos = self.env.registry.get("ir.model").studio_model_infos
+        @api.model
+        def studio_model_infos(self, *args, **kwargs):
+            sup = super_studio_model_infos(self, *args, **kwargs)
+            sup["record_ids"] = (p1 | p2).ids
+            return sup
 
-        def mock_search(self, *args, **kwargs):
-            if not args and not kwargs:
-                return (p1 | p2).ids
-            return original_search(*args, **kwargs)
-
-        self.patch(type(ResPartner), "search", mock_search)
+        self.patch(self.env.registry.get("ir.model"), "studio_model_infos", studio_model_infos)
 
         self.start_tour(self.tour_url, "web_studio.test_report_xml_other_record", login="admin")
 

@@ -88,8 +88,12 @@ export function disableHookAnimation() {
 }
 
 export function handleDefaultStudioRoutes() {
-    onRpc("/web_studio/activity_allowed", () => false);
-    onRpc("/web_studio/chatter_allowed", () => false);
+    onRpc("/web/dataset/call_kw/ir.model/studio_model_infos", () => ({
+        is_mail_thread: false,
+        is_mail_activity: false,
+        state: "base",
+        record_ids: [1],
+    }));
     onRpc("/web_studio/edit_view", () => {});
     onRpc("/web_studio/edit_view_arch", () => {});
     onRpc("/web_studio/get_default_value", () => ({ default_value: undefined }));

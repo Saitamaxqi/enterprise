@@ -37,24 +37,6 @@ OPERATIONS_WHITELIST = [
 
 class WebStudioController(http.Controller):
 
-    @http.route('/web_studio/chatter_allowed', type='jsonrpc', auth='user')
-    def is_chatter_allowed(self, model):
-        """ Returns True iff a chatter can be activated on the model's form views, i.e. if
-            - it is a custom model (since we can make it inherit from mail.thread), or
-            - it already inherits from mail.thread.
-        """
-        Model = request.env[model]
-        return Model._custom or isinstance(Model, request.env.registry['mail.thread'])
-
-    @http.route('/web_studio/activity_allowed', type='jsonrpc', auth='user')
-    def is_activity_allowed(self, model):
-        """ Returns True iff an activity view can be activated on the model's action, i.e. if
-            - it is a custom model (since we can make it inherit from mail.thread), or
-            - it already inherits from mail.thread.
-        """
-        Model = request.env[model]
-        return Model._custom or isinstance(Model, request.env.registry['mail.activity.mixin'])
-
     @http.route('/web_studio/get_studio_action', type='jsonrpc', auth='user')
     def get_studio_action(self, action_name, model, view_id=None, view_type=None):
         model = request.env['ir.model']._get(model)
@@ -1160,7 +1142,8 @@ Are you sure you want to remove the selection values of those records?""", len(r
                 }
             }
 
-        if not self.is_chatter_allowed(operation['model']):
+        Model = request.env[operation['model']]
+        if not (Model._custom or isinstance(Model, request.env.registry['mail.thread'])):
             # Chatter can only be activated form models that (can) inherit from mail.thread
             return
 

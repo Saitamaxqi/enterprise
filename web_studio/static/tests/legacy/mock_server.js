@@ -6,14 +6,15 @@ patch(MockServer.prototype, {
         if (route === "/web/dataset/call_kw/res.users/has_group") {
             return true;
         }
-        if (route === "/web_studio/activity_allowed") {
-            return Promise.resolve(this.mockActivityAllowed());
+        if (route === "/web/dataset/call_kw/ir.model/studio_model_infos") {
+            return Promise.resolve({
+                is_mail_thread: false,
+                is_mail_activity: false,
+                record_ids: [],
+            });
         }
         if (route === "/web_studio/get_studio_view_arch") {
             return Promise.resolve(this.mockGetStudioViewArch());
-        }
-        if (route === "/web_studio/chatter_allowed") {
-            return Promise.resolve(this.mockChatterAllowed());
         }
         if (route === "/web_studio/get_default_value") {
             return Promise.resolve(this.mockGetDefaultValue());
@@ -35,14 +36,6 @@ patch(MockServer.prototype, {
         }
 
         return super.performRPC(...arguments);
-    },
-
-    mockActivityAllowed() {
-        return false;
-    },
-
-    mockChatterAllowed() {
-        return false;
     },
 
     mockGetApprovalSpec({ args }) {

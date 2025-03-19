@@ -3537,8 +3537,8 @@ QUnit.module("View Editors", (hooks) => {
         ]);
         await openStudio(target);
         assert.verifySteps([
+            "/web/dataset/call_kw/ir.model/studio_model_infos",
             "/web/dataset/call_kw/coucou/get_views",
-            "/web_studio/chatter_allowed",
             "/web_studio/get_studio_view_arch",
             "/web/dataset/call_kw/coucou/onchange",
         ]);

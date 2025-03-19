@@ -133,7 +133,12 @@ test("navigation in Studio with act_window", async () => {
     await contains(".o_web_studio_navbar_item button").click();
     await waitFor(".o_web_studio_editor_manager .o_web_studio_kanban_view_editor");
 
-    expect.verifySteps(["get_views", "/web_studio/get_studio_view_arch", "web_search_read"]);
+    expect.verifySteps([
+        "studio_model_infos",
+        "get_views",
+        "/web_studio/get_studio_view_arch",
+        "web_search_read",
+    ]);
 
     expect(".o_kanban_record:contains(Yop)").toHaveCount(1);
 
@@ -145,6 +150,7 @@ test("navigation in Studio with act_window", async () => {
     expect.verifySteps([
         "/web/action/load",
         "/web/action/load_breadcrumbs",
+        "studio_model_infos",
         "get_views",
         "/web_studio/get_studio_view_arch",
         "web_search_read",

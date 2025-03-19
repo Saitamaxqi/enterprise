@@ -973,7 +973,10 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
         },
     ]);
     handleDefaultStudioRoutes();
-    onRpc("/web_studio/chatter_allowed", () => true);
+    onRpc("/web/dataset/call_kw/ir.model/studio_model_infos", () => ({
+        is_mail_thread: true,
+        record_ids: [],
+    }));
     onRpc("name_search", async ({ kwargs }) => {
         expect(kwargs.domain).toEqual(
             [
@@ -1008,8 +1011,8 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
     expect.verifySteps(["/web/action/load", "get_views", "web_read"]);
     await openStudio();
     expect.verifySteps([
+        "studio_model_infos",
         "get_views",
-        "/web_studio/chatter_allowed",
         "/web_studio/get_studio_view_arch",
         "web_read",
         "/mail/thread/recipients/fields",

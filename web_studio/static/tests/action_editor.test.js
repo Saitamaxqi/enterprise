@@ -35,13 +35,7 @@ test("add a gantt view", async () => {
 });
 
 test("create unavailable view", async () => {
-    expect.assertions(2);
-
-    onRpc("/web_studio/activity_allowed", async (request) => {
-        const { params } = await request.json();
-        expect(params.model).toBe("partner");
-    });
-
+    expect.assertions(1);
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
 

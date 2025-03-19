@@ -215,7 +215,8 @@ class ActionEditor extends Component {
         }
         const resModel = this.studio.editedAction.res_model;
         if (viewType === "activity") {
-            const activityAllowed = await this.studio.isAllowed("activity", resModel);
+            const modelInfo = await this.studio.IrModelInfo.read(resModel);
+            const activityAllowed = modelInfo.is_mail_activity || modelInfo.state === "manual";
             if (!activityAllowed) {
                 this.notification.add(_t("Activity view unavailable on this model"), {
                     title: false,

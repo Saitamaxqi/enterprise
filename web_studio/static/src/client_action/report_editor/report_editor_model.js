@@ -345,26 +345,17 @@ export class ReportEditorModel extends Reactive {
             return;
         }
         const modelName = this.reportResModel;
-        const result = await this._services.orm.search(modelName, this.getModelDomain(), {
-            context: user.context,
-        });
+        const result = await this._services.studio.IrModelInfo.read(modelName);
 
         this.reportEnv = {
-            ids: result,
-            currentId: result[0] || false,
+            domain: result.domain,
+            ids: result.record_ids,
+            currentId: result.record_ids[0] || false,
         };
     }
 
     getModelDomain() {
-        // TODO: Since 13.0, journal entries are also considered as 'account.move',
-        // therefore must filter result to remove them; otherwise not possible
-        // to print invoices and hard to lookup for them if lot of journal entries.
-        const modelName = this.reportResModel;
-        let domain = [];
-        if (modelName === "account.move") {
-            domain = [["move_type", "!=", "entry"]];
-        }
-        return domain;
+        return this.reportEnv.domain;
     }
 
     async resetReport(includeHeaderFooter = true) {

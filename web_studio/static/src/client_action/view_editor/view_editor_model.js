@@ -495,11 +495,11 @@ export class ViewEditorModel extends Reactive {
         const proms = [this._editionFlow.loadViews({ forceSearch: true })];
 
         if (this.viewType === "form") {
-            proms.push(this._studio.isAllowed("chatter", this.mainResModel));
+            proms.push(this._studio.IrModelInfo.read(this.mainResModel));
         }
 
-        const [viewDescriptions, isChatterAllowed] = await Promise.all(proms);
-        this._isChatterAllowed = isChatterAllowed;
+        const [viewDescriptions, modelInfo] = await Promise.all(proms);
+        this._isChatterAllowed = modelInfo?.is_mail_thread || modelInfo?.state === "manual";
         this.viewDescriptions = viewDescriptions || {
             relatedModels: {},
             fields: [],
