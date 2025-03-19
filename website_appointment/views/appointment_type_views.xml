@@ -9,10 +9,7 @@
             <xpath expr="//templates" position="before">
                 <field name="is_published"/>
             </xpath>
-            <xpath expr="//div[hasclass('o_appointment_kanban_card_ungrouped')]/widget[@name='web_ribbon']" position="before">
-                <widget name="web_ribbon" title="Published" bg_color="text-bg-success" invisible="not is_published or not active"/>
-            </xpath>
-            <xpath expr="//div[hasclass('o_appointment_kanban_card_grouped')]/widget[@name='web_ribbon']" position="before">
+            <xpath expr="//div[hasclass('o_appointment_kanban_card')]/div/widget[@name='web_ribbon']" position="before">
                 <widget name="web_ribbon" title="Published" bg_color="text-bg-success" invisible="not is_published or not active"/>
             </xpath>
         </field>

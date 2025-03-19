@@ -33,12 +33,30 @@
  **********************************************************/
 .o_appointment_kanban .o_kanban_renderer {
     &.o_kanban_grouped {
-        .o_appointment_kanban_card_ungrouped {
-            display:none !important;
+        .o_appointment_kanban_card > div {
+            margin-right: 0 !important;
         }
         .o_kanban_group:not(.o_column_folded){
             @include media-breakpoint-up(sm) {
                 min-width: 380px;
+            }
+        }
+        .row > div {
+            flex: 1 1 100% !important;
+            max-width: 100% !important;
+            margin: 5px 0 !important;
+            &.col-6 {
+                flex: 1 1 50% !important;
+                max-width: 50% !important;
+            }
+            &.d-none {
+                display: none !important; //forcing the d-none to override the d-lg or d-sm classes for grouped view
+            }
+            > .w-50 {
+                width: 50% !important;
+            }
+            > div.me-3 {
+                margin-right: 24px !important;
             }
         }
     }
@@ -50,9 +68,6 @@
 
     &.o_kanban_ungrouped {
         // ungrouped layout as list re-used form survey_survey
-        .o_appointment_kanban_card_grouped {
-            display:none !important;
-        }
         padding: 0;
         margin-top: -0.25rem;
 
@@ -98,7 +113,7 @@
         }
     }
     // Ungrouped specific
-    .o_appointment_kanban_card_ungrouped {
+    .o_appointment_kanban_card > div.row {
         @include media-breakpoint-up(sm) {
             margin-right: 12rem;
         }
@@ -119,13 +134,6 @@
             font-size: 120%;
             font-weight: 300;
         }
-    }
-
-    // Grouped specific
-    .o_appointment_kanban_card_grouped {
-        .o_kanban_record {
-            min-height: 165px;
-         }
     }
 
     .o_appointment_kanban_boxes {

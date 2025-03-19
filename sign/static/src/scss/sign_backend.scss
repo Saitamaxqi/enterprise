@@ -277,16 +277,23 @@
     --KanbanRecord-width: 360px;
 
     &.o_kanban_grouped {
-        .o_sign_kanban_card_ungrouped {
-            display:none !important;
+        .row > div {
+            flex: 1 1 100% !important;
+            max-width: 100% !important;
+            &.col-6 {
+                flex: 1 1 50% !important;
+                max-width: 50% !important;
+            }
+            &.d-none {
+                display: none !important; //forcing the d-none to override the d-lg or d-sm classes for grouped view
+            }
+            .oe_kanban_bottom_left {
+                float: left !important; //overrides the float-end for grouped view
+            }
         }
     }
     &.o_kanban_ungrouped {
         --Kanban-padding: 0px 0px;
-
-        .o_sign_kanban_card_grouped {
-            display:none !important;
-        }
     }
     .o_sign_kanban_card {
         min-height: 60px;
