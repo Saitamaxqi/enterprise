@@ -1014,3 +1014,14 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             picking = sub.picking_ids
             self.assertTrue(bool(picking))
             self.assertEqual(picking.date_deadline.date(), datetime.date(2024, 10, 1), "The delivery deadline should be set to the end of the period.")
+
+    def test_qty_delivered_with_respect_to_first_delivery(self):
+        """
+        Check that the qty delivered is correctly computed with respect
+        to the delivery generated at confirmation of the subscription.
+        """
+        subscription = self.subscription_delivery
+        self.assertEqual(subscription.order_line.qty_delivered, 1.0)
+        # create the related invoice manually
+        account_move = subscription._create_invoices()
+        self.assertRecordValues(account_move, [{'invoice_origin': 'Delivery', 'amount_total': subscription.order_line.price_total, 'state': 'draft'}])

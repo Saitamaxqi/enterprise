@@ -31,7 +31,10 @@ class SaleOrderLine(models.Model):
         outgoing_moves, incoming_moves = super(SaleOrderLine, self - sub_stock)._get_outgoing_incoming_moves(strict)
         for line in sub_stock:
             period_start = line.order_id.last_invoice_date or line.order_id.start_date
-            period_end = line.order_id.next_invoice_date
+            if  period_start and period_start == line.order_id.next_invoice_date:
+                period_end = period_start + line.order_id.plan_id.billing_period
+            else:
+                period_end = line.order_id.next_invoice_date
             sub_outgoing_moves, sub_incoming_moves = super(SaleOrderLine, line)._get_outgoing_incoming_moves(strict)
 
             def date_filter(m):
