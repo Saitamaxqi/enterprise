@@ -418,6 +418,12 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ar_edi
+#. odoo-python
+#: code:addons/l10n_ar_edi/models/res_config_settings.py:0
+msgid "Continue Configurations"
+msgstr ""
+
+#. module: l10n_ar_edi
 #: model:ir.actions.act_window,name:l10n_ar_edi.action_l10n_ar_afip_ws_consult
 #: model:ir.ui.menu,name:l10n_ar_edi.menu_l10n_ar_afip_ws_consult
 msgid "Consult invoice in AFIP"

@@ -1,7 +1,7 @@
 import re
 
 from odoo import _, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, RedirectWarning
 
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
@@ -62,8 +62,12 @@ class ResConfigSettings(models.TransientModel):
                         error=repr(error),
                     ),
                 )
-
-        raise UserError("\n".join(results))
+        action = self.env.ref('account.action_account_config')
+        raise RedirectWarning(
+            "\n".join(results),
+            action=action.id,
+            button_text=_("Continue Configurations")
+        )
 
     def random_demo_cert(self):
         self.company_id.set_demo_random_cert()
