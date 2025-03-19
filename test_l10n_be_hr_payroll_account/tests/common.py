@@ -30,9 +30,12 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
             'raw': cls.pdf_content,
             'name': 'test_employee_contract.pdf',
         })
-        cls.template = cls.env['sign.template'].create({
+
+        cls.template = cls.env['sign.template'].create({})
+
+        cls.document_id = cls.env['sign.document'].create({
             'attachment_id': attachment.id,
-            'sign_item_ids': [(6, 0, [])],
+            'template_id': cls.template.id,
         })
 
         cls.env['sign.item'].create([
@@ -44,7 +47,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'page': 1,
                 'posX': 0.273,
                 'posY': 0.158,
-                'template_id': cls.template.id,
+                'document_id': cls.document_id.id,
                 'width': 0.150,
                 'height': 0.015,
             }, {
@@ -55,7 +58,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'page': 1,
                 'posX': 0.707,
                 'posY': 0.158,
-                'template_id': cls.template.id,
+                'document_id': cls.document_id.id,
                 'width': 0.150,
                 'height': 0.015,
             }, {
@@ -66,7 +69,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'page': 1,
                 'posX': 0.506,
                 'posY': 0.184,
-                'template_id': cls.template.id,
+                'document_id': cls.document_id.id,
                 'width': 0.150,
                 'height': 0.015,
             }, {
@@ -77,7 +80,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'page': 1,
                 'posX': 0.663,
                 'posY': 0.184,
-                'template_id': cls.template.id,
+                'document_id': cls.document_id.id,
                 'width': 0.150,
                 'height': 0.015,
             }, {
@@ -88,7 +91,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'page': 1,
                 'posX': 0.349,
                 'posY': 0.184,
-                'template_id': cls.template.id,
+                'document_id': cls.document_id.id,
                 'width': 0.150,
                 'height': 0.015,
             }, {
@@ -99,7 +102,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'page': 2,
                 'posX': 0.333,
                 'posY': 0.575,
-                'template_id': cls.template.id,
+                'document_id': cls.document_id.id,
                 'width': 0.200,
                 'height': 0.050,
             }, {
@@ -110,7 +113,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'page': 2,
                 'posX': 0.333,
                 'posY': 0.665,
-                'template_id': cls.template.id,
+                'document_id': cls.document_id.id,
                 'width': 0.200,
                 'height': 0.050,
             }, {
@@ -121,7 +124,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'page': 2,
                 'posX': 0.665,
                 'posY': 0.694,
-                'template_id': cls.template.id,
+                'document_id': cls.document_id.id,
                 'width': 0.150,
                 'height': 0.015,
             }, {
@@ -132,7 +135,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'page': 2,
                 'posX': 0.665,
                 'posY': 0.694,
-                'template_id': cls.template.id,
+                'document_id': cls.document_id.id,
                 'width': 0.150,
                 'height': 0.015,
             }

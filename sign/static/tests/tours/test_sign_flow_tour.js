@@ -25,17 +25,6 @@ registry.category("web_tour.tours").add("test_sign_flow_tour", {
             run: "click",
         },
         {
-            content: 'Search template "template_1_roles"',
-            trigger: ".o_cp_searchview input",
-            tooltipPosition: "bottom",
-            run: "edit template_1_role(2)",
-        },
-        {
-            content: "Search Document Name",
-            trigger: ".o_searchview_autocomplete .o-dropdown-item:first",
-            run: "click",
-        },
-        {
             content: "list view",
             trigger: "button.o_list",
             run: "click",

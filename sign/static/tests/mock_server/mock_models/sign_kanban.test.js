@@ -1,6 +1,6 @@
 import { defineMailModels, startServer } from "@mail/../tests/mail_test_helpers";
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { SignTemplate, SignTemplateTag } from "@sign/../tests/mock_server/mock_models/sign_model";
+import { SignDocument, SignTemplate, SignTemplateTag } from "@sign/../tests/mock_server/mock_models/sign_model";
 import { dragoverFiles, dropFiles } from "@web/../tests/utils";
 import {
     asyncStep,
@@ -11,7 +11,7 @@ import {
 } from "@web/../tests/web_test_helpers";
 
 defineMailModels();
-defineModels([SignTemplate, SignTemplateTag]);
+defineModels([SignDocument, SignTemplate, SignTemplateTag]);
 
 describe.current.tags("desktop");
 
@@ -24,8 +24,11 @@ beforeEach(async () => {
         res_model: "sign.template",
         mimetype: "application/pdf",
     });
-    pyEnv["sign.template"].write(1, {
+    const documentId = pyEnv["sign.document"].create({
         attachment_id: attachmentId,
+    });
+    pyEnv["sign.template"].write(1, {
+        document_ids: [(6, 0, [documentId])],
     });
 });
 
@@ -50,22 +53,25 @@ test("Drop to upload file in kanban", async () => {
     fileInput.files = dataTransfer.files;
     await dragoverFiles(".o_content", dataTransfer.files);
     await dropFiles(".o_dropzone", dataTransfer.files);
-    onRpc("/web/dataset/call_kw/sign.template/create_with_attachment_data", async (request) => {
+    onRpc("/web/dataset/call_kw/sign.template/create_from_attachment_data", async (request) => {
         asyncStep("attachment create");
         const values = await request.json();
-        if (values.params.method === "create_with_attachment_data") {
+        if (values.params.method === "create_from_attachment_data") {
             expect(values.params.model).toBe("sign.template");
-            expect(values.params.args.length).toBe(3);
+            expect(values.params.args.length).toBe(2);
             const attachmentID = pyEnv["ir.attachment"].create({
-                name: values.params.args[0],
+                name: values.params.args[0][0].name,
                 res_model: values.params.model,
-                datas: values.params.args[1],
+                datas: values.params.args[0][0].datas,
             });
-            const signTemplate = pyEnv[values.params.model].create({
-                attachment_id: attachmentID,
+            const signTemplateID = pyEnv[values.params.model].create({
                 active: true,
             });
-            return signTemplate;
+            pyEnv['sign.document'].create({
+                template_id: signTemplateID,
+                attachment_id: attachmentID,
+            });
+            return [signTemplateID];
         }
     });
     expect(".o_dropzone").toHaveCount(1);

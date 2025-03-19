@@ -41,28 +41,37 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
     def test_bridge_folder_workflow(self):
         """
         tests the create new business model (sign).
-    
         """
         self.assertEqual(self.document_pdf_0.res_model, 'documents.document', "failed at default res model")
-        self.documents.document_sign_create_sign_template_x('sign.template.new', self.folder_a.id)
-
-        with self.assertRaises(UserError, msg="Can only be executed on one record."):
-            self.documents.document_sign_create_sign_template_x('sign.template.direct', self.folder_a.id)
-    
-        self.assertEqual(self.document_pdf_0.res_model, 'sign.template',
-                         "failed at workflow_bridge_dms_sign new res_model")
-        template = self.env['sign.template'].search([('id', '=', self.document_pdf_0.res_id)])
+        self.documents.document_sign_create_sign_template(self.folder_a.id)
+        self.assertEqual(self.document_pdf_0.res_model, 'sign.document',
+                            "failed at workflow_bridge_dms_sign new res_model")
+        document = self.env['sign.document'].search([('id', '=', self.document_pdf_0.res_id)])
+        template = self.env['sign.template'].search([('document_ids', 'in', document.id)])
+        self.assertTrue(document.exists(), 'failed at workflow_bridge_dms_account template')
         self.assertTrue(template.exists(), 'failed at workflow_bridge_dms_account template')
-        self.assertEqual(self.document_pdf_0.res_id, template.id, "failed at workflow_bridge_dms_account res_id")
 
     @mute_logger('odoo.addons.documents.models.documents_document')
     def test_sign_action(self):
         """ Test sign a document from Document app using the workflow rule. """
-        self.document_pdf_0.document_sign_create_sign_template_x('sign.template.direct', self.folder_a.id)
-        self.assertEqual(self.document_pdf_0.res_model, 'sign.template')
-        template = self.env['sign.template'].search([('id', '=', self.document_pdf_0.res_id)])
-        # Get the sign item for the customer from template_3_roles and assign it to the template
-        self.template_3_roles.sign_item_ids[0].copy().template_id = template
+        self.document_pdf_0.document_sign_create_sign_template(self.folder_a.id)
+        self.assertEqual(self.document_pdf_0.res_model, 'sign.document')
+        document = self.env['sign.document'].search([('id', '=', self.document_pdf_0.res_id)])
+        template = self.env['sign.template'].search([('document_ids', 'in', document.id)])
+
+        # Create a sign item directly for the new template
+        self.env['sign.item'].create({
+            'type_id': self.env.ref('sign.sign_item_type_text').id,
+            'required': True,
+            'responsible_id': self.env.ref('sign.sign_item_role_customer').id,
+            'page': 1,
+            'posX': 0.273,
+            'posY': 0.158,
+            'document_id': document.id,
+            'width': 0.150,
+            'height': 0.015,
+        })
+
         sign_request = self.env['sign.request'].create({
             'template_id': template.id,
             'reference': template.display_name,
@@ -74,7 +83,7 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
         sign_request_item = sign_request.request_item_ids[0]
         sign_values = self.create_sign_values(template.sign_item_ids, self.role_customer.id)
 
-        sign_request_item._edit_and_sign(sign_values)
+        sign_request_item.sign(sign_values)
         self.assertEqual(sign_request_item.state, 'completed', 'The sign.request.item should be completed')
 
     @mute_logger("odoo.addons.documents.models.documents_document")  # avoid warning about counting page of PDFs
@@ -101,7 +110,7 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
             with self.subTest(user_name=user.name):
                 sign_request = self.create_sign_request_1_role(user.partner_id, Partner)
                 # See /sign/sign/<int:sign_request_id>/<token> controller
-                sign_request.request_item_ids[0].with_user(user).sudo()._edit_and_sign(
+                sign_request.request_item_ids[0].with_user(user).sudo().sign(
                     {str(self.template_1_role.sign_item_ids[0].id): "Test Sign"})
                 self.env['documents.access'].invalidate_model()
                 documents_signed = Document.search(
@@ -174,9 +183,13 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
                     'mimetype': 'application/pdf',
                 })
                 template = self.env['sign.template'].create({
-                    'attachment_id': attachment.id,
                     'folder_id': self.folder_a_a.id,
                 })
+                self.env['sign.document'].create({
+                    'attachment_id': attachment.id,
+                    'template_id': template.id,
+                })
+
                 wizard = self.env['sign.send.request'].create({
                     'template_id': template.id,
                     'subject': 'test test',
@@ -189,7 +202,7 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
 
         with self.subTest("Ensure sign request links to the correct document"):
             # create a sign request from the document_to_sign
-            action = document_to_sign.document_sign_create_sign_template_x('sign.template.direct')
+            action = document_to_sign.document_sign_create_sign_template()
             document_sign_template = self.env['sign.template'].browse(action['params']['id'])
             wizard = self.env['sign.send.request'].create({
                 'template_id': document_sign_template.id,

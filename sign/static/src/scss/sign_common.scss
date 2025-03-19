@@ -16,6 +16,22 @@
     display: block;
 }
 
+.o_sign_portal_navigator {
+    border: 0px;
+}
+
+.o_sign_document_navigator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.o_sign_document_navigator_text {
+    margin: 0 10px;
+    font-size: 14px;
+}
+
 .o_sign_signer_status_wrapper {
     flex-wrap: wrap;
     overflow: auto;

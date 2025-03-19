@@ -1,47 +1,18 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
-import io
-import os
 import re
 
-from collections import defaultdict
-
-from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.rl_config import TTFSearchPath
-from reportlab.pdfgen import canvas
-from reportlab.platypus import Paragraph
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.pdfbase.pdfmetrics import stringWidth
-from PIL import UnidentifiedImageError
 
 from odoo import api, fields, models, Command, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
-from odoo.tools import config, misc, pdf, format_date
-from odoo.tools.pdf import PdfFileReader, PdfFileWriter, PdfReadError, reshape_text
+from odoo.tools import misc, pdf, format_date
 
 TTFSearchPath.append(misc.file_path("web/static/fonts/sign"))
-
-
-
-def _fix_image_transparency(image):
-    """ Modify image transparency to minimize issue of grey bar artefact.
-    When an image has a transparent pixel zone next to white pixel zone on a
-    white background, this may cause on some renderer grey line artefacts at
-    the edge between white and transparent.
-
-    This method sets black transparent pixel to white transparent pixel which solves
-    the issue for the most probable case. With this the issue happen for a
-    black zone on black background but this is less likely to happen.
-    """
-    pixels = image.load()
-    for x in range(image.size[0]):
-        for y in range(image.size[1]):
-            if pixels[x, y] == (0, 0, 0, 0):
-                pixels[x, y] = (255, 255, 255, 0)
 
 
 class SignTemplate(models.Model):
@@ -51,11 +22,9 @@ class SignTemplate(models.Model):
     def _default_favorited_ids(self):
         return [(4, self.env.user.id)]
 
-    attachment_id = fields.Many2one('ir.attachment', string="Attachment", required=True, ondelete='cascade')
-    name = fields.Char(related='attachment_id.name', readonly=False, store=True)
-    num_pages = fields.Integer('Number of pages', compute="_compute_num_pages", readonly=True, store=True)
-    datas = fields.Binary(related='attachment_id.datas')
-    sign_item_ids = fields.One2many('sign.item', 'template_id', string="Signature Items", copy=True)
+    document_ids = fields.One2many('sign.document', 'template_id', string="Documents", copy=True)
+    name = fields.Char(required=True, default="New Template")
+    sign_item_ids = fields.One2many('sign.item', 'template_id', string="Signature Items", compute='_compute_sign_item_ids', store=True)
     responsible_count = fields.Integer(compute='_compute_responsible_count', string="Responsible Count")
 
     active = fields.Boolean(default=True, string="Active")
@@ -94,13 +63,14 @@ class SignTemplate(models.Model):
             templates = templates[:limit]
         return [(template.id, template.display_name) for template in templates.sudo()]
 
-    @api.depends('attachment_id.datas')
-    def _compute_num_pages(self):
-        for record in self:
-            try:
-                record.num_pages = self._get_pdf_number_of_pages(base64.b64decode(record.attachment_id.datas))
-            except Exception:
-                record.num_pages = 0
+    @api.depends('document_ids.sign_item_ids')
+    def _compute_sign_item_ids(self):
+        for template in self:
+            template.sign_item_ids = [Command.set([
+                item.id
+                for document in template.document_ids
+                for item in document.sign_item_ids
+            ])]
 
     @api.depends('sign_item_ids.responsible_id')
     def _compute_responsible_count(self):
@@ -134,64 +104,64 @@ class SignTemplate(models.Model):
             return '<p class="o_view_nocontent_smiling_face">%s</p>' % _('Upload a PDF')
         return super().get_empty_list_help(help_message)
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        # Sometimes the attachment is not already created in database when the sign template create method is called
-        attachment_vals = [{'name': val['name'], 'datas': val.pop('datas')} for val in vals_list if not val.get('attachment_id') and val.get('datas')]
-        attachments_iter = iter(self.env['ir.attachment'].create(attachment_vals))
-        for val in vals_list:
-            if not val.get('attachment_id', True):
-                try:
-                    val['attachment_id'] = next(attachments_iter).id
-                except StopIteration:
-                    raise UserError(_('No attachment was provided'))
-        attachments = self.env['ir.attachment'].browse([vals.get('attachment_id') for vals in vals_list if vals.get('attachment_id')])
-        for attachment in attachments:
-            self._check_pdf_data_validity(attachment.datas)
-        # copy the attachment if it has been attached to a record
-        for vals, attachment in zip(vals_list, attachments):
-            if attachment.res_model or attachment.res_id:
-                vals['attachment_id'] = attachment.copy().id
-            else:
-                attachment.res_model = self._name
-        templates = super().create(vals_list)
-        for template, attachment in zip(templates, templates.attachment_id):
-            attachment.write({
-                'res_model': self._name,
-                'res_id': template.id
-            })
-        templates.attachment_id.check('read')
-        return templates
-
-    def write(self, vals):
-        res = super().write(vals)
-        if 'attachment_id' in vals:
-            self.attachment_id.check('read')
-        return res
-
     def copy_data(self, default=None):
         vals_list = super().copy_data(default=default)
         for template, vals in zip(self, vals_list):
-            vals['name'] = vals.get('name', template._get_copy_name(template.name))
+            if 'name' in vals and vals.get('name') == template.name or 'name' not in vals:
+                vals['name'] = template._get_copy_name(template.name)
+
         return vals_list
 
     @api.model
-    def create_with_attachment_data(self, name, data, active=True):
-        try:
-            attachment = self.env['ir.attachment'].create({'name': name, 'datas': data})
-            return self.create({'attachment_id': attachment.id, 'active': active}).id
-        except UserError:
-            return 0
+    def create_from_attachment_data(self, attachment_data_list, active=True):
+        """
+        Create a sign.template record with sign.document records from a list of attachment data.
 
-    @api.model
-    def _get_pdf_number_of_pages(self, pdf_data):
-        file_pdf = PdfFileReader(io.BytesIO(pdf_data), strict=False, overwriteWarnings=False)
-        return len(file_pdf.pages)
+        :param attachment_data_list: List of dictionaries, each with 'name' and 'datas' keys.
+                                    Example: [{'name': 'asdf', 'datas': 'asdfasdfasdf23423'}, ...]
+        :return: [ID of the newly created sign.template record, name of the template]
+        :raises UserError: If the input list is empty or a dictionary is missing required keys.
+        """
+        # Update sequence for documents order.
+        count_sequence = len(self.document_ids)
+        for att_data in attachment_data_list:
+            att_data['sequence'] = count_sequence
+            count_sequence += 1
+
+        template = self.create({
+            'name': attachment_data_list[0]['name'],
+            'active': active,
+        })
+        document_ids = self.env['sign.document'].create_from_attachment_data(attachment_data_list, template.id)
+        if len(document_ids):
+            template.write({
+                'name': document_ids[0].name,
+            })
+        return {
+            'id': template.id,
+            'name': template.name,
+        }
+
+    def update_from_attachment_data(self, attachment_data_list):
+        """
+        Update the current sign.template record by adding sign.document records created from a list of attachment data.
+
+        :param attachment_data_list: List of dictionaries, each with 'name' and 'datas' keys.
+                                    Example: [{'name': 'asdf', 'datas': 'asdfasdfasdf23423'}, ...]
+        :return: None. The sign.template record is updated in place.
+        """
+        # Update sequence for documents order.
+        count_sequence = len(self.document_ids)
+        for att_data in attachment_data_list:
+            att_data['sequence'] = count_sequence
+            count_sequence += 1
+
+        self.env['sign.document'].create_from_attachment_data(attachment_data_list, self.id)
 
     def go_to_custom_template(self, sign_directly_without_mail=False):
         self.ensure_one()
         return {
-            'name': "Template \"%(name)s\"" % {'name': self.attachment_id.name},
+            'name': "Template \"%(name)s\"" % {'name': self.name},
             'type': 'ir.actions.client',
             'tag': 'sign.Template',
             'params': {
@@ -215,13 +185,6 @@ class SignTemplate(models.Model):
                 "You can't delete a template for which signature requests "
                 "exist but you can archive it instead."))
 
-    @api.model
-    def _check_pdf_data_validity(self, datas):
-        try:
-            self._get_pdf_number_of_pages(base64.b64decode(datas))
-        except Exception as e:
-            raise UserError(_("One uploaded file cannot be read. Is it a valid PDF?"))
-
     def get_radio_set_info_by_item_id(self, sign_item_ids=None):
         """
         :param list of sign item IDs (sign_item_ids)
@@ -239,39 +202,7 @@ class SignTemplate(models.Model):
             }
         return radio_set_by_item_dict
 
-    def get_radio_sets_dict(self):
-        """
-        :return: dict radio_sets_dict that maps each radio set that belongs to
-        this template to a dictionary containing num_options and radio_item_ids.
-        """
-        radio_sets = self.sign_item_ids.filtered(lambda item: item.radio_set_id).radio_set_id
-        radio_sets_dict = {
-            radio_set.id: {
-                'num_options': radio_set.num_options,
-                'radio_item_ids': radio_set.radio_items.ids,
-            } for radio_set in radio_sets
-        }
-        return radio_sets_dict
-
-    def update_attachment_name(self, name):
-        """
-        Updates the attachment's name. If the provided name is empty or None,
-        the current name is retained. This forced update prevents the creation
-        of duplicate sign items during simultaneous RPC requests.
-        :param name: The new name for the attachment.
-        :return:
-            - True: Indicates the attachment name was successfully updated.
-            - False: Indicates the update was skipped because a sign request linked
-                    to the template already exists
-        """
-        self.ensure_one()
-        sign_requests = self.env['sign.request'].search([('template_id', '=', self.id)], limit=1)
-        if not sign_requests:
-            self.attachment_id.name = name or self.attachment_id.name
-            return True
-        return False
-
-    def update_from_pdfviewer(self, sign_items=None, deleted_sign_item_ids=None, name=None):
+    def update_from_pdfviewer(self, sign_items=None, deleted_sign_item_ids=None, name=None, document_id=None):
         """ Update a sign.template from the pdfviewer
         :param dict sign_items: {id (str): values (dict)}
             id: positive: sign.item's id in database (the sign item is already in the database and should be update)
@@ -288,7 +219,9 @@ class SignTemplate(models.Model):
         if sign_items is None:
             sign_items = {}
 
-        self.update_attachment_name(name)
+        if name and document_id:
+            document_id = self.env['sign.document'].search([('id', '=', document_id)])
+            document_id.update_attachment_name(name)
 
         # update new_sign_items to avoid recreating sign items
         new_sign_items = dict(sign_items)
@@ -313,7 +246,6 @@ class SignTemplate(models.Model):
         new_values_list = []
         for key, values in new_sign_items.items():
             if int(key) < 0:
-                values['template_id'] = self.id
                 new_values_list.append(values)
         new_id_to_item_id_map.update(zip(new_sign_items.keys(), self.env['sign.item'].create(new_values_list).ids))
 
@@ -397,24 +329,6 @@ class SignTemplate(models.Model):
         self.ensure_one()
         return self.sign_request_ids.filtered(lambda sr: sr.state == 'shared' and sr.create_uid == self.env.user).unlink()
 
-    def _copy_sign_items_to(self, new_template):
-        """ copy all sign items of the self template to the new_template """
-        self.ensure_one()
-        if new_template.has_sign_requests:
-            raise UserError(_("Somebody is already filling a document which uses this template"))
-        item_id_map = {}
-        for sign_item in self.sign_item_ids:
-            new_sign_item = sign_item.copy({'template_id': new_template.id})
-            item_id_map[str(sign_item.id)] = str(new_sign_item.id)
-        return item_id_map
-
-    def _get_sign_items_by_page(self):
-        self.ensure_one()
-        items = defaultdict(lambda: self.env['sign.item'])
-        for item in self.sign_item_ids:
-            items[item.page] += item
-        return items
-
     def trigger_template_tour(self):
         template = self.env.ref('sign.template_sign_tour')
         if template.has_sign_requests:
@@ -436,13 +350,6 @@ class SignTemplate(models.Model):
     ##################
     # PDF Rendering #
     ##################
-
-    def _check_is_encrypted(self):
-        self.ensure_one()
-        if not self.sign_item_ids:
-            return False
-        old_pdf = PdfFileReader(io.BytesIO(self.attachment_id.raw), strict=False)
-        return old_pdf.isEncrypted
 
     def _get_font(self):
         custom_font = self.env["ir.config_parameter"].sudo().get_param("sign.use_custom_font")
@@ -522,186 +429,13 @@ CRM, eCommerce, accounting, inventory, point of sale,\n project management, etc.
         signed_values = values_dict
         return signed_values, values_dict
 
-    def _render_template_with_items(self, password="", signed_values=None, values_dict=None, final_log_hash=None):
-        self.ensure_one()
-        items_by_page = self._get_sign_items_by_page()
-        if not signed_values or not values_dict:
-            signed_values, values_dict = self._get_preview_values()
-        try:
-            old_pdf = PdfFileReader(io.BytesIO(self.attachment_id.raw), strict=False)
-            old_pdf.getNumPages()
-        except (ValueError, PdfReadError):
-            raise ValidationError(_("ERROR: Invalid PDF file!"))
-
-        isEncrypted = old_pdf.isEncrypted
-        if isEncrypted and not old_pdf.decrypt(password):
-            # password is not correct
-            return
-
-        font = self._get_font()
-        normalFontSize = self._get_normal_font_size()
-
-        packet = io.BytesIO()
-        can = canvas.Canvas(packet, pagesize=self._get_page_size(old_pdf))
-        for p in range(0, old_pdf.getNumPages()):
-            page = old_pdf.getPage(p)
-            # Absolute values are taken as it depends on the MediaBox template PDF metadata, they may be negative
-            width = float(abs(page.mediaBox.getWidth()))
-            height = float(abs(page.mediaBox.getHeight()))
-            
-            #add the final_log_hash as the certificate reference id on each page
-            if final_log_hash:
-                can.setFont(font, height * 0.01)
-                ref_text = f"Signature: {final_log_hash}"
-                can.drawCentredString(width/3, height-15, ref_text)
-
-            # Set page orientation (either 0, 90, 180 or 270)
-            rotation = page.get('/Rotate', 0)
-            if rotation and isinstance(rotation, int):
-                can.rotate(rotation)
-                # Translate system so that elements are placed correctly
-                # despite of the orientation
-                if rotation == 90:
-                    width, height = height, width
-                    can.translate(0, -height)
-                elif rotation == 180:
-                    can.translate(-width, -height)
-                elif rotation == 270:
-                    width, height = height, width
-                    can.translate(-width, 0)
-
-            items = items_by_page.get(p + 1, [])
-            for item in items:
-                value_dict = signed_values.get(item.id)
-                if not value_dict:
-                    continue
-                # only get the 1st
-                value = value_dict['value']
-                frame = value_dict['frame']
-                if frame:
-                    try:
-                        image_reader = ImageReader(io.BytesIO(base64.b64decode(frame[frame.find(',') + 1:])))
-                    except UnidentifiedImageError:
-                        raise ValidationError(_("There was an issue downloading your document. Please contact an administrator."))
-                    _fix_image_transparency(image_reader._image)
-                    can.drawImage(
-                        image_reader,
-                        width * item.posX,
-                        height * (1 - item.posY - item.height),
-                        width * item.width,
-                        height * item.height,
-                        'auto',
-                        True
-                    )
-
-                if item.type_id.item_type == "text":
-                    value = reshape_text(value)
-                    can.setFont(font, height * item.height * 0.8)
-                    if item.alignment == "left":
-                        can.drawString(width * item.posX, height * (1 - item.posY - item.height * 0.9), value)
-                    elif item.alignment == "right":
-                        can.drawRightString(width * (item.posX + item.width), height * (1 - item.posY - item.height * 0.9), value)
-                    else:
-                        can.drawCentredString(width * (item.posX + item.width / 2), height * (1 - item.posY - item.height * 0.9), value)
-
-                elif item.type_id.item_type == "selection":
-                    text = ""
-                    for option in item.option_ids:
-                        if option.id == int(value):
-                            text = option.value
-                    font_size = height * normalFontSize * 0.8
-                    string_width = stringWidth(text, font, font_size)
-                    p = Paragraph(text, ParagraphStyle(name='Selection Paragraph', fontName=font, fontSize=font_size, leading=12))
-                    posX = width * (item.posX + item.width * 0.5) - string_width // 2
-                    posY = height * (1 - item.posY - item.height * 0.5) - p.wrap(width, height)[1] // 2
-                    p.drawOn(can, posX, posY)
-
-                elif item.type_id.item_type == "textarea":
-                    font_size = height * normalFontSize * 0.8
-                    can.setFont(font, font_size)
-                    lines = value.split('\n')
-                    y = (1 - item.posY)
-                    for line in lines:
-                        empty_space = width * item.width - can.stringWidth(line, font, font_size)
-                        x_shift = 0
-                        if item.alignment == 'center':
-                            x_shift = empty_space / 2
-                        elif item.alignment == 'right':
-                            x_shift = empty_space
-                        y -= normalFontSize * 0.9
-                        line = reshape_text(line)
-                        can.drawString(width * item.posX + x_shift, height * y, line)
-                        y -= normalFontSize * 0.1
-
-                elif item.type_id.item_type == "checkbox":
-                    itemW, itemH = item.width * width, item.height * height
-                    itemX, itemY = item.posX * width, (1 - item.posY) * height
-                    meanSize = (itemW + itemH) // 2
-                    can.setLineWidth(max(meanSize // 30, 1))
-                    can.rect(itemX, itemY - itemH, itemW, itemH)
-                    if value == 'on':
-                        can.setLineWidth(max(meanSize // 20, 1))
-                        can.bezier(
-                            itemX + 0.20 * itemW, itemY - 0.35 * itemH,
-                            itemX + 0.30 * itemW, itemY - 0.8 * itemH,
-                            itemX + 0.30 * itemW, itemY - 1.2 * itemH,
-                            itemX + 0.85 * itemW, itemY - 0.15 * itemH,
-                        )
-                elif item.type_id.item_type == "radio":
-                    x = width * item.posX
-                    y = height * (1 - item.posY)
-                    w = item.width * width
-                    h = item.height * height
-                    # Calculate the center of the sign item rectangle.
-                    c_x = x + w * 0.5
-                    c_y = y - h * 0.5
-                    # Draw the outer empty circle.
-                    can.circle(c_x, c_y, h * 0.5)
-                    if value == "on":
-                        # Draw the inner filled circle.
-                        can.circle(x_cen=c_x, y_cen=c_y, r=h * 0.5 * 0.75, fill=1)
-                elif item.type_id.item_type == "signature" or item.type_id.item_type == "initial":
-                    try:
-                        image_reader = ImageReader(io.BytesIO(base64.b64decode(value[value.find(',') + 1:])))
-                    except UnidentifiedImageError:
-                        raise ValidationError(_("There was an issue downloading your document. Please contact an administrator."))
-                    _fix_image_transparency(image_reader._image)
-                    can.drawImage(image_reader, width * item.posX, height * (1 - item.posY - item.height), width * item.width, height * item.height, 'auto', True)
-                elif item.type_id.item_type == "strikethrough" and value == "striked":
-                    x = width * item.posX
-                    y = height * (1 - item.posY)
-                    w = item.width * width
-                    h = item.height * height
-                    can.line(x, y - 0.5 * h, x + w, y - 0.5 * h)
-
-            can.showPage()
-
-        can.save()
-
-        item_pdf = PdfFileReader(packet)
-        new_pdf = PdfFileWriter()
-
-        for p in range(0, old_pdf.getNumPages()):
-            page = old_pdf.getPage(p)
-            page.mergePage(item_pdf.getPage(p))
-            new_pdf.addPage(page)
-
-        if isEncrypted:
-            new_pdf.encrypt(password)
-
-        output = io.BytesIO()
-        try:
-            new_pdf.write(output)
-        except PdfReadError:
-            raise ValidationError(_("There was an issue downloading your document. Please contact an administrator."))
-        return output
-
-    def action_template_preview(self):
+    def action_template_preview(self, document_id):
         self.ensure_one()
         # We create the wizard here to have a proper id (not newID). The pdf_viewer widget needs it
         # to display the pdf in the iFrame
         wizard = self.env['sign.template.preview'].create({
-            'template_id': self.id
+            'template_id': self.id,
+            'document_id': document_id,
         })
         return {
             'name': _("Template Preview"),

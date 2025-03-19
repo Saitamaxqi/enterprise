@@ -1,6 +1,5 @@
 import { _t } from "@web/core/l10n/translation";
 import { useService, useBus } from "@web/core/utils/hooks";
-import { multiFileUpload } from "@sign/backend_components/multi_file_upload";
 import { user } from "@web/core/user";
 import { getDataURLFromFile } from "@web/core/utils/urls";
 import { TemplateAlertDialog } from "@sign/backend_components/template_alert_dialog/template_alert_dialog";
@@ -21,34 +20,27 @@ export function useSignViewButtons() {
     let latestRequestContext;
     let inactive;
     let resModel;
+    let signTemplateId = false;
+    let updateDocuments = () => {};
 
-    const uploadFile = async (file) => {
-        const dataUrl = await getDataURLFromFile(file);
+    const uploadFiles = async (files) => {
         inactive = resModel === 'sign.template' ? true : false;
-        const args = [file.name, dataUrl.split(",")[1], inactive];
-        return await orm.call("sign.template", "create_with_attachment_data", args);
-    };
-
-    /**
-     * Called on newly created templates, does a sign.Template action on those.
-     */
-    const handleTemplates = (templates) => {
-        if (!templates || !templates.length) {
-            return;
+        const files_list = await Promise.all(
+            Array.from(files).map(async (file) => ({
+                name: file.name,
+                datas: (await getDataURLFromFile(file)).split(",")[1],
+            }))
+        );
+        if (signTemplateId) {
+            return await orm.call(
+                "sign.template",
+                "update_from_attachment_data",
+                [signTemplateId],
+                { attachment_data_list: files_list },
+            );
+        } else {
+            return await orm.call("sign.template", "create_from_attachment_data", [files_list, inactive]);
         }
-        const file = templates.shift();
-        multiFileUpload.addNewFiles(templates);
-        action.doAction({
-            type: "ir.actions.client",
-            tag: "sign.Template",
-            name: _t("Template %s", file.name),
-            params: {
-                sign_edit_call: latestRequestContext,
-                id: file.template,
-                sign_directly_without_mail: false,
-                resModel: resModel,
-            },
-        });
     };
 
     const upload = {
@@ -60,33 +52,32 @@ export function useSignViewButtons() {
             if (!files || !files.length) {
                 return;
             }
-            const uploadedTemplates = await Promise.all(Array.from(files).map(uploadFile));
-            const templates = uploadedTemplates.map((template, index) => ({
-                template,
-                name: files[index].name,
-            }));
-            const { true: succesfulTemplates, false: failedTemplates } = templates.reduce(
-                (result, item) => {
-                    const key = Boolean(item.template);
-                    if (!result[key]) {
-                        result[key] = [];
-                    }
-                    result[key].push(item);
-                    return result;
-                },
-                {}
-            );
-            if (failedTemplates && failedTemplates.length) {
+            if (Array.from(files).filter((file) => file.type !== "application/pdf").length) {
                 dialog.add(TemplateAlertDialog, {
                     title: _t("File Error"),
-                    failedTemplates,
-                    successTemplateCount: succesfulTemplates && succesfulTemplates.length,
-                    confirm: handleTemplates.bind(undefined, succesfulTemplates),
+                    message: _t("Only PDF files are allowed."),
                 });
-            } else {
-                handleTemplates(succesfulTemplates);
+                return;
             }
-            ev.target.value = "";
+            if (signTemplateId) {
+                await uploadFiles(files);
+                return updateDocuments();
+            }
+            const {
+                id: template_id,
+                name: template_name,
+            } = await uploadFiles(files);
+            action.doAction({
+                type: "ir.actions.client",
+                tag: "sign.Template",
+                name: _t("Template %s", template_name),
+                params: {
+                    sign_edit_call: latestRequestContext,
+                    id: template_id,
+                    sign_directly_without_mail: false,
+                    resModel: resModel,
+                },
+            });
         },
 
         /**
@@ -99,6 +90,8 @@ export function useSignViewButtons() {
         requestFile(context) {
             latestRequestContext = context;
             resModel = this.props.resModel;
+            signTemplateId = this.props.signTemplateId;
+            updateDocuments = this.props.updateDocuments;
             fileInput.el.click();
         },
     };

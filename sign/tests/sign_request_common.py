@@ -15,6 +15,7 @@ class SignRequestCommon(TransactionCase):
         super().setUpClass()
         with file_open('sign/static/demo/sample_contract.pdf', "rb") as f:
             pdf_content = f.read()
+            cls.pdf_data_64 = base64.b64encode(pdf_content)
 
         cls.attachment = cls.env['ir.attachment'].create({
             'type': 'binary',
@@ -38,13 +39,22 @@ class SignRequestCommon(TransactionCase):
 
         cls.template_no_item = cls.env['sign.template'].create({
             'name': 'template_no_item',
-            'attachment_id': cls.attachment.id,
         })
 
         cls.template_1_role = cls.env['sign.template'].create({
             'name': 'template_1_role',
-            'attachment_id': cls.attachment.id,
         })
+
+        cls.document_1 = cls.env['sign.document'].create({
+            'attachment_id': cls.attachment.id,
+            'template_id': cls.template_no_item.id,
+        })
+
+        cls.document_2 = cls.env['sign.document'].create({
+            'attachment_id': cls.attachment.id,
+            'template_id': cls.template_1_role.id,
+        })
+
         cls.env['sign.item'].create([
             {
                 'type_id': cls.env.ref('sign.sign_item_type_text').id,
@@ -53,7 +63,7 @@ class SignRequestCommon(TransactionCase):
                 'page': 1,
                 'posX': 0.273,
                 'posY': 0.158,
-                'template_id': cls.template_1_role.id,
+                'document_id': cls.document_2.id,
                 'width': 0.150,
                 'height': 0.015,
             }
@@ -62,7 +72,10 @@ class SignRequestCommon(TransactionCase):
 
         cls.template_3_roles = cls.env['sign.template'].create({
             'name': 'template_3_roles',
+        })
+        cls.document_3 = cls.env['sign.document'].create({
             'attachment_id': cls.attachment.id,
+            'template_id': cls.template_3_roles.id,
         })
         cls.env['sign.item'].create([
             {
@@ -72,7 +85,7 @@ class SignRequestCommon(TransactionCase):
                 'page': 1,
                 'posX': 0.273,
                 'posY': 0.158,
-                'template_id': cls.template_3_roles.id,
+                'document_id': cls.document_3.id,
                 'width': 0.150,
                 'height': 0.015,
             }, {
@@ -82,7 +95,7 @@ class SignRequestCommon(TransactionCase):
                 'page': 1,
                 'posX': 0.373,
                 'posY': 0.258,
-                'template_id': cls.template_3_roles.id,
+                'document_id': cls.document_3.id,
                 'width': 0.150,
                 'height': 0.015,
             }, {
@@ -92,7 +105,7 @@ class SignRequestCommon(TransactionCase):
                 'page': 1,
                 'posX': 0.373,
                 'posY': 0.358,
-                'template_id': cls.template_3_roles.id,
+                'document_id': cls.document_3.id,
                 'width': 0.150,
                 'height': 0.015,
             },
@@ -227,7 +240,8 @@ class SignRequestCommon(TransactionCase):
                 'posX': 0.1,
                 'posY': 0.2,
                 'width': 0.15,
-                'height': 0.15
+                'height': 0.15,
+                'document_id': self.document_3.id,
         }
 
     def create_sign_values(self, sign_item_ids, role_id):

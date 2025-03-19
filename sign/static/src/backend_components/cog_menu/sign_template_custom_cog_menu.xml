@@ -7,7 +7,7 @@
             </button>
             <t t-set-slot="content">
                 <t t-if="showEditButton">
-                    <DropdownItem class="'o_menu_item'" onSelected.bind="editTemplate">
+                    <DropdownItem class="'o_menu_item'" onSelected.bind="props.onEditTemplate">
                         <i class="fa fa-file-text fa-fw"/> Edit
                     </DropdownItem>
                 </t>

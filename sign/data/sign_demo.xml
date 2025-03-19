@@ -14,12 +14,16 @@
         <field name="mimetype">application/pdf;base64</field>
     </record>
     <record id="template_sign_1" model="sign.template">
-        <field name="attachment_id" ref="attachment_sign_1"/>
+        <field name="name">Employment Contract.pdf</field>
         <field name="create_uid" ref="base.user_admin"/>
         <field name="tag_ids" eval="[(4, ref('sign.sign_template_tag_1'))]"/>
     </record>
-    <record model="sign.item" id="sign_item_1">
+    <record id="document_sign_1" model="sign.document">
+        <field name="attachment_id" ref="attachment_sign_1"/>
         <field name="template_id" ref="template_sign_1"/>
+    </record>
+    <record model="sign.item" id="sign_item_1">
+        <field name="document_id" ref="document_sign_1"/>
         <field name="type_id" ref="sign_item_type_name"/>
         <field name="responsible_id" ref="sign_item_role_employee"/>
         <field name="page" type="int">1</field>
@@ -30,7 +34,7 @@
         <field name="name">Name</field>
     </record>
     <record model="sign.item" id="sign_item_2">
-        <field name="template_id" ref="template_sign_1"/>
+        <field name="document_id" ref="document_sign_1"/>
         <field name="type_id" ref="sign_item_type_date"/>
         <field name="responsible_id" ref="sign_item_role_employee"/>
         <field name="page" type="int">1</field>
@@ -41,7 +45,7 @@
         <field name="name">Date</field>
     </record>
     <record model="sign.item" id="sign_item_3">
-        <field name="template_id" ref="template_sign_1"/>
+        <field name="document_id" ref="document_sign_1"/>
         <field name="type_id" ref="sign_item_type_text"/>
         <field name="responsible_id" ref="sign_item_role_employee"/>
         <field name="page" type="int">1</field>
@@ -52,7 +56,7 @@
         <field name="name">Text</field>
     </record>
     <record model="sign.item" id="sign_item_4">
-        <field name="template_id" ref="template_sign_1"/>
+        <field name="document_id" ref="document_sign_1"/>
         <field name="type_id" ref="sign_item_type_initial"/>
         <field name="responsible_id" ref="sign_item_role_employee"/>
         <field name="page" type="int">1</field>
@@ -63,7 +67,7 @@
         <field name="name">Initials</field>
     </record>
     <record model="sign.item" id="sign_item_5">
-        <field name="template_id" ref="template_sign_1"/>
+        <field name="document_id" ref="document_sign_1"/>
         <field name="type_id" ref="sign_item_type_initial"/>
         <field name="responsible_id" ref="sign_item_role_employee"/>
         <field name="page" type="int">2</field>
@@ -74,7 +78,7 @@
         <field name="name">Initials</field>
     </record>
     <record model="sign.item" id="sign_item_8">
-        <field name="template_id" ref="template_sign_1"/>
+        <field name="document_id" ref="document_sign_1"/>
         <field name="type_id" ref="sign_item_type_signature"/>
         <field name="responsible_id" ref="sign_item_role_employee"/>
         <field name="page" type="int">3</field>
@@ -85,7 +89,7 @@
         <field name="name">Signature</field>
     </record>
     <record model="sign.item" id="sign_item_9">
-        <field name="template_id" ref="template_sign_1"/>
+        <field name="document_id" ref="document_sign_1"/>
         <field name="type_id" ref="sign_item_type_date"/>
         <field name="responsible_id" ref="sign_item_role_employee"/>
         <field name="page" type="int">3</field>
@@ -102,14 +106,18 @@
         <field name="mimetype">application/pdf</field>
     </record>
     <record id="template_sign_2" model="sign.template">
-        <field name="attachment_id" ref="attachment_sign_2"/>
+        <field name="name">Non-Disclosure Agreement.pdf</field>
         <field name="create_uid" ref="base.user_admin"/>
         <field name="favorited_ids" eval="[(4, ref('base.user_admin'))]"/>
         <field name="tag_ids" eval="[(4, ref('sign.sign_template_tag_2')), (4, ref('sign.sign_template_tag_1'))]"/>
         <field name="user_id" ref="base.user_admin"/>
     </record>
-    <record model="sign.item" id="sign_item_10">
+    <record id="document_sign_2" model="sign.document">
+        <field name="attachment_id" ref="attachment_sign_2"/>
         <field name="template_id" ref="template_sign_2"/>
+    </record>
+    <record model="sign.item" id="sign_item_10">
+        <field name="document_id" ref="document_sign_2"/>
         <field name="type_id" ref="sign_item_type_name"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -120,7 +128,7 @@
         <field name="name">Name</field>
     </record>
     <record model="sign.item" id="sign_item_11">
-        <field name="template_id" ref="template_sign_2"/>
+        <field name="document_id" ref="document_sign_2"/>
         <field name="type_id" ref="sign_item_type_text"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -131,7 +139,7 @@
         <field name="name">Text</field>
     </record>
     <record model="sign.item" id="sign_item_12">
-        <field name="template_id" ref="template_sign_2"/>
+        <field name="document_id" ref="document_sign_2"/>
         <field name="type_id" ref="sign_item_type_initial"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -142,7 +150,7 @@
         <field name="name">Initials</field>
     </record>
     <record model="sign.item" id="sign_item_13">
-        <field name="template_id" ref="template_sign_2"/>
+        <field name="document_id" ref="document_sign_2"/>
         <field name="type_id" ref="sign_item_type_initial"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">2</field>
@@ -153,7 +161,7 @@
         <field name="name">Initials</field>
     </record>
     <record model="sign.item" id="sign_item_14">
-        <field name="template_id" ref="template_sign_2"/>
+        <field name="document_id" ref="document_sign_2"/>
         <field name="type_id" ref="sign_item_type_initial"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">3</field>
@@ -164,7 +172,7 @@
         <field name="name">Initials</field>
     </record>
     <record model="sign.item" id="sign_item_15">
-        <field name="template_id" ref="template_sign_2"/>
+        <field name="document_id" ref="document_sign_2"/>
         <field name="type_id" ref="sign_item_type_initial"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">4</field>
@@ -175,7 +183,7 @@
         <field name="name">Initials</field>
     </record>
     <record model="sign.item" id="sign_item_16">
-        <field name="template_id" ref="template_sign_2"/>
+        <field name="document_id" ref="document_sign_2"/>
         <field name="type_id" ref="sign_item_type_signature"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">5</field>
@@ -186,7 +194,7 @@
         <field name="name">Signature</field>
     </record>
     <record model="sign.item" id="sign_item_18">
-        <field name="template_id" ref="template_sign_2"/>
+        <field name="document_id" ref="document_sign_2"/>
         <field name="type_id" ref="sign_item_type_name"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">5</field>
@@ -203,11 +211,15 @@
         <field name="mimetype">application/pdf;base64</field>
     </record>
     <record id="template_sign_3" model="sign.template">
-        <field name="attachment_id" ref="attachment_sign_3"/>
+        <field name="name">Odoo_Individual_Contributor_License_Agreement.pdf</field>
         <field name="create_uid" ref="base.user_admin"/>
     </record>
-    <record model="sign.item" id="sign_item_20">
+    <record id="document_sign_3" model="sign.document">
+        <field name="attachment_id" ref="attachment_sign_3"/>
         <field name="template_id" ref="template_sign_3"/>
+    </record>
+    <record model="sign.item" id="sign_item_20">
+        <field name="document_id" ref="document_sign_3"/>
         <field name="type_id" ref="sign_item_type_initial"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -218,7 +230,7 @@
         <field name="name">Initials</field>
     </record>
     <record model="sign.item" id="sign_item_21">
-        <field name="template_id" ref="template_sign_3"/>
+        <field name="document_id" ref="document_sign_3"/>
         <field name="type_id" ref="sign_item_type_name"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">2</field>
@@ -229,7 +241,7 @@
         <field name="name">Name</field>
     </record>
     <record model="sign.item" id="sign_item_22">
-        <field name="template_id" ref="template_sign_3"/>
+        <field name="document_id" ref="document_sign_3"/>
         <field name="type_id" ref="sign_item_type_email"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">2</field>
@@ -240,7 +252,7 @@
         <field name="name">Email</field>
     </record>
     <record model="sign.item" id="sign_item_23">
-        <field name="template_id" ref="template_sign_3"/>
+        <field name="document_id" ref="document_sign_3"/>
         <field name="type_id" ref="sign_item_type_text"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">2</field>
@@ -251,7 +263,7 @@
         <field name="name">Text</field>
     </record>
     <record model="sign.item" id="sign_item_24">
-        <field name="template_id" ref="template_sign_3"/>
+        <field name="document_id" ref="document_sign_3"/>
         <field name="type_id" ref="sign_item_type_date"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">2</field>
@@ -262,7 +274,7 @@
         <field name="name">Date</field>
     </record>
     <record model="sign.item" id="sign_item_25">
-        <field name="template_id" ref="template_sign_3"/>
+        <field name="document_id" ref="document_sign_3"/>
         <field name="type_id" ref="sign_item_type_signature"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">2</field>
@@ -279,14 +291,18 @@
         <field name="mimetype">application/pdf</field>
     </record>
     <record id="template_sign_4" model="sign.template">
-        <field name="attachment_id" ref="attachment_sign_4"/>
+        <field name="name">Real_Estate_Listing_Agreement.pdf</field>
         <field name="create_uid" ref="base.user_admin"/>
         <field name="favorited_ids" eval="[(4, ref('base.user_admin'))]"/>
         <field name="tag_ids" eval="[(4, ref('sign.sign_template_tag_3'))]"/>
         <field name="user_id" ref="base.user_admin"/>
     </record>
-    <record model="sign.item" id="sign_item_27">
+    <record id="document_sign_4" model="sign.document">
+        <field name="attachment_id" ref="attachment_sign_4"/>
         <field name="template_id" ref="template_sign_4"/>
+    </record>
+    <record model="sign.item" id="sign_item_27">
+        <field name="document_id" ref="document_sign_4"/>
         <field name="type_id" ref="sign_item_type_name"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -297,7 +313,7 @@
         <field name="name">Name</field>
     </record>
     <record model="sign.item" id="sign_item_29">
-        <field name="template_id" ref="template_sign_4"/>
+        <field name="document_id" ref="document_sign_4"/>
         <field name="type_id" ref="sign_item_type_initial"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -308,7 +324,7 @@
         <field name="name">Initials</field>
     </record>
     <record model="sign.item" id="sign_item_31">
-        <field name="template_id" ref="template_sign_4"/>
+        <field name="document_id" ref="document_sign_4"/>
         <field name="type_id" ref="sign_item_type_name"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">2</field>
@@ -319,7 +335,7 @@
         <field name="name">Name</field>
     </record>
     <record model="sign.item" id="sign_item_33">
-        <field name="template_id" ref="template_sign_4"/>
+        <field name="document_id" ref="document_sign_4"/>
         <field name="type_id" ref="sign_item_type_signature"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">2</field>
@@ -336,13 +352,16 @@
         <field name="mimetype">application/pdf</field>
     </record>
     <record id="template_sign_5" model="sign.template">
-        <field name="attachment_id" ref="attachment_sign_5"/>
         <field name="create_uid" ref="base.user_demo"/>
         <field name="favorited_ids" eval="[(4, ref('base.user_demo'))]"/>
         <field name="tag_ids" eval="[(4, ref('sign.sign_template_tag_3'))]"/>
     </record>
-    <record model="sign.item" id="sign_item_34">
+    <record id="document_sign_5" model="sign.document">
+        <field name="attachment_id" ref="attachment_sign_5"/>
         <field name="template_id" ref="template_sign_5"/>
+    </record>
+    <record model="sign.item" id="sign_item_34">
+        <field name="document_id" ref="document_sign_5"/>
         <field name="type_id" ref="sign_item_type_company"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -353,7 +372,7 @@
         <field name="name">Company</field>
     </record>
     <record model="sign.item" id="sign_item_35">
-        <field name="template_id" ref="template_sign_5"/>
+        <field name="document_id" ref="document_sign_5"/>
         <field name="type_id" ref="sign_item_type_name"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -364,7 +383,7 @@
         <field name="name">Name</field>
     </record>
     <record model="sign.item" id="sign_item_36">
-        <field name="template_id" ref="template_sign_5"/>
+        <field name="document_id" ref="document_sign_5"/>
         <field name="type_id" ref="sign_item_type_email"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -375,7 +394,7 @@
         <field name="name">Email</field>
     </record>
     <record model="sign.item" id="sign_item_37">
-        <field name="template_id" ref="template_sign_5"/>
+        <field name="document_id" ref="document_sign_5"/>
         <field name="type_id" ref="sign_item_type_phone"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -386,7 +405,7 @@
         <field name="name">Phone</field>
     </record>
     <record model="sign.item" id="sign_item_43">
-        <field name="template_id" ref="template_sign_5"/>
+        <field name="document_id" ref="document_sign_5"/>
         <field name="type_id" ref="sign_item_type_company"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -397,7 +416,7 @@
         <field name="name">Company</field>
     </record>
     <record model="sign.item" id="sign_item_45">
-        <field name="template_id" ref="template_sign_5"/>
+        <field name="document_id" ref="document_sign_5"/>
         <field name="type_id" ref="sign_item_type_signature"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -408,7 +427,7 @@
         <field name="name">Signature</field>
     </record>
     <record model="sign.item" id="sign_item_46">
-        <field name="template_id" ref="template_sign_5"/>
+        <field name="document_id" ref="document_sign_5"/>
         <field name="type_id" ref="sign_item_type_initial"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">2</field>
@@ -419,7 +438,7 @@
         <field name="name">Initials</field>
     </record>
     <record model="sign.item" id="sign_item_47">
-        <field name="template_id" ref="template_sign_5"/>
+        <field name="document_id" ref="document_sign_5"/>
         <field name="type_id" ref="sign_item_type_initial"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">3</field>
@@ -430,7 +449,7 @@
         <field name="name">Initials</field>
     </record>
     <record model="sign.item" id="sign_item_48">
-        <field name="template_id" ref="template_sign_5"/>
+        <field name="document_id" ref="document_sign_5"/>
         <field name="type_id" ref="sign_item_type_initial"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">4</field>
@@ -452,12 +471,15 @@
         <field name="mimetype">application/pdf</field>
     </record>
     <record id="template_sign_6" model="sign.template">
-        <field name="attachment_id" ref="attachment_sign_6"/>
         <field name="group_ids" eval="[(4,ref('sign.group_sign_user'))]"/>
         <field name="tag_ids" eval="[(4, ref('sign.sign_template_tag_4'))]"/>
     </record>
-    <record model="sign.item" id="sign_item_1">
+    <record id="document_sign_6" model="sign.document">
+        <field name="attachment_id" ref="attachment_sign_6"/>
         <field name="template_id" ref="template_sign_6"/>
+    </record>
+    <record model="sign.item" id="sign_item_1">
+        <field name="document_id" ref="document_sign_6"/>
         <field name="type_id" ref="sign_item_type_name"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>
@@ -467,7 +489,7 @@
         <field name="height" type="float">0.015</field>
     </record>
     <record model="sign.item" id="sign_item_2">
-        <field name="template_id" ref="template_sign_6"/>
+        <field name="document_id" ref="document_sign_6"/>
         <field name="type_id" ref="sign_item_type_signature"/>
         <field name="responsible_id" ref="sign_item_role_customer"/>
         <field name="page" type="int">1</field>

@@ -5,8 +5,9 @@ import { Component, useRef, useEffect, onWillUnmount, onWillStart, useState, use
 import { buildPDFViewerURL , injectPDFCustomStyles } from "@sign/components/sign_request/utils";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { hidePDFJSButtons } from "@web/core/utils/pdfjs";
-import { useSetupAction } from "@web/search/action_hook";
 import { SignSaveTemplateDialog } from "./sign_save_template_dialog";
+import { user } from "@web/core/user";
+
 
 export class SignTemplateBody extends Component {
     static template = "sign.SignTemplateBody";
@@ -15,9 +16,9 @@ export class SignTemplateBody extends Component {
     };
     static props = {
         signItemTypes: { type: Array },
-        signItems: { type: Array },
+        signItems: { type: Array, optional: true },
         signRoles: { type: Array },
-        radioSets: { type: Object },
+        radioSets: { type: Object, optional: true },
         hasSignRequests: { type: Boolean },
         signItemOptions: { type: Array },
         attachmentLocation: { type: String },
@@ -25,11 +26,11 @@ export class SignTemplateBody extends Component {
         goBackToKanban: { type: Function },
         onTemplateSaveClick: { type: Function },
         manageTemplateAccess: { type: Boolean },
-        isPDF: { type: Boolean },
         resModel: { type: String },
         signStatus: { type: Object },
         iframe: { type: Object, optional: true },
         setIframe: { type: Function },
+        documentId: { type: Number },
     };
 
     setup() {
@@ -70,14 +71,6 @@ export class SignTemplateBody extends Component {
             }
         });
 
-        useSetupAction({
-            beforeLeave: async () => {
-                if (this.props.signStatus.isTemplateChanged && !this.props.signStatus.isSignTemplateSaved && this.props.signTemplate.active) {
-                    await this.saveTemplate();
-                    this.notification.add(_t("Saved"), { type: "success" });
-                }
-            }
-        });
 
         onWillUnmount(() => {
             if (this.props.iframe) {
@@ -97,6 +90,31 @@ export class SignTemplateBody extends Component {
                 );
                 this.state.documentUsedTimesCounter = documentUsedTimes;
             };
+
+            return await Promise.all([this.fetchRadioSets(), this.fetchSignItemData()]);
+        });
+    }
+
+    async fetchRadioSets() {
+        this.radioSets = await this.orm.call(
+            "sign.document",
+            "get_radio_sets_dict", [
+                this.props.documentId,
+            ]
+        );
+    }
+
+    async fetchSignItemData() {
+        this.signItems = await this.orm.call(
+            "sign.item",
+            "search_read",
+            [[["document_id", "=", this.props.documentId]]],
+            { context: user.context }
+        );
+
+        this.signItems.forEach((item) => {
+            item.radio_set_id = item?.radio_set_id[0] || undefined;
+            item.roleName = item.responsible_id[1];
         });
     }
 
@@ -137,16 +155,17 @@ export class SignTemplateBody extends Component {
             },
             {
                 signItemTypes: this.props.signItemTypes,
-                signItems: this.props.signItems,
+                signItems: this.signItems,
                 signRoles: this.props.signRoles,
                 hasSignRequests: this.props.hasSignRequests,
                 signItemOptions: this.props.signItemOptions,
-                radioSets: this.props.radioSets,
+                radioSets: this.radioSets,
                 saveTemplate: () => this.saveTemplate(),
                 getRadioSetInfo: (id) => this.getRadioSetInfo(id),
                 rotatePDF: () => this.rotatePDF(),
                 signStatus: this.props.signStatus,
                 setTemplateChangedState: (state) => this.props.signStatus.isTemplateChanged = state,
+                documentId: this.props.documentId,
             }
         );
         this.props.setIframe(iframe);
@@ -175,12 +194,13 @@ export class SignTemplateBody extends Component {
         const newId2ItemIdMap = await this.orm.call("sign.template", "update_from_pdfviewer", [
             this.props.signTemplate.id,
             updatedSignItems,
-            this.props.iframe.deletedSignItemIds,
+            this.props.iframe?.deletedSignItemIds,
             newTemplateName || "",
         ]);
 
         if (!newId2ItemIdMap) {
-            this.showBlockedTemplateDialog();
+            if (updatedSignItems)
+                this.showBlockedTemplateDialog();
             return false;
         }
 
@@ -221,6 +241,7 @@ export class SignTemplateBody extends Component {
                         width: signItem.width,
                         height: signItem.height,
                         radio_set_id: signItem.radio_set_id,
+                        document_id: signItem.documentId,
                     };
 
                     if (id < 0) {

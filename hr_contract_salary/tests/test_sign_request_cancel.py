@@ -19,7 +19,11 @@ class TestSignRequestCancel(TransactionCase):
 
         cls.template_id = cls.env['sign.template'].create({
             'name': 'Employee Contract Template',
+        })
+
+        cls.document_id = cls.env['sign.document'].create({
             'attachment_id': cls.attachment.id,
+            'template_id': cls.template_id.id,
         })
 
         cls.structure_type = cls.env['hr.payroll.structure.type'].create({'name': 'struct'})
@@ -38,7 +42,7 @@ class TestSignRequestCancel(TransactionCase):
             'page': 1,
             'posX': 0.273,
             'posY': 0.158,
-            'template_id': cls.template_id.id,
+            'document_id': cls.document_id.id,
             'width': 0.150,
             'height': 0.015,
         }])

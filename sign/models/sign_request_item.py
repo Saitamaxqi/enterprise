@@ -9,7 +9,7 @@ from markupsafe import Markup
 from random import randint
 from werkzeug.urls import url_join, url_quote, url_encode
 
-from odoo import _, api, fields, models, Command
+from odoo import _, api, fields, models
 from odoo.tools import consteq, email_normalize, formataddr, groupby, get_lang, is_html_empty
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.misc import hmac
@@ -197,7 +197,6 @@ class SignRequestItem(models.Model):
                 'show_validity': signer.sign_request_id.validity and not has_default_validity,
             }, lang=signer_lang, minimal_qcontext=True)
 
-            attachment_ids = signer.sign_request_id.attachment_ids.ids
             self.env['sign.request']._message_send_mail(
                 body, 'sign.sign_mail_notification_light',
                 {'record_name': signer.sign_request_id.reference},
@@ -207,7 +206,6 @@ class SignRequestItem(models.Model):
                 {'email_from': signer.create_uid.email_formatted,
                  'author_id': signer.create_uid.partner_id.id,
                  'email_to': formataddr((signer.partner_id.name, signer_email_normalized)),
-                 'attachment_ids': attachment_ids,
                  'subject': signer.sign_request_id.subject},
                 force_send=self.env.context.get('force_send', True),  # only force_send if not from cron
                 lang=signer_lang,
@@ -215,12 +213,9 @@ class SignRequestItem(models.Model):
             signer.is_mail_sent = True
             del context
 
-    def _edit_and_sign(self, signature, **kwargs):
+    def sign(self, signature, **kwargs):
         """ Sign sign request items at once.
         :param signature: dictionary containing signature values and corresponding ids
-        :param dict new_sign_items: {id (str): values (dict)}
-            id: negative: negative random itemId(sync_id) in pdfviewer (the sign item is new created in the pdfviewer and should be created)
-            values: values to create
         """
         self.ensure_one()
         if not self.env.su:
@@ -229,41 +224,6 @@ class SignRequestItem(models.Model):
             raise UserError(_("This sign request item cannot be signed"))
         elif self.sign_request_id.validity and self.sign_request_id.validity < fields.Date.today():
             raise UserError(_('This sign request is not valid anymore'))
-
-        # edit request template while signing
-        new_sign_items = kwargs.get('new_sign_items', False)
-        if new_sign_items:
-            if any(int(item_id) >= 0 for item_id in new_sign_items):
-                raise UserError(_("Existing sign items are not allowed to be changed"))
-            if any(item['responsible_id'] != self.role_id.id for item in new_sign_items.values()):
-                raise UserError(_("You can only add new items for the current role"))
-            sign_request = self.sign_request_id
-            if sign_request.nb_closed != 0:
-                raise UserError(_("The document has been signed by a signer and cannot be edited"))
-            # copy the old template
-            old_template = sign_request.template_id
-            new_template = old_template.copy({
-                'favorited_ids': [Command.link(sign_request.create_uid.id), Command.link(self.env.user.id)],
-                'active': False,
-                'sign_item_ids': []
-            }).sudo(False)
-            existing_item_id_map = old_template._copy_sign_items_to(new_template)
-
-            # edit the new template(add new sign items)
-            new_item_id_map = new_template.update_from_pdfviewer(new_sign_items)
-            sign_request.template_id = new_template
-            item_id_map = dict(existing_item_id_map, **new_item_id_map)
-
-            # update the item ids in signature
-            new_signature = {}
-            for item_id, item_value in signature.items():
-                new_item_id = item_id_map[item_id]
-                new_signature[new_item_id] = item_value
-            signature = new_signature
-
-            self.env['sign.log'].create({'sign_request_id': sign_request.id, 'action': 'update'})
-            body = _("The signature request has been edited by: %s.", self.partner_id.name)
-            sign_request.message_post(body=body)
 
         self._sign(signature, **kwargs)
 
@@ -392,7 +352,7 @@ class SignRequestItem(models.Model):
                 body += sign_request.message
             if not sign_request.communication_company_id:
                 sign_request.communication_company_id = self.env.company
-            sign_request.message_post(body=body, attachment_ids=sign_request.attachment_ids.ids)
+            sign_request.message_post(body=body)
         self._send_signature_access_mail()
 
     def _get_user_signature(self, signature_type='sign_signature'):

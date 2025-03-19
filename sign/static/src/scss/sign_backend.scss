@@ -64,7 +64,7 @@
             opacity: 1.0; 
         }
 
-        .o_sign_template_name_input {
+        .o_sign_document_name_input {
             width: auto;
             display: inline-block;
             border: 1px dashed white;
@@ -139,6 +139,10 @@
     .o_sign_sidebar_icon {
         min-width: 20px;
         border: none;
+    }
+
+    .o_sign_document_list_item {
+        cursor: pointer;
     }
 
     .o_sign_sidebar_add_button_container {
@@ -355,6 +359,30 @@
 
 .sign-popover {
     z-index: 1055 !important;
+}
+
+.o_sign_documents_container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.o_sign_visible_document {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.o_sign_invisible_document {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .o_sign_template_tags_and_save {

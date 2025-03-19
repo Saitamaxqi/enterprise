@@ -7,9 +7,12 @@
         <field name="mimetype">application/pdf</field>
     </record>
     <record id="template_sign_tour" model="sign.template">
-        <field name="attachment_id" ref="attachment_sign_tour"/>
         <field name="active" eval="False"/>
         <field name="group_ids" eval="[Command.link(ref('sign.group_sign_user'))]"/>
+    </record>
+    <record id="attachment_sign_tour_document" model="sign.document">
+        <field name="attachment_id" ref="attachment_sign_tour"/>
+        <field name="template_id" ref="template_sign_tour" />
     </record>
 
     <!-- Reminder CRON -->

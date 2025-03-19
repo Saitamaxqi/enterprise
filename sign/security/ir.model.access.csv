@@ -1,6 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_sign_request_user,sign.request.user,model_sign_request,group_sign_user,1,1,1,1
 access_sign_template_user,sign.template.user,model_sign_template,group_sign_user,1,1,1,1
+access_sign_document_user,sign.document.user,model_sign_document,group_sign_user,1,1,1,1
 access_sign_request_item_user,sign.request.item.user,model_sign_request_item,group_sign_user,1,1,1,0
 access_sign_item_user,sign.item.user,model_sign_item,group_sign_user,1,1,1,1
 access_sign_item_option_user,sign.item.option.user,model_sign_item_option,group_sign_user,1,0,1,0
@@ -17,3 +18,4 @@ access_sign_send_request_signer_user,sign.send.request.signer.user,model_sign_se
 access_sign_duplicate_template_with_pdf_user,sign.duplicate.template.pdf.user,model_sign_duplicate_template_pdf,sign.group_sign_user,1,1,1,0
 access_sign_template_preview,sign.template.preview.user,model_sign_template_preview,sign.group_sign_user,1,1,1,0
 sign.access_sign_request_download,access_sign_request_download,sign.model_sign_request_download,base.group_user,1,1,1,1
+sign.access_sign_completed_document,access_sign_completed_document,sign.model_sign_completed_document,base.group_user,1,1,1,1

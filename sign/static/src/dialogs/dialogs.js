@@ -3,7 +3,6 @@ import { SignNameAndSignatureDialog } from "./sign_name_and_signature_dialog";
 import { SMSSignerDialog } from "./sms_signer_dialog";
 import { ThankYouDialog } from "./thank_you_dialog";
 import { NextDirectSignDialog } from "./next_direct_sign_dialog";
-import { EncryptedDialog } from "./encrypted_dialog";
 import { SignRefusalDialog } from "./sign_refusal_dialog";
 
 export {
@@ -12,6 +11,5 @@ export {
     SMSSignerDialog,
     ThankYouDialog,
     NextDirectSignDialog,
-    EncryptedDialog,
     SignRefusalDialog,
 };

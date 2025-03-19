@@ -11,6 +11,7 @@ class SignTemplatePreview(models.TransientModel):
     _description = 'Sign Tempate Preview'
 
     template_id = fields.Many2one('sign.template', ondelete='cascade')
+    document_id = fields.Many2one('sign.document', ondelete='cascade')
     pdf_data = fields.Binary(compute='_compute_pdf')
 
     @api.depends('template_id')
@@ -19,7 +20,7 @@ class SignTemplatePreview(models.TransientModel):
             if not wiz.template_id:
                 continue
             wiz.template_id.check_access('read')
-            output = wiz.template_id.with_context(bin_size=False)._render_template_with_items()
+            output = wiz.document_id.with_context(bin_size=False).render_document_with_items()
             pdf_data = base64.b64encode(output.getvalue())
             output.close()
             wiz.pdf_data = pdf_data

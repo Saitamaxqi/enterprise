@@ -10,11 +10,12 @@
                             t-att-value="state.roleName"
                             t-attf-class="o_input form-control bg-transparent rounded-0 pe-1 {{ props.isInputFocused ? '' : 'o_sign_sidebar_role_muted_input' }} {{ !props.isCollapsed ? 'fw-bold' : '' }}"
                             t-att-readonly="!props.isInputFocused"
+                            t-att-disabled="!canEditSignerName"
                             t-on-click="() => this.onFocusRoleInput(this.props.id)"
                             t-on-change="ev => this.onChangeRoleName(ev.target.value)"
                             t-on-mouseout="ev => this.updateShowEditLabelIcon(ev, false)"
                         />
-                        <i t-if="!props.isCollapsed" class="fa fa-pencil"/>
+                        <i t-if="canEditSignerName" class="fa fa-pencil"/>
                     </div>
                 </div>
                 <!-- Edit, delete and collapse signer options. -->
@@ -43,7 +44,7 @@
             </div>
             <div class="o_sign_sidebar_signer_content">
                 <!-- Sign items for the selected role. -->
-                <div t-attf-class="o_sign_field_type_toolbar_items mt-3 {{ !state.roleId or props.isCollapsed ? 'd-none' : ''}}">
+                <div t-if="!props.hasSignRequests" t-attf-class="o_sign_field_type_toolbar_items mt-3 {{ !state.roleId or props.isCollapsed ? 'd-none' : ''}}">
                     <div class="o_sign_sidebar_item_grid">
                         <t t-foreach="props.signItemTypes" t-as="itemType" t-key="itemType.id">
                             <button

@@ -47,7 +47,6 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
         self.start_tour(url, 'translate_sign_instructions', login=None)
 
     def test_sign_flow(self):
-        flow_template = self.template_1_role.copy()
         self.env['sign.item'].create([{
             'type_id': self.env.ref('sign.sign_item_type_signature').id,
             'required': True,
@@ -55,10 +54,11 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
             'page': 1,
             'posX': 0.144,
             'posY': 0.716,
-            'template_id': flow_template.id,
+            'document_id': self.document_2.id,
             'width': 0.200,
             'height': 0.050,
         }])
+        self.env['sign.template'].search([('id', '!=', self.template_1_role.id)]).write({'active': False})
         with file_open('sign/static/demo/signature.png', "rb") as f:
             img_content = base64.b64encode(f.read())
 
@@ -72,12 +72,15 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
     def test_template_edition(self):
         blank_template = self.env['sign.template'].create({
             'name': 'blank_template',
+        })
+
+        document = self.env['sign.document'].create({
             'attachment_id': self.attachment.id,
+            'template_id': blank_template.id,
         })
 
         self.start_tour("/odoo", "sign_template_creation_tour", login="admin")
-
-        self.assertEqual(blank_template.name, 'filled_template.pdf', 'The tour should have changed the template name')
+        self.assertEqual(document.name, 'new-document-name', 'The tour should have changed the document name')
         self.assertEqual(len(blank_template.sign_item_ids), 5)
         self.assertEqual(blank_template.responsible_count, 1)
         self.assertEqual(set(blank_template.sign_item_ids.mapped("type_id.item_type")), {"text", "signature"})

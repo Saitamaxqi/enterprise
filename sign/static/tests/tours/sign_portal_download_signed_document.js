@@ -23,7 +23,7 @@ registry.category("web_tour.tours").add("portal_download_signed_document", {
             },
         },
         {
-            content: "Open all the signature requets",
+            content: "Open all the signature requests",
             trigger: ".o_portal_submenu a:contains(Signature requests)",
             run: "click",
         },

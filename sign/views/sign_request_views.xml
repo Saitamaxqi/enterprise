@@ -66,7 +66,7 @@
                     <button type="object" name="send_signature_accesses" class="btn btn-secondary" string="Resend"/>
                     <button type="action" name="%(action_view_sign_requests)d" class="btn btn-secondary" string="Download"/>
                 </header>
-                <field name="create_date" string="Creation Date" readonly="1" optional="hide"/>
+                <field name="create_date" string="Creation Date" readonly="1"/>
                 <field name="reference" readonly="1"/>
                 <field name="request_item_ids" string="Signees" widget="many2many_tags" readonly="1" options="{'color_field': 'color'}"/>
                 <field name="template_tags" string="Tags" widget="many2many_tags" optional="hide" options="{'color_field': 'color'}"/>
@@ -166,7 +166,7 @@
         <field name="arch" type="xml">
             <search>
                 <field name="reference" string="Document/Signer" filter_domain="['|', '|', ('reference', 'ilike', self), ('request_item_ids.partner_id.email', 'ilike', self), ('request_item_ids.partner_id.complete_name', 'ilike', self)]"/>
-                <field name="template_id" string="Template or Tag" filter_domain="['|', ('template_id.attachment_id.name', 'ilike', self), ('template_id.tag_ids.name', 'ilike', self)]"/>
+                <field name="template_id" string="Template or Tag" filter_domain="['|', ('template_id.name', 'ilike', self), ('template_id.tag_ids.name', 'ilike', self)]"/>
                 <filter name="my_docs" string="My Documents" domain="[('create_uid', '=', uid)]"/>
                 <filter name="my_sign_request" string="My Requests" domain="[('request_item_ids.partner_id.user_ids', 'in', uid)]"/>
                 <separator/>

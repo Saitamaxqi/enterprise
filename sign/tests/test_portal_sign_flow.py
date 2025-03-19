@@ -16,9 +16,8 @@ class TestPortalSignFlow(HttpCaseWithUserPortal, SignRequestCommon):
     def test_portal_download_signed_document(self):
         """Test for download a signed document using download button."""
         sign_request = self.create_sign_request_1_role(self.partner_portal, self.env['res.partner'])
-        sign_request_item_id = sign_request.request_item_ids[0]
         sign_request_item = {sign_request_item.role_id: sign_request_item for sign_request_item in sign_request.request_item_ids}
         sign_request_item_customer = sign_request_item[self.role_customer]
 
-        sign_request_item_customer.sudo()._edit_and_sign(self.single_role_customer_sign_values)
+        sign_request_item_customer.sudo().sign(self.single_role_customer_sign_values)
         self.start_tour("/", 'portal_download_signed_document', login="portal")

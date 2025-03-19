@@ -211,9 +211,9 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
             trigger: ":iframe .o_sign_sign_item.multi_selected",
         },
         {
-            content: "Change template name",
-            trigger: ".o_sign_template_name_input",
-            run: "edit filled_template && click body",
+            content: "Change document name",
+            trigger: ".o_sign_document_name_input",
+            run: "edit new-document-name && click body",
         },
         {
             trigger: ".breadcrumb .o_back_button",

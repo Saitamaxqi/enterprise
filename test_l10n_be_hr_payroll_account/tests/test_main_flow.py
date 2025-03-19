@@ -57,9 +57,10 @@ class TestHR(AccountTestInvoicingCommon):
             'datas': pdf_content,
             'name': 'test_employee_contract.pdf',
         })
-        cls.template = cls.env['sign.template'].create({
+        cls.template = cls.env['sign.template'].create({})
+        cls.document = cls.env['sign.document'].create({
             'attachment_id': attachment.id,
-            'sign_item_ids': [(6, 0, [])],
+            'template_id': cls.template.id,
         })
 
     @classmethod

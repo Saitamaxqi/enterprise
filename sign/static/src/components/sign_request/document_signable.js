@@ -1,14 +1,22 @@
-import { App, Component, xml, whenReady, useEffect, useComponent } from "@odoo/owl";
+import { App, Component, xml, whenReady, useEffect, useComponent, useState } from "@odoo/owl";
 import { MainComponentsContainer } from "@web/core/main_components_container";
 import { useService } from "@web/core/utils/hooks";
 import { getTemplate } from "@web/core/templates";
 import { makeEnv, startServices } from "@web/env";
-import { SignRefusalDialog } from "@sign/dialogs/dialogs";
 import { SignablePDFIframe } from "./signable_PDF_iframe";
 import { buildPDFViewerURL, injectPDFCustomStyles } from "@sign/components/sign_request/utils";
 import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
 import { hidePDFJSButtons } from "@web/core/utils/pdfjs";
+import {
+    SignRefusalDialog,
+    SignNameAndSignatureDialog,
+    ThankYouDialog,
+    PublicSignerDialog,
+    SMSSignerDialog,
+    NextDirectSignDialog,
+} from "@sign/dialogs/dialogs";
+import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 
 function datasetFromElements(elements) {
     return Array.from(elements).map((el) => {
@@ -32,6 +40,11 @@ export class Document extends Component {
         this.dialog = useService("dialog");
         this.ui = useService("ui");
         this.signInfo = useService("signInfo");
+
+        this.state = useState({
+            documentsWithUnsignedItems: new Set(),
+        });
+
         useEffect(
             () => {
                 this.getDataFromHTML();
@@ -46,13 +59,155 @@ export class Document extends Component {
             },
             () => []
         );
+
+        useEffect(
+            () => {
+                if (this.state.documentsWithUnsignedItems) {
+                    if (this.state.documentsWithUnsignedItems.size === 0) {
+                        this.showBanner();
+                    } else {
+                        this.hideBanner();
+                    }
+                }
+            },
+            () => [this.state.documentsWithUnsignedItems]
+        );
+    }
+
+    /**
+     * Returns the set of unsigned documents
+     * @returns {Set}
+     */
+    getDocumentsWithUnsignedItems() {
+        return this.state.documentsWithUnsignedItems;
+    }
+
+    /**
+     * Updates the set of unsigned documents
+     * @param {string} documentId
+     * @param {boolean} hasUnsignedItems
+     */
+    updateDocumentsWithUnsignedItems(documentId, hasUnsignedItems) {
+        const newSet = new Set(this.state.documentsWithUnsignedItems);
+        if (hasUnsignedItems) {
+            newSet.add(documentId);
+        } else {
+            newSet.delete(documentId);
+        }
+        this.state.documentsWithUnsignedItems = newSet;
+        this.controlNavigatorVisibility();
+    }
+
+    documentNavigate(shift) {
+        this.openedDocumentIndex = (this.openedDocumentIndex + shift + this.documents.length) % this.documents.length;
+        this.documents.forEach((doc, index) => {
+            if (index === this.openedDocumentIndex) {
+                doc.iframe.classList.remove("d-none");
+            } else {
+                doc.iframe.classList.add("d-none");
+            }
+        });
+        document.querySelectorAll(".o_sign_document_navigator_text").forEach((text) => {
+            if (text)
+                text.textContent = (this.openedDocumentIndex + 1) + " / " + this.documents.length;
+        });
+    }
+
+    /**
+     * Navigates to a document by its ID
+     * @param {string} documentId
+     */
+    documentNavigateByID(documentId) {
+        const index = this.documents.findIndex(document => document.id === documentId);
+        if (index !== -1) {
+            this.openedDocumentIndex = index;
+            this.documentNavigate(0);
+        }
+    }
+
+    showBanner() {
+        if (this.validateBanner) {
+            this.validateBanner.style.display = "block";
+            const an = this.validateBanner.animate(
+                { opacity: 1 },
+                { duration: 500, fill: "forwards" }
+            );
+            an.finished.then(() => {
+                if (this.env.isSmall) {
+                    this.validateBanner.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                        inline: "center",
+                    });
+                }
+            });
+        }
+    }
+
+    hideBanner() {
+        if (this.validateBanner) {
+            this.validateBanner.style.display = "none";
+            this.validateBanner.style.opacity = 0;
+        }
+    }
+
+    /**
+     * Controls the visibility of the navigator to be invisible if all documents are signed
+     */
+    controlNavigatorVisibility() {
+        const documentsWithUnsignedItems = this.state.documentsWithUnsignedItems;
+        if (this.documents) {
+            for (let i = 0; i < this.documents.length; i++) {
+                const document = this.documents[i];
+                const showNavigator = documentsWithUnsignedItems.size > 0;
+                if (document.iframeManager && document.iframeManager.navigator) {
+                    document.iframeManager.navigator.toggle(showNavigator);
+                }
+            }
+        }
     }
 
     getDataFromHTML() {
         const { el: parentEl } = this.props.parent;
-        this.attachmentLocation = parentEl.querySelector(
-            "#o_sign_input_attachment_location"
-        )?.value;
+        this.openedDocumentIndex = 0;
+        this.documents = datasetFromElements(parentEl.querySelectorAll(".o_sign_document_input_info"));
+        this.state.documentsWithUnsignedItems = new Set(this.documents.map(doc => doc.id));
+        const iframes = parentEl.querySelectorAll(".o_sign_pdf_iframe");
+        for (let i = 0; i < this.documents.length; i++) {
+            if (i > 0) {
+                iframes[i].classList.add("d-none");
+            }
+            iframes[i].setAttribute(
+                "src",
+                buildPDFViewerURL(this.documents[i].attachmentLocation, this.env.isSmall)
+            );
+            hidePDFJSButtons(iframes[i], {
+                hideDownload: true,
+                hidePrint: true,
+                hidePresentation: true,
+                hideRotation: true,
+            });
+            this.documents[i].iframe = iframes[i];
+        }
+        this.documents.forEach((document) => {
+            document.iframe.addEventListener("load", () => {
+                setTimeout(() => {
+                    document.iframeManager = this.initializeIframe(document.iframe, document.id);
+                }, 1);
+            })
+        });
+
+        document.querySelectorAll(".o_sign_document_navigator_text").forEach((text) => {
+            if (text)
+                text.textContent = "1 / " + this.documents.length;
+        });
+        document.querySelectorAll(".o_sign_document_navigator_left_arrow").forEach((arrow) => {
+            arrow?.addEventListener("click", (e) => this.documentNavigate(-1));
+        });
+        document.querySelectorAll(".o_sign_document_navigator_right_arrow").forEach((arrow) => {
+            arrow?.addEventListener("click", (e) => this.documentNavigate(1));
+        });
+
         this.templateName = parentEl.querySelector("#o_sign_input_template_name")?.value;
         this.templateID = parseInt(parentEl.querySelector("#o_sign_input_template_id")?.value);
         this.templateItemsInProgress = parseInt(
@@ -78,7 +233,8 @@ export class Document extends Component {
         this.types = datasetFromElements(
             parentEl.querySelectorAll(".o_sign_field_type_input_info")
         );
-        this.items = datasetFromElements(parentEl.querySelectorAll(".o_sign_item_input_info"));
+        const items = datasetFromElements(parentEl.querySelectorAll(".o_sign_item_input_info"));
+        this.documents.forEach((document) => document.items = items.filter(item => item.document_id === document.id));
         this.selectOptions = datasetFromElements(
             parentEl.querySelectorAll(".o_sign_select_options_input_info")
         );
@@ -89,27 +245,17 @@ export class Document extends Component {
 
         this.isUnknownPublicUser = Boolean(parentEl.querySelector("#o_sign_is_public_user"));
         this.frameHash = parentEl.querySelector("#o_sign_input_sign_frame_hash")?.value;
-        this.PDFIframe = parentEl.querySelector("iframe.o_sign_pdf_iframe");
-        this.PDFIframe.setAttribute(
-            "src",
-            buildPDFViewerURL(this.attachmentLocation, this.env.isSmall)
-        );
-        hidePDFJSButtons(this.PDFIframe, {
-            hideDownload: true,
-            hidePrint: true,
-            hidePresentation: true,
-            hideRotation: true,
-        });
-        this.PDFIframe.addEventListener("load", () => {
-            setTimeout(() => this.initializeIframe(), 1);
+        this.validateButton?.addEventListener("click", () => {
+            this.signDocuments();
         });
     }
-    initializeIframe() {
-        if (!this.PDFIframe.contentDocument.querySelector('link[href*="pdfjs_overrides.css"]')) {
-            injectPDFCustomStyles(this.PDFIframe.contentDocument);
+    initializeIframe(iframe, sign_document_id) {
+        if (!iframe.contentDocument.querySelector('link[href*="pdfjs_overrides.css"]')) {
+            injectPDFCustomStyles(iframe.contentDocument);
         }
-        this.iframe = new this.props.PDFIframeClass(
-            this.PDFIframe.contentDocument,
+        const props = this.getIframeProps(sign_document_id);
+        const iframeManager = new this.props.PDFIframeClass(
+            iframe.contentDocument,
             this.env,
             {
                 rpc,
@@ -118,23 +264,247 @@ export class Document extends Component {
                 ui: this.ui,
                 signInfo: this.signInfo,
             },
-            this.iframeProps
+            props,
         );
+        return iframeManager;
     }
 
-    get iframeProps() {
+    // **** Signing ****
+    getMailFromSignItems() {
+        let mail = "";
+        for (let i = 0; i < this.documents.length; i++) {
+            const document = this.documents[i];
+            const iframeManager = document.iframeManager;
+            for (const page in iframeManager.signItems) {
+                Object.values(iframeManager.signItems[page]).forEach(({ el }) => {
+                    const childInput = el.querySelector("input");
+                    const value = el.value || (childInput && childInput.value);
+                    if (value && value.indexOf("@") >= 0) {
+                        mail = value;
+                    }
+                });
+            }
+        }
+        return mail;
+    }
+
+    updateSignerName(name) {
+        this.signerName = name;
+        this.documents.forEach((document) => document.iframeManager.updateSignerName(name));
+    }
+
+    async openAuthDialog() {
+        const authDialog = await this.getAuthDialog();
+        if (authDialog.component) {
+            this.closeFn = this.dialog.add(authDialog.component, authDialog.props, {
+                onClose: () => {
+                    this.validateButton.removeAttribute("disabled");
+                },
+            });
+        } else {
+            this._sign();
+        }
+    }
+
+    async getAuthDialog() {
+        if (this.authMethod === "sms" && !this.signatureInfo.smsToken) {
+            const credits = await rpc("/sign/has_sms_credits");
+            if (credits) {
+                return {
+                    component: SMSSignerDialog,
+                    props: {
+                        signerPhone: this.signerPhone,
+                        postValidation: (code) => {
+                            this.signatureInfo.smsToken = code;
+                            return this._signDocuments();
+                        },
+                    },
+                };
+            }
+            return false;
+        }
+        return false;
+    }
+
+    closeDialog() {
+        this.closeFn && this.closeFn();
+        this.closeFn = false;
+    }
+
+    async signDocuments() {
+        this.validateBanner.setAttribute("disabled", true);
+        this.signatureInfo = {
+            name: this.signerName || "",
+            mail: this.getMailFromSignItems(),
+            signatureValues: {},
+            frameValues: {},
+        };
+        for (let i = 0; i < this.documents.length; i++) {
+            const iframeManager = this.documents[i].iframeManager;
+            const [signatureValues, frameValues] = iframeManager.getSignatureValuesFromConfiguration();
+            Object.assign(this.signatureInfo.signatureValues, signatureValues);
+            Object.assign(this.signatureInfo.frameValues, frameValues);
+        }
+        const noSignItems = this.documents.every((document) => {
+            const iframeManager = document.iframeManager;
+            return Object.keys(iframeManager.signItems).length === 0;
+        });
+        this.signatureInfo.hasNoSignature =
+            Object.keys(this.signatureInfo.signatureValues).length === 0 && noSignItems;
+        this._signDocuments();
+    }
+
+    _signDocuments(){
+        this.validateButton.setAttribute("disabled", true);
+        if (this.signatureInfo.hasNoSignature) {
+            const signature = {
+                name: this.signerName || "",
+            };
+            this.closeFn = this.dialog.add(SignNameAndSignatureDialog, {
+                signature,
+                onConfirm: () => {
+                    this.signatureInfo.name = signature.name;
+                    this.signatureInfo.signatureValues = signature
+                        .getSignatureImage()
+                        .split(",")[1];
+                    this.signatureInfo.frameValues = [];
+                    this.signatureInfo.hasNoSignature = false;
+                    this.closeDialog();
+                    this._signDocuments();
+                },
+                onCancel: () => {
+                    this.closeDialog();
+                },
+            });
+        } else if (this.isUnknownPublicUser) {
+            this.closeFn = this.dialog.add(
+                PublicSignerDialog,
+                {
+                    name: this.signatureInfo.name,
+                    mail: this.signatureInfo.mail,
+                    postValidation: async (requestID, requestToken, accessToken) => {
+                        this.signInfo.set({
+                            documentId: requestID,
+                            signRequestToken: requestToken,
+                            signRequestItemToken: accessToken,
+                        });
+                        this.requestID = requestID;
+                        this.requestToken = requestToken;
+                        this.accessToken = accessToken;
+                        if (this.coords) {
+                            await rpc(
+                                `/sign/save_location/${requestID}/${accessToken}`,
+                                this.coords
+                            );
+                        }
+                        this.isUnknownPublicUser = false;
+                        this._signDocuments();
+                    },
+                },
+                {
+                    onClose: () => {
+                        this.validateButton.removeAttribute("disabled");
+                    },
+                }
+            );
+        } else if (this.authMethod) {
+            this.openAuthDialog();
+        } else {
+            this._sign();
+        }
+    }
+
+    _getRouteAndParams() {
+        const route = this.signatureInfo.smsToken
+            ? `/sign/sign/${encodeURIComponent(this.requestID)}/${encodeURIComponent(
+                  this.props.accessToken
+              )}/${encodeURIComponent(this.signatureInfo.smsToken)}`
+            : `/sign/sign/${encodeURIComponent(this.requestID)}/${encodeURIComponent(
+                  this.accessToken
+              )}`;
+
+        const params = {
+            signature: this.signatureInfo.signatureValues,
+            frame: this.signatureInfo.frameValues,
+        };
+
+        return [route, params];
+    }
+
+    disableItems() {
+        for (let i = 0; i < this.documents.length; i++) {
+            const iframeManager = this.documents[i].iframeManager;
+            iframeManager.disableItems();
+        }
+    }
+
+    openThankYouDialog() {
+        this.dialog.add(ThankYouDialog, {
+            redirectURL: this.redirectURL,
+            redirectURLText: this.redirectURLText,
+        });
+    }
+
+    async _sign() {
+        const [route, params] = this._getRouteAndParams();
+        this.ui.block();
+        const response = await rpc(route, params).finally(() => this.ui.unblock());
+        this.validateButton.removeAttribute("disabled");
+        if (response.success) {
+            if (response.url) {
+                document.location.pathname = response.url;
+            } else {
+                this.disableItems();
+                // only available in backend
+                const nameList = this.signInfo.get("nameList");
+                if (nameList && nameList.length > 0) {
+                    this.dialog.add(NextDirectSignDialog);
+                } else {
+                    this.openThankYouDialog();
+                }
+            }
+        } else {
+            if (response.sms) {
+                this.dialog.add(AlertDialog, {
+                    title: _t("Error"),
+                    body: _t(
+                        "Your signature was not submitted. Ensure the SMS validation code is correct."
+                    ),
+                });
+            } else {
+                this.dialog.add(
+                    AlertDialog,
+                    {
+                        title: _t("Error"),
+                        body: _t(
+                            "Sorry, an error occurred, please try to fill the document again."
+                        ),
+                    },
+                    {
+                        onClose: () => {
+                            window.location.reload();
+                        },
+                    }
+                );
+            }
+            this.validateButton.setAttribute("disabled", true);
+        }
+    }
+
+    getIframeProps(sign_document_id) {
+        const document = this.documents.find((document) => document.id === sign_document_id);
         return {
-            attachmentLocation: this.attachmentLocation,
+            attachmentLocation: document.attachmentLocation,
             requestID: this.requestID,
             requestToken: this.requestToken,
             accessToken: this.accessToken,
             signItemTypes: this.types,
-            signItems: this.items,
+            signItems: document.items,
             hasSignRequests: false,
             signItemOptions: this.selectOptions,
             currentRole: this.currentRole,
             currentName: this.currentName,
-            readonly: this.PDFIframe.getAttribute("readonly") === "readonly",
+            readonly: document.iframe.getAttribute("readonly") === "readonly",
             frameHash: this.frameHash,
             signerName: this.signerName,
             signerPhone: this.signerPhone,
@@ -145,6 +515,13 @@ export class Document extends Component {
             redirectURL: this.redirectURL,
             redirectURLText: this.redirectURLText,
             templateEditable: this.templateEditable,
+            documentId: sign_document_id,
+            updateDocumentsWithUnsignedItems: (documentId, hasUnsignedItems) =>
+                this.updateDocumentsWithUnsignedItems(documentId, hasUnsignedItems),
+            documentNavigateByID: (documentId) => this.documentNavigateByID(documentId),
+            documentsWithUnsignedItems: () => this.getDocumentsWithUnsignedItems(),
+            signDocuments: () => this.signDocuments(),
+            updateSignerName: (name) => this.updateSignerName(name),
         };
     }
 }
@@ -210,9 +587,9 @@ export class SignableDocument extends Document {
         );
     }
 
-    get iframeProps() {
+    getIframeProps(sign_document_id) {
         return {
-            ...super.iframeProps,
+            ...super.getIframeProps(sign_document_id),
             coords: this.coords,
         };
     }

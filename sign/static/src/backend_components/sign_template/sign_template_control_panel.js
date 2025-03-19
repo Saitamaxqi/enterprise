@@ -17,7 +17,6 @@ export class SignTemplateControlPanel extends Component {
     };
     static props = {
         responsibleCount: { type: Number },
-        isPDF: { type: Boolean },
         hasSignRequests: { type: Boolean },
         actionType: { type: String },
         signTemplate: { type: Object },
@@ -26,6 +25,8 @@ export class SignTemplateControlPanel extends Component {
         manageTemplateAccess: { type: Boolean },
         onTemplateSaveClick: { type: Function },
         hasSignersWithoutItems: { type: Boolean },
+        documentId: { type: Number },
+        onEditTemplate: { type: Function },
     };
 
     setup() {
@@ -40,8 +41,9 @@ export class SignTemplateControlPanel extends Component {
             signTemplate: this.props.signTemplate,
             hasSignRequests: this.props.hasSignRequests,
             manageTemplateAccess: this.props.manageTemplateAccess,
-            isPDF: this.props.isPDF,
             onTemplateSaveClick: this.props.onTemplateSaveClick,
+            documentId: this.props.documentId,
+            onEditTemplate: this.props.onEditTemplate,
         };
     }
 

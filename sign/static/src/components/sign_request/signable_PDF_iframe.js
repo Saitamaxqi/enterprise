@@ -3,13 +3,8 @@ import { _t } from "@web/core/l10n/translation";
 import { user } from "@web/core/user";
 import { PDFIframe } from "./PDF_iframe";
 import { startSignItemNavigator } from "./sign_item_navigator";
-import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import {
     SignNameAndSignatureDialog,
-    ThankYouDialog,
-    PublicSignerDialog,
-    SMSSignerDialog,
-    NextDirectSignDialog,
 } from "@sign/dialogs/dialogs";
 
 export class SignablePDFIframe extends PDFIframe {
@@ -155,7 +150,11 @@ export class SignablePDFIframe extends PDFIframe {
 
     handleInput() {
         this.checkSignItemsCompletion();
-        this.navigator.setTip(_t("next"));
+        if(this.isDocumentUnsigned()) {
+            this.navigator.setTip(_t("next"));
+        } else {
+            this.navigator.setTip(_t("next document"));
+        }
     }
 
     /**
@@ -199,6 +198,10 @@ export class SignablePDFIframe extends PDFIframe {
         this.closeFn = false;
     }
 
+    updateSignerName(name) {
+        this.signerName = name;
+    }
+
     /**
      * Opens the signature dialog
      * @param { HTMLElement } signatureItem
@@ -236,7 +239,7 @@ export class SignablePDFIframe extends PDFIframe {
                 onConfirm: async () => {
                     if (!signature.isSignatureEmpty && signature.signatureChanged) {
                         const signatureName = signature.name;
-                        this.signerName = signatureName;
+                        this.props.updateSignerName(signatureName);
                         await frame.updateFrame();
                         const frameData = frame.getFrameImageSrc();
                         const signatureSrc = signature.getSignatureImage();
@@ -269,7 +272,7 @@ export class SignablePDFIframe extends PDFIframe {
                 },
                 onConfirmAll: async () => {
                     const signatureName = signature.name;
-                    this.signerName = signatureName;
+                    this.props.updateSignerName(signatureName);
                     await frame.updateFrame();
                     const frameData = frame.getFrameImageSrc();
                     const signatureSrc = signature.getSignatureImage();
@@ -341,31 +344,33 @@ export class SignablePDFIframe extends PDFIframe {
             });
         }
 
-        itemsToSign.length ? this.hideBanner() : this.showBanner();
-        this.navigator.toggle(itemsToSign.length > 0);
+         // Updates the set of unsigned documents if is fully signed or any item gets unsigned
+        const documentsWithUnsignedItems = this.props.documentsWithUnsignedItems();
+        if(itemsToSign.length=== 0 || !documentsWithUnsignedItems.has(this.props.documentId)) {
+            this.props.updateDocumentsWithUnsignedItems(this.props.documentId, itemsToSign.length > 0);
+        }
+
         return itemsToSign;
     }
 
-    showBanner() {
-        this.props.validateBanner.style.display = "block";
-        const an = this.props.validateBanner.animate(
-            { opacity: 1 },
-            { duration: 500, fill: "forwards" }
-        );
-        an.finished.then(() => {
-            if (this.env.isSmall) {
-                this.props.validateBanner.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center",
-                    inline: "center",
-                });
-            }
-        });
+    /**
+     * Checks if the current document has unsigned items
+     * @returns {boolean}
+     */
+    isDocumentUnsigned() {
+        const documentsWithUnsignedItems = this.props.documentsWithUnsignedItems();
+        return documentsWithUnsignedItems.has(this.props.documentId);
     }
 
-    hideBanner() {
-        this.props.validateBanner.style.display = "none";
-        this.props.validateBanner.style.opacity = 0;
+    /**
+     * Navigates to the next unsigned document in the set of unsigned documents
+     */
+    goToNextUnsignedDocument() {
+        const documentsWithUnsignedItems = this.props.documentsWithUnsignedItems();
+        if (documentsWithUnsignedItems.size === 0) {
+            return;
+        }
+        this.props.documentNavigateByID([...documentsWithUnsignedItems][0]);
     }
 
     /**
@@ -412,13 +417,17 @@ export class SignablePDFIframe extends PDFIframe {
             this,
             this.root.querySelector("#viewerContainer"),
             this.signItemTypesById,
-            this.env
+            this.env,
         );
         this.checkSignItemsCompletion();
 
         this.root.querySelector("#viewerContainer").addEventListener("scroll", () => {
             if (!this.navigator.state.isScrolling && this.navigator.state.started) {
-                this.navigator.setTip(_t("next"));
+                if(this.isDocumentUnsigned()) {
+                    this.navigator.setTip(_t("next"));
+                } else {
+                    this.navigator.setTip(_t("next document"));
+                }
             }
         });
 
@@ -429,186 +438,32 @@ export class SignablePDFIframe extends PDFIframe {
             this.navigator.goToNextSignItem();
         });
 
-        this.props.validateBanner
-            .querySelector(".o_validate_button")
-            .addEventListener("click", () => {
-                this.signDocument();
-            });
-    }
-
-    getMailFromSignItems() {
-        let mail = "";
-        for (const page in this.signItems) {
-            Object.values(this.signItems[page]).forEach(({ el }) => {
-                const childInput = el.querySelector("input");
-                const value = el.value || (childInput && childInput.value);
-                if (value && value.indexOf("@") >= 0) {
-                    mail = value;
+        // Navigates to the next unsigned document if the navigator is clicked
+        const navigatorElement = this.root.querySelector(".o_sign_sign_item_navigator");
+        if (navigatorElement) {
+            navigatorElement.addEventListener("click", () => {
+                if (!this.isDocumentUnsigned()) {
+                    this.goToNextUnsignedDocument();
                 }
             });
         }
-        return mail;
     }
 
     signDocument() {
-        this.props.validateBanner.setAttribute("disabled", true);
-        this.signatureInfo = { name: this.signerName || "", mail: this.getMailFromSignItems() };
-
-        [
-            this.signatureInfo.signatureValues,
-            this.signatureInfo.frameValues,
-            this.signatureInfo.newSignItems,
-        ] = this.getSignatureValuesFromConfiguration();
-        if (!this.signatureInfo.signatureValues) {
-            this.checkSignItemsCompletion();
-            this.dialog.add(AlertDialog, {
-                title: _t("Warning"),
-                body: _t("Some fields have still to be completed"),
-            });
-            this.props.validateBanner.removeAttribute("disabled");
-            return;
-        }
-        this.signatureInfo.hasNoSignature =
-            Object.keys(this.signatureInfo.signatureValues).length == 0 &&
-            Object.keys(this.signItems).length == 0;
-        this._signDocument();
+        this.props.signDocuments();
     }
 
     async _signDocument() {
-        this.props.validateButton.setAttribute("disabled", true);
-        if (this.signatureInfo.hasNoSignature) {
-            const signature = {
-                name: this.signerName || "",
-            };
-            this.closeFn = this.dialog.add(SignNameAndSignatureDialog, {
-                signature,
-                onConfirm: () => {
-                    this.signatureInfo.name = signature.name;
-                    this.signatureInfo.signatureValues = signature
-                        .getSignatureImage()
-                        .split(",")[1];
-                    this.signatureInfo.frameValues = [];
-                    this.signatureInfo.hasNoSignature = false;
-                    this.closeDialog();
-                    this._signDocument();
-                },
-                onCancel: () => {
-                    this.closeDialog();
-                },
-            });
-        } else if (this.props.isUnknownPublicUser) {
-            this.closeFn = this.dialog.add(
-                PublicSignerDialog,
-                {
-                    name: this.signatureInfo.name,
-                    mail: this.signatureInfo.mail,
-                    postValidation: async (requestID, requestToken, accessToken) => {
-                        this.signInfo.set({
-                            documentId: requestID,
-                            signRequestToken: requestToken,
-                            signRequestItemToken: accessToken,
-                        });
-                        this.props.requestID = requestID;
-                        this.props.requestToken = requestToken;
-                        this.props.accessToken = accessToken;
-                        if (this.props.coords) {
-                            await rpc(
-                                `/sign/save_location/${requestID}/${accessToken}`,
-                                this.props.coords
-                            );
-                        }
-                        this.props.isUnknownPublicUser = false;
-                        this._signDocument();
-                    },
-                },
-                {
-                    onClose: () => {
-                        this.props.validateButton.removeAttribute("disabled");
-                    },
-                }
-            );
-        } else if (this.props.authMethod) {
-            this.openAuthDialog();
-        } else {
-            this._sign();
-        }
-    }
-
-    _getRouteAndParams() {
-        const route = this.signatureInfo.smsToken
-            ? `/sign/sign/${encodeURIComponent(this.props.requestID)}/${encodeURIComponent(
-                  this.props.accessToken
-              )}/${encodeURIComponent(this.signatureInfo.smsToken)}`
-            : `/sign/sign/${encodeURIComponent(this.props.requestID)}/${encodeURIComponent(
-                  this.props.accessToken
-              )}`;
-
-        const params = {
-            signature: this.signatureInfo.signatureValues,
-            frame: this.signatureInfo.frameValues,
-            new_sign_items: this.signatureInfo.newSignItems,
-        };
-
-        return [route, params];
-    }
-
-    async _sign() {
-        const [route, params] = this._getRouteAndParams();
-        this.ui.block();
-        const response = await rpc(route, params).finally(() => this.ui.unblock());
-        this.props.validateButton.removeAttribute("disabled");
-        if (response.success) {
-            if (response.url) {
-                document.location.pathname = response.url;
-            } else {
-                this.disableItems();
-                // only available in backend
-                const nameList = this.signInfo.get("nameList");
-                if (nameList && nameList.length > 0) {
-                    this.dialog.add(NextDirectSignDialog);
-                } else {
-                    this.openThankYouDialog();
-                }
-            }
-            this.hideBanner();
-        } else {
-            if (response.sms) {
-                this.dialog.add(AlertDialog, {
-                    title: _t("Error"),
-                    body: _t(
-                        "Your signature was not submitted. Ensure the SMS validation code is correct."
-                    ),
-                });
-            } else {
-                this.dialog.add(
-                    AlertDialog,
-                    {
-                        title: _t("Error"),
-                        body: _t(
-                            "Sorry, an error occurred, please try to fill the document again."
-                        ),
-                    },
-                    {
-                        onClose: () => {
-                            window.location.reload();
-                        },
-                    }
-                );
-            }
-            this.props.validateButton.setAttribute("disabled", true);
-        }
     }
 
     /**
      * Gets the signature values from the sign items
      * Gets the frame values
-     * Gets the sign items that were added in edit while signing
      * @returns { Array } [signature values, frame values, added sign items]
      */
     getSignatureValuesFromConfiguration() {
         const signatureValues = {};
         const frameValues = {};
-        const newSignItems = {};
         for (const page in this.signItems) {
             for (const item of Object.values(this.signItems[page])) {
                 const responsible = item.data.responsible || 0;
@@ -630,24 +485,10 @@ export class SignablePDFIframe extends PDFIframe {
 
                 signatureValues[item.data.id] = value;
                 frameValues[item.data.id] = { frameValue, frameHash };
-                if (item.data.isSignItemEditable) {
-                    newSignItems[item.data.id] = {
-                        type_id: item.data.type_id,
-                        required: item.data.required,
-                        name: item.data.name || false,
-                        option_ids: item.data.option_ids,
-                        responsible_id: responsible,
-                        page: page,
-                        posX: item.data.posX,
-                        posY: item.data.posY,
-                        width: item.data.width,
-                        height: item.data.height,
-                    };
-                }
             }
         }
 
-        return [signatureValues, frameValues, newSignItems];
+        return [signatureValues, frameValues];
     }
 
     getSignatureValueFromElement(item) {
@@ -727,45 +568,5 @@ export class SignablePDFIframe extends PDFIframe {
         for (const item of Array.from(items)) {
             item.classList.add("o_sign_sign_item_pdfview");
         }
-    }
-
-    openThankYouDialog() {
-        this.dialog.add(ThankYouDialog, {
-            redirectURL: this.props.redirectURL,
-            redirectURLText: this.props.redirectURLText,
-        });
-    }
-
-    async openAuthDialog() {
-        const authDialog = await this.getAuthDialog();
-        if (authDialog.component) {
-            this.closeFn = this.dialog.add(authDialog.component, authDialog.props, {
-                onClose: () => {
-                    this.props.validateButton.removeAttribute("disabled");
-                },
-            });
-        } else {
-            this._sign();
-        }
-    }
-
-    async getAuthDialog() {
-        if (this.props.authMethod === "sms" && !this.signatureInfo.smsToken) {
-            const credits = await rpc("/sign/has_sms_credits");
-            if (credits) {
-                return {
-                    component: SMSSignerDialog,
-                    props: {
-                        signerPhone: this.props.signerPhone,
-                        postValidation: (code) => {
-                            this.signatureInfo.smsToken = code;
-                            return this._signDocument();
-                        },
-                    },
-                };
-            }
-            return false;
-        }
-        return false;
     }
 }

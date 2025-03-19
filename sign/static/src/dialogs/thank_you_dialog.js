@@ -4,7 +4,6 @@ import { user } from "@web/core/user";
 import { Dialog } from "@web/core/dialog/dialog";
 import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
-import { EncryptedDialog } from "./encrypted_dialog";
 import { Component, onWillStart, useState } from "@odoo/owl";
 import { isMobileOS } from "@web/core/browser/feature_detection";
 
@@ -64,16 +63,7 @@ export class ThankYouDialog extends Component {
         };
     }
 
-    async checkIfEncryptedDialog() {
-        const route = `/sign/encrypted/${this.signInfo.get("documentId")}`;
-        return rpc(route);
-    }
-
     async willStart() {
-        const isEncrypted = await this.checkIfEncryptedDialog();
-        if (isEncrypted) {
-            this.dialog.add(EncryptedDialog);
-        }
         this.signRequestState = await rpc(
             `/sign/sign_request_state/${this.signInfo.get("documentId")}/${this.signInfo.get(
                 "signRequestToken"

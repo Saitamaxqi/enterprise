@@ -2,7 +2,7 @@
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models, _, Command
+from odoo import api, fields, models, Command
 from odoo.exceptions import UserError
 
 
@@ -30,7 +30,7 @@ class SignSendRequest(models.TransientModel):
         if 'filename' in fields:
             res['filename'] = template.display_name
         if 'subject' in fields:
-            res['subject'] = _("Signature Request - %(file_name)s", file_name=template.attachment_id.name)
+            res['subject'] = self.env._("Signature Request - %(file_name)s", file_name=template.name)
         if 'signers_count' in fields or 'signer_ids' in fields or 'signer_id' in fields:
             roles = template.sign_item_ids.responsible_id.sorted()
             if 'signers_count' in fields:
@@ -91,7 +91,7 @@ class SignSendRequest(models.TransientModel):
     message = fields.Html("Message", help="Message to be sent to signers of the specified document")
     message_cc = fields.Html("CC Message", help="Message to be sent to contacts in copy of the signed document")
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
-    filename = fields.Char("Filename", required=True)
+    filename = fields.Char("Filename", required=False)
 
     validity = fields.Date(string='Valid Until', default=lambda self: fields.Date.today() + relativedelta(months=6), help="Leave empty for requests without expiration.")
     reminder_enabled = fields.Boolean(default=False)
@@ -101,7 +101,7 @@ class SignSendRequest(models.TransientModel):
     @api.onchange('validity')
     def _onchange_validity(self):
         if self.validity and self.validity < fields.Date.today():
-            raise UserError(_('Request expiration date must be set in the future.'))
+            raise UserError(self.env._('Request expiration date must be set in the future.'))
 
     @api.onchange('reminder')
     def _onchange_reminder(self):
@@ -118,7 +118,7 @@ class SignSendRequest(models.TransientModel):
     def _onchange_template_id(self):
         self.signer_id = False
         self.filename = self.template_id.display_name
-        self.subject = _("Signature Request - %s", self.template_id.attachment_id.name or '')
+        self.subject = self.env._("Signature Request - %s", self.template_id.name or '')
         roles = self.template_id.mapped('sign_item_ids.responsible_id').sorted()
         if self.signer_ids and len(self.signer_ids) == len(roles):
             signer_ids = [(0, 0, {
@@ -161,7 +161,7 @@ class SignSendRequest(models.TransientModel):
 
     def _activity_done(self):
         signatories = self.signer_id.name or self.signer_ids.partner_id.mapped('name')
-        feedback = _('Signature requested for template: %(template)s\nSignatories: %(signatories)s', template=self.template_id.name, signatories=signatories)
+        feedback = self.env._('Signature requested for template: %(template)s\nSignatories: %(signatories)s', template=self.template_id.name, signatories=signatories)
         self.activity_id._action_done(feedback=feedback)
 
     def create_request(self):
@@ -171,7 +171,7 @@ class SignSendRequest(models.TransientModel):
         else:
             signers = [{'partner_id': self.signer_id.id, 'role_id': self.env.ref('sign.sign_item_role_default').id, 'mail_sent_order': self.signer_ids.mail_sent_order}]
         cc_partner_ids = self.cc_partner_ids.ids
-        reference = self.filename
+        reference = self.filename or self.template_id.name
         subject = self.subject
         message = self.message
         message_cc = self.message_cc
@@ -207,7 +207,7 @@ class SignSendRequest(models.TransientModel):
             'tag': 'display_notification',
             'params': {
                 'type': 'success',
-                'message': _("Request sent successfully"),
+                'message': self.env._("Request sent successfully"),
                 'next': {'type': 'ir.actions.client', 'tag': 'soft_reload'},
             },
         }
@@ -216,9 +216,9 @@ class SignSendRequest(models.TransientModel):
         if request.reference_doc:
             model = request.reference_doc and self.env['ir.model']._get(request.reference_doc._name)
             if model.is_mail_thread:
-                body = _("A signature request has been linked to this document: %s", request._get_html_link())
+                body = self.env._("A signature request has been linked to this document: %s", request._get_html_link())
                 request.reference_doc.message_post(body=body)
-                body = _("%s has been linked to this sign request.", request.reference_doc._get_html_link())
+                body = self.env._("%s has been linked to this sign request.", request.reference_doc._get_html_link())
                 request.message_post(body=body)
 
     def sign_directly(self):

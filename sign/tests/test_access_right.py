@@ -2,6 +2,8 @@
 
 from .sign_request_common import SignRequestCommon
 
+from odoo.exceptions import AccessError
+
 
 class TestAccessRight(SignRequestCommon):
 
@@ -16,3 +18,16 @@ class TestAccessRight(SignRequestCommon):
         sign_request_item_customer.with_user(self.user_1).partner_id = self.partner_5
         # reassign
         self.assertEqual(sign_request_item_customer.signer_email, "char.aznable.a@example.com", 'email address should be char.aznable.a@example.com')
+
+    def test_user_can_edit_only_own_templates_and_documents(self):
+        """ Ensure basic sign users can only edit their own templates and documents. """
+        res = self.env['sign.template'].with_user(self.user_1).create_from_attachment_data(
+            attachment_data_list=[{'name': 'sample_contract.pdf', 'datas': self.pdf_data_64}]
+        )
+        user_1_template_id = res.get('id')
+        user_1_template = self.env['sign.template'].with_user(self.user_1).browse(user_1_template_id)
+        user_1_document = user_1_template.document_ids[0]
+        with self.assertRaises(AccessError):
+            user_1_template.with_user(self.user_2).write({'name': 'My New Name!'})
+        with self.assertRaises(AccessError):
+            user_1_document.with_user(self.user_2).write({'name': 'My New Name!'})

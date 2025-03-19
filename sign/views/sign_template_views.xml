@@ -42,7 +42,7 @@
                                 <span class="d-flex align-items-center">
                                     <field name="user_id" widget="many2one_avatar_user"
                                         options="{'display_avatar_name': True}"/>
-                                        <span class="mx-1">-</span>
+                                        <span class="mx-1"/>
                                     <em>
                                         <t t-esc="luxon.DateTime.fromISO(record.create_date.raw_value).toFormat('MMM yyyy')"/>
                                     </em>
@@ -110,12 +110,12 @@
         <field name="model">sign.template</field>
         <field name="arch" type="xml">
             <list sample="1" js_class="sign_list" action="go_to_custom_template" type="object">
-                <field name="attachment_id" string="Name"/>
+                <field name="name"/>
                 <field name="tag_ids" string="Tags" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <field name="create_date" optional="hide"/>
-                <field name="sign_item_ids"/>
+                <field name="responsible_count" string="Signees" optional="hide"/>
+                <field name="document_ids"/>
                 <field name="active" column_invisible="True"/>
-                <field name="responsible_count" column_invisible="True"/>
                 <field name="is_sharing" string="Link enabled?"/>
                 <button name="%(sign.action_sign_send_request)d" string="Send" type="action" context="{'sign_directly_without_mail': 0, 'show_email': 1}"/>
                 <button name="%(sign.action_sign_send_request)d" string="Sign Now" type="action" context="{'sign_directly_without_mail': 1}"/>
@@ -153,7 +153,6 @@
                     <group>
                         <group>
                             <field name="active" invisible="1"/>
-                            <field name="attachment_id" invisible="1"/>
                             <field name="responsible_count" invisible="1"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="Tags"/>
                         </group>
@@ -166,9 +165,6 @@
                         </group>
                     </group>
                     <notebook>
-                        <page name="document" string="Document">
-                            <field name="datas" widget="pdf_viewer"/>
-                        </page>
                         <page string="Fields" name="signatures">
                             <field name="sign_item_ids" readonly="1"/>
                         </page>
@@ -216,7 +212,7 @@
         <field name="model">sign.template</field>
         <field name="arch" type="xml">
             <search>
-                <field name="attachment_id" string="Document Name"/>
+                <field name="name" string="Template Name"/>
                 <filter name="my_templates" string="My Templates" domain="[('user_id', '=', uid)]"/>
                 <filter name="favorite" string="My Favorites" domain="[('favorited_ids', 'in', uid)]"/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>

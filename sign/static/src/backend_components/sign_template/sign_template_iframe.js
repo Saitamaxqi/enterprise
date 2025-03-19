@@ -37,6 +37,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
          */
         this.negativeIds = {};
         this.radioSets = this.props.radioSets;
+        this.documentId = this.props.documentId;
     }
 
     get allowEdit() {

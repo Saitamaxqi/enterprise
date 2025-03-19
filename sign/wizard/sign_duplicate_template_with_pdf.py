@@ -2,7 +2,7 @@
 import io
 import base64
 
-from odoo import api, models, fields, _
+from odoo import api, models, fields, _, Command
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.pdf import PdfFileReader, PdfReadError
 
@@ -19,22 +19,39 @@ class SignDuplicateTemplatePdf(models.TransientModel):
     new_template = fields.Char('New Template Name')
 
     def duplicate_template_with_pdf(self):
-        if not self._compare_page_templates(self.original_template_id.datas, self.new_pdf):
-            raise UserError(_("The template has more pages than the current file, it can't be applied."))
-
+        # Check original template access
         self.original_template_id.check_access('write')
-        pdf = self.env['ir.attachment'].create({
-            'name': self.new_template or self.original_template_id.name,
-            'datas': self.new_pdf,
-            'type': 'binary'
-        })
 
+        # Check original documents access
+        for document in self.original_template_id.document_ids:
+            document.check_access('write')
+
+        # Create the new template empty documents
         new_template = self.original_template_id.sudo().copy({
-            'name': pdf.name,
-            'attachment_id': pdf.id,
+            'name': self.new_template or self.original_template_id.name,
+            'document_ids': [Command.set([])],
             'active': True,
-            'favorited_ids': [(4, self.env.user.id)],
+            'favorited_ids': [Command.link(self.env.user.id)],
         })
+        for document in self.original_template_id.document_ids.sorted('sequence'):
+            if not self._compare_page_templates(document.datas, self.new_pdf):
+                raise UserError(self.env._("The new PDF must have at least as many pages as the original document."))
+            new_attachment = self.env['ir.attachment'].create({
+                'name': f"{self.new_template or self.original_template_id.name} - {document.name}",
+                'datas': self.new_pdf,
+                'type': 'binary'
+            })
+            self.env['sign.document'].create({
+                'attachment_id': new_attachment.id,
+                'sequence': document.sequence,  # Preserve original sequence
+                'template_id': new_template.id,
+            })
+
+        # Copy sign items while preserving document relationships
+        orig_docs = self.original_template_id.document_ids.sorted('sequence')
+        new_docs = new_template.document_ids.sorted('sequence')
+        for orig_doc, new_doc in zip(orig_docs, new_docs):
+            orig_doc._copy_sign_items_to(new_doc)
 
         return new_template.go_to_custom_template()
 

@@ -8,6 +8,7 @@ import { Component, onWillStart, useState } from "@odoo/owl";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 import { SignTemplateSidebar } from "./sign_template_sidebar";
 import { rpc } from "@web/core/network/rpc";
+import { useSetupAction } from "@web/search/action_hook";
 
 export class SignTemplate extends Component {
     static template = "sign.Template";
@@ -50,12 +51,24 @@ export class SignTemplate extends Component {
         this.state = useState({
             signers: [],
             nextId: 0,
+            documentIds: [],
+            selectedDocumentId: 0,
+            iframe: undefined,
         });
         this.waitForIframeToLoad();
+
+        useSetupAction({
+            beforeLeave: async () => {
+                if (this.signStatus.isTemplateChanged && !this.signStatus.isSignTemplateSaved && this.signTemplate.active) {
+                    await this.signStatus.save();
+                    this.notification.add(_t("Saved"), { type: "success" });
+                }
+            }
+        });
     }
 
     get showSidebar() {
-        return !this.hasSignRequests && !this.env.isSmall;
+        return !this.env.isSmall;
     }
 
     /**
@@ -70,21 +83,73 @@ export class SignTemplate extends Component {
         return {
             signItemTypes: this.signItemTypes,
             isSignRequest: this.resModel === "sign.request",
-            iframe: this.state.iframe,
+            updateRoleName: (roleId, roleName) => this.updateRoleName(roleId, roleName),
+            deleteRole: (roleId) => this.deleteRole(roleId),
             signTemplateId: this.signTemplate.id,
             signers: this.state.signers,
-            templateName: this.signTemplate.display_name,
+            hasSignRequests: this.hasSignRequests,
+            documents: this.state.documents,
+            selectedDocumentId: this.state.selectedDocumentId,
+            selectedDocumentName: this.getSelectedDocumentName(),
             /* Update callbacks binding for parent. */
-            updateTemplateName: (newTemplateName) => this.updateTemplateName(newTemplateName),
+            onEditTemplate: () => this.onEditTemplate(),
             updateCollapse: (id, value) => this.updateCollapse(id, value),
             updateInputFocused: (id, value) => this.updateInputFocused(id, value),
             updateSigners: this.updateSigners.bind(this),
             pushNewSigner: this.pushNewSigner.bind(this),
+            updateSelectedDocumentName: (newName) => this.updateSelectedDocumentName(newName),
+            updateSelectedDocument: (id) => this.updateSelectedDocument(id),
+            updateDocuments: () => this.updateDocuments(),
+            deleteDocument: (documentId) => this.deleteDocument(documentId),
+            moveDocumentUp: (documentId) => this.moveDocument(documentId, -1),
+            moveDocumentDown: (documentId) => this.moveDocument(documentId, 1),
         }
     }
 
+    async onEditTemplate() {
+        const duplicatedTemplateIds = await this.orm.call("sign.template", "copy", [
+            [this.signTemplate.id],
+        ]);
+
+        this.action.doAction({
+            type: "ir.actions.client",
+            tag: "sign.Template",
+            name: _t("Edit Template"),
+            params: {
+                id: duplicatedTemplateIds[0],
+            },
+        });
+    }
+
+    getSelectedDocumentName() {
+        // Get the selected document name across the documents.
+        return this.state.documents.find((doc) => doc.id === this.state.selectedDocumentId).display_name;
+    }
+
+    updateRoleName(roleId, roleName) {
+        this.state.documents.forEach(document => document.iframe.updateRoleName(roleId, roleName));
+    }
+
+    deleteRole(roleId) {
+        this.state.documents.forEach(document => document.iframe.deleteRole(roleId));
+    }
+
     waitForIframeToLoad() {
-        if (this.state.iframe) {
+        //TODO: this save methods does n rpc requests, where n is the number of documents.
+        //To bo optimized later.
+        this.signStatus.save = () => {
+            this.state.documents.filter((document) => !document.deleted).forEach(document => document.iframe.saveChangesOnBackend());
+        }
+        let iframesLoaded = false;
+        if (this.state.documents) {
+            iframesLoaded = true;
+            this.state.documents.forEach((document) => {
+                if (!document.iframe) {
+                    iframesLoaded = false;
+                }
+            });
+        }
+        if (iframesLoaded) {
             this.orm.call("sign.template", "get_template_items_roles_info", [this.templateID]).then(info => {
                 /* Make all signers collapsed when loading for the first time. */
                 const updatedInfo = info.map(item => ({
@@ -107,8 +172,10 @@ export class SignTemplate extends Component {
                     this.pushNewSigner();
 
                 /* Set callback for tracking number of items of each signer and load font. */
-                this.state.iframe.updateSignItemsCountCallback = (signItemsCountByRole) => this.updateSignItemsCount(signItemsCountByRole);
-                this.state.iframe.setFont(this.font);
+                this.state.documents.forEach(document => {
+                    document.iframe.updateSignItemsCountCallback = () => this.updateSignItemsCount();
+                    document.iframe.setFont(this.font);
+                });
             });
         } else {
             setTimeout(() => this.waitForIframeToLoad(), 50);
@@ -118,14 +185,21 @@ export class SignTemplate extends Component {
     updateSigners(newSigners) {
         this.state.signers = newSigners;
         this.state.signers.forEach(signer => {
-            this.state.iframe.setRoleColor(signer.roleId, signer.colorId);
+            this.state.documents.forEach(document => {
+                document.iframe.setRoleColor(signer.roleId, signer.colorId);
+            });
         });
     }
 
-    updateSignItemsCount(signItemsCountByRole) {
+    updateSignItemsCount() {
         const updatedSigners = this.state.signers;
         updatedSigners.forEach(signer => {
-            signer.itemsCount = signItemsCountByRole[signer.roleId] || 0;
+            signer.itemsCount = 0;
+            this.state.documents.forEach((document) => {
+                if (document.iframe.signItemsCountByRole) {
+                    signer.itemsCount += document.iframe.signItemsCountByRole[signer.roleId] || 0;
+                }
+            })
         });
         this.updateSigners(updatedSigners);
     }
@@ -143,8 +217,10 @@ export class SignTemplate extends Component {
             'isInputFocused': true,
         });
         this.updateCollapse(this.state.nextId, false);
-        this.state.iframe.setRoleColor(roleId, colorId);
-        setTimeout(() => this.state.iframe.setupDragAndDrop(), 50);
+        this.state.documents.forEach(document => {
+            document.iframe.setRoleColor(roleId, colorId)
+            setTimeout(() => document.iframe.setupDragAndDrop(), 50);
+        });
         this.state.nextId++;
     }
 
@@ -183,11 +259,34 @@ export class SignTemplate extends Component {
         return 0;
     }
 
+    async updateDocuments() {
+        const documents = await this.orm.call("sign.document", "search_read", [[["template_id", "=", this.templateID]]]);
+        const new_documents = documents.filter((document) => !this.state.documentIds.includes(document.id));
+        new_documents.forEach((document) => {
+            this.state.documentIds.push(document.id)
+            document.attachment_location = `/web/content/${document.attachment_id[0]}`;
+            document.iframe = undefined;
+            document.setIframe = (iframe) => {
+                document.iframe = iframe;
+                document.iframe.setFont(this.font);
+                document.iframe.updateSignItemsCountCallback = () => this.updateSignItemsCount();
+                this.state.signers.forEach(signer => {
+                    document.iframe.setRoleColor(signer.roleId, signer.colorId);
+                });
+                this.signStatus.save = () => {
+                    this.state.documents.filter((document) => !document.deleted).forEach(document => document.iframe.saveChangesOnBackend());
+                }
+            };
+            this.state.documents.push(document);
+        });
+    }
+
     async fetchTemplateData() {
         const template = await this.orm.call("sign.template", "read", [
             [this.templateID],
-            ["id", "attachment_id", "has_sign_requests", "responsible_count", "display_name", "active"],
+            ["id", "has_sign_requests", "responsible_count", "display_name", "active"],
         ]);
+
         if (!template.length) {
             this.templateID = undefined;
             this.notification.add(_t("The template doesn't exist anymore."), {
@@ -196,34 +295,33 @@ export class SignTemplate extends Component {
             });
             return;
         }
+        this.state.documents = await this.orm.call("sign.document", "search_read", [[["template_id", "=", this.templateID]]]);
+        this.state.documentIds = this.state.documents.map(document => document.id);
+        this.state.selectedDocumentId = this.state.documentIds[0];
+        this.state.documents.forEach((document) => {
+            document.attachment_location = `/web/content/${document.attachment_id[0]}`;
+            document.iframe = undefined;
+            document.setIframe = (iframe) => {
+                document.iframe = iframe;
+                if (document.id === this.state.selectedDocumentId) {
+                    document.iframe.setIsActive(true);
+                }
+            };
+        });
         this.signTemplate = template[0];
-        this.state.templateName = this.signTemplate.display_name;
         this.hasSignRequests = this.signTemplate.has_sign_requests;
         this.responsibleCount = this.signTemplate.responsible_count;
-        this.attachmentLocation = `/web/content/${this.signTemplate.attachment_id[0]}`;
 
         return Promise.all([
             this.fetchSignItemData(),
-            this.fetchAttachment(),
             this.fetchSignItemTypes(),
             this.fetchSignRoles(),
-            this.fetchRadioSets(),
         ]);
     }
 
     async fetchFont() {
         const fonts = await rpc("/web/sign/get_fonts/LaBelleAurore-Regular.ttf");
         this.font = fonts[0];
-        this.state.iframe?.setFont(this.font);
-    }
-
-    async fetchRadioSets() {
-        this.radioSets = await this.orm.call(
-            "sign.template",
-            "get_radio_sets_dict", [
-                this.signTemplate.id
-            ]
-        );
     }
 
     async fetchSignItemTypes() {
@@ -239,44 +337,11 @@ export class SignTemplate extends Component {
     }
 
     async fetchSignItemData() {
-        this.signItems = await this.orm.call(
-            "sign.item",
-            "search_read",
-            [[["template_id", "=", this.signTemplate.id]]],
-            { context: user.context }
-        );
-
-        this.signItems.forEach((item) => {
-            item.radio_set_id = item?.radio_set_id[0] || undefined;
-            item.roleName = item.responsible_id[1];
-        });
-
         this.signItemOptions = await this.orm.call(
             "sign.item.option",
             "search_read",
             [[], ["id", "value"]],
             { context: user.context }
-        );
-    }
-
-    async fetchAttachment() {
-        const attachment = await this.orm.call(
-            "ir.attachment",
-            "read",
-            [[this.signTemplate.attachment_id[0]], ["mimetype", "name"]],
-            { context: user.context }
-        );
-
-        this.signTemplateAttachment = attachment[0];
-        this.isPDF = this.signTemplateAttachment.mimetype.indexOf("pdf") > -1;
-    }
-
-    async updateTemplateName(newTemplateName) {
-        await this.orm.call(
-            "sign.template",
-            "update_from_pdfviewer",
-            [this.signTemplate.id],
-            { name: newTemplateName || "" }
         );
     }
 
@@ -299,9 +364,86 @@ export class SignTemplate extends Component {
         return this.state.properties;
     }
 
-    setIframe(iframe) {
-        this.state.iframe = iframe;
-        this.signStatus.save = iframe.saveChangesOnBackend.bind(iframe);
+    getSignTemplateBodyProps(documentId) {
+        const document = this.state.documents.find((doc) => doc.id === documentId);
+        return {
+            attachmentLocation: document.attachment_location,
+            manageTemplateAccess: this.manageTemplateAccess,
+            hasSignRequests: this.hasSignRequests,
+            signTemplate: this.signTemplate,
+            signItemTypes: this.signItemTypes,
+            signItems: this.signItems,
+            signRoles: this.signRoles,
+            radioSets: this.radioSets,
+            signItemOptions: this.signItemOptions,
+            goBackToKanban: () => this.goBackToKanban(),
+            resModel: this.resModel,
+            signStatus: this.signStatus,
+            iframe: document.iframe,
+            setIframe: (iframe) => document.setIframe(iframe),
+            onTemplateSaveClick: () => this.onTemplateSaveClick(),
+            documentId: documentId,
+        }
+    }
+
+    updateSelectedDocument(documentId) {
+        this.state.documents.find((doc) => doc.id === this.state.selectedDocumentId).iframe?.setIsActive(false);
+        this.state.selectedDocumentId = documentId;
+        this.state.documents.find((doc) => doc.id === this.state.selectedDocumentId).iframe?.setIsActive(true);
+    }
+
+    async updateSelectedDocumentName(newName) {
+        if (this.state.selectedDocumentId) {
+            let selectedDocument = this.state.documents.filter((doc) => doc.id === this.state.selectedDocumentId)[0];
+            if (selectedDocument && newName !== selectedDocument.display_name) {
+                this.state.documents.find((doc) => doc.id === selectedDocument.id).display_name = newName;
+                await this.orm.write(
+                    "sign.document",
+                    [selectedDocument.id],
+                    { name: newName }
+                );
+            }
+        }
+    }
+
+    async deleteDocument(documentId) {
+        if (this.state.documents.length === 1) {
+            return;
+        }
+        if (this.state.selectedDocumentId === documentId) {
+            this.updateSelectedDocument(this.getNewFocusedDocument(documentId).id);
+        }
+        const document = this.state.documents.find((doc) => doc.id === documentId);
+        document.deleted = true;
+        await this.orm.unlink("sign.document", [documentId]);
+    }
+
+    /**
+     * 
+     * @param {Number} documentId 
+     * @param {Number} direction 
+     * Moves the document up (direction = -1) or down (direction = 1) in the list of documents,
+     * by swapping the sequence numbers of the two documents.
+     */
+    async moveDocument (documentId, direction) {
+        const active_documents = this.state.documents.filter((doc) => !doc.deleted).sort((a, b) => a.sequence - b.sequence);
+        const index_1 = active_documents.findIndex(doc => doc.id === documentId);
+        const index_2 = index_1 + direction;
+        if (index_2 < 0 || index_2 >= active_documents.length) {
+            return;
+        }
+        const document_a = active_documents[index_1];
+        const document_b = active_documents[index_2];
+        const seq_a = document_a.sequence;
+        const seq_b = document_b.sequence;
+        document_a.sequence = seq_b;
+        document_b.sequence = seq_a;
+        await this.orm.write("sign.document", [document_a.id], { sequence: seq_b });
+        await this.orm.write("sign.document", [document_b.id], { sequence: seq_a });
+    }
+
+    getNewFocusedDocument(oldFocusedDocumentId) {
+        return this.state.documents.find((doc) => doc.id !== oldFocusedDocumentId && !doc.deleted);
     }
 }
 

@@ -6,33 +6,23 @@
             hasSignRequests="hasSignRequests"
             responsibleCount="responsibleCount"
             signTemplate="signTemplate"
-            isPDF="isPDF"
             goBackToKanban.bind="goBackToKanban"
             signStatus="signStatus"
             manageTemplateAccess="manageTemplateAccess"
             onTemplateSaveClick.bind="onTemplateSaveClick"
             hasSignersWithoutItems ="hasSignersWithoutItems"
+            documentId="this.state.selectedDocumentId"
+            onEditTemplate.bind="onEditTemplate"
         />
         <div class="d-flex flex-grow-1 h-100 overflow-hidden">
             <SignTemplateSidebar t-if="showSidebar" t-props="signTemplateSidebarProps"/>
-            <SignTemplateBody
-                isPDF="isPDF"
-                attachmentLocation="attachmentLocation"
-                manageTemplateAccess="manageTemplateAccess"
-                hasSignRequests="hasSignRequests"
-                signTemplate="signTemplate"
-                signItemTypes="signItemTypes"
-                signItems="signItems"
-                signRoles="signRoles"
-                radioSets="radioSets"
-                signItemOptions="signItemOptions"
-                goBackToKanban.bind="goBackToKanban"
-                resModel="resModel"
-                signStatus="signStatus"
-                iframe="state.iframe"
-                setIframe.bind="setIframe"
-                onTemplateSaveClick.bind="onTemplateSaveClick"
-            />
+            <div class="o_sign_documents_container">
+                <t t-foreach="this.state.documents" t-as="document" t-key="document.id">
+                    <div t-attf-class="{{document.id == this.state.selectedDocumentId ? 'o_sign_visible_document' : 'o_sign_invisible_document'}}">
+                        <SignTemplateBody t-props="getSignTemplateBodyProps(document.id)"/>
+                    </div>
+                </t>
+            </div>
         </div>
     </div>
 </templates>

@@ -19,16 +19,16 @@ export class SignTemplateSidebarRoleItems extends Component {
         id: { type: Number },
         signTemplateId: { type: Number },
         isSignRequest: { type: Boolean },
-        iframe: { type: Object, optional: true },
+        updateRoleName: { type: Function },
         roleId: { type: Number, optional: true },
         colorId: { type: Number },
         isInputFocused: { type: Boolean, optional: true },
         updateInputFocused: { type: Function },
         isCollapsed: { type: Boolean },
         updateCollapse: { type: Function },
-        updateSigner: { type: Function },
         onDelete: { type: Function },
         itemsCount: { type: Number },
+        hasSignRequests: { type: Boolean },
     };
 
     async setup() {
@@ -52,6 +52,7 @@ export class SignTemplateSidebarRoleItems extends Component {
         this.orm.call("sign.item.role", "read", [this.props.roleId]).then((role) => {
             this.state.roleName = role[0].name;
         });
+        this.canEditSignerName = !this.props.hasSignRequests && !this.props.isCollapsed;
     }
 
     updateShowEditLabelIcon(ev, value) {
@@ -91,7 +92,7 @@ export class SignTemplateSidebarRoleItems extends Component {
         if (name && this.state.roleId && name !== this.state.roleName) {
             this.orm.write("sign.item.role", [this.state.roleId], { name: name });
             this.state.roleName = name;
-            this.props.iframe.updateRoleName(this.state.roleId, this.state.roleName);
+            this.props.updateRoleName(this.state.roleId, this.state.roleName);
         }
     }
 
@@ -109,12 +110,5 @@ export class SignTemplateSidebarRoleItems extends Component {
                 this.state.roleName = data.name;
             },
         });
-    }
-
-    async updateRole(resId) {
-        if (resId) {
-            this.state.roleId = resId;
-            this.props.updateSigner(this.props.id, this.state.roleId, this.state.colorId);
-        }
     }
 }

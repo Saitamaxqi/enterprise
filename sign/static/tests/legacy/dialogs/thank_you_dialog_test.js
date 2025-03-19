@@ -60,9 +60,7 @@ QUnit.module("thank you dialog", (hooks) => {
 
     QUnit.test("Thank you dialog is correctly rendered", async (assert) => {
         const mockRPC = (route) => {
-            if (route === "/sign/encrypted/23") {
-                return false;
-            } else if (route === "/sign/sign_request_state/23/abc") {
+            if (route === "/sign/sign_request_state/23/abc") {
                 return "draft";
             } else if (route === "/sign/sign_request_items") {
                 return [];
@@ -95,9 +93,7 @@ QUnit.module("thank you dialog", (hooks) => {
 
     QUnit.test("suggest signup is shown", async (assert) => {
         const mockRPC = (route) => {
-            if (route === "/sign/encrypted/23") {
-                return false;
-            } else if (route === "/sign/sign_request_state/23/abc") {
+            if (route === "/sign/sign_request_state/23/abc") {
                 return "draft";
             } else if (route === "/sign/sign_request_items") {
                 return [];
@@ -128,9 +124,7 @@ QUnit.module("thank you dialog", (hooks) => {
 
     QUnit.test("download button is shown when document is completed", async (assert) => {
         const mockRPC = (route) => {
-            if (route === "/sign/encrypted/23") {
-                return false;
-            } else if (route === "/sign/sign_request_state/23/abc") {
+            if (route === "/sign/sign_request_state/23/abc") {
                 return "signed";
             } else if (route === "/sign/sign_request_items") {
                 return [];
@@ -157,9 +151,7 @@ QUnit.module("thank you dialog", (hooks) => {
 
     QUnit.test("redirect button works", async (assert) => {
         const mockRPC = (route) => {
-            if (route === "/sign/encrypted/23") {
-                return false;
-            } else if (route === "/sign/sign_request_state/23/abc") {
+            if (route === "/sign/sign_request_state/23/abc") {
                 return "signed";
             } else if (route === "/sign/sign_request_items") {
                 return [];

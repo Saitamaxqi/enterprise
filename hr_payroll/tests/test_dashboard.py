@@ -50,9 +50,12 @@ class TestDashboardUi(HttpCase):
                 'datas': pdf_content,
                 'name': 'Employment Contract.pdf',
             })
-            self.env['sign.template'].with_user(user).create({
+            template = self.env['sign.template'].with_user(user).create({
+                'name': 'Employment Contract',
+            })
+            self.env['sign.document'].with_user(user).create({
                 'attachment_id': attachment.id,
-                'sign_item_ids': [(6, 0, [])],
+                'template_id': template.id,
             })
         self.start_tour("/web", "payroll_dashboard_ui_tour", login='dashboarder', timeout=300)
 

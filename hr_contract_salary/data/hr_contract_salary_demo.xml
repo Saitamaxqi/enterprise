@@ -26,10 +26,15 @@
     </record>
 
     <record id="sign_template_cdi_developer" model="sign.template">
-        <field name="attachment_id" ref="hr_contract_salary.ir_attachment_cdi_developer_contract"/>
-        <field name="sign_item_ids" eval="[(6, 0, [])]"/>
+        <field name="active">True</field>
     </record>
 
+    <record id="sign_document_cdi_developer" model="sign.document">
+        <field name="attachment_id" ref="ir_attachment_cdi_developer_contract"/>
+        <field name="template_id" ref="sign_template_cdi_developer"/>
+    </record>
+
+    <!-- TODO: To be further looked into -->
     <record id="ir_attachment_cdi_developer_contract" model="ir.attachment">
         <field name="res_model">sign.template</field>
         <field name="res_id" ref="sign_template_cdi_developer"/>
@@ -43,7 +48,7 @@
         <field name="page">1</field>
         <field name="posX">0.257</field>
         <field name="posY">0.160</field>
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="document_id" ref="sign_document_cdi_developer"/>
         <field name="width">0.150</field>
         <field name="height">0.015</field>
     </record>
@@ -56,7 +61,7 @@
         <field name="page">1</field>
         <field name="posX">0.693</field>
         <field name="posY">0.160</field>
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="document_id" ref="sign_document_cdi_developer"/>
         <field name="width">0.150</field>
         <field name="height">0.015</field>
     </record>
@@ -69,7 +74,7 @@
         <field name="page">1</field>
         <field name="posX">0.480</field>
         <field name="posY">0.184</field>
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="document_id" ref="sign_document_cdi_developer"/>
         <field name="width">0.170</field>
         <field name="height">0.015</field>
     </record>
@@ -82,7 +87,7 @@
         <field name="page">1</field>
         <field name="posX">0.663</field>
         <field name="posY">0.184</field>
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="document_id" ref="sign_document_cdi_developer"/>
         <field name="width">0.150</field>
         <field name="height">0.015</field>
     </record>
@@ -95,7 +100,7 @@
         <field name="page">1</field>
         <field name="posX">0.189</field>
         <field name="posY">0.185</field>
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="document_id" ref="sign_document_cdi_developer"/>
         <field name="width">0.270</field>
         <field name="height">0.015</field>
     </record>
@@ -108,7 +113,7 @@
         <field name="page">2</field>
         <field name="posX">0.649</field>
         <field name="posY">0.613</field>
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="document_id" ref="sign_document_cdi_developer"/>
         <field name="width">0.150</field>
         <field name="height">0.015</field>
     </record>
@@ -121,7 +126,7 @@
         <field name="page">2</field>
         <field name="posX">0.287</field>
         <field name="posY">0.579</field>
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="document_id" ref="sign_document_cdi_developer"/>
         <field name="width">0.200</field>
         <field name="height">0.050</field>
     </record>
@@ -134,7 +139,7 @@
         <field name="page">2</field>
         <field name="posX">0.285</field>
         <field name="posY">0.661</field>
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="document_id" ref="sign_document_cdi_developer"/>
         <field name="width">0.200</field>
         <field name="height">0.050</field>
     </record>
@@ -147,7 +152,7 @@
         <field name="page">2</field>
         <field name="posX">0.649</field>
         <field name="posY">0.695</field>
-        <field name="template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
+        <field name="document_id" ref="sign_document_cdi_developer"/>
         <field name="width">0.150</field>
         <field name="height">0.015</field>
     </record>

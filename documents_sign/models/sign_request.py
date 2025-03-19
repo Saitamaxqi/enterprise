@@ -2,6 +2,7 @@
 from odoo import models, api
 
 from werkzeug.urls import url_encode
+from collections import defaultdict
 
 
 class SignRequest(models.Model):
@@ -10,15 +11,23 @@ class SignRequest(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        sign_requets = super().create(vals_list)
-        attachment_ids = sign_requets.template_id.attachment_id.ids
-        documents = self.env['documents.document'].search([('attachment_id', 'in', attachment_ids)]).grouped('attachment_id')
-        for sr in sign_requets:
+        sign_requests = super().create(vals_list)
+        attachment_ids = sign_requests.template_id.document_ids.attachment_id.ids
+        documents = self.env['documents.document'].search([('attachment_id', 'in', attachment_ids)])
+        attachment_docs = defaultdict(list)
+        for doc in documents:
+            attachment_docs[doc.attachment_id.id].append(doc)
+
+        for sr in sign_requests:
             if sr.template_id.folder_id and not sr.reference_doc:
-                # The Sign Request was created from the Document application
-                doc = documents.get(sr.template_id.attachment_id)
-                sr.reference_doc = doc and f"documents.document,{doc.id}"
-        return sign_requets
+                document_ids = []
+                for attachment in sr.template_id.document_ids.attachment_id:
+                    document_ids += attachment_docs[attachment.id]
+                if len(document_ids) == 1:
+                    sr.reference_doc = f"documents.document,{document_ids[0].id}"
+                elif document_ids and all(doc.folder_id == document_ids[0].folder_id for doc in document_ids):
+                    sr.reference_doc = f"documents.document,{document_ids[0].folder_id.id}"
+        return sign_requests
 
     def _get_linked_record_action(self, default_action=None):
         self.ensure_one()
@@ -37,19 +46,19 @@ class SignRequest(models.Model):
         else:
             return super()._get_linked_record_action(default_action=default_action)
 
-    def _generate_completed_document(self):
+    def _generate_completed_documents(self):
         """ Ensure document are created by the super method which only create the related attachment. """
-        super(SignRequest, self.with_context(no_document=False))._generate_completed_document()
+        super(SignRequest, self.with_context(no_document=False))._generate_completed_documents()
 
-    def _send_completed_document(self):
+    def _send_completed_documents(self):
         """ Ensure no documents are created when sending the completed document.
 
-        The super method call _generate_completed_document which create the completed document then the attachments
+        The super method call _generate_completed_documents which create the completed document then the attachments
         of the completed documents are sent by mail, and we want to avoid to turn those attachments again into
         document by forcing no_document=True (otherwise the system will attempt to create a document on attachment
         already referenced by a document leading to a duplicate key constraint violation).
         """
-        super(SignRequest, self.with_context(no_document=True))._send_completed_document()
+        super(SignRequest, self.with_context(no_document=True))._send_completed_documents()
 
     def _get_document_tags(self):
         return self.template_id.documents_tag_ids

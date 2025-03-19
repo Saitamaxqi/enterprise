@@ -24,8 +24,13 @@ class SignItsmeCommon(TestSignControllerCommon):
 
         cls.template_itsme = cls.env['sign.template'].create({
             'name': 'template_itsme_test',
-            'attachment_id': cls.attachment.id,
         })
+
+        cls.document_itsme = cls.env['sign.document'].create({
+            'attachment_id': cls.attachment.id,
+            'template_id': cls.template_itsme.id,
+        })
+
         cls.env['sign.item'].create([
             {
                 'type_id': cls.env.ref('sign.sign_item_type_text').id,
@@ -34,7 +39,7 @@ class SignItsmeCommon(TestSignControllerCommon):
                 'page': 1,
                 'posX': 0.273,
                 'posY': 0.158,
-                'template_id': cls.template_itsme.id,
+                'document_id': cls.document_itsme.id,
                 'width': 0.150,
                 'height': 0.015,
             }

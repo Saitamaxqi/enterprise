@@ -22,7 +22,7 @@ class SignContract(Sign):
             ('sign_request_ids', 'in', request_item.sign_request_id.ids)])
         if employee and employee.company_id.documents_hr_folder and employee.company_id.documents_hr_settings:
             sign_request_sudo = request_item.sign_request_id.sudo()
-            sign_request_sudo._generate_completed_document()
+            sign_request_sudo._generate_completed_documents()
 
             employee_partner = employee.work_contact_id or employee.user_id.partner_id
             owner = employee.user_id
@@ -31,16 +31,16 @@ class SignContract(Sign):
             if not owner:
                 owner = employee.contract_id.hr_responsible_id
 
-            request.env['documents.document'].sudo().create({
+            request.env['documents.document'].sudo().create([{
                 'partner_id': employee_partner.id,
                 'owner_id': owner.id,
-                'datas': sign_request_sudo.completed_document,
-                'name': sign_request_sudo.display_name,
+                'datas': doc.file,
+                'name': f'{sign_request_sudo.display_name}/{doc.document_id.name}',
                 'folder_id': employee.company_id.documents_hr_folder.id,
                 'tag_ids': [(4, signature_request_tag.id)] if signature_request_tag else [],
                 'res_id': employee.id,
                 'res_model': 'hr.employee',  # Security Restriction to contract managers
-            })
+            } for doc in sign_request_sudo.completed_document_ids])
 
         contract = request.env['hr.contract'].sudo().with_context(active_test=False).search([
             ('sign_request_ids', 'in', request_item.sign_request_id.ids)], order="date_start desc", limit=1)
@@ -48,7 +48,7 @@ class SignContract(Sign):
             sign_request_folder = contract._get_sign_request_folder()
             if sign_request_folder and contract.company_id.documents_hr_settings:
                 sign_request_sudo = request_item.sign_request_id.sudo()
-                sign_request_sudo._generate_completed_document()
+                sign_request_sudo._generate_completed_documents()
 
                 employee = contract.employee_id
                 employee_partner = employee.work_contact_id or employee.user_id.partner_id
@@ -58,14 +58,14 @@ class SignContract(Sign):
                 if not owner:
                     owner = contract.hr_responsible_id
 
-                request.env['documents.document'].sudo().create({
+                request.env['documents.document'].sudo().create([{
                     'partner_id': employee_partner.id,
                     'owner_id': owner.id,
-                    'datas': sign_request_sudo.completed_document,
-                    'name': sign_request_sudo.display_name,
+                    'datas': doc.file,
+                    'name': f'{sign_request_sudo.display_name}/{doc.document_id.name}',
                     'folder_id': sign_request_folder.id,
                     'tag_ids': [(4, signature_request_tag.id)] if signature_request_tag else [],
                     'res_id': contract.id,
                     'res_model': 'hr.contract',  # Security Restriction to contract managers
-                })
+                } for doc in sign_request_sudo.completed_document_ids])
         return result

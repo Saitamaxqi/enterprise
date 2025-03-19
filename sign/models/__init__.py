@@ -17,3 +17,5 @@ from . import sign_item_type
 from . import sign_item_role
 from . import sign_log
 from . import ir_http
+from . import sign_document
+from . import sign_completed_document

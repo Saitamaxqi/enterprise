@@ -7,10 +7,10 @@ class SignItem(models.Model):
     _name = 'sign.item'
     _description = "Fields to be sign on Document"
     _order = "page asc, posY asc, posX asc"
-    _rec_name = 'template_id'
+    _rec_name = 'document_id'
 
-    template_id = fields.Many2one('sign.template', string="Document Template", required=True, index=True, ondelete='cascade')
-
+    document_id = fields.Many2one('sign.document', string="Document Template", required=True, index=True, ondelete='cascade')
+    template_id = fields.Many2one('sign.template', related='document_id.template_id')
     type_id = fields.Many2one('sign.item.type', string="Type", required=True, ondelete='restrict')
 
     required = fields.Boolean(default=True)

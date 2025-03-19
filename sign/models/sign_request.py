@@ -1,6 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import base64
 import time
 import uuid
 from werkzeug.urls import url_join, url_quote
@@ -9,7 +8,6 @@ from markupsafe import Markup
 from odoo import _, api, fields, models, Command
 from odoo.tools import get_lang, is_html_empty, format_date
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools.pdf.signature import PdfSigner
 
 
 class SignRequest(models.Model):
@@ -47,8 +45,7 @@ class SignRequest(models.Model):
         ("expired", "Expired"),
     ], default='sent', tracking=True, group_expand=True, copy=False, index=True)
 
-    completed_document = fields.Binary(readonly=True, string="Completed Document", attachment=True, copy=False)
-
+    completed_document_ids = fields.One2many('sign.completed.document', 'sign_request_id', string="Completed Documents Binaries", copy=False)
     nb_wait = fields.Integer(string="Sent Requests", compute="_compute_stats", store=True)
     nb_closed = fields.Integer(string="Completed Signatures", compute="_compute_stats", store=True)
     nb_total = fields.Integer(string="Requested Signatures", compute="_compute_stats", store=True)
@@ -448,30 +445,27 @@ class SignRequest(models.Model):
         if self.state != 'sent' or any(sri.state != 'completed' for sri in self.request_item_ids):
             raise UserError(_("This sign request cannot be signed"))
         self.write({'state': 'signed'})
-        if not self.template_id._check_is_encrypted():
-            # if the file is encrypted, we must wait that the document is decrypted
-            self._send_completed_document()
+        self._send_completed_documents()
 
-            if self.reference_doc:
-                model = self.env['ir.model']._get(self.reference_doc._name)
-                if model.is_mail_thread:
-                    self.reference_doc.message_post_with_source(
-                        "sign.message_signature_link",
-                        render_values={"request": self, "salesman": self.env.user.partner_id},
-                        subtype_xmlid='mail.mt_note',
-                    )
-                    # attach a copy of the signed document to the record for easy retrieval
-                    attachment_values = []
-                    for att in self.completed_document_attachment_ids:
-                        attachment_values.append({
-                            "name": att['name'],
-                            "datas": att['datas'],
-                            "type": "binary",
-                            "res_model": self.reference_doc._name,
-                            "res_id": self.reference_doc.id
-
-                        })
-                    self.env["ir.attachment"].create(attachment_values)
+        if self.reference_doc:
+            model = self.env['ir.model']._get(self.reference_doc._name)
+            if model.is_mail_thread:
+                self.reference_doc.message_post_with_source(
+                    "sign.message_signature_link",
+                    render_values={"request": self, "salesman": self.env.user.partner_id},
+                    subtype_xmlid='mail.mt_note',
+                )
+                # attach a copy of the signed document to the record for easy retrieval
+                attachment_values = []
+                for doc in self.completed_document_ids:
+                    attachment_values.append({
+                        "name": doc.document_id.name,
+                        "datas": doc.file,
+                        "type": "binary",
+                        "res_model": self.reference_doc._name,
+                        "res_id": self.reference_doc.id
+                    })
+                self.env["ir.attachment"].create(attachment_values)
 
     def cancel(self):
         for sign_request in self:
@@ -484,7 +478,7 @@ class SignRequest(models.Model):
 
         self.env['sign.log'].sudo().create([{'sign_request_id': sign_request.id, 'action': 'cancel'} for sign_request in self])
 
-    def _send_completed_document(self):
+    def _send_completed_documents(self):
         """ Send the completed document to signers and Contacts in copy with emails
         """
         self.ensure_one()
@@ -492,17 +486,17 @@ class SignRequest(models.Model):
             raise UserError(_('The sign request has not been fully signed'))
         self._check_senders_validity()
 
-        if not self.completed_document:
-            self._generate_completed_document()
+        if not self.completed_document_ids:
+            self._generate_completed_documents()
 
         signers = [{'name': signer.partner_id.name, 'email': signer.signer_email, 'id': signer.partner_id.id} for signer in self.request_item_ids]
         request_edited = any(log.action == "update" for log in self.sign_log_ids)
         for sign_request_item in self.request_item_ids:
-            self._send_completed_document_mail(signers, request_edited, sign_request_item.partner_id, access_token=sign_request_item.sudo().access_token, with_message_cc=False, force_send=True)
+            self._send_completed_documents_mail(signers, request_edited, sign_request_item.partner_id, access_token=sign_request_item.sudo().access_token, with_message_cc=False, force_send=True)
 
         cc_partners_valid = self.cc_partner_ids.filtered(lambda p: p.email_formatted)
         for cc_partner in cc_partners_valid:
-            self._send_completed_document_mail(signers, request_edited, cc_partner)
+            self._send_completed_documents_mail(signers, request_edited, cc_partner)
         if cc_partners_valid:
             body = _(
                 "The mail has been sent to contacts in copy: %(contacts)s",
@@ -519,7 +513,7 @@ class SignRequest(models.Model):
                 partner_ids=cc_partners_valid.ids,
             )
 
-    def _send_completed_document_mail(self, signers, request_edited, partner, access_token=None, with_message_cc=True, force_send=False):
+    def _send_completed_documents_mail(self, signers, request_edited, partner, access_token=None, with_message_cc=True, force_send=False):
         self.ensure_one()
         if access_token is None:
             access_token = self.access_token
@@ -578,71 +572,47 @@ class SignRequest(models.Model):
 
         return final_log.log_hash if final_log else False
 
-    def _generate_completed_document(self, password="", preview=False):
-        if not preview:
-            self.ensure_one()
+    def _generate_completed_documents(self):
         if self.state != 'signed':
             raise UserError(_("The completed document cannot be created because the sign request is not fully signed"))
-        if not self.template_id.sign_item_ids:
-            self.completed_document = self.template_id.attachment_id.datas
-        else:
-            itemsByPage = self.template_id._get_sign_items_by_page()
-            items_ids = [id for items in itemsByPage.values() for id in items.ids]
-            values_dict = self.env['sign.request.item.value']._read_group(
-                [('sign_item_id', 'in', items_ids), ('sign_request_id', '=', self.id)],
-                groupby=['sign_item_id'],
-                aggregates=['value:array_agg', 'frame_value:array_agg', 'frame_has_hash:array_agg']
-            )
-            signed_values = {
-                sign_item.id : {
-                    'value': values[0],
-                    'frame': frame_values[0],
-                    'frame_has_hash': frame_has_hashes[0],
-                }
-                for sign_item, values, frame_values, frame_has_hashes in values_dict
-            }
-            final_log_hash = self._get_final_signature_log_hash()
-            output = self.template_id._render_template_with_items(password=password, signed_values=signed_values, values_dict=values_dict, final_log_hash=final_log_hash)
 
-            signer = PdfSigner(output, self.communication_company_id)
-            signed_output = signer.sign_pdf(True, self._get_signing_field_name(), self.create_uid.partner_id)
+        for record in self:
+            if not record.completed_document_ids:
+                self.env['sign.completed.document'].create([{
+                    'sign_request_id': record.id,
+                    'document_id': document.id,
+                } for document in record.template_id.document_ids])
+                record.completed_document_ids._generate_completed_document()
+                attachment_ids = self.env['ir.attachment'].create([{
+                    'name': "%s.pdf" % record.reference,
+                    'datas': document.file,
+                    'type': 'binary',
+                    'res_model': self._name,
+                    'res_id': record.id,
+                } for document in record.completed_document_ids])
 
-            if signed_output:
-                output = signed_output
-
-            self.completed_document = base64.b64encode(output.getvalue())
-            output.close()
-
-        attachment = self.env['ir.attachment'].create({
-            'name': "%s.pdf" % self.reference if self.reference.split('.')[-1] != 'pdf' else self.reference,
-            'datas': self.completed_document,
-            'type': 'binary',
-            'res_model': self._name,
-            'res_id': self.id,
-        })
-
-        # print the report with the public user in a sudoed env
-        # public user because we don't want groups to pollute the result
-        # (e.g. if the current user has the group Sign Manager,
-        # some private information will be sent to *all* signers)
-        # sudoed env because we have checked access higher up the stack
-        public_user = self.env.ref('base.public_user', raise_if_not_found=False)
-        if not public_user:
-            # public user was deleted, fallback to avoid crash (info may leak)
-            public_user = self.env.user
-        pdf_content, __ = self.env["ir.actions.report"].with_user(public_user).sudo()._render_qweb_pdf(
-            'sign.action_sign_request_print_logs',
-            self.ids,
-            data={'format_date': format_date, 'company_id': self.communication_company_id}
-        )
-        attachment_log = self.env['ir.attachment'].create({
-            'name': "Certificate of completion - %s.pdf" % time.strftime('%Y-%m-%d - %H:%M:%S'),
-            'raw': pdf_content,
-            'type': 'binary',
-            'res_model': self._name,
-            'res_id': self.id,
-        })
-        self.completed_document_attachment_ids = [Command.set([attachment.id, attachment_log.id])]
+                # print the report with the public user in a sudoed env
+                # public user because we don't want groups to pollute the result
+                # (e.g. if the current user has the group Sign Manager,
+                # some private information will be sent to *all* signers)
+                # sudoed env because we have checked access higher up the stack
+                public_user = self.env.ref('base.public_user', raise_if_not_found=False)
+                if not public_user:
+                    # public user was deleted, fallback to avoid crash (info may leak)
+                    public_user = self.env.user
+                pdf_content, __ = self.env["ir.actions.report"].with_user(public_user).sudo()._render_qweb_pdf(
+                    'sign.action_sign_request_print_logs',
+                    record.id,
+                    data={'format_date': format_date, 'company_id': record.communication_company_id}
+                )
+                attachment_log = self.env['ir.attachment'].create({
+                    'name': self.env._("Certificate of completion - %s.pdf", time.strftime('%Y-%m-%d - %H:%M:%S')),
+                    'raw': pdf_content,
+                    'type': 'binary',
+                    'res_model': self._name,
+                    'res_id': record.id,
+                })
+                self.completed_document_attachment_ids = [Command.link(attachment_log.id)] + [Command.link(att.id) for att in attachment_ids]
 
     def _get_signing_field_name(self) -> str:
         """Generates a name for the signing field of the pdf document

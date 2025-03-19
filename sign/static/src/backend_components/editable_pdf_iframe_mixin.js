@@ -122,7 +122,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
         }
 
         updateSideBarSignItemsCount() {
-            const signItemsCountByRole = {};
+            this.signItemsCountByRole = {};
             const countedRadioSets = {};
             for (const page in this.signItems) {
                 for (const id in this.signItems[page]) {
@@ -134,13 +134,13 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                         countedRadioSets[data.radio_set_id] = true;
                     }
                     const role = this.signItems[page][id].data.responsible;
-                    if (!signItemsCountByRole[role]) {
-                        signItemsCountByRole[role] = 0;
+                    if (!this.signItemsCountByRole[role]) {
+                        this.signItemsCountByRole[role] = 0;
                     }
-                    signItemsCountByRole[role]++;
+                    this.signItemsCountByRole[role]++;
                 }
             }
-            this.updateSignItemsCountCallback(signItemsCountByRole);
+            this.updateSignItemsCountCallback();
         }
 
         setFont(font) {
@@ -674,6 +674,10 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             startResize(signItem, this.onResizeItem.bind(this));
         }
 
+        setIsActive(active) {
+            this.isActive = active;
+        }
+
         startDragAndDrop() {
             this.root.querySelectorAll(".page").forEach((page) => {
                 if (!page.hasAttribute("updated")) {
@@ -684,11 +688,11 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             });
 
             document.querySelectorAll(".o_sign_field_type_button").forEach((sidebarItem) => {
-                if (!sidebarItem.hasAttribute("updated")) {
+                if (!sidebarItem.hasAttribute(`updated-${this.documentId}`)) {
                     sidebarItem.setAttribute("draggable", true);
                     sidebarItem.addEventListener("dragstart", (e) => this.onSidebarDragStart(e));
                     sidebarItem.addEventListener("dragend", (e) => this.onSidebarDragEnd(e));
-                    sidebarItem.setAttribute("updated", true);
+                    sidebarItem.setAttribute(`updated-${this.documentId}`, true);
                 }
             });
         }
@@ -841,6 +845,9 @@ export const EditablePDFIframeMixin = (pdfClass) =>
         }
 
         onSidebarDragStart(e) {
+            if (!this.isActive) {
+                return;
+            }
             this.setCanvasVisibility("hidden");
             const signTypeElement = e.currentTarget;
             const firstPage = this.root.querySelector('.page[data-page-number="1"]');
@@ -873,6 +880,9 @@ export const EditablePDFIframeMixin = (pdfClass) =>
         }
 
         onSidebarDragEnd() {
+            if (!this.isActive) {
+                return;
+            }
             this.scrollCleanup();
             const firstPage = this.root.querySelector('.page[data-page-number="1"]');
             firstPage.removeChild(this.ghostSignItem);
@@ -881,11 +891,17 @@ export const EditablePDFIframeMixin = (pdfClass) =>
         }
 
         onDragOver(e) {
+            if (!this.isActive) {
+                return;
+            }
             e.preventDefault();
             e.dataTransfer.dropEffect = "move";
         }
 
         onDrop(e) {
+            if (!this.isActive) {
+                return;
+            }
             e.preventDefault();
             const page = e.currentTarget;
             const textLayer = page.querySelector(".textLayer");
