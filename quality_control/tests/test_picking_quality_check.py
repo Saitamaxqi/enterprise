@@ -1118,3 +1118,108 @@ class TestQualityCheck(TestQualityCommon):
         self.assertEqual(len(backorder.check_ids), 1)
         backorder.check_ids.do_pass()
         self.assertEqual(backorder.check_ids.quality_state, 'pass')
+
+    def test_quality_check_on_receipt_with_additional_move_lines(self):
+        """
+        Check that adding a move line for a new product to an already
+        assigned receipt will generate the associated quality check.
+        """
+        # Create Quality Point for incoming shipments.
+        self.env['quality.point'].create([
+            {
+                'title': "Check product 2",
+                'measure_on': "operation",
+                'product_ids': [Command.link(self.product_2.id)],
+                'picking_type_ids': [Command.link(self.picking_type_id)],
+            },
+        ])
+
+        receipt = self.env['stock.picking'].create({
+            'picking_type_id': self.picking_type_id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id,
+            'move_ids': [Command.create({
+                'name': self.product.name,
+                'product_id': self.product.id,
+                'product_uom_qty': 2,
+                'product_uom': self.product.uom_id.id,
+                'location_id': self.location_id,
+                'location_dest_id': self.location_dest_id,
+            })],
+        })
+        receipt.action_confirm()
+        self.assertRecordValues(receipt, [{
+            'state': 'assigned', 'quality_check_todo': False,
+        }])
+        # create a move line as you would from the detailed operation
+        self.env['stock.move.line'].create({
+            'product_id': self.product_2.id,
+            'picking_id': receipt.id,
+            'quantity': 3,
+        })
+        # try to validate the receipt to be warned that you still need to process some quality checks
+        self.assertRecordValues(receipt.move_ids.sorted('quantity'), [
+            {'product_id': self.product.id, 'quantity': 2.0, 'state': 'assigned'},
+            {'product_id': self.product_2.id, 'quantity': 3.0, 'state': 'assigned'},
+        ])
+        receipt.invalidate_recordset()
+        self.assertRecordValues(receipt, [{
+            'state': 'assigned', 'quality_check_todo': True,
+        }])
+        self.assertEqual(len(receipt.check_ids), 1)
+        receipt.check_ids.do_pass()
+        receipt.button_validate()
+        self.assertEqual(len(receipt.check_ids), 1)
+
+    def test_quality_check_on_delivery_with_additional_move_lines(self):
+        """
+        Check that adding a move line for a new product to an already
+        assigned delivery will generate the associated quality check.
+        """
+        out_type_id = self.env.ref('stock.warehouse0').out_type_id
+        # Create Quality Point for outgoing shipments.
+        self.env['quality.point'].create([
+            {
+                'title': "Check product 2",
+                'measure_on': "operation",
+                'product_ids': [Command.link(self.product_2.id)],
+                'picking_type_ids': [Command.link(out_type_id.id)],
+            },
+        ])
+
+        delivery = self.env['stock.picking'].create({
+            'picking_type_id': out_type_id.id,
+            'location_id': self.location_dest_id,
+            'location_dest_id': self.ref('stock.stock_location_customers'),
+            'move_ids': [Command.create({
+                'name': self.product.name,
+                'product_id': self.product.id,
+                'product_uom_qty': 2,
+                'product_uom': self.product.uom_id.id,
+                'location_id': self.location_dest_id,
+                'location_dest_id': self.ref('stock.stock_location_customers'),
+            })],
+        })
+        delivery.action_confirm()
+        self.assertRecordValues(delivery, [{
+            'state': 'assigned', 'quality_check_todo': False,
+        }])
+        # create a move line as you would from the detailed operation
+        self.env['stock.move.line'].create({
+            'product_id': self.product_2.id,
+            'picking_id': delivery.id,
+            'quantity': 3,
+        })
+        # try to validate the delivery to be warned that you still need to process some quality checks
+        self.assertRecordValues(delivery.move_ids.sorted('quantity'), [
+            {'product_id': self.product.id, 'quantity': 2.0, 'state': 'assigned'},
+            {'product_id': self.product_2.id, 'quantity': 3.0, 'state': 'assigned'},
+        ])
+        delivery.invalidate_recordset()
+        self.assertRecordValues(delivery, [{
+            'state': 'assigned', 'quality_check_todo': True,
+        }])
+        self.assertEqual(len(delivery.check_ids), 1)
+        delivery.check_ids.do_pass()
+        delivery.button_validate()
+        self.assertEqual(len(delivery.check_ids), 1)
