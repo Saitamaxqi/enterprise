@@ -472,7 +472,11 @@ class HrAppraisal(models.Model):
             raise UserError(_("You cannot delete appraisal which is not in draft state"))
 
     def read(self, fields=None, load='_classic_read'):
-        check_notes = set(fields) & {'note', 'assessment_note'}
+        fields_set = set(fields) if fields is not None else {}
+        check_feedback = fields_set & {'manager_feedback', 'employee_feedback'}
+        check_notes = fields_set & {'note', 'assessment_note'}
+        if check_feedback:
+            fields = fields + ['can_see_employee_publish', 'can_see_manager_publish', 'employee_feedback_published', 'manager_feedback_published']
         if check_notes:
             fields = fields + ['employee_id']
         records = super().read(fields, load)
