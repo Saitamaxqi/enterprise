@@ -186,7 +186,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll_partena
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_partena/models/hr_work_entry_type.py:0
-msgid "The code should have 3 characters!"
+msgid "The code should have 5 characters!"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_partena
