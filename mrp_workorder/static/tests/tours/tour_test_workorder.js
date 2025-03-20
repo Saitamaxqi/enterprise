@@ -318,7 +318,7 @@ registry
                     ".o_mrp_display_records:has(.card-header:contains(Lovely MO)) button:contains(Nuclear Workcenter)",
             },
             {
-                content: "Add Wood to the MO components",
+                content: "Add Courage to the MO components",
                 trigger:
                     ".o_mrp_display_record:has(.card-header:contains(Lovely MO)) .card-footer button.btn-light.py-3",
                 run: "click",
@@ -357,9 +357,50 @@ registry
                 run: "click",
             },
             {
-                content: "Check that the Wood is visible on the MO",
+                content: "Check that the Courage is visible on the MO",
                 trigger:
                     ".o_mrp_display_record:has(.card-header:contains(Lovely MO))  .o_mrp_record_line:contains(Courage)",
+            },
+            {
+                content: "Add Courage to the MO components",
+                trigger:
+                    ".o_mrp_display_record:contains(Stone Tools) .card-footer button.btn-light.py-3",
+                run: "click",
+            },
+            {
+                trigger: "button:contains(Add Component)",
+                run: "click",
+            },
+            {
+                trigger: ".modal-content input.o_searchview_input.o_input",
+                run: "edit Courage",
+            },
+            {
+                trigger: ".dropdown-item:contains(Courage)",
+                run: "click",
+            },
+            {
+                trigger: ".modal-content .o_kanban_record:has(span:contains('Courage'))",
+                run: "click",
+            },
+            {
+                content: "Await for the Component to be added",
+                trigger: ".modal-content input.o_input[type='number']",
+                run: function () {
+                    helper.assert(
+                        document.querySelector(".modal-content input.o_input[type='number']").value,
+                        "2"
+                    );
+                },
+            },
+            {
+                trigger: ".modal-content button.btn-close",
+                run: "click",
+            },
+            {
+                content: "Check that the last piece of Courage was added to the MO",
+                trigger: ".o_mrp_record_line:contains(Courage) button:contains(2)",
+                run: () => {},
             },
         ],
     });

@@ -700,6 +700,6 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         new_pick = mo.picking_ids - pick
         self.assertEqual(new_pick.picking_type_id, warehouse.pbm_type_id)
         self.assertRecordValues(new_pick.move_ids, [{
-            'quantity': 1.0,
+            'quantity': 2.0,
             'product_id': self.product_1.id,
         }])
