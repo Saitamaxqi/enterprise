@@ -104,11 +104,12 @@ registry.category("web_tour.tours").add("test_sign_flow_tour", {
             run: "click",
         },
         {
-            trigger: ".modal-dialog",
+            trigger:
+                ".modal-dialog .modal-body:contains(You will get the signed document by email.)",
         },
         {
             content: "view",
-            trigger: "h4:contains('It\'s signed') + button:btn-close",
+            trigger: "h4:contains('It's signed') + button:btn-close",
             run: "click",
         },
     ],
