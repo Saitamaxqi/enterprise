@@ -99,6 +99,71 @@ class TestBankRecWidgetWithoutEntry(CommonAccountingInstalled, TestBankRecWidget
             }])
             self.assertRecordValues(batch, [{'state': 'reconciled'}])
 
+    def test_reset_batch(self):
+        payment_state = 'paid' if self.module == 'invoicing_only' else 'in_process'
+        invoice_payment_state = 'paid' if self.module == 'invoicing_only' else 'in_payment'
+
+        # Setup: one invoice with 2 payments, each in a batch, with a matching statement line
+        invoice = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[20.0], post=True)
+        payment1 = self._register_payment(invoice, amount=5.0)
+        payment2 = self._register_payment(invoice, amount=15.0)
+
+        batch1 = self.env['account.batch.payment'].create({
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_ids': [Command.set(payment1.ids)],
+            'payment_method_id': self.payment_method_line.payment_method_id.id,
+        })
+        batch1.validate_batch()
+        batch2 = self.env['account.batch.payment'].create({
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_ids': [Command.set(payment2.ids)],
+            'payment_method_id': self.payment_method_line.payment_method_id.id,
+        })
+        batch2.validate_batch()
+
+        st_line1 = self._create_st_line(5.0, payment_ref=batch1.name, partner_id=self.partner_a.id)
+        st_line2 = self._create_st_line(15.0, payment_ref=batch1.name, partner_id=self.partner_a.id)
+
+        # Check initial state
+        self.assertRecordValues(payment1 + payment2, [
+            {'state': payment_state, 'is_matched': False},
+            {'state': payment_state, 'is_matched': False},
+        ])
+        self.assertEqual(invoice.payment_state, invoice_payment_state)
+        self.assertRecordValues(batch1 + batch2, [{'state': 'sent'}, {'state': 'sent'}])
+
+        # Match the first batch and make sure the states are updated
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line1.id).new({})
+        wizard._action_add_new_batch_payments(batch1)
+        wizard._action_validate()
+        self.assertRecordValues(payment1 + payment2, [
+            {'state': 'paid', 'is_matched': True},
+            {'state': payment_state, 'is_matched': False},
+        ])
+        self.assertEqual(invoice.payment_state, invoice_payment_state)
+        self.assertRecordValues(batch1 + batch2, [{'state': 'reconciled'}, {'state': 'sent'}])
+
+        # Match the second batch and make sure the states are updated
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line2.id).new({})
+        wizard._action_add_new_batch_payments(batch2)
+        wizard._action_validate()
+        self.assertRecordValues(payment1 + payment2, [
+            {'state': 'paid', 'is_matched': True},
+            {'state': 'paid', 'is_matched': True},
+        ])
+        self.assertEqual(invoice.payment_state, 'paid')
+        self.assertRecordValues(batch1 + batch2, [{'state': 'reconciled'}, {'state': 'reconciled'}])
+
+        # Reset and check that we are back to the state before we matched the batch
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line1.id).new({})
+        wizard._js_action_reset()
+        self.assertRecordValues(payment1 + payment2, [
+            {'state': payment_state, 'is_matched': False},
+            {'state': 'paid', 'is_matched': True},
+        ])
+        self.assertEqual(invoice.payment_state, invoice_payment_state)
+        self.assertRecordValues(batch1 + batch2, [{'state': 'sent'}, {'state': 'reconciled'}])
+
     def test_writeoff(self):
         invoice = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[1000.0], post=True)
         payment = self.env['account.payment.register'].create({
