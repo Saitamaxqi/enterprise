@@ -1053,7 +1053,7 @@ class AccountMove(models.Model):
         )
         Document._add_tax_objected_cfdi_values(cfdi_values, cfdi_lines)
         Document._add_base_lines_cfdi_values(cfdi_values, cfdi_lines)
-        Document._add_date_cfdi_values(cfdi_values, self.invoice_date, journal=self.journal_id)
+        Document._add_date_cfdi_values(cfdi_values, self.l10n_mx_edi_post_time, journal=self.journal_id)
         Document._add_payment_policy_cfdi_values(
             cfdi_values,
             payment_policy=self.l10n_mx_edi_payment_policy,
@@ -2371,7 +2371,7 @@ class AccountMove(models.Model):
             document_dates = []
             for invoice in invoices:
                 inv_cfdi_values = dict(cfdi_values)
-                Document._add_date_cfdi_values(inv_cfdi_values, invoice.invoice_date, journal=invoice.journal_id)
+                Document._add_date_cfdi_values(inv_cfdi_values, invoice.l10n_mx_edi_post_time, journal=invoice.journal_id)
                 document_dates.append(datetime.strptime(inv_cfdi_values['fecha'], CFDI_DATE_FORMAT).date())
             document_date = max(document_dates)
 

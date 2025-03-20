@@ -661,17 +661,9 @@ class L10n_Mx_EdiDocument(models.Model):
 
         :param cfdi_values:     The current CFDI values.
         :param document_date:   The date of the document.
-        :param journal:         An optional accounting journal to retrieve the custom timezone from it.
+        :param journal:         (deprecated) An optional accounting journal to retrieve the custom timezone from it.
         """
-        timezoned_now = self._get_datetime_now_with_mx_timezone(cfdi_values, journal=journal)
-        timezoned_today = timezoned_now.date()
-        if document_date >= timezoned_today:
-            cfdi_values['fecha'] = timezoned_now.strftime(CFDI_DATE_FORMAT)
-        else:
-            cfdi_time = datetime.strptime('23:59:00', '%H:%M:%S').time()
-            cfdi_values['fecha'] = datetime\
-                .combine(fields.Datetime.from_string(document_date), cfdi_time)\
-                .strftime(CFDI_DATE_FORMAT)
+        cfdi_values['fecha'] = document_date.strftime(CFDI_DATE_FORMAT)
 
     @api.model
     def _add_payment_policy_cfdi_values(self, cfdi_values, payment_policy=None, payment_method=None):
