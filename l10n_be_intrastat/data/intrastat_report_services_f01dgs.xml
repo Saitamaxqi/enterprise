@@ -5,7 +5,7 @@
             <field name="name">Intrastat (Services F01DGS)</field>
             <field name="country_id" ref="base.be"/>
             <field name="root_report_id" ref="account_intrastat.intrastat_report"/>
-            <field name="filter_show_draft" eval="False"/>
+            <field name="filter_show_draft" eval="True"/>
             <field name="filter_unreconciled" eval="False"/>
             <field name="filter_unfold_all"/>
             <field name="filter_period_comparison" eval="True"/>

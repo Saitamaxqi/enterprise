@@ -3,7 +3,7 @@
     <data>
         <record id="intrastat_report" model="account.report">
             <field name="name">Intrastat (Goods)</field>
-            <field name="filter_show_draft" eval="False"/>
+            <field name="filter_show_draft" eval="True"/>
             <field name="filter_unreconciled" eval="False"/>
             <field name="filter_unfold_all"/>
             <field name="filter_period_comparison" eval="True"/>

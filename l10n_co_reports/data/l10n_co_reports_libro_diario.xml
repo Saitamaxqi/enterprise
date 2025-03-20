@@ -5,7 +5,7 @@
         <field name="name">Daily Journal Report</field>
         <field name="filter_unfold_all" eval="False"/>
         <field name="filter_partner" eval="False"/>
-        <field name="filter_show_draft" eval="False"/>
+        <field name="filter_show_draft" eval="True"/>
         <field name="filter_unreconciled" eval="False"/>
         <field name="filter_period_comparison" eval="False"/>
         <field name="filter_date_range" eval="True"/>

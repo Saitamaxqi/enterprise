@@ -5,7 +5,7 @@
         <field name="name@nl">Jaarlijkse lijst van de btw-belastingplichtige afnemers</field>
         <field name="name@fr">Liste annuelle des clients assujettis à la TVA</field>
         <field name="name@de">Jährliche Kundenliste</field>
-        <field name="filter_show_draft" eval="False"/>
+        <field name="filter_show_draft" eval="True"/>
         <field name="filter_period_comparison" eval="False"/>
         <field name="default_opening_date_filter">previous_year</field>
         <field name="custom_handler_model_id" ref="model_l10n_be_partner_vat_handler"/>
