@@ -4,7 +4,7 @@
         <div t-attf-class="o-voip-Numpad {{ props.extraClass }}">
             <div class="d-flex border-bottom mb-3">
                 <div t-if="softphone.numpad.countryCode" class="d-flex align-items-center ms-3">
-                    <img t-attf-src="base/static/img/country_flags/{{ softphone.numpad.countryCode }}.png" t-att-alt="flagAltLabel" class="country-flag"/>
+                    <img t-attf-src="/base/static/img/country_flags/{{ softphone.numpad.countryCode }}.png" t-att-alt="flagAltLabel" class="country-flag"/>
                 </div>
                 <input class="o_input form-control-lg ps-3 border-0" type="text" placeholder="Enter the number…" t-model="softphone.numpad.value" t-att-data-value="softphone.numpad.value" t-ref="input" t-on-input="updateCountryCodeDebounced" t-on-keydown="onKeydown"/>
                 <button class="btn fa fa-long-arrow-left shadow-none" title="Backspace" t-on-click="onClickBackspace"/>
