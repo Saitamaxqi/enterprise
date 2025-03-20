@@ -236,7 +236,8 @@
                     invisible="rating_avg_text == 'none'"
                     class="fw-bold" widget="helpdesk_smiley_badge" optional="hide"/>
                 <field name="kanban_state" nolabel="1" width="20px" optional="show" widget="state_selection"/>
-                <field name="stage_id" optional="show" readonly="not context.get('default_team_id', False)"/>
+                <field name="stage_id_color" column_invisible="1"/>
+                <field name="stage_id" optional="show" readonly="not context.get('default_team_id', False)" widget="selection_badge" options="{'color_field': 'stage_id_color'}"/>
             </list>
         </field>
     </record>

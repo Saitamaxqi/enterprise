@@ -32,6 +32,12 @@
         </div>
     </template>
 
+    <template id="portal_my_tickets_badge_widget_template" name="badge Widget Template">
+        <span t-attf-class="badge rounded-pill o_tag o_badge_color_#{ticket.stage_id_color}"
+            t-attf-title="#{ticket.stage_id.name}" t-out="ticket.stage_id.name"
+        />
+    </template>
+
     <template id="portal_helpdesk_ticket" name="My Tickets">
         <t t-call="portal.portal_layout">
             <t t-set="breadcrumbs_searchbar" t-value="True"/>
@@ -91,7 +97,7 @@
                                     <span class="align-middle" t-field="ticket.user_id"/>
                                 </td>
                                 <td t-if="groupby != 'stage_id'" class="text-end">
-                                    <span t-attf-class="badge rounded-pill fw-normal #{'text-bg-success' if ticket.stage_id.fold else 'text-bg-primary'}" t-esc="ticket.stage_id.name"/>
+                                    <t t-call="helpdesk.portal_my_tickets_badge_widget_template"/>
                                 </td>
                             </tr>
                         </t>
@@ -210,7 +216,7 @@
                                         </div>
                                         <div class="col col-auto">
                                             <small>Stage:</small>
-                                            <small t-field="ticket.stage_id.name" t-attf-class="badge rounded-pill smaller #{'text-bg-info' if ticket.stage_id.fold else 'text-bg-light bg-200'}" title="Current stage of this ticket"/>
+                                            <t t-call="helpdesk.portal_my_tickets_badge_widget_template"/>
                                         </div>
                                     </h5>
                                 </div>

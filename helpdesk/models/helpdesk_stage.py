@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models, _
@@ -38,6 +37,7 @@ class HelpdeskStage(models.Model):
     legend_normal = fields.Char(
         'Grey Kanban Label', default=lambda s: s.env._('In Progress'), translate=True, required=True)
     ticket_count = fields.Integer(compute='_compute_ticket_count', export_string_translation=False)
+    color = fields.Integer(string='Color', export_string_translation=False)
 
     def _compute_ticket_count(self):
         res = self.env['helpdesk.ticket']._read_group(

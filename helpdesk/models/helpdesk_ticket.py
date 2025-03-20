@@ -108,6 +108,7 @@ class HelpdeskTicket(models.Model):
         'helpdesk.stage', string='Stage', compute='_compute_user_and_stage_ids', store=True,
         readonly=False, ondelete='restrict', tracking=1, group_expand='_read_group_stage_ids',
         copy=False, index=True, domain="[('team_ids', '=', team_id)]")
+    stage_id_color = fields.Integer(string='Stage Color', related="stage_id.color", export_string_translation=False)
     fold = fields.Boolean(related="stage_id.fold", export_string_translation=False)
     date_last_stage_update = fields.Datetime("Last Stage Update", copy=False, readonly=True)
     ticket_ref = fields.Char(string='Ticket IDs Sequence', copy=False, readonly=True, index=True)

@@ -5,11 +5,12 @@
         <field name="name">helpdesk.stages.list</field>
         <field name="model">helpdesk.stage</field>
         <field name="arch" type="xml">
-            <list string="Stage" multi_edit="1" sample="1" delete="0">
+            <list string="Stage" multi_edit="1" sample="1" delete="0" editable="bottom">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="team_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="show"/>
                 <field name="template_id" options="{'no_create': True}" optional="hide"/>
+                <field name="color" optional="hide" widget="color_picker"/>
                 <field name="fold" optional="show"/>
             </list>
         </field>
@@ -47,9 +48,12 @@
         <field name="name">helpdesk.stages.kanban</field>
         <field name="model">helpdesk.stage</field>
         <field name="arch" type="xml">
-            <kanban>
+            <kanban highlight_color="color" >
                 <field name="sequence" widget="handle"/>
                 <templates>
+                    <t t-name="menu" t-if="!selection_mode" groups="base.group_user">
+                        <field name="color" widget="kanban_color_picker"/>
+                    </t>
                     <t t-name="card">
                         <field name="name" class="fw-bolder fs-5"/>
                         <field name="team_ids" options="{'color_field': 'color'}" widget="many2many_tags"/>
@@ -76,6 +80,7 @@
                         <group>
                             <field name="name"/>
                             <field name="template_id" context="{'default_model': 'helpdesk.ticket'}"/>
+                            <field name="color" widget="color_picker"/>
                             <field name="sequence" groups="base.group_no_one"/>
                         </group>
                         <group>

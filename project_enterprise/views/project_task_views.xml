@@ -201,7 +201,7 @@
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <xpath expr="//gantt" position="attributes">
-                <attribute name="color">stage_id</attribute>
+                <attribute name="color">stage_id_color</attribute>
                 <attribute name="display_mode">sparse</attribute>
             </xpath>
         </field>
