@@ -2,10 +2,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from functools import partial
+from typing import Callable
 
 from odoo import _, api, fields, models, Command
 from odoo.tools import frozendict, float_round, groupby
 from odoo.tools.misc import formatLang, format_date
+from odoo.tools.xml_utils import find_xml_value
 from odoo.exceptions import ValidationError
 from datetime import datetime
 
@@ -210,6 +212,7 @@ class AccountMove(models.Model):
                 l10n_show_ec_authorization = bool(move.l10n_ec_authorization_number)
                 l10n_edit_ec_authorization = False
             elif move.journal_id.l10n_ec_withhold_type == 'out_withhold' or\
+                move.state == 'posted' or\
                 (move.journal_id.type == 'purchase' and move._is_manual_document_number()):
                 # Edit and show the autorization number when:
                 # - The document it's an out withhold
@@ -977,6 +980,119 @@ class AccountMove(models.Model):
             raise ValidationError(
                 _("Please ensure all the taxes in reimbursement lines use the same tax support. Creating reimbursement lines with multiple tax supports is not allowed.\n"
                     "Tax supports in reimbursements: %s", ', '.join(taxsupports_used)))
+
+    def _get_edi_decoder(self, file_data: dict, new=False) -> Callable:
+        # EXTENDS 'account'
+        self.ensure_one()
+        if self.country_code == 'EC' and self.move_type == 'in_invoice' and file_data.get('xml_tree') is not None:
+            factura_node = file_data['xml_tree'] if file_data['xml_tree'].tag == 'factura' else file_data['xml_tree'].find('.//factura')
+            if factura_node is not None and factura_node.attrib.get('id') == 'comprobante':
+                return self._l10n_ec_edi_import_bill
+        return super()._get_edi_decoder(file_data, new=new)
+
+    def _l10n_ec_edi_import_bill(self, bill, file_data: dict, new: bool = False) -> bool | None:
+        with bill._get_edi_creation() as bill:
+            tree = file_data.get('xml_tree')
+            if tree is None:
+                return
+            vendor_node = './/infoTributaria'
+            move_node = './/infoFactura'
+            latam_document_number = (
+                f"{find_xml_value(f'{vendor_node}//estab', tree)}-"
+                f"{find_xml_value(f'{vendor_node}//ptoEmi', tree)}-"
+                f"{find_xml_value(f'{vendor_node}//secuencial', tree)}"
+            )
+
+            vendor_name = find_xml_value(f'{vendor_node}//razonSocial', tree)
+            vendor_vat = find_xml_value(f'{vendor_node}//ruc', tree)
+            vendor = self.env['res.partner'].search([('vat', '=', vendor_vat)], limit=1)
+            if not vendor:
+                vendor = self.env['res.partner'].create([{
+                    'name': vendor_name,
+                    'street': find_xml_value(f'{vendor_node}//dirMatriz', tree),
+                    'vat': vendor_vat,
+                }])
+
+            bill_vals = {
+                'move_type': 'in_invoice',
+                'invoice_date': datetime.strptime(find_xml_value(f'{move_node}//fechaEmision', tree), '%d/%m/%Y').strftime('%Y-%m-%d'),
+                'l10n_ec_authorization_number': find_xml_value(f'{vendor_node}//claveAcceso', tree),
+                'l10n_latam_document_type_id': self.env['l10n_latam.document.type'].search([
+                    ('code', '=', f"{int(find_xml_value(f'{vendor_node}//tipoEmision', tree)):02}")
+                ], limit=1),
+                'l10n_latam_document_number': latam_document_number,
+                'partner_id': vendor.id,
+            }
+
+            payment_method = self.env['l10n_ec.sri.payment'].search([
+                ('code', '=', find_xml_value(f'{move_node}//pagos//pago//formaPago', tree))
+            ], limit=1)
+            if payment_method:
+                bill['l10n_ec_sri_payment_id'] = payment_method
+
+            self._l10n_ec_edi_import_bill_fill_move_line(tree.findall('.//detalles//detalle'), bill)
+            bill.write(bill_vals)
+            return True
+
+    def _l10n_ec_edi_import_bill_fill_move_line(self, line_nodes, bill) -> None:
+        def _get_tax_group_ec_type_from_code(code, code_percentage, amount) -> str:
+            if code == '3':
+                return 'ice'
+            return {
+                '0': 'zero_vat',
+                '2': 'vat12',
+                '3': 'vat14',
+                '4': 'vat15',
+                '5': 'vat05',
+                '6': 'not_charged_vat',
+                '7': 'exempt_vat',
+                '10': 'vat13',
+            }.get(code_percentage) or f'vat{amount:02}' if int(amount) != 0 else 'zero_vat'
+
+        new_line_vals = []
+        product_vals = []
+        tax_group_codes = set()
+        for node in line_nodes:
+            product_vals.append((node.find('codigoPrincipal').text, node.find('descripcion').text))
+            tax_group_codes.update([_get_tax_group_ec_type_from_code(
+                code=tax_node.find('codigo').text,
+                code_percentage=tax_node.find('codigoPorcentaje').text,
+                amount=tax_node.find('tarifa').text.split('.')[0],
+            ) for tax_node in node.findall('.//impuestos//impuesto')])
+
+        product_codes, product_descriptions = zip(*product_vals)
+        existing_products = self.env['product.product'].search([
+            '|',
+            ('default_code', 'in', product_codes),
+            ('description', 'in', product_descriptions),
+        ]).grouped('default_code')
+        tax_groups = self.env['account.tax.group'].search([('l10n_ec_type', 'in', tax_group_codes)])
+        taxes = self.env['account.tax'].search([('tax_group_id', 'in', tax_groups.ids)]).grouped(lambda tax: tax.tax_group_id.l10n_ec_type)
+
+        for node in line_nodes:
+            new_line_val = {
+                'move_id': bill.id,
+                'quantity': node.find('cantidad').text,
+                'price_unit': node.find('precioUnitario').text,
+            }
+            if existing_products.get(node.find('codigoPrincipal').text):
+                new_line_val['product_id'] = existing_products[node.find('codigoPrincipal').text].id
+            else:
+                new_line_val['name'] = node.find('descripcion').text
+
+            for tax_node in node.findall('.//impuestos//impuesto'):
+                tax_group_code = _get_tax_group_ec_type_from_code(
+                    code=tax_node.find('codigo').text,
+                    code_percentage=tax_node.find('codigoPorcentaje').text,
+                    amount=tax_node.find('tarifa').text.split('.')[0],
+                )
+
+                if tax := taxes.get(tax_group_code) and next(iter(taxes[tax_group_code])):
+                    new_line_val['tax_ids'] = tax.ids
+
+            new_line_vals.append(new_line_val)
+
+        self.env['account.move.line'].create(new_line_vals)
 
 
 class AccountMoveLine(models.Model):
