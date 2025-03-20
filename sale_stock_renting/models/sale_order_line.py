@@ -311,10 +311,12 @@ class SaleOrderLine(models.Model):
             'name': _("Rental move: %(order)s", order=self.order_id.name),
             'state': 'confirmed',
         })
-        rental_stock_move._action_assign()
-        rental_stock_move.quantity = qty
-        rental_stock_move.picked = True
-        rental_stock_move._action_done()
+        rental_stock_moves = rental_stock_move._set_rental_sm_qty()
+        for move in rental_stock_moves:
+            move._action_assign()
+            move.quantity = move.product_uom_qty
+            move.picked = True
+        rental_stock_moves._action_done()
 
     def _return_qty(self, qty, location_id, location_dest_id):
         """Undo a qty move (partially or totally depending on qty).

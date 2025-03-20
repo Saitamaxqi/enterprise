@@ -96,3 +96,7 @@ class StockMove(models.Model):
 
         if moves_to_super:
             super(StockMove, moves_to_super)._compute_location_dest_id()
+
+    def _set_rental_sm_qty(self):
+        self.ensure_one()
+        return self

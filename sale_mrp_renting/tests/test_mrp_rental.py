@@ -167,3 +167,26 @@ class TestRentalKits(TestRentalCommon):
             {'product_id': self.component_2.id, 'product_qty': 1, 'bom_line_id': bom_line_03.id, 'location_id': rental_location.id},
             {'product_id': component_3.id, 'product_qty': 1, 'bom_line_id': bom_line_04.id, 'location_id': rental_location.id},
         ])
+
+    def test_pickup_kit_from_rental(self):
+        """Create a rental with a kit and confirm it. Then, pickup the kit.
+        """
+        # disable the setting to don't create a picking and allow the user to pickup the kit
+        self.env.user.group_ids -= self.env.ref('sale_stock_renting.group_rental_stock_picking')
+        settings = self.env['res.config.settings'].with_user(self.env.user).create({})
+        settings.group_rental_stock_picking = False
+        settings.set_values()
+        # create a rental with kit
+        rental = self.sale_order_id.copy()
+        rental.order_line.write({'product_uom_qty': 1, 'is_rental': True})
+        self.assertEqual(rental.order_line.product_id.is_kits, True)
+        rental.action_confirm()
+        # pickup the kit
+        self.assertEqual(rental.order_line.qty_delivered, 0)
+        action_dict = rental.action_open_pickup()
+        pickup_wizard = self.env['rental.order.wizard'].with_context(
+            action_dict['context']
+        ).create({})
+        pickup_wizard._get_wizard_lines()
+        pickup_wizard.apply()
+        self.assertEqual(rental.order_line.qty_delivered, 1)

@@ -32,3 +32,10 @@ class StockMove(models.Model):
                         sale_line._generate_delay_line(current_qty_returned)
                     sale_line.qty_returned = amount_kits_returned
         return res
+
+    def _set_rental_sm_qty(self):
+        self.ensure_one()
+        if self.product_id.is_kits:
+            return self.with_context(skip_picking_assignation=True).action_explode()
+        else:
+            return super()._set_rental_sm_qty()
