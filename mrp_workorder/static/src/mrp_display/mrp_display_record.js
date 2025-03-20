@@ -202,7 +202,7 @@ export class MrpDisplayRecord extends Component {
 
     subRecordProps(subRecord) {
         const props = {
-            clickable: !this.state.underValidation,
+            clickable: !this.state.underValidation && !this.disabled,
         };
         if (
             subRecord.resModel === "quality.check" &&

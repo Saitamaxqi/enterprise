@@ -6,8 +6,10 @@
                   t-out="label"/>
             <div>
                 <span t-if="showQty" t-out="showQty" class="me-1 fw-bold"/>
-                <button t-if="hasInstruction" t-on-click.stop="showWorksheet" class="btn btn-lg btn-outline-secondary fa fa-info me-1"/>
-                <button class="btn" t-on-click="onClick" t-att-class="showImage ? 'p-0' : ''" t-attf-class="{{isActive ? activeClass : 'btn-outline-secondary'}}">
+                <button t-if="hasInstruction" t-on-click.stop="showWorksheet" class="btn btn-lg btn-outline-secondary fa fa-info me-1"
+                        t-att-class="{'d-none': !props.clickable}"/>
+                <button class="btn" t-on-click="onClick" t-att-class="{'p-0' : showImage, 'd-none': !props.clickable}"
+                        t-attf-class="{{isActive ? activeClass : 'btn-outline-secondary'}}">
                     <i t-if="!showImage" t-att-class="icon"/>
                     <img t-else="" style="max-width: 35px; max-height: 35px;" t-att-src="imageUrl"/>
                     <!-- CLPI: maybe better to use bg image with contain on the button instead -->
