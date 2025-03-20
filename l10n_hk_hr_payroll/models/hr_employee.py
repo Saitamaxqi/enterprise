@@ -7,7 +7,6 @@ from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import single_email_re
 
-
 auto_mobn_re = re.compile(r"""^[+]\d{1,3}-\d{1,29}$""", re.VERBOSE)
 
 
@@ -123,6 +122,14 @@ class HrEmployee(models.Model):
         for employee in self:
             if employee.l10n_hk_autopay_mobn and not auto_mobn_re.match(employee.l10n_hk_autopay_mobn):
                 raise ValidationError(_('Invalid Mobile! Please enter a valid mobile number.'))
+
+    @api.depends('l10n_hk_surname', 'l10n_hk_given_name')
+    def _compute_legal_name(self):
+        hk_employees = self.filtered(lambda e: e.company_id.country_code == 'HK')
+        for employee in hk_employees:
+            employee.legal_name = ' '.join(filter(None, [employee.l10n_hk_surname, employee.l10n_hk_given_name]))
+
+        super(HrEmployee, self - hk_employees)._compute_legal_name()
 
     def _compute_l10n_hk_years_of_service(self):
         for employee in self:
