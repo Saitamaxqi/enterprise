@@ -48,8 +48,6 @@ Allow clients to Schedule Appointments through your Website
         'web.assets_unit_tests_setup': [
             'website_appointment/static/src/snippets/**/*.js',
             ('remove', 'website_appointment/static/src/snippets/**/options.js'),
-            # TODO Remove when all 000 have been adapted
-            ('remove', 'website_appointment/static/src/snippets/**/000.js'),
         ],
         'web.assets_frontend': [
             'website_appointment/static/src/scss/website_appointment.scss',
@@ -58,7 +56,6 @@ Allow clients to Schedule Appointments through your Website
             'website_appointment/static/src/xml/appointment_no_slot.xml',
             'website_appointment/static/src/js/appointment_frontend/*.js',
             'website_appointment/static/src/snippets/**/*.js',
-            ('remove', 'website_appointment/static/src/snippets/**/000.js'),
             ('remove', 'website_appointment/static/src/snippets/**/options.js'),
         ],
         'website.assets_editor': [
