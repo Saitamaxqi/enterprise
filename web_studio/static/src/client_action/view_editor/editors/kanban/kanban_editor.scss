@@ -8,6 +8,9 @@
                 background: $o-web-studio-bg-light;
                 aspect-ratio: 2;
             }
+            &:not(.o_kanban_demo) {
+                z-index: 1;
+            }
             &.o_kanban_ghost {
                 opacity: 0;
             }
