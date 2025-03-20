@@ -283,7 +283,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         action = self.env[action.type].browse(action.id)
         assertViewArchEqual(self, studioView.arch, """
             <data>
-                <xpath expr="//field[@name='complete_name']" position="before">
+                <xpath expr="//field[@name='avatar_128']" position="before">
                     <header>
                         <button string="web_studio_new_button_action_name" name="{actionId}" type="action"/>
                     </header>
@@ -291,7 +291,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             </data>""".format(actionId=action.xml_id))
         self.start_tour("/odoo?debug=tests", 'web_studio_test_remove_action_button_in_list_view', login="admin")
         arch = """<data>
-                <xpath expr="//field[@name='complete_name']" position="before">
+                <xpath expr="//field[@name='avatar_128']" position="before">
                     <header/>
                 </xpath>
             </data>"""
