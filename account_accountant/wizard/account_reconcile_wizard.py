@@ -313,12 +313,9 @@ class AccountReconcileWizard(models.TransientModel):
                 for aml in all_amls
             }
 
-            disable_partial_exchange_diff = bool(self.env['ir.config_parameter'].sudo().get_param('account.disable_partial_exchange_diff'))
             plan = plan_list[0]
             # residuals are subtracted from aml_values_map
-            amls\
-                .with_context(no_exchange_difference=self._context.get('no_exchange_difference') or disable_partial_exchange_diff) \
-                ._prepare_reconciliation_plan(plan, aml_values_map, shadowed_aml_values=shadowed_aml_values)
+            amls._prepare_reconciliation_plan(plan, aml_values_map, shadowed_aml_values=shadowed_aml_values)
 
             reco_currency = get_reco_currency(amls, aml_values_map)
             if not reco_currency:

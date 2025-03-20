@@ -1966,6 +1966,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         entry and the lines will directly be exigible, so we want to use the final tax account directly.
         """
         tax_account = self.company_data['default_account_tax_sale']
+        tax_account.reconcile = True
 
         caba_tax = self.env['account.tax'].create({
             'name': "CABA",

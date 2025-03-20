@@ -66,6 +66,13 @@ class TestTaxReport(TestAccountReportsCommon):
             'account_type': 'liability_current',
         })
 
+        cls.cash_basis_transfer_account = cls.env['account.account'].create({
+            'code': 'cash.basis.transfer.account',
+            'name': 'cash_basis_transfer_account',
+            'account_type': 'income',
+            'reconcile': True,
+        })
+
         # ==== Sale taxes: group of two taxes having type_tax_use = 'sale' ====
         cls.sale_tax_percentage_incl_1 = cls.env['account.tax'].create({
             'name': 'sale_tax_percentage_incl_1',
@@ -868,6 +875,7 @@ class TestTaxReport(TestAccountReportsCommon):
                 'amount_type': 'percent',
                 'type_tax_use': tax_type,
                 'tax_exigibility': 'on_payment',
+                'cash_basis_transition_account_id': self.cash_basis_transfer_account.id,
                 'invoice_repartition_line_ids': [
                     Command.create({
                         'repartition_type': 'base',
@@ -1093,7 +1101,7 @@ class TestTaxReport(TestAccountReportsCommon):
             """
             # Pay the invoice with a misc operation simulating a payment, so that the cash basis entries are created
             invoice_reconcilable_line = invoice.line_ids.filtered(lambda x: x.account_type in ('liability_payable', 'asset_receivable'))
-            account = (invoice.line_ids - invoice_reconcilable_line).account_id
+            account = (invoice.line_ids - invoice_reconcilable_line).account_id - self.cash_basis_transfer_account
             pmt_move = self.env['account.move'].create({
                 'move_type': 'entry',
                 'date': invoice.date,
@@ -1183,6 +1191,7 @@ class TestTaxReport(TestAccountReportsCommon):
             'amount_type': 'percent',
             'type_tax_use': 'sale',
             'tax_exigibility': 'on_payment',
+            'cash_basis_transition_account_id': self.cash_basis_transfer_account.id,
             # We use default repartition: 1 base line, 1 100% tax line
         })
 
@@ -1275,6 +1284,7 @@ class TestTaxReport(TestAccountReportsCommon):
             'amount_type': 'percent',
             'type_tax_use': 'sale',
             'tax_exigibility': 'on_payment',
+            'cash_basis_transition_account_id': self.cash_basis_transfer_account.id,
             'include_base_amount': True,
             'sequence': 1,
             # We use default repartition: 1 base line, 1 100% tax line
@@ -1366,6 +1376,7 @@ class TestTaxReport(TestAccountReportsCommon):
         caba_tax.write({
             'include_base_amount': True,
             'tax_exigibility': 'on_payment',
+            'cash_basis_transition_account_id': self.cash_basis_transfer_account.id,
             'sequence': 1,
         })
 
@@ -1517,6 +1528,7 @@ class TestTaxReport(TestAccountReportsCommon):
         })
         caba_tax.write({
             'tax_exigibility': 'on_payment',
+            'cash_basis_transition_account_id': self.cash_basis_transfer_account.id,
             'sequence': 1,
         })
 
@@ -1686,6 +1698,7 @@ class TestTaxReport(TestAccountReportsCommon):
             'amount_type': 'percent',
             'type_tax_use': 'sale',
             'tax_exigibility': 'on_payment',
+            'cash_basis_transition_account_id': self.cash_basis_transfer_account.id,
             # We use default repartition: 1 base line, 1 100% tax line
         })
         self.env.company.tax_exigibility = True
@@ -2213,6 +2226,7 @@ class TestTaxReport(TestAccountReportsCommon):
             'type_tax_use': 'sale',
             'amount': 42,
             'tax_exigibility': 'on_payment',
+            'cash_basis_transition_account_id': self.cash_basis_transfer_account.id,
             'invoice_repartition_line_ids': [
                 Command.create({
                     'repartition_type': 'base',

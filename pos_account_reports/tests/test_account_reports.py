@@ -152,6 +152,7 @@ class POSTestTaxReport(TestAccountReportsCommon):
             'name': 'POS caba transition tax account',
             'code': 'POSCaba',
             'account_type': 'asset_current',
+            'reconcile': True,
         })
         self.pos_tax.write({
             'tax_exigibility': 'on_payment',
