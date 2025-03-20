@@ -22,13 +22,18 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     l10n_in_payment_advice_xlsx = fields.Binary('Payment Advice XLSX', readonly=True, attachment=False)
     l10n_in_payment_advice_filename_xlsx = fields.Char()
     l10n_in_reference = fields.Char(string="Report Name")
+    l10n_in_valid_bank_accounts_ids = fields.Many2many('res.partner.bank', compute="_compute_bank_account_ids")
     l10n_in_company_bank_id = fields.Many2one('res.partner.bank', string="Company Bank Account",
-        domain="[('company_id', 'in', allowed_company_ids)]")
+        domain="[('id', 'in', l10n_in_valid_bank_accounts_ids)]")
     l10n_in_neft = fields.Boolean(string="NEFT Transaction", help="Tick this box if your company use online transfer for salary")
     l10n_in_cheque_number = fields.Char(string="Cheque Number")
     l10n_in_state_pdf = fields.Boolean()
     l10n_in_state_xlsx = fields.Boolean()
     l10n_in_effective_from = fields.Date(string="Effective From", default=fields.Date.today)
+
+    def _compute_bank_account_ids(self):
+        for record in self:
+            record.l10n_in_valid_bank_accounts_ids = record.company_id.partner_id.bank_ids
 
     def _get_report_data(self, payslip):
         employee = payslip.employee_id
