@@ -127,7 +127,7 @@ class TestOfferMailFeatures(MailCommon):
                 {
                     'create_values': {},
                     'email': 'applicant@test.example.com',
-                    'name': 'Mr Applicant',
+                    'name': 'Amazing Applicant',
                     'partner_id': self.applicant.partner_id.id,
                 },
             ], [
