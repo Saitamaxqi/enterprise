@@ -44,11 +44,6 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
             run: "edit 12:00",
         },
         {
-            content: "Apply change",
-            trigger: '.o_datetime_buttons button.o_apply',
-            run: "click",
-        },
-        {
             content: "Add one quantity",
             trigger: '.css_quantity a.js_add_cart_json i.fa-plus',
             run: "click",

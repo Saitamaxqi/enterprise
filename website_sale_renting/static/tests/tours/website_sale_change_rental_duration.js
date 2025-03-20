@@ -41,11 +41,6 @@ registry.category("web_tour.tours").add("rental_cart_update_duration", {
             run: "edit 12:00 && press Enter",
         },
         {
-            content: "Apply change",
-            trigger: ".o_datetime_buttons button.o_apply",
-            run: "click",
-        },
-        {
             content: "click on add to cart",
             trigger:
                 '#product_detail form #add_to_cart',
@@ -64,12 +59,7 @@ registry.category("web_tour.tours").add("rental_cart_update_duration", {
         {
             content: "Pick start time",
             trigger: ".o_time_picker_input:eq(0)",
-            run: "edit 8:00",
-        },
-        {
-            content: "Apply change",
-            trigger: ".o_datetime_buttons button.o_apply",
-            run: "click",
+            run: "edit 8:00 && press Enter && press Escape",
         },
         {
             content: "Verify order line rental period start time",

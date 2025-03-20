@@ -39,8 +39,8 @@ registry
             },
             {
                 content: 'Apply change',
-                trigger: '.o_datetime_buttons button.o_apply',
-                run: 'click',
+                trigger: 'input[name=renting_start_date]',
+                run: 'press Enter',
             },
             {
                 content: 'Check that css_not_available has been added to the product form',
@@ -52,19 +52,9 @@ registry
                 run: `edit ${getValidNextEndDatetime()}`,
             },
             {
-                content: 'Apply change',
-                trigger: '.o_datetime_buttons button.o_apply',
-                run: 'click',
-            },
-            {
                 content: 'Pick a valid start date',
                 trigger: 'input[name=renting_start_date]',
                 run: `edit ${getValidNextStartDatetime()}`,
-            },
-            {
-                content: 'Apply change',
-                trigger: '.o_datetime_buttons button.o_apply',
-                run: 'click',
             },
             {
                 content: 'Check that css_not_available has been removed',
