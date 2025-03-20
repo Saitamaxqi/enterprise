@@ -15,6 +15,9 @@
                     groups="point_of_sale.group_pos_user"/>
                 </group>
             </xpath>
+            <xpath expr="//field[@name='image_1920']" position="attributes">
+                 <attribute name="options">{'convert_to_webp': False, 'preview_image': 'image_128'}</attribute>
+             </xpath>
         </field>
     </record>
 
