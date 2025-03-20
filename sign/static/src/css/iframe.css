@@ -269,11 +269,6 @@ select:focus {
     opacity: 0.6;
 }
 
-.o_sign_sign_strikethrough {
-    border: none !important;
-    box-shadow: unset !important;
-}
-
 .o_sign_strikethrough_line {
     position: absolute;
     top: 50%;

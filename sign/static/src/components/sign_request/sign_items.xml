@@ -40,7 +40,7 @@
                     </select>
                 </div>
             </div>
-            <div t-if="type == 'strikethrough'" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item o_sign_sign_strikethrough" t-att-style="style">
+            <div t-if="type == 'strikethrough'" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item" t-att-style="style" t-att-placeholder="placeholder">
                 <div class="o_sign_strikethrough_line"/>
             </div>
         </t>
@@ -137,7 +137,14 @@
     </div>
     <div t-name="sign.strikethroughSignItem" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item o_sign_edit_strikethrough" t-att-data-id="id" t-att-style="style">
         <div class="sign_item_body">
-            <div class="o_sign_strikethrough_line o_sign_strikethrough_line_striked"/>
+            <t t-if="isSignItemEditable or value">
+                <div class="o_sign_strikethrough_line o_sign_strikethrough_line_striked"/>
+            </t>
+            <t t-else="">
+                <p class="o_placeholder_text_item ps-0 o_sign_field_alignment">
+                    <t t-esc="placeholder"/>
+                </p>
+            </t>
             <t t-if="editMode" t-call="sign.signItemConfiguration"/>
         </div>
     </div>
