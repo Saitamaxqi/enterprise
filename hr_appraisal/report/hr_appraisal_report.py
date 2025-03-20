@@ -46,7 +46,7 @@ class HrAppraisalReport(models.Model):
                      e.department_id as department_id,
                      a.date_close as deadline,
                      CASE WHEN min(ce.start) >= NOW() AT TIME ZONE 'UTC' THEN min(ce.start) ELSE max(ce.start) END AS final_interview,
-                     a.state
+                     CASE WHEN a.state = '1_new' THEN 'new' WHEN a.state = '2_pending' THEN 'pending' ELSE 'done' END as state
                      from hr_appraisal a
                         left join hr_employee e on (e.id=a.employee_id)
                         LEFT OUTER JOIN calendar_event ce ON ce.res_id = a.id AND ce.res_model = 'hr.appraisal'
