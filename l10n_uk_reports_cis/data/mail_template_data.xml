@@ -54,7 +54,6 @@
             <field name="partner_to">{{ object.partner_id.id }}</field>
             <field name="subject">CIS Deduction Report Submission Due</field>
             <field name="description">Sent to companies to inform that they need to return they CIS deductions to HMRC</field>
-            <field name="lang">{{ object.partner_id.lang }}</field>
         </record>
 
         <template id="email_body_template_cis_notification">

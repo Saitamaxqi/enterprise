@@ -9,7 +9,6 @@
             <field name="use_default_to" eval="False"/>
             <field name="subject">{{ object.company_id.name }} DTE (Ref {{ (object.name or 'n/a') }})</field>
             <field name="auto_delete" eval="False"/>
-            <field name="lang">{{ object.partner_id.lang }}</field>
             <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;">
     <p style="margin: 0px; padding: 0px; font-size: 13px;">
