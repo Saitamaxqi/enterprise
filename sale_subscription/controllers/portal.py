@@ -199,6 +199,7 @@ class CustomerPortal(payment_portal.PaymentPortal):
             'product_documents': order_sudo._get_product_documents(),
             'next_billing_details': order_sudo._next_billing_details(),
             'format_date': lambda date: format_date(request.env, date),
+            **self._prepare_partner_addresses(order_sudo)
         }
 
         history_session_key = request.session.get('current_history', 'my_subscriptions_history')
@@ -223,6 +224,16 @@ class CustomerPortal(payment_portal.PaymentPortal):
             **payment_context,
         }
         return request.render("sale_subscription.subscription_portal_template", rendering_context)
+
+    def _prepare_partner_addresses(self, order_sudo):
+        """ Retrieves the invoicing and delivery addresses of the sale order, and format them properly for display. """
+        addresses_data = self._prepare_address_data(order_sudo.partner_id)
+        # we don't allow to update the subscription shipping address yet.
+        return {
+            'multiple_addresses_enabled': order_sudo.user_id.has_group('account.group_delivery_invoice_address'),
+            'invoicing_addresses': [{'id': partner.id, 'address': f'{partner.name}, {partner._display_address(without_company=True)}'} for partner in addresses_data.get('billing_addresses')],
+            'delivery_addresses': [{'id': partner.id, 'address': f'{partner.name}, {partner._display_address(without_company=True)}'} for partner in addresses_data.get('delivery_addresses') if order_sudo.partner_shipping_id.id == partner.id],
+        }
 
     @http.route([
         '/my/orders/<int:order_id>/document/<int:document_id>',
@@ -276,6 +287,21 @@ class CustomerPortal(payment_portal.PaymentPortal):
             renewal.action_quotation_sent()
             return request.redirect(renewal.get_portal_url(query_string=qs))
 
+    @http.route(['/my/subscriptions/<int:order_id>/change_address'], type='http', methods=["POST"], auth="public", website=True)
+    def subscription_change_address(self, order_id, access_token=None, **kw):
+        order_sudo, redirection = self._get_subscription(access_token, order_id)
+        if redirection:
+            return redirection
+        multiple_addresses_enabled = order_sudo.user_id.has_group('account.group_delivery_invoice_address')
+        if not multiple_addresses_enabled:
+            raise request.not_found()
+        addresses_data = self._prepare_address_data(order_sudo.partner_id)
+        invoicing_id = int(kw.get('invoicing_address', 0))
+        invoicing_partner = request.env['res.partner'].browse(invoicing_id)
+        # Check if the provided address is in the list of accessible address to the SO partner
+        if invoicing_partner in addresses_data['billing_addresses']:
+            order_sudo.partner_invoice_id = invoicing_partner
+        return request.redirect(order_sudo.get_portal_url(query_string="&%s" % url_encode({'address_updated': 'true'})))
 
 class PaymentPortal(payment_portal.PaymentPortal):
 

@@ -771,3 +771,57 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
             sorted(expected_prices.items()),
             "Prices in the response should match the expected list prices."
         )
+
+    def test_modification_of_subscription_addresses(self):
+        """
+        Tests that the invoicng address linked to a subscription can be updated from the portal.
+        """
+        fpos_1 = self.env['account.fiscal.position'].create({
+            'name': "Test fpos 1",
+            'country_id': self.env.ref('base.be').id,
+            'foreign_vat': 'BE0477472701',
+        })
+        self.portal_user.property_account_position_id = fpos_1.id
+        invoicing_partner = self.env['res.partner'].create({
+            'name': 'John Doe',
+            'street': "Example street 13",
+            'street2': "",
+            'city': "Example city",
+            'zip': 1234,
+            'state_id': False,
+            'country_id': self.env.ref('base.be').id,
+            'property_account_position_id': fpos_1.id,
+            'type': 'invoice',
+            'commercial_partner_id': self.portal_user.partner_id.commercial_partner_id.id,
+        })
+        shipping_partner_1 = self.env['res.partner'].create({
+            'name': 'John Doe',
+            'street': "Example street 13",
+            'street2': "",
+            'city': "Example city",
+            'zip': 1234,
+            'state_id': False,
+            'country_id': self.env.ref('base.be').id,
+            'property_account_position_id': fpos_1.id,
+            'type': 'delivery',
+            'commercial_partner_id': self.portal_user.partner_id.commercial_partner_id.id,
+        })
+        self.portal_user.child_ids = [Command.link(invoicing_partner.id)]
+        self.subscription.partner_id = self.portal_partner
+        self.subscription.user_id.group_ids += self.env.ref('account.group_delivery_invoice_address')
+        self.subscription.action_confirm()
+        original_shipping_partner = self.subscription.partner_shipping_id
+        # Update the partner
+        self.authenticate(self.portal_user.login, self.portal_user.login)
+        data = {
+            "csrf_token": http.Request.csrf_token(self),
+            "access_token": self.subscription.access_token,
+            "delivery_address": shipping_partner_1.id,
+            "invoicing_address": invoicing_partner.id,
+        }
+        url = f"/my/subscriptions/{self.subscription.id}/change_address"
+        res = self.url_open(url, allow_redirects=False, data=data)
+        self.assertEqual(res.status_code, 303, "Redirection status code should be 303.")
+        self.subscription.invalidate_recordset(fnames=['partner_shipping_id', 'partner_invoice_id'])
+        self.assertEqual(self.subscription.partner_shipping_id, original_shipping_partner, "shipping partner is not updated even when it is provided")
+        self.assertEqual(self.subscription.partner_invoice_id, invoicing_partner, "the invoicing partner is updated")
