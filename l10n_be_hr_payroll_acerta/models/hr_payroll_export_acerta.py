@@ -39,7 +39,7 @@ class L10nBeHrPayrollExportAcerta(models.Model):
         work_entry = we_dotdict.work_entries[0]
         if not work_entry.work_entry_type_id.acerta_code:
             raise UserError(_(
-                'acerta\'s code is missing for work entry type %(work_entry_type)s',
+                'Acerta code is missing for work entry type %(work_entry_type)s',
                 work_entry_type=work_entry.work_entry_type_id.name))
         duration = we_dotdict.duration
         return 'KLX1' + self.company_id.acerta_code + contract.acerta_code.zfill(20) \
@@ -54,7 +54,7 @@ class L10nBeHrPayrollExportAcerta(models.Model):
         for contract in employee_line.contract_ids:
             if not contract.acerta_code:
                 raise UserError(_(
-                    'acerta\'s code is missing for contract: %(contract)s',
+                    'Acerta code is missing for contract: %(contract)s',
                     contract=contract.name
                 ))
             if len(employee_line.contract_ids) > 1:

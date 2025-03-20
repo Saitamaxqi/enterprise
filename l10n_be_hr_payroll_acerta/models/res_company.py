@@ -12,4 +12,4 @@ class ResCompany(models.Model):
     @api.constrains('acerta_code')
     def _check_acerta_code(self):
         if any(company.acerta_code and len(company.acerta_code) != 7 for company in self):
-            raise ValidationError(_('The code should have 7 characters!'))
+            raise ValidationError(_('The code should be 7 characters!'))

@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -14,5 +14,5 @@ class HrEmployee(models.Model):
         for employee in self:
             if employee.prisma_code and len(employee.prisma_code) != 5:
                 if len(employee.prisma_code) > 5:
-                    raise ValidationError(_("Prisma code must be 5 characters long"))
+                    raise ValidationError(self.env._("Prisma codes can't be longer than 5 characters"))
                 employee.prisma_code = employee.prisma_code.zfill(5)

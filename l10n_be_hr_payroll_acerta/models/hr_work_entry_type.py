@@ -2,6 +2,7 @@
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+from odoo.tools import format_list
 
 
 class HrWorkEntryType(models.Model):
@@ -18,7 +19,7 @@ class HrWorkEntryType(models.Model):
 
         if problematic_work_entries:
             raise ValidationError(_(
-                'The following work entry types have an acerta code that'
-                'are not between 2 and 7 characters: %(work_entries)s',
-                work_entries=problematic_work_entries.mapped('name')
+                'The following work entry types have an Acerta code that'
+                'is not between 2 and 7 characters: %(work_entries)s',
+                work_entries=format_list(self.env, problematic_work_entries.mapped('name'))
             ))

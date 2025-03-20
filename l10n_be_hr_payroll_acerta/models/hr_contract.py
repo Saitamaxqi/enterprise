@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
+from odoo.tools import format_list
 
 
 class HrContract(models.Model):
@@ -18,7 +19,7 @@ class HrContract(models.Model):
                 contract.acerta_code = contract.acerta_code.zfill(20)
 
         if problematic_contracts:
-            raise ValueError(
-                "The following contracts have an acerta code that is too long: %(contracts)s",
-                contracts=problematic_contracts.mapped('name')
-            )
+            raise ValueError(self.env._(
+                "The following contracts have an Acerta code that is too long: %(contracts)s",
+                contracts=format_list(self.env, problematic_contracts.mapped('name'))
+            ))

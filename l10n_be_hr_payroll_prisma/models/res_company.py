@@ -12,4 +12,4 @@ class ResCompany(models.Model):
     @api.constrains('prisma_code')
     def _check_prisma_code(self):
         if any(company.prisma_code and len(company.prisma_code) != 8 for company in self):
-            raise ValidationError(_('The code should have 8 characters!'))
+            raise ValidationError(_('The code should be 8 characters!'))

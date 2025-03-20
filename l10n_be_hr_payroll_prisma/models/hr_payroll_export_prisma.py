@@ -40,7 +40,7 @@ class L10nBeHrPayrollExportPrisma(models.Model):
         work_entry = we_dotdict.work_entries[0]
         if not work_entry.work_entry_type_id.prisma_code:
             raise UserError(_(
-                'prisma\'s code is missing for work entry type %(work_entry_type)s',
+                'Prisma code is missing for work entry type %(work_entry_type)s',
                 work_entry_type=work_entry.work_entry_type_id.name))
         duration = we_dotdict.duration
         return self.company_id.prisma_code + ' ' * 10 + employee.prisma_code.zfill(5) \
