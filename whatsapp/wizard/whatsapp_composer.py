@@ -119,18 +119,11 @@ class WhatsappComposer(models.TransientModel):
             if composer.batch_mode:
                 invalid_phone_number_count = 0
                 for rec in records:
-                    mobile_number = rec._find_value_from_field_path(composer.wa_template_id.phone_field)
-                    mobile_number = wa_phone_validation.wa_phone_format(
-                        rec, number=mobile_number or '',
-                        raise_exception=False,
-                    ) if mobile_number else False
+                    mobile_number = rec._whatsapp_phone_format(fpath=composer.wa_template_id.phone_field)
                     if not mobile_number:
                         invalid_phone_number_count += 1
             elif composer.phone:
-                sanitize_number = wa_phone_validation.wa_phone_format(
-                    records, number=composer.phone,
-                    raise_exception=False,
-                )
+                sanitize_number = records._whatsapp_phone_format(number=composer.phone)
                 invalid_phone_number_count = 1 if not sanitize_number else 0
             else:
                 invalid_phone_number_count = 1
@@ -238,12 +231,18 @@ class WhatsappComposer(models.TransientModel):
         message_vals_all = []
         raise_exception = not (self.batch_mode or force_create)
         for rec in records:
-            mobile_number = rec._find_value_from_field_path(self.wa_template_id.phone_field) if self.batch_mode else self.phone
-            formatted_number_wa = wa_phone_validation.wa_phone_format(
-                rec, number=mobile_number,
-                force_format="WHATSAPP",
-                raise_exception=raise_exception,
-            )
+            mobile_number = None
+            if self.batch_mode:
+                formatted_number_wa = rec._whatsapp_phone_format(
+                    fpath=self.wa_template_id.phone_field,
+                    raise_on_format_error=raise_exception,
+                )
+                mobile_number = rec.mapped(self.wa_template_id.phone_field)[0]
+            elif not mobile_number:
+                mobile_number = self.phone
+                formatted_number_wa = rec._whatsapp_phone_format(
+                    number=mobile_number, raise_on_format_error=raise_exception,
+                )
 
             message_vals = {}
 

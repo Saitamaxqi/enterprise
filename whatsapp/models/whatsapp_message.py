@@ -2,12 +2,11 @@
 
 import re
 import logging
-import markupsafe
 from markupsafe import Markup, escape
 
 from datetime import timedelta
 
-from odoo import models, fields, api, _
+from odoo import models, modules, fields, api, _
 from odoo.addons.phone_validation.tools import phone_validation
 from odoo.addons.whatsapp.tools import phone_validation as wa_phone_validation
 from odoo.addons.whatsapp.tools.retryable_codes import WHATSAPP_RETRYABLE_ERROR_CODES
@@ -210,7 +209,8 @@ class WhatsappMessage(models.Model):
         records = self.search([
             ('state', '=', 'outgoing'), ('wa_template_id', '!=', False)
         ], order='wa_template_id', limit=500)
-        records._send_message(with_commit=True)
+        # should not commit during tests
+        records._send_message(with_commit=not modules.module.current_test)
         if len(records) == 500:  # assumes there are more whenever search hits limit
             self.env.ref('whatsapp.ir_cron_send_whatsapp_queue')._trigger()
 
@@ -268,7 +268,7 @@ class WhatsappMessage(models.Model):
                     if whatsapp_message.mail_message_id.model != whatsapp_message.wa_template_id.model:
                         raise WhatsAppError(failure_type='template')
 
-                    RecordModel = self.env[whatsapp_message.mail_message_id.model].with_user(whatsapp_message.create_uid)
+                    RecordModel = self.env[whatsapp_message.mail_message_id.model].with_user(whatsapp_message.env.user)
                     from_record = RecordModel.browse(whatsapp_message.mail_message_id.res_id)
 
                     # if retrying message then we need to unlink previous attachment

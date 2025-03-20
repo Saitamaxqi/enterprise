@@ -17,6 +17,7 @@ class WhatsappTestBase(models.Model):
     name = fields.Char('Name')
     country_id = fields.Many2one('res.country', 'Country')
     customer_id = fields.Many2one('res.partner', 'Customer')
+    guest_ids = fields.Many2many('res.partner')
     phone = fields.Char('Phone', compute='_compute_phone', readonly=False, store=True)
     user_id = fields.Many2one(comodel_name='res.users', string="Salesperson")
     datetime = fields.Datetime()
@@ -33,10 +34,10 @@ class WhatsappTestBase(models.Model):
             record.phone = record.customer_id.phone
 
     def _mail_get_partner_fields(self, introspect_fields=False):
-        return ['customer_id']
+        return ['customer_id', 'guest_ids']
 
     def _wa_get_safe_phone_fields(self):
-        return ['customer_id.phone']
+        return super()._wa_get_safe_phone_fields() + ['customer_id.phone', 'guest_ids.phone']
 
 
 class WhatsappTestNothread(models.Model):

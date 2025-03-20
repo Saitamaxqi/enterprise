@@ -350,7 +350,10 @@ class WhatsAppComposerInternals(WhatsAppComposerCase, CronMixinCase):
                     composer.action_send_whatsapp_template()
                 self.assertWAMessage(
                     mail_message_values={
+                        'author_id': self.user_employee.partner_id,
+                        'create_uid': self.user_employee,
                         'body': f'<p>Please evaluate {expected_value}.</p>',
+                        'partner_ids': test_partner,
                     }
                 )
 
