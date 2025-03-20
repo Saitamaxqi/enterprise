@@ -478,7 +478,7 @@ test("Progress bar danger when ratio > 100", async () => {
     });
     expect.verifySteps(["get_gantt_data"]);
     expect(SELECTORS.progressBar).toHaveCount(1);
-    expect(SELECTORS.progressBarBackground).toHaveStyle("100%");
+    expect(SELECTORS.progressBarBackground).toHaveStyle("width: 100%", { inline: true });
     expect(SELECTORS.progressBar).toHaveClass("o_gantt_group_danger");
     await hoverGridCell("Monday 17", "Week 51 of 2018");
     expect(queryFirst(SELECTORS.progressBarForeground).parentElement).toHaveClass("text-bg-danger");
@@ -524,7 +524,7 @@ test("Search field return rows with progressbar", async () => {
     const { rows } = getGridContent();
     expect(rows.map((r) => r.title)).toEqual(["Project 1", "User 2"]);
     expect(SELECTORS.progressBar).toHaveCount(1);
-    expect(SELECTORS.progressBarBackground).toHaveStyle("12.5%");
+    expect(SELECTORS.progressBarBackground).toHaveStyle("width: 12.5%", { inline: true });
 });
 
 test("add record in empty gantt", async () => {
@@ -779,7 +779,7 @@ test("position of no content help in sample mode", async () => {
         domain: Domain.FALSE.toList(),
     });
     expect(".o_view_nocontent").toHaveCount(1);
-    expect(".o_gantt_row_header").not.toHaveClass("o_sample_data_disabled");
+    expect(".o_gantt_row_header:first").not.toHaveClass("o_sample_data_disabled");
     const noContentHelp = queryFirst(".o_view_nocontent");
     const noContentHelpTop = noContentHelp.getBoundingClientRect().top;
     const firstRowHeader = queryFirst(".o_gantt_row_header");
