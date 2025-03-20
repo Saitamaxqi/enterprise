@@ -370,3 +370,65 @@ test("hr.timesheet (grid): display sample data and then data + fetch last valida
     expect(".o_grid_section_title").toHaveCount(4);
     expect.verifySteps(["get_last_validated_timesheet_date"]); // the rpc should be called only once
 });
+
+test("test timesheet grid when grouped by employees shows color code on timesheets", async () => {
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction({
+        res_model: "account.analytic.line",
+        type: "ir.actions.act_window",
+        views: [[ false, "grid" ]],
+        context: { group_by: [ "employee_id"] },
+    });
+    /**
+     * Working periods of all employees in the test
+     *
+     * Mario - 6 hours on 25 and 27
+     * Luigi - 8 hours on 24 and 25
+     * Yoshi - 5.5 hours on 25
+     * Toad - No working periods
+     *
+     * The timesheet here would be as (denoted as timesheet amount / that day work period length (corresponding color) )
+     * ╔═══════╦════════════════╦═════════════════════════╦══════════════════╦══════════════════════╦═════════════════════╗
+     * ║       ║ Jan 25         ║ Jan 26                  ║ Jan 27           ║ Jan 28               ║ Unit amount         ║
+     * ╠═══════╬════════════════╬═════════════════════════╬══════════════════╬══════════════════════╬═════════════════════╣
+     * ║ Luigi ║ 2:30 / 8 (Red) ║ 0                       ║ 0                ║ -3:30 / 0 (No color) ║ -1:00 / 8 (Red)     ║
+     * ╠═══════╬════════════════╬═════════════════════════╬══════════════════╬══════════════════════╬═════════════════════╣
+     * ║ Mario ║ 0              ║ 25 / 8 (Orange)         ║ 0                ║ 10 / 8 (Orange)      ║ 35 / 16 (Orange)    ║
+     * ╠═══════╬════════════════╬═════════════════════════╬══════════════════╬══════════════════════╬═════════════════════╣
+     * ║ Toad  ║ 0              ║ 0                       ║ 4 / 0 (No Color) ║ 0                    ║ 4 / 0 (Green)       ║
+     * ╠═══════╬════════════════╬═════════════════════════╬══════════════════╬══════════════════════╬═════════════════════╣
+     * ║ Yoshi ║ 0              ║ 5:30 / 5.30 (No color)  ║ 0                ║ 0                    ║ 5:30 / 5:30 (Green) ║
+     * ╚═══════╩════════════════╩═════════════════════════╩══════════════════╩══════════════════════╩═════════════════════╝
+     *
+     **/
+    expect(".o_grid_row .o_grid_cell_readonly span:contains(2:30)").toHaveClass("text-danger", {
+        message: "The cell text should be red as that employee has working period of 8 hours but has timesheet of 2.5 hours",
+    });
+    expect(".o_grid_row .o_grid_cell_readonly span:contains(-3:30)").toHaveClass("text-900", {
+        message: "The cell text should be normal as that employee has no working period of 8 hours but has timesheet of 2.5 hours",
+    });
+    expect(".o_grid_row .o_grid_cell_readonly span:contains(25:00)").toHaveClass("text-warning", {
+        message: "The cell text should be orange as that employee has working period of 8 hours but has timesheet of 25 hours",
+    });
+    expect(".o_grid_row .o_grid_cell_readonly span:contains(10:00)").toHaveClass("text-warning", {
+        message: "The cell text should be orange as that employee has working period of 8 hours but has timesheet of 10 hours",
+    });
+    expect(".o_grid_row .o_grid_cell_readonly span:contains(4:00)").toHaveClass("text-900", {
+        message: "The cell text should be normal as that employee has no working period but has timesheet of 4 hours",
+    });
+    expect(".o_grid_row .o_grid_cell_readonly span:contains(5:30)").toHaveClass("text-900", {
+        message: "The cell text should be normal as that employee has working period of 5.5 and has timesheet of 5.5 hours",
+    });
+    expect(queryFirst(".o_grid_row.o_grid_row_total span:contains(-1:00)").closest(".o_grid_row")).toHaveClass("text-bg-danger", {
+        message: "The total cell should be red as that employee has working period of 8 and has timesheet of -1 hours",
+    });
+    expect(queryFirst(".o_grid_row.o_grid_row_total span:contains(35:00)").closest(".o_grid_row")).toHaveClass("text-bg-warning", {
+        message: "The total cell should be orange as that employee has working period of 16 and has timesheet of 35 hours",
+    });
+    expect(queryFirst(".o_grid_row.o_grid_row_total span:contains(4:00)").closest(".o_grid_row")).toHaveClass("text-bg-success", {
+        message: "The total cell should be green as that employee has no working period and has timesheet of 4 hours",
+    });
+    expect(queryFirst(".o_grid_row.o_grid_row_total span:contains(5:30)").closest(".o_grid_row")).toHaveClass("text-bg-success", {
+        message: "The total cell should be green as that employee has working period of 5.5 and has timesheet of 5.5 hours",
+    });
+});

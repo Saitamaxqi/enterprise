@@ -72,7 +72,7 @@ export class TimesheetGridModel extends GridModel {
             this._fetchAllTimesheetM2OAvatarData(metaData),
         ];
 
-        if (metaData.sectionField?.name === this.employeeField.name) {
+        if ((metaData.sectionField?.name || (metaData.searchParams.groupBy?.length === 1 && metaData.searchParams.groupBy?.[0]) === this.employeeField.name)) {
             result.push(this._fetchDailyWorkingHours(metaData));
         }
 

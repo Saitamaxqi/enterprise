@@ -88,7 +88,7 @@
             <div t-foreach="props.columns"
                 t-as="column"
                 t-key="column.id"
-                t-attf-class="o_grid_section o_grid_highlightable position-relative d-flex align-items-center justify-content-center fw-bold {{ getCellColorClass(column) }}"
+                t-attf-class="o_grid_section o_grid_highlightable position-relative d-flex align-items-center justify-content-center fw-bold {{ getCellColorClass(column, section) }}"
                 t-att-class="getSectionColumnsClasses(column, section)"
                 t-att-data-row="section.id"
                 t-att-data-column="column.id"
@@ -180,9 +180,7 @@
                  t-attf-class="{{getUnavailableClass(column)}}"
             />
             <div class="o_grid_cell_readonly position-relative d-flex justify-content-center align-items-center w-100 h-100">
-                <span t-att-class="{
-                          'text-900 text-opacity-25': row.cells[column.id].value === 0,
-                      }"
+                <span t-att-class="getCellsTextClasses(column, row)"
                       t-esc="formatValue(row.cells[column.id].value)"
                 />
             </div>
@@ -190,12 +188,7 @@
         <t t-set="grandTotal" t-value="row.getGrandTotal(props.state.isWeekendVisible)" />
         <div t-if="!props.options.hideLineTotal"
              class="o_grid_row o_grid_row_total o_grid_highlightable position-relative position-md-sticky end-0 d-flex align-items-center justify-content-center px-3 py-1"
-             t-att-class="{
-                'fst-italic': row.isAdditionalRow,
-                'text-bg-200': grandTotal &gt;= 0,
-                'bg-danger text-bg-danger': grandTotal lt 0,
-                'text-opacity-50': grandTotal === 0
-             }"
+             t-att-class="getTotalCellsTextClasses(row, grandTotal)"
              t-att-data-grid-row="rowPosition"
              t-att-data-grid-column="props.columns.length + 1 + columnsGap"
              t-attf-style="grid-row: {{rowPosition}}; grid-column: {{props.columns.length + 1 + columnsGap}};"

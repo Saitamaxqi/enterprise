@@ -95,15 +95,16 @@ export class TimesheetGridRenderer extends GridRenderer {
         return res;
     }
 
-    getCellColorClass(column) {
+    getCellColorClass(column, section) {
         const res = super.getCellColorClass(...arguments);
-        const workingHours = this.props.model.data.workingHours.dailyPerEmployee?.[this.section.valuePerFieldName.employee_id[0]];
+        const workingHours =
+            this.props.model.data.workingHours.dailyPerEmployee?.[section?.valuePerFieldName?.employee_id?.[0]];
         if (!workingHours) {
             return res;
         }
 
         const value = workingHours[column.value];
-        const cellValue = this.section.cells[column.id].value;
+        const cellValue = section?.cells?.[column.id]?.value;
         if (cellValue > value) {
             return "text-warning";
         } else if (cellValue < value) {
@@ -162,9 +163,9 @@ export class TimesheetGridRenderer extends GridRenderer {
         return Object.values(section.cells).reduce((overtime, cell) => overtime + this.getSectionDailyOvertime(cell, workingHours), 0);
     }
 
-    _getSectionTotalCellBgColor(section) {
+    _getTotalCellBgColor(section) {
         const weeklyOvertime = this.getSectionOvertime(section);
-        const res = super._getSectionTotalCellBgColor(section);
+        const res = super._getTotalCellBgColor(section);
         if (weeklyOvertime == null) {
             return res;
         } else if (weeklyOvertime < 0) {
@@ -174,6 +175,24 @@ export class TimesheetGridRenderer extends GridRenderer {
         } else {
             return 'text-bg-warning';
         }
+    }
+
+    getCellsTextClasses(column, row) {
+        const res = super.getCellsTextClasses(...arguments);
+        if (this.props.model.searchParams.groupBy[0] === "employee_id") {
+            res[this.getCellColorClass(column, row)] = true;
+        }
+        return res;
+    }
+
+    getTotalCellsTextClasses(row, grandTotal) {
+        const res = super.getTotalCellsTextClasses(...arguments);
+        // Limit applying color when multi groupby of employees when the row is section
+        if (this.props.model.searchParams.groupBy[0] === "employee_id" && row.section.isFake) {
+            Object.assign(res, { [this._getTotalCellBgColor(row)]: true });
+            delete res["text-bg-200"];
+        }
+        return res;
     }
 
     /** Return grid cell action helper when no records are found */

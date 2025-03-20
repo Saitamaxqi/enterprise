@@ -245,7 +245,7 @@ export class GridRenderer extends Component {
         return this.props.createInline && this.row.id === this.row.section.lastRow.id;
     }
 
-    getCellColorClass(column) {
+    getCellColorClass(column, section) {
         return "text-900";
     }
 
@@ -286,13 +286,16 @@ export class GridRenderer extends Component {
         };
     }
 
-    _getSectionTotalCellBgColor(section) {
+    /**
+     * @param {GridSection | GridRow} section
+     */
+    _getTotalCellBgColor(section) {
         return 'text-bg-800';
     }
 
     getSectionTotalRowClass(section, grandTotal) {
         return {
-            [this._getSectionTotalCellBgColor(section)]: true,
+            [this._getTotalCellBgColor(section)]: true,
             'text-opacity-25': grandTotal === 0,
         };
     }
@@ -322,6 +325,21 @@ export class GridRenderer extends Component {
             name: fieldName,
             type: this.props.widgetPerFieldName[fieldName] || this.props.model.fieldsInfo[fieldName].type,
         };
+    }
+
+    getCellsTextClasses(column, row) {
+        return {
+            'text-900 text-opacity-25': row.cells[column.id].value === 0,
+        }
+    }
+
+    getTotalCellsTextClasses(row, grandTotal) {
+        return {
+            'fst-italic': row.isAdditionalRow,
+            'text-bg-200': grandTotal >= 0,
+            'bg-danger text-bg-danger': grandTotal < 0,
+            'text-opacity-50': grandTotal === 0,
+        }
     }
 
     onCreateInlineClick(section) {
