@@ -7,7 +7,7 @@ import { rpc } from "@web/core/network/rpc";
 import { renderToElement } from "@web/core/utils/render";
 import { getDataURLFromFile } from "@web/core/utils/urls";
 import { attachComponent } from "@web_editor/js/core/owl_utils";
-import { HrContractSalarySelectMenu } from "./hr_contract_salary_select_menu" 
+import { HrContractSalarySelectMenu } from "../js/hr_contract_salary_select_menu" 
 
 class SelectMenuWrapper extends Component {
     static template = "hr_contract_salary.SelectMenuWrapper";

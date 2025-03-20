@@ -47,7 +47,7 @@
     'assets': {
         'web.assets_frontend': [
             'hr_contract_salary/static/src/scss/hr_contract_salary.scss',
-            'hr_contract_salary/static/src/js/hr_contract_salary.js',
+            'hr_contract_salary/static/src/interactions/hr_contract_salary.js',
             'hr_contract_salary/static/src/xml/resume_sidebar.xml',
             'hr_contract_salary/static/src/xml/select_menu_wrapper_template.xml',
             'hr_contract_salary/static/src/xml/hr_contract_salary_select_menu_template.xml',
