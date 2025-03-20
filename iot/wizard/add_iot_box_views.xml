@@ -1,57 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- This view is used when waiting for an IoT Box to connect -->
     <record id="view_add_iot_box" model="ir.ui.view">
         <field name="name">Add IoT box</field>
         <field name="model">add.iot.box</field>
         <field name="arch" type="xml">
-            <form string="Connect my IoT Box" js_class="add_iot_box_wizard">
-                <strong>
-                    Follow the instructions below to connect your IoT Box to your database
-                    <a href="//www.odoo.com/documentation/master/applications/general/iot/config/connect.html#connect-an-iot-box-to-odoo" target="_blank" class="fa fa-question-circle" invisible="use_token"/>
-                    <a href="//www.odoo.com/documentation/master/applications/general/iot/config/connect.html#manually-connecting-the-iot-box-using-the-token" target="_blank" class="fa fa-question-circle" invisible="not use_token"/>
-                </strong>
-                <br/><br/>
-                <div invisible="use_token">
-                    <ol>
-                        <li>
-                            Power on the IoT Box and connect it to the internet through ethernet
-                            <a href="//www.odoo.com/documentation/master/applications/general/iot/config/connect.html#ethernet-connection" target="_blank" class="fa fa-question-circle"/>
-                            or wifi
-                            <a href="//www.odoo.com/documentation/master/applications/general/iot/config/connect.html#wifi-connection" target="_blank" class="fa fa-question-circle"/>
-                        </li>
-                        <li>Read the pairing code from a display or thermal printer connected to the IoT Box. You can also find it on the IoT Box Homepage</li>
-                        <li>Enter the code below and click on "Connect"</li>
-                        <li>After some time the IoT Box should appear in the list along with the connected devices</li>
-                    </ol>
-                    <group class="col-md-8">
-                        <field name="pairing_code"/>
-                    </group>
-                </div>
-                <div invisible="not use_token">
-                    <ol>
-                        <li>Copy the token below</li>
-                        <li>While on the same network as the IoT Box, open a web browser and go to the IoT Box IP address</li>
-                        <li>In the "Server" section click on the "Configure" button</li>
-                        <li>Paste the token in the "Server token" field and click on "Connect"</li>
-                        <li>After some time the IoT Box should appear in the list along with the connected devices</li>
-                    </ol>
-                    <group>
-                        <field name="token" widget="CopyClipboardChar" readonly="1"/>
-                    </group>
-                </div>
-
+            <form string="IoT Box found" js_class="add_iot_box_wizard">
+                Your IoT is connecting to your database. This shouldn't take long <span class="spinner-border spinner-border-sm"/>
                 <footer>
                     <div class="d-flex justify-content-between w-100">
                         <div class="d-flex gap-1">
-                            <button id="pair_button" class="btn btn-primary" type="object" name="box_pairing" string="Connect" invisible="use_token"/>
                             <button class="btn btn-secondary" string="Discard" data-hotkey="x" name="cancel" special="cancel"/>
                         </div>
-                        <button class="btn btn-secondary" string="Use another method" type="object" name="toggle_connection_method" groups="base.group_no_one"/>
                     </div>
                 </footer>
             </form>
         </field>
     </record>
+
+    <!-- This view is used when the user is asked to enter the pairing code -->
+    <record id="view_enter_pairing_code" model="ir.ui.view">
+        <field name="name">Enter Pairing Code</field>
+        <field name="model">add.iot.box</field>
+        <field name="arch" type="xml">
+            <form string="No IoT Box found">
+                <ol>
+                    <li>Be sure your IoT Box is connected to internet, wait one minute for it to start.</li>
+                    <li>Then provide the IoT Box pairing code found on a screen or printer connected to the IoT Box.</li>
+                    <br/>
+                    <group class="col-md-8">
+                        <field name="pairing_code"/>
+                    </group>
+                </ol>
+                <footer>
+                    <div class="d-flex justify-content-between w-100">
+                        <div class="d-flex gap-1">
+                            <button id="pair_button" class="btn btn-primary" type="object" name="add_iot_box_wizard_action" string="Connect"/>
+                            <button class="btn btn-secondary" string="Discard" data-hotkey="x" name="cancel" special="cancel"/>
+                        </div>
+                    </div>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- This view is used when multiple iot boxes have been found -->
+    <record id="view_select_box_to_connect" model="ir.ui.view">
+        <field name="name">Select Box To Connect</field>
+        <field name="model">add.iot.box</field>
+        <field name="arch" type="xml">
+            <form string="Select IoT Box to connect">
+                Which one do you want to connect?<br/><br/>
+                <group class="col-md-8">
+                    <!-- required is forced here because the record is created without a value -->
+                    <field name="iot_box_to_connect" widget="radio" required="1"/>
+                </group>
+                <footer>
+                    <div class="d-flex justify-content-between w-100">
+                        <div class="d-flex gap-1">
+                            <button id="pair_button" class="btn btn-primary" type="object" name="add_iot_box_wizard_action" string="Connect"/>
+                        </div>
+                    </div>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- This view is used when no iot boxes have been found -->
+    <record id="view_no_iot_box_found" model="ir.ui.view">
+        <field name="name">No IoT Box Found</field>
+        <field name="model">add.iot.box</field>
+        <field name="arch" type="xml">
+            <form string="No IoT Box found">
+                    <p class="mb-3">It takes 1 minute for the IoT Box to boot, in the mean time check this:</p>
+                    <div class="d-flex flex-column flex-md-row gap-4 gap-md-3 text-center">
+                        <div class="d-flex flex-column flex-grow-1 align-items-center w-100">
+                            <img src="/iot/static/src/img/iot_power.svg" alt="Power is on" class="mb-3"/>
+                            <h5 class="h2">Power the box</h5>
+                            <p class="mb-0">Make sure the IoT Box is powered on.</p>
+                        </div>
+                        <i class="oi oi-arrow-right align-self-center d-none d-md-block fs-2 text-muted"/>
+                        <div class="d-flex flex-column flex-grow-1 align-items-center w-100">
+                            <img src="/iot/static/src/img/network_light.svg" alt="Internet is connected" class="mb-3"/>
+                            <h5 class="h2">Check the lights</h5>
+                            <p class="mb-0">Make sure the Network lights are on.</p>
+                        </div>
+                        <i class="oi oi-arrow-right align-self-center d-none d-md-block fs-2 text-muted"/>
+                        <div class="d-flex flex-column flex-grow-1 align-items-center w-100">
+                            <img src="/iot/static/src/img/pairing_code.svg" alt="Pairing code received from a printer or screen" class="mb-3"/>
+                            <h5 class="h2">Plug a screen</h5>
+                            <p class="mb-0">Plug a screen or a printer to get a status (optional).</p>
+                        </div>
+                    </div>
+                <footer>
+                    <div class="d-flex justify-content-between w-100">
+                        <div class="d-flex gap-1">
+                            <button class="btn btn-primary" name="open_documentation_url" type="object" string="Documentation"/>
+                            <button id="pair_code_button" class="btn btn-secondary" type="object" name="add_iot_box_wizard_action" string="Use Pairing Code"/>                            <button class="btn btn-secondary" string="Discard" data-hotkey="x" name="cancel" special="cancel"/>
+                        </div>
+                    </div>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
     <record id="action_add_iot_box" model="ir.actions.act_window">
         <field name="name">Connect my IoT Box</field>
         <field name="res_model">add.iot.box</field>

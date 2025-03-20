@@ -64,7 +64,7 @@
         <field name="arch" type="xml">
             <kanban create="false">
                 <header>
-                    <button groups="iot.group_iot_admin" name="%(iot.action_add_iot_box)d" type="action" string="Connect" class="btn-primary o-kanban-button-new"  display="always"/>
+                    <button groups="iot.group_iot_admin" name="connect_iot_box" type="object" string="Connect" class="btn-primary o-kanban-button-new"  display="always"/>
                 </header>
                 <templates>
                     <t t-name="card" class="p-0">
@@ -82,7 +82,7 @@
         <field name="arch" type="xml">
             <list create="false">
                 <header>
-                    <button name="%(iot.action_add_iot_box)d" type="action" string="Connect" class="btn-primary o_list_button_save" display="always"/>
+                    <button groups="iot.group_iot_admin" name="connect_iot_box" type="object" string="Connect" class="btn-primary" display="always"/>
                 </header>
                 <field name="name"/>
                 <field name="identifier"/>
@@ -99,7 +99,7 @@
                 No IoT Box found!
             </p><p>
                 Click on the 
-                <a name="%(iot.action_add_iot_box)d" type="action" tabindex="-1">connect</a>
+                <a name="connect_iot_box" type="object" tabindex="-1">connect</a>
                  to add an IoT Box.
             </p>
         </field>

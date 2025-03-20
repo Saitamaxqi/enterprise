@@ -143,11 +143,15 @@ class IoTController(http.Controller):
             _logger.info('Updating IoT %s with data: %s', box, create_update_value)
             box.write(create_update_value)
         else:
-            iot_token = request.env['ir.config_parameter'].sudo().search([('key', '=', 'iot_token')], limit=1).value.strip('\n')
+            icp_sudo = request.env['ir.config_parameter'].sudo()
+            iot_token = icp_sudo.get_param('iot.iot_token')
             if iot_token == iot_box['token']:
                 create_update_value['identifier'] = iot_identifier
                 _logger.info('Creating IoT with data: %s', create_update_value)
                 box = request.env['iot.box'].sudo().create(create_update_value)
+
+                # Clear the used token to force creating a new one for next IoT Box
+                icp_sudo.set_param('iot.iot_token', '')
             else:
                 _logger.warning('Token mismatch for IoT %s expected %s got %s', iot_identifier, iot_token, iot_box['token'])
                 return
