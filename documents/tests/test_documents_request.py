@@ -190,7 +190,7 @@ class TestDocumentRequest(MailCommon, HttpCase):
 
         self.authenticate("admin", "admin")
         with io.StringIO("Hello world!") as file:
-            response = self.opener.post(
+            response = self.url_open(
                 url=f"{self.base_url()}/mail/attachment/upload",
                 files={"ufile": file},
                 data={

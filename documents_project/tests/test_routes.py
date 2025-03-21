@@ -47,7 +47,7 @@ class TestDocumentsProjectRoutes(HttpCase, TestProjectCommon):
         # Upload an attachment through the activity
         self.authenticate("admin", "admin")
         with io.StringIO("Hello world!") as file:
-            response = self.opener.post(
+            response = self.url_open(
                 url="%s/mail/attachment/upload" % self.base_url(),
                 files={"ufile": file},
                 data={
