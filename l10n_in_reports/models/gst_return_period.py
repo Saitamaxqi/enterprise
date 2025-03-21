@@ -1201,6 +1201,12 @@ class L10n_InGstReturnPeriod(models.Model):
             self.env.ref("l10n_in_reports.ir_cron_to_send_gstr1_data")._trigger()
 
     def send_gstr1(self):
+        if not self.company_id._is_l10n_in_gstr_token_valid():
+            self.sudo().write({
+                "gstr1_blocking_level": "error",
+                "gstr1_error": _("GSTR-1 submission failed:  GST token expired or missing, Please regenerate it by verifying GST OTP."),
+            })
+            return
         json_payload = self._get_gstr1_json()
         self.sudo().message_post(
             subject=_("GSTR-1 Send data"),
@@ -1272,6 +1278,12 @@ class L10n_InGstReturnPeriod(models.Model):
         return act_type_xmlid, advisor_user
 
     def check_gstr1_status(self):
+        if not self.company_id._is_l10n_in_gstr_token_valid():
+            self.sudo().write({
+                "gstr1_blocking_level": "error",
+                "gstr1_error": _("GSTR-1 check status failed: GST token expired or missing, Please regenerate it by verifying GST OTP."),
+            })
+            return
         response = self._get_gstr_status(
             company=self.company_id, month_year=self.return_period_month_year, reference_id=self.gstr_reference)
         if response.get('data'):
@@ -1299,7 +1311,7 @@ class L10n_InGstReturnPeriod(models.Model):
                 AccountMove = self.env['account.move'].with_context(allowed_company_ids=self.company_ids.ids)
                 if data.get("status_cd") == "ER":
                     error_report = data.get('error_report', {})
-                    message = "[%s] %s"%(error_report.get('error_cd'), error_report.get('error_msg'))
+                    message = "[%s] %s" % (error_report.get('error_cd'), error_report.get('error_msg'))
                 else:
                     act_type_xmlid, advisor_user = self._get_gstr_responsible_activity_and_user()
                     error_report_summary = {}
@@ -1605,6 +1617,12 @@ class L10n_InGstReturnPeriod(models.Model):
         self.env.ref('l10n_in_reports.ir_cron_auto_sync_gstr2b_data')._trigger()
 
     def get_gstr2b_data(self):
+        if not self.company_id._is_l10n_in_gstr_token_valid():
+            self.sudo().write({
+                "gstr2b_blocking_level": "error",
+                "gstr2b_error": _("GSTR-2B data fetching failed: GST token expired or missing, Please regenerate it by verifying GST OTP."),
+            })
+            return
         response = self._get_gstr2b_data(company=self.company_id, month_year=self.return_period_month_year)
         if response.get("data"):
             gstr2b_data = response["data"]
