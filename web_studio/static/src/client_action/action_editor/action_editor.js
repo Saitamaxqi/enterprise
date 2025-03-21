@@ -34,11 +34,11 @@ function getViewCategories() {
         },
         timeline: {
             title: _t("Timeline views"),
-            viewTypes: ["calendar", "cohort", "gantt"],
+            viewTypes: ["calendar", "gantt"],
         },
         reporting: {
             title: _t("Reporting views"),
-            viewTypes: ["graph", "pivot"],
+            viewTypes: ["graph", "pivot", "cohort"],
         },
     };
 }
