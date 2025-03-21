@@ -264,7 +264,7 @@ class AccountJournal(models.Model):
                    or not bool(BankStatementLine.sudo().search([('unique_import_id', '=', line_vals['unique_import_id'])], limit=1)))):
                     filtered_st_lines.append(line_vals)
                 else:
-                    ignored_statement_lines_import_ids.append(line_vals['unique_import_id'])
+                    ignored_statement_lines_import_ids.append(line_vals)
                     if st_vals.get('balance_start') is not None:
                         st_vals['balance_start'] += float(line_vals['amount'])
 
