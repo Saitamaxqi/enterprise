@@ -133,7 +133,7 @@ class AccountReport(models.Model):
             # Update expenditures table
             n_expenditure += 1
             name = line['name']
-            acquisition_cost_no_vat = float(line['columns'][4].get('no_format', 0)) + float(line['columns'][5].get('no_format', 0))
+            acquisition_cost_no_vat = float(line['columns'][3].get('no_format', 0)) + float(line['columns'][4].get('no_format', 0))
             vat = float(tax_amounts.get(line['id'], 0.))
             value_to_be_depreciated = float(depreciable_values.get(line['id'], 0))
             expenditures_line = {
@@ -151,17 +151,17 @@ class AccountReport(models.Model):
             expenditures_table.append(expenditures_line)
 
             # Update Depreciation/amortisation table
-            depreciation_or_amortisation = float(line['columns'][3].get('name', '')[:-2] or 0)  # remove ' %' sign
+            depreciation_or_amortisation = float(line['columns'][2].get('name', '')[:-2] or 0)  # remove ' %' sign
             # Book value at the beginning of the reported accounting period (not reported by super's _get_lines)
             # asset_opening (acquisition price at the beginning of the accounting period)
             #  - depreciation_opening (depreciated value at the beginning of the accounting period)
-            book_value_beginning = float(line['columns'][4].get('no_format', 0)) - float(line['columns'][8].get('no_format', 0))
-            acquisitions = float(line['columns'][5].get('no_format', 0))
-            sales = float(line['columns'][6].get('no_format', 0))
+            book_value_beginning = float(line['columns'][3].get('no_format', 0)) - float(line['columns'][8].get('no_format', 0))
+            acquisitions = float(line['columns'][4].get('no_format', 0))
+            sales = float(line['columns'][5].get('no_format', 0))
             # Depreciation reported from _get_lines divided in value decrease (+) and value increase (-);
             # depreciation is the net difference
-            depreciation = float(line['columns'][9].get('no_format', 0)) - float(line['columns'][10].get('no_format', 0))
-            book_value_end = float(line['columns'][12].get('no_format', 0))
+            depreciation = float(line['columns'][8].get('no_format', 0)) - float(line['columns'][9].get('no_format', 0))
+            book_value_end = float(line['columns'][11].get('no_format', 0))
             depreciations_line = {
                 '617': {'field_type': 'number', 'value': str(n_expenditure)},
                 '602': {'field_type': 'char', 'value': acquisition_date},

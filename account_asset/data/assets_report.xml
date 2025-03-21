@@ -14,11 +14,6 @@
                 <field name="expression_label">acquisition_date</field>
                 <field name="figure_type">date</field>
             </record>
-            <record id="assets_report_first_depreciation" model="account.report.column">
-                <field name="name">First Depreciation</field>
-                <field name="expression_label">first_depreciation</field>
-                <field name="figure_type">date</field>
-            </record>
             <record id="assets_report_first_method" model="account.report.column">
                 <field name="name">Method</field>
                 <field name="expression_label">method</field>

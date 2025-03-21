@@ -176,7 +176,6 @@ class AccountAssetReportHandler(models.AbstractModel):
             # Format the data
             columns_by_expr_label = {
                 "acquisition_date": al["asset_acquisition_date"] and format_date(self.env, al["asset_acquisition_date"]) or "",  # Characteristics
-                "first_depreciation": al["asset_date"] and format_date(self.env, al["asset_date"]) or "",
                 "method": (al["asset_method"] == "linear" and _("Linear")) or (al["asset_method"] == "degressive" and _("Declining")) or _("Dec. then Straight"),
                 **asset_parent_values
             }
