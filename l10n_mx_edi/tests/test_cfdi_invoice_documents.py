@@ -1974,3 +1974,59 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
             checksums = [attachment_data['checksum'] for attachment_data in store.data['ir.attachment'].values()]
             self.assertTrue(invoice.l10n_mx_edi_cfdi_attachment_id.checksum in checksums)
             self.assertTrue(invoice_for_global.l10n_mx_edi_cfdi_attachment_id.checksum in checksums)
+
+    def test_cancel_payment(self):
+        """ Test the payment cancelation workflow, here is the flow we test :
+                1) create and sign an invoice
+                2) create a payment and send it - it needs to fail in order to reset it to draft without requesting cancelation
+                3) reset the payment to draft
+                4) cancel the payment
+        """
+        # Create invoice
+        invoice = self._create_invoice(invoice_date_due='2017-01-01')
+
+        # Sign.
+        with freeze_time('2017-01-01'), self.with_mocked_pac_sign_success():
+            invoice._l10n_mx_edi_cfdi_invoice_try_send()
+
+        sent_doc_values = {
+            'move_id': invoice.id,
+            'datetime': fields.Datetime.from_string('2017-01-01 00:00:00'),
+            'state': 'invoice_sent',
+            'cancellation_reason': False,
+            'attachment_origin': False,
+        }
+        self.assertRecordValues(invoice.l10n_mx_edi_invoice_document_ids, [sent_doc_values])
+
+        # Create new payment with `Por Definir` payment method in order to fail the cfdi
+        payment1 = self.env['account.payment.register']\
+            .with_context(active_model='account.move', active_ids=invoice.ids)\
+            .create({
+                'payment_date': '2017-01-01',
+                'amount': 1160.0,
+                'l10n_mx_edi_payment_method_id': self.env.ref('l10n_mx_edi.payment_method_otros').id,
+            })\
+            ._create_payments()
+
+        with freeze_time('2017-01-01'), self.with_mocked_pac_sign_success():
+            invoice.l10n_mx_edi_cfdi_invoice_try_update_payments()
+        with freeze_time('2017-01-01'), self.with_mocked_pac_sign_error():
+            payment1.l10n_mx_edi_payment_document_ids.action_force_payment_cfdi()
+
+        payment1_doc_values = {
+            'move_id': payment1.move_id.id,
+            'datetime': fields.Datetime.from_string('2017-01-01 00:00:00'),
+            'state': 'payment_sent_failed',
+            'cancellation_reason': False,
+            'attachment_origin': False,
+        }
+        self.assertRecordValues(invoice.l10n_mx_edi_invoice_document_ids.sorted(), [
+            payment1_doc_values,
+            sent_doc_values,
+        ])
+
+        payment1.action_draft()
+        payment1.action_cancel()
+
+        self.assertFalse(payment1.move_id)
+        self.assertEqual(payment1.state, 'canceled')
