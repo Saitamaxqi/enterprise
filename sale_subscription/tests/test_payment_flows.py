@@ -9,10 +9,8 @@ from odoo.tools import mute_logger
 
 from odoo.addons.mail.tests.common import MockEmail
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
-from odoo.addons.sale_subscription.controllers.portal import CustomerPortal
 from odoo.addons.website.tools import MockRequest
 from odoo.addons.sale_subscription.tests.test_sale_subscription import TestSubscriptionCommon
-from odoo.addons.website.tools import MockRequest
 
 
 @tagged('post_install', '-at_install')
