@@ -13,9 +13,6 @@ patch(PosStore.prototype, {
         this.total_new_order = 0;
         this.delivery_providers_active = false;
         this.delivery_order_count = {};
-        this.data.connectWebSocket("DELIVERY_ORDER_COUNT", async (order_id) => {
-            await this._fetchUrbanpiperOrderCount(order_id);
-        });
         if (this.config.module_pos_urban_piper && this.config.urbanpiper_store_identifier) {
             await this._fetchUrbanpiperOrderCount(false);
         }
@@ -88,6 +85,16 @@ patch(PosStore.prototype, {
                 sticky: false,
             });
         }
+        const response = await this.data.call(
+            "pos.config",
+            "get_delivery_data",
+            [this.config.id],
+            {}
+        );
+        this.delivery_order_count = response.delivery_order_count;
+        this.delivery_providers = response.delivery_providers;
+        this.total_new_order = response.total_new_order;
+        this.delivery_providers_active = response.delivery_providers_active;
         const deliveryOrder = order_id ? this.models["pos.order"].get(order_id) : false;
         if (!deliveryOrder) {
             return;
