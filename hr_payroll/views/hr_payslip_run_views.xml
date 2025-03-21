@@ -11,6 +11,8 @@
                 <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'verify')]" help="Confirmed Payslip Batches"/>
                 <filter string="Done" name="done_filter" domain="[('state', '=', 'close')]" help="Done Payslip Batches"/>
                 <filter string="Paid" name="paid" domain="[('state', '=', 'paid')]" help="Paid Payslip Batches"/>
+                <separator/>
+                <filter string="Date" name="date_filter" date="date_start"/>
                 <group expand="0" string="Group By">
                     <filter string="Status" name="state" context="{'group_by': 'state'}"/>
                 </group>
