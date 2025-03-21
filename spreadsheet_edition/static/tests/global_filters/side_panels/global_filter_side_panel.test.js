@@ -66,7 +66,7 @@ class Parent extends Component {
 
         onMounted(() => {
             this.props.model.on("update", this, () => this.render(true));
-            stores.on("store-updated", this, () => this.render.bind(this, true));
+            stores.on("store-updated", this, this.render.bind(this, true));
         });
         onWillUnmount(() => {
             this.props.model.off("update", this);
