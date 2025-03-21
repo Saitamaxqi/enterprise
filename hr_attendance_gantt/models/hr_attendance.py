@@ -54,12 +54,11 @@ class HrAttendance(models.Model):
         return round(employee.resource_id.calendar_id.full_time_required_hours * (num_days / 7))
 
     def _get_gantt_progress_bar_domain(self, res_ids, start, stop):
-        domain = [
+        return [
             ('employee_id', 'in', res_ids),
-            ('check_in', '>=', start),
-            ('check_out', '<=', stop)
+            ('check_in', '>=', start.replace(tzinfo=None)),
+            ('check_out', '<=', stop.replace(tzinfo=None)),
         ]
-        return domain
 
     def _gantt_progress_bar_employee_ids(self, res_ids, start, stop):
         """

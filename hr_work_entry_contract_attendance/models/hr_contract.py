@@ -31,11 +31,13 @@ class HrContract(models.Model):
         ##################################
         #   ATTENDANCE BASED CONTRACTS   #
         ##################################
+        start_naive = start_dt.replace(tzinfo=None)
+        end_naive = end_dt.replace(tzinfo=None)
         attendance_based_contracts = self.filtered(lambda c: c.work_entry_source == 'attendance')
         search_domain = [
             ('employee_id', 'in', attendance_based_contracts.employee_id.ids),
-            ('check_in', '<', end_dt),
-            ('check_out', '>', start_dt), # We ignore attendances which don't have a check_out
+            ('check_in', '<', end_naive),
+            ('check_out', '>', start_naive),  # We ignore attendances which don't have a check_out
         ]
         resource_ids = attendance_based_contracts.employee_id.resource_id.ids
         attendances = self.env['hr.attendance'].sudo().search(search_domain) if attendance_based_contracts\
@@ -69,14 +71,14 @@ class HrContract(models.Model):
         public_leaves = self.env['resource.calendar.leaves'].search([
             ('resource_id', '=', False),
             '|', ('calendar_id', '=', False), ('calendar_id', 'in', self.resource_calendar_id.ids),
-            ('date_from', '<=', end_dt),
-            ('date_to', '>=', start_dt)
+            ('date_from', '<=', end_naive),
+            ('date_to', '>=', start_naive)
         ])
 
         attendances = self.env['hr.attendance'].sudo().search([
             ('employee_id', 'in', calendar_based_contracts.employee_id.ids),
-            ('check_in', '<=', end_dt),
-            ('check_out', '>=', start_dt), #We ignore attendances without check_out date
+            ('check_in', '<=', end_naive),
+            ('check_out', '>=', start_naive),  # We ignore attendances without check_out date
             ('overtime_status', '=', 'approved'),
         ])
 

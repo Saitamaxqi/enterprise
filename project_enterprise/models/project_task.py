@@ -976,9 +976,10 @@ class ProjectTask(models.Model):
         :return: A dictionary where the keys are user IDs and the values are the unavailable intervals.
         :rtype: dict[int, Intervals]
         """
-        domain = [('user_ids', 'in', user_ids),
-            ('date_deadline', '>=', date_begin),
-            ('planned_date_begin', '<=', date_end),
+        domain = [
+            ('user_ids', 'in', user_ids),
+            ('date_deadline', '>=', date_begin.replace(tzinfo=None)),
+            ('planned_date_begin', '<=', date_end.replace(tzinfo=None)),
         ]
 
         if tasks_to_exclude_ids:

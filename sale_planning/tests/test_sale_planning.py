@@ -351,7 +351,7 @@ class TestSalePlanning(TestCommonSalePlanning):
             [],
         )
         copy = PlanningSlot.search([
-            ('start_datetime', '=', copy_start),
+            ('start_datetime', '=', copy_start.replace(tzinfo=None)),
             ('sale_line_id', '=', sol.id),
         ])
         self.assertEqual(len(copy), 1)

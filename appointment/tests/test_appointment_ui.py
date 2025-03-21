@@ -274,7 +274,7 @@ class AppointmentUITest(AppointmentUICommon):
             url = f"/appointment/{appointment.id}/submit"
             res = self.url_open(url, data=appointment_data)
             self.assertEqual(res.status_code, 200, "Response should = OK")
-            event = CalendarEvent.search([('appointment_type_id', '=', appointment.id), ('start', '=', new_appt_datetime.astimezone(pytz.utc))])
+            event = CalendarEvent.search([('appointment_type_id', '=', appointment.id), ('start', '=', new_appt_datetime.astimezone(pytz.utc).replace(tzinfo=None))])
             self.assertIn(event.access_token, res.url)
             with self.subTest(expect_discuss=expect_discuss, access_token=event.access_token):
                 if expect_discuss:

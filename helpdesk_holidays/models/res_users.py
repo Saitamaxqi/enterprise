@@ -11,8 +11,8 @@ class ResUsers(models.Model):
         leaves = {}
         if compute_leaves:
             leaves = self.env['hr.leave']._get_leave_interval(
-                date_from=start_dt.astimezone(pytz.timezone('UTC')),
-                date_to=end_dt.astimezone(pytz.timezone('UTC')),
+                date_from=start_dt.astimezone(pytz.timezone('UTC')).replace(tzinfo=None),
+                date_to=end_dt.astimezone(pytz.timezone('UTC')).replace(tzinfo=None),
                 employee_ids=self.employee_id
             )
         # We do not pass compute_leaves as when True, need to take the non validated leaves into account,

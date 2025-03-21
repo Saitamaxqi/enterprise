@@ -84,7 +84,11 @@ class PlanningSlot(models.Model):
 
     def _gantt_progress_bar_project_id(self, res_ids, start, stop):
         planning_read_group = self.env['planning.slot']._read_group(
-            [('project_id', 'in', res_ids), ('start_datetime', '<=', stop), ('end_datetime', '>=', start)],
+            [
+                ('project_id', 'in', res_ids),
+                ('start_datetime', '<=', stop.replace(tzinfo=None)),
+                ('end_datetime', '>=', start.replace(tzinfo=None)),
+            ],
             ['project_id'],
             ['allocated_hours:sum'],
         )

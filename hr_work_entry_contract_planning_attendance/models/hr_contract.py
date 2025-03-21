@@ -21,10 +21,12 @@ class HrContract(models.Model):
         if not planning_based_contracts:
             return mapped_intervals
 
+        start_naive = start_dt.replace(tzinfo=None)
+        end_naive = end_dt.replace(tzinfo=None)
         attendances = self.env['hr.attendance'].sudo().search([
             ('employee_id', 'in', planning_based_contracts.employee_id.ids),
-            ('check_in', '<=', end_dt),
-            ('check_out', '>=', start_dt), #We ignore attendances without check_out date
+            ('check_in', '<=', end_naive),
+            ('check_out', '>=', start_naive),  # We ignore attendances without check_out date
         ])
         if not attendances:
             return mapped_intervals
@@ -32,8 +34,8 @@ class HrContract(models.Model):
         public_leaves = self.env['resource.calendar.leaves'].search([
             ('resource_id', '=', False),
             '|', ('calendar_id', '=', False), ('calendar_id', 'in', self.resource_calendar_id.ids),
-            ('date_from', '<=', end_dt),
-            ('date_to', '>=', start_dt),
+            ('date_from', '<=', end_naive),
+            ('date_to', '>=', start_naive),
         ])
 
         resource_ids = attendances.employee_id.resource_id.ids

@@ -39,8 +39,8 @@ class HrContract(models.Model):
         search_domain = [
             ('employee_id', 'in', planning_based_contracts.employee_id.ids),
             ('state', '=', 'published'),
-            ('start_datetime', '<', end_dt),
-            ('end_datetime', '>', start_dt),
+            ('start_datetime', '<', end_dt.replace(tzinfo=None)),
+            ('end_datetime', '>', start_dt.replace(tzinfo=None)),
         ]
         resource_ids = planning_based_contracts.employee_id.resource_id.ids
         planning_slots = self.env['planning.slot'].sudo().search(search_domain) if planning_based_contracts\
