@@ -1,6 +1,12 @@
 import io
 import base64
-import openpyxl
+import unittest
+
+try:
+    from openpyxl import load_workbook
+except ImportError:
+    load_workbook = None
+
 from datetime import date
 
 from odoo.addons.l10n_in_hr_payroll_account.tests.common import TestPayrollAccountCommon
@@ -59,7 +65,10 @@ class TestHrESICReport(TestPayrollAccountCommon):
         self.assertTrue(esic_report.xlsx_file, "The XLS file was not generated.")
 
         xlsx_data = base64.b64decode(esic_report.xlsx_file)
-        xlsx = openpyxl.load_workbook(io.BytesIO(xlsx_data))
+
+        if load_workbook is None:
+            raise unittest.SkipTest("openpyxl not available")
+        xlsx = load_workbook(io.BytesIO(xlsx_data))
         sheet = xlsx.worksheets[0]
         sheet_values = list(sheet.values)
 
