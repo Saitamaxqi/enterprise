@@ -28,7 +28,7 @@
                         <div t-name="gantt-popover">
                             <div>
                                 <strong>Name: </strong><t t-out="holiday_status_id[1]"/>: <t t-out="number_of_days"/> days
-                                (<t t-out="date_from.toFormat('mm/dd/yyyy')" /> to <t t-out="date_to.toFormat('mm/dd/yyyy')" />)
+                                (<t t-out="date_from.toFormat('MM/dd/yyyy')" /> to <t t-out="date_to.toFormat('MM/dd/yyyy')" />)
                             </div>
                             <div><strong>Start: </strong> <t t-out="date_from.toFormat('f')"/></div>
                             <div><strong>Stop: </strong> <t t-out="date_to.toFormat('f')"/></div>
