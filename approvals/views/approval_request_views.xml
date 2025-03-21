@@ -81,6 +81,8 @@
                 <filter string="Refused" name="filter_refused_requests" domain="[('request_status', '=', 'refused')]"/>
                 <separator/>
                 <filter string="Canceled" name="filter_canceled_requests" domain="[('request_status', '=', 'cancel')]"/>
+                <separator/>
+                <filter string="Archived" name="filter_archived_requests" domain="[('active', '=', False)]"/>
                 <group string="Group By">
                     <filter string="Request Owner" name="groupby_request_owner"
                         context="{'group_by': 'request_owner_id'}"/>
@@ -114,6 +116,7 @@
                     <field name="request_status" widget="statusbar" statusbar_visible="new,pending,approved,refused" />
                 </header>
                 <sheet>
+                    <field name="active" invisible="1"/>
                     <field name="has_date" invisible="1"/>
                     <field name="has_period" invisible="1"/>
                     <field name="has_quantity" invisible="1"/>
@@ -139,6 +142,7 @@
                     <div class="oe_avatar">
                         <field name="category_image" widget="image" options="{'preview_image': 'category_image', 'size': [80, 80]}" class="bg-view" />
                     </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <div class="oe_title">
                         <label for="name"/>
                         <h1>

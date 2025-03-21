@@ -17,6 +17,7 @@ class ApprovalRequest(models.Model):
         return [('share', '=', False), ('company_ids', 'in', self.env.companies.ids)]
 
     name = fields.Char(string="Approval Subject", tracking=True)
+    active = fields.Boolean(default=True, tracking=True)
     category_id = fields.Many2one('approval.category', string="Category", required=True)
     category_image = fields.Binary(related='category_id.image')
     approver_ids = fields.One2many('approval.approver', 'request_id', string="Approvers", check_company=True,
@@ -126,6 +127,12 @@ class ApprovalRequest(models.Model):
         ])
         if attachment_ids:
             attachment_ids.unlink()
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_status_is_approved(self):
+        for request in self:
+            if request.request_status == 'approved':
+                raise UserError(_("You can't delete an approved request. Archive it instead."))
 
     def unlink(self):
         self.filtered(lambda a: a.has_product).product_line_ids.unlink()
