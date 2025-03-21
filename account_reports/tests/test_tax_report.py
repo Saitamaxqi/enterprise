@@ -2798,7 +2798,7 @@ class TestTaxReport(TestAccountReportsCommon):
         options = self._generate_options(self.basic_tax_report, '2021-03-01', '2021-03-31')
         vat_closing_action = self.env['account.generic.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
         initial_closing_entry = self.env['account.move'].browse(vat_closing_action['res_id'])
-        with self.enter_registry_test_mode():
+        with self.allow_pdf_render():
             initial_closing_entry.action_post()
         initial_closing_entry.button_draft()
         vat_closing_action = self.env['account.generic.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
@@ -2864,7 +2864,7 @@ class TestTaxReport(TestAccountReportsCommon):
                 main_closing_move = closing_moves.filtered(lambda x: x.company_id == main_company)
                 self.assertEqual(len(main_closing_move), 1)
 
-                with self.enter_registry_test_mode():
+                with self.allow_pdf_render():
                     action = main_closing_move.action_post()
                     self.assertTrue(action['params']['depending_action'])
                     # When posting the main closing move a component will open to propose you to post the depending moves.
@@ -2882,7 +2882,7 @@ class TestTaxReport(TestAccountReportsCommon):
         options = self._generate_options(self.basic_tax_report, '2023-01-01', '2023-03-31')
         vat_closing_action = self.env['account.generic.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
         Q1_closing_entry = self.env['account.move'].browse(vat_closing_action['res_id'])
-        with self.enter_registry_test_mode():
+        with self.allow_pdf_render():
             Q1_closing_entry.action_post()
 
         options = self._generate_options(self.basic_tax_report, '2023-04-01', '2023-06-30')
@@ -2891,7 +2891,7 @@ class TestTaxReport(TestAccountReportsCommon):
 
         # We need to force recompute the entry as it is already generated from posting the Q1 entry.
         Q2_closing_entry = self.env['account.generic.tax.report.handler']._generate_tax_closing_entries(self.basic_tax_report, options, closing_moves=Q2_closing_entry)
-        with self.enter_registry_test_mode():
+        with self.allow_pdf_render():
             Q2_closing_entry.action_post()
 
         with self.assertRaises(UserError):
